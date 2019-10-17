@@ -1,7 +1,7 @@
 %define oname saharaclient
 
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.2.1
 Release: alt1
 Summary: Python API and CLI for OpenStack  Sahara
 
@@ -23,7 +23,7 @@ BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-openstackclient >= 3.12.0
-BuildRequires: python-module-requests >= 2.14.0
+BuildRequires: python-module-requests >= 2.14.2
 BuildRequires: python-module-six >= 1.10.0
 
 BuildRequires: python-module-sphinx
@@ -42,7 +42,7 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-openstackclient >= 3.12.0
-BuildRequires: python3-module-requests >= 2.14.0
+BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 
 BuildRequires: python3-module-sphinx
@@ -140,6 +140,9 @@ sphinx-build -b html doc/source html
 %doc html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
+- Automatically updated to 2.2.1
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

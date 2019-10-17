@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.13.0
-Release: alt2
+Version: 2.14.1
+Release: alt1
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python
@@ -44,7 +44,7 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-pyparsing >= 2.1.0
 BuildRequires: python3-module-cmd2 >= 0.6.7
-BuildRequires: python3-module-stevedore  >= 1.20.0
+BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-yaml >= 3.10.0
 BuildRequires: python3-module-nose
@@ -151,6 +151,9 @@ popd
 #%doc html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.14.1-alt1
+- Automatically updated to 2.14.1
+
 * Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 2.13.0-alt2
 - Dropped BR and RR on python argparse.
 

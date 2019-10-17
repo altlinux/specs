@@ -1,15 +1,13 @@
 %define oname osc-lib
 
 Name: python-module-%oname
-Version: 1.11.1
-Release: alt2
+Version: 1.12.1
+Release: alt1
 Summary: OpenStackClient (aka OSC) is a command-line client for OpenStack
 Group: Development/Python
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-
-Patch1: fix-error-with-3.7-python.patch
 
 BuildArch: noarch
 
@@ -23,7 +21,7 @@ BuildRequires: python-module-keystoneauth1 >= 3.7.0
 BuildRequires: python-module-openstacksdk >= 0.15.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-simplejson >= 3.5.0
+BuildRequires: python-module-simplejson >= 3.5.1
 BuildRequires: python-module-stevedore >= 1.20.0
 
 # doc
@@ -43,7 +41,7 @@ BuildRequires: python3-module-keystoneauth1 >= 3.7.0
 BuildRequires: python3-module-openstacksdk >= 0.15.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-simplejson >= 3.5.0
+BuildRequires: python3-module-simplejson >= 3.5.1
 BuildRequires: python3-module-stevedore >= 1.20.0
 
 # doc
@@ -90,7 +88,6 @@ This package contains tests for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch1 -p1
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
@@ -133,6 +130,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt1
+- Automatically updated to 1.12.1
+
 * Mon Aug 05 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.1-alt2
 - Fix work with python 3.7
 

@@ -2,7 +2,7 @@
 %define oname aodhclient
 
 Name:       python-module-%oname
-Version:    1.1.1
+Version:    1.2.0
 Release:    alt1
 Summary:    Python API and CLI for OpenStack Aodh
 Group:      Development/Python
@@ -14,7 +14,7 @@ BuildArch:  noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-pbr >= 1.4
 BuildRequires: python-module-argparse
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
@@ -34,7 +34,7 @@ BuildRequires: python-module-reno >= 1.6.2
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 1.4
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-cliff >= 1.14.0
 BuildRequires: python3-module-osc-lib >= 1.0.1
@@ -137,6 +137,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Automatically updated to 1.2.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - 1.1.1
 

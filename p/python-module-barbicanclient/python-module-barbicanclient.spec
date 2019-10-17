@@ -1,7 +1,7 @@
 %define oname barbicanclient
 
 Name:       python-module-%oname
-Version:    4.7.1
+Version:    4.8.1
 Release:    alt1
 Summary:    Client Library for OpenStack Barbican Key Management API
 License:    ASL 2.0
@@ -26,15 +26,15 @@ BuildRequires: python-module-oslo.config >= 3.14.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-requests >= 2.10.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-cliff >= 2.3.0
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-cliff >= 2.8.0
 BuildRequires: python3-module-oslo.config >= 3.14.0
-BuildRequires: python3-module-keystoneauth1 >= 2.18.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
+BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno
@@ -128,6 +128,9 @@ rm -f doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
+- Automatically updated to 4.8.1
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 4.7.1-alt1
 - 4.7.1
 

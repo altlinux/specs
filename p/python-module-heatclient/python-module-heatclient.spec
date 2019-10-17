@@ -2,7 +2,7 @@
 %define oname heatclient
 
 Name: python-module-%oname
-Version: 1.16.1
+Version: 1.17.0
 Release: alt1
 Summary: Python API and CLI for OpenStack Heat
 
@@ -157,6 +157,9 @@ rm -fr build/sphinx/html/.doctrees build/sphinx/html/.buildinfo
 %doc build/sphinx/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt1
+- Automatically updated to 1.17.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
 - 1.16.1
 

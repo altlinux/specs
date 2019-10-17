@@ -2,7 +2,7 @@
 %def_without doc
 
 Name: openstack-%oname
-Version: 11.0.1
+Version: 12.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack measurement collection service
@@ -42,18 +42,20 @@ Obsoletes: %name-api
 Requires: python3-module-PasteDeploy
 Requires(pre):    shadow-utils
 Requires: python3-module-ceilometer  = %EVR
-Requires: python3-module-oslo.messaging >= 5.2.0
+Requires: python3-module-oslo.messaging >= 5.12.0
 Requires: python3-module-oslo.serialization >= 1.10.0
 Requires: python3-module-oslo.utils >= 3.5.0
 
 BuildRequires: /proc
 BuildArch: noarch
 BuildRequires: crudini
-BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
+BuildRequires: webserver-common
+BuildRequires: rpm-build-webserver-common
+BuildRequires: rpm-macros-apache2
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-cachetools >= 1.1.0
 BuildRequires: python-module-cotyledon >= 1.3.0
 BuildRequires: python-module-futures >= 3.0
@@ -98,8 +100,8 @@ BuildRequires: python-module-sphinx >= 1.6.2
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-cachetools >= 1.1.0
 BuildRequires: python3-module-cotyledon >= 1.3.0
 BuildRequires: python3-module-futurist >= 0.11.0
@@ -130,7 +132,7 @@ BuildRequires: python3-module-requests >= 2.8.1
 BuildRequires: python3-module-stevedore >= 1.9.0
 BuildRequires: python3-module-tenacity >= 3.2.1
 BuildRequires: python3-module-tooz >= 1.47.0
-BuildRequires: python3-module-os-xenapi >= 0.1.13
+BuildRequires: python3-module-os-xenapi >= 0.1.1
 
 BuildRequires: python3-module-oslo.cache >= 1.5.0
 BuildRequires: python3-module-gnocchiclient >= 3.1.0
@@ -501,6 +503,9 @@ crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilomete
 %_initdir/%name-polling
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:12.0.0-alt1
+- Automatically updated to 12.0.0
+
 * Fri Jan 11 2019 Alexey Shabalin <shaba@altlinux.org> 1:11.0.1-alt1
 - 11.0.1 Rocky release
 - switch to python3

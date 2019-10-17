@@ -1,7 +1,7 @@
 %define oname designateclient
 
 Name:    python-module-%oname
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 Summary: Openstack DNS (Designate) API Client
 License: Apache-2.0
@@ -19,7 +19,7 @@ BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-osc-lib >= 1.8.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-keystoneauth1 >= 3.4.0
-BuildRequires: python-module-requests >= 2.14.0
+BuildRequires: python-module-requests >= 2.14.2
 BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-debtcollector >= 1.2.0
@@ -39,7 +39,7 @@ BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
-BuildRequires: python3-module-requests >= 2.10.0
+BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
@@ -142,6 +142,9 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1
+- Automatically updated to 2.11.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt1
 - 2.10.0
 

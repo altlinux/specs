@@ -3,17 +3,17 @@
 %def_disable doc
 
 Name: openstack-%oname
-Version: 18.2.0
-Release: alt1
 Epoch: 1
+Version: 19.0.2
+Release: alt1
+
 Summary: OpenStack Compute (nova)
 
 Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
-Patch100: 964832d37dd244f4f4ebc0dba46e4316241a2120.patch
+Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 Source6: nova.logrotate
 
@@ -51,7 +51,6 @@ Source131: %name-serialproxy.init
 Source132: %name-api-os-compute.init
 Source133: %name-placement-api.init
 
-
 Source21: nova-polkit.pkla
 Source23: nova-polkit.rules
 Source22: nova-ifc-template
@@ -59,95 +58,15 @@ Source24: nova-sudoers
 Source30: %name-novncproxy.sysconfig
 
 BuildArch: noarch
+
 # /proc need for generate sample config fix "nova.cmd.novncproxy: [Errno 2] No such file or directory: '/proc/stat'"
 BuildRequires: /proc
 BuildRequires: crudini
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-decorator >= 3.4.0
-BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-jinja2 >= 2.10
-BuildRequires: python-module-keystonemiddleware >= 4.17.0
-BuildRequires: python-module-lxml >= 3.4.1
-BuildRequires: python-module-routes >= 2.3.1
-BuildRequires: python-module-cryptography >= 2.1
-BuildRequires: python-module-webob >= 1.8.2
-BuildRequires: python-module-greenlet >= 0.4.10
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-paste >= 2.0.2
-BuildRequires: python-module-prettytable >= 0.7.1
-BuildRequires: python-module-migrate >= 0.11.0
-BuildRequires: python-module-numpy
-BuildRequires: python-module-netaddr >= 0.7.18
-BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-paramiko >= 2.0.0
-BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-enum34 >= 1.0.4
-BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-jsonschema >= 2.6.0
-BuildRequires: python-module-cinderclient >= 3.3.0
-BuildRequires: python-module-keystoneauth1 >= 3.9.0
-BuildRequires: python-module-neutronclient >= 6.7.0
-BuildRequires: python-module-glanceclient >= 2.8.0
-BuildRequires: python-module-requests >= 2.14.2
-BuildRequires: python-module-stevedore >= 1.20.0
-BuildRequires: python-module-websockify >= 0.8.0
-BuildRequires: python-module-oslo.cache >= 1.26.0
-BuildRequires: python-module-oslo.concurrency >= 3.26.0
-BuildRequires: python-module-oslo.config >= 6.1.0
-BuildRequires: python-module-oslo.context >= 2.19.2
-BuildRequires: python-module-oslo.log >= 3.36.0
-BuildRequires: python-module-oslo.reports >= 1.18.0
-BuildRequires: python-module-oslo.serialization >= 2.18.0
-BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-oslo.db >= 4.27.0
-BuildRequires: python-module-oslo.rootwrap >= 5.8.0
-BuildRequires: python-module-oslo.messaging >= 6.3.0
-BuildRequires: python-module-oslo.policy >= 1.35.0
-BuildRequires: python-module-oslo.privsep >= 1.23.0
-BuildRequires: python-module-oslo.i18n >= 3.15.3
-BuildRequires: python-module-oslo.service >= 1.24.0
-BuildRequires: python-module-rfc3986 >= 0.3.1
-BuildRequires: python-module-oslo.middleware >= 3.31.0
-BuildRequires: python-module-psutil >= 3.2.2
-BuildRequires: python-module-oslo.versionedobjects >= 1.31.2
-BuildRequires: python-module-os-brick >= 2.5.0
-BuildRequires: python-module-os-traits >= 0.4.0
-BuildRequires: python-module-os-vif >= 1.7.0
-BuildRequires: python-module-os-win >= 3.0.0
-BuildRequires: python-module-castellan >= 0.16.0
-BuildRequires: python-module-microversion-parse >= 0.2.1
-BuildRequires: python-module-os-xenapi >= 0.3.3
-BuildRequires: python-module-tooz >= 1.58.0
-BuildRequires: python-module-cursive >= 0.2.1
-BuildRequires: python-module-retrying >= 1.3.3
-BuildRequires: python-module-pypowervm >= 1.1.15
-BuildRequires: python-module-os-service-types >= 1.2.0
-BuildRequires: python-module-taskflow >= 2.16.0
-BuildRequires: python-module-dateutil >= 2.5.3
-BuildRequires: python-module-zVMCloudConnector >= 1.1.1
-BuildRequires: python-module-futures >= 3.0.0
-
-BuildRequires: python-module-barbicanclient
-BuildRequires: python-module-oslo.vmware >= 2.17.0
-
-%if_enabled doc
-# Required to build module documents
-BuildRequires: python-module-sphinx >= 1.6.2
-BuildRequires: python-module-sphinxcontrib-actdiag >= 0.8.5
-BuildRequires: python-module-sphinxcontrib-seqdiag >= 0.8.4
-BuildRequires: python-module-sphinx-feature-classification >= 0.2.0
-BuildRequires: python-module-os-api-ref >= 1.4.0
-BuildRequires: python-module-openstackdocstheme >= 1.19.0
-BuildRequires: python-module-reno >= 2.5.0
-%endif
+BuildRequires: graphviz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools >= 21.0.0
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
@@ -184,22 +103,22 @@ BuildRequires: python3-module-oslo.config >= 6.1.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.reports >= 1.18.0
-BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-oslo.db >= 4.27.0
+BuildRequires: python3-module-oslo.serialization >= 2.21.1
+BuildRequires: python3-module-oslo.utils >= 3.37.0
+BuildRequires: python3-module-oslo.db >= 4.44.0
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
 BuildRequires: python3-module-oslo.messaging >= 6.3.0
 BuildRequires: python3-module-oslo.policy >= 1.35.0
-BuildRequires: python3-module-oslo.privsep >= 1.23.0
+BuildRequires: python3-module-oslo.privsep >= 1.32.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.service >= 1.24.0
-BuildRequires: python3-module-rfc3986 >= 0.3.1
+BuildRequires: python3-module-oslo.service >= 1.34.0
+BuildRequires: python3-module-rfc3986 >= 1.1.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
 BuildRequires: python3-module-psutil >= 3.2.2
-BuildRequires: python3-module-oslo.versionedobjects >= 1.31.2
-BuildRequires: python3-module-os-brick >= 2.5.0
-BuildRequires: python3-module-os-traits >= 0.4.0
-BuildRequires: python3-module-os-vif >= 1.7.0
+BuildRequires: python3-module-oslo.versionedobjects >= 1.33.3
+BuildRequires: python3-module-os-brick >= 2.6.1
+BuildRequires: python3-module-os-traits >= 0.8.0
+BuildRequires: python3-module-os-vif >= 1.14.0
 BuildRequires: python3-module-os-win >= 3.0.0
 BuildRequires: python3-module-castellan >= 0.16.0
 BuildRequires: python3-module-microversion-parse >= 0.2.1
@@ -227,8 +146,6 @@ BuildRequires: python3-module-openstackdocstheme >= 1.19.0
 BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
-BuildRequires: graphviz
-
 Requires: %name-compute = %EVR
 Requires: %name-scheduler = %EVR
 Requires: %name-api = %EVR
@@ -253,8 +170,8 @@ Summary: Components common to all OpenStack Nova services
 Group: System/Servers
 
 Requires: python3-module-nova = %EVR
-Requires: python3-module-oslo.rootwrap >= 5.0.0
-Requires: python3-module-oslo.messaging >= 5.14.0
+Requires: python3-module-oslo.rootwrap >= 5.8.0
+Requires: python3-module-oslo.messaging >= 6.3.0
 Requires(pre): shadow-utils
 
 %description common
@@ -389,7 +306,7 @@ Summary: OpenStack Nova console access services
 Group: System/Servers
 
 Requires: openstack-nova-common = %EVR
-Requires: python3-module-websockify
+Requires: python3-module-websockify >= 0.8.0
 
 %description console
 OpenStack Compute (codename Nova) is open source software designed to
@@ -429,7 +346,7 @@ Group: System/Servers
 
 Requires: openstack-nova-common = %EVR
 Requires: novnc
-Requires: python3-module-websockify
+Requires: python3-module-websockify >= 0.8.0
 
 %description novncproxy
 OpenStack Compute (codename Nova) is open source software designed to
@@ -466,7 +383,7 @@ Summary: OpenStack Nova Spice HTML5 console access service
 Group: System/Servers
 
 Requires: openstack-nova-common = %EVR
-Requires: python3-module-websockify
+Requires: python3-module-websockify >= 0.8.0
 Requires: spice-html5
 
 %description spicehtml5proxy
@@ -487,7 +404,7 @@ Summary: OpenStack Nova serial console access service
 Group: System/Servers
 
 Requires: openstack-nova-common = %EVR
-Requires: python3-module-websockify
+Requires: python3-module-websockify >= 0.8.0
 
 %description serialproxy
 OpenStack Compute (codename Nova) is open source software designed to
@@ -501,32 +418,6 @@ standard hardware configurations and seven major hypervisors.
 
 This package contains the Nova services providing the
 serial console access service to Virtual Machines.
-
-%package -n python-module-%oname
-Summary: Nova Python libraries
-Group: Development/Python
-
-Requires: openssl
-# Require openssh for ssh-keygen
-Requires: openssh-common
-Requires: sudo
-
-Requires: python-module-SQLAlchemy
-Requires: python-module-PasteDeploy
-
-%description -n python-module-%oname
-OpenStack Compute (codename Nova) is open source software designed to
-provision and manage large networks of virtual machines, creating a
-redundant and scalable cloud computing platform.
-
-This package contains the nova Python library.
-
-%package -n python-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python
-
-%description -n python-module-%oname-tests
-This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: Nova Python3 libraries
@@ -546,7 +437,6 @@ provision and manage large networks of virtual machines, creating a
 redundant and scalable cloud computing platform.
 
 This package contains the nova Python library.
-
 
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname
@@ -568,7 +458,6 @@ This package contains documentation files for nova.
 
 %prep
 %setup -n %oname-%version
-%patch100 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -578,12 +467,8 @@ find nova -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 # to distutils requiers_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
+%python3_build
 
 %if_enabled doc
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -596,20 +481,8 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 oslo-config-generator --config-file=etc/nova/nova-config-generator.conf
 oslopolicy-sample-generator --config-file=etc/nova/nova-policy-generator.conf
 
-pushd ../python3
-%python3_build
-popd
-
 %install
-%python_install
-
-for f in $(ls -1 %buildroot%_bindir)
-    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
-done
-
-pushd ../python3
 %python3_install
-popd
 
 %if_enabled doc
 mkdir -p %buildroot%_man1dir
@@ -692,7 +565,6 @@ install -d -m 755 %buildroot%_runtimedir/nova
 
 # Install template files
 install -p -D -m 644 %SOURCE22 %buildroot%_datadir/nova/interfaces.template
-
 
 # Install policy-kit rules to allow nova user to manage libvirt
 install -p -D -m 644 %SOURCE23 %buildroot%_sysconfdir/polkit-1/rules.d/50-nova.rules
@@ -879,22 +751,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_unitdir/%name-serialproxy.service
 %_initdir/%name-serialproxy
 
-%files -n python-module-%oname
-%doc LICENSE
-%_bindir/nova*.py2
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/test.*
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/test.*
-%exclude %python_sitelibdir/%oname/tests/live_migration/hooks
-
 %files -n python3-module-%oname
 %doc LICENSE
 %_bindir/*
-%exclude %_bindir/nova*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/test.*
@@ -910,6 +769,10 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:19.0.2-alt1
+- Build new version.
+- Build without python2.
+
 * Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:18.2.0-alt1
 - 18.2.0
 

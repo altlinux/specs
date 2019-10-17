@@ -1,7 +1,7 @@
 %define oname magnumclient
 
 Name:       python-module-%oname
-Version:    2.10.0
+Version:    2.12.0
 Release:    alt1
 Summary:    Client Library for OpenStack Magnum Container Management API
 Group:      Development/Python
@@ -24,7 +24,8 @@ BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-os-client-config >= 1.28.0
-BuildRequires: python-module-osc-lib >= 1.8.0 python-module-osc-lib-tests
+BuildRequires: python-module-osc-lib >= 1.8.0
+BuildRequires: python-module-osc-lib-tests
 BuildRequires: python-module-prettytable >= 0.7.2
 BuildRequires: python-module-cryptography >= 2.1
 BuildRequires: python-module-decorator >= 3.4.0
@@ -35,7 +36,7 @@ BuildRequires: python-module-reno
 BuildRequires: python-module-openstackdocstheme >= 1.18.1
 
 
-BuildRequires: python-module-oslo.log
+BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-argparse
 BuildRequires: python-module-mock
 BuildRequires: python-module-subunit-tests
@@ -56,9 +57,9 @@ BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
-BuildRequires: python3-module-osc-lib >= 1.2.0
+BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-cryptography >= 1.0
+BuildRequires: python3-module-cryptography >= 2.1
 BuildRequires: python3-module-decorator >= 3.4.0
 
 # doc
@@ -160,6 +161,9 @@ rm -fr build/sphinx/html/.doctrees /build/sphinx/html/.buildinfo
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.12.0-alt1
+- Automatically updated to 2.12.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0.
 

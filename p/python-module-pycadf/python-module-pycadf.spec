@@ -1,7 +1,7 @@
 %global oname pycadf
 
 Name: python-module-%oname
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Summary: DMTF Cloud Audit (CADF) data model
 
@@ -17,7 +17,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.serialization >= 2.18.0
-BuildRequires: python-module-pytz
+BuildRequires: python-module-pytz >= 2013.6
 BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 
@@ -31,7 +31,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pytz >= 2013.6
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
@@ -127,6 +127,9 @@ mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
 %doc html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
+- Automatically updated to 2.9.0
+
 * Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

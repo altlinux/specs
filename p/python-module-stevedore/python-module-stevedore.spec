@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.29.0
-Release: alt2
+Version: 1.30.1
+Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
 License: ASL 2.0
@@ -16,11 +16,16 @@ BuildRequires(pre): rpm-macros-sphinx
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0 python-module-six >= 1.10
-BuildRequires: python-module-Pillow python-module-oslotest
-BuildRequires: python-module-discover python-module-testrepository
-BuildRequires: python-module-coverage python-module-mock
-BuildRequires: python-module-mox3 python-module-mimeparse
+BuildRequires: python-module-pbr >= 2.0.0
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-Pillow
+BuildRequires: python-module-oslotest
+BuildRequires: python-module-discover
+BuildRequires: python-module-testrepository
+BuildRequires: python-module-coverage
+BuildRequires: python-module-mock
+BuildRequires: python-module-mox3
+BuildRequires: python-module-mimeparse
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-openstackdocstheme >= 1.18.1
 BuildRequires: python-module-reno >= 2.5.0
@@ -28,11 +33,16 @@ BuildRequires: python-module-reno >= 2.5.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0 python3-module-six >= 1.10
-BuildRequires: python3-module-Pillow python3-module-oslotest
-BuildRequires: python3-module-discover python3-module-testrepository
-BuildRequires: python3-module-coverage python3-module-mock
-BuildRequires: python3-module-mox3 python3-module-mimeparse
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-discover
+BuildRequires: python3-module-testrepository
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-mox3
+BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
@@ -163,6 +173,9 @@ popd
 
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.1-alt1
+- Automatically updated to 1.30.1
+
 * Tue Jan 29 2019 Stanislav Levin <slev@altlinux.org> 1.29.0-alt2
 - Dropped dependency on python argparse (use stdlib's one).
 

@@ -1,7 +1,7 @@
 %define oname keystoneauth1
 
 Name: python-module-%oname
-Version: 3.10.0
+Version: 3.13.1
 Release: alt1
 Summary: OpenStack authenticating tools
 Group: Development/Python
@@ -135,6 +135,9 @@ popd
 #%doc doc/build/html
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.13.1-alt1
+- Automatically updated to 3.13.1
+
 * Thu Dec 06 2018 Alexey Shabalin <shaba@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

@@ -1,7 +1,7 @@
 %define oname monascaclient
 
 Name:       python-module-%oname
-Version:    1.12.1
+Version:    1.15.0
 Release:    alt1
 Summary:    Python API and CLI for OpenStack Monasca
 License:    ASL 2.0
@@ -141,6 +141,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt1
+- Automatically updated to 1.15.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
 - Updated to 1.12.1.
 - Added building docs.

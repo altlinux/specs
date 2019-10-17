@@ -1,7 +1,7 @@
 %define oname oslo.versionedobjects
 
 Name: python-module-%oname
-Version: 1.33.3
+Version: 1.36.0
 Release: alt1
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildRequires: python-module-oslo.concurrency >= 3.26.0
 BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.context >= 2.19.2
 BuildRequires: python-module-oslo.messaging >= 5.29.0
-BuildRequires: python-module-oslo.serialization >= 1.18.0
+BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-oslo.utils >= 3.33.0
 BuildRequires: python-module-iso8601 >= 0.1.11
 BuildRequires: python-module-oslo.log >= 3.36.0
@@ -42,7 +42,7 @@ BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
-BuildRequires: python3-module-oslo.serialization >= 1.18.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-oslo.log >= 3.36.0
@@ -146,6 +146,9 @@ popd
 %doc html
 
 %changelog
+* Fri Aug 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.36.0-alt1
+- new version 1.36.0
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.33.3-alt1
 - 1.33.3
 

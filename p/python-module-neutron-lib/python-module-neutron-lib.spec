@@ -1,7 +1,7 @@
 %define oname neutron-lib
 
 Name: python-module-%oname
-Version: 1.18.0
+Version: 1.25.0
 Release: alt1
 Summary: OpenStack Neutron shared routines and utilities
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-oslo.concurrency >= 3.26.0
 BuildRequires: python-module-oslo.config >= 5.2.0
 BuildRequires: python-module-oslo.context >= 2.19.2
-BuildRequires: python-module-oslo.db >= 4.27.0
+BuildRequires: python-module-oslo.db >= 4.37.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.log >= 3.36.0
 BuildRequires: python-module-oslo.messaging >= 5.29.0
@@ -55,7 +55,7 @@ BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
-BuildRequires: python3-module-oslo.db >= 4.27.0
+BuildRequires: python3-module-oslo.db >= 4.37.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
@@ -156,6 +156,9 @@ popd
 %doc build/sphinx/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.25.0-alt1
+- Automatically updated to 1.25.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt1
 - 1.18.0
 

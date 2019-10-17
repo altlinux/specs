@@ -1,7 +1,7 @@
 %global oname oslo.service
 
 Name: python-module-%oname
-Version: 1.31.8
+Version: 1.40.0
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildRequires: python-module-webob >= 1.7.1
 BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-greenlet >= 0.4.10
 BuildRequires: python-module-monotonic >= 0.6
-BuildRequires: python-module-oslo.utils >= 3.33.0
+BuildRequires: python-module-oslo.utils >= 3.40.2
 BuildRequires: python-module-oslo.concurrency >= 3.25.0
 BuildRequires: python-module-oslo.config >= 5.1.0
 BuildRequires: python-module-oslo.log >= 3.36.0
@@ -41,7 +41,7 @@ BuildRequires: python3-module-webob >= 1.7.1
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-monotonic >= 0.6
-BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.utils >= 3.40.2
 BuildRequires: python3-module-oslo.concurrency >= 3.25.0
 BuildRequires: python3-module-oslo.config >= 5.1.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
@@ -137,6 +137,9 @@ popd
 %doc html
 
 %changelog
+* Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.40.0-alt1
+- Automatically updated to 1.40.0
+
 * Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.31.8-alt1
 - 1.31.8
 

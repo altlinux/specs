@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.62.0
+Version: 1.64.2
 Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python
@@ -17,13 +17,13 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.16.0
-BuildRequires: python-module-enum34
+BuildRequires: python-module-enum34 >= 1.0.4
 BuildRequires: python-module-voluptuous >= 0.8.9
 BuildRequires: python-module-msgpack >= 0.4.0
 BuildRequires: python-module-fasteners >= 0.7
 BuildRequires: python-module-tenacity >= 3.2.1
 BuildRequires: python-module-futures >= 3.0
-BuildRequires: python-module-futurist >= 0.11.0
+BuildRequires: python-module-futurist >= 1.2.0
 BuildRequires: python-module-oslo.utils >= 3.15.0
 BuildRequires: python-module-oslo.serialization >= 1.10.0
 
@@ -45,12 +45,12 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-stevedore >= 1.5.0
+BuildRequires: python3-module-stevedore >= 1.16.0
 BuildRequires: python3-module-voluptuous >= 0.8.9
 BuildRequires: python3-module-msgpack >= 0.4.0
 BuildRequires: python3-module-fasteners >= 0.7
 BuildRequires: python3-module-tenacity >= 3.2.1
-BuildRequires: python3-module-futurist >= 0.11.0
+BuildRequires: python3-module-futurist >= 1.2.0
 BuildRequires: python3-module-oslo.utils >= 3.15.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 %endif
@@ -146,6 +146,9 @@ popd
 %doc build/sphinx/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.64.2-alt1
+- Automatically updated to 1.64.2
+
 * Mon Dec 10 2018 Alexey Shabalin <shaba@altlinux.org> 1.62.0-alt1
 - 1.62.0
 

@@ -1,7 +1,7 @@
 %define oname debtcollector
 
 Name: python-module-%oname
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1
 Summary: A collection of Python deprecation patterns and strategies
 Group: Development/Python
@@ -20,7 +20,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-wrapt >= 1.7.0
-BuildRequires: python-module-funcsigs >= 0.4
+BuildRequires: python-module-funcsigs >= 1.0.0
 
 BuildRequires: python-module-fixtures
 
@@ -144,6 +144,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.21.0-alt1
+- Automatically updated to 1.21.0
+
 * Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.20.0-alt1
 - 1.20.0
 

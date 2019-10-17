@@ -1,7 +1,7 @@
 %define oname osprofiler
 
 Name: python-module-%oname
-Version: 2.3.0
+Version: 2.6.0
 Release: alt1
 Summary: OpenStack cross-project profiling library
 Group: Development/Python
@@ -132,6 +132,9 @@ popd
 %doc doc/build/html
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0
+
 * Wed Dec 12 2018 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
 - Updated to 2.3.0.
 

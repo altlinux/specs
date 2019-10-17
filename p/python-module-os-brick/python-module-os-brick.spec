@@ -1,7 +1,7 @@
 %define oname os-brick
 
 Name: python-module-%oname
-Version: 2.5.4
+Version: 2.8.2
 Release: alt1
 Summary: OpenStack Cinder brick library for managing local volume attaches
 Group: Development/Python
@@ -141,6 +141,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.2-alt1
+- Automatically updated to 2.8.2
+
 * Tue Dec 18 2018 Alexey Shabalin <shaba@altlinux.org> 2.5.4-alt1
 - 2.5.4
 

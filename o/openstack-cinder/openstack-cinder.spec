@@ -3,14 +3,16 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-%oname
-Version: 13.0.5
-Release: alt1
 Epoch: 1
+Version: 14.0.1
+Release: alt1
+
 Summary: OpenStack Volume service
 
 Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Source1: cinder-dist.conf
 Source2: cinder.logrotate
@@ -29,92 +31,15 @@ Source113: openstack-cinder-backup.init
 
 Source20: cinder-sudoers
 
-Patch: cinder-13.0.2-system-urllib3.patch
-
 BuildArch: noarch
+
 BuildRequires: /proc
-BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
+BuildRequires: webserver-common
+BuildRequires: rpm-build-webserver-common
+BuildRequires: rpm-macros-apache2
 BuildRequires: git-core
 BuildRequires: crudini
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-setuptools
 BuildRequires: graphviz
-BuildRequires: python-module-babel >= 2.3.4
-BuildRequires: python-module-decorator >= 3.4.0
-BuildRequires: python-module-defusedxml >= 0.5.0
-BuildRequires: python-module-enum34
-BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-greenlet >= 0.4.10
-BuildRequires: python-module-httplib2 >= 0.9.1
-BuildRequires: python-module-iso8601 >= 0.1.11
-BuildRequires: python-module-jsonschema >= 2.6.0
-BuildRequires: python-module-ipaddress >= 1.0.17
-BuildRequires: python-module-keystoneauth1 >= 3.4.0
-BuildRequires: python-module-keystonemiddleware >= 4.17.0
-BuildRequires: python-module-lxml >= 3.4.1
-BuildRequires: python-module-oauth2client >= 1.5.0
-BuildRequires: python-module-oslo.config >= 5.2.0
-BuildRequires: python-module-oslo.concurrency >= 3.26.0
-BuildRequires: python-module-oslo.context >= 2.19.2
-BuildRequires: python-module-oslo.db >= 4.27.0
-BuildRequires: python-module-oslo.log >= 3.36.0
-BuildRequires: python-module-oslo.messaging >= 5.29.0
-BuildRequires: python-module-oslo.middleware >= 3.31.0
-BuildRequires: python-module-oslo.policy >= 1.30.0
-BuildRequires: python-module-oslo.privsep >= 1.23.0
-BuildRequires: python-module-oslo.reports >= 1.18.0
-BuildRequires: python-module-oslo.rootwrap >= 5.8.0
-BuildRequires: python-module-oslo.serialization >= 2.18.0
-BuildRequires: python-module-oslo.service >= 1.24.0
-BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.31.2
-BuildRequires: python-module-osprofiler >= 1.4.0
-BuildRequires: python-module-paramiko >= 2.0.0
-BuildRequires: python-module-paste >= 2.0.2
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-psutil >= 3.2.2
-BuildRequires: python-module-pyparsing >= 2.1.0
-BuildRequires: python-module-barbicanclient >= 4.5.2
-BuildRequires: python-module-glanceclient >= 2.8.0
-BuildRequires: python-module-keystoneclient >= 3.8.0
-BuildRequires: python-module-novaclient >= 9.1.0
-BuildRequires: python-module-swiftclient >= 3.2.0
-BuildRequires: python-module-pytz >= 2013.6
-BuildRequires: python-module-requests >= 2.14.2
-BuildRequires: python-module-urllib3
-BuildRequires: python-module-retrying >= 1.2.3
-BuildRequires: python-module-routes >= 2.3.1
-BuildRequires: python-module-taskflow >= 2.16.0
-BuildRequires: python-module-rtslib >= 2.1.65
-BuildRequires: python-module-simplejson >= 3.5.1
-BuildRequires: python-module-SQLAlchemy >= 1.0.10
-BuildRequires: python-module-migrate >= 0.11.0
-BuildRequires: python-module-stevedore >= 1.20.0
-BuildRequires: python-module-suds-jurko >= 0.6
-BuildRequires: python-module-webob >= 1.7.1
-BuildRequires: python-module-oslo.i18n >= 3.15.3
-BuildRequires: python-module-oslo.vmware >= 2.17.0
-BuildRequires: python-module-os-brick >= 2.2.0
-BuildRequires: python-module-os-win >= 3.0.0
-BuildRequires: python-module-tooz >= 1.58.0
-BuildRequires: python-module-google-api-client >= 1.4.2
-BuildRequires: python-module-castellan >= 0.16.0
-BuildRequires: python-module-cryptography >= 2.1
-BuildRequires: python-module-cursive >= 0.2.1
-
-%if_enabled doc
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
-BuildRequires: python-module-reno >= 2.5.0
-BuildRequires: python-module-doc8 >= 0.6.0
-BuildRequires: python-module-os-api-ref >= 1.4.0
-BuildRequires: python-module-sphinxcontrib-apidoc >= 0.2.0
-BuildRequires: python-module-sphinx-feature-classification >= 0.1.0
-%endif
-BuildRequires: python-module-testtools
-BuildRequires: python-module-subunit-tests
-
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
@@ -129,8 +54,8 @@ BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-ipaddress >= 1.0.17
-BuildRequires: python3-module-keystoneauth1 >= 3.4.0
-BuildRequires: python3-module-keystonemiddleware >= 4.17.0
+BuildRequires: python3-module-keystoneauth1 >= 3.7.0
+BuildRequires: python3-module-keystonemiddleware >= 4.21.0
 BuildRequires: python3-module-lxml >= 3.4.1
 BuildRequires: python3-module-oauth2client >= 1.5.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
@@ -138,15 +63,15 @@ BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.db >= 4.27.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-oslo.messaging >= 6.4.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
-BuildRequires: python3-module-oslo.policy >= 1.30.0
-BuildRequires: python3-module-oslo.privsep >= 1.23.0
+BuildRequires: python3-module-oslo.policy >= 1.44.1
+BuildRequires: python3-module-oslo.privsep >= 1.32.0
 BuildRequires: python3-module-oslo.reports >= 1.18.0
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.service >= 1.24.0
-BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.utils >= 3.34.0
 BuildRequires: python3-module-oslo.versionedobjects >= 1.31.2
 BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-paramiko >= 2.0.0
@@ -164,7 +89,7 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-retrying >= 1.2.3
 BuildRequires: python3-module-routes >= 2.3.1
-BuildRequires: python3-module-taskflow >= 2.16.0
+BuildRequires: python3-module-taskflow >= 3.2.0
 BuildRequires: python3-module-rtslib >= 2.1.65
 BuildRequires: python3-module-simplejson >= 3.5.1
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
@@ -181,6 +106,8 @@ BuildRequires: python3-module-google-api-client >= 1.4.2
 BuildRequires: python3-module-castellan >= 0.16.0
 BuildRequires: python3-module-cryptography >= 2.1
 BuildRequires: python3-module-cursive >= 0.2.1
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-subunit-tests
 
 %if_enabled doc
 BuildRequires: python3-module-sphinx
@@ -191,19 +118,14 @@ BuildRequires: python3-module-os-api-ref >= 1.4.0
 BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
 BuildRequires: python3-module-sphinx-feature-classification >= 0.1.0
 %endif
-BuildRequires: python3-module-testtools
-BuildRequires: python3-module-subunit-tests
-
 
 Requires: python3-module-cinder = %EVR
 Requires: python3-module-PasteDeploy
 Requires: python3-module-osprofiler >= 1.4.0
-Requires: python3-module-keystonemiddleware
+Requires: python3-module-keystonemiddleware >= 4.21.0
 
 Requires(pre): shadow-utils
-
 Requires: lvm2
-# Requires: scsitarget-utils
 Requires: targetcli
 Requires: python3-module-rtslib
 Requires: sysfsutils
@@ -213,23 +135,6 @@ Requires: qemu-img
 %description
 OpenStack Volume (codename Cinder) provides services to manage and
 access block storage volumes for use by Virtual Machine instances.
-
-%package -n python-module-%oname
-Summary: OpenStack Volume Python libraries
-Group: Development/Python
-
-%description -n python-module-%oname
-OpenStack Volume (codename Cinder) provides services to manage and
-access block storage volumes for use by Virtual Machine instances.
-
-This package contains the cinder Python library.
-
-%package -n python-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python
-
-%description -n python-module-%oname-tests
-This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: OpenStack Volume Python libraries
@@ -260,24 +165,18 @@ This package contains documentation files for cinder.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
 find cinder -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
+grep -rl requests.packages.urllib3 | xargs sed -i "s/requests.packages.urllib3/urllib3/g"
+
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-
-%python_build
-
-pushd ../python3
 %python3_build
 # Generate config file
 oslo-config-generator --config-file=tools/config/cinder-config-generator.conf
@@ -288,9 +187,10 @@ PYTHONPATH=. python3 setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
 rm -fr build/sphinx/html/.buildinfo
 %endif
-popd
 
 %install
+%python3_install
+
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/cinder
 install -d -m 755 %buildroot%_cachedir/cinder
@@ -303,30 +203,14 @@ install -d -m 755 %buildroot%_sysconfdir/cinder/cinder-volume.conf.d
 install -d -m 755 %buildroot%_sysconfdir/cinder/volumes
 install -d -m 755 %buildroot%_sysconfdir/cinder/rootwrap.d
 
-%python_install
-mv %buildroot%_bindir/cinder-api %buildroot%_bindir/cinder-api.py2
-mv %buildroot%_bindir/cinder-backup %buildroot%_bindir/cinder-backup.py2
-mv %buildroot%_bindir/cinder-manage %buildroot%_bindir/cinder-manage.py2
-mv %buildroot%_bindir/cinder-rootwrap %buildroot%_bindir/cinder-rootwrap.py2
-mv %buildroot%_bindir/cinder-rtstool %buildroot%_bindir/cinder-rtstool.py2
-mv %buildroot%_bindir/cinder-scheduler %buildroot%_bindir/cinder-scheduler.py2
-mv %buildroot%_bindir/cinder-volume %buildroot%_bindir/cinder-volume.py2
-mv %buildroot%_bindir/cinder-volume-usage-audit %buildroot%_bindir/cinder-volume-usage-audit.py2
-mv %buildroot%_bindir/cinder-wsgi %buildroot%_bindir/cinder-wsgi.py2
-
-pushd ../python3
-%python3_install
 mkdir -p %buildroot%_man1dir
 install -p -D -m 640 etc/cinder/cinder.conf.sample %buildroot%_sysconfdir/cinder/cinder.conf
 install -p -D -m 640 etc/cinder/policy.yaml.sample %buildroot%_sysconfdir/cinder/policy.yaml
 install -p -D -m 644 etc/cinder/{api-paste.ini,rootwrap.conf} %buildroot%_sysconfdir/cinder/
 install -p -D -m 644 etc/cinder/rootwrap.d/* %buildroot%_sysconfdir/cinder/rootwrap.d/
-popd
 
 # Install config files
-
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/tgt/conf.d/cinder.conf
-
 
 # Symlinks to rootwrap config files
 for filter in %_sysconfdir/os-brick/rootwrap.d/*.filters; do
@@ -424,22 +308,11 @@ rm -rf %buildroot/usr/etc
 %dir %attr(0775, root, cinder) %_sharedstatedir/cinder
 %dir %attr(0775, root, cinder) %_cachedir/cinder
 
-%files -n python-module-%oname
-%_bindir/*.py2
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/test.*
-
 %files -n python3-module-%oname
 %_bindir/*
-%exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/test.*
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/test.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
@@ -451,6 +324,10 @@ rm -rf %buildroot/usr/etc
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:14.0.1-alt1
+- Build new version.
+- Build without python2.
+
 * Mon May 13 2019 Alexey Shabalin <shaba@altlinux.org> 1:13.0.5-alt1
 - 13.0.5
 - disbale build docs
@@ -465,7 +342,7 @@ rm -rf %buildroot/usr/etc
 * Fri Jul 14 2017 Lenar Shakirov <snejok@altlinux.ru> 1:10.0.3-alt2
 - Requires added:
   * python-module-osprofile
-  * python-module-keystonemiddleware
+  * python-module-keystonemiddleware >= 4.21.0
 
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:10.0.3-alt1
 - 10.0.3

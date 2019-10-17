@@ -3,7 +3,7 @@
 %define oname futurist
 
 Name: python-module-%oname
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python
@@ -12,9 +12,9 @@ Url: http://docs.openstack.org/developer/futurist
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
-#Requires: python-module-six >= 1.9.0
-Requires: python-module-monotonic
-Requires: python-module-futures >= 3.0
+#Requires: python-module-six >= 1.10.0
+Requires: python-module-monotonic >= 0.6
+Requires: python-module-futures >= 3.0.0
 Requires: python-module-contextlib2 >= 0.4.0
 
 BuildRequires: python-devel
@@ -22,7 +22,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-six >= 1.10.0
 BuildRequires: python-module-monotonic >= 0.6
-BuildRequires: python-module-futures >= 3.0
+BuildRequires: python-module-futures >= 3.0.0
 BuildRequires: python-module-contextlib2 >= 0.4.0
 BuildRequires: python-module-prettytable >= 0.7.1
 BuildRequires: python-module-sphinx
@@ -62,8 +62,8 @@ Tests for futurist library.
 Summary: Useful additions to futures, from the future
 Group: Development/Python3
 
-#Requires: python3-module-six >= 1.9.0
-Requires: python3-module-monotonic
+#Requires: python3-module-six >= 1.10.0
+Requires: python3-module-monotonic >= 0.6
 Requires: python3-module-contextlib2 >= 0.4.0
 
 %description -n python3-module-%oname
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Automatically updated to 1.8.1
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

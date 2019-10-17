@@ -1,7 +1,7 @@
 %define oname oslo.policy
 
 Name: python-module-%oname
-Version: 1.38.1
+Version: 2.3.2
 Release: alt1
 Summary: RBAC policy enforcement library for OpenStack
 Group: Development/Python
@@ -16,7 +16,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 2.0.0
 BuildRequires: python-module-requests >= 2.14.2
 BuildRequires: python-module-oslo.config >= 5.2.0
-BuildRequires: python-module-oslo.context >= 2.21.0
+BuildRequires: python-module-oslo.context >= 2.22.0
 BuildRequires: python-module-oslo.i18n >= 3.15.3
 BuildRequires: python-module-oslo.serialization >= 2.18.0
 BuildRequires: python-module-yaml >= 3.12
@@ -26,6 +26,7 @@ BuildRequires: python-module-stevedore >= 1.20.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-reno >= 2.5.0
 BuildRequires: python-module-openstackdocstheme
+BuildRequires: python-module-sphinxcontrib-apidoc
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -33,7 +34,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-oslo.config >= 5.2.0
-BuildRequires: python3-module-oslo.context >= 2.21.0
+BuildRequires: python3-module-oslo.context >= 2.22.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-yaml >= 3.12
@@ -130,6 +131,9 @@ popd
 %doc html
 
 %changelog
+* Fri Sep 20 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
+- new version 2.3.2
+
 * Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.38.1-alt1
 - 1.38.1
 
