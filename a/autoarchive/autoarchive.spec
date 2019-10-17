@@ -7,7 +7,7 @@ BuildRequires: python3-module-setuptools
 %define _localstatedir %{_var}
 Name:           autoarchive
 Version:        1.3.0
-Release:        alt1_7
+Release:        alt1_11
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
@@ -38,6 +38,7 @@ which reads information from it and creates desired backup.
 %setup -q
 %patch0 -p1
 
+
 %build
 # Need to set LANG to ensure we get utf-8 as default codec, or setup.py
 # crashes
@@ -67,6 +68,9 @@ popd
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_11
+- update to new release by fcimport
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_7
 - update to new release by fcimport
 
