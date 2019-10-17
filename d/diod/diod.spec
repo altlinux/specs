@@ -1,6 +1,6 @@
 Name: diod
 Version: 1.0.24.0.53.git0d87511
-Release: alt1
+Release: alt2
 
 Summary: multi-threaded, userspace file server that speaks 9P2000.L protocol
 
@@ -50,5 +50,8 @@ ln -s diodmount.8 %buildroot%_man8dir/mount.diod.8
 %_unitdir/diod.service
 
 %changelog
+* Thu Oct 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.24.0.53.git0d87511-alt2
+- Fixed rundir patch.
+
 * Sun Oct 13 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.24.0.53.git0d87511-alt1
 - Initial build for ALT Sisyphus.
