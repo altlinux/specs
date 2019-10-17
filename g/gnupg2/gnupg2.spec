@@ -5,7 +5,7 @@
 
 Name: gnupg2
 Version: 2.2.17
-Release: alt3
+Release: alt4
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -70,8 +70,8 @@ Provides: %name(gost) = %gostversion
 Patch23: %name-%version-issuersconf.patch
 Provides: %name(issuersconf) = %issuersconfversion
 
-BuildRequires: libgcrypt-devel >= 1.8.3-alt4
-BuildRequires: libksba-devel >= 1.3.6-alt7
+BuildRequires: libgcrypt-devel >= 1.8.5-alt2
+BuildRequires: libksba-devel >= 1.3.6-alt12
 BuildRequires: libassuan-devel
 BuildRequires: libgnutls-devel libnpth-devel
 BuildRequires: bzlib-devel libcurl-devel libldap-devel
@@ -184,6 +184,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Oct 17 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt4
+- Fixed build requires.
+
 * Wed Oct 16 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt3
 - Mark the version as release with GOST revision number %gostversion.
 
