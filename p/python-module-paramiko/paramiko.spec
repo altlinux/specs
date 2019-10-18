@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.4.2
+Version: 2.6.0
 Release: alt1
 
 Summary: SSH2 protocol for python
@@ -19,18 +19,23 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-pytest
-BuildRequires: python-module-cryptography
-BuildRequires: python-module-pyasn1
-BuildRequires: python-module-bcrypt
-BuildRequires: python-module-pynacl
-BuildRequires: python-module-mock
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-pyasn1
-BuildRequires: python3-module-bcrypt
-BuildRequires: python3-module-pynacl
-BuildRequires: python3-module-mock
+BuildRequires: python2.7(bcrypt)
+BuildRequires: python2.7(cryptography)
+BuildRequires: python2.7(gssapi)
+BuildRequires: python2.7(pyasn1)
+BuildRequires: python2.7(k5test)
+BuildRequires: python2.7(mock)
+BuildRequires: python2.7(nacl)
+BuildRequires: python2.7(pytest-relaxed)
+BuildRequires: python3(bcrypt)
+BuildRequires: python3(cryptography)
+BuildRequires: python3(gssapi)
+BuildRequires: python3(pyasn1)
+BuildRequires: python3(k5test)
+BuildRequires: python3(mock)
+BuildRequires: python3(nacl)
+BuildRequires: python3(pytest-relaxed)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -74,11 +79,17 @@ pushd ../python3
 popd
 
 %check
-LC_ALL=en_US.UTF-8 py.test -vv
-
-pushd ../python3
-LC_ALL=en_US.UTF-8 py.test3 -vv
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+# Python2.7 test_utf8* fails on default hasher locale ('POSIX')
+export LC_ALL=en_US.UTF-8
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='LC_ALL'
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -v -- -v -ra
 
 %files
 %doc README.rst LICENSE
@@ -91,6 +102,9 @@ popd
 %python3_sitelibdir/paramiko-*.egg-info/
 
 %changelog
+* Fri Oct 18 2019 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.4.2 -> 2.6.0.
+
 * Mon Oct 29 2018 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
 - 2.4.1 -> 2.4.2.
 
