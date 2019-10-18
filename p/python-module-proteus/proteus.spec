@@ -1,10 +1,11 @@
 %define oname proteus
 
 %def_without python3
+%def_without check
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1.1
+Release: alt2
 Summary: Library to access Tryton server as a client
 License: LGPL
 Group: Development/Python
@@ -37,6 +38,9 @@ A library to access Tryton's models like a client.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%if_with check
+%add_python_req_skip trytond.tests.test_tryton
+%endif
 
 %description tests
 A library to access Tryton's models like a client.
@@ -56,6 +60,9 @@ A library to access Tryton's models like a client.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%if_with check
+%add_python_req_skip trytond.tests.test_tryton
+%endif
 
 %description -n python3-module-%oname-tests
 A library to access Tryton's models like a client.
@@ -88,6 +95,7 @@ pushd ../python3
 popd
 %endif
 
+%if_with test
 %check
 export PYTHONPATH=$PWD
 py.test -vv
@@ -97,6 +105,7 @@ pushd ../python3
 export PYTHONPATH=$PWD
 py.test3 -vv
 popd
+%endif
 %endif
 
 %files
@@ -118,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.4.0-alt2
+- disable tests (cycle dependency on python(trytond)) for remove package
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
