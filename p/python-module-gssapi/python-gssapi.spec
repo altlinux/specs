@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 1.5.1
-Release: alt3
+Version: 1.6.1
+Release: alt1
 
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 License: ISC
@@ -113,6 +113,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Fri Oct 18 2019 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
+- 1.5.1 -> 1.6.1.
+
 * Sat Mar 23 2019 Stanislav Levin <slev@altlinux.org> 1.5.1-alt3
 - Fixed errors found by a new flake8 3.7.7.
 
