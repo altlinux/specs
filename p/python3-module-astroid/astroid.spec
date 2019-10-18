@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -74,6 +74,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Fri Oct 18 2019 Stanislav Levin <slev@altlinux.org> 2.3.2-alt1
+- 2.3.1 -> 2.3.2.
+
 * Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
 - 2.2.5 -> 2.3.1.
 

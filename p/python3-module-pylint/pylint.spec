@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Python code static checker
@@ -94,6 +94,9 @@ tox.py3 --sitepackages -p auto -o -v -- -v
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Fri Oct 18 2019 Stanislav Levin <slev@altlinux.org> 2.4.3-alt1
+- 2.4.2 -> 2.4.3.
+
 * Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
 - 2.3.1 -> 2.4.2.
 
