@@ -1,9 +1,9 @@
-%def_without libQgpsmm
-%define abiversion 22
+%def_with libQgpsmm
+%define abiversion 25
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.15
+Version: 3.19
 Release: alt1
 License: %bsd
 Group: System/Servers
@@ -15,12 +15,13 @@ Requires: libgps%abiversion = %version-%release
 
 BuildPreReq:	rpm-build-licenses
 
-# Automatically added by buildreq on Tue Sep 27 2011
-# optimized out: glib2-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libdbus-devel libdbus-glib libgpg-error libncurses-devel libstdc++-devel libtinfo-devel python-base python-modules xml-common xorg-xproto-devel
-BuildRequires: docbook-dtds docbook-style-xsl gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel python-devel xorg-cf-files xsltproc scons python-module-json
+BuildRequires: docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc
+
+BuildRequires: python-dev python-module-pycairo python-module-pygobject python-module-json python-module-serial
+#BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject python3-module-anyjson python3-module-serial
 
 %if_with libQgpsmm
-BuildRequires: libqt4-core libqt4-devel libqt4-network
+BuildRequires: libqt4-devel
 %endif
 
 BuildRequires: libbluez-devel
@@ -96,30 +97,37 @@ Python bindings to libgps
 %setup
 
 # don't set RPATH
-sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
+#sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
 
 # fixed linking with libm
-sed -i 's|parse_flags=usblibs . rtlibs . bluezlibs . ."-lgps".|parse_flags=usblibs + rtlibs + bluezlibs + ["-lgps", "-lm"]|' SConstruct
+#sed -i 's|parse_flags=usblibs . rtlibs . bluezlibs . ."-lgps".|parse_flags=usblibs + rtlibs + bluezlibs + ["-lgps", "-lm"]|' SConstruct
+
+# fixed binary's path, exit with 1 when not found
+sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsd.service
+sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsdctl@.service
 
 %build
 scons \
     prefix=/usr \
     libdir=%_libdir \
+    python_libdir=%python_sitelibdir \
     debug=yes
 
 %install
 DESTDIR=%buildroot scons install udev-install
 
-# systemd's units installed when udev-install is used
-rm -rf %buildroot/lib/systemd
-
 %files
 %doc README INSTALL COPYING
 %_sbindir/gpsd
 %_sbindir/gpsdctl
-%_man8dir/gps*
-%_man5dir/*
+%_unitdir/gpsd.service
+%_unitdir/gpsd.socket
+%_unitdir/gpsdctl@.service
 %_udevrulesdir/*.rules
+
+%_man8dir/gps*
+%_man8dir/ppscheck.*
+%_man5dir/*
 
 %files -n libgps%abiversion
 %_libdir/libgps*.so.*
@@ -148,6 +156,17 @@ rm -rf %buildroot/lib/systemd
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Oct 15 2019 Sergey Y. Afonin <asy@altlinux.org> 3.19-alt1
+- 3.18
+- Changed abiversion to 25
+
+* Wed Mar 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.18-alt1
+- 3.18
+- Changed abiversion to 24
+- Enabled libQgpsmm
+- Packaged systemd's units
+- Removed fixes for libm and RPATH
+
 * Tue Jun 09 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.15-alt1
 - 3.15
 - Removed "Requires: gpsd" from lib* packages
