@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Python code static checker
@@ -14,18 +14,21 @@ Group: Development/Python3
 Url: http://www.pylint.org/
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest-runner
 
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-runner
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-astroid
-BuildRequires: python3-module-mccabe
-BuildRequires: python3-module-isort
-BuildRequires: python3-module-enchant
-BuildRequires: python3-module-tox
+BuildRequires: python3(lazy-object-proxy)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(astroid)
+BuildRequires: python3(mccabe)
+BuildRequires: python3(isort)
+BuildRequires: python3(enchant)
+BuildRequires: python3(tox)
+BuildRequires: python3(turtle)
 BuildRequires: hunspell-en
 %endif
 
@@ -50,6 +53,7 @@ Additionally, it is possible to write plugins to add your own checks.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -77,9 +81,8 @@ sed -i -e '/[[:space:]]*coverage[[:space:]]*$/d' \
 -e '/python -c \x22import os/d' tox.ini
 
 export PIP_NO_INDEX=YES
-export PIP_NO_DEPS=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -p auto -o -v -- -v
 
 %files
 %doc ChangeLog README.rst doc/
@@ -91,6 +94,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
+- 2.3.1 -> 2.4.2.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
 - 2.2.2 -> 2.3.1.
 

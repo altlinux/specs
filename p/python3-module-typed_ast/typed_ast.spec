@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: A fork of the ast module with type annotations
@@ -35,6 +35,8 @@ as supported in Python 3.6.
 
 %install
 %python3_install
+# don't package tests
+rm -rf %buildroot%python3_sitelibdir/typed_ast/tests
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -49,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/typed_ast-*.egg-info/
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.1 -> 1.4.0.
+
 * Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.0 -> 1.3.1.
 

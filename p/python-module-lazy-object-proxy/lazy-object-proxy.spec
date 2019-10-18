@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: A fast and thorough lazy object proxy
 License: BSD
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(setuptools_scm)
 BuildRequires: python3(setuptools_scm)
+
+%py_provides lazy-object-proxy
 
 %if_with check
 BuildRequires: python2.7(pytest)
@@ -37,6 +39,7 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %package -n python3-module-%oname
 Summary: A fast and thorough lazy object proxy
 Group: Development/Python3
+%py3_provides lazy-object-proxy
 
 %description -n python3-module-%oname
 This Python3 module is based on wrapt's ObjectProxy with one big change: it
@@ -78,6 +81,9 @@ pushd ../python3
 popd
 
 %check
+# PEP 517/518 is not yet well supported
+rm pyproject.toml
+
 sed -i -e '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -110,6 +116,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/lazy_object_proxy-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
+- 1.4.1 -> 1.4.2.
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.4.1-alt2
 - Fixed testing against Pytest 5.
 

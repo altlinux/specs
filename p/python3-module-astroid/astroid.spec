@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.5
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -53,17 +53,15 @@ partial trees by inspecting living objects.
 
 %install
 %python3_install
+# used only in tests, but requires Pytest
+rm %buildroot%python3_sitelibdir/astroid/test_utils.py
 
 %check
-grep -qs '[[:space:]]*attr[[:space:]]*$' tox.ini || exit 1
 grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
 grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
-grep -qsF 'py36: typed_ast<1.3.0' tox.ini || exit 1
 
-sed -i '/[[:space:]]*attr[[:space:]]*$/d' tox.ini
 sed -i '/[[:space:]]*coverage[[:space:]]*$/d' tox.ini
 sed -i 's/ {envsitepackagesdir}\/coverage run / /' tox.ini
-sed -i 's/py36: typed_ast<1\.3\.0/py36: typed_ast>=1.3.0/' tox.ini
 
 export PIP_NO_INDEX=YES
 export PIP_NO_DEPS=YES
@@ -76,6 +74,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.2.5 -> 2.3.1.
+
 * Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 2.2.5-alt2
 - Fixed testing against Pytest 5.
 
