@@ -2,9 +2,9 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.1.7
+Version: 4.1.8
 Epoch: 1
-Release: %rel.1
+Release: %rel
 
 ExcludeArch: ppc64le
 
@@ -103,6 +103,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Oct 18 2019 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.8-alt1
+- 4.1.8
+
 * Thu Aug 15 2019 Motsyo Gennadi <drool@altlinux.ru> 1:4.1.7-alt1.1
 - add ExcludeArch for ppc64le
 
