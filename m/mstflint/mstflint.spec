@@ -1,4 +1,4 @@
-%global commit      941bf389b87686ca2be8d6a8fcf0b2ee22955ecc
+%global commit      d873a086aa3a342dc76ca5c4289991034327ad14
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %def_enable dc
@@ -9,7 +9,7 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.11.0
+Version: 4.13.1
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -66,6 +66,9 @@ rm -rf %buildroot%_includedir
 %_man1dir/*
 
 %changelog
+* Fri Oct 18 2019 Alexey Shabalin <shaba@altlinux.org> 4.13.1-alt1
+- v4.13.1-1
+
 * Mon Feb 11 2019 Alexey Shabalin <shaba@altlinux.org> 4.11.0-alt1
 - 4.11.0-2
 
