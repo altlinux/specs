@@ -7,13 +7,15 @@ Group: System/Libraries
 Summary:       ALSA driver C++ Library
 Name:          libclalsadrv
 Version:       2.0.0
-Release:       alt1_19
+Release:       alt1_21
 License:       GPLv2+
 URL:           http://kokkinizita.linuxaudio.org/
 Source0:       http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{oldname}-%{version}.tar.bz2
 
 BuildRequires: libalsa-devel
 BuildRequires: gcc-c++
+# This package has been deprecated upstream and replaced by zita-alsa-pcmi
+Provides:      deprecated()
 Source44: import.info
 
 %description
@@ -23,6 +25,7 @@ ALSA driver C++ access library
 Group: Development/Other
 Summary:       ALSA driver C++ access library
 Requires:      %{name} = %{version}-%{release}
+Provides:      deprecated()
 
 
 %description devel
@@ -56,6 +59,9 @@ ln -s lib%{oldname}.so.2.0.0 %{buildroot}%{_libdir}/lib%{oldname}.so.2
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_21
+- update to new release by fcimport
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_19
 - cleaned up provides (closes: #36613)
 
