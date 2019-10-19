@@ -1,14 +1,14 @@
 Group: Development/Python
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: gcc-c++ python-devel python-module-setuptools python3-module-setuptools
+BuildRequires: python-devel python-module-setuptools python3-module-setuptools
 # END SourceDeps(oneline)
 %define oldname pybox2d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           python-module-pybox2d
 Version:        2.3.2
-Release:        alt1.1_5
+Release:        alt1.1_10
 Summary:        A 2D rigid body simulation library for Python
 
 License:        zlib
@@ -19,7 +19,7 @@ Source0:        https://github.com/pybox2d/%{oldname}/archive/%{version}.tar.gz#
 # Upstream pull request: https://github.com/pybox2d/pybox2d/pull/90
 Patch0:			replace-deprecated-swigconstant.patch
 
-BuildRequires:  gcc
+BuildRequires:  gcc gcc-c++
 BuildRequires:  swig
 Source44: import.info
 
@@ -50,6 +50,7 @@ This package provides the Python 3 build of %{oldname}.
 %setup -q -n %{oldname}-%{version}
 %patch0 -p1
 
+
 %build
 %python_build
 %python3_build
@@ -70,6 +71,9 @@ This package provides the Python 3 build of %{oldname}.
 %{python3_sitelibdir}/*
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1.1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1.1_5
 - update to new release by fcimport
 
