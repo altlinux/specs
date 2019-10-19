@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libkdtree++
 Version:        0.7.0
-Release:        alt2_21
+Release:        alt2_24
 Summary:        C++ template container implementation of kd-tree sorting
 URL:            http://libkdtree.alioth.debian.org/
 License:        Artistic 2.0
@@ -122,6 +122,9 @@ install -pm 0644 python-bindings/kdtree.py %{buildroot}%{python3_sitelibdir_noar
 %doc examples/test*.cpp
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_24
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_21
 - update to new release by fcimport
 
