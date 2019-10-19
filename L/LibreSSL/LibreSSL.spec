@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 2.9.2
+Version: 3.0.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -24,8 +24,15 @@ Url: http://www.libressl.org/
 # repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
 Source: %oname-%version.tar
 Source1: %name.watch
-# git://git.altlinux.org/gears/L/LibreSSL.git
-Patch: %name-%version-%release.patch
+
+Patch1: 0001-ALT-netcat-execcmd.patch
+Patch2: 0002-ALT-netcat-proxy_pass.patch
+Patch3: 0003-ALT-netcat-usage.patch
+Patch4: 0004-ALT-openssl-manpage.patch
+Patch5: 0005-ALT-OPENSSLDIR.patch
+Patch6: 0006-ALT-devel-manpages.patch
+Patch7: 0007-ALT-Do-not-build-tests-since-they-use-static-librari.patch
+Patch8: 0008-SUSE-extra-symver.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -166,7 +173,7 @@ Common uses include:
 
 %prep
 %setup -n %oname-%version
-%patch -p1
+%autopatch -p2
 
 %build
 %autoreconf
@@ -203,7 +210,7 @@ popd
 mkdir -p %buildroot%docdir
 install -pm 644 ChangeLog COPYING \
 	%buildroot%docdir
-gzip -9 %buildroot%docdir/ChangeLog
+xz %buildroot%docdir/ChangeLog
 
 %files -n openssl-LibreSSL
 %dir %docdir
@@ -261,6 +268,11 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Sat Oct 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt1
+- Updated to 3.0.2.
+- Packed upstream-signing-key.asc.
+- Updated watch file.
+
 * Tue May 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.2-alt1
 - 2.9.2.
 
