@@ -11,7 +11,7 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt2_21
+Release:        alt2_24
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
@@ -127,6 +127,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_24
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2_21
 - update to new release by fcimport
 
