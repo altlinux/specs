@@ -2,15 +2,15 @@
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libtinyxml2-devel python-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libvoikko
 Version:        4.1.1
-Release:        alt1_1
+Release:        alt1_5
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
-Group:          System/Libraries
 License:        GPLv2+
 URL:            http://voikko.puimula.org
 # The usual format of stable release URLs
@@ -38,8 +38,8 @@ analysis in their hyphenators should be implemented using other tools such as
 Hunspell.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkgconfig
 
@@ -48,8 +48,8 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %package -n     voikko-tools
+Group: Text tools
 Summary:        Test tools for %{name}
-Group:          Text tools
 Requires:       %{name} = %{version}-%{release}
 
 %description -n voikko-tools
@@ -58,8 +58,8 @@ tools for testing libvoikko. These tools may also be useful for shell
 scripts.
 
 %package -n python3-module-libvoikko
+Group: Development/Other
 Summary:        Python interface to %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 %{?python_provide:%python_provide python3-libvoikko}
@@ -93,6 +93,9 @@ find $RPM_BUILD_ROOT -name '*.a' -exec rm -f {} ';'
 install -d $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}
 install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}/
 
+
+
+
 %files
 %doc ChangeLog COPYING README
 %{_libdir}/*.so.*
@@ -115,6 +118,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python3_sitelibdir_noarch}
 %{python3_sitelibdir_noarch}/__pycache__/*
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_5
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_1
 - update to new release by fcimport
 
