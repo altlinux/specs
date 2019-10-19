@@ -10,7 +10,7 @@ BuildRequires: python3-module-setuptools
 
 Name:           battray
 Version:        2.3
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Tool for displaying a laptop's battery status in the system traiy
 License:        MIT
 URL:            http://arp242.net/code/battray/
@@ -47,6 +47,9 @@ low, dim the screen when you switch from AC to battery, etc.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_11
+- update to new release by fcimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_10
 - new version
 
