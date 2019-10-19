@@ -59,8 +59,8 @@
 %endif
 
 Name:    samba
-Version: 4.10.8
-Release: alt2
+Version: 4.10.9
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -158,7 +158,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 1.5.5
+%define ldb_version 1.5.6
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python-module-pyldb-devel
 BuildRequires: python3-module-pyldb-devel
@@ -1823,6 +1823,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Oct 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.9-alt1
+- Update to latest autumn release
+
 * Tue Sep 11 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.8-alt2
 - Add requires samba-dc-mitkrb5 for samba
 - Use krb5.conf from the Samba private directory in MIT KDC service
