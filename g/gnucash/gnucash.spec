@@ -2,9 +2,10 @@
 
 # TODO:fix build Python bindings
 %def_enable python
+%def_with aqbanking
 
 Name: 	 gnucash
-Version: 3.6
+Version: 3.7
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -24,6 +25,7 @@ Source7: conv_gnucash2.sh
 Patch: %name-%version-%release.patch
 Patch1: %name-alt-check-supported-gwenhywfar-version.patch
 Patch2: %name-alt-fix-rpath.patch
+Patch3: %name-glib-warnings.patch
 
 AutoReq: yes, noperl
 
@@ -41,13 +43,16 @@ BuildRequires: libdbi-drivers-dbd-mysql
 BuildRequires: libdbi-drivers-dbd-pgsql
 BuildRequires: swig
 BuildRequires: libexpat-devel
+BuildRequires: libpcre-devel
 BuildRequires: libpixman-devel
 BuildRequires: libdrm-devel
 BuildRequires: xsltproc
 BuildRequires: zlib-devel
 BuildRequires: libxslt-devel
 BuildRequires: boost-locale-devel boost-filesystem-devel
+%if_with aqbanking
 BuildRequires: aqbanking-devel
+%endif
 BuildRequires: libgmock-devel libgtest-devel
 BuildRequires: libwebkit2gtk-devel
 %if_enabled python
@@ -128,10 +133,14 @@ fetch and update.
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 tar xf %SOURCE1
 
 %build
 %cmake \
+%if_without aqbanking
+       -DWITH_AQBANKING=OFF \
+%endif
        -DCMAKE_SKIP_RPATH=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH=OFF \
        -DCMAKE_INSTALL_RPATH:DIR=%_libdir/%name \
@@ -192,6 +201,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Oct 14 2019 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
+- New version.
+
 * Mon Jul 01 2019 Andrey Cherepanov <cas@altlinux.org> 3.6-alt1
 - New version.
 
@@ -608,5 +620,5 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 
 - First RPM for Mandrake
 
-* Mon Feb 29 2000 Christian Schaller <Uraues@linuxrising.org>
+* Tue Feb 29 2000 Christian Schaller <Uraues@linuxrising.org>
 - Updated for use with TurboLinux and some minor SPEC changes

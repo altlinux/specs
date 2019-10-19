@@ -6,7 +6,7 @@
 
 Name: python-module-%modulename
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt2
+- updated to v2.3.1-30-g5fb711a (compatible with icu-65.1)
+
 * Sat May 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
