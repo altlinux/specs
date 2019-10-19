@@ -11,7 +11,7 @@ BuildRequires: python3-module-setuptools
 
 Name:		python-module-pyaudio
 Version:	0.2.11
-Release:	alt1_3
+Release:	alt1_6
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
 Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
@@ -58,6 +58,9 @@ rm -rf packaging
 %{python3_sitelibdir}/*egg-info
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_6
+- update to new release by fcimport
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_3
 - update to new release by fcimport
 
