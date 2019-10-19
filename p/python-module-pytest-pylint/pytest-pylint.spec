@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt2
+Release: alt3
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
@@ -98,6 +98,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Sat Oct 19 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt3
+- Fixed testing against Pylint 2.4.2+.
+
 * Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt2
 - Fixed testing against Pytest 5.1.
 
