@@ -1,3 +1,4 @@
+Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define lang en
@@ -6,10 +7,9 @@
 Summary: English dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
-Version: 2018.04.16
-Release: alt1_2
+Version: 2019.10.06
+Release: alt1_1
 License: MIT and BSD
-Group: Text tools
 URL: http://aspell.net/
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell%{aspellversion}-%{lang}-%{version}-%{langrelease}.tar.bz2
 Buildrequires: aspell libaspell
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2019.10.06-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 2018.04.16-alt1_2
 - update to new release by fcimport
 
