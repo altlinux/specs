@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.19
-Release: alt1
+Release: alt2
 License: %bsd
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -15,10 +15,9 @@ Requires: libgps%abiversion = %version-%release
 
 BuildPreReq:	rpm-build-licenses
 
-BuildRequires: docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc
+BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc
 
-BuildRequires: python-dev python-module-pycairo python-module-pygobject python-module-json python-module-serial
-#BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject python3-module-anyjson python3-module-serial
+BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-anyjson python3-module-serial
 
 %if_with libQgpsmm
 BuildRequires: libqt4-devel
@@ -86,11 +85,11 @@ to dump the package version and exit. Additionally, it accepts -rv
 cgps resembles xgps, but without the pictorial satellite display.  It
 can run on a serial terminal or terminal emulator.
 
-%package -n python-module-gps
+%package -n python3-module-gps
 Summary: Python bindings to libgps
 Group: Development/Python
 
-%description -n python-module-gps
+%description -n python3-module-gps
 Python bindings to libgps
 
 %prep
@@ -106,11 +105,18 @@ Python bindings to libgps
 sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsd.service
 sed -i '/\/usr\/local\/sbin/{s||%_sbindir|;h};${x;/./{x;q0};x;q1}' systemd/gpsdctl@.service
 
+sed -i 's|/usr/bin/python|%__python3|' contrib/gpsData.py
+find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python|%__python3|' {} \;
+for FILE in gegps gpscat gpsfake gpsprof ubxtool xgps xgpsspeed zerk ; do
+   sed -i 's|/usr/bin/env python|%__python3|' $FILE
+done
+
 %build
 scons \
     prefix=/usr \
     libdir=%_libdir \
-    python_libdir=%python_sitelibdir \
+    python_libdir=%python3_sitelibdir \
+    target_python=%__python3 \
     debug=yes
 
 %install
@@ -151,13 +157,17 @@ DESTDIR=%buildroot scons install udev-install
 %_bindir/*
 %_man1dir/*
 
-%files -n python-module-gps
-%python_sitelibdir/gps/
-%python_sitelibdir/*.egg-info
+%files -n python3-module-gps
+%python3_sitelibdir/gps/
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 20 2019 Sergey Y. Afonin <asy@altlinux.org> 3.19-alt2
+- switched to python 3
+- built with asciidoc
+
 * Tue Oct 15 2019 Sergey Y. Afonin <asy@altlinux.org> 3.19-alt1
-- 3.18
+- 3.19
 - Changed abiversion to 25
 
 * Wed Mar 27 2019 Sergey Y. Afonin <asy@altlinux.ru> 3.18-alt1
