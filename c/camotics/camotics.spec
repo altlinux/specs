@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: camotics
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1.20191008
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -11,14 +14,17 @@ Url: https://github.com/CauldronDevelopmentLLC/CAMotics
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-# libv8-3.14-devel cannot be compiled for aarch64
-ExcludeArch: aarch64
+Source2: camotics.xml
+Source3: CAMotics.appdata.xml
+Patch: 0001-Revert-Updates-to-use-newer-v8.patch
+Patch1: 0002-do-not-check-conf.TryCompile-for-dxflib.patch
+
+# libv8-3.14-devel cannot be compiled for aarch64, ppc64le
+ExclusiveArch: %ix86 x86_64
 
 BuildRequires: gcc-c++
+BuildRequires: python3-devel
 BuildRequires: scons
-BuildRequires: boost-filesystem-devel
-BuildRequires: boost-program_options-devel
-BuildRequires: boost-interprocess-devel
 BuildRequires: libcairo-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-websockets-devel
@@ -26,15 +32,20 @@ BuildRequires: qt5-tools
 BuildRequires: bzlib-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libexpat-devel
-BuildRequires: libv8-3.14-devel
 BuildRequires: libevent-devel
-BuildRequires: python-module-simplejson
-BuildRequires: python-module-six
+BuildRequires: libv8-3.14-devel
+BuildRequires: python3-module-six
 BuildRequires: libssl-devel
 BuildRequires: libre2-devel
 BuildRequires: zlib-devel
+BuildRequires: libyaml-devel
+BuildRequires: libleveldb-devel
+BuildRequires: libsnappy-devel
+BuildRequires: libdxflib-devel
 BuildRequires: ImageMagick-tools desktop-file-utils
 BuildRequires: chrpath
+BuildRequires: libappstream-glib
+
 Requires: %name-data = %EVR
 
 %description
@@ -68,14 +79,29 @@ Data files for %name
 
 %prep
 %setup
+pushd cbang
+%patch -p1
+popd
+%patch1 -p1
+
+for file in $(grep -Rl --include=SConscript -- '-Werror' src/ 2>/dev/null); do
+  sed -i "s/\.replace('-Werror', '')/\nflags = re.sub(r'-Werro([^\\\s]+|r)', '', flags)/" $file
+  sed -i '1iimport re' $file
+done
 
 %build
+# re2 from system uses c++11 features (GH cbang #22)
+%global _scopts cxxstd=c++11 debug=1 strict=0 disable_local="bzip2 expat re2 sqlite3 zlib" %_smp_mflags
 export QT5DIR=%_includedir/qt5
-scons -C cbang %_smp_mflags
-scons %_smp_mflags
+scons -C cbang %_scopts
+scons %_scopts
 
 %install
-scons install install_prefix=%buildroot%prefix
+scons install install_prefix=%buildroot%prefix %_scopts
+
+# https://github.com/CauldronDevelopmentLLC/CAMotics/issues/211
+install -d -m 0755 %buildroot%_datadir/mime/packages
+install -p -m 0644 %SOURCE2 %buildroot/%_datadir/mime/packages
 
 #Install missing data files
 mkdir -p %buildroot%_datadir/%name
@@ -93,29 +119,54 @@ desktop-file-install --dir %buildroot%_desktopdir \
         --remove-category=Science \
         --add-category=Development \
         --add-category=Engineering \
-        %buildroot%_desktopdir/CAMotics.desktop
+%buildroot%_desktopdir/CAMotics.desktop
 
+install -d -m 0755 %buildroot%_iconsdir/hicolor/128x128/apps
+install -p -m 0644 images/camotics.png %buildroot%_iconsdir/hicolor/128x128/apps/
 #Convert and install images files
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
 	convert images/camotics.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/camotics.png
 done
 
+# https://github.com/CauldronDevelopmentLLC/CAMotics/pull/236
+install -d -m 0755 %buildroot%_datadir/appdata
+install -p -m 0644 %SOURCE3 %buildroot/%_datadir/appdata
+
+# Convert files with DOS line endings to Unix
+find "%buildroot%_datadir" -not -type d -exec file {} \; \
+     | grep CRLF | cut -f1 -d: | while read -r dosfile; do
+       sed -i $'s/\r$//' $dosfile; done
+
+# Remove executable bit from executable files in datadir
+find "%buildroot%_datadir" -executable -type f -exec chmod -x {} \;
+
 # fix RPATH
 chrpath -d %buildroot%_bindir/*
 
+%check
+appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
+
 %files
 %_bindir/*
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
+%_iconsdir/hicolor/*/apps/*
 %_desktopdir/CAMotics.desktop
+%_datadir/appdata/*
+%_datadir/mime/packages/*
 
 %files data
 %_docdir/%name
 %_datadir/%name
 
 %changelog
+* Sun Oct 20 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1.20191008
+- new snapshot
+- fix build with scons switched to python3
+- ExclusiveArch: ix86 x86_64
+- add appdata
+- add mime
+- update BuildRequires
+
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
 - Added missing dep on `six`.
 
