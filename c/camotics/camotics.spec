@@ -3,7 +3,7 @@
 
 Name: camotics
 Version: 1.2.1
-Release: alt1.20191008
+Release: alt2.20191008
 
 Summary: Open-Source Simulation and Computer Aided Machining - A 3-axis CNC GCode simulator
 
@@ -130,8 +130,8 @@ for x in 16 32 48; do
 done
 
 # https://github.com/CauldronDevelopmentLLC/CAMotics/pull/236
-install -d -m 0755 %buildroot%_datadir/appdata
-install -p -m 0644 %SOURCE3 %buildroot/%_datadir/appdata
+install -d -m 0755 %buildroot%_datadir/metainfo
+install -p -m 0644 %SOURCE3 %buildroot/%_datadir/metainfo
 
 # Convert files with DOS line endings to Unix
 find "%buildroot%_datadir" -not -type d -exec file {} \; \
@@ -145,13 +145,13 @@ find "%buildroot%_datadir" -executable -type f -exec chmod -x {} \;
 chrpath -d %buildroot%_bindir/*
 
 %check
-appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
+appstream-util validate-relax --nonet %buildroot/%_datadir/metainfo/*.appdata.xml
 
 %files
 %_bindir/*
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/CAMotics.desktop
-%_datadir/appdata/*
+%_datadir/metainfo/*
 %_datadir/mime/packages/*
 
 %files data
@@ -159,6 +159,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Mon Oct 21 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt2.20191008
+- fix directory: 's|_datadir/appdata|_datadir/metainfo|g'
+
 * Sun Oct 20 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1.20191008
 - new snapshot
 - fix build with scons switched to python3
