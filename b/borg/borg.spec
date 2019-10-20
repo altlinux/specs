@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.1.10
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -10,12 +10,14 @@ Url: https://borgbackup.github.io/borgbackup/
 
 # Source-url: https://github.com/borgbackup/borg/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch1: borg-unbundle-xxhash-1.1.10.patch
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gcc-c++
 BuildRequires: libacl-devel ipython3 python3-module-Cython libssl-devel python3-dev
-BuildRequires: liblz4-devel python3-module-setuptools_scm libzstd-devel
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: liblz4-devel libzstd-devel libb2-devel libxxhash-devel
 
 #Requires: python3-module-msgpack >= 0.4.6
 Requires: python3-module-zmq
@@ -33,6 +35,10 @@ fully trusted targets.
 
 %prep
 %setup
+%patch1 -p1
+rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
+# TODO: remove with the patch after 1.2.0
+%__subst "s|xxh64/xxhash.c|xxhash.h|" src/borg/algorithms/checksums.pyx
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -49,6 +55,11 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 20 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.10-alt2
+- remove source code of the bundled libraries
+- build with external blake2
+- build with external xxhash (ALT bug 36408)
+
 * Wed Jun 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.10-alt1
 - borgbackup 1.1.10 bug fix release (now bundling msgpack)
 - gcc-c++ used
