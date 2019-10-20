@@ -10,7 +10,7 @@ Requires: bash-completion
 
 Name:           autojump
 Version:        22.5.1
-Release:        alt1_5
+Release:        alt1_8
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -25,7 +25,7 @@ BuildArch:      noarch
 BuildRequires:  pandoc
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-mock
-BuildRequires:  python3-module-pytest
+BuildRequires:  pytest python-module-pytest python3-module-pytest
 Source44: import.info
 
 %description
@@ -59,6 +59,7 @@ autojump-fish is designed to work with fish shell.
 %setup -q -n %{name}-release-v%{version}
 %patch0 -p1
 %patch1 -p1
+
 
 # Use system argparse
 sed -i 's|autojump_argparse|argparse|' bin/%{name}
@@ -103,6 +104,9 @@ mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 22.5.1-alt1_8
+- update to new release by fcimport
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 22.5.1-alt1_5
 - update to new release by fcimport
 
