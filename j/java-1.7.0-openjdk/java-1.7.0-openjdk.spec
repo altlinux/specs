@@ -6,6 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 # 1.7.0 - added manually
 BuildRequires: libfreetype-devel libkrb5-devel
 BuildRequires: pkgconfig(gtk+-2.0)
+%define majorver 7
 BuildRequires: ca-certificates-java
 %def_enable accessibility
 %def_disable javaws
@@ -232,7 +233,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt2_2.6.18.0jpp8
+Release: alt3_2.6.18.0jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -425,6 +426,7 @@ Requires: fontconfig
 Requires: fonts-type1-xorg
 #requires rest of java
 Requires: %{name}-headless = %{epoch}:%{version}-%{release}
+Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 
 
 # Standard JPackage base provides.
@@ -457,6 +459,9 @@ Provides: %{_jvmdir}/%{jredir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1
 ExcludeArch: aarch64 ppc64le
 # self-deps. gcc8 linkage quirk?
 %filter_from_requires /^.usr.lib.jvm.java-1.7.0-openjdk-1.7.0.*jre.lib/d
+# no more
+Obsoletes:      java-1.7.0-openjdk-javaws < %version
+Obsoletes:      mozilla-plugin-java-1.7.0-openjdk < %version
 Source45: rhino.jar
 Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
 
@@ -488,6 +493,7 @@ Requires: libnss %{NSS_BUILDTIME_VERSION}
 Requires: libnss %{NSSSOFTOKN_BUILDTIME_VERSION}
 # tool to copy jdk's configs - should be Recommends only, but then only dnf/yum eforce it, not rpm transaction and so no configs are persisted when pure rpm -u is run. I t may be consiedered as regression
 #Requires:	copy-jdk-configs >= 3.3
+#Requires: copy-jdk-configs
 # Post requires alternatives to install tool alternatives.
 # in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
@@ -524,6 +530,7 @@ Group:   Development/Java
 
 # Require base package.
 Requires:         %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives.
 # in version 1.7 and higher for --family switch
 # Postun requires alternatives to uninstall tool alternatives.
@@ -547,6 +554,7 @@ Summary: OpenJDK Demos
 Group:   Development/Other
 
 Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 
 %description demo
 The OpenJDK demos.
@@ -583,6 +591,7 @@ Group: Development/Java
 Summary: OpenJDK accessibility connector
 Requires: java-atk-wrapper
 Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name}-headless = %{epoch}:%{version}-%{release}
 
 %description accessibility
 Enables accessibility support in OpenJDK by using java-at-wrapper. This allows compatible at-spi2 based accessibility programs to work for AWT and Swing-based programs.
@@ -1462,6 +1471,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Oct 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.221-alt3_2.6.18.0jpp8
+- added obsoletes (closes: #37301)
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.221-alt2_2.6.18.0jpp8
 - new alternatives layout
 
