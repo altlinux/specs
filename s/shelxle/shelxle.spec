@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.955
+Version: 1.0.997
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -9,10 +9,7 @@ Group: Sciences/Chemistry
 Url: http://www.shelxle.org/
 Source: %name-%version.tar.bz2
 
-# Automatically added by buildreq on Fri Dec 09 2011
-# optimized out: fontconfig libGL-devel libGLU-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-webkit libqt4-xml libstdc++-devel
-#BuildRequires: gcc-c++ libfftw3-devel libgomp-devel phonon-devel
-BuildRequires: gcc-c++ libfftw3-devel libgomp-devel libqt4-devel
+BuildRequires: gcc-c++ libgomp-devel qt5-base-devel libGLU-devel
 
 %description
 ShelXle is a graphical user interface for the SHELX structure
@@ -25,7 +22,7 @@ J. Appl. Cryst. (2011). 44, 1281-1284.
 subst 's/Qt;Science;Chemistry;Physics;Education/Science;Chemistry;/' %name.desktop
 
 %build
-qmake-qt4
+qmake-qt5
 %make_build
 
 %install
@@ -33,15 +30,19 @@ qmake-qt4
 mkdir -p %buildroot%_iconsdir/hicolor/64x64/apps
 mv %buildroot%_pixmapsdir/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/
 rm -rf %buildroot%_pixmapsdir
+cp kissfft/COPYING COPYING_kissfft
 
 %files
-%doc COPYING
+%doc COPYING COPYING_kissfft
 %_bindir/%name
-#_datadir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Mon Oct 21 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.997-alt1
+- new version
+- build with Qt5
+
 * Fri Apr 12 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.955-alt1
 - new version
 
