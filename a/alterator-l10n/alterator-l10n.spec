@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.47
+Version: 2.9.48
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Sun Oct 20 2019 Andrey Cherepanov <cas@altlinux.org> 2.9.48-alt1
+- Add localization and help for alterator-domain-policy.
+
 * Wed Sep 11 2019 Lenar Shakirov <snejok@altlinux.ru> 2.9.47-alt1
 - Update translations for alterator-sysconfig
 
