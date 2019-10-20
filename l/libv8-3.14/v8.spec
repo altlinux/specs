@@ -15,7 +15,7 @@
 
 Name: lib%truename-3.14
 Version: %somajor.%sominor.%sobuild.%sotiny
-Release: alt1
+Release: alt2
 Summary: JavaScript Engine
 Group: System/Libraries
 License: BSD
@@ -29,7 +29,7 @@ BuildRequires: scons libreadline-devel libicu-devel
 BuildRequires: valgrind-devel
 BuildRequires: gcc-c++
 Obsoletes: libv8-3.15
-ExcludeArch: aarch64
+ExclusiveArch: %ix86 x86_64
 
 #backport fix for CVE-2013-2634 (RHBZ#924495)
 Patch1: v8-3.14.5.8-CVE-2013-2634.patch
@@ -151,6 +151,9 @@ Patch29: v8-powerpc-support-SConstruct.patch
 # GCC8 HAPPY FUN TIME
 Patch30: v8-3.14.5.10-gcc8.patch
 
+# ALT patchs
+Patch100: v8-3.14.5.10-scons-py3.patch
+
 %description
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
 in Google Chrome, the open source browser from Google. V8 implements ECMAScript
@@ -200,6 +203,7 @@ Development headers and libraries for v8 3.14.
 %patch28 -p1 -b .gcc7
 %patch29 -p1 -b .ppc-harder
 %patch30 -p1 -b .gcc8
+%patch100 -p2
 
 # Do not need this lying about.
 rm -rf src/third_party/valgrind
@@ -340,5 +344,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Sat Oct 19 2019 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt2
+- fix build with scons switched to python3
+- ExclusiveArch: ix86 x86_64
+
 * Fri Jan 04 2019 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt1
 - Initial build for ALT Sisyphus.
