@@ -1,18 +1,20 @@
 %define oname graphcanvas
-Name: python-module-%oname
-Version: 4.0.2
-Release: alt1.git20130328
+
+Name: python3-module-%oname
+Version: 4.1.0
+Release: alt1
+
 Summary: Interactive graph (network) visualization
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/enthought/graphcanvas
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/enthought/graphcanvas.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-distribute
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setuptools
+
 
 %description
 graphcanvas is an library for interacting with visualizations of complex
@@ -23,16 +25,21 @@ simplest means and be able to visualize the graph immediately.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc *.rst examples
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt1
+- Version updated to 4.1.0
+- python2 -> python3
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.git20130328
 - Version 4.0.2
 
