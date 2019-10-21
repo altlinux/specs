@@ -1,5 +1,5 @@
-%define git_ver 8935
-%define git_commit d4ba7f37b67e7b19601a37a2cfd296b9c25eafee
+%define git_ver 8963
+%define git_commit 29cddc30f0ce70ed38e913520bdd7b2c2f4819ad
 
 %define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -121,6 +121,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Oct 21 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8963-alt1
+- Version 0.0.7.8963
+
 * Sat Oct 19 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8935-alt1
 - Version 0.0.7.8935
 
