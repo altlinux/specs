@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.1
+Version: 3.1.1
+Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
 Group: Development/Python
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Build new version.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
