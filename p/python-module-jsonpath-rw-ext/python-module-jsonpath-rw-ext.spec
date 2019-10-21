@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%pkgname
-Version: 0.1.9
-Release: alt1.1.2
+Version: 1.2.2
+Release: alt1
 Summary: Extensions for JSONPath RW
 Group: Development/Python
 
@@ -94,6 +94,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.9-alt1.1.2
 - (NMU) rebuild with python3.6
 
