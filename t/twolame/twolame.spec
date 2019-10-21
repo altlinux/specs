@@ -1,5 +1,7 @@
+%def_enable check
+
 Name: twolame
-Version: 0.3.13
+Version: 0.4.0
 Release: alt1
 
 Summary: TwoLAME, an optimized MPEG Audio Layer 2 encoder
@@ -11,7 +13,8 @@ Source: http://prdownloads.sourceforge.net/twolame/%name-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++ libsndfile-devel
+BuildRequires: gcc-c++ libsndfile-devel asciidoc
+%{?_enable_check:BuildRequires: perl-devel}
 
 %description
 TwoLAME is an optimized MPEG Audio Layer 2 (MP2) encoder.
@@ -61,19 +64,20 @@ This package contains static library required to develop
 %autoreconf
 %configure --docdir=%_defaultdocdir/%name-%version \
 	%{subst_enable static}
-
+%nil
 %make_build
 
 %install
 %makeinstall_std
-install -pD -m644 AUTHORS README ChangeLog TODO %buildroot%_docdir/%name-%version/
+install -pD -m644 AUTHORS README ChangeLog %buildroot%_docdir/%name-%version/
 ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
+
+%check
+%make check
 
 %files
 %_bindir/%name
 %_man1dir/*
-%exclude %_docdir/%name-%version/html
-%_docdir/%name-%version
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -82,7 +86,7 @@ ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
 %_includedir/%name.h
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
-%_docdir/%name-%version/html
+%_docdir/%name-%version
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -90,6 +94,10 @@ ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
 %endif
 
 %changelog
+* Sun Oct 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+- %%check section
+
 * Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
 - 0.3.13
 

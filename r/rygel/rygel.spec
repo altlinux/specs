@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 0.38
@@ -19,7 +20,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -27,8 +28,11 @@ Group: System/Servers
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Rygel
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define libxml_ver 2.7
 %define vala_ver 0.36.0
@@ -233,6 +237,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Sun Oct 20 2019 Yuri N. Sedunov <aris@altlinux.org> 0.38.2-alt1
+- 0.38.2
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 0.38.1-alt1
 - 0.38.1
 

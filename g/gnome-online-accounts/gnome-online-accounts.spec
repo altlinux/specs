@@ -24,7 +24,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Provide online accounts information
@@ -199,6 +199,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Wed Oct 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
