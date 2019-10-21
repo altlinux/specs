@@ -1,5 +1,5 @@
 Name: nagios-plugins-check_monit
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Nagios(R) plug-in for checking monit status
@@ -24,6 +24,9 @@ all warnings and "unmonitored" states are shown.
 %prep
 %setup
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+$(find ./ -name '*.py')
+
 %install
 mkdir -p %buildroot%pluginsdir/
 install -m755 check_monit.py %buildroot%pluginsdir/
@@ -33,6 +36,10 @@ install -m755 check_monit.py %buildroot%pluginsdir/
 %doc README check_monit.cfg
 
 %changelog
+* Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt1
+- Version updated to 1.4
+- python2 -> python3
+
 * Thu Feb 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - the plugin updated to fit to new monit versions (5.8.1+)
 
