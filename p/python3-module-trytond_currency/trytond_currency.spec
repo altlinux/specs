@@ -1,25 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname trytond_currency
-Name: python-module-%oname
-Version: 4.2.0
-Release: alt1.1
+
+Name: python3-module-%oname
+Version: 5.2.1
+Release: alt1
+
 Summary: Tryton module with currencies
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://crd.lbl.gov/~dhbailey/mpdist/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/14/b2/b636a2644d3f3401e6ec8e1618e2f669f3239d55359dacea7802df8ffbd1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-trytond
+Source0: https://pypi.python.org/packages/14/b2/b636a2644d3f3401e6ec8e1618e2f669f3239d55359dacea7802df8ffbd1/%{oname}-%{version}.tar.gz
+
+BuildPreReq: python-module-setuptools rpm-build-python3
+
 
 %description
 The currency module of the Tryton application platform.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -31,20 +33,24 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc CHANGELOG README doc/* COPYRIGHT PKG-INFO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/*/tests
+%doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/*/tests
 
 %files tests
-%python_sitelibdir/*/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+
 
 %changelog
+* Fri Oct 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.1-alt1
+- Version updated to 5.2.1
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

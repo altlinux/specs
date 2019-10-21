@@ -1,21 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define oname trytond_company
-Name: python-module-%oname
-Version: 4.2.0
-Release: alt1.1
+
+Name: python3-module-%oname
+Version: 5.2.0
+Release: alt1
+
 Summary: The company module of the Tryton application platform
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/trytond_company/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/20/a6/1580d8a0ddd9a9c03bc48f5a123365c10f9934989c0be7015003f3e5a98e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-pytz
-BuildPreReq: python-module-trytond python-module-trytond_party
-BuildPreReq: python-module-trytond_currency
-BuildPreReq: python-module-trytond_country
+BuildPreReq: rpm-build-python3
+BuildPreReq: python3-module-setuptools
 
 %description
 Tryton module with companies and employees.
@@ -34,20 +33,25 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc CHANGELOG README doc/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/*/tests
+%doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/*/tests
 
 %files tests
-%python_sitelibdir/*/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+
 
 %changelog
+* Thu Oct 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.0-alt1
+- version updated to 5.2.0
+- disable python2, enable python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
