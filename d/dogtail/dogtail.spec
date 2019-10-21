@@ -1,28 +1,25 @@
 Name: dogtail
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
 Summary: GUI test tool and automation framework
 
 License: GPL
 Group: Development/Other
 Url: https://fedorahosted.org/dogtail/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildArch: noarch
 
 Source: https://fedorahosted.org/released/dogtail/dogtail-%version.tar
+Patch0: py2-to-py3.patch
 
-BuildArch: noarch
-# Automatically added by buildreq on Sat May 21 2011
-# optimized out: python-base python-devel python-modules python-modules-compiler
-BuildRequires: python-module-paste python-module-peak
-
+BuildRequires(pre): rpm-build-python3
 BuildRequires: desktop-file-utils
 
-%py_requires gconf
+# %%py_requires gconf
 
 # Hack for build
-%add_python_req_skip Accessibility
+%add_python3_req_skip Accessibility
+
 
 %description
 GUI test tool and automation framework that uses assistive technologies to
@@ -33,12 +30,16 @@ $ gconftool-2 -s -t boolean /desktop/gnome/interface/accessibility true
 
 %prep
 %setup
+%patch0 -p2
 
 %build
-%python_build
+sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+    $(find ./ -type f)
+
+%python3_build
 
 %install
-%python_install
+%python3_install
 rm -rf %buildroot%_docdir/dogtail/
 find examples -type f -exec chmod 0644 \{\} \;
 %__subst "s|\.svg||g" %buildroot%_desktopdir/*
@@ -46,14 +47,18 @@ find examples -type f -exec chmod 0644 \{\} \;
 %files
 %doc README examples/
 %_bindir/*
-%python_sitelibdir/%name/
-%python_sitelibdir/%name-*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%name-*.egg-info
 %_desktopdir/*
 %_datadir/%name/
 #_liconsdir/*
 %_iconsdir/hicolor/scalable/*
 
+
 %changelog
+* Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.11-alt2
+- python2 -> python3
+
 * Sun Nov 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
 - new version 0.9.11 (with rpmrb script)
 
