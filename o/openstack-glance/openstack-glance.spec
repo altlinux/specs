@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 18.0.0
+Version: 19.0.0
 Release: alt1
 
 Summary: OpenStack Image Service
@@ -41,7 +41,7 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-defusedxml >= 0.5.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
-BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-eventlet >= 0.22.0
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-routes >= 2.3.1
 BuildRequires: python3-module-migrate >= 0.11.0
@@ -269,6 +269,9 @@ crudini --set %glance_conf paste_deploy flavor keystone
 #%doc doc/build/html
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:19.0.0-alt1
+- Automatically updated to 19.0.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:18.0.0-alt1
 - Build new version.
 - Build without python2.

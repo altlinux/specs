@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.15.1
+Version: 1.17.0
 Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
@@ -86,6 +86,9 @@ rm -fr build/sphinx/html/.buildinfo
 %endif
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt1
+- Automatically updated to 1.17.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.15.1-alt1
 - Updated to 1.15.1.
 - Build without python2.

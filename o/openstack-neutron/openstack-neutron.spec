@@ -1,7 +1,7 @@
 %define oname neutron
 
 Name: openstack-%oname
-Version: 14.0.2
+Version: 15.0.0
 Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
@@ -47,7 +47,6 @@ Source129: neutron-rpc-server.init
 
 BuildArch: noarch
 
-
 Requires: python3-module-neutron = %EVR
 Requires: python3-module-PasteDeploy
 Requires: python3-module-oslo.rootwrap >= 5.8.0
@@ -56,67 +55,9 @@ Requires(pre): shadow-utils
 
 Conflicts: %name-ml2 < %EVR
 
-
 BuildRequires: crudini
 
 BuildRequires: /proc
-
-# doc
-BuildRequires: python-module-weakrefmethod
-BuildRequires: python-module-pbr >= 4.0.0
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-paste >= 2.0.2
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-routes >= 2.3.1
-BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-eventlet >= 0.18.2
-BuildRequires: python-module-pecan >= 1.3.2
-BuildRequires: python-module-httplib2 >= 0.9.1
-BuildRequires: python-module-requests >= 2.14.2
-BuildRequires: python-module-jinja2 >= 2.10
-BuildRequires: python-module-keystonemiddleware >= 4.17.0
-BuildRequires: python-module-netaddr >= 0.7.18
-BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-neutron-lib >= 1.25.0
-BuildRequires: python-module-neutronclient >= 6.7.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-ryu >= 4.24
-BuildRequires: python-module-SQLAlchemy >= 1.2.0
-BuildRequires: python-module-webob >= 1.7.1
-BuildRequires: python-module-keystoneauth1 >= 3.4.0
-BuildRequires: python-module-alembic >= 0.8.10
-BuildRequires: python-module-stevedore >= 1.20.0
-BuildRequires: python-module-oslo.cache >= 1.26.0
-BuildRequires: python-module-oslo.concurrency >= 3.26.0
-BuildRequires: python-module-oslo.config >= 5.2.0
-BuildRequires: python-module-oslo.context >= 2.19.2
-BuildRequires: python-module-oslo.db >= 4.37.0
-BuildRequires: python-module-oslo.db-tests
-BuildRequires: python-module-oslo.i18n >= 3.15.3
-BuildRequires: python-module-oslo.log >= 3.36.0
-BuildRequires: python-module-oslo.messaging >= 5.29.0
-BuildRequires: python-module-oslo.middleware >= 3.31.0
-BuildRequires: python-module-oslo.policy >= 1.30.0
-BuildRequires: python-module-oslo.reports >= 1.18.0
-BuildRequires: python-module-oslo.privsep >= 1.32.0
-BuildRequires: python-module-oslo.rootwrap >= 5.8.0
-BuildRequires: python-module-oslo.serialization >= 2.18.0
-BuildRequires: python-module-oslo.service >= 1.24.0
-BuildRequires: python-module-oslo.utils >= 3.33.0
-BuildRequires: python-module-oslo.versionedobjects >= 1.35.1
-BuildRequires: python-module-osprofiler >= 1.4.0
-BuildRequires: python-module-openvswitch >= 2.8.0
-BuildRequires: python-module-ovsdbapp >= 0.9.1
-BuildRequires: python-module-psutil >= 3.2.2
-BuildRequires: python-module-novaclient >= 9.1.0
-BuildRequires: python-module-designateclient >= 2.7.0
-BuildRequires: python-module-os-xenapi >= 0.3.1
-BuildRequires: python-module-os-xenapi >= 0.3.1
-
-BuildRequires: python-module-sphinx >= 1.6.2
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
-BuildRequires: python-module-oslotest >= 3.2.0
-BuildRequires: python-module-reno >= 2.5.0
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -135,7 +76,7 @@ BuildRequires: python3-module-jinja2 >= 2.10
 BuildRequires: python3-module-keystonemiddleware >= 4.17.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-netifaces >= 0.10.4
-BuildRequires: python3-module-neutron-lib >= 1.25.0
+BuildRequires: python3-module-neutron-lib >= 1.29.1
 BuildRequires: python3-module-neutronclient >= 6.7.0
 BuildRequires: python3-module-tenacity >= 3.2.1
 BuildRequires: python3-module-ryu >= 4.24
@@ -162,7 +103,7 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.service >= 1.24.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oslo.versionedobjects >= 1.35.1
-BuildRequires: python3-module-osprofiler >= 1.4.0
+BuildRequires: python3-module-osprofiler >= 2.3.0
 BuildRequires: python3-module-openvswitch >= 2.8.0
 BuildRequires: python3-module-ovsdbapp >= 0.9.1
 BuildRequires: python3-module-psutil >= 3.2.2
@@ -176,7 +117,6 @@ BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-reno >= 2.5.0
-
 
 %description
 Neutron is a virtual network service for Openstack. Just like
@@ -332,7 +272,6 @@ SR-IOV network cards.
 %setup -n %oname-%version
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
-
 
 # Let's handle dependencies ourseleves
 rm -f requirements.txt
@@ -606,6 +545,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:15.0.0-alt1
+- Automatically updated to 15.0.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:14.0.2-alt1
 - Updated to 14.0.2
 - Removed python2 modules.

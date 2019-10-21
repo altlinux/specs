@@ -2,7 +2,7 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 15.0.0
+Version: 16.0.0
 Release: alt1
 
 Summary: OpenStack Identity Service
@@ -50,7 +50,7 @@ BuildRequires: python3-module-migrate >= 0.11.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-passlib >= 1.7.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
-BuildRequires: python3-module-keystonemiddleware >= 5.1.0
+BuildRequires: python3-module-keystonemiddleware >= 7.0.0
 BuildRequires: python3-module-bcrypt >= 3.1.3
 BuildRequires: python3-module-scrypt >= 0.8.0
 BuildRequires: python3-module-oslo.cache >= 1.26.0
@@ -60,9 +60,9 @@ BuildRequires: python3-module-oslo.context >= 2.22.0
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
 BuildRequires: python3-module-oslo.db >= 4.27.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.log >= 3.38.0
+BuildRequires: python3-module-oslo.log >= 3.44.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
-BuildRequires: python3-module-oslo.policy >= 1.43.1
+BuildRequires: python3-module-oslo.policy >= 2.3.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oauthlib >= 0.6.2
@@ -111,9 +111,9 @@ Requires: python3-module-oslo.context >= 2.22.0
 Requires: python3-module-oslo.messaging >= 5.29.0
 Requires: python3-module-oslo.db >= 4.27.0
 Requires: python3-module-oslo.i18n >= 3.15.3
-Requires: python3-module-oslo.log >= 3.38.0
+Requires: python3-module-oslo.log >= 3.44.0
 Requires: python3-module-oslo.middleware >= 3.31.0
-Requires: python3-module-oslo.policy >= 1.43.1
+Requires: python3-module-oslo.policy >= 2.3.0
 Requires: python3-module-oslo.serialization >= 2.18.0
 Requires: python3-module-oslo.utils >= 3.33.0
 # add not finded requires
@@ -175,7 +175,7 @@ install -p -D -m 640 etc/keystone.conf.sample %buildroot%_sysconfdir/keystone/ke
 install -p -D -m 640 etc/keystone.policy.yaml.sample %buildroot%_sysconfdir/keystone/keystone.policy.yaml
 #install -p -D -m 644 etc/keystone-paste.ini %buildroot%_sysconfdir/keystone/
 
-install -p -D -m 644 etc/policy.v3cloudsample.json %buildroot%_sysconfdir/keystone/policy.v3cloudsample.json
+#install -p -D -m 644 etc/policy.v3cloudsample.json %buildroot%_sysconfdir/keystone/policy.v3cloudsample.json
 install -p -D -m 640 etc/logging.conf.sample %buildroot%_sysconfdir/keystone/logging.conf
 install -p -D -m 644 etc/default_catalog.templates %buildroot%_sysconfdir/keystone/default_catalog.templates
 install -p -D -m 644 etc/sso_callback_template.html %buildroot%_sysconfdir/keystone/sso_callback_template.html
@@ -255,7 +255,7 @@ fi
 %config %_sysconfdir/keystone/default_catalog.templates
 #%%config %%_sysconfdir/keystone/keystone-paste.ini
 %config %_sysconfdir/keystone/keystone.policy.yaml
-%config %_sysconfdir/keystone/policy.v3cloudsample.json
+#%%config %%_sysconfdir/keystone/policy.v3cloudsample.json
 %config %_sysconfdir/keystone/sso_callback_template.html
 %config(noreplace) %_sysconfdir/logrotate.d/openstack-keystone
 %dir %attr(0755, keystone, keystone) %_sharedstatedir/keystone
@@ -277,6 +277,9 @@ fi
 #build/sphinx/html
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:16.0.0-alt1
+- Automatically updated to 16.0.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:15.0.0-alt1
 - Build new version.
 - Build without python2.

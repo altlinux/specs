@@ -4,7 +4,7 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 19.0.2
+Version: 20.0.0
 Release: alt1
 
 Summary: OpenStack Compute (nova)
@@ -71,12 +71,12 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-SQLAlchemy >= 1.0.10
 BuildRequires: python3-module-decorator >= 3.4.0
-BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-eventlet >= 0.20.0
 BuildRequires: python3-module-jinja2 >= 2.10
-BuildRequires: python3-module-keystonemiddleware >= 4.17.0
+BuildRequires: python3-module-keystonemiddleware >= 4.20.0
 BuildRequires: python3-module-lxml >= 3.4.1
 BuildRequires: python3-module-routes >= 2.3.1
-BuildRequires: python3-module-cryptography >= 2.1
+BuildRequires: python3-module-cryptography >= 2.7
 BuildRequires: python3-module-webob >= 1.8.2
 BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
@@ -91,7 +91,7 @@ BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
-BuildRequires: python3-module-keystoneauth1 >= 3.9.0
+BuildRequires: python3-module-keystoneauth1 >= 3.16.0
 BuildRequires: python3-module-neutronclient >= 6.7.0
 BuildRequires: python3-module-glanceclient >= 2.8.0
 BuildRequires: python3-module-requests >= 2.14.2
@@ -104,20 +104,20 @@ BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.reports >= 1.18.0
 BuildRequires: python3-module-oslo.serialization >= 2.21.1
-BuildRequires: python3-module-oslo.utils >= 3.37.0
+BuildRequires: python3-module-oslo.utils >= 3.40.2
 BuildRequires: python3-module-oslo.db >= 4.44.0
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
-BuildRequires: python3-module-oslo.messaging >= 6.3.0
+BuildRequires: python3-module-oslo.messaging >= 7.0.0
 BuildRequires: python3-module-oslo.policy >= 1.35.0
-BuildRequires: python3-module-oslo.privsep >= 1.32.0
+BuildRequires: python3-module-oslo.privsep >= 1.33.2
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.service >= 1.34.0
+BuildRequires: python3-module-oslo.service >= 1.40.1
 BuildRequires: python3-module-rfc3986 >= 1.1.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
 BuildRequires: python3-module-psutil >= 3.2.2
-BuildRequires: python3-module-oslo.versionedobjects >= 1.33.3
+BuildRequires: python3-module-oslo.versionedobjects >= 1.35.0
 BuildRequires: python3-module-os-brick >= 2.6.1
-BuildRequires: python3-module-os-traits >= 0.8.0
+BuildRequires: python3-module-os-traits >= 0.16.0
 BuildRequires: python3-module-os-vif >= 1.14.0
 BuildRequires: python3-module-os-win >= 3.0.0
 BuildRequires: python3-module-castellan >= 0.16.0
@@ -127,7 +127,7 @@ BuildRequires: python3-module-tooz >= 1.58.0
 BuildRequires: python3-module-cursive >= 0.2.1
 BuildRequires: python3-module-retrying >= 1.3.3
 BuildRequires: python3-module-pypowervm >= 1.1.15
-BuildRequires: python3-module-os-service-types >= 1.2.0
+BuildRequires: python3-module-os-service-types >= 1.7.0
 BuildRequires: python3-module-taskflow >= 2.16.0
 BuildRequires: python3-module-dateutil >= 2.5.3
 BuildRequires: python3-module-zVMCloudConnector >= 1.1.1
@@ -171,7 +171,7 @@ Group: System/Servers
 
 Requires: python3-module-nova = %EVR
 Requires: python3-module-oslo.rootwrap >= 5.8.0
-Requires: python3-module-oslo.messaging >= 6.3.0
+Requires: python3-module-oslo.messaging >= 7.0.0
 Requires(pre): shadow-utils
 
 %description common
@@ -761,7 +761,6 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/test.*
-%exclude %python3_sitelibdir/%oname/tests/live_migration/hooks
 
 %if_enabled doc
 %files doc
@@ -769,6 +768,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %endif
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:20.0.0-alt1
+- Automatically updated to 20.0.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:19.0.2-alt1
 - Build new version.
 - Build without python2.
