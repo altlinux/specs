@@ -1,5 +1,5 @@
 Name: libmodbus
-Version: 3.1.4
+Version: 3.1.6
 Release: alt1
 
 Summary: A Modbus library in C, which supports RTU communication over a serial line or a TCP link
@@ -10,7 +10,7 @@ Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://github.com/downloads/stephane/libmodbus/%name-%version.tar
+Source: https://libmodbus.org/releases/libmodbus-%version.tar
 
 # Automatically added by buildreq on Tue Mar 30 2010
 BuildRequires: gcc-c++ xmlto asciidoc-a2x
@@ -41,6 +41,7 @@ of %name library.
 %install
 #mkdir -p -m755 %buildroot/
 %makeinstall_std
+rm -rfv %buildroot%_docdir/%name/
 #mkdir -p -m755 %buildroot%_datadir/libmodbus/
 #ls -lRh %buildroot/
 
@@ -60,6 +61,9 @@ of %name library.
 %_man7dir/*
 
 %changelog
+* Mon Oct 21 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
+- new version 3.1.6 (with rpmrb script) (ALT bug 37365)
+
 * Mon Nov 21 2016 Terechkov Evgenii <evg@altlinux.org> 3.1.4-alt1
 - 3.1.4 (ALT#30848)
 
