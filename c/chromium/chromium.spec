@@ -16,6 +16,8 @@
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
+%define _unpackaged_files_terminate_build 1
+
 # Leave this alone, please.
 %global target out/Release
 
@@ -27,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        77.0.3865.90
+Version:        77.0.3865.120
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -369,7 +371,8 @@ ninja \
 	-C %target \
 	chrome \
 	chrome_sandbox \
-	chromedriver
+	chromedriver \
+	policy_templates
 
 %install
 mkdir -p -- \
@@ -380,6 +383,10 @@ mkdir -p -- \
 #
 install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
+
+# add directories for policy management
+mkdir -p %buildroot%_sysconfdir/%name/policies/managed
+mkdir -p %buildroot%_sysconfdir/%name/policies/recommended
 
 # compatibility symlink
 ln -s %name %buildroot/%_bindir/chromium-browser
@@ -469,6 +476,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
 %dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/policies
+%dir %_sysconfdir/%name/policies/managed
+%dir %_sysconfdir/%name/policies/recommended
 %config %_sysconfdir/%name/*
 %attr(4711,root,root) %_libdir/%name/chrome-sandbox
 %_libdir/%name
@@ -491,6 +501,15 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Oct 21 2019 Alexey Gladkov <legion@altlinux.ru> 77.0.3865.120-alt1
+- New version (77.0.3865.120).
+- Security fixes:
+  - CVE-2019-13693: Use-after-free in IndexedDB.
+  - CVE-2019-13694: Use-after-free in WebRTC.
+  - CVE-2019-13695: Use-after-free in audio.
+  - CVE-2019-13696: Use-after-free in V8.
+  - CVE-2019-13697: Cross-origin size leak.
+
 * Wed Sep 25 2019 Alexey Gladkov <legion@altlinux.ru> 77.0.3865.90-alt1
 - New version (77.0.3865.90).
 - Security fixes:
