@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.13
+Version: 1.3.14
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Oct 21 2019 Michael Shigorin <mike@altlinux.org> 1.3.14-alt1
+- make bails out on single image build error, see also make -k (iv@)
+- mipsel support (iv@, antohami@)
+- regular-vm.mk, refactoring, cleanups (antohami@)
+
 * Mon Sep 16 2019 Michael Shigorin <mike@altlinux.org> 1.3.13-alt1
 - recovery.tar support (iv@)
 - mixin/mixin deps, aarch64 EFI, mcom02 & jetson nano support,
