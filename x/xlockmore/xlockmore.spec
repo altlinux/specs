@@ -1,5 +1,5 @@
 Name: xlockmore
-Version: 5.57
+Version: 5.59
 Release: alt1
 
 Summary: An X terminal locking program
@@ -110,6 +110,12 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Mon Oct 21 2019 Fr. Br. George <george@altlinux.ru> 5.59-alt1
+- Autobuild version bump to 5.59
+
+* Thu Oct 03 2019 Fr. Br. George <george@altlinux.ru> 5.58-alt1
+- Autobuild version bump to 5.58
+
 * Wed Jun 26 2019 Fr. Br. George <george@altlinux.ru> 5.57-alt1
 - Autobuild version bump to 5.57
 
