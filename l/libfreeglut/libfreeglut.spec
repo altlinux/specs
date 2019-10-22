@@ -2,7 +2,7 @@
 %define _name freeglut
 %define sover 3
 %def_enable replace_glut
-%def_enable wayland
+%def_disable wayland
 %def_disable check
 
 %define glut_version 5:8.0.1
@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -119,6 +119,9 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Tue Oct 22 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
+- disabled wayland support (ALT #37367)
+
 * Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
