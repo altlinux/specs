@@ -5,7 +5,7 @@
 
 Name: gnupg2
 Version: 2.2.17
-Release: alt4
+Release: alt5
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -184,6 +184,10 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Wed Oct 23 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt5
+- Reflect support of the GOST algorithms in 'gpgsm --version'.
+- Reflect support of the GOST algorithms in 'gpg --version'
+
 * Thu Oct 17 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt4
 - Fixed build requires.
 
