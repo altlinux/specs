@@ -1,6 +1,6 @@
 Name: shelxle
 Version: 1.0.997
-Release: alt1
+Release: alt2
 
 Summary: A Qt GUI for SHELX
 License: LGPLv2
@@ -22,7 +22,7 @@ J. Appl. Cryst. (2011). 44, 1281-1284.
 subst 's/Qt;Science;Chemistry;Physics;Education/Science;Chemistry;/' %name.desktop
 
 %build
-qmake-qt5
+%qmake_qt5 "CONFIG+=debug"
 %make_build
 
 %install
@@ -39,6 +39,9 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Oct 22 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.997-alt2
+- fixed build flags and debuginfo
+
 * Mon Oct 21 2019 Denis G. Samsonenko <ogion@altlinux.org> 1.0.997-alt1
 - new version
 - build with Qt5
