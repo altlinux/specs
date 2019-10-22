@@ -5,7 +5,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 8.0.6
+Version: 8.1.1
 Release: alt1
 
 Summary: DHCP Client
@@ -91,6 +91,11 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Tue Oct 22 2019 Mikhail Efremov <sem@altlinux.org> 1:8.1.1-alt1
+- Drop "Don't use BSD semantics for UDP." patch.
+- Drop obsoleted patch.
+- Updated to 8.1.1.
+
 * Fri Sep 13 2019 Mikhail Efremov <sem@altlinux.org> 1:8.0.6-alt1
 - Updated to 8.0.6.
 
