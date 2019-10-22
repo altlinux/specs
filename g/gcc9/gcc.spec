@@ -1,8 +1,8 @@
-%define gcc_branch 8
+%define gcc_branch 9
 
 Name: gcc%gcc_branch
-Version: 8.3.1
-Release: alt7
+Version: 9.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -16,7 +16,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20190507
+%define snapshot 20190827
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -43,18 +43,19 @@ Url: https://gcc.gnu.org/
 
 %define ada_binaries gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls gnatmake gnatname gnatprep gnatxref
 
+%define d_runtime_arches	%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
-%define libmpx_arches		%ix86 x86_64
 %define libquadmath_arches	%ix86 x86_64 ppc64le
 %define libtsan_arches		x86_64 aarch64 ppc64le
 %define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le
 %define libvtv_arches		%ix86 x86_64
 
+%def_enable d
 %ifarch %go_arches
 %def_with go
 %endif
@@ -80,8 +81,6 @@ Url: https://gcc.gnu.org/
 %ifarch %arm
 %set_verify_elf_method textrel=relaxed
 %endif
-# support for Cygnus-style trees has been removed in newer automake versions
-%set_automake_version 1.11
 
 # Build parameters.
 %def_enable bootstrap
@@ -95,9 +94,9 @@ Url: https://gcc.gnu.org/
 # precompat knob disables interpackage dependencies optimization
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
-# BTW, compat and precompat are mutually exclusive.
+# NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64
@@ -135,16 +134,17 @@ Source: %srcfilename.tar
 
 # Fedora patches.
 Patch100: gcc-hack.patch
-Patch102: gcc-i386-libgomp.patch
-Patch103: gcc-sparc-config-detection.patch
-Patch104: gcc-libgomp-omp_h-multilib.patch
-Patch105: gcc-libtool-no-rpath.patch
-# Patch106: gcc-isl-dl.patch
-Patch107: gcc-libstdc++-docs.patch
-Patch108: gcc-no-add-needed.patch
-Patch109: gcc-foffload-default.patch
-Patch110: gcc-Wno-format-security.patch
-Patch111: gcc-rh1512529-aarch64.patch
+Patch101: gcc-i386-libgomp.patch
+Patch102: gcc-sparc-config-detection.patch
+Patch103: gcc-libgomp-omp_h-multilib.patch
+Patch104: gcc-libtool-no-rpath.patch
+# Patch105: gcc-isl-dl.patch
+Patch106: gcc-libstdc++-docs.patch
+Patch107: gcc-no-add-needed.patch
+Patch108: gcc-foffload-default.patch
+Patch109: gcc-Wno-format-security.patch
+Patch110: gcc-rh1574936.patch
+Patch111: gcc-d-shared-libphobos.patch
 
 # Debian patches.
 Patch201: gcc-textdomain.diff
@@ -153,15 +153,11 @@ Patch203: libstdc++-man-3cxx.diff
 Patch217: testsuite-hardening-format.diff
 Patch218: testsuite-hardening-printf-types.diff
 Patch219: testsuite-hardening-updates.diff
-Patch220: pr47818.diff
 Patch221: ada-gcc-name.diff
-# this patch is broken; needs update
-#Patch222: ada-symbolic-tracebacks.diff
 Patch224: testsuite-glibc-warnings.diff
-Patch230: gcc-as-needed-push-pop.diff
+Patch225: gdc-driver-nophobos.diff
 
 # ALT patches.
-Patch700: alt-_GCC_AUTOCONF_VERSION.patch
 Patch701: alt-install.patch
 Patch703: alt-libatomic-makefile.patch
 Patch704: alt-libgfortran-makefile.patch
@@ -178,7 +174,6 @@ Patch718: alt-libgo-weak.patch
 Patch722: alt-defaults-trampolines.patch
 Patch723: alt-libgo-Werror-unused-result.patch
 Patch724: alt-change-default-rtld-paths.patch
-Patch726: alt-fix-libmpxwrappers-link.patch
 Patch727: alt-testsuite-Wtrampolines.patch
 Patch728: alt-libstdc++-libvtv-rpath-disable.patch
 Patch729: deb-alt-gcc-as-needed.diff
@@ -186,7 +181,6 @@ Patch730: deb-alt-mips-gcc-multiarch.diff
 Patch731: alt-riscv64-not-use-lp64d.patch
 Patch732: alt-defaults-cxx-Werror-return-type.patch
 Patch733: alt-disable-gdb-plugin-versioning.patch
-Patch734: PR89906.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
@@ -505,23 +499,6 @@ Requires: libvtv0 %REQ %EVR
 %description -n libvtv%gcc_branch-devel-static
 This package contains GNU Transactional Memory static libraries.
 
-%package -n libmpx2
-Summary: The Memory Protection Extensions runtime libraries
-Group: System/Libraries
-
-%description -n libmpx2
-This package contains the Memory Protection Extensions runtime libraries
-which is used for -fcheck-pointer-bounds -mmpx instrumented programs.
-
-%package -n libmpx%gcc_branch-devel-static
-Summary: The Memory Protection Extensions static libraries
-Group: Development/C
-Requires: libmpx2 %REQ %EVR
-
-%description -n libmpx%gcc_branch-devel-static
-This package contains the Memory Protection Extensions static runtime
-libraries.
-
 ####################################################################
 # Preprocessor
 
@@ -630,6 +607,87 @@ If you have multiple versions of the GNU Compiler Collection
 installed on your system, you may want to execute
 g++%psuffix
 in order to explicitly use the GNU C++ compiler version %version.
+
+####################################################################
+# D Runtime
+
+%package -n libgdruntime76
+Summary: D runtime
+Group: System/Libraries
+
+%description -n libgdruntime76
+This package contains DRuntime shared library which is the
+low-level runtime library backing the D programming language.
+
+%package -n libgdruntime%gcc_branch-devel
+Summary: Development files for DRuntime library
+Group: Development/Other
+Requires: libgdruntime76 = %EVR
+
+%description -n libgdruntime%gcc_branch-devel
+This package contains development files for DRuntime library.
+
+%package -n libgdruntime%gcc_branch-devel-static
+Summary: Static DRuntime library
+Group: Development/Other
+Requires: libgdruntime76 = %EVR
+Requires: libgdruntime%gcc_branch-devel = %EVR
+
+%description -n libgdruntime%gcc_branch-devel-static
+This package contains static DRuntime library.
+
+%package -n libgphobos76
+Summary: D runtime
+Group: System/Libraries
+
+%description -n libgphobos76
+This packages contains the standard library for the D Programming
+Language which is needed to run D dynamically linked programs.
+
+%package -n libgphobos%gcc_branch-devel
+Summary: Development files for DRuntime library
+Group: Development/Other
+Requires: libgphobos76 = %EVR
+
+%description -n libgphobos%gcc_branch-devel
+This package contains development files for DRuntime library.
+
+%package -n libgphobos%gcc_branch-devel-static
+Summary: Static D libraries
+Group: Development/Other
+Requires: libgphobos%gcc_branch-devel = %EVR
+
+%description -n libgphobos%gcc_branch-devel-static
+This package contains static D standard library.
+
+####################################################################
+# The GNU D Compiler
+%package gdc
+Summary: GNU D compiler
+Group: Development/Other
+Requires: %name = %EVR
+%ifarch %d_runtime_arches
+Requires: libgdruntime%gcc_branch-devel = %EVR
+Requires: libgphobos%gcc_branch-devel = %EVR
+%endif
+
+%description gdc
+This package provides support for compiling D
+programs with the GNU Compiler Collection.
+
+####################################################################
+# The GNU D Compiler documentation
+
+%package gdc-doc
+Summary: D compiler documentation
+Group: Development/Other
+# This is not a noarch subpackage because of d_arches.
+#BuildArch: noarch
+Requires: %name-doc = %EVR
+
+%description gdc-doc
+This package contains documentation for the GNU D Compiler
+version %version.
 
 ####################################################################
 # Objective-C Libraries
@@ -768,8 +826,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of libquadmath_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc7-fortran-doc
-Obsoletes: gcc7-fortran-doc
+Conflicts: gcc8-fortran-doc gcc7-fortran-doc
+Obsoletes: gcc8-fortran-doc gcc7-fortran-doc
 
 %description fortran-doc
 This package contains documentation for the GNU Fortran Compiler
@@ -818,7 +876,7 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: The GNU Ada Compiler
 Group: Development/Other
-Obsoletes: gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc8-gnat gcc7-gnat gcc6-gnat gcc5-gnat gcc4.9-gnat gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 Requires(pre): gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -841,8 +899,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of gnat_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc7-gnat-doc
-Obsoletes: gcc7-gnat-doc
+Conflicts: gcc8-gnat-doc gcc7-gnat-doc
+Obsoletes: gcc8-gnat-doc gcc7-gnat-doc
 
 %description gnat-doc
 This package contains documentation for the GNU Ada Compiler
@@ -851,12 +909,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo13
+%package -n libgo14
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo13
+%description -n libgo14
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -865,7 +923,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo13 %REQ %EVR
+Requires: libgo14 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -907,8 +965,8 @@ Group: Development/Other
 # This is not a noarch subpackage because of go_arches.
 #BuildArch: noarch
 Requires: %name-doc = %EVR
-Conflicts: gcc7-go-doc
-Obsoletes: gcc7-go-doc
+Conflicts: gcc8-go-doc gcc7-go-doc
+Obsoletes: gcc8-go-doc gcc7-go-doc
 
 %description go-doc
 This package contains documentation for the GNU compiler version %version
@@ -959,7 +1017,8 @@ Conflicts: gcc4.9-doc
 Conflicts: gcc5-doc
 Conflicts: gcc6-doc
 Conflicts: gcc7-doc
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc
+Conflicts: gcc8-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc gcc4.9-doc gcc5-doc gcc6-doc gcc7-doc gcc8-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -970,11 +1029,12 @@ version %version.
 
 # Fedora patches.
 %patch100 -p0
+%patch101 -p0
 %patch102 -p0
 %patch103 -p0
 %patch104 -p0
-%patch105 -p0
-#%%patch106 -p0 -b .isl-dl~
+#%%patch105 -p0 -b .isl-dl~
+%patch106 -p0
 %patch107 -p0
 %patch108 -p0
 %patch109 -p0
@@ -988,14 +1048,13 @@ version %version.
 %patch217 -p2
 %patch218 -p2
 %patch219 -p2
-%patch220 -p2
 %patch221 -p2
-#%%patch222 -p2
 %patch224 -p2
-%patch230 -p2
+%ifnarch %d_runtime_arches
+%patch225 -p2
+%endif
 
 # ALT patches.
-%patch700 -p1
 %patch701 -p1
 %patch703 -p1
 %patch704 -p1
@@ -1012,7 +1071,6 @@ version %version.
 %patch722 -p1
 %patch723 -p1
 %patch724 -p1
-%patch726 -p1
 %patch727 -p1
 %patch728 -p1
 %patch729 -p2
@@ -1020,13 +1078,11 @@ version %version.
 %patch731 -p1
 %patch732 -p1
 %patch733 -p1
-%patch734 -p1
 
 echo '%distribution %version-%release' > gcc/DEV-PHASE
 
 # due to autoconf >= 2.69
 > libgo/config/go.m4
-> gotools/config/go.m4
 
 # This test causes fork failures, because it spawns way too many threads
 rm -f gcc/testsuite/go.test/test/chan/goroutines.go
@@ -1209,7 +1265,7 @@ CONFIGURE_OPTS="\
 	--enable-vtable-verify \
 %endif
 	%{subst_enable bootstrap} \
-	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go},lto" \
+	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
 	#
@@ -1403,9 +1459,6 @@ mv %buildroot%_libdir/libitm.spec %buildroot%gcc_target_libdir/
 %endif
 mv %buildroot%_libdir/libgomp.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
-%ifarch %libmpx_arches
-mv %buildroot%_libdir/libmpx.spec %buildroot%gcc_target_libdir/
-%endif
 %if_with libsanitizer
 mv %buildroot%_libdir/libsanitizer.spec %buildroot%gcc_target_libdir/
 %endif
@@ -1467,9 +1520,6 @@ for n in \
 %endif
 %ifarch %libvtv_arches
     libvtv-devel-static \
-%endif
-%ifarch %libmpx_arches
-    libmpx-devel-static \
 %endif
     libgomp-devel libgomp-devel-static \
     gcc-c++ libstdc++-devel libstdc++-devel-static \
@@ -1599,7 +1649,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/altivec.h
 %gcc_target_libdir/include/amo.h
 %gcc_target_libdir/include/mm_malloc.h
-%gcc_target_libdir/include/paired.h
 %gcc_target_libdir/include/ppc-asm.h
 %gcc_target_libdir/include/si2vmx.h
 %gcc_target_libdir/include/spu2vmx.h
@@ -1646,11 +1695,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libsanitizer.spec
 %dir %gcc_target_libdir/include/sanitizer/
 %gcc_target_libdir/include/sanitizer/common_interface_defs.h
-%endif
-%ifarch %libmpx_arches
-%gcc_target_libdir/libmpx.so
-%gcc_target_libdir/libmpx.spec
-%gcc_target_libdir/libmpxwrappers.so
 %endif
 %ifarch x86_64
 %dir %gcc_target_lib32dir/
@@ -1725,12 +1769,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_libdir/libvtv.so.0*
 %endif
 %endif #compat
-
-%ifarch %libmpx_arches
-%files -n libmpx2
-%_libdir/libmpx.so.2*
-%_libdir/libmpxwrappers.so.2*
-%endif
 
 %files plugin-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-plugin-devel
@@ -1820,14 +1858,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libvtv.a
 %endif
 
-%ifarch %libmpx_arches
-%files -n libmpx%gcc_branch-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/libmpx%gcc_branch-devel-static
-%dir %gcc_target_libdir/
-%gcc_target_libdir/libmpx.a
-%gcc_target_libdir/libmpxwrappers.a
-%endif
-
 %files -n cpp%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/cpp%gcc_branch
 %_bindir/cpp%psuffix
@@ -1878,6 +1908,40 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/vtv_*.h
 %endif
 
+%if_enabled d
+%ifarch %d_runtime_arches
+%files -n libgphobos76
+%_libdir/libgphobos.so.76*
+
+%files -n libgphobos%gcc_branch-devel
+%gcc_target_libdir/include/d
+%gcc_target_libdir/libgphobos.so
+%_libdir/libgphobos.spec
+
+%files -n libgphobos%gcc_branch-devel-static
+%gcc_target_libdir/libgphobos.a
+
+%files -n libgdruntime76
+%_libdir/libgdruntime.so.76*
+
+%files -n libgdruntime%gcc_branch-devel
+%gcc_target_libdir/libgdruntime.so
+
+%files -n libgdruntime%gcc_branch-devel-static
+%gcc_target_libdir/libgdruntime.a
+%endif
+
+%files gdc
+%_bindir/gdc%psuffix
+%_bindir/%gcc_target_platform-gdc%psuffix
+%_man1dir/gdc%psuffix.*
+%dir %gcc_target_libexecdir/
+%gcc_target_libexecdir/d21
+
+%files gdc-doc
+%_infodir/gdc.info*
+%endif
+
 %if_with objc
 %if_disabled compat
 %files -n libobjc4
@@ -1918,7 +1982,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgfortran%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgfortran%gcc_branch-devel
 %dir %gcc_target_libdir/
+%dir %gcc_target_libdir/include
 %gcc_target_libdir/libgfortran.so
+%gcc_target_libdir/include/ISO_Fortran_binding.h
 %gcc_target_libdir/finclude/
 
 %files -n libgfortran%gcc_branch-devel-static
@@ -1995,8 +2061,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo13
-%_libdir/libgo.so.13*
+%files -n libgo14
+%_libdir/libgo.so.14*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2058,11 +2124,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Tue Aug 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3.1-alt7
-- Rebuilt in gcc9 compatibility mode.
-
-* Tue Aug 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3.1-alt6
-- Rebuilt in precompat mode to prepare for gcc9 build.
+* Tue Oct 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt1
+- Updated to redhat/gcc-9-branch r274959.
+- Synced with Fedora gcc 9.2.1-1 and Debian gcc-9 9.2.1-9.
 
 * Mon Aug 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3.1-alt5
 - Applied upstream fix for PR 89906 (closes: #36972).

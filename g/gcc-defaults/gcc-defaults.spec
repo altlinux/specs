@@ -1,6 +1,6 @@
 %set_compress_method none
 
-%define gcc_branch 8
+%define gcc_branch 9
 %define psuffix -%gcc_branch
 
 %define gnat_arches		%ix86 x86_64
@@ -9,7 +9,6 @@
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
 %define liblsan_arches		x86_64 aarch64 ppc64le
-%define libmpx_arches		%ix86 x86_64
 %define libquadmath_arches	%ix86 x86_64 ppc64le
 %define libtsan_arches		x86_64 aarch64 ppc64le
 %define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le
@@ -17,7 +16,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt2
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -88,6 +87,15 @@ Conflicts: gcc6-c++ < 6.3.1-alt3
 
 %description -n gcc-c++
 This is metapackage for the default GNU C++ compiler.
+
+%package -n gcc-gdc
+Summary: Dependency package for GNU D compiler
+Group: Development/Other
+Requires: gcc = %EVR
+Requires: gcc%gcc_branch-gdc
+
+%description -n gcc-gdc
+This is metapackage for the default GNU D compiler.
 
 %package -n gcc-fortran
 Summary: Dependency package for GNU Fortran compiler
@@ -188,9 +196,6 @@ This is metapackage for %{1}-%{2}. \
 %ifarch %liblsan_arches
 %do_package liblsan devel-static 1 #
 %endif
-%ifarch %libmpx_arches
-%do_package libmpx devel-static 1 #
-%endif
 %ifarch %libquadmath_arches
 %do_package libquadmath devel 1 #
 %endif
@@ -240,6 +245,10 @@ ln_man gcov{,-tool,-dump}
 ln_bin g++
 ln_man g++
 
+# gcc-gdc
+ln_bin gdc
+ln_man gdc
+
 # gcc-fortran
 ln_bin gfortran
 ln_man gfortran
@@ -281,6 +290,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %_bindir/%gcc_target_platform-g++
 %_man1dir/g++.1.xz
 
+%files -n gcc-gdc
+%_bindir/%gcc_target_platform-gdc
+%_man1dir/gdc.1.xz
+
 %files -n gcc-fortran
 %_bindir/%gcc_target_platform-gfortran
 %_man1dir/gfortran.1.xz
@@ -297,6 +310,10 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Wed Oct 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9-alt1
+- Added gcc-gdc metapacakge.
+- Dropped libmpx-devel-static subpackage.
+
 * Wed Aug 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8-alt2
 - Added ppc64le (ALT#37086) and riscv64 support.
 - Added gcc-gdb-plugin subpackage.
