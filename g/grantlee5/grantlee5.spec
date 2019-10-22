@@ -5,7 +5,7 @@
 
 Name: grantlee5
 Version: 5.1.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
@@ -81,6 +81,7 @@ format for easy browsing.
 %prep
 %setup -q
 %patch1 -p1
+sed -i 's| -ansi ||' CMakeLists.txt
 
 %build
 %Kbuild \
@@ -121,6 +122,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Tue Oct 22 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt4
+- fix compile flags
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt3
 - dont use ubt macro
 
