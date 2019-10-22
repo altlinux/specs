@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.3.2
+Version: 2.5.2
 Epoch: 1
 Release: alt1
 Group: Development/Python
@@ -19,12 +19,14 @@ BuildRequires: python2.7(vine) python2.7(case)
 BuildRequires: python-module-unittest2
 BuildRequires: python-module-mock
 BuildRequires: python-module-pytest-sugar >= 0.9.1
+BuildRequires: python-module-pytest-rerunfailures
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-sugar >= 0.9.1
+BuildRequires: python3-module-pytest-rerunfailures
 BuildRequires: python3(vine) python3(case)
 %endif
 
@@ -117,7 +119,7 @@ popd
 %files
 %doc AUTHORS Changelog LICENSE README.rst
 %python_sitelibdir/%module_name
-%python_sitelibdir/%module_name-%version-py*.egg-info
+%python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/%module_name/pickle
 
 %files pickles
@@ -130,10 +132,13 @@ popd
 %files -n python3-module-%module_name
 %doc AUTHORS Changelog LICENSE README.rst
 %python3_sitelibdir/%module_name
-%python3_sitelibdir/%module_name-%version-py*.egg-info
+%python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Tue Oct 22 2019 Grigory Ustinov <grenka@altlinux.org> 1:2.5.2-alt1
+- Updated to upstream version 2.5.2.
+
 * Fri Dec 07 2018 Alexey Shabalin <shaba@altlinux.org> 1:2.3.2-alt1
 - Updated to upstream version 2.3.2.
 
