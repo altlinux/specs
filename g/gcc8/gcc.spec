@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 8.3.1
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -96,7 +96,7 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # BTW, compat and precompat are mutually exclusive.
-%def_disable precompat
+%def_enable precompat
 %def_disable compat
 
 # For some architectures we do not want multilib support.
@@ -2058,6 +2058,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Aug 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3.1-alt6
+- Rebuilt in precompat mode to prepare for gcc9 build.
+
 * Mon Aug 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3.1-alt5
 - Applied upstream fix for PR 89906 (closes: #36972).
 - Removed versioning of lib{cc1,cc1plugin,cp1plugin} libraries
