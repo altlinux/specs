@@ -2,9 +2,9 @@
 %define module_version 0.8.2
 %define module_release alt2
 
-%define flavour un-def
-%define karch %ix86 x86_64 aarch64 ppc64le
-BuildRequires(pre): kernel-headers-modules-un-def
+%define flavour std-pae
+%define karch %ix86
+BuildRequires(pre): kernel-headers-modules-std-pae
 
 %setup_kernel_module %flavour
 
