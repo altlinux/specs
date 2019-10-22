@@ -1,22 +1,23 @@
-Name: python-module-pyrax
-Version: 1.9.0
-Release: alt2.qa1
+%define oname pyrax
+
+Name: python3-module-%oname
+Version: 1.9.8
+Release: alt1
 
 Summary: Python language bindings for OpenStack Clouds
 
 License: ASL 2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/rackspace/pyrax
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://imcleod.fedorapeople.org/src/pyrax/pyrax-%version.tar
-
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-mock
-BuildRequires: python-devel
+Source: http://imcleod.fedorapeople.org/src/pyrax/pyrax-%version.tar
+Patch0: 0001-rename-keyword.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-mock
+
 
 %description
 A library for working with most OpenStack-based cloud deployments, though it
@@ -26,20 +27,45 @@ network, even though CDN support is not part of OpenStack Swift. But if you
 don't use any of the CDN-related code, your app will work fine on any
 standard Swift deployment.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+A library for working with most OpenStack-based cloud deployments, though it
+originally targeted the Rackspace public cloud. For example, the code for
+cloudfiles contains the ability to publish your content on Rackspace's CDN
+network, even though CDN support is not part of OpenStack Swift. But if you
+don't use any of the CDN-related code, your app will work fine on any
+standard Swift deployment.
+
+This package contains tests for %oname.
+
 %prep
 %setup -n pyrax-%version
+%patch0 -p2
 
 %build
-%python_build
+sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+       -e 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
+
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc README COPYING samples docs
-%python_sitelibdir/*
+%doc *.rst LICENSE docs/
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.8-alt1
+- Version updated to 1.9.8
+- python2 -> python3
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2.qa1
 - NMU: applied repocop patch
 
