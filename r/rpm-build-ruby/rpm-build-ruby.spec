@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt8
+Release:       alt9
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -56,6 +56,10 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Tue Feb 18 2020 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt9
+- Fixed (!) ruby.prov (closes #36506, #37088)
+- changed (*) ruby.req output
+
 * Tue Jul 23 2019 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt8
 - Macros gem- copied to ruby-, old rules ruby-tool-setup is removed
 
