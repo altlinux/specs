@@ -1,11 +1,8 @@
-# This spec file has been made for ALT Linux distribuition
-
 %def_with docs
-%def_with python3
 
 Name: fityk
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: Tool for fitting and analyzing data
 License: GPL
@@ -13,44 +10,35 @@ Group: Sciences/Other
 
 Url: https://github.com/wojdyr/fityk
 # https://github.com/wojdyr/fityk.git
+
 Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: x-%name.desktop
 
 BuildRequires(pre): rpm-build-xdg
-# Automatically added by buildreq on Mon Aug 04 2008
-BuildRequires: gcc-c++ gcc-fortran libreadline-devel rpm-build-python
-
-BuildPreReq: boost-devel libxylib-devel compat-libwxGTK3.0-gtk2-devel zlib-devel
-BuildPreReq: python-module-sphinx-devel swig dvipng
-BuildPreReq: libcmpfit-devel
-BuildPreReq: texlive-collection-latexrecommended tex(preview.sty) gnuplot
-BuildRequires: liblua-devel
-BuildRequires: python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
 BuildRequires: python3-devel
-%endif
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: liblua-devel
+BuildRequires: libreadline-devel
+BuildRequires: libcmpfit-devel
+BuildRequires: libxylib-devel
+BuildRequires: boost-devel
+BuildRequires: compat-libwxGTK3.0-gtk2-devel
+BuildRequires: texlive-collection-latexrecommended
+BuildRequires: swig
+BuildRequires: dvipng
+BuildRequires: zlib-devel
+
 
 %description
 Fityk is a program for nonlinear fitting of analytical functions
 (especially peak-shaped) to data (usually experimental data).
 It can be also used for visualization of x-y data only.
 
-%package -n python-module-%name
-Summary: Python module for Fityk
-Group: Development/Python
-%py_provides fityk
-Conflicts: %name < %version-%release
-
-%description -n python-module-%name
-Fityk is a program for nonlinear fitting of analytical functions
-(especially peak-shaped) to data (usually experimental data).
-It can be also used for visualization of x-y data only.
-
-This package contains Python module for Fityk.
-
-%if_with python3
 %package -n python3-module-%name
 Summary: Python 3 module for Fityk
 Group: Development/Python3
@@ -62,7 +50,6 @@ Fityk is a program for nonlinear fitting of analytical functions
 It can be also used for visualization of x-y data only.
 
 This package contains Python module for Fityk.
-%endif
 
 %package devel
 Summary: Header files, libraries and development documentation for %name
@@ -77,35 +64,19 @@ you will need to install %name-devel.
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %ifarch %e2k
 %add_optflags -std=gnu++11
 %endif
 
 %build
-%if_with python3
 export PYTHON=python3
 export PYTHON_LDFLAGS="$(python3-config --ldflags) -lm"
-pushd ../python3
-./autogen.sh
-%configure \
-	--enable-python \
-%if_without docs
-	--without-doc \
-%endif
-	--enable-lua
 
-#make_build
-%make
-popd
-%endif
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 
-export PYTHON=python
-unset PYTHON_LDFLAGS
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 ./autogen.sh
 %configure \
 	--enable-python \
@@ -125,11 +96,7 @@ install -d 755 %buildroot%_datadir/mimelnk/application/
 install -d 755 %buildroot%_niconsdir
 install -d 755 %buildroot%_miconsdir
 
-%if_with python3
-pushd ../python3
 %make_install DESTDIR=$PWD/build3 install
-popd
-%endif
 
 %makeinstall_std
 rm -f samples/Makefile* doc/fitykhelp_img/Makefile* samples/*.pl \
@@ -146,35 +113,25 @@ install -m 644 %name.png %buildroot%_niconsdir/
 install -m 644 %name.png %buildroot%_miconsdir/
 rm -f %buildroot%_datadir/%name/samples/*.pl
 
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3/build3
-install -d %buildroot%python3_sitelibdir
-mv $PWD%python3_sitelibdir/* %buildroot%python3_sitelibdir/
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-mv $PWD%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
-%endif
-popd
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-#check
-# no check for: java, lua, perl and ruby
-#make samples/hello samples/helloc
-#samples/hello
-#samples/helloc
-#LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python_sitelibdir samples/hello.py
-#if_with python3
-#pushd ../python3
-#make samples/hello samples/helloc
-#samples/hello
-#samples/helloc
-#2to3 -w samples/hello.py
-#LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python3_sitelibdir %__python3 samples/hello.py
+#pushd build3
+#install -d %buildroot%python3_sitelibdir
+#mv $PWD%python3_sitelibdir/* %buildroot%python3_sitelibdir/
+#%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+#mv $PWD%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+#%endif
 #popd
-#endif
+
+%check
+make samples/hello samples/helloc
+samples/hello
+samples/helloc
+2to3 -w samples/hello.py
+LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python3_sitelibdir \
+                %__python3 samples/hello.py
 
 %files
 %doc COPYING NEWS TODO
@@ -197,15 +154,14 @@ popd
 %_includedir/*
 %_libdir/*.so
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
-%if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.1-alt3
+- python2 -> python3
+
 * Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1.3.1-alt2
 - E2K: explicit -std=gnu++11
 
