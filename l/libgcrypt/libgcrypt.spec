@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.8.5
-Release: alt2
+Release: alt3
 
 %define soname %{name}%{soversion}
 
@@ -179,10 +179,13 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Tue Oct 22 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt3
+- Maintenance release.
+
 * Wed Oct 02 2019 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt2
 - CryptoPro key meshing for GOST-28147.
-- GOST-28147 IMIT mode.
-- GOST-28147 optimizations.
+- GOST-28147 IMIT mode (thx Dmitry Eremin-Solenikov).
+- GOST-28147 optimizations (thx Dmitry Eremin-Solenikov).
 - GOST VKO support in ECDH: multiply by an optional UKM value.
 - Added GOST-R.3410-2012 curves.
 
