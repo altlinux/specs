@@ -11,7 +11,7 @@
 
 Name:    gitea
 Version: 1.9.4
-Release: alt2
+Release: alt3
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -84,7 +84,7 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 %files
 %_bindir/%name
-%dir %attr(0770,root,%name) %_localstatedir/%name
+%dir %attr(0750,%name,%name) %_localstatedir/%name
 %dir %attr(0770,root,%name) %_logdir/%name
 %dir %_docdir/%name
 %dir %_sysconfdir/%name
@@ -97,6 +97,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Tue Oct 22 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt3
+- Fix perms on /var/lib/gitea.
+
 * Mon Oct 14 2019 Alexey Shabalin <shaba@altlinux.org> 1.9.4-alt2
 - Update spec:
   + disable find debuginfo files
