@@ -1,25 +1,21 @@
 %define oname SimPy
-%define major 2.3
-Name: python-module-SimPy
-Version: %major.1
+%define major 3.0
+
+Name: python3-module-%oname
+Version: %major.11
 Release: alt1
 
 Summary: SimPy simulation package
-
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://simpy.sourceforge.net/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://sourceforge.net/projects/simpy/files/simpy/SimPy-%major/%oname-%version.tar
-
 BuildArch: noarch
 
-%setup_python_module %oname
+Source: http://sourceforge.net/projects/simpy/files/simpy/SimPy-%major/%oname-%version.tar
 
-# Automatically added by buildreq on Sun Aug 04 2013
-# optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email
-BuildRequires: python-module-mwlib
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+
 
 %description
 SimPy is a process-based discrete-event simulation language
@@ -44,17 +40,21 @@ post a message to the simpy-Users mailing list,
 %setup -n %oname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc SimPyDocs SimPyModels
-%doc CHANGES_FROM_PREVIOUS_VERSION.* COMPATIBILITY.* HISTORY.* README.*
-%python_sitelibdir/*
+%doc CHANGES.txt AUTHORS.txt LICENSE.txt README.txt
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.11-alt1
+- Version updated to 3.0.11
+- python2 -> python3
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - new version 2.3.1 (with rpmrb script)
 - cleanup spec
