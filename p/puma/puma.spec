@@ -2,7 +2,7 @@
 %define        pkgname puma
 
 Name:          %pkgname
-Version:       4.2.0
+Version:       4.2.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD 3-Clause
@@ -13,8 +13,14 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake-compiler)
+BuildRequires: libssl-devel
+BuildRequires: gem(nio4r)
 BuildRequires: gem(rack)
+BuildRequires: gem(minitest)
+BuildRequires: gem(minitest-retry)
+BuildRequires: gem(minitest-proveit)
+BuildRequires: gem(rubocop)
+BuildRequires: gem(m)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
@@ -99,6 +105,11 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Mon Oct 21 2019 Pavel Skrylev <majioa@altlinux.org> 4.2.1-alt1
+- update (^) 4.2.0 -> 4.2.1
+- added (+) build deps
+- enable (+) SSL for puma
+
 * Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 4.2.0-alt1
 - update (^) 3.12.1 -> 4.2.0
 - update (^) Ruby Policy 2.0
