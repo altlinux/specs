@@ -1,11 +1,11 @@
 %define oname proteus
 
-%def_with bootstrap
-%def_without check
+%def_without bootstrap
+%def_with check
 
 Name: python3-module-%oname
 Version: 5.2.1
-Release: alt1
+Release: alt2
 
 Summary: Library to access Tryton server as a client
 License: LGPL
@@ -20,6 +20,7 @@ BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-pytest python3-module-trytond-tests
+BuildRequires: python3-modules-sqlite3
 %endif
 
 %if_without bootstrap
@@ -69,6 +70,9 @@ py.test3 -vv
 
 
 %changelog
+* Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.1-alt2
+- enable bootstrap requires, enable tests
+
 * Fri Oct 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.1-alt1
 - Version updated to 5.2.1
 - disable python2, enable python3
