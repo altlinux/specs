@@ -1,42 +1,32 @@
 %define oname logbook
 
-%def_with python3
-
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4.3
-Release: alt1
+Release: alt2
+
 Summary: A logging replacement for Python
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/Logbook/
-
 # https://github.com/mitsuhiko/logbook.git
+
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-notebook python-module-objects.inv python-module-setuptools time
-BuildRequires: python-module-mock python-module-pip python-module-brotlipy
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook python3-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
+BuildRequires: python3-module-Cython python3-module-html5lib
+BuildRequires: python3-module-notebook python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-pip python3-module-brotlipy
-%endif
+BuildRequires: python3-module-sphinx-devel
+
 
 %description
 An awesome logging implementation that is fun to use.
 
-%package -n python3-module-%oname
-Summary: A logging replacement for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-An awesome logging implementation that is fun to use.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 An awesome logging implementation that is fun to use.
@@ -56,62 +46,41 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's/sphinx-build/&-3/' docs/Makefile
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-py.test
-%if_with python3
-pushd ../python3
 py.test3
-popd
-%endif
 
 %files
 %doc AUTHORS CHANGES *.md
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS CHANGES *.md
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
+- python2 -> python3
+
 * Wed Mar 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Build new version for python3.7.
 - Disable check.
