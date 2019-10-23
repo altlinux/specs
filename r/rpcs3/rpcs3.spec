@@ -1,5 +1,5 @@
-%define git_ver 8963
-%define git_commit 29cddc30f0ce70ed38e913520bdd7b2c2f4819ad
+%define git_ver 8990
+%define git_commit 6867fc5f06c59f01e743930aa69f36c5850fc5e3
 
 %define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -8,7 +8,7 @@
 %define libusb_commit 7cfa00e9d723f10167b4d71bceebf2b4b2cbd70e
 %define yaml_cpp_commit eca9cfd64899525d0a61abb0553849676a0fe511
 %define xx_hash_commit 7cc9639699f64b750c0b82333dced9ea77e8436e
-%define llvm_commit b860b5e8f4ee90d6eb567d83ce8ed1a3e71e496f
+%define llvm_commit 9836c299733ee5ef14760cd5bdae27e8233d2393
 %define gsl_commit 1995e86d1ad70519465374fb4876c6ef7c9f8c61
 %define cereal_commit 42a45b6e15fcbd1a3d65b033f5d4d0b2ef6c023d
 
@@ -121,6 +121,10 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Oct 23 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8990-alt1
+- Version 0.0.7.8990
+- Update LLVM to 9836c29
+
 * Mon Oct 21 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8963-alt1
 - Version 0.0.7.8963
 
