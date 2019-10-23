@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191010
+Version: 20191023
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Oct 23 2019 Cronbuild Service <cronbuild@altlinux.org> 20191023-alt1
+- upstream changes (GIT ad7a8b2):
+  + Mellanox: Add new mlxsw_spectrum2 firmware 29.2000.2308 (thx Ido Schimmel)
+  + Mellanox: Add new mlxsw_spectrum firmware 13.2000.2308 (thx Ido Schimmel)
+  + rtl_nic: add firmware files for RTL8153 (thx Hayes Wang)
+  + rtl_bt: Update configuration file for BT part of RTL8822CU (thx Max Chou)
+  + bnx2x: Add FW 7.13.15.0. (thx Sudarsana Reddy Kalluru)
+  + Update AMD cpu microcode (thx Allen, John)
+
 * Wed Oct 16 2019 Cronbuild Service <cronbuild@altlinux.org> 20191010-alt1
 - upstream changes (GIT 4c3e853):
   + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
