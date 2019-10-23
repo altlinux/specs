@@ -10,7 +10,7 @@
 %def_enable regex
 
 Name: keepalived
-Version: 2.0.18
+Version: 2.0.19
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -107,6 +107,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Wed Oct 23 2019 Anton Farygin <rider@altlinux.ru> 2.0.19-alt1
+- 2.0.19
+
 * Thu Aug 08 2019 Anton Farygin <rider@altlinux.ru> 2.0.18-alt1
 - 2.0.18
 
