@@ -2,7 +2,7 @@
 
 Name: libksba
 Version: 1.3.6
-Release: alt12
+Release: alt13
 
 Group: System/Libraries
 Summary: X.509 library
@@ -92,6 +92,9 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Tue Oct 22 2019 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt13
+- Maintenance release.
+
 * Wed Oct 16 2019 Paul Wolneykien <manowar@altlinux.org> 1.3.6-alt12
 - Fix the PKCS#7 parser: by '*' skip only the first bit/octet string.
 
