@@ -61,7 +61,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.29
+Version:	4.3.30
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -1257,6 +1257,9 @@ done
 ################ end extra clients ################
 
 %changelog
+* Wed Oct 23 2019 Sergey Y. Afonin <asy@altlinux.org> 4.3.30-alt1
+- new version (bugfix for 4.3.29)
+
 * Thu Sep 12 2019 Sergey Y. Afonin <asy@altlinux.org> 4.3.29-alt1
 - new version  (fixes: CVE-2019-13451, CVE-2019-13452, CVE-2019-13455,
   CVE-2019-13473, CVE-2019-13474, CVE-2019-13484, CVE-2019-13485,
