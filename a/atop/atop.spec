@@ -1,6 +1,6 @@
 Name: atop
-Version: 2.2
-Release: alt2
+Version: 2.4
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -19,16 +19,13 @@ network-load on process-level).
 The program can also be used to log system- and process-level information in raw
 format for long-term analysis.
 
-
 %prep
 %setup
 %patch -p1
 
-
 %build
 %make_build CFLAGS="%optflags"
 gzip -c9 ChangeLog > ChangeLog.gz
-
 
 %install
 mkdir -p %buildroot/usr/lib/pm-utils/sleep.d
@@ -37,34 +34,33 @@ make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir
 done
 :> %buildroot%_sysconfdir/%{name}rc
 
-
 %post
 %post_service %name ||:
-
 
 %preun
 %preun_service %name ||:
 
-
 %files
 %doc AUTHOR ChangeLog.* README
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/*
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
 %_bindir/*
-%_sbindir/atopacctd
+%_sbindir/*
 %_man1dir/*
 %_man5dir/*
-%_man8dir/atopacctd.8.*
+%_man8dir/*
 %_sysconfdir/cron.d/*
 %_sysconfdir/logrotate.d/*
 %_initdir/*
-%_unitdir/%name.service
-%_unitdir/atopacct.service
+%_unitdir/%{name}*.service
 %_logdir/%name
-%_libexecdir/pm-utils/sleep.d/45atoppm
+%_datadir/%name
+/usr/lib/systemd/system-sleep/atop-pm.sh
+/usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Wed Oct 23 2019 Terechkov Evgenii <evg@altlinux.org> 2.4-alt1
+- 2.4 (ALT#37288)
+
 * Thu Sep 24 2015 Terechkov Evgenii <evg@altlinux.org> 2.2-alt2
 - Systemd unit file fixed
 
