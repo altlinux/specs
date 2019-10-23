@@ -1,4 +1,4 @@
-%define kernel_base_version 5.1
+%define kernel_base_version 5.3
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent_%kernel_base_version/plugins/*
 %add_findreq_skiplist %_datadir/perf_%kernel_base_version-core/tests/*.py
@@ -450,6 +450,10 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Wed Oct 23 2019 Alexey Shabalin <shaba@altlinux.org> 5.3-alt1
+- Update for 5.3
+- fixed sysvinit scripts
+
 * Tue May 21 2019 Vitaly Chikunov <vt@altlinux.org> 5.1-alt1
 - Add /usr/lib/perf to perf
 - Clean up .spec (fix warnings, remove duplicated files)
