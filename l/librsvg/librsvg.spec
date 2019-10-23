@@ -12,12 +12,12 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
 Summary: SVG rendering library
-License: LGPLv2+
+License: LGPLv2.1+
 Group: System/Libraries
 Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 
@@ -176,6 +176,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Wed Oct 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.46.3-alt1
+- 2.46.3
+
 * Mon Oct 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1:2.46.2-alt1
 - 2.46.2
 
