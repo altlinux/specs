@@ -2,7 +2,7 @@
 
 Name: sqlite3
 Version: 3.30.1
-Release: alt1
+Release: alt2
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -135,6 +135,7 @@ autoreconf -i
 	#
 
 %make_build all
+make sqlite3_analyzer sqldiff
 
 %check
 subst 's|-DSQLITE_ENABLE_FTS3=1||' Makefile
@@ -144,6 +145,9 @@ subst 's|-DSQLITE_ENABLE_FTS3=1||' Makefile
 %make_install install tcl_install DESTDIR=%buildroot
 
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
+
+install -pD -m755 sqlite3_analyzer %buildroot%_bindir/sqlite3_analyzer
+install -pD -m755 sqldiff %buildroot%_bindir/sqldiff
 
 install -pD -m755 lemon %buildroot%_bindir/lemon
 install -pD -m644 lempar.c %buildroot%_datadir/lemon/lempar.c
@@ -158,6 +162,8 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 
 %files
 %_bindir/%name
+%_bindir/sqlite3_analyzer
+%_bindir/sqldiff
 %_man1dir/%name.*
 
 %files -n lib%name
@@ -190,6 +196,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Wed Oct 23 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.1-alt2
+- Built and packed sqlite3_analyzer and sqldiff.
+
 * Sat Oct 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.1-alt1
 - 3.30.1.
 
