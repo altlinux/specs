@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.12
+Version: 2.1.13
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -47,6 +47,12 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Thu Oct 24 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.13-alt1
+- add debugsource packages support (skip it) (eterbug #12325)
+- replace wine-gecko and wine-mono with wine-common
+- send_via_py_xmpp.py: python2 -> python3
+- watcher robot script: exit if can't write pid file
+
 * Fri Jun 28 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.12-alt1
 - fail if depends file is missed
 - improve component download
