@@ -2,7 +2,7 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Epoch: 20180202
 
@@ -81,12 +81,9 @@ This package contains a static development library.
 %files -n lib%name
 %doc AUTHORS NEWS THANKS TODO
 %_docdir/%name
-%exclude %_docdir/%name/example
 %_libdir/*.so.*
-%_infodir/*info*
 
 %files -n lib%name-devel
-%doc %_docdir/%name/example
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -98,6 +95,9 @@ This package contains a static development library.
 %endif
 
 %changelog
+* Thu Oct 24 2019 Grigory Ustinov <grenka@altlinux.org> 20180202:0.13.0-alt1
+- Build new version 0.13.0.
+
 * Fri Feb 02 2018 Grigory Ustinov <grenka@altlinux.org> 20180202:0.12.0-alt1
 - NMU:
   + build new version (Closes: #33422).
