@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Documents
-%define ver_major 3.33
+%define ver_major 3.34
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -158,6 +158,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Thu Oct 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
+- 3.34.0
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.33.90-alt1
 - 3.33.90
 
