@@ -1,20 +1,22 @@
 Name: rbdoom3bfg
 Version: 1.1.0
-Release: alt1
-Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
-Summary(ru_RU.UTF-8): Doom 3: BFG Edition с мягкими тенями, приведёнными в порядок исходниками, поддержкой Linux и 64-битной архитектуры
+Release: alt1.1
 
+Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
 Group: Games/Arcade
-Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
-ExclusiveArch: %ix86 x86_64
-Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source: %name-%version.tar.gz
+Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
+Source: %name-%version.tar
 Source2: %name.png
 Source3: %name.desktop
+Packager: Artyom Bystrov <arbars@altlinux.org>
+
+ExclusiveArch: %ix86 x86_64 %e2k
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake libjpeg-devel libSDL2-devel ffmpeg libopenal-devel libGLU-devel
+
+Summary(ru_RU.UTF-8): Doom 3: BFG Edition с мягкими тенями, приведёнными в порядок исходниками, поддержкой Linux и 64-битной архитектуры
 
 %description
 Doom 3: BFG Edition game engine with soft shadows, cleaned up source, Linux
@@ -42,12 +44,21 @@ $HOME/.rbdoom3bfg/
 
 %prep
 %setup
+sed -i 's,-march=native,-mcpu=native,' \
+	neo/CMakeLists.txt neo/libs/rapidjson/CMakeLists.txt
+sed -i 's,-m64,,' neo/libs/zlib/configure
 
 %build
 %cmake_insource \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DONATIVE=ON \
 	-DSDL2=ON \
+%ifnarch %ix86 x86_64
+	-DUSE_INTRINSICS=OFF \
+%ifnarch %e2k
+	-DCPU_OPTIMIZATION= \
+%endif
+%endif
 	./neo
 
 %make_build
@@ -68,5 +79,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/%name.png
 
 %changelog
+* Thu Oct 24 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1
+- E2K: fixed build (disable SIMD)
+- minor spec/gear cleanup
+
 * Wed Sep 25 2019 Artyom Bystrov <arbars@altlinux.org> 1.1.0-alt1
 - initial build for ALT Sisyphus
