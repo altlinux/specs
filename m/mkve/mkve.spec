@@ -1,15 +1,22 @@
 Name: mkve
 Version: 0.22
-Release: alt1
-Source: %name-%version.tar
+Release: alt2
 
 Summary: Package for initial managing of virtual environments
 License: GPLv2+
 Group: System/Configuration/Other
 
+Source: %name-%version.tar
+
 Requires: su
 Requires: mkve-cache
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-libvirt
+BuildRequires: python3-module-lxml
+
 Conflicts: ve-build-scripts
+
 
 %description
 Package for managing virtual environments, creating caches for such
@@ -42,7 +49,11 @@ A tool to create caches for virtual environments.
 %_bindir/mkve-cache
 %_man1dir/mkve-cache*
 
+
 %changelog
+* Thu Oct 24 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.22-alt2
+- python2 -> python3
+
 * Wed Aug 28 2019 Dmitry V. Levin <ldv@altlinux.org> 0.22-alt1
 - mkve-cache:
   + updated for hsh-fakedev removal;
