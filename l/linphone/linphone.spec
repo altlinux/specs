@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.12.0
-Release: alt6
+Release: alt7
 
 Summary: Open source video SIP phone
 License: GPLv2+
@@ -13,7 +13,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 
 BuildPreReq: libortp-devel >= 0.16
 
-BuildRequires: doxygen gcc-c++ intltool libbelle-sip-devel libgtk+2-devel
+BuildRequires: doxygen gcc8-c++ intltool libbelle-sip-devel libgtk+2-devel
 BuildRequires: libmediastreamer-devel libnotify-devel libreadline-devel
 BuildRequires: libspeex-devel libsqlite3-devel libudev-devel libxml2-devel
 BuildRequires: python3-base sgmltools-lite libSDL-devel libncurses-devel
@@ -90,6 +90,11 @@ sed -i 's,-fno-inline-small-functions,,' CMakeLists.txt configure.ac
 
 %build
 %add_optflags %optflags_shared %optflags_strict %optflags_notraceback -Wno-error=cast-function-type -Wno-error=sizeof-pointer-memaccess -Wno-error=format-truncation
+%ifnarch %e2k
+%set_gcc_version 8
+export CC="gcc-%{_gcc_version}"
+export CXX="g++-%{_gcc_version}"
+%endif
 
 ./autogen.sh
 %configure --enable-external-ortp \
@@ -155,6 +160,9 @@ sed -i 's,-fno-inline-small-functions,,' CMakeLists.txt configure.ac
 
 
 %changelog
+* Thu Oct 24 2019 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt7
+- Build with gcc8
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 3.12.0-alt6
 - E2K: avoid lcc-unsupported options
 - Minor spec cleanup
