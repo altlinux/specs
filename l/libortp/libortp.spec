@@ -1,6 +1,6 @@
 Name: libortp
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Real-time Transport Protocol Stack
@@ -11,7 +11,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: doxygen glibc-devel libbctoolbox-devel
+BuildRequires: doxygen glibc-devel libbctoolbox-devel gcc8
 
 %description
 oRTP is a LGPL licensed C library implementing the RTP protocol
@@ -46,6 +46,10 @@ develop programs using the oRTP library.
 %ifarch %ix86
 %add_optflags -malign-double
 %endif
+%ifnarch %e2k
+%set_gcc_version 8
+export CC="gcc-%{_gcc_version}"
+%endif
 ./autogen.sh
 %configure \
     --disable-static \
@@ -67,6 +71,9 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Thu Oct 24 2019 Alexei Takaseev <taf@altlinux.org> 1.0.2-alt3
+- Build with GCC 8
+
 * Tue Jan 29 2019 Michael Shigorin <mike@altlinux.org> 1.0.2-alt2
 - E2K: avoid lcc-unsupported options
 
