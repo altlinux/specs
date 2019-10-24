@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libgtkmm3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -102,6 +102,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Thu Oct 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Wed Mar 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 
