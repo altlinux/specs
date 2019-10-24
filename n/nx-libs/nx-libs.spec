@@ -1,17 +1,17 @@
 %def_with system_locale
 
 Name:    nx-libs
-Version: 3.5.2.31
-Release: alt9
+Version: 3.5.99.22
+Release: alt1
 Summary: NX X11 protocol compression libraries
 
 Group:   System/Libraries
 License: GPLv2+
 URL:     https://github.com/ArcticaProject/nx-libs/
 
-# Source0-url: https://github.com/ArcticaProject/nx-libs/archive/redist-server/%version.tar.gz
+# Source0-url: https://github.com/ArcticaProject/nx-libs/archive/%version.tar.gz
 Source0: %name-%version.tar
-Source1: Makefile.alt
+#Source1: Makefile.alt
 Source2: patches.etersoft.tar
 
 BuildRequires: gcc-c++
@@ -105,7 +105,7 @@ Requires: nx-libs = %EVR
 This package provides the NX proxy (client) binary.
 
 %prep
-%setup -q
+%setup
 
 # Apply all patches from debian/patches
 cat debian/patches/series | while read patchfile;do 
@@ -118,20 +118,10 @@ for patchfile in $(ls patches.etersoft/*.patch); do
 	test -e $patchfile && patch -p0 < $patchfile
 done
 
-
+# remove build cruft that is in Git (also taken from roll-tarball.sh)
+rm -Rf nx*/configure nx*/autom4te.cache*
 # Install into /usr
 sed -i -e 's,/usr/local,/usr,' nx-X11/config/cf/site.def
-# Use rpm optflags
-sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/host.def
-sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/linux.cf
-echo "#define DefaultGcc2Ppc64Opt %optflags" >> nx-X11/config/cf/host.def
-# Use multilib dirs
-# We're installing binaries into %%_libdir/nx/bin rather than %%_libexedir/nx
-# becuase upstream expects libraries and binaries in the same directory
-
-#sed -i -e 's,/lib/nx,/%_lib/nx,' Makefile nx-X11/config/cf/X11.tmpl
-#sed -i -e 's,/lib/x2go,/%_lib/x2go,' Makefile
-
 # Fix FSF address
 find -name LICENSE | xargs sed -i \
   -e 's/59 Temple Place/51 Franklin Street/' -e 's/Suite 330/Fifth Floor/' \
@@ -139,13 +129,12 @@ find -name LICENSE | xargs sed -i \
 # Fix source permissions
 find -type f -name '*.[hc]' | xargs chmod -x
 
-# Bundled nx-X11/extras
-# Xpm - Is needed and needs to get linked to libXcomp
-# Mesa - Used by the X server
+# Use rpm optflags
+sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/host.def
+sed -i -e 's|-O3|%{optflags}|' nx-X11/config/cf/linux.cf
+echo "#define DefaultGcc2Ppc64Opt %optflags" >> nx-X11/config/cf/host.def
 
-# Xcursor - Other code still references files in it
-# Xfont - Statically linked to nxarget  others?
-# Xpm
+
 
 %__subst "s:\$(NLSSUBDIR):nls:" nx-X11/Imakefile
 
@@ -157,163 +146,105 @@ find -type f -name '*.[hc]' | xargs chmod -x
 %__subst "s|#define XLocaleDir \$(LIBDIR)/locale|#define XLocaleDir %_datadir/nx/X11/locale|g" nx-X11/config/cf/X11.tmpl
 %endif
 
-cp %SOURCE1 nx-X11
+#cp %SOURCE1 nx-X11
 
 
 %build
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags"
-
-# allow use rpm optflags
-%__subst "s|^C.*FLAGS=.*-O.*||" */configure*
-
-# prepare X11 includes
-pushd nx-X11
-%make_build USRLIBDIR=%_libdir SHLIBDIR=%_libdir -f Makefile.alt Includes
-popd
-
-for i in nxcomp nxproxy nxcompshad nxcompext; do
-pushd $i
-%autoreconf
-%configure USRLIBDIR=%_libdir SHLIBDIR=%_libdir
-%__subst "s,/usr/X11R6/lib ,/usr/X11R6/%_lib ,g" Makefile
-popd
-done
-
-# build X11 Support Libraries and Agents
-pushd nx-X11
-%__subst 's|NX_REQUIREDLIBS   = |NX_REQUIREDLIBS   = -ldl |g' lib/X11/Imakefile
-%make_build USRLIBDIR=%_libdir SHLIBDIR=%_libdir World
-popd
-
-# build Compression Library and Proxy and Extended Compression Library
-for i in nxcomp nxproxy nxcompshad nxcompext; do
-pushd $i
-export LDFLAGS="${LDFLAGS} -L../nx-X11/exports/lib -lNX_X11"
-%make_build USRLIBDIR=%_libdir SHLIBDIR=%_libdir
-popd
-done
-
-pushd nx-X11
-%make_build USRLIBDIR=%_libdir SHLIBDIR=%_libdir
-popd
-
-pushd nx-X11/lib
-
-# rebuild libraries with new links
-for i in X11 Xfixes Xdamage Xcomposite; do
-pushd $i
-%__subst 's|-lc|-lc -lX11|g' Makefile
-rm -rf *.so*
-%make_build
-popd
-done
-popd
-
+cat >"my_configure" <<'EOF'
+%configure \
+  --disable-silent-rules \
+  "${@}"
+EOF
+chmod a+x my_configure;
+# The RPM macro for the linker flags does not exist on EPEL
+%{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
+SHLIBGLOBALSFLAGS="%{__global_ldflags}"
+LOCAL_LDFLAGS="%{__global_ldflags}"
+CDEBUGFLAGS="%{?__global_cppflags} %{?__global_cflags} %{?optflags}"
+IMAKE_DEFINES=''
+FORCE_TIRPC='YES'
+IMAKE_DEFINES="-DUseTIRPC=${FORCE_TIRPC}"
+make CONFIGURE="$PWD/my_configure" PREFIX=%{_prefix} LIBDIR=%{_libdir} CDEBUGFLAGS="${CDEBUGFLAGS}" LOCAL_LDFLAGS="${LOCAL_LDFLAGS}" SHLIBGLOBALSFLAGS="${SHLIBGLOBALSFLAGS}" IMAKE_DEFINES="${IMAKE_DEFINES}"
 
 %install
-pushd nx-X11
-%makeinstall_std PREFIX=%_prefix USRLIBDIR=%_libdir SHLIBDIR=%_libdir NXLIBDIR=%_libdir -C lib
-%makeinstall_std PREFIX=%_prefix USRLIBDIR=%_libdir SHLIBDIR=%_libdir NXLIBDIR=%_libdir -C nls
-%makeinstall_std PREFIX=%_prefix USRLIBDIR=%_libdir SHLIBDIR=%_libdir NXLIBDIR=%_libdir -C programs/Xserver/Xext
-popd
+make install \
+        DESTDIR=%{buildroot} \
+        PREFIX=%{_prefix} \
+        LIBDIR=%{_libdir} SHLIBDIR=%{_libdir} \
+        INSTALL_DIR="install -dm0755" \
+        INSTALL_FILE="install -pm0644" \
+        INSTALL_PROGRAM="install -pm0755"
 
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_libdir
-mkdir -p %buildroot%_sysconfdir/nxagent
-mkdir -p %buildroot%_man1dir
 
-# install NX libraries to system libdir
-cp -a nx-X11/lib/X11/libNX_*.so.* %buildroot%_libdir/
+# TODO: broken upstream with broken linking and strange shell wrappers
+# https://bugs.etersoft.ru/show_bug.cgi?id=14208
+#rm -f %buildroot%_libdir/nx/X11/libX11.so*
 
-# Remove static libs
-rm %buildroot%_libdir/*.a
+# Remove static libs (they don't exist on SLES, so using -f here)
+rm -f %{buildroot}%{_libdir}/*.a
 
-# install Compression Libraries and Proxy
-cp -a nxcomp/libXcomp.so.* %buildroot%_libdir/
-cp -a nxcompext/libXcompext.so.* %buildroot%_libdir/
-cp -a nxcompshad/libXcompshad.so.* %buildroot%_libdir/
-install -m 755 nxproxy/nxproxy %buildroot%_bindir/
+# Fix permissions on shared libraries
+chmod 755  %{buildroot}%{_libdir}/lib*.so*
 
-mkdir -p -m0755 %buildroot%_includedir/nx
-cp -afLr nx-X11/exports/include/X11 %buildroot%_includedir/nx/
+#Remove extras, GL, and other unneeded headers
+rm -r %{buildroot}%{_includedir}/GL
+rm -r %{buildroot}%{_includedir}/nx-X11/extensions/XK*.h
+rm -r %{buildroot}%{_includedir}/nx-X11/extensions/*Xv*.h
+rm -r %{buildroot}%{_includedir}/nx-X11/extensions/XRes*.h
+rm -r %{buildroot}%{_includedir}/nx-X11/extensions/XIproto.h
+rm -r %{buildroot}%{_includedir}/nx-X11/extensions/XI.h
+rm -r %{buildroot}%{_includedir}/nx-X11/Xtrans
 
-# install files for development
-mkdir -p %buildroot%_includedir/nx
-cp -a nxcomp/*.h %buildroot%_includedir/nx/
-cp -a nxcomp/libXcomp.so %buildroot%_libdir/
-cp -a nxcompshad/Shadow.h %buildroot%_includedir/nx/
+#Remove our shared libraries' .la files before wrapping up the packages
+rm -f %{buildroot}%{_libdir}/*.la
 
-mkdir -p %buildroot%_libdir/nx/bin
-install -D -m 755 nx-X11/programs/Xserver/nxagent %buildroot%_libdir/nx/bin
-install -D -m 755 debian/wrappers/nxagent %buildroot%_bindir
-subst 's|/usr/lib|%_libdir|g' %buildroot%_bindir/nxagent
-
-mkdir -p %buildroot%_datadir/nx/X11
-mv %buildroot%_sysconfdir/X11/xserver/SecurityPolicy %buildroot%_datadir/nx/SecurityPolicy
-mv %buildroot/usr/lib/nx/X11/*DB %buildroot%_datadir/nx/X11/
-mv %buildroot/usr/lib/nx/X11/Xcms.txt %buildroot%_datadir/nx/X11/
-
-# fix keyboard layout switch
-#mkdir -p %buildroot%_sysconfdir/nxagent/xkb/compiled/
-#ln -fs ../../../var/lib/xkb %buildroot%_sysconfdir/nxagent/xkb/compiled
-#ln -fs ../../../../../%_sysconfdir/nxagent/xkb %buildroot%_libdir/nxserver/lib/X11/
-
-# delete unused files
-rm -rf %buildroot%_sysconfdir/X11
-rm -rf %buildroot%_sysconfdir/fonts
-rm -rf %buildroot%_libdir/nxserver/bin
-rm -rf %buildroot%_libdir/nxserver/include
-rm -rf %buildroot%_libdir/nxserver/lib*/X11/*.so*
-rm -rf %buildroot%_libdir/nxserver/lib*/X11/config
-rm -rf %buildroot%_libdir/nxserver/lib*/X11/config
-rm -rf %buildroot%_libdir/nxserver/lib*/X11/xserver
-rm -rf %buildroot/usr/lib/nx/X11/xserver
-rm -rf %buildroot%_libdir/nxserver/lib*/pkgconfig
-rm -rf %buildroot%_libdir/nxserver/lib*/*.so*
-rm -rf %buildroot%_libdir/nxserver/lib*/*.a
-rm -rf %buildroot%_libdir/pkgconfig/*.pc
+#FIXME: leaving nxdialog integration to Ionic
+rm -f %{buildroot}%{_bindir}/nxdialog
+rm -f %{buildroot}%{_datadir}/man/man1/nxdialog.1*
 
 %if_with system_locale
 rm -rf %buildroot%_datadir/X11/locale
 %endif
 
-mkdir -p %buildroot%_datadir/nx/
-install -m644 debian/rgb %buildroot%_datadir/nx/rgb.txt
+#mkdir -p %buildroot%_datadir/nx/
+#install -m644 debian/rgb %buildroot%_datadir/nx/rgb.txt
 
-cd %buildroot%_libdir
-ln -sf libXcomp.so.3.5.0 libXcomp.so
-ln -sf libXcompext.so.3.5.0 libXcompext.so
-ln -sf libXcompshad.so.3.5.0 libXcompshad.so
-cd -
+#cd %buildroot%_libdir
+#ln -sf libXcomp.so.3.5.0 libXcomp.so
+#ln -sf libXcompext.so.3.5.0 libXcompext.so
+#ln -sf libXcompshad.so.3.5.0 libXcompshad.so
+#cd -
 
-mkdir -p %buildroot%_docdir/%name-%version/
-install -m 644 nxcomp/LICENSE %buildroot%_docdir/%name-%version/
-mkdir -p %buildroot%_docdir/%name-%version/nxcomp/
-install -m 644 nxcomp/README %buildroot%_docdir/%name-%version/nxcomp
+#mkdir -p %buildroot%_docdir/%name-%version/
+#install -m 644 nxcomp/LICENSE %buildroot%_docdir/%name-%version/
+#mkdir -p %buildroot%_docdir/%name-%version/nxcomp/
+#install -m 644 nxcomp/README %buildroot%_docdir/%name-%version/nxcomp
 
 # Needed for nxagent to find the keymap directory
-mkdir -p %buildroot%_datadir/X11/xkb
-touch %buildroot%_datadir/X11/xkb/keymap.dir
+#mkdir -p %buildroot%_datadir/X11/xkb
+#touch %buildroot%_datadir/X11/xkb/keymap.dir
 
-cp -a nxcomp/VERSION %buildroot%_datadir/nx/VERSION.nxagent
-cp -a nxproxy/VERSION %buildroot%_datadir/nx/VERSION.nxproxy
-cp -a debian/keystrokes.cfg %buildroot%_sysconfdir/nxagent/
-cp -a debian/nxagent.keyboard %buildroot%_sysconfdir/nxagent/
-mkdir -p %buildroot%_datadir/pixmaps/
-cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps/
+#cp -a nxcomp/VERSION %buildroot%_datadir/nx/VERSION.nxagent
+#cp -a nxproxy/VERSION %buildroot%_datadir/nx/VERSION.nxproxy
+#cp -a debian/keystrokes.cfg %buildroot%_sysconfdir/nxagent/
+#cp -a debian/nxagent.keyboard %buildroot%_sysconfdir/nxagent/
+#mkdir -p %buildroot%_datadir/pixmaps/
+#cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps/
 
 %files
 #%doc README.md LICENSE LICENSE.nxcomp
-%doc %_docdir/%name-%version
+#doc %_docdir/%name-%version
 #%config(noreplace) %_sysconfdir/ld.so.conf.d/%name-%_arch.conf
 %_libdir/libXcomp*.so.*
 %_libdir/libNX_*.so.*
-%dir %_libdir/nx
+%dir %_libdir/nx/
+%dir %_libdir/nx/X11/
+%_libdir/nx/X11/libX11.so.*
 %dir %_datadir/nx
 %_datadir/nx/*
 %exclude %_datadir/nx/VERSION.nxagent
 %exclude %_datadir/nx/VERSION.nxproxy
+%_man1dir/nxproxy.*
 
 %if_without system_locale
 %dir %_libdir/nx/X11/locale
@@ -324,21 +255,21 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_libdir/libNX_*.so
 %_libdir/libXcomp*.so
 
-# conflict with X11-devel
-# %_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
-%dir %_includedir/nx
-%dir %_includedir/nx/X11
+%dir %_includedir/nx/
 %_includedir/nx/*
+%_includedir/nx-X11/
 
 %files -n nxagent
 %dir %_sysconfdir/nxagent
 %config(noreplace) %_sysconfdir/nxagent/keystrokes.cfg
-%config(noreplace) %_sysconfdir/nxagent/nxagent.keyboard
+#config(noreplace) %_sysconfdir/nxagent/nxagent.keyboard
 %_bindir/nxagent
 %dir %_libdir/nx/bin
 %_libdir/nx/bin/nxagent
-%_datadir/X11/xkb/keymap.dir
+%_man1dir/nxagent.*
+#_datadir/X11/xkb/keymap.dir
 %_pixmapsdir/nxagent.xpm
 #%_man1dir/nxagent.1*
 %_datadir/nx/VERSION.nxagent
@@ -350,6 +281,10 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 %_datadir/nx/VERSION.nxproxy
 
 %changelog
+* Fri Sep 13 2019 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.22-alt1
+- new version 3.5.99.22 (with rpmrb script)
+- build without channel_usbip, channel_pcscd, channel_extra1
+
 * Fri Mar 01 2019 Pavel Vainerman <pv@altlinux.ru> 3.5.2.31-alt9
 - added patches for compilation with gcc8 (altbug #36207)
 

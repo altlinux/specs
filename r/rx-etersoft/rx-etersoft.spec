@@ -1,8 +1,8 @@
 %define oname freenx-server
 %define hooksroot rx-etersoft
 Name: rx-etersoft
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Freenx application/thin-client server
 Group: Networking/Remote access
@@ -190,6 +190,14 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Thu Oct 24 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- nxloadconfig: add startkde5 support
+- rx-etersoft.init: fix RX Etersoft name
+- disable SET_LD_LIBRARY_PATH by default
+
+* Fri Dec 28 2018 Etersoft Builder <builder@etersoft.ru> 1.4.1-alt3
+- (CI): disabled release build for p7
+
 * Wed Dec 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt2
 - remove license check from GPL code
 
