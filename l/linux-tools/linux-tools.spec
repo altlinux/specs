@@ -9,7 +9,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -248,7 +248,7 @@ find %buildroot%_sysconfdir/bash_completion.d \
 make -C %kernel_source/tools/bpf/bpftool \
 	DESTDIR=%buildroot \
 	prefix=%_prefix \
-	bash_compdir=%_sysconfdir/bash_completion.d/ \
+	bash_compdir=%_datadir/bash-completion/completions \
 	mandir=%_mandir \
 	install \
 	doc-install
@@ -260,7 +260,7 @@ mkdir -p %buildroot%_altdir
 cat <<'_EOF'_ > %buildroot%_altdir/%name
 %_bindir/perf	%_bindir/perf_%kernel_base_version	20
 %_bindir/trace	%_bindir/trace_%kernel_base_version	20
-%_sysconfdir/bash_completion.d/perf	%_sysconfdir/bash_completion.d/perf_%kernel_base_version	20
+%%_sysconfdir/bash_completion.d/perf	%_sysconfdir/bash_completion.d/perf_%kernel_base_version	20
 _EOF_
 
 # Add man alternatives:
@@ -400,6 +400,7 @@ fi
 %files -n cpupower -f cpupower.lang
 %_bindir/cpupower
 %_man1dir/cpupower*
+%_datadir/bash-completion/completions/cpupower
 %ifarch %ix86 x86_64
 %_man8dir/turbostat*
 %_man8dir/x86_energy_perf_policy*
@@ -446,10 +447,14 @@ fi
 
 %files -n bpftool
 %_sbindir/bpftool
-%_sysconfdir/bash_completion.d/bpftool
+%_datadir/bash-completion/completions/bpftool
 %_man8dir/bpftool*
 
 %changelog
+* Thu Oct 24 2019 Alexey Shabalin <shaba@altlinux.org> 5.3-alt2
+- move bash completions for bpftool to /usr/share
+- package bash completions for cpupower
+
 * Wed Oct 23 2019 Alexey Shabalin <shaba@altlinux.org> 5.3-alt1
 - Update for 5.3
 - fixed sysvinit scripts
