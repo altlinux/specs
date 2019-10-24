@@ -1,6 +1,6 @@
 Name: efivar
 Version: 37
-Release: alt1
+Release: alt2
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
@@ -58,6 +58,9 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM
 %_libdir/*.so.*
 
 %changelog
+* Thu Oct 24 2019 Anton Farygin <rider@altlinux.ru> 37-alt2
+- fixed build with gcc-9 by applying patches from upstream
+
 * Mon Dec 10 2018 Anton Farygin <rider@altlinux.ru> 37-alt1
 - new version
 
