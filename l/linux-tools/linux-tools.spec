@@ -9,7 +9,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt3
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -260,7 +260,7 @@ mkdir -p %buildroot%_altdir
 cat <<'_EOF'_ > %buildroot%_altdir/%name
 %_bindir/perf	%_bindir/perf_%kernel_base_version	20
 %_bindir/trace	%_bindir/trace_%kernel_base_version	20
-%%_sysconfdir/bash_completion.d/perf	%_sysconfdir/bash_completion.d/perf_%kernel_base_version	20
+%_sysconfdir/bash_completion.d/perf	%_sysconfdir/bash_completion.d/perf_%kernel_base_version	20
 _EOF_
 
 # Add man alternatives:
@@ -451,6 +451,9 @@ fi
 %_man8dir/bpftool*
 
 %changelog
+* Fri Oct 25 2019 Alexey Shabalin <shaba@altlinux.org> 5.3-alt3
+- fixed typo alternatives for perf
+
 * Thu Oct 24 2019 Alexey Shabalin <shaba@altlinux.org> 5.3-alt2
 - move bash completions for bpftool to /usr/share
 - package bash completions for cpupower
