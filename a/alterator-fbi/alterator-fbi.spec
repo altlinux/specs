@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.42
+Version: 5.43
 Release: alt1
 
 Source: %name-%version.tar
@@ -152,6 +152,10 @@ fi ||:
 
 
 %changelog
+* Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 5.43-alt1
+- Render table with dynamic fields from JSON (thanks majioa@).
+  See alterator-domain-policy for details.
+
 * Wed Apr 17 2019 Paul Wolneykien <manowar@altlinux.org> 5.42-alt1
 - Update the call-cc-via-reset patch (for E2K).
 - Fixed the accidentally overwritten URL query parsing regexp fix
