@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.48.0
+Version: 4.2.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -23,101 +23,125 @@ Patch1: calibre-0.8.55-alt-no-macmenu.patch
 Requires: fonts-ttf-liberation
 Requires: xkeyboard-config
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 1.9.19
 
-%add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
+# FIXME: hack
+%add_python3_req_skip calibre.ebooks.markdown.__main__
+
+# Windows's modules
+%add_python3_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
+
+%add_python3_path %_libdir/%name
 
 BuildRequires: chrpath
 BuildRequires: /proc
 
-BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
+BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libsqlite3-devel
+BuildRequires: libusb-devel >= 1.0.22
+
+####### Building headless QPA plugin #######
+#Project MESSAGE: This project is using private headers and will therefore be tied to this specific Qt module build version.
+#Project MESSAGE: Running this project against other versions of the Qt modules may crash at any arbitrary point.
+#Project MESSAGE: This is not a bug, but a result of using Qt internals. You have been warned!
+#make: *** No rule to make target '/usr/lib64/libQt5ThemeSupport.a', needed by '/usr/src/RPM/BUILD/calibre/src/calibre/plugins/libheadless.so'.  Stop.
+BuildRequires: qt5-base-devel-static glibc-devel-static
 
 # missed in the official list
 BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
 
-BuildRequires: python >= 2.7.9
-Requires: python >= 2.7.9
+BuildRequires: python3
+Requires: python3
 
-BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
+BuildRequires: python3-modules-curses
 
-BuildRequires: python-module-sip-devel >= 4.19.1
-Requires: python-module-sip >= 4.19.1
+BuildRequires: python3-module-sip-devel >= 4.19.18
+Requires: python3-module-sip >= 4.19.18
 
 # Checked 01.10.2017 with
 # https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
 # calibre/bypy/sources.json
 
-BuildRequires: qt5-base-devel-static >= 5.3.2
-BuildRequires: python-module-PyQt5-devel
+BuildRequires: qt5-base-devel
+# >= 5.13
+BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-imageformats qt5-webchannel-devel qt5-location-devel qt5-x11extras-devel qt5-wayland-devel qt5-sensors-devel qt5-webengine-devel
+BuildRequires: python3-module-PyQt5-devel python3-module-PyQtWebEngine
+# TODO: pyqt-webengine
 # >= 5.8
 BuildRequires: xdg-utils >= 1.0.2
 
 BuildRequires: libpoppler-qt5-devel >= 0.20.2
-BuildRequires: libpoppler-devel >= 0.52
-BuildRequires: libpodofo-devel >= 0.9.5
+BuildRequires: libpoppler-devel >= 0.76.1
+BuildRequires: libpodofo-devel >= 0.9.6
 BuildRequires: libwmf-devel >= 0.2.8
-# chmlib
 BuildRequires: libchm-devel >= 0.40
 BuildRequires: libicu-devel >= 5.6
-BuildRequires: libmtp-devel >= 1.1.11
+BuildRequires: libmtp-devel >= 1.1.16
 
-# with msgpack 0.4.x: TypeError: unpackb() got an unexpected keyword argument 'raw'
-%py_use msgpack >= 0.5.6
-%py_use html5-parser
-%py_use mechanize
+%py3_use msgpack >= 0.6.1
+%py3_use html5-parser >= 0.4.6
+%py3_use mechanize >= 0.4.3
+%py3_use lxml >= 4.3.3
+# https://bugzilla.altlinux.org/show_bug.cgi?id=37303
+%py3_use dateutil
+# >= 2.8.0
+%py3_use css-parser >= 1.0.4
+%py3_use dns 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=37338
+# >= 1.16.0
+%py3_use feedparser >= 5.2.1
+%py3_use markdown >= 3.1
+%py3_use html2text
 # TODO
-# >= 0.3.5
-%py_use lxml >= 3.8.0
-%py_use dateutil >= 2.5.3
-%py_use css-parser >= 1.0.4
-%py_use dns >= 1.14.0
+#py3_use html2text >= 2018.1.9
 
-%py_use netifaces >= 0.10.5
-%py_use psutil >= 4.3.0
-#py_use apsw >= 3.13.0
+%py3_use netifaces >= 0.10.9
+#py3_use ifaddr >= 0.1.6
+#py3_use zeroconf >= 0.21.3
+%py3_use psutil >= 5.6.2
+%py3_use apsw >= 3.27.2
 # as in p8
-%py_use apsw >= 3.8.0
-%py_use dbus >= 1.2.4
+#py3_use apsw >= 3.8.0
+%py3_use dbus >= 1.2.8
 BuildRequires: libdbus-devel >= 1.10.8
-# pygments 2.1.3
-# optipng 0.7.6
-# mozjpeg 3.1
-%py_use cssselect >= 0.7.1
+BuildRequires: libdbus-glib-devel
+# TODO >= 0.110
+%py3_use Pygments >= 2.3.1
+BuildRequires: optipng >= 0.7.7
+Requires: optipng >= 0.7.7
+# TODO: mozjpeg 3.3.1
+%py3_use cssselect >= 0.7.1
 
 # no need really
-#py_use soupsieve >= 1.8
-# bs4 >= 4.7.1
-%py_use BeautifulSoup4 >= 4.6.3
+#py3_use soupsieve >= 1.9.1
+# TODO: bs4 >= 4.7.1
+%py3_use BeautifulSoup4 >= 4.6.3
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
 BuildRequires: zlib-devel bzlib-devel
 BuildRequires: libexpat >= 2.2.4
 BuildRequires: libffi-devel >= 3.2.1
-#BuildRequires: nasm
-BuildRequires: libwebp-devel >= 0.5.0
+BuildRequires: libwebp-devel >= 1.0.2
+BuildRequires: libjxr-devel >= 0.2.1
 # iconv?
-BuildRequires: libxml2-devel
-# >= 2.9.5
-BuildRequires: libxslt-devel
-# >= 1.1.30
-BuildRequires: libgpg-error-devel >= 1.22
-BuildRequires: libgcrypt-devel >= 1.7.1
-BuildRequires: libdbus-glib-devel >= 0.106
+BuildRequires: libxml2-devel >= 2.9.9
+BuildRequires: libxslt-devel >= 1.1.33
+BuildRequires: libgpg-error-devel >= 1.36
+BuildRequires: libgcrypt-devel >= 1.8.4
 
-%py_use six >= 1.10.0
-%py_use regex >= 2017.01.11
-%py_use dukpy
+BuildRequires: libhunspell-devel >= 1.7.0
+
+%py3_use six >= 1.12.0
+%py3_use regex >= 2019.04.14
+%py3_use dukpy
 # >= 0.3
-%py_use chardet >= 3.0.3
-%py_use pycrypto >= 2.6.1
-# TODO jxrlib
-# https://packages.debian.org/ru/source/sid/jxrlib
-%py_use webencodings >= 0.5.1
-%py_use html5lib >= 0.999999999
-%py_use Pillow >= 3.2.0
-# TODO qtwebkit
-Requires: python-module-unrardll
+%py3_use chardet >= 3.0.4
+%py3_use pycrypto >= 2.6.1
+%py3_use webencodings >= 0.5.1
+%py3_use html5lib >= 1.0.1
+%py3_use Pillow >= 6.0.0
+%py3_use unrardll
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -138,28 +162,37 @@ TXT, PDF, LRS и FB2.
 
 %prep
 %setup -n %name
-%__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python_sitelibdir'|" setup/install.py
+%__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python3_sitelibdir'|" setup/install.py
+%__subst "s|hunspell-1.7|hunspell|" setup/extensions.json
 # don't check for new upstream version
 #patch -p1
 #patch1 -p1
+# FIXME: does not effect
+%__subst "s|python2|python3|" src/*/*.py src/*/*/*.py src/*/*/*/*.py
 
-# TODO: assure we will not use it. see calibre-use-system-hunspell.patch
-# rm -rf src/hunspell/
+# we put sip for python3 to sip3 dir
+%__subst "s|'share', 'sip'|'share', 'sip3'|" setup/build_environment.py
+# fix default libdir
+%__subst "s|/usr/lib|%_libdir|" setup/build_environment.py
 
 %build
-%python_build
+export CALIBRE_PY3_PORT=1
+export SIP_BIN=sip3
+%python3_build
 
 %install
 #python_install (not use due skip-build unsupported)
-mkdir -p %buildroot%python_sitelibdir/
-python setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
+mkdir -p %buildroot%python3_sitelibdir/
+CALIBRE_PY3_PORT=1 python3 setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
 %find_lang --with-kde %name
 
 # fix bash completion file placement
-install -m644 -D %buildroot%_datadir/bash-completion/completions/calibre %buildroot/etc/bash_completion.d/%name
-rm -rf %buildroot%_datadir/bash-completion
+#install -m644 -D %buildroot%_datadir/bash-completion/completions/calibre %buildroot/etc/bash_completion.d/%name
+rm -rfv %buildroot%_datadir/bash-completion
+rm -rfv %buildroot%_libdir/calibre/tinycss/tests
 
-chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
+
+#chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
 rm -f %buildroot%_bindir/calibre-uninstall
 rm -rf %buildroot%_datadir/%name/fonts/liberation/
@@ -167,10 +200,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 %files -f %name.lang
 %doc README.md Changelog.yaml
-/etc/bash_completion.d/%name
+#/etc/bash_completion.d/%name
 %_bindir/*
 %_libdir/%name/
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_datadir/%name/
 %_datadir/metainfo/*.appdata.xml
 %_desktopdir/*.desktop
@@ -179,6 +212,17 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Oct 25 2019 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version (4.2.0) with rpmgs script
+
+* Wed Oct 16 2019 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0 (with rpmrb script)
+- switch to python3
+
+* Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+- update build requires to the latest used versions
+
 * Tue Sep 17 2019 Vitaly Lipatov <lav@altlinux.ru> 3.48.0-alt1
 - new version (3.48.0) with rpmgs script
 
