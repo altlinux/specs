@@ -1,5 +1,5 @@
-%define lvm2version 2.03.5
-%define dmversion 1.02.163
+%define lvm2version 2.03.6
+%define dmversion 1.02.165
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -484,6 +484,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Fri Oct 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.03.6-alt1
+- 2.03.6
+
 * Sat Aug 10 2019 Alexey Shabalin <shaba@altlinux.org> 2.03.5-alt1
 - 2.03.5
 - drop applib support
