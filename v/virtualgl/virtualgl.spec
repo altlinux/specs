@@ -1,5 +1,5 @@
 Name: virtualgl
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 %define vgl_name vgl
@@ -18,11 +18,9 @@ Source2: README.ALT-ru_RU.UTF-8
 Patch1: %name-2.5.90-alt-remove-solaris-stuff.patch
 Patch2: %name-2.5.2-alt-xauth.patch
 Patch3: %name-2.5.2-alt-nettest.patch
-Patch4: %name-2.5.2-alt-fix-linkage.patch
+Patch4: %name-2.6.3-alt-fix-linkage.patch
 # patch 5: modified RedHat libexec path patch
 Patch5: %name-2.5.2-alt-libexec-path-fix.patch
-# patch 6: updated Fedora Core system glx patch
-Patch6: %name-2.5.2-alt-system-glx.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++ 
@@ -32,6 +30,9 @@ BuildRequires: libfltk-devel
 BuildRequires: libssl-devel
 BuildRequires: libturbojpeg-devel
 BuildRequires: boost-devel-headers
+BuildRequires: opencl-headers
+BuildRequires: ocl-icd-devel
+BuildRequires: libxcbutil-keysyms-devel
 
 Provides: VirtualGL = %version %name = %version
 Obsoletes: VirtualGL <= %version %name < %version
@@ -68,7 +69,6 @@ This package contains VirtualGL development libraries.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 # fix compute endian on aarch64
 cat <<__EOF__ >include/boost/endian.hpp
@@ -78,7 +78,7 @@ __EOF__
 sed -i -e 's,"glx.h",<GL/glx.h>,' server/*.[hc]*
 sed -i -e 's,"glxext.h",<GL/glxext.h>,' server/*.[hc]*
 # Remove bundled libraries
-rm -r common/glx* server/fltk
+rm -r server/fltk
 rm doc/LICENSE-*.txt
 
 %build
@@ -95,7 +95,8 @@ rm doc/LICENSE-*.txt
 	-DVGL_USESSL=ON \
 	-DVGL_SYSTEMGLX=1 \
 	-DVGL_SYSTEMFLTK=1 \
-       	-DVGL_FAKEXCB=1 ..
+	-DVGL_FAKEOPENCL=1 \
+	-DVGL_FAKEXCB=1 ..
 %cmake_build VERBOSE=1
 
 %install
@@ -147,6 +148,12 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Fri Oct 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.3-alt1
+- new version
+  + update fix-linkage patch
+  + remove obsolete system-glx patch
+  + spec: add new BR: opencl-headers, ocl-icd-devel, libxcbutil-keysyms-devel
+
 * Thu May 23 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.2-alt1
 - new version
 
