@@ -9,13 +9,13 @@
 
 Name: dhcp
 Version: 4.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
-License: BSD-style
+License: MPLv2.0
 Group: System/Servers
-Url: http://www.isc.org/sw/dhcp/
+Url: https://www.isc.org/dhcp/
 
 %define srcname dhcp-%version%{?patchlevel:%patchlevel}
 Source0: dhcp-%version.tar
@@ -84,6 +84,8 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
+Patch0040: 0040-server-Fix-error-message.patch
+Patch0041: 0041-Fix-build-with-gcc-9.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -104,7 +106,7 @@ BuildArch: noarch
 %package client
 Summary: The ISC DHCP client daemon
 Group: System/Servers
-PreReq: %name-common = %epoch:%version-%release
+Requires(pre): %name-common = %epoch:%version-%release
 Requires: %name-libs = %epoch:%version-%release
 # NetworkManager can use dhclient
 Provides: nm-dhcp-client
@@ -112,7 +114,7 @@ Provides: nm-dhcp-client
 %package server
 Summary: The ISC DHCP server daemon
 Group: System/Servers
-PreReq: %name-common = %epoch:%version-%release
+Requires(pre): %name-common = %epoch:%version-%release
 Requires: %name-libs = %epoch:%version-%release
 Requires: /var/empty
 Provides: %name = %epoch:%version-%release
@@ -121,14 +123,14 @@ Obsoletes: dhcp, dhcpd
 %package relay
 Summary: The ISC DHCP relay daemon
 Group: System/Servers
-PreReq: %name-common = %epoch:%version-%release
+Requires(pre): %name-common = %epoch:%version-%release
 Requires: %name-libs = %epoch:%version-%release
 Requires: /var/empty
 
 %package omshell
 Summary: The ISC DHCP OMAPI command shell tool
 Group: System/Servers
-PreReq: %name-common = %epoch:%version-%release
+Requires(pre): %name-common = %epoch:%version-%release
 Requires: %name-libs = %epoch:%version-%release
 
 %package devel
@@ -237,6 +239,8 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
+%patch0040 -p2
+%patch0041 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -254,8 +258,8 @@ find server -type f -not -name Makefile\* -print0 |
 
 %build
 %add_optflags -fpie -fno-strict-aliasing -Wno-unused -Dlint
-%ifnarch e2k
-# lcc: omapi.c:789: -Werror=array-bounds
+%ifnarch %e2k
+# lcc: omapi.c:854: -Werror=array-bounds
 %add_optflags -Werror
 %endif
 
@@ -563,6 +567,13 @@ fi
 # }}}
 
 %changelog
+* Fri Oct 25 2019 Mikhail Efremov <sem@altlinux.org> 1:4.4.1-alt2
+- Don't use deprecated PreReq.
+- Fixed build on e2kv4 through %%e2k macro (by Michael Shigorin).
+- Fixed build with gcc-9.
+- Updated Url.
+- Updated license.
+
 * Fri Dec 07 2018 Mikhail Efremov <sem@altlinux.org> 1:4.4.1-alt1
 - Added patches from Debian.
 - Updated patches.
