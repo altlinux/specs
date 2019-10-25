@@ -1,35 +1,26 @@
 %define oname apicapi
 
-Name:       python-module-%oname
-Version:    1.6.0
+Name:       python3-module-%oname
+Version:    1.6.4
 Release:    alt1
 
 Summary:    Library for APIC REST api
+
 License:    ASL 2.0
-URL:       http://github.com/noironetworks/%oname
-Group:      Development/Python
-BuildArch:  noarch
+URL:        http://github.com/noironetworks/apicapi
+Group:      Development/Python3
 
-Source:    %name-%version.tar
-
-BuildRequires: python-module-html5lib python-module-oslo.db
-%add_python_req_skip oslo.config oslo.db.sqlalchemy
-%py_requires oslo_config oslo_db.sqlalchemy
+Source:     %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-html5lib python3-module-oslo.db
 
+BuildArch:  noarch
 
-%description
-There is a Python library provides an interface to the APIC REST api.
-
-%package -n python3-module-%oname
-Summary: Library for APIC REST api
-Group: Development/Python3
 %add_python3_req_skip oslo.config oslo.db.sqlalchemy
 %py3_requires oslo_config oslo_db.sqlalchemy
 
-%description -n python3-module-%oname
+%description
 There is a Python library provides an interface to the APIC REST api.
 
 %prep
@@ -38,41 +29,25 @@ There is a Python library provides an interface to the APIC REST api.
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-mv %buildroot%_bindir/apic-cleanup %buildroot%_bindir/python3-apic-cleanup
-mv %buildroot%_bindir/apic-route-reflector %buildroot%_bindir/python3-apic-route-reflector
-
-%python_install
 
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/*/test
 rm -fr %buildroot%python3_sitelibdir/*/test
 
 %files
-%doc AUTHORS README.rst
 %_bindir/*
-%exclude %_bindir/python3-*
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
-%_bindir/python3-*
 %python3_sitelibdir/*
 
-
 %changelog
+* Fri Oct 25 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1
+- Updated version to 1.6.4.
+- Build without python2.
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt1
 - Updated version to 1.6.0
 
