@@ -1,3 +1,5 @@
+%def_disable snapshot
+%def_enable python2
 %def_with doc
 
 %define modname cairo
@@ -5,7 +7,7 @@
 %define ver_major 1.18
 
 Name: python-module-%oname
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
@@ -13,19 +15,28 @@ Group: Development/Python
 License: LGPLv2.1/MPLv1.1
 Url: https://github.com/pygobject/pycairo
 
-# VCS: https://github.com/pygobject/pycairo.git
+%if_disabled snapshot
 Source: %url/releases/download/v%version/%oname-%version.tar.gz
+%else
+# VCS: https://github.com/pygobject/pycairo.git
+Source: %oname-%version.tar
+%def_with bootstrap
+%endif
 
-%setup_python_module %modname
+%{?_enable_python2:%setup_python_module %modname}
 
-BuildRequires(pre): rpm-build-python rpm-build-python3
 BuildRequires: libcairo-devel >= 1.13.1
-BuildRequires: python-devel python3-devel
-%{?!_with_bootstrap:BuildRequires: python-module-Pygments}
-%if_with doc
-BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
-BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
-BuildRequires: texlive-latex-base
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%{?_with_bootstrap:BuildRequires: python3-module-Pygments}
+%{?_with_doc:
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: texlive-latex-base python3-module-sphinx-devel python3-module-sphinx_rtd_theme}
+
+%if_enabled python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+%{?_with_bootstrap:BuildRequires: python-module-Pygments}
 %endif
 
 %description
@@ -73,53 +84,58 @@ BuildArch: noarch
 %description docs
 Documentation for pycairo.
 
-%package tests
+%package -n python3-module-%oname-tests
 Summary: Tests for pycairo
-Group: Development/Python
-Requires: %name = %version-%release
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
 
-%description tests
+%description -n python3-module-%oname-tests
 Documentation for pycairo.
 
-%package examples
+%package -n python3-module-%oname-examples
 Summary: Examples for pycairo
-Group: Development/Python
-Requires: %name = %version-%release
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
 
-%description examples
+%description -n python3-module-%oname-examples
 Examples for pycairo.
 
-%package pickles
+%package -n python3-module-%oname-pickles
 Summary: Pickles for pycairo
-Group: Development/Python
+Group: Development/Python3
 
-%description pickles
+%description -n python3-module-%oname-pickles
 Pickles for pycairo.
 
 %prep
-%setup -n %oname-%version -a0
-mv %oname-%version py3build
-# fix pc-file install
-subst 's|\"lib\"|"%_lib"|' {,py3build/}setup.py
+%setup -n %oname-%version %{?_enable_python2:-a0
+mv %oname-%version py2build}
 
-%{?_with_doc:%prepare_sphinx docs}
+# fix pc-file install
+subst 's|\"lib\"|"%_lib"|' setup.py %{?_enable_python2:py2build/setup.py}
+
+%{?_with_doc:%prepare_sphinx3 docs}
 
 %build
 # incomplete support
 %define opts --pkgconfigdir=%_pkgconfigdir
-%python_build
+%python3_build
 %{?_with_doc:%make -C docs}
 
-pushd py3build
-%python3_build
+%if_enabled python2
+pushd py2build
+%python_build
 popd
+%endif
 
 %install
-pushd py3build
-%python3_install
-popd
-
+%if_enabled python2
+pushd py2build
 %python_install
+popd
+%endif
+
+%python3_install
 
 # docs
 install -d %buildroot%_docdir/%name-%version
@@ -130,33 +146,34 @@ install -p -m644 NEWS README* \
 cp -fR docs/_build/reference %buildroot%_docdir/%name-%version/
 
 # pickles
-install -d %buildroot%python_sitelibdir/%oname/pickle
-cp -fR docs/_build/.doctrees/* %buildroot%python_sitelibdir/%oname/pickle/
+install -d %buildroot%python3_sitelibdir/%oname/pickle
+cp -fR docs/_build/.doctrees/* %buildroot%python3_sitelibdir/%oname/pickle/
 
 # tests and examples
-cp -fR examples tests %buildroot%python_sitelibdir/%modulename/
-for i in $(find %buildroot%python_sitelibdir/%modulename/examples -type d)
+cp -fR examples tests %buildroot%python3_sitelibdir/%modulename/
+for i in $(find %buildroot%python3_sitelibdir/%modulename/examples -type d)
 do
 	touch $i/__init__.py
 done
 
-%pre pickles
-rm -fR %python_sitelibdir/%oname/pickle
+%pre -n python3-module-%oname-pickles
+rm -fR %python3_sitelibdir/%oname/pickle
 %endif # doc
 
 %files
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/NEWS
-%doc %_docdir/%name-%version/README*
+%if_enabled python2
 %python_sitelibdir/%modulename
-
-%if_with doc
-%exclude %python_sitelibdir/%modulename/tests
-%exclude %python_sitelibdir/%modulename/examples
 %endif
 
 %files -n python3-module-%oname
 %python3_sitelibdir/%modname/
+%if_with doc
+%exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/%modulename/examples
+%endif
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/NEWS
+%doc %_docdir/%name-%version/README*
 
 %files common-devel
 %_includedir/%oname/
@@ -174,18 +191,22 @@ rm -fR %python_sitelibdir/%oname/pickle
 %exclude %_docdir/%name-%version/NEWS
 %exclude %_docdir/%name-%version/README*
 
-%files tests
-%python_sitelibdir/%modulename/tests
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%modulename/tests
 
-%files examples
-%python_sitelibdir/%modulename/examples
+%files -n python3-module-%oname-examples
+%python3_sitelibdir/%modulename/examples
 
-%files pickles
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname/pickle/
+%files -n python3-module-%oname-pickles
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle/
 %endif
 
 %changelog
+* Sat Oct 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
+- 1.18.2
+- made python2 build optional
+
 * Sat Apr 20 2019 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
 - 1.18.1
 
