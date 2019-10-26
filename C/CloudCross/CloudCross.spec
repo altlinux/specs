@@ -1,5 +1,5 @@
 Name: CloudCross
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 License: BSD
 Group: Networking/File transfer
@@ -36,6 +36,9 @@ install -D ccross-app/doc/ccross %buildroot%_man1dir/ccross.1
 %_man1dir/*
 
 %changelog
+* Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1.4.5-alt1
+- Autobuild version bump to 1.4.5
+
 * Tue Jan 29 2019 Fr. Br. George <george@altlinux.ru> 1.4.4-alt1
 - Autobuild version bump to 1.4.4
 
