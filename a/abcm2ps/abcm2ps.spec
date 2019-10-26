@@ -1,5 +1,5 @@
 Name: abcm2ps
-Version: 8.14.4
+Version: 8.14.5
 Release: alt1
 Summary: a program to typeset abc tunes into Postscript
 License: GPL
@@ -33,6 +33,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/*
 
 %changelog
+* Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 8.14.5-alt1
+- Autobuild version bump to 8.14.5
+
 * Tue May 28 2019 Fr. Br. George <george@altlinux.ru> 8.14.4-alt1
 - Autobuild version bump to 8.14.4
 
