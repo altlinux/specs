@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 6.9.0
+%define npmver 6.11.3
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 10.16
+%define major 10.17
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -29,6 +29,7 @@
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
 
+%global libnghttp2_abi 1.39.2
 %def_with systemnghttp2
 
 %def_disable check
@@ -82,7 +83,7 @@ BuildRequires: libicu-devel >= %libicu_abi
 %endif
 
 %if_with systemnghttp2
-BuildRequires: libnghttp2-devel
+BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 %endif
 
 BuildRequires: libhttp-parser-devel
@@ -318,6 +319,16 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Oct 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.17.0-alt1
+- new version 10.17.0 (with rpmrb script)
+- npm >= 6.11.3
+
+* Fri Aug 30 2019 Vitaly Lipatov <lav@altlinux.ru> 10.16.3-alt1
+- new version 10.16.3 (with rpmrb script)
+- libnghttp2 >= 1.39.2
+- CVE-2019-9511, CVE-2019-9511, CVE-2019-9513, CVE-2019-9514
+- CVE-2019-9515, CVE-2019-9516, CVE-2019-9517, CVE-2019-9518
+
 * Thu Jun 06 2019 Vitaly Lipatov <lav@altlinux.ru> 10.16.0-alt1
 - new version 10.16.0 (with rpmrb script)
 - 2019-05-28, Version 10.16.0 'Dubnium' (LTS), @BethGriggs
