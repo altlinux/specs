@@ -1,9 +1,10 @@
 # since 1.9 no more releaeses (tarballs) and corresponding tags,
 # so we use snapshots. See NEWS and configure.ac for versions.
 %def_enable snapshot
+%def_enable check
 
 Name: arp-scan
-Version: 1.9.5
+Version: 1.9.6
 Release: alt1
 
 Summary: Scanning and fingerprinting tool
@@ -40,6 +41,9 @@ cp -a %_sourcedir/{ieee-iab.txt,ieee-oui.txt} .
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %_bindir/arp-fingerprint
 %_bindir/%name
@@ -51,6 +55,11 @@ cp -a %_sourcedir/{ieee-iab.txt,ieee-oui.txt} .
 %doc NEWS README*
 
 %changelog
+* Sat Oct 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9.6-alt1
+- updated to 1.9.6-9-g36de712
+- updated ieee-{iab,oui}.txt
+- new %%check section
+
 * Mon Jan 09 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.5-alt1
 - 1.9.5
 - updated ieee-{iab,oui}.txt
