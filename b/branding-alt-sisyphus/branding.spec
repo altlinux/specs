@@ -9,7 +9,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20190624
+Version: 20191026
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -212,6 +212,10 @@ cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
 %_datadir/design/current	%_datadir/design/%theme	10
 __EOF__
 
+# bootsplash
+mkdir -p %buildroot%_pixmapsdir
+cp -a images/system-logo.png %buildroot%_pixmapsdir/
+
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
 {
@@ -303,6 +307,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
+%_pixmapsdir/system-logo.png
 
 %files release
 %_sysconfdir/*-release
@@ -328,6 +333,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Sat Oct 26 2019 Anton Midyukov <antohami@altlinux.org> 20191026-alt1
+- bootsplash: add system-logo
+
 * Mon Jun 24 2019 Anton Midyukov <antohami@altlinux.org> 20190624-alt1
 - xfce-settings: replaced clipman and power-manager applets on tray
 applications
