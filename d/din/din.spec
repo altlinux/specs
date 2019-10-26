@@ -1,6 +1,6 @@
 %def_without jack
 Name: din
-Version: 39.0.1
+Version: 43
 Release: alt1
 License: GPLv2
 Summary: Edit waveforms in a GUI, and watch the sound change before your ears
@@ -67,6 +67,9 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 43-alt1
+- Autobuild version bump to 43
+
 * Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 39.0.1-alt1
 - Autobuild version bump to 39.0.1
 
