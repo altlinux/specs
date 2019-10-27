@@ -1,12 +1,8 @@
-# we do not have python3(gtk)
-%def_without python3bin
-%def_without python3
-%define oname fonttools
 %define modulename fontTools
 
-Name: %oname
-Version: 3.44.0
-Release: alt2
+Name: python3-module-fonttools
+Version: 4.0.2
+Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
 
@@ -22,22 +18,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-compat >= 1.2
+BuildRequires(pre): rpm-build-python3
+
 BuildRequires: xorg-sdk
 # python-module-PyXML python-module-ctypes
-BuildRequires: python-devel python-module-setuptools python-module-numpy
-
-%if_with python3
-%add_python3_req_skip Res calldll macfs
-BuildRequires(pre): rpm-build-python3
-# python3-module-PyXML python3-module-ctypes
 BuildRequires: python3-devel python3-module-setuptools python3-module-numpy
-%endif
 
-%if_with python3bin
-Requires: python3-module-%oname = %EVR
-%else
-Requires: python-module-%oname = %EVR
-%endif
 
 %global desc \
 FontTools/TTX is a library to manipulate font files from Python. It supports \
@@ -49,82 +35,39 @@ from an XML-based format.
 %description
 %desc
 
-%package -n python-module-%oname
-Group: Development/Python
-Summary: Python 2 fonttools library
-
-%description -n python-module-%oname
-%desc
-
-%if_with python3
-%package -n python3-module-%oname
+%package -n fonttools
 Group: Development/Python3
-Summary: Python 3 fonttools library
+Summary: Python 3 fonttools
+Requires: %name = %EVR
 
-%description -n python3-module-%oname
+%description -n fonttools
 %desc
-%endif
 
 %prep
 %setup
-
 sed -i '1d' Lib/fontTools/mtiLib/__init__.py
 
-# macOS
-#rm Lib/fontTools/ttLib/test/ttBrowser.py
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3bin
-%python_install
-pushd ../python3
 %python3_install
-popd
-%else
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-# we do not have python3(gtk)
-rm -f %buildroot/%python3_sitelibdir/%modulename/inspect.py*
-rm -f %buildroot/%python3_sitelibdir/%modulename/__pycache__/inspect.*
-%endif
-%python_install
-%endif
 
-%if 0
 %files
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/fonttools-%version-py%__python3_version.egg-info
+
+%files -n fonttools
 %_bindir/ttx
 %_bindir/pyft*
 %_bindir/fonttools
 %_man1dir/*
-%endif
 
-%files -n python-module-%oname
-%python_sitelibdir/%modulename/
-%python_sitelibdir/%oname-%version-py%__python_version.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%oname-%version-py%__python3_version.egg-info
-%endif
 
 %changelog
-* Mon Oct 28 2019 Vitaly Lipatov <lav@altlinux.ru> 3.44.0-alt2
-- build python2 only, don't pack fontools utils
+* Sun Oct 27 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+- build python3 version only
 
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 3.44.0-alt1
 - new version 3.44.0 (with rpmrb script)
