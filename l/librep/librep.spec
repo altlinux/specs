@@ -1,23 +1,23 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%define platform %(%_datadir/automake/config.sub %_target_platform | sed -e 's,-%_vendor,,')
-
 Name: librep
 Version: 0.92.3
-Release: alt4
+Release: alt5
 
 Summary: An embeddable LISP environment
 License: GPL
 Group: Development/Other
+
 Url: http://librep.sourceforge.net/
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+%define platform %(%_datadir/gnu-config/config.sub %_configure_platform | sed -e 's,-%_vendor,,')
 
 Provides: %_datadir/rep/%version/lisp
 Provides: %_datadir/rep/site-lisp
 Provides: %_libdir/rep/%version/%platform
 Provides: %_libdir/rep/%platform
-
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Dec 26 2008
 BuildRequires: libffi-devel libgdbm-devel libgmp-devel libncurses-devel libreadline-devel
@@ -43,9 +43,13 @@ Requires: %name = %version-%release
 Link libraries and C header files for librep development.
 
 %prep
-%setup -q
+%setup
 %patch -p1
-cp -pfv %_datadir/automake/config.{guess,sub} .
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
+%ifarch %e2k
+# lcc is not GNUC actually...
+sed -i '/__GNUC__/s,__OPTIMIZE__,& \&\& !defined __LCC__,' src/repint.h
+%endif
 
 %build
 %add_optflags -fgnu89-inline
@@ -60,7 +64,7 @@ sed -ie 's,^host_type=.*$,host_type=%platform,g' librep.pc
 %make_build host_type=%platform
 
 %install
-%make_build install host_type=%platform DESTDIR=%buildroot
+%makeinstall_std host_type=%platform
 mkdir -p %buildroot%_datadir/rep/site-lisp
 find %buildroot%_libdir/rep -type f -name '*.la' -delete
 
@@ -106,6 +110,12 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Sun Oct 27 2019 Michael Shigorin <mike@altlinux.org> 0.92.3-alt5
+- E2K: fixed build (lcc is __not__ gcc though!).
+- Replaced %%_target_platform with %%_configure_platform
+  to fix e2k build on e2kv4 machine (imz@ knows more).
+- Minor spec cleanup.
+
 * Thu Feb 07 2019 Paul Wolneykien <manowar@altlinux.org> 0.92.3-alt4
 - Add "aarch64" to the set of known arches (in order to make the
   stack direction autodetection work).
