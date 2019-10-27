@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libQGLViewer
 Version:        2.6.4
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -92,6 +92,10 @@ rm -rf ../%{name}-%{version}-qt5
 cp -a ../%{name}-%{version} ../%{name}-%{version}-qt5
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
@@ -190,6 +194,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 %doc examples
 
 %changelog
+* Sun Oct 27 2019 Michael Shigorin <mike@altlinux.org> 2.6.4-alt2_1
+- E2K: explicit -std=c++11
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt1_1
 - update to new release by fcimport
 
