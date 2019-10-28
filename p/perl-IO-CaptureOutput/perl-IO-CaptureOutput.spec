@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-CaptureOutput
 Name: perl-%dist
-Version: 1.1104
+Version: 1.1105
 Release: alt1
 
 Summary: Capture STDOUT and STDERR from Perl code, subprocesses or XS
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/IO-CaptureOutput-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ subroutines, forked system calls (e.g. "system()", "fork()") and from XS
 or C modules.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ or C modules.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_privlib/IO
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.1105-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.1104-alt1
 - automated CPAN update
 
