@@ -1,9 +1,9 @@
 Summary:	Netscape Portable Runtime (NSPR)
 Name:		nspr
-Version:	4.22
+Version:	4.23
 Release:	alt1
 Epoch:		1
-License:	MPL/GPL/LGPL
+License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/nspr/
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -105,6 +105,10 @@ sed -e "s,@libdir@,%_libdir,g" \
 %_libdir/*.a
 
 %changelog
+* Mon Oct 28 2019 Alexey Gladkov <legion@altlinux.ru> 1:4.23-alt1
+- New version (4.23).
+- Update license tag.
+
 * Tue Sep 10 2019 Alexey Gladkov <legion@altlinux.ru> 1:4.22-alt1
 - New stable release 4.22.
 
