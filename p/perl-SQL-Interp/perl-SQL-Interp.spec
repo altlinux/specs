@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.24
 %define module_name SQL-Interp
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DBI.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Test/More.pm) perl(overload.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(DBI.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Sub/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.24
+Version: 1.25
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/MA/MARKSTOS/SQL-Interp-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YO/YORHEL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +29,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc Changes README.md
 %perl_vendor_privlib/S*
 %perl_vendor_privlib/D*
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
 - automated CPAN update
 
