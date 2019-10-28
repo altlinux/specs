@@ -1,7 +1,7 @@
 Summary: Twm based window manager for the X Window System
 Summary(ru_RU): Основанный на twm оконный менеджер для X Window System
 Name: ctwm
-Version: 4.0.1
+Version: 4.0.3
 Epoch: 1
 Release: alt1
 
@@ -81,6 +81,9 @@ install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 %_datadir/%name/
 
 %changelog
+* Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1:4.0.3-alt1
+- Autobuild version bump to 4.0.3
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 1:4.0.1-alt1
 - Autobuild version bump to 4.0.1
 
