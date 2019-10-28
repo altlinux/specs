@@ -1,6 +1,6 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.10.0
+%define        core_version   6.10.1
 %define        dm_version     1.0.1
 
 Name:          %pkgname
@@ -196,6 +196,9 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 
 
 %changelog
+* Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 6.10.1-alt1
+- New version.
+
 * Tue Oct 01 2019 Andrey Cherepanov <cas@altlinux.org> 6.10.0-alt1
 - New version.
 
