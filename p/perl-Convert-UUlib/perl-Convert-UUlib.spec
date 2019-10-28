@@ -2,8 +2,8 @@
 %define module	Convert-UUlib
 
 Name: perl-%module
-Version: 1.5
-Release: alt1.2
+Version: 1.6
+Release: alt1
 Epoch: 2
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
@@ -13,7 +13,7 @@ Url: http://search.cpan.org/dist/%module/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 # BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Convert-UUlib-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
 Patch1: Convert-UUlib-1.5-alt-system-libuu.patch
 Patch2: Convert-UUlib-1.32-alt_strip_stuff_not_in_libuu.patch
 
@@ -27,7 +27,7 @@ Base64 and BinHex-Encoded files as well as for encoding
 binary files into all of these representations except BinHex.
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 %patch1 -p1
 %patch2 -p1
 
@@ -38,11 +38,14 @@ binary files into all of these representations except BinHex.
 %perl_vendor_install
 
 %files
-%doc Changes README doc
+%doc Changes README doc COPYING.Artistic COPYING.GNU
 %perl_vendor_archlib/Convert
 %perl_vendor_autolib/Convert
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.6-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.5-alt1.2
 - rebuild with new perl 5.28.1
 
