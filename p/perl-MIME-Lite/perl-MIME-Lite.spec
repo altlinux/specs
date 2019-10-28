@@ -1,6 +1,6 @@
 %define dist MIME-Lite
 Name: perl-MIME-Lite
-Version: 3.030
+Version: 3.031
 Release: alt1
 
 Summary: Low-calorie MIME generator
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/MIME-Lite-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 Patch: MIME-Lite-3.028-alt-req.patch
 
 BuildArch: noarch
@@ -25,7 +25,7 @@ attachments.  It does not require that you have the Mail:: or MIME::
 modules installed, but will work with them if they are.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -35,10 +35,13 @@ modules installed, but will work with them if they are.
 %perl_vendor_install
 
 %files
-%doc README
+%doc README changes.pod examples
 %perl_vendor_privlib/MIME
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 3.031-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 3.030-alt1
 - automated CPAN update
 
