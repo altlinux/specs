@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: libpeas
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -173,7 +173,7 @@ xvfb-run %meson_test
 
 %if_enabled python2
 %files python-loader
-%_libdir/%name-%api_ver/loaders/libpython2loader.so
+%_libdir/%name-%api_ver/loaders/libpythonloader.so
 %endif
 
 %files python3-loader
@@ -219,6 +219,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Mon Oct 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
+- 1.24.1
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
 - 1.24.0 (ported to Meson build system)
 
