@@ -1,6 +1,6 @@
 Name:     root6
 Version:  6.19.01
-Release:  alt1
+Release:  alt2
 
 Summary:  C++ data analysis framework and interpreter from CERN.
 License:  %lgpl21plus
@@ -103,8 +103,7 @@ rm -f %buildroot/usr/lib64/libCore.so-gdb.*
 
 %files
 %dir %_datadir/root6/
-%dir %_datadir/root6/macros/
-%_datadir/root6/macros/*
+%_datadir/root6/*
 %_includedir/*
 %_bindir/*
 %_libdir/*
@@ -112,6 +111,9 @@ rm -f %buildroot/usr/lib64/libCore.so-gdb.*
 %_sysconfdir/*
 
 %changelog
+* Mon Oct 28 2019 Nikita Ermakov <arei@altlinux.org> 6.19.01-alt2
+- Add necessary data for ROOT 6.
+
 * Mon Sep 02 2019 Nikita Ermakov <arei@altlinux.org> 6.19.01-alt1
 - Update to upstream 6.19.01 version.
 
