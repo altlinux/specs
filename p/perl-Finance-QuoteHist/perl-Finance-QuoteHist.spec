@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Finance-QuoteHist
 Name: perl-%dist
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: Perl module for fetching historical stock quotes
@@ -34,6 +34,9 @@ stock quotes from the web.
 %perl_vendor_privlib/Finance
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
