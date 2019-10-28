@@ -1,6 +1,6 @@
 Name: chroma
-Version: 1.15
-Release: alt2
+Version: 1.17
+Release: alt1
 Group: Games/Puzzles
 License: GPLv2
 Source: %name-%version.tar.bz2
@@ -72,6 +72,9 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1.17-alt1
+- Autobuild version bump to 1.17
+
 * Thu May 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15-alt2
 - Fixed build with new toolchain.
 
