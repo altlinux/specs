@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.3.0
-Release: alt2
+Version: 3.3.1
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -189,6 +189,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Oct 27 2019 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
+- new version 3.3.1 (with rpmrb script)
+
 * Tue Jun 25 2019 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt2
 - gimagereader-qt5 now provides gimagereader-qt4 (ALT bug 36946)
 
