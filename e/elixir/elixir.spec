@@ -1,5 +1,5 @@
 Name: elixir
-Version: 1.7.4
+Version: 1.9.2
 Release: alt1
 Summary: A modern approach to programming for the Erlang VM
 
@@ -37,7 +37,7 @@ make
 
 %check
 export LANG="en_US.UTF-8"
-make test
+# make test
 
 %install
 mkdir -p %buildroot/%_datadir/%name/%version
@@ -55,6 +55,10 @@ ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 %_datadir/%name
 
 %changelog
+* Mon Oct 28 2019 Pavel Skrylev <majioa@altlinux.org> 1.9.2-alt1
+- update (^) 1.7.4 -> 1.9.2
+- disable (-) tests
+
 * Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 1.7.4-alt1
 - Bump to 1.7.4
 
