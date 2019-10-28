@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.86
-Release: alt2
+Version: 0.87
+Release: alt1
 
 Summary: Manage perl installations in your $HOME
 Group: Development/Perl
@@ -30,14 +30,17 @@ export SHELL
 %perl_vendor_install
 
 %files
-%doc LICENSE README README.md Changes doc CONTRIBUTING.md
+%doc README README.md Changes doc CONTRIBUTING.md
 %_bindir/perlbrew
 %_man1dir/*
 %perl_vendor_privlib/App/perlbrew*
 %perl_vendor_privlib/App/Perlbrew*
-%doc Changes LICENSE README
+%doc Changes README
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.87-alt1
+- automated CPAN update
+
 * Thu Jan 31 2019 Ivan A. Melnikov <iv@altlinux.org> 0.86-alt2
 - fix rebuild on Sisyphus
 
