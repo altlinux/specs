@@ -1,7 +1,7 @@
 %define py_name youtube_dl
 
 Name: youtube-dl
-Version: 2019.10.22
+Version: 2019.10.29
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -82,6 +82,9 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Mon Oct 28 2019 Cronbuild Service <cronbuild@altlinux.org> 2019.10.29-alt1
+- Updated to 2019.10.29.
+
 * Fri Oct 25 2019 Cronbuild Service <cronbuild@altlinux.org> 2019.10.22-alt1
 - Updated to 2019.10.22.
 
