@@ -2,8 +2,8 @@
 %define dist Log-Dispatch
 
 Name: perl-%dist
-Version: 2.68
-Release: alt2
+Version: 2.69
+Release: alt1
 
 Summary: Dispatches messages to one or more outputs
 License: Artistic 2.0
@@ -36,10 +36,13 @@ and particularly for creating new outputs.
 %add_findreq_skiplist %perl_vendor_privlib/Log/Dispatch/ApacheLog.pm
 
 %files
-%doc README.md Changes CONTRIBUTING.md CODE_OF_CONDUCT.md
+%doc README.md Changes CONTRIBUTING.md
 %perl_vendor_privlib/Log/
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2.69-alt1
+- automated CPAN update
+
 * Tue Jan 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.68-alt2
 - build w/o apache1
 
