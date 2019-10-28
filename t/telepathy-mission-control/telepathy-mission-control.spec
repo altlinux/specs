@@ -9,8 +9,8 @@
 %def_disable check
 
 Name: telepathy-mission-control
-Version: 5.16.4
-Release: alt2
+Version: 5.16.5
+Release: alt1
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
@@ -18,17 +18,18 @@ Group: System/Libraries
 Url: http://mission-control.sourceforge.net/
 
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
-Patch: %name-5.16.4-up-string_max_size_calculation.patch
 
 Requires: dconf
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gtk-doc libgio-devel >= 2.46.0 libdbus-glib-devel libtelepathy-glib-devel >= 0.22.0
-%{?_enable_upower:BuildRequires: libupower-devel}
+%{?_enable_upower:BuildRequires: libupower-devel < 0.99}
 %{?_enable_nm:BuildRequires: libnm-devel}
 
 %if_enabled check
-BuildRequires: python-modules-encodings python-module-twisted-words python-module-twisted-core-gui
-BuildRequires: python-module-dbus python-module-zope.interface telepathy-logger /proc dbus-tools-gui
+# not ready for python3
+BuildRequires: python3-module-twisted-words python3-module-twisted-core
+BuildRequires: python3-module-dbus telepathy-logger /proc dbus-tools-gui
 %endif
 
 %description
@@ -63,14 +64,14 @@ Development libraries and header files for %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-glib-1`"
 %configure \
 	--disable-static \
-	--disable-schemas-compile
+	--disable-schemas-compile \
+	PYTHON=%__python3
 
 %make_build
 
@@ -100,6 +101,9 @@ mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Oct 27 2019 Yuri N. Sedunov <aris@altlinux.org> 5.16.5-alt1
+- 5.16.5
+
 * Sun Jul 01 2018 Yuri N. Sedunov <aris@altlinux.org> 5.16.4-alt2
 - updated buildreqs
 - disabled %%check
