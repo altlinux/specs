@@ -3,7 +3,7 @@
 
 Name: cups-filters
 Version: 1.25.11
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -20,6 +20,7 @@ Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_s
 Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
 Source1: %name.watch
 Source2: cups-browsed.init
+Source3: default-testpage.pdf
 Patch0: %name-alt.patch
 Patch1: %name-braille-indexv4-path.patch
 Patch2: %name-pjl-as-ps.patch
@@ -135,6 +136,7 @@ mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 rm -rf %buildroot%_docdir/%name
+install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 
 
 %files
@@ -189,6 +191,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Oct 28 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.25.11-alt2
+- new default testpage
+
 * Fri Oct 11 2019 Anton Farygin <rider@altlinux.ru> 1.25.11-alt1
 - new version 1.25.11
 
