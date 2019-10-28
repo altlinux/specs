@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
-Version: 1.812
-Release: alt1.1
+Version: 1.813
+Release: alt1
 Summary: Perl interface to OpenSSL for X509
 License: Perl
 Group: Development/Perl
@@ -33,12 +33,15 @@ rm -rf ./inc
 
 
 %files
-%doc Changes TODO README
+%doc Changes README
 %perl_vendor_archlib/auto/*
 %perl_vendor_archlib/Crypt
 
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.813-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.812-alt1.1
 - rebuild with new perl 5.28.1
 
