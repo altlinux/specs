@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm) perl(Module/Build/Tiny.pm)
 %define _enable_test 1
 
 Name: perl-TheSchwartz
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: TheSchwartz is a reliable job queue system
@@ -55,13 +55,16 @@ is used to automatically dispatch to the proper class to do the actual work.
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md doc
+%doc Changes README.md doc
 %_bindir/schwartzmon
 %_man1dir/schwartzmon*
 %perl_vendor_privlib/TheSchwartz.pm
 %perl_vendor_privlib/TheSchwartz/
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
