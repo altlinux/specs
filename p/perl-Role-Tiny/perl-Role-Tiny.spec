@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Role-Tiny
-Version: 2.001003
+Version: 2.001004
 Release: alt1
 
 Summary: Role::Tiny - minimalist role composition tool
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/Role/Tiny*
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2.001004-alt1
+- new version
+
 * Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.001003-alt1
 - new version
 
