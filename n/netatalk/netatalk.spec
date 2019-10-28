@@ -1,6 +1,6 @@
 Name: netatalk
 Version: 3.1.12
-Release: alt2
+Release: alt3
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
 
@@ -46,6 +46,10 @@ touch -r aclocal.m4 configure configure.ac macros/gssapi-check.m4
 
 # fix permissions
 find include \( -name '*.h' -a -executable \) -exec chmod -x {} \;
+
+# py2 -> py3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
 %build
 %configure \
@@ -121,6 +125,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Mon Oct 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1.12-alt3
+- python2 -> python3
+
 * Tue Feb 05 2019 Nikolai Kostrigin <nickel@altlinux.org> 3.1.12-alt2
 - Fix FTBFS against libmysqlclient21
 
