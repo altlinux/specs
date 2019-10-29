@@ -5,9 +5,9 @@
 %def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     10
-%define postgresql_minor     10
-%define postgresql_altrel    2
+%define postgresql_major     11
+%define postgresql_minor     5
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -44,8 +44,6 @@ Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
-Patch9: 0008-ALT-SeLinux-user-name.patch
-Patch10: 0009-postgresql-10-logging.patch
 
 # 1C
 Patch101: 00001-1c_FULL_100_EXT.patch
@@ -219,7 +217,6 @@ database.
 %patch4 -p2
 %patch6 -p2
 %patch8 -p1
-#%%patch10 -p0
 
 # 1C
 %patch101 -p1
@@ -345,6 +342,7 @@ cp -a COPYRIGHT README \
 %find_lang pg_test_fsync-%postgresql_major
 %find_lang pg_test_timing-%postgresql_major
 %find_lang pg_upgrade-%postgresql_major
+%find_lang pg_verify_checksums-%postgresql_major
 %find_lang pg_waldump-%postgresql_major
 %find_lang pgscripts-%postgresql_major
 %find_lang plperl-%postgresql_major
@@ -359,7 +357,8 @@ cat psql-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
-    pg_test_timing-%postgresql_major.lang > main.lang
+    pg_test_timing-%postgresql_major.lang \
+    pg_verify_checksums-%postgresql_major.lang > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
@@ -467,6 +466,7 @@ fi
 %_bindir/pg_basebackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
+%_bindir/pg_verify_checksums
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
@@ -485,6 +485,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verify_checksums.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -543,9 +544,6 @@ fi
 %_libdir/pgsql/btree_gist.so
 %_datadir/%PGSQL/extension/btree_gist-*.sql
 %_datadir/%PGSQL/extension/btree_gist.control
-%_libdir/pgsql/chkpass.so
-%_datadir/%PGSQL/extension/chkpass-*.sql
-%_datadir/%PGSQL/extension/chkpass.control
 %_libdir/pgsql/citext.so
 %_datadir/%PGSQL/extension/citext-*.sql
 %_datadir/%PGSQL/extension/citext.control
@@ -595,6 +593,16 @@ fi
 %_libdir/pgsql/isn.so
 %_datadir/%PGSQL/extension/isn-*.sql
 %_datadir/%PGSQL/extension/isn.control
+%_libdir/pgsql/jsonb_plperl.so
+%_datadir/%PGSQL/extension/jsonb_plperl-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperl.control
+%_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperlu.control
+%_libdir/pgsql/jsonb_plpython2.so
+%_datadir/%PGSQL/extension/jsonb_plpython2u-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpython2u.control
+%_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpythonu.control
 %_libdir/pgsql/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
@@ -721,6 +729,7 @@ fi
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
 %dir %_datadir/%PGSQL
+%_datadir/%PGSQL/errcodes.txt
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
 %dir %_datadir/%PGSQL/timezonesets
@@ -809,6 +818,23 @@ fi
 %endif
 
 %changelog
+* Tue Oct 29 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt1
+- 11.5
+- Re-applay patches from 1C:
+    * 00001-1c_FULL_100_EXT.patch
+    * 00004-postgresql-1c-10.patch
+    * 00005-coalesce_cost.patch
+    * 00006-pg_receivewal.patch
+    * 00007-remove_selfjoin.patch
+    * 00008-planner_timing.patch
+    * 00009-opt_group_by_and_cost_sort.patch
+    * 00010-joinsel.patch
+    * 00011-max_files_per_process.patch
+    * 00012-index_getattr_optimization.patch
+    * 00013-notransvalue.patch
+    * 00014-optimizer_utils.patch
+    * 00015-lessmem.patch
+
 * Fri Oct 25 2019 Alexei Takaseev <taf@altlinux.org> 10.10-alt2
 - Re-applay patches from 1C:
     * 00001-1c_FULL_100_EXT.patch
