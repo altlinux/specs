@@ -5,7 +5,7 @@
 
 Name: gnupg2
 Version: 2.2.17
-Release: alt5
+Release: alt6
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -53,7 +53,7 @@ Patch102: alt-agent-fix-password-request.patch
 Patch103: alt-texinfo.patch
 
 # GOST patch/requires/provides
-%define gostversion 2.0.0
+%define gostversion 2.0.1
 Patch18: %name-%version-gost-common.patch
 Patch19: %name-%version-gost-agent.patch
 Patch20: %name-%version-gost-g10.patch
@@ -184,6 +184,10 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Oct 29 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt6
+- Fix: Try to determine the signer digest algorithm using the
+  public key.
+
 * Wed Oct 23 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt5
 - Reflect support of the GOST algorithms in 'gpgsm --version'.
 - Reflect support of the GOST algorithms in 'gpg --version'
