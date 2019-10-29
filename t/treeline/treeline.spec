@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: treeline
-Version: 2.9.0
-Release: alt1.qa1
+Version: 3.1.1
+Release: alt1
 
 Summary: Treeline stores almost any kind of information
 
@@ -9,7 +9,7 @@ License: GPL
 Group: Text tools
 Url: http://treeline.bellz.org/
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 #Source1: http://download.berlios.de/treeline/%name-i18n-%{version}a.tar.bz2
 
 BuildArch: noarch
@@ -50,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
+- new version 3.1.1
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt1.qa1
 - NMU: applied repocop patch
 
