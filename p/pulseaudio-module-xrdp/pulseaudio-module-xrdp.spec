@@ -1,7 +1,7 @@
-%define pulseaudio_version 12.2
+%define pulseaudio_version 13.0
 
 Name:     pulseaudio-module-xrdp
-Version:  0.3
+Version:  0.4
 Release:  alt1
 
 Summary:  xrdp sink / source pulseaudio modules
@@ -68,5 +68,8 @@ rm -f %buildroot%_libdir/pulse-*/modules/*.la
 %_libdir/pulse-*/modules/*.so
 
 %changelog
+* Mon Oct 28 2019 Andrey Cherepanov <cas@altlinux.org> 0.4-alt1
+- New version.
+
 * Mon Jun 17 2019 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus.
