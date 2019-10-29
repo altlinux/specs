@@ -1,5 +1,5 @@
 Name: ktoblzcheck
-Version: 1.49
+Version: 1.50
 Release: alt1
 
 Summary: A library to check account numbers and bank codes of German banks
@@ -13,7 +13,13 @@ Url: http://ktoblzcheck.sourceforge.net/
 Source: http://prdownloads.sf.net/ktoblzcheck/%name-%version.tar.gz
 Source1: %name.watch
 
-BuildRequires: gcc-c++ libstdc++-devel lynx python-devel python-modules-encodings recode
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: libstdc++-devel
+BuildRequires: lynx
+BuildRequires: python-devel
+BuildRequires: python-modules-encodings
+BuildRequires: recode
 
 %description
 KtoBLZCheck is a library to check account numbers and bank codes of
@@ -35,7 +41,6 @@ Header files for KtoBLZCheck library.
 %package -n python-module-ktoblzcheck
 Summary: Python binding for KtoBLZCheck library
 Group: Development/Python
-BuildArch: noarch
 Requires: %name = %version-%release
 
 %description -n python-module-ktoblzcheck
@@ -45,35 +50,34 @@ Python binding for KtoBLZCheck library.
 %setup -q
 
 %build
-%autoreconf
-%configure \
-	--enable-python \
-	--disable-static
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-
-%_python_set_noarch
+%cmakeinstall_std
 
 %files
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README.md
 %_bindir/ktoblzcheck
 %_libdir/libktoblzcheck.so.*
 %dir %_datadir/%name/
 %_datadir/%name/*.txt
-%_datadir/%name/*.pl
 %_man1dir/ktoblzcheck.1*
 
 %files devel
 %_libdir/libktoblzcheck.so
 %_includedir/*.h
+%_libdir/cmake/*
 %_pkgconfigdir/ktoblzcheck.pc
 
 %files -n python-module-ktoblzcheck
-%python_sitelibdir/*
+%python_sitelibdir/%name.*
 
 %changelog
+* Thu Oct 10 2019 Andrey Cherepanov <cas@altlinux.org> 1.50-alt1
+- new version 1.50
+- use cmake for build
+
 * Sat Mar 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.49-alt1
 - new version 1.49
 
