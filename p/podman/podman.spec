@@ -1,7 +1,7 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.5.1
-Release:  alt2
+Version:  1.6.2
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -70,6 +70,9 @@ export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
 %doc *.md
 
 %changelog
+* Tue Oct 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.2-alt1
+- new version 1.6.2
+
 * Fri Sep 20 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.1-alt2
 - Use make to build
 - Add podman-docker subpackage
