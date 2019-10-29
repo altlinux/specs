@@ -4,7 +4,7 @@
 %def_with clang
 
 Name: tdlib
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
@@ -114,6 +114,9 @@ rm -fv %buildroot%_libdir/*.a
 #%_libdir/libtd*.a
 
 %changelog
+* Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Thu May 02 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
