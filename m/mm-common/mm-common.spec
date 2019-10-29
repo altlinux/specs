@@ -1,7 +1,7 @@
-%define ver_major 0.9
+%define ver_major 1.0
 
 Name: mm-common
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: Common build files of the C++ bindings
@@ -10,6 +10,9 @@ BuildArch: noarch
 License: GPLv2+ and GFDL
 Url: http://gtkmm.org
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+BuildRequires(pre): meson rpm-build-python3
+%add_python3_path %_datadir/%name/build
 
 %description
 The mm-common module provides the build infrastructure and utilities
@@ -31,11 +34,11 @@ which could be used as a base for new mm module.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_bindir/*
@@ -51,6 +54,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Tue Oct 29 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.12-alt1
 - 0.9.12
 
