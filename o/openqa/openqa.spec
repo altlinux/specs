@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt6
+Release: alt7
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -367,6 +367,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Tue Oct 29 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt7
+- update to current version
+
 * Tue Oct 01 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt6
 - update to current version
 
