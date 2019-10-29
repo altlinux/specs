@@ -1,6 +1,6 @@
 Name: nagios-plugins-check_monit
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Nagios(R) plug-in for checking monit status
 License: GPL
@@ -11,6 +11,9 @@ Url: https://code.google.com/p/nagios-monit-plugin/
 Source: %name-%version.tar
 
 BuildArchitectures: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
 
 Requires: nagios-nrpe
 
@@ -24,6 +27,8 @@ all warnings and "unmonitored" states are shown.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 $(find ./ -name '*.py')
 
@@ -36,6 +41,9 @@ install -m755 check_monit.py %buildroot%pluginsdir/
 %doc README check_monit.cfg
 
 %changelog
+* Tue Oct 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt2
+- py2 -> py3 (Closes #37396)
+
 * Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt1
 - Version updated to 1.4
 - python2 -> python3
