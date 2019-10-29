@@ -1,19 +1,23 @@
 %define oname yams
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.45.1
-Release: alt1.1
+Release: alt2
+
 Summary: Entity / relation schema
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/yams/
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-module-logilab-common
-BuildRequires: python-module-logilab-database python-module-six
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-logilab-common python-tools-2to3
+BuildRequires: python3-module-logilab-database python3-module-six
 
 %py_provides %oname
+
 
 %description
 Yet Another Magic Schema ! A simple/generic but powerful entities /
@@ -23,21 +27,35 @@ readable/writable from/to various formats.
 %prep
 %setup
 
+find -type f \( -name '*.py' -o -name 'owl2yams' -o -name 'yams-check' \
+             -o -name 'yams-view' \) -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ \( -name '*.py' -o -name 'owl2yams' -o -name 'yams-check' \
+              -o -name 'yams-view' \))
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ \( -name '*.py' -o -name 'owl2yams' -o -name 'yams-check' \
+              -o -name 'yams-view' \))
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+python3 setup.py test
 
 %files
 %doc ChangeLog README
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Oct 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.45.1-alt2
+- python2 -> python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.45.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
