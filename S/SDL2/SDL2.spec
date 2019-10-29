@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -91,6 +91,9 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Tue Oct 29 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.0.10-alt2
+- use khrplatform defines, not ptrdiff_t
+
 * Thu Aug 29 2019 Alexey Tourbin <at@altlinux.ru> 2.0.10-alt1
 - 2.0.9 -> 2.0.10
 - this new version is required to build 0ad on ppc64le: SDL_cpuinfo.h
