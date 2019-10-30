@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba
-Version: 4.10.9
+Version: 4.10.10
 Release: alt1
 
 Group:   System/Servers
@@ -1823,6 +1823,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Oct 29 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.10-alt1
+- Update to second security autumn release
+- Security fixes:
+  + CVE-2019-10218 Client code can return filenames containing path separators
+  + CVE-2019-14833 Samba AD DC check password script does not receive the full password
+  + CVE-2019-14847 User with "get changes" permission can crash AD DC LDAP server via dirsync
+
 * Sat Oct 19 2019 Evgeny Sinelikov <sin@altlinux.org> 4.10.9-alt1
 - Update to latest autumn release
 
