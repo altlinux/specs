@@ -1,26 +1,41 @@
-%define  modulename meinheld
+%define  oname meinheld
 
-Name:    python3-module-%modulename
+%def_with check
+
+Name:    python3-module-%oname
 Version: 0.6.1
-Release: alt2
+Release: alt3
 
 Summary: meinheld is a high performance asynchronous WSGI Web Server (based on picoev)
 License: BSD
 Group:   Development/Python3
 URL:     https://github.com/mopemope/meinheld
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-distribute
 
-Source:  %modulename-%version.tar
+%if_with check
+BuildRequires: python3-module-gunicorn
+%endif
+
+Source:  %oname-%version.tar
+
 
 %description
 %summary
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description tests
+%summary
+
+This package contains tests for %oname
+
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 
 %build
 %python3_build
@@ -28,11 +43,28 @@ Source:  %modulename-%version.tar
 %install
 %python3_install
 
+mv tests/ %buildroot%python3_sitelibdir/%oname/
+
+%if_with check
+%check
+%__python3 setup.py test
+%endif
+
 %files
-%python3_sitelibdir/%modulename/
+%doc LICENSE *.rst example/
+%python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
 
+%exclude %python3_sitelibdir/%oname/tests/
+
+%files tests
+%python3_sitelibdir/%oname/tests/
+
+
 %changelog
+* Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
+- fix build
+
 * Fri Feb 22 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.1-alt2
 - Fix license
 
