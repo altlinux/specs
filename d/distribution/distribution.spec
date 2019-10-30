@@ -1,14 +1,15 @@
 Name: distribution
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Short, simple, direct scripts for creating character-based graphs
 License: GPLv2
 Group: Text tools
 URL: https://github.com/philovivero/distribution
+BuildArch: noarch
+
 Source0: %name-%version.tar
 
-BuildArch: noarch
 
 %description
 Short, simple, direct scripts for creating character-based graphs in a
@@ -37,6 +38,9 @@ This is python implementation
 %prep
 %setup
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %install
 mkdir -p %buildroot%_bindir
 for file in %name %name.py;do
@@ -52,6 +56,10 @@ done
 %files
 %doc README.md VERSION screenshot.png distributionrc
 
+
 %changelog
+* Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.2-alt2
+- python2 -> python3
+
 * Fri Jan  8 2016 Terechkov Evgenii <evg@altlinux.org> 1.2.2-alt1
 - Initial build for ALT Linux Sisyphus
