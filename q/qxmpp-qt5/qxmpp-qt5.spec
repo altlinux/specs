@@ -4,16 +4,16 @@
 %def_disable check
 
 Name: %_name-qt5
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Qt XMPP library
 License: LGPLv2+
 Group: Development/KDE and QT
-Url: https://github.com/%name-project/%name
+Url: https://github.com/%_name-project/%_name
 
 #VCS: https://github.com/qxmpp-project/qxmpp.git
-Source: %url/archive/%_name-%version.tar.gz
+Source: %url/archive/v%version/%_name-%version.tar.gz
 
 Conflicts: lib%_name
 
@@ -129,6 +129,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Wed Oct 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Tue Jan 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
