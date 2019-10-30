@@ -1,4 +1,4 @@
-%define ver_major 1.5
+%define ver_major 1.6
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-epub-thumbnailer
@@ -11,6 +11,8 @@ Group: Graphical desktop/GNOME
 Url: https://live.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+Requires: librsvg
 
 BuildRequires: libgio-devel libgdk-pixbuf-devel libxml2-devel libarchive-devel >= 3.1
 
@@ -37,6 +39,9 @@ This package provides a thumbnailer for EPub and MOBI books files.
 %doc README AUTHORS NEWS
 
 %changelog
+* Wed Oct 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - 1.5
 
