@@ -1,6 +1,6 @@
 Name: libglvnd
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -11,6 +11,7 @@ Provides: libGLdispatch = %epoch:%version-%release libglvnd0 = %epoch:%version-%
 Obsoletes: libGLdispatch < %epoch:%version-%release libglvnd0 < %epoch:%version-%release
 
 Source: %name-%version.tar
+Patch: %name-%version.patch
 
 BuildRequires: libXext-devel python-modules-compiler python-modules-distutils python-modules-xml xorg-glproto-devel
 
@@ -74,6 +75,7 @@ libGL are the common dispatch interface for the GLX API
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -123,6 +125,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt2
+- update GL/gl.h to match Mesa
+
 * Thu Oct 10 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt1
 - 1.2.0
 
