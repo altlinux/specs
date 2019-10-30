@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.163
-Release: alt2
+Release: alt4
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -16,8 +16,6 @@ Patch1: %name-%version.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: libxml2-devel libe2fs-devel libuuid-devel libssl-devel libjson-c-devel
-
-%add_verify_elf_skiplist %python3_sitelibdir/libploop/*
 
 %description
 This package contains tools to work with ploop devices and images.
@@ -105,6 +103,12 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 30 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt4
+- fix compilation warnings on snprintf/strncpy calls
+
+* Fri Oct 25 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt3
+- enable ELF verify
+
 * Thu Oct 17 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt2
 - convert to python3
 
