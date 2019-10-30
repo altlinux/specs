@@ -1,16 +1,15 @@
 %define oname motor
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Non-blocking MongoDB driver for Tornado
 
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/motor/
 
 BuildArch: noarch
@@ -19,38 +18,20 @@ BuildArch: noarch
 # Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-tornado
-BuildRequires: python-module-pymongo python-module-pymongo-gridfs
-BuildRequires: python-module-futures
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-pymongo python3-module-gridfs
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(aiohttp)
-%endif
 
-%py_provides %oname
-%py_requires tornado pymongo gridfs
+%py3_provides %oname
+%py3_requires tornado pymongo gridfs
+
 
 %description
 Motor is a full-featured, non-blocking MongoDB driver for Python Tornado
 applications.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Non-blocking MongoDB driver for Tornado
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires tornado pymongo gridfs
-
-%description -n python3-module-%oname
-Motor is a full-featured, non-blocking MongoDB driver for Python Tornado
-applications.
-%endif
 
 %package docs
 Summary: Documentation for %oname
@@ -66,59 +47,36 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %prepare_sphinx3 .
 ln -s ../objects.inv doc/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if_with doc
 make -C doc SPHINXBUILD=py3_sphinx-build
 %endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %if_with doc
 %files docs
 %doc doc/_build/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt2
+- disable python2, enable python3
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version (2.0.0) with rpmgs script
 - switch to build from tarball
