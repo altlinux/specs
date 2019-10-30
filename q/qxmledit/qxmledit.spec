@@ -1,7 +1,7 @@
 %define Name QXmlEdit
 Name: qxmledit
 Version: 0.9.13
-Release: alt2
+Release: alt3
 
 Summary: Simple XML editor and XSD viewer
 
@@ -11,6 +11,7 @@ URL: https://github.com/lbellonda/%name
 
 # Source-url: https://github.com/lbellonda/qxmledit/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch0: add-translation-units.patch
 
 Provides: %Name = %version-%release
 
@@ -45,6 +46,7 @@ Main features:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 lrelease-qt5 src/QXmlEdit.pro
@@ -83,6 +85,9 @@ mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
 
 
 %changelog
+* Tue Oct 28 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 0.9.13-alt3
+- add russian translations
+
 * Wed Oct 17 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 0.9.13-alt2
 - build translations
 
