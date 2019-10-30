@@ -6,7 +6,7 @@
 
 Name: %{oname}3
 Version: 2.88
-Release: alt1
+Release: alt2
 
 Summary: Professional 3D collision detection library
 License: Zlib
@@ -90,6 +90,11 @@ sed -i \
        -e 's|-L@CMAKE_INSTALL_PREFIX@/@LIB_DESTINATION@/|-L@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/|' \
        -e 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@|' \
        %oname.pc.cmake
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
+	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %cmake \
@@ -140,6 +145,9 @@ done
 %endif #static
 
 %changelog
+* Wed Oct 30 2019 Michael Shigorin <mike@altlinux.org> 2.88-alt2
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Tue Oct 08 2019 Konstantin Rybakov <kastet@altlinux.org> 2.88-alt1
 - Updated to upstream version 2.88
 
