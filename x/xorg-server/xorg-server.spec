@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.20.5
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -308,6 +308,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Oct 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.5-alt3
+- lower gl version to work with libglvnd
+
 * Mon Sep 09 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.5-alt2
 - use intel ddx only on pre-gen4 hw, newer ones will fall back to modesetting
 
