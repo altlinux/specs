@@ -1,6 +1,6 @@
 Name:     altsp-test-progs
 Version:  1.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Programs for tests for ALT SP OS
 License:  GPLv2+
@@ -43,6 +43,9 @@ cp -ar autoinstall %buildroot%_libdir/%name-%version
 %doc AUTHORS NEWS README ejector.sh
 
 %changelog
+* Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2-alt2
+- python2 -> python3
+
 * Tue Mar 12 2019 Denis Medvedev <nbr@altlinux.org> 1.2-alt1
 - incorporated changes from branch c
 
