@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.163
-Release: alt4
+Release: alt5
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -103,6 +103,9 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 31 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt5
+- make python3 convertion closer to upstream style
+
 * Wed Oct 30 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt4
 - fix compilation warnings on snprintf/strncpy calls
 
