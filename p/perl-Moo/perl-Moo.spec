@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Moo
-Version: 2.003004
+Version: 2.003006
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -36,6 +37,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2.003006-alt1
+- new version
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.003004-alt1
 - automated CPAN update
 
