@@ -1,5 +1,5 @@
-%define git_ver 8990
-%define git_commit 6867fc5f06c59f01e743930aa69f36c5850fc5e3
+%define git_ver 9053
+%define git_commit 03a2d36c7e76415046c9e318ef58b4473b553e6b
 
 %define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -121,6 +121,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Oct 31 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9053-alt1
+- Version 0.0.7.9053
+
 * Wed Oct 23 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.8990-alt1
 - Version 0.0.7.8990
 - Update LLVM to 9836c29
