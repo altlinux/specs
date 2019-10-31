@@ -1,7 +1,7 @@
 
 Name:    vcmmd
 Version: 7.0.165
-Release: alt1
+Release: alt2
 
 Summary: Virtuozzo containers memory management daemon
 License: LGPL-2.1
@@ -11,8 +11,8 @@ URL:     https://src.openvz.org/
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libvcmmd
 BuildRequires: systemd
 BuildRequires: gcc-c++
@@ -30,16 +30,16 @@ Virtuozzo containers memory management daemon
 %patch -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-echo "INSTALL: " %python_install
-%python_install
+echo "INSTALL: " %python3_install
+%python3_install
 
 %files
 %doc COPYING
 %_bindir/*
-%python_sitelibdir/%name/
+%python3_sitelibdir/*
 %_libdir/python*/site-packages/*info
 %_libdir/python*/site-packages/%name/
 %_unitdir/%name.service
@@ -49,5 +49,8 @@ echo "INSTALL: " %python_install
 %config(noreplace) %_sysconfdir/logrotate.d/*
 
 %changelog
+* Thu Oct 31 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt2
+- convert to python3
+
 * Mon Sep 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt1
   - initial import for ALT
