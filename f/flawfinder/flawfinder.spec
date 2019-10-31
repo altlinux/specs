@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: flawfinder
-Version: 1.31
+Version: 2.0.10
 Release: alt1
 
 Summary: Examines C/C++ source code for security flaws
@@ -16,10 +16,9 @@ BuildArch: noarch
 
 Source: http://www.dwheeler.com/%name/%name-%version.tar.gz
 
-# Automatically added by buildreq on Wed Nov 21 2007
-BuildRequires: python-modules
+BuildRequires(pre): rpm-build-python3
+BuildRequires: flex
 
-BuildPreReq: flex
 
 %description
 Flawfinder scans through C/C++ source code, identifying lines ("hits")
@@ -38,6 +37,9 @@ Flawfinder сканирует исходный код на С/С++, указывая на строки, в
 
 rm -f test-results.*
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ \( -name '*.py' -o -name '%name' \))
+
 %build
 %make_build
 %{?!_without_check:%{?!_disable_check:%make_build -k check ||:}}
@@ -52,7 +54,11 @@ bzip2 -9fk ChangeLog
 %doc announcement README ChangeLog.bz2 *.pdf
 %doc test.c test2.c test-results.*
 
+
 %changelog
+* Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.10-alt1
+- Version updated to 2.0.10
+
 * Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.31-alt1
 - Version 1.31
 
