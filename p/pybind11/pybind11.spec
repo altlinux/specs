@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
-Version: 2.4.2
-Release: alt2
+Version: 2.4.3
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -12,7 +12,6 @@ Source0: %name-%version.tar
 
 Patch1: alt-e2k-workaround-for-missing-copy-elision.patch
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu May 10 2018
 BuildRequires: boost-devel-headers
@@ -42,11 +41,6 @@ Group: Development/Other
 # For dir ownership
 Requires: cmake
 
-%package -n python-module-%name
-Summary: %summary
-Group: Development/Python
-Requires: %name-devel = %EVR
-
 %package -n python3-module-%name
 Summary: %summary
 Group: Development/Python3
@@ -63,11 +57,6 @@ pybind11 is a lightweight header-only library that exposes C++ types in Python a
 
 This package contains the development headers for pybind11.
 
-%description -n python-module-%name
-%base_description
-
-This package contains the Python 2 files.
-
 %description -n python3-module-%name
 %base_description
 
@@ -81,20 +70,17 @@ This package contains the Python 3 files.
 %endif
 
 %build
-for py in python python3; do
-    mkdir $py
-    cd $py
-    %cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/$py ../..
-    %cmake_build
-    cd ..
-done
-%python_build_debug
+mkdir -p python3
+pushd python3
+%cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/python3 ../..
+%cmake_build
+popd
+
 %python3_build_debug
 
 %install
-%makeinstall_std -C python/BUILD
+%makeinstall_std -C python3/BUILD
 # Force install to arch-ful directories instead.
-PYBIND11_USE_CMAKE=true %python_install "--install-purelib" "%python_sitelibdir"
 PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdir"
 
 rm -rf %buildroot%_includedir/python*
@@ -103,7 +89,6 @@ rm -rf %buildroot%_includedir/python*
 %ifarch %e2k
 export SKIP_E2K=1
 %endif
-make -C python/BUILD/tests check -j$NPROCS
 make -C python3/BUILD/tests check -j$NPROCS
 
 %files devel
@@ -111,15 +96,15 @@ make -C python3/BUILD/tests check -j$NPROCS
 %_includedir/%name
 %_datadir/cmake/%name
 
-%files -n python-module-%name
-%python_sitelibdir/%name
-%python_sitelibdir/%name-%version-*.egg-info
-
 %files -n python3-module-%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Oct 28 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.4.3-alt1
+- New version
+- Spec: quit building Python2 module package
+
 * Thu Oct 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt2
 - Added hack for build on e2k.
 - Introduced strong inter-package dependencies.
