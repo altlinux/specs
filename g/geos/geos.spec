@@ -5,7 +5,7 @@
 
 Name: geos
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -18,6 +18,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: %name-fix-lib-destination.patch
 Patch2: %name-alt-fix-link-benchmarks.patch
+Patch3: %name-fix-geos-config--libs.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): cmake
@@ -89,6 +90,7 @@ Ruby bindings for the lib%name library.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %ifarch %e2k
 # strip UTF-8 BOM
@@ -131,7 +133,6 @@ popd
 %if %_lib == lib64
 LIB_SUFFIX=64
 %endif
-
 
 # E2K: tests/unit/tut/tut.hpp: excessive recursion at instantiation [...]
 %cmake_insource \
@@ -182,7 +183,8 @@ make check || exit 0
 
 %files -n lib%name-devel
 %_bindir/%name-config
-%_libdir/lib*.so
+%_libdir/libgeos.so
+%_libdir/libgeos_c.so
 %_includedir/*
 %_libdir/cmake/GEOS
 
@@ -202,6 +204,10 @@ make check || exit 0
 %endif
 
 %changelog
+* Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
+- Fix geos-config --libs.
+- Make libgeos.so for devel subpackage.
+
 * Tue Oct 29 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 
