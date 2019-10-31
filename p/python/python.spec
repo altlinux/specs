@@ -3,7 +3,7 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.16
+Version: 2.7.17
 Release: alt1
 
 %define package_name		%real_name
@@ -180,16 +180,40 @@ This is a python with relaxed conflicts: using with python24 are allowed.
 %package base
 Summary: Base python modules and executables
 Group: Development/Python
+#BuildArch: noarch
+# {{{ remove me in the next release
 Provides: /usr/bin/python
 Provides: %python_libdir %python_dynlibdir %python_sitelibdir %python_tooldir
 %if "lib" != "%_lib"
 Provides: %prefix/lib/%python_name %prefix/lib/%python_name/site-packages %prefix/lib/%python_name/tools
 %endif
+# }}}
+Requires: python2-base
+
+%description base
+Python is an interpreted, interactive, object-oriented programming
+language often compared to Tcl, Perl, Scheme or Java. Python includes
+modules, classes, exceptions, very high level dynamic data types and
+dynamic typing. Python supports interfaces to many system calls and
+libraries, as well as to various windowing systems (X11, Motif, Tk,
+Mac and MFC).
+
+This package contains symlink to default python interpreter.
+
+%package -n python2-base
+Summary: Base python modules and executables
+Group: Development/Python
+# restore me in the next release
+#Provides: %python_libdir %python_dynlibdir %python_sitelibdir %python_tooldir
+#if "lib" != "%_lib"
+#Provides: %prefix/lib/%python_name %prefix/lib/%python_name/site-packages %prefix/lib/%python_name/tools
+#endif
 Provides: %python_name(os.path)
 Provides: %python_name(pwd)
 Provides: python(abi) = %suffix_ver
 Obsoletes: %python_name-base <= %noversion_from
-%description base
+
+%description -n python2-base
 Python is an interpreted, interactive, object-oriented programming
 language often compared to Tcl, Perl, Scheme or Java. Python includes
 modules, classes, exceptions, very high level dynamic data types and
@@ -910,9 +934,9 @@ touch dev-list
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 if [ "%real_name" != "%name" ]; then
 echo %real_name >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
-echo %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name >> base-list
+echo %_sysconfdir/buildreqs/packages/substitute.d/%name >> base-list
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
-echo %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel >> dev-list
+echo %_sysconfdir/buildreqs/packages/substitute.d/%name-devel >> dev-list
 fi
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-dev
 %if_with tk
@@ -948,18 +972,18 @@ install -d -m 755 %buildroot%_sysconfdir/skel
 install -m 644 %SOURCE11 %buildroot%_sysconfdir/skel/.pythonrc.py
 
 mkdir -p %buildroot%_rpmlibdir
-cat <<\EOF >%buildroot%_rpmlibdir/%name-base-files.req.list
+cat <<\EOF >%buildroot%_rpmlibdir/python2-base-files.req.list
 # %name-base dirlist for %_rpmlibdir/files.req
-%python_libdir	%name-base
-%python_dynlibdir	%name-base
-%python_sitelibdir	%name-base
-%python_tooldir	%name-base
+%python_libdir	python2-base
+%python_dynlibdir	python2-base
+%python_sitelibdir	python2-base
+%python_tooldir	python2-base
 EOF
 %if "lib" != "%_lib"
-cat <<\EOF >>%buildroot%_rpmlibdir/%name-base-files.req.list
-%prefix/lib/%python_name	%name-base
-%prefix/lib/%python_name/site-packages	%name-base
-%prefix/lib/%python_name/tools	%name-base
+cat <<\EOF >>%buildroot%_rpmlibdir/python2-base-files.req.list
+%prefix/lib/%python_name	python2-base
+%prefix/lib/%python_name/site-packages	python2-base
+%prefix/lib/%python_name/tools	python2-base
 EOF
 %endif
 
@@ -974,30 +998,38 @@ ln -s pynche%suffix_ver %buildroot%_bindir/pynche
 rm -rf %buildroot%_libdir/%python_name/lib2to3/tests/
 rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
+# hack to make arepo (remove me in the future)
+ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
+
 %files
 
 %files strict
 
 %files relaxed
 
-%files base -f base-list
-%_mandir/man?/*
-%config %_sysconfdir/buildreqs/files/ignore.d/%name
-%_bindir/%python_name
+%files base
 %_bindir/%real_name
-%_bindir/%{real_name}2
-%_bindir/pydoc
-%_bindir/pydoc%suffix_ver
+# move to python2-base in the next release
 %dir %python_libdir
 %dir %python_dynlibdir
 %dir %python_sitelibdir
 %dir %python_tooldir
-%doc LICENSE
-%doc Misc/{HISTORY,NEWS,cheatsheet}.xz
 %if "lib" != "%_lib"
 %prefix/lib/%python_name
 %endif
-%_rpmlibdir/%name-base-files.req.list
+# hack to make arepo (remote it in the future)
+%ghost %_libdir/libpython.so
+
+%files -n python2-base -f base-list
+%_mandir/man?/*
+%config %_sysconfdir/buildreqs/files/ignore.d/%name
+%_bindir/%python_name
+%_bindir/%{real_name}2
+%_bindir/pydoc
+%_bindir/pydoc%suffix_ver
+%doc LICENSE
+%doc Misc/{HISTORY,NEWS,cheatsheet}.xz
+%_rpmlibdir/python2-base-files.req.list
 %python_libdir/pydoc_data
 %python_libdir/importlib
 %python_libdir/config
@@ -1175,6 +1207,11 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu Oct 31 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt1
+- Updated to 2.7.17.
+- Separated python2-base subpackage.
+- Prepared python2-base-files.req.list.
+
 * Mon Apr 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.16-alt1
 - Updated to 2.7.16 (fixes FTBFS with openssl 1.1.1).
 - Removed redundant R: alternatives.
