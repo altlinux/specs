@@ -2,13 +2,14 @@
 %define oname testlink
 
 Name: python3-module-%oname
-Version: 0.6.4
-Release: alt1
+Version: 0.8.1
+Release: alt2
 Summary: A Python client to use the TestLink API
 License: Apache 2.0
 Group: Development/Python3
-Url: https://github.com/orenault/TestLink-API-Python-client
+Url: https://github.com/lczub/TestLink-API-Python-client
 Source: %name-%version.tar
+Patch1: add-inactive-active-testplan-feature.patch
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
@@ -20,6 +21,7 @@ TestLink-API-Python-client is a Python XML-RPC client for TestLink.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python3_build
@@ -34,5 +36,11 @@ cp -r example test %buildroot%python3_sitelibdir/%oname
 %doc LICENSE-2.0.txt doc/{install.rst,usage.rst}
 
 %changelog
+* Thu Oct 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt2
+- Add inactive and active feature for testplan
+
+* Tue Oct 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt1
+- New version
+
 * Thu Oct 17 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.4-alt1
 - Initial build for ALT
