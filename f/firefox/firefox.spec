@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        69.0.2
+Version:        70.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -32,6 +32,8 @@ Source6:        firefox.desktop
 Source7:        firefox-wayland.desktop
 Source8:        firefox.c
 Source9:        firefox-prefs.js
+Source10:       firefox-l10n.txt
+Source11:       l10n.tar
 
 ### Start Patches
 Patch001: 0001-ALT-fix-werror-return-type.patch
@@ -43,6 +45,9 @@ Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch009: 0009-ALT-Fix-aarch64-build.patch
+Patch010: 0010-FEDORA-wayland-cache-missing.patch
+Patch011: 0011-MOZILLA-1548475-Disable-Flash-on-Wayland-backend.patch
+Patch012: 0012-MOZILLA-1587008-Wayland-GL-Fixed-visual-glitches-wit.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -115,14 +120,19 @@ BuildRequires: libnss-devel-static
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
-Obsoletes:	firefox-3.6 firefox-4.0 firefox-5.0
-Conflicts:	firefox-settings-desktop
+Provides: webclient
+Requires: mozilla-common
 
-Provides:	webclient
-Requires:	mozilla-common
+Obsoletes: firefox-ru <= 70.0.1
+Obsoletes: firefox-uk <= 70.0.1
+Obsoletes: firefox-kk <= 70.0.1
+
+Provides: firefox-ru = %EVR
+Provides: firefox-uk = %EVR
+Provides: firefox-kk = %EVR
 
 # ALT#30732
-Requires:	gst-plugins-ugly%gst_version
+Requires: gst-plugins-ugly%gst_version
 
 Requires: libnspr >= %nspr_version
 Requires: libnss >= %nss_version
@@ -171,12 +181,16 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch007 -p1
 %patch008 -p1
 %patch009 -p1
+%patch010 -p1
+%patch011 -p1
+%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
 
 tar -xf %SOURCE1
 tar -xf %SOURCE2
+tar -xf %SOURCE11
 
 cp -f %SOURCE4 .mozconfig
 
@@ -194,29 +208,37 @@ ac_add_options --disable-elf-hack
 %endif
 EOF
 
-mkdir -p -- my_rust_vendor
-tar --strip-components=1 -C my_rust_vendor --overwrite -xf %SOURCE3
-
-mkdir -p -- .cargo
-cat > .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "$PWD/my_rust_vendor"
-EOF
-
 
 %build
+# compile cbindgen
+CBINDGEN_HOME="$PWD/cbindgen"
+CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
+
+if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
+	mkdir -p -- "$CBINDGEN_HOME"
+
+	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
+
+	cat > "$CBINDGEN_HOME/config" <<-EOF
+		[source.crates-io]
+		replace-with = "vendored-sources"
+
+		[source.vendored-sources]
+		directory = "$CBINDGEN_HOME"
+	EOF
+
+	env CARGO_HOME="$CBINDGEN_HOME" \
+		cargo install cbindgen
+fi
+
+# compile firefox
 cd mozilla
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %firefox_prefix
 
-env CARGO_HOME="$PWD/.cargo" \
-	cargo install cbindgen
-
 export MOZ_BUILD_APP=browser
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
@@ -237,6 +259,10 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 #ifnarch %{ix86}
 export CC="clang"
 export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export RANLIB="llvm-ranlib"
+export LLVM_PROFDATA="llvm-profdata"
 #else
 #export CC="gcc"
 #export CXX="g++"
@@ -245,11 +271,9 @@ export CXX="clang++"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
-export RUST_BACKTRACE=1
 export RUSTFLAGS="-Cdebuginfo=0"
-export BUILD_VERBOSE_LOG=1
-export MOZ_MAKE_FLAGS="-j6"
-export PATH="$PWD/.cargo/bin:$PATH"
+export MOZ_MAKE_FLAGS="-j10"
+export PATH="$CBINDGEN_BINDIR:$PATH"
 
 autoconf old-configure.in > old-configure
 pushd js/src
@@ -257,6 +281,12 @@ autoconf old-configure.in > old-configure
 popd
 
 ./mach build
+
+while read -r loc; do
+	./mach build chrome-$loc
+done < %SOURCE10
+
+make -C objdir/browser/installer multilocale.txt
 
 $CC $CFLAGS \
 	-Wall -Wextra \
@@ -270,6 +300,7 @@ $CC $CFLAGS \
 cd mozilla
 
 export SHELL=/bin/sh
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -357,20 +388,19 @@ rm -rf -- \
 # Add real RPATH
 (set +x
 	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-	find %buildroot/%firefox_prefix -type f |
+	find %buildroot -type f |
 	while read f; do
 		t="$(readlink -ev "$f")"
-		file "$t" | fgrep -qs ELF || continue
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
-			chrpath -r "%firefox_prefix" "$t"
-		fi
+		file "$t" | fgrep -qs ELF ||
+			continue
+		chrpath -l "$t" |
+			fgrep -qs \
+				-e "RPATH=$rpath" \
+				-e "RUNPATH=$rpath" ||
+			continue
+		chrpath -r "%firefox_prefix" "$t"
 	done
 )
-
-%pre
-for n in defaults browserconfig.properties; do
-	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
-done
 
 %files
 %_altdir/firefox
@@ -394,6 +424,27 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Oct 31 2019 Alexey Gladkov <legion@altlinux.ru> 70.0.1-alt1
+- New release (70.0.1).
+- Builtin ru, kk, uk locales.
+
+* Mon Oct 28 2019 Alexey Gladkov <legion@altlinux.ru> 70.0-alt1
+- New release (70.0).
+- Fixed:
+  + CVE-2018-6156: Heap buffer overflow in FEC processing in WebRTC
+  + CVE-2019-15903: Heap overflow in expat library in XML_GetCurrentLineNumber
+  + CVE-2019-11757: Use-after-free when creating index updates in IndexedDB
+  + CVE-2019-11759: Stack buffer overflow in HKDF output
+  + CVE-2019-11760: Stack buffer overflow in WebRTC networking
+  + CVE-2019-11761: Unintended access to a privileged JSONView object
+  + CVE-2019-11762: document.domain-based origin isolation has same-origin-property violation
+  + CVE-2019-11763: Incorrect HTML parsing results in XSS bypass technique
+  + CVE-2019-11765: Incorrect permissions could be granted to a website
+  + CVE-2019-17000: CSP bypass using object tag with data: URI
+  + CVE-2019-17001: CSP bypass using object tag when script-src 'none' is specified
+  + CVE-2019-17002: upgrade-insecure-requests was not being honored for links dragged and dropped
+  + CVE-2019-11764: Memory safety bugs fixed in Firefox 70 and Firefox ESR 68.2
+
 * Fri Oct 04 2019 Alexey Gladkov <legion@altlinux.ru> 69.0.2-alt1
 - New release (69.0.2).
 
