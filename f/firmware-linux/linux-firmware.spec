@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191023
+Version: 20191028
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Oct 31 2019 Cronbuild Service <cronbuild@altlinux.org> 20191028-alt1
+- upstream changes (GIT 9e194c7):
+  + qed: Add firmware 8.40.33.0 (thx Rasesh Mody)
+  + amdgpu: add new navi14 wks gfx firmware for 19.30 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 19.30 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 19.30 (thx Alex Deucher)
+  + Add firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+
 * Wed Oct 23 2019 Cronbuild Service <cronbuild@altlinux.org> 20191023-alt1
 - upstream changes (GIT ad7a8b2):
   + Mellanox: Add new mlxsw_spectrum2 firmware 29.2000.2308 (thx Ido Schimmel)
