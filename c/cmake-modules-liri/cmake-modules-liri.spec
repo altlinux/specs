@@ -1,6 +1,6 @@
 Name: cmake-modules-liri
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Liri-specific cmake modules
 License: BSD
@@ -31,5 +31,8 @@ Requires: extra-cmake-modules >= 5.48.0
 %_datadir/LiriCMakeShared
 
 %changelog
+* Thu Oct 31 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt2
+- rebuilt as arch-independent
+
 * Thu Oct 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
 - initial
