@@ -5,7 +5,7 @@
 
 Name: gnupg2
 Version: 2.2.17
-Release: alt6
+Release: alt7
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -53,7 +53,7 @@ Patch102: alt-agent-fix-password-request.patch
 Patch103: alt-texinfo.patch
 
 # GOST patch/requires/provides
-%define gostversion 2.0.1
+%define gostversion 2.0.2
 Patch18: %name-%version-gost-common.patch
 Patch19: %name-%version-gost-agent.patch
 Patch20: %name-%version-gost-g10.patch
@@ -184,6 +184,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Oct 31 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt7
+- Switch to an opaque session key value to prevent key length errors.
+
 * Tue Oct 29 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt6
 - Fix: Try to determine the signer digest algorithm using the
   public key.
