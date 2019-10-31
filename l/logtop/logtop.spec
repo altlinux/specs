@@ -1,20 +1,22 @@
 Name: logtop
 Version: 0.6.1
-Release: alt2.git20140901.2
+Release: alt3
+
 Summary: Display real time statistics of whatever you want
 License: BSD
 Group: Text tools
 Url: http://julienpalard.github.io/logtop/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/JulienPalard/logtop.git
+
 Source: %name-%version.tar
+Patch0: rm-python2-from-makefile.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: swig libncurses-devel libuthash-devel
-BuildPreReq: python-devel python3-devel
+BuildPreReq: python3-devel
 
 Requires: lib%name = %EVR
+
 
 %description
 logtop displays real-time count of strings received in standard input.
@@ -32,18 +34,6 @@ $ tail -f /var/log/apache2/access.log | cut -d ' ' -f1 | logtop
 
 This package contains shared library of %name.
 
-%package -n python-module-%name
-Summary: Python module of %name
-Group: Development/Python
-AutoReq: yes,nopython
-
-%description -n python-module-%name
-logtop displays real-time count of strings received in standard input.
-It's useful for some cases, like getting the IP flooding your server:
-$ tail -f /var/log/apache2/access.log | cut -d ' ' -f1 | logtop
-
-This package contains Python module of %name.
-
 %package -n python3-module-%name
 Summary: Python module of %name
 Group: Development/Python3
@@ -57,6 +47,10 @@ This package contains Python module of %name.
 
 %prep
 %setup
+%patch -p1
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
 %make_build all
@@ -64,7 +58,6 @@ This package contains Python module of %name.
 %install
 %makeinstall_std LIB_SUFFIX=%_libsuff
 
-sed -i '/^ogtop_swigregister/d' %buildroot%python_sitelibdir/%name.py
 sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 
 %files
@@ -75,13 +68,14 @@ sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 %files -n lib%name
 %_libdir/*.so
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
+
 %changelog
+* Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
+- python2 -> python3
+
 * Tue May 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.1-alt2.git20140901.2
 - Fixed lib suffix handling.
 
