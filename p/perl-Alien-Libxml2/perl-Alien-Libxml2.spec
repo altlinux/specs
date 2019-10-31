@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Alien-Libxml2
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/Build/MM.pm) perl(Alien/Build/Plugin/Build/SearchDep.pm) perl(Alien/Build/Plugin/Prefer/BadVersion.pm) perl(Config.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Alien.pm) perl(Test2/V0.pm) perl(base.pm) pkgconfig(libxml-2.0)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
-Release: alt2
+Version: 0.11
+Release: alt1
 Summary: Install the C libxml2 library on your system
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/pod/Alien::Libxml2
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module_name}-%{version}.tar.gz
 #BuildArch: noarch
 
 %description
@@ -32,11 +32,14 @@ while.
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README author.yml
+%doc Changes README author.yml
 %perl_vendor_archlib/A*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Oct 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Wed May 29 2019 Alexey Shabalin <shaba@altlinux.org> 0.09-alt2
 - build to Sisyphus
 
