@@ -1,9 +1,8 @@
-%def_disable static
 %define oname %name-backends
 
 Name: sane
 Version: 1.0.28
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -39,6 +38,9 @@ Requires: udev
 Provides: %oname-drivers-scanners = %version-%release
 
 BuildRequires: rpm-build-intro
+
+# needed for genesys plugin
+BuildRequires: gcc-c++
 
 # manually removed: libsane-devel
 # Automatically added by buildreq on Sat Oct 12 2019
@@ -177,7 +179,8 @@ rm -f backend/dll.conf
 	--enable-locking \
 	--disable-rpath \
 	--with-lockdir=%_lockdir/%name \
-	--enable-static
+	--enable-shared \
+	--disable-static
 %make_build
 #%make -C doc sane.ps.gz
 
@@ -199,11 +202,6 @@ mkdir -p %buildroot%_lockdir/%name/
 rm -f %buildroot%_libdir/%name/*.la
 
 %find_lang %oname
-
-%if_disabled static
-rm -f %buildroot%_libdir/*.a
-rm -f %buildroot%_libdir/%name/*.a
-%endif
 
 %pre -n lib%name
 %groupadd -f scanner || :
@@ -257,13 +255,10 @@ rm -f %buildroot%_libdir/%name/*.a
 %_includedir/sane/
 %_pkgconfigdir/%oname.pc
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%_libdir/sane/*.a
-%endif
-
 %changelog
+* Thu Oct 31 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.28-alt2
+- add buildreq gcc-c++ (ALT bug 37406)
+
 * Sat Oct 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.28-alt1
 - new version 1.0.28 (with rpmrb script)
 - update buildreq (enable build with systemd, avahi)
