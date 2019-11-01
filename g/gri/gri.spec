@@ -1,11 +1,12 @@
 Name: gri
-Summary: A language for scientific illustration
 Version: 2.12.23
-Release: alt5
-Group: Development/Tools
-License: GPL v2
-URL: http://gri.sourceforge.net
+Release: alt6
 
+Summary: A language for scientific illustration
+License: GPLv3+
+Group: Development/Tools
+
+Url: http://gri.sourceforge.net
 Source: %name-%version.tar.gz
 Source1: http://gri.sourceforge.net/refcard.pdf
 Source2: http://gri.sourceforge.net/cmdrefcard.pdf
@@ -15,8 +16,8 @@ Patch2: %name-%version-alt-perl-compat.patch
 Patch3: %name-%version-alt-gcc7-compat.patch
 
 BuildRequires: gcc-c++ ImageMagick-tools texlive-base-bin info
-BuildRequires: ghostscript-classic perl4-compat
-BuildRequires: makeinfo
+BuildRequires: ghostscript-classic makeinfo
+BuildRequires: perl-Perl4-CoreLibs
 
 %description
 Gri is a language for scientific graphics programming.  It is a
@@ -65,6 +66,10 @@ This package contains documentation for Gri.
 %patch3 -p2
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %autoreconf
 %configure --enable-linux_redhat
 %make_build
@@ -73,7 +78,7 @@ This package contains documentation for Gri.
 %makeinstall_std
 
 mv %buildroot%_docdir/%name-%version %buildroot%_docdir/%name
-install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
+install -pm644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 
 %files
 %doc AUTHORS COPYING ChangeLog NEWS README THANKS license.txt copyright.txt
@@ -87,6 +92,11 @@ install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Fri Nov 01 2019 Michael Shigorin <mike@altlinux.org> 2.12.23-alt6
+- Updated License: tag
+- E2K: explicit -std=c++11
+- Minor spec cleanup
+
 * Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.23-alt5
 - Fixed build with new gcc.
 
