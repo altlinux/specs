@@ -18,7 +18,7 @@
 
 
 Name: dpdk
-Version: 18.11.1
+Version: 18.11.3
 Release: alt1
 Url: http://dpdk.org
 Packager: Lenar Shakirov <snejok@altlinux.ru>
@@ -316,6 +316,9 @@ EOF
 %endif
 
 %changelog
+* Fri Nov 01 2019 Alexey Shabalin <shaba@altlinux.org> 18.11.3-alt1
+- Update to latest LTS release 18.11.3
+
 * Wed Jun 05 2019 Alexey Shabalin <shaba@altlinux.org> 18.11.1-alt1
 - Update to latest LTS release 18.11.1
 - switch to use python3
