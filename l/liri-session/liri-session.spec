@@ -1,5 +1,5 @@
 Name: liri-session
-Version: 0.0.20191007
+Version: 0.0.20191017
 Release: alt1
 
 Summary: The Liri Session
@@ -44,17 +44,15 @@ this package contains development part of %name
 %_bindir/liri-session-ctl
 
 %_prefix/lib/systemd/user/liri-*
-%_prefix/lib/systemd/user-generators/liri-*
 
 %_prefix/libexec/liri-daemon
-%_prefix/libexec/liri-launcher
 
 %_libdir/libLiri1*.so.*
 %_libdir/qt5/plugins/liri/daemon
 
-%_datadir/dbus-1/services/io.liri.Launcher.service
 %_datadir/desktop-directories/*.directory
 %_datadir/glib-2.0/schemas/*.xml
+%_datadir/liri-session/systemd-user/autostart/*.desktop
 %_datadir/wayland-sessions/liri.desktop
 
 %files devel
@@ -64,5 +62,8 @@ this package contains development part of %name
 %_pkgconfigdir/Liri1*.pc
 
 %changelog
+* Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191017-alt1
+- updated form upstream git.2840b1b
+
 * Fri Oct 11 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191007-alt1
 - initial
