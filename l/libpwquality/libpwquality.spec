@@ -1,7 +1,8 @@
 %define _name pwquality
+%def_disable python2
 
 Name: lib%_name
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: A library for password generation and password quality checking
@@ -13,8 +14,10 @@ Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
 
 Provides: pam_%_name = %version-%release
 Requires: cracklib-words pam
-BuildRequires: cracklib-devel pam-devel python-devel
+
+BuildRequires: cracklib-devel pam-devel
 BuildRequires: rpm-build-python3 python3-devel
+%{?_enable_python2:BuildRequires: python-devel}
 
 %description
 This is a library for password quality checks and generation of random
@@ -55,31 +58,37 @@ Python3 applications.
 
 
 %prep
-%setup -a0
-mv %name-%version py3build
+%setup %{?_enable_python2:-a0
+mv %name-%version py2build}
 
 %build
 %define opts --with-securedir=%_pam_modules_dir --disable-static
-%configure \
-	%opts \
-	--with-python-rev=2.7 \
-	--with-pythonsitedir=%python_sitelibdir
-%make_build
 
-pushd py3build
+
 %configure \
 	%opts \
 	--with-python-binary=python3 \
 	--with-pythonsitedir=%python3_sitelibdir
 %make_build
+
+%if_enabled python2
+pushd py2build
+%configure \
+	%opts \
+	--with-python-rev=2.7 \
+	--with-pythonsitedir=%python_sitelibdir
+%make_build
 popd
+%endif
 
 %install
 %makeinstall_std
 
-pushd py3build
+%if_enabled python2
+pushd py2build
 %makeinstall_std
 popd
+%endif
 
 # relocate %name.so.1 to %_lib
 mkdir -p %buildroot/%_lib
@@ -110,15 +119,21 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %_pkgconfigdir/%_name.pc
 %_man3dir/pwquality.3.*
 
+%if_enabled python2
 %files -n python-module-%_name
 %python_sitelibdir/%_name.so
 %python_sitelibdir/*.egg-info
+%endif
 
 %files -n python3-module-%_name
 %python3_sitelibdir/%{_name}*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+- disabled python2 module
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
