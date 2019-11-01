@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		624fb7497b
+%define svnrev		8870606e6a
 
 %def_with pgsql
 %def_enable java
@@ -14,8 +14,9 @@
 %define _unitdir %systemd_unitdir
 %endif
 
+
 Name: zabbix
-Version: 4.2.7
+Version: 4.4.1
 Release: alt1
 Epoch: 1
 
@@ -395,8 +396,7 @@ find conf -type f -print0 | xargs -0 sed -i \
 
 %install
 # Generate *.mo files
-# TODO 'Remove | grep -v "/locale/fr/"' when fix FR locale
-for pofile in `find frontends/php/locale -type f ! -wholename '*/.svn*' -name '*.po' | grep -v "/locale/fr/"`
+for pofile in `find frontends/php/locale -type f -name '*.po'`
 do
     msgfmt --use-fuzzy -c -o ${pofile%%po}mo $pofile
 done
@@ -552,7 +552,7 @@ fi
 
 %if_with pgsql
 %files common-database-pgsql
-%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
+%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/timescaledb.sql
 %endif
 
 %files server-common
@@ -637,6 +637,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Nov 01 2019 Alexei Takaseev <taf@altlinux.org> 1:4.4.1-alt1
+- 4.4.1
+
 * Thu Oct 03 2019 Alexei Takaseev <taf@altlinux.org> 1:4.2.7-alt1
 - 4.2.7
 
