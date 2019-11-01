@@ -1,5 +1,5 @@
 Name: liri-wayland
-Version: 0.0.20191002
+Version: 0.0.20191026
 Release: alt1
 
 Summary: Wayland client and server extensions
@@ -15,6 +15,7 @@ BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5WaylandClient)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-protocols)
 
 %package -n libliri-wayland-client
 Summary: Liri wayland client extensions
@@ -78,5 +79,8 @@ Group: Development/C++
 %_libdir/cmake/Liri1WaylandServer
 
 %changelog
+* Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191026-alt1
+- update from upstream git.89303e9
+
 * Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191002-alt1
 - initial
