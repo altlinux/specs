@@ -8,8 +8,7 @@
 
 Name:    qt-creator
 Version: 4.9.2
-Release: alt2
-Summary: Cross-platform IDE for Qt
+Release: alt3
 
 Summary: Cross-platform IDE for Qt
 License: GPLv3 with exceptions
@@ -55,6 +54,9 @@ BuildRequires: lld
 %endif
 
 Requires: qt5-quickcontrols
+# Add Qt5 build environment to build Qt project
+Requires: qt5-base-devel
+Requires: gcc-c++
 
 %ifarch %e2k
 # error: cpio archive too big - 4446M
@@ -147,6 +149,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Nov 01 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt3
+- Add Qt5 build environment to build Qt project (ALT #37403).
+
 * Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 4.9.2-alt2
 - E2K:
   + fix build with dummy-qt5-webkit-devel dropped
@@ -331,15 +336,3 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 
 * Thu Apr 23 2009 Boris Savelev <boris@altlinux.org> 1.1.0-alt1
 - initial build for Sisyphus from Fedora
-
-* Tue Mar 20 2009 Itamar Reis Peixoto <itamar@ispbrasil.com.br> - 1.0.0-4
-- fix lib's loading in 64 bit machines
-
-* Tue Mar 18 2009 Itamar Reis Peixoto <itamar@ispbrasil.com.br> - 1.0.0-3
-- Changed License to LGPLv2 with exceptions and BR to qt4-devel >= 4.5.0
-
-* Tue Mar 17 2009 Itamar Reis Peixoto <itamar@ispbrasil.com.br> - 1.0.0-2
-- Improved Version to make it more compatible with fedora guidelines
-
-* Sun Mar 15 2009 Itamar Reis Peixoto <itamar@ispbrasil.com.br> - 1.0.0-1
-- initial RPM release
