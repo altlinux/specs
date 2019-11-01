@@ -2,11 +2,11 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-pcre
-Version: 7.4.1
+Version: 7.4.3
 Release: alt1
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
-License: LGPL
+License: LGPLv2.1
 Group: Development/ML
 Url: http://mmottl.github.io/pcre-ocaml/
 
@@ -17,7 +17,7 @@ Obsoletes: pcre-ocaml
 Provides: ocaml-pcre-runtime = %version-%release
 Obsoletes: ocaml-pcre-runtime < %version-%release
 
-BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc dune opam ocaml-base ocaml-configurator ocaml-stdio
+BuildRequires: libpcre-devel ocaml ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-configurator ocaml-stdio
 
 %description
 This OCaml-library interfaces the PCRE (Perl-compatibility regular
@@ -41,9 +41,7 @@ developing applications that use %name.
 make
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md README.md
@@ -62,6 +60,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Fri Nov 01 2019 Anton Farygin <rider@altlinux.ru> 7.4.3-alt1
+- 7.4.3
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 7.4.1-alt1
 - 7.4.1
 
