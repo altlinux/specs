@@ -1,5 +1,5 @@
 Name: libxml2
-Version: 2.9.9.0.52.f824
+Version: 2.9.10
 Release: alt1
 Epoch: 1
 
@@ -248,6 +248,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Fri Nov 01 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.9.10-alt1
+- Updated to v2.9.10
+
 * Wed May 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.9.9.0.52.f824-alt1
 - v2.9.4-12-ge905f08 -> v2.9.9-52-gf824a4bd
   (fixes: CVE-2017-9047, CVE-2017-9048, CVE-2017-9049, CVE-2017-9050,
