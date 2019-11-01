@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.17.1
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Configuration/Packaging
@@ -125,6 +125,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-fla
 %_K5icon/*/*/apps/*flatpak*.*
 
 %changelog
+* Fri Nov 01 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.17.1-alt2
+- Fixed use-after-free bug introduced by last patch.
+
 * Mon Oct 28 2019 Sergey V Turchin <zerg@altlinux.org> 5.17.1-alt1
 - new version
 
