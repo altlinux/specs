@@ -2,7 +2,7 @@
 
 Name: gnome-quod
 Version: 0.2.3
-Release: alt3
+Release: alt4
 Summary: Place pieces on a grid so that they make a square
 Group: Games/Puzzles
 License: GPL3
@@ -29,6 +29,10 @@ sed -i 's/^LF_/# LF_/' configure.ac
 for s in 16 32 48 64 128; do convert pixmaps/quod.png -resize ${s}x${s} $s.png; done
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 %autoreconf
 %configure
 %make_build
@@ -53,6 +57,9 @@ done
 %_man6dir/*
 
 %changelog
+* Fri Nov 01 2019 Michael Shigorin <mike@altlinux.org> 0.2.3-alt4
+- E2K: explicit -std=c++11
+
 * Fri Feb 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt3
 - Fixed build with gcc-8.
 
