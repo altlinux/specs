@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gimp
-Version: %ver_major.12
+Version: %ver_major.14
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -74,7 +74,7 @@ gtkdocize
 	--disable-gimp-console \
 	--enable-python
 
-%make V=1
+%make_build V=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -112,6 +112,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Fri Nov 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.10.14-alt1
+- 2.10.14
+
 * Thu Jun 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.10.12-alt1
 - 2.10.12
 
