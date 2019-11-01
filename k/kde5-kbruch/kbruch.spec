@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 19.08.0
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Education
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libKF5Bruch.so.*
 
 %changelog
+* Fri Nov 01 2019 Pavel Moseev <mars@altlinux.org> 19.08.0-alt3
+- fix incorrect display of user interface elements (closes: #37308)
+
 * Mon Oct 28 2019 Pavel Moseev <mars@altlinux.org> 19.08.0-alt2
 - fix incorrect display of user interface elements (closes: #37308)
 
