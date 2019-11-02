@@ -1,6 +1,6 @@
 Name: libxml2
 Version: 2.9.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -248,6 +248,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Sat Nov 02 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.10-alt2
+- xml2-config: fixed regressions introduced in v2.9.10.
+
 * Fri Nov 01 2019 Alexey Shabalin <shaba@altlinux.org> 1:2.9.10-alt1
 - Updated to v2.9.10
 
