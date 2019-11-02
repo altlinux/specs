@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.16.1
+Version: 2.16.3
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -51,6 +51,7 @@ AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 %package -n libmbedx509-%so_x509_version
 Summary: Library to work with X.509 certificates
 Group: System/Libraries
+Conflicts: hiawatha
 
 %description -n libmbedx509-%so_x509_version
 This subpackage of mbedtls contains a library that can read, verify
@@ -145,6 +146,10 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Nov 02 2019 Nazarov Denis <nenderus@altlinux.org> 2.16.3-alt1
+- Version 2.16.3
+- Fix conflict with hiawatha package (ALT #37417)
+
 * Sun Apr 07 2019 Nazarov Denis <nenderus@altlinux.org> 2.16.1-alt1
 - Version 2.16.1 (ALT #36525)
 - Remove %ubt macro (ALT #36525)
