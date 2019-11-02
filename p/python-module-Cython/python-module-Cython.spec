@@ -1,10 +1,10 @@
 %define modname Cython
 %def_disable debugger
 
-%def_with python3
+%def_with python2
 
 Name: python-module-%modname
-Version: 0.29.13
+Version: 0.29.14
 Release: alt1
 
 Summary: C-extensions for Python
@@ -17,14 +17,14 @@ Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
 Provides: %modname = %version-%release
 Conflicts: python-module-Cython0.18
 
-%if_with  python3
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
-%endif
 
-%add_python_req_skip IPython
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-distribute
 
-BuildRequires: rpm-build-python
+%{?_with_python2:BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools python-module-json
+%add_python_req_skip IPython}
 
 %description
 Cython is a language that makes writing C extensions for the Python
@@ -84,15 +84,12 @@ code.
 
 This package provides modules for debugging Cython programms.
 
-%if_with python3
 %package -n python3-module-%modname
 Summary: C-extensions for Python3
 Group: Development/Python3
 # since 0.20.1
 %py3_provides cython
 Conflicts: python3-module-Cython0.18
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
 
 %description -n python3-module-%modname
 Cython is a language that makes writing C extensions for the Python3
@@ -151,37 +148,41 @@ libraries, and for fast C modules that speed up the execution of Python3
 code.
 
 This package provides modules for debugging Cython programms.
-%endif
 
 %prep
 %setup -n %modname-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
+%if_with python2
+rm -rf ../python2
+cp -a . ../python2
 %endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
+%if_with python2
+pushd ../python2
+%python_build
 popd
 %endif
 
 %install
-%if_with python3
-pushd ../python3
-%python3_install
+%if_with python2
+pushd ../python2
+%python_install
 popd
-mv %buildroot/%_bindir/cython %buildroot/%_bindir/cython3
-mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
+for f in cy{thon{,ize},gdb}; do
+mv %buildroot/%_bindir/$f %buildroot/%_bindir/"$f"2;
+done
 %endif
 
-%python_install
+%python3_install
+for f in cy{thon{,ize},gdb}; do
+ln -s $f %buildroot/%_bindir/"$f"3;
+done
 
 %files
-%_bindir/cython
-%_bindir/cythonize
+%if_with python2
+%_bindir/cython2
+%_bindir/cythonize2
 %python_sitelibdir/pyximport/
 %python_sitelibdir/%modname/
 %python_sitelibdir/%modname-*egg-info
@@ -197,12 +198,15 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %if_enabled debugger
 %files debugger
 %python_sitelibdir/%modname/Debugger
-%_bindir/cygdb
+%_bindir/cygdb2
+%endif
 %endif
 
-%if_with python3
 %files -n python3-module-%modname
+%_bindir/cython
+%_bindir/cythonize
 %_bindir/cython3
+%_bindir/cythonize3
 %python3_sitelibdir/%modname/
 %python3_sitelibdir/pyximport/
 %python3_sitelibdir/cython.py
@@ -218,11 +222,15 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %if_enabled debugger
 %files -n python3-module-%modname-debugger
 %python3_sitelibdir/%modname/Debugger
+%_bindir/cygdb
 %_bindir/cygdb3
-%endif
 %endif
 
 %changelog
+* Sat Nov 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.29.14-alt1
+- 0.29.14
+- made python2 build optional
+
 * Fri Aug 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.29.13-alt1
 - 0.29.13
 
