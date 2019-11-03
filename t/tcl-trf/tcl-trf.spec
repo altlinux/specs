@@ -1,6 +1,6 @@
 Name: tcl-trf
 Version: 2.1.4
-Release: alt1
+Release: alt2
 
 Summary: A tcl extension called Tcl Data transformations
 License: BSD
@@ -30,8 +30,7 @@ BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-m
 %teapatch
 
 %build
-aclocal -I .
-autoconf
+%autoreconf
 %add_optflags -DSSL_STATIC_BUILD=1 -D_XOPEN_SOURCE
 export no_zlibtcl=true
 export CFLAGS="%optflags"
@@ -68,6 +67,10 @@ TCLLIBPATH=%buildroot%_tcllibdir ./test.tcl
 %_tcllibdir/Trf%version
 
 %changelog
+* Sun Nov 03 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt2
+- Replaced aclocal and autoconf calls with %%autoreconf in the %%build
+  (fixed FTBFS).
+
 * Tue May 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt1
 - Updated to 2.1.4.
 - Applied Debian patches.
