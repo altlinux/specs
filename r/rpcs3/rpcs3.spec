@@ -1,5 +1,5 @@
-%define git_ver 9053
-%define git_commit 03a2d36c7e76415046c9e318ef58b4473b553e6b
+%define git_ver 9061
+%define git_commit 7475be99ab888ed38801e3a8e4565e81d9d8aa23
 
 %define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -11,6 +11,7 @@
 %define llvm_commit 9836c299733ee5ef14760cd5bdae27e8233d2393
 %define gsl_commit 1995e86d1ad70519465374fb4876c6ef7c9f8c61
 %define cereal_commit 42a45b6e15fcbd1a3d65b033f5d4d0b2ef6c023d
+%define faudio_commit f86adca2bdd87c62b5d0db89c9a4279d1c8adce9
 
 Name: rpcs3
 Version: 0.0.7.%git_ver
@@ -36,14 +37,17 @@ Source7: https://github.com/Cyan4973/xxHash/archive/%xx_hash_commit/xxHash-%xx_h
 Source8: https://github.com/RPCS3/llvm/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
 Source9: https://github.com/microsoft/GSL/archive/%gsl_commit/GSL-%gsl_commit.tar.gz
 Source10: https://github.com/USCiLab/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
+Source11: https://github.com/FNA-XNA/FAudio/archive/%faudio_commit/FAudio-%faudio_commit.tar.gz
 
 BuildRequires: cmake
 BuildRequires: cvs
 BuildRequires: git-core
 BuildRequires: libGLEW-devel
+BuildRequires: libSDL2-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libevdev-devel
+BuildRequires: libfaudio-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
 BuildRequires: libpulseaudio-devel
@@ -53,6 +57,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
+BuildRequires: libxml2-devel
 BuildRequires: python3-dev
 BuildRequires: qt5-declarative-devel
 BuildRequires: subversion
@@ -63,7 +68,7 @@ BuildPreReq: libswresample-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 %__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
@@ -74,6 +79,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../llvm-%llvm_commit llvm
 %__mv -Tf ../GSL-%gsl_commit 3rdparty/GSL
 %__mv -Tf ../cereal-%cereal_commit 3rdparty/cereal
+%__mv -Tf ../FAudio-%faudio_commit 3rdparty/FAudio
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -121,6 +127,11 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Nov 03 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9061-alt1
+- Version 0.0.7.9061
+- Add FAudio in 3rdparty
+- Update build requires
+
 * Thu Oct 31 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9053-alt1
 - Version 0.0.7.9053
 
