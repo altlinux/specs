@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: ostree
-Version: 2019.2
+Version: 2019.5
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -11,7 +11,7 @@ Url: https://github.com/ostreedev/ostree
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
+# Source-url: https://github.com/ostreedev/ostree/releases/download/v%version/lib%name-%version.tar.gz
 Source: %name-%version.tar
 # Note! Always use HEAD!!
 # Source1-url: https://github.com/GNOME/libglnx/archive/master.zip
@@ -123,6 +123,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Sun Nov 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.5-alt1
+- 2019.5
+
 * Tue Apr 30 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.2-alt1
 - 2019.2
 
