@@ -1,5 +1,5 @@
 Name: instead-cat
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 Group: Games/Adventure
 Summary: The return of the quantum cat -- INSTEAD game (russian)
@@ -7,7 +7,7 @@ Summary(ru_RU.UTF-8): Возвращение квантового кота -- и
 License: Distributable
 Source: %name-%version.zip
 Packager: Fr. Br. George <george@altlinux.ru>
-Url: http://instead-games.googlecode.com
+Url: http://instead-games.ru/game.php?ID=107
 
 BuildArch: noarch
 Requires: instead
@@ -42,6 +42,9 @@ cp -a . %buildroot%instead/cat
 %instead/cat
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.6.1-alt1
+- Autobuild version bump to 1.6.1
+
 * Tue Jan 10 2012 Fr. Br. George <george@altlinux.ru> 1.6-alt1
 - Autobuild version bump to 1.6
 
