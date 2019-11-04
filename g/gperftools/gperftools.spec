@@ -1,5 +1,5 @@
 Name: gperftools
-Version: 2.6.3
+Version: 2.7
 Release: alt1
 
 Provides: google-perftools
@@ -68,6 +68,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 2.7-alt1
+- Autobuild version bump to 2.7
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.6.3-alt1
 - Autobuild version bump to 2.6.3
 
