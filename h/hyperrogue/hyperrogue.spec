@@ -1,5 +1,5 @@
 Name: hyperrogue
-Version: 9.4g
+Version: 112d
 Release: alt1
 Source: v%version.tar.gz
 Url: http://www.roguetemple.com/z/hyper.php
@@ -89,6 +89,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1:112d-alt1
+- Autobuild version bump to 112d
+
 * Mon May 29 2017 Fr. Br. George <george@altlinux.ru> 1:9.4g-alt1
 - Autobuild version bump to 9.4g
 
