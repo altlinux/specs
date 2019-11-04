@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.4
 %def_enable gtk_doc
@@ -9,16 +9,17 @@
 %endif
 
 Name: orc
-Version: %ver_major.30.1
-Release: alt0.2
+Version: %ver_major.31
+Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
 License: BSD
-URL: http://code.entropywave.com/projects/orc/
+URL: http://code.entropywave.com/projects/orc
 
 %if_disabled snapshot
-Source: https://gstreamer.freedesktop.org/src/orc/%name-%version.tar.xz
+Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
+#Source: https://gstreamer.freedesktop.org/src/orc/%name-%version.tar.xz
 %else
 # VCS: https://anongit.freedesktop.org/gstreamer/orc
 Source: %name-%version.tar
@@ -146,6 +147,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Nov 04 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.31-alt1
+- 0.4.31
+
 * Thu Sep 26 2019 Yuri N. Sedunov <aris@altlinux.org> 0.4.30.1-alt0.2
 - fixed %%check section for %%e2k
 
