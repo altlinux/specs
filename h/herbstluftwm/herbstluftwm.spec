@@ -1,6 +1,6 @@
 Name: herbstluftwm
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: A manual tiling window manager
 License: BSD-2-Clause
@@ -85,9 +85,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %dir %_datadir/zsh/functions/Completion/X
 %_datadir/zsh/functions/Completion/X/_herbstclient
 
-%dir %_datadir/bash_completion/
-%dir %_datadir/bash_completion/completions/
-%_datadir/bash_completion/completions/herbstclient-completion
+%dir %_datadir/bash-completion/
+%dir %_datadir/bash-completion/completions/
+%_datadir/bash-completion/completions/herbstclient-completion
 
 %dir %_datadir/fish
 %dir %_datadir/fish/vendor_completions.d
@@ -97,6 +97,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/doc/%name/examples
 
 %changelog
+* Tue Nov 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt2
+- Fixed bash completion location.
+
 * Fri Oct 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt1
 - Initial build for ALT Sisyphus based on openSUSE spec file, but heavily
   reworked.
