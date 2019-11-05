@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 20190831
+Version: 20191025
 Release: alt1
 Summary: Qogir GTK theme
 
@@ -32,6 +32,9 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Tue Nov 05 2019 Leontiy Volodin <lvol@altlinux.org> 20191025-alt1
+- New version.
+
 * Tue Sep 03 2019 Leontiy Volodin <lvol@altlinux.org> 20190831-alt1
 - New version.
 - Added sassc in BR for generate css styles.
