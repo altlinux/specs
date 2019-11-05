@@ -1,6 +1,6 @@
 Name: squashfs-tools
-Version: 4.3
-Release: alt4.e38956b
+Version: 4.4
+Release: alt1
 
 Summary: squashfs support
 License: GPL
@@ -40,6 +40,9 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Tue Nov 05 2019 Anton Farygin <rider@altlinux.ru> 4.4-alt1
+- 4.4 (fixes: CVE-2015-4645, CVE-2015-4646)
+
 * Wed Aug 28 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3-alt4.e38956b
 - Fixed build flags and debuginfo.
 
