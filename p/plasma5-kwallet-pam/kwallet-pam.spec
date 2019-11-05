@@ -1,7 +1,7 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.17.1
+Version: 5.17.2
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Fri Nov 01 2019 Sergey V Turchin <zerg@altlinux.org> 5.17.2-alt1
+- new version
+
 * Mon Oct 28 2019 Sergey V Turchin <zerg@altlinux.org> 5.17.1-alt1
 - new version
 
