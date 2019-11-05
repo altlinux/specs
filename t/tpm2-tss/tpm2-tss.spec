@@ -2,7 +2,7 @@
 %define soname 0
 Name: tpm2-tss
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
 # is under TCGL(Trusted Computing Group License).
@@ -67,6 +67,11 @@ use tpm2-tss.
 %install
 %makeinstall_std
 
+%pre -n lib%{name}-common
+%_sbindir/groupadd -r -f tss >/dev/null 2>&1 ||:
+%_sbindir/useradd -g tss -c 'TPM2 Software Stack User' \
+    -d /var/empty -s /dev/null -r -l -M tss >/dev/null 2>&1 ||:
+
 %files -n lib%{name}%{soname}
 %_libdir/libtss2-mu.so.%{soname}
 %_libdir/libtss2-sys.so.%{soname}
@@ -108,6 +113,9 @@ use tpm2-tss.
 %_mandir/man7/tss2*.7.*
 
 %changelog
+* Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.3.1-alt2
+- add tss user and group (ALT #37279)
+
 * Mon Sep 16 2019 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
 - first build for ALT, based on specfile from Fedora
 
