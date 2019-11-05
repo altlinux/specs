@@ -2,8 +2,8 @@
 
 Summary: bootloader and GPU firmware for Raspberry Pi
 Name: raspberrypi-firmware
-Version: 20190926
-Release: alt2
+Version: 20191105
+Release: alt1
 Url: https://github.com/raspberrypi/firmware
 License: distributable
 Group: System/Kernel and hardware
@@ -82,6 +82,9 @@ echo 'arm_64bit=1' >> %buildroot/%target_rpi4/config.txt
 %doc %_docdir/%name
 
 %changelog
+* Tue Nov 05 2019 Dmitry Terekhin <jqt4@altlinux.org> 20191105-alt1
+- new snapshot
+
 * Tue Oct 08 2019 Anton Midyukov <antohami@altlinux.org> 20190926-alt2
 - Add support u-boot-rpi3-2019.10
 
