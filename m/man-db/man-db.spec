@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.8.5
-Release: alt2
+Version: 2.9.0
+Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -161,6 +161,9 @@ cat %name.lang %name-gnulib.lang >> %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Tue Nov 05 2019 Alexey Gladkov <legion@altlinux.ru> 2.9.0-alt1
+- New version (2.9.0).
+
 * Thu Jul 11 2019 Alexey Gladkov <legion@altlinux.ru> 2.8.5-alt2
 - Return patch for e2k.
 
