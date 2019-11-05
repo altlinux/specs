@@ -1,40 +1,21 @@
 %define oname sp
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.2.2
-Release: alt2.1.2
+Release: alt3
+
 Summary: SP (Simple Parser), Python parser generator
 License: LGPL v3 or later
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.cdsoft.fr/sp/sp.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel
-%endif
+Source: %oname-%version.tar.gz
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python3 python3-base
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+
 
 %description
-SP (Simple Parser) is a Python parser generator. It is aimed at easy
-usage rather than performance. SP produces Top-Down Recursive descent
-parsers. SP also uses memoization to optimize parsers' speed when
-dealing with ambiguous grammars.
-
-%package -n python3-module-%oname
-Summary: SP (Simple Parser), Python parser generator
-Group: Development/Python3
-
-%description -n python3-module-%oname
 SP (Simple Parser) is a Python parser generator. It is aimed at easy
 usage rather than performance. SP produces Top-Down Recursive descent
 parsers. SP also uses memoization to optimize parsers' speed when
@@ -55,35 +36,24 @@ This package contains documentation and examples for Simple Parser.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec \
-	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-%endif
+find ./ -type f -name '*.py' -exec \
+    sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 
 %install
-install -d %buildroot%python_sitelibdir
-install -p -m644 %oname.py %buildroot%python_sitelibdir
-
-%if_with python3
-pushd ../python3
 install -d %buildroot%python3_sitelibdir
 install -p -m644 %oname.py %buildroot%python3_sitelibdir
-popd
-%endif
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
 %doc doc examples
 
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2.2-alt3
+- disable python2
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.2.2-alt2.1.2
 - (NMU) rebuild with python3.6
 
