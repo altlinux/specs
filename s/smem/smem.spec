@@ -1,6 +1,6 @@
 Name: smem
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Report application memory usage in a meaningful way
 
@@ -13,9 +13,8 @@ Url: http://www.selenic.com/smem
 Source0: http://www.selenic.com/smem/download/%name-%version.tar
 Source1: http://www.selenic.com/smem/index.html
 
-Packager: Michael Shigorin <mike@altlinux.org>
-
 Conflicts: secure_delete
+
 
 %description
 smem is a tool that can give numerous reports on memory usage
@@ -37,6 +36,9 @@ Requires: kernel >= 2.6.27
 %setup
 cp -a %SOURCE1 smem.html
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -type f -name 'smem')
+
 %build
 make smemcap CFLAGS="%optflags"
 
@@ -50,7 +52,11 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 %_man8dir/*
 %doc smem.html COPYING
 
+
 %changelog
+* Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt2
+- python2 -> python3
+
 * Sun Sep 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
 - new version 1.5 (from tag 1.5 at https://selenic.com/repo/smem/rev/1.5)
 
