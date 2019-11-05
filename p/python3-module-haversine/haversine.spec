@@ -1,100 +1,56 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname haversine
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.5
-#Release: alt1.git20150615.1.1
+Release: alt2
+
 Summary: Calculate the distance bewteen 2 points on Earth
 License: GPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/haversine/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/mapado/haversine.git
+
 Source0: https://pypi.python.org/packages/57/b4/3b1f5ca78876ad00cbb2a2bf7bcebfe4751c00ddabc47005b59f33835646/%{oname}-%{version}.tar.gz
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-%endif
 
-%py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel python3-devel rpm-build-python3
-
-%description
-Calculate the distance (in km or in miles) bewteen two points on Earth,
-located by their latitude and longitude.
-
-%package -n python3-module-%oname
-Summary: Calculate the distance bewteen 2 points on Earth
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 Calculate the distance (in km or in miles) bewteen two points on Earth,
 located by their latitude and longitude.
 
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
 SUFF=$(echo %_python3_version%_python3_abiflags |sed 's|\.||')
-sed -i "s|libhsine.so|libhsine.cpython-$SUFF.so|" \
-	../python3/%oname/__init__.py
-%endif
+sed -i "s|libhsine.so|libhsine.cpython-$SUFF.so|" %oname/__init__.py
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py build_ext -i
-python -c "from %oname import %oname"
-%if_with python3
-pushd ../python3
 python3 setup.py build_ext -i
 python3 -c "from %oname import %oname"
-popd
-%endif
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.5-alt2
+- disable python2
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1
 - automated PyPI update
 
