@@ -1,10 +1,10 @@
-Name: wvstreams
-Version: 4.6.1
-Release: alt4.qa1
-
 %define soffix .so.4.6
 %def_disable kdoc
 %def_enable static
+
+Name: wvstreams
+Version: 4.6.1
+Release: alt5
 
 Summary: C++ libraries for rapid application development
 License: LGPL
@@ -37,9 +37,14 @@ BuildPreReq: OpenSP /proc
 # Automatically added by buildreq on Mon Jan 05 2009
 BuildRequires: boost-devel docbook-style-dsssl doxygen graphviz
 BuildRequires: libcom_err-devel libdbus-devel libpam-devel libqt3-devel
-BuildRequires: libreadline-devel libssl-devel openjade valgrind-devel
+BuildRequires: libreadline-devel libssl-devel openjade
 %if_enabled kdoc
 BuildPreReq: kdoc
+%endif
+
+BuildRequires(pre): rpm-macros-valgrind
+%ifarch %valgrind_arches
+BuildRequires: valgrind-devel
 %endif
 
 %description
@@ -236,7 +241,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %exclude %_pkgconfigdir/libuniconf.pc
 %exclude %_pkgconfigdir/libwvqt.pc
 %pkgdocdir/ChangeLog.bz2
+%ifarch %valgrind_arches
 %_libdir/valgrind/wvstreams.supp
+%endif
 
 %files -n lib%name-devel-doc
 %pkgdocdir/html/
@@ -280,6 +287,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 4.6.1-alt5
+- Move to rpm-macros-valgrind
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.6.1-alt4.qa1
 - NMU: applied repocop patch
 
