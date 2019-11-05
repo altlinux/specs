@@ -1,6 +1,6 @@
 
 Name:    yq
-Version: 2.7.2
+Version: 2.9.2
 Release: alt1
 
 Summary: Command-line YAML and XML processor
@@ -41,6 +41,9 @@ wrapper for YAML and XML documents.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Nov 05 2019 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Wed Jan 30 2019 Ivan A. Melnikov <iv@altlinux.org> 2.7.2-alt1
 - 2.7.2
 - require python-module-toml (closes: #36001)
