@@ -6,13 +6,12 @@
 %def_enable cpg_plugin
 %def_disable libvirt_qmf_plugin
 
-%global commit      c2ca768a8e57a73b5ec2899305439122285aa4a9
-%global shortcommit c2ca768
-#%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global commit      34ab24718795f8676a67f555f44f6db56f90a91d
+%global shortcommit 34ab247
 
 Name: fence-virt
 Version: 0.4.0
-Release: alt0.1.%shortcommit
+Release: alt0.2.%shortcommit
 Summary: A pluggable fencing framework for virtual machines
 License: GPLv2+
 Group: System/Base
@@ -152,6 +151,9 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_libdir/%name/cpg.so
 
 %changelog
+* Tue Nov 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 0.4.0-alt0.2.34ab247
+- master snapshot 34ab24718795f8676a67f555f44f6db56f90a91d
+
 * Tue May 07 2019 Andrew A. Vasilyev <andy@altlinux.org> 0.4.0-alt0.1.c2ca768
 - master snapshot c2ca768a8e57a73b5ec2899305439122285aa4a9
 
