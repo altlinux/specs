@@ -61,7 +61,7 @@
 Name: systemd
 Epoch: 1
 Version: 243
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1139,6 +1139,7 @@ fi
 %_sbindir/groupadd -r -f input >/dev/null 2>&1 ||:
 %_sbindir/groupadd -r -f video >/dev/null 2>&1 ||:
 %_sbindir/groupadd -r -f render >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %post -n udev
 %post_service udevd
@@ -1524,11 +1525,6 @@ fi
 %_man8dir/systemd-firstboot.*
 %endif
 
-%_datadir/bash-completion/completions/*
-%exclude %_datadir/bash-completion/completions/udevadm
-%_datadir/zsh/site-functions/*
-%exclude %_datadir/zsh/site-functions/_udevadm
-
 %ghost %config(noreplace) %_sysconfdir/machine-info
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
@@ -1567,6 +1563,11 @@ fi
 /lib/systemd/systemd-timedated
 %dir /lib/systemd/ntp-units.d
 %dir %_sysconfdir/systemd/ntp-units.d
+
+%_datadir/bash-completion/completions/*
+%exclude %_datadir/bash-completion/completions/udevadm
+%_datadir/zsh/site-functions/*
+%exclude %_datadir/zsh/site-functions/_udevadm
 
 %_mandir/*/*login*
 %exclude %_man3dir/*
@@ -1822,6 +1823,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 1:243-alt4
+- move completions to systemd-services (ALT #37352)
+- group add vmusers in pre for udev package (ALT #37200)
+
 * Mon Oct 14 2019 Alexey Shabalin <shaba@altlinux.org> 1:243-alt3
 - merge with v243-stable ef677436aa203c24816021dd698b57f219f0ff64
 - add symlink /usr/bin/systemctl -> /bin/systemctl for compat with other distros
