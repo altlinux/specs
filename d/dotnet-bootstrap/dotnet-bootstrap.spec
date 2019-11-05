@@ -5,7 +5,7 @@
 
 Name: dotnet-bootstrap
 Version: 3.0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: .NET Core SDK binaries
 
@@ -58,13 +58,6 @@ https://github.com/dotnet/core/blob/master/release-notes/download-archives/%vers
 %ifarch aarch64
 rm -rf packs/ host/ shared/
 tar xfv %SOURCE2
-# hack: we have lib64/ld-linux-aarch64.so.1
-sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" \
-    dotnet \
-    shared/Microsoft.NETCore.App/%coreversion/{*.so,createdump} \
-    host/fxr/%coreversion/libhostfxr.so \
-    sdk/%sdkversion/AppHostTemplate/apphost \
-    packs/Microsoft.NETCore.App.Host.linux-arm64/%coreversion/runtimes/linux-arm64/native/*
 sed -E -i -e "s@CURL_OPENSSL_3@\x0URL_OPENSSL_3@" shared/Microsoft.NETCore.App/3.0.0/System.Net.Http.Native.so
 %endif
 
@@ -75,6 +68,36 @@ cp -a * %buildroot%_libdir/%name/
 # due missed lldb (TODO)
 rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %__subst "s|libsosplugin.so|libsos.so|g" %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/Microsoft.NETCore.App.deps.json
+
+cd %buildroot%_libdir/%name
+
+strip \
+	shared/Microsoft.NETCore.App/3.0.0/libmscordbi.so \
+	shared/Microsoft.NETCore.App/3.0.0/libmscordaccore.so \
+	shared/Microsoft.NETCore.App/3.0.0/libhostpolicy.so \
+	shared/Microsoft.NETCore.App/3.0.0/libdbgshim.so \
+	shared/Microsoft.NETCore.App/3.0.0/libcoreclrtraceptprovider.so \
+	shared/Microsoft.NETCore.App/3.0.0/libcoreclr.so \
+	shared/Microsoft.NETCore.App/3.0.0/libclrjit.so \
+	shared/Microsoft.NETCore.App/3.0.0/createdump \
+	shared/Microsoft.NETCore.App/3.0.0/System.Security.Cryptography.Native.OpenSsl.so \
+	shared/Microsoft.NETCore.App/3.0.0/System.Net.Security.Native.so \
+	shared/Microsoft.NETCore.App/3.0.0/System.Net.Http.Native.so \
+	shared/Microsoft.NETCore.App/3.0.0/System.Native.so \
+	shared/Microsoft.NETCore.App/3.0.0/System.IO.Compression.Native.so \
+	shared/Microsoft.NETCore.App/3.0.0/System.Globalization.Native.so \
+	sdk/3.0.100/AppHostTemplate/apphost \
+%ifarch x86_64
+	packs/Microsoft.NETCore.App.Host.linux-x64/3.0.0/runtimes/linux-x64/native/libnethost.so \
+	packs/Microsoft.NETCore.App.Host.linux-x64/3.0.0/runtimes/linux-x64/native/apphost \
+%endif
+%ifarch aarch64
+	packs/Microsoft.NETCore.App.Host.linux-arm64/3.0.0/runtimes/linux-arm64/native/libnethost.so \
+	packs/Microsoft.NETCore.App.Host.linux-arm64/3.0.0/runtimes/linux-arm64/native/apphost \
+%endif
+	host/fxr/3.0.0/libhostfxr.so \
+	dotnet \
+	#
 
 %files
 %dir %_libdir/%name/
@@ -113,6 +136,9 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/dotnet
 
 %changelog
+* Fri Nov 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.0-alt1.qa1
+- Dropped hack for ld-linux path on aarch64.
+
 * Sat Oct 05 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - new version (3.0.0) with rpmgs script
 - .NET Core 3.0.0 - September 23, 2019
