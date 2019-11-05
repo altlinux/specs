@@ -1,10 +1,11 @@
 Name: cups-backend-bjnp
 Version: 2.0.1
-Release: alt1
+Release: alt2
 License: GPLv2
 URL: https://sourceforge.net/projects/cups-bjnp/
 # Source: http://downloads.sourceforge.net/cups-bjnp/cups-bjnp-%version.tar.gz
 Source: cups-bjnp-%version.tar
+Patch: alt-use-memcpy-ftbfs.patch
 
 Group: System/Configuration/Printing
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
@@ -21,6 +22,7 @@ proprietary BJNP network protocol.
 
 %prep
 %setup -n cups-bjnp-%version
+%patch -p1
 
 %build
 %configure --with-cupsbackenddir=%cups_backend_dir
@@ -34,6 +36,9 @@ proprietary BJNP network protocol.
 %doc COPYING ChangeLog TODO NEWS README
 
 %changelog
+* Tue Nov 05 2019 Oleg Solovyov <mcpain@altlinux.org> 2.0.1-alt2
+- Fix FTBFS
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 2.0.1-alt1
 - Build version 2.0.1
 
