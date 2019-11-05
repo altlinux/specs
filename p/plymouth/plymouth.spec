@@ -8,14 +8,14 @@
 
 Name: plymouth
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
 License: GPLv2+
 Group: System/Base
 
-Url: http://freedesktop.org/software/plymouth/releases
+Url: http://www.freedesktop.org/wiki/Software/Plymouth
 
 Source: %name-%version.tar
 
@@ -30,7 +30,7 @@ BuildRequires: pkgconfig(pangocairo) >= 1.21.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(systemd)
-BuildRequires: xsltproc docbook-dtds docbook-style-xsl
+BuildRequires: xsltproc docbook-dtds docbook-style-xsl intltool
 
 Conflicts: bootsplash
 Conflicts: systemd < 186-alt1
@@ -92,18 +92,6 @@ Requires: %name = %EVR
 This package contains scripts that help integrate Plymouth with
 the system.
 
-%package gdm-hooks
-Summary: Plymouth GDM integration
-Group: System/Base
-Requires: gdm >= 2.22.0
-Requires: plymouth-utils
-Requires: %name = %EVR
-
-%description gdm-hooks
-This package contains support files for integrating Plymouth with GDM
-Namely, it adds hooks to show boot messages at the login screen in the
-event start-up services fail.
-
 %package plugin-label
 Summary: Plymouth label plugin
 Group: System/Base
@@ -138,23 +126,10 @@ This package contains the "Fade-In" boot splash theme for
 Plymouth. It features a centered logo that fades in and out
 while stars twinkle around the logo during system boot up.
 
-%package plugin-throbgress
-Summary: Plymouth "Throbgress" plugin
-Group: System/Base
-Requires: lib%name = %EVR
-Requires: lib%name-graphics = %EVR
-Requires: plymouth-plugin-label = %EVR
-
-%description plugin-throbgress
-This package contains the "throbgress" boot splash plugin for
-Plymouth. It features a centered logo and animated spinner that
-spins repeatedly while a progress bar advances at the bottom of
-the screen.
-
 %package theme-spinfinity
 Summary: Plymouth "Spinfinity" theme
 Group: System/Base
-Requires: %name-plugin-throbgress = %EVR
+Requires: %name-plugin-two-step = %EVR
 Requires(post): %name-scripts = %version-%release
 BuildArch: noarch
 
@@ -284,10 +259,8 @@ export UDEVADM="/sbin/udevadm"
 %configure \
 	--disable-static				\
 	--enable-tracing				\
-	--enable-drm					\
-	--enable-pango					\
 	--enable-documentation				\
-	--with-logo=%_pixmapsdir/altlinux.png		\
+	--with-logo=%_pixmapsdir/system-logo.png		\
 	--with-background-start-color-stop=0x0073B3	\
 	--with-background-end-color-stop=0x00457E	\
 	--with-background-color=0x3391cd		\
@@ -297,14 +270,10 @@ export UDEVADM="/sbin/udevadm"
 	--enable-systemd-integration			\
 	--with-systemdunitdir=%_unitdir			\
 	--with-system-root-install			\
-	--with-boot-tty=tty1				\
-	--with-shutdown-tty=tty1			\
-	--with-release-file=/etc/altlinux-release
+	--with-release-file=/etc/os-release \
+	--with-runtimedir=/run
 
-#	--with-boot-tty=tty7				\
-#	--with-shutdown-tty=tty1			\
-
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -333,8 +302,12 @@ install -m 0640 sysconfig %buildroot%_sysconfdir/sysconfig/bootsplash
 install plymouth-update %buildroot%plymouthdaemon_execdir/
 mkdir -p %buildroot%_initdir
 install init %buildroot%_initdir/plymouth
-
 ln -s plymouth-quit.service %buildroot%_unitdir/plymouth.service
+
+mkdir -p %buildroot%_pixmapsdir
+touch %buildroot%_pixmapsdir/system-logo.png
+
+%find_lang %name
 
 %post
 if [ $1 = 1 ]; then
@@ -382,7 +355,7 @@ fi \
 %theme_scripts script
 
 
-%files
+%files -f %name.lang
 %doc AUTHORS NEWS README
 %dir %_datadir/plymouth
 %dir %_datadir/plymouth/themes
@@ -390,6 +363,7 @@ fi \
 %dir %_libexecdir/plymouth
 %dir %_localstatedir/lib/plymouth
 %config(noreplace) %_sysconfdir/plymouth/plymouthd.conf
+%config(noreplace) %_sysconfdir/logrotate.d/bootlog
 %config %_sysconfdir/sysconfig/bootsplash
 %_initdir/plymouth
 %plymouthdaemon_execdir/plymouthd
@@ -410,7 +384,6 @@ fi \
 %dir %_datadir/plymouth/themes/tribar
 %_datadir/plymouth/themes/tribar/tribar.plymouth
 %_datadir/plymouth/plymouthd.defaults
-%_localstatedir/run/plymouth
 %_localstatedir/spool/plymouth
 %_mandir/man?/*
 %ghost %_localstatedir/lib/plymouth/boot-duration
@@ -443,19 +416,11 @@ fi \
 # %_libexecdir/plymouth/plymouth-generate-initrd
 # %_libexecdir/plymouth/plymouth-populate-initrd
 
-%if_enabled gdm
-%files gdm-hooks
-%_datadir/gdm/autostart/LoginWindow/plymouth-log-viewer.desktop
-%endif
-
 %files plugin-label
 %_libdir/plymouth/label.so
 
 %files plugin-fade-throbber
 %_libdir/plymouth/fade-throbber.so
-
-%files plugin-throbgress
-%_libdir/plymouth/throbgress.so
 
 %files plugin-space-flares
 %_libdir/plymouth/space-flares.so
@@ -493,6 +458,14 @@ fi \
 %files system-theme
 
 %changelog
+* Sun Nov 03 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.9.4-alt2
+- snapshot d18086efcc6aff16d510cfdbddad81421175a917
+- remove the throbgress plugin
+- build with --with-logo=%%_pixmapsdir/system-logo.png
+- drop gdm-hooks package
+- define runtimedir as /run
+- use /etc/os-release for define release
+
 * Sun Feb 24 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.9.4-alt1
 - 0.9.4
 - add bgrt theme
