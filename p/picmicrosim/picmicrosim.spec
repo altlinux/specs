@@ -1,23 +1,22 @@
-Name:		picmicrosim
-Version:	1.0
-Release:	alt4
-Summary:	PIC Microprocessor Simulator on Linux
+Name: picmicrosim
+Version: 1.0
+Release: alt5
 
-License:	GPLv2+
-Group:		Engineering
-URL:		http://sourceforge.net/projects/picmicrosim/
+Summary: PIC Microprocessor Simulator on Linux
+License: GPLv2+
+Group: Engineering
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Url: http://sourceforge.net/projects/picmicrosim/
+Source: microsim_v1.0.tar.gz
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:		microsim_v1.0.tar.gz
+Patch1: picmicrosim-fix-permissive.patch
+Patch2: picmicrosim-fix-missing-includes.patch
+Patch3: picmicrosim-use-stuff-from-app-dir.patch
+Patch4: %name-%version-alt-gcc6.patch
+Patch5: %name-g++8.patch
 
-Patch1:		picmicrosim-fix-permissive.patch
-Patch2:		picmicrosim-fix-missing-includes.patch
-Patch3:		picmicrosim-use-stuff-from-app-dir.patch
-Patch4:		%name-%version-alt-gcc6.patch
-Patch5:     %name-g++8.patch
-
-BuildRequires:  gcc-c++ libqt3-devel
+BuildRequires: gcc-c++ libqt3-devel
 ExclusiveArch:  i586 x86_64
 
 %description
@@ -27,7 +26,7 @@ memory viewer, source browser, register editor and mapping PIC pins to
 parallel port for real world interfacing.
 
 %prep
-%setup -q -n version-1.0
+%setup -n version-1.0
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
@@ -40,9 +39,8 @@ qmake-qt3 "QMAKE_CXXFLAGS+=%optflags `pkg-config --cflags qt-mt`" "DEFINES+=APPS
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir
+mkdir -p %buildroot{%_bindir,%_datadir/apps/microsim}
 cp -a microsim %buildroot%_bindir
-mkdir -p %buildroot%_datadir/apps/microsim
 cp -a documentation images %buildroot%_datadir/apps/microsim
 
 %files
@@ -51,6 +49,9 @@ cp -a documentation images %buildroot%_datadir/apps/microsim
 %_datadir/apps/microsim
 
 %changelog
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 1.0-alt5
+- minor spec cleanup (and yes, it's x86 specific: sys/io.h)
+
 * Tue Feb 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt4
 - no return statement in the non-void function fixed (according g++8)
 
