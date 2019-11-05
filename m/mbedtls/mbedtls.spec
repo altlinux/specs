@@ -5,7 +5,7 @@
 
 Name: mbedtls
 Version: 2.16.3
-Release: alt1
+Release: alt2
 
 Summary: Transport Layer Security protocol suite
 License: Apache
@@ -51,7 +51,7 @@ AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 %package -n libmbedx509-%so_x509_version
 Summary: Library to work with X.509 certificates
 Group: System/Libraries
-Conflicts: hiawatha
+Conflicts: hiawatha < 10.10
 
 %description -n libmbedx509-%so_x509_version
 This subpackage of mbedtls contains a library that can read, verify
@@ -146,6 +146,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Tue Nov 05 2019 Nazarov Denis <nenderus@altlinux.org> 2.16.3-alt2
+- Fix conflict libmbedx509 with hiawatha package less than 10.10 (ALT #37417)
+
 * Sat Nov 02 2019 Nazarov Denis <nenderus@altlinux.org> 2.16.3-alt1
 - Version 2.16.3
 - Fix conflict with hiawatha package (ALT #37417)
