@@ -1,17 +1,19 @@
 %define oname fixedpoint
-Summary: A fixed point arithmatic class for python
-Name: python-module-fixedpoint
+
+Name: python3-module-fixedpoint
 Version: 0.1.2
-Release: alt2.1.1.qa1
+Release: alt3
+
+Summary: A fixed point arithmatic class for python
 License: Distributable
-Group: Development/Python
+Group: Development/Python3
 Url: http://fixedpoint.sourceforge.net/
-Packager: Boris Savelev <boris@altlinux.org>
 
 Source: http://download.sourceforge.net/sourceforge/%oname/%oname.%version.tar.gz
 
-# Automatically added by buildreq on Sun Jan 25 2009
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
 
 %description
 FixedPoint is a python module to provide a fixed point arithmatic
@@ -23,18 +25,28 @@ unbounded.
 %prep
 %setup -n %oname
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%__python test_%oname.py
+%__python3 test_%oname.py
 
 %install
-mkdir -p %buildroot%python_sitelibdir
-install -m644 %oname.* %buildroot%python_sitelibdir/
+mkdir -p %buildroot%python3_sitelibdir
+install -m644 %oname.* %buildroot%python3_sitelibdir/
 
 %files
 %doc README examples
-%python_sitelibdir/%oname.*
+%python3_sitelibdir/%oname.*
+%python3_sitelibdir/__pycache__/*
+
 
 %changelog
+* Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.2-alt3
+- python2 -> python3
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2.1.1.qa1
 - NMU: applied repocop patch
 
