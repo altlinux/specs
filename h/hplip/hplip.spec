@@ -27,7 +27,7 @@
 %endif
 
 Name:    hplip
-Version: 3.19.10
+Version: 3.19.11
 Release: alt1
 Epoch:   1
 
@@ -1147,6 +1147,16 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Nov 06 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.11-alt1
+- New version.
+- Added support for the following new Printers:
+  + HP Color LaserJet MFP M776dn
+  + HP Color LaserJet Flow MFP M776z
+  + HP Color LaserJet Flow MFP M776zs
+  + HP Color LaserJet M856dn
+  + HP Color LaserJet M856x
+  + HP Color LaserJet E85055dn
+
 * Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.10-alt1
 - New version.
 - Added support for the following new Printers:
