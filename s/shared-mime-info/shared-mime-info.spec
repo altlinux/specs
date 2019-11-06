@@ -1,9 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable updatedb
+%define ver_major 1
+%define ver_minor 15
 
 Name: shared-mime-info
-Version: 1.13.1
+Version: 1.15
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -12,9 +14,9 @@ License: %gpl2plus
 Url: http://www.freedesktop.org/wiki/Software/%name
 
 %if_disabled snapshot
-Source: http://www.freedesktop.org/~hadess/%name-%version.tar.xz
+Source: https://github.com/freedesktop/xdg-%name/archive/Release-%ver_major-%ver_minor/%name-%version.tar.gz
 %else
-#VCS: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
+#VCS: https://github.com/freedesktop/xdg-shared-mime-info.git
 Source: %name-%version.tar
 %endif
 
@@ -54,7 +56,7 @@ created by converting the existing KDE and GNOME databases to the new
 format and merging them together.
 
 %prep
-%setup
+%setup %{?_disable_snapshot:-n xdg-%name-Release-%ver_major-%ver_minor}
 cp %SOURCE1 .
 %patch
 %patch1 -b .swf
@@ -112,6 +114,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
+- 1.15
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.13.1-alt1
 - 1.13.1 snapshot (Release-1-13-1-6-g88ee228)
 - new %%check section
