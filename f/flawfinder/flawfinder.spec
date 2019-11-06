@@ -3,40 +3,36 @@
 
 Name: flawfinder
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Examines C/C++ source code for security flaws
-Summary(ru_RU.CP1251): Исследует исходный код на С/С++ на предмет ошибок в безопасности
-
 License: GPL
 Group: Development/Other
+
 Url: http://www.dwheeler.com/flawfinder/
-
-BuildArch: noarch
-
 Source: http://www.dwheeler.com/%name/%name-%version.tar.gz
 
+BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex
 
+Summary(ru_RU.UTF-8): РСЃСЃР»РµРґСѓРµС‚ РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ РЅР° РЎ/РЎ++ РЅР° РїСЂРµРґРјРµС‚ РѕС€РёР±РѕРє РІ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё
 
 %description
 Flawfinder scans through C/C++ source code, identifying lines ("hits")
 with potential security flaws. By default it reports hits sorted by
 severity, with the riskiest lines first.
 
-%description -l ru_RU.CP1251
-Flawfinder сканирует исходный код на С/С++, указывая на строки, в
-которых содержатся возможные ошибки в безопасности. По умолчанию
-программа выводит отчет, отсортированный по предполагаемой серьёзности
-ошибок, где строки, требующие пристального внимания с вашей стороны,
-располагаются в начале.
+%description -l ru_RU.UTF-8
+Flawfinder СЃРєР°РЅРёСЂСѓРµС‚ РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ РЅР° РЎ/РЎ++, СѓРєР°Р·С‹РІР°СЏ РЅР° СЃС‚СЂРѕРєРё,
+РІ РєРѕС‚РѕСЂС‹С… СЃРѕРґРµСЂР¶Р°С‚СЃСЏ РІРѕР·РјРѕР¶РЅС‹Рµ РѕС€РёР±РєРё РІ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+РїСЂРѕРіСЂР°РјРјР° РІС‹РІРѕРґРёС‚ РѕС‚С‡РµС‚, РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ РїРѕ РїСЂРµРґРїРѕР»Р°РіР°РµРјРѕР№ СЃРµСЂСЊС‘Р·РЅРѕСЃС‚Рё
+РѕС€РёР±РѕРє, РіРґРµ СЃС‚СЂРѕРєРё, С‚СЂРµР±СѓСЋС‰РёРµ РїСЂРёСЃС‚Р°Р»СЊРЅРѕРіРѕ РІРЅРёРјР°РЅРёСЏ СЃ РІР°С€РµР№ СЃС‚РѕСЂРѕРЅС‹,
+СЂР°СЃРїРѕР»Р°РіР°СЋС‚СЃСЏ РІ РЅР°С‡Р°Р»Рµ.
 
 %prep
 %setup
-
 rm -f test-results.*
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name '%name' \))
 
@@ -46,16 +42,21 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %install
 %makeinstall_std
-bzip2 -9fk ChangeLog
+xz ChangeLog
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.*
-%doc announcement README ChangeLog.bz2 *.pdf
-%doc test.c test2.c test-results.*
-
+%doc announcement README ChangeLog* *.pdf
+%doc test.c test2.c
+%{?!_without_check:%{?!_disable_check:%doc test-results.*}}
 
 %changelog
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 2.0.10-alt2
+- Fixed build --without test
+- Converted spec to UTF-8
+- Minor spec cleanup
+
 * Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.10-alt1
 - Version updated to 2.0.10
 
