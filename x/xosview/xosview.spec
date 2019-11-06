@@ -1,17 +1,18 @@
 Name: xosview
-Version: 1.19
-Release: alt1
+Version: 1.21
+Release: alt2
 
 Summary: An X Window System utility for monitoring system resources
-Group: Monitoring
 License: GPL
-Url: http://xosview.sourceforge.net/
+Group: Monitoring
 
+Url: http://xosview.sourceforge.net/
 # https://github.com/hills/xosview.git
 Source: %name-%version.tar
-Source2: xosview16.png
-Source3: xosview32.png
-Source4: xosview48.png
+Source1: xosview16.png
+Source2: xosview32.png
+Source3: xosview48.png
+Patch: xosview-1.21-alt-e2k.patch
 
 BuildRequires: gcc-c++ libXpm-devel libX11-devel desktop-file-utils
 
@@ -22,6 +23,9 @@ Xosview runs under the X Window System.
 
 %prep
 %setup
+%ifarch %e2k
+%patch -p1
+%endif
 
 %build
 %make_build OPTFLAGS="${CFLAGS:-%optflags}"
@@ -44,9 +48,9 @@ mkdir -p %buildroot{%_bindir,%_man1dir,%_x11appconfdir}
 %make_install install PREFIX=%buildroot%prefix
 
 install -pD -m644 Xdefaults %buildroot%_x11appconfdir/XOsview
-install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
-install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
-install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
+install -pD -m644 %SOURCE1  %buildroot%_miconsdir/%name.png
+install -pD -m644 %SOURCE2  %buildroot%_niconsdir/%name.png
+install -pD -m644 %SOURCE3  %buildroot%_liconsdir/%name.png
 
 desktop-file-install --dir %buildroot%_datadir/applications %{name}.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -64,6 +68,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc CHANGES README.linux TODO
 
 %changelog
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 1.21-alt2
+- E2K: fix ftbfs (patch sent upstream)
+- NB: there's xosview2 2.3.1 out there too!
+
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 1.21-alt1
+- 1.21
+
 * Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19-alt1
 - Updated to upstream version 1.19.
 
