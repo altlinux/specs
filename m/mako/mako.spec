@@ -1,6 +1,6 @@
 Name:       mako
 Version:    1.4
-Release:    alt1
+Release:    alt2
 Summary:    Lightweight Wayland notification daemon
 Provides:   desktop-notification-daemon
 Group:      Graphical desktop/Other
@@ -38,15 +38,21 @@ the layer-shell protocol.
 %install
 %meson_install
 
+rm -f -- \
+	%buildroot/%_bindir/makoctl \
+	%buildroot/%_man1dir/makoctl.* \
+
+
 %files
 %doc LICENSE README.md
 %_bindir/mako
-%_bindir/makoctl
 %_datadir/dbus-1/services/fr.emersion.mako.service
 %_man1dir/mako.*
-%_man1dir/makoctl.*
 
 %changelog
+* Wed Nov 06 2019 Alexey Gladkov <legion@altlinux.ru> 1.4-alt2
+- Drop makoctl to avoid logind dependency.
+
 * Wed Aug 07 2019 Alexey Gladkov <legion@altlinux.ru> 1.4-alt1
 - New version (1.4).
 

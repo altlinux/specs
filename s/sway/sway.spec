@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sway
-Version: 1.2.rc1
+Version: 1.2
 Release: alt1
+Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
 Url: http://swaywm.org/
@@ -83,7 +84,7 @@ rm -rf -- \
 	#
 
 %post
-/sbin/setcap cap_sys_ptrace,cap_sys_tty_config=eip %_bindir/%name
+/sbin/setcap cap_sys_admin=eip %_bindir/%name
 
 %files
 %doc LICENSE
@@ -108,6 +109,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Wed Nov 06 2019 Alexey Gladkov <legion@altlinux.ru> 1:1.2-alt1
+- New version (1.2)
+
 * Fri Aug 09 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.rc1-alt1
 - New version (1.2-rc1)
 
