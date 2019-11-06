@@ -1,26 +1,37 @@
+%ifarch %valgrind_arches
+%def_enable valgrind
+%endif
+
 Name: mongo
 Version: 4.2.1
-Release: alt1
+Release: alt2
+
 Summary: mongo client shell and tools
 License: SSPL 1.0
-Url: http://www.mongodb.org
 Group: Development/Databases
-# From https://docs.mongodb.com/manual/installation
-# Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
-ExclusiveArch: x86_64 aarch64
 
+Url: http://www.mongodb.org
+Source: %name-%version.tar
 Packager: Vladimir Didenko <cow@altlinux.org>
 
-Source: %name-%version.tar
+# From https://docs.mongodb.com/manual/installation
+# Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
+ExclusiveArch: x86_64 aarch64 ppc64el %e2k
+
+BuildRequires(pre): rpm-macros-valgrind
 
 BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources scons
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
-BuildRequires: libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json
+BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel
+
+%if_enabled valgrind
+BuildRequires: valgrind-devel
+%endif
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -67,18 +78,23 @@ sed -i 's/\r//' README
 %ifarch aarch64
 %define ccflags_arch_opts "-march=armv8-a+crc"
 %endif
+%ifarch %e2k
+%define opt_wt --wiredtiger=off
+%else
+%define opt_wt --wiredtiger=on
+%endif
 %define build_opts \\\
        -j %__nprocs \\\
        --use-system-tcmalloc \\\
        --use-system-pcre \\\
        --use-system-snappy \\\
-       --use-system-valgrind \\\
+       %{?_enable_valgrind:--use-system-valgrind} \\\
        --use-system-zlib \\\
        --use-system-stemmer \\\
        --use-system-yaml \\\
        --nostrip \\\
        --use-sasl-client \\\
-       --wiredtiger=on \\\
+       %opt_wt \\\
        --ssl=on \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
@@ -182,6 +198,10 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 4.2.1-alt2
+- added ppc64el, %%e2k to ExclusiveArch:
+- conditional valgrind build dependency
+
 * Tue Oct 22 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
