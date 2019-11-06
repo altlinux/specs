@@ -1,8 +1,9 @@
 %define  modulename memory_profiler
+%def_without python2
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: Monitor Memory usage of Python code
@@ -12,9 +13,11 @@ URL:     https://github.com/fabianp/memory_profiler
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+%if_with python2
 BuildRequires: rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-distribute
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -50,8 +53,9 @@ cp -fR . ../python3
 %endif
 
 %build
+%if_with python2
 %python_build
-
+%endif
 %if_with python3
 pushd ../python3
 %python3_build
@@ -59,27 +63,35 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
-
+%endif
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
 
+%if_with python2
 %files
 %doc *.rst
-#_bindir/mprof
 %python_sitelibdir/%modulename.*
 %python_sitelibdir/*.egg-info
+%endif
 
 %if_with python3
 %files -n python3-module-%modulename
 %doc *.rst
+%_bindir/mprof
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Nov 06 2019 Andrey Cherepanov <cas@altlinux.org> 0.56-alt1
+- New version.
+- Build only for Python 3.x.
+- Package mprof executable.
+
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 0.55-alt1
 - New version.
 
