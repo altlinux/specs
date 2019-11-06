@@ -14,7 +14,7 @@
 %def_enable ibus
 %def_enable gstreamer1
 %def_enable emotion
-%def_enable elogind
+%def_disable elogind
 
 %def_enable wayland
 # wayland requires elput and drm
@@ -38,7 +38,7 @@
 
 Name: efl
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -447,6 +447,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt2
+- disabled useless elogind support (ALT #37431)
+
 * Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt1
 - 1.22.6
 
