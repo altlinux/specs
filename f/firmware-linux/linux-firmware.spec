@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191028
+Version: 20191104
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Nov 06 2019 Cronbuild Service <cronbuild@altlinux.org> 20191104-alt1
+- upstream changes (GIT 11bdc57):
+  + rtw88: RTL8723D: add firmware file v48 (thx Yan-Hsuan Chuang)
+
 * Thu Oct 31 2019 Cronbuild Service <cronbuild@altlinux.org> 20191028-alt1
 - upstream changes (GIT 9e194c7):
   + qed: Add firmware 8.40.33.0 (thx Rasesh Mody)
