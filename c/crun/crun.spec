@@ -2,7 +2,7 @@
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 0.10.2
+Version: 0.10.4
 Release: alt1
 Group: Development/Other
 License: GPLv3+
@@ -46,6 +46,9 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Wed Nov 06 2019 Alexey Shabalin <shaba@altlinux.org> 0.10.4-alt1
+- 0.10.4
+
 * Thu Oct 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.10.2-alt1
 - 0.10.2
 
