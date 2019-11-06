@@ -1,8 +1,9 @@
 %def_without kde
+%def_without gnome
 
 Name: openbox
 Version: 3.6.1
-Release: alt3
+Release: alt4
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -26,6 +27,9 @@ Source13: menu.xml
 
 # ALT Linux
 Patch2: openbox-alt-menu-rc.xml.in.patch
+
+# Fedora patch
+Patch10: openbox-python3.patch
 
 Requires: lib%name = %version-%release
 # for menu "Run" item
@@ -103,6 +107,7 @@ Requires: %_bindir/openbox
 Run KDE with Openbox as the WM.
 %endif
 
+%if_with gnome
 %package gnome
 Summary: Run GNOME with Openbox as the WM
 Group: Graphical desktop/Other
@@ -110,6 +115,7 @@ Requires: %_bindir/openbox
 
 %description gnome
 Run GNOME with Openbox as the WM.
+%endif
 
 %package autostart
 Summary: XDG support for Openbox
@@ -265,6 +271,7 @@ This theme distributed with Openbox.
 %prep
 %setup -q -a2
 %patch2 -p1
+%patch10 -p1
 sed -i '/^obrender_libobrender_la_LIBADD/ a\\tobt/libobt.la \\' Makefile.am
 
 %build
@@ -350,6 +357,7 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_man1dir/openbox-kde-session.*
 %endif
 
+%if_with gnome
 %files gnome
 %config %_sysconfdir/X11/wmsession.d/11openbox-gnome
 %_bindir/openbox-gnome-session
@@ -359,6 +367,7 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/xsessions/openbox-gnome.desktop
 %_man1dir/openbox-gnome-session.*
 %_man1dir/gnome-panel-control.*
+%endif
 
 %files autostart
 %_libexecdir/openbox-xdg-autostart
@@ -405,6 +414,10 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/themes/Syscrash
 
 %changelog
+* Wed Nov 06 2019 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt4
+- switch to python3
+- Rebuilt without gnome subpackage.
+
 * Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.1-alt3
 - Rebuilt without kde subpackage.
 
