@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1062.1.2.vz7.114.1
-%define orelease 1062.1.2.vz7.114.1
+#     rh7-3.10.0-1062.1.2.vz7.114.6
+%define orelease 1062.1.2.vz7.114.6
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -376,6 +376,9 @@ for d in arch/%kernel_arch/include; do
 	install -p -m 0644 $a/Makefile* %buildroot%kbuild_dir/$a/
 done
 find %buildroot%kbuild_dir/{include,arch} -type f -name Kbuild -delete
+%if_without firmware
+rm -rf %buildroot/lib/firmware
+%endif
 
 %if 0
 # drivers-headers install
@@ -595,6 +598,12 @@ grep beancounter boot.log
 
 
 %changelog
+* Wed Nov 06 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.1.2.vz7.114.6
+- Build 3.10.0-alt2.1062.1.2.vz7.114.6
+
+* Thu Oct 24 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.1.2.vz7.114.1.1
+- remove firmware files when build without firmware
+
 * Wed Oct 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.1.2.vz7.114.1
 - Build 3.10.0-alt2.1062.1.2.vz7.114.1
 
