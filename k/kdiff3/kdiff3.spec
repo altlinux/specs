@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           kdiff3
-Version:        1.7.90
-Release:        alt2.gitd59b742
+Version:        1.8.1
+Release:        alt1.git.c45ce8c
 Summary:        Compare + merge 2 or 3 files or directories
  
 License:        GPLv2
-Group: 		Text tools
+Group:          Text tools
 URL:            https://github.com/KDE/kdiff3
+
 Source0:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5 
@@ -39,7 +40,7 @@ KDiff3 is a program that
 - and has an intuitive graphical user interface.
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
 %K5build
@@ -56,15 +57,18 @@ KDiff3 is a program that
 %_K5bin/%name
 %_K5plug/kf5/kfileitemaction/kdiff3fileitemaction.so
 %_K5plug/kf5/parts/kdiff3part.so
-%_K5data/appdata/org.kde.%name.appdata.xml
+%_datadir/metainfo/org.kde.%name.appdata.xml
 %_K5xdgapp/org.kde.%name.desktop
 %_K5icon/hicolor/*/apps/*.png
 %_K5icon/hicolor/scalable/apps/kdiff3.svgz
 %_K5srv/kdiff3part.desktop
 %_K5xmlgui/%name
-%_K5xmlgui/kdiff3part/kdiff3_part.rc
+%_K5xmlgui/kdiff3part
 
 %changelog
+* Wed Nov 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1.git.c45ce8c
+- Updated to upstream snapshot c45ce8c
+
 * Mon Mar 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.90-alt2.gitd59b742
 - Updated build dependencies.
 
