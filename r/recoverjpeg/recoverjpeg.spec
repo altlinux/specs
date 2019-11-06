@@ -1,6 +1,6 @@
 Name: recoverjpeg
 Version: 2.6.3
-Release: alt1
+Release: alt2
 
 Summary: Recover jpeg pictures and mov movies from damaged devices
 License: GPLv2
@@ -29,6 +29,8 @@ NB: sort-pictures(1) requires ImageMagick-tools, exif
 %prep
 %setup
 
+sed -i 's|#! /usr/bin/python|#!/usr/bin/python3|' scripts/remove-duplicates
+
 %build
 %configure
 %make_build
@@ -43,7 +45,11 @@ NB: sort-pictures(1) requires ImageMagick-tools, exif
 %_bindir/%name
 %_man1dir/*.1*
 
+
 %changelog
+* Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.6.3-alt2
+- python2 -> python3
+
 * Mon Sep 17 2018 Michael Shigorin <mike@altlinux.org> 2.6.3-alt1
 - new version (watch file uupdate)
 
