@@ -11,7 +11,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.8
+Version: 1.4.1.9
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -589,6 +589,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 05 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.9-alt1
+- 1.4.1.8 -> 1.4.1.9.
+
 * Fri Sep 27 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.8-alt1
 - 1.4.1.7 -> 1.4.1.8.
 
