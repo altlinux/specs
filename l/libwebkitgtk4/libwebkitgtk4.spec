@@ -31,8 +31,8 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -341,6 +341,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt1
+- 2.26.2
+
 * Fri Oct 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt2
 - rebuild against icu-65.1 libraries
 
