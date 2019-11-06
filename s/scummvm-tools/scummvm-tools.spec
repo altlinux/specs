@@ -1,5 +1,5 @@
 Name: scummvm-tools
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
@@ -18,6 +18,8 @@ in conjunction with ScummVM.
 
 %prep
 %setup
+# Make arm64/ppc64le happy
+cp /usr/share/gnu-config/config.guess .
 
 %build
 ./configure --prefix=%prefix
@@ -33,6 +35,10 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- Autobuild version bump to 2.1.0
+- Fix build
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.0.0-alt1
 - Autobuild version bump to 2.0.0
 
