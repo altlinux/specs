@@ -1,52 +1,32 @@
 %define oname gevent-socketio
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3.6
-Release: alt3.git20140202
+Release: alt4
+
 Summary: SocketIO server based on the Gevent pywsgi server, a Python network library
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/gevent-socketio/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/abourget/gevent-socketio.git
-Source: %name-%version.tar
-Patch: fix-django-utils-importlib-since-1.9.patch
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-versiontools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools python-module-versiontools python3-module-setuptools python3-module-versiontools rpm-build-python3 time
+Source: %name-%version.tar
+Patch: fix-django-utils-importlib-since-1.9.patch
 
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-versiontools python-tools-2to3
-%endif
+BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
 
-%py_provides %oname
-%py_requires gevent-websocket
+BuildRequires: python-tools-2to3
+BuildRequires: python3-module-versiontools
+BuildRequires: python3-module-sphinx
+
+%py3_provides %oname
+%py3_requires gevent-websocket
+
 
 %description
 SocketIO server based on the Gevent pywsgi server, a Python network
 library.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: SocketIO server based on the Gevent pywsgi server, a Python 3 network library
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires gevent-websocket
-
-%description -n python3-module-%oname
-SocketIO server based on the Gevent pywsgi server, a Python network
-library.
-%endif
 
 %package docs
 Summary: Documentation for gevent-socketio
@@ -72,54 +52,36 @@ This package contains pickles for gevent-socketio.
 %setup
 %patch -p1
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
-popd
-%endif
 
 %make -C docs pickle
 %make -C docs html
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/socketio/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/socketio/
 
 %files
 %doc AUTHORS LICENSE
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS LICENSE CHANGELOG *.rst
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.6-alt4
+- disable python2
+
 * Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.6-alt3.git20140202
 - Adapt module for a new Django.
 
