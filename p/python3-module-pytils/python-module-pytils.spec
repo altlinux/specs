@@ -1,73 +1,42 @@
-%define version 0.3
-%define release alt1
-%setup_python_module pytils
+%define oname pytils
 
-%def_with python3
+Name: python3-module-%oname
+Version: 0.3
+Release: alt2
 
 Summary: Utils for easy processing string in russian.
-Name: %packagename
-Version: %version
-Release: alt1.2
-Source: %modulename-%version.tar
+Source: %oname-%version.tar
 License: GPL
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 URL: http://www.pyobject.ru/projects/pytils/
+BuildArch: noarch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-%endif
+
 
 %description
 Simple tools for processing string in russian (choose proper form for plurals,
 in-words representation of numerals, dates in russian without locales,
 transliteration, etc)
 
-%package -n python3-module-%modulename
-Summary: Utils for easy processing string in russian
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-Simple tools for processing string in russian (choose proper form for plurals,
-in-words representation of numerals, dates in russian without locales,
-transliteration, etc)
-
 %prep
-%setup -n %modulename-%version
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %oname-%version
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install --record=INSTALLED_FILES
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%files -f INSTALLED_FILES
-%doc doc/* Changelog LICENSE TODO AUTHORS
-
-%if_with python3
-%files -n python3-module-%modulename
+%files
 %doc doc/* Changelog LICENSE TODO AUTHORS
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt2
+- disable python2
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt1.2
 - (NMU) rebuild with python3.6
 
