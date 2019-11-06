@@ -1,23 +1,30 @@
 Name: clickhouse
-Version: 19.13.6.51
+Version: 19.16.2.2
 Release: alt1
 Summary: open source distributed column-oriented DBMS
 License: Apache License 2.0
 Group: Databases
+Url: https://clickhouse.yandex/
+
+# https://github.com/ClickHouse/ClickHouse.git
 Source: %name-%version.tar
 Source1: %name-%version-contrib-base64.tar
 Source2: %name-%version-contrib-simdjson.tar
-Source3: %name-%version-contrib-rapidjson.tar
+Source3: %name-%version-contrib-zlib-ng.tar
 Patch0: %name-%version-%release.patch
-Url: https://clickhouse.yandex/
+
 BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
-BuildRequires: rpm-macros-cmake, liblz4-devel, zlib-devel, /proc, libzstd-devel, libmariadb-devel
+BuildRequires: rpm-macros-cmake, liblz4-devel, /proc, libzstd-devel, libmariadb-devel
 BuildRequires: farmhash-devel, metrohash-devel, libdouble-conversion-devel, librdkafka-devel, libssl-devel, libre2-devel
 BuildRequires: libgsasl-devel, libcap-ng-devel, libxxhash-devel, boost-devel, libunixODBC-devel, libgperftools-devel
 BuildRequires: libpoco-devel, libgtest-devel, libbrotli-devel, capnproto-devel, libxml2-devel, libcppkafka-devel
 BuildRequires: libtinfo-devel, boost-filesystem-devel, boost-program_options-devel, boost-geometry-devel
 BuildRequires: llvm-devel, gcc-c++, perl-JSON-XS, libb64-devel libasan-devel-static, boost-lockfree-devel
 BuildRequires: libprotobuf-devel
+BuildRequires: libstdc++-devel-static
+BuildRequires: libsparsehash-devel
+BuildRequires: rapidjson-devel
+BuildRequires: boost-devel-static
 %ifarch x86_64
 BuildRequires: libhyperscan-devel
 %endif
@@ -31,15 +38,12 @@ allows generating analytical data reports in real time.
 %package common-static
 Group: Databases
 Summary: Common files for %name
+Provides: libclickhouse = %EVR
+Conflicts: libclickhouse < %EVR
+Obsoletes: libclickhouse < %EVR
 
 %description common-static
 This package provides common files for both clickhouse server and client.
-
-%package -n libclickhouse
-Summary: Shared library for ClickHouse
-Group: Databases
-%description -n libclickhouse
-This package contains shared library for ClickHouse DBMS.
 
 %package server
 Summary: Server binary for ClickHouse
@@ -68,13 +72,19 @@ ClickHouse tests
 %prep
 %setup -a1 -a2 -a3
 %patch0 -p1
-mv %name-%version-contrib-base64/* contrib/base64/
-mv %name-%version-contrib-simdjson/* contrib/simdjson/
-mv %name-%version-contrib-rapidjson/* contrib/rapidjson/
 
 %build
-%remove_optflags -frecord-gcc-switches
-%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_UTILS=0 -DCMAKE_VERBOSE_MAKEFILE=0 -DUNBUNDLED=1 -DUSE_STATIC_LIBRARIES=0 -DUSE_UNWIND=0 -DCLICKHOUSE_SPLIT_BINARY=1 -DENABLE_JEMALLOC=0
+%cmake \
+	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DENABLE_UTILS=0 \
+	-DCMAKE_VERBOSE_MAKEFILE=0 \
+	-DUNBUNDLED=1 \
+	-DUSE_STATIC_LIBRARIES=1 \
+	-DUSE_UNWIND=0 \
+	-DCLICKHOUSE_SPLIT_BINARY=0 \
+	-DENABLE_JEMALLOC=0 \
+	%nil
+
 %cmake_build VERBOSE=1
 
 %install
@@ -98,13 +108,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 
 
 %files common-static
-%_datadir/clickhouse
 %_bindir/clickhouse
 %_bindir/clickhouse-odbc-bridge
 %config(noreplace) %_sysconfdir/security/limits.d/clickhouse.conf
-
-%files -n libclickhouse
-%_libdir/*.so.*
 
 %files server
 %config(noreplace) %_sysconfdir/cron.d/clickhouse-server
@@ -137,6 +143,12 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Wed Nov 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 19.16.2.2-alt1
+- Updated to stable upstream version 19.16.2.2.
+- Used bundled zlib-ng instead of system zlib library.
+- Disabled building shared clickhouse library.
+- Built single clickhouse binary.
+
 * Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 19.13.6.51-alt1
 - 19.13.6.51
 
