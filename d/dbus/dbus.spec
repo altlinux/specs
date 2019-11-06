@@ -8,8 +8,8 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.12.12
-Release: alt2
+Version: 1.12.16
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -150,17 +150,21 @@ __EOF__
 %_sbindir/useradd -r -n -g %dbus_group -d %system_socket_dir -s /dev/null -c "D-Bus System User" %dbus_user 2> /dev/null ||:
 
 %post
-if [ $1 -eq 1 ] ; then
-    /sbin/chkconfig --add messagebus
+if /bin/systemctl --version >/dev/null 2>&1; then
+	/bin/systemctl daemon-reload
+	if [ $1 -eq 1 ] ; then
+		/bin/systemctl -q preset messagebus.service
+	else
+		/bin/systemctl reload messagebus.service
+	fi
 else
-    /sbin/chkconfig messagebus resetpriorities
+	if [ $1 -eq 1 ] ; then
+		/sbin/chkconfig --add messagebus
+	else
+		/sbin/chkconfig messagebus resetpriorities
+	fi
 fi
-
 /bin/dbus-uuidgen --ensure
-
-#%triggerin -- %name < %version
-#service messagebus restart
-#/bin/dbus-uuidgen --ensure
 
 %preun
 %preun_service messagebus
@@ -229,6 +233,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Nov 06 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.12.16-alt1
+- 1.12.16 (closes: #37414)
+
 * Mon Feb 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.12.12-alt2
 - fixed build with new autoconf-archive-2019.01.06
 
