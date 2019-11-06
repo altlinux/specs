@@ -1,6 +1,6 @@
 Name: nagios-plugins-check_monit
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Nagios(R) plug-in for checking monit status
 License: GPL
@@ -9,6 +9,7 @@ Group: Monitoring
 Url: https://code.google.com/p/nagios-monit-plugin/
 
 Source: %name-%version.tar
+Patch0: fix-encode-py3.patch
 
 BuildArchitectures: noarch
 
@@ -26,6 +27,7 @@ all warnings and "unmonitored" states are shown.
 
 %prep
 %setup
+%patch0 -p1
 
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
@@ -41,6 +43,9 @@ install -m755 check_monit.py %buildroot%pluginsdir/
 %doc README check_monit.cfg
 
 %changelog
+* Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt3
+- func of encoding according python3 fixed (Closes #37396)
+
 * Tue Oct 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt2
 - py2 -> py3 (Closes #37396)
 
