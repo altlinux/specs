@@ -1,6 +1,6 @@
 
 Name: urbackup-client
-Version: 2.4.6.0
+Version: 2.4.9
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
@@ -25,7 +25,7 @@ are stored to disks in a efficient way (deduplication)
 on either Windows or Linux servers.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version.0
 %patch1 -p1
 %patch2 -p1
 
@@ -74,6 +74,7 @@ touch %buildroot%_logdir/urbackupclient.log
 %dir %_sysconfdir/urbackup
 %config(noreplace) %_sysconfdir/urbackup/*
 %_bindir/urbackupclientctl
+%_bindir/blockalign
 %_sbindir/urbackupclientbackend
 %_unitdir/%name.service
 %_man1dir/*
@@ -82,6 +83,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Thu Nov 07 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.9-alt1
+- 2.4.9
+
 * Sun Aug 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.6.0-alt1
 - 2.4.6
 - add snapshot scripts
