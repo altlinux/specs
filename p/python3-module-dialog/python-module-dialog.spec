@@ -1,85 +1,49 @@
 %global upstream_name pythondialog
-%global upstream_name2 python2-pythondialog
 
-%def_with python3
-
-Name: python-module-dialog
+Name: python3-module-dialog
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Python interface to the Unix dialog utility
 
 License: LGPLv2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://pythondialog.sourceforge.net
-# Upstream releases two tarballs from the same sources
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: https://pypi.python.org/packages/source/p/%upstream_name/%upstream_name-%version.tar
-Source1: https://pypi.python.org/packages/source/p/%upstream_name2/%upstream_name2-%version.tar
-
 BuildArch: noarch
-BuildRequires: python-devel
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools
-%endif
+
 
 %description
 A Python interface to the Unix dialog utility, designed to provide an
 easy, pythonic and as complete as possible way to use the dialog
 features from Python code.
 
-%if_with python3
-%package -n python3-module-dialog
-Requires: dialog
-Summary: %summary
-Group: Development/Python
-
-%description -n python3-module-dialog
-A Python interface to the Unix dialog utility, designed to provide an
-easy, pythonic and as complete as possible way to use the dialog
-features from Python code.
-%endif
-
 %prep
 %setup -n %upstream_name-%version
-tar -xvf %SOURCE1
+
+sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%if_with python3
 %python3_build
-%endif
-
-pushd %upstream_name2-%version
-%python_build
-popd
 
 %install
-%if_with python3
 %python3_install
-%endif
 
-pushd %upstream_name2-%version
-%python_install
-popd
-
-%if_with python3
-%files -n python3-module-dialog
+%files
 %doc COPYING
 %doc README.rst examples/
 %python3_sitelibdir/dialog.py*
 %python3_sitelibdir/__pycache__/
 %python3_sitelibdir/pythondialog-*.egg-info
-%endif
 
-%files
-%doc %upstream_name2-%version/COPYING
-%doc %upstream_name2-%version/README.rst %upstream_name2-%version/examples/
-%python_sitelibdir/dialog.py*
-%python_sitelibdir/python2_pythondialog-*.egg-info
 
 %changelog
+* Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.4.0-alt2
+- disable python2
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version 3.4.0 (with rpmrb script)
 
