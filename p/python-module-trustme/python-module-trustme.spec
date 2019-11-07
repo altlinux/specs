@@ -1,7 +1,8 @@
 %define  modulename trustme
+%def_without python2
 
 Name:    python-module-%modulename
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
@@ -45,25 +46,35 @@ rm -rf ../python3
 cp -a . ../python3
 
 %build
+%if_with python2
 %python_build
+%endif
 pushd ../python3
 %python3_build
 popd
 
 %install
+%if_with python2
 %python_install
+%endif
 pushd ../python3
 %python3_install
 popd
 
+%if_with python2
 %files
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
+%endif
 
 %files -n python3-module-%modulename
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.3-alt1
+- New version.
+- Build without Python2 support.
+
 * Tue Jun 04 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
 - New version.
 
