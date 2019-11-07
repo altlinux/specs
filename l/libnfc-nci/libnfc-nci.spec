@@ -4,13 +4,14 @@
 
 Name: libnfc-nci
 Version: 2.4
-Release: alt1.dev.git20190613
+Release: alt2.dev.git20190613
+
 Summary: Linux NFC stack for NCI based NXP NFC Controllers.
 License: Apache 2.0
 Group: System/Libraries
+
 Url: https://www.nxp.com/docs/en/application-note/AN11697.pdf
 # Git: https://github.com/NXPNFCLinux/linux_libnfc-nci
-
 Source: %name-%version.tar
 Source1: 42-pn5xx_i2c.rules
 
@@ -56,6 +57,11 @@ sed -i 's|-L\$(openssldir)/lib|-L\$(openssldir)/lib%_libsuff|g' Makefile.am
 export openssldir=%_prefix 
 %endif
 
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
+
 export exec_prefix=%_prefix
 %configure \
 	--disable-static \
@@ -70,12 +76,10 @@ export exec_prefix=%_prefix
 %make_build
 
 %install
-make install DESTDIR=%buildroot
-# remove *.la files
-find %buildroot -name '*.la' -exec rm -f {} ';'
-mkdir -p %buildroot/%_bindir
-mv %buildroot/%_sbindir/* %buildroot/%_bindir
-install -p -m644 -D %SOURCE1 %buildroot/%_udevrulesdir/42-pn5xx_i2c.rules
+%makeinstall_std
+find %buildroot -name '*.la' -delete
+mv %buildroot%_sbindir %buildroot%_bindir
+install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/42-pn5xx_i2c.rules
 
 %files
 %doc README.md LICENSE.txt
@@ -94,6 +98,10 @@ install -p -m644 -D %SOURCE1 %buildroot/%_udevrulesdir/42-pn5xx_i2c.rules
 %_udevrulesdir/*.rules
 
 %changelog
+* Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 2.4-alt2.dev.git20190613
+- E2K: explicit -std=c++11
+- minor spec cleanup
+
 * Thu Jul 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.4-alt1.dev.git20190613
 - initial build for OS ALT
 
