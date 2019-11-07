@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.8.5
-Release: alt1
+Release: alt2
 
 Summary: Remote desktop chooser
 License: GPL
@@ -53,6 +53,9 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Thu Nov 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.5-alt2
+- Fixed version
+
 * Wed Nov 06 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.5-alt1
 - Remmina: fixed connect/open/import for RDP/VNC (ALT #36757)
 - FreeRDP:  disable fullscreen (auto), when toggled workarea or manually resolution
