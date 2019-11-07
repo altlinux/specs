@@ -1,6 +1,6 @@
 Name: hasher
-Version: 1.4.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: Modern safe package building technology
 License: GPLv2+
@@ -61,6 +61,12 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Thu Nov 07 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.1-alt1
+- hsh-initroot:
+  + disabled copying of resolver configuration files from host system
+    by default (by Gleb Fotengauer-Malinovskiy);
+  + fixed error handling in archive_chroot_cache_compress_file.
+
 * Fri Oct 11 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt2
 - Added "Conflicts: mkimage < 0.2.28" due to hsh-fakedev removal.
 
