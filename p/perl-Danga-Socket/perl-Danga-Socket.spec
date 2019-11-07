@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Danga-Socket
 Name: perl-%m_distro
-Version: 1.61
+Version: 1.62
 Release: alt1
 Summary: Event loop and event-driven async socket base class
 
@@ -12,7 +13,7 @@ BuildArch: noarch
 Source: %m_distro-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: perl-devel perl-Sys-Syscall
+BuildRequires: perl-devel perl-Sys-Syscall perl(Net/EmptyPort.pm)
 
 %description
 This is an abstract base class for objects backed by a socket which
@@ -30,10 +31,14 @@ loop.
 %perl_vendor_install
 
 %files
+%doc CHANGES examples
 %perl_vendor_privlib/Danga/Socket*
 %doc CHANGES
 
 %changelog
+* Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1
+- new version
+
 * Mon Oct 26 2009 Vladimir Lettiev <crux@altlinux.ru> 1.61-alt1
 - initial build
 
