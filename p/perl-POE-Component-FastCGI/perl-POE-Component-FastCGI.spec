@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist POE-Component-FastCGI
 Name: perl-%dist
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: POE FastCGI server
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ and POE. This means that it is possible to effectively proxy a
 POE server behind a webserver that supports FastCGI.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,13 @@ POE server behind a webserver that supports FastCGI.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README Changes.old
 %perl_vendor_privlib/POE
 
 %changelog
+* Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.19-alt1
 - 0.18 -> 0.19
 
