@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.30.1
+Version: 1.31.0
 Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
@@ -173,6 +173,9 @@ popd
 
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.31.0-alt1
+- Automatically updated to 1.31.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.1-alt1
 - Automatically updated to 1.30.1
 

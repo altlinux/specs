@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python-module-%pypi_name
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
 Summary: Mock object framework for Python
 License: Apache-2.0
@@ -178,6 +178,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.28.0-alt1
+- Automatically updated to 0.28.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.27.0-alt1
 - Automatically updated to 0.27.0
 

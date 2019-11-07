@@ -1,13 +1,17 @@
 %global oname aodh
 
 Name: openstack-%oname
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
+
 Summary: OpenStack Telemetry Alarming
+
 Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
 BuildArch: noarch
 
 Source2: aodh.logrotate
@@ -32,46 +36,6 @@ BuildRequires: crudini
 BuildRequires: webserver-common
 BuildRequires: rpm-build-webserver-common
 BuildRequires: rpm-macros-apache2
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-croniter >= 0.3.4
-BuildRequires: python-module-futures >= 3.0
-BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-keystonemiddleware >= 2.2.0
-BuildRequires: python-module-gnocchiclient >= 3.1.0
-BuildRequires: python-module-lxml >= 2.3
-BuildRequires: python-module-oslo.db >= 4.8.0
-BuildRequires: python-module-oslo.config >= 2.6.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.2.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-pecan >= 0.8.0
-BuildRequires: python-module-oslo.messaging >= 5.2.0
-BuildRequires: python-module-oslo.middleware >= 3.22.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-pytz >= 2013.6
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-tooz >= 1.28.0
-BuildRequires: python-module-voluptuous >= 0.8.10
-BuildRequires: python-module-webob >= 1.2.3
-BuildRequires: python-module-wsme >= 0.8
-BuildRequires: python-module-cachetools >= 1.1.6
-BuildRequires: python-module-cotyledon
-BuildRequires: python-module-keystoneauth1 >= 2.1
-BuildRequires: python-module-debtcollector >= 1.2.0
-
-BuildRequires: python-module-openstackdocstheme >= 1.11.0
-BuildRequires: python-module-reno >= 0.1.1
-BuildRequires: python-module-sphinx >= 1.6.2
-#BuildRequires: python-module-sphinxcontrib-httpdomain
-#BuildRequires: python-module-sphinxcontrib-pecanwsme >= 0.8
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -80,7 +44,7 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-tenacity >= 3.2.1
 BuildRequires: python3-module-croniter >= 0.3.4
 BuildRequires: python3-module-futurist >= 0.11.0
-BuildRequires: python3-module-jsonschema >= 2.0.0
+BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-keystonemiddleware >= 2.2.0
 BuildRequires: python3-module-gnocchiclient >= 3.1.0
 BuildRequires: python3-module-lxml >= 2.3
@@ -107,12 +71,12 @@ BuildRequires: python3-module-cachetools >= 1.1.6
 BuildRequires: python3-module-cotyledon
 BuildRequires: python3-module-keystoneauth1 >= 2.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-heatclient
+BuildRequires: python3-module-octaviaclient
 
 BuildRequires: python3-module-openstackdocstheme >= 1.11.0
 BuildRequires: python3-module-reno >= 0.1.1
 BuildRequires: python3-module-sphinx >= 1.6.2
-#BuildRequires: python3-module-sphinxcontrib-httpdomain
-#BuildRequires: python3-module-sphinxcontrib-pecanwsme >= 0.8
 
 %description
 Aodh is the alarm engine of the Ceilometer project.
@@ -136,16 +100,6 @@ Requires: %name-listener
 This package only exists to help transition openstack-ceilometer-alarm users
 to the new package split. It will be removed after one distribution release
 cycle, please do not reference it or depend on it in any way.
-
-%package -n python-module-%oname
-Summary: OpenStack aodh python libraries
-Group: Development/Python
-Requires: python-module-PasteDeploy
-
-%description -n python-module-%oname
-OpenStack aodh provides API and services for managing alarms.
-
-This package contains the aodh python library.
 
 %package -n python3-module-%oname
 Summary: OpenStack aodh python libraries
@@ -223,16 +177,6 @@ OpenStack aodh provides API and services for managing alarms.
 
 This package contains the aodh expirer service.
 
-%package -n python-module-%oname-tests
-Summary: Aodh tests
-Group: Development/Python
-Requires: python-module-aodh = %version-%release
-
-%description -n python-module-%oname-tests
-OpenStack aodh provides API and services for managing alarms.
-
-This package contains the Aodh test files.
-
 %package -n python3-module-%oname-tests
 Summary: Aodh tests
 Group: Development/Python3
@@ -242,7 +186,6 @@ Requires: python3-module-aodh = %version-%release
 OpenStack aodh provides API and services for managing alarms.
 
 This package contains the Aodh test files.
-
 
 %prep
 %setup -n %oname-%version
@@ -255,35 +198,16 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-
-%python_build
-
+%python3_build
 # Generate config file
 PYTHONPATH=. oslo-config-generator --config-file=build/lib/aodh/cmd/aodh-config-generator.conf --output-file aodh.conf.sample
 
 # Generate i18n files
 #python setup.py compile_catalog -d build/lib/%oname/locale
 
-pushd ../python3
-%python3_build
-popd
-
 %install
-%python_install
-
-for f in $(ls -1 %buildroot%_bindir)
-    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
-done
-
-pushd ../python3
 %python3_install
-popd
-
 
 # Install config files
 install -d -m 755 %buildroot%_sysconfdir/aodh
@@ -379,17 +303,8 @@ rm -fr %buildroot/usr/etc
 
 %files compat
 
-%files -n python-module-aodh
-%_bindir/*.py2
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files -n python-module-aodh-tests
-%python_sitelibdir/*/tests
-
 %files -n python3-module-aodh
 %_bindir/*
-%exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -437,6 +352,10 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
+- Automatically updated to 9.0.0.
+- Build without python2.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt1
 - Automatically updated to 8.0.0
 

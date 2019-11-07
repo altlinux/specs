@@ -4,7 +4,7 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 14.0.1
+Version: 15.0.0
 Release: alt1
 
 Summary: OpenStack Volume service
@@ -48,7 +48,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-decorator >= 3.4.0
 BuildRequires: python3-module-defusedxml >= 0.5.0
-BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-eventlet >= 0.22.0
 BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-iso8601 >= 0.1.11
@@ -324,6 +324,9 @@ rm -rf %buildroot/usr/etc
 %endif
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:15.0.0-alt1
+- Automatically updated to 15.0.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:14.0.1-alt1
 - Build new version.
 - Build without python2.

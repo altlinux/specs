@@ -1,16 +1,20 @@
-%define oname ceilometer
 %def_without doc
 
+%define oname ceilometer
+
 Name: openstack-%oname
-Version: 12.0.0
-Release: alt1
 Epoch: 1
+Version: 13.0.0
+Release: alt1
+
 Summary: OpenStack measurement collection service
 
 Group: System/Servers
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
 Source2: ceilometer.logrotate
 Source4: ceilometer-rootwrap-sudoers
 Source5: openstack-ceilometer-polkit.rules
@@ -31,6 +35,8 @@ Source116: %name-notification.init
 Source117: %name-ipmi.init
 Source118: %name-polling.init
 
+BuildArch: noarch
+
 Provides: %name-common = %EVR
 Obsoletes: %name-common < %EVR
 # Collector service has been removed but not replaced
@@ -39,103 +45,58 @@ Obsoletes: %name-collector < %EVR
 # api service has been removed
 Obsoletes: %name-api
 
+Requires(pre): shadow-utils
 Requires: python3-module-PasteDeploy
-Requires(pre):    shadow-utils
 Requires: python3-module-ceilometer  = %EVR
-Requires: python3-module-oslo.messaging >= 5.12.0
+Requires: python3-module-oslo.messaging >= 6.2.0
 Requires: python3-module-oslo.serialization >= 1.10.0
-Requires: python3-module-oslo.utils >= 3.5.0
+Requires: python3-module-oslo.utils >= 3.37.0
 
 BuildRequires: /proc
-BuildArch: noarch
 BuildRequires: crudini
 BuildRequires: webserver-common
 BuildRequires: rpm-build-webserver-common
 BuildRequires: rpm-macros-apache2
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-cachetools >= 1.1.0
-BuildRequires: python-module-cotyledon >= 1.3.0
-BuildRequires: python-module-futures >= 3.0
-BuildRequires: python-module-futurist >= 0.11.0
-BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-jsonpath-rw-ext >= 0.1.9
-BuildRequires: python-module-lxml >= 2.3
-BuildRequires: python-module-monotonic
-BuildRequires: python-module-msgpack >= 0.4.0
-BuildRequires: python-module-oslo.concurrency >= 3.5.0
-BuildRequires: python-module-oslo.config >= 3.22.0
-BuildRequires: python-module-oslo.i18n >= 2.1.0
-BuildRequires: python-module-oslo.log >= 1.14.0
-BuildRequires: python-module-oslo.reports >= 0.6.0
-BuildRequires: python-module-oslo.rootwrap >= 2.0.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.messaging >= 5.12.0
-BuildRequires: python-module-oslo.utils >= 3.5.0
-BuildRequires: python-module-pysnmp4 >= 4.2.3
-BuildRequires: python-module-glanceclient >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-keystoneauth1 >= 2.1.0
-BuildRequires: python-module-neutronclient >= 4.2.0
-BuildRequires: python-module-novaclient >= 2.29.0
-BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-cinderclient >= 1.6.0
-BuildRequires: python-module-yaml >= 3.1.0
-BuildRequires: python-module-requests >= 2.8.1
-BuildRequires: python-module-stevedore >= 1.9.0
-BuildRequires: python-module-tenacity >= 3.2.1
-BuildRequires: python-module-tooz >= 1.47.0
-BuildRequires: python-module-os-xenapi >= 0.1.1
-
-BuildRequires: python-module-oslo.cache >= 1.5.0
-BuildRequires: python-module-gnocchiclient >= 3.1.0
-
-BuildRequires: python-module-openstackdocstheme >= 1.11.0
-BuildRequires: python-module-reno >= 1.6.2
-BuildRequires: python-module-oslo.vmware >= 1.16.0
-BuildRequires: python-module-sphinx >= 1.6.2
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-cachetools >= 1.1.0
+BuildRequires: python3-module-cachetools >= 2.1.0
 BuildRequires: python3-module-cotyledon >= 1.3.0
-BuildRequires: python3-module-futurist >= 0.11.0
+BuildRequires: python3-module-futurist >= 1.8.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-jsonpath-rw-ext >= 0.1.9
-BuildRequires: python3-module-lxml >= 2.3
-BuildRequires: python3-module-monotonic
-BuildRequires: python3-module-msgpack >= 0.4.0
-BuildRequires: python3-module-oslo.concurrency >= 3.5.0
-BuildRequires: python3-module-oslo.config >= 3.22.0
-BuildRequires: python3-module-oslo.i18n >= 2.1.0
-BuildRequires: python3-module-oslo.log >= 1.14.0
-BuildRequires: python3-module-oslo.reports >= 0.6.0
+BuildRequires: python3-module-jsonpath-rw-ext >= 1.1.3
+BuildRequires: python3-module-lxml >= 3.4.1
+BuildRequires: python3-module-monotonic >= 0.6
+BuildRequires: python3-module-msgpack >= 0.5.0
+BuildRequires: python3-module-oslo.concurrency >= 3.26.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.privsep
+BuildRequires: python3-module-oslo.reports >= 1.18.0
 BuildRequires: python3-module-oslo.rootwrap >= 2.0.0
 BuildRequires: python3-module-oslo.service >= 0.7.0
-BuildRequires: python3-module-oslo.messaging >= 5.12.0
-BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.messaging >= 6.2.0
+BuildRequires: python3-module-oslo.utils >= 3.37.0
 BuildRequires: python3-module-pysnmp4 >= 4.2.3
 BuildRequires: python3-module-glanceclient >= 2.0.0
 BuildRequires: python3-module-keystoneclient >= 1.6.0
-BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-keystoneauth1 >= 3.9.0
 BuildRequires: python3-module-neutronclient >= 4.2.0
 BuildRequires: python3-module-novaclient >= 2.29.0
 BuildRequires: python3-module-swiftclient >= 2.2.0
 BuildRequires: python3-module-cinderclient >= 1.6.0
 BuildRequires: python3-module-yaml >= 3.1.0
 BuildRequires: python3-module-requests >= 2.8.1
-BuildRequires: python3-module-stevedore >= 1.9.0
-BuildRequires: python3-module-tenacity >= 3.2.1
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-tenacity >= 4.4.0
 BuildRequires: python3-module-tooz >= 1.47.0
-BuildRequires: python3-module-os-xenapi >= 0.1.1
-
-BuildRequires: python3-module-oslo.cache >= 1.5.0
-BuildRequires: python3-module-gnocchiclient >= 3.1.0
+BuildRequires: python3-module-os-xenapi >= 0.3.3
+BuildRequires: python3-module-oslo.cache >= 1.26.0
+BuildRequires: python3-module-gnocchiclient >= 7.0.0
 
 BuildRequires: python3-module-openstackdocstheme >= 1.11.0
 BuildRequires: python3-module-reno >= 1.6.2
@@ -145,28 +106,6 @@ BuildRequires: python3-module-sphinx >= 1.6.2
 %description
 OpenStack ceilometer provides services to measure and
 collect metrics from OpenStack components.
-
-%package -n python-module-%oname
-Summary: OpenStack ceilometer python libraries
-Group: Development/Python
-Requires: python-module-PasteDeploy
-Requires: python-module-ceilometerclient
-Requires: python-module-keystoneclient
-Requires: python-module-keystonemiddleware
-
-%description -n python-module-%oname
-OpenStack ceilometer provides services to measure and
-collect metrics from OpenStack components.
-
-This package contains the ceilometer python library.
-
-%package -n python-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description -n python-module-%oname-tests
-This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: OpenStack ceilometer python3 libraries
@@ -299,39 +238,21 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 # to distutils requires_dist config
 rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
 PYTHONPATH=. oslo-config-generator --config-file=etc/ceilometer/ceilometer-config-generator.conf
-%python_build
-python setup.py compile_catalog -d build/lib/ceilometer/locale
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-for f in $(ls -1 %buildroot%_bindir)
-    do mv %buildroot%_bindir/$f %buildroot%_bindir/$f.py2
-done
-
-pushd ../python3
 %python3_install
-popd
 
 %if_with doc
 # docs generation requires everything to be installed first
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 
 pushd doc
-
-SPHINX_DEBUG=1 sphinx-build -b html source build/html
+SPHINX_DEBUG=1 sphinx-build-3 -b html source build/html
 # Fix hidden-file-or-dir warnings
 rm -fr build/html/.doctrees build/html/.buildinfo
-
 popd
 %endif
 
@@ -380,7 +301,7 @@ install -d -m 755 %buildroot%_runtimedir/ceilometer
 install -d -m 755 %buildroot%_datadir
 rm -f %buildroot%python_sitelibdir/ceilometer/locale/*/LC_*/ceilometer*po
 rm -f %buildroot%python_sitelibdir/ceilometer/locale/*pot
-mv %buildroot%python_sitelibdir/ceilometer/locale %buildroot%_datadir/locale
+#mv %buildroot%python_sitelibdir/ceilometer/locale %buildroot%_datadir/locale
 
 # Find language files
 %find_lang ceilometer --all-name
@@ -452,17 +373,8 @@ crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilomete
 %dir %attr(0755, ceilometer, ceilometer) %_sharedstatedir/ceilometer
 %dir %attr(0755, ceilometer, ceilometer) %_cachedir/ceilometer
 
-%files -n python-module-%oname
-%_bindir/*.py2
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/tests
-
 %files -n python3-module-%oname
 %_bindir/*
-%exclude %_bindir/*.py2
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -503,6 +415,10 @@ crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilomete
 %_initdir/%name-polling
 
 %changelog
+* Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:13.0.0-alt1
+- Automatically updated to 13.0.0.
+- Build without python2.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1:12.0.0-alt1
 - Automatically updated to 12.0.0
 

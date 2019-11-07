@@ -1,5 +1,5 @@
 Name: openstack-swift
-Version: 2.5.0
+Version: 2.23.1
 Release: alt1
 Summary: OpenStack Object Storage (Swift)
 
@@ -61,23 +61,26 @@ Source20: %name.tmpfs
 Source7: swift.conf
 
 BuildArch: noarch
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-pbr
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-dns >= 1.9.4
-BuildRequires: python-module-eventlet >= 0.16.1
-BuildRequires: python-module-greenlet >= 0.3.1
-BuildRequires: python-module-netifaces >= 0.5
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-simplejson >= 2.0.9
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-pyxattr >= 0.4
-BuildRequires: python-module-pyeclib >= 1.0.7
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-d2to1
+BuildRequires: python3-module-dns >= 1.9.4
+BuildRequires: python3-module-eventlet >= 0.16.1
+BuildRequires: python3-module-greenlet >= 0.3.1
+BuildRequires: python3-module-netifaces >= 0.5
+BuildRequires: python3-module-PasteDeploy >= 1.5.0
+BuildRequires: python3-module-simplejson >= 2.0.9
+BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-pyxattr >= 0.4
+BuildRequires: python3-module-pyeclib >= 1.0.7
 # for build doc
-BuildRequires: python-modules-sqlite3
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-openstackdocstheme
 
 Requires(pre):    shadow-utils
 
@@ -135,8 +138,7 @@ Summary: A proxy server for Swift
 Group: System/Servers
 
 Requires: %name = %version-%release
-Requires: python-module-keystonemiddleware
-Requires: python-module-swift-plugin-swift3
+Requires: python3-module-keystonemiddleware
 
 %description proxy
 OpenStack Object Storage (Swift) aggregates commodity servers to work together
@@ -167,17 +169,17 @@ This package contains documentation files for %name.
 rm -rf {test-,}requirements.txt
 
 %build
-%python_build
+%python3_build
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
-%__python setup.py build_sphinx
+%__python3 setup.py build_sphinx
 
 # Fix hidden-file-or-dir warning
 #rm doc/build/html/.buildinfo
 
 %install
-%python_install
+%python3_install
 # systemd units
 install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/%name-account.service
 install -p -D -m 644 %SOURCE21 %buildroot%_unitdir/%name-account@.service
@@ -225,7 +227,7 @@ install -p -D -m 755 %SOURCE159 %buildroot%_initdir/%name-object-expirer
 install -p -D -m 755 %SOURCE160 %buildroot%_initdir/%name-proxy
 
 # Remove tests
-rm -fr %buildroot/%python_sitelibdir/test
+rm -fr %buildroot/%python3_sitelibdir/test
 # Misc other
 install -d -m 755 %buildroot%_sysconfdir/swift
 install -d -m 755 %buildroot%_sysconfdir/swift/account-server
@@ -319,7 +321,7 @@ done
 %preun_service %name-container-reconciler
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.rst
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %_man5dir/dispersion.conf.5*
@@ -337,7 +339,7 @@ done
 %dir %attr(0755, swift, root) %_runtimedir/swift
 %dir %attr(0755, swift, root) %_cachedir/swift
 %dir %attr(0755, swift, root) %_sharedstatedir/swift
-%dir %python_sitelibdir/swift
+%dir %python3_sitelibdir/swift
 %_bindir/swift-account-audit
 %_bindir/swift-config
 %_bindir/swift-drive-audit
@@ -351,14 +353,14 @@ done
 %_bindir/swift-oldies
 %_bindir/swift-orphans
 %_bindir/swift-form-signature
-%_bindir/swift-temp-url
-%python_sitelibdir/swift/*.py*
-%python_sitelibdir/swift/cli
-%python_sitelibdir/swift/common
-%python_sitelibdir/swift/account
-%python_sitelibdir/swift/obj
-%python_sitelibdir/swift/locale
-%python_sitelibdir/swift-%{version}*.egg-info
+#%%_bindir/swift-temp-url
+%python3_sitelibdir/swift/*.py*
+%python3_sitelibdir/swift/cli
+%python3_sitelibdir/swift/common
+%python3_sitelibdir/swift/account
+%python3_sitelibdir/swift/obj
+%python3_sitelibdir/swift/locale
+%python3_sitelibdir/*.egg-info
 
 %files account
 %doc etc/account-server.conf-sample
@@ -401,7 +403,7 @@ done
 %_bindir/swift-container-replicator
 %_bindir/swift-container-updater
 %_bindir/swift-container-sync
-%python_sitelibdir/swift/container
+%python3_sitelibdir/swift/container
 
 %files object
 %doc etc/object-server.conf-sample etc/rsyncd.conf-sample
@@ -445,12 +447,17 @@ done
 %_bindir/swift-container-reconciler
 %_bindir/swift-object-expirer
 %_bindir/swift-proxy-server
-%python_sitelibdir/swift/proxy
+%python3_sitelibdir/swift/proxy
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE
+#doc/build/html
 
 %changelog
+* Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 2.23.1-alt1
+- 2.23.1 (attention! not packaged some files).
+- Transfer on python2.
+
 * Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0 (OpenStack Liberty release)
 

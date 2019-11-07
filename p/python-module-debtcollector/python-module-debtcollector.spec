@@ -1,7 +1,7 @@
 %define oname debtcollector
 
 Name: python-module-%oname
-Version: 1.21.0
+Version: 1.22.0
 Release: alt1
 Summary: A collection of Python deprecation patterns and strategies
 Group: Development/Python
@@ -144,6 +144,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.22.0-alt1
+- Automatically updated to 1.22.0.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.21.0-alt1
 - Automatically updated to 1.21.0
 
