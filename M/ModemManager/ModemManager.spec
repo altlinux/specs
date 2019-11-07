@@ -10,12 +10,13 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.10.8
+Version: 1.12.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: https://cgit.freedesktop.org/ModemManager/ModemManager/
+Vcs: https://cgit.freedesktop.org/ModemManager/ModemManager/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -25,7 +26,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
-%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.22.4}
+%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.24.0}
 %{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.18.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
@@ -233,6 +234,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 06 2019 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
+- Updated to 1.12.0.
+
 * Tue Nov 05 2019 Mikhail Efremov <sem@altlinux.org> 1.10.8-alt1
 - Updated to 1.10.8.
 
