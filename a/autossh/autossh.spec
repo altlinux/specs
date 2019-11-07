@@ -1,6 +1,6 @@
 Name: autossh
 Version: 1.4g
-Release: alt2
+Release: alt3
 
 Summary: Automatically restart SSH sessions and tunnels
 License: BSD-style
@@ -9,7 +9,7 @@ Url: http://www.harding.motd.ca/autossh
 
 # %url/autossh-%version.tar.bz2
 Source: autossh-%version.tar
-Source1: autossh_at.service
+Source1: autossh@.service
 Source2: autossh.conf.sample
 Source3: README.ALT
 Patch1: autossh-1.4a-alt-setproctitle.patch
@@ -26,7 +26,7 @@ mechanism are from rstunnel (Reliable SSH Tunnel), but implemented in C.
 %setup
 %patch1 -p1
 chmod -x autossh.host rscreen
-cp -a %SOURCE1 autossh@.service
+cp -a %SOURCE1 .
 cp -a %SOURCE2 .
 cp -a %SOURCE3 .
 
@@ -53,6 +53,9 @@ mkdir -pm755 %buildroot%_sysconfdir/autossh
 %_libexecdir/systemd/user/*
 
 %changelog
+* Thu Nov 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt3
+- Fixed systemd service file.
+
 * Sat Oct 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt2
 - Added systemd service file, its config sample and README.ALT.
 
