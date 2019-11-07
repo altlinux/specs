@@ -1,6 +1,6 @@
 Name: featherpad
-Version: 0.10.0
-Release: alt2
+Version: 0.11.1
+Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
 License: GPLv3+
@@ -11,7 +11,7 @@ Source: V%version.tar.gz
 
 # Automatically added by buildreq on Mon May 07 2018
 # optimized out: GraphicsMagick GraphicsMagick-common gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libX11-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel xorg-xproto-devel
-BuildRequires: GraphicsMagick-ImageMagick-compat qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+BuildRequires: GraphicsMagick-ImageMagick-compat qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libhunspell-devel
 
 %ifnarch %e2k
 BuildRequires: qt5-webview-devel qt5-webengine-devel qt5-webkit-devel
@@ -59,6 +59,9 @@ done
 %_iconsdir/*/*/*/*
 
 %changelog
+* Thu Nov 07 2019 Leontiy Volodin <lvol@altlinux.org> 0.11.1-alt1
+- new version 0.11.1
+
 * Tue Jul 23 2019 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2
 - fixed icons installation
 - E2K: avoid webview/webkit/webengine for now
