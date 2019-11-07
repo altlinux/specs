@@ -66,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.2.2
+Version: 19.2.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -86,7 +86,7 @@ BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxc
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python-module-libxml2 python3-module-mako python-module-argparse wayland-protocols
-BuildRequires: libclc-devel libglvnd-devel
+BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
 %ifarch %radeon_arches
 BuildRequires: llvm-devel clang-devel
 %ifarch %link_static_llvm_arches
@@ -103,7 +103,7 @@ Mesa is an OpenGL compatible 3D graphics library
 %package -n libGLX-mesa
 Summary: OpenGL 1.3 compatible 3D graphics library for X Window server
 Group: System/Libraries
-Conflicts: libGL < 4:18.2.2-alt1
+Conflicts: libGL < 4:19.2.2-alt1
 
 %description -n libGLX-mesa
 Mesa is an OpenGL compatible 3D graphics library
@@ -111,7 +111,7 @@ Mesa is an OpenGL compatible 3D graphics library
 %package -n libGL-devel
 Summary: Development files for Mesa Library
 Group: Development/C
-Requires: libglvnd-devel libGLX-mesa = %epoch:%version-%release
+Requires: libglvnd-devel >= 1.2.0 libGLX-mesa = %epoch:%version-%release
 
 %description -n libGL-devel
 libGL-devel contains the libraries and header files needed to
@@ -127,7 +127,7 @@ Mesa EGL library
 %package -n libEGL-devel
 Summary: Mesa libEGL development package
 Group: Development/C
-Requires: libglvnd-devel
+Requires: libglvnd-devel >= 1.2.0
 
 %description -n libEGL-devel
 Mesa libEGL development package
@@ -135,7 +135,7 @@ Mesa libEGL development package
 %package -n libGLES-devel
 Summary: Mesa libGLES development package
 Group: Development/C
-Requires: libglvnd-devel
+Requires: libglvnd-devel >= 1.2.0
 
 %description -n libGLES-devel
 Mesa libGLES development package
@@ -338,24 +338,9 @@ sed -i '/.*nouveau.*/d' xorg-dri-armsoc.list
 sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
-# remove unpackaged files
-rm -f %buildroot%_includedir/GL/*.h
-rm -f %buildroot%_pkgconfigdir/*gl.pc
-rm -f %buildroot%_includedir/EGL/egl.h
-rm -f %buildroot%_includedir/EGL/eglext.h
-rm -f %buildroot%_includedir/EGL/eglplatform.h
-rm -fr %buildroot%_includedir/GLES*
-rm -fr %buildroot%_includedir/KHR
-%ifarch %vulkan_intel_arches
-rm -f %buildroot%_includedir/vulkan/vulkan_intel.h
-%endif
-%ifarch %opencl_arches
-rm -f %buildroot%_libdir/libMesaOpenCL.so
-%endif
-
 install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 
-%define _unpackaged_files_terminate_build 1
+#define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
 %doc docs/relnotes/%version.html
@@ -374,7 +359,8 @@ install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 %_datadir/glvnd/egl_vendor.d/50_mesa.json
 
 %files -n libEGL-devel
-%_includedir/EGL
+%_includedir/EGL/eglextchromium.h
+%_includedir/EGL/eglmesaext.h
 %_libdir/libEGL_mesa.so
 %endif
 
@@ -474,6 +460,9 @@ install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 %endif
 
 %changelog
+* Thu Nov 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.3-alt1
+- 19.2.3
+
 * Mon Oct 28 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.2-alt1
 - 19.2.2
 
