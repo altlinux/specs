@@ -1,6 +1,6 @@
 
 Name: urbackup-server
-Version: 2.4.7
+Version: 2.4.11
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
@@ -9,7 +9,7 @@ Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Patch1: urbackup-server-fix-link-sqlite3.patch
 Patch3: urbackup-server-2.4.7-config.patch
-Patch4: urbackup-server-2.3.8-no-update.patch
+Patch4: urbackup-server-2.4.11-no-update.patch
 
 Requires: guestfs-tools
 
@@ -31,7 +31,7 @@ are stored to disks in a efficient way (deduplication)
 on either Windows or Linux servers.
 
 %prep
-%setup -n %name-%version.0
+%setup -n %name-%version
 %patch1 -p1
 #%patch3 -p1
 %patch4 -p1
@@ -97,6 +97,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %attr(0644,root,root) %_unitdir/%name.service
 
 %changelog
+* Thu Nov 07 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.11-alt1
+- 2.4.11
+
 * Sun Aug 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.7-alt1
 - update default config(patch3)
 - disable autoudate service(patch4)
