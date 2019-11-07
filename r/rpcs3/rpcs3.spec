@@ -1,17 +1,17 @@
-%define git_ver 9061
-%define git_commit 7475be99ab888ed38801e3a8e4565e81d9d8aa23
+%define git_ver 9086
+%define git_commit 24fdd24808853bdc018e379c6a3d5624cd99804c
 
-%define glslang_commit c11e3156af2297f89a23c8db3f5e2323733ee556
+%define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
 %define libusb_commit 7cfa00e9d723f10167b4d71bceebf2b4b2cbd70e
 %define yaml_cpp_commit eca9cfd64899525d0a61abb0553849676a0fe511
-%define xx_hash_commit 7cc9639699f64b750c0b82333dced9ea77e8436e
+%define xx_hash_version 0.6.5
 %define llvm_commit 9836c299733ee5ef14760cd5bdae27e8233d2393
-%define gsl_commit 1995e86d1ad70519465374fb4876c6ef7c9f8c61
-%define cereal_commit 42a45b6e15fcbd1a3d65b033f5d4d0b2ef6c023d
-%define faudio_commit f86adca2bdd87c62b5d0db89c9a4279d1c8adce9
+%define gsl_version 2.0.0
+%define cereal_version 1.2.0
+%define faudio_version 19.10
 
 Name: rpcs3
 Version: 0.0.7.%git_ver
@@ -27,17 +27,17 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 ExclusiveArch: x86_64
 
 Source0: https://github.com/RPCS3/%name/archive/%git_commit/%name-%git_commit.tar.gz
-Source1: https://github.com/KhronosGroup/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
+Source1: https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
 Source2: https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source3: https://github.com/zeux/pugixml/archive/%pugixml_commit/pugixml-%pugixml_commit.tar.gz
 Source4: https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source5: https://github.com/RPCS3/libusb/archive/%libusb_commit/libusb-%libusb_commit.tar.gz
 Source6: https://github.com/jbeder/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
-Source7: https://github.com/Cyan4973/xxHash/archive/%xx_hash_commit/xxHash-%xx_hash_commit.tar.gz
+Source7: https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
 Source8: https://github.com/RPCS3/llvm/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
-Source9: https://github.com/microsoft/GSL/archive/%gsl_commit/GSL-%gsl_commit.tar.gz
-Source10: https://github.com/USCiLab/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
-Source11: https://github.com/FNA-XNA/FAudio/archive/%faudio_commit/FAudio-%faudio_commit.tar.gz
+Source9: https://github.com/microsoft/GSL/archive/v%gsl_version/GSL-%gsl_version.tar.gz
+Source10: https://github.com/USCiLab/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
+Source11: https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
 
 BuildRequires: cmake
 BuildRequires: cvs
@@ -69,17 +69,17 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %prep
 %setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
-%__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
+%__mv -Tf ../glslang-%glslang_version Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
 %__mv -Tf ../libusb-%libusb_commit 3rdparty/libusb
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
-%__mv -Tf ../xxHash-%xx_hash_commit 3rdparty/xxHash
+%__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-%llvm_commit llvm
-%__mv -Tf ../GSL-%gsl_commit 3rdparty/GSL
-%__mv -Tf ../cereal-%cereal_commit 3rdparty/cereal
-%__mv -Tf ../FAudio-%faudio_commit 3rdparty/FAudio
+%__mv -Tf ../GSL-%gsl_version 3rdparty/GSL
+%__mv -Tf ../cereal-%cereal_version 3rdparty/cereal
+%__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -127,6 +127,10 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Fri Nov 08 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9086-alt1
+- Version 0.0.7.9086
+- Change commits to version on 3rdparty packages (if possible)
+
 * Sun Nov 03 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9061-alt1
 - Version 0.0.7.9061
 - Add FAudio in 3rdparty
