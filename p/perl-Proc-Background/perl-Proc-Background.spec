@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl-podlators
@@ -8,14 +9,14 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl-podlators
 %define upstream_version 1.10
 
 Name:		perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_8
+Version:    1.21
+Release:    alt1
 
 Summary:    Generic interface to Unix and Win32 background process management
 License:	GPL+ or Artistic
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://search.cpan.org/CPAN/authors/id/B/BZ/BZAJAC/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/N/NE/NERDVANA/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(App/Cache.pm)
 BuildRequires: perl(Class/Accessor/Chained.pm)
@@ -30,7 +31,7 @@ retrieve exit values, and see if background processes still exist.
 
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -50,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT/%{perl_vendor_archlib}
 %{_bindir}/*
 
 %changelog
+* Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.10-alt3_8
 - to Sisyphus as dependency
 
