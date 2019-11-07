@@ -5,13 +5,13 @@
 %define goffice_api_ver 0.10
 
 %def_without gda
-%def_with python
+%def_without python
 %def_with perl
 %def_enable introspection
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.45
+Version: %ver_major.46
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -30,17 +30,15 @@ Provides: %name-light = %version-%release
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
 %define goffice_ver 0.10.45
-%if_with python
 # Provided by python_loader.so
-Provides: python%__python_version(Gnumeric)
-%endif
+%{?_with_python:Provides: python%__python_version(Gnumeric)}
 
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
 Requires: %name-data = %version-%release
 
-BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-build-python
+BuildRequires(pre): rpm-build-gnome rpm-build-gir
 BuildRequires: bison flex help2man gtk-doc
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
 BuildRequires: libgsf-devel >= %gsf_ver
@@ -48,7 +46,9 @@ BuildRequires: libgtk+3-devel
 BuildRequires: intltool yelp-tools zlib-devel librarian
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
-%{?_with_python:BuildRequires: python-devel python-module-pygobject3-devel}
+%{?_with_python:
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-pygobject3-devel}
 %{?_with_gda:BuildRequires: libgda5-devel >= %gda_ver libgnomedb4-devel}
 %{?_enable_check:BuildRequires: xvfb-run}
 
@@ -118,11 +118,7 @@ GObject introspection devel data for the Gnumeric.
 %patch1
 
 subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
-
 subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
-# itstool > 2.0.2 crashes on cs help translations
-#rm -rf doc/cs
-#sed -i 's/cs / /' doc/Makefile.am
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -133,7 +129,8 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 	%{subst_with gda} \
 	%{subst_with python} \
 	%{subst_with perl} \
-	%{?_enable_introspection:--enable-introspection=yes}
+	%{?_enable_introspection:--enable-introspection=yes} \
+	%{?_with_python:PYTHON=%_bindir/python2}
 %make_build
 
 %install
@@ -154,7 +151,7 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %exclude %_libdir/%name/%version/plugins/*/*.la
 %exclude %_libdir/goffice/%goffice_api_ver/plugins/%name/%name.la
 # requires no more existing python(gsf)
-%exclude %_libdir/%name/%version/plugins/gnome-glossary
+%{?_with_python:%exclude %_libdir/%name/%version/plugins/gnome-glossary}
 
 %files data -f %name.lang
 %dir %_datadir/%name
@@ -184,6 +181,10 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Thu Nov 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.46-alt1
+- 1.12.46
+- disabled python2 support
+
 * Mon Jun 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.45-alt1
 - 1.12.45
 

@@ -4,12 +4,12 @@
 
 %def_with lasem
 %def_enable introspection
-%ifarch %ix86
+%ifarch %ix86 ppc64le
 %def_disable check
 %endif
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.45
+Version: %ver_major.46
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -140,6 +140,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Thu Nov 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.46-alt1
+- 0.10.46
+
 * Mon Jun 03 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.45-alt1
 - 0.10.45
 
