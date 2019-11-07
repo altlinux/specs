@@ -10,17 +10,16 @@
 Name: libtorrent-rasterbar
 Epoch: 3
 Version: 1.1.13
-Release: alt1
+Release: alt2
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
-Group: System/Libraries
 License: BSD
-Url: https://www.rasterbar.com/products/libtorrent/
+Group: System/Libraries
 
+Url: https://www.rasterbar.com/products/libtorrent/
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
-
-Patch1: %name-1.1.9-fedora-system-tommath.patch
+Patch: %name-1.1.9-fedora-system-tommath.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
@@ -139,7 +138,7 @@ python-3 bindings to libTorrent.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 mkdir -p build-aux
 touch build-aux/config.rpath
@@ -156,6 +155,11 @@ cp -r . ../build-python2
 pushd ../build-python2
 
 export PYTHON=%_bindir/python2
+
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 
 %autoreconf
 %configure \
@@ -223,6 +227,10 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 3:1.1.13-alt2
+- E2K: explicit -std=c++11
+- Minor spec cleanup
+
 * Thu Jul 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.1.13-alt1
 - Updated to upstream version 1.1.13.
 - Built bindings for python-3 (Closes: #31679).
