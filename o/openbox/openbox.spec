@@ -3,7 +3,7 @@
 
 Name: openbox
 Version: 3.6.1
-Release: alt4
+Release: alt4.1
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -48,6 +48,7 @@ BuildPreReq: gettext >= 0.15
 BuildRequires: imake libSM-devel libXcursor-devel libXinerama-devel libXrandr-devel libpango-devel libstartup-notification-devel libxml2-devel perl-podlators xorg-cf-files
 
 BuildRequires: perl-podlators
+BuildRequires(pre): rpm-build-python3
 
 %description
 Openbox is a standards compliant, fast, light-weight, extensible window manager.
@@ -121,7 +122,7 @@ Run GNOME with Openbox as the WM.
 Summary: XDG support for Openbox
 Group: Graphical desktop/Other
 BuildArch: noarch
-Requires: python-module-pyxdg
+%py3_requires xdg
 
 %description autostart
 XDG support for Openbox.
@@ -414,6 +415,9 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/themes/Syscrash
 
 %changelog
+* Thu Nov 07 2019 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt4.1
+- fix reguires
+
 * Wed Nov 06 2019 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt4
 - switch to python3
 - Rebuilt without gnome subpackage.
