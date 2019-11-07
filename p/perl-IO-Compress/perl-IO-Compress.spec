@@ -1,7 +1,8 @@
+BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.087
+Version: 2.089
 Release: alt1
 
 Summary: Read and write compressed data
@@ -16,7 +17,7 @@ BuildArch: noarch
 Provides: perl-IO-Compress-Base = %version perl-IO-Compress-Zlib = %version perl-IO-Compress-Bzip2 = %version perl-Compress-Zlib = %version
 Obsoletes: perl-IO-Compress-Base < %version perl-IO-Compress-Zlib < %version perl-IO-Compress-Bzip2 < %version perl-Compress-Zlib < %version
 
-BuildRequires: perl-Compress-Raw-Zlib >= %version
+BuildRequires: perl-Compress-Raw-Zlib >= %version perl(Pod/Man.pm)
 BuildRequires: perl-Compress-Raw-Bzip2 >= %version
 
 # Automatically added by buildreq on Wed Sep 26 2012
@@ -25,6 +26,15 @@ BuildRequires: perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Test-NoWarnin
 %description
 This distribution provides a Perl interface to allow reading and writing
 of compressed data created with the zlib and bzip2 libraries.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %EVR
+Conflicts: %name < 2.088
+
+%description scripts
+scripts for %name
 
 %prep
 %setup -q -n %{dist}-%{version}
@@ -38,12 +48,22 @@ export TEST_SKIP_VERSION_CHECK=1
 
 %files
 %doc Changes README examples
-%_bindir/zipdetails
 %perl_vendor_privlib/Compress
 %perl_vendor_privlib/File
 %perl_vendor_privlib/IO
 
+%files scripts
+#%_bindir/zipdetails
+#%_bindir/streamzip
+%_bindir/*
+%_man1dir/*
+
+
+
 %changelog
+* Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.089-alt1
+- automated CPAN update
+
 * Thu Aug 22 2019 Igor Vlasenko <viy@altlinux.ru> 2.087-alt1
 - automated CPAN update
 
