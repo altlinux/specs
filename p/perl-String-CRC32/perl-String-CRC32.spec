@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist String-CRC32
 Name: perl-%dist
-Version: 1.7
-Release: alt1.1
+Version: 1.8
+Release: alt1
 
 Summary: Cyclic redundency check generation
 License: Public Domain
@@ -28,13 +28,16 @@ and from files.
 %perl_vendor_install
 
 %files
-%doc README.md Changes LICENSE
+%doc README.md Changes
 %dir	%perl_vendor_archlib/String
 	%perl_vendor_archlib/String/CRC32.pm
 %doc	%perl_vendor_archlib/String/CRC32.pod
 	%perl_vendor_autolib/String
 
 %changelog
+* Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1.1
 - rebuild with new perl 5.28.1
 
