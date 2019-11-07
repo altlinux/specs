@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -53,6 +53,16 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Wed Nov 06 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.5-alt1
+- Remmina: fixed connect/open/import for RDP/VNC (ALT #36757)
+- FreeRDP:  disable fullscreen (auto), when toggled workarea or manually resolution
+- FS: if protocol is 'file', then default server is 'localhost'
+- 'kiosk' changes:
+ + Disable TRAY when activate
+ + Added online checking access
+- Updated .desktop file
+- Updated icons for CITRIX & VMWARE
+
 * Fri Jan 25 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.4-alt1
 - Added buttons 'Communication with developer' and 'Report a bug' into menu Help.
 - FreeRDP: added checkbox for glyph-cache (ALT #35796)
