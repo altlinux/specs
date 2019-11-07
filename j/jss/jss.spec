@@ -5,7 +5,7 @@
 
 Name: jss
 Version: 4.6.2
-Release: alt1
+Release: alt2
 
 Summary: Java Security Services (JSS)
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -123,6 +123,9 @@ cp -p *.txt %buildroot%_javadocdir/%name-%version
 %_javadocdir/%name-%version
 
 %changelog
+* Thu Nov 07 2019 Stanislav Levin <slev@altlinux.org> 4.6.2-alt2
+- Fixed NPE during FreeIPA installations (RHBZ: 1766451).
+
 * Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1
 - 4.6.1 -> 4.6.2 (closes: CVE-2019-14823).
 
