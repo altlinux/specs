@@ -1,17 +1,21 @@
 Name: qucs
 Version: 0.0.19
-Release: alt2
+Release: alt3
+
 Summary: Circuit simulator
 License: GPL
 Group: Education
-Url: http://qucs.sourceforge.net/
 
-Source0: https://sourceforge.net/projects/%name/files/%name/%version/%name-%version.tar.gz
+Url: http://qucs.sourceforge.net/
+# https://sourceforge.net/projects/%name/files/%name/%version/%name-%version.tar.gz
+# Vcs: https://github.com/Qucs/qucs/
+Source0: https://sourceforge.net/projects/%name/files/%name/%version/%name-%version.tar
 Source1: %name.desktop
-Source2: qucs-tango-icons.tar.bz2
-Source3: qucs-icons.tar.bz2
-Patch: qucs-0.0.17-norecode.patch
+Source2: qucs-tango-icons.tar
+Source3: qucs-icons.tar
+Patch0: qucs-0.0.17-norecode.patch
 #Patch1: %name-%version-alt-build.patch
+Patch2: qucs-0.0.19-alt-e2k.patch
 
 # WTF libqt4-devel
 BuildRequires: libqt4-devel
@@ -53,10 +57,12 @@ Development environment for Qucs, a circuit simulator.
 
 %prep
 %setup
-tar -xjf %SOURCE2 -C qucs
-##sed -i '\@<tr1/complex>@d' qucs-core/configure
+tar -xf %SOURCE2 -C qucs
 ##patch -p1
 #patch1 -p2
+%ifarch %e2k
+%patch2 -p2
+%endif
 
 %build
 ./bootstrap
@@ -65,18 +71,18 @@ tar -xjf %SOURCE2 -C qucs
 
 %install
 mkdir -p %buildroot%_defaultdocdir/%name-%version
-
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 mkdir -p %buildroot%_iconsdir
-tar -xjf %SOURCE3 -C %buildroot%_iconsdir
+tar -xf %SOURCE3 -C %buildroot%_iconsdir
 
 for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
     echo -n $l | sed 's,.*_\(.*\)\.qm,%%lang\(\1\) ,'
     echo $l | sed "s,%buildroot,,"
 done > %name.lang
 
+# TODO: disable rpath properly
 chrpath -d %buildroot%_bindir/qucsconv
 chrpath -d %buildroot%_bindir/qucsator
 
@@ -116,6 +122,11 @@ chrpath -d %buildroot%_bindir/qucsator
 %_includedir/qucs-core
 
 %changelog
+* Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 0.0.19-alt3
+- E2K: fixed build (see mcst#4487); patch suggested upstream
+- avoid tarball compression
+- minor spec cleanup
+
 * Tue Aug 07 2018 Vladislav Zavjalov <slazav@altlinux.org> 0.0.19-alt2
 - github/master snapshot 2018-08-07 (Closes: 35217)
 
