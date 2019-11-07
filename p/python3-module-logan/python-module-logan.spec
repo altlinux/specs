@@ -1,23 +1,20 @@
 %define  modulename logan
 
-Name:    python-module-%modulename
+Name:    python3-module-%modulename
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: Logan is a toolkit for building standalone Django applications
 License: Apache-2.0
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://github.com/dcramer/logan
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
+
 Source:  %modulename-%version.tar
+
 
 %description
 Logan is a toolkit for running standalone Django applications. It
@@ -28,17 +25,21 @@ ability to bootstrap the process.
 %setup -n %modulename-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/tests/%modulename/
+%python3_install
+rm -rf %buildroot%python3_sitelibdir/tests/%modulename/
 
 %files
 %doc README.rst
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
+
 
 %changelog
+* Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.2-alt2
+- python2 -> python3
+
 * Thu Mar 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
 - Initial build for Sisyphus
