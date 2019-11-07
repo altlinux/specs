@@ -1,8 +1,9 @@
 %define  modulename cheroot
+%def_without python2
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 6.5.8
+Version: 8.2.1
 Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
@@ -15,12 +16,15 @@ Patch:   alt-fix-requires.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+%if_with python2
 BuildRequires: rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools_scm
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools_scm
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools_scm
 %endif
 
 BuildArch: noarch
@@ -49,7 +53,9 @@ cp -a . ../python3
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%if_with python2
 %python_build
+%endif
 %if_with python3
 pushd ../python3
 %python3_build
@@ -58,16 +64,20 @@ popd
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%if_with python2
 %python_install
+%endif
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
 
+%if_with python2
 %files
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
+%endif
 
 %if_with python3
 %files -n python3-module-%modulename
@@ -76,6 +86,13 @@ popd
 %endif
 
 %changelog
+* Thu Nov 07 2019 Andrey Cherepanov <cas@altlinux.org> 8.2.1-alt1
+- New version.
+- Build without Python 2.x support.
+
+* Tue Oct 01 2019 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
+- New version.
+
 * Thu Sep 05 2019 Andrey Cherepanov <cas@altlinux.org> 6.5.8-alt1
 - New version.
 
