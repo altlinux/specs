@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.7.4
-Release: alt1
+Release: alt2
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -720,6 +720,9 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Fri Nov 08 2019 Stanislav Levin <slev@altlinux.org> 10.7.4-alt2
+- Fixed build against Pylint-2.4.2.
+
 * Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 10.7.4-alt1
 - 10.7.3 -> 10.7.4.
 
