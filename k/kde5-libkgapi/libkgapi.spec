@@ -11,8 +11,8 @@
 %define libkpimgapitasks libkpimgapitasks%sover
 
 Name: kde5-%rname
-Version: 19.08.2
-Release: alt2
+Version: 19.08.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -169,6 +169,9 @@ done
 %_K5lib/libKPimGAPITasks.so.*
 
 %changelog
+* Fri Nov 08 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.3-alt1
+- new version
+
 * Fri Oct 25 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.2-alt2
 - fix requires, build requires
 
