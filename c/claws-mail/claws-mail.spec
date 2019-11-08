@@ -9,6 +9,8 @@
 %def_disable 	networkmanager
 %endif
 
+%def_enable		manual
+
 # pligins
 %def_enable 	archive
 %def_disable	bsfilter
@@ -22,7 +24,8 @@
 %def_enable 	gdata
 %def_enable 	litehtmlviewer
 %ifnarch %e2k
-%def_enable 	python
+# It is python2, so disable it.
+%def_disable 	python
 %else
 %def_disable 	python
 %endif
@@ -32,7 +35,7 @@
 
 Name:   	claws-mail
 Version:	3.17.4
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -47,6 +50,7 @@ Patch:	%name-%version-%release.patch
 # Must be dropped with new release.
 Patch1: Fix-crash-in-litehtml_viewer-when-base-tag-has-no-hr.patch
 Patch2: fix-bug-4257-claws-mail-3.17.4-breaks-copy-pasting-f.patch
+Patch3: Fix-wrong-length-value-passed-to-fd_write.patch
 
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
@@ -56,12 +60,13 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq:	autoconf-common gettext-tools
 
 BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2-devel libgnutls-devel libgpgme-devel libldap-devel libstartup-notification-devel libgcrypt-devel zlib-devel
-# For experimental SNI support
+# For SNI support
 BuildRequires: libetpan-devel >= 1.9.1-alt3
 BuildRequires: libnettle-devel
 BuildRequires: libgtk+2-devel
 %{?_enable_svg:BuildRequires: librsvg-devel}
 %{?_enable_networkmanager:BuildRequires: libnm-devel}
+%{?_enable_manual:BuildRequires: docbook-utils lynx}
 
 # For plugin-archive:
 %if_enabled archive
@@ -119,8 +124,10 @@ BuildRequires: libytnef-devel
 BuildRequires: libical-devel
 
 # For tools
-BuildRequires:  python
-BuildRequires:	python-modules-encodings
+# Tools written on python2 are not packaged now.
+# Should be ported to python3.
+#BuildRequires: python
+#BuildRequires:	python-modules-encodings
 BuildPreReq:	perl-MIME-tools
 BuildPreReq:	perl-Text-Iconv
 BuildPreReq:	perl-XML-SimpleObject
@@ -587,7 +594,9 @@ you sent or received.
 Summary:	Additional tools for %name
 Group:		Networking/Mail
 Requires:	%name = %version-%release
-Requires:	python
+# Tools written on python2 are not packaged now.
+# Should be ported to python3.
+#Requires:	python
 
 BuildArch: noarch
 
@@ -610,6 +619,7 @@ echo 'echo "%version"' >./version
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %autoreconf
 
@@ -620,10 +630,9 @@ export LDFLAGS=-pie
 		--disable-static \
 		--disable-rpath \
 		--with-lib-prefix=%_usr \
-		--with-faqdir=%_datadir/%name \
-		--with-manualdir=%_datadir/%name \
+		--with-manualdir=%_defaultdocdir/%name \
 		--with-config-dir=.%name \
-		--disable-manual \
+		%{subst_enable manual} \
 		--disable-jpilot \
 		%{subst_enable appdata} \
 		%{subst_enable svg} \
@@ -684,7 +693,7 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog* COPYING INSTALL NEWS README* TODO* RELEASE_NOTES 
+%doc AUTHORS ChangeLog* COPYING INSTALL NEWS README* TODO* RELEASE_NOTES
 %_bindir/%name
 %_man1dir/%name.1.*
 %_desktopdir/*.desktop
@@ -696,52 +705,16 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %dir %_libdir/%name
 %dir %_claws_plugins_path
 %dir %_datadir/%name
+%if_enabled manual
+%_defaultdocdir/%name/
+%exclude %_defaultdocdir/%name/RELEASE_NOTES
+%endif
 
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
 
 %files plugins
-
-%files plugin-spamassassin
-%doc src/plugins/spamassassin/README* src/plugins/spamassassin/NOTICE
-%_claws_plugins_path/spamassassin.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-spamassassin.metainfo.xml
-%endif
-
-%files plugin-bogofilter
-%_claws_plugins_path/bogofilter.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-bogofilter.metainfo.xml
-%endif
-
-%files plugin-pgpcore
-%_claws_plugins_path/pgpcore.so
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpcore.metainfo.xml
-%endif
-
-%files plugin-pgpmime
-%_claws_plugins_path/pgpmime.so
-%_claws_plugins_path/pgpmime.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpmime.metainfo.xml
-%endif
-
-%files plugin-pgpinline
-%_claws_plugins_path/pgpinline.so
-%_claws_plugins_path/pgpinline.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-pgpinline.metainfo.xml
-%endif
-
-%files plugin-smime
-%_claws_plugins_path/smime.so
-%_claws_plugins_path/smime.deps
-%if_enabled appdata
-%_datadir/appdata/claws-mail-smime.metainfo.xml
-%endif
 
 %files plugin-acpinotifier
 %_claws_plugins_path/acpi_notifier.so
@@ -773,6 +746,12 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %_claws_plugins_path/att_remover.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-att_remover.metainfo.xml
+%endif
+
+%files plugin-bogofilter
+%_claws_plugins_path/bogofilter.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-bogofilter.metainfo.xml
 %endif
 
 %if_enabled bsfilter
@@ -868,6 +847,26 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %_datadir/appdata/claws-mail-perl.metainfo.xml
 %endif
 
+%files plugin-pgpcore
+%_claws_plugins_path/pgpcore.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpcore.metainfo.xml
+%endif
+
+%files plugin-pgpinline
+%_claws_plugins_path/pgpinline.so
+%_claws_plugins_path/pgpinline.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpinline.metainfo.xml
+%endif
+
+%files plugin-pgpmime
+%_claws_plugins_path/pgpmime.so
+%_claws_plugins_path/pgpmime.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-pgpmime.metainfo.xml
+%endif
+
 %if_enabled python
 %files plugin-python
 %_claws_plugins_path/python.so
@@ -880,6 +879,20 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %_claws_plugins_path/rssyl.so
 %if_enabled appdata
 %_datadir/appdata/claws-mail-rssyl.metainfo.xml
+%endif
+
+%files plugin-smime
+%_claws_plugins_path/smime.so
+%_claws_plugins_path/smime.deps
+%if_enabled appdata
+%_datadir/appdata/claws-mail-smime.metainfo.xml
+%endif
+
+%files plugin-spamassassin
+%doc src/plugins/spamassassin/README* src/plugins/spamassassin/NOTICE
+%_claws_plugins_path/spamassassin.so
+%if_enabled appdata
+%_datadir/appdata/claws-mail-spamassassin.metainfo.xml
 %endif
 
 %files plugin-spamreport
@@ -908,11 +921,23 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/%name/tools/update-po
 %exclude %_datadir/%name/tools/check-appstream.sh
 %exclude %_datadir/%name/tools/ca-certificates.crt
+# These scripts for python2, so don't package them.
+%exclude %_datadir/%name/tools/*.py
 
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Fri Nov 08 2019 Mikhail Efremov <sem@altlinux.org> 3.17.4-alt3
+- Patch from upstream:
+    Fix wrong length value passed to fd_write().
+- Fix comment.
+- Build and package manual.
+- cosmetic: Arrange plugin %%files in alphabet order.
+- Drop non-existent configure option.
+- tools: Don't package python2 scripts.
+- Disable python plugin.
+
 * Fri Oct 18 2019 Mikhail Efremov <sem@altlinux.org> 3.17.4-alt2
 - Patches from upstream:
   + Fix crash in litehtml_viewer when <base> tag has no href.
