@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 13.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
-BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
+BuildRequires: libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libGConf-devel
@@ -333,6 +333,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Fri Nov 08 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt2
+- rebuilt to avoid lirc dependency
+
 * Mon Sep 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt1
 - 13.0 released
 
