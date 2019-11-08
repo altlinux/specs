@@ -1,9 +1,10 @@
 %define _name elementaryicons
-%define ver_major 5.0
+%define ver_major 5.1
+%define rdn_name io.elementary.icons
 %def_disable palettes
 
 Name: elementary-icon-theme
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
@@ -42,9 +43,13 @@ theme.
 %_datadir/gimp/2.0/palettes/elementary.gpl
 %_datadir/inkscape/palettes/elementary.gpl
 %endif
-%doc AUTHORS README*
+%_datadir/metainfo/%rdn_name.appdata.xml
+%doc README*
 
 %changelog
+* Fri Nov 08 2019 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Mon Jul 22 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.4-alt1
 - 5.0.4
 
