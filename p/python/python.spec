@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.17
-Release: alt1
+Release: alt2
 
 %define package_name		%real_name
 %define weight			1001
@@ -91,7 +91,7 @@ Patch104: 00104-lib64-fix-for-test_install.patch
 
 # this package python = %version-%release requires all standard python modules
 # package python = %require_ver is provided by python-strict and python-relaxed
-Requires: %name-base = %version-%release
+Requires: python2-base
 Requires: %name-modules %name-modules-encodings
 Requires: %name-modules-curses %name-modules-xml %name-modules-compiler
 Requires: %name-modules-email %name-modules-hotshot %name-modules-bsddb
@@ -181,13 +181,6 @@ This is a python with relaxed conflicts: using with python24 are allowed.
 Summary: Base python modules and executables
 Group: Development/Python
 #BuildArch: noarch
-# {{{ remove me in the next release
-Provides: /usr/bin/python
-Provides: %python_libdir %python_dynlibdir %python_sitelibdir %python_tooldir
-%if "lib" != "%_lib"
-Provides: %prefix/lib/%python_name %prefix/lib/%python_name/site-packages %prefix/lib/%python_name/tools
-%endif
-# }}}
 Requires: python2-base
 
 %description base
@@ -203,11 +196,10 @@ This package contains symlink to default python interpreter.
 %package -n python2-base
 Summary: Base python modules and executables
 Group: Development/Python
-# restore me in the next release
-#Provides: %python_libdir %python_dynlibdir %python_sitelibdir %python_tooldir
-#if "lib" != "%_lib"
-#Provides: %prefix/lib/%python_name %prefix/lib/%python_name/site-packages %prefix/lib/%python_name/tools
-#endif
+Provides: %python_libdir %python_dynlibdir %python_sitelibdir %python_tooldir
+%if "lib" != "%_lib"
+Provides: %prefix/lib/%python_name %prefix/lib/%python_name/site-packages %prefix/lib/%python_name/tools
+%endif
 Provides: %python_name(os.path)
 Provides: %python_name(pwd)
 Provides: python(abi) = %suffix_ver
@@ -226,7 +218,7 @@ This package contains base python modules and executables.
 %package modules
 Summary: Standard python modules
 Group: Development/Python
-Requires: %name-base = %version-%release
+Requires: python2-base
 Obsoletes: %python_name-modules <= %noversion_from
 # We have split nis from python-modules. Therefore, for now,
 # we require it in order not to break the past promises. (rpm-build-python
@@ -289,7 +281,7 @@ names, e.g. 'utf-8' is implemented by the module 'utf_8.py'.
 #%package obsolete
 #Summary: Obsoleted python modules
 #Group: Development/Python
-#Requires: %name-base = %version-%release
+#Requires: python2-base
 #Obsoletes: %python_name-obsolete  <= %noversion_from
 #
 #%description obsolete
@@ -305,7 +297,7 @@ names, e.g. 'utf-8' is implemented by the module 'utf_8.py'.
 %package modules-curses
 Summary: Python "curses" module
 Group: Development/Python
-Requires: %name-base = %version-%release
+Requires: python2-base
 Obsoletes: %python_name-modules-curses
 
 %description modules-curses
@@ -522,7 +514,7 @@ This package contains Python3 shared library
 %package test
 Summary: Test suite for standard python modules
 Group: Development/Python
-Requires: %name-base = %version-%release
+Requires: python2-base
 AutoReqProv: yes, nopython
 Obsoletes: %python_name-test <= %noversion_from
 
@@ -712,6 +704,8 @@ be linked with shared library.
 
 %prep
 %setup -q -n Python-%version
+# fix shebangs
+find . -type f -exec sed -Ei '1 s@(^#!.*/usr/bin/).*python$@\1%python_name@' '{}' '+'
 %undefine _python_compile_skip_x
 #mkdir info
 #tar -C info -xf #SOURCE1
@@ -761,7 +755,7 @@ find -type f \( -name \*~ -o -name \*.orig \) -print0 |
 
 find -type f -print0 |
     xargs -r0 grep -FZl -- /usr/local/bin/python |
-    xargs -r0 sed -i 's@/usr/local/bin/python@/usr/bin/python@' --
+    xargs -r0 sed -i 's@/usr/local/bin/python@/usr/bin/%python_name@' --
 
 xz -9k Misc/{HISTORY,NEWS,cheatsheet}
 
@@ -973,7 +967,7 @@ install -m 644 %SOURCE11 %buildroot%_sysconfdir/skel/.pythonrc.py
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/python2-base-files.req.list
-# %name-base dirlist for %_rpmlibdir/files.req
+# python2-base dirlist for %_rpmlibdir/files.req
 %python_libdir	python2-base
 %python_dynlibdir	python2-base
 %python_sitelibdir	python2-base
@@ -1009,14 +1003,6 @@ ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
 
 %files base
 %_bindir/%real_name
-# move to python2-base in the next release
-%dir %python_libdir
-%dir %python_dynlibdir
-%dir %python_sitelibdir
-%dir %python_tooldir
-%if "lib" != "%_lib"
-%prefix/lib/%python_name
-%endif
 # hack to make arepo (remote it in the future)
 %ghost %_libdir/libpython.so
 
@@ -1027,14 +1013,22 @@ ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
 %_bindir/%{real_name}2
 %_bindir/pydoc
 %_bindir/pydoc%suffix_ver
+%dir %python_libdir
+%dir %python_dynlibdir
+%dir %python_sitelibdir
+%dir %python_tooldir
 %doc LICENSE
 %doc Misc/{HISTORY,NEWS,cheatsheet}.xz
+%if "lib" != "%_lib"
+%prefix/lib/%python_name
+%endif
 %_rpmlibdir/python2-base-files.req.list
 %python_libdir/pydoc_data
 %python_libdir/importlib
 %python_libdir/config
 %python_sitelibdir/README
 %_includedir/%python_name/pyconfig.h
+%dir %_includedir/%python_name
 
 %files -n libpython
 %_libdir/lib%python_name.so.*
@@ -1207,6 +1201,11 @@ ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
 %endif
 
 %changelog
+* Fri Nov 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt2
+- Packed files listed in python2-base-files.req.list to python2-base.
+- Made no packages require python-base.
+- Made python2-base own %%_includedir/%%python_name.
+
 * Thu Oct 31 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt1
 - Updated to 2.7.17.
 - Separated python2-base subpackage.
