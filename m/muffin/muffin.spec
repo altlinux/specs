@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 4.2.2
-Release: alt3
+Release: alt4
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -197,6 +197,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt4
+- fix build with new Mesa
+
 * Tue Oct 1 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt3
 - fix build with new gobject-introspection
 
