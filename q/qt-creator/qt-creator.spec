@@ -8,7 +8,7 @@
 
 Name:    qt-creator
 Version: 4.9.2
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform IDE for Qt
 License: GPLv3 with exceptions
@@ -56,7 +56,8 @@ BuildRequires: lld
 Requires: qt5-quickcontrols
 # Add Qt5 build environment to build Qt project
 Requires: qt5-base-devel
-Requires: gcc-c++
+Requires: qt5-translations
+Requires: qt5-tools
 
 %ifarch %e2k
 # error: cpio archive too big - 4446M
@@ -149,6 +150,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Nov 08 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt4
+- Add to requirements qt5-translations and qt5-tools.
+
 * Fri Nov 01 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt3
 - Add Qt5 build environment to build Qt project (ALT #37403).
 
