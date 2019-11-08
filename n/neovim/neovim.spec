@@ -1,6 +1,6 @@
 Name: neovim
-Version: 0.4.2
-Release: alt2
+Version: 0.4.3
+Release: alt1
 
 Summary: heavily refactored vim fork
 
@@ -91,6 +91,9 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.org> 0.4.3-alt1
+- New version
+
 * Fri Sep 20 2019 Vladimir Didenko <cow@altlinux.org> 0.4.2-alt2
 - Don't build on aarch64
 

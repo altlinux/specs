@@ -1,6 +1,6 @@
 Name: neovim-qt
-Version: 0.2.14
-Release: alt2
+Version: 0.2.15
+Release: alt1
 
 Summary: Neovim client library and GUI, in Qt5.
 
@@ -44,6 +44,9 @@ Neovim client library and GUI, in Qt5.
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.org> 0.2.15-alt1
+- New version.
+
 * Fri Sep 20 2019 Vladimir Didenko <cow@altlinux.org> 0.2.14-alt2
 - Don't build on aarch64 platform(because we don't build neovim on it
 
