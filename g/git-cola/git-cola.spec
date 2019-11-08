@@ -1,6 +1,6 @@
 Name: git-cola
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: A highly caffeinated git gui
 License: GPLv2+
@@ -12,20 +12,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Jun 22 2009
-BuildRequires: git-core python-module-PyQt4 python-module-PyXML python-modules-email python-modules-encodings
-BuildRequires: xmlto python-module-sphinx asciidoc mercurial
-BuildRequires: rpm-macros-sphinx
-BuildRequires: python-module-sphinx python-module-objects.inv
-
-Requires: python-module-pyinotify
-
-# python3 building adds qt4 instead qt5 and removes mercurial support
-#BuildRequires: git-core python3-module-PyQt5 python3-base
-#BuildRequires: python3-module-sphinx-sphinx-build-symlink rpm-macros-sphinx3
-#Requires: python3-module-pyinotify
+# Automatically added by buildreq on Fri Nov 08 2019 (-bi)
+# optimized out: python-base python-modules python2-base python3 python3-base rpm-build-python3 sh4 tzdata
+BuildRequires: rpm-macros-sphinx3 python3-module-sphinx python3-dev rpm-build-gir tk
+BuildRequires: xmlto asciidoc mercurial rpm-macros-sphinx3
 # hasher tests:
-#Requires: python3-module-pyinotify python3-module-PySide libqt5-core
+Requires: python3-module-pyinotify python3-module-PyQt5
 
 %description
 A sweet, carbonated git gui known for its sugary flavour
@@ -33,15 +25,19 @@ and caffeine-inspired features.
 
 %prep
 %setup
-%prepare_sphinx share/doc/%name
+
+sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
+	$(find ./ -name '*.py')
+
+%prepare_sphinx3 share/doc/%name
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
-%make DESTDIR=%buildroot prefix=%prefix install-doc
-%make DESTDIR=%buildroot prefix=%prefix install-html
+%python3_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
+#make DESTDIR=%buildroot prefix=%prefix install-doc
+#make DESTDIR=%buildroot prefix=%prefix install-html
 %find_lang %name
 
 %files -f %name.lang
@@ -52,10 +48,13 @@ and caffeine-inspired features.
 %_datadir/appdata/git-cola.appdata.xml
 %_datadir/appdata/git-dag.appdata.xml
 %_docdir/git-cola
-%_man1dir/*
-%python_sitelibdir/*
+#_man1dir/*
+%python3_sitelibdir/*
 
 %changelog
+* Fri Nov 08 2019 Leontiy Volodin <lvol@altlinux.org> 3.5-alt2
+- Switched to python3.
+
 * Tue Sep 24 2019 Leontiy Volodin <lvol@altlinux.org> 3.5-alt1
 - 3.5
 
