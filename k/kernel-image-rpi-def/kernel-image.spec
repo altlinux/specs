@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rpi-def
-Release: alt0.5
+Release: alt0.6
 epoch:1 
 %define kernel_base_version	4.19
 %define kernel_sublevel .71
@@ -290,6 +290,9 @@ find %buildroot -name '*.ko' | xargs gzip
 mkdir -p %buildroot/lib/devicetree/$KernelVer
 find arch/%arch_dir/boot/dts -type f -name \*.dtb | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer
 
+mkdir -p %buildroot/lib/devicetree/$KernelVer/overlays
+find -L arch/%arch_dir/boot/dts/overlays -type f -name \*.dtbo | xargs -iz install -pm0644 z %buildroot/lib/devicetree/$KernelVer/overlays
+
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
@@ -481,6 +484,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging
 
 %changelog
+* Fri Nov 08 2019 Dmitry Terekhin <jqt4@altlinux.org> 1:4.19.71-alt0.6
+- added dtb file from rpi4 fiwmware
+- packing dtbo files in package
+
 * Wed Oct 23 2019 Dmitry Terekhin <jqt4@altlinux.org> 1:4.19.71-alt0.5
 - CONFIG_RFKILL=m
 - CONFIG_INPUT_EVBUG, CONFIG_IOMMU_DEBUGFS is off
