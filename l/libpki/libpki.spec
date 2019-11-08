@@ -1,6 +1,6 @@
 Name: libpki
 Version: 0.8.9
-Release: alt3.git20180603
+Release: alt4.git20180603
 
 Summary: Library for PKI enabled application development.
 License: %asl
@@ -18,6 +18,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libldap-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
+BuildRequires: liblzma-devel zlib-devel
 
 %description
 The LibPKI Project is aimed to provide an easy-to-use PKI library for PKI
@@ -88,6 +89,9 @@ rm -fr %buildroot%_includedir/%name/drivers/kmf
 %_libdir/*.a
 
 %changelog
+* Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt4.git20180603
+- Fix build deps
+
 * Wed Aug 29 2018 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt3.git20180603
 - Specify build arches (aarch64 is not supported)
 
