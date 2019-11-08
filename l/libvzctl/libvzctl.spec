@@ -2,7 +2,7 @@
 Name: libvzctl
 Summary: OpenVZ Containers API library
 Version: 7.0.545
-Release: alt3
+Release: alt4
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -13,11 +13,11 @@ Patch: %name-%version.patch
 
 ExclusiveArch: x86_64
 
-Requires: libvzevent >= 5.0.0
+Requires: libvzevent >= 7.0.0
 Requires: libploop >= 7.0.92
 Requires: cgroup
 Requires: crtools >= 2.8.0.15
-Requires: libvcmmd = 7.0.22
+Requires: libvcmmd >= 7.0.22
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: libvzevent-devel >= 5.0.0
 BuildRequires: libploop-devel >= 7.0.92
@@ -67,6 +67,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Fri Nov 08 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.545-alt4
+- fix broken Requires
+
 * Wed Nov 06 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.545-alt3
 - revert 1d53de2b265fe21c7df7bc to lower diff with upstream
 
