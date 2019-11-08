@@ -1,12 +1,13 @@
 
 Name: libvcmmd
-Version: 7.0.22
+Version: 7.0.23
 Release: alt1
 Summary: Library for accessing vcmmd
 Group: System/Libraries
 License: LGPLv2.1
 Source: %name-%version.tar
-#Patch: %name-%version.patch
+Patch: %name-%version.patch
+# git-vsc: https://src.openvz.org/scm/ovz/libvcmmd.git
 BuildRequires: libdbus-devel
 
 %description
@@ -25,7 +26,7 @@ that uses libvcmmd.
 
 %prep
 %setup -q
-#patch -p1
+patch -p1
 
 %build
 %autoreconf
@@ -45,5 +46,11 @@ that uses libvcmmd.
 %_includedir/libvcmmd/*.h
 
 %changelog
+* Fri Nov 08 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.23-alt1
+- 7.0.23
+
+* Mon Sep 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.22-alt2
+- reworked gear repo style
+
 * Thu Feb 08 2018 Alexey Shabalin <shaba@altlinux.ru> 7.0.22-alt1
 - Initial build
