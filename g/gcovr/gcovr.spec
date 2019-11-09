@@ -1,5 +1,5 @@
 Name: gcovr
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
@@ -38,6 +38,9 @@ Python.
 %doc README.rst PKG-INFO
 
 %changelog
+* Sat Nov 09 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+
 * Wed Jul 04 2018 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt1
 - 4.1
 
