@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        77.0.3865.120
+Version:        78.0.3904.97
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -76,10 +76,12 @@ Patch018: 0018-ALT-openh264-always-pic-on-x86.patch
 Patch019: 0019-ALT-allow-to-override-clang-through-env-variables.patch
 Patch020: 0020-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch021: 0021-ALT-Add-missing-header-on-aarch64.patch
-Patch022: 0022-IWYU-include-memory-in-one_euro_filter.h-as-it-uses-.patch
-Patch023: 0023-WTF-Make-LinkedHashSet-understand-values-for-which-m.patch
-Patch024: 0024-Fix-build-failure-due-to-missing-include-for-std-num.patch
-Patch025: 0025-GENTOO-Clang-allows-detection-of-these-builtins.patch
+Patch022: 0022-GENTOO-Clang-allows-detection-of-these-builtins.patch
+Patch023: 0023-FEDORA-gcc-DohUpgradeEntry-nonconst.patch
+Patch024: 0024-FEDORA-gcc-size_t-fix.patch
+Patch025: 0025-FEDORA-vtable-symbol-undefined.patch
+Patch026: 0026-FEDORA-remove-noexcept.patch
+Patch027: 0027-Add-missing-include-for-unique_ptr.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -228,6 +230,8 @@ tar -xf %SOURCE1
 %patch023 -p1
 %patch024 -p1
 %patch025 -p1
+%patch026 -p1
+%patch027 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -501,6 +505,37 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Sat Nov 09 2019 Alexey Gladkov <legion@altlinux.ru> 78.0.3904.97-alt1
+- New version (78.0.3904.97).
+- Security fixes:
+  - CVE-2019-13720: Use-after-free in audio.
+  - CVE-2019-13721: Use-after-free in PDFium.
+
+* Thu Oct 24 2019 Alexey Gladkov <legion@altlinux.ru> 78.0.3904.70-alt1
+- New version (78.0.3904.70).
+- Security fixes:
+  - CVE-2019-13699: Use-after-free in media.
+  - CVE-2019-13700: Buffer overrun in Blink.
+  - CVE-2019-13701: URL spoof in navigation.
+  - CVE-2019-13702: Privilege elevation in Installer.
+  - CVE-2019-13703: URL bar spoofing.
+  - CVE-2019-13704: CSP bypass.
+  - CVE-2019-13705: Extension permission bypass.
+  - CVE-2019-13706: Out-of-bounds read in PDFium.
+  - CVE-2019-13707: File storage disclosure.
+  - CVE-2019-13708: HTTP authentication spoof.
+  - CVE-2019-13709: File download protection bypass.
+  - CVE-2019-13710: File download protection bypass.
+  - CVE-2019-13711: Cross-context information leak.
+  - CVE-2019-13713: Cross-origin data leak.
+  - CVE-2019-13714: CSS injection.
+  - CVE-2019-13715: Address bar spoofing.
+  - CVE-2019-13716: Service worker state error.
+  - CVE-2019-13717: Notification obscured.
+  - CVE-2019-13718: IDN spoof.
+  - CVE-2019-13719: Notification obscured.
+  - CVE-2019-15903: Buffer overflow in expat.
+
 * Mon Oct 21 2019 Alexey Gladkov <legion@altlinux.ru> 77.0.3865.120-alt1
 - New version (77.0.3865.120).
 - Security fixes:
