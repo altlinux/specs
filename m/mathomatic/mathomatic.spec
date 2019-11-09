@@ -1,18 +1,16 @@
 Name: mathomatic
 Version: 16.0.5
-Release: alt3
+Release: alt4
 
 Summary: Small, portable symbolic math program
 License: LGPL
 Group: Sciences/Mathematics
 Url: http://www.mathomatic.org/
 
-Source: %name-%version.tar.bz2
-Patch: %name-16.0.1-m4.patch
+Source: %name-%version.tar.gz
+Patch: %name-%version-alt.patch
 
 BuildRequires: libncurses-devel libreadline-devel
-BuildRequires: python-tools-2to3
-
 
 %description
 Mathomatic is a small, portable symbolic math program that can automatically
@@ -23,18 +21,6 @@ Gesslein II and has been under development since 1986.
 %prep
 %setup
 %patch -p1
-
-# Hack out 15.6.3 install -Cv
-sed -i 's/-Cv//' makefile
-sed -i 's/-Cv//' primes/makefile
-
-# py2 -> py3
-find -type f \( -name 'matho-mult' -o -name 'matho-sum' -o -name 'primorial' \
-             -o -name 'factorial' \) -exec 2to3 -w -n '{}' +
-
-sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
-    $(find ./ -type f \( -name 'matho-mult' -o -name 'matho-sum' \
-                      -o -name 'primorial' -o -name 'factorial' \))
 
 %build
 %make_build READLINE=1 mathdocdir=%_defaultdocdir/%name-%version
@@ -51,7 +37,7 @@ sed -i 's@%buildroot@@' %buildroot/%_bindir/matho
 make test
 
 %files
-%doc *.txt doc tests m4
+%doc *.txt doc tests m4 examples
 %_man1dir/*
 %_bindir/*
 %_datadir/pixmaps/mathomatic.*
@@ -61,6 +47,9 @@ make test
 
 
 %changelog
+* Sat Nov 09 2019 Fr. Br. George <george@altlinux.ru> 16.0.5-alt4
+- Rewrite some python3 scripts, drop 2to3
+
 * Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 16.0.5-alt3
 - python2 -> python3
 
