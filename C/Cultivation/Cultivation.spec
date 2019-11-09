@@ -1,13 +1,15 @@
 Name: Cultivation
 Version: 8
-Release: alt4
+Release: alt5
+
 Summary: Cultivation is a game about the interactions within a gardening community
 License: GPL
 Group: Games/Arcade
+
 Url: http://cultivation.sourceforge.net/
+Source: Cultivation_8_UnixSource.tar
+Patch: Cultivation-8-alt-Makefile.patch
 Packager: Fr. Br. George <george@altlinux.ru>
-Source0: Cultivation_8_UnixSource.tar.gz
-Patch0: Cultivation-8-alt-Makefile.patch
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: libGL-devel libGLU-devel libX11-devel libstdc++-devel
@@ -33,12 +35,16 @@ object has a uniquely 'grown' appearance. Every time you play,
 Cultivation generates fresh visuals, music, and behaviors.
 
 %prep
-%setup -q -n %{name}_%{version}_UnixSource
-%patch0 -p2
+%setup -n %{name}_%{version}_UnixSource
+%patch -p2
+%ifarch %e2k
+sed -i 's/-O9/-O%_optlevel/g' game2/Makefile.common
+%endif
 
 %build
 sed -i -e "s|/usr/X11R6/lib|%_lib|g" game2/Makefile.GnuLinux
 export CFLAGS="$RPM_OPT_FLAGS -fPIC -DPIC"
+# make: *** No rule to make target 'lib/', needed by 'lib/libportaudio.a'. Stop.
 pushd minorGems/sound/portaudio
 	chmod u+x ./configure
 	%configure
@@ -54,7 +60,7 @@ cat \
 	../minorGems/build/Makefile.minorGems_targets > gameSource/Makefile
 
 pushd gameSource
-	%make
+	%make_build
 popd
 
 popd
@@ -62,18 +68,18 @@ popd
 %install
 install -dm 755 %buildroot%_bindir
 install -dm 755 %buildroot%_gamesbindir
-install -m 755 game2/gameSource/%name \
+install -pm 755 game2/gameSource/%name \
 	%buildroot%_gamesbindir/%name.bin
 
 install -dm 755 %buildroot%_datadir/%name
-install -m 644 game2/gameSource/font.tga \
+install -pm 644 game2/gameSource/font.tga \
 	%buildroot%_datadir/%name
-install -m 644 game2/gameSource/features.txt \
+install -pm 644 game2/gameSource/features.txt \
 	%buildroot%_datadir/%name
-install -m 644 game2/gameSource/language.txt \
+install -pm 644 game2/gameSource/language.txt \
 	%buildroot%_datadir/%name
 install -dm 755 %buildroot%_datadir/%name/languages
-install -m 644 game2/gameSource/languages/*.txt \
+install -pm 644 game2/gameSource/languages/*.txt \
 	%buildroot%_datadir/%name/languages
 
 # startscript
@@ -90,12 +96,12 @@ fi
 cd \$HOME/.%name
 %_gamesbindir/%name.bin
 EOF
-install -m 755 %name.sh \
+install -pm 755 %name.sh \
 	%buildroot%_bindir/%name
 
 # icon
 install -dm 755 %buildroot%_datadir/pixmaps
-install -m 644 game2/build/win32/iconSource.png \
+install -pm 644 game2/build/win32/iconSource.png \
 	%buildroot%_datadir/pixmaps/%name.png
 
 install -dm 755 %buildroot/%_datadir/applications
@@ -122,6 +128,12 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %_datadir/pixmaps/*.png
 
 %changelog
+* Sat Nov 09 2019 Michael Shigorin <mike@altlinux.org> 8-alt5
+- E2K: fix superfluous optimization level
+- avoid tarball compression
+- partially enable parallel build
+- more reproducible installed file timestamps
+
 * Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8-alt4
 - NMU: rebuilt with libGLUT.
 
