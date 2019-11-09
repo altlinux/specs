@@ -1,6 +1,6 @@
 Name: iotop
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Top like utility for I/O
 License: GPLv2
@@ -9,10 +9,21 @@ Group: Monitoring
 Url: http://guichaz.free.fr/iotop/
 Source: http://guichaz.free.fr/iotop/files/iotop-%version.tar.bz2
 
+# rhbz#1035503
+Patch0: iotop-0.6-noendcurses.patch
+Patch1: iotop-0.6-python3.patch
+
+# Fix build error with Python 3 caused by itervalues() in setup.py
+# http://repo.or.cz/iotop.git/commit/99c8d7cedce81f17b851954d94bfa73787300599
+Patch2:	iotop-python3build.patch
+
+# sent upstream, iotop <= 0.6, rhbz#1285088
+Patch3: iotop-0.3.2-batchprintutf8.patch
+
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Mar 29 2011
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 
 %description
 iotop is a Python program with a top like UI used to show of behalf of which
@@ -20,19 +31,26 @@ process is the I/O going on.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_sbindir/iotop
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_man8dir/*
 
 %changelog
+* Sun Nov 10 2019 Anton Midyukov <antohami@altlinux.org> 0.6-alt2
+- rebuild with python3
+
 * Fri Feb 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
 - 0.6
 
