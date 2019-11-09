@@ -1,5 +1,5 @@
-%define git_ver 9086
-%define git_commit 24fdd24808853bdc018e379c6a3d5624cd99804c
+%define git_ver 9095
+%define git_commit 81c61e230f3f96f4427d87833b033c949af3aac5
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -127,6 +127,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Nov 09 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9095-alt1
+- Version 0.0.7.9095
+
 * Fri Nov 08 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9086-alt1
 - Version 0.0.7.9086
 - Change commits to version on 3rdparty packages (if possible)
