@@ -1,6 +1,7 @@
 %define oname roundcubemail
+%define rel -rc2
 Name: roundcube
-Version: 1.3.10
+Version: 1.4
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -9,7 +10,7 @@ License: GPL2
 Group: Networking/Mail
 Url: http://roundcube.net/
 
-# Source-url: https://github.com/roundcube/roundcubemail/releases/download/%version/roundcubemail-%{version}-complete.tar.gz
+# Source-url: https://github.com/roundcube/roundcubemail/releases/download/%version%rel/roundcubemail-%version%rel-complete.tar.gz
 Source: %name-%version.tar
 Source1: %name.apache.conf
 Source2: composer.json-dist
@@ -74,7 +75,7 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch0 -p2
+#patch0 -p2
 #sed -i 's,php_,php5_,' .htaccess
 
 # disable Reply button
@@ -149,6 +150,10 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sat Nov 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- build 1.4-RC2
+- Classic skin will no longer be maintained (use Larry or Elastic themes)
+
 * Tue Oct 01 2019 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt1
 - new version 1.3.10 (with rpmrb script)
 
