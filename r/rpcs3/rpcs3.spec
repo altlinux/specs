@@ -1,5 +1,5 @@
-%define git_ver 9095
-%define git_commit 81c61e230f3f96f4427d87833b033c949af3aac5
+%define git_ver 9122
+%define git_commit 8234bdb8f000e1dc2c11523ba596007dabe3f78a
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -9,9 +9,9 @@
 %define yaml_cpp_commit eca9cfd64899525d0a61abb0553849676a0fe511
 %define xx_hash_version 0.6.5
 %define llvm_commit 9836c299733ee5ef14760cd5bdae27e8233d2393
-%define gsl_version 2.0.0
 %define cereal_version 1.2.0
 %define faudio_version 19.10
+%define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 
 Name: rpcs3
 Version: 0.0.7.%git_ver
@@ -35,9 +35,9 @@ Source5: https://github.com/RPCS3/libusb/archive/%libusb_commit/libusb-%libusb_c
 Source6: https://github.com/jbeder/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source7: https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
 Source8: https://github.com/RPCS3/llvm/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
-Source9: https://github.com/microsoft/GSL/archive/v%gsl_version/GSL-%gsl_version.tar.gz
-Source10: https://github.com/USCiLab/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
-Source11: https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
+Source9: https://github.com/USCiLab/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
+Source10: https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
+Source11: https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
 
 BuildRequires: cmake
 BuildRequires: cvs
@@ -77,9 +77,9 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
 %__mv -Tf ../llvm-%llvm_commit llvm
-%__mv -Tf ../GSL-%gsl_version 3rdparty/GSL
 %__mv -Tf ../cereal-%cereal_version 3rdparty/cereal
 %__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
+%__mv -Tf ../span-%span_commit 3rdparty/span
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -127,6 +127,11 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Nov 11 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9122-alt1
+- Version 0.0.7.9122
+- Remove GSL package
+- Add span package in 3rdparty
+
 * Sat Nov 09 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9095-alt1
 - Version 0.0.7.9095
 
