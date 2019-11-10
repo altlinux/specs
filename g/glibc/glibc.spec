@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.27
-Release: alt11
+Version: 2.30
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -29,7 +29,7 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable multiarch
 %endif
 
-%define basever 2.27
+%define basever 2.30
 
 %define enablekernel 3.2
 
@@ -78,15 +78,19 @@ BuildPreReq: rpm-build >= 4.0.4-alt61
 # This is required for building auxiliary programs.
 %{?!_disable_memusagestat:BuildPreReq: libgd2-devel}
 
-BuildPreReq: makeinfo
+BuildPreReq: makeinfo python3
 
 # g++ and /proc are required for test suite.
-%{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ libstdc++-devel-static /proc}}
+%{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ libstdc++-devel-static /proc /dev/pts}}
 
 %define _localstatedir /var
 %define _gconvdir %_libdir/gconv
 %filter_from_provides /GLIBC_PRIVATE/d
 %filter_from_requires /GLIBC_PRIVATE/d
+
+%ifarch aarch64
+%filter_from_provides s@^ld-linux-aarch64\.so\.1.*@&\n/lib/&@
+%endif
 
 %package preinstall
 Summary: The GNU libc preinstall utilities
@@ -560,6 +564,8 @@ export test-xfail-test-errno-linux=yes
 export test-xfail-tst-mlock2=yes
 export test-xfail-tst-pkey=yes
 export test-xfail-tst-clock2=yes
+export test-xfail-tst-rwlock9=yes
+export test-xfail-tst-rwlock18=yes
 %endif
 %ifarch ppc64le
 export test-xfail-tst-pkey=yes
@@ -772,6 +778,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Nov 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.30-alt1
+- Updated to glibc-2.30-8-gfca2d6186a from 2.30 branch.
+
 * Thu Oct 10 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.27-alt11
 - Updated to glibc-2.27-141-g5b4f7382af from 2.27 branch.
 - Added ld-linux compat symlinks for aarch64 and riscv64.

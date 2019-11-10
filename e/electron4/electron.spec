@@ -3,7 +3,7 @@
 
 Name: electron4
 Version: 4.1.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
 
@@ -43,8 +43,6 @@ tar xfv %SOURCE1
 
 %ifarch aarch64
 tar xfv %SOURCE2
-# hack: we have lib64/ld-linux-aarch64.so.1
-sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" ./%base_name
 rm -rf swiftshader
 %endif
 
@@ -62,6 +60,9 @@ ln -rs %buildroot%_libdir/%name/%base_name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Fri Nov 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt2.qa1
+- Dropped hack for ld-linux path on aarch64.
+
 * Thu Aug 01 2019 Pavel Moseev <mars@altlinux.org> 4.1.1-alt2
 - rename to electron4
 

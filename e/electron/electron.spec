@@ -1,7 +1,7 @@
 # TODO: build from sources
 Name: electron
 Version: 6.0.12
-Release: alt1
+Release: alt1.qa1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
 
@@ -41,8 +41,6 @@ tar xfv %SOURCE1
 
 %ifarch aarch64
 tar xfv %SOURCE2
-# hack: we have lib64/ld-linux-aarch64.so.1
-sed -E -i -e "s@/lib/ld-linux-aarch64.so.1@/lib64/ld-2.27.so\x0________@" ./%name ./chrome-sandbox
 rm -rf swiftshader
 %endif
 
@@ -50,10 +48,27 @@ rm -rf swiftshader
 #sh %SOURCE10 ./%name
 
 %install
+%ifnarch i586 x86_64 aarch64
+exit 0
+%endif
+
 mkdir -p %buildroot%_libdir/%name/
 cp -a * %buildroot%_libdir/%name/
 mkdir -p %buildroot%_bindir/
 ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
+
+cd %buildroot%_libdir/%name
+strip \
+%ifarch i586 x86_64
+	swiftshader/libGLESv2.so \
+	swiftshader/libEGL.so \
+%endif
+	libffmpeg.so \
+	libGLESv2.so \
+	libEGL.so \
+	electron \
+	chrome-sandbox \
+	#
 
 %files
 %ifarch i586 x86_64 aarch64
@@ -62,6 +77,9 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %endif
 
 %changelog
+* Fri Nov 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.12-alt1.qa1
+- Dropped hack for ld-linux path on aarch64.
+
 * Wed Oct 16 2019 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt1
 - new version 6.0.12 (with rpmrb script)
 - build stub package for unsupported arches (to be happy with noarch pkgs)
