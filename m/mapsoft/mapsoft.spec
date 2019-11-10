@@ -1,6 +1,6 @@
 Name: mapsoft
-Version: 20190916
-Release: alt2
+Version: 20191110
+Release: alt1
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
 Group: Sciences/Geosciences
@@ -68,8 +68,15 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_datadir/mapsoft/*
 %_datadir/xfig/Libraries/*
 %_mandir/man1/mapsoft_vmap.*
+%_bindir/map_rescale
+%_bindir/*.sh
+%_bindir/map_*_gk
+%_bindir/map_*_nom
 
 %changelog
+* Sun Nov 10 2019 Vladislav Zavjalov <slazav@altlinux.org> 20191110-alt1
+- add more scripts to mapsoft_vmap package
+
 * Fri Oct 04 2019 Vladislav Zavjalov <slazav@altlinux.org> 20190916-alt2
 - fix build with libproj 6.2.0 (use DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 
