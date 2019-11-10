@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	5.3
-%define kernel_sublevel .8
+%define kernel_sublevel .10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -683,6 +683,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Sun Nov 10 2019 Kernel Bot <kernelbot@altlinux.org> 1:5.3.10-alt1
+- v5.3.10
+
 * Thu Nov 07 2019 Vitaly Chikunov <vt@altlinux.org> 1:5.3.8-alt2
 - Merge kernel-modules-kvm into kernel-image.
 
