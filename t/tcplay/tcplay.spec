@@ -1,6 +1,6 @@
 Name: tcplay
 Version: 2.0
-Release: alt1.1
+Release: alt2
 
 Summary: TrueCrypt implementation
 License: BSD-2-Clause
@@ -11,6 +11,8 @@ Packager: Alexey Appolonov <alexey@altlinux.org>
 
 # https://github.com/bwalex/tc-play/archive/v2.0.tar.gz
 Source: %{name}-%{version}.tar
+
+Patch1: %name-2.0-alt-glibc_update.patch
 
 BuildRequires: libuuid-devel
 BuildRequires: libdevmapper-devel
@@ -38,6 +40,7 @@ Files necessary to develop applications that use the libtcplay.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %make_build -f Makefile.classic PREFIX=%_prefix LIBDIR=%_libdir
@@ -61,6 +64,9 @@ rm %buildroot/%_libdir/lib%{name}.a
 %_libdir/lib%{name}.so
 
 %changelog
+* Mon Nov 11 2019 Alexey Appolonov <alexey@altlinux.org> 2.0-alt2
+- Build with glibc 2.30.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.0-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
