@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.17
-Release: alt2
+Release: alt3
 
 %define package_name		%real_name
 %define weight			1001
@@ -176,22 +176,6 @@ libraries, as well as to various windowing systems (X11, Motif, Tk,
 Mac and MFC).
 
 This is a python with relaxed conflicts: using with python24 are allowed.
-
-%package base
-Summary: Base python modules and executables
-Group: Development/Python
-#BuildArch: noarch
-Requires: python2-base
-
-%description base
-Python is an interpreted, interactive, object-oriented programming
-language often compared to Tcl, Perl, Scheme or Java. Python includes
-modules, classes, exceptions, very high level dynamic data types and
-dynamic typing. Python supports interfaces to many system calls and
-libraries, as well as to various windowing systems (X11, Motif, Tk,
-Mac and MFC).
-
-This package contains symlink to default python interpreter.
 
 %package -n python2-base
 Summary: Base python modules and executables
@@ -981,7 +965,6 @@ cat <<\EOF >>%buildroot%_rpmlibdir/python2-base-files.req.list
 EOF
 %endif
 
-ln -sf %python_name %buildroot%_bindir/%real_name
 ln -s %python_name-config %buildroot%_bindir/python-config
 ln -s pydoc%suffix_ver %buildroot%_bindir/pydoc
 ln -s python-%suffix_ver.pc %buildroot%_pkgconfigdir/%real_name.pc
@@ -992,19 +975,11 @@ ln -s pynche%suffix_ver %buildroot%_bindir/pynche
 rm -rf %buildroot%_libdir/%python_name/lib2to3/tests/
 rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
-# hack to make arepo (remove me in the future)
-ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
-
 %files
 
 %files strict
 
 %files relaxed
-
-%files base
-%_bindir/%real_name
-# hack to make arepo (remote it in the future)
-%ghost %_libdir/libpython.so
 
 %files -n python2-base -f base-list
 %_mandir/man?/*
@@ -1201,6 +1176,9 @@ ln -rs %buildroot%_libdir/lib%python_name.so.* %buildroot%_libdir/libpython.so
 %endif
 
 %changelog
+* Mon Nov 11 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt3
+- Built without python-base (moved to its own package).
+
 * Fri Nov 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt2
 - Packed files listed in python2-base-files.req.list to python2-base.
 - Made no packages require python-base.
