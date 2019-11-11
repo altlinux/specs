@@ -1,41 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define oname minipg
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.6
-Release: alt1
+Release: alt2
+
 Summary: Yet another PostgreSQL database driver
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/minipg/
-Packager: Python Development Team <python@packages.altlinux.org>
-
 # https://github.com/nakagami/minipg.git
+
 Source0: https://pypi.python.org/packages/08/5b/672bb919188d537ac67e3a201b9218208db2ebe156b31cd8b61407706739/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-Cython
-#BuildPreReq: python-module-setuptools-tests
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-Cython
-#BuildPreReq: python3-module-setuptools-tests
-%endif
+BuildRequires: python3-devel python3-module-Cython
 
-%py_provides %oname
+%py3_provides %oname
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base python3-dev python3-module-zope
-#BuildRequires: python-module-Cython python3-module-Cython rpm-build-python3
 
 %description
 Yet another Python PostgreSQL database driver.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -43,81 +34,40 @@ Yet another Python PostgreSQL database driver.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: Yet another PostgreSQL database driver
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Yet another Python PostgreSQL database driver.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Yet another Python PostgreSQL database driver.
-
-This package contains tests for %oname.
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-rm -rf ../python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
+
+%python3_build_debug
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 exit 1
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
-
-%files tests
-%python_sitelibdir/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
-%endif
+
 
 %changelog
+* Mon Nov 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.6-alt2
+- disable python2
+
 * Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt1
 - Build new version for python3.7.
 
