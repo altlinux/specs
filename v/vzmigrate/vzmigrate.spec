@@ -1,6 +1,6 @@
 Name:     vzmigrate
 Version:  7.0.124
-Release:  alt5
+Release:  alt6
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt6
+- fix FTB and C++11 warning
+
 * Tue Oct 01 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt5
 - fix branding
 
