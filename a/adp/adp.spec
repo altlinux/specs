@@ -1,6 +1,6 @@
 Name:     adp
 Version:  1.0
-Release:  alt1
+Release:  alt2
 
 Summary:  ALT Domain Policy
 License:  GPL-3.0+
@@ -89,6 +89,9 @@ if [ $1 -eq 0 ]; then
 fi
 %post_service adp
 
+%check
+make check
+
 %files
 %doc *.md
 %doc examples
@@ -114,5 +117,9 @@ fi
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Mon Nov 11 2019 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
+- Fix is in templates (ALT #37455).
+- Add %%check in spec file.
+
 * Fri Oct 25 2019 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
