@@ -1,6 +1,6 @@
 Name: casync
-Version: 2.0.101.git8595b4d
-Release: alt1.1
+Version: 2.0.219.gita8f6c84
+Release: alt1
 
 Summary: Content Addressable Data Synchronizer
 
@@ -106,8 +106,13 @@ meson test -C %_target_platform \
 %_libexecdir/casync/protocols/casync-sftp
 %_man1dir/casync.1*
 %_udevrulesdir/75-casync.rules
+%_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Nov 12 2019 Arseny Maslennikov <arseny@altlinux.org> 2.0.219.gita8f6c84-alt1
+- 2-101-git8595b4d -> 2-219-gita8f6c84.
+- Included upstream-provided bash completion.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.101.git8595b4d-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
