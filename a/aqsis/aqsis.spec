@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel
 %define _localstatedir %{_var}
 Name:		aqsis
 Version:	1.8.2
-Release:	alt3_29
+Release:	alt4_29
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -25,11 +25,12 @@ Patch2: aqsis-1.8.2-boost-1.59.patch
 Patch3: aqsis-1.8.2-gcc6.patch
 
 Patch4: aqsis-1.8.2-alt-boost-thread.patch
+Patch5: aqsis-1.8.2-alt-boost-headers.patch
 
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
@@ -125,6 +126,7 @@ integration with third-party applications.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p2
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -239,6 +241,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt4_29
+- Rebuilt with boost-1.71.0.
+
 * Mon Jun 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3_29
 - NMU: rebuilt with boost-1.67.0
 
