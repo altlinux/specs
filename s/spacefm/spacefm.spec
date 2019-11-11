@@ -2,7 +2,7 @@
 
 Name: spacefm
 Version: 1.0.6
-Release: alt2
+Release: alt3
 Summary: Multi-panel tabbed file and desktop manager
 License: GPLv3+ and LGPLv3+
 Group: File tools
@@ -10,6 +10,7 @@ Url: http://ignorantguru.github.io/spacefm
 Source0: %name-%version.tar
 Source1: %name.conf
 Source2: session
+Patch0: spacefm-1.0.6-major-glibc228.patch
 
 BuildRequires: intltool libgtk+%gtkver-devel libudev-devel
 
@@ -25,6 +26,7 @@ alike for its stability, speed, convenience and flexibility.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -32,7 +34,7 @@ alike for its stability, speed, convenience and flexibility.
   --with-preferable-sudo=%_bindir/xdg-su \
   --htmldir=%_docdir/%name-%version \
   --disable-video-thumbnails \
-  --with-%gtkver
+  --with-gtk%gtkver
 %make_build
 
 %install
@@ -56,6 +58,9 @@ install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 %_datadir/mime/packages/%name-mime.xml
 
 %changelog
+* Mon Nov 11 2019 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt3
+- Fix FTBFS with glibc >= 2.28
+
 * Sun Sep 30 2018 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt2
 - Added support for zip archives
 
