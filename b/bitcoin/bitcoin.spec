@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 0.18.1
-Release: alt2
+Version: 0.19.0
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -57,6 +57,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Mon Nov 11 2019 Alexei Takaseev <taf@altlinux.org> 0.19.0-alt1
+- Version 0.19.0
+
 * Mon Oct 28 2019 Alexei Takaseev <taf@altlinux.org> 0.18.1-alt2
 - Remove BR: lcov
 
