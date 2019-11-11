@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 9.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -666,6 +666,7 @@ This package contains static D standard library.
 Summary: GNU D compiler
 Group: Development/Other
 Requires: %name = %EVR
+Requires(pre): gcc-gdc-common
 %ifarch %d_runtime_arches
 Requires: libgdruntime%gcc_branch-devel = %EVR
 Requires: libgphobos%gcc_branch-devel = %EVR
@@ -2124,6 +2125,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Nov 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt2
+- gdc: add R: gcc-gdc-common.
+
 * Tue Oct 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt1
 - Updated to redhat/gcc-9-branch r274959.
 - Synced with Fedora gcc 9.2.1-1 and Debian gcc-9 9.2.1-9.
