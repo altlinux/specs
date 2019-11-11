@@ -1,7 +1,7 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.66.0
+Version: 7.67.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -16,7 +16,8 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn2-devel libssh2-devel libssl-devel libkrb5-devel zlib-devel python-modules python-modules-logging python-modules-xml libpsl-devel libldap-devel libbrotli-devel
+BuildRequires: glibc-devel-static groff-base libidn2-devel libssh2-devel libssl-devel libkrb5-devel
+BuildRequires: zlib-devel libpsl-devel libldap-devel libbrotli-devel
 
 %{?_with_nghttp2:BuildRequires: libnghttp2-devel}
 
@@ -149,6 +150,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Mon Nov 11 2019 Anton Farygin <rider@altlinux.ru> 7.67.0-alt1
+- 7.67.0
+
 * Wed Sep 11 2019 Anton Farygin <rider@altlinux.ru> 7.66.0-alt1
 - 7.66.0
 - fixes:
