@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: Python 2 and 3 compatibility utilities
@@ -75,7 +75,7 @@ set -o pipefail
 PYTHONPATH="$(pwd)" python3 -c "import six;assert six.__version__==\"%version\";modules=six._importer.known_modules.keys();print(*modules, sep='\n')" | sort > move.actual.list
 set +o pipefail
 cat %SOURCE2 | sort > move.expected.list
-diff -yq move.expected.list move.actual.list
+diff -y move.expected.list move.actual.list
 
 %check
 export PIP_NO_INDEX=YES
@@ -94,6 +94,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/six-*.egg-info/
 
 %changelog
+* Mon Nov 11 2019 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
+- 1.12.0 -> 1.13.0.
+
 * Sat Jan 20 2019 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
 - 1.11.0 -> 1.12.0.
 
