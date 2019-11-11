@@ -1,6 +1,6 @@
 Name: binwalk
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Firmware Analysis Tool
 
@@ -14,15 +14,16 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 # TODO:
-%add_python_req_skip lzma
-%add_python_req_skip capstone
+%add_python3_req_skip lzma
+%add_python3_req_skip capstone
 
-BuildRequires: libdb4-devel python-module-cmd2 python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libdb4-devel python3-module-cmd2 python3-module-setuptools
 
 # TODO (see https://bugzilla.altlinux.org/show_bug.cgi?id=19293):
-#BuildPreReq: python-module-magic > 5.0.0
+#BuildPreReq: python3-module-magic > 5.0.0
 
-#Requires: python-module-matplotlib python-module-numpy
+#Requires: python3-module-matplotlib python3-module-numpy
 
 %description
 Binwalk is a firmware analysis tool designed to assist in the analysis,
@@ -49,18 +50,21 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 [ "%_libdir" = "/usr/lib" ] || mv %buildroot/usr/lib %buildroot%_libdir
 
 %files
 %_bindir/*
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Nov 11 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt2
+- Transfer on python3.
+
 * Sat Oct 26 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - new version 2.2.0 (with rpmrb script)
 
