@@ -6,7 +6,7 @@
 Name: libvzevent
 Summary: Virtuozzo event library
 Version: 7.0.7
-Release: alt5
+Release: alt6
 License: LGPLv2.1
 Group: System/Libraries
 # git-vsc: https://src.openvz.org/scm/ovz/libvzevent.git
@@ -50,6 +50,9 @@ rm -f %buildroot%_libdir/%name.a
 %_includedir/vz/*.h
 
 %changelog
+* Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.7-alt6
+- change /var/run to /run
+
 * Wed Oct 30 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.7-alt5
 - fix compilation warning
 
