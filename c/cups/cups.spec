@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.2.12
-Release: alt2
+Release: alt3
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -279,6 +279,7 @@ aclocal -I config-scripts
 autoconf -I config-scripts
 
 %configure \
+   --with-system-groups='sys wheel root' \
    --with-icondir=%_iconsdir \
    --with-menudir=%_desktopdir \
    --with-xinetd=%_sysconfdir/xinetd.d \
@@ -409,6 +410,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Mon Nov 11 2019 Fr. Br. George <george@altlinux.ru> 2.2.12-alt3
+- Add wheel to system-groups list
+
 * Tue Aug 27 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.2.12-alt2
 - ALT SE related patches added
 
