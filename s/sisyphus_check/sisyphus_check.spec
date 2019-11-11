@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.52
+Version: 0.8.53
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Sat Oct 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.53-alt1
+- 100-check-deps: add /usr/bin/lua to bad_deps.
+
 * Wed Sep 25 2019 Dmitry V. Levin <ldv@altlinux.org> 0.8.52-alt1
 - 130-check-fhs: allow hasher-provides-dev-kvm package to provide /dev/kvm.
 
