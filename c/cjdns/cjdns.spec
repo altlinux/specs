@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cjdns
-Version: 20.3
-Release: alt2
+Version: 20.4
+Release: alt1
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -222,6 +222,10 @@ done
 %_bindir/graphStats
 
 %changelog
+* Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20.4-alt1
+- Updated to upstream version 20.4.
+- Got rid of -Werror build flag.
+
 * Tue Oct 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 20.3-alt2
 - Increased fuzz test timeout to 50 seconds to fix build on ppc64le.
 
