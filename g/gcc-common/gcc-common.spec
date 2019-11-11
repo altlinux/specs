@@ -1,6 +1,6 @@
 Name: gcc-common
 Version: 1.4.24
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL-2.0-or-later
@@ -177,6 +177,9 @@ cpp --version
 %_bindir/g++
 %_includedir/c++
 
+%files -n gcc-gdc-common
+%_bindir/gdc
+
 %files -n gcc-fortran-common
 %_bindir/f77
 %_bindir/f95
@@ -194,6 +197,9 @@ cpp --version
 %_bindir/gnat*
 
 %changelog
+* Mon Nov 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.24-alt2
+- Packaged gdc wrapper.
+
 * Wed Oct 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.24-alt1
 - Added gcc-gdc-common subpackage.
 
