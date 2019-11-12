@@ -1,23 +1,26 @@
+%define oname hg-github
+
 %def_disable check
 
-%define oname hg-github
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.5
-Release: alt2.git20140713.1
+Release: alt3
+
 Summary: A Mercurial extension for working with GitHub repositories
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/hg-github/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/stephenmcd/hg-github.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools mercurial
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: mercurial
 
 Requires: mercurial
-%py_provides hggithub
+%py3_provides hggithub
+
 
 %description
 hg-github is a Mercurial extension that wraps hg-git, and supports a
@@ -31,19 +34,23 @@ you automatically.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc AUTHORS *.rst docs/*.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt3
+- python2 -> python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.5-alt2.git20140713.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
