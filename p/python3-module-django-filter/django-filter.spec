@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: A generic system for filtering Django QuerySets based on user selections
 License: BSD
@@ -61,6 +61,9 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 %endif
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
 %python3_build_debug
 
@@ -96,6 +99,9 @@ python3 runtests.py
 
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt3
+- shebang fixed (py2 -> py3)
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt2
 - disable python2
 
