@@ -3,29 +3,23 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: BDD library for the py.test runner
 License: MIT
-Group: Development/Python
-
+Group: Development/Python3
 Url: https://pypi.org/project/pytest-bdd/
 # https://github.com/pytest-dev/pytest-bdd.git
+BuildArch: noarch
+
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(execnet)
-BuildRequires: python2.7(glob2)
-BuildRequires: python2.7(mako)
-BuildRequires: python2.7(parse)
-BuildRequires: python2.7(parse_type)
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(execnet)
 BuildRequires: python3(glob2)
 BuildRequires: python3(mako)
@@ -34,27 +28,8 @@ BuildRequires: python3(parse_type)
 BuildRequires: python3(tox)
 %endif
 
+
 %description
-pytest-bdd implements a subset of Gherkin language for the automation of
-the project requirements testing and easier behavioral driven
-development.
-
-Unlike many other BDD tools it doesn't require a separate runner and
-benefits from the power and flexibility of the pytest. It allows to
-unify your unit and functional tests, easier continuous integration
-server configuration and maximal reuse of the tests setup.
-
-Pytest fixtures written for the unit tests can be reused for the setup
-and actions mentioned in the feature steps with dependency injection,
-which allows a true BDD just-enough specification of the requirements
-without maintaining any context object containing the side effects of
-the Gherkin imperative declarations.
-
-%package -n python3-module-%oname
-Summary: BDD library for the py.test runner
-Group: Development/Python3
-
-%description -n python3-module-%oname
 pytest-bdd implements a subset of Gherkin language for the automation of
 the project requirements testing and easier behavioral driven
 development.
@@ -77,27 +52,14 @@ the Gherkin imperative declarations.
 grep -qs 'import mock' tests/feature/test_wrong.py || exit 1
 sed -i '/import mock/d' tests/feature/test_wrong.py
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-
-%python_install
 
 %check
 # no used deps
@@ -110,29 +72,26 @@ sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -vr
 
 %files
 %doc CHANGES.rst README.rst
-%_bindir/pytest-bdd
-%python_sitelibdir/pytest_bdd/
-%python_sitelibdir/pytest_bdd-*.egg-info/
-
-%files -n python3-module-%oname
-%doc CHANGES.rst README.rst
-%_bindir/pytest-bdd.py3
+%_bindir/*
 %python3_sitelibdir/pytest_bdd/
 %python3_sitelibdir/pytest_bdd-*.egg-info/
 
+
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1.1-alt2
+- disable python2
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
 - 3.1.0 -> 3.1.1.
 - Fixed testing against Pytest 5.
