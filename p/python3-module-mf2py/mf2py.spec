@@ -1,103 +1,58 @@
 %define oname mf2py
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.5
-Release: alt1.git20170715.1
+Release: alt2
+
 Summary: Python Microformats2 parser
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/mf2py/
-
 # https://github.com/tommorris/mf2py.git
+BuildArch: noarch
+
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-requests
-BuildRequires: python-module-BeautifulSoup4 python-module-nose
-BuildRequires: python-module-gunicorn
-BuildRequires: python-module-mock
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-BeautifulSoup4 python3-module-nose
-BuildRequires: python3-module-mock
-%endif
+BuildRequires: python3-module-mock python-tools-2to3
 
-%py_provides %oname
-%py_requires html5lib requests bs4 flask gunicorn
+%py3_provides %oname
+%py3_requires html5lib requests bs4 flask gunicorn
+
 
 %description
 Python parser for microformats 2. Full-featured and mostly stable.
 Implements the full mf2 spec, including backward compatibility with
 microformats1.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python Microformats2 parser
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires html5lib requests bs4 flask gunicorn
-
-%description -n python3-module-%oname
-Python parser for microformats 2. Full-featured and mostly stable.
-Implements the full mf2 spec, including backward compatibility with
-microformats1.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-export LC_ALL=en_US.UTF-8
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-export LC_ALL=en_US.UTF-8
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-export LC_ALL=en_US.UTF-8
-python setup.py test
-#nosetests -v
-%if_with python3
-pushd ../python3
 python3 setup.py test
-#nosetests3 -v
-popd
-%endif
 
 %files
 %doc AUTHORS *.md doc/source/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS *.md doc/source/*.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.5-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1.git20170715.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
