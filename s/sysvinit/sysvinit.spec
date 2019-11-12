@@ -1,6 +1,6 @@
 Name: sysvinit
 Version: 2.88
-Release: alt5
+Release: alt6
 
 %def_enable selinux
 %def_enable initramfs
@@ -33,6 +33,7 @@ Patch111: %name-2.88-alt-wur.patch
 Patch112: %name-2.88-alt-wall-line-size.patch
 Patch113: %name-2.88-alt-halt-poweroff.patch
 Patch114: %name-2.88-alt-gentoo-kexec.patch
+Patch115: %name-2.88-alt-sysmacros.patch
 
 # SuSE
 Patch201: %name-2.88-suse-SETSIG.patch
@@ -40,7 +41,6 @@ Patch201: %name-2.88-suse-SETSIG.patch
 Provides: SysVinit = %version-%release
 Obsoletes: SysVinit < %version-%release
 
-PreReq: coreutils
 Requires: /sbin/sulogin
 Requires: %name-utils = %version-%release
 Conflicts: glibc < 6:2.2.1-ipl0.2mdk,
@@ -96,6 +96,7 @@ Simplified version of init (used in initfamfs).
 %patch112 -p1
 %patch113 -p1
 %patch114 -p1
+%patch115 -p1
 
 # rest
 %patch201 -p1
@@ -214,6 +215,10 @@ fi
 %_man8dir/pidof.*
 
 %changelog
+* Mon Nov 11 2019 Dmitry V. Levin <ldv@altlinux.org> 2.88-alt6
+- Fixed build with glibc >= 2.28.
+- Removed explicit "PreReq: coreutils".
+
 * Thu Feb 19 2015 Alexey Gladkov <legion@altlinux.ru> 2.88-alt5
 - Add subpackage for initramfs (closes: #30738).
 
