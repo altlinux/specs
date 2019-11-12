@@ -1,63 +1,37 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
-%define module_name django-countries
+%define oname django-countries
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%oname
 Version: 4.0
-#Release: alt1.git20141027.1
-Group: Development/Python
+Release: alt2
+
+Group: Development/Python3
 License: BSD License
 Summary: Provides a country field for Django models.
 URL: https://pypi.python.org/pypi/django-countries
 # https://github.com/SmileyChris/django-countries.git
-Source0: https://pypi.python.org/packages/91/88/c99df63539deafc9306158e65965e1774eebf3a9f39c8bb2314369fb79a8/%{module_name}-%{version}.tar.gz
 
-BuildPreReq: python-module-setuptools
-%if_with python3
+Source0: https://pypi.python.org/packages/91/88/c99df63539deafc9306158e65965e1774eebf3a9f39c8bb2314369fb79a8/%{oname}-%{version}.tar.gz
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides django_countries
+%py3_provides django_countries
+
 
 %description
 Provides a country field for Django models.
 
-%package -n python3-module-%module_name
-Summary: Provides a country field for Django models
-Group: Development/Python3
-%py3_provides django_countries
-
-%description -n python3-module-%module_name
-Provides a country field for Django models.
-
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -65,15 +39,13 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc *.rst
-%python_sitelibdir/django_countries*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc *.rst
 %python3_sitelibdir/django_countries*
-%endif
+
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0-alt2
+- disable python2
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1
 - automated PyPI update
 
