@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.5.0
+Version:  2.5.1
 Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
@@ -73,6 +73,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_mandir/man?/*
 
 %changelog
+* Tue Nov 12 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.5.1-alt1
+- Updated to v2.5.1.
+
 * Sat Oct 27 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2.5.0-alt1
 - Updated to v2.5.0.
 - enable support for Freedesktop.org secret storage DBus protocol
