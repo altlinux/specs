@@ -1,29 +1,41 @@
-%def_without docs
+%def_with docs
+%def_enable check
+
 %define _unpackaged_files_terminate_build 1
 %define oname cmd2
 
 Name: python3-module-%oname
 Version: 0.9.19
-Release: alt1
+Release: alt2
 
 Summary: A toolkit for simple interactive command-line applications
 
 License: MIT
 Group: Development/Python3
-Url: https://bitbucket.org/catherinedevlin/cmd2
+Url: https://pypi.org/project/cmd2/
 
-# hg clone https://bitbucket.org/catherinedevlin/cmd2
-Source0: https://pypi.python.org/packages/97/80/d5c6efd4a1467865fd25c203fbe3a107f241b09f30cc7f8d9a3e3bef8abd/%{oname}-%{version}.tar.gz
+# https://github.com/python-cmd2/cmd2
+Source0: %oname-%version.tar.gz
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3 python3-module-sphinx
+Buildrequires: python3-module-setuptools_scm
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+Buildrequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-wcwidth
 BuildRequires: python3-module-attrs
+Buildrequires: python3-module-colorama
 BuildRequires: python3-module-pyperclip
-Buildrequires: python3-module-setuptools_scm
-Buildrequires: python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-pyparsing python3-module-setuptools time
+%endif
+
+%if_enabled check
+BuildRequires: pytest3
+BuildRequires: python3-module-pytest-mock
+%endif
 
 %description
 cmd2, a toolkit for simple interactive command-line applications. A
@@ -53,8 +65,7 @@ module.
 This package contains pickles for cmd2.
 
 %prep
-%setup -q -n %{oname}-%{version}
-rm -f docs/pycon2010/ui/pycon/pretty.css~
+%setup -n %oname-%version
 
 %if_with docs
 %prepare_sphinx3 .
@@ -65,33 +76,41 @@ ln -s ../objects.inv docs/
 %python3_build_debug
 
 %if_with docs
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+# temporary install to avoid circular dependency
+%__python3 setup.py install --skip-build --root=_build --force
+export PYTHONPATH=$PWD/_build/%python3_sitelibdir
+
+sphinx-build-3 -b html docs build/html
+sphinx-build-3 -b pickle docs build/pickle
+
+# remove the sphinx-build leftovers
+rm -rf build/html/.{doctrees,buildinfo}
+rm -rf build/pickles/.{doctrees,buildinfo}
 %endif
 
 %install
-export PYTHONPATH=%buildroot%python_sitelibdir
 %python3_install
 
 %if_with docs
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-for i in $(find %buildroot -name '*~'); do
-	rm -f $i
-done
+%check
+export PYTHONPATH=$PWD/_build/%python3_sitelibdir
+pytest3 -v
 
 %files
-%doc LICENSE PKG-INFO docs *.md
-%python3_sitelibdir/*
+%doc LICENSE PKG-INFO *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
 
 %if_with docs
 %files docs
-%doc docs/_build/html docs/pycon2010 example
+%doc build/html docs/examples
 
 %files pickles
 %dir %python3_sitelibdir/%oname
@@ -99,6 +118,11 @@ done
 %endif
 
 %changelog
+* Fri Nov 08 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.19-alt2
+- Cleanup spec.
+- Build with docs.
+- Enable check.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.19-alt1
 - Build new version.
 - Build without python2.
