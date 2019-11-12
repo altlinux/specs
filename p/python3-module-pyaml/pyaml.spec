@@ -1,29 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pyaml
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 16.12.2
-Release: alt1.1
+Release: alt2
+
 Summary: pretty-yaml: Pretty YAML serialization
 License: WTFPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyaml/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/mk-fg/pretty-yaml.git
-Source0: https://pypi.python.org/packages/aa/bc/68c34bd6c5a7bd6d2ecf94ba7cd2337c9f9be58d670e2edef16fa1e0d6a2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-yaml
-BuildPreReq: python-module-unidecode
+Source0: https://pypi.python.org/packages/aa/bc/68c34bd6c5a7bd6d2ecf94ba7cd2337c9f9be58d670e2edef16fa1e0d6a2/%{oname}-%{version}.tar.gz
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-unidecode
+
+%py3_provides %oname
+
 
 %description
 PyYAML-based module to produce pretty and readable YAML-serialized data.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -34,26 +37,33 @@ This package contains tests for %oname.
 %prep
 %setup -q -n %{oname}-%{version}
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 export PYTHONPATH=$PWD
-python pyaml/tests/dump.py
+%__python3 pyaml/tests/dump.py
 
 %files
 %doc COPYING PKG-INFO README README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
+
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 16.12.2-alt2
+- python2 -> python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 16.12.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

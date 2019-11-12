@@ -1,43 +1,52 @@
 Name: json2yaml
 Version: 1.1.1
-Release: alt2.1
+Release: alt3
+
 Summary: Convert JSON to YAML or vice versa, while preserving the order of associative arrays
 License: ASLv2.0
 Group: File tools
-BuildArch: noarch
 Url: https://pypi.python.org/pypi/json2yaml/
-
 # https://github.com/drbild/json2yaml.git
+BuildArch: noarch
+
 Source: %{name}-%{version}.tar.gz
 
-BuildRequires: python-module-setuptools python-module-docopt
-BuildRequires: python-module-yaml python-module-pyaml
-BuildRequires: python-modules-json
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-docopt
+BuildRequires: python3-module-yaml python3-module-pyaml
 
-%py_requires yaml pyaml docopt json
+%py3_requires yaml pyaml docopt json
+
 
 %description
 Convert JSON to YAML or vice versa, while preserving the order of
 associative arrays.
 
 %prep
-%setup -q 
+%setup -q
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ \( -name '*.py' -o -name '%name' -o -name 'yaml2json' \))
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 #doc NOTICE *.md
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.1-alt3
+- python2 -> python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
