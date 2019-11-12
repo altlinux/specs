@@ -1,5 +1,5 @@
-%define git_ver 9122
-%define git_commit 8234bdb8f000e1dc2c11523ba596007dabe3f78a
+%define git_ver 9123
+%define git_commit a21d7def33a05fa1ad3ae51a9740c843ba601d86
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -127,6 +127,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Nov 12 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9123-alt1
+- Version 0.0.7.9123
+
 * Mon Nov 11 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9122-alt1
 - Version 0.0.7.9122
 - Remove GSL package
