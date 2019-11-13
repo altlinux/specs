@@ -1,22 +1,20 @@
 %define  oname GeoIP2
 %define  descr Python code for GeoIP2 webservice client and database reader
 
-Name:    python-module-%oname
+Name:    python3-module-%oname
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: %descr
 License: ASLv2.0
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://github.com/maxmind/GeoIP2-python
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-MaxMindDB
-BuildRequires: python-module-sphinx
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-MaxMindDB
+BuildRequires: python3-module-sphinx
 
 BuildArch: noarch
 
@@ -25,39 +23,35 @@ Source:  %oname-%version.tar
 %description
 %descr
 
-%package -n python3-module-%oname
-Summary: %descr
-Group: Development/Python3
+%package doc
+Summary: Documentation for %oname
+Group: Development/Documentation
 
-%description -n python3-module-%oname
-%descr
+%description doc
+Documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-cp -a . ../python3
 
 %build
-%python_build
-pushd ../python3
 %python3_build
-popd
-sphinx-build -b html docs html
+sphinx-build-3 -b html docs html
 rm -rf html/.{buildinfo,doctrees}
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %files
-%python_sitelibdir/geoip2
-%python_sitelibdir/*.egg-info
-
-%files -n python3-module-%oname
 %python3_sitelibdir/geoip2
 %python3_sitelibdir/*.egg-info
 
+%files doc
+%doc html/
+
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt2
+- Build without python2.
+- Build with docs.
+
 * Wed Dec 19 2018 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Initial build for Sisyphus.
