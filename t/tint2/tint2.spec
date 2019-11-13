@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: tint2
-Version: 0.11
-Release: alt2.652.1
+Version: 16.7
+Release: alt1
 Summary: Simple panel/taskbar made for modern x window managers
 
 Group: Graphical desktop/Other
 License: GPLv2
-Packager: Andrew Clark <andyc@altlinux.org>
-Url: http://code.google.com/p/%name/
+Url: https://gitlab.com/o9000/tint2
 
-Source: http://tint2.googlecode.com/files/%name-%version.tar.gz
-Patch0: tint2-alt-default_icon.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -18,7 +18,7 @@ BuildRequires: cmake gcc-c++ imlib2-devel libXcomposite-devel libXdamage-devel l
 BuildRequires: libstartup-notification-devel
 BuildRequires: libcairo-devel libpixman-devel libexpat-devel
 BuildRequires: libXdmcp-devel libXxf86vm-devel libharfbuzz-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+2-devel librsvg-devel
 
 %description
 tint2 is a simple panel/taskbar made for modern x window managers.
@@ -27,26 +27,34 @@ other window managers (GNOME, KDE, etc...).
 
 %prep
 %setup -q %name-%version
-%patch0 -p1
 
 %build
-%cmake -DENABLE_TINT2CONF=OFF -DENABLE_EXAMPLES=ON
-%make_build -C BUILD/
+%cmake \
+	-DENABLE_TINT2CONF=ON \
+	-DENABLE_EXAMPLES=ON
+
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD/
-install -pD -m 644 %buildroot%_datadir/%name/default_icon.png  %buildroot%_liconsdir/%name.png
-rm -rf %buildroot/{%_datadir,%_docdir}/%name
+%cmakeinstall_std
 
-%files
-%doc AUTHORS ChangeLog COPYING README* sample/
+%find_lang tint2conf
+
+%files -f tint2conf.lang
+%doc %_datadir/doc/*
+%_datadir/applications/*.desktop
+%_datadir/%name
+%_iconsdir/hicolor/scalable/apps/*.svg
 %dir %_sysconfdir/xdg/%name/
 %config(noreplace) %_sysconfdir/xdg/%name/tint2rc
 %_bindir/*
 %_man1dir/*
-%_liconsdir/*.png
+%_datadir/mime/packages/tint2conf.xml
 
 %changelog
+* Tue Nov 05 2019 Konstantin Rybakov <kastet@altlinux.org> 16.7-alt1
+- Updated to upstream version 16.7 
+
 * Wed Oct 30 2013 Afanasov Dmitry <ender@altlinux.org> 0.11-alt2.652.1
 - fix default icon lookup
 
