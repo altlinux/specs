@@ -1,8 +1,8 @@
 %define oname glance_store
 
 Name: python3-module-%oname
-Version: 0.26.1
-Release: alt4
+Version: 1.0.1
+Release: alt1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python3
 License: ASL 2.0
@@ -100,6 +100,9 @@ rm -fr build/sphinx/html/.buildinfo
 %doc build/sphinx/html
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 0.26.1-alt4
 - Build without python2.
 
