@@ -2,23 +2,26 @@
 
 %define oname Flask-WebTest
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.0.9
-Release: alt1
+Release: alt2
+
 Summary: Utilities for testing Flask applications with WebTest
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/Flask-WebTest/
+# https://github.com/aromanovich/flask-webtest.git
 BuildArch: noarch
 
-# https://github.com/aromanovich/flask-webtest.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools python-module-flask
-BuildRequires: python-module-flask_sqlalchemy python-module-webtest
-BuildRequires: python-module-blinker python-modules-sqlite3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flask python-tools-2to3
+BuildRequires: python3-module-flask_sqlalchemy python3-module-webtest
+BuildRequires: python3-module-blinker python3-modules-sqlite3
 
-%py_provides flask_webtest
+%py3_provides flask_webtest
+
 
 %description
 Provides a set of utilities to ease testing Flask applications with
@@ -27,20 +30,26 @@ WebTest.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst docs/*.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.9-alt2
+- python2 -> python3
+
 * Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.9-alt1
 - Updated to upstream version 0.0.9.
 
