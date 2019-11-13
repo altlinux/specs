@@ -1,13 +1,15 @@
 %global oname pypowervm
 
 Name: python3-module-%oname
-Version: 1.1.19
-Release: alt2
+Version: 1.1.23
+Release: alt1
+
 Summary: Python API wrapper for PowerVM
 
 Group: Development/Python3
 License: ASL 2.0
 Url: http://github.com/powervm/pypowervm
+
 Source: %oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -58,13 +60,17 @@ rm -rf *.egg-info
 
 %files
 %doc AUTHORS ChangeLog README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.23-alt1
+- Automatically updated to 1.1.23.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.19-alt2
 - Build without python2.
 
