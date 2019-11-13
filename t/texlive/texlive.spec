@@ -72,13 +72,12 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_3
+Release:	alt1_6
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
 URL:		http://tug.org/texlive/
-#Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz
-Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar
+Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz.sha512
 
 %if %{enable_xdvik}
@@ -166,7 +165,7 @@ BuildRequires:	makeinfo
 BuildRequires:	pkgconfig(zziplib)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	libpaper-devel
-BuildRequires:	mercurial mercurial-hgext
+BuildRequires:	mercurial
 
 #-----------------------------------------------------------------------
 Patch1: texlive-20160523-mageia-format.patch
@@ -209,7 +208,7 @@ Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
 Patch34: texlive-2018-alt-gcc8.patch
 Provides: texlive-collection-binextra = %{tl_version}
-Patch36: texlive-2018-e2k-luatex.patch
+Patch35: texlive-2018-e2k-luatex.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -473,7 +472,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	texk/kpathsea/texmf.cnf
 %patch33 -p0
 %patch34 -p1
-%patch36 -p2
+%patch35 -p2
 
 #-----------------------------------------------------------------------
 %build
@@ -716,6 +715,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Mon Nov 04 2019 Igor Vlasenko <viy@altlinux.ru> 2019-alt1_6
+- filetrigger fixes
+
 * Thu Oct 31 2019 Andrey Savchenko <bircoph@altlinux.org> 2019-alt1_3
 - Use external ligraphite2 and harfbuzz. This fixes build on E2K.
 - Remove obsolete E2K patches.
