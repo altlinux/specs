@@ -1,6 +1,6 @@
 Name: ddd
 Version: 3.3.12
-Release: alt3
+Release: alt4
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
 License: GPL
@@ -17,6 +17,7 @@ Patch2: ddd-texinfo-5.0.patch
 Patch3: ddd-buildcompare.patch
 Patch4: ddd-wrong-memcpy.patch
 Patch5: ddd-3.3.12-alt-e2k-lcc.patch
+Patch6: ddd-3.3.12-make_gcc_happy.patch
 
 Requires: gdb
 Obsoletes: ddd-static, ddd-semistatic, ddd-dynamic
@@ -68,6 +69,7 @@ This packages contains PostScript documentation for DDD.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p0
 
 install -pm644 %SOURCE3 doc/
 rm -f doc/html/%name.html ddd/*.info*
@@ -153,6 +155,9 @@ sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 %docdir/html
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.12-alt4
+- Fixed FTBFS.
+
 * Mon May 06 2019 Michael Shigorin <mike@altlinux.org> 3.3.12-alt3
 - fixed build on e2k with lcc
 
