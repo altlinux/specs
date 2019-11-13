@@ -1,104 +1,92 @@
 %define oname mysqlclient
-%define fname python3-module-%oname
-%define descr \
-mysqlclient is a fork of MySQL-python. It adds Python 3.3 support and \
-merges some pull requests.
 
 %def_enable check
 
-Name: %fname
-Version: 1.4.4
+Name: python3-module-%oname
+Version: 1.4.5
 Release: alt1
 
-%if ""==""
 Summary: Python interface to MySQL
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
 
 License: GPL
 Url: https://pypi.python.org/pypi/mysqlclient/
 # https://github.com/PyMySQL/mysqlclient-python.git
 Source: %name-%version.tar
 
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-BuildArch: noarch
-%else
 Conflicts: python3-module-MySQLdb
 Conflicts: python3-module-MySQLdb2
 Provides: python3-module-MySQLdb
 %py3_provides MySQLdb
-%endif
 
-BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: libmysqlclient-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python3-devel python3-module-nose python3-module-pytest rpm-build-python3 time
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+Buildrequires: libmysqlclient21-devel
+BuildRequires: python3-module-nose python3-module-pytest time
+BuildRequires: python3-module-sphinx
 
 %description
-%descr
+mysqlclient is a fork of MySQL-python. It adds Python 3.3 support and
+merges some pull requests.
 
-%if ""!=""
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+BuildArch: noarch
+
+%description docs
 This package contains documentation for %oname.
 
-%package -n %fname-pickles
+%package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
 
-%description -n %fname-pickles
-%descr
-
+%description pickles
 This package contains pickles for %oname.
-%endif
 
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
-%endif
 
 %build
-%if ""==""
 %python3_build
-%else
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
-%make -C doc html
-%endif
-
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make SPHINXBUILD="sphinx-build-3" -C doc html
+%make SPHINXBUILD="sphinx-build-3" -C doc pickle
+%make SPHINXBUILD="sphinx-build-3" -C doc man
 
 %install
-%if ""==""
 %python3_install
-%else
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+mkdir -p %buildroot%_man1dir/
+install -m0644 doc/_build/man/mysqldb.1 %buildroot%_man1dir/
 
-%if ""==""
 %check
 python3 setup.py test
 
 %files
 %doc HISTORY* *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/MySQLdb
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%oname/pickle
+%_man1dir/*
 
-%else
+%files pickles
+%python3_sitelibdir/%oname/pickle
 
-%files
+%files docs
 %doc doc/_build/html/*
 
-%files -n %fname-pickles
-%python3_sitelibdir/*/pickle
-%endif
-
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.5-alt1
+- Build new version.
+- Build without python2.
+- Remove specsubst scheme.
+- Add man page.
+
 * Mon Aug 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
 - Build new version.
 
