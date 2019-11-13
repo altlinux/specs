@@ -1,6 +1,6 @@
 Name: dirb
 Version: 2.22
-Release: alt1
+Release: alt2
 
 Summary: Web Content Scanner.
 
@@ -30,6 +30,7 @@ against a web server and analizing the response.
 
 %install
 %makeinstall_std
+mv %buildroot/%_bindir/gendict{,-dirb}
 mkdir -p %buildroot/%_datadir/dirb/
 find wordlists/ -maxdepth 1 -type f -exec install -m 0644 '{}' %buildroot/%_datadir/dirb/ \;
 mkdir -p %buildroot/%_datadir/dirb/others
@@ -50,5 +51,8 @@ find wordlists/vulns -maxdepth 1 -type f -exec install -m 0644 '{}' %buildroot/%
 %doc LICENSE.txt README.txt docs/GENDICT.TXT docs/FAQ.txt docs/TRICKS.txt docs/CHANGES.txt
 
 %changelog
+* Tue Nov 12 2019 Nikita Ermakov <arei@altlinux.org> 2.22-alt2
+- Rename gendict to gendict-dirb to avoid collisions with icu-utils.
+
 * Tue Nov 12 2019 Nikita Ermakov <arei@altlinux.org> 2.22-alt1
 - Initial build for ALT Linux Sisyphus.
