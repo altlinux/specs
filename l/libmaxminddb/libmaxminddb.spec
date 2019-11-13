@@ -1,5 +1,5 @@
 Name:    libmaxminddb
-Version: 1.3.2
+Version: 1.4.2
 Release: alt1
 
 Summary: C library for the MaxMind DB file format
@@ -57,5 +57,8 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_man3dir/*
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Build new version 1.4.2.
+
 * Thu Dec 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
 - Initial build for Sisyphus.
