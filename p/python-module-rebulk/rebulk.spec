@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
 License: MIT
 Group: Development/Python
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
