@@ -1,21 +1,19 @@
 %define oname deliverance
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.6.1
-Release: alt3
+Release: alt4
 
 Summary: Deliverance transforms HTML to theme pages
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/Deliverance
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python-tools-2to3
 
 
 %description
@@ -23,30 +21,9 @@ Deliverance does transformations of HTML to 'theme' pages, similar in
 function to XSLT but using a simpler XML-based language to express the
 transformation.
 
-%package -n python3-module-%oname
-Summary: Deliverance transforms HTML to theme pages
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Deliverance does transformations of HTML to 'theme' pages, similar in
-function to XSLT but using a simpler XML-based language to express the
-transformation.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Deliverance
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Deliverance does transformations of HTML to 'theme' pages, similar in
-function to XSLT but using a simpler XML-based language to express the
-transformation.
-
-This package contains tests for Deliverance.
-
 %package tests
 Summary: Tests for Deliverance
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -59,61 +36,36 @@ This package contains tests for Deliverance.
 %prep
 %setup
 
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec \
-	sed -i 's|rfc822|rfc822py3|' '{}' +
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find ./ -type f -name '*.py' -exec \
+    sed -i 's|rfc822|rfc822py3|' '{}' +
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
 
-%python_install
-
-# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
-# which is normally a Windows image thumbnail database. 
-# Such databases are generally useless in packages and were usually 
-# accidentally included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
 %files
 %_bindir/*
-
-%exclude %_bindir/*.py3
-
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/*/*/*/*/test
-
-%files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/*/*/*/*/test
-
-%files -n python3-module-%oname
-%_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/*/*/*/*/test
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/*/*/*/*/test
 
 
 %changelog
+* Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt4
+- python2 disabled
+
 * Tue May 15 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
 - rebuild with python3.6
 
