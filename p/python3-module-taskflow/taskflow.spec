@@ -1,14 +1,16 @@
 %define oname taskflow
 
 Name: python3-module-%oname
-Version: 3.2.0
-Release: alt3
+Version: 3.7.1
+Release: alt1
 Epoch: 1
+
 Summary: Taskflow structured state management library
 
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -18,20 +20,28 @@ Requires: python3-module-networkx-drawing
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-futurist >= 0.1.2
-BuildRequires: python3-module-fasteners >= 0.7
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-fasteners >= 0.7.0
 BuildRequires: python3-module-networkx >= 1.10
 BuildRequires: python3-module-contextlib2 >= 0.4.0
-BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-jsonschema >= 2.0.0
-BuildRequires: python3-module-automaton >= 0.5.0
-BuildRequires: python3-module-oslo.utils >= 3.18.0
-BuildRequires: python3-module-oslo.serialization >= 1.10.0
-BuildRequires: python3-module-tenacity >= 3.2.1
-BuildRequires: python3-module-cachetools >= 1.1.0
+BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-automaton >= 1.9.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-tenacity >= 4.4.0
+BuildRequires: python3-module-cachetools >= 2.0.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
+
+# docs
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-kazoo
+BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-kombu
+BuildRequires: python3-module-alembic
+BuildRequires: python3-module-SQLAlchemy-Utils
 
 %description
 A library to do [jobs, tasks, flows] in a HA manner using
@@ -67,16 +77,17 @@ rm -rf {test-,}requirements.txt
 %build
 %python3_build
 
-#python setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-#rm -fr doc/build/html/.buildinfo
+# Prevent doc build warnings from causing a build failure
+sed -i '/warning-is-error/d' setup.cfg
+python3 setup.py build_sphinx
 
 %install
 %python3_install
 
 %files
 %doc README.rst LICENSE ChangeLog
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/test*
 
@@ -84,7 +95,14 @@ rm -rf {test-,}requirements.txt
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/test*
 
+%files doc
+%doc doc/build/html
+
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1:3.7.1-alt1
+- Automatically updated to 3.7.1.
+- Build with docs.
+
 * Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 1:3.2.0-alt3
 - Build without python2.
 
