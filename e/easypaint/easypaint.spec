@@ -1,7 +1,7 @@
 Name: easypaint
 Epoch: 1
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: Easy graphic editing program
 License: MIT
 Group: Graphics
@@ -9,6 +9,7 @@ URL: https://github.com/Gr1N/EasyPaint
 
 Source: %name-%version.tar
 Source1: %name.desktop
+Patch: easypaint-0.1.1-fix-link-to-tracker.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools
 BuildRequires: ImageMagick-tools
@@ -18,6 +19,7 @@ BuildRequires: ImageMagick-tools
 
 %prep
 %setup
+%patch -p1
 
 %build
 pushd sources
@@ -48,6 +50,9 @@ done
 %_miconsdir/*
 
 %changelog
+* Wed Nov 13 2019 Anton Midyukov <antohami@altlinux.org> 1:0.1.1-alt2
+- Fix link to tracker (Closes: 37477)
+
 * Wed Nov 06 2019 Anton Midyukov <antohami@altlinux.org> 1:0.1.1-alt1
 - New snapshot from commit 81d7a87d
 - switch to new upstream
