@@ -1,13 +1,15 @@
 %global oname sphinx-feature-classification
 
 Name: python3-module-%oname
-Version: 0.3.1
-Release: alt2
+Version: 0.4.1
+Release: alt1
+
 Summary: Generate a matrix of pluggable drivers and their support to an API in Sphinx.
 
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -15,7 +17,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-pbr >= 2.0
 BuildRequires: python3-module-docutils >= 0.11
 
 BuildRequires: python3-module-sphinx >= 1.5.1
@@ -27,7 +29,8 @@ This is a Sphinx directive that allows creating matrices of drivers
 a project contains and which features they support.
 The directive takes an INI file with specific syntax explained
 in the usage documentation to generate the matrices,
-in which projects have the authority to say what is supported within their own repository.
+in which projects have the authority to say what is supported
+within their own repository.
 
 %package tests
 Summary: Tests for %oname
@@ -75,6 +78,9 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %doc doc/build/html
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Automatically updated to 0.4.1.
+
 * Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt2
 - Build without python2.
 
