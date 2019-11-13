@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.9.0
-Release: alt1
+Release: alt2
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -21,6 +21,7 @@ Patch0: man-db-2.8.5-change-owner-of-man-cache.patch
 Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
 
 Patch2: man-db-2.7.6.1-e2k-mcst-path.patch
+Patch3: man-db-2.9.0-catman-use-path-env.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -77,6 +78,7 @@ This package provides periodic update of man-db cache.
 %ifarch %e2k
 %patch2 -p1
 %endif
+%patch3 -p1
 
 %build
 %autoreconf -f
@@ -161,6 +163,9 @@ cat %name.lang %name-gnulib.lang >> %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Wed Nov 13 2019 Alexey Gladkov <legion@altlinux.ru> 2.9.0-alt2
+- The catman sometime needs to execute other utilities.
+
 * Tue Nov 05 2019 Alexey Gladkov <legion@altlinux.ru> 2.9.0-alt1
 - New version (2.9.0).
 
