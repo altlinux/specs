@@ -10,8 +10,8 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	3.10
-Release:	alt3
+Version:	3.18
+Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -51,6 +51,8 @@ BuildRequires: libuv-devel
 
 BuildRequires: liblxd_sqlite3-devel
 BuildRequires: libdqlite-devel
+BuildRequires: libraft-devel
+BuildRequires: libco-devel
 
 BuildRequires: help2man
 # Needed for manpages generation. Accessing to '/proc/self/...'
@@ -136,8 +138,8 @@ mkdir -p %buildroot%_logdir/%name
 
 # Install the manpages
 mkdir -p %buildroot/%_man1dir
-help2man %buildroot/%_bindir/fuidshift -n "uid/gid shifter" --no-info > %buildroot/%_man1dir/fuidshift.1
-help2man %buildroot/%_bindir/lxc-to-lxd -n "Convert LXC containers to LXD" --no-info --version-string=%version > %buildroot/%_man1dir/lxc-to-lxd.1
+help2man %buildroot/%_bindir/fuidshift -n "uid/gid shifter" --no-info --no-discard-stderr > %buildroot/%_man1dir/fuidshift.1
+help2man %buildroot/%_bindir/lxc-to-lxd -n "Convert LXC containers to LXD" --no-info --version-string=%version --no-discard-stderr > %buildroot/%_man1dir/lxc-to-lxd.1
 help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benchmark" --no-info --no-discard-stderr > %buildroot/%_man1dir/lxd-benchmark.1
 %buildroot/%_bindir/lxd manpage %buildroot/%_man1dir/
 %buildroot/%_bindir/lxc manpage %buildroot/%_man1dir/
@@ -175,6 +177,16 @@ help2man %buildroot/%_bindir/lxd-benchmark -n "The container lightervisor - benc
 %exclude %go_path/src/%import_path/go.sum
 
 %changelog
+* Tue Nov 12 2019 Denis Pynkin <dans@altlinux.org> 3.18-alt1
+- New version
+- Have to checkout module with:
+  go get github.com/spf13/cobra@77e4d5aecc4d34e58f72e5a1c4a5a13ef55e6f44
+- Fix help2man call
+- Added new build requirements to libraft and libco
+
+* Mon Sep 30 2019 Denis Pynkin <dans@altlinux.org> 3.17-alt1
+- New version
+
 * Sun Jun 02 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.10-alt3
 - Add rsync, iptables and dnsmasq to requires
 
