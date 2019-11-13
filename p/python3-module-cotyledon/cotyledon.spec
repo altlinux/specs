@@ -1,23 +1,30 @@
 %define pypi_name cotyledon
 
 Name: python3-module-%pypi_name
-Version: 1.6.3
-Release: alt2
+Version: 1.7.3
+Release: alt1
+
 Summary: Cotyledon provides a framework for defining long-running services
+
 Group: Development/Python3
 License: ASL 2.0
 Url: https://github.com/sileht/cotyledon
+
 Source: %pypi_name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-oslo.config
 
 %description
 This library is mainly used in Openstack Telemetry projects for now.
-In the past oslo.service was used. But our projects don't want to use eventlet anymore.
+In the past oslo.service was used. But our projects don't want
+to use eventlet anymore.
 
 oslo.service is written on top of eventlet to provide two main features:
 - periodic tasks
@@ -56,6 +63,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1
+- Automatically updated to 1.7.3.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt2
 - Build without python2.
 
