@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191104
+Version: 20191113
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,19 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Nov 13 2019 Cronbuild Service <cronbuild@altlinux.org> 20191113-alt1
+- upstream changes (GIT c62c3c2):
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + amdgpu: update navi14 vcn firmware (thx Alex Deucher)
+  + amdgpu: update navi10 vcn firmware (thx Alex Deucher)
+  + i915: Add HuC firmware v7.0.3 for TGL (thx Daniele Ceraolo Spurio)
+  + i915: Add GuC firmware v35.2.0 for TGL (thx Daniele Ceraolo Spurio)
+  + i915: Add HuC firmware v9.0.0 for EHL (thx Daniele Ceraolo Spurio)
+  + i915: Add GuC firmware v33.0.4 for EHL (thx Daniele Ceraolo Spurio)
+
 * Wed Nov 06 2019 Cronbuild Service <cronbuild@altlinux.org> 20191104-alt1
 - upstream changes (GIT 11bdc57):
   + rtw88: RTL8723D: add firmware file v48 (thx Yan-Hsuan Chuang)
