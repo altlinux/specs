@@ -1,38 +1,23 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname modepy
 
-%def_with python3
 %def_without docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2016.1.2
-Release: alt1
+Release: alt2
+
 Summary: Modes and nodes for high-order discretizations
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://documen.tician.de/modepy/
-
+# https://github.com/inducer/modepy.git
 BuildArch: noarch
 
-# https://github.com/inducer/modepy.git
 Source: %name-%version.tar
-
 Patch1: %oname-alt-docs.patch
 
-BuildRequires: python-devel python-module-setuptools
-
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
-BuildRequires: python-module-matplotlib python-module-numpy-testing python-module-objects.inv
-BuildRequires: python-module-pytools python-module-sphinx-bootstrap-theme
-%endif
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
+BuildRequires(pre): rpm-macros-sphinx rpm-build-python3
 
 
 %description
@@ -45,23 +30,9 @@ The basic objects that modepy manipulates are functions on a simplex.
 For example, it supplies an orthonormal basis on triangles (shown here)
 and tetrahedra.
 
-%package -n python3-module-%oname
-Summary: Modes and nodes for high-order discretizations
-Group: Development/Python3
-
-%description -n python3-module-%oname
-modepy helps you create well-behaved high-order discretizations on
-simplices (i.e. triangles and tetrahedra). These are a key building
-block for high-order unstructured discretizations, as often used in a
-finite element context.
-
-The basic objects that modepy manipulates are functions on a simplex.
-For example, it supplies an orthonormal basis on triangles (shown here)
-and tetrahedra.
-
 %package pickles
 Summary: Pickles for modepy
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 modepy helps you create well-behaved high-order discretizations on
@@ -95,65 +66,45 @@ This package contains documentation for modepy.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %if_with docs
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if_with docs
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc pickle
 %make -C doc html
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %files
 %doc LICENSE
 %doc README.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %if_with docs
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 
 %if_with docs
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files doc
 %doc doc/_build/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE
-%doc README.rst
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 2016.1.2-alt2
+- disable python2
+
 * Tue Jul 23 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.1.2-alt1
 - Updated to upstream version 2016.1.2.
 
