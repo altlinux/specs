@@ -2,7 +2,7 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 2.0201
-Release: alt1
+Release: alt2
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -14,6 +14,10 @@ Patch: %name-%version-%release.patch
 
 Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
+# Since the version of libxml2 is embedded into
+# XML::LibXML::LIBXML_VERSION() at build time, this package
+# has to be rebuilt every time the version of libxml2 is changed.
+Requires: %(rpmquery --qf '%%{NAME} = %%{VERSION}' libxml2)
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport
@@ -61,6 +65,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Wed Nov 13 2019 Dmitry V. Levin <ldv@altlinux.org> 2.0201-alt2
+- Added to Requires the same version of libxml2 that was used for build.
+
 * Wed May 29 2019 Alexey Shabalin <shaba@altlinux.org> 2.0201-alt1
 - 2.0201
 
