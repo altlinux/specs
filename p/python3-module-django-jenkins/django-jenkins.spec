@@ -1,64 +1,47 @@
 %define oname django-jenkins
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: Plug and play continuous integration with django and jenkins
 License: LGPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-jenkins/
 # https://github.com/kmmbvnr/django-jenkins.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+
+%add_python3_req_skip flake8.engine
 
 
 %description
 Plug and play continuous integration with Django and Jenkins.
 
-%package -n python3-module-%oname
-Summary: Plug and play continuous integration with django and jenkins
-Group: Development/Python3
-%add_python3_req_skip flake8.engine
-
-%description -n python3-module-%oname
-Plug and play continuous integration with Django and Jenkins.
-
 %prep
 %setup
 
-cp -fR . ../python3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
 
 
 %changelog
+* Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.19.0-alt2
+- python2 disabled
+
 * Sun Dec 23 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.19.0-alt1
 - update to 0.19.0
 
