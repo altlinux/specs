@@ -1,19 +1,31 @@
 Name:           python3-module-pyghmi
 Version:        1.4.1
-Release:        alt1
-Summary:        Python General Hardware Management Initiative (IPMI and others)
-Group:          Development/Python3
+Release:        alt2
 
+Summary:        Python General Hardware Management Initiative (IPMI and others)
+
+Group:          Development/Python3
 License:        ASL 2.0
 URL:            https://github.com/stackforge/pyghmi
+
 Source0:        %name-%version.tar
+
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-pbr
+BuildRequires:  python3-module-sphinx
+BuildRequires:  python3-module-openstackdocstheme
 
 %description
 This is a pure python implementation of the IPMI protocol.
+
+%package doc
+Summary: Documentation for pyghmi
+Group: Development/Documentation
+
+%description doc
+Documentation for pyghmi.
 
 %prep
 %setup
@@ -27,6 +39,10 @@ rm -rf {test-,}requirements.txt
 
 %build
 %python3_build
+
+python3 setup.py build_sphinx -b html
+# remove the sphinx-build leftovers
+rm -rf doc/build/html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -47,7 +63,13 @@ popd
 %_bindir/pyghmiutil
 %_bindir/virshbmc
 
+%files doc
+%doc doc/build/html
+
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt2
+- Build with docs.
+
 * Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Build new version.
 - Build with python3 instead of python2.
