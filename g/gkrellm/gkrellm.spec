@@ -1,6 +1,6 @@
 Name: gkrellm
-Version: 2.3.10
-Release: alt1.2
+Version: 2.3.11
+Release: alt1
 
 Summary: Multiple stacked system monitors
 License: GPLv3+
@@ -134,8 +134,11 @@ __EOF__
 %config(noreplace) %_sysconfdir/gkrellmd.conf
 %_man1dir/gkrellmd.*
 
-
 %changelog
+* Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.11-alt1
+- Build new version 2.3.11-alt1.
+- Clean up changelog.
+
 * Sat Apr 06 2019 L.A. Kostis <lakostis@altlinux.ru> 2.3.10-alt1.2
 - Rebuild w/ new lm_sensors.
 
@@ -320,100 +323,3 @@ __EOF__
 
 * Sat Jan 13 2001 AEN <aen@logic.ru>
 - RE  adaptation
-
-* Mon Jan 08 2001 Vincent Danen <vdanen@mandrakesoft.com> 1.0.3-1mdk
-- 1.0.3
-
-* Wed Nov 15 2000 Vincent Danen <vdanen@mandrakesoft.com> 1.0.2-1mdk
-- 1.0.2
-
-* Mon Nov  6 2000 Vincent Danen <vdanen@mandrakesoft.com> 1.0.1-2mdk
-- rebuild for new libstdc++
-
-* Thu Oct 20 2000 Vincent Danen <vdanen@mandrakesoft.com> 1.0.1-1mdk
-- 1.0.1
-
-* Fri Oct 13 2000 Vincent Danen <vdanen@mandrakesoft.com> 1.0.0-1mdk
-- 1.0.0
-
-* Fri Oct 06 2000 Vincent Danen <vdanen@mandrakesoft.com> 0.10.5-3mdk
-- added missing icons
-
-* Tue Aug 08 2000 Frederic Lepied <flepied@mandrakesoft.com> 0.10.5-2mdk
-- automatically added BuildRequires
-
-* Mon Aug 07 2000 Vincent Danen <vdanen@mandrakesoft.com> 0.10.5-1mdk
-- 0.10.5
-- more macros
-- added requires version for gkrellm-devel
-- move include dir from /usr/X11R6/include to /usr/include
-
-* Wed Jul 12 2000 Vincent Danen <vdanen@mandrakesoft.com> 0.10.4-1mdk
-- 0.10.4
-- macroization
-- move plugins to their own RPM
-- add devel package
-
-* Wed Jul 05 2000 Lenny Cartier <lenny@mandrakesoft.com> 0.10.2-1mdk
-- v 0.10.2
-
-* Wed May 24 2000 Vincent Danen <vdanen@linux-mandrake.com> 0.9.10-1mdk
-- 0.9.10
-- bzip2 patches
-- comment out all plugins since they refuse to compile
-
-* Tue Apr 25 2000 Vincent Danen <vdanen@linux-mandrake.com> 0.9.8-1mdk
-- 0.9.8
-- Added gkrellmms plugin by Sander Lebbink <sander@cerberus.demon.nl>
-
-* Mon Apr 10 2000 Lenny Cartier <lenny@mandrakesoft.com> 0.9.7-1mdk
-- fix group
-- add menu entry
-
-* Fri Mar 24 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.7
-
-* Sun Mar 12 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.6
-- Added seti@home plugin by Henry Palonen <henkka@yty.net>
-- Added plugin to to display fan speeds by Jarkko Lietolahti <jappe@iki.fi>
-- since plugins (currently) need to be in ~/.gkrellm/plugins, you must
-  symlink to the plugins in /usr/share/gkrellm/plugins
-
-* Fri Mar 3 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.5
-
-* Mon Feb 28 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.4
-- libgtop is no longer required
-
-* Thu Feb 24 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.3
-
-* Wed Feb 23 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.1
-
-* Tue Feb 22 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.9.0
-- libgtop-devel is now required but it seems to be broken as the
-  glibtop-config.h is in /usr/lib/libgtop/include and not /usr/include/ like
-  it should be (you must manually copy before building the RPM)
-
-* Sun Feb 13 2000 Vincent Danen <vdanen@linux-mandrake.com>
-- 0.8.1
-
-* Mon Dec 06 1999 Lenny Cartier <lenny@mandrakesoft.com>
-- 0.7.5
-
-* Fri Nov 19 1999 Lenny Cartier <lenny@mandrakesoft.com>
-- New in contrib
-- Used the SRPMS provided by Vincent Danen
-- bz2 archive
-- 0.7.4
-
-* Wed Nov 17 1999 Vincent Danen <vdanen@linux-mandrake.com>
-- updated specfile for Mandrake contribution
-
-* Thu Nov 11 1999 Vincent Danen <vdanen@softhome.net>
-- wrote spec file
-- 0.7.3
