@@ -3,7 +3,7 @@
 
 Name: python3-module-sphinx-contrib
 Version: 0.2.1
-Release: alt2
+Release: alt3
 
 Summary: A collection of Sphinx extensions
 License: BSD
@@ -36,6 +36,9 @@ instance.
 %prep
 %setup
 
+sed -i 's|#!.*/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
 pushd traclinks
 %python3_build
@@ -54,6 +57,9 @@ popd
 
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt3
+- shebang fixed
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt2
 - python2 -> python3
 
