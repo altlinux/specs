@@ -1,95 +1,59 @@
 %define oname ElasticQuery
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.1
-Release: alt1
+Release: alt2
+
 Summary: A simple query builder for Elasticsearch
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/ElasticQuery/
+# https://github.com/Fizzadar/ElasticQuery.git
 BuildArch: noarch
 
-# https://github.com/Fizzadar/ElasticQuery.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-modules-json
-BuildRequires: python-module-pytest
-BuildRequires: python2.7(jsontest)
-BuildRequires: python2.7(dictdiffer)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python-tools-2to3
 BuildRequires: python3-module-pytest
 BuildRequires: python3(jsontest)
 BuildRequires: python3(dictdiffer)
-%endif
 
-%py_provides elasticquery
+%py3_provides elasticquery
+
 
 %description
 A simple query builder for Elasticsearch. Outputs json ready to be sent
 to Elasticsearch via your favourite client.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A simple query builder for Elasticsearch
-Group: Development/Python3
-%py3_provides elasticquery
-
-%description -n python3-module-%oname
-A simple query builder for Elasticsearch. Outputs json ready to be sent
-to Elasticsearch via your favourite client.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+## py2 -> py3
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+##
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1-alt2
+- python2 disabled
+
 * Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1
 - Updated to upstream version 3.1.
 
