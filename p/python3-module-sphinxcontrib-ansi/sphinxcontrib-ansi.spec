@@ -1,25 +1,27 @@
 %define oname sphinxcontrib-ansi
+
 %def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.6
-Release: alt1.3
+Release: alt2
+
 Summary: Sphinx extension ansi
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinxcontrib-ansi/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-sphinx
-BuildPreReq: python-module-mock
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx python3-module-mock
 
 %if_with bootstrap
-%py_provides sphinxcontrib.ansi
-%py_requires sphinxcontrib sphinx
+%py3_provides sphinxcontrib.ansi
+%py3_requires sphinxcontrib sphinx
 %endif
+
 
 %description
 A Sphinx extension, which turns ANSI color sequences in Sphinx documents
@@ -28,23 +30,28 @@ into colored HTML output.
 %prep
 %setup
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
-%if_without bootstrap
 %check
-python setup.py test
-py.test -vv
-%endif
+%__python3 setup.py test
+# py3.test -vv
 
 %files
 %doc README *.rst doc/*.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
+- python2 -> python3
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt1.3
 - (NMU) rebuild with all requires
 
