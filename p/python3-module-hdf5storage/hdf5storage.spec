@@ -1,37 +1,29 @@
 %define oname hdf5storage
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.14
-Release: alt1.1
+Release: alt2
+
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
 License: BSD
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/hdf5storage/
-
 # https://github.com/frejanordsiek/hdf5storage.git
+BuildArch: noarch
+
 Source: %name-%version.tar
 Patch1: %oname-%version-upstream-docs.patch
 Patch2: %oname-%version-alt-build.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-numpy-testing python-module-h5py-tests
-BuildRequires: python-module-scipy python-module-nose
-BuildRequires: python-module-pytest
-BuildRequires: python-module-numpydoc python-module-alabaster python-module-html5lib python-module-objects.inv
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy python3-module-nose
-BuildRequires: python3-module-pytest
-%endif
+BuildRequires: python3-module-pytest python3-module-sphinx
 
-%py_provides %oname
-%py_requires numpy h5py scipy
+%py3_provides %oname
+%py3_requires numpy h5py scipy
+
 
 %description
 This Python package provides high level utilities to read/write a
@@ -40,24 +32,9 @@ files. This package also provides support for MATLAB MAT v7.3 formatted
 files, which are just HDF5 files with a different extension and some
 extra meta-data.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires numpy h5py scipy
-
-%description -n python3-module-%oname
-This Python package provides high level utilities to read/write a
-variety of Python types to/from HDF5 (Heirarchal Data Format) formatted
-files. This package also provides support for MATLAB MAT v7.3 formatted
-files, which are just HDF5 files with a different extension and some
-extra meta-data.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 This Python package provides high level utilities to read/write a
@@ -87,63 +64,42 @@ This package contains documentation for %oname.
 %patch1 -p1
 %patch2 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx doc
-ln -s ../objects.inv doc/source/
+sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 export PYTHONPATH=$PWD
 %make -C doc pickle
 %make -C doc html
 
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc COPYING.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc doc/build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc COPYING.txt *.rst
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.14-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.14-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
