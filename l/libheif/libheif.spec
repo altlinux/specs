@@ -1,6 +1,6 @@
 Name: libheif
-Version: 1.4.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
 Group: System/Libraries
@@ -50,6 +50,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Nov 14 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 
