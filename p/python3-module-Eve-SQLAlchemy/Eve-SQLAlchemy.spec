@@ -3,26 +3,27 @@
 %def_disable check
 %def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 License: GPL / BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/Eve-SQLAlchemy/
 # https://github.com/RedTurtle/eve-sqlalchemy.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-%py_provides eve_sqlalchemy
-%py_requires eve sqlalchemy flask_sqlalchemy
-
-BuildRequires: python-module-pytest
+%py3_provides eve_sqlalchemy
+%add_python3_req_skip flask.ext.sqlalchemy
+%if_with bootstrap
+%py3_requires eve sqlalchemy flask_sqlalchemy
+%endif
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-pytest
+BuildRequires: python3-module-pytest
 
 
 %description
@@ -30,56 +31,30 @@ Powered by Eve, SQLAlchemy and good intentions this extenstion allows to
 effortlessly build and deploy highly customizable, fully featured
 RESTful Web Services with SQL-based backends.
 
-%package -n python3-module-%oname
-Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
-Group: Development/Python3
-%py3_provides eve_sqlalchemy
-%add_python3_req_skip flask.ext.sqlalchemy
-%if_with bootstrap
-%py3_requires eve sqlalchemy flask_sqlalchemy
-%endif
-
-%description -n python3-module-%oname
-Powered by Eve, SQLAlchemy and good intentions this extenstion allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services with SQL-based backends.
-
 %prep
 %setup
 
-cp -fR . ../python3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-python setup.py test
-
-pushd ../python3
 python3 setup.py test
-popd
 
 %files
-%doc AUTHORS CHANGES *.rst docs/*.rst examples
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc AUTHORS CHANGES *.rst docs/*.rst examples
 %python3_sitelibdir/*
 
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt4
+- python2 disabled
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt3
 - rebuild with all requires
 
