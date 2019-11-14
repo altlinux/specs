@@ -3,7 +3,7 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: 1.1.18
-Release: alt2
+Release: alt3
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -39,6 +39,8 @@ sed -i -e 's:git describe --always:echo %version:' \
 	configure.ac
 
 %build
+# without following export it fails to build with new boost for some reason on ppc64le
+export ax_boost_user_program_options_lib=boost_program_options
 %autoreconf
 %configure \
 	--enable-ssl \
@@ -72,6 +74,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Thu Nov 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.18-alt3
+- Rebuilt with boost-1.71.0.
+
 * Wed Mar 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.1.18-alt2
 - Fix FTBFS against libmysqlclient.so.21
 
