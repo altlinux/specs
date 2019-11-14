@@ -10,7 +10,7 @@
 
 Name: telegram-desktop
 Version: 1.8.15
-Release: alt1
+Release: alt2
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -37,20 +37,20 @@ Patch19: 0019-fix-add-ppc64-e2k-support.patch
 # ix86 disabled due to memory limits:
 # /usr/bin/ld.default: error: CMakeFiles/Telegram.dir/generated/scheme.cpp.o(.eh_frame) is too large (0xdddd8 bytes)
 # /usr/bin/ld.default: error in CMakeFiles/Telegram.dir/generated/scheme.cpp.o(.eh_frame); no .eh_frame_hdr table will be created
-ExcludeArch: %ix86
+#ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
 
 BuildRequires(pre): rpm-build-compat >= 2.1.5
 BuildRequires(pre): rpm-build-intro >= 2.1.5
+
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 3000
 
-# https://www.altlinux.org/RPM/debuginfo
-#undefine _enable_debug
-#global __find_debuginfo_files %nil
+%ifarch %ix86
 %define optflags_debug -g0
+%endif
 
 BuildRequires: gcc-c++ libstdc++-devel gyp python3
 
@@ -60,6 +60,9 @@ BuildRequires: cmake >= 3.13
 BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
 # needs for smiles and emojicons
 Requires: qt5-imageformats
+
+# run around https://bugzilla.altlinux.org/show_bug.cgi?id=34665
+Requires: libqt5-core >= %_qt5_version
 
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
@@ -223,6 +226,10 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Thu Nov 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.15-alt2
+- enable build for i586 (with -g0)
+- fix unexpected canonicalization unexpectedly shrank by one character (in Qt's paths)
+
 * Tue Oct 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.15-alt1
 - new version 1.8.15 (with rpmrb script)
 - build codegen separately
