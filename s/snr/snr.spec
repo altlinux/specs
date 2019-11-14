@@ -3,7 +3,7 @@ Name: snr
 License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
-Version: 1.4
+Version: 1.5
 Release: alt1
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -36,6 +36,9 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Thu Nov 14 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.5-alt1
+- Fixed parsing pactl output
 
 * Mon Oct 21 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.4-alt1
 - Version 1.4:
