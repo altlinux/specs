@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install libglvnd-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_14
+Release:        alt3_14
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -32,6 +32,9 @@ Patch3:         %{name}-1.3-narrowing-conversion-fixes.patch
 # Fix comparison between pointer and integer errors
 # https://github.com/anura-engine/anura/commit/18ad198565f7a3280d991a5878316f6e5c9351d3
 Patch4:         %{name}-1.3-comparison.patch
+
+# Based on https://github.com/anura-engine/anura/commit/faecd8a86d73d2239ebc7998aea5c69d0511decb
+Patch100:       %{name}-1.3-alt-support-boost-1.71.0.patch
 
 # We have problems with these architectures
 # https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
@@ -85,6 +88,7 @@ Game data for frogatto.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch100 -p2
 
 # Fix locale file path
 sed -i 's!"./locale/"!"%{_datadir}/locale/"!' src/i18n.cpp
@@ -154,6 +158,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Thu Nov 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt3_14
+- Rebuilt with boost-1.71.0.
+
 * Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_14
 - update to new release by fcimport
 
