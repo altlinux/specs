@@ -3,7 +3,7 @@
 Summary: bootloader and GPU firmware for Raspberry Pi
 Name: raspberrypi-firmware
 Version: 20191105
-Release: alt1
+Release: alt2
 Url: https://github.com/raspberrypi/firmware
 License: distributable
 Group: System/Kernel and hardware
@@ -28,6 +28,7 @@ Source14: start4.elf
 Source15: start4cd.elf
 Source16: start4db.elf
 Source17: start4x.elf
+Source18: bcm2711-rpi-4-b.dtb
 
 Requires: u-boot-rpi3
 
@@ -66,6 +67,7 @@ Requires: u-boot-rpi3
 %__install -m644 %SOURCE15 %buildroot/%target_rpi4
 %__install -m644 %SOURCE16 %buildroot/%target_rpi4
 %__install -m644 %SOURCE17 %buildroot/%target_rpi4
+%__install -m644 %SOURCE18 %buildroot/%target_rpi4
 
 cp -a %buildroot/%target_rpi3/bootcode.bin %buildroot/%target_rpi4
 
@@ -82,6 +84,9 @@ echo 'arm_64bit=1' >> %buildroot/%target_rpi4/config.txt
 %doc %_docdir/%name
 
 %changelog
+* Thu Nov 14 2019 Dmitry Terekhin <jqt4@altlinux.org> 20191105-alt2
+- Added bcm2711-rpi-4-b.dtb for the RasPi4 firmware's work
+
 * Tue Nov 05 2019 Dmitry Terekhin <jqt4@altlinux.org> 20191105-alt1
 - new snapshot
 
