@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -14,7 +14,7 @@ BuildArch: noarch
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Conflicts: rpm-build < 4.0.4-alt100.91
-Requires: python-base >= 2.7.2-alt3
+Requires: python2-base
 Requires: file >= 4.26-alt11
 
 AutoReqProv: yes, nopython
@@ -63,6 +63,12 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Thu Nov 14 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.38.0-alt1
+- Set __python macro to python2.7.
+- Fixed python.req.py and test.sh (use python2-base instead of python-base).
+- Fixed shebangs and interpreter calls (use versioned python).
+- Made the package require no python-base.
+
 * Mon Jul  2 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.37.0-alt1
 - Assume that setuptools are required if the traditional Python build/install
   macros are used (overridable through %%python_setup_buildrequires).
