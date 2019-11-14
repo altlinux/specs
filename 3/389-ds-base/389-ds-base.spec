@@ -11,7 +11,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.9
+Version: 1.4.1.10
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -52,6 +52,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: python3(build_manpages)
 BuildRequires: python3(argcomplete)
 BuildRequires: python3(ldap)
+BuildRequires: python3(packaging)
 BuildRequires: python3(six)
 
 %if_with cockpit
@@ -589,6 +590,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 14 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.10-alt1
+- 1.4.1.9 -> 1.4.1.10 (fixes: CVE-2019-14824).
+
 * Tue Nov 05 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.9-alt1
 - 1.4.1.8 -> 1.4.1.9.
 
