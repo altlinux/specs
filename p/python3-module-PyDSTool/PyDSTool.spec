@@ -1,80 +1,54 @@
 %define oname PyDSTool
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.88.121202
-Release: alt3.bzr20130716.1.1
+Release: alt4
+
 Summary: Integrated simulation, modeling and analysis package for dynamical systems
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.ni.gsu.edu/~rclewley/PyDSTool/FrontPage.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # http://jay.cam.cornell.edu/svn/PyDSTool
+
 Source: %oname-%version.tar.gz
 Source1: %oname.pth
 
-#Requires: python-module-scipy python-module-matplotlib
-#Requires: python-modules-tkinter gcc-fortran python-devel
-#Requires: python-devel gcc-fortran swig python-module-numpy
-#Requires: libgotoblas-devel liblapack-goto-devel
-#Requires: python-module-openopt
-#Requires: gnuplot
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
 
-%add_python_req_skip matplotlib scipy pylab
+%add_python3_req_skip matplotlib scipy pylab
+
 
 %description
 PyDSTool is an integrated simulation, modeling and analysis package for
 dynamical systems, written in Python.
 
-%package -n python3-module-%oname
-Summary: Integrated simulation, modeling and analysis package for dynamical systems
-Group: Development/Python3
-%add_python3_req_skip matplotlib scipy pylab
-
-%description -n python3-module-%oname
-PyDSTool is an integrated simulation, modeling and analysis package for
-dynamical systems, written in Python.
-
 %install
-install -d %buildroot%python_sitelibdir
-pushd %buildroot%python_sitelibdir
-tar -xzf %SOURCE0
-rm -fR .gear
-install -p -m644 %SOURCE1 .
-popd
-
-%if_with python3
 install -d %buildroot%python3_sitelibdir
 pushd %buildroot%python3_sitelibdir
 tar -xzf %SOURCE0
 rm -fR .gear
+
+## py2 -> py3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+##
+
 install -p -m644 %SOURCE1 .
 popd
-%endif
 
-# There is a file in the package named .DS_Store or .DS_Store.gz, 
-# the file name used by Mac OS X to store folder attributes.  
-# Such files are generally useless in packages and were usually accidentally 
-# included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
 %files
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.88.121202-alt4
+- python2 disabled
+
 * Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.88.121202-alt3.bzr20130716.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
