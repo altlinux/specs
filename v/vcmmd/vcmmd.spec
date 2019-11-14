@@ -1,7 +1,7 @@
 
 Name:    vcmmd
 Version: 7.0.165
-Release: alt3
+Release: alt4
 
 Summary: Virtuozzo containers memory management daemon
 License: LGPL-2.1
@@ -40,8 +40,6 @@ echo "INSTALL: " %python3_install
 %doc COPYING
 %_bindir/*
 %python3_sitelibdir/*
-%_libdir/python*/site-packages/*info
-%_libdir/python*/site-packages/%name/
 %_unitdir/%name.service
 %_sysconfdir/vz/vcmmd.d/
 %config(noreplace) %_sysconfdir/dbus-1/system.d/com.virtuozzo.vcmmd.conf
@@ -49,6 +47,9 @@ echo "INSTALL: " %python3_install
 %config(noreplace) %_sysconfdir/logrotate.d/*
 
 %changelog
+* Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt4
+- cleanup spec
+
 * Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt3
 - change /var/run to /run
 
@@ -56,4 +57,4 @@ echo "INSTALL: " %python3_install
 - convert to python3
 
 * Mon Sep 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt1
-  - initial import for ALT
+- initial import for ALT
