@@ -6,7 +6,7 @@
 
 Name: pve-%rname
 Version: 4.0.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -60,6 +60,13 @@ Patch41: 0031-PVE-bug-fix-1071-vma-writer.c-use-correct-AioContext.patch
 Patch42: 0032-qmp_backup-run-backup-related-code-inside-coroutines.patch
 Patch43: 0033-qmp_backup-use-a-CoMutex-to-protect-access-to-backup.patch
 Patch44: 0034-vma_writer_close-avoid-call-to-aio_poll-acquire-flus.patch
+Patch45: 0035-backup_job_create-pass-cluster-size-for-dump.patch
+Patch46: 0036-avoid-calling-dump_cb-with-NULL-data-pointer-for-sma.patch
+Patch47: 0037-rename-config_to_vma-into-pvebackup_co_add_config.patch
+Patch48: 0038-pvebackup_co_dump_cb-do-not-call-job-cancel.patch
+Patch49: 0039-fix-backup-job-completion.patch
+Patch50: 0040-pvebackup_complete_cb-avoid-poll-loop-if-already-ins.patch
+Patch51: 0041-PVE-backup-consider-source-cluster-size-as-well.patch
 
 ExclusiveArch: x86_64 aarch64
 BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
@@ -184,6 +191,13 @@ This is an auxiliary package.
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
+%patch45 -p1
+%patch46 -p1
+%patch47 -p1
+%patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
 
 %patch100 -p1
 
@@ -320,7 +334,6 @@ fi
 %_bindir/elf2dmp
 %_bindir/qemu
 %_bindir/qemu-kvm
-%_bindir/kvm
 %_bindir/qemu*system*
 %_bindir/vma
 %_bindir/qemu-pr-helper
@@ -342,6 +355,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Wed Nov 13 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:4.0.1-alt3
+- 4.0.1-5
+
 * Wed Oct 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:4.0.1-alt2
 - 4.0.1-2
 
