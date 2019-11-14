@@ -5,8 +5,8 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 8.1.1
-Release: alt2
+Version: 8.1.2
+Release: alt1
 
 Summary: DHCP Client
 License: %bsd
@@ -15,10 +15,6 @@ Group: System/Servers
 URL: https://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-# Patch from upstream.
-# Drop it with new version.
-Patch1: INET-Fix-corruption-of-IPv4-address-flags-when-renew.patch
 
 AutoReq: yes, noshell
 
@@ -40,7 +36,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %add_optflags -fpie
@@ -96,6 +91,10 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Thu Nov 14 2019 Mikhail Efremov <sem@altlinux.org> 1:8.1.2-alt1
+- Drop obsoleted patch.
+- Updated to 8.1.2.
+
 * Tue Nov 12 2019 Mikhail Efremov <sem@altlinux.org> 1:8.1.1-alt2
 - Patch drom upstream:
   + INET: Fix corruption of IPv4 address flags when renewing.
