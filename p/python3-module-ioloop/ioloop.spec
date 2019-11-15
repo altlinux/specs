@@ -1,87 +1,50 @@
 %define oname ioloop
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1
-Release: alt2.a.git20141215.1
+Release: alt3
+
 Summary: Simple IOloop by epoll or kqueue
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/ioloop/
-
 # https://github.com/mengzhuo/ioloop.git
+BuildArch: noarch
+
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
+BuildRequires: python-tools-2to3
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 Simple IOloop by epoll or kqueue.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Simple IOloop by epoll or kqueue
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Simple IOloop by epoll or kqueue.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-python test.py
-%if_with python3
-pushd ../python3
 2to3 -w -n test.py
-python3 setup.py test
-python3 test.py
-popd
-%endif
+%__python3 setup.py test
+%__python3 test.py
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Nov 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1-alt3
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.a.git20141215.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
