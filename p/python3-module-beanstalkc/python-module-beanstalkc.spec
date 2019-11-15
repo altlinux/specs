@@ -1,63 +1,39 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140302.2
 %define module_name beanstalkc
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 0.4.0
-#Release: alt1.git20140302.1.1
-Group: Development/Python
+Release: alt2
+Group: Development/Python3
 License: Apache License
+
 Summary: beanstalkc is a simple beanstalkd client library for Python
 URL: https://github.com/earl/beanstalkc.git
 # https://github.com/earl/beanstalkc.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
+
 
 %description
-beanstalkc is a simple beanstalkd client library for Python. [beanstalkd][1] is
-a fast, distributed, in-memory workqueue service
-
-%package -n python3-module-%module_name
-Summary: beanstalkc is a simple beanstalkd client library for Python
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 beanstalkc is a simple beanstalkd client library for Python. [beanstalkd][1] is
 a fast, distributed, in-memory workqueue service
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+## py2 -> py3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+##
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -65,16 +41,14 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc LICENSE README.* TUTORIAL.*
-%python_sitelibdir/beanstalkc*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc LICENSE README.* TUTORIAL.*
 %python3_sitelibdir/beanstalkc*
 %python3_sitelibdir/__pycache__/*
-%endif
+
 
 %changelog
+* Fri Nov 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.0-alt2
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1.git20140302.2
 - Rebuild with python3.7.
 
