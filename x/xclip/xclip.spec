@@ -1,6 +1,6 @@
 Name: xclip
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Packager: Nikita Ermakov <arei@altlinux.org>
 
@@ -12,8 +12,7 @@ Url: https://github.com/astrand/xclip
 Source: %name-%version.tar
 Patch1: xclip-0.12-setsid.patch
 
-# Automatically added by buildreq on Sun Nov 15 2009
-BuildRequires: imake libICE-devel libXmu-devel xorg-cf-files
+BuildRequires: libICE-devel libXmu-devel
 
 %description
 xclip is a command line interface to the X11 clipboard. It can read data from
@@ -41,6 +40,9 @@ make DESTDIR=%buildroot install install.man
 %_bindir/*
 
 %changelog
+* Fri Nov 15 2019 Nikita Ermakov <arei@altlinux.org> 0.13-alt2
+- Drop imake BR.
+
 * Tue Aug 20 2019 Nikita Ermakov <arei@altlinux.org> 0.13-alt1
 - Sync with an upstream (ALT bug #36554).
 - Minor fixes to the spec file.
