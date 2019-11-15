@@ -2,7 +2,7 @@
 
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          2.2.0
+Version:          2.3.0
 Release:          alt1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
@@ -95,6 +95,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Fri Nov 15 2019 Mikhail Efremov <sem@altlinux.org> 2.3.0-alt1
+- 2.2.0 -> 2.3.0.
+
 * Thu May 23 2019 Mikhail Efremov <sem@altlinux.org> 2.2.0-alt1
 - 2.1.1 -> 2.2.0.
 - Drop libidn2.so.4 symlink and provides.
