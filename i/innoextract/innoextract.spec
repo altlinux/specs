@@ -1,6 +1,6 @@
 Name:    innoextract
 Version: 1.8
-Release: alt1
+Release: alt2
 
 Summary: A tool to extract installers created by Inno Setup
 License: Zlib
@@ -9,6 +9,7 @@ Url:     http://constexpr.org/innoextract/
 Group:   Archiving/Compression
 
 Source0: %name-%version.tar
+Patch1: %name-%version-alt-boost-compat.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -21,6 +22,7 @@ non-windows systems without running the actual installer using wine.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %cmake_insource
@@ -35,6 +37,9 @@ non-windows systems without running the actual installer using wine.
 %_man1dir/innoextract.*
 
 %changelog
+* Fri Nov 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8-alt2
+- Rebuilt with boost-1.71.0.
+
 * Mon Sep 16 2019 Andrey Cherepanov <cas@altlinux.org> 1.8-alt1
 - New version.
 
