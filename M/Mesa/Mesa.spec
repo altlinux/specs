@@ -66,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.2.3
+Version: 19.2.4
 Release: alt1
 Epoch: 4
 License: MIT
@@ -460,6 +460,9 @@ install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 %endif
 
 %changelog
+* Fri Nov 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.4-alt1
+- 19.2.4
+
 * Thu Nov 07 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.3-alt1
 - 19.2.3
 
