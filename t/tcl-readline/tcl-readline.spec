@@ -3,7 +3,7 @@
 
 %define teaname readline
 %define srcname tclreadline
-%define srcver 2.3.6
+%define srcver 2.3.7
 
 Name: tcl-%teaname
 Version: %srcver
@@ -16,7 +16,7 @@ Url: https://github.com/flightaware/tclreadline
 
 # repacked https://github.com/flightaware/tclreadline/archive/v%version.tar.gz
 Source0: %srcname-%srcver.tar
-Source1: sample.tclshrc
+Source1: tcl-readline.watch
 
 Patch1: DEBIAN-functions.patch
 Patch2: 0001-ALT-init.patch
@@ -38,26 +38,39 @@ as well as history expansion (well known from shells like bash).
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
-sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
 
 %build
 autoreconf -fisv -Iaux
 %add_optflags -DUSE_NON_CONST
-%configure --libdir=%_tcllibdir --with-tk=%_libdir --with-tlib-library="-ltinfo"
+%configure \
+	--disable-static \
+	--enable-tclstub \
+	--libdir=%_tcllibdir \
+	--with-tk=%_libdir \
+	--with-tlib-library="-ltinfo" \
+	#
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install \
-	libdir=%_tcllibdir tclrldir=%_tcldatadir/%teaname
-%__cp %SOURCE1 .
+	libdir=%_tcllibdir tclrldir=%_tcllibdir/%teaname
 
 %files
 %doc AUTHORS COPYING ChangeLog README.md TODO sample.tclshrc
 %_tcllibdir/lib%{srcname}*.so
-%_tcldatadir/%teaname
+%_tcllibdir/%teaname
 %_mandir/mann/%srcname.n.*
 
 %changelog
+* Fri Nov 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.7-alt1
+- Updated to 2.3.7.
+- Built according ALT TCL extension policy (archdep extentsions should hold
+  pkgIndex.tcl in %%_tcllibdir/%%teaname), reworked patches and spec.
+- Built with tclstub.
+- Removed non-in-the-source sample.tclshrc.
+- spec: Put --disable-static to %%configure.
+- Packed watch file to the sourcerpm.
+
 * Sun Aug 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.6-alt1
 - 2.3.6.
 - Refreshed Url for new upstream.
