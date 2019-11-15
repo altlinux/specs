@@ -1,6 +1,6 @@
 Name: x2gobroker
 Version: 0.0.4.1
-Release: alt13
+Release: alt14
 Summary: X2Go Session Broker
 License: AGPLv3+
 Group: Communications
@@ -419,6 +419,9 @@ touch ~/.ssh/id_rsa
 %_man8dir/x2gobroker-pubkeyauthorizer.8*
 
 %changelog
+* Fri Nov 15 2019 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt14
+- run daemon with x2gobroker:x2gobroker perms
+
 * Wed Oct 30 2019 Oleg Solovyov <mcpain@altlinux.org> 0.0.4.1-alt13
 - don't run daemon from root
 
