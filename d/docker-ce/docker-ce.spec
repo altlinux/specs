@@ -15,7 +15,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    19.03.3
+Version:    19.03.5
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -174,6 +174,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Fri Nov 15 2019 Vladimir Didenko <cow@altlinux.org> 19.03.5-alt1
+- 19.03.5
+
 * Thu Oct 10 2019 Vladimir Didenko <cow@altlinux.org> 19.03.3-alt1
 - 19.03.3
 
