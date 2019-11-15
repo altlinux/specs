@@ -1,9 +1,9 @@
 %define testsdir %{_localstatedir}/%{name}/tests
-%def_with bootstrap
+%def_without bootstrap
 
 Name: libtree
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: C++ lib that helps to work with tree-like data structures
 License: GPLv3
@@ -101,6 +101,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Nov 15 2019 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt2
+- Build with tests activated.
+
 * Fri Nov 15 2019 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
 - Initial release;
 - Tests are not yet activated.
