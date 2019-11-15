@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1
 
 Summary: Python test framework
@@ -114,6 +114,9 @@ tox --sitepackages -p auto -o -v
 %_bindir/pytest
 
 %changelog
+* Fri Nov 15 2019 Stanislav Levin <slev@altlinux.org> 4.6.6-alt1
+- 4.6.5 -> 4.6.6.
+
 * Thu Aug 22 2019 Stanislav Levin <slev@altlinux.org> 4.6.5-alt1
 - 4.6.4 -> 4.6.5.
 
