@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          45c710223c5fbf04dc3028b9a90b51892e36ca7f
+%global commit          510ec3acd06934207683a5c949bc2de77d017925
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           libnetwork
-Version:        19.03.3
+Version:        19.03.5
 Release:        alt1.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
@@ -61,6 +61,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Fri Nov 15 2019 Vladimir Didenko <cow@altlinux.org> 19.03.5-alt1.git510ec3a
+- New version (for docker 19.03.5-ce)
+
 * Thu Oct 10 2019 Vladimir Didenko <cow@altlinux.org> 19.03.3-alt1.git45c7102
 - New version (for docker 19.03.3-ce).
 
