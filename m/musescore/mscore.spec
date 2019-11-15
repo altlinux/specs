@@ -2,7 +2,7 @@
 %define mversion 3.3
 
 Name: musescore
-Version: 3.3
+Version: 3.3.2
 Release: alt1
 
 Summary: Music notation and composition software
@@ -13,8 +13,6 @@ Url: https://musescore.org
 
 # https://github.com/musescore/MuseScore
 Source: %name-%version.tar
-# Grabbed from https://github.com/OpenMandrivaAssociation/musescore
-Patch: musescore-3.0.2-dont-copy-qtwebengine.patch
 
 BuildPreReq: chrpath rpm-build-xdg
 
@@ -43,7 +41,6 @@ Music notation and composition software
 
 %prep
 %setup
-%patch -p1
 
 # Remove -lporttime on RPM-based systems where PortTime is part of PortMidi
 sed -i 's/ -lporttime//' mscore/CMakeLists.txt
@@ -58,6 +55,7 @@ cmake \
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
     -DBUILD_SCRIPTGEN=FALSE \
     -DUSE_SYSTEM_FREETYPE=ON \
+    -DBUILD_WEBENGINE=OFF \
     ..
 
 make lrelease
@@ -94,6 +92,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Nov 15 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1
+- Build new version.
+
 * Wed Nov 06 2019 Grigory Ustinov <grenka@altlinux.org> 3.3-alt1
 - Build new version.
 
@@ -143,13 +144,3 @@ chrpath -d %buildroot%_bindir/mscore
 
 * Mon Jun 09 2008 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - initial build for ALT Linux Sisyphus
-
-* Sun Feb 10 2008 - Carlos Goncalves <cgoncalves@opensuse.org>
-- updated to version 0.9.1
-
-* Tue Jul 31 2007 - Carlos Goncalves <cgoncalves@opensuse.org>
-- updated to version 0.6.1
- * This is a bugfix release fixing the midi import crash and adding some small usability enhancements.
-
-* Sun Jul 29 2007 - Carlos Goncalves <cgoncalves@opensuse.org>
-- initial package
