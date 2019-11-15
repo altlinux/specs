@@ -1,6 +1,6 @@
 Name: libxslt
-Version: 1.1.33
-Release: alt2
+Version: 1.1.34
+Release: alt1
 
 Summary: Library providing XSLT support
 License: MIT
@@ -169,12 +169,14 @@ make check
 %dir %pkgdocdir
 %dir %pkgdocdir/python
 %dir %pkgdocdir/python/examples
-%pkgdocdir/python/TODO
 %pkgdocdir/python/examples/*.py
 %pkgdocdir/python/examples/*.xml
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
+* Fri Nov 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.34-alt1
+- Updated to 1.1.34.
+
 * Thu Sep 12 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.33-alt2
 - Fixes:
   + CVE-2019-11068 security framework bypass;
