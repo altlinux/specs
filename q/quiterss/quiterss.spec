@@ -3,8 +3,8 @@
 %endif
 
 Name: quiterss
-Version: 0.18.12
-Release: alt2
+Version: 0.19.0
+Release: alt1
 
 Summary: RSS/Atom aggregator
 Summary(ru_RU.UTF-8): QuiteRSS - быстрая и удобная программа для чтения новостных лент RSS/Atom
@@ -76,6 +76,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Sat Nov 16 2019 Anton Midyukov <antohami@altlinux.org> 0.19.0-alt1
+- new version
+
 * Sun Nov 10 2019 Anton Midyukov <antohami@altlinux.org> 0.18.12-alt2
 - rebuild with qt5 except e2k
 
