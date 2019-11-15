@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-cffi
-Version: 1.12.3
+Version: 1.13.2
 Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
@@ -87,6 +87,9 @@ tox.py3 --sitepackages -vr
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Nov 15 2019 Stanislav Levin <slev@altlinux.org> 1.13.2-alt1
+- 1.12.3 -> 1.13.2.
+
 * Mon May 06 2019 Stanislav Levin <slev@altlinux.org> 1.12.3-alt1
 - 1.10.0 -> 1.12.3.
 - Enabled testing.
