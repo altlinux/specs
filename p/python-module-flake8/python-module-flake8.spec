@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.7.8
+Version: 3.7.9
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -128,6 +128,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/flake8-*.egg-info/
 
 %changelog
+* Sat Nov 16 2019 Stanislav Levin <slev@altlinux.org> 3.7.9-alt1
+- 3.7.8 -> 3.7.9.
+
 * Tue Aug 13 2019 Stanislav Levin <slev@altlinux.org> 3.7.8-alt1
 - 3.7.7 -> 3.7.8.
 
