@@ -1,11 +1,11 @@
 Name: git
-Version: 2.21.0
-Release: alt1
+Version: 2.24.0
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
 Group: Development/Other
-Url: http://git-scm.com/
+Url: https://git-scm.com/
 
 # git://git.altlinux.org/gears/g/git.git
 Source: %name-%version-%release.tar
@@ -243,6 +243,20 @@ and full access to internals.
 This package contains diff-highlight utility, which is a part of Git
 contributed software.
 
+%package subtree
+Summary: Merge subtrees together and split repository into subtrees
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-core = %EVR
+
+%description subtree
+Git is a fast, scalable, distributed revision control system with an
+unusually rich command set that provides both high-level operations
+and full access to internals.
+
+This package contains git-subtree utility which is a part of Git
+contributed software.
+
 %package full
 Summary: Git core and tools
 Group: Development/Other
@@ -288,6 +302,7 @@ touch git-gui/credits
 %make_build -C Documentation doc.dep
 %make_build all %{!?_without_doc:man html}
 %make_build -C contrib/diff-highlight
+%make_build -C contrib/subtree all %{!?_without_doc:doc}
 
 %check
 %make_build -k test
@@ -296,6 +311,7 @@ touch git-gui/credits
 %makeinstall_std \
 	install-lib \
 	%{!?_without_doc:install-man install-html}
+%makeinstall_std %{!?_without_doc:install-doc} -C contrib/subtree
 
 mkdir -p %buildroot%_includedir/git
 find -name \*.d -print0 |
@@ -311,7 +327,7 @@ xargs install -pm644 -t %buildroot%_includedir/git -- < headers.list
 
 chmod a-x %buildroot%gitexecdir/git-sh-setup
 install -pDm644 contrib/completion/git-completion.bash \
-	%buildroot/etc/bash_completion.d/git
+	%buildroot%_datadir/bash-completion/completions/git
 # Generate shell functions provides list.
 (
 	echo '# shell functions provides list'
@@ -342,6 +358,7 @@ rm -r %buildroot%_datadir/git-core/contrib/completion
 rm -r %buildroot%_datadir/git-core/contrib/emacs
 rm -r %buildroot%_datadir/git-core/contrib/examples
 rm -r %buildroot%_datadir/git-core/contrib/diff-highlight
+rm -r %buildroot%_datadir/git-core/contrib/subtree
 
 # Remove unpackaged files.
 %{?_without_arch:rm %buildroot%gitexecdir/git-archimport}
@@ -372,7 +389,7 @@ popd
 %files full
 
 %files core
-%config /etc/bash_completion.d/git
+%_datadir/bash-completion/completions/git
 %_bindir/*
 %exclude %_bindir/git-cvs*
 %gitexecdir/
@@ -380,7 +397,9 @@ popd
 %exclude %gitexecdir/git-gui*
 %exclude %gitexecdir/git-citool
 %exclude %gitexecdir/git-add--interactive
+%exclude %gitexecdir/git-subtree
 %exclude %_bindir/gitk
+%exclude %_bindir/diff-highlight
 %exclude %_bindir/diff-highlight
 %{!?_without_arch:%exclude %gitexecdir/git-archimport}
 %{!?_without_email:%exclude %gitexecdir/git-*email*}
@@ -389,6 +408,7 @@ popd
 %exclude %_datadir/git-core/contrib/
 %if_with doc
 %_mandir/man?/*
+%exclude %_man1dir/git-subtree.*
 %exclude %_man1dir/git-daemon.*
 %exclude %_man1dir/git-svn*.1*
 %exclude %_man1dir/git-cvs*.1*
@@ -492,7 +512,20 @@ popd
 %_bindir/diff-highlight
 %doc contrib/diff-highlight/README
 
+%files subtree
+%gitexecdir/git-subtree
+%if_with doc
+%_man1dir/git-subtree.*
+%endif #doc
+
 %changelog
+* Sun Nov 17 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt2
+- Relocated bash completions (closes: #37426).
+- Packaged git-subtree as a separate subpackage (closes: #37432).
+
+* Mon Nov 04 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt1
+- 2.21.0 -> 2.24.0.
+
 * Sun Feb 24 2019 Dmitry V. Levin <ldv@altlinux.org> 2.21.0-alt1
 - 2.19.2 -> 2.21.0.
 
