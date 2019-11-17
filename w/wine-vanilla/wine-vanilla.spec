@@ -1,8 +1,8 @@
 %define gecko_version 2.47
-%define mono_version 4.9.3
+%define mono_version 4.9.4
 
 Name: wine-vanilla
-Version: 4.19
+Version: 4.20
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -87,6 +87,7 @@ Requires: libssl libgnutls30 libpng16 libjpeg
 Requires: webclient
 
 Requires: wine-gecko = %gecko_version
+Conflicts: wine-mono < %mono_version
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -430,6 +431,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 4.20-alt1
+- new version 4.20
+- strict require wine-mono 4.9.4
+
 * Sat Nov 02 2019 Vitaly Lipatov <lav@altlinux.ru> 4.19-alt1
 - new version 4.19
 
