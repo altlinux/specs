@@ -3,9 +3,9 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 1.2.3
-Release: alt2
+Name: python3-module-%oname
+Version: 3.1.0
+Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
 License: BSD 3-Clause
@@ -16,12 +16,20 @@ Url: https://pypi.org/project/pytest-randomly/
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-python3
+
 %if_with check
-BuildRequires: python-module-numpy
-BuildRequires: python-module-pytest
+BuildRequires: python3(entrypoints)
+BuildRequires: python3(factory)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
+
+# PyPi name
+%py3_provides pytest-randomly
 
 %description
 Randomness in testing can be quite powerful to discover hidden flaws in the
@@ -40,23 +48,38 @@ filled in randomly due to not being specified.
 %setup
 %patch -p1
 
+# relax deps
+grep -qsF 'deps = -rrequirements/py37.txt' tox.ini || exit 1
+sed -i 's/deps = -rrequirements\/py37\.txt/deps = /' tox.ini
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-PYTHONPATH="$(pwd)" %_bindir/py.test -vv
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -v
 
 %files
 %doc README.rst
-%python_sitelibdir/pytest_randomly.py*
-%python_sitelibdir/pytest_randomly-*.egg-info/
+%python3_sitelibdir/pytest_randomly.py
+%python3_sitelibdir/__pycache__/pytest_randomly.*.py*
+%python3_sitelibdir/pytest_randomly-*.egg-info/
 
 %changelog
-* Sat Nov 16 2019 Stanislav Levin <slev@altlinux.org> 1.2.3-alt2
-- Moved Python3 part to its own package.
+* Sat Nov 16 2019 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 1.2.3 -> 3.1.0.
 
 * Wed Dec 19 2018 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
 - Initial build.
