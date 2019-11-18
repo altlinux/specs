@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
-Version: 6.04.pre1
-Release: alt1.5e426532
+Version: 6.04.pre3
+Release: alt1
 License: GPL-2.0-or-later
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -15,7 +15,10 @@ Source4: extlinux.filetrigger
 
 Patch0: strip-gnu-property.patch
 
-BuildRequires: libe2fs-devel libuuid-devel nasm
+BuildRequires: libe2fs-devel
+BuildRequires: libuuid-devel
+BuildRequires: nasm
+BuildRequires: python-base
 
 Requires: libshell util-linux
 
@@ -51,7 +54,8 @@ sed -i \
 	-e 's,\(strip tidy clean dist install installer netinstall\):$,\1 extbootinstall:,' \
 	Makefile
 
-make bios
+make bios \
+	PYTHON=python2
 
 %install
 make bios extbootinstall \
@@ -105,6 +109,12 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 6.04.pre3-alt1
+- New release (6.04.pre3).
+
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 6.04.pre1-alt2.5e426532
+- Fix build.
+
 * Sat Dec 22 2018 Alexey Gladkov <legion@altlinux.ru> 6.04.pre1-alt1.5e426532
 - New snapshot (syslinux-6.04-pre1-41-g5e426532).
 
