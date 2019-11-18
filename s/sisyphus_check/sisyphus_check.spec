@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.53
+Version: 0.8.54
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Nov 19 2019 Alexey Gladkov <legion@altlinux.ru> 0.8.54-alt1
+- 150-check-intersects: forbid intersections with common-licenses.
+- 250-check-license: add license validation.
+
 * Sat Oct 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.53-alt1
 - 100-check-deps: add /usr/bin/lua to bad_deps.
 

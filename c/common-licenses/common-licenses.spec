@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -19,16 +19,46 @@ just refer to this one.
 %prep
 %setup -q -n license
 
+%build
+if find license license-ambiguous -mindepth 1 -maxdepth 1 -printf '%%f\n' | sort | uniq -d | grep ^; then
+	echo >&2 'These licenses are listed in both directories simultaneously.'
+	exit 1
+fi
+
 %install
-mkdir -p %buildroot%_licensedir  %buildroot%_licensedir-exception
+mkdir -p \
+	%buildroot%_licensedir \
+	%buildroot%_licensedir-ambiguous \
+	%buildroot%_licensedir-exception
+
 cp -dp license/* %buildroot%_licensedir
-cp -dp exception/* %buildroot%_licensedir-exception
+cp -dp license-ambiguous/.desc %buildroot%_licensedir-ambiguous
+cp -dp license-ambiguous/* %buildroot%_licensedir-ambiguous
+cp -dp license-exception/* %buildroot%_licensedir-exception
 
 %files
 %_licensedir
+%_licensedir-ambiguous
 %_licensedir-exception
 
 %changelog
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 1.5-alt1
+- Add ambiguous license names
+- Add Bitstream Vera license
+- Add compatibility link for PHP-3.01
+- Add compatibility links for GPL and LGPL
+- Add copyleft-next-0.3.0
+- Add NVIDIA license
+- Add Perl license
+- Add script to synchronize with SPDX
+- Add text for Public Domain
+- Add Thor Public License
+- Add Ubuntu Font License 1.0
+- Add Unicode Character Database Terms Of Use
+- Remove non-obvious alias
+- Rename exception/ to license-exception/
+- Update MIT from SPDX
+
 * Fri Nov 09 2018 Alexey Gladkov <legion@altlinux.ru> 1.4-alt1
 - Add licenses from SPDX version 3.3 2018-10-24 (https://spdx.org/licenses/).
 - Add licenses exceptions from SPDX version 3.2 (https://spdx.org/licenses/exceptions-index.html).
