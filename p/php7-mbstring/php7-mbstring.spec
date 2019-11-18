@@ -34,14 +34,13 @@ export LDFLAGS=-lphp-%_php7_version
 %php7_make
 
 %install
-%php7_make_install
+%php7_make_install phpincludedir=%includedir
 install -D -m 644 %SOURCE1 %buildroot/%php7_extconf/%php7_extension/config
 install -D -m 644 %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 
 %files
 %php7_extconf/%php7_extension
 %php7_extdir/*
-%doc CREDITS README README_PHP3-i18n-ja
 
 %post
 %php7_extension_postin
