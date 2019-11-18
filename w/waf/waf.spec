@@ -1,8 +1,7 @@
-%def_with python3
 %add_python3_path %_datadir/waf3
 Name: waf
 Version: 2.0.18
-Release: alt1
+Release: alt2
 
 Summary: A Python-based build system
 License: BSD
@@ -16,33 +15,17 @@ Patch1: waf-1.6.9-logo.patch
 # with python-3 waf does not find the top_dir directory with wscript and this path try to fix it
 Patch2: waf-2.0.12-python3-build.patch
 
-# Automatically added by buildreq on Mon Aug 09 2010
-BuildRequires: python-devel python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging
-
 BuildArch: noarch
-
-%if_with python3
 BuildRequires: python3-devel 
 BuildRequires(pre): rpm-build-python3
-%endif
+
+Provides: python3-module-waf = %EVR
+Obsoletes: python3-module-waf < %EVR
 
 %description
 Waf is a Python-based framework for configuring, compiling and installing
 applications. It is a replacement for other tools such as Autotools, Scons,
 CMake or Ant.
-
-%if_with python3
-%package -n python3-module-waf
-Group: Development/Tools
-Summary:        Python3 support for %{name}
-
-%description -n python3-module-waf
-Waf is a Python-based framework for configuring, compiling and
-installing applications. It is a replacement for other tools such as
-Autotools, Scons, CMake or Ant.
-
-This package contains the Python 3 version of %{name}.
-%endif # with_python3
 
 %prep
 %setup
@@ -63,7 +46,6 @@ sed -i -e 's@fontname=\(Vera.*sans\),@fontname="\1",@g' \
   docs/sphinx/featuremap.rst
 
 %build
-./configure --prefix=/usr
 # skip build slow_qt4 extras
 rm -f waflib/extras/slow_qt4.py
 extras=
@@ -73,44 +55,26 @@ for f in waflib/extras/*.py ; do
     extras="${extras:+$extras,}$f" ;
   fi
 done
-./waf-light --make-waf --strip --tools="$extras"
+%__python3 ./waf-light --make-waf --strip --tools="$extras"
 
 %install
-#./waf install --yes --destdir=%buildroot
-
 # use waf so it unpacks itself
 mkdir _temp ; pushd _temp
 cp -av ../waf .
-%{__python} ./waf >/dev/null 2>&1
-pushd .waf-%{version}-*
-find . -name '*.py' -printf '%%P\0' |
-  xargs -0 -I{} install -m 0644 -p -D {} %{buildroot}%{_datadir}/waf/{}
-popd
-%if_with python3
 %{__python3} ./waf >/dev/null 2>&1
 pushd .waf3-%{version}-*
 find . -name '*.py' -printf '%%P\0' |
   xargs -0 -I{} install -m 0644 -p -D {} %{buildroot}%{_datadir}/waf3/{}
 popd
-%endif # with_python3
 popd
-
-# install the frontend
-install -m 0755 -p -D waf-light %{buildroot}%{_bindir}/waf-%{__python_version}
-%if_with python3
 install -m 0755 -p -D waf-light %{buildroot}%{_bindir}/waf-%{__python3_version}
-%endif # with_python3
-ln -s waf-%{__python_version} %{buildroot}%{_bindir}/waf
+ln -s waf-%{__python3_version} %{buildroot}%{_bindir}/waf
 
 # remove shebangs from and fix EOL for all scripts in wafadmin
 find %{buildroot}%{_datadir}/ -name '*.py' \
      -exec sed -i -e '1{/^#!/d}' -e 's|\r$||g' {} \;
 
-# fix waf script shebang line
-sed -i "1c#! %{__python}" %{buildroot}%{_bindir}/waf-%{__python_version}
-%if_with python3
 sed -i "1c#! /usr/bin/python3" %{buildroot}%{_bindir}/waf-%{__python3_version}
-%endif # with_python3
 
 # remove x-bits from everything going to doc
 find demos utils -type f -exec chmod 0644 {} \;
@@ -120,17 +84,14 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 %files
 %_bindir/waf
-%_bindir/waf-2.7
-%_datadir/waf
-
-%if_with python3
-%files -n python3-module-waf
-%{_bindir}/waf-%__python3_version
-%{_datadir}/waf3
-%endif # with_python3
-
+%_bindir/waf-3.7
+%_datadir/waf3
 
 %changelog
+* Mon Nov 18 2019 Anton Farygin <rider@altlinux.ru> 2.0.18-alt2
+- built waf version for python3 by default
+- removed waf for python-2
+
 * Tue Aug 06 2019 Anton Farygin <rider@altlinux.ru> 2.0.18-alt1
 - 2.0.18
 
