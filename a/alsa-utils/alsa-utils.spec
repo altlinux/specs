@@ -1,5 +1,5 @@
 Name: alsa-utils
-Version: 1.1.9
+Version: 1.2.1
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,6 @@ Patch: %name-%version-%release.patch
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: dialog
-#Requires: libalsa >= %version
 Obsoletes: alsa2-utils < 0.9.4
 Provides: alsa2-utils = %version
 Conflicts: alsa-utils < 1.0.9a-alt1
@@ -52,7 +51,6 @@ driver.  amixer supports multiple soundcards.
 %prep
 %setup
 %patch -p1
-
 touch config.rpath
 
 %build
@@ -63,13 +61,13 @@ touch config.rpath
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-
+%makeinstall_std
 %find_lang --with-man --output=%name.lang %name
 
 %files -f %name.lang
 %doc ChangeLog README*
-/lib/udev/rules.d/90-alsa-restore.rules
+%_udevrulesdir/89-alsa-ucm.rules
+%_udevrulesdir/90-alsa-restore.rules
 %_bindir/*
 %exclude %_bindir/aplay
 %exclude %_bindir/arecord
@@ -95,6 +93,11 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt1
+- 1.2.1
+- added 89-alsa-ucm.rules
+- minor spec cleanup
+
 * Mon May 13 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.9-alt1
 - 1.1.9
 

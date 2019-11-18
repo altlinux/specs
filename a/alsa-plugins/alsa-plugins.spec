@@ -1,5 +1,5 @@
 Name: alsa-plugins
-Version: 1.1.9
+Version: 1.2.1
 Release: alt1
 Epoch: 1
 
@@ -14,6 +14,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libalsa-devel libavcodec-devel libdbus-devel
 BuildRequires: libpulseaudio-devel libsamplerate-devel libspeex-devel libspeexdsp-devel
+
+%define _unpackaged_files_terminate_build 1
 
 Summary(ru_RU.UTF-8): Плагины ALSA
 Summary(uk_UA.UTF-8): Плагіни ALSA
@@ -30,7 +32,8 @@ Advanced Linux Sound Architecture (ALSA) plugins.
 %package pulse
 Summary: ALSA pulseaudio plugin
 Group: Sound
-Requires: libalsa >= 1.0.21a pulseaudio-daemon
+Requires: libalsa >= 1.0.21a
+Requires: pulseaudio-daemon
 
 %description pulse
 ALSA pulseaudio plugin
@@ -47,25 +50,37 @@ ALSA pulseaudio plugin
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_datadir/alsa
-cat << __EOF__ >> %buildroot%_datadir/alsa/alsa.conf.d/pulse.conf
-pcm.!default { type pulse }
-ctl.!default { type pulse }
-pcm.pulse { type pulse }
-ctl.pulse { type pulse }
-__EOF__
+# drop unneeded files
+find %buildroot%_libdir/alsa-lib/ -name '*.la' -delete
+
+# turn symlinks into relative ones
+find %buildroot%_sysconfdir/alsa/conf.d/ -type l -delete
+for i in %buildroot%_datadir/alsa/alsa.conf.d/*.conf; do
+	ln -sr "$i" %buildroot%_sysconfdir/alsa/conf.d/
+done
 
 %files
+# I know of README-pulse, too much hassle with merging docdirs
 %doc doc/*.txt doc/README-*
+%config(noreplace) %_sysconfdir/alsa/conf.d/*.conf
+%exclude %_sysconfdir/alsa/conf.d/*pulse*.conf
+%_datadir/alsa/alsa.conf.d/*.conf
+%exclude %_datadir/alsa/alsa.conf.d/*pulse*.conf
 %_libdir/alsa-lib/*.so
 %exclude %_libdir/alsa-lib/*pulse*.so
 
 %files pulse
 %_libdir/alsa-lib/*pulse*.so
-%_datadir/alsa/alsa.conf.d/pulse.conf
+%_sysconfdir/alsa/conf.d/99-pulseaudio-default.conf.example
+%_sysconfdir/alsa/conf.d/50-pulseaudio.conf
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt1
+- 1.2.1
+- actually package plugin configuration files
+- dropped pulse.conf in favour of upstream 50-pulseaudio.conf
+
 * Mon May 13 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.9-alt1
 - 1.1.9
 
