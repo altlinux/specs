@@ -1,77 +1,46 @@
 %define oname texttemplate
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2.0
-Release: alt3.2
+Release: alt4
+
 Summary: Text templating module
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/texttemplate/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel
-%if_with python3
+Source: %name-%version.tar
+Patch0: port-on-python3.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
-%endif
+
 
 %description
 texttemplate converts text templates into simple Python-based object
 models easily manipulated from ordinary Python code. Fast, powerful and
 easy to use.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Text templating module (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-texttemplate converts text templates into simple Python-based object
-models easily manipulated from ordinary Python code. Fast, powerful and
-easy to use.
-%endif
-
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%patch0 -p2
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-sed -i 's|%_bindir/python|%_bindir/python3|' Examples/Tutorial_1.py
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc *.txt Documentation Examples
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt Documentation ../python3/Examples
+%doc *.txt Documentation ./Examples
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Nov 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt4
+- python2 disabled
+- porting on python3
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt3.2
 - (NMU) rebuild with python3.6
 
