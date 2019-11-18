@@ -1,9 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%def_without check
+
 Name:     earlyoom
 Version:  1.3
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -15,9 +17,11 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source:   %name-%version.tar
 Source1:  %name.init
 
-BuildRequires: pandoc
-BuildRequires: golang
 BuildRequires: /proc
+BuildRequires: pandoc
+%if_with check
+BuildRequires: golang
+%endif
 
 %description
 The oom-killer generally has a bad reputation among Linux users.
@@ -46,7 +50,7 @@ mkdir -p %buildroot%_initdir
 install -pm755 %SOURCE1 %buildroot%_initdir/%name
 
 %check
-%make_build test ||:
+%make_build test
 
 %post
 %post_service %name
@@ -63,6 +67,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/default/%name
 
 %changelog
+* Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 1.3-alt2.1
+- Disable check
+
 * Fri Jun 07 2019 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
 - add condrestart, condstop in init script
 
