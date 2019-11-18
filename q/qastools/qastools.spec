@@ -1,6 +1,6 @@
 Name: qastools
-Version: 0.21.0
-Release: alt5
+Version: 0.22.0
+Release: alt1
 
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
@@ -80,7 +80,7 @@ done
 # meta package
 
 %files -n qascommon
-%doc COPYING CHANGELOG README TODO
+%doc COPYING CHANGELOG README.md TODO
 %_datadir/%name
 
 %files -n qasconfig
@@ -102,6 +102,9 @@ done
 %_man1dir/qasmixer.1.*
 
 %changelog
+* Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 0.22.0-alt1
+- new version 0.22.0
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.21.0-alt5
 - NMU: remove rpm-build-ubt from BR:
 
