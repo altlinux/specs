@@ -1,6 +1,6 @@
 Name: polkit-sysvinit
-Version: 0.3.4
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Allow media/network changes to xgrp users
 License: public domain
@@ -10,8 +10,10 @@ Url: http://altlinux.org/sysvinit
 Source0: 60-sysvinit-mount.rules
 Source1: 60-sysvinit-nm.rules
 Source2: 60-xfsm-shutdown-helper.rules
-Source3: 60-sysvinit-console-kit.rules
+Source3: 60-gnome-gparted.rules
 Source4: 60-xfce4-pm-helper.rules
+Source5: 60-xfce-power-backlight-helper.rules
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -28,12 +30,17 @@ on SysVinit-based systems.
 
 %install
 mkdir -p %buildroot%pkdir
-install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %buildroot%pkdir
+install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %buildroot%pkdir
 
 %files
 %pkdir/*
 
 %changelog
+* Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
+- Added 60-gnome-gparted.rules,60-xfce-power-backlight-helper.rules
+- Drop 60-sysvinit-console-kit.rules, not suported more
+- 60-sysvinit-nm.rules: 's/_nmconnect/wheel/'
+
 * Thu Jul 13 2017 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt2
 - Added missing empty string to the end of xfce4-pm-helper
 
