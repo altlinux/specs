@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.8
 
 %def_enable libcap
 %def_enable x11
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: wlroots
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 0.8.1-alt1
+- New version (0.8.1)
+
 * Fri Aug 09 2019 Alexey Gladkov <legion@altlinux.ru> 0.6.0-alt2
 - Add freerdp support
 - Fix build error
