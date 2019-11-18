@@ -3,7 +3,7 @@
 %define _pseudouser_home     /var/empty
 
 Name: uwsgi
-Version: 2.0.15
+Version: 2.0.18
 Release: alt1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
@@ -16,9 +16,10 @@ Source: %name-%version.tar
 Source1: %name.init
 Source2: %name.logrotate
 Source3: %name.sysconfig
-Patch: %name-2.0.15-alt-no-rpath.patch
+Patch1: %name-2.0.15-alt-no-rpath.patch
+Patch2: %name-2.0.18-alt-use-python3.patch
 
-BuildRequires: libxml2-devel python-devel
+BuildRequires: libxml2-devel python3-devel
 
 %description
 uWSGI is a fast (pure C), self-healing, developer-friendly WSGI server,
@@ -38,7 +39,8 @@ Erlang message exchanger are already available.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %make
@@ -66,6 +68,10 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %doc README contrib
 
 %changelog
+* Mon Nov 18 2019 Oleg Solovyov <mcpain@altlinux.org> 2.0.18-alt1
+- update to 2.0.18
+- built with python3
+
 * Thu Nov 02 2017 Oleg Solovyov <mcpain@altlinux.org> 2.0.15-alt1
 - update to 2.0.15
 
