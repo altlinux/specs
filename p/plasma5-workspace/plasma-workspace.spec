@@ -27,7 +27,7 @@
 
 Name: plasma5-workspace
 Version: 5.17.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -40,6 +40,7 @@ Requires: sddm-theme-breeze
 Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
+Requires: xmessage
 Requires: qt5-dbus qt5-tools qt5-quickcontrols qt5-virtualkeyboard dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
@@ -393,6 +394,9 @@ done
 
 
 %changelog
+* Mon Nov 18 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.17.3-alt2
+- fix requires
+
 * Wed Nov 13 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.17.3-alt1
 - new version
 
