@@ -1,63 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.2
 %define module_name amqplib
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 1.0.2
-#Release: alt2.1.1
-Group: Development/Python
+Release: alt3
+
+Group: Development/Python3
 License: GPLv2
 Summary: Python AMQP (Advanced Message Queuing Protocol) Client library
 URL: http://code.google.com/p/py-amqplib/
+
 Source: %module_name-%version.tgz
 
-#BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
-%endif
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
-Python AMQP (Advanced Message Queuing Protocol) Client library.
-
-%package -n python3-module-%module_name
-Summary: Python AMQP (Advanced Message Queuing Protocol) Client library
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 Python AMQP (Advanced Message Queuing Protocol) Client library.
 
 %prep
 %setup -n %module_name-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -65,15 +35,13 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc CHANGES LICENSE README TODO
-%python_sitelibdir/amqplib*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc CHANGES LICENSE README TODO
 %python3_sitelibdir/amqplib*
-%endif
+
 
 %changelog
+* Mon Nov 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt3
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt2.2
 - Rebuild with python3.7.
 
