@@ -3,7 +3,7 @@
 %endif
 
 Name: quiterss
-Version: 0.19.0
+Version: 0.19.1
 Release: alt1
 
 Summary: RSS/Atom aggregator
@@ -36,6 +36,7 @@ BuildRequires: libqtsingleapplication-devel pkgconfig(phonon)
 Requires: libqt4-sql-sqlite
 %endif
 BuildRequires: pkgconfig(sqlite3)
+BuildRequires: dos2unix
 
 %description
 Qt-based RSS/Atom aggregator.
@@ -50,6 +51,8 @@ Qt-based RSS/Atom aggregator.
 sed -i 's,qtsingleapplication.h,QtSolutions/&,' src/application/mainapplication.h
 sed -i 's,phonon/audiooutput.h,kde4/&,' src/application/mainwindow.h
 sed -i 's,phonon/mediaobject.h,kde4/&,' src/application/mainwindow.h
+# 0.19.1 introduced CRLF EOLs here, reported upstream
+dos2unix %name.desktop
 
 %build
 %if_with qt5
@@ -76,6 +79,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 0.19.1-alt1
+- new version (watch file uupdate)
+- desktop file fixup
+
 * Sat Nov 16 2019 Anton Midyukov <antohami@altlinux.org> 0.19.0-alt1
 - new version
 
