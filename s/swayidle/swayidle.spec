@@ -2,7 +2,7 @@
 
 Name: swayidle
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Idle management daemon for Wayland 
 License: MIT
 Url: https://github.com/swaywm/swayidle
@@ -10,7 +10,6 @@ Group: Graphical desktop/Other
 
 Source0: %name-%version.tar
 
-BuildRequires: libelogind-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
@@ -47,6 +46,9 @@ rm -rf -- \
 %_man1dir/*
 
 %changelog
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 1.3-alt2
+- Remove libelogind-devel.
+
 * Wed May 22 2019 Alexey Gladkov <legion@altlinux.ru> 1.3-alt1
 - 1.3
 
