@@ -1,6 +1,8 @@
+%def_without python
+
 Name: libstfl0
 Version: 0.24
-Release: alt5.2
+Release: alt6
 
 %define oname stfl
 
@@ -21,7 +23,8 @@ Patch3: stfl-0.24-alt-warnings.patch
 
 # Automatically added by buildreq on Fri Mar 03 2017
 # optimized out: libncurses-devel libtinfo-devel perl perl-devel python-base python-modules ruby ruby-stdlibs swig-data
-BuildRequires: libncursesw-devel libruby-devel perl-Encode python-devel swig
+BuildRequires: libncursesw-devel libruby-devel perl-Encode swig
+%{?_with_python: BuildRequires: python-devel}
 
 %description
 STFL is a library which implements a curses-based widget set for text
@@ -91,16 +94,21 @@ rm %buildroot%_libdir/*.a
 %files -n perl-%oname
 %_libdir/perl5/*
 
+%if_with python
 %files -n python-module-%oname
 %python_sitelibdir/lib-dynload/_stfl.so
 %python_sitelibdir/stfl.py
 %python_sitelibdir/stfl.pyc
 %python_sitelibdir/stfl.pyo
+%endif
 
 %files -n ruby-%oname
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Mon Nov 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt6
+- Disabled Python 2 module.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt5.2
 - rebuild with new perl 5.28.1
 
