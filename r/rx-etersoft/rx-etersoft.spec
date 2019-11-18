@@ -1,7 +1,7 @@
 %define oname freenx-server
 %define hooksroot rx-etersoft
 Name: rx-etersoft
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: Freenx application/thin-client server
@@ -190,6 +190,9 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Mon Nov 18 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.4.3-alt1
+- fix session_close (eterbug #13765)
+
 * Thu Oct 24 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - nxloadconfig: add startkde5 support
 - rx-etersoft.init: fix RX Etersoft name
