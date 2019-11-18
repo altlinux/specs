@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.6
+Version: 0.9.9.7
 Release: alt1
 
 Summary: The system startup scripts
@@ -169,6 +169,16 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Sun Nov 17 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.9.7-alt1
+- rc.sysinit:
+  + Add parameter for udev service.
+  + Do not hardcode systemd-modules-load and optimize mount /proc.
+  + Remove obsolete code that updates the /etc/mtab file.
+  + Remove obsolete idetune.
+  + Remove obsolete rsbac_autotune.
+  + Refactor code.
+- fbsetfont: Remove duplicate code
+
 * Wed Oct 31 2018 Alexey Shabalin <shaba@altlinux.org> 0.9.9.6-alt1
 - random: move random_seed from /var/run to /var/lib/random,
   because /var/run might be on tmpfs
