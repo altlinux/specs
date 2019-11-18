@@ -1,82 +1,49 @@
 %define _unpackaged_files_terminate_build 1
 %define oname chevron
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.11.1
-Release: alt1.1
+Release: alt2
+
 Summary: Mustache templating language renderer
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/chevron/
+BuildArch: noarch
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-
-%description
-A python implementation of the mustache templating language.
-
-%package -n python3-module-%oname
-Summary: Mustache templating language renderer
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 A python implementation of the mustache templating language.
 
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %files
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Nov 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.11.1-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
