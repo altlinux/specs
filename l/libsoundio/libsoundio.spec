@@ -4,13 +4,13 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major	1
+%define major	2
 %define	libname	libsoundio%{major}
 %define	devel	libsoundio-devel
 
 Name:		libsoundio
-Version:	1.1.0
-Release:	alt1_2
+Version:	2.0.0
+Release:	alt1_1
 Summary:	C library for cross-platform real-time audio input and output
 Group:		Sound
 License:	MIT
@@ -61,9 +61,7 @@ developing applications that use %{name}.
 
 
 %build
-mkdir build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%{mageia_cmake}
 %make_build
 
 
@@ -85,6 +83,9 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
+- update by mgaimport
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2
 - fixed build
 
