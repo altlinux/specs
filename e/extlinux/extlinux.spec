@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
 Version: 6.04.pre3
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -18,7 +18,7 @@ Patch0: strip-gnu-property.patch
 BuildRequires: libe2fs-devel
 BuildRequires: libuuid-devel
 BuildRequires: nasm
-BuildRequires: python-base
+BuildRequires: python3-base
 
 Requires: libshell util-linux
 
@@ -55,7 +55,7 @@ sed -i \
 	Makefile
 
 make bios \
-	PYTHON=python2
+	PYTHON=python3
 
 %install
 make bios extbootinstall \
@@ -109,6 +109,9 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 6.04.pre3-alt2
+- Built with python3.
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 6.04.pre3-alt1
 - New release (6.04.pre3).
 
