@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lmms
-Version: 1.2.0
-Release: alt3.20190117
+Version: 1.2.1
+Release: alt1
 
 Summary: Linux MultiMedia Studio
 License: GPL
@@ -14,14 +14,15 @@ Source: %name-%version.tar
 Source4: %name-16x16.png
 Source5: %name-32x32.png
 Source6: %name-48x48.png
-Patch1: %name-%version-no_werror.patch
-Patch2: %name-%version-vst-nowine.patch
+Patch1: %name-1.2.0-no_werror.patch
+Patch2: %name-1.2.0-vst-nowine.patch
 
 BuildPreReq: rpm-build-lmms libfltk-devel rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 
 BuildRequires: desktop-file-utils
 BuildRequires: libfluidsynth-devel
+BuildRequires: libsoundio-devel
 BuildRequires: qt5-base-devel
 BuildRequires: liblame-devel
 BuildRequires: qt5-tools-devel
@@ -90,9 +91,6 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %install
 %cmakeinstall_std
 
-# remove unneeded static helper library from install
-rm %buildroot%_libdir/libqx11embedcontainer.a
-
 rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 
 %find_lang %name
@@ -112,6 +110,9 @@ rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 %_includedir/%name
 
 %changelog
+* Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
+- Version 1.2.1
+
 * Sun Jul 28 2019 Michael Shigorin <mike@altlinux.org> 1.2.0-alt3.20190117
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
