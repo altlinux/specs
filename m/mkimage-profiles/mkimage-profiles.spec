@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.3.14
+Version: 1.3.15
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1.3.15-alt1
+- autoinstall fix (sin@)
+- Baikal-M support, @ARM, elogind removal, other tweaks (antohami@)
+- factored out archdep-filter, pulled in check-pkg-list (me)
+
 * Mon Oct 21 2019 Michael Shigorin <mike@altlinux.org> 1.3.14-alt1
 - make bails out on single image build error, see also make -k (iv@)
 - mipsel support (iv@, antohami@)
