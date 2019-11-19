@@ -6,7 +6,7 @@ BuildRequires: perl(DateTime.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.101
+Version: 0.102
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.102-alt1
+- automated CPAN update
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.101-alt1
 - automated CPAN update
 
