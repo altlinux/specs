@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -17,7 +18,7 @@ BuildRequires: perl-podlators
 %bcond_without perl_Term_Table_enables_unicode
 
 Name:           perl-Term-Table
-Version:        0.014
+Version:        0.015
 Release:        alt1
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
@@ -90,6 +91,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
