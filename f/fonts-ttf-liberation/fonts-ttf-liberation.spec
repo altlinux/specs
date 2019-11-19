@@ -5,7 +5,7 @@
 
 Name: fonts-ttf-%fontname
 Version: 2.00.4
-Release: alt1
+Release: alt2
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -29,6 +29,10 @@ Provides: fonts-ttf-core
 Provides: fonts-ttf-liberation-mono = %version
 Provides: fonts-ttf-liberation-sans = %version
 Provides: fonts-ttf-liberation-serif = %version
+
+# Additional font which used to be in this package (until 2.00.1-alt1); useful
+# as a replacement for the popular Arial Narrow (found in many official forms).
+Requires: %name-narrow
 
 # To satisfy requirements of official Google Chrome RPM package
 Provides: liberation-fonts
@@ -77,6 +81,14 @@ done
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Tue Nov 19 2019 Ivan Zakharyaschev <imz@altlinux.org> 2.00.4-alt2
+- Made additional useful part of this font set (Liberation Narrow) be installed
+  together with this package always, to make users happier. (By a Requires.
+  It used to be part of this package until 2.00.1-alt1, but was separated into
+  another package due to license, see https://lwn.net/Articles/502371/ ).
+  This addition is a replacement for the Arial Narrow font, which is popular
+  in official documents and helps LibreOffice render them nicer.
+
 * Sat Feb 09 2019 Vitaly Lipatov <lav@altlinux.ru> 2.00.4-alt1
 - new version 2.00.4 (with rpmrb script)
 
