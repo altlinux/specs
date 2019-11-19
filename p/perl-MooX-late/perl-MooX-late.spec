@@ -1,20 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Type/Utils.pm) perl(Types/Standard.pm) perl(base.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define module_version 0.015
 %define module_name MooX-late
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.015
-Release: alt1.1
+Version: 0.016
+Release: alt1
 Summary: easily translate Moose code to Moo
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/MooX-late
 
-Source: http://www.cpan.org/authors/id/T/TO/TOBYINK/MooX-late-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -81,7 +80,7 @@ will never do more than seven.
 
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -90,10 +89,13 @@ will never do more than seven.
 %perl_vendor_install
 
 %files
-%doc README COPYRIGHT LICENSE Changes examples
+%doc README COPYRIGHT Changes examples CREDITS
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1.1
 - rebuild to restore role requires
 
