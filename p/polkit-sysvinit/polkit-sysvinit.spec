@@ -1,5 +1,5 @@
 Name: polkit-sysvinit
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Allow media/network changes to xgrp users
@@ -13,6 +13,7 @@ Source2: 60-xfsm-shutdown-helper.rules
 Source3: 60-gnome-gparted.rules
 Source4: 60-xfce4-pm-helper.rules
 Source5: 60-xfce-power-backlight-helper.rules
+Source6: 60-cpu-x.rules
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -20,7 +21,7 @@ BuildArch: noarch
 AutoReqProv: no
 Requires: polkit
 
-%define pkdir %_sysconfdir/polkit-1/rules.d
+%define pkdir %_datadir/polkit-1/rules.d
 
 %description
 %summary
@@ -30,12 +31,17 @@ on SysVinit-based systems.
 
 %install
 mkdir -p %buildroot%pkdir
-install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %buildroot%pkdir
+install -pm644 %SOURCE0 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 \
+ %SOURCE5 %SOURCE6 %buildroot%pkdir
 
 %files
 %pkdir/*
 
 %changelog
+* Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
+- Added 60-cpu-x.rules
+- changed pkdir on _datadir/polkit-1/rules.d
+
 * Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
 - Added 60-gnome-gparted.rules,60-xfce-power-backlight-helper.rules
 - Drop 60-sysvinit-console-kit.rules, not suported more
