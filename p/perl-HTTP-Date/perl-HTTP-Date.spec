@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTTP-Date
 Name: perl-%dist
-Version: 6.02
+Version: 6.04
 Release: alt1
 
 Summary: Date conversion routines
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTTP-Date-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -23,7 +24,7 @@ the HTTP protocol (and then some more).  Only the first two functions,
 time2str() and str2time(), are exported by default.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +33,13 @@ time2str() and str2time(), are exported by default.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes CONTRIBUTORS README.md
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 6.02-alt1
 - automated CPAN update
 
