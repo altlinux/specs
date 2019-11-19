@@ -1,28 +1,21 @@
-Name: python-module-rosapi
-Version: 0.2.4
-Release: alt1.2
-Summary: Routerboard API
+%define _unpackaged_files_terminate_build 1
 
-Group: Development/Python
+Name: python3-module-rosapi
+Version: 0.2.4
+Release: alt2
+
+Summary: Routerboard API
+Group: Development/Python3
 License: CCPL
 Url: https://github.com/jellonek/rosapi
+BuildArch: noarch
+
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
-BuildArch: noarch
+
 
 %description
-Routerboard API for accessing mikrotik routers.
-
-Base of this code is http://wiki.mikrotik.com/index.php?title=Manual:API
-
-%package -n python3-module-rosapi
-Summary: Routerboard API
-Group: Development/Python3
-
-%description -n python3-module-rosapi
 Routerboard API for accessing mikrotik routers.
 
 Base of this code is http://wiki.mikrotik.com/index.php?title=Manual:API
@@ -30,22 +23,24 @@ Base of this code is http://wiki.mikrotik.com/index.php?title=Manual:API
 %prep
 %setup
 
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
 
 %files
-%python_sitelibdir/rosapi*
 %doc README.txt
-
-%files -n python3-module-rosapi
 %python3_sitelibdir/rosapi*
 
+
 %changelog
+* Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.4-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.4-alt1.2
 - (NMU) rebuild with python3.6
 
