@@ -1,77 +1,46 @@
 %define _unpackaged_files_terminate_build 1
 %define oname toolz
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: List processing tools and functional utilities
-
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/toolz/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # Source-url: https://pypi.io/packages/source/t/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-A set of utility functions for iterators, functions, and dictionaries.
-
-%package -n python3-module-%oname
-Summary: List processing tools and functional utilities
-Group: Development/Python3
-
-%description -n python3-module-%oname
 A set of utility functions for iterators, functions, and dictionaries.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt2
+- python2 disabled
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version 0.9.0 (with rpmrb script)
 
