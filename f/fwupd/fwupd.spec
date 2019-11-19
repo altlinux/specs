@@ -14,7 +14,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.3.3
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -288,6 +288,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Tue Nov 19 2019 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2
+- fixed work with EFI secure boot (closes: #37486)
+
 * Thu Nov 07 2019 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 - enabled tests
