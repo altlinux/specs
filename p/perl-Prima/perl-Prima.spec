@@ -38,7 +38,7 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 %{bcond_without perl_Prima_enables_xft}
 
 Name:           perl-Prima
-Version:        1.56
+Version:        1.57
 Release:        alt1
 Summary:        Perl graphic toolkit
 # img/codec_jpeg.c:     EXIF parser is based on io-jpeg.c from gdk-pixbuf
@@ -202,6 +202,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Prima/Test.*
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
+- automated CPAN update
+
 * Thu Aug 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 
