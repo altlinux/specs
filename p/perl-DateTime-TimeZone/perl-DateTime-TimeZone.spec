@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.37
+Version: 2.38
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -84,6 +84,9 @@ fi
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.38-alt1
+- automated CPAN update
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 2.37-alt1
 - automated CPAN update
 
