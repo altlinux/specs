@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -118,6 +118,10 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Tue Nov 19 2019 Ivan A. Melnikov <iv@altlinux.org> 3.2.0-alt2
+- fix build with PostgreSQL 12 (upstream changes by
+  Pino Toscano <pino at kde dot org>)
+
 * Fri Jun 21 2019 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
 - new version
 
