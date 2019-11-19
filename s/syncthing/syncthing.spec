@@ -7,7 +7,7 @@
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
@@ -215,6 +215,9 @@ export GO111MODULE=off
 %_bindir/stcli
 
 %changelog
+* Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Wed Sep 04 2019 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt1
 - new version 1.2.2
 
