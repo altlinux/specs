@@ -1,5 +1,5 @@
 Name: gource
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
@@ -12,6 +12,7 @@ Url: http://gource.io/
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
 Patch0: %name-0.43-alt-build.patch
+Patch1: ax_boost_base.patch
 
 Requires: fonts-ttf-freefont
 
@@ -43,6 +44,7 @@ files and directories.
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
 %patch0 -p0
+%patch1 -p1
 
 %build
 %autoreconf
@@ -58,6 +60,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Mon Nov 18 2019 Mikhail Efremov <sem@altlinux.org> 0.50-alt1
+- Updated to 0.50.
+- Fixed build on ppc64le.
+
 * Wed Jun 27 2018 Mikhail Efremov <sem@altlinux.org> 0.49-alt1
 - Updated to 0.49.
 
