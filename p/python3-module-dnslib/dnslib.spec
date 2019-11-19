@@ -1,26 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define oname dnslib
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.7
-Release: alt2
+Release: alt3
+
 Summary: Simple library to encode/decode DNS wire-format packets
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/dnslib
 
 Source: %{oname}-%{version}.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %description
 A library to encode/decode DNS wire-format packets supporting both
@@ -28,7 +23,7 @@ Python 2.7 and Python 3.2+.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -37,82 +32,35 @@ Python 2.7 and Python 3.2+.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Simple library to encode/decode DNS wire-format packets
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-A library to encode/decode DNS wire-format packets supporting both
-Python 2.7 and Python 3.2+.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-A library to encode/decode DNS wire-format packets supporting both
-Python 2.7 and Python 3.2+.
-
-This package contains tests for %oname.
-%endif
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-VERSIONS=python ./run_tests.sh -v
-%if_with python3
-pushd ../python3
 VERSIONS=python3 ./run_tests.sh -v
-popd
-%endif
 
 %files
-%doc README* PKG-INFO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
-
-%files tests
-%python_sitelibdir/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc README* PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
-%endif
+
 
 %changelog
+* Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.7-alt3
+- python2 disabled
+
 * Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt2
 - Fixed build.
 
