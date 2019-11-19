@@ -1,26 +1,89 @@
+%define _unpackaged_files_terminate_build 1
+%define oname canto_next
+
 Name: canto-next
-Version: 0.9.0
-Release: alt1.rc1.git20140903.2
-Summary: The next generation Canto RSS daemon
+Version: 0.9.7
+Release: alt1
+
+Summary: The next generation Canto RSS daemon.
 License: GPLv2
 Group: Networking/News
 Url: http://codezen.org/canto-ng/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/themoken/canto-next.git
-Source: %name-%version.tar
 BuildArch: noarch
 
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+
+Requires: python3-module-%name
+
 
 %description
 This is the RSS backend for Canto clients.
 
-canto-curses is the default client.
+Canto is an Atom/RSS feed reader for the console that is meant to be
+quick, concise, and colorful. It's meant to allow you to crank through
+feeds like you've never cranked before by providing a minimal, yet
+information packed interface. No navigating menus. No dense blocks of
+unreadable white text. An interface with almost infinite customization
+and extensibility using the excellent Python programming language.
+
+%package -n python3-module-%name
+Summary: Python module for %name
+Group: Development/Python3
+
+%description -n python3-module-%name
+This is the RSS backend for Canto clients.
+
+Canto is an Atom/RSS feed reader for the console that is meant to be
+quick, concise, and colorful. It's meant to allow you to crank through
+feeds like you've never cranked before by providing a minimal, yet
+information packed interface. No navigating menus. No dense blocks of
+unreadable white text. An interface with almost infinite customization
+and extensibility using the excellent Python programming language.
+
+This package contains python3 module for %name.
+
+%package -n python3-module-%name-tests
+Summary: Tests for %name
+Group: Development/Python3
+
+%description -n python3-module-%name-tests
+This is the RSS backend for Canto clients.
+
+Canto is an Atom/RSS feed reader for the console that is meant to be
+quick, concise, and colorful. It's meant to allow you to crank through
+feeds like you've never cranked before by providing a minimal, yet
+information packed interface. No navigating menus. No dense blocks of
+unreadable white text. An interface with almost infinite customization
+and extensibility using the excellent Python programming language.
+
+This package contains tests for %name.
+
+%package -n python3-module-%name-plugins
+Summary: Python module for %name
+Group: Development/Python3
+Requires: %name
+
+%description -n python3-module-%name-plugins
+This is the RSS backend for Canto clients.
+
+Canto is an Atom/RSS feed reader for the console that is meant to be
+quick, concise, and colorful. It's meant to allow you to crank through
+feeds like you've never cranked before by providing a minimal, yet
+information packed interface. No navigating menus. No dense blocks of
+unreadable white text. An interface with almost infinite customization
+and extensibility using the excellent Python programming language.
+
+This package contains plugins for %name.
 
 %prep
 %setup
+
+for i in `ls plugins`; do
+sed -i '1s|^|#!/usr/bin/python3|' plugins/$i
+done
 
 %build
 %python3_build_debug
@@ -28,16 +91,32 @@ canto-curses is the default client.
 %install
 %python3_install
 
-%files
-%doc *.md
-%_bindir/*
-%_man1dir/*
-%python3_sitelibdir/*
-%_libexecdir/systemd/user/*
+mv tests/ %buildroot%python3_sitelibdir/%oname/
 
-# TODO: SysV init-script
+%files
+%doc COPYING README.md
+%_bindir/canto-daemon
+%_bindir/canto-remote
+%_man1dir/canto-*
+%_libexecdir/systemd/user/canto-daemon.service
+
+%files -n python3-module-%name
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/*.py
+%python3_sitelibdir/%oname/__pycache__/
+
+%files -n python3-module-%name-tests
+%python3_sitelibdir/%oname/tests/
+
+%files -n python3-module-%name-plugins
+%_libexecdir/canto/plugins/
+
 
 %changelog
+* Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.7-alt1
+- Version updated to 0.9.7
+- porting on python3
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt1.rc1.git20140903.2
 - (NMU) rebuild with python3.6
 
