@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Load-Conditional
 Name: perl-%dist
-Version: 0.68
+Version: 0.70
 Release: alt1
 
 Summary: Looking up module information / loading at runtime
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ It is able to load multiple modules at once or none at all if one of them
 was not able to load. It also takes care of any error checking and so forth.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 # avoid self build dependency
@@ -42,6 +42,9 @@ rm t/01_Module_Load_Conditional.t
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - automated CPAN update
 
