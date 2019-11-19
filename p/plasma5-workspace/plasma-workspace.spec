@@ -27,7 +27,7 @@
 
 Name: plasma5-workspace
 Version: 5.17.3
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -231,7 +231,7 @@ popd
 %patch122 -p2
 %patch123 -p1
 %patch124 -p1
-#%patch125 -p1
+%patch125 -p1
 %patch126 -p1
 
 cat %SOURCE1 >> po/ru/freememorynotifier.po
@@ -394,6 +394,9 @@ done
 
 
 %changelog
+* Tue Nov 19 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.17.3-alt3
+- fix disk activity monitor defaults
+
 * Mon Nov 18 2019 Sergey V Turchin <zerg@altlinux.org> 1:5.17.3-alt2
 - fix requires
 
