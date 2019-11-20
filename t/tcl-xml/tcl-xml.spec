@@ -1,30 +1,37 @@
+%define teaname tclxml
+
 Name: tcl-xml
-Version: 3.1
-Release: alt4.qa1
+Version: 3.2
+Release: alt1
 
 Summary: XML parsers for Tcl
 License: BSD
 Group: Development/Tcl
 Url: http://tclxml.sourceforge.net/
 
-Source: %name-%version.tar.bz2
+# repacked http://prdownloads.sourceforge.net/tclxml/tclxml-%version.tar.gz
+Source: %teaname-%version.tar
+Patch1: 0001-reverted-fix-for-sf-bug-596959-seems-unneeded.patch
+Patch2: 0002-ALT-TEA.patch
+Patch3: 0003-FEDORA-sgmlparser.patch
+Patch4: 0004-FEDORA-xmlGenericError.patch
 
 BuildRequires: rpm-build-tcl >= 0.2-alt1
 BuildRequires: libxml2-devel rpm-build >= 4.0.4-alt41 tcl-devel >= 8.4.0-alt1
+BuildRequires: libxslt-devel
+BuildRequires: /usr/bin/xslt-config
 
-%package core
-Summary: A front-end interface and generic XML parser for Tcl
-Group: Development/Tcl
-
-%package libxml2
-Summary: A libxml2-based XML parser for Tcl
-Group: Development/Tcl
-Requires: %name-core = %version-%release
+Provides: tcl-xml-core tcl-dom-core tcl-xslt
+Obsoletes: tcl-xml-core < 3.2
+Obsoletes: tcl-dom-core < 3.2
+Obsoletes: tcl-xslt < 3.2
+Conflicts: tcl-xml-libxml2 < 3.2
+Conflicts: tcl-dom-libxml2 < 3.2
 
 %package devel
 Summary: Header files for %name
 Group: Development/Tcl
-Requires: %name-core = %version-%release
+Requires: %name
 
 %description
 This package provides XML parsers for Tcl scripts.  There is a generic
@@ -34,51 +41,45 @@ implementations or wrappers are provided:
 * Gnome libxml2 library.  This package is known as TclXML/libxml2.
 * A generic Tcl implementation, known as TclXML/tcl.
 
-%description core
-This package provides a generic front-end interface with plugin parser
-implementations and generic Tcl implementation, known as TclXML/tcl.
-
-%description libxml2
-This package provides a libxml2-based XML parser, also known as TclXML/libxml2.
-
 %description devel
-This package includes header files for %name
+This package includes header files for %name.
 
 %prep
-%setup
-sed -i 's/@lib@/%_lib/g' pkgIndex.tcl.in libxml2/pkgIndex.tcl.in
+%setup -n %teaname-%version
+%autopatch -p2
 
 %build
-aclocal
-autoconf
-%configure
-pushd libxml2
-aclocal
-autoconf
-%configure
-popd
-make
-make -C libxml2
+%autoreconf
+%configure \
+	--disable-static \
+	--enable-stub \
+	#
+%make_build
 
-%install 
+%install
 %make_install DESTDIR=%buildroot install
-%make_install -C libxml2 DESTDIR=%buildroot install
+xz ChangeLog
 
-%files core
-%doc ChangeLog README RELNOTES LICENSE
-%_tcllibdir/libTclxml%version.so
-%_tcldatadir/Tclxml%version
-%_mandir/mann/*
-
-%files libxml2
-%_tcllibdir/libTclXML_libxml2%version.so
-%_tcldatadir/TclXML_libxml2%version
+%files
+%doc ANNOUNCE ChangeLog* README.html LICENSE
+%doc doc/*.html
+%_tcllibdir/Tclxml%version/libTclxml%version.so
+%_tcllibdir/Tclxml%version/*.tcl
+#_mandir/mann/*
 
 %files devel
 %_includedir/tclxml
-%_includedir/tclxml-libxml2
+%_tcllibdir/Tclxml%version/libTclxmlstub%version.a
 
 %changelog
+* Wed Nov 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2-alt1
+- Updated to 3.2.
+- Moved to tcl-xml package, that provides and obsoletes tcl-xml-core,
+  tcl-dom-core and tcl-xslt.
+- Dropped tcl-xml-libxml2 subpackage (upstream change).
+- Made it conflicts with tcl-xml-libxml2 and tcl-dom-libxml2.
+- Compressed ChangeLog.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
