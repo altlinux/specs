@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Symbolic
 Version:        0.612
-Release:        alt2_14
+Release:        alt2_18
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Math-Symbolic
 Source0:        https://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Math-Symbolic-%{version}.tar.gz
 BuildArch:      noarch
@@ -33,7 +33,7 @@ Requires:       perl(Memoize.pm) >= 1.010
 # RPM 4.9 style:
 
 Source44: import.info
-%filter_from_requires /perl(Memoize\\)$/d
+%filter_from_requires /perl(Memoize.pm)/d
 
 %description
 Math::Symbolic is intended to offer symbolic calculation capabilities to
@@ -65,6 +65,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_18
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_14
 - update to new release by fcimport
 
