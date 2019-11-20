@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(XSLoader.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm)
 %define _localstatedir %{_var}
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt4_16
+Release:        alt4_20
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Devel-Refcount
 Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Devel-Refcount-%{version}.tar.gz
 BuildRequires:  perl-devel
@@ -50,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt4_20
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt4_16
 - rebuild with new perl 5.28.1
 
