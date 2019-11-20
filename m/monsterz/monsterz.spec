@@ -1,13 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           monsterz
 Version:        0.7.1
-Release:        alt3
+Release:        alt3_25
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 License:        WTFPL
 URL:            http://sam.zoy.org/monsterz/
@@ -18,9 +18,9 @@ Patch1:         %{name}-0.7.1-64bitfix.patch
 Patch2:         %{name}-0.7.1-blit-crash.patch
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
-BuildRequires:  python3-devel /usr/bin/pathfix.py
-BuildRequires:  python-tools-2to3
-Requires:       pygame
+BuildRequires:  python-devel /usr/bin/pathfix.py
+Requires:       python-module-pygame
+Requires:       python-module-numpy python-module-numpy-testing
 Requires:       icon-theme-hicolor
 Provides:       %{name}-data = %{version}-%{release}
 Obsoletes:      %{name}-data < 0.7.1
@@ -42,9 +42,7 @@ board again. Chain reactions earn you even more points.
 %patch1 -p1
 %endif
 %patch2 -p0
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" .
-
-find -type f -name '*.py' -exec 2to3 -w '{}' +
+pathfix.py -pni "%{__python} %{py2_shbang_opts}" .
 
 %build
 %make_build prefix=%{_usr} datadir=%{_datadir} pkgdatadir=%{_datadir}/%{name} CFLAGS="%{optflags}"
@@ -96,6 +94,9 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3_25
+- update to new release by fcimport
+
 * Mon Oct 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt3
 - python2 -> python3
 
