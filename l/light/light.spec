@@ -2,8 +2,8 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       light
-Version:    1.1.2
-Release:    alt1_4
+Version:    1.2.1
+Release:    alt1_1
 Summary:    Control backlight controllers
 
 License:    GPLv3
@@ -12,7 +12,9 @@ Source0:    https://github.com/haikarainen/%{name}/archive/v%{version}/%{name}-%
 
 BuildRequires:  gcc
 BuildRequires: help2man
+BuildRequires: automake
 Source44: import.info
+
 
 %description
 Light is a program to control backlight controllers under GNU/Linux,
@@ -35,25 +37,27 @@ Features
 
 
 %build
+./autogen.sh
+%configure
 %make_build
-%make_build light
-%make_build man
 
 
 %install
-mkdir -p %{buildroot}/%{_bindir}
-install -m4755 ./light %{buildroot}/%{_bindir}/
-
-mkdir -p %{buildroot}/%{_mandir}
-install -m644 light.1.gz %{buildroot}/%{_mandir}/
+%makeinstall_std
 
 
 %files
+%doc COPYING
+%doc ChangeLog.md
+%doc README.md
 %{_bindir}/%{name}
-%{_mandir}/%{name}.1*
+%{_mandir}/man1/%{name}.1*
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_4
 - new version
 
