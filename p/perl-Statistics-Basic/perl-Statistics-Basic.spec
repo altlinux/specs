@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Test/Perl/Critic.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_10
+Release:        alt1_14
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
-Group:          Development/Other
 URL:            https://metacpan.org/release/Statistics-Basic
 Source0:        https://cpan.metacpan.org/authors/id/J/JE/JETTERO/Statistics-Basic-%{version}.tar.gz
 BuildArch:      noarch
@@ -33,7 +33,7 @@ Requires:       perl(Number/Format.pm) >= 1.420
 # Remove underspecified dependecies
 
 Source44: import.info
-%filter_from_requires /perl(Number.Format\\)$/d
+%filter_from_requires /perl(Number.Format.pm)/d
 
 %description
 use Statistics::Basic qw(:all);
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_10
 - update to new release by fcimport
 
