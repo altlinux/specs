@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-IO-Socket-PortState
 Version:        0.03
-Release:        alt1_15
+Release:        alt1_19
 Summary:        Perl extension for checking the open or closed status of a port
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/IO-Socket-PortState
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_19
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_15
 - update to new release by fcimport
 
