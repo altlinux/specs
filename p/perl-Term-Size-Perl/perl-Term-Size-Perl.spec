@@ -7,7 +7,7 @@ BuildRequires: perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Perl
 Version:        0.031
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Term-Size-Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.031-alt1_2
 - update to new release by fcimport
 
