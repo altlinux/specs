@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_30
+Release:        alt2_34
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/IO-Null
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_34
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_30
 - update to new release by fcimport
 
