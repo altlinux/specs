@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Event-Recurrence
 Version:        0.19
-Release:        alt1_5
+Release:        alt1_9
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Event-Recurrence
@@ -36,8 +36,8 @@ Requires:       perl(DateTime/Set.pm) >= 0.360.0
 
 
 Source44: import.info
-%filter_from_requires /^perl(DateTime\\)$/d
-%filter_from_requires /^perl(DateTime.Set\\)$/d
+%filter_from_requires /^perl(DateTime.pm)/d
+%filter_from_requires /^perl(DateTime.Set.pm)/d
 
 %description
 This module provides convenience methods that let you easily create
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_9
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_5
 - update to new release by fcimport
 
