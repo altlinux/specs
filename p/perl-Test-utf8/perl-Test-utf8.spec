@@ -7,7 +7,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_12
+Release:        alt1_16
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-utf8
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_16
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_12
 - update to new release by fcimport
 
