@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -23,21 +22,25 @@ BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Epoch:          1
 Version:        0.80
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/YAML/YAML-LibYAML-%{version}.tar.gz
+Patch0:         YAML-LibYAML-0.79-Unbundled-libyaml.patch
 
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
+BuildRequires:  libyaml2 >= 0.2.2
+BuildRequires:  libyaml-devel >= 0.2.2
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  sed
 
 # Module
 BuildRequires:  perl(B/Deparse.pm)
@@ -76,12 +79,7 @@ BuildRequires:  perl(Path/Class.pm)
 
 # Dependencies
 Requires:       perl(B/Deparse.pm)
-
-# libyaml is tweaked and bundled
-# https://github.com/ingydotnet/yaml-libyaml-pm/issues/49
-# version number determined by comparing commits in upstream repo:
-# https://github.com/yaml/libyaml/
-Provides:       bundled(libyaml) = 0.2.2
+Requires:       libyaml2 >= 0.2.2
 
 # Avoid provides for perl shared objects
 
@@ -94,6 +92,15 @@ bound to Python and was later bound to Ruby.
 
 %prep
 %setup -q -n YAML-LibYAML-%{version}
+# Unbundled libyaml, the source files are the same as in libyaml-0.2.2
+# It was determined by comparing commits in upstream repo:
+# https://github.com/yaml/libyaml/
+%patch0 -p1 -b .orig
+for file in api.c dumper.c emitter.c loader.c parser.c reader.c scanner.c \
+    writer.c yaml.h yaml_private.h; do
+    rm LibYAML/$file
+    sed -i -e "/^LibYAML\/$file/d" MANIFEST
+done
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
@@ -108,11 +115,15 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.80-alt1_1
+- update to new release by fcimport
+
 * Sun Aug 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.80-alt1
 - automated CPAN update
 
