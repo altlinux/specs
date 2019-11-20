@@ -3,19 +3,15 @@
 Name: libstemmer
 Version: 0
 # to replace old libvreen from qutim package
-Release: alt1.svn%svn_version
+Release: alt2.svn%svn_version
 Summary: C stemming algorithm library
 
 Group: System/Libraries
-License: %bsd
+License: BSD-2-Clause
 Url: http://snowball.tartarus.org
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source0: %{name}_c.tar
-Source1: Notice.txt
-Source2: BSD.txt
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 Snowball stemming algorithms for use in Information Retrieval Snowball
@@ -60,10 +56,8 @@ ln -s libstemmer.so.0.0.0 %{buildroot}%{_libdir}/libstemmer.so.0
 ln -s libstemmer.so.0.0.0 %{buildroot}%{_libdir}/libstemmer.so
 install -p -D -m 644 include/* %{buildroot}%{_includedir}/
 
-cp %{SOURCE1} %{SOURCE2} .
-
 %files -n %name
-%doc Notice.txt BSD.txt README
+%doc README
 %_libdir/%name.so.*
 
 %files -n %name-devel
@@ -71,5 +65,8 @@ cp %{SOURCE1} %{SOURCE2} .
 %_libdir/%{name}.so
 
 %changelog
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 0-alt2.svn585
+- Fix license name
+
 * Tue Mar 24 2015 Vladimir Didenko <cow@altlinux.org> 0-alt1.svn585
 - Initial build
