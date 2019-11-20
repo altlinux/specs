@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-SealRequireHints
 Version:        0.011
-Release:        alt2_7
+Release:        alt2_11
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Lexical-SealRequireHints
 Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
 BuildRequires:  coreutils
@@ -66,6 +66,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.011-alt2_11
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.011-alt2_7
 - rebuild with new perl 5.28.1
 
