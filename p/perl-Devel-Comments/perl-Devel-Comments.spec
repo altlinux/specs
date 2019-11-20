@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-Comments
 Version:        1.1.4
-Release:        alt2_18
+Release:        alt2_22
 Summary:        Debug with executable smart comments to logs
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Devel-Comments
 Source0:        https://cpan.metacpan.org/authors/id/X/XI/XIONG/developer-tools/Devel-Comments-v%{version}.tar.gz
 BuildArch:      noarch
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_22
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_18
 - update to new release by fcimport
 
