@@ -3,33 +3,50 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Perform optional tests
+%bcond_without perl_Const_Fast_enables_optional_test
+
 Name:           perl-Const-Fast
 Version:        0.014
-Release:        alt2_14
+Release:        alt2_19
 Summary:        Facility for creating read-only scalars, arrays, and hashes
 License:        GPL+ or Artistic
-
 URL:            https://metacpan.org/release/Const-Fast
 Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/Const-Fast-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl-devel
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build/Tiny.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Storable.pm)
-BuildRequires:  perl(Sub/Exporter.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Sub/Exporter/Progressive.pm)
+BuildRequires:  perl(warnings.pm)
 # Tests
 BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Exception.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Test/Fatal.pm)
-BuildRequires:  perl(Sub/Exporter/Progressive.pm)
+BuildRequires:  perl(Test/More.pm)
+%if %{with perl_Const_Fast_enables_optional_test}
 # Optional tests
+# Pod::Coverage::TrustPod not used
+# Test::Pod not used
+# Test::Pod::Coverage not used
 BuildRequires:  perl(Test/Script.pm)
+%endif
 
 
 Source44: import.info
@@ -47,28 +64,31 @@ read-only. Arrays and hashes will be made deeply read-only.
 
 
 %build
-/usr/bin/perl Build.PL --installdirs vendor
+perl Build.PL --installdirs vendor
 ./Build
 
 
 %install
 ./Build install --destdir $RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
-
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 
 %check
+unset RELEASE_TESTING
 ./Build test
 
 
 %files
-%doc Changes LICENSE README
+%doc --no-dereference LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_19
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt2_14
 - update to new release by fcimport
 
