@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Version
 Version:	2.09
-Release:	alt1_3
+Release:	alt1_8
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 URL:		https://metacpan.org/release/Test-Version
@@ -99,6 +99,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1_8
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1_3
 - update to new release by fcimport
 
