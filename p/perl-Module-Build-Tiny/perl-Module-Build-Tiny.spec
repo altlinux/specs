@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,15 +8,14 @@ BuildRequires: perl-podlators
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1_10
+Release:	alt1_15
 License:	GPL+ or Artistic
-Group:		Development/Other
-URL:		https://github.com/Leont/module-build-tiny
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+URL:		https://metacpan.org/release/Module-Build-Tiny
+Source0:	https://cpan.metacpan.org/modules/by-module/Module/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
 BuildRequires:	perl(DynaLoader.pm)
@@ -53,6 +53,13 @@ Requires:	perl(ExtUtils/CBuilder.pm)
 Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
 Requires:	perl(TAP/Harness/Env.pm)
+
+# ExtUtils::CBuilder in EL-8 has no dependency on gcc or c++ (#1547165)
+# so pull them in ourselves
+%if 0%{?el8}
+BuildRequires:	gcc, gcc-c++
+Requires:	gcc, gcc-c++
+%endif
 Source44: import.info
 
 %description
@@ -84,6 +91,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_15
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_10
 - update to new release by fcimport
 
