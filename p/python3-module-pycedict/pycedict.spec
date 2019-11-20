@@ -1,89 +1,50 @@
 %define oname pycedict
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.2
-Release: alt1.git20170220.1
+Release: alt2
+
 Summary: A library for parsing CEDict and adding tone marks to pinyin
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/pycedict/
-
 # https://github.com/jdillworth/pycedict.git
+
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
 
-%py_provides cedict
-%add_python_req_skip cedict_parser pinyin
+%py3_provides cedict
+# %%add3_python_req_skip cedict_parser pinyin
+
 
 %description
 A library made for working with CC-CEDICT (http://cc-cedict.org/wiki/ )
 and pinyin.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A library for parsing CEDict and adding tone marks to pinyin
-Group: Development/Python3
-%py3_provides cedict
-
-%description -n python3-module-%oname
-A library made for working with CC-CEDICT (http://cc-cedict.org/wiki/ )
-and pinyin.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-python tests.py -v
-%if_with python3
-pushd ../python3
-python3 setup.py test
-python3 tests.py -v
-popd
-%endif
+%__python3 setup.py test
+%__python3 tests.py -v
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.git20170220.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
