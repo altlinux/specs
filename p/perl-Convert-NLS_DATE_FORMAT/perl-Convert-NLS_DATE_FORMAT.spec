@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-NLS_DATE_FORMAT
 Version:        0.06
-Release:        alt1_17
+Release:        alt1_21
 Summary:        Convert Oracle NLS_DATE_FORMAT <-> strftime Format Strings
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Convert-NLS_DATE_FORMAT
@@ -49,6 +49,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_21
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_17
 - update to new release by fcimport
 
