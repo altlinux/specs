@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -9,9 +8,9 @@ BuildRequires: perl(Sub/Uplevel.pm) perl-podlators
 Name:           perl-Scope-Upper
 Summary:        Act on upper scopes
 Version:        0.32
-Release:        alt1
+Release:        alt1_2
 License:        GPL+ or Artistic
-Source0:        http://www.cpan.org/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/V/VP/VPIT/Scope-Upper-%{version}.tar.gz
 URL:            https://metacpan.org/release/Scope-Upper
 # Build
 BuildRequires:  findutils
@@ -76,6 +75,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1_2
+- update to new release by fcimport
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
