@@ -8,7 +8,7 @@ BuildRequires: perl(Sub/Identify.pm)
 %define _localstatedir %{_var}
 Name:           perl-Devel-REPL
 Version:        1.003028
-Release:        alt2_8
+Release:        alt2_12
 Summary:        Modern perl interactive shell
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Devel-REPL
@@ -72,7 +72,7 @@ Requires:       perl(Devel/REPL/Plugin/Packages.pm)
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(\(Data.Dump.Streamer\|Moose\)\\)$/d
+%filter_from_requires /^perl(\(Data.Dump.Streamer\|Moose\).pm)/d
 
 %description
 This is an interactive shell for Perl, commonly known as a REPL - Read,
@@ -286,6 +286,9 @@ make test
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_12
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_8
 - update to new release by fcimport
 
