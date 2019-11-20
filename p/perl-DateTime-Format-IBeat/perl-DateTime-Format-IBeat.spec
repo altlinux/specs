@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,9 +7,8 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_31
+Release:        alt2_35
 Summary:        Format times in .beat notation 
-Group:          Development/Other
 License:        GPL+ or Artistic 
 URL:            https://metacpan.org/release/DateTime-Format-IBeat
 Source0:        http://backpan.perl.org/authors/id/E/EM/EMARTIN/DateTime-Format-IBeat-0.161.tar.gz
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_35
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_31
 - update to new release by fcimport
 
