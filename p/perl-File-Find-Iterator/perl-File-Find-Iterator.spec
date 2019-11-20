@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Iterator
 Version:        0.4
-Release:        alt3_17
+Release:        alt3_22
 Summary:        Iterator interface for search files
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/File-Find-Iterator
 Source0:        https://cpan.metacpan.org/authors/id/T/TE/TEXMEC/File-Find-Iterator-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(Carp.pm)
@@ -21,6 +22,7 @@ BuildRequires:  perl(Class/Iterator.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(IO/Dir.pm)
 BuildRequires:  perl(Storable.pm)
+BuildRequires:  perl(vars.pm)
 # Tests:
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Class/Iterator.pm) >= 0.100
@@ -29,7 +31,7 @@ Requires:       perl(Storable.pm) >= 2.040
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(\(Class.Iterator\|Storable\)\\)$/d
+%filter_from_requires /^perl(\(Class.Iterator\|Storable\).pm)/d
 
 %description
 Find::File::Iterator is an iterator object for searching through directory
@@ -41,13 +43,11 @@ search later.
 %setup -q -n File-Find-Iterator-%{version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_22
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_17
 - update to new release by fcimport
 
