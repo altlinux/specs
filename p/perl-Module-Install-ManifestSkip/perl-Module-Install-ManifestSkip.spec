@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Manifest/Skip.pm) perl(Test/Pod.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Module/Manifest/Skip.pm) perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Module-Install-ManifestSkip
 Version:        0.24
-Release:        alt2_11
+Release:        alt2_15
 Summary:        Generate a MANIFEST.SKIP file
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Module-Install-ManifestSkip
 Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Install-ManifestSkip-%{version}.tar.gz
 BuildArch:      noarch
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_15
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_11
 - update to new release by fcimport
 
