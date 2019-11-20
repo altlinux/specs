@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Entities-Interpolate
 Version:        1.10
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Call HTML::Entities::encode_entities via a hash within a string
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-Entities-Interpolate
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_6
 - update to new release by fcimport
 
