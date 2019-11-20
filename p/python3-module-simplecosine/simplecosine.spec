@@ -1,87 +1,50 @@
 %define _unpackaged_files_terminate_build 1
 %define oname simplecosine
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1
-Release: alt1.1
+Release: alt2
+
 Summary: Simple cosine distance
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/simplecosine/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/20/af/fc538611b39e3fa884054051d65b10325ac5fc55e4f946a8b443950f52ba/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-numpy
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-numpy
-%endif
+Source0: https://pypi.python.org/packages/20/af/fc538611b39e3fa884054051d65b10325ac5fc55e4f946a8b443950f52ba/%{oname}-%{version}.tar.gz
 
-%py_provides %oname
-%py_requires numpy
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-numpy
+
+%py3_provides %oname
+%py3_requires numpy
 
 %description
 Simple cosine distance.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Simple cosine distance
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires numpy
-
-%description -n python3-module-%oname
-Simple cosine distance.
-%endif
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
