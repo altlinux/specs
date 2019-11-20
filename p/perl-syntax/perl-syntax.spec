@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-syntax
 Version:        0.004
-Release:        alt2_17
+Release:        alt2_21
 Summary:        Activate syntax extensions
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/syntax
 Source0:        https://cpan.metacpan.org/authors/id/P/PH/PHAYLON/syntax-%{version}.tar.gz
 BuildArch:      noarch
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_21
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_17
 - update to new release by fcimport
 
