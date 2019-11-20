@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt3_17
+Release:        alt3_21
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Devel-LexAlias
 Source0:        https://cpan.metacpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-%{version}.tar.gz
 # Module Build
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3_21
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt3_17
 - rebuild with new perl 5.28.1
 
