@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statement.pm) perl(Test/CPAN/Meta.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statem
 %define _localstatedir %{_var}
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Test-Database
 Source0:        https://cpan.metacpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
@@ -47,7 +47,7 @@ Requires:       perl(YAML/Tiny.pm) >= 1.620
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(YAML.Tiny\\)$/d
+%filter_from_requires /^perl(YAML.Tiny.pm)/d
 
 %description
 Test::Database Perl module provides a simple way for test authors to request
@@ -75,6 +75,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_10
 - update to new release by fcimport
 
