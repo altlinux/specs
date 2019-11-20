@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 Summary: 	Calculate business hours in a time period
 Name: 		perl-Business-Hours
 Version: 	0.13
-Release: 	alt1_1
+Release: 	alt1_4
 License: 	GPL+ or Artistic
 URL: 		https://metacpan.org/release/Business-Hours
 
@@ -64,6 +64,9 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Business
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_4
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
 - update to new release by fcimport
 
