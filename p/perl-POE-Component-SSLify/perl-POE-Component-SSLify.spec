@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-POE-Component-SSLify
 Version:        1.012
-Release:        alt1_15
+Release:        alt1_17
 Summary:        Makes using SSL in the world of POE easy!
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/POE-Component-SSLify
@@ -89,6 +89,9 @@ AUTOMATED_TESTING=0 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.012-alt1_17
+- update to new release by fcimport
+
 * Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.012-alt1_15
 - fixed build (closes: #36474)
 
