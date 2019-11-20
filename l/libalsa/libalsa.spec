@@ -2,8 +2,8 @@
 %def_without python
 
 Name: libalsa
-Version: 1.1.9
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -22,6 +22,10 @@ Obsoletes: libalsa2 < %version
 # for fourth-party software
 Provides: alsa-lib = %version
 
+# factored out from alsa-lib.git
+Requires: alsa-ucm-conf
+Requires: alsa-topology-conf
+
 # Automatically added by buildreq on Mon Dec 26 2016
 # optimized out: perl python-base python-modules
 %{?_with_doc:BuildRequires: doxygen}
@@ -34,6 +38,8 @@ Provides: alsa-lib = %version
 %define modules_conf /etc/modules.conf
 %define modprobe_old %_sysconfdir/modprobe.d/alsa-modindex
 %define modprobe_conf %modprobe_old.conf
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Advanced Linux Sound Architecture (ALSA) libs. Modularized
@@ -130,8 +136,6 @@ __EOF__
 
 install -d %buildroot%_localstatedir/alsa
 
-%define _unpackaged_files_terminate_build 1
-
 %pre
 [ ! -f %modutils_oss ] || {
 	grep -q "^above snd-" %modules_conf && {
@@ -170,6 +174,7 @@ done
 %_includedir/asoundlib.h
 %_libdir/*.so
 %_pkgconfigdir/alsa.pc
+%_pkgconfigdir/alsa-topology.pc
 %_datadir/aclocal/*
 
 %if_with doc
@@ -183,6 +188,11 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt1
+- 1.2.1
+- R: alsa-ucm-conf, alsa-topology-conf (maintained separately now)
+- added alsa-topology.pc to -devel subpackage
+
 * Tue May 14 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.9-alt2
 - NMU.
 - Packaged %_includedir/asoundlib.h introduced in 1.1.9 to fix builds
