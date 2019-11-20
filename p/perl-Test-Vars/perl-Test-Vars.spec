@@ -7,11 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Vars
 Version:	0.014
-Release:	alt1_7
+Release:	alt1_13
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-Vars
-Source0:	https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
@@ -90,6 +90,9 @@ prove -Ilib $(echo $(find xt/ -name '*.t'))
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_7
 - update to new release by fcimport
 
