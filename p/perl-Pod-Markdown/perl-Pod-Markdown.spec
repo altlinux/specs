@@ -1,18 +1,17 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Usage.pm) perl-podlators perl(URI/Escape.pm)
+BuildRequires: perl(Pod/Usage.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pod-Markdown
 Version:        3.200
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Pod-Markdown
-Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -25,6 +24,7 @@ BuildRequires:  perl(Encode.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Pod/Simple.pm)
 BuildRequires:  perl(Pod/Simple/Methody.pm)
+BuildRequires:  perl(URI/Escape.pm)
 # Tests:
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -47,23 +47,27 @@ This module subclasses Pod::Parser and converts POD to Markdown.
 %setup -q -n Pod-Markdown-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/*
 %{_mandir}/man[13]/*
 %{_bindir}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 3.200-alt1_1
+- update to new release by fcimport
+
 * Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.200-alt1
 - automated CPAN update
 
