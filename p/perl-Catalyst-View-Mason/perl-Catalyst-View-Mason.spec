@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(Fi
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-View-Mason
 Version:        0.19
-Release:        alt1_13
+Release:        alt1_16
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Catalyst*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_16
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_13
 - update to new release by fcimport
 
