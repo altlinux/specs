@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-Module-Install-AuthorRequires
 Version:        0.02
-Release:        alt2_17
+Release:        alt2_20
 Summary:        Declare author-only dependencies
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Module-Install-AuthorRequires
 Source0:        https://cpan.metacpan.org/authors/id/F/FL/FLORA/Module-Install-AuthorRequires-%{version}.tar.gz
 BuildArch:      noarch
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_20
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_17
 - update to new release by fcimport
 
