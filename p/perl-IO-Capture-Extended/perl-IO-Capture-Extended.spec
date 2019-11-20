@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-IO-Capture-Extended
 Version:        0.13
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/IO-Capture-Extended
 Source0:        https://cpan.metacpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
 BuildArch:      noarch
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_10
 - update to new release by fcimport
 
