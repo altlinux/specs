@@ -3,18 +3,16 @@ BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name liblscp
-%define major   6
-%define libname lib%{oname}%{major}
-%define develname lib%{oname}-devel
-%define old_libname lib%{name}%{major}
-%define oname   lscp
+%define major       6
+%define libname     lib%{oname}%{major}
+%define develname   lib%{oname}-devel
+
+%define oname       lscp
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.5.8
-Release:       alt1_2
+Version:       0.6.0
+Release:       alt1_1
 License:       GPLv2
 Group:         System/Libraries
 URL:           http://www.linuxsampler.org/
@@ -22,7 +20,7 @@ Source0:       http://download.linuxsampler.org/packages/liblscp-%{version}.tar.
 Source44: import.info
 
 %description
-LinuxSampler Control Protocol (LSCP) wrapper library
+LinuxSampler Control Protocol (LSCP) wrapper library.
 
 #--------------------------------------------------------------------
 
@@ -30,13 +28,12 @@ LinuxSampler Control Protocol (LSCP) wrapper library
 Group:          System/Libraries
 Summary:        Libraries for %name
 Provides:       %name = %version-%release
-Obsoletes:      %old_libname <= %version-%release
 
 %description -n %libname 
-LinuxSampler Control Protocol (LSCP) wrapper library
+LinuxSampler Control Protocol (LSCP) wrapper library.
 
 %files -n %libname
-%_libdir/liblscp.so.%{major}*
+%{_libdir}/liblscp.so.%{major}*
 
 #--------------------------------------------------------------------
 
@@ -45,17 +42,14 @@ Group:          Development/Other
 Summary:        Libraries for %name
 Requires:       %libname = %{version}-%{release}
 Provides:       %{name}-devel = %{version}-%{release}
-Obsoletes:      %old_libname-devel <= %{version}-%{release}
-Obsoletes:      %{_lib}%{oname}5-devel < %{version}-%{release}
 
 %description -n %develname
-Development libraries from %oname
+Development libraries from %oname.
 
 %files -n %develname
 %doc COPYING
 %dir %_includedir/lscp
 %_includedir/lscp/*.h
-%_libdir/liblscp.a
 %_libdir/liblscp.so
 %_libdir/pkgconfig/lscp.pc
 
@@ -65,16 +59,19 @@ Development libraries from %oname
 %setup -q
 
 %build
-[[ -f Makefile.svn ]] && make -f Makefile.svn
-%configure
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
+
 find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
+- update by mgaimport
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_2
 - new version
 
