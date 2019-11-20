@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,15 +7,18 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2_12
+Release:        alt2_17
 Summary:        Extract distribution name and version from a distribution filename
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/CPAN-DistnameInfo
 Source0:        https://cpan.metacpan.org/authors/id/G/GB/GBARR/CPAN-DistnameInfo-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Tests:
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -37,12 +41,11 @@ developer release.
 %setup -q -n CPAN-DistnameInfo-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT
 
 %check
@@ -53,6 +56,9 @@ make test
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_17
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_12
 - update to new release by fcimport
 
