@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.
 %define _localstatedir %{_var}
 Name:           perl-App-Daemon
 Version:        0.22
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/App-Daemon
 Source0:        https://cpan.metacpan.org/authors/id/M/MS/MSCHILLI/App-Daemon-%{version}.tar.gz
 BuildArch:      noarch
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_10
 - update to new release by fcimport
 
