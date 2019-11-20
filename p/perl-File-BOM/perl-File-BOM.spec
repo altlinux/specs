@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-BOM
 Version:        0.16
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Utilities for handling Byte Order Marks
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-BOM
@@ -72,6 +72,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_1
 - update to new release by fcimport
 
