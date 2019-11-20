@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.07
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Converts HTML to Text with tables in tact
 License:        Artistic 2.0
-Group:          Development/Other
 URL:            https://metacpan.org/release/HTML-FormatText-WithLinks-AndTables
 BuildArch:      noarch
 
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_6
 - update to new release by fcimport
 
