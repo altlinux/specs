@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,28 +8,27 @@ BuildRequires: perl-podlators
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	5.4
-Release:	alt1_11
+Release:	alt1_16
 License:	GPL+ or Artistic
-Group:		Development/Other
 URL:		https://metacpan.org/release/XML-TreeBuilder
 # have to:
 #  push the patch upstream
 Source:		https://cpan.metacpan.org/modules/by-module/XML/XML-TreeBuilder-%{version}.tar.gz
 BuildArch:	noarch
-BuildRequires:	perl-devel
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(File/Basename.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(HTML/Element.pm)
 BuildRequires:	perl(HTML/Tagset.pm)
+BuildRequires:	perl(IO/File.pm)
 BuildRequires:	perl(Module/Build.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test.pm)
 BuildRequires:	perl(Test/More.pm)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
-BuildRequires:	perl(Test/Perl/Critic.pm)
 BuildRequires:	perl(vars.pm)
 BuildRequires:	perl(warnings.pm)
 BuildRequires:	perl(XML/Catalog.pm)
@@ -52,12 +52,16 @@ that builds a tree of XML::Element objects.
 %install
 ./Build pure_install destdir=$RPM_BUILD_ROOT create_packlist=0
 find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_16
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_11
 - update to new release by fcimport
 
