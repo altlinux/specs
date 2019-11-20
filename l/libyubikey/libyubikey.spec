@@ -4,7 +4,7 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libyubikey
 Version:        1.13
-Release:        alt1_11
+Release:        alt1_12
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 License:        BSD
@@ -62,6 +62,9 @@ make check
 %{_libdir}/libyubikey.so
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_12
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_11
 - update to new release by fcimport
 
