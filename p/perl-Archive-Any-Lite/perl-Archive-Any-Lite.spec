@@ -3,22 +3,35 @@ Group: Development/Perl
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Run extra test
+%if ! (0%{?rhel})
+%bcond_without perl_Archive_Any_Lite_enables_extra_test
+%else
+%bcond_with perl_Archive_Any_Lite_enables_extra_test
+%endif
+
 Name:		perl-Archive-Any-Lite
 Version:	0.11
-Release:	alt1_7
+Release:	alt1_12
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Archive-Any-Lite
-Source0:	http://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Archive/Archive-Any-Lite-%{version}.tar.gz
 Patch0:		Archive-Any-Lite-0.08-EU:MM.patch
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Archive/Tar.pm)
@@ -36,7 +49,9 @@ BuildRequires:	perl(FindBin.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/UseAllModules.pm)
 # Optional Tests
+%if %{with perl_Archive_Any_Lite_enables_extra_test}
 BuildRequires:	perl(Parallel/ForkManager.pm)
+%endif
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
@@ -64,7 +79,7 @@ perl Makefile.PL INSTALLDIRS=vendor
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -delete
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test TEST_POD=1
@@ -75,6 +90,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_7
 - update to new release by fcimport
 
