@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Log-Trace
 Version:        1.070
-Release:        alt2_26
+Release:        alt2_30
 License:        GPLv2+
 Summary:        A unified approach to tracing
 Source:         https://cpan.metacpan.org/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
@@ -37,7 +37,7 @@ Requires:     perl(Time/HiRes.pm)
 
 
 Source44: import.info
-%filter_from_provides /^perl(DB\\)$/d
+%filter_from_provides /^perl(DB.pm)/d
 
 %description
 This module provides a unified approach to tracing. A script can 'use
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_26
 - update to new release by fcimport
 
