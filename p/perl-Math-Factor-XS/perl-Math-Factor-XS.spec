@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        alt4_21
+Release:        alt4_25
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Math-Factor-XS
 Source0:        https://cpan.metacpan.org/authors/id/K/KR/KRYDE/Math-Factor-XS-%{version}.tar.gz
 BuildRequires:  gcc-c++
@@ -59,6 +59,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.40-alt4_25
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.40-alt4_21
 - rebuild with new perl 5.28.1
 
