@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-Color
 Version:        0.11
-Release:        alt1_13
+Release:        alt1_17
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Convert-Color
 Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
 # Workaround to a source-code trick, which break rpm's perl-module deptracking
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_17
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_13
 - update to new release by fcimport
 
