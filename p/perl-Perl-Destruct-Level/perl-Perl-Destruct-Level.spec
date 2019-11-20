@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,8 +8,7 @@ BuildRequires: perl-podlators
 Name:		perl-Perl-Destruct-Level
 Summary:	Allows you to change perl's internal destruction level
 Version:	0.02
-Release:	alt5_21
-Group:		Development/Other
+Release:	alt5_25
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Perl-Destruct-Level
 Source0:	https://cpan.metacpan.org/authors/id/R/RG/RGARCIA/Perl-Destruct-Level-%{version}.tar.gz
@@ -66,6 +66,9 @@ make test
 %{perl_vendor_archlib}/Perl/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt5_25
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt5_21
 - rebuild with new perl 5.28.1
 
