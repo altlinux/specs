@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/
 %define _localstatedir %{_var}
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_25
+Release:        alt2_29
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-YAML-Valid
@@ -81,6 +81,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_25
 - update to new release by fcimport
 
