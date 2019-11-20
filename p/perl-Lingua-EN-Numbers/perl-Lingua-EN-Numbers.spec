@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers
 Version:        2.03
-Release:        alt1_8
+Release:        alt1_12
 Summary:        Turn "407" into "four hundred and seven", etc
 License:        GPLv2
-Group:          Development/Other
 URL:            https://metacpan.org/release/Lingua-EN-Numbers
 Source0:        https://cpan.metacpan.org/authors/id/N/NE/NEILB/Lingua-EN-Numbers-%{version}.tar.gz
 BuildArch:      noarch
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_12
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_8
 - update to new release by fcimport
 
