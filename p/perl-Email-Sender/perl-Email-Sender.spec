@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Email-Sender
 Version:        1.300031
-Release:        alt1_5
+Release:        alt1_9
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 
@@ -88,6 +88,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.300031-alt1_9
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.300031-alt1_5
 - update to new release by fcimport
 
