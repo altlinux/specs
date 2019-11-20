@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -18,18 +19,17 @@ BuildRequires: perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt5_22
+Release:	alt5_27
 License:	UCD and (GPL+ or Artistic)
-Group:		Development/Other
 Url:		http://search.cpan.org/dist/Unicode-CheckUTF8/
-Source0:	https://cpan.metacpan.org/authors/id/B/BR/BRADFITZ/Unicode-CheckUTF8-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Unicode/Unicode-CheckUTF8-%{version}.tar.gz
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
 BuildRequires:	gcc
 BuildRequires:	perl-devel
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(base.pm)
@@ -55,7 +55,7 @@ This module is for use when you're getting input from users and want to make
 sure it's valid UTF-8 before continuing.
 
 %prep
-%setup -q -n Unicode-CheckUTF8-%{version} 
+%setup -q -n Unicode-CheckUTF8-%{version}
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
@@ -64,8 +64,8 @@ perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -delete
-find %{buildroot} -type f -name '*.bs' -a -empty -delete
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name '*.bs' -empty -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt5_27
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt5_22
 - rebuild with new perl 5.28.1
 
