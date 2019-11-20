@@ -1,46 +1,28 @@
 %define oname pycosat
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.6.1
-Release: alt4.git20140610
+Release: alt5
+
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pycosat/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/ContinuumIO/pycosat.git
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests libpicosat-devel
-BuildRequires: libpicosat-devel python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildRequires: python3-dev
-%endif
+BuildRequires: libpicosat-devel
 
 ExclusiveArch: x86_64 %ix86
 
-%py_provides %oname
-
-%description
-PicoSAT is a popular SAT solver written by Armin Biere in pure C. This
-package provides efficient Python bindings to picosat on the C level,
-i.e. when importing pycosat, the picosat solver becomes part of the
-Python process itself. For ease of deployment, the picosat source
-(namely picosat.c and picosat.h) is included in this project. These
-files have been extracted from the picosat source (picosat-954.tar.gz).
-
-%package -n python3-module-%oname
-Summary: Bindings to picosat (a SAT solver)
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 PicoSAT is a popular SAT solver written by Armin Biere in pure C. This
 package provides efficient Python bindings to picosat on the C level,
 i.e. when importing pycosat, the picosat solver becomes part of the
@@ -53,55 +35,30 @@ files have been extracted from the picosat source (picosat-954.tar.gz).
 
 rm -f picosat.*
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing -DDONT_INCLUDE_PICOSAT
-%python_build_debug
 
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-rm -fR build
-py.test
-%if_with python3
-pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
 rm -fR build
 py.test-%_python3_version
-popd
-%endif
 
 %files
-%doc CHANGELOG *.rst examples
-%python_sitelibdir/*
-%exclude %python_sitelibdir/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc CHANGELOG *.rst examples
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/test*
 %exclude %python3_sitelibdir/*/test*
-%endif
+
 
 %changelog
+* Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt5
+- python2 disabled
+
 * Fri Apr 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt4.git20140610
 - Rebuild for python3.7.
 
