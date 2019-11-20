@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-UU
 Version:        0.5201
-Release:        alt3_20
+Release:        alt3_24
 Summary:        Perl module for uuencode and uudecode
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Convert-UU
@@ -57,6 +57,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.5201-alt3_24
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.5201-alt3_20
 - update to new release by fcimport
 
