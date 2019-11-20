@@ -7,17 +7,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-EOL
 Version:	2.00
-Release:	alt1_7
+Release:	alt1_10
 Summary:	Check the correct line endings in your project
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-EOL
-Source0:	https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-EOL-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-EOL-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(Cwd.pm)
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_10
+- update to new release by fcimport
+
 * Fri Mar 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_7
 - fixed build
 
