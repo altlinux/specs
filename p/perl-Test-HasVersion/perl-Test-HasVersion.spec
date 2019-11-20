@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,18 +7,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-HasVersion
 Version:        0.014
-Release:        alt1_8
+Release:        alt1_13
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Test-HasVersion
-Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Test-HasVersion-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-HasVersion-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 # Module Runtime
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
@@ -52,8 +52,8 @@ perl Makefile.PL INSTALLDIRS=vendor
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_8
 - update to new release by fcimport
 
