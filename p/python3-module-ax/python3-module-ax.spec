@@ -3,10 +3,10 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
-Summary: Python module with various useful features
+Summary: Generic function library initially developed for cve-manager
 License: GPLv3
 Group: Development/Python3
 
@@ -21,7 +21,8 @@ BuildRequires: python3-devel
 Requires: python3
 
 %description
-%{summary}.
+Python module with generic function library initially developed for
+cve-manager project but potentially reusable elsewhere.
 
 %prep
 %setup
@@ -42,5 +43,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Nov 20 2019 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
+- Couple of new functions - one for searching files and one for removing
+  duplicates from a given list.
+
 * Sat Nov 16 2019 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
 - Initial release.
