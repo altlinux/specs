@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-Module-Package
 Version:        0.30
-Release:        alt2_17
+Release:        alt2_21
 Summary:        Postmodern Perl Module Packaging
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Module-Package
 Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Package-%{version}.tar.gz
 # Fix building on Perl without "." in @INC, CPAN RT#121748
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2_21
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2_17
 - update to new release by fcimport
 
