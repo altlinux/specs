@@ -8,7 +8,7 @@ BuildRequires: perl(CPAN.pm) perl(Compress/Zlib.pm) perl(ExtUtils/CBuilder.pm) p
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.62
-Release:        alt1_1
+Release:        alt1_4
 License:        GPL+ or Artistic
 
 Source0:        https://cpan.metacpan.org/authors/id/M/MS/MSTROUT/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
@@ -100,6 +100,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1_4
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1_1
 - update to new release by fcimport
 
