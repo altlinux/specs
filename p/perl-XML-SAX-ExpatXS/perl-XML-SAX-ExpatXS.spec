@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,10 +8,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        alt4_20
+Release:        alt4_24
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/XML-SAX-ExpatXS
 Source0:        https://cpan.metacpan.org/authors/id/P/PC/PCIMPRICH/XML-SAX-ExpatXS-%{version}.tar.gz
 BuildRequires:  gcc-c++
@@ -73,6 +73,9 @@ fi
 %{perl_vendor_archlib}/XML*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.33-alt4_24
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.33-alt4_20
 - rebuild with new perl 5.28.1
 
