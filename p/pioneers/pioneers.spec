@@ -1,23 +1,25 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/rsvg-convert ImageMagick-tools pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libnotify)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/rsvg-convert ImageMagick-tools pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pioneers
-Version:        15.3
-Release:        alt1_5
+Version:        15.5
+Release:        alt1_1
 Summary:        Turnbased board strategy game (colonize an island)
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://pio.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pio/%{name}-%{version}.tar.gz
-Patch0:         pioneers-15.3-sanitize.patch
-BuildRequires:  libgnome-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools librarian intltool
+Patch0:         pioneers-15.5-sanitize.patch
+BuildRequires:  gcc
+BuildRequires:  libgnome-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools scrollkeeper intltool
+BuildRequires:  itstool
 BuildRequires:  perl(XML/Parser.pm) desktop-file-utils
 Requires:       icon-theme-hicolor
-Requires(post): librarian
-Requires(postun): librarian
+Requires(post): scrollkeeper
+Requires(postun): scrollkeeper
+Source44: import.info
 
 %description
 Pioneers is a computerized version of a well known strategy board game. The
@@ -29,8 +31,8 @@ client as well as both a GUI and CLI version of the server for local games.
 
 
 %package editor
+Group: Games/Other
 Summary:        Pioneers Game Editor
-Group:          Games/Other
 Requires:       pioneers = %{version}-%{release}
 
 %description editor
@@ -63,13 +65,10 @@ rm $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}/splash.png
 
 # Reinstall the .desktop files
 desktop-file-install --delete-original \
-%if 0%{?fedora} && 0%{?fedora} < 19
-   \
-%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-editor.desktop \
-  $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-server.desktop
+  $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-server-gtk.desktop
 
 # Register as an application to be visible in the software center
 #
@@ -111,6 +110,7 @@ if grep Catan `find $RPM_BUILD_ROOT ! -path "$RPM_BUILD_ROOT/usr/src/debug*"`;
 fi
 
 
+
 %files -f %{name}.lang
 %doc AUTHORS COPYING ChangeLog README NEWS
 %{_bindir}/%{name}
@@ -120,23 +120,19 @@ fi
 %{_bindir}/%{name}-server-gtk
 %{_datadir}/games/%{name}
 %{_datadir}/pixmaps/%{name}
-%{_datadir}/omf/%{name}
-%{_datadir}/gnome/help/%{name}
+%{_datadir}/help/C/%{name}
 %{_mandir}/man6/%{name}*.6*
-%if 0%{?fedora} && 0%{?fedora} < 19
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/applications/%{name}-server.desktop
-%else
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/applications/%{name}-server.desktop
-%endif
+%{_datadir}/applications/%{name}-server-gtk.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/pixmaps/%{name}-server.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}-server.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-server.svg
+%{_datadir}/icons/hicolor/scalable/actions/%{name}*.svg
+
 
 %files editor
 %{_bindir}/%{name}-editor
@@ -146,6 +142,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 15.5-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_5
 - update to new release by fcimport
 
