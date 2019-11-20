@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -8,11 +7,11 @@ BuildRequires: perl(parent.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-App-Nopaste
 Version:        1.013
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/App-Nopaste
-Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -63,10 +62,10 @@ would normally be too long to give directly in the channel (hence the
 name nopaste).
 
 %package -n nopaste
+Group: Development/Other
 # needs to beat old nopaste-2835-3
 Epoch:          1
 License:        GPL+ or Artistic
-Group:          Development/Other
 Summary:        Access pastebins from the command line
 Requires:       %{name} = 0:%{version}-%{release}
 
@@ -94,6 +93,7 @@ make test
 
 %files
 %doc Changes CONTRIBUTING README
+%doc --no-dereference LICENSE
 %{perl_vendor_privlib}/App*
 
 %files -n nopaste
@@ -101,6 +101,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1
 - automated CPAN update
 
