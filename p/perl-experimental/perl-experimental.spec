@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.020
-Release:        alt1_2
+Release:        alt1_439
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/experimental
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_439
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_2
 - update to new release by fcimport
 
