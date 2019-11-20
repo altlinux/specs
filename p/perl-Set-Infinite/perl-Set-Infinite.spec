@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_23
+Release:        alt2_27
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Set-Infinite
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_27
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_23
 - update to new release by fcimport
 
