@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        alt4_22
+Release:        alt4_25
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Math-Libm
 Source0:        https://cpan.metacpan.org/authors/id/D/DS/DSLEWART/Math-Libm-%{version}.tar.gz
 Source1:        Math-Libm-license.txt
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt4_25
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt4_22
 - rebuild with new perl 5.28.1
 
