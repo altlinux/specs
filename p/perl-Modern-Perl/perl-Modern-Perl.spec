@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -9,18 +8,17 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
 Version:        1.20190727
-Release:        alt1
+Release:        alt1_1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Modern-Perl
-Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel >= 5.10.0
-BuildRequires:  perl(autodie.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:  perl(feature.pm)
@@ -31,10 +29,9 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Test Suite
 BuildRequires:  perl(Test/More.pm)
-# Runtime
-Requires:       perl(autodie.pm) >= 2.220
 Source44: import.info
 Provides: perl(Modern/Perl.pm) = 2019.0
+# Runtime
 
 %description
 Modern Perl often relies on the presence of several core and CPAN pragmas
@@ -56,11 +53,15 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_privlib}/Modern/
 %{perl_vendor_privlib}/odern/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.20190727-alt1_1
+- update to new release by fcimport
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.20190727-alt1
 - automated CPAN update
 
