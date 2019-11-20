@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -7,41 +8,41 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 Name:           perl-MouseX-Types
 Summary:        Organize your Mouse types in libraries
 Version:        0.06
-Release:        alt2_19
+Release:        alt2_24
 License:        GPL+ or Artistic
-Group:          Development/Other
-Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFUJI/MouseX-Types-%{version}.tar.gz
 URL:            https://metacpan.org/release/MouseX-Types
+Source0:        https://cpan.metacpan.org/modules/by-module/MouseX/MouseX-Types-%{version}.tar.gz
 BuildArch:      noarch
-
+# Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(Any/Moose.pm)
-BuildRequires:  perl(base.pm)
-BuildRequires:  perl(Carp.pm)
-BuildRequires:  perl(constant.pm)
-BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl-devel
 BuildRequires:  perl(inc/Module/Install.pm)
-BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Module/Install/AuthorTests.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
 BuildRequires:  perl(Module/Install/Repository.pm)
 BuildRequires:  perl(Module/Install/WriteAll.pm)
+BuildRequires:  sed
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Mouse.pm)
 BuildRequires:  perl(Mouse/Exporter.pm)
 BuildRequires:  perl(Mouse/Util/TypeConstraints.pm)
-BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(Any/Moose.pm)
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(warnings.pm)
-
-Requires:       perl(Mouse.pm) >= 0.410
-
-# obsolete/provide old tests subpackage
-# can be removed during F19 development cycle
-Obsoletes:      %{name}-tests < 0.06-2
-Provides:       %{name}-tests = %{version}-%{release}
+# Dependencies
+Requires:       perl(Mouse.pm) >= 0.770
 
 
 Source44: import.info
@@ -55,32 +56,35 @@ This library was split off from Mouse as of Mouse 0.15.
 
 %prep
 %setup -q -n MouseX-Types-%{version}
+
 # Remove bundled libraries
 rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 
-find lib -type f -name '*.pm' -print0 | xargs -0 chmod 0644
-chmod 0644 t/*.t
+# Remove unwanted exec permissions
+find lib -type f -name '*.pm' -print0 | xargs -0 chmod -c 0644
+chmod -c 0644 t/*.t
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
-# %{_fixperms} %{buildroot}/*
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
 %doc Changes README t/
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/MouseX/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_24
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_19
 - update to new release by fcimport
 
