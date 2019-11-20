@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-FieldHash
 Version:        0.15
-Release:        alt2_8
+Release:        alt2_12
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Hash-FieldHash
 Source0:        https://cpan.metacpan.org/modules/by-module/Hash/Hash-FieldHash-%{version}.tar.gz
 Patch0:         Hash-FieldHash-0.15-Fix-building-on-Perl-without-dot-in-INC.patch
@@ -87,6 +87,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_12
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_8
 - rebuild with new perl 5.28.1
 
