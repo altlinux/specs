@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(LWP/Simple.pm) perl(Test/Deep.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl-podlators
@@ -7,10 +8,9 @@ BuildRequires: perl-Filter
 %define _localstatedir %{_var}
 Name:           perl-Module-Compile
 Version:        0.37
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Perl Module Compilation
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Module-Compile
 Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
 BuildArch:      noarch
@@ -40,7 +40,7 @@ Requires:       perl(Filter/Util/Call.pm)
 
 
 Source44: import.info
-%filter_from_requires /:__requires_exclude\|}^perl(Digest.SHA1\\)$/d
+%filter_from_requires /:__requires_exclude\|}^perl(Digest.SHA1.pm)/d
 
 %description
 This module provides a system for writing modules that compile other
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_2
 - update to new release by fcimport
 
