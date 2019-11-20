@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(threads.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(threads.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_26
+Release:	alt3_30
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
-Group:		Development/Other
 URL:		https://metacpan.org/release/Tie-RefHash-Weak
 Source0:	https://cpan.metacpan.org/authors/id/N/NU/NUFFIN/Tie-RefHash-Weak-%{version}.tar.gz
 BuildArch:	noarch
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_26
 - update to new release by fcimport
 
