@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-podlators
@@ -6,17 +7,15 @@ BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_21
+Release:        alt3_26
 Summary:        Perl version for POD directives used
 License:        GPLv3+
-Group:          Development/Other
 URL:            https://metacpan.org/release/Pod-MinimumVersion
 Source0:        https://cpan.metacpan.org/authors/id/K/KR/KRYDE/Pod-MinimumVersion-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  coreutils
-BuildRequires:  findutils
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(strict.pm)
@@ -50,12 +49,11 @@ it with pod2man etc.
 %setup -q -n Pod-MinimumVersion-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -69,6 +67,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 50-alt3_26
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 50-alt3_21
 - update to new release by fcimport
 
