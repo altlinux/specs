@@ -10,7 +10,7 @@ Group: Development/C
 
 Name: libapogee
 Version: 3.2
-Release: alt1_1
+Release: alt1_3
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -37,7 +37,7 @@ These are the header files needed to develop a %{name} application
 
 %prep
 %setup -q -n %{name}-%{version}
-sed -i 's|/lib/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
+sed -i 's|/etc/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
 sed -i 's|DESTINATION lib|DESTINATION lib${LIB_SUFFIX}|g' CMakeLists.txt
 
 %build
@@ -61,6 +61,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_1
 - update to new release by fcimport
 
