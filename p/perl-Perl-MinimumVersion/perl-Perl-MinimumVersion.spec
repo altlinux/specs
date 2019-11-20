@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_18
+Release:        alt1_23
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Perl-MinimumVersion
 Source0:        https://cpan.metacpan.org/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
 
@@ -44,8 +44,8 @@ BuildRequires: perl(Test/Script.pm)
 
 
 Source44: import.info
-%filter_from_requires /^perl(version\\)$/d
-%filter_from_requires /^perl(Params.Util\\)$/d
+%filter_from_requires /^perl(version.pm)/d
+%filter_from_requires /^perl(Params.Util.pm)/d
 %filter_from_requires /^perl >= 0:5.005$/d
 
 %description
@@ -75,6 +75,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_23
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_18
 - update to new release by fcimport
 
