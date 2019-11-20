@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(XXX.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod
 %define _localstatedir %{_var}
 Name:           perl-Pegex
 Version:        0.70
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Pegex
 Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Pegex-%{version}.tar.gz
 BuildArch:      noarch
@@ -73,6 +73,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1_2
 - update to new release by fcimport
 
