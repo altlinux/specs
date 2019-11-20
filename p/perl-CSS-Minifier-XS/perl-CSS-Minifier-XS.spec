@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/File.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Benchmark.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier-XS
 Version:    0.09
-Release:    alt5_15
+Release:    alt5_19
 # lib/CSS/Minifier/XS.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
-Group:      Development/Other
 Summary:    XS based CSS minifier
 Source:     https://cpan.metacpan.org/authors/id/G/GT/GTERMARS/CSS-Minifier-XS-%{version}.tar.gz
 Url:        https://metacpan.org/release/CSS-Minifier-XS
@@ -60,6 +60,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.09-alt5_19
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.09-alt5_15
 - rebuild with new perl 5.28.1
 
