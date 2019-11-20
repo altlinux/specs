@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Oracle
 Version:        0.06
-Release:        alt2_17
+Release:        alt2_21
 Summary:        Parse and format Oracle dates and timestamps
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/DateTime-Format-Oracle
 Source0:        https://cpan.metacpan.org/authors/id/K/KO/KOLIBRIE/DateTime-Format-Oracle-%{version}.tar.gz
 BuildArch:      noarch
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_21
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_17
 - update to new release by fcimport
 
