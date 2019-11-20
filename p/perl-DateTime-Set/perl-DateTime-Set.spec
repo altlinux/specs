@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Set
 Version:        0.3900
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/DateTime-Set
 Source0:        https://cpan.metacpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
 Patch0:         DateTime-Set-0.32-version.patch
@@ -67,6 +67,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1_6
 - update to new release by fcimport
 
