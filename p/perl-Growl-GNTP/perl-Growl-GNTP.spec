@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Encode.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Encode.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Growl-GNTP
 Version:        0.21
-Release:        alt1_7
+Release:        alt1_11
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Growl-GNTP
 Source0:        https://cpan.metacpan.org/authors/id/M/MA/MATTN/Growl-GNTP-%{version}.tar.gz
 BuildArch:      noarch
@@ -49,6 +49,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_11
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_7
 - update to new release by fcimport
 
