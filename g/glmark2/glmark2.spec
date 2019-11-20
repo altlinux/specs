@@ -1,20 +1,22 @@
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
-Version:	0.0.0.0.834.f413c5b
+Version:	0.0.0.0.907.24a1139
 Release:	alt1
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
 Group:		Graphics
-License:	GPLv3
+License:	GPL-3.0-or-later
 
-# repacked imported tarball from git
-Source:		%name-%version.tar
+#		git://git.altlinux.org:/gears/g/glmark2.git
+Source:		%name-%version-%release.tar
 
-BuildRequires(pre): gcc-c++ python
-BuildRequires:	libpng-devel
+BuildRequires(pre): gcc-c++
+BuildRequires:	/usr/bin/python3
 BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libudev-devel
 
 # GL support
 BuildRequires:	libGL-devel
@@ -58,9 +60,9 @@ Group:		Graphics
 BuildArch:	noarch
 
 %define common_descr \
-glmark2 is an OpenGL 2.0 and ES 2.0 benchmark. \
+glmark2 is an OpenGL 2.0 and ES 2.0 benchmark.\
 \
-glmark2 is developed by Alexandros Frantzis and Jesse Barker based on the \
+glmark2 is developed by Alexandros Frantzis and Jesse Barker based on the\
 original glmark benchmark by Ben Smith.
 
 
@@ -98,7 +100,7 @@ This package contains ES 2.0 Wayland flavor.
 This package contains data files.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %build
 export CFLAGS="%optflags"
@@ -141,6 +143,10 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Wed Nov 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.907.24a1139-alt1
+- Updated to 0.0.0-907-g24a1139.
+- Fixed license field.
+
 * Mon Dec 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.834.f413c5b-alt1
 - recent upstream commit
 - added URL
