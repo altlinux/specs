@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sys-MemInfo
 Version:        0.99
-Release:        alt4_7
+Release:        alt4_11
 Summary:        Memory information as Perl module
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Sys-MemInfo
 Source0:        https://cpan.metacpan.org/authors/id/S/SC/SCRESTO/Sys-MemInfo-%{version}.tar.gz
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_archlib}/Sys*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt4_11
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt4_7
 - rebuild with new perl 5.28.1
 
