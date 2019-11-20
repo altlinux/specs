@@ -4,12 +4,12 @@ License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
 Version: 1.5
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 BuildArch: noarch
 BuildRequires: md2man
 Requires: systemd-container
-Requires: iproute2
+Requires: coreutils iproute2 binutils grep gawk sed
 
 %description
 Simple wrapper to quickly run systemd-nspawn containers with support to:
@@ -36,6 +36,9 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Thu Nov 20 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.5-alt2
+- Explicitly require binutils and gawk, AutoReq failed to detect them
 
 * Thu Nov 14 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.5-alt1
 - Fixed parsing pactl output
