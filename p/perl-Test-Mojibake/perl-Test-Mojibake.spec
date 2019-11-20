@@ -1,8 +1,9 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Encode.pm) perl-podlators
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
@@ -14,12 +15,11 @@ BuildRequires: perl(Encode.pm) perl-podlators
 
 Name:		perl-Test-Mojibake
 Version:	1.3
-Release:	alt1_7
+Release:	alt1_13
 Summary:	Check your source for encoding misbehavior
-Group:		Development/Other
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-Mojibake
-Source0:	https://cpan.metacpan.org/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-Mojibake-%{version}.tar.gz
 Patch1:		Test-Mojibake-1.3-old-Test::More.patch
 Patch2:		Test-Mojibake-1.3-old-Test::Pod.patch
 Patch3:		Test-Mojibake-1.3-no-Test::Version.patch
@@ -29,8 +29,8 @@ BuildArch:	noarch
 # ===================================================================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -59,6 +59,7 @@ BuildRequires:	perl(Test/Script.pm)
 # their author/release tests.
 # ===================================================================
 %if 0%{!?perl_bootstrap:1}
+BuildRequires:	perl(Perl/Critic.pm)
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/CPAN/Meta.pm)
 BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
@@ -67,15 +68,12 @@ BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/HasVersion.pm)
 BuildRequires:	perl(Test/MinimumVersion.pm)
 BuildRequires:	perl(Test/NoTabs.pm)
+BuildRequires:	perl(Test/Perl/Critic.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
 BuildRequires:	perl(Test/Synopsis.pm)
-# Modules only available from EL-6
-%if 0%{?fedora} || 0%{?rhel} > 5
-BuildRequires:	perl(Test/Perl/Critic.pm), perl(Perl/Critic.pm)
 BuildRequires:	perl(Test/Vars.pm)
-%endif
 # Modules only available from EL-7
 %if 0%{?fedora} || 0%{?rhel} > 6
 BuildRequires:	perl(Test/CPAN/Changes.pm)
@@ -168,6 +166,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_7
 - update to new release by fcimport
 
