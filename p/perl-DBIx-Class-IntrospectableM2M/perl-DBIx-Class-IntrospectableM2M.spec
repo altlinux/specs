@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-DBIx-Class-IntrospectableM2M
 Version:        0.001002
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Introspect many-to-many shortcuts
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/DBIx-Class-IntrospectableM2M
 Source0:        https://cpan.metacpan.org/authors/id/I/IL/ILMARI/DBIx-Class-IntrospectableM2M-%{version}.tar.gz
 Patch0:         DBIx-Class-IntrospectableM2M-0.001002-Fix-building-on-Perl-without-dot-in-INC.patch
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.001002-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.001002-alt1_10
 - update to new release by fcimport
 
