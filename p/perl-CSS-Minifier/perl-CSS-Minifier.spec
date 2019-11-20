@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier 
 Version:    0.01 
-Release:    alt2_26
+Release:    alt2_30
 # lib/CSS/Minifier.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
-Group:      Development/Other
 Summary:    Remove unnecessary whitespace from CSS files 
 Source:     https://cpan.metacpan.org/authors/id/P/PM/PMICHAUX/CSS-Minifier-%{version}.tar.gz
 Url:        https://metacpan.org/release/CSS-Minifier
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_26
 - update to new release by fcimport
 
