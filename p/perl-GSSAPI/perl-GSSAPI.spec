@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -12,10 +13,9 @@ BuildRequires: perl-podlators
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        alt6_24
+Release:        alt6_28
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/GSSAPI
 Source0:        https://cpan.metacpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRequires:  findutils
@@ -64,6 +64,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/GSSAPI*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.28-alt6_28
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.28-alt6_24
 - rebuild with new perl 5.28.1
 
