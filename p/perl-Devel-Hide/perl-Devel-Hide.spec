@@ -20,7 +20,7 @@ BuildRequires: perl(Module/CoreList.pm) perl-podlators
 
 Name:           perl-Devel-Hide
 Version:        0.0010
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Devel-Hide
@@ -74,6 +74,9 @@ make test
 %{perl_vendor_privlib}/Devel/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1_2
 - update to new release by fcimport
 
