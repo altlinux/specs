@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-CGI-PSGI
 Version:        0.15
-Release:        alt1_20
+Release:        alt1_24
 Summary:        Enable your CGI.pm aware applications to adapt PSGI protocol
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/CGI-PSGI
 Source0:        https://cpan.metacpan.org/authors/id/M/MI/MIYAGAWA/CGI-PSGI-%{version}.tar.gz
 BuildArch:      noarch
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_24
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_20
 - update to new release by fcimport
 
