@@ -8,7 +8,7 @@ BuildRequires: /proc
 %define _localstatedir %{_var}
 Name:           perl-Sys-CPU
 Version:        0.61
-Release:        alt6_16
+Release:        alt6_20
 Summary:        Getting CPU information
 
 # Some code was copied from Unix::Processors, which is LGPLv3 or Artistic 2.0
@@ -65,6 +65,9 @@ find %{buildroot} -type f -name CPU.bs -exec rm -f {} ';'
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.61-alt6_20
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.61-alt6_16
 - rebuild with new perl 5.28.1
 
