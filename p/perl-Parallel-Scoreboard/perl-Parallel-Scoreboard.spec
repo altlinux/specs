@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(ExtUtils/CBuilder.pm) perl(IO/All.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Markdown.pm) perl(Sub/Uplevel.pm) perl(YAML/Tiny.pm) perl(parent.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(Ext
 %define _localstatedir %{_var}
 Name:           perl-Parallel-Scoreboard
 Version:        0.08
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Parallel-Scoreboard
 Source0:        https://cpan.metacpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
@@ -67,6 +67,9 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_6
 - update to new release by fcimport
 
