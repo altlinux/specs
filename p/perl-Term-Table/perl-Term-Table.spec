@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -19,11 +18,11 @@ BuildRequires: perl-podlators
 
 Name:           perl-Term-Table
 Version:        0.015
-Release:        alt1
+Release:        alt1_1
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Term-Table
-Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Term-Table-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Term-Table-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -74,11 +73,11 @@ This Perl module is able to format rows of data into tables.
 %setup -q -n Term-Table-%{version}
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -87,10 +86,14 @@ unset TABLE_TERM_SIZE
 make test
 
 %files
-%doc Changes README README.md
+%doc --no-dereference LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
 - automated CPAN update
 
