@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_21
+Release:        alt5_23
 Summary:        Falling blocks game
 
 License:        GPLv2
@@ -20,6 +20,9 @@ BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 BuildRequires: /usr/bin/pathfix.py python-devel
 Requires:       python-module-pygame icon-theme-hicolor libgail libgtk+2
+
+# Requirement for pygame.surfarray:
+Requires:       python-module-numpy python-module-numpy-testing
 Source44: import.info
 
 %description
@@ -68,6 +71,9 @@ pathfix.py -pni "%{__python} %{py2_shbang_opts}" $RPM_BUILD_ROOT%{_datadir}/%{na
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_23
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_21
 - update to new release by fcimport
 
