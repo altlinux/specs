@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CGI.pm) perl(HTML/Template.pm) perl-podlators
@@ -6,11 +7,10 @@ BuildRequires: perl(CGI.pm) perl(HTML/Template.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        alt4_23
+Release:        alt4_27
 Summary:        Compute Voronoi diagrams from sets of points
 License:        (GPL+ or Artistic) and MIT
 # Perl module is licensed as Perl, underlaying C code is MIT
-Group:          Development/Other
 URL:            https://metacpan.org/release/Math-Geometry-Voronoi
 Source0:        https://cpan.metacpan.org/authors/id/S/SA/SAMTREGAR/Math-Geometry-Voronoi-%{version}.tar.gz
 Source1:        Math-Geometry-Voronoi-license-mail1.txt
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_27
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_23
 - rebuild with new perl 5.28.1
 
