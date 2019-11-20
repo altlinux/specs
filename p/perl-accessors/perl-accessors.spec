@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Exporter.pm) perl(File/Spec.pm) perl(base.pm) perl(warnings/register.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Exporter.pm) p
 %define _localstatedir %{_var}
 Name:           perl-accessors
 Version:        1.01
-Release:        alt1_25
+Release:        alt1_29
 Summary:        Create accessor methods in caller's package
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/accessors
 Source0:        https://cpan.metacpan.org/authors/id/S/SP/SPURKIS/accessors-%{version}.tar.gz
 BuildArch:      noarch
@@ -47,6 +47,9 @@ find $RPM_BUILD_ROOT%{perl_vendor_privlib} -name *.pm | xargs chmod a-x
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_25
 - update to new release by fcimport
 
