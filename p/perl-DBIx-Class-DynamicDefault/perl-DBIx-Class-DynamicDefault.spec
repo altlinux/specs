@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_19
+Release:    alt2_23
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Summary:    Automatically set and update fields 
@@ -41,7 +41,7 @@ Requires:       perl(DBIx/Class.pm) >= 0.081.270
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(DBIx.Class\\)$/d
+%filter_from_requires /^perl(DBIx.Class.pm)/d
 
 %description
 Automatically set and update fields with values calculated at run time.
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_23
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
 - update to new release by fcimport
 
