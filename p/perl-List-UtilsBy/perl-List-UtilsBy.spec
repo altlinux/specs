@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-List-UtilsBy
 Version:        0.11
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Higher-order list utility functions
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/List-UtilsBy
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_7
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_5
 - update to new release by fcimport
 
