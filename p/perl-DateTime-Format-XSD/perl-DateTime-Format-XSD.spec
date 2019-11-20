@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-XSD
 Version:        0.2
-Release:        alt2_18
+Release:        alt2_22
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/DateTime-Format-XSD
 Source0:        https://cpan.metacpan.org/modules/by-module/DateTime/DateTime-Format-XSD-%{version}.tar.gz
 BuildArch:      noarch
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_22
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_18
 - update to new release by fcimport
 
