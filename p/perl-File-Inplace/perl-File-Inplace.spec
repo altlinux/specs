@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Inplace
 Version:        0.20
-Release:        alt2_20
+Release:        alt2_24
 Summary:        Perl module for in-place editing of files
 License:        (GPL+ or Artistic)
-Group:          Development/Other
 URL:            https://metacpan.org/release/File-Inplace
 Source0:        https://cpan.metacpan.org/modules/by-module/File/File-Inplace-%{version}.tar.gz
 BuildArch:      noarch
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_24
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_20
 - update to new release by fcimport
 
