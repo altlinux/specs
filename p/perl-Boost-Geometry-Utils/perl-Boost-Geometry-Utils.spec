@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,10 +8,9 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt2_20
+Release:        alt2_24
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Boost-Geometry-Utils
 Source0:        https://cpan.metacpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
 # Fix for RT#96145
@@ -56,6 +56,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_24
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_20
 - rebuild with new perl 5.28.1
 
