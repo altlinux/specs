@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
 Version:        0.39
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-WWW-Mechanize-PSGI
@@ -62,6 +62,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1_1
 - update to new release by fcimport
 
