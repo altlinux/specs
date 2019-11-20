@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Class-Field
 Version:        0.24
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Class-Field
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/Class*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
 - update to new release by fcimport
 
