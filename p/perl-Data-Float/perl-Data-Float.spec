@@ -16,7 +16,7 @@ BuildRequires: perl-podlators
 
 Name:           perl-Data-Float
 Version:        0.013
-Release:        alt1_3
+Release:        alt1_7
 Summary:        Details of the floating point data type
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Data-Float
@@ -70,6 +70,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_7
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1_3
 - update to new release by fcimport
 
