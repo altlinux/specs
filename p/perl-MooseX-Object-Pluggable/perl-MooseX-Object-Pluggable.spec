@@ -7,7 +7,7 @@ BuildRequires: perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Object-Pluggable
 Version:        0.0014
-Release:        alt2_10
+Release:        alt2_14
 Summary:        Make your Moose classes pluggable
 License:        GPL+ or Artistic
 
@@ -68,6 +68,9 @@ AUTHOR_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.0014-alt2_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0014-alt2_10
 - update to new release by fcimport
 
