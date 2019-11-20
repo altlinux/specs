@@ -8,7 +8,7 @@ BuildRequires: perl-Encode-devel
 %define _localstatedir %{_var}
 Name:           perl-Encode-EUCJPASCII
 Version:        0.03
-Release:        alt9_24
+Release:        alt9_28
 Summary:        EucJP-ascii - An eucJP-open mapping
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Encode-EUCJPASCII
@@ -59,6 +59,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.03-alt9_28
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.03-alt9_24
 - rebuild with new perl 5.28.1
 
