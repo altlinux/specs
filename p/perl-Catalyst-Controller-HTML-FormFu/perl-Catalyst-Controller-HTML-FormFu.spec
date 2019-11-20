@@ -8,7 +8,7 @@ BuildRequires: perl(Locale/Maketext.pm)
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        2.04
-Release:        alt1_2
+Release:        alt1_6
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
@@ -72,7 +72,7 @@ Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
 # Task::Weaken for Scalar::Util, see Makefile.PL
 Requires:       perl(Task/Weaken.pm)
 Source44: import.info
-%filter_from_requires /^perl(\(HTML.FormFu\|MooseX.Attribute.Chained\)\\)$/d
+%filter_from_requires /^perl(\(HTML.FormFu\|MooseX.Attribute.Chained\).pm)/d
 
 %description
 This base controller merges the functionality of HTML::FormFu with Catalyst.
@@ -100,6 +100,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1_2
 - update to new release by fcimport
 
