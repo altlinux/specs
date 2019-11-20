@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 29
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global use_system_admesh 0
@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt2_8
+Release:        alt2_10
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -105,16 +105,16 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ImageMagick-tools
 Requires:       perl(Growl/GNTP.pm) >= 0.150
 Requires:       perl(XML/SAX.pm)
-
-# Optional dependency. Not packaged in Fedora yet.
-# It's only used for magically finding octoprint servers.
-# Requires:     perl(Net/Bonjour.pm)
 Source44: import.info
 # alt bug #34434
 Requires:       perl(OpenGL.pm)
 Requires:       perl(Class/Accessor.pm)
 Requires:       perl(Math/Trig.pm)
 Requires:       perl-Wx-GLCanvas
+
+# Optional dependency. Not packaged in Fedora yet, hence we cannot list it.
+# It's only used for magically finding octoprint servers.
+# #Recommends:    perl(Net::Bonjour)
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -250,6 +250,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_10
+- update to new release by fcimport
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_8
 - update to new release by fcimport
 
