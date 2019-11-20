@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Email
 Version:        0.07
-Release:        alt2_13
+Release:        alt2_17
 Summary:        Test Email Contents
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Test-Email
 Source0:        https://cpan.metacpan.org/authors/id/J/JA/JAMES/Test-Email-%{version}.tar.gz
 BuildArch:      noarch
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_17
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_13
 - update to new release by fcimport
 
