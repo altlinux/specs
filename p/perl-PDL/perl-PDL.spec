@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.019
 Version:        2.19.0
-Release:        alt4
+Release:        alt4_9
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -141,6 +141,7 @@ BuildRequires:  perl(Storable.pm)
 %if %{with perl_PDL_enables_proj}
 # Needed by PDL::GIS::Proj
 BuildRequires:  libproj-devel
+BuildRequires:  proj-datumgrid
 %endif
 # Need by PDL::IO::Browser, currently disabled
 # BuildRequires:  ncurses-devel
@@ -244,6 +245,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt4_9
+- update to new release by fcimport
+
 * Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.19.0-alt4
 - rebuild with libproj 6.2.0
 - remove dependency on proj-nad (all these data are in libproj package now)
