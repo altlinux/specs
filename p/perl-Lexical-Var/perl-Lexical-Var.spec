@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt3_17
+Release:        alt3_21
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Lexical-Var
 Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
 # Update code to work with Perl 5.21.x (CPAN RT#101058)
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.009-alt3_21
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.009-alt3_17
 - rebuild with new perl 5.28.1
 
