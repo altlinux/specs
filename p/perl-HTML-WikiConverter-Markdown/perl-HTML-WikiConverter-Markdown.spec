@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-WikiConverter-Markdown
 Version:        0.06
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Convert HTML to Markdown markup
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/HTML-WikiConverter-Markdown
 Source0:        https://cpan.metacpan.org/authors/id/J/JF/JFEARN/HTML-WikiConverter-Markdown-%{version}.tar.gz
 BuildArch:      noarch
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_10
 - update to new release by fcimport
 
