@@ -7,7 +7,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.25
-Release:        alt1_8
+Release:        alt1_12
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/MooseX-AttributeHelpers
@@ -55,6 +55,9 @@ sed -i '1s,#!perl,#!%{__perl},' t/*.t
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_12
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_8
 - update to new release by fcimport
 
