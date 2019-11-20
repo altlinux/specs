@@ -1,21 +1,34 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Set-Scalar
 Version:        1.29
-Release:        alt1_10
+Release:        alt1_15
 Summary:        Basic set operations
-Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Set-Scalar
 Source0:        https://cpan.metacpan.org/authors/id/D/DA/DAVIDO/Set-Scalar-%{version}.tar.gz
 BuildArch:      noarch
+# Module Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Test Suite
+BuildRequires:  perl(Carp.pm)
 Source44: import.info
+# Dependencies
 
 %description
 %{summary}.
@@ -24,23 +37,25 @@ Source44: import.info
 %setup -q -n Set-Scalar-%{version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make_build
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
-find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
-chmod -R u+w $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README README.old
 %{perl_vendor_privlib}/Set/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_15
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_10
 - update to new release by fcimport
 
