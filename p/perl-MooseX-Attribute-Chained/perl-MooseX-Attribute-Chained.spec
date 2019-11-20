@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Warnings.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Attribute-Chained
 Version:        1.0.3
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/MooseX-Attribute-Chained
 Source0:        https://cpan.metacpan.org/authors/id/T/TO/TOMHUKINS/MooseX-Attribute-Chained-%{version}.tar.gz
 BuildArch:      noarch
@@ -63,6 +63,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_6
 - update to new release by fcimport
 
