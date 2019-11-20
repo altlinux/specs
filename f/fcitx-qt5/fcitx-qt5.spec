@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 
 Name:           fcitx-qt5
 Version:        1.2.3
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Fcitx IM module for Qt5
 
 # The entire source code is GPLv2+ except
@@ -79,6 +79,9 @@ make install/fast DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" -C build
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_10
+- update to new release by fcimport
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_8
 - update to new release by fcimport
 
