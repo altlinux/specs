@@ -1,6 +1,7 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(parent.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -19,13 +20,13 @@ BuildRequires: perl(parent.pm) perl-podlators
 
 Name:           perl-Test-MockModule
 Version:        0.171.0
-Release:        alt1
+Release:        alt1_1
 Summary:        Override subroutines in a module for unit testing
-Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-MockModule
-Source0:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-v%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-MockModule-v%{version}.tar.gz
 BuildArch:      noarch
+# Build:
 BuildRequires:  coreutils
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
@@ -39,37 +40,49 @@ BuildRequires:  perl(SUPER.pm)
 BuildRequires:  perl(vars.pm)
 # Tests:
 BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:	perl(Test/Warnings.pm)
+BuildRequires:  perl(Test/Warnings.pm)
 %if %{with perl_Test_MockModule_enables_optional_test}
 # Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 %endif
 Source44: import.info
+# Dependencies:
 
 %description
-%{summary}.
+Test::MockModule lets you temporarily redefine subroutines in other packages
+for the purposes of unit testing.
+
+A Test::MockModule object is set up to mock subroutines for a given module. The
+object remembers the original subroutine so it can easily be restored. This
+happens automatically when all MockModule objects for the given module go out
+of scope, or when you unmock() the subroutine.
 
 %prep
 %setup -q -n Test-MockModule-v%{version}
 
 %build
-/usr/bin/perl Build.PL installdirs=vendor
+perl Build.PL --installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-chmod -R u+w $RPM_BUILD_ROOT/*
+./Build install --destdir=%{buildroot} --create_packlist=0
+# %{_fixperms} -c %{buildroot}
 
 %check
 ./Build test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README.md
-%{perl_vendor_privlib}/Test
+%{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.171.0-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.171.0-alt1
 - automated CPAN update
 
