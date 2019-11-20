@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-YAML-Meta
 Version:        0.22
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Validation of the META.yml file in a distribution
 License:        Artistic 2.0
-Group:          Development/Other
 URL:            https://metacpan.org/release/Test-YAML-Meta
 Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-YAML-Meta-%{version}.tar.gz
 Patch0:         Test-YAML-Meta-0.21-utf8.patch
@@ -67,6 +67,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_10
 - update to new release by fcimport
 
