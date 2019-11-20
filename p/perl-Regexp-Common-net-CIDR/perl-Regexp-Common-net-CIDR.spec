@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.p
 %define _localstatedir %{_var}
 Name:           perl-Regexp-Common-net-CIDR
 Version:        0.03
-Release:        alt1_9
+Release:        alt1_13
 Summary:        Provide patterns for CIDR blocks
 License:        GPLv2
 
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_9
 - update to new release by fcimport
 
