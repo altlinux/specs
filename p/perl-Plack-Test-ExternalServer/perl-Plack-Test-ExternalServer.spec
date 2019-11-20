@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,12 +7,11 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Plack-Test-ExternalServer
 Version:        0.02
-Release:        alt1_11
+Release:        alt1_16
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Plack-Test-ExternalServer
-Source0:        https://cpan.metacpan.org/authors/id/F/FL/FLORA/Plack-Test-ExternalServer-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/Plack-Test-ExternalServer-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -58,6 +58,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Plack*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_16
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_11
 - update to new release by fcimport
 
