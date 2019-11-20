@@ -4,7 +4,7 @@
 
 Name: quiterss
 Version: 0.19.1
-Release: alt1
+Release: alt2
 
 Summary: RSS/Atom aggregator
 Summary(ru_RU.UTF-8): QuiteRSS - быстрая и удобная программа для чтения новостных лент RSS/Atom
@@ -28,7 +28,7 @@ BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5WebKitWidgets)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: libqtsingleapplication-qt5-devel
-Requires: qt5-sql-sqlite3
+Requires: qt5-sql-sqlite
 %else
 BuildRequires: gcc-c++ qt4-devel
 BuildRequires: pkgconfig(QtGui) pkgconfig(QtNetwork) pkgconfig(QtWebKit) pkgconfig(QtXml) pkgconfig(QtSql)
@@ -79,6 +79,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Wed Nov 20 2019 Michael Shigorin <mike@altlinux.org> 0.19.1-alt2
+- replace BR: qt5-sql-sqlite3 with qt5-sql-sqlite (closes: #37515)
+
 * Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 0.19.1-alt1
 - new version (watch file uupdate)
 - desktop file fixup
