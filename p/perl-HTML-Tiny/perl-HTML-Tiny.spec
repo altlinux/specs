@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_27
+Release:        alt2_31
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_31
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_27
 - update to new release by fcimport
 
