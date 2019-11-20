@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators perldoc
@@ -6,9 +7,8 @@ BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators 
 %define _localstatedir %{_var}
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_34
+Release:        alt3_38
 Summary:        Net::Jabber - Jabber Perl Library
-Group:          Development/Other
 License:        (GPL+ or Artistic) or LGPLv2+
 URL:            https://metacpan.org/release/Net-Jabber
 Source0: https://cpan.metacpan.org/authors/id/R/RE/REATMON/Net-Jabber-%{version}.tar.gz
@@ -79,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_38
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_34
 - update to new release by fcimport
 
