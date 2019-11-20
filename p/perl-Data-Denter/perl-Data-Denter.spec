@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Data-Denter
 Version:        0.15
-Release:        alt2_25
+Release:        alt2_29
 License:        GPL+ or Artistic
 Summary:        An alternative to Data::Dumper and Storable
 Source:         https://cpan.metacpan.org/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_25
 - update to new release by fcimport
 
