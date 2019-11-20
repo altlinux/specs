@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_19
+Release:        alt2_23
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Browser-Open
 Source0:        https://cpan.metacpan.org/authors/id/C/CF/CFRANKS/Browser-Open-%{version}.tar.gz
 BuildArch:      noarch
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_23
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
 - update to new release by fcimport
 
