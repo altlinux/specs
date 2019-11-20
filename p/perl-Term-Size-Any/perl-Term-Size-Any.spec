@@ -1,26 +1,45 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Perform optional tests
+%bcond_without perl_Term_Size_Any_enabels_optional_test
+
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_24
+Release:        alt2_29
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Term-Size-Any
 Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Term-Size-Any-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
-BuildRequires:  perl(Devel/Hide.pm)
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Module/Load/Conditional.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
 BuildRequires:  perl(Term/Size/Perl.pm)
+# Term::Size::Win32 not used on Linux
+BuildRequires:  perl(vars.pm)
+# Tests:
+BuildRequires:  perl(Module/Load/Conditional.pm)
 BuildRequires:  perl(Test/More.pm)
+%if %{with perl_Term_Size_Any_enabels_optional_test}
+# Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+%endif
 Requires:       perl(Term/Size/Perl.pm)
 
 
@@ -36,14 +55,11 @@ on behalf of Term::Size::Any.
 %setup -q -n Term-Size-Any-%{version}
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -54,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_29
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_24
 - update to new release by fcimport
 
