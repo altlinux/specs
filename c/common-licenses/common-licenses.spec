@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -42,6 +42,34 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Wed Nov 20 2019 Alexey Gladkov <legion@altlinux.ru> 1.6-alt1
+- Sync with SPDX.
+- Add licenses:
+  + BSD 3-Clause Open MPI variant (BSD-3-Clause-Open-MPI)
+  + Blue Oak Model License 1.0.0 (BlueOak-1.0.0)
+  + Creative Commons Public Domain Dedication and Certification (CC-PDDC)
+  + CERN Open Hardware Licence v1.1 (CERN-OHL-1.1)
+  + CERN Open Hardware Licence v1.2 (CERN-OHL-1.2)
+  + Historical Permission Notice and Disclaimer - sell variant (HPND-sell-variant)
+  + Japan Network Information Center License (JPNIC)
+  + Mulan Permissive Software License, Version 1 (MulanPSL-1.0)
+  + Open Government Licence - Canada (OGL-Canada-2.0)
+  + The Parity Public License (Parity-6.0.0)
+  + Solderpad Hardware License v0.5 (SHL-0.5)
+  + Solderpad Hardware License, Version 0.51 (SHL-0.51)
+  + SSH OpenSSH license (SSH-OpenSSH)
+  + SSH short notice (SSH-short)
+  + Server Side Public License v1 (SSPL-1.0)
+  + TAPR Open Hardware License v1.0 (TAPR-OHL-1.0)
+  + Upstream Compatibility License v1.0 (UCL-1.0)
+  + SQLite Blessing (blessing)
+  + Etalab Open License 2.0 (etalab-2.0)
+  + PNG Reference Library version 2 (libpng-2.0)
+- Add exceptions:
+  + GPL Cooperation Commitment Version 1.0 (GPL-CC-1.0)
+  + Runtime Library Exception to the Apache 2.0 License (Swift-exception)
+  + The Universal FOSS Exception, Version 1.0 (Universal-FOSS-exception-1.0)
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 1.5-alt1
 - Add ambiguous license names
 - Add Bitstream Vera license
