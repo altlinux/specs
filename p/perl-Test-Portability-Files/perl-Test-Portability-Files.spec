@@ -7,7 +7,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %define _localstatedir %{_var}
 Name:           perl-Test-Portability-Files
 Version:        0.10
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-Portability-Files
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_4
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
 - update to new release by fcimport
 
