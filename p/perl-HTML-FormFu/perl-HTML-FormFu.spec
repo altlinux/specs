@@ -8,7 +8,7 @@ BuildRequires: perl(Encode/JP.pm)
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormFu
 Version:        2.07
-Release:        alt1_1
+Release:        alt1_4
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-FormFu
@@ -128,6 +128,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1_4
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1_1
 - update to new release by fcimport
 
