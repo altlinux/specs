@@ -1,6 +1,6 @@
 Summary: Simple scripts for encrypt and digest files with openssl and caja
 Name: mate-file-manager-actions-gost
-Version: 2
+Version: 3
 Release: alt1
 Group: Graphical desktop/MATE
 License: GPL-3.0+
@@ -56,6 +56,9 @@ cp -a %SOURCE13 %buildroot%_datadir/file-manager/actions/
 %exclude %_iconsdir/gnome/48x48/status/dialog-information.png
 
 %changelog
+* Wed Nov 20 2019 Leontiy Volodin <lvol@altlinux.org> 3-alt1
+- Fixed checksum calculation for files with spaces in names.
+
 * Tue Nov 19 2019 Leontiy Volodin <lvol@altlinux.org> 2-alt1
 - Fixed encryption of files with spaces in names.
 - The spec was simplified.
