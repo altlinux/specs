@@ -7,17 +7,17 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-SUPER
 Version:	1.20190531
-Release:	alt1
+Release:	alt1_3
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/SUPER
-Source0:	http://www.cpan.org/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
 BuildArch:	noarch
 # =============== Module Build =================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # =============== Module Runtime ===============
 BuildRequires:	perl(Carp.pm)
@@ -50,19 +50,24 @@ perl Makefile.PL INSTALLDIRS=vendor
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -delete
-# %{_fixperms} %{buildroot}
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
 %if 0%{?_licensedir:1}
+%doc --no-dereference LICENSE
 %else
+%doc LICENSE
 %endif
 %doc Changes README
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.20190531-alt1_3
+- update to new release by fcimport
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 1.20190531-alt1
 - automated CPAN update
 
