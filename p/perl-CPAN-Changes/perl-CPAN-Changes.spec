@@ -1,21 +1,24 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.400002
-Release:	alt1_8
+Release:	alt1_13
 License:	GPL+ or Artistic
-Group:		Development/Other
 URL:		https://metacpan.org/release/CPAN-Changes
-Source0:	https://cpan.metacpan.org/authors/id/H/HA/HAARG/CPAN-Changes-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/CPAN/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl-devel
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(Encode.pm)
@@ -31,7 +34,9 @@ BuildRequires:	perl(Pod/Usage.pm)
 # Test Suite
 BuildRequires:	perl(Test/More.pm)
 # Optional Tests
+%if 0%{?fedora:1}
 BuildRequires:	perl(Moo.pm)
+%endif
 # Extra Tests
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
@@ -60,8 +65,8 @@ perl Makefile.PL INSTALLDIRS=vendor
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
@@ -75,6 +80,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.400002-alt1_8
 - update to new release by fcimport
 
