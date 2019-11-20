@@ -1,38 +1,23 @@
 %define oname pylzma
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.6.2
-Release: alt1.git20141116.1.1.1
+Release: alt2
+
 Summary: Python bindings for the LZMA library by Igor Pavlov
 License: LGPLv2.1+
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pylzma/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/fancycode/pylzma.git
+
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-
-%description
-PyLZMA provides a platform independent way to read and write data that
-has been compressed or can be decompressed by the LZMA library by Igor
-Pavlov.
-
-%package -n python3-module-%oname
-Summary: Python bindings for the LZMA library by Igor Pavlov
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 PyLZMA provides a platform independent way to read and write data that
 has been compressed or can be decompressed by the LZMA library by Igor
 Pavlov.
@@ -42,48 +27,32 @@ Pavlov.
 
 sed -i 's|@VERSION@|%version|' version.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
+
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
 
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.md doc/*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md doc/*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.6.2-alt2
+- disable python2
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.6.2-alt1.git20141116.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
