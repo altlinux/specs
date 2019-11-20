@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.54
-Release:    alt2_1
+Release:    alt2_4
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
 Source:     https://cpan.metacpan.org/authors/id/M/MA/MANWAR/Time-Warp-%{version}.tar.gz
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.54-alt2_4
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.54-alt2_1
 - rebuild with new perl 5.28.1
 
