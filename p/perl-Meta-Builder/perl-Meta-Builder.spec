@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Meta-Builder
 Version:        0.004
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Meta-Builder
 Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Meta-Builder-%{version}.tar.gz
 BuildArch:      noarch
@@ -50,6 +50,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_1
 - update to new release by fcimport
 
