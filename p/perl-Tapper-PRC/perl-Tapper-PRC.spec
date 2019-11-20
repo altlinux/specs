@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators
@@ -7,19 +6,19 @@ BuildRequires: perl(File/Slurp.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-PRC
-%define upstream_version 5.0.3
+%define upstream_version 5.0.4
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.4
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -61,7 +60,7 @@ Source44: import.info
 Tapper - Program run control for test program automation.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -75,7 +74,7 @@ Tapper - Program run control for test program automation.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{_mandir}/man1/*
 %{perl_vendor_privlib}/*
 %{_bindir}/tapper-automatic-test.pl
@@ -83,8 +82,10 @@ Tapper - Program run control for test program automation.
 %{_bindir}/tapper-client-no-fork
 %{_bindir}/tapper-minion-worker
 
-
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1_1
+- update by mgaimport
+
 * Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1
 - automated CPAN update
 
