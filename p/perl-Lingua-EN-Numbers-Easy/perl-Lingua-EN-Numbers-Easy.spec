@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1_10
+Release:        alt1_14
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 URL:            https://metacpan.org/release/Lingua-EN-Numbers-Easy
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_14
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_10
 - update to new release by fcimport
 
