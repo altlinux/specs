@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1_12
+Release:        alt1_16
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/MooseX-Aliases
 Source0:        https://cpan.metacpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
 BuildArch:      noarch
@@ -68,6 +68,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_16
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
 - update to new release by fcimport
 
