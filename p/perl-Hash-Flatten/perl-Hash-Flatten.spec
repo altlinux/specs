@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_22
+Release:        alt3_26
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 URL:            https://metacpan.org/release/Hash-Flatten
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_26
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_22
 - update to new release by fcimport
 
