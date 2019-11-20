@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt2_15
+Release:        alt2_19
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/PerlIO-Layers
 Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
 BuildRequires:  perl-devel
@@ -62,6 +62,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.011-alt2_19
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.011-alt2_15
 - rebuild with new perl 5.28.1
 
