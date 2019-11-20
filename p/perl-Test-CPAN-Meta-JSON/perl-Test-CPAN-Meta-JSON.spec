@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,17 +7,18 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-CPAN-Meta-JSON
 Version:	0.16
-Release:	alt2_10
+Release:	alt2_15
 Summary:	Validate a META.json file within a CPAN distribution
-Group:		Development/Other
 License:	Artistic 2.0
 Url:		http://search.cpan.org/dist/Test-CPAN-Meta-JSON/
-Source0:	https://cpan.metacpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-JSON-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-CPAN-Meta-JSON-%{version}.tar.gz
 Patch0:		Test-CPAN-Meta-JSON-0.16-utf8.patch
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl-devel
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
 BuildRequires:	perl(IO/File.pm)
@@ -55,8 +57,8 @@ perl Makefile.PL INSTALLDIRS=vendor
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test AUTOMATED_TESTING=1
@@ -71,6 +73,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_15
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_10
 - update to new release by fcimport
 
