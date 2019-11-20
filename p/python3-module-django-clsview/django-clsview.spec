@@ -1,74 +1,46 @@
 %define oname django-clsview
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.0.3
-Release: alt1.git20100818.2
+Release: alt2
+
 Summary: Yet another class-based view system for Django
 License: Free
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-clsview/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/zacharyvoase/django-clsview.git
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-django-clsview is a library with yet another solution to the problem of
-class-based views in Django.
-
-%package -n python3-module-%oname
-Summary: Yet another class-based view system for Django
-Group: Development/Python3
-
-%description -n python3-module-%oname
 django-clsview is a library with yet another solution to the problem of
 class-based views in Django.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
+sed -i 's|#!python|#!/python3|' distribute_setup.py
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.md UNLICENSE
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md UNLICENSE
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.3-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.3-alt1.git20100818.2
 - (NMU) rebuild with python3.6
 
