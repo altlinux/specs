@@ -1,3 +1,4 @@
+Group: System/Servers
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1_7
+Release:        alt1_11
 Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
-Group:          System/Servers
 URL:            https://metacpan.org/release/Gearman-Server
 Source0:        https://cpan.metacpan.org/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
 # Use absolute interpreter
@@ -47,7 +47,7 @@ BuildRequires:  perl(Test/Script.pm)
 
 
 Source44: import.info
-%filter_from_requires /^perl(Danga.Socket\\)$/d
+%filter_from_requires /^perl(Danga.Socket.pm)/d
 
 %description
 You run a Gearman server (or more likely, many of them for both high-
@@ -81,6 +81,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_11
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_7
 - update to new release by fcimport
 
