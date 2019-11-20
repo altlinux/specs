@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Safe-Isa
 Version:        1.000010
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Safe-Isa
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1_6
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.000010-alt1_2
 - update to new release by fcimport
 
