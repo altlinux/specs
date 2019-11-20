@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -7,9 +8,8 @@ BuildRequires: perl-podlators
 Name:           perl-Class-Mix
 Summary:        Dynamic class mixing
 Version:        0.006
-Release:        alt1_3
+Release:        alt1_7
 License:        GPL+ or Artistic
-Group:          Development/Other
 Source0:        https://cpan.metacpan.org/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
 URL:            https://metacpan.org/release/Class-Mix
 BuildArch:      noarch
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1_7
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1_3
 - update to new release by fcimport
 
