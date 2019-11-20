@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.7
+Version: 0.9.9.8
 Release: alt1
 
 Summary: The system startup scripts
@@ -169,6 +169,10 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Wed Nov 20 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.9.8-alt1
+- rc.sysinit:
+  + Fix regression with ignoring HOSTNAME.
+
 * Sun Nov 17 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.9.7-alt1
 - rc.sysinit:
   + Add parameter for udev service.
