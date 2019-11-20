@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Devel/TimeThis.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Devel/TimeThis.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Prime-XS
 Version:        0.27
-Release:        alt2.1_7
+Release:        alt2.1_11
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Math-Prime-XS
 Source0:        https://cpan.metacpan.org/authors/id/K/KR/KRYDE/Math-Prime-XS-%{version}.tar.gz
 BuildRequires:  findutils
@@ -67,6 +67,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2.1_11
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2.1_7
 - rebuild with new perl 5.28.1
 
