@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-List-MoreUtils-XS
 Version:	0.428
-Release:	alt2_3
+Release:	alt2_7
 Summary:	Provide compiled List::MoreUtils functions
 # Code from List-MoreUtils < 0.417 is GPL+ or Artistic
 # Anything after that is ASL 2.0
@@ -83,6 +83,9 @@ make test
 %{perl_vendor_archlib}/List/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.428-alt2_7
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.428-alt2_3
 - rebuild with new perl 5.28.1
 
