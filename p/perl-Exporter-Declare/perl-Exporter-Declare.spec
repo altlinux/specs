@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Exporter-Declare
 Version:        0.114
-Release:        alt2_8
+Release:        alt2_12
 Summary:        Exporting done right
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Exporter-Declare
 Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Exporter-Declare-%{version}.tar.gz
 BuildArch:      noarch
@@ -64,6 +64,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_12
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_8
 - update to new release by fcimport
 
