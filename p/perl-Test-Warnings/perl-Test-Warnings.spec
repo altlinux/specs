@@ -1,9 +1,9 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,18 +21,17 @@ BuildRequires: perl-podlators
 
 Name:		perl-Test-Warnings
 Version:	0.027
-Release:	alt1
+Release:	alt1_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
-Group:		Development/Other
 URL:		https://metacpan.org/release/Test-Warnings
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Carp.pm)
@@ -93,18 +92,21 @@ perl Makefile.PL INSTALLDIRS=vendor
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-# %{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
 make test
 
 %files
-%doc LICENCE examples
+%doc --no-dereference LICENCE
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
 - automated CPAN update
 
