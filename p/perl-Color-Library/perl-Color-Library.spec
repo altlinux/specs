@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Color-Library
 Version:        0.021
-Release:        alt2_14
+Release:        alt2_18
 Summary:        Easy-to-use and comprehensive named-color library
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Color-Library
 Source0:        https://cpan.metacpan.org/authors/id/R/RO/ROKR/Color-Library-%{version}.tar.gz
 # Fix POD syntax, CPAN RT#86023
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_18
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_14
 - update to new release by fcimport
 
