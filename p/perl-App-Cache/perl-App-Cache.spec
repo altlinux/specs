@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 Name:           perl-App-Cache
 Summary:        Easy application-level caching
 Version:        0.37
-Release:        alt2_25
+Release:        alt2_27
 License:        GPL+ or Artistic
 
 Source0:        https://cpan.metacpan.org/authors/id/L/LB/LBROCARD/App-Cache-%{version}.tar.gz
@@ -79,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.37-alt2_27
+- update to new release by fcimport
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.37-alt2_25
 - to Sisyphus as dependency
 
