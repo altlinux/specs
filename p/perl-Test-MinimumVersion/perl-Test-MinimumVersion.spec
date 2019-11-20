@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-MinimumVersion
 Version:	0.101082
-Release:	alt1_9
+Release:	alt1_13
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
-Group:		Development/Other
 URL:		https://metacpan.org/release/Test-MinimumVersion
 Source0:	https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_13
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_9
 - update to new release by fcimport
 
