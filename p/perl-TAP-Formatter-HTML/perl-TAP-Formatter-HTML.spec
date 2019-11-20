@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(IO/File.pm) perl(Time/HiRes.pm) perl(base.pm) perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl(Cwd.pm) perl(Fcntl.p
 %define _localstatedir %{_var}
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_15
+Release:        alt1_19
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/TAP-Formatter-HTML
 Source0:        https://cpan.metacpan.org/authors/id/S/SP/SPURKIS/TAP-Formatter-HTML-%{version}.tar.gz
 BuildArch:      noarch
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_19
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_15
 - update to new release by fcimport
 
