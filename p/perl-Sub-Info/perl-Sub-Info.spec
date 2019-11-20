@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,10 +7,9 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sub-Info
 Version:        0.002
-Release:        alt1_6
+Release:        alt1_10
 Summary:        Tool for inspecting Perl subroutines
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            https://metacpan.org/release/Sub-Info
 Source0:        https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Sub-Info-%{version}.tar.gz
 BuildArch:      noarch
@@ -30,7 +30,7 @@ Requires:       perl(Importer.pm) >= 0.024
 
 
 Source44: import.info
-%filter_from_requires /^perl(Importer\\)$/d
+%filter_from_requires /^perl(Importer.pm)/d
 
 %description
 This allows to inspect Perl subroutines.
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1_10
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1_6
 - update to new release by fcimport
 
