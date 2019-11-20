@@ -8,7 +8,7 @@ BuildRequires: perl(Moose.pm)
 %define _localstatedir %{_var}
 Name:           perl-Config-GitLike
 Version:        1.17
-Release:        alt1_4
+Release:        alt1_8
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_8
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4
 - update to new release by fcimport
 
