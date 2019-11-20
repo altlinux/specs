@@ -7,7 +7,7 @@ BuildRequires: perl(Term/ReadLine.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
 Version:        1.07
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-Natural
@@ -87,6 +87,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_3
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_1
 - update to new release by fcimport
 
