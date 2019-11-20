@@ -7,7 +7,7 @@ BuildRequires: perl(IO/CaptureOutput.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_26
+Release:        alt2_30
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 URL:            https://metacpan.org/release/Test-Assertions
@@ -71,6 +71,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_30
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_26
 - update to new release by fcimport
 
