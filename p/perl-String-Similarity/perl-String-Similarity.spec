@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.pm) perl-podlators
@@ -6,12 +7,12 @@ BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.p
 %define _localstatedir %{_var}
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt5_23
+Release:        alt5_27
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
-Group:          Development/Other
 URL:            https://metacpan.org/release/String-Similarity
 Source0:        https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-%{version}.tar.gz
+BuildRequires:  gcc
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -50,6 +51,9 @@ make test
 %{perl_vendor_archlib}/String*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt5_27
+- update to new release by fcimport
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.04-alt5_23
 - rebuild with new perl 5.28.1
 
