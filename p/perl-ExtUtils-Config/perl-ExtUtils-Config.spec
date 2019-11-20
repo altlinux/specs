@@ -7,11 +7,11 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-Config
 Version:	0.008
-Release:	alt1_13
+Release:	alt1_17
 Summary:	A wrapper for perl's configuration
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Config
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-Config-%{version}.tar.gz
+Source0:	https://cpan.metacpan.org/modules/by-module/ExtUtils/ExtUtils-Config-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_17
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_13
 - update to new release by fcimport
 
