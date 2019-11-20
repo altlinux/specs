@@ -15,7 +15,7 @@ BuildRequires: unzip
 Name:		fonts-ttf-bpg
 Summary: 	Georgian Unicode fonts
 Version:	%{common_ver}
-Release:	alt5_9
+Release:	alt5_14
 # Font exception
 # See: http://groups.google.com/group/bpg-fonts/web/gpl-gnu-license
 # No version of the GPL is specified.
@@ -92,6 +92,16 @@ Source77:       %{fontname}-sans-regular.metainfo.xml
 Source78:       %{fontname}-serif.metainfo.xml
 Source79:       %{fontname}-serif-modern.metainfo.xml
 Source80:       %{fontname}-ucnobi.metainfo.xml
+# 2017 DejaVu Unicode updates
+Source81:       BPG-2017-DejaVuSans.zip
+Source82:       BPG-2017-DejaVuSansCondensed.zip
+Source83:       BPG-2017-DejaVuSansMono.zip
+Source84:       BPG-2017-DejaVuSerif.zip
+Source85:       BPG-2017-DejaVuSerifCondensed.zip
+Source86:       %{fontname}-dejavu-sans-mono.metainfo.xml
+Source87:       %{oldname}-dejavu-sans-mono-fontconfig.conf
+Source88:       %{fontname}-dejavu-serif.metainfo.xml
+Source89:       %{oldname}-dejavu-serif-fontconfig.conf
 
 # Docs
 Source100:	README
@@ -128,6 +138,7 @@ This package contains the Algeti font family.
 %files -n fonts-ttf-bpg-algeti
 %{_fontconfig_templatedir}/%{fontconf}-algeti.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-algeti.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Algeti*.ttf"
 %{_datadir}/appdata/%{fontname}-algeti.metainfo.xml
 
@@ -145,6 +156,7 @@ This package contains the Chveulebrivi font family.
 %files -n fonts-ttf-bpg-chveulebrivi
 %{_fontconfig_templatedir}/%{fontconf}-chveulebrivi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-chveulebrivi.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Chveulebrivi_*.ttf"
 %{_datadir}/appdata/%{fontname}-chveulebrivi.metainfo.xml
 
@@ -162,6 +174,7 @@ This package contains the Classic font family.
 %files -n fonts-ttf-bpg-classic
 %{_fontconfig_templatedir}/%{fontconf}-classic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-classic.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Classic_*.otf"
 %{_datadir}/appdata/%{fontname}-classic.metainfo.xml
 
@@ -179,6 +192,7 @@ This package contains the Courier font family.
 %files -n fonts-ttf-bpg-courier
 %{_fontconfig_templatedir}/%{fontconf}-courier.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-courier.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Courier_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-courier.metainfo.xml
 
@@ -196,6 +210,7 @@ This package contains the Courier S font family.
 %files -n fonts-ttf-bpg-courier-s
 %{_fontconfig_templatedir}/%{fontconf}-courier-s.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-courier-s.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Courier_S*.ttf"
 %{_datadir}/appdata/%{fontname}-courier-s.metainfo.xml
 
@@ -213,27 +228,72 @@ This package contains the DedaEna Block font family.
 %files -n fonts-ttf-bpg-dedaena-block
 %{_fontconfig_templatedir}/%{fontconf}-dedaena-block.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dedaena-block.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DedEena_Block*.ttf"
 %{_datadir}/appdata/%{fontname}-dedaena-block.metainfo.xml
 
 %package -n fonts-ttf-bpg-dejavu-sans
 Group: System/Fonts/True type
 Summary:	DejaVu Sans with BPG Georgian changes
-Version:	2.28
+Version:	2017.2.005
 License:	Bitstream Vera
 Requires:	%{name}-common = %{common_ver}-%{release}
 
 %description -n fonts-ttf-bpg-dejavu-sans
 %common_desc
 
-This package contains an improved version of DejaVu Sans with BPG Georgian 
+This package contains an improved version of DejaVu Sans with BPG Georgian
 changes.
 
 %files -n fonts-ttf-bpg-dejavu-sans
 %{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-bpg-dejavu-sans.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_Sans_*.ttf"
+%{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_SansCondensed_*.ttf"
 %{_datadir}/appdata/%{fontname}-dejavu-sans.metainfo.xml
+
+%package -n fonts-ttf-bpg-dejavu-sans-mono
+Group: System/Fonts/True type
+Summary:	DejaVu Sans Mono with BPG Georgian changes
+Version:	2017.3.003
+License:	Bitstream Vera
+Requires:	%{name}-common = %{common_ver}-%{release}
+
+%description -n fonts-ttf-bpg-dejavu-sans-mono
+%common_desc
+
+This package contains an improved version of DejaVu Sans Mono with BPG Georgian
+changes.
+
+%files -n fonts-ttf-bpg-dejavu-sans-mono
+%{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans-mono.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-bpg-dejavu-sans-mono.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
+%{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_SansMono*.ttf"
+%{_datadir}/appdata/%{fontname}-dejavu-sans-mono.metainfo.xml
+
+%package -n fonts-ttf-bpg-dejavu-serif
+Group: System/Fonts/True type
+Summary:	DejaVu Serif with BPG Georgian changes
+Version:	2017.2.37
+License:	Bitstream Vera
+Requires:	%{name}-common = %{common_ver}-%{release}
+
+%description -n fonts-ttf-bpg-dejavu-serif
+%common_desc
+
+This package contains an improved version of DejaVu Serif with BPG Georgian
+changes.
+
+%files -n fonts-ttf-bpg-dejavu-serif
+%{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-serif.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-bpg-dejavu-serif.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
+%{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_Serif_*.ttf"
+%{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_SerifCondensed_*.ttf"
+%{_datadir}/appdata/%{fontname}-dejavu-serif.metainfo.xml
+
 
 %package -n fonts-ttf-bpg-elite
 Group: System/Fonts/True type
@@ -249,6 +309,7 @@ This package contains the Elite font family.
 %files -n fonts-ttf-bpg-elite
 %{_fontconfig_templatedir}/%{fontconf}-elite.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-elite.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Elite*.ttf"
 %{_datadir}/appdata/%{fontname}-elite.metainfo.xml
 
@@ -267,6 +328,7 @@ This package contains the Excelsior font family.
 %files -n fonts-ttf-bpg-excelsior
 %{_fontconfig_templatedir}/%{fontconf}-excelsior.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-excelsior.metainfo.xml
 
@@ -285,6 +347,7 @@ This package contains the Excelsior Caps font family.
 %files -n fonts-ttf-bpg-excelsior-caps
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-caps.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Caps*.ttf"
 %{_datadir}/appdata/%{fontname}-excelsior-caps.metainfo.xml
 
@@ -303,6 +366,7 @@ This package contains the Excelsior Condenced font family.
 %files -n fonts-ttf-bpg-excelsior-condenced
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-condenced.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Condenced*.ttf"
 %{_datadir}/appdata/%{fontname}-excelsior-condenced.metainfo.xml
 
@@ -319,6 +383,7 @@ This package contains the Glaho font family.
 %files -n fonts-ttf-bpg-glaho
 %{_fontconfig_templatedir}/%{fontconf}-glaho.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-glaho.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Glaho*.ttf"
 %{_datadir}/appdata/%{fontname}-glaho.metainfo.xml
 
@@ -336,6 +401,7 @@ This package contains the Gorda font family.
 %files -n fonts-ttf-bpg-gorda
 %{_fontconfig_templatedir}/%{fontconf}-gorda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gorda.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Gorda*.ttf"
 %{_datadir}/appdata/%{fontname}-gorda.metainfo.xml
 
@@ -353,6 +419,7 @@ This package contains the Ingiri font family.
 %files -n fonts-ttf-bpg-ingiri
 %{_fontconfig_templatedir}/%{fontconf}-ingiri.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ingiri.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Ingiri*.ttf"
 %{_datadir}/appdata/%{fontname}-ingiri.metainfo.xml
 
@@ -377,6 +444,7 @@ replica of this casted type.
 %files -n fonts-ttf-bpg-irubaqidze
 %{_fontconfig_templatedir}/%{fontconf}-irubaqidze.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-irubaqidze.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Irubaqidze*.otf"
 %{_datadir}/appdata/%{fontname}-irubaqidze.metainfo.xml
 
@@ -398,6 +466,7 @@ in Tbilisi by Hungarian Master Michael Stefan Hungaro-Valakhian.
 %files -n fonts-ttf-bpg-mikhail-stephan
 %{_fontconfig_templatedir}/%{fontconf}-mikhail-stephan.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mikhail-stephan.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mikhail_Stephan*.otf"
 %{_datadir}/appdata/%{fontname}-mikhail-stephan.metainfo.xml
 
@@ -415,6 +484,7 @@ This package contains the Mrgvlovani font family.
 %files -n fonts-ttf-bpg-mrgvlovani
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-mrgvlovani.metainfo.xml
 
@@ -432,6 +502,7 @@ This package contains the Mrgvlovani Caps font family.
 %files -n fonts-ttf-bpg-mrgvlovani-caps
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani-caps.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_Caps_*.ttf"
 %{_datadir}/appdata/%{fontname}-mrgvlovani-caps.metainfo.xml
 
@@ -449,6 +520,7 @@ This package contains the Nateli font family.
 %files -n fonts-ttf-bpg-nateli
 %{_fontconfig_templatedir}/%{fontconf}-nateli.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-nateli.metainfo.xml
 
@@ -466,6 +538,7 @@ This package contains the Nateli Caps font family.
 %files -n fonts-ttf-bpg-nateli-caps
 %{_fontconfig_templatedir}/%{fontconf}-nateli-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-caps.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Caps*.ttf"
 %{_datadir}/appdata/%{fontname}-nateli-caps.metainfo.xml
 
@@ -483,6 +556,7 @@ This package contains the Nateli Condenced font family.
 %files -n fonts-ttf-bpg-nateli-condenced
 %{_fontconfig_templatedir}/%{fontconf}-nateli-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-condenced.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Condenced*.ttf"
 %{_datadir}/appdata/%{fontname}-nateli-condenced.metainfo.xml
 
@@ -500,6 +574,7 @@ This package contains the Nino Medium font family.
 %files -n fonts-ttf-bpg-nino-medium
 %{_fontconfig_templatedir}/%{fontconf}-nino-medium.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nino-medium.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nino_Medium_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-nino-medium.metainfo.xml
 
@@ -517,6 +592,7 @@ This package contains the Nino Medium Cond font family.
 %files -n fonts-ttf-bpg-nino-medium-cond
 %{_fontconfig_templatedir}/%{fontconf}-nino-medium-cond.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nino-medium-cond.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nino_Medium_Cond*.ttf"
 %{_datadir}/appdata/%{fontname}-nino-medium-cond.metainfo.xml
 
@@ -534,6 +610,7 @@ This package contains the Sans font family.
 %files -n fonts-ttf-bpg-sans
 %{_fontconfig_templatedir}/%{fontconf}-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Sans_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 
@@ -551,6 +628,7 @@ This package contains the Sans Medium font family.
 %files -n fonts-ttf-bpg-sans-medium
 %{_fontconfig_templatedir}/%{fontconf}-sans-medium.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-medium.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Sans_Medium*.ttf"
 %{_datadir}/appdata/%{fontname}-sans-medium.metainfo.xml
 
@@ -569,6 +647,7 @@ This package contains the Sans Modern font family.
 %files -n fonts-ttf-bpg-sans-modern
 %{_fontconfig_templatedir}/%{fontconf}-sans-modern.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-modern.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Sans_Modern*.ttf"
 %{_datadir}/appdata/%{fontname}-sans-modern.metainfo.xml
 
@@ -586,6 +665,7 @@ This package contains the Sans Regular font family.
 %files -n fonts-ttf-bpg-sans-regular
 %{_fontconfig_templatedir}/%{fontconf}-sans-regular.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans-regular.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Sans_Regular*.ttf"
 %{_datadir}/appdata/%{fontname}-sans-regular.metainfo.xml
 
@@ -603,6 +683,7 @@ This package contains the Serif font family.
 %files -n fonts-ttf-bpg-serif
 %{_fontconfig_templatedir}/%{fontconf}-serif.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Serif_GPL*.ttf"
 %{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 
@@ -621,6 +702,7 @@ This package contains the Serif Modern font family.
 %files -n fonts-ttf-bpg-serif-modern
 %{_fontconfig_templatedir}/%{fontconf}-serif-modern.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif-modern.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Serif_Modern*.ttf"
 %{_datadir}/appdata/%{fontname}-serif-modern.metainfo.xml
 
@@ -638,13 +720,42 @@ This package contains the Ucnobi font family.
 %files -n fonts-ttf-bpg-ucnobi
 %{_fontconfig_templatedir}/%{fontconf}-ucnobi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ucnobi.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Ucnobi*.otf"
 %{_datadir}/appdata/%{fontname}-ucnobi.metainfo.xml
 
 %prep
-%setup -q -c -n %{oldname}
+%setup -q -c -n %{oldname} -a 81 -a 82 -a 83 -a 84 -a 85
 mkdir -p Docs/
 cp -p %{SOURCE100} %{SOURCE101} Docs/
+
+# cleanup dejavu
+## this one is out of date
+rm -rf BPG_DejaVu_Sans_2011_GPL-GNU.ttf
+## nuke the .jpg files
+rm -rf BPG*.jpg
+## fix naming on the new ones
+mv "BPG 2017 DejaVuSans.ttf" "BPG_DejaVu_Sans_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSans-Bold.ttf" "BPG_DejaVu_Sans_Bold_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSans-BoldOblique.ttf" "BPG_DejaVu_Sans_BoldOblique_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSans-Oblique.ttf" "BPG_DejaVu_Sans_Oblique_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVu Sans Caps.ttf" "BPG_DejaVu_Sans_Caps_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansMono.ttf" "BPG_DejaVu_SansMono_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansMono-Bold.ttf" "BPG_DejaVu_SansMono_Bold_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansMono-BoldOblique.ttf" "BPG_DejaVu_SansMono_BoldOblique_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansMono-Oblique.ttf" "BPG_DejaVu_SansMono_Oblique_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansCondensed.ttf" "BPG_DejaVu_SansCondensed_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansCondensed-Bold.ttf" "BPG_DejaVu_SansCondensed_Bold_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansCondensed-BoldOblique.ttf" "BPG_DejaVu_SansCondensed_BoldOblique2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSansCondensed-Oblique.ttf" "BPG_DejaVu_SansCondensed_Oblique2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerif.ttf" "BPG_DejaVu_Serif_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerif-Bold.ttf" "BPG_DejaVu_Serif_Bold_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerif-BoldItalic.ttf" "BPG_DejaVu_Serif_BoldItalic_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerif-Italic.ttf" "BPG_DejaVu_Serif_Italic_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerifCondensed.ttf" "BPG_DejaVu_SerifCondensed_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerifCondensed-Bold.ttf" "BPG_DejaVu_SerifCondensed_Bold_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerifCondensed-BoldItalic.ttf" "BPG_DejaVu_SerifCondensed_BoldItalic_2017_GPL-GNU.ttf"
+mv "BPG 2017 DejaVuSerifCondensed-Italic.ttf" "BPG_DejaVu_SerifCondensed_Italic_2017_GPL-GNU.ttf"
 
 %build
 
@@ -683,6 +794,8 @@ install -m 0644 -p %{SOURCE28} %{buildroot}%{_fontconfig_templatedir}/%{fontconf
 install -m 0644 -p %{SOURCE29} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-ucnobi.conf
 install	-m 0644 -p %{SOURCE30} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-dedaena-block.conf
 install -m 0644 -p %{SOURCE31} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans.conf
+install -m 0644 -p %{SOURCE87} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans-mono.conf
+install -m 0644 -p %{SOURCE89} %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-serif.conf
 
 for fontconf in %{fontconf}-algeti.conf %{fontconf}-chveulebrivi.conf %{fontconf}-courier.conf %{fontconf}-courier-s.conf\
 		%{fontconf}-elite.conf %{fontconf}-glaho.conf %{fontconf}-ingiri.conf %{fontconf}-nino-medium.conf\
@@ -691,7 +804,7 @@ for fontconf in %{fontconf}-algeti.conf %{fontconf}-chveulebrivi.conf %{fontconf
 		%{fontconf}-classic.conf %{fontconf}-excelsior-caps.conf %{fontconf}-excelsior-condenced.conf \
 		%{fontconf}-gorda.conf %{fontconf}-irubaqidze.conf %{fontconf}-mikhail-stephan.conf %{fontconf}-mrgvlovani.conf \
 		%{fontconf}-mrgvlovani-caps.conf %{fontconf}-nateli.conf %{fontconf}-nateli-caps.conf %{fontconf}-nateli-condenced.conf \
-		%{fontconf}-ucnobi.conf %{fontconf}-dedaena-block.conf %{fontconf}-bpg-dejavu-sans.conf
+		%{fontconf}-ucnobi.conf %{fontconf}-dedaena-block.conf %{fontconf}-bpg-dejavu-sans.conf %{fontconf}-bpg-dejavu-sans-mono.conf %{fontconf}-bpg-dejavu-serif.conf
 do
 	ln -s %{_fontconfig_templatedir}/$fontconf %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
@@ -757,6 +870,10 @@ install -Dm 0644 -p %{SOURCE79} \
         %{buildroot}%{_datadir}/appdata/%{fontname}-serif-modern.metainfo.xml
 install -Dm 0644 -p %{SOURCE80} \
         %{buildroot}%{_datadir}/appdata/%{fontname}-ucnobi.metainfo.xml
+install -Dm 0644 -p %{SOURCE86} \
+	%{buildroot}%{_datadir}/appdata/%{fontname}-dejavu-sans-mono.metainfo.xml
+install -Dm 0644 -p %{SOURCE88} \
+	%{buildroot}%{_datadir}/appdata/%{fontname}-dejavu-serif.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -792,11 +909,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files -n fonts-ttf-bpg-common
 %doc Docs/*
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt5_14
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt5_9
 - update to new release by fcimport
 
