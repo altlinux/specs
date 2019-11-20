@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.54
+Version: 0.8.55
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,11 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Nov 20 2019 Alexey Gladkov <legion@altlinux.ru> 0.8.55-alt1
+- 250-check-license:
+  + Fix irrelevant error message.
+  + Treat "group with one element" error as a real error.
+
 * Tue Nov 19 2019 Alexey Gladkov <legion@altlinux.ru> 0.8.54-alt1
 - 150-check-intersects: forbid intersections with common-licenses.
 - 250-check-license: add license validation.
