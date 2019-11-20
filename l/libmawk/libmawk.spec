@@ -7,7 +7,7 @@
 %define devname lib%{name}-devel 
 
 Name:           libmawk
-Version:        1.0.1
+Version:        1.0.2
 Release:        alt1_1
 Summary:        Embed awk scripting language in any application written in C
 Group:          System/Libraries
@@ -82,6 +82,9 @@ HTML documentation for %{name}.
 
 
 %changelog
+* Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
+- update by mgaimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1
 - new version
 
