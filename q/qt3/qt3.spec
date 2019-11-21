@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt12
+%define rlz alt13
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -1285,6 +1285,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 21 2019 Ivan A. Melnikov <iv@altlinux.org> 3.3.8d-alt13
+- (NMU) Fix build with PostgreSQL 12
+
 * Thu Nov 29 2018 Ivan A. Melnikov <iv@altlinux.org> 3.3.8d-alt12
 - (NMU) Fix build with recent postgresql-devel
 
