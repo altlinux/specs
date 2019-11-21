@@ -6,7 +6,7 @@
 
 %define Theme Workstation K
 %define smalltheme kworkstation
-%define codename Centaurea Ruthenica
+%define codename Centaurea Pineticola
 %define brand alt
 %define Brand ALT
 %define fakebrand xalt
@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.4
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -29,11 +29,9 @@ BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: design-bootloader-source >= 5.0-alt2
 BuildRequires: cpio %{?_enable_gfxboot:gfxboot >= 4}
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
-
-BuildRequires: ImageMagick fontconfig bc libGConf-devel
+BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
@@ -434,6 +432,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Nov 21 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt1
+- update for p9
+
 * Fri Oct 04 2019 Oleg Solovyov <mcpain at altlinux dot org> 9.0.0-alt0.4
 - replace old message when the new one sent to plymouth
 
@@ -455,19 +456,19 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 * Tue Nov 20 2018 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt2
 - don't package kde3-settings
 
-* Mon Sep 17 2018 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt1%ubt
+* Mon Sep 17 2018 Sergey V Turchin <zerg at altlinux dot org> 8.3.0-alt1
 - new version
 
-* Fri Dec 01 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt3%ubt
+* Fri Dec 01 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt3
 - update indexhtml
 
-* Tue Jul 25 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt2%ubt
+* Tue Jul 25 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt2
 - update steps/sysconfig-base.png
 
-* Thu Jul 20 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt1%ubt
+* Thu Jul 20 2017 Sergey V Turchin <zerg at altlinux dot org> 8.2.0-alt1
 - new version
 
-* Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt4%ubt
+* Tue Mar 07 2017 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt4
 - require pam-limits-desktop; don't use own limits
 
 * Wed Nov 16 2016 Sergey V Turchin <zerg at altlinux dot org> 8.1.0-alt3
