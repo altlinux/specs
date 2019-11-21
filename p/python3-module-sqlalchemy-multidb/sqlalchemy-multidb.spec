@@ -1,93 +1,51 @@
 %define _unpackaged_files_terminate_build 1
 %define oname sqlalchemy-multidb
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.2
-Release: alt1.2
+Release: alt2
 
 Summary: Provides methods to connect to multiple databases easily
-
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/sqlalchemy-multidb/
-
 # https://github.com/viniciuschiele/sqlalchemy-multidb.git
+
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-modules-json python-module-SQLAlchemy
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-SQLAlchemy
-%endif
 
-%py_provides sqlalchemy_multidb
-%py_requires sqlalchemy
+%py3_provides sqlalchemy_multidb
+%py3_requires sqlalchemy
+
 
 %description
 Provides methods to load the database configurations from a config file
 and access multiple databases easily.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Provides methods to connect to multiple databases easily
-Group: Development/Python3
-%py3_provides sqlalchemy_multidb
-%py3_requires sqlalchemy
-
-%description -n python3-module-%oname
-Provides methods to load the database configurations from a config file
-and access multiple databases easily.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test -v
-%if_with python3
-pushd ../python3
-python3 setup.py test -v
-popd
-%endif
+%__python3 setup.py test -v
 
 %files
 %doc *.rst examples
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst examples
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt2
+- python2 disabled
+
 * Fri May 10 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1.2
 - add BR python-module-json
 
