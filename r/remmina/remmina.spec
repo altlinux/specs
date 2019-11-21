@@ -1,8 +1,10 @@
 %def_without telepathy
 
+%define _unpackaged_files_terminate_build 1
+
 Name: remmina
 Version: 1.3.6
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -236,6 +238,7 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %files -f %name.lang
 %doc AUTHORS CHANGELOG.md README.md
 %_bindir/%name
+%_bindir/remmina-file-wrapper.sh
 %_datadir/metainfo/*.appdata.xml
 %_datadir/mime/*/*.xml
 %_datadir/applications/*.desktop
@@ -296,6 +299,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Thu Nov 21 2019 Ivan A. Melnikov <iv@altlinux.org> 1.3.6-alt2
+- package remmina-file-wrapper.sh (closes: #37514)
+
 * Tue Sep 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.6-alt1
 - 1.3.6
 
