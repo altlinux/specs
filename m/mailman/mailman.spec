@@ -3,7 +3,7 @@
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
 Version: 2.1.29.0.9.e227c
-Release: alt1
+Release: alt2
 Epoch: 5
 
 %define mm_user %name
@@ -124,6 +124,11 @@ do
 	echo "Patch ($patch):"
 	patch -s -p1 < debian/patches/$patch
 done
+
+# fix python shebangs
+find . -type f -print0 |
+	xargs -r0 grep -lZ '^#![[:space:]]*/usr/bin/.*python$' -- |
+	xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)/usr/bin/(env[[:space:]]+)?python$@\1%__python@' --
 
 touch src/*.c
 
@@ -379,6 +384,9 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Thu Nov 21 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29.0.9.e227c-alt2
+- Fixed python shebangs.
+
 * Tue Jan 29 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29.0.9.e227c-alt1
 - 2.1.29 -> 2.1.29-9-ge227cb9f.
 
