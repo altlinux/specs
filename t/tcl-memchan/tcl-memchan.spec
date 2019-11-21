@@ -1,22 +1,22 @@
 # -*- rpm-spec -*-
 # $Id: tcl-memchan,v 1.12 2006/07/21 22:00:14 me Exp $
 
-%define snapshot 20060508
-%define teaname memchan
+%define teaname Memchan
 
 Name: tcl-memchan
-Version: 2.2.1
-Release: alt3.qa1
+Version: 2.3
+Release: alt1
 
 Summary: A tcl extension implementing memory channels
-License: BSD
+License: TCL
 Group: Development/Tcl
 Url: http://%teaname.sourceforge.net/
 
 %ifdef snapshot
 Source: %name-%snapshot.tar.bz2
 %else
-Source: http://download.sourceforge.net/%teaname/%teaname-%version.tar.bz2
+# repacked https://download.sourceforge.net/memchan/%teaname%version.tar.gz
+Source: %teaname%version.tar
 %endif
 
 Patch0: tcl-memchan-2.2-alt-warn.patch
@@ -30,25 +30,34 @@ implementing memory channels, i.e. channels storing the data
 placed into them in memory, not on disk.
 
 %prep
-%setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname-%version%uver}
+%setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
 %patch0 -p1
 %teapatch
 
 %build
-%__aclocal
-%__autoconf
+%autoreconf
 %configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
+rm %buildroot%_mandir/mann/random.n
+
+%check
+make test
 
 %files
 %_tcllibdir/libMemchan%version.so
-%_tcldatadir/Memchan%version
+%_tcllibdir/Memchan%version
 %_mandir/mann/*
 
 %changelog
+* Thu Nov 21 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3-alt1
+- Updated to 2.3.
+- Built according ALT Tcl/Tk extension policy.
+- Fixed license field.
+- Enabled test.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.1-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
