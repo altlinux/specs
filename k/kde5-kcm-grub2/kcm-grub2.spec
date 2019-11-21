@@ -7,7 +7,7 @@
 
 Name: kde5-kcm-grub2
 Version: 0.6.4
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,7 @@ License: GPLv3
 Source: %rname-%version.tar
 Source1: po.tar
 Patch1: alt-no-details-btn.patch
+Patch2: alt-wallpaper.patch
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -36,6 +37,7 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 %prep
 %setup -n %rname-%version -a1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -67,6 +69,9 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 
 %changelog
+* Thu Nov 21 2019 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt3
+- add GRUB_WALLPAPER support
+
 * Thu Nov 14 2019 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt2
 - remove Details button from info dialogs
 
