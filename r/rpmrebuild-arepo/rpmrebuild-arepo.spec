@@ -1,6 +1,6 @@
 Name: rpmrebuild-arepo
 Version: 3.1.10
-Release: alt1
+Release: alt2
 
 Summary: biarch repackager for Sisyphus packages
 License: GPL
@@ -27,6 +27,11 @@ Helper scripts for %name biarch repackager
 %prep
 %setup
 
+# fix python shebangs
+find . -type f -print0 |
+	xargs -r0 grep -lZ '^#![[:space:]]*%_bindir/.*python$' -- |
+	xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python$@\1%__python@' --
+
 %install
 mkdir -p %buildroot%_bindir
 install -m755 arepo_pre.py %buildroot%_bindir/
@@ -44,6 +49,9 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_bindir/arepo_pre.py
 
 %changelog
+* Thu Nov 21 2019 Dmitry V. Levin <ldv@altlinux.org> 3.1.10-alt2
+- Fixed python shebangs.
+
 * Sun Apr 28 2019 Ivan Zakharyaschev <imz@altlinux.org> 3.1.10-alt1
 - Use rpmquery-strictdep for the dependency on the native package,
   which gives an additional guarantee that the dependency is actually
