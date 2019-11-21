@@ -1,52 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-diffeo
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2.0
-Release: alt1.1
+Release: alt2
+
 Summary: Common py.test support for Diffeo tests
 License: MIT/X11
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pytest-diffeo/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/diffeo/pytest-diffeo.git
-Source0: https://pypi.python.org/packages/e3/ee/25a3cab817e1ef69da019dbcfdbd8fa429f3c02dc6653c978262d3d9a83a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildRequires: python-module-six
-BuildRequires: python-module-pytest
-%if_with python3
+Source0: https://pypi.python.org/packages/e3/ee/25a3cab817e1ef69da019dbcfdbd8fa429f3c02dc6653c978262d3d9a83a/%{oname}-%{version}.tar.gz
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 BuildRequires: python3-module-six
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides pytest_diffeo
-
-%description
-If this package is installed, then you can run py.test with additional
-command-line arguments --runperf, --runslow, -runload, or
--run-integration. Tests marked with @pytest.mark.performance,
-@pytest.mark.slow, @pytest.mark.load, and pytest.mark.integration
-respectively, will not be run unless the corresponding command-line
-option is present.
-
-This package also provides a redis_address fixture to get the location
-of an external Redis installation. This must be provided via a
---redis-address command-line argument.
-
-%package -n python3-module-%oname
-Summary: Common py.test support for Diffeo tests
-Group: Development/Python3
 %py3_provides pytest_diffeo
 
-%description -n python3-module-%oname
+
+%description
 If this package is installed, then you can run py.test with additional
 command-line arguments --runperf, --runslow, -runload, or
 -run-integration. Tests marked with @pytest.mark.performance,
@@ -63,48 +39,29 @@ of an external Redis installation. This must be provided via a
 
 sed -i 's|@VERSION@|%version|' setup.py
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
