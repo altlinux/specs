@@ -1,36 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname sqlquerybuilder
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.0.13
-Release: alt2.1
+Release: alt3
+
 Summary: Python SQL Query Builder based on django ORM
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/sqlquerybuilder/
-
 # https://github.com/josesanch/sqlquerybuilder.git
+
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 SQL Query Builder inspired on django ORM Syntax.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -38,82 +33,34 @@ SQL Query Builder inspired on django ORM Syntax.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python SQL Query Builder based on django ORM
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-SQL Query Builder inspired on django ORM Syntax.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-SQL Query Builder inspired on django ORM Syntax.
-
-This package contains tests for %oname.
-%endif
-
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py build_ext -i
-py.test %oname/tests.py
-%if_with python3
-pushd ../python3
-python3 setup.py build_ext -i
+%__python3 setup.py build_ext -i
 py.test3 %oname/tests.py
-popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
-
-%files tests
-%python_sitelibdir/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests.*
 %python3_sitelibdir/*/*/tests.*
-%endif
+
 
 %changelog
+* Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.13-alt3
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.13-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
