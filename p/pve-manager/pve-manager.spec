@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.0.7
-Release: alt4
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -75,6 +75,7 @@ Patch39: qemu-server-aarch64-spice.patch
 Patch40: qemu-server-virtio-rng.patch
 Patch41: pve-manager-aarch64.patch
 Patch42: qemu-server-aarch64.patch
+Patch43: pve-mini-journalreader-getopt.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -97,7 +98,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 4.0.7
+Version: 4.0.8
 Group: System/Servers
 Requires: ebtables ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -185,6 +186,7 @@ This is used to implement the PVE REST API
 %patch40 -p0 -b .virtio-rng
 %patch41 -p0 -b .aarch64
 %patch42 -p0 -b .aarch64
+%patch43 -p0 -b .getopt
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -568,6 +570,10 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Wed Nov 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt5
+- pve-firewall 4.0-8
+- fixed mini-journalreader on aarch64
+
 * Wed Nov 13 2019 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt4
 - fixed creation/launch of VM on aarch64 (closes: #37441)
 
