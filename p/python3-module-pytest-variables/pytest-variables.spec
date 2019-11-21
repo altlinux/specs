@@ -1,92 +1,51 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-variables
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4
-Release: alt1.1
+Release: alt2
+
 Summary: pytest plugin for providing variables to tests/fixtures
 License: MPLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pytest-variables/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/davehunt/pytest-variables.git
-Source0: https://pypi.python.org/packages/ef/44/2f8207347c0ae3e8216feb4306be4ca575e184fda220d057095db9513b2f/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
-%endif
+Source0: https://pypi.python.org/packages/ef/44/2f8207347c0ae3e8216feb4306be4ca575e184fda220d057095db9513b2f/%{oname}-%{version}.tar.gz
 
-%py_provides pytest_variables
-%py_requires pytest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest
+
+%py3_provides pytest_variables
+%py3_requires pytest
+
 
 %description
 pytest-variables is a plugin for py.test that provides variables to
 tests/fixtures as a dict via a JSON file specified on the command line.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: pytest plugin for providing variables to tests/fixtures
-Group: Development/Python3
-%py3_provides pytest_variables
-%py3_requires pytest
-
-%description -n python3-module-%oname
-pytest-variables is a plugin for py.test that provides variables to
-tests/fixtures as a dict via a JSON file specified on the command line.
-%endif
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test -v
-%if_with python3
-pushd ../python3
-python3 setup.py test -v
-popd
-%endif
+%__python3 setup.py test -v
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
