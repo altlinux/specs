@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191113
+Version: 20191115
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Thu Nov 21 2019 Cronbuild Service <cronbuild@altlinux.org> 20191115-alt1
+- upstream changes (GIT e8a0f4c):
+  + rtl_nic: add firmware rtl8168fp-3 (thx Heiner Kallweit)
+  + Update NXP Management Complex firmware to version 10.18.0 (thx Cristian Sovaiala)
+
 * Wed Nov 13 2019 Cronbuild Service <cronbuild@altlinux.org> 20191113-alt1
 - upstream changes (GIT c62c3c2):
   + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
