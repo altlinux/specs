@@ -1,80 +1,53 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname identicon
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 20101207
-Release: alt2.qa1
+Release: alt3
+
 Summary: Python identicon implementation
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://github.com/aerosol/identicon
-
 # https://github.com/aerosol/identicon.git
+
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python-tools-2to3
-%endif
 
-%py_requires PIL
+%py3_requires PIL
+
 
 %description
 identicon.py: identicon python implementation.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python identicon implementation
-Group: Development/Python3
-%py3_requires PIL
-
-%description -n python3-module-%oname
-identicon.py: identicon python implementation.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+## py2 -> py3
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+##
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 20101207-alt3
+- python2 disabled
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 20101207-alt2.qa1
 - NMU: applied repocop patch
 
