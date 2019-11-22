@@ -1,6 +1,6 @@
 Name: xfce4-weather-plugin
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Weather plugin for the Xfce panel
 License: %gpl2plus
@@ -53,6 +53,9 @@ mkdir m4
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Nov 22 2019 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt2
+- Fix day/night calculation (closes: #37528).
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
