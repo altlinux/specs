@@ -1,6 +1,6 @@
 Name: light-locker-settings
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Simple settings dialog for light-locker
 License: %gpl3only
@@ -13,9 +13,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: python-devel intltool
+BuildRequires: python3-devel intltool
 
 Requires: light-locker
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 %summary
@@ -41,6 +43,9 @@ Requires: light-locker
 %_datadir/%name
 
 %changelog
+* Fri Nov 22 2019 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt2
+- Port to python3.
+
 * Tue Apr 12 2016 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
 - Update for current psutils.
 - Initial build.
