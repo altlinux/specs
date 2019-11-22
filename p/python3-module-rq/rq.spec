@@ -2,107 +2,55 @@
 %define oname rq
 
 %def_without check
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Simple job queues for Python
-
 License: BSD
-Group: Development/Python
-BuildArch: noarch
-
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/rq/
+BuildArch: noarch
 
 # Source-url: https://pypi.io/packages/source/r/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-redis-py
-BuildRequires: python-module-click
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-click
-%endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 RQ is a simple, lightweight, library for creating background jobs, and
 processing them.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Simple job queues for Python
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-RQ is a simple, lightweight, library for creating background jobs, and
-processing them.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %if_with check
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 %endif
 
 %files
 %doc *.md
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Nov 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
+- python2 disabled
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - new version (1.0) with rpmgs script
 - cleanup spec
