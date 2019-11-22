@@ -1,6 +1,6 @@
 Name: gqrx
 Version: 2.11.5
-Release: alt1
+Release: alt2
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
@@ -11,16 +11,25 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
+# fix build with gnuradio 3.8
+# See: https://github.com/csete/gqrx/pull/703
+Patch0: 0001-Replace-deprecated-qt5_use_modules-macro.patch
+Patch1: 0002-Port-to-GNU-Radio-3.8.patch
+
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: libgnuradio-devel
+BuildRequires: gnuradio-devel
+BuildRequires: gr-osmosdr-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libalsa-devel
+BuildRequires: libjack-devel
+BuildRequires: liborc-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libpulse-simple)
 BuildRequires: git
-BuildRequires: gr-osmosdr-devel
 BuildRequires: pkgconfig(gnuradio-analog)
 BuildRequires: pkgconfig(gnuradio-blocks)
 BuildRequires: pkgconfig(gnuradio-digital)
@@ -28,6 +37,7 @@ BuildRequires: pkgconfig(gnuradio-filter)
 BuildRequires: pkgconfig(gnuradio-fft)
 BuildRequires: pkgconfig(gnuradio-runtime)
 BuildRequires: pkgconfig(gnuradio-osmosdr)
+BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: boost-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -37,6 +47,8 @@ BuildRequires: libappstream-glib
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 #qmake_qt5 PREFIX=%_prefix
@@ -70,6 +82,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Tue Nov 26 2019 Anton Midyukov <antohami@altlinux.org> 2.11.5-alt2
+- rebuild with gnuradio 3.8
+
 * Sat Dec 29 2018 Anton Midyukov <antohami@altlinux.org> 2.11.5-alt1
 - new version 2.11.5
 

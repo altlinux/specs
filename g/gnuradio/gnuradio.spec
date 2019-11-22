@@ -1,14 +1,14 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_enable docs
+%def_disable docs
 %def_enable tests
 
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.7.13.4
-Release: alt2
+Version: 3.8.0.0
+Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -16,17 +16,26 @@ Url: http://www.gnuradio.org
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: fix-gnuradio-qtgui.pc.patch
-Patch1: gnuradio-upstream-boost-compat.patch
+Patch0: fix-gnuradio-qtgui.pc.patch
+Patch1: gnuradio-3.8.0-python3-fix.patch
 
-BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
-BuildRequires: gcc-c++
+# upstream patch
+Patch10: 0034-GRC-update-cloned-port-s-dtype.patch
+Patch11: 0035-Replace-tabs-with-spaces.patch
+
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3 rpm-build-gir
+BuildRequires: gcc-c++ cmake
+BuildRequires: liborc-devel
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: libgmpxx-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: libgsm-devel
-BuildRequires: libqt4-devel
-BuildRequires: libqwt6-devel
+BuildRequires: qt5-base-devel
+BuildRequires: liblog4cpp-devel
+BuildRequires: mpir-devel
+BuildRequires: libqwt6-qt5-devel
 BuildRequires: libzeromq-cpp-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(codec2)
@@ -34,31 +43,38 @@ BuildRequires: pkgconfig(comedilib)
 BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(gsl)
 BuildRequires: pkgconfig(jack)
-BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(portaudio-2.0)
-BuildRequires: pkgconfig(sdl)
 BuildRequires: pkgconfig(thrift)
 BuildRequires: pkgconfig(uhd)
-BuildRequires: pkgconfig(volk)
-BuildRequires: python-devel
-BuildRequires: python-module-Cheetah
-BuildRequires: python-module-lxml
-BuildRequires: python-module-numpy
-BuildRequires: python-module-pygtk
-BuildRequires: python-module-PyQt4
-BuildRequires: python-module-wx
+BuildRequires: libSDL-devel
+BuildRequires: libvolk-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-mako
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pygobject3-devel
+BuildRequires: python3-module-pycairo-devel
+BuildRequires: python3-module-PyQt5
+BuildRequires: python3-module-click-plugins
 BuildRequires: swig
 
 %if_enabled tests
 BuildRequires: pkgconfig(cppunit)
 %endif #tests
 %if_enabled docs
-BuildRequires: doxygen python-module-sphinx
+BuildRequires: doxygen python3-module-sphinx
 BuildRequires: /usr/bin/latex /usr/bin/dvips tex(dvips.def)
 %endif #docs
 BuildRequires: desktop-file-utils xdg-utils
-Requires: %name-data = %version-%release
-Requires: lib%name = %version-%release
+%add_python3_req_skip PyQt4 PyQt4.Qwt5
+%add_python3_req_skip gnuradio.ctrlport.GNURadio
+
+# skip requires on python2
+%set_findreq_skiplist %_datadir/%name/modtool/templates/*
+
+Obsoletes: gnuradio-data < 3.8
+Obsoletes: libgnuradio < 3.8
 
 %description
 GNU Radio is a collection of software that when combined with minimal
@@ -67,19 +83,11 @@ transmitted and received are defined by software. What this means is
 that it turns the digital modulation schemes used in today's high
 performance wireless devices into software problems.
 
-%package data
-Summary: GNU Radio Data Files
-Group: Engineering
-Buildarch: noarch
-
-%description data
-GNU Radio Data Files.
-
 %package docs
 Summary: GNU Radio Documentation
 Group: Engineering
 Buildarch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description docs
 GNU Radio Documentation.
@@ -88,101 +96,65 @@ GNU Radio Documentation.
 Summary: GNU Radio Examples
 Group: Engineering
 Buildarch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description examples
 GNU Radio Examples.
 
-%package -n lib%name
-Group: Development/C++
-Summary: GNU Radio Library
-
-%description -n lib%name
-GNU Radio Library.
-
-%package -n lib%name-devel
+%package devel
 Group: Development/C++
 Summary: GNU Radio Headers
-Requires: lib%name = %version-%release
+Requires: %name = %EVR
 Requires: cmake boost-program_options-devel
+Provides: libgnuradio-devel = %EVR
 
-%description -n lib%name-devel
+%description devel
 GNU Radio Headers.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 %patch1 -p1
-
-find . -name '*.py' | xargs sed -i \
-	-e 's:/usr/bin/env python$:/usr/bin/env python2:' \
-	-e 's:/usr/bin/env /usr/bin/python$:/usr/bin/env /usr/bin/python2:' \
-	-e 's:/usr/bin/python$:/usr/bin/python2:' \
-	%nil
-
-find gnuradio-runtime/python -type f | xargs sed -i \
-	-e 's:/usr/bin/env python$:/usr/bin/env python2:' \
-	-e 's:/usr/bin/env /usr/bin/python$:/usr/bin/env /usr/bin/python2:' \
-	-e 's:/usr/bin/python$:/usr/bin/python2:' \
-	%nil
+%patch10 -p1
+%patch11 -p1
 
 %build
-%cmake  -DENABLE_INTERNAL_VOLK=OFF \
-        %if_enabled tests
-        -DENABLE_TESTING=ON
-        %else
-        -DENABLE_TESTING=OFF
-        %endif #tests
+%cmake \
+	-DENABLE_INTERNAL_VOLK=OFF \
+	-DGR_PYTHON_DIR=%python3_sitelibdir \
+	-DPYTHON_EXECUTABLE=%__python3 \
+%if_enabled tests
+	-DENABLE_TESTING=ON
+%else
+	-DENABLE_TESTING=OFF
+%endif #tests
 %cmake_build
 
 %install
 %cmakeinstall_std
 
-# remove atsc example (bytecompilation problem)
-# the examples shouldn't be probably bytecompiled,
-# but selective bytecompilation would take a lot of time,
-# thus letting it as is
-rm -rf %buildroot%_datadir/%name/examples/atsc
-rm -rf %buildroot%_datadir/%name/examples/uhd/tags_demo
-
-# remove bundled cmake modules, upstream ticket 592
-pushd %buildroot%_libdir/cmake/gnuradio && rm -f `ls | sed '/^FindUHD.cmake\|^Gr.*\|^Gnuradio.*/ d'`
-popd
-
-# install desktop file, icons, and MIME configuration to right locations
-mkdir -p %buildroot%_desktopdir
-desktop-file-install --dir=%buildroot%_desktopdir \
-%buildroot%_datadir/%name/grc/freedesktop/gnuradio-grc.desktop
-mkdir -p %buildroot%_datadir/mime/packages
-mv %buildroot%_datadir/%name/grc/freedesktop/gnuradio-grc.xml %buildroot%_datadir/mime/packages
-for x in 32 48 64 128 256
-do
-  mkdir -p %buildroot%_iconsdir/hicolor/${x}x${x}/apps
-  mv %buildroot%_datadir/%name/grc/freedesktop/grc-icon-${x}.png %buildroot%_iconsdir/hicolor/${x}x${x}/apps/gnuradio-grc.png
-done
-rm -f %buildroot%_datadir/%name/grc/freedesktop/*
-rmdir %buildroot%_datadir/%name/grc/freedesktop
+# Remove extraneous desktop/icon/mime files
+rm -r %buildroot%_datadir/%name/grc/freedesktop
+rm -r %buildroot%_datadir/icons/gnome
 
 # remove verify_elf problem files
-rm -f %buildroot%_datadir/%name/examples/audio/dial_tone
-rm -f %buildroot%_datadir/%name/examples/qt-gui/display_qt
-rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
+rm %buildroot%_datadir/%name/examples/audio/dial_tone
+rm %buildroot%_datadir/%name/examples/qt-gui/display_qt
+rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 
 %files
 %_bindir/*
 %_sysconfdir/%name
-%python_sitelibdir/%name
-%python_sitelibdir/grc_%name
-%python_sitelibdir/pmt
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*.desktop
 %_datadir/mime/packages/*
+%_libdir/*.so.*
 %_libexec/%name
-
-%files data
 %_datadir/%name
 %exclude %_datadir/%name/examples
 %_docdir/%name-%version
+%python3_sitelibdir/%name
+%python3_sitelibdir/pmt
 %if_enabled docs
 %exclude %_docdir/%name-%version/xml
 %exclude %_docdir/%name-%version/html
@@ -190,17 +162,14 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 
 %if_enabled docs
 %files docs
-%exclude %_docdir/%name-%version/xml
-%exclude %_docdir/%name-%version/html
+%_docdir/%name-%version/xml
+%_docdir/%name-%version/html
 %endif #docs
 
 %files examples
 %_datadir/%name/examples
 
-%files -n lib%name
-%_libdir/*.so.*
-
-%files -n lib%name-devel
+%files devel
 %_libdir/*.so
 %_libdir/cmake/%name
 %_includedir/%name
@@ -208,6 +177,12 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 3.8.0.0-alt1
+- new version 3.8.0.0
+- switch to python3
+- Obsoletes: gnuradio-data libgnuradio libgnuradio-devel < 3.8
+- rename libgnuradio-devel to gnuradio-devel
+
 * Thu Dec 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.13.4-alt2
 - Rebuilt with boost-1.71.0.
 

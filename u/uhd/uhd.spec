@@ -17,7 +17,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.14.1.1
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -28,6 +28,8 @@ Source1: %name-limits.conf
 # Download command firmware:
 # uhd_images_downloader --types "(fpga|fw)_default" -i images
 Source2: images.tar
+
+Patch: uhd-0.14.1.1-python3-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -79,7 +81,7 @@ Requires: %name = %EVR
 Tools that are useful for working with and/or debugging USRP device.
 
 %package -n python3-module-%name
-Group: Development/Python
+Group: Development/Python3
 Summary: Python 3 API for %name
 Requires: %name = %EVR
 
@@ -90,9 +92,10 @@ Python 3 API for %name
 %setup
 sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
 
-# Some of these scripts are definitely not yet python3-compatible.
-# Due to that, change shebang to python2
-find host/utils -name '*.py' | xargs sed -i -e 's|/usr/bin/env python|/usr/bin/env python2|'
+%patch -p1
+
+# fix python shebangs
+find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
 
 %build
 pushd host
@@ -192,6 +195,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 3.14.1.1-alt3
+- fix python3 shebang and syntax for utils
+- fix Group
+
 * Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.14.1.1-alt2
 - Fixed shebang for installed scripts.
 - Rebuilt with boost-1.71.0.
