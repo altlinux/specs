@@ -2,16 +2,16 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.1
+Version: 1.2.1.1
 Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
-License: LGPL 2.1+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
 Patch1: 0001-Restore-loading-usr-share-alsa-alsa.conf.d.patch
 Url: http://www.alsa-project.org
 
@@ -83,7 +83,7 @@ Advanced Linux Sound Architecture (ALSA) Developer Documentation
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 # Replace "include" with "__include__" in public header files
 # to make them compilable by "gcc -ansi" again.
@@ -92,9 +92,6 @@ find include -type f -print0 |
 	xargs -r0 sed -i 's/ inline / __inline__ /g' --
 
 %build
-%ifarch %e2k
-cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
-%endif
 %autoreconf
 %configure \
 	--with-configdir=%_datadir/alsa \
@@ -111,8 +108,10 @@ find %buildroot%_libdir -name \*.la -delete
 install -pDm644 asound.conf.sonicvibes_2 %buildroot%_datadir/alsa/cards/SonicVibes.conf
 
 mkdir -p %buildroot%pkgdocdir
+%if_with doc
 install -pm644 NOTES MEMORY-LEAK TODO %buildroot%pkgdocdir/
-%{?_with_doc:cp -a doc/doxygen/html %buildroot%pkgdocdir/}
+cp -a doc/doxygen/html %buildroot%pkgdocdir/
+%endif
 
 mkdir -p %buildroot%_sysconfdir/modprobe.d
 cat << __EOF__ >> %buildroot%modprobe_conf
@@ -188,6 +187,12 @@ done
 %_bindir/aserver
 
 %changelog
+* Fri Nov 22 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1.1-alt1
+- 1.2.1.1
+- fix License: tag spelling
+- fix doc knob
+- E2K: drop lcc 1.21 support
+
 * Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt1
 - 1.2.1
 - R: alsa-ucm-conf, alsa-topology-conf (maintained separately now)
