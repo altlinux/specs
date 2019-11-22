@@ -1,6 +1,6 @@
 Name: pesign
 Version: 0.109
-Release: alt6
+Release: alt7
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv2
@@ -22,6 +22,10 @@ as well as other associated tools.
 %setup -n %name-%version-%release
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+# lcc 1.23.20 doesn't do that
+sed -i 's,-fshort-wchar,,g' Make.defaults util/Makefile
+%endif
 
 %build
 %make_build OPTFLAGS='%optflags'
@@ -29,8 +33,7 @@ as well as other associated tools.
 %install
 %makeinstall_std LIBDIR=%_libdir MACROS_DIR=%_rpmmacrosdir
 mv %buildroot%_rpmmacrosdir/{macros.,}pesign
-%make_install -C src install_systemd install_sysvinit \
-	DESTDIR=%buildroot \
+%makeinstall_std -C src install_systemd install_sysvinit \
 	INIT_DIR=%_initdir \
 	UNIT_DIR=%_unitdir \
 	TMPFILES_DIR=%_tmpfilesdir \
@@ -75,7 +78,12 @@ fi
 %ghost %_runtimedir/pesign/socketdir/socket
 %ghost %_runtimedir/pesign.pid
 
+# NB: pesign 0.113 moved to GPLv3+
+
 %changelog
+* Fri Nov 22 2019 Michael Shigorin <mike@altlinux.org> 0.109-alt7
+- E2K: avoid lcc-unsupported option
+
 * Tue Sep 10 2019 Andrey Cherepanov <cas@altlinux.org> 0.109-alt6
 - Use upstream fix for build with nss >= 3.44.
 
