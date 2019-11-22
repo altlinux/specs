@@ -4,7 +4,7 @@
 
 Name: tk
 Version: 8.6.10
-Release: alt0.rc0.1
+Release: alt1
 
 Summary: The Tk toolkit fot Tcl scripting language
 License: TCL
@@ -22,13 +22,13 @@ Patch6: 0006-Fedora-make.patch
 Patch7: 0007-Fedora-no-fonts-fix.patch
 Patch8: 0008-ALT-removed-XFT_LIBS-from-the-definition-of-TK_LIBS.patch
 Patch9: 0009-ALT-pkgIndex.tcl-location.patch
-Patch10: 0010-Debian-manpages.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
 BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
 Requires: tcl = %version lib%name
 
 Provides: tcl(Ttk) = %version
+Obsoletes: tcl-tile <= 0.8.2
 
 %package -n lib%name
 Summary: The Tk toolkit fot Tcl scripting language - shared library
@@ -82,7 +82,7 @@ the features of the Tk toolkit.
 
 %prep
 %setup -q -n %name%version
-%autopatch -p1
+%autopatch -p2
 # remove unneeded stuff
 rm -r macosx win
 
@@ -140,6 +140,13 @@ install -pm0644 README.md license.terms changes.xz ChangeLog.xz %buildroot%docdi
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Fri Nov 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt1
+- Updated to 8.6.10.
+- Made tk obsolete tcl-tile.
+
+* Wed Nov 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt0.rc1.1
+- Updated to 8.6.10rc1.
+
 * Tue Oct 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt0.rc0.1
 - Updated to 8.6.10rc0.
 - Fixed license field and summary.

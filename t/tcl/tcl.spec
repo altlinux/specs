@@ -6,7 +6,7 @@
 
 Name: tcl
 Version: 8.6.10
-Release: alt0.rc0.2
+Release: alt1
 
 Summary: The Tool Command Language (TCL)
 License: TCL
@@ -16,23 +16,19 @@ Url: http://www.tcl.tk/
 # repacked ftp://ftp.tcl.tk/pub/tcl/tcl8_6/tcl%version-src.tar.gz
 Source: %name%version-src.tar
 Source1: tcl.m4
-Patch1: 0001-ALT-extra-headers.patch
+Patch1: 0001-ALT-private-headers.patch
 Patch2: 0002-ALT-soname.patch
 Patch3: 0003-ALT-norpath.patch
 Patch4: 0004-ALT-nostdinc.patch
 Patch5: 0005-ALT-libpath.patch
 Patch6: 0006-Revert-generic-tclObj.c-remove-superfluous-include-o.patch
-Patch7: 0007-ALT-tcl_pkgPath-fixed-to-our-policy.patch
-Patch8: 0008-ALT-more-extra-headers.patch
-Patch9: 0009-ALT-add-libdir-tcl-to-package-search-path.patch
-Patch10: 0010-DEBIAN-manpages.diff.patch
-Patch11: 0011-ALT-add-THREADS_LIBS-to-TCL_LIB_FLAG-tclConfig.sh-pr.patch
-Patch12: 0012-ALT-tclsh.1-fix-shebang-example.patch
-Patch13: 0013-ALT-TEA-for-pkgs.patch
-Patch14: 0014-ALT-itcl-uses-tclInt.h-from-TCL-sources-instead-of-s.patch
-Patch15: 0015-ALT-make-pkgs-test-work.patch
-Patch16: 0016-ALT-set-LDFLAGS-to-link-pkgs-against-tclstub.patch
-Patch17: 0017-ALT-pkgs-soname.patch
+Patch7: 0007-ALT-TCL_LIBS-for-shared-linkage.patch
+Patch8: 0008-ALT-tclsh.1-fix-shebang-example.patch
+Patch9: 0009-ALT-pkgs-TEA.patch
+Patch10: 0010-ALT-itcl-TCL_INCLUDES.patch
+Patch11: 0011-ALT-pkgs-test.patch
+Patch12: 0012-ALT-pkgs-LDFLAGS.patch
+Patch13: 0013-ALT-pkgs-soname.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
 %{?_with_test:BuildConflicts: tcl-vfs}
@@ -81,6 +77,7 @@ Conflicts: tcl-thread-devel <= 2.8.2-alt1
 %package pkgs-devel
 Summary: Meta package for TCL pkgs devel
 Group: Development/C
+BuildArch: noarch
 Requires: %name-devel
 Requires: %name-pkgs
 Requires: %name-pkg-incrtcl4
@@ -178,7 +175,7 @@ popd
 %define docdir %_defaultdocdir/%name-%version
 %define __tclsh %buildroot%_bindir/.tclsh
 
-%make_install INSTALL_ROOT=%buildroot install -C unix
+%make_install INSTALL_ROOT=%buildroot install install-private-headers -C unix
 mkdir -p %buildroot%_tcllibdir %buildroot%_tcldatadir %buildroot%docdir
 install -p -m0644 -D tcl.m4 %buildroot%_datadir/aclocal/tea.m4
 ln -sf tclsh%major %buildroot%_bindir/tclsh
@@ -273,6 +270,14 @@ popd
 %files pkgs-devel
 
 %changelog
+* Fri Nov 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt1
+- Updated to 8.6.10.
+- Revised patches.
+
+* Wed Nov 06 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt0.rc1.1
+- Updated to 8.6.10rc1.
+- Built tcl-pkgs-devel as noarch.
+
 * Wed Oct 23 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.10-alt0.rc0.2
 - Separated tcl-pkg-incrtcl4 subpackage.
 
