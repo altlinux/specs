@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.9.0.1
+Version: 4.9.2
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -172,6 +172,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Sat Nov 23 2019 Vitaly Lipatov <lav@altlinux.ru> 4.9.2-alt1
+- new version 4.9.2 (with rpmrb script)
+
 * Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 4.9.0.1-alt1
 - new version 4.9.0.1 (with rpmrb script)
 + PMASA-2019-3 is an SQL injection flaw in the Designer feature
