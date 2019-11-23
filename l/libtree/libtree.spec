@@ -1,9 +1,8 @@
 %define testsdir %{_localstatedir}/%{name}/tests
-%def_without bootstrap
 
 Name: libtree
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
 License: GPLv3
@@ -38,18 +37,14 @@ Development package for %{name}.
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-%if_without bootstrap
 %package -n %{name}-checkinstall
 Summary: Tests and test data for %{name}
 Group: Other
-
-BuildRequires: %{name}-devel
 
 Requires: %{name}
 
 %description -n %{name}-checkinstall
 Tests and test data for %{name}.
-%endif
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -58,9 +53,7 @@ Tests and test data for %{name}.
 
 %build
 %make_build
-%if_without bootstrap
 %make_build -C ./tests
-%endif
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -74,17 +67,13 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # Documentation
 cp COPYING %{buildroot}%{_defaultdocdir}/%{name}/
 # Tests
-%if_without bootstrap
 cp tests/bin/tests %{buildroot}%{testsdir}
 cp -r tests/data %{buildroot}%{testsdir}
-%endif
 
-%if_without bootstrap
 %post -n %{name}-checkinstall
 cd %{testsdir}
 ./tests data
 cd -
-%endif
 
 %files
 %{_libdir}/*.so
@@ -93,14 +82,17 @@ cd -
 %files -n %{name}-devel
 %{_includedir}/%{name}/
 
-%if_without bootstrap
 %files -n %{name}-checkinstall
 %{testsdir}/*
-%endif
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Nov 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
+- Corrected and modified JSON procedures;
+- Using headers and lib from buildroot to build checkinstall package,
+  no bootstrapping is needed.
+
 * Fri Nov 15 2019 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt2
 - Build with tests activated.
 
