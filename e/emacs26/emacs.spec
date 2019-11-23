@@ -21,11 +21,11 @@
 
 Name: emacs26
 Version: 26.3
-Release: alt11
+Release: alt12
 
 Group: Editors
 Summary: GNU Emacs text editor
-License: GPLv3 or later
+License: GPLv3+
 
 URL: http://www.gnu.org/software/emacs/
 
@@ -81,7 +81,7 @@ BuildRequires(build): sendmail-common
 # We need emacs-base
 BuildPreReq: %shortname-base >= 0.0.5-alt2
 
-BuildPreReq: python-base python-modules-compiler python-modules-encodings rpm-build-python
+# BuildPreReq: python-base python-modules-compiler python-modules-encodings rpm-build-python
 
 # Now el-pkgutils in emacs-devel
 BuildPreReq: %shortname-devel
@@ -1529,6 +1529,10 @@ install -p -m 0644 etc/emacs.appdata.xml %buildroot%_datadir/appdata/emacs.appda
 %_includedir/emacs-module.h
 
 %changelog
+* Sun Nov 24 2019 Terechkov Evgenii <evg@altlinux.org> 26.3-alt12
+- Build without python(2)
+- Update License: tag
+
 * Tue Sep  3 2019 Terechkov Evgenii <evg@altlinux.org> 26.3-alt11
 - 26.3
 - Fix for ALT#37107 (recode emacs21-rus-win-keyboard-alt2.el to utf8 and fix quoting)
