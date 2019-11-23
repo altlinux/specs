@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt13
+Release: alt14
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -23,10 +23,8 @@ Patch5: cairo-dock-plugins-3.4.1-weather-update-URL.patch
 Patch6: cairo-dock-plugins-3.4.1-no-nv.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python-modules-distutils
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libetpan-devel
@@ -36,17 +34,17 @@ BuildRequires: lsb-release
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
-BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
+#BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
 BuildRequires: pkgconfig(libexif)
 BuildRequires: pkgconfig(fftw3f)
-BuildRequires: pkgconfig(libgnome-menu-3.0)
+#BuildRequires: pkgconfig(libgnome-menu-3.0)
 BuildRequires: libical-devel
-BuildRequires: pkgconfig(indicator3-0.4)
+#BuildRequires: pkgconfig(indicator3-0.4)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(upower-glib)
 #BuildRequires: pkgconfig(webkitgtk-3.0)
 BuildRequires: pkgconfig(libxklavier)
-BuildRequires: pkgconfig(zeitgeist-2.0)
+#BuildRequires: pkgconfig(zeitgeist-2.0)
 BuildRequires: cairo-dock-devel >= %version
 Requires: cairo-dock >= %version
 Requires: %packagename-common = %EVR
@@ -96,13 +94,6 @@ Requires: %packagename-rssreader = %EVR
 Requires: %packagename-folders = %EVR
 Requires: %packagename-Screenshot = %EVR
 Requires: %packagename-Sound-Effects = %EVR
-Requires: %packagename-Global-Menu = %EVR
-Requires: %packagename-GMenu = %EVR
-Requires: %packagename-Indicator-Generic = %EVR
-Requires: %packagename-Messaging-Menu = %EVR
-Requires: %packagename-Recent-Events = %EVR
-Requires: %packagename-Status-Notifier = %EVR
-Requires: %packagename-launcher-API-daemon = %EVR
 Requires: %packagename-doncky = %EVR
 Requires: %packagename-remote-control = %EVR
 
@@ -928,131 +919,6 @@ This applet allows you to adjust sound notifications.
 
 #---------------------------------------------------------------------
 
-%package -n %packagename-GMenu
-Summary: That package provides plugin "GMenu"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-GMenu
-This applet allows you to adjust gmenu.
-
-%files -n %packagename-GMenu
-%_datadir/%packagename/plug-ins/GMenu
-%_libdir/%packagename/libcd-GMenu.so
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-Global-Menu
-Summary: That package provides plugin "Global-Menu"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-Global-Menu
-This applet allows you to adjust global menu.
-
-%files -n %packagename-Global-Menu
-%_datadir/%packagename/plug-ins/Global-Menu
-%_libdir/%packagename/libcd-Global-Menu.so
-%_libdir/%packagename/appmenu-registrar
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-Indicator-Generic
-Summary: That package provides plugin "Indicator-Generic"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-Indicator-Generic
-This applet allows you to adjust indicator generic.
-
-%files -n %packagename-Indicator-Generic
-%_datadir/%packagename/plug-ins/Indicator-Generic
-%_libdir/%packagename/libcd-Indicator-Generic.so
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-Messaging-Menu
-Summary: That package provides plugin "Messaging-Menu"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-Messaging-Menu
-This applet allows you to adjust messaging menu.
-
-%files -n %packagename-Messaging-Menu
-%_datadir/%packagename/plug-ins/Messaging-Menu
-%_libdir/%packagename/libcd-Messaging-Menu.so
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-Recent-Events
-Summary: That package provides plugin "Recent-Events"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-Recent-Events
-This applet allows you to adjust recent events.
-
-%files -n %packagename-Recent-Events
-%_datadir/%packagename/plug-ins/Recent-Events
-%_libdir/%packagename/libcd-Recent-Events.so
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-Status-Notifier
-Summary: That package provides plugin "Status-Notifier"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-Status-Notifier
-This applet allows you to adjust status notifier.
-
-%files -n %packagename-Status-Notifier
-%_datadir/%packagename/plug-ins/Status-Notifier
-%_libdir/%packagename/status-notifier-watcher
-%_libdir/%packagename/libcd-status-notifier.so
-
-#---------------------------------------------------------------------
-
-%package -n %packagename-launcher-API-daemon
-Summary: That package provides plugin "launcher-API-daemon"
-Group: Graphical desktop/Other
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-
-%description -n %packagename-launcher-API-daemon
-This applet allows you to adjust status notifier.
-
-%files -n %packagename-launcher-API-daemon
-%_libdir/%packagename/%packagename-launcher-API-daemon
-
-#---------------------------------------------------------------------
-
-%package -n python-module-cairo-dock
-Summary: Python2 binding for Cairo-Dock
-Group:Development/Python
-Requires: %packagename = %version
-Requires: %packagename-common = %EVR
-Requires: %packagename-dbus = %EVR
-BuildArch: noarch
-
-%description -n python-module-cairo-dock
-This package contains Python2 binding files for Cairo-Dock
-
-%files -n python-module-cairo-dock
-%python_sitelibdir_noarch/CairoDock.py*
-%python_sitelibdir_noarch/CDApplet.py*
-%python_sitelibdir_noarch/CDBashApplet.py*
-%python_sitelibdir_noarch/*.egg-info
-
-#---------------------------------------------------------------------
-
 %package -n python3-module-cairo-dock
 Summary: Python3 binding for Cairo-Dock
 Group:Development/Python3
@@ -1125,7 +991,7 @@ binding for Cairo-Dock.
     -Denable-network-monitor=yes \
     -Denable-old-gnome-integration=no \
     -Denable-scooby-do=yes \
-    -Denable-global-menu=yes
+    -Denable-global-menu=no
 
 %cmake_build
 
@@ -1135,6 +1001,16 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14
+- Build without python
+- Removed:
+    - Global-Menu
+    - GMenu
+    - Status-Notifier
+    - launcher-API-daemon
+    - Recent-Events
+    - Indicator-Generic
+
 * Fri Jan 11 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt13
 - Rebuild with libical-devel
 
