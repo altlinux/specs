@@ -1,9 +1,9 @@
 Name: tig
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: text-mode interface for git
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 URL: http://jonas.nitro.dk/tig/
@@ -12,7 +12,7 @@ Patch: tig-%version-%release.patch
 
 Requires: git-core
 
-# Automatically added by buildreq on Thu Oct 05 2017
+# Automatically added by buildreq on Sat Nov 23 2019
 BuildRequires: asciidoc libncursesw-devel libreadline-devel xmlto
 
 %description
@@ -48,6 +48,9 @@ install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 %_man7dir/tigmanual.7*
 
 %changelog
+* Sat Nov 23 2019 Alexey Tourbin <at@altlinux.ru> 2.5.0-alt1
+- 2.4.0 -> 2.5.0
+
 * Sun Jul 22 2018 Alexey Tourbin <at@altlinux.ru> 2.4.0-alt1
 - 2.3.2 -> 2.4.0
 
