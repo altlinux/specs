@@ -1,6 +1,6 @@
 Name: uniset-configurator
 Version: 1.0
-Release: alt14
+Release: alt15
 Summary: UniSet configurator
 Group: Development/Python
 License: GPL
@@ -65,6 +65,9 @@ ln -s %python_sitelibdir_noarch/%name/can_conf.py %buildroot/%_bindir/uniset-can
 %_bindir/*
 
 %changelog
+* Sat Nov 23 2019 Pavel Vainerman <pv@altlinux.ru> 1.0-alt15
+- env python --> env python2.7
+
 * Thu Mar 02 2017 Pavel Vainerman <pv@altlinux.ru> 1.0-alt14
 - modify LCAPS tests generator
 
