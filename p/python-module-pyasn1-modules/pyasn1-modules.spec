@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.2.4
+Version: 0.2.8
 Release: alt1
 
 Summary: ASN.1 modules for Python
-License: %bsdstyle
+License: BSD-2-Clause
 Group: Development/Python
 # Source-git: https://github.com/etingof/pyasn1-modules.git
 Url: https://pypi.python.org/pypi/pyasn1-modules
@@ -16,19 +16,17 @@ Url: https://pypi.python.org/pypi/pyasn1-modules
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: python-module-pyasn1 >= 0.4.1
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-pyasn1 >= 0.4.1
-BuildRequires: python3-module-setuptools
+BuildRequires: python2.7(pyasn1)
+BuildRequires: python3(pyasn1)
 
 %if_with check
-BuildRequires: pytest
-BuildRequires: pytest3
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 %endif
 
-Requires: python-module-pyasn1 >= 0.4.1
+Requires: python-module-pyasn1 >= 0.4.6
 BuildArch: noarch
 
 %description
@@ -40,7 +38,7 @@ It's thought to be useful to protocol developers and testers.
 %package -n python3-module-%mname
 Summary: ASN.1 modules for Python 3
 Group: Development/Python3
-Requires: python3-module-pyasn1 >= 0.4.1
+Requires: python3-module-pyasn1 >= 0.4.6
 
 %description -n python3-module-%mname
 This is a small but growing collection of ASN.1 data structures
@@ -67,11 +65,15 @@ pushd ../python3
 popd
 
 %check
-pytest -v
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
 
-pushd ../python3
-pytest3 -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE.txt README.md
@@ -84,6 +86,9 @@ popd
 %python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %changelog
+* Sat Nov 23 2019 Stanislav Levin <slev@altlinux.org> 0.2.8-alt1
+- 0.2.4 -> 0.2.8.
+
 * Mon Feb 11 2019 Stanislav Levin <slev@altlinux.org> 0.2.4-alt1
 - 0.2.3 -> 0.2.4.
 
