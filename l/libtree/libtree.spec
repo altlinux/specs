@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -88,6 +88,9 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Nov 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt1
+- Shorter representation of JSON bool values.
+
 * Sat Nov 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
 - Corrected and modified JSON procedures;
 - Using headers and lib from buildroot to build checkinstall package,
