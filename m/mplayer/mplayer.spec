@@ -296,7 +296,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt1
+Release: alt2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -308,7 +308,6 @@ Summary(ru_RU.UTF-8): Медиаплейер
 License: GPLv2+
 Group: Video
 URL: http://www.mplayerhq.hu
-Packager: Afanasov Dmitry <ender@altlinux.org>
 %if %name != %Name
 Provides: %Name = %version-%release
 Obsoletes: %Name
@@ -325,10 +324,35 @@ Requires: %name-fonts
 Source0: %Name-%pkgver.tar
 # register console mplayer as mime handler
 Source2: %lname.desktop
-Source4: standard-1.9.tar
+# repacked http://mplayerhq.hu/MPlayer/skins/Blue-1.13.tar.bz2
+Source4: Blue-1.13.tar
 Source5: %lname.conf.in
-# git://git.altlinux.org/gears/m/mplayer.git
-Patch0: %name-%version-%release.patch
+Patch1: 0001-fix-configure-script.patch
+Patch2: 0002-fix-Makefile.patch
+Patch3: 0003-fix-aalib-dev-vcsa-detection.patch
+Patch4: 0004-help_mp-uk.h-fixed-typo.patch
+Patch5: 0005-fix-vbe.h-path.patch
+Patch6: 0006-fixed-subreader.patch
+Patch7: 0007-fix-stream_dvd.patch
+Patch8: 0008-fix-desktop-file.patch
+Patch9: 0009-help-update-ru-translation.patch
+Patch10: 0010-update-ru-translation.patch
+Patch11: 0011-update-uk-translation.patch
+Patch12: 0012-fix-messages.patch
+Patch13: 0013-fix-ru-translation.patch
+Patch14: 0014-update-uk-translation.patch
+Patch15: 0015-fix-add-missing-ld-flag.patch
+Patch16: 0016-fix-aarch64-compile.patch
+Patch17: 0017-compilation-fix-with-glibc-2.27.patch
+Patch18: 0018-stream-stream_smb.c-include-time.h.patch
+Patch19: 0019-ffmpeg-libavformat-libsmbclient.c-include-time.h.patch
+Patch20: 0020-ppc-disable-vsx-on-little-endian-systems.patch
+Patch21: 0021-fix-tools-build-with-shared-ffmpeg.patch
+Patch22: 0001-add-NLS-support.patch
+Patch23: 0002-add-po-dir.patch
+Patch24: 0003-fix-usage-mp_msg.patch
+Patch25: 0004-po-mp_msg2po.awk-fix-po-generation.patch
+Patch26: 0005-fix-po-mp_help2msg.awk.patch
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -618,7 +642,7 @@ Ukrainian language support for %Name.
 
 %prep
 %setup -q -n %Name-%pkgver
-%patch0 -p1
+%autopatch -p2
 
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
@@ -865,8 +889,10 @@ for s in 128 96 72 64 48 36 32 24 22 16; do
 done
 %endif
 
-gzip -9c Changelog > Changelog.gz
+xz Changelog
 
+# fix python shebang
+find TOOLS -name '*.py' -exec sed -Ei '1s@(^#!/usr/bin/.*python$)@\12@' {} '+'
 
 %install
 %makeinstall_std
@@ -878,7 +904,7 @@ install -p -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
 %if_enabled gui
 install -d -m 0755 %buildroot%_datadir/%name/skins
 tar -C %buildroot%_datadir/%name/skins -xf %SOURCE4
-ln -s standard %buildroot%_datadir/%name/skins/default
+ln -s Blue %buildroot%_datadir/%name/skins/default
 install -d -m 0755 %buildroot%_datadir/%name/skins/0
 convert -size 8x1 xc:black -define png:format=png24 %buildroot%_datadir/%name/skins/0/0.png
 cat >> %buildroot%_datadir/%name/skins/0/skin <<__EOF__
@@ -1093,6 +1119,11 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sun Nov 24 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt2
+- Fixed python shebangs (use versioned python).
+- Made "Blue" the default skin (as it was provided by upstream).
+- Compressed Changelog with xz instead of gzip.
+
 * Sat Apr 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt1
 - 1.4 (ALT#36638).
 - built with system FFmpeg (ALT#35031).
