@@ -1,6 +1,6 @@
 Name: dvdbackup
 Version: 0.4.2
-Release: alt2
+Release: alt3
 
 Summary: DVD-copy tool
 License: GPL
@@ -10,8 +10,6 @@ Url: http://dvdbackup.sourceforge.net
 Source0: %name-%version.tar
 Source1: http://ftp.debian.org/debian/pool/main/d/dvdbackup/dvdbackup_0.4.2-4.debian.tar.gz
 Packager: Vlasenko Igor <viy@altlinux.ru>
-
-Requires: libdvdread
 BuildRequires: libdvdread-devel >= 0.9.6
 
 Summary(ru_RU.UTF-8): Утилита для копирования содержимого DVD на жесткий диск
@@ -45,6 +43,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/%name.*
 
 %changelog
+* Wed Apr 22 2020 Anton Farygin <rider@altlinux.ru> 0.4.2-alt3
+- update from debian to fix build with libdvdread 6.1.1
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 0.4.2-alt2
 - fixed build on new arches
 - spec fixup/cleanup
