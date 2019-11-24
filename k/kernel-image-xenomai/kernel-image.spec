@@ -1,6 +1,6 @@
 %define flavour			xenomai
 Name: kernel-image-%flavour
-Release: alt1
+Release: alt2
 
 %define kernel_base_version	4.14
 # ipipe-core-4.14.134-x86-8
@@ -36,7 +36,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %brp_strip_none /boot/*
 
 Summary: The Linux kernel %version with Xenomai real-time Cobalt core and I-pipe
-License: GPL
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://xenomai.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
@@ -246,14 +246,6 @@ scripts/config -e XENO_DRIVERS_GPIOPWM
 scripts/config -e XENO_DRIVERS_SPI_BCM2835
 scripts/config -e XENO_DRIVERS_SPI_SUN6I
 
-# Disable what is recommended in https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
-scripts/config -d CONFIG_CPU_FREQ
-scripts/config -d CONFIG_CPU_IDLE
-scripts/config -d CONFIG_APM
-scripts/config -d CONFIG_ACPI_PROCESSOR
-scripts/config -d CONFIG_INTEL_IDLE
-scripts/config -d CONFIG_INPUT_PCSPKR
-
 # Enable EFI handover support
 scripts/config -e EFI
 scripts/config -e EFI_STUB
@@ -281,8 +273,34 @@ scripts/config -m IPMI_HANDLER
 scripts/config -m IPMI_SSIF
 scripts/config -m IPMI_WATCHDOG
 
+# Additional options
+scripts/config -e CONFIG_USER_NS
+scripts/config -e CONFIG_SQUASHFS -e CONFIG_SQUASHFS_XZ
+scripts/config -e CONFIG_SCSI_VIRTIO -e CONFIG_SCSI_LOWLEVEL -e CONFIG_VIRTIO_PCI \
+	       -e CONFIG_VIRTIO_BLK -e CONFIG_VIRTIO_NET -e CONFIG_VIRTIO_CONSOLE \
+	       -e CONFIG_HW_RANDOM_VIRTIO -e CONFIG_VIRTIO_BALLOON
+%ifarch %ix86 x86_64
+scripts/config -e CONFIG_KGDB
+%endif
+
+# Disable what is recommended in https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
+scripts/config -d CONFIG_CPU_FREQ
+scripts/config -d CONFIG_CPU_IDLE
+scripts/config -d CONFIG_APM
+scripts/config -d CONFIG_ACPI_PROCESSOR -d X86_INTEL_PSTATE -d SCHED_MC_PRIO
+scripts/config -d CONFIG_INTEL_IDLE
+scripts/config -d CONFIG_INPUT_PCSPKR
+
 %make_build olddefconfig
 egrep 'IPIPE|XENO' .config
+
+# Verify that bad options are still disabled
+grep -w -e ^CONFIG_CPU_FREQ \
+	-e ^CONFIG_CPU_IDLE \
+	-e ^CONFIG_APM \
+	-e ^CONFIG_ACPI_PROCESSOR \
+	-e ^CONFIG_INTEL_IDLE \
+	-e ^CONFIG_INPUT_PCSPKR .config && exit 1
 
 %make_build bzImage
 %make_build modules
@@ -435,7 +453,7 @@ int main()
 __EOF__
 echo init | cpio -H newc -o | gzip -9n > initrd.img
 QEMU=qemu-system-%_arch
-QEMU_OPTS="-nographic -no-reboot -m 256M -initrd initrd.img"
+QEMU_OPTS="-bios bios.bin -nographic -no-reboot -m 256M -initrd initrd.img"
 CONSOLE=ttyS0
 %ifarch %ix86
  QEMU=qemu-system-i386
@@ -485,6 +503,12 @@ grep -q "Cobalt v[0-9.]\+" boot.log
 %modules_dir/build
 
 %changelog
+* Sun Nov 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt2
+- Actually disable ACPI_PROCESSOR, CPU_FREQ, and CPU_IDLE
+- Add more options based on -rt kernel experience.
+- Enable virtio for debugging.
+- Fix license tag and other minor spec changes.
+
 * Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt1
 - Update to ipipe-core-4.14.134-x86-8.
 - Fix qemu run.
