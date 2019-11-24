@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt134
+Release: alt135
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -542,6 +542,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Nov 24 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt135
+- Fixed build with glibc >= 2.28.
+
 * Fri Nov 01 2019 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt134
 - Backported RPMTAG_VCS support from rpm.org.
 
