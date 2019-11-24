@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt14.1
+Release: alt14.2
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -1001,8 +1001,11 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Sun Nov 24 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14.2
+- Fix typo in changelog
+
 * Sun Nov 24 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14.1
-- Fix typo in description -l ru_RU.UTF-8 (Closes: 37435)
+- Fix typo in description -l ru_RU.UTF-8 (Closes: 37535)
 
 * Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14
 - Build without python
