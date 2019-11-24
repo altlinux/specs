@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.4.5
+Version: 0.4.8
 Release: alt1
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
-License: %bsdstyle
+License: BSD
 Group: Development/Python
 # Source-git: https://github.com/etingof/pyasn1.git
 Url: https://pypi.python.org/pypi/pyasn1
@@ -18,10 +18,11 @@ Source1: pyasn1.watch
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-licenses
 
 %if_with check
-BuildRequires: python-modules-unittest
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -64,11 +65,14 @@ pushd ../python3
 popd
 
 %check
-python setup.py test
-
-pushd ../python3
-python3 setup.py test
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m pytest {posargs:-vra}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc LICENSE.rst README.md CHANGES.rst
@@ -81,6 +85,9 @@ popd
 %python3_sitelibdir/pyasn1-%version-*.egg-info/
 
 %changelog
+* Sat Nov 23 2019 Stanislav Levin <slev@altlinux.org> 0.4.8-alt1
+- 0.4.5 -> 0.4.8.
+
 * Thu Jan 17 2019 Stanislav Levin <slev@altlinux.org> 0.4.5-alt1
 - 0.4.4 -> 0.4.5.
 
