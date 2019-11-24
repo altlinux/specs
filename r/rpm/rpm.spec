@@ -7,6 +7,7 @@
 %def_with beecrypt
 %def_with memcached
 %def_enable default_priority_distbranch
+%def_with profile
 
 %define rpmhome /usr/lib/rpm
 
@@ -18,7 +19,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt13
+Release: alt14
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -301,6 +302,27 @@ done;
 
 %make_build
 
+rpmquery -a --provides |fgrep '= set:' |sort >P
+rpmquery -a --requires |fgrep '= set:' |sort >R
+join -o 1.3,2.3 P R |shuf >setcmp-data
+time ./setcmp <setcmp-data >/dev/null
+rm lib/set.lo lib/librpm.la
+set_c_cflags="$(sed -n 's/^CFLAGS = //p' lib/Makefile) -W -Wno-override-init %{!?_enable_debug:-O3} -fno-builtin-memcmp"
+%make_build -C lib set.lo librpm.la CFLAGS="$set_c_cflags"
+
+%if_with profile
+time ./setcmp <setcmp-data >/dev/null
+rm lib/set.lo lib/librpm.la
+%make_build -C lib set.lo librpm.la CFLAGS="$set_c_cflags -fprofile-generate"
+./setcmp <setcmp-data >/dev/null
+ls -l lib/.libs/set.gcda
+rm lib/set.lo lib/librpm.la
+%make_build -C lib set.lo CFLAGS="$set_c_cflags -fprofile-use"
+%endif #with profile
+
+%make_build
+time ./setcmp <setcmp-data >/dev/null
+
 pushd python
 %python_build
 %python3_build
@@ -385,6 +407,10 @@ ls -A tests/rpmtests.dir 2>/dev/null ||:
 #[ ! -L %%_rpmlibdir/noarch-alt-%%_target_os ] || rm -f %%_rpmlibdir/noarch-alt-%%_target_os ||:
 
 %post
+if [ -f %_localstatedir/PackageKit/disable-rpm-triggers ]; then
+        exit 0
+fi
+
 #chgrp %%name %%_localstatedir/%%name/[A-Z]*
 [ -n "$DURING_INSTALL" -o -n "$BTE_INSTALL" ] ||
         %_rpmlibdir/pdeath_execute $PPID %_rpmlibdir/postupdate
@@ -540,6 +566,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sat Nov 23 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt14
+- Added triggers circumvention for packagekit offline update (by Aleksei Nikiforov).
+- Imported rpmsetcmp optimization from rpm-build.
+
 * Wed Oct 02 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt13
 - posttrans-filetriggers: Remove RPM_INSTALL_* variables (closes: #37275).
 
