@@ -4,17 +4,19 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.6
-Release: alt3
+Version: 4.7.0
+Release: alt1
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
-License: Python Software Foundation License
+License: ISC
 Group: Development/Python
 # Source-git: https://github.com/pexpect/pexpect.git
 Url: https://pypi.python.org/pypi/pexpect
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
+# python3 only
+Patch1: Transform-some-Python2-specifics-to-Python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
@@ -43,14 +45,6 @@ them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
 control it as if a human were typing commands.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -68,14 +62,6 @@ them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
 control it as if a human were typing commands.
 
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
 %package pickles
 Summary: Pickles for Pexpect
 Group: Development/Python
@@ -92,25 +78,34 @@ This package contains pickles for Pexpect.
 %setup
 %patch0 -p1
 
+fix_env_python () {
+    # change shebang /usr/bin/env python -> /usr/bin/$PYTHON
+    PYTHON="$1"
+    find -type f -name '*.py' | \
+        xargs sed -i \
+            "1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/$PYTHON|"
+
+    # change python -> $PYTHON callings
+    find tests -type f -name '*.py' | \
+        xargs sed -i \
+            "s/\(.*pexpect.spawn(\x27\)\(python\)\(\(\x27\| \)\)/\1$PYTHON\3/"
+
+    sed -i \
+        "s|self.runfunc(\x27python exit1.py\x27|self.runfunc(\x27$PYTHON exit1.py\x27|" \
+        tests/test_run.py
+
+    sed -i "1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/$PYTHON|" \
+        tests/fakessh/ssh
+}
+
 cp -a . ../python3
 
 pushd ../python3
-# change shebang python -> python3
-find -type f -name '*.py' | \
-xargs sed -i '1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/env python3|'
+%patch1 -p1
+fix_env_python python3
 
-# fix print functions and other for python3
-find tests -type f -name '*.py' -exec 2to3 -f print -f imports -w -n '{}' +
-
-# change python -> python3 callings
-find tests -type f -name '*.py' | \
-	xargs sed -i 's/\(.*pexpect.spawn(\x27python\)\(\(\x27\| \)\)/\13\2/'
-sed -i 's|self.runfunc(\x27python exit1.py\x27|self.runfunc(\x27python3 exit1.py\x27|' \
-	tests/test_run.py
-
-sed -i '1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/env python3|' \
-tests/fakessh/ssh
 popd
+fix_env_python python2
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -124,11 +119,9 @@ popd
 
 %install
 %python_install
-cp -fR tests %buildroot%python_sitelibdir/pexpect/
 
 pushd ../python3
 %python3_install
-cp -fR tests %buildroot%python3_sitelibdir/pexpect/
 popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -151,10 +144,6 @@ popd
 %python_sitelibdir/pexpect/
 %python_sitelibdir/pexpect-*.egg-info/
 %exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
 
 %files docs
 %doc doc/_build/html
@@ -167,12 +156,11 @@ popd
 %doc LICENSE *.rst
 %python3_sitelibdir/pexpect/
 %python3_sitelibdir/pexpect-*.egg-info/
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Sat Nov 23 2019 Stanislav Levin <slev@altlinux.org> 4.7.0-alt1
+- 4.6 -> 4.7.0.
+
 * Mon Feb 25 2019 Stanislav Levin <slev@altlinux.org> 4.6-alt3
 - Fixed testing:
   + increased timeout for test_large_stdout_stream
