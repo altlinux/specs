@@ -8,10 +8,10 @@
 
 Name: opendnssec
 Version: 1.4.14
-Release: alt4
+Release: alt5
 
 Summary: DNSSEC key and zone management software
-License: %bsd
+License: BSD-2-Clause
 Group: System/Servers
 
 URL: http://www.opendnssec.org/
@@ -25,11 +25,8 @@ Source6: ods-enforcerd.init
 Source7: ods-signerd.init
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildRequires: xml-utils xsltproc
 BuildRequires: libxml2-devel libsqlite3-devel libldns-devel
-BuildRequires: python-devel
 BuildRequires: doxygen sqlite3
 
 Requires: softhsm
@@ -143,6 +140,9 @@ ods-ksmutil update all >/dev/null 1>&2 ||:
 %_man8dir/*
 
 %changelog
+* Sun Nov 24 2019 Stanislav Levin <slev@altlinux.org> 1.4.14-alt5
+- Fixed build.
+
 * Mon Sep 09 2019 Stanislav Levin <slev@altlinux.org> 1.4.14-alt4
 - Fixed integration with FreeIPA.
 
