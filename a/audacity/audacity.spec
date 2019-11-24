@@ -1,6 +1,6 @@
 Name: audacity
-Version: 2.3.2
-Release: alt3
+Version: 2.3.3
+Release: alt1
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -15,9 +15,6 @@ Source3: %name-32x32.xpm
 Source4: %name-16x16.xpm
 Source6: %name-%version-help-en.tar
 
-Patch1: 0001-Fix-building-with-wxWidgets-3.1.2.patch
-Patch2: 0002-Fix-Ru-translation-of-signed-and-float.patch
-
 # Debian patches are from https://salsa.debian.org/multimedia-team/audacity/tree/master/debian/patches
 # NetBSD patches are from http://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/audio/audacity/patches/
 # openSUSE patches are from https://build.opensuse.org/package/show/openSUSE:Leap:15.0/audacity
@@ -25,8 +22,6 @@ Patch2: 0002-Fix-Ru-translation-of-signed-and-float.patch
 Patch20: Debian-0004-desktop.patch
 Patch50: NetBSD-ALT-Session-directory-in-home.patch
 Patch60: ALT-system-sbsms.patch
-# maybe useful when backporting to p8
-Patch130: NetBSD-ffmpeg3.patch
 Patch140: Fedora-libmp3lame-default.patch
 Patch170: ALT-Remove-warning-about-alpha-version.patch
 
@@ -66,7 +61,9 @@ BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
 BuildRequires: pkgconfig(zlib)
-BuildRequires: libsbsms-devel >= 2.0.2-alt2
+BuildRequires: libsbsms-devel
+# %%autopatch macro appeared in 4.0.4-alt133
+BuildRequires: rpm-build >= 4.0.4-alt133
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -96,25 +93,16 @@ For the most up to date manual content, use the on-line manual.
 
 %prep
 %setup -n %name-src-%version
-
-%patch1 -p1
-%patch2 -p1
-
-%patch20 -p1
-%patch50 -p1
-%patch60 -p1
-%patch130 -p0
-%patch140 -p1
-%patch170 -p1
+%autopatch -p1
 
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0/" || true
 sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffect.cpp
 
 %build
-# src/RevisionIdent.h is in src/.gitignore and may be missing, what leads to build errors, but it's empty in release tarballs
+# src/RevisionIdent.h is in src/.gitignore and may be missing,
+# what leads to build errors, but it's empty in release tarballs
 [ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
 
-%global optflags %{optflags} -fno-strict-aliasing
 %ifarch mips mipsel mips32 mips64
 export LDFLAGS="${LDFLAGS} -latomic"
 %endif
@@ -123,7 +111,8 @@ aclocal -I m4
 %autoreconf
 
 # From SUSE's spec about PortAudio:
-# 'This [using system PortAudio] would require to patch our portaudio package with "PortMixer"... an extra API that never got integrated in PortAudio'
+# 'This [using system PortAudio] would require to patch our portaudio package with "PortMixer"...
+# an extra API that never got integrated in PortAudio'
 %configure \
 	--enable-sse \
 	--enable-dynamic-loading=no \
@@ -188,6 +177,23 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+
+* Sun Nov 24 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.3-alt1
+- Version 2.3.3
+- Keeping and rediffed NetBSD-ALT-Session-directory-in-home.patch:
+  * Use $AUDACITY_TMPDIR env to specify a custom temp directory,
+    it then will be $AUDACITY_TMPDIR/audacity-$UID.
+  * Default temp directory is ~/.audacity-tmp instead of upstream /var/tmp/audacity-$UID.
+  * Reading $TMPDIR was previously changed to $AUDACITY_TMPDIR
+    because e.g. pam_mktemp is used by default on ALT and breaks the environment
+    that Audacity developers expected.
+- Dropped patches merged to upstream:
+  * 0001-Fix-building-with-wxWidgets-3.1.2.patch
+  * 0002-Fix-Ru-translation-of-signed-and-float.patch
+- Dropped NetBSD-ffmpeg3.patch (does not make sense)
+- Dropped -fno-strict-aliasing
+- Chanages in lib-src/sbsms were ported to libsbsms10
+
 * Fri Oct 04 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.2-alt3
 - Fix Russian translation of 'signed' and 'float' (Closes: 37238)
   PRed to upstream: https://github.com/audacity/audacity/pull/381
