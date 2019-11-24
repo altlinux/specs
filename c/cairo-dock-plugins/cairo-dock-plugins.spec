@@ -8,7 +8,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt14
+Release: alt14.1
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -107,7 +107,7 @@ This package contains various plugins for cairo-dock.
 %description -l ru_RU.UTF-8
 Сairo-dock использует cairo для рендеринга приятной графики и Glitz для
 задействования аппаратного ускорения. Это полностью настраиваемая и
-многофункциональная панель задач. Вы можете легко включить апплеты не ней.
+многофункциональная панель задач. Вы можете легко включить апплеты на ней.
 
 Пакет содержит различные плагины для cairo-dock.
 
@@ -1001,6 +1001,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Sun Nov 24 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14.1
+- Fix typo in description -l ru_RU.UTF-8 (Closes: 37435)
+
 * Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt14
 - Build without python
 - Removed:
