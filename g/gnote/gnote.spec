@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Note-taking application
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 %define gtk_ver 3.20
 %define gtkmm_ver 3.18
 %define glibmm_ver 2.32
-%define gspell_ver 1.8.2
+%define gspell_ver 1.6
 %define libsecret_ver 0.8
 
 BuildRequires: gcc-c++
@@ -82,6 +82,9 @@ and consumes fewer resources.
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
+- 3.34.1
+
 * Thu Sep 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
