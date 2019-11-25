@@ -1,6 +1,6 @@
 Name: libglvnd
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -125,6 +125,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt3
+- git snapshot master.9ba775e
+
 * Wed Oct 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt2
 - update GL/gl.h to match Mesa
 
