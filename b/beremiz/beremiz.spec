@@ -3,7 +3,7 @@
 %def_with doc
 Name: beremiz
 Version: 1.2
-Release: alt5.20190221
+Release: alt7.20190221
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -83,6 +83,8 @@ Requires: wxGlade
 Requires: python-module-twisted-core-test
 %py_requires cwiid umsgpack twisted.internet.wxsupport service_identity
 %add_python_req_skip __pyjamas__ canfestival_config commondialogs eds_utils gen_cfile gluon.contrib.simplejson gnosis.xml.pickle gnosis.xml.pickle.util networkeditortemplate nodeeditortemplate nodelist nodemanager subindextable targets.typemapping MotionLibrary
+# Not build for python3 more
+%add_python_req_skip autobahn.twisted autobahn.twisted.websocket autobahn.wamp.exception autobahn.wamp autobahn.wamp.serializer
 
 %description -n python-module-%name
 Integrated development environment for machine automation
@@ -106,7 +108,7 @@ Tests for python-module-%name
 rm -f tests/tools/check_source.sh
 
 # fix PATH to python
-sed 's|/usr/bin/env python|%_bindir/python|g' -i *.py
+sed 's|/usr/bin/env python|%__python|g' -i *.py
 
 find . -type f -print0 | xargs -0 dos2unix
 
@@ -176,7 +178,7 @@ if ! [ -d \$HOME/beremiz/BACnet ]; then
     make
 fi
 cd \$HOME
-%_bindir/python %python_sitelibdir/%name/Beremiz.py $*
+%__python %python_sitelibdir/%name/Beremiz.py $*
 END
 
 mkdir -p %buildroot%_bindir/
@@ -185,7 +187,7 @@ install -m 755 %name %buildroot%_bindir/%name
 ### == executable file beremiz-service
 cat>%name<<END
 #!/bin/sh
-%_bindir/python %python_sitelibdir/%name/Beremiz_service.py $*
+%__python %python_sitelibdir/%name/Beremiz_service.py $*
 END
 
 mkdir -p %buildroot%_bindir/
@@ -194,7 +196,7 @@ install -m 755 %name %buildroot%_bindir/%name-service
 ### == executable file PLCOpenEditor
 cat>%name<<END
 #!/bin/sh
-%_bindir/python %python_sitelibdir/%name/PLCOpenEditor.py $*
+%__python %python_sitelibdir/%name/PLCOpenEditor.py $*
 END
 
 mkdir -p %buildroot%_bindir/
@@ -206,7 +208,7 @@ cat>%name.desktop<<END
 Name=Beremiz
 Exec=%name
 Icon=%name
-Terminal=false
+Terminal=true
 Type=Application
 Categories=IDE;Development;
 END
@@ -239,6 +241,13 @@ END
 
 desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 
+### == drop shebang
+sed -i '/!\/usr\/bin\//d' \
+  $(find %buildroot%python_sitelibdir/%name -type f -name "*.py")
+
+### == drop execute bit
+chmod 644  $(find %buildroot%python_sitelibdir/%name -type f -name "*.py")
+
 %files
 %_bindir/*
 %_miconsdir/*.png
@@ -258,6 +267,13 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Mon Nov 25 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt7.20190221
+- fix shebang
+- beremiz.desktop: run in terminal
+
+* Sat Sep 21 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt6.20190221
+- add_python_req_skip autobahn
+
 * Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt5.20190221
 - fix build without doc
 
