@@ -1,4 +1,4 @@
-%define ver_major 0.99
+%define ver_major 0.100
 %define libname libmsi
 %define api_ver 1.0
 
@@ -73,6 +73,7 @@ This package provides GObject introspection devel data for the %libname.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-fast-install
@@ -98,7 +99,7 @@ This package provides GObject introspection devel data for the %libname.
 %_bindir/wixl-heat
 %_datadir/bash-completion/completions/msitools
 %_datadir/wixl-%version/
-%doc NEWS README TODO
+%doc NEWS README* TODO
 
 %files -n %libname
 %_libdir/%libname.so.*
@@ -116,6 +117,9 @@ This package provides GObject introspection devel data for the %libname.
 %_girdir/Libmsi-%api_ver.gir
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 0.100-alt1
+- 0.100
+
 * Fri Feb 15 2019 Yuri N. Sedunov <aris@altlinux.org> 0.99-alt1
 - 0.99
 
