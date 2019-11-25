@@ -5,13 +5,14 @@
 %define liz_confdir	%_sysconfdir/mfs
 %define liz_limits_conf %_sysconfdir/security/limits.d/10-lizardfs.conf
 %define liz_pam_d %_sysconfdir/pam.d/lizardfs
+%define __nprocs 4
 
 %def_without ganesha
 
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc1.16.g9c119b5c.1
+Release: alt0.rc1.16.g9c119b5c.2
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -120,7 +121,6 @@ LizardFS fsal plugin for nfs-ganesha.
 Summary: LizardFS CGI Monitor
 Group: System/Servers
 Conflicts: moosefs-cgi
-#Requires: python2
 
 %description cgi
 LizardFS CGI Monitor.
@@ -153,7 +153,7 @@ LizardFS cluster management tool.
 %prep
 %setup
 
-#unzip -q -d external %SOURCE3
+#unzip -q -d external SOURCE3
 %if_with ganesha
 unzip -q -d external %SOURCE4
 unzip -q -d external %SOURCE5
@@ -380,6 +380,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Fri Nov 22 2019 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc1.16.g9c119b5c.2
+- fix python-base dependency
+
 * Wed Jul 10 2019 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc1.16.g9c119b5c.1
 - add conflicts with moosefs-*
 
