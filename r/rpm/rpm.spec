@@ -19,7 +19,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt14
+Release: alt15
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -315,7 +315,11 @@ time ./setcmp <setcmp-data >/dev/null
 rm lib/set.lo lib/librpm.la
 %make_build -C lib set.lo librpm.la CFLAGS="$set_c_cflags -fprofile-generate"
 ./setcmp <setcmp-data >/dev/null
+%ifnarch %e2k
 ls -l lib/.libs/set.gcda
+%else
+mv eprof.sum* lib
+%endif
 rm lib/set.lo lib/librpm.la
 %make_build -C lib set.lo CFLAGS="$set_c_cflags -fprofile-use"
 %endif #with profile
@@ -566,6 +570,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Nov 25 2019 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt15
+- Support rpmsetcmp profiling on E2K.
+
 * Sat Nov 23 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt14
 - Added triggers circumvention for packagekit offline update (by Aleksei Nikiforov).
 - Imported rpmsetcmp optimization from rpm-build.
