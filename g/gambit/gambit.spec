@@ -1,6 +1,6 @@
 Name: gambit
 Version: 4.9.3
-Release: alt1
+Release: alt2
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -92,7 +92,7 @@ Development files for Gambit Scheme (PHP backend)
 Summary: Development files for Gambit Scheme (Python backend)
 Group: Development/Other
 Requires: gambit = %version-%release
-Requires: /usr/bin/python
+Requires: /usr/bin/python3
 
 %description devel-python
 Development files for Gambit Scheme (Python backend)
@@ -203,6 +203,9 @@ EOF
 %_bindir/gambcomp-ruby
 
 %changelog
+* Mon Nov 25 2019 Paul Wolneykien <manowar@altlinux.org> 4.9.3-alt2
+- Fixed the ambiguous Python requirement: Require Python v3.
+
 * Thu Feb 07 2019 Cronbuild Service <cronbuild@altlinux.org> 4.9.3-alt1
 - new version 4.9.3
 
