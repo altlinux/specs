@@ -2,7 +2,7 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.8.7
+Version: 0.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -16,7 +16,6 @@ Source1: version-script.libssh
 Source2: compat.lds
 Patch1: version-script.patch
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake doxygen ghostscript-utils graphviz latex2html
 BuildRequires: gcc-c++ %{?_enable_gcrypt: libgcrypt-devel}
 BuildRequires: libssl-devel zlib-devel kde-common-devel
@@ -87,6 +86,9 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Mon Nov 25 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
+- new version
+
 * Mon Mar 04 2019 Sergey V Turchin <zerg@altlinux.org> 0.8.7-alt1
 - new version
 
@@ -107,10 +109,10 @@ install -m 0644 %SOURCE2 ./
 * Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt1
 - new version
 
-* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1%ubt
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
 - new version
 
-* Tue Aug 08 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.5-alt1%ubt
+* Tue Aug 08 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.5-alt1
 - new version
 - security fix: CVE-2016-0739
 
