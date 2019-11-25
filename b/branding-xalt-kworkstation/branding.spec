@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -432,6 +432,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Nov 25 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt2
+- make bootsplash progress bar shorten
+
 * Thu Nov 21 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt1
 - update for p9
 
