@@ -2,15 +2,15 @@
 %def_enable check
 
 Name: pcre2
-Version: 10.33
-Release: alt1.1
+Version: 10.34
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
 License: BSD
 Url: http://www.pcre.org/
 
-Source: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/%name-%version.tar.gz
+Source: https://ftp.pcre.org/pub/pcre/%name-%version.tar.gz
 
 BuildRequires: libreadline-devel zlib-devel bzlib-devel
 
@@ -62,6 +62,7 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %setup -n %name-%version
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 %ifnarch %e2k
@@ -135,6 +136,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 10.34-alt1
+- 10.34
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 10.33-alt1.1
 - mike@: support e2kv4 build through %%e2k macro
 
