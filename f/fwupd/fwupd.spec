@@ -13,8 +13,8 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.3
-Release: alt2
+Version: 1.3.4
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -57,6 +57,7 @@ BuildRequires: libxmlb-devel
 BuildRequires: bash-completion
 BuildRequires: libtpm2-tss-devel
 BuildRequires: cmake
+BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow rpm-build-python3
 
 %if_enabled dell
 BuildRequires: libsmbios-devel
@@ -67,7 +68,6 @@ BuildRequires: /proc
 %endif
 
 %if_enabled uefi
-BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow
 BuildRequires: libpango-devel
 BuildRequires: libcairo-devel libcairo-gobject-devel
 BuildRequires: libfreetype-devel
@@ -117,6 +117,7 @@ Data files for installed tests.
 %build
 %meson \
     -Dgtkdoc=true \
+    -Dfirmware-packager=true \
     -Dman=false \
     -Dlvfs=true \
     -Dplugin_flashrom=false \
@@ -198,7 +199,10 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/metainfo/org.freedesktop.fwupd.metainfo.xml
 %_datadir/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs-testing.metainfo.xml
 %_datadir/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs.metainfo.xml
-%_datadir/fwupd/firmware-packager
+%_datadir/fwupd/firmware_packager.py
+%_datadir/fwupd/add_capsule_header.py
+%_datadir/fwupd/install_dell_bios_exe.py
+%_datadir/fwupd/simple_client.py
 %_presetdir/fwupd-refresh.preset
 %_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
@@ -241,6 +245,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli_usbhub.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_cxaudio.so
+%_libdir/fwupd-plugins-3/libfu_plugin_logitech_hidpp.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_prometheus.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_synapticsmst.so
@@ -259,7 +264,6 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %config(noreplace)%_sysconfdir/fwupd/uefi.conf
 %config(noreplace)%_sysconfdir/fwupd/redfish.conf
 %endif
-%_libdir/fwupd-plugins-3/libfu_plugin_unifying.so
 %_libdir/fwupd-plugins-3/libfu_plugin_upower.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_usb.so
 %_libdir/fwupd-plugins-3/libfu_plugin_wacom_raw.so
@@ -288,6 +292,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Nov 25 2019 Anton Farygin <rider@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+
 * Tue Nov 19 2019 Anton Farygin <rider@altlinux.ru> 1.3.3-alt2
 - fixed work with EFI secure boot (closes: #37486)
 
