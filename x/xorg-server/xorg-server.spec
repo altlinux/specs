@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.5
-Release: alt3
+Version: 1.20.6
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -308,6 +308,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Nov 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.6-alt1
+- 1.20.6
+
 * Wed Oct 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.5-alt3
 - lower gl version to work with libglvnd
 
