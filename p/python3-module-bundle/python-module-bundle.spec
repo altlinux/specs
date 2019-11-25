@@ -1,58 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.2
 %define module_name bundle
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 1.1.2
-#Release: alt2.1
-Group: Development/Python
-License: BSD License
+Release: alt3
+
 Summary: Manages installed Bundle packages
+License: BSD License
+Group: Development/Python3
 URL: https://github.com/ask/bundle.git
+
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-Manages installed Bundle packages
-
-%package -n python3-module-%module_name
-Summary: Manages installed Bundle packages
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 Manages installed Bundle packages
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py.*')
 
 %build
 %python_build
 
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
-
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -60,15 +35,13 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc AUTHORS Changelog LICENSE README.rst TODO
-%python_sitelibdir/bundle*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc AUTHORS Changelog LICENSE README.rst TODO
 %python3_sitelibdir/bundle*
-%endif
+
 
 %changelog
+* Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.2-alt3
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt2.2
 - Rebuild with python3.7.
 
