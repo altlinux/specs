@@ -21,7 +21,7 @@
 
 Name: %_name-base%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
@@ -48,7 +48,7 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel gtk-doc
 BuildRequires: gstreamer%api_ver-devel >= %version libgstreamer%api_ver-gir-devel
-BuildRequires: libgudev-devel libGL-devel libGLES-devel libdrm-devel libgbm-devel
+BuildRequires: libgudev-devel libglvnd-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
@@ -198,6 +198,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
+- BR: s/libGL-devel libGLES-devel/libglvnd-devel/
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 

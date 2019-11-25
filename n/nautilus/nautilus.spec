@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -28,7 +28,6 @@ Source: %name-%version.tar
 
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
-
 %define glib_ver 2.55.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
@@ -52,10 +51,6 @@ Requires: totem-video-thumbnailer
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libappstream-glib-devel
-# for %%check
-BuildRequires: xvfb-run dbus-tools-gui /proc
-
-BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: libpango-devel >= %pango_ver
@@ -71,6 +66,7 @@ BuildRequires: pkgconfig(gstreamer-tag-1.0)
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui /proc}
 
 %description
 Nautilus integrates access to files, applications, media, Internet-based
@@ -190,6 +186,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
