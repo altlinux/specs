@@ -1,11 +1,11 @@
 Name:          foreman
 Version:       1.22.0
-Release:       alt1
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers
-License:       GPLv3+ with exceptions
+License:       GPLv3
 Group:         System/Servers
 Url:           https://theforeman.org
-%vcs           https://github.com/theforeman/foreman.git
+Vcs:           https://github.com/theforeman/foreman.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -35,6 +35,7 @@ BuildRequires: libfreetype-devel
 
 Requires:      wget
 Requires:      vixie-cron
+Requires:      postgresql-server
 # npmjs
 Requires:      libX11
 Requires:      libnss
@@ -132,6 +133,9 @@ useradd -r -g foreman -d %_libdir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
+%post_service postgresql
+systemctl start postgresql
+
 mkdir -m 750 -p %_var/tmp/%name
 mkdir -m 750 -p %_cachedir/%name
 ln -sf %_var/tmp/%name %_libdir/%name/tmp
@@ -246,6 +250,13 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 %ruby_ridir/*
 
 %changelog
+* Mon Nov 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.22.0-alt2
+- changed (*) license
+- fixed (!) requires and required service
+- added (+) vcs tag to spec
+- fixed (!) post install procedure, running the postgres server to setup users
+  and db
+
 * Thu Sep 26 2019 Pavel Skrylev <majioa@altlinux.org> 1.22.0-alt1
 - updated (^) 1.20.1 -> 1.22.0
 - fixed (!) run and primarily work, js is bundled in
