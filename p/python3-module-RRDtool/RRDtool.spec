@@ -1,26 +1,21 @@
 %define oname RRDtool
 
-%def_with python3
+Name: python3-module-%oname
+Version: 0.1.15
+Release: alt1
 
-Name: python-module-%oname
-Version: 0.1.12
-Release: alt1.1.1
 Summary: rrdtool bindings for Python
 License: LGPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/rrdtool/
-
 # https://github.com/commx/python-rrdtool.git
+
 Source: %name-%version.tar
 
-BuildRequires: librrd-devel
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
+BuildRequires: librrd-devel
 
-%py_provides %oname rrdtool
+%py3_provides rrdtool
 Conflicts: python-module-rrd python-module-rrdtool
 
 %description
@@ -30,57 +25,25 @@ This bindings are based on the original Python rrdtool bindings from
 Hye-Shik Chang and are slightly modified to support Python 3.3+ and 2.6+
 in the same code base.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: rrdtool bindings for Python
-Group: Development/Python3
-%py3_provides %oname rrdtool
-Conflicts: python3-module-rrd python3-module-rrdtool
-
-%description -n python3-module-%oname
-rrdtool binding for Python 2.6+ and 3.3+.
-
-This bindings are based on the original Python rrdtool bindings from
-Hye-Shik Chang and are slightly modified to support Python 3.3+ and 2.6+
-in the same code base.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.15-alt1
+- Version updated to 0.1.15
+- python2 disabled
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.12-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
