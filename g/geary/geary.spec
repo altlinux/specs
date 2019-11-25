@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Email client
@@ -27,6 +27,8 @@ Source: %name-%version.tar
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
 %define webkit_ver 2.20
+
+Requires: dconf gnome-keyring gcr
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools >= %vala_ver libvala-devel
@@ -82,6 +84,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
