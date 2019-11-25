@@ -1,19 +1,20 @@
 Name: offlineimap
 Version: 7.2.4
-Release: alt1
-Summary: Powerful IMAP/Maildir synchronization and reader support
+Release: alt2
 
+Summary: Powerful IMAP/Maildir synchronization and reader support
 License: GPLv2+
 Group: Networking/Mail
 Url: http://offlineimap.org/
 # https://github.com/OfflineIMAP/offlineimap.git
-Source0: https://pypi.python.org/packages/04/f5/e768b9b650bc204afd72b0a6508d28bb0c030920eaa0b94d150c5e717664/%{name}-%{version}.tar.gz
-
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun May 11 2008
-BuildRequires: docbook-utils python-devel asciidoc-a2x
-BuildPreReq: python-module-sphinx-devel
+Source0: https://pypi.python.org/packages/04/f5/e768b9b650bc204afd72b0a6508d28bb0c030920eaa0b94d150c5e717664/%{name}-%{version}.tar.gz
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: docbook-utils asciidoc-a2x
+BuildRequires: python3-module-sphinx-devel python3-modules-sqlite3
+
 
 %description
 OfflineIMAP is a tool to simplify your e-mail reading. With OfflineIMAP,
@@ -26,32 +27,37 @@ reader that does not have IMAP support, has poor IMAP support, or does
 not provide disconnected operation.
 
 %prep
-%setup -q 
+%setup -q
 
-%prepare_sphinx docs
-ln -s ../objects.inv docs/doc-src/
+## py2 -> py3
+sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+sed -i 's|#!/usr/bin/python.*|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
+##
 
 %build
-%python_build
-#cp -p debian/changelog ChangeLog
-#docbook2man %name.sgml
+%python3_build
 
 %install
-%python_install --prefix=%prefix
+%python3_install --prefix=%prefix
 
 %make -C docs man api
 mkdir -p %buildroot/%_man1dir
 install -p docs/%name.1 %buildroot/%_man1dir/
 
 %files
+%doc COPYING %name.conf* *.md docs/html
 %_bindir/%name
-%python_sitelibdir/%name/
-%python_sitelibdir/%name-%version-py*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%name-%version-py*.egg-info
 %_man1dir/%name.1.*
 
-%doc COPYING %name.conf* *.md docs/html
 
 %changelog
+* Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 7.2.4-alt2
+- python2 -> python3
+
 * Sun Jul 14 2019 Denis Smirnov <mithraen@altlinux.ru> 7.2.4-alt1
 - Version 7.2.4 (ALT #36991)
 
