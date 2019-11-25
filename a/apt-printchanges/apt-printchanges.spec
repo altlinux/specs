@@ -1,5 +1,5 @@
 Name: apt-printchanges
-Version: 0.01.1
+Version: 0.02
 Release: alt1
 
 Summary: Print last changelog for each installed/upgraded package
@@ -12,7 +12,7 @@ Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source0: %name-%version.tar
 
-Requires: python-module-rpm >= 4.13.0
+Requires: python3-module-rpm
 
 %description
 Print last changelog for each installed/upgraded package
@@ -29,6 +29,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/20-%name.conf
 %config(noreplace) /etc/apt/apt.conf.d/*
 
 %changelog
+* Sun Nov 24 2019 Terechkov Evgenii <evg@altlinux.org> 0.02-alt1
+- Port to python3
+
 * Wed Dec 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.01.1-alt1
 - Fix for new rpm python module.
 
