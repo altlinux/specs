@@ -1,6 +1,6 @@
 Name: faust
 Version: 0.9.90
-Release: alt2.2
+Release: alt3
 
 Summary: FAUST is a compiled language for real-time audio signal processing
 License: GPLv2+
@@ -10,8 +10,9 @@ Url: http://faust.grame.fr/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 #Patch: %name-1.0-alt-makefile-fixes.patch
+Patch1: faust2md-pyhon3.patch
 
-BuildRequires(pre): gcc-c++
+BuildRequires(pre): gcc-c++ rpm-build-python3
 
 %description
 FAUST is a compiled language for real-time audio signal processing.
@@ -103,6 +104,7 @@ Development files for FAUST, a compiled language for real-time audio signal proc
 %prep
 %setup
 #patch -p1
+%patch1 -p2
 
 %build
 #configure
@@ -124,6 +126,13 @@ pushd tools/faust2appls
 %makeinstall install
 install -pD -m0644 README %buildroot%_docdir/%name-%version/README.faust2appls
 popd
+
+# remove static library
+rm %buildroot/usr/lib/*.a
+
+# remove files for other OS
+rm -r %buildroot%_libexecdir/%name/android
+rm -r %buildroot%_libexecdir/%name/iOS*
 
 %files -f %name.lang
 %dir %doc %_docdir/%name-%version/
@@ -147,10 +156,11 @@ popd
 %files devel
 %_includedir/%name
 %_libexecdir/%name
-%exclude %_libexecdir/%name/android
-%exclude %_libexecdir/%name/iOS*
 
 %changelog
+* Wed Nov 27 2019 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt3
+- switch to python3
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.90-alt2.2
 - rebuild with octave 5
 
