@@ -7,12 +7,12 @@
 %define xdg_name org.gnome.TwentyFortyEight
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A 2048 clone for GNOME
 Group: Games/Boards
-License: GPLv3+
+License: %gpl3plus
 Url: https://wiki.gnome.org/Apps/2048
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
@@ -25,7 +25,7 @@ Provides:  %__name = %version-%release
 %define libgames_ver 1.2.0
 %define vala_ver 0.24
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-licenses
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel >= %clutter_gtk_ver
@@ -53,6 +53,10 @@ Move the tiles until you obtain the 2048 tile.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+- updated License tag
+
 * Tue Oct 29 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 
