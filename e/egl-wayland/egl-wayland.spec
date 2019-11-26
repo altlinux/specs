@@ -4,7 +4,7 @@
 
 Name: egl-wayland
 Version: 1.1.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Group: System/Libraries
@@ -66,6 +66,9 @@ install -pm 0644 %SOURCE1 %buildroot/%_datadir/egl/egl_external_platform.d/
 %_datadir/wayland-eglstream/
 
 %changelog
+* Tue Nov 26 2019 Sergey V Turchin <zerg@altlinux.org> 1:1.1.4-alt3
+- upstream tag 1.1.4 updated
+
 * Tue Nov 05 2019 Sergey V Turchin <zerg@altlinux.org> 1:1.1.4-alt2
 - fix to build with new Mesa
 
