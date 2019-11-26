@@ -7,7 +7,7 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.8.0.0
+Version: 3.8.1.0
 Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
@@ -17,11 +17,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
-Patch1: gnuradio-3.8.0-python3-fix.patch
-
-# upstream patch
-Patch10: 0034-GRC-update-cloned-port-s-dtype.patch
-Patch11: 0035-Replace-tabs-with-spaces.patch
+Patch1: gnuradio-3.8.1-python3-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3 rpm-build-gir
 BuildRequires: gcc-c++ cmake
@@ -115,8 +111,6 @@ GNU Radio Headers.
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 %cmake \
@@ -177,6 +171,9 @@ rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 3.8.1.0-alt1
+- new version 3.8.1.0
+
 * Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 3.8.0.0-alt1
 - new version 3.8.0.0
 - switch to python3

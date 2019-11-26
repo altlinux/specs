@@ -1,5 +1,5 @@
 Name: volk
-Version: 2.0.0
+Version: 2.3.0
 Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
@@ -81,6 +81,9 @@ Python 3 module for VOLK.
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+
 * Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
