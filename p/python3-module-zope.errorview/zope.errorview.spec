@@ -1,55 +1,28 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.2
 %define oname zope.errorview
 
-%def_with python3
+Name: python3-module-%oname
+Version: 1.2.0
+Release: alt1
 
-Name: python-module-%oname
-Version: 0.11
-#Release: alt2.1
 Summary: Basic HTTP and Browser exception views
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.errorview/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+%py3_requires zope.component zope.interface zope.publisher zope.security
 
-%py_requires zope.component zope.interface zope.publisher zope.security
 
 %description
 Provides basic HTTP and Browser views for common exceptions.
-
-%package -n python3-module-%oname
-Summary: Basic HTTP and Browser exception views
-Group: Development/Python3
-%py3_requires zope.component zope.interface zope.publisher zope.security
-
-%description -n python3-module-%oname
-Provides basic HTTP and Browser views for common exceptions.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.errorview
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
-
-%description -n python3-module-%oname-tests
-Provides basic HTTP and Browser views for common exceptions.
-
-This package contains tests for zope.errorview.
 
 %package tests
 Summary: Tests for zope.errorview
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py3_requires zope.testing
 
 %description tests
 Provides basic HTTP and Browser views for common exceptions.
@@ -59,59 +32,36 @@ This package contains tests for zope.errorview.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 %files
-%doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
-%endif
+
 
 %changelog
+* Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt1
+- version updated to 1.2.0
+- python2 disabled
+
+* Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.11-alt3
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.11-alt2.2
 - Rebuild with python3.7.
 
