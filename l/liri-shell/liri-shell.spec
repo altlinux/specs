@@ -1,9 +1,9 @@
 Name: liri-shell
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: Responsive shell for the Liri desktop.
-License: GPL
+License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/lirios/shell
 
@@ -54,6 +54,9 @@ BuildRequires: qt5-tools-devel
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Tue Nov 26 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt3
+- update from upstream git.ec8c2372
+
 * Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
 - v0.9.0-445-g8d979d8f
 

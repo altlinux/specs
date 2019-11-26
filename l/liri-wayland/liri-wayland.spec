@@ -1,9 +1,9 @@
 Name: liri-wayland
-Version: 0.0.20191026
+Version: 0.0.20191126
 Release: alt1
 
 Summary: Wayland client and server extensions
-License: LGPL
+License: LGPLv3
 Group: System/Libraries
 Url: https://github.com/lirios/wayland
 
@@ -79,6 +79,9 @@ Group: Development/C++
 %_libdir/cmake/Liri1WaylandServer
 
 %changelog
+* Tue Nov 26 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191126-alt1
+- update from upstream git.3ec6248
+
 * Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191026-alt1
 - update from upstream git.89303e9
 
