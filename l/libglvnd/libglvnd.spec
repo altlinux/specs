@@ -1,14 +1,14 @@
 Name: libglvnd
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
 Url: https://github.com/NVIDIA/libglvnd
 License: MIT
 
-Provides: libGLdispatch = %epoch:%version-%release libglvnd0 = %epoch:%version-%release
-Obsoletes: libGLdispatch < %epoch:%version-%release libglvnd0 < %epoch:%version-%release
+Provides: libGLdispatch = %epoch:%version-%release
+Obsoletes: libGLdispatch < %epoch:%version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -22,8 +22,8 @@ arbitrating OpenGL API calls between multiple vendors on a per-screen basis
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Provides: libglvnd0-devel = %epoch:%version-%release
-Obsoletes: libglvnd0-devel < %epoch:%version-%release
+Provides: libGLES-devel
+Obsoletes: libGLES-devel
 Conflicts: libGL-devel < 19.2.2
 
 %description devel
@@ -33,8 +33,6 @@ developing applications that use %name
 %package -n libOpenGL
 Summary: OpenGL support for libglvnd
 Group: System/Libraries
-Provides: libglvnd0-opengl = %epoch:%version-%release
-Obsoletes: libglvnd0-opengl < %epoch:%version-%release
 
 %description -n libOpenGL
 libOpenGL is the common dispatch interface for the workstation OpenGL API
@@ -58,8 +56,6 @@ libEGL are the common dispatch interface for the EGL API
 Summary: GLX support for libglvnd
 Group: System/Libraries
 Requires: libGLX-mesa
-Provides: libglvnd0-glx = %epoch:%version-%release
-Obsoletes: libglvnd0-glx < %epoch:%version-%release
 
 %description -n libGLX
 libGLX are the common dispatch interface for the GLX API
@@ -125,6 +121,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 26 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt4
+- fixed conflicts between libglvnd-devel and libGLES-devel
+
 * Mon Nov 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt3
 - git snapshot master.9ba775e
 
