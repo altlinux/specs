@@ -1,60 +1,30 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.2
 %define oname zope.principalregistry
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.0.0
-#Release: alt3.1
+Release: alt4
+
 Summary: Global principal registry component for Zope3
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.principalregistry/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_requires zope zope.authentication zope.component zope.interface
-%py_requires zope.password zope.security
+%py3_requires zope zope.authentication zope.component zope.interface
+%py3_requires zope.password zope.security
 
 %description
 This package provides an authentication utility for zope.authentication
 that uses simple non-persistent principal registry.
 
-%package -n python3-module-%oname
-Summary: Global principal registry component for Zope3
-Group: Development/Python3
-%py3_requires zope zope.authentication zope.component zope.interface
-%py3_requires zope.password zope.security
-
-%description -n python3-module-%oname
-This package provides an authentication utility for zope.authentication
-that uses simple non-persistent principal registry.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.principalregistry
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.component
-
-%description -n python3-module-%oname-tests
-This package provides an authentication utility for zope.authentication
-that uses simple non-persistent principal registry.
-
-This package contains tests for zope.principalregistry
-
 %package tests
 Summary: Tests for zope.principalregistry
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires zope.component
+%py3_requires zope.component
 
 %description tests
 This package provides an authentication utility for zope.authentication
@@ -65,59 +35,32 @@ This package contains tests for zope.principalregistry
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
-%endif
+
 
 %changelog
+* Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0.0-alt4
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt3.2
 - Rebuild with python3.7.
 
