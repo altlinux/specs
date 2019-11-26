@@ -14,14 +14,14 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
 Group: Sound
 URL: http://www.fluidsynth.org
-License: LGPL2.1+
+License: %lgpl21plus
 
 %if_disabled snapshot
 Source: https://github.com/FluidSynth/%name/archive/v%version/%name-%version.tar.gz
@@ -37,6 +37,7 @@ Requires: lib%name = %version-%release
 %define ladcca_ver 0.4.0
 %define alsa_ver 0.9.8-alt2
 
+BuildRequires(pre): rpm-macros-cmake rpm-build-licenses
 BuildRequires: cmake >= %cmake_ver gcc-c++
 BuildRequires: doxygen graphviz xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: glib2-devel libsndfile-devel libalsa-devel >= %alsa_ver libe2fs-devel
@@ -197,6 +198,10 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
+- 2.0.9
+- updated License tag
+
 * Mon Oct 28 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.8-alt1
 - 2.0.8
 
