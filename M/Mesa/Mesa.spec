@@ -67,7 +67,7 @@
 
 Name: Mesa
 Version: 19.2.6
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -131,14 +131,6 @@ Requires: libglvnd-devel >= 1.2.0
 
 %description -n libEGL-devel
 Mesa libEGL development package
-
-%package -n libGLES-devel
-Summary: Mesa libGLES development package
-Group: Development/C
-Requires: libglvnd-devel >= 1.2.0
-
-%description -n libGLES-devel
-Mesa libGLES development package
 
 %package -n libgbm
 Summary: GBM buffer management library
@@ -338,8 +330,6 @@ sed -i '/.*nouveau.*/d' xorg-dri-armsoc.list
 sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
-install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
-
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
@@ -363,9 +353,6 @@ install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 %_includedir/EGL/eglmesaext.h
 %_libdir/libEGL_mesa.so
 %endif
-
-%files -n libGLES-devel
-%_includedir/GLES3/gl3ext.h
 
 %files -n libgbm
 %_libdir/libgbm.so.*
@@ -460,6 +447,9 @@ install -pD -m0644 include/GLES3/gl3ext.h %buildroot%_includedir/GLES3/gl3ext.h
 %endif
 
 %changelog
+* Tue Nov 26 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.6-alt2
+- fixed conflicts between libglvnd-devel and libGLES-devel
+
 * Fri Nov 22 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.6-alt1
 - 19.2.6
 
