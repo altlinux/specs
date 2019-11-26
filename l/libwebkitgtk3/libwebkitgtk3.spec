@@ -20,11 +20,11 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt8
+Release: alt9
 
 Summary: Web browser engine
 Group: System/Libraries
-License: %bsd %lgpl2plus
+License: LGPL-2.0+ and BSD-3-Clause
 
 Url: http://www.webkitgtk.org
 
@@ -36,13 +36,14 @@ Patch3: webkitgtk-2.4.11-icu59.patch
 # https://bugs.webkit.org/show_bug.cgi?id=126985
 Patch4: webkitgtk-x86-assembler-fix.patch
 Patch5: webkitgtk-2.4.10-suse-aarch64.patch
+Patch6: webkitgtk-2.4.11-icu65.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
 
 Requires: libjavascriptcoregtk3 = %version-%release
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gir
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ libicu-devel bison perl-Switch zlib-devel
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
@@ -224,6 +225,7 @@ GObject introspection data for the Webkit2 library
 %patch3
 %patch4 -p2
 %patch5 -p1
+%patch6 -p2
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -245,7 +247,7 @@ echo "GTK_DOC_CHECK([1.10])" >> configure.ac
 gtkdocize --copy
 %autoreconf -I Source/autotools
 %configure \
-%ifarch ppc ppc64 ppc64le riscv64
+%ifarch ppc ppc64 ppc64le riscv64 mipsel
 	--disable-jit \
 %endif
 %ifarch riscv64
@@ -354,6 +356,11 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Tue Nov 26 2019 Ivan A. Melnikov <iv@altlinux.org> 2.4.11-alt9
+- Fixed build with recent libicu.
+- Update license tag.
+- Disable JIT on mipsel.
+
 * Thu Jun 20 2019 Nikita Ermakov <arei@altlinux.org> 2.4.11-alt8
 - Add RISC-V (vr64gc) support.
 
