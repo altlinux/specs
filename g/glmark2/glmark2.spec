@@ -2,7 +2,7 @@
 
 Name:		glmark2
 Version:	0.0.0.0.907.24a1139
-Release:	alt1
+Release:	alt2
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -21,7 +21,7 @@ BuildRequires:	libudev-devel
 # GL support
 BuildRequires:	libGL-devel
 # GLESv2 support
-BuildRequires:	libEGL-devel libGLES-devel
+BuildRequires:	libEGL-devel libglvnd-devel
 # DRM support
 BuildRequires:	libdrm-devel libgbm-devel
 # Wayland support
@@ -143,6 +143,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Tue Nov 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.907.24a1139-alt2
+- Fixed build dependency.
+
 * Wed Nov 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.907.24a1139-alt1
 - Updated to 0.0.0-907-g24a1139.
 - Fixed license field.
