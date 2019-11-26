@@ -3,12 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.14.0
-Release: alt3
+Release: alt4
+
 Summary: pytest plugin to check source code with pylint
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/pytest-pylint/
 
@@ -17,15 +18,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-pytest-runner
 BuildRequires: python3-module-pytest-runner
 
 %if_with check
 BuildRequires: pylint
-BuildRequires: python-module-coverage
-BuildRequires: python-module-mock
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-pep8
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pylint
@@ -34,19 +30,10 @@ BuildRequires: python3-module-pytest-pep8
 BuildRequires: python3-module-tox
 %endif
 
-%py_provides %oname
-
-%description
-Run pylint with pytest and have configurable rule types (i.e.
-Convention, Warn, and Error) fail the build. You can also specify a
-pylintrc file.
-
-%package -n python3-module-%oname
-Summary: pytest plugin to check source code with pylint
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 Run pylint with pytest and have configurable rule types (i.e.
 Convention, Warn, and Error) fail the build. You can also specify a
 pylintrc file.
@@ -55,49 +42,39 @@ pylintrc file.
 %setup
 %patch -p1
 
-rm -rf ../python3
-cp -fR . ../python3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
     py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
 commands_pre =\
     \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %files
-%doc *.rst pylintrc
-%python_sitelibdir/pytest_pylint.py*
-%python_sitelibdir/pytest_pylint-*.egg-info/
-
-%files -n python3-module-%oname
 %doc *.rst pylintrc
 %python3_sitelibdir/pytest_pylint.py
 %python3_sitelibdir/pytest_pylint-*.egg-info/
 %python3_sitelibdir/__pycache__/
 
+
 %changelog
+* Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.14.0-alt4
+- python2 disabled
+
 * Sat Oct 19 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt3
 - Fixed testing against Pylint 2.4.2+.
 
