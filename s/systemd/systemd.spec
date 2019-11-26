@@ -58,10 +58,12 @@
 %define mmap_min_addr 32768
 %endif
 
+%define ver_major 243
+
 Name: systemd
 Epoch: 1
-Version: 243
-Release: alt4
+Version: %ver_major.4
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1466,7 +1468,7 @@ fi
 
 %files utils
 %dir /lib/systemd
-/lib/systemd/libsystemd-shared-%version.so
+/lib/systemd/libsystemd-shared-%ver_major.so
 
 /sbin/systemctl
 /bin/systemctl
@@ -1823,6 +1825,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Nov 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:243.4-alt1
+- 243.4 from stable branch
+
 * Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 1:243-alt4
 - move completions to systemd-services (ALT #37352)
 - group add vmusers in pre for udev package (ALT #37200)
