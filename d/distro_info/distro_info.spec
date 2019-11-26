@@ -1,5 +1,5 @@
 Name: distro_info
-Version: 1.0
+Version: 1.2
 Release: alt1
 
 Summary: Get various info about a system and used distro
@@ -32,5 +32,14 @@ install -m0644 -D man/distro_info.1 %buildroot%_man1dir/distro_info.1
 %_man1dir/*
 
 %changelog
+* Tue Nov 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
+- improve virtualization detection
+- drop upstart detection
+- add --pretty option to print pretty name of the distro
+
+* Thu Nov 21 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- add -i: print virtualization type
+- add -y: print running service manager
+
 * Thu Nov 21 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Sisyphus
