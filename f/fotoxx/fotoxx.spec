@@ -1,10 +1,10 @@
 Name: fotoxx
-Version: 19.18
+Version: 19.20
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
-License: GPLv3+
 Group: Graphics
+License: %lgpl3plus
 Url: http://www.kornelix.com/%name/%name.html
 
 # VCS: https://gitlab.com/fotoxx/fotoxx.git
@@ -26,6 +26,7 @@ Requires: brasero
 Provides: fotox
 Obsoletes: fotox
 
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel liblcms2-devel
 BuildRequires: perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
@@ -82,6 +83,10 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 19.20-alt1
+- 19.20
+- updated License tag
+
 * Thu Oct 17 2019 Yuri N. Sedunov <aris@altlinux.org> 19.18-alt1
 - 19.18
 
