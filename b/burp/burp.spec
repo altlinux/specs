@@ -1,9 +1,9 @@
 Name:		burp
-Version:	2.3.14
+Version:	2.3.16
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
-License:	GPL
+License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
 Url:		https://burp.grke.org/
 
@@ -20,6 +20,7 @@ BuildRequires:  libacl-devel
 BuildRequires:  libuthash-devel
 BuildRequires:  libyajl-devel
 BuildRequires:  check libcheck-devel
+BuildRequires:  libcap-devel
 
 BuildRequires: rpm-macros-intro-conflicts
 %filter_from_requires /^\/usr\/local\/bin\/mail\.php$/d
@@ -77,6 +78,12 @@ chmod go-rwx %{buildroot}%_sysconfdir/burp/*.conf
 %preun_service burp-server
 
 %changelog
+* Mon Nov 25 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.16-alt1
+- New version 2.3.16
+- Fix license string
+- Fix compatibility with openssl-1.1.1
+- Implement support of keeping readall capabilities
+
 * Tue Oct 01 2019 Vitaly Chikunov <vt@altlinux.org> 2.3.14-alt1
 - New version 2.3.14
 
