@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -361,10 +361,19 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
 #bootsplash
 %post bootsplash
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
+sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+if [ -f /etc/sysconfig/grub2 ] ; then
+      sed -i "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/boot/grub/themes/%theme/boot.png|" \
              /etc/sysconfig/grub2 ||:
+      sed -i "s|GRUB_BACKGROUND=.*|GRUB_BACKGROUND=/boot/grub/themes/%theme/boot.png|" \
+             /etc/sysconfig/grub2 ||:
+    if ! grep -q '^GRUB_BACKGROUND=' /etc/sysconfig/grub2 ; then
+	if grep -q '^GRUB_WALLPAPER=' /etc/sysconfig/grub2 ; then
+	    sed -i "s|\(^GRUB_WALLPAPER=.*$\)|\1\nGRUB_BACKGROUND=/boot/grub/themes/%theme/boot.png|" \
+                /etc/sysconfig/grub2 ||:
+        fi
+    fi
+fi
 
 %post gnome-settings
 %gconf2_set string /desktop/gnome/interface/font_name Sans 11
@@ -432,6 +441,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Nov 26 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt3
+- setup GRUB_BACKGROUND
+
 * Mon Nov 25 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt2
 - make bootsplash progress bar shorten
 
