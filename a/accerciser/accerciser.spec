@@ -2,12 +2,12 @@
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
 Group: Accessibility
-License: %bsd
+License: BSD
 Url: https://wiki.gnome.org/Apps/Accerciser
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
