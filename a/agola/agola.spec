@@ -1,5 +1,5 @@
 %global import_path github.com/agola-io/agola
-%global commit 6ca985c641e513183341b063f4e9ca4e2e9351a3
+%global commit 074f346c7851df430f11b3934557a4cad5a19cd9
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,12 +12,12 @@
 
 
 Name:		agola
-Version:	0.2.0
+Version:	0.4.0
 Release:	alt1
 Summary:	CI/CD redefined
 
 Group:		Development/Other
-License:	ASL 2.0
+License:	Apache-2.0
 URL:		https://agola.io
 
 Source: %name-%version.tar
@@ -71,6 +71,9 @@ install -p -m 755 bin/agola-toolbox %buildroot%_bindir/agola-toolbox
 %_bindir/*
 
 %changelog
+* Tue Nov 26 2019 Alexey Shabalin <shaba@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Mon Sep 16 2019 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
