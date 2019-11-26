@@ -1,17 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 5.3
+%define ver_major 5.4
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pantheon Terminal
 Group: Terminals
-License: GPLv3
+License: %gpl3plus
 Url: https://github.com/elementary/terminal
 
 %if_disabled snapshot
@@ -24,7 +24,7 @@ Source: %_name-%version.tar
 Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-licenses
 BuildRequires: appstream desktop-file-utils
 BuildRequires: libgranite-devel libnotify-devel libvte3-devel libgee0.8-devel
 BuildRequires: vala-tools libgranite-vala
@@ -59,7 +59,7 @@ This package provides Vala language bindings for the %name.
 %find_lang %rdn_name
 
 %files -f %rdn_name.lang
-%doc AUTHORS README*
+%doc README*
 %_bindir/%rdn_name
 %_datadir/%rdn_name/
 %_desktopdir/%rdn_name.desktop
@@ -75,6 +75,10 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
+- 5.4.0
+- updated License tag
+
 * Mon Jul 22 2019 Yuri N. Sedunov <aris@altlinux.org> 5.3.6-alt1
 - 5.3.6
 
