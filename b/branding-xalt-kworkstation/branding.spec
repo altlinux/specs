@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -42,6 +42,9 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define variants alt-kdesktop alt-server alt-starterkit alt-workstation altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
+%define grub_normal white/light-blue
+%define grub_high black/light-gray
+
 Source: %name.tar
 
 Group: Graphics
@@ -60,8 +63,6 @@ License: GPL
 PreReq: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-%define grub_normal white/black
-%define grub_high black/white
 %description bootloader
 Here you find the graphical boot logo. Suitable for both lilo and syslinux.
 
@@ -342,7 +343,9 @@ echo $lang > lang
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
-
+shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/%theme/boot.png
+# deprecated
+shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/boot.png
 
 %preun bootloader
 [ $1 = 0 ] || exit 0
@@ -362,18 +365,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 #bootsplash
 %post bootsplash
 sed -i "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-if [ -f /etc/sysconfig/grub2 ] ; then
-      sed -i "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/boot/grub/themes/%theme/boot.png|" \
-             /etc/sysconfig/grub2 ||:
-      sed -i "s|GRUB_BACKGROUND=.*|GRUB_BACKGROUND=/boot/grub/themes/%theme/boot.png|" \
-             /etc/sysconfig/grub2 ||:
-    if ! grep -q '^GRUB_BACKGROUND=' /etc/sysconfig/grub2 ; then
-	if grep -q '^GRUB_WALLPAPER=' /etc/sysconfig/grub2 ; then
-	    sed -i "s|\(^GRUB_WALLPAPER=.*$\)|\1\nGRUB_BACKGROUND=/boot/grub/themes/%theme/boot.png|" \
-                /etc/sysconfig/grub2 ||:
-        fi
-    fi
-fi
 
 %post gnome-settings
 %gconf2_set string /desktop/gnome/interface/font_name Sans 11
@@ -441,6 +432,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Nov 27 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt4
+- fix setup grub
+
 * Tue Nov 26 2019 Sergey V Turchin <zerg at altlinux dot org> 9.0.0-alt3
 - setup GRUB_BACKGROUND
 
