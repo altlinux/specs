@@ -1,5 +1,5 @@
 Name: kodi
-Version: 18.4
+Version: 18.5
 Release: alt1
 
 Summary: Kodi Media Center
@@ -15,8 +15,8 @@ Source0: %name-%version-%release.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
-BuildRequires: libunistring-devel libidn2-devel
-BuildRequires: java-1.8.0-openjdk-devel /proc swig
+BuildRequires: libunistring-devel libidn2-devel libEGL-devel
+BuildRequires: java-devel /proc swig
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(avahi-client)
@@ -167,6 +167,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Tue Nov 26 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.5-alt1
+- 18.5 Leia released
+
 * Mon Sep 23 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.4-alt1
 - 18.4 Leia released
 
