@@ -1,88 +1,50 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.svn20100323.2
 %define oname z3c.javascript
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2
-#Release: alt1.svn20100323.1
+Release: alt2
+
 Summary: Javascript libraries Zope 3
 License: BSD-like
-Group: Development/Python
+Group: Development/Python3
 Url: http://svn.zope.org/z3c.javascript/?rev=80712#dirlist
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://z3c-javascript.googlecode.com/svn/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_requires z3c
-
-%description
-Javascript libraries Zope 3.
-
-%package -n python3-module-%oname
-Summary: Javascript libraries Zope 3
-Group: Development/Python3
 %py3_requires z3c
 
-%description -n python3-module-%oname
+
+%description
 Javascript libraries Zope 3.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%endif
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt2
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2-alt1.svn20100323.2
 - Rebuild with python3.7.
 
