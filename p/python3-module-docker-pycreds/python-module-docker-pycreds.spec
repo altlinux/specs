@@ -1,81 +1,47 @@
 %define oname docker-pycreds
 %define modname dockerpycreds
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the docker credentials store API
-
 License: %asl
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/shin-/dockerpy-creds
-
-Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-%endif
+Source: %oname-%version.tar
 
-%setup_python_module %oname
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-distribute
+
 
 %description
 Python bindings for the docker credentials store API
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python bindings for the docker credentials store API (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Python bindings for the docker credentials store API
-%endif
-
-
 %prep
 %setup -n %oname-%version
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc LICENSE README.md
-%python_sitelibdir/%modname
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/%modname
 %python3_sitelibdir/*.egg-*
-%endif
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.0-alt2
+- python2 disabled
+
 * Tue Jan 29 2019 Vladimir Didenko <cow@altlinux.ru> 0.4.0-alt1
 - New version
 
