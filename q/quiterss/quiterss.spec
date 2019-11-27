@@ -3,8 +3,8 @@
 %endif
 
 Name: quiterss
-Version: 0.19.1
-Release: alt2
+Version: 0.19.2
+Release: alt1
 
 Summary: RSS/Atom aggregator
 Summary(ru_RU.UTF-8): QuiteRSS - быстрая и удобная программа для чтения новостных лент RSS/Atom
@@ -79,6 +79,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Wed Nov 27 2019 Michael Shigorin <mike@altlinux.org> 0.19.2-alt1
+- new version (watch file uupdate)
+
 * Wed Nov 20 2019 Michael Shigorin <mike@altlinux.org> 0.19.1-alt2
 - replace BR: qt5-sql-sqlite3 with qt5-sql-sqlite (closes: #37515)
 
