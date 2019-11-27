@@ -10,7 +10,7 @@
 
 Name: python-module-dbus
 Version: 1.2.14
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -44,6 +44,15 @@ BuildRequires: python-module-pygobject3 python-module-tappy
 %description
 D-Bus python bindings for use with python programs.
 
+%package gobject
+Summary: Python bindings for D-BUS library
+Group: Development/Python
+Requires: python-module-dbus = %EVR
+
+%description gobject
+D-Bus bindings for use with python programs
+(gobject introspection bindings).
+
 %package -n python3-module-dbus
 Summary: Python3 bindings for D-BUS library
 License: AFL/GPL
@@ -53,10 +62,19 @@ Requires: dbus >= %dbus_ver
 %description -n python3-module-dbus
 D-Bus python bindings for use with python programs.
 
+%package -n python3-module-dbus-gobject
+Summary: Python3 bindings for D-BUS library
+Group: Development/Python3
+Requires: python3-module-dbus = %EVR
+
+%description -n python3-module-dbus-gobject
+D-Bus bindings for use with python programs
+(gobject introspection bindings).
+
 %package devel
 Summary: Python bindings for D-BUS library (devel package)
 Group: Development/Python
-Requires: %name = %EVR
+Requires: %name-gobject = %EVR
 %py_package_provides %modname-devel = %EVR
 Provides: python3-module-dbus-devel = %EVR
 
@@ -131,6 +149,12 @@ done
 %doc AUTHORS COPYING NEWS
 
 %exclude %python_sitelibdir/*.la
+%exclude %python_sitelibdir/dbus/gobject_service.py*
+%exclude %python_sitelibdir/dbus/gi_service.py*
+
+%files gobject
+%python_sitelibdir/dbus/gobject_service.py*
+%python_sitelibdir/dbus/gi_service.py*
 %endif
 
 %files devel
@@ -143,6 +167,12 @@ done
 %python3_sitelibdir/dbus/
 
 %exclude %python3_sitelibdir/*.la
+%exclude %python3_sitelibdir/dbus/gi_service.py
+%exclude %python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
+
+%files -n python3-module-dbus-gobject
+%python3_sitelibdir/dbus/gi_service.py
+%python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
 
 %if_enabled installed_tests
 %files tests
@@ -158,6 +188,9 @@ done
 
 
 %changelog
+* Thu Nov 28 2019 Anton Midyukov <antohami@altlinux.org> 1.2.14-alt2
+- Allocated a separate subpackages with pygobject bindings (Closes: 34351)
+
 * Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.14-alt1
 - 1.2.14
 
