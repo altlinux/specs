@@ -3,8 +3,8 @@
 %define _name licenses
 
 Name: rpm-build-%_name
-Version: 2.0.5
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: RPM macros for well-known licenses
 # We can't use our own macros...
@@ -39,46 +39,45 @@ cat <<__EOF__ >%_name.rpmmacros
 %%lgpl21plus LGPLv2.1+
 %%lgpl3only LGPLv3
 %%lgpl3plus LGPLv3+
-%%bsd_orig BSD (original)
-%%bsd BSD (revised)
-%%bsdstyle BSD-style
-%%mit MIT/X Consortium
-%%mpl MPL
+%%bsd_orig BSD-4-Clause-UC
+%%bsd BSD
+%%bsdstyle BSD-4-Clause
+%%mit MIT
+%%mpl MPL-2.0
 %%w3cl W3C
-%%asl Apache
-%%jpackage_license JPackage
+%%asl Apache-2.0
+%%jpackage_license GPL2+ or Apache-2.0
 %%sendmail_license Sendmail
-%%artistic_license Artistic
-%%artistic_license_v2 Artistic 2.0
-%%perl_license Perl (GPL or Artistic)
-%%fdl FDL
-%%gfdl GFDL
-%%lppl LPPL
-%%qpl1 QPLv1.0
+%%artistic_license Artistic-1.0
+%%artistic_license_v2 Artistic-2.0
+%%perl_license Perl
+%%fdl FDL-1.2
+%%gfdl GFDL-1.3+
+%%lppl LPPL-1.3c
+%%qpl1 QPL-1.0
 %%ccbysa30 CC-BY-SA-3.0
 %%ccby30 CC-BY-3.0
 %%ccbysa25 CC-BY-SA-2.5
 %%ccby25 CC-BY-2.5
-%%epl Erlang Public License
-%%pubdomain Public domain
-%%distributable Distributable, non-free
-%%gagpl3only GAGPLv3
-%%gagpl3plus GAGPLv3+
+%%epl ErlPL
+%%pubdomain ALT-Public-Domain
+%%gagpl3only AGPL-3.0
+%%gagpl3plus AGPL-3.0+
 
 # Not sure whether these ones should exist at all. Too clumsy names and vague
 # semantics.
 %%gpllgpl2only \
 %{warning Hopefully you have read the README section about %%gpllgpl* macros.}\
-GPLv2, LGPLv2
+GPLv2 and LGPLv2
 %%gpllgpl2plus \
 %{warning Hopefully you have read the README section about %%gpllgpl* macros.}\
-GPLv2+, LGPLv2+
+GPLv2+ and LGPLv2+
 %%gpllgpl3only \
 %{warning Hopefully you have read the README section about %%gpllgpl* macros.}\
-GPLv3, LGPLv3
+GPLv3 and LGPLv3
 %%gpllgpl3plus \
 %{warning Hopefully you have read the README section about %%gpllgpl* macros.}\
-GPLv3+, LGPLv3+
+GPLv3+ and LGPLv3+
 __EOF__
 install -pD -m644 %_name.rpmmacros %buildroot%_rpmmacrosdir/%_name
 
@@ -88,6 +87,9 @@ install -pD -m644 %_name.rpmmacros %buildroot%_rpmmacrosdir/%_name
 %doc --no-dereference COPYING
 
 %changelog
+* Wed Nov 27 2019 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
+- Updated for common-licenses-1.6.
+
 * Sun Feb 07 2016 Michael Shigorin <mike@altlinux.org> 2.0.5-alt2
 - get rid of useless rpm-macros-branch: this package was never
   built for any branch specifically (ironically, that one has
