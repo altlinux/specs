@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Specio
-Version: 0.44
+Version: 0.45
 Release: alt1
 
 Summary: Type constraints and coercions for Perl
@@ -32,6 +32,9 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 %doc Changes README* TODO*
 
 %changelog
+* Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- new version
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - new version
 
