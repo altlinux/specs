@@ -1,71 +1,40 @@
-%define version 1.2.0
-%define release alt2
-%setup_python_module postmarkup
+%define oname postmarkup
 
-%def_with python3
-
-Name: %packagename
-Version: %version
-Release: alt2.2
+Name: python3-module-%oname
+Version: 1.2.0
+Release: alt3
 
 Summary: Generates XHTML snippets from BBCode
-
 License: BSD
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: http://code.google.com/p/postmarkup
+BuildArch: noarch
 
-Source: %modulename-%version.tar
+Source: %oname-%version.tar
 
-BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Generates XHTML snippets from BBCode.
 
-%package -n python3-module-%modulename
-Summary: Generates XHTML snippets from BBCode
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-Generates XHTML snippets from BBCode.
-
 %prep
-%setup -n %modulename-%version
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %oname-%version
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install --record=INSTALLED_FILES
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%files -f INSTALLED_FILES
-
-%if_with python3
-%files -n python3-module-%modulename
+%files
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt3
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt2.2
 - (NMU) rebuild with python3.6
 
