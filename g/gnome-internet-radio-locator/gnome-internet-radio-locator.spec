@@ -3,7 +3,7 @@
 %def_with recording
 
 Name: gnome-internet-radio-locator
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -56,6 +56,9 @@ with the help of a map.
 
 
 %changelog
+* Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Thu Oct 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
