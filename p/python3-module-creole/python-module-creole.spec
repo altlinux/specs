@@ -1,39 +1,22 @@
 %define oname creole
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1.2
+Release: alt2
 
 Summary: Markup converter in pure Python for: creole2html, html2creole, html2ReSt, html2textile
 License: GPLv3+
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-
 Url: http://code.google.com/p/python-creole
+
 # sourcecode: http://github.com/jedie/python-creole
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-Python lib for:
- - creole markup -> html
- - html -> creole markup
-python-creole is pure python. No external libs needed.
-The creole2html part based on the creole markup parser and emitter from
-the MoinMoin project by Radomir Dopieralski and Thomas Waldmann.
-
-%package -n python3-module-%oname
-Summary: Markup converter in pure Python for: creole2html, html2creole, html2ReSt, html2textile
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Python lib for:
  - creole markup -> html
  - html -> creole markup
@@ -44,53 +27,27 @@ the MoinMoin project by Radomir Dopieralski and Thomas Waldmann.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %files
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/%oname
-%exclude %python_sitelibdir/%oname/tests
-%python_sitelibdir/python_%oname-*.egg-info
-%doc AUTHORS README.%oname LICENSE
-
-%if_with python3
-%files -n python3-module-%oname
-%_bindir/*.py3
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/python_%oname-*.egg-info
 %doc AUTHORS README.%oname LICENSE
-%endif
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt1.2
 - (NMU) rebuild with python3.6
 
