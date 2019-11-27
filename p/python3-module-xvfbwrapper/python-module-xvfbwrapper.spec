@@ -1,12 +1,10 @@
 %global pypi_name xvfbwrapper
 %define version 0.2.9
 
-%def_with python3
-
-Name:           python-module-%{pypi_name}
+Name:           python3-module-%{pypi_name}
 Version:        %{version}
-Release:        alt1
-Group:          Development/Python
+Release:        alt2
+Group:          Development/Python3
 Summary:        run headless display inside X virtual framebuffer (Xvfb)
 
 License:        MIT
@@ -15,65 +13,35 @@ Source0:        %{name}-%{version}.tar
 
 BuildArch:      noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 
-#BuildRequires:  python-module-setuptools
 
 %description
 Python wrapper for running a display inside X virtual framebuffer (Xvfb)
 
-%if_with python3
-%package -n python3-module-%pypi_name
-Summary:        run headless display inside X virtual framebuffer (Xvfb)
-Group:          Development/Python
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools
-#BuildRequires:  python3-devel
-
-%description -n python3-module-%pypi_name
-Python wrapper for running a display inside X virtual framebuffer (Xvfb)
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc README.rst
-%{python_sitelibdir}/%{pypi_name}.py*
-%{python_sitelibdir}/%{pypi_name}-%{version}-py%{_python_version}.egg-info
-
-%if_with python3
-%files -n python3-module-%{pypi_name}
 %doc README.rst
 %{python3_sitelibdir}/%{pypi_name}.py*
 %{python3_sitelibdir}/__pycache__/%{pypi_name}.*
 %{python3_sitelibdir}/%{pypi_name}-%{version}-py%{_python3_version}.egg-info
-%endif # with_python3
+
 
 %changelog
+* Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.9-alt2
+- python2 disabled
+
 * Mon May 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt1
 - Build new version.
 
