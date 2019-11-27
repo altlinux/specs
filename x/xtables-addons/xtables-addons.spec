@@ -1,6 +1,6 @@
 Name: xtables-addons
-Version: 3.5
-Release: alt2
+Version: 3.6
+Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -71,6 +71,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Wed Nov 27 2019 Anton Farygin <rider@altlinux.ru> 3.6-alt1
+- 3.6
+
 * Thu Oct 03 2019 Alexey Shabalin <shaba@altlinux.org> 3.5-alt2
 - update changelog for allow copy to branch p9
 
