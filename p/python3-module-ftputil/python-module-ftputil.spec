@@ -1,44 +1,22 @@
 %define oname ftputil
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.4
-Release: alt1
+Release: alt2
 
 Summary: high-level interface to the ftplib module
-
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://ftputil.sschwarzer.net/trac
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildArch: noarch
 
 # Source-url: https://pypi.io/packages/source/f/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-%setup_python_module %oname
-
-# Automatically added by buildreq on Wed Oct 24 2007
-BuildRequires: python-devel python-modules-compiler
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
+
 
 %description
-The ftputil Python library is a high-level interface to the ftplib
-module. The FTPHost objects generated with ftputil allow many operations
-similar to those of os  and os.path
-
-%package -n python3-module-%oname
-Summary: high-level interface to the ftplib module
-Group: Development/Python3
-
-%description -n python3-module-%oname
 The ftputil Python library is a high-level interface to the ftplib
 module. The FTPHost objects generated with ftputil allow many operations
 similar to those of os  and os.path
@@ -46,39 +24,24 @@ similar to those of os  and os.path
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc doc/*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc doc/*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.4-alt2
+- python2 disabled
+
 * Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
 - new version 3.4 (with rpmrb script)
 
