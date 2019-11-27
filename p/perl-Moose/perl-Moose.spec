@@ -2,8 +2,8 @@
 %def_without bootstrap
 %define dist Moose
 Name: perl-%dist
-Version: 2.2011
-Release: alt2
+Version: 2.2012
+Release: alt1
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
@@ -64,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2012-alt1
+- automated CPAN update
+
 * Wed Jan 30 2019 Igor Vlasenko <viy@altlinux.ru> 2.2011-alt2
 - unbootstrap
 
