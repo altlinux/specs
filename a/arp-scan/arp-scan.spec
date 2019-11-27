@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: arp-scan
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 
 Summary: Scanning and fingerprinting tool
@@ -55,6 +55,10 @@ cp -a %_sourcedir/{ieee-iab.txt,ieee-oui.txt} .
 %doc NEWS README*
 
 %changelog
+* Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9.7-alt1
+- 1.9.7
+- updated ieee-{iab,oui}.txt
+
 * Sat Oct 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.9.6-alt1
 - updated to 1.9.6-9-g36de712
 - updated ieee-{iab,oui}.txt
