@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.61
+Version: 2.9.62
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,10 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Apr 20 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.9.62-alt1
+- Add l10n for alterator-gpupdate
+- Update l10n for alterator-auth
+
 * Mon Apr 13 2020 Ivan Razzhivin <underwit@altlinux.org> 2.9.61-alt1
 - add help for alterator-kiosk
 
