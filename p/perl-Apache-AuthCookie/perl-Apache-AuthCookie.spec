@@ -16,8 +16,8 @@
 %define _enable_test 1
 
 Name: perl-Apache-AuthCookie
-Version: 3.27
-Release: alt2
+Version: 3.28
+Release: alt1
 
 Summary: Perl Authentication and Authorization via cookies
 
@@ -75,13 +75,14 @@ verifies them and returns a session key.
 %perl_vendor_install
 
 %files -n perl-Apache2-AuthCookie
-%doc README.apache-2.4.pod LICENSE README.modperl2 README Changes
+%doc README.apache-2.4.pod README.modperl2 README Changes
 %perl_vendor_privlib/Apache2/AuthCookie*
 %perl_vendor_privlib/Apache/README.apache-2.4.pod                               
 %perl_vendor_privlib/Apache2_4/AuthCookie.pm                                    
 
 %if_with apache1
 %files
+%doc README.modperl2 LICENSE Changes README.apache-2.4.pod README
 %perl_vendor_privlib/Apache/AuthCookie.pm
 %else
 %exclude %perl_vendor_privlib/Apache/AuthCookie.pm
@@ -91,6 +92,9 @@ verifies them and returns a session key.
 %perl_vendor_privlib/Apache/AuthCookie
 
 %changelog
+* Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.28-alt1
+- automated CPAN update
+
 * Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.27-alt2
 - build w/o apache1
 
