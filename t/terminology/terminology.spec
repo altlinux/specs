@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.5
+%define ver_major 1.6
 
 %def_enable check
 
@@ -24,7 +24,7 @@ Patch: %name-1.0.0-alt-default_font.patch
 Requires: fonts-bitmap-terminus
 Provides: xvt
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-licenses
 Conflicts: libelementary < 1.20.0
 BuildRequires: efl-libs-devel
 BuildRequires: libelementary-devel >= 1.20.0
@@ -67,6 +67,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Jul 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
