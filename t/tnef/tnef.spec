@@ -1,14 +1,16 @@
 Name: tnef
-Version: 1.4.17
+Version: 1.4.18
 Release: alt1
 
 Summary: MS-TNEF attachments decoder
-License: GPLv2+
+License: %gpl2plus
 Group: Text tools
-Url: http://sourceforge.net/projects/%name
+Url: https://github.com/verdammelt/tnef
 
-# VCS: https://github.com/verdammelt/tnef
-Source: http://downloads.sf.net/%name/%name-%version.tar.gz
+# VCS: https://github.com/verdammelt/tnef.git
+Source: %url/archive/%version/%name-%version.tar.gz
+
+BuildRequires(pre): rpm-build-licenses
 
 %description
 TNEF is a program for unpacking MIME attachments of type "application/ms-tnef".
@@ -37,6 +39,10 @@ view the attachment.
 %doc AUTHORS BUGS NEWS README* doc/FAQ
 
 %changelog
+* Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.18-alt1
+- 1.4.18
+- updated License tag
+
 * Wed Jan 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.17-alt1
 - 1.4.17
 
