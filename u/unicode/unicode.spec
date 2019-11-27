@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: unicode
-Version: 0.9.4
-Release: alt1.1
+Version: 2.7
+Release: alt1
 
 Summary: display unicode character properties
 License: GPLv3
 Group: Text tools
-
+Url: http://kassiopeia.juls.savba.sk/~garabik/software/unicode/
 BuildArch: noarch
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
-Url: http://kassiopeia.juls.savba.sk/~garabik/software/unicode/
-
 Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 unicode is a simple command line utility that displays
@@ -22,17 +23,24 @@ unicode database for a given name.
 %prep
 %setup
 
+%build
+%python3_build
+
 %install
-mkdir -p %buildroot{%_bindir,%_man1dir}
-install -p -m755 unicode paracode %buildroot%_bindir/
-install -p -m644 unicode.1 paracode.1 %buildroot%_man1dir/
+%python3_install
 
 %files
-%_bindir/*
-%_man1dir/*
-%doc README* debian/README.Debian debian/changelog debian/copyright
+%doc README* COPYING
+%_bindir/%name
+%_bindir/paracode
+%python3_sitelibdir/%name-%version-*
+
 
 %changelog
+* Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.7-alt1
+- Version updated to 2.7
+- porting on python3
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.4-alt1.1
 - Rebuild with Python-2.7
 
