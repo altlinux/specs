@@ -4,10 +4,10 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt1
+Release: alt2
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
-License: GPL
+License: GPLv3
 Group: System/Libraries
 
 # git://git.aubio.org/git/aubio/
@@ -17,9 +17,9 @@ Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Thu Nov 06 2008
 BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
 
-BuildPreReq: python-modules waf >= 1.9.12 libavcodec-devel libavformat-devel
-BuildPreReq: libavresample-devel txt2man doxygen python-devel libswresample-devel
-BuildPreReq: libnumpy-devel
+BuildPreReq: python3-base waf >= 1.9.12 libavcodec-devel libavformat-devel
+BuildPreReq: libavresample-devel txt2man doxygen python3-dev libswresample-devel
+BuildPreReq: libnumpy-devel python3-module-numpy
 
 %description
 Aubio is a library for real time audio labelling. Its features include
@@ -34,12 +34,12 @@ A few examples of applications are provided in examples/ and python/:
  - aubiopitch is a python script to extract pitch tracks from sound files.
 
 %if_enabled python
-%package -n python-module-%origname
+%package -n python3-module-%origname
 Group: Development/Python
 Summary: Python bindings to %name
 Requires: %name = %EVR
 
-%description -n python-module-%origname
+%description -n python3-module-%origname
 Aubio is a library for real time audio labelling. Its features include
 segmenting a sound file before each of its attacks, performing pitch detection,
 tapping the beat and producing midi streams from live audio.
@@ -108,14 +108,14 @@ waf configure --prefix=%prefix --libdir=%_libdir
 waf build -vv
 
 %if_enabled python
-%python_build_debug
+%python3_build
 %endif
 
 %install
 waf install --destdir=%buildroot
 
 %if_enabled python
-%python_install
+%python3_install
 %endif
 
 %files
@@ -123,9 +123,9 @@ waf install --destdir=%buildroot
 %_libdir/*.so.%{sover}*
 
 %if_enabled python
-%files -n python-module-%origname
+%files -n python3-module-%origname
 %doc python/README.md python/demos
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %endif
 
 %files devel
@@ -142,6 +142,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Wed Nov 27 2019 Anton Farygin <rider@altlinux.ru> 0.4.9-alt2
+- built with python3
+
 * Fri Mar 08 2019 Anton Farygin <rider@altlinux.ru> 0.4.9-alt1
 - 0.4.9
 - added libaubio-devel provides
