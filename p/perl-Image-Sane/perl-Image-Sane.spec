@@ -2,7 +2,7 @@
 %define module_name Image-Sane
 
 Name: perl-Image-Sane
-Version: 4
+Version: 5
 Release: alt1
 
 Summary: Perl extension for the SANE (Scanner Access Now Easy) Project
@@ -45,6 +45,9 @@ Find out more about SANE at http://www.sane-project.org.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 5-alt1
+- new version
+
 * Fri Sep 20 2019 Igor Vlasenko <viy@altlinux.ru> 4-alt1
 - new version
 
