@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Archive-Extract
 Name: perl-%dist
-Version: 0.80
+Version: 0.82
 Release: alt1
 
 Summary: A generic archive extracting mechanism
@@ -38,6 +38,9 @@ either perl modules, or commandline tools on your system.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.82-alt1
+- automated CPAN update
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
 - automated CPAN update
 
