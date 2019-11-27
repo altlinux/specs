@@ -9,7 +9,7 @@
 %def_enable documentation
 
 Name: python-module-dbus
-Version: 1.2.12
+Version: 1.2.14
 Release: alt1
 
 Summary: Python bindings for D-BUS library
@@ -31,8 +31,8 @@ BuildRequires: python3-devel python3-module-pygobject3
 %if_enabled python2
 %setup_python_module dbus
 Requires: dbus
-Provides: %modname = %version-%release
-Provides: %name-data = %version-%release
+Provides: %modname = %EVR
+Provides: %name-data = %EVR
 Obsoletes: %name-data < %version-%release
 
 BuildRequires: autoconf-archive libdbus-devel >= %dbus_ver libgio-devel >= 2.40
@@ -56,9 +56,9 @@ D-Bus python bindings for use with python programs.
 %package devel
 Summary: Python bindings for D-BUS library (devel package)
 Group: Development/Python
-Requires: %name = %version-%release
-%py_package_provides %modname-devel = %version-%release
-Provides: python3-module-dbus-devel = %version-%release
+Requires: %name = %EVR
+%py_package_provides %modname-devel = %EVR
+Provides: python3-module-dbus-devel = %EVR
 
 %description devel
 D-Bus python bindings for use with python programs.
@@ -76,7 +76,7 @@ Development documentation for %modname.
 %package tests
 Summary: Tests for the %name package
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: dbus-tools
 
 %description tests
@@ -158,6 +158,9 @@ done
 
 
 %changelog
+* Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.14-alt1
+- 1.2.14
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.12-alt1
 - 1.2.12
 
