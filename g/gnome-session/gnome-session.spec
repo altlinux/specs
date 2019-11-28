@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -148,8 +148,6 @@ export PATH=$PATH:/sbin
 %_userunitdir/%name-restart-dbus.service
 %_userunitdir/%name-shutdown.target
 %_userunitdir/%name-signal-init.service
-%_userunitdir/%name-stable.target
-%_userunitdir/%name-stable.timer
 %_userunitdir/%name-wayland.target
 %_userunitdir/%name-wayland@.target
 %_userunitdir/%name-x11-services.target
@@ -172,6 +170,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Thu Nov 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
