@@ -1,77 +1,45 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-pythonpath
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.1
-Release: alt2.1
+Release: alt3
+
 Summary: pytest plugin for adding to the PYTHONPATH from command line or configs
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pytest-pythonpath/
+BuildArch: noarch
 
 # https://github.com/bigsassy/pytest-pythonpath.git
 Source: %oname-%version.tar.gz
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
-%py_provides pytest_pythonpath
-
-%description
-This is a py.test plugin for adding to the PYTHONPATH from the
-pytests.ini file before tests run.
-
-%package -n python3-module-%oname
-Summary: pytest plugin for adding to the PYTHONPATH from command line or configs
-Group: Development/Python3
 %py3_provides pytest_pythonpath
 
-%description -n python3-module-%oname
+
+%description
 This is a py.test plugin for adding to the PYTHONPATH from the
 pytests.ini file before tests run.
 
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc PKG-INFO
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc PKG-INFO
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt3
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
