@@ -7,7 +7,7 @@
 
 Name: kde5-liquidshell
 Version: 1.5
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -127,6 +127,9 @@ install -Dm 0644 liquidshell-session.desktop %buildroot/%_datadir/xsessions/liqu
 %_datadir/xsessions/liquidshell-session.desktop
 
 %changelog
+* Thu Nov 28 2019 Sergey V Turchin <zerg@altlinux.org> 1.5-alt4
+- add upstream fix to reduce minimum panel height
+
 * Tue Nov 26 2019 Sergey V Turchin <zerg@altlinux.org> 1.5-alt3
 - add upstream fixes
 
