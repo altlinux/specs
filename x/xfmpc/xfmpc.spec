@@ -1,8 +1,8 @@
 Name: xfmpc
 Summary: MPD client written in GTK+ for Xfce
 Version: 0.3.0
-Release: alt1
-License: %gpl2plus
+Release: alt2
+License: GPL-2.0+
 Url: https://goodies.xfce.org/projects/applications/%name
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -11,8 +11,6 @@ Patch: %name-%version-%release.patch
 ExcludeArch: aarch64
 
 Group: Graphical desktop/XFce
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
@@ -53,6 +51,10 @@ export NPROCS=1
 %_man1dir/xfmpc.1.*
 
 %changelog
+* Thu Nov 28 2019 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt2
+- Don't use rpm-build-licenses.
+- Fix types casting.
+
 * Sat Jun 22 2019 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Updated to 0.3.0.
 
