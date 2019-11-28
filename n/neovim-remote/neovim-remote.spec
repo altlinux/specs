@@ -1,8 +1,8 @@
 %define oname nvr
 
 Name: neovim-remote
-Version: 2.2.2
-Release: alt1
+Version: 2.3.4
+Release: alt2
 
 Summary: Remote controle for Neovim
 
@@ -12,6 +12,8 @@ Url: https://github.com/mhinz/neovim-remote
 
 Source: %name-%version.tar
 BuildArch: noarch
+
+Patch: %name-%version-%release.patch
 
 AutoReqProv: nopython
 %define __python %nil
@@ -26,6 +28,7 @@ This package provides an executable called nvr which solves these cases:
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %python3_build
@@ -39,6 +42,12 @@ This package provides an executable called nvr which solves these cases:
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Nov 28 2019 Vladimir Didenko <cow@altlinux.org> 2.3.4-alt2
+- fix neovim module requirement
+
+* Thu Nov 28 2019 Vladimir Didenko <cow@altlinux.org> 2.3.4-alt1
+- new version
+
 * Thu Oct 17 2019 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
 - new version
 
