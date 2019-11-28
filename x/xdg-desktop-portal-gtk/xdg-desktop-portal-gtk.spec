@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
@@ -18,6 +18,8 @@ Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 BuildRequires: libgtk+3-devel
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
 BuildRequires: libdbus-devel libsystemd-devel
+# since 1.5.1
+BuildRequires: pkgconfig(gnome-desktop-3.0)
 
 %description
 A backend implementation for xdg-desktop-portal that is using GTK+ and various
@@ -47,6 +49,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Thu Nov 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Nov 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
