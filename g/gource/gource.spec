@@ -1,9 +1,9 @@
 Name: gource
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
-License: %gpl3only
+License: GPL-3.0-only
 Group: Development/Tools
 Url: http://gource.io/
 
@@ -16,7 +16,6 @@ Patch1: ax_boost_base.patch
 
 Requires: fonts-ttf-freefont
 
-BuildPreReq: rpm-build-licenses
 BuildPreReq: libSDL2-devel >= 1.2
 BuildPreReq: libSDL2_image-devel >= 1.2
 BuildPreReq: libpcre-devel
@@ -60,6 +59,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Thu Nov 28 2019 Mikhail Efremov <sem@altlinux.org> 0.51-alt1
+- Don't use rpm-build-licenses.
+- Updated to 0.51.
+
 * Mon Nov 18 2019 Mikhail Efremov <sem@altlinux.org> 0.50-alt1
 - Updated to 0.50.
 - Fixed build on ppc64le.
