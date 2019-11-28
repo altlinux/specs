@@ -1,4 +1,4 @@
-%define ver_major 4.2
+%define ver_major 4.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -122,6 +122,9 @@ export NPROCS=1
 %_pkgconfigdir/*
 
 %changelog
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Wed Jul 31 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt1
 - 4.2.2
 

@@ -1,8 +1,8 @@
-%define ver_major 4.2
+%define ver_major 4.4
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -107,7 +107,7 @@ Requires: dconf-editor >= 0.10
 Requires: gcalctool
 
 # Default video player
-Requires: xplayer gst-libav
+Requires: celluloid
 # Default image viewer
 Requires: xviewer
 
@@ -127,6 +127,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Nov 25 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- bump version
+- replace xplayer by celluloid
+
 * Tue Aug 20 2019 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt4
 - remove firefox, thunderbird, pidgin
 - remove gconf-editor

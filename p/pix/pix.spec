@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.2
+%define ver_major 2.4
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -140,6 +140,12 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Nov 28 2019 Vladimir Didenko <cow@altlinux.org> 2.4.1-alt1
+- New version
+
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- New version
+
 * Wed Jul 31 2019 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
 - New version
 

@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.2.2
-Release: alt4
+Version: 4.4.1
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -197,6 +197,15 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Fri Nov 22 2019 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
+- 4.4.1
+
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt5
+- v4.2.2-3-gb9e9eca
+
 * Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt4
 - fix build with new Mesa
 

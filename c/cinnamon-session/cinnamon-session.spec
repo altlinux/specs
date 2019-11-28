@@ -1,12 +1,12 @@
-%define ver_major 4.2
+%define ver_major 4.4
 %define _libexecdir %_prefix/libexec
 %define _name cinnamon
 
 %def_disable wmsession
 
 Name: %{_name}-session
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -58,6 +58,7 @@ BuildRequires: libcinnamon-desktop-devel
 BuildRequires: xmlto
 BuildRequires: libsystemd-devel libpolkit-devel
 BuildRequires: libxapps-devel
+BuildRequires: libGConf-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -118,6 +119,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Fri Jul 19 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt2
 - spec: made wmsession support optional (disabled by default),
   removed gconf stuff,
