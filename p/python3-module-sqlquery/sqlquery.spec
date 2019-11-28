@@ -1,98 +1,57 @@
 %define oname sqlquery
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.1
-Release: alt1.1
+Release: alt2
+
 Summary: SQL query translation
 License: ASLv2.0
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sqlquery/
+BuildArch: noarch
 
 # https://github.com/coldeasy/py-sql-query.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-mock python-module-six
-BuildRequires: python-module-wheel
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-six
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
-%py_requires six
+%py3_provides %oname
+%py3_requires six
+
 
 %description
 py-sql-query is a basic and pre-alpha SQL translation layer in python.
 You construct queries using mainly python constructs which later can be
 serialized to a SQL query.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: SQL query translation
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires six
-
-%description -n python3-module-%oname
-py-sql-query is a basic and pre-alpha SQL translation layer in python.
-You construct queries using mainly python constructs which later can be
-serialized to a SQL query.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-py.test -vv
-%if_with python3
-pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 py.test3 -vv
-popd
-%endif
 
 %files
 %doc *.rst docs/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst docs/*.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
