@@ -1,25 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define oname jellyfish
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.6
-Release: alt1.1
+Release: alt2
+
 Summary: A library for doing approximate and phonetic matching of strings
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/jellyfish/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/sunlightlabs/jellyfish.git
 Source0: https://pypi.python.org/packages/94/48/ddb1458d966f0a84e472d059d87a9d1527df7768a725132fc1d810728386/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Jellyfish is a python library for doing approximate and phonetic
@@ -27,7 +22,7 @@ matching of strings.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -36,72 +31,34 @@ matching of strings.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: A library for doing approximate and phonetic matching of strings
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Jellyfish is a python library for doing approximate and phonetic
-matching of strings.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Jellyfish is a python library for doing approximate and phonetic
-matching of strings.
-
-This package contains tests for %oname.
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test.*
-
-%files tests
-%python_sitelibdir/*/test.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test.*
 %exclude %python3_sitelibdir/*/*/test.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test.*
 %python3_sitelibdir/*/*/test.*
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5.6-alt2
+- python2 disabled
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.6-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
