@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		6d7579cc01
+%define svnrev		6cad6f888e
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 4.4.2
+Version: 4.4.3
 Release: alt1
 Epoch: 1
 
@@ -637,6 +637,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Nov 28 2019 Alexei Takaseev <taf@altlinux.org> 1:4.4.3-alt1
+- 4.4.3
+
 * Wed Nov 27 2019 Alexei Takaseev <taf@altlinux.org> 1:4.4.2-alt1
 - 4.4.2
 
