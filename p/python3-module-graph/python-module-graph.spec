@@ -1,32 +1,20 @@
 %define modulename graph
 
-%def_with python3
-
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 1.8.1
-Release: alt1.1.1.2
+Release: alt2
 
 Summary: library for working with graphs in Python
 License: MIT
-Group: Development/Python
-
+Group: Development/Python3
 Url: http://code.google.com/p/python-graph/
 BuildArch: noarch
 
-Source: python-module-%modulename-%version.tar
+Source: %name-%version.tar
 
-#BuildPreReq: %py_dependencies setuptools
-Provides: python-module-pygraph
-
-%setup_python_module %modulename
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+Provides: python3-module-pygraph
 
-#BuildRequires: python3-devel python3-module-distribute
-%endif
 
 %description
 This software provides a suitable data structure for
@@ -44,66 +32,41 @@ representing graphs and a whole set of important algorithms.
 
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-cd core
-%python_build
-cd ../dot
-%python_build
-cd ..
-%if_with python3
-pushd ../python3
 pushd core
 %python3_build
 popd
 pushd dot
 %python3_build
 popd
-popd
-%endif
 
 %install
-cd core
-%python_install
-cd ../dot
-%python_install
-cd ..
-
-touch %buildroot%python_sitelibdir/pygraph/__init__.py
-
-%if_with python3
-pushd ../python3
 pushd core
 %python3_install
 popd
 pushd dot
 %python3_install
 popd
-popd
+
 touch %buildroot%python3_sitelibdir/pygraph/__init__.py
-%endif
 
 # TODO: split to subpackages "core" and "dot"
 
 %files
 %doc  Changelog README
-%python_sitelibdir/pygraph
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/*.pth
-
-%if_with python3
-%files -n python3-module-%modulename
-%doc  Changelog README
 %python3_sitelibdir/pygraph
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/*.pth
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.8.1-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.8.1-alt1.1.1.2
 - (NMU) rebuild with python3.6
 
