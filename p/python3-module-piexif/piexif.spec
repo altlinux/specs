@@ -1,91 +1,51 @@
 %define _unpackaged_files_terminate_build 1
 %define oname piexif
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.13
-Release: alt1.1
+Release: alt2
+
 Summary: Exif manipulation with pure python script
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/piexif/
+BuildArch: noarch
 
 # https://github.com/hMatoba/Piexif.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Pillow
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Pillow
-%endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 This is a renamed project from Pyxif.
 To simplify exif manipulations with python. Writing, reading, and more...
 Piexif isn't a wrapper. To everywhere with Python.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Exif manipulation with pure python script
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-This is a renamed project from Pyxif.
-To simplify exif manipulations with python. Writing, reading, and more...
-Piexif isn't a wrapper. To everywhere with Python.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst *sample*.py
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst *sample*.py
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.13-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.13-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
