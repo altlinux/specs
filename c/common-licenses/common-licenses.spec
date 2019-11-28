@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -42,6 +42,11 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Thu Nov 28 2019 Alexey Gladkov <legion@altlinux.ru> 1.7-alt1
+- Add licenses:
+  + Add Free Art License 1.3 (ALT-Free-Art-1.3)
+- Rename non-standard licenses and create compatibility links
+
 * Wed Nov 20 2019 Alexey Gladkov <legion@altlinux.ru> 1.6-alt1
 - Sync with SPDX.
 - Add licenses:
