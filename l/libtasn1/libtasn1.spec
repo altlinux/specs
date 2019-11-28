@@ -1,5 +1,5 @@
 Name: libtasn1
-Version: 4.14
+Version: 4.15.0
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
@@ -9,8 +9,13 @@ URL: http://www.gnu.org/software/libtasn1/
 # git://git.altlinux.org/gears/l/libtasn1.git
 Source: %name-%version.tar
 Patch1: fix-for-werror.patch
+Patch2: Enable-LFS-support.patch
 
-BuildRequires: gtk-doc texinfo
+# Patch from upstream git.
+# Must be dropped with new release.
+Patch100: fix-install.patch
+
+BuildRequires: gtk-doc texinfo help2man
 
 %description
 This is GNU Libtasn1, a library that provides Abstract Syntax Notation
@@ -67,6 +72,8 @@ This package contains libtasn1 development documentation.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch100 -p1
 
 %build
 %def_enable Werror
@@ -116,6 +123,10 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Thu Nov 28 2019 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Do not install generated fuzzers and tools.
+- Updated to 4.15.0.
+
 * Thu Aug 08 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt1
 - Enabled LFS support.
 - Updated fix-for-werror.patch.
