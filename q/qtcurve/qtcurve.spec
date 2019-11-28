@@ -3,7 +3,7 @@
 
 Name:    qtcurve
 Version: 1.9.1
-Release: alt2
+Release: alt3
 Epoch:  1
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -16,6 +16,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: qtcurve-1.8.18-no_env.patch
+Patch2: qtcurve-1.9.1-fix-build-with-gcc9.patch
 
 BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 rpm-macros-cmake
 BuildPreReq: gcc-c++ libgtk+2-devel
@@ -106,6 +107,7 @@ This is a set of widget styles for KF5
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 chmod +x tools/gen-version.sh
 
 %build
@@ -150,6 +152,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 %endif
 
 %changelog
+* Thu Nov 28 2019 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.1-alt3
+- Fix build with gcc9 (upstream patch for https://bugs.kde.org/408286).
+
 * Thu Mar 28 2019 Andrey Cherepanov <cas@altlinux.org> 1:1.9.1-alt2
 - Drop qt4 support due to kde4libs missing.
 
