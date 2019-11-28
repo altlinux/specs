@@ -1,100 +1,54 @@
 %define oname pebble
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.3.7
-Release: alt1.git20180228
+Release: alt2
+
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/Pebble/
 
 # https://github.com/noxdafox/pebble.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-futures
-BuildRequires: python-module-pytest
-BuildRequires: /proc
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
-%endif
+BuildRequires: python3-module-pytest /proc
 
-%py_provides %oname
-%py_requires multiprocessing concurrent.futures
+%py3_provides %oname
+%py3_requires multiprocessing
+
 
 %description
 Pebble provides a neat API to manage threads and processes within an
 application.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Threading and multiprocessing eye-candy
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires multiprocessing
-
-%description -n python3-module-%oname
-Pebble provides a neat API to manage threads and processes within an
-application.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-
-pushd ../python3
-#fix python version for python3 tests
+# fix python version for python3 tests
 grep -q 'python -m pytest' ./test/run-tests.sh && \
 sed -i 's/python -m pytest/python3 -m pytest/' ./test/run-tests.sh
-popd
-%endif
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
 ./test/run-tests.sh
 
-%if_with python3
-pushd ../python3
-./test/run-tests.sh
-popd
-%endif
-
 %files
 %doc *.rst doc/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst doc/*.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.3.7-alt2
+- python2 disabled
+
 * Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.7-alt1.git20180228
 - Updated to upstream version 4.3.7.
 
