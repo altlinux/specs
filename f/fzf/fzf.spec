@@ -1,5 +1,5 @@
 %global import_path github.com/junegunn/fzf
-%global commit b46227dcb6f1718d66ad828443d9f03a4bd58c4c
+%global commit 9a41fd5327ffb112ca68d023e165fe0fcee01320
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -10,8 +10,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		fzf
-Version:	0.18.0
-Release:	alt2
+Version:	0.19.0
+Release:	alt1
 Summary:	A general-purpose command-line fuzzy finder.
 
 Group:		Development/Tools
@@ -134,6 +134,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Thu Nov 28 2019 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt1
+- New version
+
 * Fri Sep 6 2019 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt2
 - Fix build with golang 1.13
 
