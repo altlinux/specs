@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.0.7
-Release: alt5
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -76,6 +76,8 @@ Patch40: qemu-server-virtio-rng.patch
 Patch41: pve-manager-aarch64.patch
 Patch42: qemu-server-aarch64.patch
 Patch43: pve-mini-journalreader-getopt.patch
+Patch44: 0001-usb-Enable-USB3-for-Spice-USB-passthrough.patch
+Patch45: qemu-server-xhci.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -115,9 +117,9 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 6.0.7
+Version: 6.0.9
 Group: System/Servers
-Requires: socat genisoimage pve-qemu-system >= 2.6.1-alt4
+Requires: socat genisoimage pve-qemu-system >= 4.1.1-alt1
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -187,6 +189,8 @@ This is used to implement the PVE REST API
 %patch41 -p0 -b .aarch64
 %patch42 -p0 -b .aarch64
 %patch43 -p0 -b .getopt
+%patch44 -p0 -b .usb3
+%patch45 -p0 -b .xhci
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -570,6 +574,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Thu Nov 28 2019 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt6
+- qemu-server 6.0-9
+
 * Wed Nov 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt5
 - pve-firewall 4.0-8
 - fixed mini-journalreader on aarch64
