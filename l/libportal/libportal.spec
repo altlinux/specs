@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 0.0
+%define ver_major 0.1
 %define soname %ver_major.1
 
 %def_enable gtk_doc
 
 Name: libportal
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 Epoch: 1
 
@@ -80,6 +80,9 @@ This package provides development documentations for %name.
 
 
 %changelog
+* Thu Nov 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.1-alt1
+- 0.1
+
 * Sun Nov 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.2-alt1
 - first build for Sisyphus
 
