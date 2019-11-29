@@ -1,6 +1,6 @@
 %define flavour			xenomai
 Name: kernel-image-%flavour
-Release: alt2
+Release: alt3
 
 %define kernel_base_version	4.14
 # ipipe-core-4.14.134-x86-8
@@ -280,7 +280,7 @@ scripts/config -e CONFIG_SCSI_VIRTIO -e CONFIG_SCSI_LOWLEVEL -e CONFIG_VIRTIO_PC
 	       -e CONFIG_VIRTIO_BLK -e CONFIG_VIRTIO_NET -e CONFIG_VIRTIO_CONSOLE \
 	       -e CONFIG_HW_RANDOM_VIRTIO -e CONFIG_VIRTIO_BALLOON
 %ifarch %ix86 x86_64
-scripts/config -e CONFIG_KGDB
+scripts/config -e CONFIG_KGDB -e CONFIG_KGDB_KDB -e CONFIG_LKDTM
 %endif
 
 # Disable what is recommended in https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
@@ -503,6 +503,9 @@ grep -q "Cobalt v[0-9.]\+" boot.log
 %modules_dir/build
 
 %changelog
+* Fri Nov 29 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt3
+- Enable kdb/kgdb/lkdtm on x86.
+
 * Sun Nov 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt2
 - Actually disable ACPI_PROCESSOR, CPU_FREQ, and CPU_IDLE
 - Add more options based on -rt kernel experience.
