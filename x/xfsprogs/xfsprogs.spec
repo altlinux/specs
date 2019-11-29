@@ -1,11 +1,11 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
-License: LGPL v2.1 (libhandle), GPL v2 (the rest)
+License: LGPL-2.1 and GPL-2.0
 Group: System/Kernel and hardware
 
 Url: http://xfs.org
@@ -23,7 +23,8 @@ BuildPreReq: rpm-build >= 4.0.4-alt96.11
 BuildConflicts: libxfs-devel
 
 # Automatically added by buildreq on Wed May 27 2009 (-bi)
-BuildRequires: libuuid-devel libblkid-devel
+BuildRequires: libuuid-devel libblkid-devel 
+BuildRequires: libsystemd-devel rpm-build-python3
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -100,7 +101,8 @@ for f in %buildroot/%_lib/*.so; do
 	[ -n "$t" ]
 	ln -nsf ../../%_lib/"$t" "%buildroot%_libdir/${f##*/}"
 done
-
+# don't use crontab 
+rm -f %buildroot/%_lib/xfsprogs/xfs_scrub_all.cron
 # Workaround bug in makefiles
 rm -f %buildroot/%_lib/*.{so,*a}
 rm -rf %buildroot%_datadir/doc/%name
@@ -110,6 +112,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %files -f %name.lang
 /sbin/*
 %_sbindir/*
+%_unitdir/*.service
+%_unitdir/*.timer
+/%_lib/xfsprogs/xfs_scrub_fail
 %_mandir/man[85]/*
 %doc doc/CHANGES.gz doc/CREDITS README
 
@@ -139,6 +144,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Nov 21 2019 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
+- 5.3.0
+- packaged tool, systemd units and timer for scrubbing xfs partitions
+
 * Thu Oct 10 2019 Anton Farygin <rider@altlinux.ru> 5.2.1-alt1
 - 5.2.1
 
