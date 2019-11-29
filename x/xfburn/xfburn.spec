@@ -1,17 +1,15 @@
 Name: xfburn
 Version: 0.6.1
-Release: alt1
+Release: alt2.g89c4d68
 
 Summary: CD-R/CD-RW disc writing application
-Url: http://www.xfce.org/projects/xfburn/ 
-License: %gpl2plus
+Url: https://goodies.xfce.org/projects/applications/xfburn
+License: GPL-2.0+
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Group: Archiving/Cd burning
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: xfce4-dev-tools rpm-build-xfce4
 BuildPreReq: libxfce4ui-gtk3-devel libexo-gtk3-devel
@@ -27,6 +25,9 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 %prep
 %setup
 %patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfburn_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -51,6 +52,11 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 %_man1dir/*
 
 %changelog
+* Fri Nov 29 2019 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt2.g89c4d68
+- Updated url.
+- Don't use rpm-build-licenses.
+- Upstream git snapshot (for translations update).
+
 * Tue Nov 05 2019 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
 - Enabled debug (minimum level).
 - Updated to 0.6.1.
