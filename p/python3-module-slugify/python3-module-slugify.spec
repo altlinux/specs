@@ -1,7 +1,7 @@
 %define  modulename slugify
 
 Name:    python3-module-%modulename
-Version: 1.2.4
+Version: 4.0.0
 Release: alt1
 
 Summary: Returns unicode slugs
@@ -37,5 +37,8 @@ mv %buildroot/%_bindir/slugify{,3}
 %_bindir/slugify3
 
 %changelog
+* Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt1
+- 4.0.0 released
+
 * Thu Feb 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.4-alt1
 - Separate build for Sisyphus
