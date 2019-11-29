@@ -4,16 +4,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.2
+Version: 1.7.1
 Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/PyJWT/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/progrium/pyjwt.gi
-Source0: https://pypi.python.org/packages/8f/10/9ce7e91d8ec9d852db6f9f2b076811d9f51ed7b0360602432d95e6ea4feb/PyJWT-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/2f/38/ff37a24c0243c5f45f5798bd120c0f873eeed073994133c084e1cf13b95c/PyJWT-%{version}.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -80,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt1
+- 1.7.1 released
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1
 - automated PyPI update
 
