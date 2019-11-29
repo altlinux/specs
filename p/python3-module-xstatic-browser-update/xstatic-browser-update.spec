@@ -1,46 +1,28 @@
 %define mname xstatic
 %define oname %mname-browser-update
 %define pypi_name XStatic-browser-update
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.1
-Release: alt3.1
+Release: alt4
+
 Summary: browser-update (XStatic packaging standard)
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/%pypi_name/
+BuildArch: noarch
 
 Source: %pypi_name-%version.tar.gz
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-%mname
-BuildRequires: python2.7(xstatic.pkg.jquery)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-%mname
 BuildRequires: python3(xstatic.pkg.jquery)
-%endif
 
-%py_provides %mname.pkg.browser_update
-%py_requires %mname.pkg %mname.pkg.jquery
-
-%description
-jquery-ui javascript library packaged for setuptools (easy_install) /
-pip.
-
-This package is intended to be used by **any** project that needs these
-files.
-
-%package -n python3-module-%oname
-Summary: browser-update (XStatic packaging standard)
-Group: Development/Python3
 %py3_provides %mname.pkg.browser_update
 %py3_requires %mname.pkg %mname.pkg.jquery
 
-%description -n python3-module-%oname
+
+%description
 jquery-ui javascript library packaged for setuptools (easy_install) /
 pip.
 
@@ -50,51 +32,26 @@ files.
 %prep
 %setup -n %pypi_name-%version
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
-%doc *.txt
-%python_sitelibdir/%mname/pkg/*
-%python_sitelibdir/XStatic_browser_update-%version-py*.egg-info
-%exclude %python_sitelibdir/*.pth
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/%mname/pkg/*
 %python3_sitelibdir/XStatic_browser_update-%version-py*.egg-info
 %exclude %python3_sitelibdir/*.pth
-%endif
+
 
 %changelog
+* Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt4
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt3.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
