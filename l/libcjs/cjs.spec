@@ -1,4 +1,4 @@
-%define ver_major 4.2
+%define ver_major 4.4
 %define _name cjs
 %define api_ver 1.0
 
@@ -12,7 +12,7 @@ Group: System/Libraries
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
 # The console module (modules/console.c)
 # Stack printer (cjs/stack.c)
-License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
+License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
 Url: https://github.com/linuxmint/cjs
 
 Source: %_name-%version.tar
@@ -83,6 +83,9 @@ cp %SOURCE1 m4/
 %doc examples/*
 
 %changelog
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - 4.2.0
 

@@ -1,4 +1,4 @@
-%define ver_major 4.2
+%define ver_major 4.4
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
@@ -119,6 +119,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Tue Jun 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
 - 4.2.0
 

@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.2.4
-Release: alt2
+Version: 4.4.1
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -197,6 +197,15 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Thu Nov 28 2019 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
+- 4.4.1-3-g24eca8dd
+
+* Mon Nov 25 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
+* Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.2.4-alt3
+- 4.2.3-109-g72f60941
+
 * Fri Sep 27 2019 Vladimir Didenko <cow@altlinux.org> 4.2.4-alt2
 - fix default apps module of cinnamon-settings
 
