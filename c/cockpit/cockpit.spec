@@ -4,6 +4,7 @@
 %define _libexecdir    /usr/libexec
 %define cockpit_user   _cockpit-ws
 %define cockpit_group  _cockpit-ws
+%define cockpit_wsinstance_user  _cockpit-wsinstance
 
 %def_with dashboard
 %def_with basic
@@ -29,7 +30,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 202
+Version: 208
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -43,7 +44,6 @@ Source2: node_modules.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires: node
-BuildRequires: intltool
 BuildRequires: libgnutls-devel
 BuildRequires: libjson-glib-devel
 BuildRequires: libsystemd-devel
@@ -418,6 +418,7 @@ grep -rl '/usr/bin/false' | xargs sed -i 's/\/usr\/bin\/false/\/bin\/false/g'
     %{?_without_doc:--disable-doc } \
     %{?_with_vdo:--with-vdo-package='"vdo"' } \
     --with-cockpit-user=%cockpit_user \
+    --with-cockpit-ws-instance-user=%cockpit_wsinstance_user \
     --with-selinux-config-type=etc_t \
     --with-appstream-data-packages='[ "appstream-data" ]' \
     --with-nfs-client-package='"nfs-utils"' \
@@ -427,7 +428,7 @@ grep -rl '/usr/bin/false' | xargs sed -i 's/\/usr\/bin\/false/\/bin\/false/g'
 %make -j4 all
 
 %check
-%make -j4 check || { cat ./test-suite.log; exit 1; }
+TMPDIR=/tmp %make -j4 check || { cat ./test-suite.log; exit 1; }
 
 %install
 %makeinstall_std
@@ -556,13 +557,23 @@ done
 %_unitdir/cockpit.service
 %_unitdir/cockpit-motd.service
 %_unitdir/cockpit.socket
+%_unitdir/cockpit-wsinstance-http.socket
+%_unitdir/cockpit-wsinstance-http.service
+%_unitdir/cockpit-wsinstance-http-redirect.socket
+%_unitdir/cockpit-wsinstance-http-redirect.service
+%_unitdir/cockpit-wsinstance-https-factory.socket
+%_unitdir/cockpit-wsinstance-https-factory@.service
+%_unitdir/cockpit-wsinstance-https@.socket
+%_unitdir/cockpit-wsinstance-https@.service
+%_unitdir/system-cockpithttps.slice
 %_tmpfilesdir/cockpit-tempfiles.conf
 %_sbindir/remotectl
 /%_lib/security/pam_ssh_add.so
 %_libexecdir/cockpit-ws
+%_libexecdir/cockpit-wsinstance-factory
 %_libexecdir/cockpit-tls
 %_libexecdir/cockpit-desktop
-%attr(4710, root, %cockpit_user) %_libexecdir/cockpit-session
+%attr(4710, root, %cockpit_wsinstance_user) %_libexecdir/cockpit-session
 %attr(775, root, wheel) %_sharedstatedir/cockpit
 %_datadir/cockpit/static/
 %_datadir/cockpit/branding/
@@ -571,6 +582,10 @@ done
 %_sbindir/groupadd -r -f %cockpit_group >/dev/null 2>&1 ||:
 %_sbindir/useradd -r -g %cockpit_group -d %_sharedstatedir/cockpit -s \
 /dev/null -c "User for cockpit web service" %cockpit_user >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f %cockpit_wsinstance_user >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -g %cockpit_wsinstance_user -d %_sharedstatedir/cockpit -s \
+/dev/null -c "User for cockpit-ws instances" %cockpit_wsinstance_user >/dev/null 2>&1 ||:
 
 %post ws
 if [ $1 -eq 1 ] ; then
@@ -657,6 +672,9 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Fri Nov 29 2019 Stanislav Levin <slev@altlinux.org> 208-alt1
+- 202 -> 208.
+
 * Thu Sep 05 2019 Stanislav Levin <slev@altlinux.org> 202-alt1
 - 194 -> 202.
 
