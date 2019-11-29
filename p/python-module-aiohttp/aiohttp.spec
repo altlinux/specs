@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python-module-%oname
-Version: 3.5.4
+Version: 3.6.1
 Release: alt1
 Summary: http client/server for asyncio
 License: ASLv2.0
@@ -94,6 +94,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.6.1-alt1
+- 3.6.1 released
+
 * Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 3.5.4-alt1
 - New version 3.5.4
 - Disable check
