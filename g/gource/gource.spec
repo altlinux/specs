@@ -1,12 +1,12 @@
 Name: gource
 Version: 0.51
-Release: alt1
+Release: alt2
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: GPL-3.0-only
 Group: Development/Tools
-Url: http://gource.io/
 
+Url: http://gource.io/
 # git clone git://github.com/acaudwell/Gource.git
 # git clone git://github.com/acaudwell/Core.git
 Source0: %name-main-%version.tar
@@ -59,6 +59,9 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Fri Nov 29 2019 Michael Shigorin <mike@altlinux.org> 0.51-alt2
+- Fixed build on %%e2k.
+
 * Thu Nov 28 2019 Mikhail Efremov <sem@altlinux.org> 0.51-alt1
 - Don't use rpm-build-licenses.
 - Updated to 0.51.
