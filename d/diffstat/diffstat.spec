@@ -1,12 +1,12 @@
 Name: diffstat
-Version: 1.62
+Version: 1.63
 Release: alt1
 
 Summary: An utility which provides statistics based on the output of diff
 License: MIT
 Group: Development/Other
-Url: http://invisible-island.net/diffstat/
-# ftp://invisible-island.net/diffstat/diffstat-%version.tgz
+Url: https://invisible-island.net/diffstat/
+# ftp://ftp.invisible-island.net/pub/diffstat/diffstat-%version.tgz
 Source: diffstat-%version.tar
 
 Requires: diffutils
@@ -36,6 +36,9 @@ to provide a summary of the changes in large, complex patch files.
 %doc CHANGES COPYING README
 
 %changelog
+* Fri Nov 29 2019 Dmitry V. Levin <ldv@altlinux.org> 1.63-alt1
+- 1.62 -> 1.63.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.62-alt1
 - 1.59 -> 1.62.
 
@@ -97,7 +100,7 @@ to provide a summary of the changes in large, complex patch files.
 * Thu Jul 20 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 1.27-12mdk
 - BM, macros, spec-helper
 
-* Thu Apr 4 2000 Denis Havlik <denis@mandrakesoft.com> 1.27-11mdk
+* Tue Apr 4 2000 Denis Havlik <denis@mandrakesoft.com> 1.27-11mdk
 - New group: Development/Other
 
 * Wed Dec 01 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
