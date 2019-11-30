@@ -1,5 +1,5 @@
 Name:		rr-project
-Version:	5.2.0
+Version:	5.2.0.0.253.g4c734005
 Release:	alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
@@ -9,13 +9,13 @@ Source:		%name-%version.tar
 ExclusiveArch:	x86_64
 Requires:	gdb
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires:	ccache
 BuildRequires:	cmake
 BuildRequires:	make
 BuildRequires:	gcc-c++
 BuildRequires:	capnproto-devel
-BuildRequires:	python-module-pexpect
+BuildRequires:	python3-module-pexpect
 BuildRequires:	gdb
 BuildRequires:	/proc
 
@@ -36,17 +36,23 @@ subst "s!/bin/rr_page_!lib/rr/rr_page_!" src/AddressSpace.cc
 
 %install
 %cmake_install install DESTDIR=%buildroot
-mv %buildroot/%_bindir/rr_* %buildroot/usr/lib/rr/
+mv %buildroot/%_bindir/rr_* %buildroot%_libdir/rr/
 subst '1s:/usr/bin/bash:/bin/bash:' %buildroot%_bindir/signal-rr-recording.sh
+rm -f %buildroot%_bindir/rr_page*
 
 %files
 %doc LICENSE README.md
 %_bindir/rr
 %_bindir/signal-rr-recording.sh
-/usr/share/rr/
-/usr/lib/rr
+%_bindir/rr-collect-symbols.py
+%_datadir/rr
+%_datadir/bash-completion/completions/rr
+%_libdir/rr
 
 %changelog
+* Sat Nov 30 2019 Vitaly Chikunov <vt@altlinux.org> 5.2.0.0.253.g4c734005-alt1
+- Update to 5.2.0-253-g4c734005.
+
 * Thu Jun 14 2018 Vitaly Chikunov <vt@altlinux.ru> 5.2.0-alt1
 - First build of rr for ALT.
 
