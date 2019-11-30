@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.7.2
-Release: alt2
+Release: alt3
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -115,9 +115,9 @@ touch empty
 install -Dp -m600 empty %buildroot%_ssldir/certs/dovecot.pem
 install -Dp -m600 empty %buildroot%_ssldir/private/dovecot.pem
 
-mkdir -p %buildroot/var/run/dovecot/{login,empty}
-chmod 755 %buildroot/var/run/dovecot
-chmod 700 %buildroot/var/run/dovecot/login
+mkdir -p %buildroot/run/dovecot/{login,empty}
+chmod 755 %buildroot/run/dovecot
+chmod 700 %buildroot/run/dovecot/login
 mkdir -p %buildroot/var/cache/dovecot/indexes
 
 # Install dovecot configuration and dovecot-openssl.cnf
@@ -139,6 +139,14 @@ rm -f %buildroot%_sysconfdir/dovecot/README
 
 # hi buildreq!
 ( cd %buildroot%_libdir; ln -s %name/lib*.so.* . )
+
+# create tmpfiles.conf
+mkdir -p %buildroot%_tmpfilesdir
+cat >%buildroot%_tmpfilesdir/%name.conf<<END
+d /run/dovecot 0755 root root -
+d /run/dovecot/empty 0750 root root -
+d /run/dovecot/login 0700 root root -
+END
 
 %pre
 %pre_control mailboxes
@@ -166,10 +174,12 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 
 %dir %_cachedir/dovecot
 %dir %_cachedir/dovecot/indexes
-%dir %_runtimedir/dovecot
-%dir %_runtimedir/dovecot/empty
-%dir %_runtimedir/dovecot/login
+%dir /run/dovecot
+%dir /run/dovecot/empty
+%dir /run/dovecot/login
 %dir %_localstatedir/dovecot
+
+%_tmpfilesdir/%name.conf
 
 %_initdir/dovecot
 
@@ -202,6 +212,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Sat Nov 30 2019 Anton Midyukov <antohami@altlinux.org> 2.3.7.2-alt3
+- Create _tmpfilesdir/dovecot.conf (Closes: 37554)
+- Replace /var/run -> /run, /var/lock -> /run/lock
+
 * Tue Sep 03 2019 Michael Shigorin <mike@altlinux.org> 2.3.7.2-alt2
 - E2K: fixed build with sed equivalent of george@'s patch.
 - Care a bit more about timestamps et al.
