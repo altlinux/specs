@@ -1,7 +1,7 @@
 # useful defaults
 %define name sqlgrey
 %define ver  1.6.8
-%define rel  alt1
+%define rel  alt2
 %define sqlgrey_admin mailadm
 %define sqlgrey_owner sqlgrey
 %define ROOT %_localstatedir/%name
@@ -38,13 +38,19 @@ reach your Postfix server (saves BW, user time and CPU time).
 %make_build
 
 %install
-%makeinstall ROOTDIR=$RPM_BUILD_ROOT
-%__install -p -m755 -D %SOURCE1 $RPM_BUILD_ROOT%_initdir/%name
+%makeinstall ROOTDIR=%buildroot
+%__install -p -m755 -D %SOURCE1 %buildroot%_initdir/%name
 %__mkdir_p %buildroot%ROOT
+%__mkdir_p %buildroot%_tmpfilesdir
 
-for i in $RPM_BUILD_ROOT%_sysconfdir/%name/clients_*; do
-	>"$RPM_BUILD_ROOT%_sysconfdir/%name/`basename $i`.local";
+for i in %buildroot%_sysconfdir/%name/clients_*; do
+	>"%buildroot%_sysconfdir/%name/`basename $i`.local";
 done
+
+# create tmpfiles.conf
+cat >%buildroot%_tmpfilesdir/%name.conf<<END
+d /run/%name 0750 %sqlgrey_owner %sqlgrey_admin -
+END
 
 %pre
 /usr/sbin/groupadd -r -f %sqlgrey_owner
@@ -70,16 +76,20 @@ fi
 
 %files
 %_initrddir/sqlgrey
+%_tmpfilesdir/%name.conf
 %_sbindir/sqlgrey
 %_sbindir/update_sqlgrey_config
 %_bindir/sqlgrey-logstats.pl
 %_man1dir/*
 %doc README* HOWTO Changelog FAQ TODO
-%attr(750,%name,%sqlgrey_admin) %_sysconfdir/%name
-%attr(640,%name,%sqlgrey_admin) %config(noreplace) %_sysconfdir/%name/%name.conf
-%attr(750,%name,%name) %ROOT
+%attr(750,%sqlgrey_owner,%sqlgrey_admin) %_sysconfdir/%name
+%attr(640,%sqlgrey_owner,%sqlgrey_admin) %config(noreplace) %_sysconfdir/%name/%name.conf
+%attr(750,%sqlgrey_owner,%sqlgrey_owner) %ROOT
 
 %changelog
+* Sat Nov 30 2019 Anton Midyukov <antohami@altlinux.org> 1.6.8-alt2
+- Replace sqlgrey.pid to /run/sqlgrey/ (Closes: 37555)
+
 * Fri Nov 06 2009 Afanasov Dmitry <ender@altlinux.org> 1.6.8-alt1
 - New upstream.
 
