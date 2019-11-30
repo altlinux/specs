@@ -1,6 +1,6 @@
 Name:     rteval
 Version:  2.14.0.27.g5ed68ae
-Release:  alt2
+Release:  alt3
 
 Summary:  Evaluate the performance of a realtime Linux kernel
 License:  GPL-2.0-or-later
@@ -50,6 +50,7 @@ collected during the run and the statistical analysis of the run.
 make DESTDIR=%buildroot install_rteval
 # relocate rteval as it's for root only
 mv %buildroot%_bindir %buildroot%_sbindir
+egrep -lr '^#!/usr/bin/python\b' %buildroot | xargs sed -i '1s,python,python2,'
 
 %check
 # vm-run --mem=4G --overlay=tmpfs:/usr/src/RPM/BUILD make runit
@@ -64,6 +65,9 @@ mv %buildroot%_bindir %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Sat Nov 30 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt3
+- Change hashbang python to python2.
+
 * Wed Sep 18 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt2
 - Add more Requires to streamline user experience.
 - Relocate rteval to /usr/sbin
