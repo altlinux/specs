@@ -1,6 +1,6 @@
 Name: lxqt
 Version: 0.14
-Release: alt3
+Release: alt4
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL
@@ -72,7 +72,7 @@ Requires: qps
 # clipboard history applet
 Requires: qlipper
 # fonts
-Requires: fonts-ttf-liberation
+Requires: fonts-ttf-core
 # pdf-viewer
 Requires: qpdfview
 # image-viewer
@@ -87,6 +87,9 @@ Requires: openbox-themes
 %files regular
 
 %changelog
+* Sat Nov 30 2019 Anton Midyukov <antohami@altlinux.org> 0.14-alt4
+- lxqt-regular: requires fonts-ttf-core (Closes: 37511)
+
 * Wed Jun 26 2019 Anton Midyukov <antohami@altlinux.org> 0.14-alt3
 - lxqt requires openbox-themes
 
