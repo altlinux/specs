@@ -1,6 +1,6 @@
 Name:     jitterdebugger
-Version:  0.3.0.53.g3a24505
-Release:  alt2
+Version:  0.3.0.59.gdaeff0a
+Release:  alt1
 
 Summary:  Real time response messaurement tool
 License:  MIT
@@ -48,6 +48,9 @@ install -D man/jittersamples.1  %buildroot/%_man1dir/jittersamples.1
 %_man1dir/*.1*
 
 %changelog
+* Sat Nov 30 2019 Vitaly Chikunov <vt@altlinux.org> 0.3.0.59.gdaeff0a-alt1
+- Fix gettid error.
+
 * Sun Oct 06 2019 Vitaly Chikunov <vt@altlinux.org> 0.3.0.53.g3a24505-alt2
 - Build with HDF5 (hack to use older API).
 
