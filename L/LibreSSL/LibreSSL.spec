@@ -12,7 +12,7 @@
 
 Name: LibreSSL
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -192,18 +192,22 @@ pushd %buildroot%_bindir
 	ln -s nc netcat
 popd
 
-install -m 0644 apps/nc/nc.1 %buildroot%_man1dir
+install -m 0644 -pD apps/nc/nc.1 %buildroot%_man1dir/nc.1
+install -m 0644 -pD apps/ocspcheck/ocspcheck.8 %buildroot%_man8dir/ocspcheck.8
 
-pushd %buildroot%_man1dir
-	for nc_manpage in nc.*; do
+# fix manpages
+pushd %buildroot%_mandir
+	for nc_manpage in man1/nc.1; do
 		netcat_manpage=$(echo $nc_manpage | sed -e 's/nc/netcat/')
-		cp $nc_manpage $netcat_manpage
+		cp -a $nc_manpage $netcat_manpage
 	done
 
-	for openssl_manpage in openssl.*; do
+	for openssl_manpage in man1/openssl.1 man5/openssl.cnf.5; do
 		openssl_LibreSSL_manpage=$(echo $openssl_manpage | sed -e 's/\(openssl\)/\1-LibreSSL/')
 		mv $openssl_manpage $openssl_LibreSSL_manpage
 	done
+
+	mv man5/x509v3{,-LibreSSL}.cnf.5
 popd
 
 %define docdir %_docdir/%name-%version
@@ -215,7 +219,8 @@ xz %buildroot%docdir/ChangeLog
 %files -n openssl-LibreSSL
 %dir %docdir
 %_bindir/openssl-LibreSSL
-%_man1dir/openssl-LibreSSL.*
+%_man1dir/openssl-LibreSSL.1*
+%_man5dir/x509v3-LibreSSL.cnf.5*
 
 %files devel
 %_includedir/openssl
@@ -236,6 +241,7 @@ xz %buildroot%docdir/ChangeLog
 %dir %_sysconfdir/%oname/
 %config(noreplace) %_sysconfdir/%oname/openssl.cnf
 %_sysconfdir/%oname/*
+%_man5dir/openssl-LibreSSL.cnf.5*
 %_libdir/libcrypto.so.%libcrypto_sover
 %_libdir/libcrypto.so.%libcrypto_sover.*
 
@@ -247,6 +253,7 @@ xz %buildroot%docdir/ChangeLog
 
 %files -n ocspcheck
 %_bindir/ocspcheck
+%_man8dir/ocspcheck.8*
 
 %files -n libtls%libtls_sover
 %dir %docdir
@@ -264,10 +271,16 @@ xz %buildroot%docdir/ChangeLog
 %files -n netcat-tls
 %_bindir/nc
 %_bindir/netcat
-%_man1dir/nc.*
-%_man1dir/netcat.*
+%_man1dir/nc.1*
+%_man1dir/netcat.1*
 
 %changelog
+* Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt2
+- Packed manpages:
+  + ocspcheck.8 to ocspcheck subpackage;
+  + openssl-LibreSSL.cnf.5 to libcrypto-LibreSSL subpackage;
+  + x509v3-LibreSSL.cnf.5 to openssl-LibreSSL subpackage.
+
 * Sat Oct 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.2-alt1
 - Updated to 3.0.2.
 - Packed upstream-signing-key.asc.
