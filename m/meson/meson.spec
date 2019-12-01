@@ -8,7 +8,7 @@
 
 Name: meson
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -20,6 +20,7 @@ Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.
 %else
 Source: %name-%version.tar
 %endif
+Patch: meson-0.52.1-37475.patch
 
 Source1: %name.macros
 Source2: %name.env
@@ -65,6 +66,7 @@ reports, Valgrind, CCache and the like.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -90,6 +92,10 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Sat Nov 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.52.1-alt2
+- finally fixed ALT #37475
+- fixed License tag
+
 * Sat Nov 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.52.1-alt1
 - 0.52.1
 
