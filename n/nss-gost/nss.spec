@@ -13,7 +13,7 @@ Name:		nss
 %endif
 
 Version:	3.47.0
-Release:	alt2%{?relsuffix:%relsuffix}
+Release:	alt3%{?relsuffix:%relsuffix}
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -230,6 +230,11 @@ sed -e "s,@libdir@,%_libdir,g" \
     -e "s,@NSS_VERSION@,%version,g" \
 	%SOURCE1 > %buildroot/%_libdir/pkgconfig/nss.pc
 
+%if_with gost
+mv %buildroot/%_libdir/pkgconfig/nss.pc \
+   %buildroot/%_libdir/pkgconfig/nss-gost.pc
+%endif
+
 sed -e "s,@libdir@,%_libdir,g" \
     -e "s,@prefix@,%_prefix,g" \
     -e "s,@exec_prefix@,%_prefix,g" \
@@ -317,6 +322,10 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Mon Dec 02 2019 Paul Wolneykien <manowar@altlinux.org> 3.47.0-alt3.gost1.2
+- Fix: Do not duplicate 'pkgconfig(nss)' providings of the main
+  libnss-devel package.
+
 * Sun Dec 01 2019 Paul Wolneykien <manowar@altlinux.org> 3.47.0-alt2.gost1.2
 - Fix: Don't duplicate nss-* provides of the main NSS package.
 
