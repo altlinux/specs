@@ -13,7 +13,7 @@ Name:		nss
 %endif
 
 Version:	3.47.0
-Release:	alt1%{?relsuffix:%relsuffix}
+Release:	alt2%{?relsuffix:%relsuffix}
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -61,7 +61,7 @@ http://www.mozilla.org/projects/security/pki/nss/overview.html
 Summary:	Netscape Network Security Services(NSS)
 Group:		System/Libraries
 
-Provides:	nss = %version-%release
+Provides: %name = %version-%release
 
 %if_with gost
 # Provides GOST support markers
@@ -101,11 +101,11 @@ Summary:	NSS development kit
 Group:		Development/C
 Requires:	lib%name = %version-%release
 
-Provides:	nss-devel        = %version-%release
-Provides:	nss-devel(gost)  = %gost_version
-Provides:	nss-pkcs11-devel = %version-%release
+Provides:	%name-devel        = %version-%release
+Provides:	%name-pkcs11-devel = %version-%release
 
 %if_with gost
+Provides:	nss-devel(gost)  = %gost_version
 Conflicts: libnss-devel
 %endif
 
@@ -117,10 +117,10 @@ Summary:	NSS static libraries
 Group:		Development/C
 Requires:	lib%name-devel = %version-%release
 
-Provides:	nss-devel-static = %version-%release
-Provides:	nss-devel-static(gost) = %gost_version
+Provides:	%name-devel-static = %version-%release
 
 %if_with gost
+Provides:	nss-devel-static(gost) = %gost_version
 Conflicts: libnss-devel-static
 %endif
 
@@ -143,9 +143,10 @@ Summary:	Netscape Network Security Services Utilities
 Group:		Development/Other
 Requires:	lib%name = %version-%release
 
-Provides:	nss-tools
+Provides:	%name-tools
 
 %if_with gost
+Provides:	nss-tools(gost)
 Conflicts: nss-utils
 %endif
 
@@ -316,6 +317,9 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Sun Dec 01 2019 Paul Wolneykien <manowar@altlinux.org> 3.47.0-alt2.gost1.2
+- Fix: Don't duplicate nss-* provides of the main NSS package.
+
 * Thu Nov 07 2019 Paul Wolneykien <manowar@altlinux.org> 3.47.0-alt1.gost1.2
 - Version 3.47.0-alt1 with GOST support.
 

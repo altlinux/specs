@@ -24,7 +24,7 @@ Name:           firefox
 %endif
 
 Version:        70.0.1
-Release:        alt1%{?relsuffix:%relsuffix}
+Release:        alt2%{?relsuffix:%relsuffix}
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -126,14 +126,16 @@ BuildRequires: python-modules-json
 BuildRequires: /proc
 
 %if_with gost
+BuildRequires: nss-gost-devel-static >= %nss_version
 BuildRequires: nss-devel(gost) >= %gost_version
 BuildRequires: nss-devel-static(gost) >= %gost_version
+%else
+BuildRequires: nss-devel-static >= %nss_version
 %endif
 
 # Mozilla requires
 BuildRequires: pkgconfig(nspr) >= %nspr_version
 BuildRequires: pkgconfig(nss) >= %nss_version
-BuildRequires: nss-devel-static >= %nss_version
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -158,10 +160,12 @@ Provides: firefox-kk = %EVR
 Requires: gst-plugins-ugly%gst_version
 
 Requires: libnspr >= %nspr_version
-Requires: nss >= %nss_version
 
 %if_with gost
+Requires: nss-gost >= %nss_version
 Requires: nss(gost) >= %gost_version
+%else
+Requires: nss >= %nss_version
 %endif
 
 %description
@@ -460,6 +464,9 @@ rm -rf -- \
 %endif
 
 %changelog
+* Sun Dec 01 2019 Paul Wolneykien <manowar@altlinux.org> 70.0.1-alt2.gost1.0
+- Fix: Require GOSTed nss-* only.
+
 * Thu Nov 07 2019 Paul Wolneykien <manowar@altlinux.org> 70.0.1-alt1.gost1.0
 - New version 70.0.1-alt1 with GOST support.
 
