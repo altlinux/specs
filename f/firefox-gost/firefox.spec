@@ -24,7 +24,7 @@ Name:           firefox
 %endif
 
 Version:        70.0.1
-Release:        alt2%{?relsuffix:%relsuffix}
+Release:        alt3%{?relsuffix:%relsuffix}
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -135,7 +135,12 @@ BuildRequires: nss-devel-static >= %nss_version
 
 # Mozilla requires
 BuildRequires: pkgconfig(nspr) >= %nspr_version
+
+%if_with gost
+BuildRequires: pkgconfig(nss-gost) >= %nss_version
+%else
 BuildRequires: pkgconfig(nss) >= %nss_version
+%endif
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -464,6 +469,9 @@ rm -rf -- \
 %endif
 
 %changelog
+* Mon Dec 02 2019 Paul Wolneykien <manowar@altlinux.org> 70.0.1-alt3.gost1.0
+- Fix: Require pkgconfig(nss-gost).
+
 * Sun Dec 01 2019 Paul Wolneykien <manowar@altlinux.org> 70.0.1-alt2.gost1.0
 - Fix: Require GOSTed nss-* only.
 
