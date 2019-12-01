@@ -2,7 +2,7 @@
 
 Name: tcl-xml
 Version: 3.2
-Release: alt1
+Release: alt2
 
 Summary: XML parsers for Tcl
 License: BSD
@@ -20,6 +20,7 @@ BuildRequires: rpm-build-tcl >= 0.2-alt1
 BuildRequires: libxml2-devel rpm-build >= 4.0.4-alt41 tcl-devel >= 8.4.0-alt1
 BuildRequires: libxslt-devel
 BuildRequires: /usr/bin/xslt-config
+BuildRequires: tcllib
 
 Provides: tcl-xml-core tcl-dom-core tcl-xslt
 Obsoletes: tcl-xml-core < 3.2
@@ -55,9 +56,12 @@ This package includes header files for %name.
 	--enable-stub \
 	#
 %make_build
+# build doc
+cp -a tclxml-tcl/* .
+make doc
 
 %install
-%make_install DESTDIR=%buildroot install
+%make_install DESTDIR=%buildroot install install-doc
 xz ChangeLog
 
 %files
@@ -65,13 +69,16 @@ xz ChangeLog
 %doc doc/*.html
 %_tcllibdir/Tclxml%version/libTclxml%version.so
 %_tcllibdir/Tclxml%version/*.tcl
-#_mandir/mann/*
+%_mandir/mann/*
 
 %files devel
 %_includedir/tclxml
 %_tcllibdir/Tclxml%version/libTclxmlstub%version.a
 
 %changelog
+* Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2-alt2
+- Built and packed manpages.
+
 * Wed Nov 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.2-alt1
 - Updated to 3.2.
 - Moved to tcl-xml package, that provides and obsoletes tcl-xml-core,
