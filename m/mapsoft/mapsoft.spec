@@ -1,7 +1,8 @@
 Name: mapsoft
-Version: 20191110
+Version: 20191201
 Release: alt1
-License: GPL
+License: GPL3.0
+
 Summary: mapsoft - programs for working with maps and geodata
 Group: Sciences/Geosciences
 Url: http://github.org/ushakov/mapsoft
@@ -16,6 +17,7 @@ BuildRequires: libusb-devel libyaml-devel libxml2-devel proj-devel
 BuildRequires: libjansson-devel libshape-devel
 BuildRequires: python-devel scons swig m4
 BuildRequires: /usr/bin/gs netpbm transfig ImageMagick-tools /usr/bin/pod2man
+BuildRequires: boost-geometry-devel perl-Text-Iconv
 
 %package tools
 Summary: mapsoft-tools - rarely-used tools from mapsoft package
@@ -72,8 +74,14 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_bindir/*.sh
 %_bindir/map_*_gk
 %_bindir/map_*_nom
+%_bindir/mapsoft_wp_parse
 
 %changelog
+* Sun Dec 01 2019 Vladislav Zavjalov <slazav@altlinux.org> 20191201-alt1
+- fix a few problems in vmap_render and convs_gtiles (thanks to A.Kazantsev)
+- add GPL3.0 license (Altlinux requires ambiguous license for all packages)
+- fix python shebang (python -> python2)
+
 * Sun Nov 10 2019 Vladislav Zavjalov <slazav@altlinux.org> 20191110-alt1
 - add more scripts to mapsoft_vmap package
 
