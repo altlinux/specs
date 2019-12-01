@@ -1,15 +1,15 @@
-Summary: Static Multicast Routing Daemon
 Name: smcroute
-Version: 0.94.1
-Release: alt2.qa1
-License: GPL
+Version: 2.4.4
+Release: alt1
+
+Summary: Static Multicast Routing Daemon
+License: GPLv2
 Group: System/Servers
-Source: %name-%version.tar
-Url: http://alioth.debian.org/projects/smcroute
+Url: https://troglobit.com/projects/smcroute/
 
-Source1: %name.init
+Source: %name-%version-%release.tar
 
-Patch0: %name-%version-alt-changes.patch
+BuildRequires: libcap-devel libsystemd-devel
 
 %description
 SMCRoute is a daemon and command line tool to manipulate the multicast routes
@@ -17,21 +17,20 @@ of the Linux kernel. It can be used as an alternative to dynamic multicast
 routers like 'mrouted' in situations where (only) static multicast routes
 should be maintained and/or no proper IGMP signaling exists.
 
+%define docdir %_defaultdocdir/%name
+
 %prep
 %setup
-%patch -p1
 
 %build
-cd src
 %autoreconf
 %configure
-%make_build all
+%make_build
 
 %install
-make -C src BINDIR=%buildroot%_sbindir install
-install -pD doc/smcroute.8 %buildroot%_man8dir/smcroute.8
-install -pD doc/mcsender.8 %buildroot%_man8dir/mcsender.8
-install -m755 -D %SOURCE1 %buildroot%_initdir/%name
+%makeinstall_std
+install -pm0755 -D smcroute.init %buildroot%_initdir/smcroute
+touch %buildroot%_sysconfdir/smcroute.conf
 
 %post
 %post_service %name
@@ -40,12 +39,23 @@ install -m755 -D %SOURCE1 %buildroot%_initdir/%name
 %preun_service %name
 
 %files
-%doc ChangeLog AUTHORS COPYING
-%_initdir/*
-%_sbindir/*
-%_man8dir/*
+%doc %docdir
+%config(noreplace) %_sysconfdir/smcroute.conf
+%_initdir/smcroute
+%_unitdir/smcroute.service
+
+%_sbindir/smcroute
+%_sbindir/smcrouted
+%_sbindir/smcroutectl
+
+%_man8dir/smcroute.*
+%_man8dir/smcrouted.*
+%_man8dir/smcroutectl.*
 
 %changelog
+* Sun Dec 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.4-alt1
+- 2.4.4 released
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.94.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
