@@ -1,6 +1,6 @@
 Name:         libmpsse
 Version:      1.3.2
-Release:      alt2
+Release:      alt3
 
 Summary:      Open source library for SPI/I2C control via FTDI chips
 Group:        System/Libraries
@@ -47,6 +47,9 @@ autoreconf
 %_includedir/*
 
 %changelog
+* Sun Dec 01 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.3.2-alt3
+- change python->python2 in configure.ac (fix Altlinux build)
+
 * Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 1.3.2-alt2
 - fix Repocop warnings:
   altlinux-python-obsolete-buildreq-python-dev
