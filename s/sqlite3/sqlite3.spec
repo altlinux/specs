@@ -2,7 +2,7 @@
 
 Name: sqlite3
 Version: 3.30.1
-Release: alt2
+Release: alt3
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -105,17 +105,19 @@ embedded controllers.
 export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
 export CFLAGS="%optflags \
-	-DSQLITE_CORE=1 \
-	-DSQLITE_ENABLE_API_ARMOR=1 \
-	-DSQLITE_ENABLE_COLUMN_METADATA=1 \
-	-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
-	-DSQLITE_ENABLE_DESERIALIZE=1 \
-	-DSQLITE_ENABLE_FTS3=1 \
-	-DSQLITE_ENABLE_FTS5=1 \
-	-DSQLITE_ENABLE_JSON1=1 \
-	-DSQLITE_ENABLE_RTREE=1 \
-	-DSQLITE_ENABLE_UNLOCK_NOTIFY=1 \
-	-DSQLITE_SECURE_DELETE=1 \
+	-DSQLITE_CORE \
+	-DSQLITE_ENABLE_API_ARMOR \
+	-DSQLITE_ENABLE_COLUMN_METADATA \
+	-DSQLITE_ENABLE_DBSTAT_VTAB \
+	-DSQLITE_ENABLE_DESERIALIZE \
+	-DSQLITE_ENABLE_FTS3 \
+	-DSQLITE_ENABLE_FTS3_PARENTHESIS \
+	-DSQLITE_ENABLE_FTS4 \
+	-DSQLITE_ENABLE_FTS5 \
+	-DSQLITE_ENABLE_JSON1 \
+	-DSQLITE_ENABLE_RTREE \
+	-DSQLITE_ENABLE_UNLOCK_NOTIFY \
+	-DSQLITE_SECURE_DELETE \
 	-fno-strict-aliasing "
 %ifarch %e2k
 # FIXME: lcc-1.23 lacks some gcc5 builtins
@@ -126,6 +128,7 @@ autoreconf -i
 	%{subst_enable static} \
 	--disable-amalgamation \
 	--enable-fst3 \
+	--enable-fst4 \
 	--enable-fts5 \
 	--enable-json1 \
 	--enable-load-extension \
@@ -138,7 +141,7 @@ autoreconf -i
 make sqlite3_analyzer sqldiff
 
 %check
-subst 's|-DSQLITE_ENABLE_FTS3=1||' Makefile
+sed -Ei 's@-DSQLITE_ENABLE_FTS[34](\s|$)@@g' Makefile
 %make test
 
 %install
@@ -196,6 +199,10 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.1-alt3
+- Enabled fts4 module (need for fossil 2.10).
+- Enabled fts3_parenthesis.
+
 * Wed Oct 23 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.1-alt2
 - Built and packed sqlite3_analyzer and sqldiff.
 
