@@ -1,5 +1,5 @@
 Name: atop
-Version: 2.4
+Version: 2.5.0
 Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
@@ -28,7 +28,7 @@ format for long-term analysis.
 gzip -c9 ChangeLog > ChangeLog.gz
 
 %install
-mkdir -p %buildroot/usr/lib/pm-utils/sleep.d
+mkdir -p %buildroot/usr/lib/pm-utils/sleep.d %buildroot%_sysconfdir/default
 for i in systemdinstall sysvinstall;do
 make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir
 done
@@ -43,6 +43,7 @@ done
 %files
 %doc AUTHOR ChangeLog.* README
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
+%config(noreplace) %_sysconfdir/default/%name
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
@@ -52,12 +53,17 @@ done
 %_sysconfdir/logrotate.d/*
 %_initdir/*
 %_unitdir/%{name}*.service
+%_unitdir/%{name}*.timer
 %_logdir/%name
 %_datadir/%name
 /usr/lib/systemd/system-sleep/atop-pm.sh
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Sun Dec  1 2019 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt1
+- atop 2.5.0
+- Switch atopgpud to python3
+
 * Wed Oct 23 2019 Terechkov Evgenii <evg@altlinux.org> 2.4-alt1
 - 2.4 (ALT#37288)
 
