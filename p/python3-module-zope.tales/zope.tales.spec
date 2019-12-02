@@ -3,87 +3,52 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: Zope Template Application Language Expression Syntax (TALES)
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 # Source-git https://github.com/zopefoundation/zope.tales.git
 Url: http://pypi.python.org/pypi/zope.tales
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
-BuildRequires: python3-module-setuptools
-
 %if_with check
-BuildRequires: python-module-six
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-six
+BuildRequires: python3-module-zope.tales
+BuildRequires:python3-module-zope.tales-tests
 %endif
 
-%py_requires zope.interface six
+%py3_requires zope.interface six
+
 
 %description
 Template Attribute Language - Expression Syntax.
 
-%package -n python3-module-%oname
-Summary: Zope Template Application Language Expression Syntax (TALES) (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-Template Attribute Language - Expression Syntax.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for zope.tales (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 %py3_requires zope.testrunner
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname
-
-%package tests
-Summary: Tests for zope.tales
-Group: Development/Python
-Requires: %name = %EVR
-%py_requires zope.testing zope.testrunner
 
 %description tests
 This package contains tests for %oname
 
 %prep
 %setup
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -91,32 +56,22 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-zope-testrunner --test-path=src -vv
-
-pushd ../python3
 zope-testrunner3 --test-path=src -vv
-popd
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
 
+
 %changelog
+* Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt4
+- python2 disabled
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
