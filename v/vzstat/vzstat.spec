@@ -1,11 +1,11 @@
 
 Name: vzstat
-Version: 7.0.20
+Version: 7.0.21
 Release: alt1
 Summary: vzstat utility for node monitoring
 
 Group: System/Base
-License: GPL2+
+License: GPLv2+
 Url: https://src.openvz.org/projects/OVZ/repos/vzstat
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -36,6 +36,11 @@ This package contains statistic monitoring utility for OpenVZ HW node.
 %doc README.md COPYING
 
 %changelog
+* Mon Dec 02 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.21-alt1
+- 7.0.21
+- fix Licence
+- suppress stringop-truncation error
+
 * Mon Sep 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.20-alt1
 - 7.0.20
 
