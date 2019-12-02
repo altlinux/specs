@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        78.0.3904.97
+Version:        78.0.3904.108
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -505,6 +505,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Dec 02 2019 Alexey Gladkov <legion@altlinux.ru> 78.0.3904.108-alt1
+- New version (78.0.3904.108).
+- Security fixes:
+  - CVE-2019-13723: Use-after-free in Bluetooth.
+  - CVE-2019-13724: Out-of-bounds access in Bluetooth.
+
 * Sat Nov 09 2019 Alexey Gladkov <legion@altlinux.ru> 78.0.3904.97-alt1
 - New version (78.0.3904.97).
 - Security fixes:
