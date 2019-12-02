@@ -1,6 +1,6 @@
 Name: opencaster
 Version: 3.2.1
-Release: alt1
+Release: alt2
 Summary: MPEG transport stream generation and management tools
 Group: Networking/Other
 
@@ -35,6 +35,8 @@ This package contains Python libraries for OpenCaster.
 %setup
 %patch0 -p1
 
+find -iname "*.py" -exec sed -i 's@/usr/bin/env python@/usr/bin/env python2.7@g' '{}' ';'
+
 %build
 %make_build
 
@@ -61,5 +63,8 @@ cd libs/dvbobjects
 %python_sitelibdir/*
 
 %changelog
+* Mon Dec 02 2019 Alexei Takaseev <taf@altlinux.org> 3.2.1-alt2
+- Fix build with python 2.7
+
 * Thu Oct 02 2014 Alexei Takaseev <taf@altlinux.org> 3.2.1-alt1
 - Initial build for Sisyphus
