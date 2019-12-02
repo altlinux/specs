@@ -12,7 +12,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -28,7 +28,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define gtksource_ver 3.99.7
 %define amtk_ver 5.0.0
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): rpm-build-gnome rpm-build-licenses rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: libamtk-devel >= %amtk_ver
@@ -151,6 +151,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Mon Jul 16 2018 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0 (ALT #35073)
 
