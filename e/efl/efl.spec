@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.22
+%define ver_major 1.23
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -11,18 +12,14 @@
 # fb requires tslib?
 %def_disable tslib
 %def_enable drm
+%def_enable egl
 %def_enable ibus
-%def_enable gstreamer1
+%def_enable gstreamer
 %def_enable emotion
 %def_disable elogind
+%def_enable avahi
 
 %def_enable wayland
-# wayland requires elput and drm
-%def_enable elput
-%def_enable wayland_egl
-%def_disable egl
-# currently with GLES only
-%def_disable gl_drm
 
 # aarch64 with luajit-2.1-alt6: PANIC: unprotected error in call to Lua API (bad light userdata pointer)
 %ifarch aarch64
@@ -32,13 +29,13 @@
 %endif
 
 %ifnarch %e2k
+# lua-5.1 not supported anymore
 %def_enable lua
-%define _unpackaged_files_terminate_build 1
 %endif
 
 Name: efl
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -57,7 +54,7 @@ Patch1: efl-1.19.1-luajitfix.patch
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: LibreOffice
 
-%{?_enable_static:BuildPreReq: glibc-devel-static}
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
@@ -69,7 +66,7 @@ BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel li
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libxkbcommon-x11-devel
-BuildRequires: libGL-devel
+BuildRequires: libGL-devel libgnutls-devel
 
 %ifarch %e2k
 %{?_enable_lua:BuildRequires: liblua5.1-devel}
@@ -82,12 +79,11 @@ BuildRequires: libunwind-devel
 %endif
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel}
-%{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
-%{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
+%{?_enable_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
 %{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
-#%{?_enable_gl_drm:BuildRequires:}
+%{?_enable_avahi:BuildRequires: libavahi-glib-devel}
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 # for emotion_generic_players
@@ -236,42 +232,22 @@ developing applications that use Elementary libraries.
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-xinput22 \
-	--enable-systemd \
-	%{subst_enable elogind} \
-	--enable-image-loader-webp \
-	--enable-harfbuzz \
-	--enable-liblz4 \
-	--enable-image-loader-webp \
-%ifarch %e2k
-	--enable-lua-old \
-%else
-	%{subst_enable elua} \
-%endif
-	%{subst_enable multisense} \
-	%{subst_enable tslib} \
-	%{subst_enable wayland} \
-	%{subst_enable fb} \
-	%{subst_enable egl} \
-	%{subst_enable elput} \
-	%{subst_enable drm} \
-	%{?_enable_gl_drm:--enable-gl-drm} \
-	%{subst_enable ibus} \
-	%{subst_enable gstreamer1} \
-	--with-mount=/bin/mount \
-	--with-umount=/bin/umount \
-	--with-eject=%_bindir/eject
-%make_build
-#%make doc
+%meson \
+	%{?_enable_elogind:-Delogind=true} \
+	%{?_disable_elua:-Delua=false} \
+	%{?_enable_tslib:-Dtslib=true} \
+	%{?_enable_wayland:-Dwl=true} \
+	%{?_enable_fb:-Dfb=true} \
+	%{?_enable_drm:-Ddrm=true} \
+	%{?_disable_gstreamer:-Dgstreamer=false} \
+	%{?_disable_avahi:-Davahi=false} \
+	-Dmount-path=/bin/mount \
+	-Dumount-path=/bin/umount \
+	-Deject-path=%_bindir/eject
+%meson_build
 
 %install
-%makeinstall_std
-find %buildroot%_libdir -name "*.la" -delete
-
+%meson_install
 %find_lang %name
 
 %files -n %name-libs -f %name.lang
@@ -345,13 +321,15 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/efl_debugd
 %_bindir/eina_btlog
 %_bindir/eo_debug
+%_bindir/emotion_test
+%_bindir/emotion_test-eo
 %_includedir/*
 %exclude %_includedir/elementary*/
 %_libdir/cmake/*
 %exclude %_libdir/cmake/Elementary/
 %_libdir/*.so
 %exclude %_libdir/libelementary.so
-%_pkgconfigdir/ecore-audio-cxx.pc
+#%_pkgconfigdir/ecore-audio-cxx.pc
 %_pkgconfigdir/ecore-audio.pc
 %_pkgconfigdir/ecore-avahi.pc
 %_pkgconfigdir/ecore-con.pc
@@ -388,8 +366,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eio-cxx.pc
 %_pkgconfigdir/eio.pc
 %_pkgconfigdir/eldbus.pc
+%_pkgconfigdir/eldbus-cxx.pc
 %_pkgconfigdir/elocation.pc
-%{?_enable_elput:%_pkgconfigdir/elput.pc}
+%_pkgconfigdir/elput.pc
 %{?_enable_elua:%_pkgconfigdir/elua.pc}
 %_pkgconfigdir/embryo.pc
 %_pkgconfigdir/emile.pc
@@ -401,13 +380,14 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ephysics.pc
 %_pkgconfigdir/ethumb.pc
 %_pkgconfigdir/ethumb_client.pc
+%_pkgconfigdir/ethumb-client.pc
 %_pkgconfigdir/evas-cxx.pc
-%{?_enable_drm:%_pkgconfigdir/evas-drm.pc}
-%{?_enable_fb:%_pkgconfigdir/evas-fb.pc}
-%_pkgconfigdir/evas-opengl-x11.pc
-%_pkgconfigdir/evas-software-buffer.pc
-%_pkgconfigdir/evas-software-x11.pc
-%{?_enable_wayland:%_pkgconfigdir/evas-wayland-shm.pc}
+#%{?_enable_drm:%_pkgconfigdir/evas-drm.pc}
+#%{?_enable_fb:%_pkgconfigdir/evas-fb.pc}
+#%_pkgconfigdir/evas-opengl-x11.pc
+#%_pkgconfigdir/evas-software-buffer.pc
+#%_pkgconfigdir/evas-software-x11.pc
+#%{?_enable_wayland:%_pkgconfigdir/evas-wayland-shm.pc}
 %_pkgconfigdir/evas.pc
 
 %exclude %_datadir/gdb
@@ -425,14 +405,16 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/elementary/modules/test_entry/*/*.so
 %_libdir/elementary/modules/access_output/*/*.so
 %_libdir/elementary/modules/test_map/*/*.so
-%_libdir/elementary/modules/clock_input_ctxpopup/*/*.so
-%_libdir/elementary/modules/prefs/*/*.edj
+#%_libdir/elementary/modules/clock_input_ctxpopup/*/*.so
+#%_libdir/elementary/modules/prefs/*/*.edj
 %_libdir/elementary/modules/prefs/*/*.so
 %_libdir/elementary/modules/web/*/*/module.so
 
 %files -n libelementary-devel
 %_bindir/elementary_codegen
 %_bindir/elementary_test
+%_bindir/elementary_perf
+%_desktopdir/elementary_perf.desktop
 %_bindir/elm_prefs_cc
 %_includedir/elementary*/
 %_libdir/libelementary*.so
@@ -447,6 +429,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.23.3-alt1
+- 1.23.3 (ported to Meson build system)
+
 * Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt2
 - disabled useless elogind support (ALT #37431)
 

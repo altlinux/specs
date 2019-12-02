@@ -1,8 +1,9 @@
 %define _name python-efl
-%define efl_ver 1.22.0
+%define efl_ver 1.23.0
+%def_enable python2
 
 Name: python-module-efl
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 
 Summary: Python bindings for EFL libraries
@@ -62,29 +63,39 @@ widgets and more.
 This package provides Enlightenment Foundation Libraries bindings for use
 with Python3 programms.
 
-
 %prep
-%setup -n %_name-%version -a0
-mv %_name-%version py3build
+%setup -n %_name-%version %{?_enable_python2:-a0
+mv %_name-%version py2build}
 
 %build
-%python_build
-pushd py3build
+%ifarch %ix86
+%define _optlevel 1
+%else
+%define _optlevel 3
+%endif
+
 %python3_build
+%if_enabled python2
+pushd py2build
+%python_build
 popd
+%endif
 
 %install
-%python_install
-pushd py3build
 %python3_install
+%if_enabled python2
+pushd py2build
+%python_install
 popd
+%endif
 
 %files
+%if_enabled python2
 %python_sitelibdir/efl/
 %python_sitelibdir/python_efl-*.egg-info
 %doc AUTHORS README* ChangeLog
-
 %exclude %python_sitelibdir/efl/utils/setup.py*
+%endif
 
 %files -n python3-module-efl
 %python3_sitelibdir/efl/
@@ -94,6 +105,10 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
+- 1.23.0
+- made python2 build optional
+
 * Sun Apr 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
