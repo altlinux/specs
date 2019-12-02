@@ -1,9 +1,9 @@
 Name: wxMaxima
-Version: 19.10.0
+Version: 19.12.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
-License: GPL
+License: GPL-2.0+
 Group: Sciences/Mathematics
 
 Url: https://wxmaxima-developers.github.io/wxmaxima
@@ -11,7 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source0: %name-%version.tar
 Source5: wxmaxima-ru.po.bz2
-Patch:  %name-alt-help-path.patch
+Patch:   %name-alt-help-path.patch
 
 Requires: maxima
 
@@ -74,6 +74,13 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.0-alt1
+- New version.
+- Fix license according to SPDX.
+
+* Thu Nov 14 2019 Andrey Cherepanov <cas@altlinux.org> 19.11.0-alt1
+- New version.
+
 * Sun Oct 13 2019 Andrey Cherepanov <cas@altlinux.org> 19.10.0-alt1
 - New version.
 
