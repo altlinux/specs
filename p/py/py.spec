@@ -4,7 +4,7 @@
 
 Name: py
 Version: 1.8.0
-Release: alt4
+Release: alt5
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -142,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Sun Dec 01 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt5
+- Fixed testing against Pytest 5.3+.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt4
 - Fixed testing against Pytest 5.
 

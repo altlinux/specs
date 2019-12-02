@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.2.4
+Version: 5.3.1
 Release: alt1
 
 Summary: Python test framework
@@ -25,7 +25,6 @@ BuildRequires: /dev/shm
 BuildRequires: python3(tox)
 
 BuildRequires: python3(argcomplete)
-BuildRequires: python3(atomicwrites)
 BuildRequires: python3(attr)
 BuildRequires: python3(decorator)
 BuildRequires: python3(funcsigs)
@@ -100,6 +99,8 @@ mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
 mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
 
 %check
+# add workaround for https://github.com/pytest-dev/pytest/issues/6297
+export TERM=xterm
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
@@ -117,6 +118,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest3
 
 %changelog
+* Tue Nov 26 2019 Stanislav Levin <slev@altlinux.org> 5.3.1-alt1
+- 5.2.4 -> 5.3.1.
+
 * Sat Nov 16 2019 Stanislav Levin <slev@altlinux.org> 5.2.4-alt1
 - 5.2.3 -> 5.2.4.
 
