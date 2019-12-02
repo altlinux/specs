@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Python Xapp Library
 
@@ -14,6 +14,7 @@ Source: python-%oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-gir
 
 %description
 Python Xapp Library
@@ -32,6 +33,9 @@ Python Xapp Library
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Dec 2 2019 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt2
+- Add rpm-build-gir to build requires
+
 * Mon Dec 2 2019 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
 - New version
 
