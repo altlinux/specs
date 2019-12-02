@@ -19,11 +19,11 @@
 %add_tcl_req_skip twapi
 
 Name: tcllib
-Version: 1.19
+Version: 1.20
 Release: alt1
 Epoch: 1
 
-Summary: A Tcl standard library
+Summary: The Tcl standard library
 License: BSD
 Group: Development/Tcl
 Url: https://core.tcl.tk/tcllib/
@@ -35,8 +35,10 @@ BuildRequires: tcl >= 8.4.0-alt1
 # cause segfault in some apps (e.g. tkabber)
 Conflicts: tcl-trf < 2.1-alt8
 
-# git://git.altlinux.org/gears/t/tcllib.git
-Source: %name-%version-%release.tar
+# repacked https://core.tcl-lang.org/tcllib/uv/tcllib-%version.tar.gz
+Source: %name-%version.tar
+Patch1: 0001-sync-d-with-reality-i-hope.patch
+Patch2: 0002-ALT-TEA.patch
 
 %description
 Tcllib is a collection of utility modules for tcl. These modules provide
@@ -47,12 +49,11 @@ rely on to be available and stable.
 
 %prep
 %setup
+%autopatch -p2
 
 %install
 %configure
 %make_install DESTDIR=%buildroot install
-# clashes with tcl own manpages, has a prefixed with textutil_ copy
-rm -f %buildroot%_mandir/mann/split.n %buildroot%_mandir/mann/string.n
 
 find examples -type f -print0 |xargs -r0 chmod 0644 --
 
@@ -68,6 +69,9 @@ find examples -type f -print0 |xargs -r0 chmod 0644 --
 %_mandir/mann/*
 
 %changelog
+* Mon Dec 02 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.20-alt1
+- Updated to 1.20.
+
 * Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19-alt1
 - 1.19 released
 
