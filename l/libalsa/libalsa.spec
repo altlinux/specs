@@ -2,12 +2,12 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.1.1
+Version: 1.2.1.2
 Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
-License: LGPL-2.1-or-later
+License: LGPLv2.1
 Group: System/Libraries
 
 Source: %name-%version.tar
@@ -187,6 +187,10 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Dec 02 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1.2-alt1
+- 1.2.1.2
+- better License: tag spelling
+
 * Fri Nov 22 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1.1-alt1
 - 1.2.1.1
 - fix License: tag spelling
