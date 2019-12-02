@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -57,6 +57,7 @@ BuildRequires: libxmlb-devel
 BuildRequires: bash-completion
 BuildRequires: libtpm2-tss-devel
 BuildRequires: cmake
+BuildRequires: libgusb-gir-devel
 BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow rpm-build-python3
 
 %if_enabled dell
@@ -217,6 +218,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/fwupd/quirks.d/*.quirk
 %_libdir/libfwupd*.so.*
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
+%_libdir/girepository-1.0/FwupdPlugin-1.0.typelib
 /lib/udev/rules.d/*.rules
 %dir %_libdir/fwupd-plugins-3
 %_libdir/fwupd-plugins-3/libfu_plugin_altos.so
@@ -272,11 +274,14 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files devel
 %_datadir/gir-1.0/Fwupd-2.0.gir
-%_datadir/gtk-doc/html/libfwupd
+%_datadir/gir-1.0/FwupdPlugin-1.0.gir
+%_datadir/gtk-doc/html/fwupd
 %_includedir/fwupd-1
 %_libdir/libfwupd*.so
 %_libdir/pkgconfig/fwupd.pc
+%_libdir/pkgconfig/fwupdplugin.pc
 %_datadir/vala/vapi/fwupd.*
+%_datadir/vala/vapi/fwupdplugin.*
 
 %files labels
 %if_enabled uefi
@@ -292,6 +297,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Dec 02 2019 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1
+- 1.3.5
+
 * Mon Nov 25 2019 Anton Farygin <rider@altlinux.ru> 1.3.4-alt1
 - 1.3.4
 
