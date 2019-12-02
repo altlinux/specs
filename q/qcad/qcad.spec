@@ -1,14 +1,14 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.23.0.5
+Version: 3.23.0.9
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
 # VCS:   https://github.com/qcad/qcad.git
-License: GPLv3 with exceptions
+License: GPL-3.0 with exceptions
 Group:   Graphics
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -125,6 +125,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 3.23.0.9-alt1
+- New version.
+
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 3.23.0.5-alt1
 - New version.
 
