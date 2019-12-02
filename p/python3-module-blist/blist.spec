@@ -1,30 +1,20 @@
-%def_with python3
+%define oname blist
 
-Name: python-module-blist
+Name: python3-module-%oname
 Version: 1.3.6
-Release: alt2
+Release: alt3
+
 Summary: A list-like type with better asymptotic performance and similar performance on small lists
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/blist/
-%setup_python_module blist
-Source: blist-%version.tar.gz
 
+Source: blist-%version.tar.gz
 Patch: 0001-Fix-compatibility-for-Python-3.7.patch
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-%endif
+BuildRequires: python3-module-pytest
 
-# Automatically added by buildreq on Sun May 03 2015
-# optimized out: libcloog-isl4 python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-dev python3-module-pytest
-
-BuildRequires: python-module-setuptools
-%if_with python3
-BuildRequires: python3-module-setuptools
-%endif
 
 %description
 The blist is a drop-in replacement for the Python list that provides
@@ -32,44 +22,30 @@ better performance when modifying large lists. The blist package also
 provides sortedlist, sortedset, weaksortedlist, weaksortedset,
 sorteddict, and btuple types.
 
-%package -n python3-module-%modulename
-Summary: %summary
-Group: Development/Python3
-
-%description -n python3-module-%modulename
-The blist is a drop-in replacement for the Python list that provides
-better performance when modifying large lists. The blist package also
-provides sortedlist, sortedset, weaksortedlist, weaksortedset,
-sorteddict, and btuple types.
-
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 %patch -p1
+
 sed -i '/ez_setup/d' setup.py
 
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
+
+%check
+%__python3 setup.py test
 
 %files
 %doc README.rst
-%python_sitelibdir/*%{modulename}*
+%python3_sitelibdir/*%{oname}*
 
-%if_with python3
-%files -n python3-module-%modulename
-%doc README.rst
-%python3_sitelibdir/*%{modulename}*
-%endif
-
-%check
-python setup.py test
-python3 setup.py test
 
 %changelog
+* Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.6-alt3
+- python2 disabled
+
 * Tue Apr 02 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt2
 - Rebuild with python3.7.
 
