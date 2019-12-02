@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.47.0
+Version:	3.47.1
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -271,6 +271,11 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Mon Dec 02 2019 Alexey Gladkov <legion@altlinux.ru> 3.47.1-alt1
+- New version (3.47.1).
+- Security fixes:
+  + CVE-2019-11745: EncryptUpdate should use maxout, not block size.
+
 * Mon Oct 28 2019 Alexey Gladkov <legion@altlinux.ru> 3.47.0-alt1
 - New version (3.47).
 - Update license tag.
