@@ -1,5 +1,5 @@
 Name:    libleatherman
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
@@ -56,6 +56,9 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 %_libdir/cmake/leatherman
 
 %changelog
+* Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
+- New version.
+
 * Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
 - New version.
 
