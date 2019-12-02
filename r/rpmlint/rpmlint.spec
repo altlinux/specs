@@ -1,9 +1,9 @@
 Name: rpmlint
 Version: 0.85
-Release: alt5
+Release: alt6
 
 Summary: RPM correctness checker
-License: GPL2
+License: GPL-2
 Group: Development/Other
 URL: http://rpmlint.zarb.org/
 
@@ -12,9 +12,11 @@ Source1: config.alt
 Source2: README.ALT
 BuildArch: noarch
 
+BuildRequires: python2-base
+
 Patch0: %name-0.85-alt-rpm-v2.patch
 Patch1: %name-0.85-popen2.patch
-
+Patch2: %name-0.85-alt-python2.patch
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Requires: bash binutils cpio cpp file findutils grep rpm-python
@@ -27,6 +29,7 @@ Binary and source packages can be checked.
 %setup -q
 # %%patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 cp %SOURCE1 config
 cp %SOURCE2 .
@@ -51,6 +54,9 @@ install -m644 %name.bash-completion %buildroot%_sysconfdir/bash_completion.d/%na
 %_datadir/%name
 
 %changelog
+* Mon Dec  2 2019 Terechkov Evgenii <evg@altlinux.org> 0.85-alt6
+- Build with python2 (Patch2)
+
 * Wed Dec 28 2016 Terechkov Evgenii <evg@altlinux.org> 0.85-alt5
 - Turn off patch0 to work with rpm-4.3
 
