@@ -1,11 +1,11 @@
 %def_disable static
 
 Name: owfs
-Version: 3.2p1
-Release: alt1.4
+Version: 3.2p2
+Release: alt1
 
 Summary: 1-Wire Virtual File System
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/owfs
@@ -13,6 +13,7 @@ Source: %name-%version.tar.gz
 #Patch: owfs-2.9-alt-gcc5.patch
 Patch0: owfs-tcl-req.patch
 Patch1: owfs-initscript.patch
+Patch2: owfs-0002-include-sys-sysmacros.h-for-major.patch
 
 BuildRequires: chrpath
 BuildRequires: service
@@ -169,9 +170,9 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 
 %prep
 %setup
-#patch -p2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
 
 %build
@@ -337,6 +338,10 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Mon Dec 02 2019 Grigory Milev <week@altlinux.ru> 3.2p2-alt1
+- New version
+- Add patch from RedHat: libow.so: undefined reference to 'major'
+
 * Mon Oct 14 2019 Grigory Milev <week@altlinux.ru> 3.2p1-alt1.4
 - fix build requires
 
