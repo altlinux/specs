@@ -1,6 +1,6 @@
 Name: fritzing
-Version: 0.9.3b.0.31.git701e3a3
-Release: alt5
+Version: 0.9.3b.0.312.git6efd5ec2
+Release: alt1
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3, CC-BY-SA-3.0
@@ -11,14 +11,20 @@ Url: http://fritzing.org
 Source0: %name-%version.tar
 # https://github.com/fritzing/fritzing-parts
 Source1: %name-parts.tar
+# Need to refresh at every update of fritzing-parts
+# Execute Fritzing -db parts.db in fritzing-parts directory
+Source2: parts.db
 
 Patch: fritzing-desktop-file-translation.patch
+
+# Translations
+Patch1: 430dc369b4418f783aa6e367ea5e2dcfdf38a2cf.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ glibc-devel-static
 BuildRequires: phonon-devel rpm-build-python3 rpmbuild-helper-desktop
-BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs
+BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs qt5-tools
 BuildRequires: libgit2-devel qt5-base-devel qt5-svg-devel qt5-serialport-devel
 
 # large chunk of arch-independent data is better not duplicated
@@ -48,7 +54,19 @@ This package contains shared data files for Fritzing.
 
 %prep
 %setup -a1
+
+# Dynamically link against system libgit2
+sed -i 's/LIBGIT_STATIC = true/LIBGIT_STATIC = false/' phoenix.pro
+
 %patch -p1
+%patch1 -p1
+
+# make sure that russian translation will be removed
+rm translations/fritzing_ru.qm
+
+# rebuild russian translation
+lrelease-qt5 phoenix.pro
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -56,17 +74,21 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %build
 qmake-qt5
-%make_build
+%make_build debug
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%makeinstall_std INSTALL_ROOT=%buildroot debug-install
+
 cp -r %name-parts %buildroot/%_datadir/%name
+
+install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
 
 %files
 %doc LICENSE.*
 %_bindir/Fritzing
-%_iconsdir/%name.png
-%_desktopdir/fritzing.desktop
+%_pixmapsdir/%name.png
+%_desktopdir/org.fritzing.Fritzing.desktop
+%_datadir/metainfo/org.fritzing.Fritzing.appdata.xml
 %_man1dir/Fritzing.*
 %_datadir/mime/packages/%name.xml
 
@@ -74,6 +96,11 @@ cp -r %name-parts %buildroot/%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Mon Dec 02 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.312.git6efd5ec2-alt1
+- Build from last commit.
+- Update parts.
+- Update russian translation.
+
 * Tue Jul 16 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.31.git701e3a3-alt5
 - Add russian translation to desktop file (Closes: #36850).
 
