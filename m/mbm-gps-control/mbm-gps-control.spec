@@ -1,7 +1,7 @@
 Summary: MBM GPS control software
 Name: mbm-gps-control
 Version: 0.1.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Servers
 URL: git://mbm.git.sourceforge.net/gitroot/mbm/mbm-gps-control
@@ -43,5 +43,8 @@ devices so it behaves as more common GPS devices.
 %_datadir/%name/*
 
 %changelog
+* Mon Oct 14 2019 Grigory Milev <week@altlinux.ru> 0.1.0-alt2
+- Fix build with latest versions of the gtk+2
+
 * Mon Nov 04 2013 Grigory Milev <week@altlinux.ru> 0.1.0-alt1
 - Initial build for ALT Linux
