@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define dist BerkeleyDB
 Name: perl-%dist
 Version: 0.63
-Release: alt1
+Release: alt2
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 Patch: perl-BerkeleyDB-0.49-alt-DB_VERSION.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libdb4-devel perl-MLDBM perl-Test-Pod perl-unicore
+BuildRequires: %{perl_libdb_pkgname}-devel perl-MLDBM perl-Test-Pod perl-unicore
 
 %description
 BerkeleyDB is a module which allows Perl programs to make use
@@ -49,6 +49,9 @@ rm %buildroot%perl_vendor_archlib/scan.pl
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.63-alt2
+- migration to libdb4.8
+
 * Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - automated CPAN update
 
