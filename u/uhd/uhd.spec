@@ -17,7 +17,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.14.1.1
-Release: alt1.1
+Release: alt2
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -31,7 +31,7 @@ Source2: images.tar
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
-BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
+BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
 BuildRequires: libnumpy-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cheetah
@@ -89,6 +89,10 @@ Python 3 API for %name
 %prep
 %setup
 sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
+
+# Some of these scripts are definitely not yet python3-compatible.
+# Due to that, change shebang to python2
+find host/utils -name '*.py' | xargs sed -i -e 's|/usr/bin/env python|/usr/bin/env python2|'
 
 %build
 pushd host
@@ -188,6 +192,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.14.1.1-alt2
+- Fixed shebang for installed scripts.
+- Rebuilt with boost-1.71.0.
+
 * Sat Oct 19 2019 Anton Midyukov <antohami@altlinux.org> 3.14.1.1-alt1.1
 - fix shebang for setup.py
 
