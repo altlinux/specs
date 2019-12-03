@@ -1,9 +1,9 @@
 Name: libflatbuffers
-Version: 1.10.0
-Release: alt1.1
+Version: 1.11.0
+Release: alt1
 
 Summary: Memory Efficient Serialization Library
-License: Apache
+License: APL
 Group: System/Libraries
 Url: https://google.github.io/flatbuffers/
 
@@ -63,6 +63,9 @@ make test
 %_libdir/*.so
 
 %changelog
+* Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.11.0-alt1
+- 1.11.0 released
+
 * Fri Jun 07 2019 Michael Shigorin <mike@altlinux.org> 1.10.0-alt1.1
 - E2K: explicit -std=c++11; avoid -Werror for now
 
