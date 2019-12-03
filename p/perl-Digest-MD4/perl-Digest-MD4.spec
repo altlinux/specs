@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.9
-Release: alt2.2
+Release: alt3
 
 Summary: Perl interface to the MD4 Algorithm
 License: Perl
@@ -12,7 +12,7 @@ Url: %CPAN %module
 Source: http://www.cpan.org/authors/id/M/MI/MIKEM/DigestMD4/Digest-MD4-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libdb4-devel libgdbm-devel perl-devel
+BuildRequires: %{perl_libdb_pkgname}-devel libgdbm-devel perl-devel
 
 %description
 The Digest::MD4 module allows you to use the RSA Data Security Inc. MD4
@@ -35,6 +35,9 @@ as input a message of arbitrary length and produces as output a 128-bit
 %perl_vendor_autolib/Digest
 
 %changelog
+* Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3
+- migration to libdb4.8
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2.2
 - rebuild with new perl 5.28.1
 
