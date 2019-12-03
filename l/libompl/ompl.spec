@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_optio
 
 Name:           libompl
 Version:        1.3.2
-Release:        alt1_6
+Release:        alt2_6
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -30,6 +30,7 @@ BuildRequires:  python
 BuildRequires:  erb
 
 Patch0: ompl-1.3.2-pybindings.patch
+Patch1: ompl-1.3.2-upstream-boost-compat.patch
 Source44: import.info
 Provides: ompl = %{version}-%{release}
 
@@ -57,6 +58,7 @@ developing applications that use %{oldname}.
 # Get rid of bundled odeint
 rm -rf src/external/omplext_odeint/
 %patch0 -p0 -b .pybindings
+%patch1 -p1
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
@@ -103,6 +105,9 @@ make -C build test || exit 0
 %{_libdir}/cmake/%{oldname}
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt2_6
+- Rebuilt with boost-1.71.0.
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_6
 - update to new release by fcimport
 
