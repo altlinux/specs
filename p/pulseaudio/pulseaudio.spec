@@ -1,15 +1,15 @@
 Name: pulseaudio
 Version: 13.0
-Release: alt2
+Release: alt3
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
-License: LGPL
+License: LGPLv2.1
 Url: http://pulseaudio.org/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-python3
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
@@ -74,7 +74,6 @@ Conflicts: %name-daemon < 0.9.16-alt0.2
 Summary: PulseAudio equalizer interface
 Group: Sound
 Requires: lib%name = %version-%release
-%py_requires dbus PyQt5
 
 %package daemon
 Summary: PulseAudio daemon
@@ -217,6 +216,8 @@ find %buildroot%_libdir -name \*.la -delete
 %_sbindir/useradd -r -g pulse -G audio -d /run/pulse -s /dev/null \
 	-c "Pulseaudio daemon" -M -n pulse &>/dev/null ||:
 
+%set_python3_req_method strict
+
 %files
 
 %files daemon
@@ -333,6 +334,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt3
+- rebuilt with python3
+
 * Fri Nov 08 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt2
 - rebuilt to avoid lirc dependency
 
