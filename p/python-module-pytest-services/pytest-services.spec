@@ -1,6 +1,6 @@
 %define oname pytest-services
 Name: python-module-%oname
-Version: 1.3.1
+Version: 2.0.1
 Release: alt1
 Summary: Services plugin for pytest testing framework
 License: MIT
@@ -54,6 +54,9 @@ py.test3 -vv --fixtures tests
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
+- 2.0.1
+
 * Fri Sep 06 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - 1.2.1 -> 1.3.1
 - removed subpackage for python-2
