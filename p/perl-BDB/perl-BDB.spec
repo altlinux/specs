@@ -2,7 +2,7 @@
 %define dist BDB
 Name: perl-%dist
 Version: 1.92
-Release: alt1.1
+Release: alt2
 Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
@@ -13,7 +13,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libdb4-devel perl-common-sense perl-devel
+BuildRequires: %{perl_libdb_pkgname}-devel perl-common-sense perl-devel
 
 %description
 See the BerkeleyDB documentation
@@ -36,6 +36,9 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt2
+- migration to libdb4.8
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt1.1
 - rebuild with new perl 5.28.1
 
