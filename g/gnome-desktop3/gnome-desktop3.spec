@@ -16,11 +16,11 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
-License: %gpl2plus, %fdl
+License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -185,6 +185,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
