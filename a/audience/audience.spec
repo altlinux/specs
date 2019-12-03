@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 2.6
+%define ver_major 2.7
 %define gst_api_ver 1.0
 %define _name videos
 %define rdn_name io.elementary.%_name
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A modern media player
@@ -60,6 +60,9 @@ hardware acceleration than most players out there.
 %doc README.md
 
 %changelog
+* Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
+- updated to 2.7.0-6-g168d1ed
+
 * Thu Jan 17 2019 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
 - updated to 2.6.3-6-g4c4c239
 
