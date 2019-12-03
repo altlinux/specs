@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        0.9.2
+Version:        0.9.3
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -53,6 +53,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 
 
 %changelog
+* Tue Dec 03 2019 Alexei Takaseev <taf@altlinux.org> 1:0.9.3-alt1
+- Version 0.9.3
+
 * Tue Aug 20 2019 Alexei Takaseev <taf@altlinux.org> 1:0.9.2-alt1
 - Version 0.9.2
 

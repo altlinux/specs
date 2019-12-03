@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: libnftnl
-Version: 1.1.4
-Release: alt2
+Version: 1.1.5
+Release: alt1
 
 Summary: Netfilter nf_tables infrastructure library
 License: GPL-2.0-only
@@ -83,6 +83,9 @@ cp -a examples/.libs/* %buildroot%_sbindir/
 %endif
 
 %changelog
+* Tue Dec 03 2019 Alexei Takaseev <taf@altlinux.org> 1.1.5-alt1
+- Version 1.1.5
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 1.1.4-alt2
 - Fix build --without check (still weird though)
 - Minor spec cleanup
