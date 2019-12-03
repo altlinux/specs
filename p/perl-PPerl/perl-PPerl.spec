@@ -1,6 +1,6 @@
 Name: perl-PPerl
 Version: 0.25
-Release: alt4.2
+Release: alt5
 
 Summary: Make perl scripts persistent in memory
 License: GPL or Artistic
@@ -19,7 +19,7 @@ Patch6: PPerl-0.25-alt-logfile_help.patch
 Patch7: PPerl-0.25-alt-test14.patch
 
 # Automatically added by buildreq on Wed Aug 08 2007
-BuildRequires: libdb4-devel libgdbm-devel perl-DBM perl-devel
+BuildRequires: %{perl_libdb_pkgname}-devel libgdbm-devel perl-DBM perl-devel
 
 %description
 This program turns ordinary perl scripts into long running daemons, making
@@ -56,6 +56,9 @@ rm t/10tie.t
 %perl_vendor_autolib/PPerl
 
 %changelog
+* Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt5
+- migration to libdb4.8
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt4.2
 - rebuild with new perl 5.28.1
 
