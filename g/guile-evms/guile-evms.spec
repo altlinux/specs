@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.5
-Release: alt10
+Release: alt11
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt11
+- fix FTBFS with gcc9
+
 * Thu Jul 11 2019 Alexey Shabalin <shaba@altlinux.org> 0.5-alt10
 - Add /var/lib/docker,/var/lib/lxd,/var/lib/libvirt/images to well-known-mountpoints
 
