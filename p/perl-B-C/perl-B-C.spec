@@ -3,7 +3,7 @@
 %def_without test
 Name: perl-B-C
 Version: 1.57
-Release: alt1
+Release: alt2
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -13,7 +13,7 @@ URL: %CPAN B-C
 # Cloned from git https://code.google.com/p/perl-compiler
 Source: %name-%version.tar
 
-BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
+BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel %{perl_libdb_pkgname}-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
 
 %description
 %summary
@@ -42,6 +42,9 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-deve
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 1.57-alt2
+- migration to libdb4.8
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
 - new version
 
