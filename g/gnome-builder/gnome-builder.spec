@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define xdg_name org.gnome.Builder
 %define ver_major 3.34
@@ -14,7 +14,7 @@
 
 Name: gnome-builder
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -26,6 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: gnome-builder-3.34.1-up-meson.patch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -101,6 +102,7 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -214,6 +216,10 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt2
+- updated to 3.34.1-6-gf64dc9d30
+- backported fixes to build with meson-0.52
+
 * Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
