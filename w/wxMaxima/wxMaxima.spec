@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 19.12.0
-Release: alt1
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -18,7 +18,7 @@ Requires: maxima
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libwxGTK3.0-devel libpango-devel libxml2-devel zlib-devel makeinfo
 
-ExclusiveArch: %ix86 x86_64 aarch64 %e2k
+ExclusiveArch: %ix86 x86_64 armh aarch64 %e2k
 
 %description
 wxMaxima is a wxWidgets GUI for the computer algebra system Maxima.
@@ -74,6 +74,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Wed Dec 04 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.12.0-alt2
+- add armh to exclusive arches, there is nothing exclusive about it
+
 * Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.0-alt1
 - New version.
 - Fix license according to SPDX.
