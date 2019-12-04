@@ -12,8 +12,8 @@
 Summary:	Mozilla LDAP C SDK
 Name:		mozldap
 Version:	6.0.7
-Release:	alt4
-License:	MPL/GPL/LGPL
+Release:	alt5
+License:	MPL-1.1 or GPL-2.0 or LGPL-2.1
 URL:		https://wiki.mozilla.org/LDAP_C_SDK
 Group:		System/Libraries
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -21,7 +21,7 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 Source0:	mozldap.tar
 Source2:	fix_headers.sh
 
-Patch1:     mozldap-6.0.7-fix_brackets_for_perl5.26.patch
+Patch1:		mozldap-6.0.7-fix_brackets_for_perl5.26.patch
 Patch2:		ldapcsdk-5.1.7-alt-rpath-link.patch
 Patch3:		mozldap-alt-allow-x86_64-host-build.patch
 Patch5:		mozldap-alt-pc-fix.patch
@@ -29,9 +29,13 @@ Patch6:		mozldap-fix-pthread-link.patch
 Patch7:		mozldap-alt-fix-ldap_str2charray.patch
 
 # Automatically added by buildreq on Mon Feb 26 2007 (-bi)
-BuildRequires: chrpath gcc-c++ libsasl2-devel nss-utils python-base
+BuildRequires: chrpath
+BuildRequires: gcc-c++
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
+BuildRequires: libsasl2-devel
+BuildRequires: nss-utils
+BuildRequires: python2-base
 %if_with svrcore
 BuildRequires: libsvrcore-devel
 %endif
@@ -177,10 +181,14 @@ done
 
 find -type f |
 while read f; do
-  file "$f" |grep -qs ELF || continue
-  if chrpath -l "$f" |fgrep -qs "RPATH="; then
-    chrpath -d "$f"
-  fi
+  file "$f" |grep -qs ELF ||
+    continue
+  chrpath -l "$f" |
+    fgrep -qs \
+        -e "RPATH=" \
+        -e "RUNPATH=" ||
+            continue
+  chrpath -d "$f"
 done
 
 %files
@@ -195,6 +203,10 @@ done
 %_datadir/%name
 
 %changelog
+* Wed Dec 04 2019 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt5
+- Update license tag.
+- Update BuildRequires.
+
 * Mon Feb 04 2019 Stanislav Levin <slev@altlinux.org> 6.0.7-alt4
 - Made conditional usage of svrcore.
 
