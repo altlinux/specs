@@ -1,9 +1,9 @@
-%def_without python3scons
+%def_with python3scons
 %def_with lua51
 
 Name: btanks
 Version: 0.9.8083
-Release: alt7
+Release: alt8
 
 Summary: Battle Tanks is a funny battle on your desk
 
@@ -46,6 +46,7 @@ Patch16:	%{name}-gcc4.7.patch
 Patch17:	%{name}-0.9.8083-lua-5.2.patch
 # fix build against scons 3.0
 Patch18:	%{name}-scons3.patch
+Patch19:	%{name}-scons-3.0.3.patch
 
 # debian patches
 Patch21:	rename-currency-symbol.patch
@@ -96,6 +97,7 @@ This package contains all data files for Battle Tanks
 %endif
 %if_with python3scons
 %patch18 -p1 -b .scons
+%patch19 -p1 -b .scons
 %endif
 %patch21 -p1
 %patch22 -p1
@@ -198,6 +200,9 @@ done
 %_datadir/%name/data/*
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.8083-alt8
+- NMU: fixed build
+
 * Sat Jan 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.8083-alt7
 - NMU: fixed build
 
