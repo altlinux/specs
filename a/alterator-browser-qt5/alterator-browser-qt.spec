@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Tue Dec 03 2019 Sergey V Turchin <zerg at altlinux dot org> 3.1.2-alt1
+- update tooltips on language change
+
 * Tue Dec 03 2019 Sergey V Turchin <zerg at altlinux dot org> 3.1.1-alt1
 - update tooltips on language change
 
