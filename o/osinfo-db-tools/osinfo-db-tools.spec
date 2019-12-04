@@ -1,13 +1,14 @@
 
 Summary: Tools for managing the osinfo database
 Name: osinfo-db-tools
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
 Source: %name-%version.tar
 Url: http://libosinfo.org/
 
+BuildRequires(pre): meson >= 0.49.0
 BuildRequires: gettext >= 0.19.8
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.44 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
@@ -32,17 +33,16 @@ information about operating systems for use with virtualization
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %check
-%make check
+%meson_test
 
 %files -f %name.lang
 %doc NEWS README
@@ -50,6 +50,9 @@ information about operating systems for use with virtualization
 %_man1dir/*
 
 %changelog
+* Wed Dec 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- new version 1.7.0
+
 * Fri Aug 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
