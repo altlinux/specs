@@ -1,75 +1,43 @@
 %define oname fbads
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3.6
-Release: alt1.2
+Release: alt2
+
 Summary: Python client for the Facebook Ads API
 License: Free
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/fbads/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-Python client for the Facebook Ads API. Works with the new ads schema
-(ad sets). Under development!
-
-%package -n python3-module-%oname
-Summary: Python client for the Facebook Ads API
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Python client for the Facebook Ads API. Works with the new ads schema
 (ad sets). Under development!
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/tests
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/tests
-%endif
+
 
 %changelog
+* Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.6-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3.6-alt1.2
 - (NMU) rebuild with python3.6
 
