@@ -37,16 +37,17 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.14.5
-Release: alt2
+Release: alt3
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
-Patch0: wesnoth-1.13.8-sdl2.02.patch
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
 Patch2:	wesnoth-1.15.5-alt-gcc8.patch
+Patch3: wesnoth-1.14.5-upstream-boost-tribool.patch
+Patch4: wesnoth-1.14.5-upstream-boost-asio.patch
 
 Requires: %name-data = %version-%release
 
@@ -223,6 +224,8 @@ This package contains python interface to Battle for Wesnoth.
 %setup -n wesnoth-%version
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
+%patch4 -p1
 
 %build
 %define _optlevel 3
@@ -711,6 +714,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Wed Dec 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.5-alt3
+- Rebuilt with boost-1.71.0.
+
 * Tue Feb 12 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.5-alt2
 - added gcc8 patch
 
