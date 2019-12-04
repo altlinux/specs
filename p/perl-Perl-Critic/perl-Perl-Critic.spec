@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.134
+Version: 1.136
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -47,10 +47,10 @@ code analysis.
 %perl_vendor_install
 
 %files
-%doc LICENSE TODO.pod CONTRIBUTING.md README.md Changes README examples
+%doc TODO.pod CONTRIBUTING.md README.md Changes README examples
 %perl_vendor_privlib/Perl/Critic*
 %perl_vendor_privlib/Test/Perl/Critic/Policy.pm
-%doc examples extras Changes LICENSE INSTALL README.*
+%doc examples extras Changes README.*
 %exclude %perl_vendor_archlib
 
 %files -n perlcritic
@@ -59,6 +59,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.136-alt1
+- automated CPAN update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.134-alt1
 - automated CPAN update
 
