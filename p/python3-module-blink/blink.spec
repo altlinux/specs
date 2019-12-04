@@ -1,85 +1,50 @@
 %define oname blink
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2.0
-Release: alt1.1
+Release: alt2
+
 Summary: REST client interface
 License: BSD
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/blink/
+BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-requests python2.7(yaml) python2.7(dateutil.parser)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests python3(yaml) python3(dateutil.parser)
-%endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 A REST interface from Python.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: REST client interface
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-A REST interface from Python.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.0-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
