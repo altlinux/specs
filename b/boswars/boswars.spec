@@ -1,13 +1,13 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           boswars
 Version:        2.7
-Release:        alt1_14.svn160110
+Release:        alt1_19.svn160110
 Summary:        Bos Wars is a futuristic real-time strategy game
-Group:          Games/Other
 License:        GPLv2
 URL:            http://www.boswars.org/
 Source0:        ftp://ftp.nluug.nl/pub/os/Linux/distr/debian/pool/main/b/boswars/boswars_2.7+svn160110.orig.tar.xz
@@ -23,9 +23,11 @@ Patch0:         boswars-2.4.1-SConstruct.patch
 #Patch2:         boswars-2.6.1-lua-5.2.patch
 # Use compat-lua51 for now
 Patch3:         boswars-2.7-compat-lua-5.1.patch
+Patch4:         boswars-2.7-sconstruct-py3.patch
+BuildRequires:  gcc gcc-c++
 BuildRequires:  libtheora-devel libvorbis-devel libSDL-devel libGL-devel
-BuildRequires:  libtolua++-lua5.1-devel libpng-devel scons desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  libtolua++-lua5.1-devel libpng-devel scons
+BuildRequires:  libappstream-glib desktop-file-utils
 Requires:       icon-theme-hicolor xorg-utils
 Source44: import.info
 
@@ -39,6 +41,8 @@ Bos Wars aims to create a completly original and fun open source RTS game.
 %setup -q -n %{name}
 %patch0 -p1
 %patch3 -p1
+%patch4 -p1
+
 iconv -f ISO-8859-1 -t UTF8 doc/guichan-copyright.txt > guichan-copyright.txt
 find campaigns engine maps -type f -executable -exec chmod -x {} ';'
 # we want to use the system version of these
@@ -46,7 +50,7 @@ rm engine/tolua/*.h engine/tolua/tolua_*.cpp
 
 
 %build
-scons %{?_smp_mflags} opengl=1 CC="gcc $RPM_OPT_FLAGS" CXX="g++ $RPM_OPT_FLAGS"
+scons %{?_smp_mflags} opengl=1 CC="gcc $RPM_OPT_FLAGS" CXX="g++ $RPM_OPT_FLAGS" LIBPATH=%{_libdir}
 
 
 %install
@@ -83,6 +87,9 @@ install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_19.svn160110
+- fixed build
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_14.svn160110
 - update to new release by fcimport
 
