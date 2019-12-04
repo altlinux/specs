@@ -1,7 +1,7 @@
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
 Version:  1.5
-Release:  alt3
+Release:  alt4
 
 Summary:  Programs that test various rt-linux features
 License:  GPL-2.0-or-later
@@ -51,6 +51,9 @@ install -D src/hwlatdetect/hwlatdetect.py %buildroot/usr/sbin/hwlatdetect
 %doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 
 %changelog
+* Wed Dec 04 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt4
+- Return of the --numa option (for rteval).
+
 * Sun Sep 15 2019 Vitaly Chikunov <vt@altlinux.org> 1.5-alt3
 - Make it compile on other arches.
 
