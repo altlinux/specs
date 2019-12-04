@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -74,6 +74,9 @@ Patch402: alt-002-tmpdir.patch
 Patch403: alt-003-poppler-compat.patch
 Patch404: alt-004-shortint.patch
 Patch405: alt-005-mysql8-transition.patch
+
+# Based on upstream commit 56ffe3c0a1261
+Patch406: 0001-Switch-mdds-to-1.5.0-and-liborcus-to-0.15.0.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -265,6 +268,7 @@ echo Direct build
 #patch403 -p1
 %patch404 -p1
 %patch405 -p2
+%patch406 -p1
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -555,6 +559,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Dec 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0.3-alt2
+- Rebuilt with mdds-1.5.0 and boost-1.71.0.
+
 * Mon Aug 05 2019 Fr. Br. George <george@altlinux.ru> 6.3.0.3-alt1
 - Version up to 6.3.0.3
 - Require pentaho-reporting-flow-engine (Closes: #36900)
