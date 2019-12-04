@@ -2,8 +2,8 @@
 %define dist JSON-XS
 
 Name: perl-%dist
-Version: 3.04
-Release: alt2
+Version: 4.02
+Release: alt1
 Epoch: 20191119
 
 Summary: JSON serialising/deserialising, done correctly and fast
@@ -22,7 +22,7 @@ primary goal is to be *correct* and its secondary goal is to be
 *fast*. To reach the latter goal it was written in C.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 20191119:4.02-alt1
+- automated CPAN update
+
 * Tue Nov 19 2019 Valery Inozemtsev <shrek@altlinux.ru> 20191119:3.04-alt2
 - reverted to 3.04
 
