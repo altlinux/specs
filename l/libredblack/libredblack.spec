@@ -7,7 +7,7 @@
 Summary:        Library for handling red-black tree searching algorithm
 Name:           libredblack
 Version:        1.3
-Release:        alt1_3
+Release:        alt1_4
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://libredblack.sourceforge.net/
@@ -43,11 +43,12 @@ have these header and object files available for creating the executables.
 %patch0 -p1
 %patch1 -p1
 
+
 %build
 # fix build on aarch64
 autoreconf -vfi
 
-%configure --disable-static
+%configure --disable-static --with-python=/usr/bin/python2
 %make_build
 
 %install
@@ -71,6 +72,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
+- fixed build
+
 * Sat Jun 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
 - update by mgaimport
 
