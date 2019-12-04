@@ -19,12 +19,12 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
-License: LGPL
+License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
@@ -109,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Sun Oct 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
 - enabled twolame mp2 audio encoder plugin 
 

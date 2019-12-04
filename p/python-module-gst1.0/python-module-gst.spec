@@ -11,12 +11,12 @@
 %endif
 
 Name: python-module-gst%gst_api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
-License: LGPL2+
+License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/
 
 Provides: %_name = %version-%release
@@ -104,6 +104,9 @@ popd
 %doc AUTHORS NEWS
 
 %changelog
+* Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 - made python2 build optional
