@@ -3,12 +3,12 @@
 
 Name: pysol
 Version: 4.82
-Release: alt12
+Release: alt13
 
 Summary: PySol provides several solitaire card games
 Summary(ru_RU.UTF-8): PySol предлагает коллекцию карточных пасьянсов
 
-License: GPL
+License: GPLv2
 Group: Games/Cards
 Packager: Igor Vlasenko <viy@altlinux.ru>
 URL: http://www.oberhumer.com/opensource/pysol/
@@ -27,14 +27,14 @@ Patch4: %name-tcltk8.6.patch
 Conflicts: pysol-cardsets <= 4.40-alt1
 Conflicts: pysol-music <= 4.40-alt1
 
-BuildArchitectures: noarch
+BuildArch: noarch
 
 %add_python_req_skip acard actions gamedb help mfxtools mfxutil stats util pysolaudio
 %add_python_req_skip pysolsoundserver
 %add_python_compile_include %_gamesdatadir/%name
 
 # Automatically added by buildreq on Wed Mar 30 2005 (-bi)
-BuildRequires: python-base python-modules-compiler python-modules-encodings
+BuildRequires: python-modules-compiler python-modules-encodings
 
 %description
 PySol has several solitaire card games, written in 100%% pure
@@ -79,17 +79,6 @@ PYTHON=python
 EOF
 chmod 755 %buildroot%_gamesbindir/%name.sh
 
-# Menu support - used desktop file
-# mkdir -p %buildroot{%_menudir,%_iconsdir,%_liconsdir,%_miconsdir}
-# cat >%buildroot%_menudir/%name <<EOF
-# ?package(%name): \
-# needs=x11 \
-# section=Amusement/Cards \
-# title=PySOL \
-# command="soundwrapper %_gamesbindir/%name.sh" \
-# icon=%name.xpm \
-# longtitle="All solitaire cards games"
-# EOF
 install -d %buildroot%_desktopdir
 install -m 644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 
@@ -121,6 +110,9 @@ mv pysol.xpm %buildroot%_niconsdir
 
 
 %changelog
+* Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 4.82-alt13
+- fixed build
+
 * Thu Aug 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.82-alt12
 - Fixed crash with Tcl/Tk 8.6 (thnx sbolshakov@) (closes: #33419)
 
