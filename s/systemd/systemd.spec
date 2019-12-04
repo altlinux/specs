@@ -1,5 +1,5 @@
 %def_disable check
-
+%define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 
@@ -41,7 +41,7 @@
 %def_enable selinux
 %def_disable apparmor
 
-%define hierarchy hybrid
+%define hierarchy unified
 %def_enable kill_user_processes
 
 %def_enable sysusers
@@ -58,11 +58,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 243
+%define ver_major 244
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
+Version: %ver_major
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -148,7 +148,7 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
 
-%{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
+%{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
@@ -498,6 +498,8 @@ Requires: udev-hwdb = %EVR
 Requires: systemd-utils = %EVR
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
+Provides: udev-extras = %EVR
+Obsoletes: udev-extras < %EVR
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 Conflicts: make-initrd < 2.2.10
@@ -511,16 +513,6 @@ sysfs. /sbin/hotplug provides a notification to userspace when any
 device is added or removed from the system. Using these two features,
 a userspace implementation of a dynamic /dev is now possible that can
 provide a very flexible device naming policy
-
-%package -n udev-extras
-Summary: Extra rules and tools for udev
-Group: System/Configuration/Hardware
-License: GPLv2+
-Requires: udev = %EVR
-
-%description -n udev-extras
-The udev-extras package contains an additional rules and tools
-to create and identify devices
 
 %package -n udev-rules
 Summary: Rule files for udev
@@ -1347,7 +1339,7 @@ fi
 %_man8dir/systemd-initctl*
 %_man8dir/systemd-kexec*
 %_man8dir/systemd-makefs*
-%_man8dir/systemd-makeswap*
+%_man8dir/systemd-mkswap*
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
 %_man8dir/systemd-rc-local-generator*
@@ -1612,6 +1604,9 @@ fi
 %_unitdir/altlinux-simpleresolv*
 %_unitdir/*/*resolv*
 /lib/systemd/network/80-container-host0.network
+/lib/systemd/network/80-wifi-adhoc.network
+/lib/systemd/network/80-wifi-ap.network.example
+/lib/systemd/network/80-wifi-station.network.example
 %_mandir/*/*network*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
@@ -1785,8 +1780,10 @@ fi
 /lib/udev/udevd
 /lib/udev/ata_id
 /lib/udev/cdrom_id
+/lib/udev/fido_id
 /lib/udev/mtd_probe
 /lib/udev/scsi_id
+/lib/udev/v4l_id
 /sbin/udevadm
 /sbin/udevd
 /sbin/systemd-hwdb
@@ -1801,18 +1798,12 @@ fi
 %_datadir/bash-completion/completions/udevadm
 %_datadir/zsh/site-functions/_udevadm
 
-%files -n udev-extras
-/lib/udev/v4l_id
-/lib/udev/rules.d/78-sound-card.rules
-
 %files -n udev-rules
 %dir %_sysconfdir/udev/rules.d
 %config(noreplace) %_sysconfdir/udev/rules.d/*
 /lib/udev/initramfs-rules.d
 /lib/udev/rules.d
 
-# extras
-%exclude /lib/udev/rules.d/78-sound-card.rules
 # systemd
 %exclude /lib/udev/rules.d/70-uaccess.rules
 %exclude /lib/udev/rules.d/71-seat.rules
@@ -1825,6 +1816,11 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Dec 04 2019 Alexey Shabalin <shaba@altlinux.org> 1:244-alt1
+- 244
+- switch default-hierarchy to unified (cgroup-v2)
+- drop udev-extras package
+
 * Fri Nov 22 2019 Alexey Shabalin <shaba@altlinux.org> 1:243.4-alt1
 - 243.4 from stable branch
 
@@ -2201,7 +2197,7 @@ fi
 - update altlinux-openresolv units
 - run first_time before display-manager (ALT#29200)
 - add systemd-logind shell wrapper
-- revert aloow copy to /etc/localtime (Debian patch)
+- revert allow copy to /etc/localtime (Debian patch)
 - make hostnamed/localed/logind/machined/timedated D-Bus activatable (Debian patch)
 - split systemd-network support from main tmpfiles.d/systemd.conf
 - move hostnamed/localed/logind/machined/timedated and *ctl utils to systemd-service package
