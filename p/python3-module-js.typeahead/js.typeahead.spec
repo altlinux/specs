@@ -1,65 +1,36 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.2
 %define oname js.typeahead
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.2
-#Release: alt1.1
+Release: alt2
+
 Summary: Fanstatic Package of Twitter's Typeadhead.js
 License: GPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/js.typeahead/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-%py_requires js js.jquery
-
-%description
-Fanstatic Package of Twitter's Typeadhead.js.
-
-%package -n python3-module-%oname
-Summary: Fanstatic Package of Twitter's Typeadhead.js
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires js js.jquery
 
-%description -n python3-module-%oname
+
+%description
 Fanstatic Package of Twitter's Typeadhead.js.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -67,15 +38,13 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %files
 %doc docs/*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc docs/*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.2-alt2
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1.2
 - Rebuild with python3.7.
 
