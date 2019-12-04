@@ -1,8 +1,8 @@
 %define oname 2gis
 
 Name: python3-module-%oname
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: 2gis library for Python
 License: BSD
@@ -77,6 +77,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.1-alt1
+- version updated to 1.3.1
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
 - python2 disabled
 
