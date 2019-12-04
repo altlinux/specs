@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.6.0
+Version: 1.7.1
 Release: alt1
 
 License: LGPLv2+
@@ -11,12 +11,13 @@ Source: %name-%version.tar
 #Patch2: %name-%version-altlinux.patch
 
 Url: https://libosinfo.org
+BuildRequires(pre): meson >= 0.49.0
 BuildRequires: gettext >= 0.19.8
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.44 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 BuildRequires: pkgconfig(libxslt) >= 1.0.0
-BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: gobject-introspection-devel >= 0.9.7
 BuildRequires: perl-podlators
 BuildRequires: vala
@@ -76,27 +77,23 @@ Contains developer documentation for %name.
 #%%patch2 -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-introspection \
-	--with-usb-ids-path=%_datadir/misc/usb.ids \
-	--with-pci-ids-path=%_datadir/misc/pci.ids \
-	--enable-vala \
-	--enable-gtk-doc
+%meson \
+    -Denable-gtk-doc=true \
+    -Denable-tests=true \
+    -Dwith-usb-ids-path=%_datadir/misc/usb.ids \
+    -Dwith-pci-ids-path=%_datadir/misc/pci.ids \
+    -Denable-introspection=enabled \
+    -Denable-vala=enabled
 
-%make_build
-
-chmod a-x examples/*.js examples/*.py
+%meson_build
 
 %install
-%makeinstall_std
-rm -f %buildroot%_libdir/*.{a,la}
-
+%meson_install
 %find_lang --with-gnome %name
 
 %check
-%make check
+export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
+%meson_test
 
 %files -f %name.lang
 %doc COPYING.LIB NEWS README
@@ -105,8 +102,6 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_libdir/%name-*.so.*
 
 %files devel
-%doc examples/demo.js
-%doc examples/demo.py
 %_libdir/%name-*.so
 %dir %_includedir/%name-1.0
 %dir %_includedir/%name-1.0/osinfo
@@ -124,6 +119,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Dec 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Fri Aug 23 2019 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
@@ -136,10 +134,10 @@ rm -f %buildroot%_libdir/*.{a,la}
 * Sat Feb 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
-* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1%ubt
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
-* Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1%ubt
+* Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
