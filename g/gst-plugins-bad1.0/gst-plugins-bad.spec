@@ -35,12 +35,12 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
-License: LGPL
+License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/
 
 %if_disabled snapshot
@@ -166,6 +166,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
 - rebuilt with libopenh264-2.0.0
 

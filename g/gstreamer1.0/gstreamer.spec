@@ -11,11 +11,11 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
-License: LGPL
+License: LGPLv2+
 Group: System/Libraries
 Url: http://gstreamer.freedesktop.org
 
@@ -32,6 +32,7 @@ BuildRequires(pre): meson rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
+BuildRequires: libgsl-devel libgmp-devel
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: bash-completion
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
@@ -179,6 +180,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/bash-completion/helpers/gst
 
 %changelog
+* Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 

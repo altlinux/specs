@@ -12,12 +12,12 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
-License: LGPL
+License: LGPLv2+
 Url: http://gstreamer.freedesktop.org/
 
 Provides: %_name-ugly = %version-%release
@@ -85,6 +85,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Tue Sep 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
