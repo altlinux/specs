@@ -1,65 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.2
 %define oname js.jquery_form
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.09
-#Release: alt1.1
+Release: alt2
+
 Summary: Fanstatic packaging of jQuery Form
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/js.jquery_form/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
 
-%py_provides %oname
-%py_requires js js.jquery
-
-%description
-This library packages jQuery Form for fanstatic.
-
-%package -n python3-module-%oname
-Summary: Fanstatic packaging of jQuery Form
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires js js.jquery
 
-%description -n python3-module-%oname
+
+%description
 This library packages jQuery Form for fanstatic.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -67,15 +35,13 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.09-alt2
+- python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 3.09-alt1.2
 - Rebuild with python3.7.
 
