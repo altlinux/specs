@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1062.1.2.vz7.114.11
-%define orelease 1062.1.2.vz7.114.11
+#     rh7-3.10.0-1062.4.2.vz7.116.2
+%define orelease 1062.4.2.vz7.116.2
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -52,7 +52,7 @@ Epoch: 1
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
 Summary: The Linux kernel (the core of the Linux operating system)
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 
@@ -598,6 +598,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Thu Dec 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.4.2.vz7.116.2
+- Build 3.10.0-alt2.1062.4.2.vz7.116.2
+- fix License
+
 * Mon Nov 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.1.2.vz7.114.11
 - Build 3.10.0-alt2.1062.1.2.vz7.114.11
 - add options for writeback throttling
