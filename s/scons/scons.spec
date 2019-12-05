@@ -1,11 +1,11 @@
 Name: scons
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: an Open Source software construction tool
 Summary(ru_RU.UTF-8): Open Source средство для сборки ПО
 
-License: MIT, freely distributable
+License: MIT
 Group: Development/Python
 Url: http://www.scons.org
 
@@ -61,6 +61,9 @@ sed -i 's|/usr/bin/env python|/usr/bin/python3|' script/*
     --install-scripts=%_bindir \
     --install-data=%_datadir
 
+# Add symlink for compability with Fedora and Mageia
+ln -s scons %buildroot%_bindir/scons-3
+
 %files
 %doc LICENSE.txt CHANGES.txt README.txt RELEASE.txt
 %_man1dir/*
@@ -70,6 +73,10 @@ sed -i 's|/usr/bin/env python|/usr/bin/python3|' script/*
 %_mandir/man?/*
 
 %changelog
+* Thu Dec 5 2019 Vladimir Didenko <cow@altlinux.org> 3.1.1-alt2
+- add scons-3 symlink (closes: 37578)
+- fix license name
+
 * Thu Aug 29 2019 Vladimir Didenko <cow@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
