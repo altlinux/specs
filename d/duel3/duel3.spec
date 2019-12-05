@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.25.%{snapshot}
+Release:        alt3_0.29.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -64,6 +64,7 @@ mv temp music-credits.txt
 
 
 %build
+%add_optflags -DALLEGRO_NO_FIX_ALIASES
 pushd Source
 %make_build PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -Wno-non-virtual-dtor"
@@ -101,6 +102,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.29.20060225
+- fixed build
+
 * Fri Feb 15 2019 Ivan Razzhivin <underwit@altlinux.org> 0.1-alt3_0.25.20060225
 - GCC8 fix
 
