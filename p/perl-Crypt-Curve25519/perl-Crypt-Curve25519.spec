@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.06
-Release: alt3.1
+Release: alt4
 
 Summary: Generate shared secret using elliptic-curve Diffie-Hellman function
 License: %perl_license
@@ -27,6 +27,8 @@ Generate shared secret using elliptic-curve Diffie-Hellman function
 # see mcst#1802; check with lcc >= 1.24; s/uint128_t/uintmax_t/g fails tests
 cc --version | grep -q '^lcc:1.24' || sed -i 's,=\$x64,=0,;' Makefile.PL
 %endif
+# https://github.com/ajgb/crypt-curve25519/issues/9
+grep -rl "fmul" ./ | xargs sed -i 's/fmul/fixedvar/g'
 
 %build
 %perl_vendor_build
@@ -40,6 +42,9 @@ cc --version | grep -q '^lcc:1.24' || sed -i 's,=\$x64,=0,;' Makefile.PL
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4
+- fixed build
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt3.1
 - rebuild with new perl 5.28.1
 
