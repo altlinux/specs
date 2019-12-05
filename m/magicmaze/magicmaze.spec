@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_21
+Release:        alt2_25
 Summary:        Board game featuring a maze which the players change each turn
-Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
 URL:            http://www.helixsoft.nl/project_page.php?file_name=magicmaze.proj
 Source0:        http://www.helixsoft.nl/download/%{name}-%{version}_src.tar.gz
@@ -19,6 +19,7 @@ Patch2:         maze-1.0-fhs.patch
 Patch3:         magicmaze-1.0.2-license-clarification.patch
 Patch4:         magicmaze-1.0.2-trademarks.patch
 Patch5:         magicmaze-1.0.2-format-security.patch
+BuildRequires:  gcc-c++
 BuildRequires:  libgstream-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -49,6 +50,7 @@ chmod -x `find -type f`
 
 
 %build
+%add_optflags -DALLEGRO_NO_FIX_ALIASES
 %make_build -f makefile.unx PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations -I/usr/include/gstream"
 
@@ -60,7 +62,7 @@ make -f makefile.unx install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install \
 %if 0%{?fedora} && 0%{?fedora} < 19
-              \
+  --vendor fedora            \
 %endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
@@ -73,7 +75,7 @@ install -p -m 644 %{name}.png \
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %if 0%{?fedora} && 0%{?fedora} < 19
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/fedora-%{name}.desktop
 %else
 %{_datadir}/applications/%{name}.desktop
 %endif
@@ -81,6 +83,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_25
+- fixed build
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_21
 - update to new release by fcimport
 
