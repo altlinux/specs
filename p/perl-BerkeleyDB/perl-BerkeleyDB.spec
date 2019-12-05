@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define dist BerkeleyDB
 Name: perl-%dist
 Version: 0.63
-Release: alt2
+Release: alt3
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
 License: GPL or Artistic
@@ -49,6 +49,9 @@ rm %buildroot%perl_vendor_archlib/scan.pl
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.63-alt3
+- rebuild for BR: cleanup
+
 * Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.63-alt2
 - migration to libdb4.8
 
