@@ -4,9 +4,9 @@
 %define firefox_prefix  %_libdir/firefox
 %define firefox_datadir %_datadir/firefox
 
-%define gst_version 1.0
-%define nspr_version 4.22
-%define nss_version 3.46.0
+%define gst_version   1.0
+%define nspr_version  4.22
+%define nss_version   3.47.1
 %define rust_version  1.35.0
 %define cargo_version 1.35.0
 
@@ -14,9 +14,9 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        70.0.1
+Version:        71.0
 Release:        alt1
-License:        MPL/GPL/LGPL
+License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
 
@@ -46,8 +46,8 @@ Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch009: 0009-ALT-Fix-aarch64-build.patch
 Patch010: 0010-FEDORA-wayland-cache-missing.patch
-Patch011: 0011-MOZILLA-1548475-Disable-Flash-on-Wayland-backend.patch
-Patch012: 0012-MOZILLA-1587008-Wayland-GL-Fixed-visual-glitches-wit.patch
+Patch011: 0011-MOZILLA-1568569-Linux-video-is-semi-transparent-on-W.patch
+Patch012: 0012-MOZILLA-1593408-Wayland-WebRender-Maximized-windows-.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -424,6 +424,22 @@ rm -rf -- \
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Dec 05 2019 Alexey Gladkov <legion@altlinux.ru> 71.0-alt1
+- New release (71.0).
+- Update license tag.
+- Security fixes:
+  + CVE-2019-11756: Use-after-free of SFTKSession object
+  + CVE-2019-17008: Use-after-free in worker destruction
+  + CVE-2019-13722: Stack corruption due to incorrect number of arguments in WebRTC code
+  + CVE-2019-11745: Out of bounds write in NSS when encrypting with a block cipher
+  + CVE-2019-17014: Dragging and dropping a cross-origin resource, incorrectly loaded as an image, could result in information disclosure
+  + CVE-2019-17009: Updater temporary files accessible to unprivileged processes
+  + CVE-2019-17010: Use-after-free when performing device orientation checks
+  + CVE-2019-17005: Buffer overflow in plain text serializer
+  + CVE-2019-17011: Use-after-free when retrieving a document in antitracking
+  + CVE-2019-17012: Memory safety bugs fixed in Firefox 71 and Firefox ESR 68.3
+  + CVE-2019-17013: Memory safety bugs fixed in Firefox 71
+
 * Thu Oct 31 2019 Alexey Gladkov <legion@altlinux.ru> 70.0.1-alt1
 - New release (70.0.1).
 - Builtin ru, kk, uk locales.
