@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           ballz
 Version:        1.0.4
-Release:        alt1_1
+Release:        alt1_2
 Summary:        B.A.L.L.Z. - platform/puzzle game where you control a rolling ball
 License:        BSD
 URL:            https://gitlab.com/groups/ballz
@@ -38,6 +38,7 @@ acronym for 'TINS is not Speedhack'.
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+%add_optflags -DALLEGRO_NO_FIX_ALIASES
 %configure
 %make_build
 
@@ -59,6 +60,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_2
+- fixed build
+
 * Fri Mar 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
 - update to new release by fcimport
 
