@@ -1,9 +1,9 @@
 Name: guile-evms
 Version: 0.5
-Release: alt11
+Release: alt12
 
 Summary: Guile bindings for EVMS
-License: GPL
+License: GPLv2
 Group: Development/Scheme
 
 BuildRequires: guile-devel >= 2.0 libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
@@ -31,6 +31,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Dec 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt12
+- fixed crash in alterator-vm (closes: #37572)
+
 * Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt11
 - fix FTBFS with gcc9
 
