@@ -1,32 +1,20 @@
 %define oname bugzilla
 
-Name: python-module-%oname
-Version: 2.2.0
+Name: python3-module-%oname
+Version: 2.3.0
 Release: alt1
 
 Summary: A python library.. for bugzilla!
-
 License: GPLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/python-bugzilla/python-bugzilla
-
 BuildArch: noarch
 
 # Source-url: https://pypi.io/packages/source/p/python-bugzilla/python-bugzilla-%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Jan 13 2010
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-PyXML
-BuildRequires: python-module-Reportlab
-BuildRequires: python-modules-email
-BuildRequires: python-module-requests
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-requests
-BuildPreReq: python3-module-setuptools
+BuildRequires: python3-module-requests
 
 
 %description
@@ -39,58 +27,27 @@ now supports the Web Services provided by upstream Bugzilla 3.0 and 3.2 also.
 It also includes a 'bugzilla' commandline client which can be used for quick,
 ad-hoc bugzilla jiggery-pokery.
 
-%package -n python3-module-%oname
-Summary: A python library.. for bugzilla!
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This is a python module that provides a nice, python-ish interface to Bugzilla
-over XMLRPC.
-
-It was originally written specifically for Red Hat's Bugzilla instance, but
-now supports the Web Services provided by upstream Bugzilla 3.0 and 3.2 also.
-
-It also includes a 'bugzilla' commandline client which can be used for quick,
-ad-hoc bugzilla jiggery-pokery.
-
 %prep
 %setup
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot/%_bindir
-mv %oname %oname.py3
-popd
-%python_install
 
 %files
 %doc COPYING *.md examples/*
-%_bindir/%oname
-%_man1dir/bugzilla.*
-%python_sitelibdir/bugzilla/
-%python_sitelibdir/python_bugzilla*.egg-info
-
-%files -n python3-module-%oname
-%doc COPYING *.md examples/*
-%_bindir/%oname.py3
+%_bindir/*
 %_man1dir/bugzilla.*
 %python3_sitelibdir/bugzilla/
 %python3_sitelibdir/python_bugzilla*.egg-info
 
 
 %changelog
+* Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
+- python2 disabled
+
 * Wed Jun 19 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - new version 2.2.0 (with rpmrb script)
 - switch to build from tarball
