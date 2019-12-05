@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.7.13.4
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -17,7 +17,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: fix-gnuradio-qtgui.pc.patch
-#Patch1: gnuradio-3.7.12.0-upstream-boost-1.67-compat.patch
+Patch1: gnuradio-upstream-boost-compat.patch
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
 BuildRequires: gcc-c++
@@ -112,7 +112,19 @@ GNU Radio Headers.
 %prep
 %setup
 %patch -p1
-#patch1 -p1
+%patch1 -p1
+
+find . -name '*.py' | xargs sed -i \
+	-e 's:/usr/bin/env python$:/usr/bin/env python2:' \
+	-e 's:/usr/bin/env /usr/bin/python$:/usr/bin/env /usr/bin/python2:' \
+	-e 's:/usr/bin/python$:/usr/bin/python2:' \
+	%nil
+
+find gnuradio-runtime/python -type f | xargs sed -i \
+	-e 's:/usr/bin/env python$:/usr/bin/env python2:' \
+	-e 's:/usr/bin/env /usr/bin/python$:/usr/bin/env /usr/bin/python2:' \
+	-e 's:/usr/bin/python$:/usr/bin/python2:' \
+	%nil
 
 %build
 %cmake  -DENABLE_INTERNAL_VOLK=OFF \
@@ -196,6 +208,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.13.4-alt2
+- Rebuilt with boost-1.71.0.
+
 * Sat Dec 29 2018 Anton Midyukov <antohami@altlinux.org> 3.7.13.4-alt1
 - new version 3.7.13.4
 - build with libqwt6
