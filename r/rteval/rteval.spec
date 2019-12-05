@@ -1,6 +1,6 @@
 Name:     rteval
 Version:  2.14.0.27.g5ed68ae
-Release:  alt4
+Release:  alt5
 
 Summary:  Evaluate the performance of a realtime Linux kernel
 License:  GPL-2.0-or-later
@@ -65,6 +65,9 @@ egrep -lr '^#!/usr/bin/python\b' %buildroot | xargs sed -i '1s,python,python2,'
 %_man8dir/*
 
 %changelog
+* Thu Dec 05 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt5
+- Remove --numa mode leaving only --smp for cyclictest.
+
 * Wed Dec 04 2019 Vitaly Chikunov <vt@altlinux.org> 2.14.0.27.g5ed68ae-alt4
 - Minor changes (fix tabs in python code, log cyclictest cmd).
 
