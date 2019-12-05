@@ -1,19 +1,25 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel mpir-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfplll
-Version:        5.2.1
-Release:        alt1_4
+Version:        5.3.0
+Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/fplll/fplll
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
+# https://github.com/fplll/fplll/pull/398
+Patch0:         0001-Fix-out-of-bounds-vector-accesses-in-Pruner-enforce.patch
+# https://github.com/cr-marcstevens/snippets/pull/1
+Patch1:         0002-Eliminate-race-condition-in-thread-pool.patch
 
 BuildRequires:  gcc-c++
+BuildRequires:  help2man
 BuildRequires:  libmpfr-devel
 BuildRequires:  libqd-devel
 Source44: import.info
@@ -61,6 +67,9 @@ the functionality of %{name}.
 
 %prep
 %setup -q -n fplll-%{version}
+%patch0 -p1
+%patch1 -p1
+
 
 # Fix broken test for a bool type
 sed -e '/#ifndef bool/,/#endif/d' \
@@ -71,9 +80,8 @@ sed -e '/#ifndef bool/,/#endif/d' \
     -e '/ac_cv_type__Bool/s/\$ac_includes_default/#include <stdbool.h>/' \
     -i configure
 
-
 %build
-%configure --disable-silent-rules LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
+%configure --disable-silent-rules LIBS=-lpthread
 
 # Eliminate hardcoded rpaths, and workaround libtool moving all -Wl options
 # after the libraries to be linked
@@ -84,30 +92,36 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 
 %make_build
 
+# Build the man pages
+cd fplll
+export LD_LIBRARY_PATH=$PWD/.libs
+help2man -N -o ../fplll.1 ./fplll
+help2man -N -o ../latsieve.1 ./latsieve
+help2man -N -o ../latticegen.1 ./latticegen
+cd -
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+%makeinstall_std
+rm -f %{buildroot}%{_libdir}/*.la
 
+# Install the man pages
+mkdir -p %{buildroot}%{_mandir}/man1
+cp -p *.1 %{buildroot}%{_mandir}/man1
 
 %check
-export LD_LIBRARY_PATH=$PWD/src/.libs
-make check
-
-
-
+LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
 %files
 %doc NEWS README.md
 %doc --no-dereference COPYING
-%{_libdir}/*.so.*
+%{_libdir}/libfplll.so.6*
 %{_datadir}/fplll/
 
 %files devel
 %{_includedir}/fplll.h
 %{_includedir}/fplll/
-%{_libdir}/*.so
+%{_libdir}/libfplll.so
 %{_libdir}/pkgconfig/fplll.pc
 
 %files static
@@ -115,9 +129,15 @@ make check
 
 %files tools
 %{_bindir}/*
+%{_mandir}/man1/fplll.1*
+%{_mandir}/man1/latsieve.1*
+%{_mandir}/man1/latticegen.1*
 
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_1
+- update to new release by fcimport
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_4
 - fixed self-BR (thanks to rider@)
 
