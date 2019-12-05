@@ -1,14 +1,14 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators perl(Danga/Socket.pm)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Gearman
 Version:        2.004.015
-Release:        alt1_1
+Release:        alt1_5
 Summary:        Perl interface for Gearman distributed job system
 License:        GPL+ or Artistic
 URL:            http://danga.com/gearman/
@@ -88,6 +88,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.004.015-alt1_5
+- fixed build
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.004.015-alt1_1
 - update to new release by fcimport
 
