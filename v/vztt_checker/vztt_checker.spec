@@ -5,9 +5,9 @@ Name: vztt_checker
 Group: System/Configuration/Other
 # git-vsc https://src.openvz.org/scm/ovzl/vztt_checker.git
 Url: http://openvz.org/
-License: GPL
+License: GPLv2
 Version: 7.0.2
-Release: alt1
+Release: alt2
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -28,6 +28,9 @@ vztt_checker libraries for vzpkgenvs
 %_libexecdir/*.so
 
 %changelog
+* Thu Dec 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.2-alt2
+- fix License
+
 * Fri Aug 23 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.2-alt1
 - 7.0.2
 
