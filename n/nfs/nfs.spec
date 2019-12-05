@@ -1,10 +1,10 @@
 Name: nfs
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
-License: GPL
+License: GPLv2
 Group: Networking/Other
 Url: http://nfs.sourceforge.net/
 
@@ -98,6 +98,7 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
+    --disable-nfsdcld \
     --disable-static \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
@@ -105,6 +106,8 @@ sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/inclu
 
 %install
 %make_install DESTDIR=%buildroot install
+
+sed -ri 's,^#!/usr/bin/python$,&3,' %buildroot%_sbindir/{mountstats,nfsiostat}
 
 cp -a altlinux/etc %buildroot
 cp -p systemd/README README.systemd
@@ -298,6 +301,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.4.2-alt1
+- 2.4.2 released
+
 * Mon Aug 19 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.4.1-alt1
 - 2.4.1 released
 
