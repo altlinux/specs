@@ -11,8 +11,8 @@ BuildRequires: python3-module-setuptools
 %global __provides_exclude_from ^(%{python3_sitelibdir}/.*\\.so)$
 
 Name:           python-module-rpi-gpio
-Version:        0.6.5
-Release:        alt1_1
+Version:        0.7.0
+Release:        alt1_2
 Summary:        A class to control the GPIO on a Raspberry Pi
 
 License:        MIT
@@ -54,6 +54,9 @@ Python 3 library for GPIO access on a Raspberry Pi.
 %{python3_sitelibdir}/RPi*
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_2
+- update to new release by fcimport
+
 * Mon Jul 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_1
 - new version
 
