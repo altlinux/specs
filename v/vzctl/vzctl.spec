@@ -1,10 +1,10 @@
 
 Name: vzctl
 Version: 7.0.209
-Release: alt2
+Release: alt3
 
 Summary: OpenVZ Virtual Environments control utility
-License: GPL
+License: GPLv2
 Group: System/Configuration/Other
 Url: http://openvz.org/
 
@@ -125,6 +125,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Thu Dec 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt3
+- fix License
+
 * Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt2
 - change /var/run to /run
 
