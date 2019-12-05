@@ -1,31 +1,27 @@
 %define oname geopy
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 1.7.0
-Release: alt1.git20141230.1.2
+Name: python3-module-%oname
+Version: 1.19.0
+Release: alt1
+
 Summary: Python Geocoding Toolbox
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/geopy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/geopy/geopy.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
+
+%if_with check
+BuildRequires: python3-module-geographiclib
 %endif
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
 %description
 geopy is a Python 2 and 3 client for several popular geocoding web
@@ -41,11 +37,12 @@ PlaceFinder, GeoNames, MapQuest, OpenMapQuest, OpenCage, SmartyStreets,
 geocoder.us, and GeocodeFarm geocoder services. The various geocoder
 classes are located in geopy.geocoders.
 
-%package -n python3-module-%oname
-Summary: Python Geocoding Toolbox
+%package tests
+Summary: Tests %name
 Group: Development/Python3
+Requires: %name = %EVR
 
-%description -n python3-module-%oname
+%description tests
 geopy is a Python 2 and 3 client for several popular geocoding web
 services.
 
@@ -59,50 +56,47 @@ PlaceFinder, GeoNames, MapQuest, OpenMapQuest, OpenCage, SmartyStreets,
 geocoder.us, and GeocodeFarm geocoder services. The various geocoder
 classes are located in geopy.geocoders.
 
+This package contains tests for %name.
+
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+mv test/ %buildroot%python3_sitelibdir/%oname
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
+
+%if_with check
+%check
+%__python3 setup.py test
+%endif
 
 %files
 %doc *.md docs/_build/html
-%python_sitelibdir/*
-%exclude %python_sitelibdir/test
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md docs/_build/html
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/test
-%endif
+
+%exclude %python3_sitelibdir/%oname/test
+
+%files tests
+%python3_sitelibdir/%oname/test
+
 
 %changelog
+* Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.19.0-alt1
+- Version updated to 1.19.0
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.7.0-alt1.git20141230.1.2
 - (NMU) rebuild with python3.6
 
