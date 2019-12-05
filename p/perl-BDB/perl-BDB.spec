@@ -2,7 +2,7 @@
 %define dist BDB
 Name: perl-%dist
 Version: 1.92
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
@@ -36,6 +36,9 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt3
+- rebuild for BR: cleanup
+
 * Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt2
 - migration to libdb4.8
 
