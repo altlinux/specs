@@ -66,8 +66,8 @@
 %endif
 
 Name: Mesa
-Version: 19.2.6
-Release: alt2
+Version: 19.2.7
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -447,6 +447,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Thu Dec 05 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.7-alt1
+- 19.2.7
+
 * Tue Nov 26 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.6-alt2
 - fixed conflicts between libglvnd-devel and libGLES-devel
 
