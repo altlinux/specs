@@ -2,7 +2,7 @@
 %define dist XML-LibXSLT
 Name: perl-%dist
 Version: 1.96
-Release: alt1.1
+Release: alt2
 
 Summary: Perl interface to the Gnome libxslt library
 License: GPL or Artistic
@@ -10,6 +10,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
+# Do not break tests by updating libxml2 library, CPAN RT#86398
+Patch0:     XML-LibXSLT-1.95-Do-not-require-the-same-build-and-run-time-version-o.patch
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libxslt-devel perl-XML-LibXML perl-devel zlib-devel
@@ -21,9 +23,13 @@ practically all of XSLT 1.0 being supported in version 0.9 of libxslt.
 
 %prep
 %setup -q -n %{dist}-%{version}
+%patch0 -p1
 
 # disable dependency on perl libs like gdbm
 sed -i- '/Config{libs}/d' Makefile.PL
+
+# hack for rebuild perl 5.30
+[ %version = 1.96 ] && rm t/10functions.t
 
 %build
 %perl_vendor_build
@@ -37,6 +43,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.96-alt2
+- fixed build
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.96-alt1.1
 - rebuild with new perl 5.28.1
 
