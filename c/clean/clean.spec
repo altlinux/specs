@@ -2,7 +2,7 @@
 
 Name: clean
 Version: 3.0
-Release: alt1.2
+Release: alt1.3
 Summary: The Clean programming language compiler and environment
 Summary(ru_RU.UTF-8): Компилятор и системная библиотека для языка Clean
 License: BSD license
@@ -50,7 +50,6 @@ cd ../../../../
 # сообщил, что его можно снять, и как это сделать.
 execstack -c target/clean-base/lib/exe/cg
 execstack -c target/clean-base/lib/exe/cocl
-execstack -c target/clean-base/lib/exe/linker
 
 # Предупреждения насчёт relocations, к сожалению - положительные
 # срабатывания. Цитата из письма Джона:
@@ -62,9 +61,10 @@ execstack -c target/clean-base/lib/exe/linker
 # На ALT Linux это тоже R_X86_64_NONE.
 
 # Перекомпилируем clm с прописанными путями после установки.
+# После миграции на системный ld мы должны использовать clms.
 cd src/clm-master
-make -fMakefile.linux64 CLEANLIB=%_libdir/%name/exe/ CLEANPATH=.:%_libdir/%name/StdEnv/
-cp clm ../../target/clean-base/bin/
+make -fMakefile.linux64 CLEANLIB=%_libdir/%name/exe/ CLEANPATH=.:%_libdir/%name/StdEnv/ clms
+cp clms ../../target/clean-base/bin/clm
 
 %install
 %define docdir %_docdir/%name-%version
@@ -77,7 +77,10 @@ mkdir -p %buildroot%_mandir
 
 install -pm755 %target/bin/* %buildroot/%_bindir/
 cp -R %target/lib/* %buildroot%_libdir/%name
-cp -R %target/doc %buildroot%docdir
+cp src/language-report-master/CleanRep.3.0.doc %buildroot%docdir
+cp src/language-report-master/todo.txt %buildroot%docdir
+cp src/clean-ide-master/CleanLicenseConditions.txt %buildroot%docdir
+cp clean-base/linux-x64/txt/README %buildroot%docdir/README.md
 
 # Это костыль, его нужно убрать - я отправил письмо Камиллу,
 # что man страница не устанавливается в target.
@@ -99,6 +102,9 @@ touch "/usr/lib64/clean/StdEnv/Clean System Files"/*.o
 %docdir/*
 
 %changelog
+* Thu Dec 05 2019 Andrey Bergman <vkni@altlinux.org> 3.0-alt1.3
+- Update to recent unstable version. Remove linker in favor of ld.
+
 * Sat May 11 2019 Andrey Bergman <vkni@altlinux.org> 3.0-alt1.2
 - Bake in paths into clm, update compiler.
 
