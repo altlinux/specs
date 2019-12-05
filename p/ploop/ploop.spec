@@ -3,7 +3,7 @@
 
 Name: ploop
 Version: 7.0.163
-Release: alt6
+Release: alt7
 Group: System/Base
 License: GPLv2
 Summary: Ploop tools
@@ -12,6 +12,8 @@ Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
 Source: %name-%version.tar
 
 Patch1: %name-%version.patch
+
+ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -103,6 +105,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Thu Dec 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt7
+- build only for x86_64
+- fix License
+
 * Wed Dec 04 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.163-alt6
 - reduce the changes from upstream
 
