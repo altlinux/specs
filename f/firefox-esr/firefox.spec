@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        68.3.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -387,8 +387,12 @@ done
 %_datadir/applications/firefox-wayland.desktop
 
 %changelog
+* Fri Dec 06 2019 Andrey Cherepanov <cas@altlinux.org> 68.3.0-alt2
+- Fix last changelog according to https://www.altlinux.org/Vulnerability_Policy.
+
 * Thu Dec 05 2019 Andrey Cherepanov <cas@altlinux.org> 68.3.0-alt1
 - New ESR version (68.3.0).
+- Fixed:
   + CVE-2019-17008 Use-after-free in worker destruction
   + CVE-2019-13722 Stack corruption due to incorrect number of arguments in WebRTC code
   + CVE-2019-11745 Out of bounds write in NSS when encrypting with a block cipher
