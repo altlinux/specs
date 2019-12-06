@@ -11,7 +11,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.17
+Version: 8.0.18
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -52,14 +52,13 @@ Source30: mysqlrouter.conf
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.17-alt-chroot.patch
+Patch1: mysql-8.0.18-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.12-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.12-alt-mysql_config-libs.patch
-Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
-Patch9: mysql-5.7.21-alt-disable-run-libmysql_api_test.patch
+Patch9: mysql-8.0.18-alt-disable-run-libmysql_api_test.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -78,6 +77,8 @@ BuildRequires: libncurses-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libsystemd-devel
+BuildRequires: protobuf-compiler
+BuildRequires: libprotobuf-lite-devel
 
 %define soname 21
 
@@ -320,11 +321,10 @@ recommend upgrading your installation to MySQL Router 8.
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_69_0
+pushd boost/boost_1_70_0
 %patch115 -p0
 %patch125 -p1
 popd
@@ -371,6 +371,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_LZ4=system \
 	-DWITH_LIBEVENT=system \
 	-DWITH_EDITLINE=system \
+	-DWITH_PROTOBUF=system \
 	-DWITH_PIC=ON \
 	-DWITH_EXTRA_CHARSETS=all \
 	-DWITH_ARCHIVE_STORAGE_ENGINE=ON \
@@ -384,7 +385,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_69_0 \
+	-DWITH_BOOST=../boost/boost_1_70_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -772,6 +773,12 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Dec 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.18-alt1
+- new version
+- update patches: chroot, alt-disable-run-libmysql_api_test
+- remove obsolete alt-aarch64-lib64 patch
+- spec: switch to system libprotobuf-lite; add respective BR's
+
 * Thu Aug 08 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.17-alt1
 - new version
 - update patches: chroot, load_defaults
