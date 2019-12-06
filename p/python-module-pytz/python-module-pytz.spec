@@ -5,21 +5,20 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2016.10
+Version: 2019.3
 Release: alt1
 
 %setup_python_module %oname
 
 Summary: World timezone definitions, modern and historical
-Source0: https://pypi.python.org/packages/d0/e1/aca6ef73a7bd322a7fc73fd99631ee3454d4fc67dc2bee463e2adf6bb3d3/%{oname}-%{version}.tar.bz2
+Source0: https://files.pythonhosted.org/packages/82/c3/534ddba230bd4fbbd3b7a3d35f3341d014cca213f369a9940925e7e5f691/pytz-%{version}.tar.gz
 License: MIT
 Group: Development/Python
 BuildArch: noarch
 Url: http://pytz.sourceforge.net
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-python3 python3-module-setuptools
 %endif
 
 %description
@@ -136,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2019.3-alt1
+- 2019.3 released
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1:2016.10-alt1
 - automated PyPI update
 
