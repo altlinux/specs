@@ -1,13 +1,12 @@
 %define oname radssh
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1.1
+Release: alt2
+
 Summary: RadSSH Module
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/radssh/
 
@@ -15,40 +14,22 @@ Url: https://pypi.python.org/pypi/radssh/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-paramiko python-module-netaddr
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-paramiko python3-module-netaddr
-%endif
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
-%py_requires paramiko netaddr
-%add_python_req_skip genders
+%py3_provides %oname
+%py3_requires paramiko netaddr
+%add_python3_req_skip genders
+
 
 %description
 High level Paramiko-based toolkit, with an extensible parallel cluster
 "shell".
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: RadSSH Module
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires paramiko netaddr
-%add_python3_req_skip genders
-
-%description -n python3-module-%oname
-High level Paramiko-based toolkit, with an extensible parallel cluster
-"shell".
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 High level Paramiko-based toolkit, with an extensible parallel cluster
@@ -71,63 +52,42 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-PYTHONPATH=%buildroot%python_sitelibdir python tests/dispatcher.py
-%if_with python3
-pushd ../python3
 PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/dispatcher.py
-popd
-%endif
 
 %files
 %doc README *.md api_sample
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc README *.md api_sample
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.1-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
