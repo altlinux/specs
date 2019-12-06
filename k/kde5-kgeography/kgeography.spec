@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 19.08.0
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Education
@@ -53,6 +53,9 @@ mv data/flags/{ukraine/Crimea,russia/crimea}.png
 
 
 %changelog
+* Fri Dec 05 2019 Oleg Solovyov <mcpain@altlinux.org> 19.08.0-alt3
+- Crimea: fix Europe and Asia maps
+
 * Thu Dec 05 2019 Oleg Solovyov <mcpain@altlinux.org> 19.08.0-alt2
 - Move Crimea to Russia
 
