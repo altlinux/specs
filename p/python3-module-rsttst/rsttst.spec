@@ -1,98 +1,54 @@
 %define _unpackaged_files_terminate_build 1
 %define oname rsttst
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3.0
-Release: alt1.1
+Release: alt2
+
 Summary: rsttst makes your reStructuredText testable
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/rsttst/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/willemt/rsttst.git
 Source0: https://pypi.python.org/packages/b5/d9/fed43b27554822d8dd227f290707ae06eabf223a79522a27a1e1469994f3/%{oname}-%{version}.tar.gz
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-Pygments python-module-docutils
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-Pygments python3-module-docutils
-%endif
+BuildRequires: python3-module-Pygments python3-module-docutils
 
-%py_provides %oname
-%py_requires pygments docutils
-
-%description
-rsttst makes your reStructuredText documentation testable.
-
-%package -n python3-module-%oname
-Summary: rsttst makes your reStructuredText testable
-Group: Development/Python3
 %py3_provides %oname
 %py3_requires pygments docutils
 
-%description -n python3-module-%oname
+
+%description
 rsttst makes your reStructuredText documentation testable.
 
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt2
+- python2 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
