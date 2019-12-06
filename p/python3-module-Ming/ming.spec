@@ -1,51 +1,27 @@
 %define oname Ming
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.0
-Release: alt2.2
+Release: alt3
+
 Summary: Bringing order to Mongo since 2009
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/Ming/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+Source: %name-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Database mapping layer for MongoDB on Python. Includes schema
 enforcement and some facilities for schema migration.
 
-%package -n python3-module-%oname
-Summary: Bringing order to Mongo since 2009
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Database mapping layer for MongoDB on Python. Includes schema
-enforcement and some facilities for schema migration.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Bringing order to Mongo since 2009
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Database mapping layer for MongoDB on Python. Includes schema
-enforcement and some facilities for schema migration.
-
-This package contains tests for Ming.
-
 %package tests
 Summary: Tests for Bringing order to Mongo since 2009
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -57,47 +33,25 @@ This package contains tests for Ming.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc PKG-INFO README
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc PKG-INFO README
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
-%endif
+
 
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt3
+- build for python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.5.0-alt2.2
 - (NMU) rebuild with python3.6
 
