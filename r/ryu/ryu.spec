@@ -1,19 +1,18 @@
 Name: ryu
 Version: 4.30
-Release: alt3
-Summary: Component-based Software-defined Networking Framework
-Group: Development/Python3
-License: ASL 2.0
-Url: http://osrg.github.io/ryu/
-Source: %name-%version.tar.gz
+Release: alt4
 
+Summary: Component-based Software-defined Networking Framework
+License: ASL 2.0
+Group: Development/Python3
+Url: http://osrg.github.io/ryu/
 BuildArch: noarch
+
+Source: %name-%version.tar.gz
 
 Requires: python3-module-%name
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -26,6 +25,7 @@ BuildRequires: python3-module-tinyrpc
 BuildRequires: python3-module-six >= 1.4.0
 BuildRequires: python3-module-webob >= 1.2
 BuildRequires: python3-module-openvswitch  >= 2.6.0
+
 
 %description
 Ryu is a component-based software defined networking framework.
@@ -75,8 +75,8 @@ Tests for Software-defined Networking Framework
 %prep
 %setup
 
-# Remove bundled egg-info
-#rm -rf %name.egg-info
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -type f \( -name '*.py' -o -name '%name' -o -name '%name-manager' \))
 
 # drop deps in egginfo, let rpm handle them
 rm tools/*-requires
@@ -91,7 +91,7 @@ sed -i '/^from pip/d' ryu/utils.py
 
 # generate html docs
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-python3 setup.py build_sphinx
+%__python3 setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf doc/build/html/.{doctrees,buildinfo}
 
@@ -120,7 +120,11 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %files doc
 %doc doc/build/html
 
+
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.30-alt4
+- python shebang fixed
+
 * Sun Oct 27 2019 Grigory Ustinov <grenka@altlinux.org> 4.30-alt3
 - Build without python2.
 
