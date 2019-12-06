@@ -1,41 +1,20 @@
 %define oname SQLObject
 
-%def_with python3
-
-%if_with python3
-%define py3name python3-module-%oname
-%define py3dir %py3name-%version
-%endif
-
-Name: python-module-SQLObject
-Version: 2.0.0
-Release: alt1.a2dev.20141028.1.2
+Name: python3-module-SQLObject
+Version: 3.7.3
+Release: alt1
 
 Summary: Object-Relational Manager, aka database wrapper for Python
-
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://sqlobject.org
-Packager: Sergey Bolshakov <sbolshakov@altlinux.ru>
+BuildArch: noarch
 
 Source: http://pypi.python.org/packages/source/S/%oname/%oname-%version.tar
 
-BuildArch: noarch
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
-
-#BuildRequires: python-devel python-modules-compiler python-modules-encodings
-#BuildPreReq: python-module-distribute
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python-tools-2to3
-#BuildPreReq: python3-devel
-#BuildPreReq: python3-module-distribute
-%endif
+BuildRequires: python-tools-2to3
 
-%setup_python_module sqlobject
 
 %description
 SQLObject is a popular *Object Relational Manager* for providing an
@@ -47,25 +26,6 @@ more abstract, and provides substantial database independence for
 applications.
 
 Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
-
-
-%if_with python3
-%package -n %py3name
-Summary: Object-Relational Manager, aka database wrapper for Python3
-Group: Development/Python
-
-%description -n %py3name
-SQLObject is a popular *Object Relational Manager* for providing an
-object interface to your database, with tables as classes, rows as
-instances, and columns as attributes.
-
-SQLObject includes a Python-object-based query language that makes SQL
-more abstract, and provides substantial database independence for
-applications.
-
-Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
-
-%endif
 
 %package doc
 Summary: This package contains documentation for SQLObject.
@@ -85,63 +45,30 @@ Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
 
 %prep
 %setup -n %oname-%version
-%if_with python3
-rm -rf ../%py3dir
-cp -a . ../%py3dir
-pushd ../%py3dir
-find ./ -name '*.py' -print0 | xargs -0i 2to3 -w {}
-popd
-%endif
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-%if_with python3
-pushd ../%py3dir
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../%py3dir
 %python3_install
-pushd %buildroot%_bindir
-for f in `ls`
-do
-	2to3 -wn $f
-	mv $f $f-%_python3_version
-	ln -s $f-%_python3_version ${f}3
-done
-popd
-popd
-%endif
-%python_install
-
-# omit paste for a while
-#__subst '/sqlobject\/manager/d' -e '/sqlobject\/wsgi_middleware.py/d' INSTALLED_FILES
 
 %files
-%doc README.txt
-%_bindir/sqlobject-admin
-%_bindir/sqlobject-convertOldURI
-%python_sitelibdir/%modulename/
-%python_sitelibdir/%oname-*.egg-info
-
-%if_with python3
-%files -n %py3name
-%doc README.txt
-%_bindir/sqlobject-admin-%_python3_version
-%_bindir/sqlobject-admin3
-%_bindir/sqlobject-convertOldURI-%_python3_version
-%_bindir/sqlobject-convertOldURI3
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%oname-*.egg-info
-%endif
+%doc README.rst
+%_bindir/*
+%python3_sitelibdir/*
 
 %files doc
 %doc docs/*
 
+
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.7.3-alt1
+- Version updated to 3.7.3
+- build for python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1.a2dev.20141028.1.2
 - (NMU) rebuild with python3.6
 
