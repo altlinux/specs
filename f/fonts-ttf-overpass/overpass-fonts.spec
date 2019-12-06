@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 %global monofontconf 60-%{fontname}-mono.conf
 
 Name:		fonts-ttf-overpass
-Version:	3.0.3
+Version:	3.0.4
 Release:	alt1_1
 Summary:	Typeface based on the U.S. interstate highway road signage type system
 License:	OFL or LGPLv2+
@@ -139,6 +139,9 @@ fi
 %{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_1
+- update to new release by fcimport
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt1_1
 - update to new release by fcimport
 
