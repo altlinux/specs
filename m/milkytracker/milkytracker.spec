@@ -1,30 +1,33 @@
+Group: Sound
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto gcc-c++ libalsa-devel libglvnd-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmlto libalsa-devel libglvnd-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           milkytracker
 Version:        1.02.00
-Release:        alt3_1
+Release:        alt3_5
 Summary:        Module tracker software for creating music
 
-Group:          Sound
 License:        GPLv3+
 URL:            http://www.milkytracker.org/
 Source0:        https://github.com/milkytracker/MilkyTracker/archive/v%{version}.tar.gz
 Patch0:         milkytracker-1.0.0-sdlmain.patch
-Patch1:         milkytracker-1.02.00-gcc8-fix.patch
+Patch1:         milkytracker-1.02.00-buffer-overflows.patch
+Patch2:         milkytracker-1.02.00-cve-2019-14464.patch
 
 BuildRequires:  libSDL2-devel
 BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
+BuildRequires:  gcc-c++
 BuildRequires:  libappstream-glib
 BuildRequires:  librtmidi-devel
 BuildRequires:  zlib-devel
 BuildRequires:  zziplib-devel
 BuildRequires:  libjack-devel
 Source44: import.info
+Patch33: milkytracker-1.02.00-gcc8-fix.patch
 
 %description
 MilkyTracker is an application for creating music in the .MOD and .XM formats.
@@ -37,6 +40,8 @@ find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch33 -p1
 
 %build
 mkdir build
@@ -76,6 +81,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_docdir}/%{name}
 
 %changelog
+* Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.02.00-alt3_5
+- update to new release by fcimport
+
 * Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 1.02.00-alt3_1
 - GCC8 fix
 
