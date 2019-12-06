@@ -1,24 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define oname SAValidation
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.4.1
-Release: alt1.1
+Release: alt2
+
 Summary: Active Record like validation on SQLAlchemy declarative model objects
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/SAValidation/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/77/b9/b88e840e46266c99b3a35cfe77272302b6023ee2fa3d2d408ca873268b72/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-nose
-BuildPreReq: python-module-nosexcover python-module-mock
-BuildPreReq: python-module-SQLAlchemy python-module-dateutil
-BuildPreReq: python-module-FormEncode python-modules-sqlite3
+Source0: https://pypi.python.org/packages/77/b9/b88e840e46266c99b3a35cfe77272302b6023ee2fa3d2d408ca873268b72/%{oname}-%{version}.tar.gz
 
-%py_provides savalidation
-%py_requires sqlalchemy dateutil formencode sqlite3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-nosexcover
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-SQLAlchemy
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-FormEncode
+BuildRequires: python3-modules-sqlite3
+
+%py3_provides savalidation
+%py3_requires sqlalchemy dateutil formencode sqlite3
+
 
 %description
 SAValidation facilitates Active Record like validation on SQLAlchemy
@@ -26,7 +32,7 @@ declarative model objects.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -39,23 +45,27 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
+
 
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt2
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
