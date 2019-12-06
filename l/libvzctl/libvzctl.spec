@@ -1,8 +1,8 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.545
-Release: alt5
+Version: 7.0.548
+Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -27,6 +27,8 @@ BuildRequires: libxml2-devel >= 2.6.16
 BuildRequires: libuuid-devel
 BuildRequires: libdbus-devel
 
+%def_with ub
+
 %add_findreq_skiplist %_datadir/%name/dists/scripts/*
 %filter_from_requires /^\/etc\/vz\/vz.conf/d
 %define _pkglibdir %_libdir/%name
@@ -49,7 +51,7 @@ OpenVZ Containers API development library
 
 %build
 %autoreconf
-%configure
+%configure %{subst_with ub}
 %make_build
 
 %install
@@ -65,6 +67,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Fri Dec 06 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.548-alt1
+- 7.0.548
+
 * Thu Nov 14 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.545-alt5
 - fix criu scripts path
 - spec cleanup
