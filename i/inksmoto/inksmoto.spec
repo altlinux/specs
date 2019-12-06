@@ -1,22 +1,27 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: python3-tools
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 # END SourceDeps(oneline)
+# internal py
+%filter_from_requires /^python3.inksmoto./d
+%filter_from_requires /^python3.md5./d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_21
+Release: alt2_23
 Summary: The new xmoto level editor for Inkscape
 
 License: GPLv2
 URL: http://xmoto.sourceforge.net/
 Source0: http://download.tuxfamily.org/xmoto/svg2lvl/%{version}~rc1/inksmoto-%{version}.tar.gz
-BuildRequires: python-devel, /usr/bin/pathfix.py
-Requires: xmoto, inkscape, python-module-lxml python-module-pygtk python-module-pygtk-demo
+BuildRequires: python3-devel
+Requires: xmoto, inkscape, python3-module-lxml, python3-module-pygobject3
 BuildArch: noarch
 
 Patch0: inksmoto-0.7.0-pypath.patch
+Patch1: inksmoto-python3.patch
 Source44: import.info
 
 %description
@@ -31,9 +36,10 @@ Inksmoto Level Editor is written in Python, it's an Inkscape extension.
 %setup -qn extensions
 
 %patch0 -p0
+%patch1 -p1
 
 %build
-pathfix.py -pni "%{__python} %{py2_shbang_opts}" .
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" .
 
 %install
 mkdir -p %{buildroot}%{_datadir}/inkscape/extensions
@@ -50,6 +56,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS INSTALL README
 
 %changelog
+* Fri Dec 06 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_23
+- python3 migration
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_21
 - update to new release by fcimport
 
