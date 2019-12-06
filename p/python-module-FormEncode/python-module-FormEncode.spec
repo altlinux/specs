@@ -9,8 +9,8 @@
 %endif
 
 Name: python-module-%modulename
-Version: 1.3.0
-Release: alt1.git20150207.1.3
+Version: 1.3.1
+Release: alt1
 Epoch: 1
 
 %setup_python_module %modulename
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:1.3.1-alt1
+- Version updated to 1.3.1
+
 * Wed Feb 27 2019 Michael Shigorin <mike@altlinux.org> 1:1.3.0-alt1.git20150207.1.3
 - introduce doc knob (on by default)
 
