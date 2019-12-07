@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libpar2
 Version:        0.2       
-Release:        alt2_27
+Release:        alt3_27
 Summary:        Library for performing comman tasks related to PAR recovery sets
      
 Group:          System/Libraries
@@ -54,6 +54,10 @@ sed -i 's/\r//' AUTHORS
 touch -r tmpfile AUTHORS
 
 %build
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.12
+%add_optflags -std=c++11
+%endif
 #fix aarch64 build
 libtoolize
 autoreconf -i
@@ -78,6 +82,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Tue Jul 02 2019 Michael Shigorin <mike@altlinux.org> 0.2-alt3_27
+- E2K: explicit -std=c++11
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_27
 - update to new release by fcimport
 
