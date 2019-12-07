@@ -1,3 +1,4 @@
+Group: Graphics
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
 # END SourceDeps(oneline)
@@ -6,14 +7,14 @@ BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.43
-Release: alt2_5
-Group: Graphics
+Release: alt2_9
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
+BuildRequires:  gcc
 BuildRequires: desktop-file-utils
-BuildRequires: libICE-devel, libXmu-devel, libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires: libICE-devel, libXmu-devel, libSM-devel, xorg-proto-devel
 BuildRequires: libXext-devel, libXaw-devel, libXt-devel
 Source44: import.info
 
@@ -28,9 +29,9 @@ for window transparency.
 %setup
 
 %build
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 # easier than patching configure to read those files from own directory
 # cp /usr/lib/rpm/redhat/config.{guess,sub} .
-cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 
 cd X11
 %configure
@@ -41,13 +42,13 @@ cd X11
 
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/X11/app-defaults
+mkdir -p $RPM_BUILD_ROOT%{_x11appconfdir}
 
 install -p -m 0755 xdaliclock $RPM_BUILD_ROOT%{_bindir}
 install -p -m 0644 xdaliclock.man \
 	$RPM_BUILD_ROOT%{_mandir}/man1/xdaliclock.1
 install -p -m 0644 XDaliClock.ad \
-	$RPM_BUILD_ROOT%{_datadir}/X11/app-defaults/XDaliClock
+	$RPM_BUILD_ROOT%{_x11appconfdir}/XDaliClock
 
 desktop-file-install  \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
@@ -59,10 +60,13 @@ desktop-file-install  \
 %doc README
 %{_bindir}/xdaliclock
 %{_mandir}/man1/xdaliclock.1*
-%{_datadir}/X11/app-defaults/XDaliClock
+%{_x11appconfdir}/XDaliClock
 %{_datadir}/applications/*
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.43-alt2_9
+- merged e2k patch
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 2.43-alt2_5
 - fix build on newer arches
 
