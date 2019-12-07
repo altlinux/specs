@@ -1,5 +1,5 @@
-%define git_ver 9180
-%define git_commit d91f8193b001ec04a7799a28b7ffc7f6ea6b1db3
+%define git_ver 9212
+%define git_commit 6a4ba9d562193228fc90e0d73252775cfafb20b2
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -127,6 +127,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Dec 07 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9212-alt1
+- Version 0.0.7-9212
+
 * Wed Nov 27 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9180-alt1
 - Version 0.0.7.9180
 
