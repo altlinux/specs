@@ -2,7 +2,7 @@
 
 Name: clean-lib-argenv
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Clean low level interface to command line and environment
 Summary(ru_RU.UTF-8): Библиотека параметров командной строки для языка Clean
 License: BSD license
@@ -50,5 +50,8 @@ touch "/usr/lib64/clean/ArgEnv/Clean System Files"/*.o
 %_libdir/*
 
 %changelog
+* Thu Dec 05 2019 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt2
+- Rebuild with new compiler.
+
 * Sat May 04 2019 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt1
 - Initial release for Sisyphus.
