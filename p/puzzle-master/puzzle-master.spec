@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(x11) qt5-base-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           puzzle-master
 Version:        2.5.3
-Release:        alt2_3
+Release:        alt2_7
 Summary:        Fun jigsaw puzzle game
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            https://github.com/Venemo/puzzle-master
 
@@ -39,7 +39,7 @@ QMAKEFLAGS+=' -after desktopfile.path=%{_datadir}/applications'
 QMAKEFLAGS+=' -after iconfile.path=%{_datadir}/icons/hicolor/scalable/apps'
 QMAKEFLAGS+=' -after appdatafile.path=%{_datadir}/appdata'
 
-%{qmake_qt5} $QMAKEFLAGS
+qmake-qt5 $QMAKEFLAGS
 %make_build
 
 %install
@@ -55,6 +55,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %doc LICENSE-DOCS
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_7
+- merged e2k patch
+
 * Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 2.5.3-alt2_3
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
