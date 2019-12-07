@@ -1,30 +1,26 @@
 %define        pkgname        puppet
 %define        confdir        ext/redhat
-%define        core_version   6.10.1
-%define        dm_version     1.0.1
 
 Name:          %pkgname
-Version:       %core_version
+Version:       6.11.1
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
-License:       ASL 2.0
-URL:           https://puppet.com/
-%vcs           https://github.com/puppetlabs/puppet.git
+License:       Apache-2.0
+Url:           https://puppet.com/
+Vcs:           https://github.com/puppetlabs/puppet.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       client.init
 Source2:       puppet.service
 Source3:       puppet-nm-dispatcher
-
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
 
 %gem_replace_version CFPropertyList ~> 3.0
 %add_findreq_skiplist %ruby_gemslibdir/*
-
-Requires: shadow-change
+Requires:      shadow-change
 
 
 %description
@@ -35,31 +31,7 @@ like users, cron jobs, and hosts, along with obviously discrete
 elements like packages, services, and files.
 
 
-%package       -n gem-deep-merge
-Version:       %dm_version
-Release:       alt1
-Summary:       Deep merge hash
-Group:         Development/Ruby
-BuildArch:     noarch
-
-%description   -n gem-deep-merge
-%summary.
-
-
-%package       -n gem-deep-merge-doc
-Version:       %dm_version
-Release:       alt1
-Summary:       Documentation for gem-deep-merge gem
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   -n gem-deep-merge-doc
-%summary.
-
-
 %package       -n gem-%pkgname
-Version:       %core_version
-Release:       alt0.1
 Summary:       Core library code for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -69,8 +41,6 @@ BuildArch:     noarch
 
 
 %package       -n gem-%pkgname-doc
-Version:       %core_version
-Release:       alt0.1
 Summary:       Documentation for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -187,15 +157,12 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
-%files         -n gem-deep-merge
-%ruby_gemspecdir/deep_merge-%dm_version.gemspec
-%ruby_gemslibdir/deep_merge-%dm_version
-
-%files         -n gem-deep-merge-doc
-%ruby_gemsdocdir/deep_merge-%dm_version
-
-
 %changelog
+* Fri Dec 06 2019 Pavel Skrylev <majioa@altlinux.org> 6.11.1-alt1
+- updated (^) 6.10.1 -> 6.11.1
+- removed (-) deep_merge gem out of spec
+- fixed (!) version in spec
+
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 6.10.1-alt1
 - New version.
 
@@ -203,11 +170,12 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 - New version.
 
 * Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.2
-- spec according the changelog policy
+- fixed (!) spec according the changelog policy
 
 * Mon Aug 19 2019 Pavel Skrylev <majioa@altlinux.org> 6.9.0-alt0.1
-- v6.9.0
-- links to required dirs in spec
+- updated (^) 6.8.0 -> 6.9.0
+- added (+) links to required dirs in spec
+- fixed (!) spec
 
 * Fri Aug 16 2019 Andrey Cherepanov <cas@altlinux.org> 6.8.0-alt1
 - New version.
