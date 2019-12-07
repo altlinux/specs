@@ -1,23 +1,25 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
-%add_optflags %optflags_shared
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_11
+Release:	alt1_16
 Summary:	Shared functions for Ayatana indicators
 
-Group:		System/Libraries
 License:	GPLv3
 URL:		https://launchpad.net/libindicator
 Source0:	https://launchpad.net/libindicator/12.10/12.10.1/+download/%{name}-%{version}.tar.gz
+# From GLib 2.62
+Patch1:	libindicator-12.10.1-glib262-g_define_type_with_private.patch
 
 BuildRequires:	chrpath
 BuildRequires:	gtk-doc gtk-doc-mkpdf
-BuildRequires:	libtool-common
+BuildRequires:	libtool
 
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
@@ -33,10 +35,10 @@ likely to use.
 
 
 %package devel
+Group: Development/Other
 Summary:	Development files for %{name}
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -44,10 +46,10 @@ developing applications that use %{name}.
 
 
 %package tools
+Group: Development/Tools
 Summary:	Shared functions for Ayatana indicators - Tools
-Group:		Development/Tools
 Requires:	%{name} = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 
 %description tools
 This package contains tools used by the %{name} package, the
@@ -55,8 +57,8 @@ Ayatana indicators system.
 
 
 %package gtk3
+Group: System/Libraries
 Summary:	GTK+3 build of %{name}
-Group:		System/Libraries
 
 %description gtk3
 A set of symbols and convenience functions that all Ayatana indicators
@@ -65,11 +67,11 @@ by GTK+ 3 apps.
 
 
 %package gtk3-devel
+Group: Development/Other
 Summary:	Development files for %{name}-gtk3
-Group:		Development/Other
 
 Requires:	%{name}-gtk3 = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 
 %description gtk3-devel
 The %{name}-gtk3-devel package contains libraries and header files for
@@ -77,11 +79,11 @@ developing applications that use %{name}-gtk3.
 
 
 %package gtk3-tools
+Group: Development/Tools
 Summary:	Shared functions for Ayatana indicators - GTK3 Tools
-Group:		Development/Tools
 
 Requires:	%{name}-gtk3 = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 
 %description gtk3-tools
 This package contains tools used by the %{name}-gtk3 package, the
@@ -91,6 +93,9 @@ tools for the GTK+3 build of %{name}.
 
 %prep
 %setup -q
+%if 0%{?fedora} >= 31
+%patch1 -p2 -b .orig
+%endif
 
 sed -i.addvar configure.ac \
 	-e '\@LIBINDICATOR_LIBS@s|\$LIBM| \$LIBM|'
@@ -110,9 +115,11 @@ USE_GNOME2_MACROS=1 \
 . gnome-autogen.sh
 EOF
 
+sed -i s,-Werror,, `find . -name Makefile'*'`
 NOCONFIGURE=1 \
 	sh autogen.sh
 %patch33 -p2
+
 
 
 %build
@@ -180,9 +187,12 @@ rm -f %{buildroot}%{_libdir}/libdummy-indicator*.so
 # Remove libtool files
 find %{buildroot} -type f -name '*.la' -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
+
+
+
 
 
 %files
@@ -225,6 +235,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_16
+- fixed build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_11
 - update to new release by fcimport
 
