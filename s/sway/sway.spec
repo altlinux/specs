@@ -2,7 +2,7 @@
 
 Name: sway
 Version: 1.2
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -17,6 +17,7 @@ Source2: Sway_Wallpaper_Gray.png
 
 Patch00: sway-config.patch
 
+BuildRequires: gcc-c++
 BuildRequires: asciidoc-a2x
 BuildRequires: cmake
 BuildRequires: libcap-devel
@@ -109,6 +110,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sat Dec 07 2019 Alexey Gladkov <legion@altlinux.ru> 1:1.2-alt2
+- Fix BuildRequires.
+
 * Wed Nov 06 2019 Alexey Gladkov <legion@altlinux.ru> 1:1.2-alt1
 - New version (1.2)
 
