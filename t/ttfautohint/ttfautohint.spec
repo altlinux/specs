@@ -1,19 +1,17 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/xelatex perl(English.pm) perl(open.pm)
+BuildRequires: /usr/bin/bison /usr/bin/flex /usr/bin/import /usr/bin/inkscape /usr/bin/kpsewhich /usr/bin/pandoc /usr/bin/xelatex perl(English.pm) perl(open.pm)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ttfautohint
-Version:        1.8.2
-Release:        alt2_2
+Version:        1.8.3
+Release:        alt1_2
 Summary:        Automated hinting utility for TrueType fonts
 License:        FTL or GPLv2
 URL:            http://www.freetype.org/ttfautohint
 Source0:        http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz
-# https://bugzilla.redhat.com/1646687
-Patch0:         f18b7c859c92111446ca991743dd709e347d0301.patch
 
 BuildRequires:  gcc gcc-c++
 BuildRequires:  libfreetype-devel
@@ -70,7 +68,6 @@ platforms which don't use FreeType.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %ifarch %e2k
@@ -78,6 +75,7 @@ platforms which don't use FreeType.
 # unlike gnulib expects from "gcc5"...
 %add_optflags -D__ICC
 %endif
+
 %configure --disable-silent-rules --disable-static
 %make_build
 
@@ -102,6 +100,7 @@ done
 
 %files gui
 %doc --no-dereference COPYING
+#%{_docdir}/%{name}/
 %{_bindir}/ttfautohintGUI
 
 %files libs
@@ -115,6 +114,9 @@ done
 %{_libdir}/pkgconfig/ttfautohint.pc
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1_2
+- merged e2k patch
+
 * Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 1.8.2-alt2_2
 - E2K: gnulib ftbfs workaround
 
