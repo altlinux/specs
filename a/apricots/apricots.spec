@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(Shell.pm)
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt3_27
+Release:  alt4_27
 Summary: 2D air combat game
 
 License: GPLv2
@@ -53,6 +53,10 @@ chmod -x TODO
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+# e2k support
+cp -at admin -- \
+       /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
+
 #%patch4 -p0
 
 %build
@@ -92,6 +96,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt4_27
+- restored e2k patch
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt3_27
 - update to new release by fcimport
 
