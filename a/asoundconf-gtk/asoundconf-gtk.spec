@@ -1,13 +1,13 @@
 Summary: Applet to select the default ALSA sound card
 Name: asoundconf-gtk
 Version: 1.6
-Release: alt1.1.1
+Release: alt2
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: GPL
 Group: Sound
 URL: https://code.launchpad.net/asoundconf-ui
 Requires: asoundconf
-BuildRequires: rpm-build-python
+BuildRequires: python-devel
 #http://packages.ubuntu.com/ru/source/gutsy/asoundconf-gtk
 Source0: %name-%version.tar
 Patch0: asoundconf-gtk_1.6-0ubuntu1.diff.gz
@@ -23,6 +23,7 @@ Based on asoundconf code, but as a GTK+ front-end.
 %prep
 %setup -q
 %patch0 -p1
+sed -i 1s,python,python2, asoundconf-gtk/asoundconf-gtk
 
 %build
 
@@ -43,6 +44,9 @@ install -m644 asoundconf-gtk.desktop ${RPM_BUILD_ROOT}%_desktopdir/
 %_desktopdir/asoundconf-gtk.desktop
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2
+- fixed build
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6-alt1.1.1
 - Rebuild with Python-2.7
 
