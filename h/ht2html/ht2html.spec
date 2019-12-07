@@ -33,7 +33,7 @@ BuildRequires: /proc
 
 Name:		ht2html
 Version:	2.0
-Release:	alt5_2jpp5
+Release:	alt6_2jpp5
 URL:		http://ht2html.sourceforge.net
 Source0:	%{name}-%{version}.tar.bz2
 Source1:	%{name}.bz2
@@ -51,6 +51,8 @@ The www.python.org Web site generator.
 %setup -q
 bzcat %{SOURCE1} > %{name}
 %patch33 -p1
+sed -i s,python,python2, %name
+sed -i 1s,python,python2, *.py
 
 %build
 
@@ -74,12 +76,16 @@ install -m 644 Sidebar.py $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 644 Skeleton.py $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 644 StandardGenerator.py $RPM_BUILD_ROOT%{_datadir}/%{name}
 
+
 %files
 %doc README doc/*.{html,png}
 %{_datadir}/%{name}
 %{_bindir}/*
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.0-alt6_2jpp5
+- fixed build
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt5_2jpp5
 - rebuild
 
