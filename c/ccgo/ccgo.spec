@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:       ccgo
 Version:    0.3.6.5
-Release:    alt2_11
+Release:    alt2_12
 Summary:    An IGS (Internet Go Server) client written in C++
 License:    GPLv3+
 URL:        http://ccdw.org/~cjj/prog/%{name}/
@@ -83,6 +83,9 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata
 %{_datadir}/pixmaps/*
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.6.5-alt2_12
+- merged e2k patch
+
 * Mon Jun 17 2019 Michael Shigorin <mike@altlinux.org> 0.3.6.5-alt2_11
 - E2K: explicit -std=c++11
 
