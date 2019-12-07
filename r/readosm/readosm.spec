@@ -1,18 +1,19 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ 
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           readosm
 Version:        1.1.0
-Release:        alt2_1
+Release:        alt2_5
 Summary:        Library to extract data from Open Streetmap input files
 
-Group:          System/Libraries
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Source0:        http://www.gaia-gis.it/gaia-sins/%{name}-%{version}.tar.gz
 URL:            https://www.gaia-gis.it/fossil/readosm
 
+BuildRequires:  gcc
 BuildRequires:  libexpat-devel
 BuildRequires:  zlib-devel
 Source44: import.info
@@ -23,10 +24,10 @@ Open Street Map files: both input formats (.osm XML based and .osm.pbf based
 on Google's Protocol Buffer serialization) are indifferently supported.
 
 %package devel
+Group: Development/Other
 Summary:  Development libraries and headers for %{name}
-Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
-Requires: pkg-config
+Requires: pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -54,6 +55,9 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.la
 make check
 
 
+
+
+
 %files
 %doc AUTHORS COPYING
 %{_libdir}/lib%{name}.so.*
@@ -64,6 +68,9 @@ make check
 %{_includedir}/%{name}.h
 
 %changelog
+* Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_5
+- fixed self-br in import code
+
 * Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt2_1
 - avoid self-BR
 
