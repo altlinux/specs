@@ -1,20 +1,20 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-generic-compat
 # END SourceDeps(oneline)
-%define power64 ppc64
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xalan-c
 Version:        1.11.0
-Release:        alt1_12
+Release:        alt1_16
 Summary:        Xalan XSLT processor for C
 
-Group:          System/Libraries
 License:        ASL 2.0
 URL:            http://xml.apache.org/xalan-c/
 Source0:        http://www.us.apache.org/dist/xalan/xalan-c/sources/xalan_c-1.11-src.tar.gz
 Patch0:         xalan-c-1.10.0-escaping.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  libxerces-c-devel
 Source44: import.info
 
@@ -24,8 +24,8 @@ other XML document types.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Header files, libraries and development documentation for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
@@ -35,8 +35,8 @@ you will need to install %{name}-devel.
 
 
 %package doc
-Group:          Documentation
-Summary:        Documentation for Xerces-C++ validating XML parser
+Group: Documentation
+Summary:        Documentation for Xalan XSLT processor for C
 BuildArch: noarch
 
 %description doc
@@ -53,6 +53,7 @@ chmod 644 NOTICE
 # cp /usr/lib/rpm/config.guess config.guess
 
 %build
+cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 export XALANCROOT="${PWD}"
 export XERCESROOT=%{_includedir}/xercesc/
 COMMONARGS="-plinux -cgcc -xg++ -minmem"
@@ -71,6 +72,9 @@ export XERCESROOT=%{_includedir}/xercesc/
 make install DESTDIR=%{buildroot}
 
 
+
+
+
 %files
 %doc LICENSE KEYS NOTICE
 %{_bindir}/Xalan
@@ -87,6 +91,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sun Dec 08 2019 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_16
+- merged e2k patch
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_12
 - update to new release by fcimport
 
