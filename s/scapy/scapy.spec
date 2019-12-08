@@ -2,12 +2,12 @@
 
 Name: scapy
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Summary: Scapy is a powerful interactive packet manipulation program written in Python
 
 Group: Networking/Other
-License: GPL3
+License: GPLv2
 Url: http://www.secdev.org/projects/scapy/
 
 # Source-url: https://github.com/secdev/scapy/archive/v%version.zip
@@ -60,6 +60,9 @@ rm -rf %buildroot%python3_sitelibdir/%name/arch/windows
 %python3_sitelibdir/%name-*egg-info
 
 %changelog
+* Sun Dec 08 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt2
+- fix license (GPLv2 really)
+
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
 - new version 2.4.3 (with rpmrb script)
 - switch to python3
