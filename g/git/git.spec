@@ -1,6 +1,6 @@
 Name: git
 Version: 2.24.0
-Release: alt3
+Release: alt4
 
 Summary: Git core and tools
 License: GPLv2
@@ -112,7 +112,6 @@ Summary: Perl interface to Git
 Group: Development/Perl
 BuildArch: noarch
 Requires: %name-core = %EVR
-Requires: perl(Error.pm) perl(Mail/Address.pm)
 
 %description -n perl-Git
 Git is a fast, scalable, distributed revision control system with an
@@ -280,6 +279,7 @@ This package contains the full set of Git tools.
 
 %prep
 %setup -n %name-%version-%release
+rm -r perl/Git/LoadCPAN*
 cat >config.mak <<'EOF'
 V = 1
 CFLAGS = %optflags
@@ -452,12 +452,10 @@ popd
 %perl_vendor_privlib/Git/
 %perl_vendor_privlib/Git.pm
 %exclude %perl_vendor_privlib/Git/SVN*
-%exclude %perl_vendor_privlib/Git/LoadCPAN/Mail/
 
 %if_with email
 %files email
 %gitexecdir/*email*
-%perl_vendor_privlib/Git/LoadCPAN/Mail/
 %if_with doc
 %_man1dir/git-*email*.1*
 %endif #doc
@@ -524,6 +522,10 @@ popd
 %endif #doc
 
 %changelog
+* Sun Dec 08 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt4
+- Removed Git::LoadCPAN proxy, we can rely on our system perl
+  Error and Mail::Address modules.
+
 * Sat Dec 07 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt3
 - Fixed "--without doc" and "--without email" builds
   (by Michael Shigorin and me).
