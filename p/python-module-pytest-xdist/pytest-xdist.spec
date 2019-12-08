@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.29.0
-Release: alt1
+Release: alt2
 
 Summary: pytest xdist plugin for distributed testing and loop-on-failing modes
 License: MIT
@@ -128,6 +128,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_xdist-*.egg-info/
 
 %changelog
+* Fri Dec 06 2019 Stanislav Levin <slev@altlinux.org> 1.29.0-alt2
+- Fixed testing against Pytest 5.3+.
+
 * Tue Aug 13 2019 Stanislav Levin <slev@altlinux.org> 1.29.0-alt1
 - 1.27.0 -> 1.29.0.
 

@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/encukou/pytest-multihost.git
 Url: https://pypi.python.org/pypi/pytest-multihost
 
@@ -18,65 +18,43 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-paramiko
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-paramiko
+BuildRequires: python3(paramiko)
+BuildRequires: python3(tox)
 %endif
-%py_requires yaml paramiko
+
+%set_python3_req_method strict
+%py3_provides pytest-multihost
 
 BuildArch: noarch
 
 %description
 A pytest plugin for multi-host testing.
 
-%package -n python3-module-%oname
-Summary: Utility for writing multi-host tests for pytest
-Group: Development/Python3
-%py3_requires yaml paramiko
-
-%description -n python3-module-%oname
-A pytest plugin for multi-host testing.
-
 %prep
 %setup
 # skip tests which require SSH connection
 sed -i '/commands = python -m pytest/s/$/ -m "not needs_ssh"/g' tox.ini
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v
-
-pushd ../python3
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-popd
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -v
 
 %files
-%doc README.rst COPYING
-%python_sitelibdir/pytest_multihost/
-%python_sitelibdir/pytest_multihost-*.egg-info/
-
-%files -n python3-module-%oname
 %doc README.rst COPYING
 %python3_sitelibdir/pytest_multihost/
 %python3_sitelibdir/pytest_multihost-*.egg-info/
 
 %changelog
+* Fri Dec 06 2019 Stanislav Levin <slev@altlinux.org> 3.0-alt2
+- Dropped Python2 subpackage.
+
 * Mon Jul 23 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt1
 - 1.1 -> 3.0
 
