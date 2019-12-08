@@ -1,6 +1,6 @@
 Name: git
-Version: 2.24.0
-Release: alt4
+Version: 2.24.1
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -522,6 +522,12 @@ popd
 %endif #doc
 
 %changelog
+* Sun Dec 08 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.1-alt1
+- 2.24.0 -> 2.24.1 (fixes: CVE-2019-1348, CVE-2019-1387, CVE-2019-19604);
+  this update also addresses a few Windows and/or NTFS issues
+  (fixes: CVE-2019-1349, CVE-2019-1350, CVE-2019-1351, CVE-2019-1352,
+  CVE-2019-1353, CVE-2019-1354).
+
 * Sun Dec 08 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt4
 - Removed Git::LoadCPAN proxy, we can rely on our system perl
   Error and Mail::Address modules.
