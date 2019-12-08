@@ -1,6 +1,6 @@
 Name: git
 Version: 2.24.0
-Release: alt2
+Release: alt3
 
 Summary: Git core and tools
 License: GPLv2
@@ -41,7 +41,7 @@ BuildRequires: hardlink, libssl-devel, perl-devel, perl-podlators, perl(Error.pm
 %{!?_without_cvs:BuildRequires: cvs perl(DBI.pm)}
 %{!?_disable_curl:BuildRequires: libcurl-devel}
 %{!?_disable_expat:BuildRequires: libexpat-devel}
-%{!?_without_email:BuildRequires: perl(Error.pm) perl(Mail/Address.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
+%{!?_without_email:BuildRequires: perl(Mail/Address.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
 %{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) perl(YAML/Any.pm) subversion subversion-server-common}
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
 %{?!_without_gitweb:BuildRequires: perl(charnames.pm) perl(CGI.pm) perl(Encode.pm)}
@@ -305,6 +305,7 @@ touch git-gui/credits
 %make_build -C contrib/subtree all %{!?_without_doc:doc}
 
 %check
+%{?_without_email:rm t/t9001-send-email.sh}
 %make_build -k test
 
 %install
@@ -445,14 +446,18 @@ popd
 
 %files -n perl-Git
 %gitexecdir/git-add--interactive
+%if_with doc
 %_man3dir/Git.3*
+%endif
 %perl_vendor_privlib/Git/
 %perl_vendor_privlib/Git.pm
 %exclude %perl_vendor_privlib/Git/SVN*
+%exclude %perl_vendor_privlib/Git/LoadCPAN/Mail/
 
 %if_with email
 %files email
 %gitexecdir/*email*
+%perl_vendor_privlib/Git/LoadCPAN/Mail/
 %if_with doc
 %_man1dir/git-*email*.1*
 %endif #doc
@@ -519,6 +524,10 @@ popd
 %endif #doc
 
 %changelog
+* Sat Dec 07 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt3
+- Fixed "--without doc" and "--without email" builds
+  (by Michael Shigorin and me).
+
 * Sun Nov 17 2019 Dmitry V. Levin <ldv@altlinux.org> 2.24.0-alt2
 - Relocated bash completions (closes: #37426).
 - Packaged git-subtree as a separate subpackage (closes: #37432).
