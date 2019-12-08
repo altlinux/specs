@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: System/Libraries
 BuildRequires: python-modules-xml python-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -19,10 +17,9 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_13
+Release:        alt2_17
 Summary:        Library for human-machine Natural Interaction
 
-Group:          System/Libraries
 License:        ASL 2.0 and BSD
 URL:            http://www.openni.org
 # To reproduce tarball (adapt version and shortcommit):
@@ -42,9 +39,11 @@ Patch4:         openni-1.3.2.1-fedora-java.patch
 Patch5:         openni-1.5.2.23-disable-softfloat.patch
 Patch6:         openni-1.5.2.23-armsamples.patch
 Patch7:         openni-1.5.7.10-rename-equivalent-for-gcc6.patch
+Patch8:         openni-freeglut.patch
 
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
+BuildRequires:  gcc-c++
 BuildRequires:  libfreeglut-devel, tinyxml-devel, libjpeg-devel, dos2unix, libusb-devel
 BuildRequires:  python, doxygen graphviz libgraphviz
 Source44: import.info
@@ -60,8 +59,8 @@ enables communication with both:
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -70,8 +69,8 @@ developing applications that use %{name}.
 
 
 %package        java
+Group: Development/Other
 Summary:        %{name} Java library
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
@@ -84,8 +83,8 @@ developing applications that use %{name} in Java.
 
 
 %package        doc
+Group: Documentation
 Summary:        API documentation for %{name}
-Group:          Documentation
 BuildArch:      noarch
 
 %description    doc
@@ -94,8 +93,8 @@ for OpenNI.
 
 
 %package        examples
+Group: Development/Tools
 Summary:        Sample programs for %{name}
-Group:          Development/Tools
 Requires:       %{name} = %{version}-%{release}
 
 %description    examples
@@ -111,6 +110,7 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch5 -p1 -b .disable-softfloat
 %patch6 -p1 -b .armsamples
 %patch7 -p1 -b .rename-equivalent-for-gcc6
+%patch8 -p0 -b .freeglut
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -121,6 +121,7 @@ for ext in c cpp; do
     sed -i -e 's|#define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"|#define SAMPLE_XML_PATH "%{_sysconfdir}/%{name}/SamplesConfig.xml"|' {} \;
 done
 
+sed -i 's|python|python2|' Platform/Linux/CreateRedist/RedistMaker
 sed -i 's|if (os.path.exists("/usr/bin/gmcs"))|if (0)|' Platform/Linux/CreateRedist/Redist_OpenNi.py
 
 dos2unix README
@@ -176,8 +177,6 @@ sed -e 's![@]prefix[@]!%{_prefix}!g' \
     -e 's![@]includedir[@]!%{_includedir}!g' \
     -e 's![@]version[@]!%{version}!g' \
     %{SOURCE1} > %{buildroot}%{_libdir}/pkgconfig/libopenni.pc
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_var}/lib/ni/modules.xml
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -188,6 +187,7 @@ done
 
 
 %post
+%{?ldconfig}
 if [ $1 == 1 ]; then
   niReg -r %{_libdir}/libnimMockNodes.so
   niReg -r %{_libdir}/libnimCodecs.so
@@ -202,6 +202,8 @@ if [ $1 == 0 ]; then
   niReg -u %{_libdir}/libnimRecorder.so
 fi
 
+
+: 
 
 %files
 %doc LICENSE README NOTICE CHANGES
@@ -231,6 +233,9 @@ fi
 
 
 %changelog
+* Sun Dec 08 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_17
+- fixed build
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_13
 - update to new release by fcimport
 
