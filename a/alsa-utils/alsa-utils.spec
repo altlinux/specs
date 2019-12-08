@@ -1,10 +1,12 @@
+%def_with systemd
+
 Name: alsa-utils
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: http://www.alsa-project.org
@@ -18,6 +20,7 @@ Provides: alsa2-utils = %version
 Conflicts: alsa-utils < 1.0.9a-alt1
 
 BuildRequires: intltool libalsa-devel libncursesw-devel xmlto libfftw3-devel
+%{?_with_systemd:BuildRequires: systemd-devel}
 Requires: libncursesw >= 5.7
 Requires: sysfsutils
 
@@ -41,7 +44,7 @@ This package contains minimal client utility for ALSA:
 
 %package -n amixer
 Summary: Command-line mixer for ALSA soundcard driver
-License: GPL
+License: GPL-2.0-or-later
 Group: Sound
 
 %description -n amixer
@@ -57,6 +60,7 @@ touch config.rpath
 %autoreconf
 %configure \
 	--with-curses=ncursesw \
+	%{?_with_systemd:--with-systemdsystemunitdir=%_unitdir} \
 	--disable-alsaconf
 %make_build
 
@@ -82,6 +86,13 @@ touch config.rpath
 %exclude %_man1dir/amixer.1*
 %_man7dir/*.7*
 
+%if_with systemd
+%_unitdir/alsa-restore.service
+%_unitdir/alsa-state.service
+%_unitdir/sound.target.wants/alsa-restore.service
+%_unitdir/sound.target.wants/alsa-state.service
+%endif
+
 %files -n aplay
 %_bindir/aplay
 %_bindir/arecord
@@ -93,6 +104,10 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sun Dec 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.1-alt2
+- added systemd knob (on by default)
+- spec: corrected license field (use specific SPDX identifier)
+
 * Mon Nov 18 2019 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt1
 - 1.2.1
 - added 89-alsa-ucm.rules
