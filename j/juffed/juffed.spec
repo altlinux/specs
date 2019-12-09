@@ -1,47 +1,59 @@
-Name:		juffed
-Version:	0.10
-Release:	alt2
-License:	GPL
-Group:		Editors
-Summary:	Simple tabbed text editor
+Name: juffed
+Version: 0.10
+Release: alt3.git7746772
 
-Source:		%name-%version.tar
-Patch1:		%name-%version-fedora-cmake.patch
+Summary: Simple tabbed text editor
+License: GPL-2.0+
+Group:	 Editors
+URL: https://github.com/Mezomish/juffed
 
-BuildRequires: gcc-c++ cmake libqt4-devel libqscintilla2-qt4-devel chrpath
+Source:	%name-%version.tar
+Patch1:	%name-%version-fedora-cmake.patch
 
-Provides:   %name-plugins = %EVR
-Obsoletes:  %name-plugins < %EVR
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: libqscintilla2-qt5-devel
+BuildRequires: libenca-devel
+BuildRequires: chrpath
 
-%package devel
-Summary:	Includes for juffed
-Group:		Development/KDE and QT
-Requires:	%name = %EVR
-BuildArch:	noarch
+Provides: %name-plugins = %EVR
+Obsoletes: %name-plugins < %EVR
 
 %description
 Simple tabbed text editor with syntax highlighting for C++, Python,
 HTML, PHP, XML, TeX, Makefiles, ini-files and patch-files
 
-%description	devel
+%package devel
+Summary: Includes for juffed
+Group:   Development/KDE and QT
+Requires: %name = %EVR
+BuildArch: noarch
+
+%description devel
 %{summary}
-See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial for details.
+
+See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial
+for details.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 
 %build
 %cmake \
-	-DQSCINTILLA_NAMES=qscintilla2_qt4 \
+	-DUSE_QT5=TRUE \
+	-DUSE_ENCA=TRUE \
+	-DQSCINTILLA_NAMES=qscintilla2_qt5
 
-%cmake_build VERBOSE=1
+%cmake_build VERBOSE=0
 
 %install
 %cmakeinstall_std
-chrpath -d %buildroot%_bindir/%name
-chrpath -d %buildroot%_libdir/libjuff.so
-mkdir -p %buildroot/%_libdir/%name/plugins
+#chrpath -d %buildroot%_bindir/%name
+#chrpath -d %buildroot%_libdir/libjuff.so
+#mkdir -p %buildroot/%_libdir/%name/plugins
 
 %files
 %doc COPYING ChangeLog README
@@ -59,6 +71,11 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Mon Dec 09 2019 Andrey Cherepanov <cas@altlinux.org> 0.10-alt3.git7746772
+- New version from upstream git https://github.com/Mezomish/juffed.
+- Build with Qt5 (ALT #37589).
+- Fix homepage.
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt2
 - Fixed build with current toolchain.
 
