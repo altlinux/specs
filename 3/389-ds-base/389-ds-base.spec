@@ -11,8 +11,8 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.10
-Release: alt2
+Version: 1.4.1.12
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -607,6 +607,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 09 2019 Stanislav Levin <slev@altlinux.org> 1.4.1.12-alt1
+- 1.4.1.10 -> 1.4.1.12.
+
 * Sun Nov 17 2019 Michael Shigorin <mike@altlinux.org> 1.4.1.10-alt2
 - Fixed cockpit knob.
 - Enabled parallel build.
