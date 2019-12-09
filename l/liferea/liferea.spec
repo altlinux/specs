@@ -1,7 +1,7 @@
-
 Name: liferea
 Version: 1.12.7
-Release: alt1
+Release: alt2
+
 Summary: A RSS News Reader for GNOME
 License: GPLv2
 Group: Networking/News
@@ -13,18 +13,17 @@ Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %n
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme
 
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libdir/%name/plugins
+%add_python3_path %_libdir/%name/plugins
 
-BuildRequires(pre): gobject-introspection-devel
+BuildRequires(pre): gobject-introspection-devel rpm-build-gir >= 0.7.3-alt3
 BuildRequires(pre): rpm-build-python3 python3-devel
 BuildRequires: python3-module-pygobject3-devel
-BuildRequires: gcc-c++ intltool
+BuildRequires: xvfb-run gcc-c++ intltool
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
 BuildRequires: pkgconfig(glib-2.0) >= 2.50.0 pkgconfig(gio-2.0) >= 2.50.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(pango) >= 1.4.0
@@ -60,7 +59,7 @@ Requires: %name = %version-%release
 Play music and videos directly from Liferea
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -68,10 +67,10 @@ Play music and videos directly from Liferea
 %configure \
 	--enable-introspection \
 	--disable-static
-%make_build
+xvfb-run %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -115,6 +114,9 @@ Play music and videos directly from Liferea
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Mon Dec 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.7-alt2
+- run make via xvfb-run as a workaround to build Liferea-3.0.gir
+
 * Tue Aug 13 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.7-alt1
 - 1.12.7
 

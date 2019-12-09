@@ -9,7 +9,7 @@
 %def_disable gjs
 # not ready for lua-5.3
 %def_disable lua
-%def_enable python2
+%def_disable python2
 %def_enable introspection
 %def_disable vala
 %def_enable gtk_doc
@@ -18,7 +18,7 @@
 
 Name: libpeas
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -219,6 +219,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt2
+- disabled python2 support
+
 * Mon Oct 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
 - 1.24.1
 
