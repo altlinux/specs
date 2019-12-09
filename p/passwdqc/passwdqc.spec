@@ -1,11 +1,11 @@
 Name: passwdqc
-Version: 1.3.1.2
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
 Group: System/Base
-Url: http://www.openwall.com/passwdqc/
+Url: https://www.openwall.com/passwdqc/
 
 # http://www.openwall.com/passwdqc/%name-%version.tar.gz
 Source: %name-%version-%release.tar
@@ -109,7 +109,7 @@ rebuilding.
 %setup -n %name-%version-%release
 
 %build
-%add_optflags -W -Werror -D_DEFAULT_SOURCE=1 -DENABLE_NLS=1 -DHAVE_LIBAUDIT=1
+%add_optflags -W -Werror -DENABLE_NLS=1 -DHAVE_LIBAUDIT=1
 %make_build \
 	CFLAGS_lib='%optflags %optflags_shared -DLINUX_PAM' \
 	CFLAGS_bin='%optflags' \
@@ -151,6 +151,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Mon Dec 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.2-alt1
+- Merged with 1.3.2-owl1.
+
 * Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.2-alt2
 - lib%name: replaced PreReq with more appropriate dependencies.
 
