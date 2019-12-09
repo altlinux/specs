@@ -10,8 +10,8 @@
 %brp_strip_none %_bindir/*
 
 Name:    gitea
-Version: 1.9.4
-Release: alt3
+Version: 1.10.1
+Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -21,12 +21,13 @@ Url:     https://gitea.io
 
 # https://github.com/go-gitea/gitea
 Source:  %name-%version.tar
+Source1: gopath.tar
 
-Source1: gitea.service
-Source2: gitea.service.d.conf
-Source3: app-%version.ini
+Source2: gitea.service
+Source3: gitea.service.d.conf
 Source4: README.ALT
 
+Patch:  ALT_config.patch
 Patch1: make-version.patch
 
 BuildRequires(pre): rpm-build-golang
@@ -42,6 +43,9 @@ and Gitlab. Gitea is a fork of Gogs.
 
 %prep
 %setup
+tar -xvf %SOURCE1
+mv gopath .gopath
+%patch -p1
 %patch1 -p1
 
 %build
@@ -60,10 +64,10 @@ TAGS="bindata sqlite pam" make VERSION=%version generate all
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
 install -Dm 0755 ".gopath/src/%import_path/%name" %buildroot%_bindir/%name
-install -Dm 0644 %SOURCE1 %buildroot%_unitdir/%name.service
+install -Dm 0644 %SOURCE2 %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_sysconfdir/systemd/system/gitea.service.d
-install -Dm 0644 %SOURCE2 %buildroot%_sysconfdir/systemd/system/gitea.service.d/port.conf
-install -Dm 0660 %SOURCE3 %buildroot%_sysconfdir/%name/app.ini
+install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/gitea.service.d/port.conf
+install -Dm 0660 custom/conf/app.ini.sample %buildroot%_sysconfdir/%name/app.ini
 
 # install docs
 mkdir -p %buildroot%_docdir/%name
@@ -97,6 +101,10 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Mon Dec 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.1-alt1
+- Build new version.
+- Change building scheme.
+
 * Tue Oct 22 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt3
 - Fix perms on /var/lib/gitea.
 
