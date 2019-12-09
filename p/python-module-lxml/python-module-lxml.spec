@@ -5,7 +5,7 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 4.4.1
+Version: 4.4.2
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
@@ -13,7 +13,7 @@ Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt 
 # Source-git: https://github.com/lxml/lxml.git
 Source: %name-%version.tar
 
-License: BSD/GPLv2/ZPL/PSF
+License: BSD-3-Clause AND GPL-2.0-or-later
 Group: Development/Python
 URL: http://codespeak.net/lxml
 
@@ -156,6 +156,10 @@ popd
 %doc doc samples
 
 %changelog
+* Mon Dec 09 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.2-alt1
+- Build new version
+- Fix license
+
 * Fri Aug 23 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt1
 - Build new version
 - Disable bootstrap knob.
