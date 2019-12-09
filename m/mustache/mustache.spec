@@ -2,8 +2,8 @@
 %define        pkgname mustache
 
 Name:          %pkgname
-Version:       1.1.0
-Release:       alt2
+Version:       1.1.1
+Release:       alt1
 Summary:       Logic-less Ruby templates
 License:       MIT
 Group:         Development/Ruby
@@ -78,6 +78,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Dec 09 2019 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version.
+
 * Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt2
 - Use Ruby Policy 2.0
 
