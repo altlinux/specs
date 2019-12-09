@@ -1,13 +1,13 @@
 Name: barman
-Version: 2.9
+Version: 2.10
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
-License: GPLv3
+License: GPL-3.0-only
 Group: Databases
 Url: http://www.pgbarman.org/
 
-Source: https://files.pythonhosted.org/packages/source/b/%name/%name-%version.tar.gz
+Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
 Source1: barman.cron
 Source2: barman.logrotate
 
@@ -108,8 +108,12 @@ touch %buildroot/var/log/barman/barman.log
 %doc NEWS README.rst
 %_bindir/barman-wal-archive
 %_bindir/barman-wal-restore
+%_bindir/barman-cloud-backup
+%_bindir/barman-cloud-wal-archive
 %doc %_man1dir/barman-wal-archive.1.xz
 %doc %_man1dir/barman-wal-restore.1.xz
+%doc %_man1dir/barman-cloud-backup.1.xz
+%doc %_man1dir/barman-cloud-wal-archive.1.xz
 
 %files -n python3-module-barman
 %doc NEWS README.rst
@@ -124,5 +128,8 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Mon Dec 09 2019 Leontiy Volodin <lvol@altlinux.org> 2.10-alt1
+- New version (2.10) with rpmgs script.
+
 * Thu Aug 22 2019 Leontiy Volodin <lvol@altlinux.org> 2.9-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
