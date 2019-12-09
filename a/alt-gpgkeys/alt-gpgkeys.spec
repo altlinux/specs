@@ -1,9 +1,9 @@
 Name: alt-gpgkeys
-Version: 0.7.164
+Version: 0.7.165
 Release: alt1
 
 Summary: ALT GnuPG keys
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
 Packager: ALT Security Team <security@altlinux.com>
 BuildArch: noarch
@@ -21,7 +21,7 @@ This package contains ALT Linux Team GnuPG keyring.
 
 %package utils
 Summary: utilities to manipulate %name
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
 Requires: %name = %version-%release
 
@@ -61,6 +61,10 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Mon Dec 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.165-alt1
+- Added key: greh@ (880615FF; see #37333).
+- Changed License tags to GPL-2.0-or-later.
+
 * Tue Oct 29 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.164-alt1
 - Added key: nir@ (0CAE7AAC; see #35053).
 - Added key: zacat@ (ABF555DC; see #35204).
