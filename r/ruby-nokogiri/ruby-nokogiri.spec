@@ -1,7 +1,7 @@
 %define        pkgname nokogiri
 
 Name:          ruby-%pkgname
-Version:       1.10.4
+Version:       1.10.7
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:         Development/Ruby
@@ -42,6 +42,12 @@ This package contanis Ruby libraries for Nokogiri.
 Summary:       Development files for %gemname gem
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Requires:      libxml2-devel
+Requires:      libxslt-devel
+Requires:      java-devel
+Requires:      ruby-pkg-config
+Requires:      zlib-devel
 
 %description   devel
 Development files for %gemname gem.
@@ -84,8 +90,12 @@ Documentation for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Mon Dec 09 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.7-alt1
+- updated (^) 1.10.4 -> 1.10.7
+- added (+) requires for devel package
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.4-alt1
-- ^ v1.10.4
+- updated (^) 1.10.3 -> 1.10.4
 
 * Tue Jun 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.3-alt2
 - Fix spec

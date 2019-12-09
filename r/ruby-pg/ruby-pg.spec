@@ -2,12 +2,12 @@
 
 Name:          ruby-%pkgname
 Version:       1.1.4
-Release:       alt1
+Release:       alt2
 Summary:       Ruby interface to PostgreSQL RDBMS
 Group:         Development/Ruby
-License:       MIT/GPL
+License:       BSD-2-Clause
 Url:           https://bitbucket.org/ged/ruby-pg/
-# VCS:         https://bitbucket.org/ged/ruby-pg.git
+Vcs:           https://bitbucket.org/ged/ruby-pg.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -24,38 +24,49 @@ but not tested at all.
 
 %package       -n gem-%pkgname-doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
 Provides:      ruby-%pkgname-doc
 Obsoletes:     ruby-%pkgname-doc
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
 
+%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %package       -n gem-%pkgname-devel
 Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы для разработки на основе самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
+Requires:      postgresql-devel
+
 %description   -n gem-%pkgname-devel
 Development files for %gemname gem.
+
+%description   -n gem-%pkgname-devel -l ru_RU.UTF8
+Файлы для разработки на основе самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build --use=pg --version-replace=1.1.4
+%ruby_build --use=pg --version-replace=1.1.4
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
-%doc README*
+%doc README* LICENSE
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
@@ -68,6 +79,11 @@ Development files for %gemname gem.
 
 
 %changelog
+* Mon Dec 09 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt2
+- added (+) postgresql-devel to gem-%pkgname-devel
+- added (+) some translations
+- fixed (*) some syntax issues, licence (TODO)
+
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt1
 - Bump to 1.1.4
 - Use Ruby Policy 2.0
