@@ -1,8 +1,8 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
 
 Name: eyeD3
-Version: 0.7.4
-Release: alt1.2
+Version: 0.8.11
+Release: alt1
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
 License: GPLv2+
@@ -12,29 +12,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar.gz
 
-Patch0: %name-long-tyer.patch
-
-Requires: python-module-%name = %EVR
-
-BuildPreReq: python-devel
-BuildPreReq: python-module-Paver python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
-BuildPreReq: python3-module-Paver python3-module-setuptools
-%endif
-
-%description
-eyeD3 manipulates ID3 tags in mp3 files and is able to read/write and
-convert between ID3 v1.0, v1.1, v2.3 and v2.4 tags. High-level access
-is provided to most frames, including APIC (i.e., images) frames.
-
-%package py3
-Summary: Console tool that displays and manipulates id3-tags on mp3 files
-Group: Sound
 Requires: python3-module-%name = %EVR
 
-%description py3
+
+%description
 eyeD3 manipulates ID3 tags in mp3 files and is able to read/write and
 convert between ID3 v1.0, v1.1, v2.3 and v2.4 tags. High-level access
 is provided to most frames, including APIC (i.e., images) frames.
@@ -51,74 +33,33 @@ v1.0/v1.1 and v2.3/v2.4.
 
 This module is built for python %_python_version
 
-%package -n python-module-%name
-Summary: A python module for processing mp3 files
-Group: Development/Python
-
-%description -n python-module-%name
-eyeD3 is a Python module and program for processing ID3 tags.
-Information about mp3 files (i.e bit rate, sample frequency,
-play time, etc.) is also provided.  The formats supported are ID3
-v1.0/v1.1 and v2.3/v2.4.
-
-This module is built for python %_python_version
-
-
 %prep
 %setup
-#patch0 -p1
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
 export CFLAGS="%optflags"
-
-paver build
-
-%if_with python3
-pushd ../python3
-paver.py3 build
-popd
-%endif
+%python3_build
 
 %install
 export CFLAGS="%optflags"
-
-%if_with python3
-pushd ../python3
-paver.py3 install --root=%buildroot
-sed -i 's|python|python3|' bin/%name
-install -p -m755 bin/%name %buildroot%_bindir/%name.py3
-popd
-%endif
-
-paver install --root=%buildroot
-mkdir -p %buildroot{%_bindir,%_man1dir}
-install -p -m755 bin/%name %buildroot%_bindir/
+%python3_install
 
 %files
+%doc *.rst docs/ examples/
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-
-%files -n python-module-%name
-%python_sitelibdir/*
-%doc AUTHORS ChangeLog *.rst
-
-%if_with python3
-%files py3
-%_bindir/*.py3
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
-%doc AUTHORS ChangeLog *.rst
-%endif
+
 
 %changelog
+* Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.11-alt1
+- Version updated to 0.8.11
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.7.4-alt1.2
 - (NMU) rebuild with python3.6
 
