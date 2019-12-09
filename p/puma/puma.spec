@@ -2,7 +2,7 @@
 %define        pkgname puma
 
 Name:          %pkgname
-Version:       4.2.1
+Version:       4.3.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD 3-Clause
@@ -65,8 +65,10 @@ Summary:       Development headers files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
 Obsoletes:     %pkgname-devel
 Provides:      %pkgname-devel
+Requires:      libssl-devel
 
 %description   -n gem-%pkgname-devel
 Development headers for %gemname gem.
@@ -105,14 +107,18 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Mon Dec 09 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.1-alt1
+- updated (^) 4.2.1 -> 4.3.1
+- added (+) SSL build dependency
+
 * Mon Oct 21 2019 Pavel Skrylev <majioa@altlinux.org> 4.2.1-alt1
-- update (^) 4.2.0 -> 4.2.1
+- updated (^) 4.2.0 -> 4.2.1
 - added (+) build deps
-- enable (+) SSL for puma
+- enabled (+) SSL for puma
 
 * Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 4.2.0-alt1
-- update (^) 3.12.1 -> 4.2.0
-- update (^) Ruby Policy 2.0
+- updated (^) 3.12.1 -> 4.2.0
+- updated (^) -> Ruby Policy 2.0
 
 * Mon Apr 01 2019 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
 - New version.
