@@ -1,5 +1,5 @@
 Name: tgsend
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 License: GPLv3
 Group: Networking/WWW
@@ -12,7 +12,7 @@ BuildRequires: fpc upx lazarus
 
 ExclusiveArch: %ix86 x86_64
 
-Source: tgsend-1.3.1.tar
+Source: tgsend-%version.tar
 
 %description
 Simple Telegram bot message/file console sender
@@ -37,5 +37,8 @@ install -m 644 tgsend.conf %buildroot%_sysconfdir/tgsend.conf.example
 %_sysconfdir/tgsend.conf.example
 
 %changelog
+* Tue Dec 5 2019 Anton Shevtsov <x09@altlinux.org> 1.3.2-alt1
+- Help page fixed
+
 * Thu Nov 26 2019 Anton Shevtsov <x09@altlinux.org> 1.3.1-alt1
 - Initial build
