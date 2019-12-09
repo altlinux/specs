@@ -1,19 +1,17 @@
 Name: strawberry
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 Summary: Audio player and music collection organizer
 
-# Main program: GPLv3
-# src/analyzer and src/engine/gstengine and src/engine/xineengine: GPLv2
-# 3rdparty/taglib, src/widgets/fancytabwidget and src/widgets/stylehelper: LGPLv2
-# 3rdparty/qocoa: MIT
-# 3rdparty/singleapplication: MIT
-# 3rdparty/utf8-cpp: Boost
-# src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: ASL 2.0
-# some icons in qocoa: CC-BY-SA
-License: GPLv2 and GPLv3+ amd LGPLv2 and ASL 2.0 and MIT and Boost and CC-BY-SA
+# Main program: GPL-3.0-or-later
+# src/engine/gstengine and src/engine/xineengine: GPL-2.0-or-later
+# 3rdparty/taglib: LGPL-2.1
+# 3rdparty/singleapplication and src/widgets/qocoa_mac.h: MIT
+# 3rdparty/utf8-cpp: BSL
+# src/core/timeconstants.h and ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: APSL-2.0
+License: GPL-2.0-or-later and GPL-3.0-or-later and LGPL-2.1 and APSL-2.0 and MIT and BSL
 Group: Sound
-Url: http://www.strawbs.org/
+Url: https://www.strawberrymusicplayer.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
@@ -28,7 +26,6 @@ BuildRequires: libgpod-devel
 
 Requires: gst-plugins-good1.0 vlc-mini
 
-Provides: bundled(qocoa)
 Provides: bundled(utf8-cpp)
 Provides: bundled(singleapplication)
 Provides: bundled(singlecoreapplication)
@@ -94,6 +91,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Dec 09 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.7-alt1
+- New version (0.6.7) with rpmgs script.
+
 * Mon Nov 11 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.6-alt1
 - New version (0.6.6) with rpmgs script.
 
