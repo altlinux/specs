@@ -3,15 +3,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.3.6
-Release: alt2
+Version: 1.3.7
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
 License: GPLv2+ and MIT
 Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
-Source1: ru.po
+#Source1: ru.po
 Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
@@ -26,7 +26,7 @@ BuildRequires: libgcrypt-devel libssl-devel
 BuildRequires: libjpeg-devel libtasn1-devel libpng-devel libpixman-devel zlib-devel
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30 pkgconfig(avahi-client) >= 0.6.30
-BuildRequires: pkgconfig(freerdp2) >= 2.0.0
+BuildRequires: pkgconfig(freerdp2) >= 2.0.0 libcups-devel
 BuildRequires: pkgconfig(winpr2)
 BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango) pkgconfig(cairo) pkgconfig(atk) libwayland-client-devel
 BuildRequires: pkgconfig(libsecret-1)
@@ -202,9 +202,7 @@ that shows up under the display manager session menu.
 %setup
 %patch1 -p1
 
-#? Hack: https://github.com/FreeRDP/Remmina/issues/292
-sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
-cp -f %SOURCE1 po/
+#cp -f %SOURCE1 po/
 
 %build
 %cmake \
@@ -238,7 +236,7 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %files -f %name.lang
 %doc AUTHORS CHANGELOG.md README.md
 %_bindir/%name
-%_bindir/remmina-file-wrapper.sh
+%_bindir/remmina-file-wrapper
 %_datadir/metainfo/*.appdata.xml
 %_datadir/mime/*/*.xml
 %_datadir/applications/*.desktop
@@ -248,6 +246,7 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_iconsdir/hicolor/*/emblems/remmina-ssh-symbolic.svg
 %_datadir/%name
 %_man1dir/remmina.1.*
+%_man1dir/remmina-file-wrapper.1.*
 %dir %_libdir/remmina
 %dir %_libdir/remmina/plugins
 
@@ -299,6 +298,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 09 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.7-alt1
+- 1.3.7
+- drop local localization ru.po
+
 * Thu Nov 21 2019 Ivan A. Melnikov <iv@altlinux.org> 1.3.6-alt2
 - package remmina-file-wrapper.sh (closes: #37514)
 
