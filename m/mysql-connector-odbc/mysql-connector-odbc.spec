@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 8.0.15
+Version: 8.0.18
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -22,7 +22,9 @@ Source2: odbcinst.ini
 
 Patch1: %name-5.3.11-alt-rpath.patch
 Patch2: %name-8.0.13-fedora-myodbc-64bit.patch
-Patch3: %name-8.0.13-alt-prevent-i586-libssl-bundling.patch
+Patch3: %name-8.0.18-alt-prevent-i586-libssl-bundling.patch
+Patch4: %name-8.0.18-fedora-fix-inconsistency.patch
+Patch5: %name-8.0.18-fedora-fix-build.patch
 
 
 BuildRequires(pre): rpm-build-licenses
@@ -49,6 +51,8 @@ setup instructions can be found at
 %patch1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
+%patch5 -p1
 
 %build
 %cmake -G "Unix Makefiles" \
@@ -80,6 +84,11 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Mon Dec 09 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.18-alt1
+- New version
+- Update prevent-i586-libssl-bundling patch
+- Add patches fixing build from Fedora
+
 * Wed Oct 02 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.15-alt1
 - New version
   + INFO_BIN & INFO_SRC introduced by upstream to provide build environment info
