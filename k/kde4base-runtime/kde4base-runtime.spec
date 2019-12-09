@@ -1,6 +1,7 @@
 %define _kde_alternate_placement 1
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4exec/khc_*
+%add_findreq_skiplist %_K4exec/kdeeject
 
 %def_disable gcc5ready
 %def_disable ntrack
@@ -11,7 +12,7 @@
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -70,9 +71,6 @@ Group: Graphical desktop/KDE
 Requires: %libname = %EVR
 Requires: phonon-backend
 Requires: qt4-dbus icon-theme-breeze shared-desktop-ontologies kde4pimlibs
-%ifnarch s390 s390x
-Requires: eject
-%endif
 %description core
 Core files for  %name
 
@@ -225,13 +223,16 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Dec 09 2019 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt6
+- clean requires
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 16.04.1-alt5
 - NMU: remove rpm-build-ubt from BR:
 
 * Thu Jan 10 2019 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt4
 - build without clucene and NetworkManager
 
-* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt3%ubt
+* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt3
 - rebuild with new libwebp
 
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
