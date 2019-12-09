@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt7
+Release: alt8
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -16,9 +16,9 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: alt-build-time.patch
-Patch2: alt-ampdu-buf-define.patch
-Patch3: alt-kernel-5.0.patch
+Patch1: alt-build-time.diff
+Patch2: alt-ampdu-buf-define.diff
+Patch3: kernel-5.3.diff
 
 BuildRequires: kernel-build-tools
 
@@ -41,6 +41,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Mon Dec 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt8
+- add fix against 5.3 kernel
+
 * Wed Jul 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt7
 - update from 5.0-up branch
 
