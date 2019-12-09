@@ -1,37 +1,22 @@
 %define oname tornado-facebook-sdk
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.0
-Release: alt1.git20121001.2
+Release: alt2
+
 Summary: A tornado based facebook graph api wrapper
 License: OSI
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/tornado-facebook-sdk/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/pauloalem/tornado-facebook-sdk.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-The tornado-facebook-sdk is a library that aims to ease the task of
-writing non-blocking, server side, facebook social graph accessing code.
-It's built using tornado. This makes tornado-facebook-sdk a perfect fit
-if you're developing an application using tornado.
-
-%package -n python3-module-%oname
-Summary: A tornado based facebook graph api wrapper
-Group: Development/Python3
-
-%description -n python3-module-%oname
 The tornado-facebook-sdk is a library that aims to ease the task of
 writing non-blocking, server side, facebook social graph accessing code.
 It's built using tornado. This makes tornado-facebook-sdk a perfect fit
@@ -40,39 +25,26 @@ if you're developing an application using tornado.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|graphapi|facebook.graphapi|' facebook/__init__.py
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.TXT *.rst docs/*.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.TXT *.rst docs/*.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt2
+- python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt1.git20121001.2
 - (NMU) rebuild with python3.6
 
