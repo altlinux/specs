@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-tornado
 
-%def_with check
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
+
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/pytest-tornado/
 
@@ -16,49 +15,25 @@ Url: https://pypi.org/project/pytest-tornado/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python2.7(OpenSSL)
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(tornado)
 BuildRequires: python3(pytest)
 BuildRequires: python3(tornado)
 BuildRequires: python3(tox)
-%endif
 
-%py_provides %oname
-
-%description
-A py.test plugin providing fixtures and markers to simplify testing of
-asynchronous tornado applications.
-
-%package -n python3-module-%oname
-Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 A py.test plugin providing fixtures and markers to simplify testing of
 asynchronous tornado applications.
 
 %prep
 %setup
 
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 cat > tox.ini <<EOF
@@ -68,20 +43,19 @@ commands =
     {envpython} -m pytest {posargs:-vra}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst
-%python_sitelibdir/pytest_tornado/
-%python_sitelibdir/pytest_tornado-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
-%doc README.rst
 %python3_sitelibdir/pytest_tornado/
-%python3_sitelibdir/pytest_tornado-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/*.egg-info/
+
 
 %changelog
+* Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.0-alt2
+- python2 disabled
+
 * Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.5.0 -> 0.8.0.
 
