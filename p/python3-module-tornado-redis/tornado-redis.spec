@@ -1,28 +1,24 @@
 %define oname tornado-redis
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.4.18
-Release: alt2.git20141002.1
+Release: alt3
+
 Summary: Asynchronous Redis client that works within Tornado IO loop
 License: ASLv2.0
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/tornado-redis/
+BuildArch: noarch
 
 # https://github.com/leporo/tornado-redis.git
 Source: %name-%version.tar
+Patch0: fix-filter-py3.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-tornado
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tornado
-%endif
 
-%py_provides tornadoredis
+%py3_provides tornadoredis
+
 
 %description
 Asynchronous Redis client for the Tornado Web Server.
@@ -30,65 +26,32 @@ Asynchronous Redis client for the Tornado Web Server.
 This is a fork of brukva redis client modified to be used via Tornado's
 native 'tornado.gen' interface instead of 'adisp' call dispatcher.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Asynchronous Redis client that works within Tornado IO loop
-Group: Development/Python3
-%py3_provides tornadoredis
-
-%description -n python3-module-%oname
-Asynchronous Redis client for the Tornado Web Server.
-
-This is a fork of brukva redis client modified to be used via Tornado's
-native 'tornado.gen' interface instead of 'adisp' call dispatcher.
-%endif
-
 %prep
 %setup
+%patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py build_ext -i
-python runtests.py
-%if_with python3
-pushd ../python3
-python3 setup.py build_ext -i
-python3 runtests.py
-popd
-%endif
+%__python3 setup.py build_ext -i
+%__python3 runtests.py
 
 %files
 %doc *.md demos
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md demos
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.4.18-alt3
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.18-alt2.git20141002.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
