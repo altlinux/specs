@@ -1,8 +1,8 @@
 %def_enable cddb
 
 Name: libcdio
-Version: 2.0.0
-Release: alt1.1
+Version: 2.1.0
+Release: alt1
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -73,7 +73,7 @@ info.
 %makeinstall_std
 
 %files
-%doc AUTHORS README NEWS THANKS TODO
+%doc AUTHORS README NEWS* THANKS TODO
 %_libdir/*.so.*
 %_infodir/%name.info*
 %exclude %_libdir/*++.so.*
@@ -98,6 +98,9 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Thu Dec 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Mon Jan 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1.1
 - merged lost changes
 
