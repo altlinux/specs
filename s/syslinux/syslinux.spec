@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt15
+Release: alt16
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -42,7 +42,7 @@ Patch22: remove-note-gnu-section.patch
 Patch23: syslinux-4.04-lzo.diff
 
 #BuildPrereq: nasm perl-base
-# Automatically added by buildreq on Tue Oct 28 2008 (-bi)
+BuildRequires: rpm-build-python3
 BuildRequires: nasm perl-Crypt-PasswdMD5 perl-Digest-SHA1 libe2fs-devel
 #linux-libc-headers
 BuildRequires: libuuid-devel
@@ -108,7 +108,7 @@ architectures.
 %patch17 -p0
 %patch18 -p0
 %patch19 -p1
-#patch20 -p0
+%patch20 -p0
 %patch21 -p1
 %patch22 -p1
 %patch23 -p0
@@ -165,6 +165,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Mon Dec 09 2019 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt16
+- build with python3
+
 * Wed Jun 05 2019 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt15
 - sync patches with SuSE
 - use lastest gcc
