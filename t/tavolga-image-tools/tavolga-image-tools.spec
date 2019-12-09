@@ -1,8 +1,8 @@
 Name: tavolga-image-tools
 Version: 3.0
-Release: alt1
+Release: alt2
 Summary: Helpers for building images for Tavolga Terminal
-License: BSD (revised)
+License: BSD-3-Clause
 Group: System/Configuration/Other
 Url: https://git.altlinux.org/people/jqt4/packages/generate-recovery-rc.git
 BuildArch: noarch
@@ -29,6 +29,9 @@ install -Dpm 0755 %SOURCE2 %buildroot%_bindir/build-recovery-tar
 %_datadir/%name
 
 %changelog
+* Mon Dec 09 2019 Ivan A. Melnikov <iv@altlinux.org> 3.0-alt2
+- update license tag
+
 * Mon Sep 02 2019 Ivan A. Melnikov <iv@altlinux.org> 3.0-alt1
 - add build-recovery-tar tool
 
