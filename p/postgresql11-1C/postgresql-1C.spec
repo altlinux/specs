@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     11
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -818,6 +818,12 @@ fi
 %endif
 
 %changelog
+* Tue Dec 10 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt2
+- Re-applay patches from 1C:
+    * 00001-1c_FULL_100_EXT.patch
+    * 00010-joinsel.patch
+    * 00015-lessmem.patch
+
 * Tue Oct 29 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt1
 - 11.5
 - Re-applay patches from 1C:
