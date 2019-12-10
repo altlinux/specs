@@ -16,14 +16,15 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt10.rc9
+Release:        alt11.rc9
 Summary:        CLI for running Open Containers
 Group:          Development/Other
-License:        Apache 2.0
+License:        Apache-2.0
 URL:            https://%provider_prefix
 ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
+Patch1:         %name-1.0.0-fedora-cgroups-v2.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -38,6 +39,8 @@ and to manage containers running under runc.
 
 %prep
 %setup -q
+
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -65,6 +68,10 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Tue Dec 10 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt11.rc9
+- Print user friendly error on cgroups v2
+- Fix license name
+
 * Thu Oct 10 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt10.rc9
 - New version
 - fixes: CVE-2019-16884
