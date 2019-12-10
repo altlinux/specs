@@ -3,7 +3,7 @@
 %define libopenh264 libopenh264_%sover
 Name: openh264
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: H.264 codec library
 Group: System/Libraries
@@ -22,7 +22,7 @@ It is suitable for use in real time applications such as WebRTC.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %libopenh264
-
+Conflicts: libopenh264-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -31,7 +31,6 @@ developing applications that use %name.
 Summary: Static H.264 codec library
 Group: Development/C++
 Requires: %name-devel
-
 %description devel-static
 This package provides %name static library.
 
@@ -77,6 +76,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %_libdir/lib*.a
 
 %changelog
+* Tue Dec 10 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt4
+- add conflict devel subpackage with libopenh264-devel
+
 * Fri Oct 25 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt3
 - rename according Shared Libs Policy
 
