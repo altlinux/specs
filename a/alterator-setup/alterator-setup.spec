@@ -2,7 +2,7 @@
 
 Name: alterator-setup
 Version: 0.3.3
-Release: alt3
+Release: alt4
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -84,6 +84,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Fri Dec 06 2019 Ivan A. Melnikov <iv@altlinux.org> 0.3.3-alt4
+- remove rootfs-installer-features on cleanup, if present
+
 * Fri Dec 28 2018 Ivan A. Melnikov <iv@altlinux.org> 0.3.3-alt3
 - setup.service: relax dependency on plymouth-start.service
 
