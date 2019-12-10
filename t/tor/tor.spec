@@ -10,12 +10,12 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.1.6
+Version: 0.4.2.5
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
-License: BSD-like
+License: BSD
 Url: http://tor.eff.org/
 Packager: Sviatoslav Sviridov <svd@altlinux.ru>
 
@@ -142,6 +142,10 @@ fi
 %_var/cache/%name
 
 %changelog
+* Tue Dec 10 2019 Vladimir Didenko <cow@altlinux.ru> 0.4.2.5-alt1
+- new version
+- fix license name
+
 * Thu Sep 19 2019 Vladimir Didenko <cow@altlinux.ru> 0.4.1.6-alt1
 - new version
 
