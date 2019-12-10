@@ -1,36 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+
 %define oname repoze.sendmail
 
-%def_with python3
+Name: python3-module-%oname
+Version: 4.4.1
+Release: alt1
 
-Name: python-module-%oname
-Version: 4.3
-#Release: alt2.git20140222.1.1
 Summary: Send e-mails transactionally (originally cloned from zope.sendmail)
 License: Repoze Public License
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/repoze/repoze.sendmail
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.sendmail.git
 Source0: https://pypi.python.org/packages/54/60/102fdd3a16f3d42f6b3e429116ac190a2c78c629d50a82cbc7d4193c7cdc/%{oname}-%{version}.tar.gz
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires: python3-module-sphinx python3-module-repoze.sphinx.autointerface
 
-%py_requires repoze zope.interface transaction
+%py3_requires repoze zope.interface transaction
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-repoze.sphinx.autointerface python3-module-setuptools rpm-build-python3 time
 
 %description
 `repoze.sendmail` allows coupling the sending of email messages with a
@@ -46,49 +34,9 @@ finds, is included for convenience.
 specific to running in a Zope context has been removed, making this version
 more generally useful to users of other frameworks.
 
-%package -n python3-module-%oname
-Summary: Send e-mails transactionally (originally cloned from zope.sendmail)
-Group: Development/Python3
-%py3_requires repoze zope.interface transaction
-
-%description -n python3-module-%oname
-`repoze.sendmail` allows coupling the sending of email messages with a
-transaction, using the Zope transaction manager.  This allows messages to
-only be sent out when and if a transaction is committed, preventing users
-from receiving notifications about events which may not have completed
-successfully.  Messages may be sent directly or stored in a queue for later
-sending.  The queued mail approach is the more common and recommended path.  A
-console application which can flush the queue, sending the messages that it
-finds, is included for convenience.
-
-`repoze.sendmail` is a fork of `zope.sendmail`.  Functionality that was
-specific to running in a Zope context has been removed, making this version
-more generally useful to users of other frameworks.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for repoze.sendmail
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-`repoze.sendmail` allows coupling the sending of email messages with a
-transaction, using the Zope transaction manager.  This allows messages to
-only be sent out when and if a transaction is committed, preventing users
-from receiving notifications about events which may not have completed
-successfully.  Messages may be sent directly or stored in a queue for later
-sending.  The queued mail approach is the more common and recommended path.  A
-console application which can flush the queue, sending the messages that it
-finds, is included for convenience.
-
-`repoze.sendmail` is a fork of `zope.sendmail`.  Functionality that was
-specific to running in a Zope context has been removed, making this version
-more generally useful to users of other frameworks.
-
-This package contains tests for repoze.sendmail.
-
 %package tests
 Summary: Tests for repoze.sendmail
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -109,7 +57,7 @@ This package contains tests for repoze.sendmail.
 
 %package pickles
 Summary: Pickles for repoze.sendmail
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 `repoze.sendmail` allows coupling the sending of email messages with a
@@ -151,85 +99,49 @@ This package contains documentation for repoze.sendmail.
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %make -C docs pickle
 %make -C docs html
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+    %buildroot%python3_sitelibdir/
 %endif
 
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc *.txt *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/pickle
 
 %files tests
-%python_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/tests
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.4.1-alt1
+- version updated to 4.4.1
+- build for python2 disabled
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1
 - automated PyPI update
 
