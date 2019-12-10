@@ -1,7 +1,7 @@
 %define modulename meld3
 
 Name: python-module-%modulename
-Version: 1.0.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Elementree based templating system
@@ -23,7 +23,6 @@ BuildRequires: time
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 BuildPreReq: python3-module-setuptools
-BuildPreReq: python-tools-2to3
 
 Source: meld3-%version.tar
 
@@ -47,9 +46,6 @@ See http://www.entrian.com/PyMeld for a treatise on the benefits of this pattern
 %setup -n meld3-%version
 
 cp -fR . ../python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-popd
 
 %build
 %python_build
@@ -75,6 +71,9 @@ popd
 
 
 %changelog
+* Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1
+- Version updated to 2.0.0
+
 * Thu Mar 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt1
 - Version 1.0.2
   
