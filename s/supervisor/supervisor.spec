@@ -1,14 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: supervisor
-Version: 3.3.5
+Version: 4.1.0
 Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
-
 License: ZPLv2.1 and BSD and MIT
 Group: System/Base
 Url: http://supervisord.org/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildArch: noarch
 
 Source: http://pypi.io/packages/source/s/%name/%name-%version%{?prever}.tar
 Source1: supervisord.service
@@ -17,28 +17,34 @@ Source3: supervisor.logrotate
 Source4: supervisor.tmpfiles
 Source5: supervisord.init
 
-AutoProv:yes,nopython
-%add_python_req_skip %name
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
+Requires: python3-module-%name
 
-BuildArch: noarch
-BuildRequires: python-devel rpm-build-intro
-BuildRequires: python-module-setuptools
-
-Requires: python-module-meld3 >= 0.6.5
-Requires: python-module-setuptools
 
 %description
+The supervisor is a client/server system that allows its users to control a
+number of processes on UNIX-like operating systems.
+
+%package -n python3-module-%name
+Summary: Python3 module for %name
+Group: Development/Python3
+Requires: python3-module-meld3 >= 0.6.5
+
+%description -n python3-module-%name
 The supervisor is a client/server system that allows its users to control a
 number of processes on UNIX-like operating systems.
 
 %prep
 %setup
 
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 mkdir -p %buildroot/%_sysconfdir
 mkdir -p %buildroot/%_sysconfdir/supervisord.d
@@ -46,30 +52,33 @@ mkdir -p %buildroot/%_logrotatedir/
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_logdir/%name
 mkdir -p %buildroot/%_runtimedir/supervisor
+
 chmod 770 %buildroot/%_logdir/%name
 chmod 770 %buildroot/%_runtimedir/supervisor
+
 install -p -m 644 %SOURCE1 %buildroot/%_unitdir/supervisord.service
 install -p -m 644 %SOURCE2 %buildroot/%_sysconfdir/supervisord.conf
 install -p -m 644 %SOURCE3 %buildroot/%_logrotatedir/supervisor
 install -D -p -m 0644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
-%__subst s'/^#!.*//' $( find %buildroot/%python_sitelibdir/supervisor/ -type f)
+
+%__subst s'/^#!.*//' $( find %buildroot/%python3_sitelibdir/supervisor/ -type f)
+
 mkdir -p %buildroot%_sysconfigdir/
 touch %buildroot%_sysconfigdir/supervisord
 mkdir -p %buildroot/%_initdir
 install -p -m 755 %SOURCE5 %buildroot/%_initdir/supervisord
 
-rm -rf %buildroot/%python_sitelibdir/supervisor/meld3/
+rm -rf %buildroot/%python3_sitelibdir/supervisor/meld3/
 rm -f %buildroot%prefix/doc/*.txt
 
 %files
-%doc CHANGES.txt COPYRIGHT.txt README.rst LICENSES.txt
+%doc *.txt *.rst
 %dir %_logdir/%name
-%_unitdir/supervisord.service
-%python_sitelibdir/*
-%_initdir/supervisord
 %_bindir/supervisor*
 %_bindir/echo_supervisord_conf
 %_bindir/pidproxy
+%_unitdir/supervisord.service
+%_initdir/supervisord
 %_runtimedir/supervisor
 %_tmpfilesdir/%name.conf
 
@@ -78,7 +87,14 @@ rm -f %buildroot%prefix/doc/*.txt
 %config(noreplace) %_logrotatedir/supervisor
 %config(noreplace) %_sysconfigdir/supervisord
 
+%files -n python3-module-%name
+%python3_sitelibdir/*
+
+
 %changelog
+* Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt1
+- version updated to 4.1.0
+
 * Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.3.5-alt1
 - new version 3.3.5 (with rpmrb script)
 
