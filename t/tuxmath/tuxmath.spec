@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libxml2-devel pkgconfig(cai
 %define _localstatedir %{_var}
 Name:           tuxmath
 Version:        2.0.3
-Release:        alt1_5
+Release:        alt2_5
 Summary:        Educational math tutor for children
 
 License:        GPLv3+ and CC-BY and OFL
@@ -15,7 +15,7 @@ Source0:        https://alioth.debian.org/frs/download.php/3271/%{name}_w_fonts-
 Source1:        %{name}.appdata.xml
 #Patch0:	        tuxmath_w_fonts-2.0.1-scandir.patch
 Patch1:         tuxmath_w_fonts-2.0.1-gcc5.patch
-#Patch2:         tuxmath_w_fonts-2.0.1-powerup-crash.patch
+Patch2:         tuxmath-2.0.3-fix-factoroids-segfault.patch
 
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils libappstream-glib
@@ -40,7 +40,7 @@ different types of gameplay, at a variety of difficulty levels.
 rm -f data/fonts/*.ttf
 #%patch0 -p1
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p2
 
 
 %build
@@ -81,6 +81,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Dec 10 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.3-alt2_5
+- fix segfault in factoroids (closes: #34297)
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_5
 - fixed build (closes: #221688)
 
