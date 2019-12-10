@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.43
+Version: 5.45
 Release: alt1
 
 Source: %name-%version.tar
@@ -152,6 +152,19 @@ fi ||:
 
 
 %changelog
+* Tue Dec 03 2019 Paul Wolneykien <manowar@altlinux.org> 5.45-alt1
+- Power module:
+  -- Added support for reboot, suspend and hibernate
+     scheduling and instant actions.
+  -- Apply the changes to the schedule regardless of the
+     instant action.
+- Form.js: Added support to select elements by id.
+
+* Tue Nov 26 2019 Paul Wolneykien <manowar@altlinux.org> 5.44-alt1
+- Allow the email notification controls only if
+  "state-change-notify-postfix" system service is available.
+- Added controls for email notification to the "power" module.
+
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 5.43-alt1
 - Render table with dynamic fields from JSON (thanks majioa@).
   See alterator-domain-policy for details.
