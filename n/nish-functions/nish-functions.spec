@@ -1,5 +1,5 @@
 Name: nish-functions
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: Shell functions collection featuring isolated namespace
@@ -31,6 +31,10 @@ No bash/zsh/whatever extension used. Runs on Linux and (losely) FreeBSD.
 %_libexecdir/nish/*
 
 %changelog
+* Tue Dec 10 2019 Fr. Br. George <george@altlinux.ru> 2.04-alt1
+- Support new unscan messages format
+- Improve date arithmetic
+
 * Thu Feb 14 2019 Fr. Br. George <george@altlinux.ru> 2.03-alt1
 - Actualize status
 - Introduce date arithmetic
