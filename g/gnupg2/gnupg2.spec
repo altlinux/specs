@@ -4,8 +4,8 @@
 %def_disable beta
 
 Name: gnupg2
-Version: 2.2.17
-Release: alt7
+Version: 2.2.19
+Release: alt2
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -53,7 +53,7 @@ Patch102: alt-agent-fix-password-request.patch
 Patch103: alt-texinfo.patch
 
 # GOST patch/requires/provides
-%define gostversion 2.0.2
+%define gostversion 2.0.3
 Patch18: %name-%version-gost-common.patch
 Patch19: %name-%version-gost-agent.patch
 Patch20: %name-%version-gost-g10.patch
@@ -184,6 +184,16 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Dec 10 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.19-alt2
+- Fixed gpgsm decryption: test for GCRY_CIPHER_GOST28147 before
+  checking the key length.
+
+* Tue Dec 10 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.19-alt1
+- Fresh up to v2.2.19.
+
+* Tue Nov 05 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt8
+- Fixed segfault in gpg encryption with a GOST key on i586.
+
 * Thu Oct 31 2019 Paul Wolneykien <manowar@altlinux.org> 2.2.17-alt7
 - Switch to an opaque session key value to prevent key length errors.
 
