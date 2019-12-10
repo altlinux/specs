@@ -1,60 +1,31 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20121206.2
 %define oname repoze.browserid
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3
-#Release: alt2.git20121206.1
+Release: alt3
+
 Summary: Browser id middleware for WSGI
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/repoze/repoze.browserid
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.browserid.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
 
-%py_requires repoze paste
+%py3_requires repoze paste
+
 
 %description
 Browser id middleware for WSGI, loosely based on the Zope 2 concept of
 browser ids, which are cookies which represent a browser, for use by
 sessioning libraries.
 
-%package -n python3-module-%oname
-Summary: Browser id middleware for WSGI
-Group: Development/Python3
-%py3_requires repoze paste
-
-%description -n python3-module-%oname
-Browser id middleware for WSGI, loosely based on the Zope 2 concept of
-browser ids, which are cookies which represent a browser, for use by
-sessioning libraries.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for repoze.browserid
-Group: Development/Python3
-Requires: python3-module-%oname = %version
-
-%description -n python3-module-%oname-tests
-Browser id middleware for WSGI, loosely based on the Zope 2 concept of
-browser ids, which are cookies which represent a browser, for use by
-sessioning libraries.
-
-This package contains tests for repoze.browserid.
-
 %package tests
 Summary: Tests for repoze.browserid
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version
 
 %description tests
@@ -67,62 +38,36 @@ This package contains tests for repoze.browserid.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
-%doc *.txt docs/*.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
+
 
 %changelog
+* Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt3
+- build for python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.3-alt2.git20121206.2
 - Rebuild with python3.7.
 
