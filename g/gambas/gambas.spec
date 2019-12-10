@@ -8,7 +8,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.14.1
+Version:	3.14.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -100,7 +100,6 @@ Patch4:		%name-3.12.0-use-libv4l1.patch
 Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
 Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-alt-mysql8-bool-type-fix.patch
-Patch10: 	%name-alt-postgresql12.patch
 
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
@@ -1125,7 +1124,6 @@ This package contains the Gambas3 component for print form.
 %patch5 -p0
 %patch6 -p0
 %patch7 -p1
-%patch10 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1683,6 +1681,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.print.*
 
 %changelog
+* Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 3.14.2-alt1
+- New version.
+
 * Tue Nov 05 2019 Andrey Cherepanov <cas@altlinux.org> 3.14.1-alt1
 - New version.
 
