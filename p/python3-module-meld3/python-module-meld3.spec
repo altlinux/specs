@@ -1,30 +1,22 @@
 %define modulename meld3
 
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Elementree based templating system
 License: ZPL
-Group: Development/Python
-
+Group: Development/Python3
 Url: http://www.plope.com/software/meld3/
 # https://github.com/Supervisor/meld3
-Packager: Maxim Ivanov <redbaron at altlinux.org>
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-module-setuptools
-BuildRequires: time
-
-%py_requires elementtree
+Source: meld3-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
+%py3_requires elementtree
 
-Source: meld3-%version.tar
+%add_python3_req_skip neo_cgi neo_cs neo_util
 
 
 %description
@@ -32,45 +24,24 @@ meld3 is an HTML/XML templating system for Python 2.3+ which keeps template
 markup and dynamic rendering logic separate from one another. 
 See http://www.entrian.com/PyMeld for a treatise on the benefits of this pattern.
 
-%package -n python3-module-%modulename
-Summary: Elementree based templating system
-Group: Development/Python3
-%add_python3_req_skip neo_cgi neo_cs neo_util
-
-%description -n python3-module-%modulename
-meld3 is an HTML/XML templating system for Python 2.3+ which keeps template 
-markup and dynamic rendering logic separate from one another. 
-See http://www.entrian.com/PyMeld for a treatise on the benefits of this pattern.
-
 %prep
 %setup -n meld3-%version
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%python_sitelibdir/*
-%doc *.txt
-
-%files -n python3-module-%modulename
 %python3_sitelibdir/*
 %doc *.txt
 
 
 %changelog
+* Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt2
+- build for python2 disabled
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1
 - Version updated to 2.0.0
 
