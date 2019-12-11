@@ -3,7 +3,7 @@
 
 Name: slick-greeter
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -17,6 +17,7 @@ Requires: lightdm
 Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
 Requires: /usr/share/design/current
 Requires: onboard
+Requires: orca
 
 Provides: lightdm-greeter
 Provides: lightdm-slick-greeter
@@ -81,6 +82,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man8/slick-greeter.8.*
 
 %changelog
+* Wed Dec 11 2019 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt2
+- add orca to requirements (closes: #37604)
+
 * Wed Dec 11 2019 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
