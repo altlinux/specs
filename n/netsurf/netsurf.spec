@@ -1,6 +1,6 @@
 Name: netsurf
 Version: 3.9
-Release: alt1
+Release: alt2
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
 License: GNU General Public License v2 (GPL v2)
@@ -13,6 +13,7 @@ Source2: netsurf.png
 # перевод (дополнительно см. netsurf-all/netsurf/resources/FatMessages)
 Source3: netsurf_Messages
 Patch: netsurf-3.8-alt-e2k.patch
+Patch2: netsurf-3.9-fix-download-dialog-segfault.patch 
 
 BuildRequires: gtk2-devel libglade2-devel libjpeg-devel libpng-devel libmng-devel
 BuildRequires: libxml2-devel zlib-devel
@@ -21,11 +22,6 @@ BuildRequires: gcc make glibc-devel perl libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: libssl-devel
 BuildRequires: gperf flex
-%ifarch %e2k
-BuildRequires: libmozjs52-devel
-%else
-BuildRequires: libmozjs60-devel
-%endif
 BuildRequires: perl-HTML-Parser
 BuildRequires: perl-IO-Compress
 BuildRequires: xxd
@@ -55,6 +51,7 @@ and comprehensive Web browsing solution.
 %prep
 %setup -c %name-%version
 %patch -p1
+%patch2 -p1 -d netsurf
 
 mkdir -p netsurf/!NetSurf/Resources/ru
 cp -a %SOURCE3 netsurf/!NetSurf/Resources/ru/Messages
@@ -109,6 +106,10 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Dec 11 2019 Ivan A. Melnikov <iv@altlinux.org> 3.9-alt2
+- add upstream patch to fix crash on file download (closes: #37596)
+- drop BR: libmozjs, it is not used
+
 * Thu Nov 14 2019 Michael Shigorin <mike@altlinux.org> 3.9-alt1
 - 3.9 (see also https://bugs.netsurf-browser.org/mantis/view.php?id=2673)
 - enable parallel build
