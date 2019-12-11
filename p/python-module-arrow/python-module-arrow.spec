@@ -1,13 +1,13 @@
 %define modname arrow
 
-%def_with python2
+%def_without python2
 %def_disable python2_tests
 
 Name: python-module-%modname
-Version: 0.14.7
+Version: 0.15.4
 Release: alt1
 Summary: Better dates & times for Python
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/arrow/
 
@@ -23,7 +23,7 @@ BuildPreReq: python3-module-dateutil python3-module-nose
 BuildPreReq: python3-module-nose-cov python3-module-chai
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-simplejson
-BuildRequires: python3-module-mock
+BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
 
 %if_with python2
 BuildPreReq: python-devel python-module-setuptools
@@ -56,8 +56,8 @@ that supports many common creation scenarios. Simply put, it helps you
 work with dates and times with fewer imports and a lot less code.
 
 %prep
-%setup -n %modname-%version %{?_with_python2:-a0}
-%{?_with_python2:mv %modname-%version python2}
+%setup -n %modname-%version %{?_with_python2:-a0
+mv %modname-%version python2}
 
 %build
 %python3_build_debug
@@ -95,15 +95,19 @@ popd
 
 %if_with python2
 %files
-%doc *.md *.rst LICENSE man/
+%doc *.rst LICENSE man/
 %python_sitelibdir/*
 %endif
 
 %files -n python3-module-%modname
-%doc *.md *.rst LICENSE man/
+%doc *.rst LICENSE man/
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt1
+- 0.15.4
+- disabled python2 build
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.14.7-alt1
 - 0.14.7
 
