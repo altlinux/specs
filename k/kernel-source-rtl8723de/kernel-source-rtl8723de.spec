@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt8
+Release: alt9
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -41,6 +41,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Wed Dec 11 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt9
+- fix to compile
+
 * Mon Dec 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt8
 - add fix against 5.3 kernel
 
