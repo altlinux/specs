@@ -2,11 +2,11 @@
 %def_disable check
 
 Name: libgit2
-Version: 0.28.3
+Version: 0.28.4
 Release: alt1
 
 Summary: linkable library for Git
-License: GPLv2 with linking exception
+License: GPL-2.0
 
 Group: System/Libraries
 Url: https://github.com/%name
@@ -65,6 +65,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
+- 0.28.4
+
 * Wed Aug 14 2019 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1
 - 0.28.3
 
