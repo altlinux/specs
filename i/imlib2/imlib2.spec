@@ -1,12 +1,12 @@
 Name: imlib2
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
 Group: System/Libraries
 Url: http://docs.enlightenment.org/api/imlib2/html/
-# http://download.sourceforge.net/enlightenment/%name-%version.tar.bz2
+# Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.bz2
 Source: %name-%version.tar
 
 %def_disable static
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel libid3tag-devel
 
 %description
 Imlib 2 is a library that does image file loading and saving as well as
@@ -105,6 +105,10 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Dec 11 2019 Leontiy Volodin <lvol@altlinux.org> 1.6.0-alt1
+- New version (1.6.0) with rpmgs script.
+- Added BR for native mp3 support.
+
 * Tue Feb 19 2019 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
 - Updated to 1.5.1 (ALT #36086).
 
