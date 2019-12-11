@@ -12,13 +12,13 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python-module-%pypi_name
-Version:    5.4.3
+Version:    5.4.4
 Release:    alt1
 
 Summary:    Python Build Reasonableness
 
 Group:      Development/Python
-License:    ASL 2.0
+License:    Apache-2.0
 URL:        http://pypi.python.org/pypi/pbr
 
 # git://git.openstack.org/openstack-dev/pbr
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 5.4.4-alt1
+- Build new version 5.4.4.
+
 * Fri Sep 13 2019 Grigory Ustinov <grenka@altlinux.org> 5.4.3-alt1
 - Build new version.
 
