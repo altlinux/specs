@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 19.12.0
-Release: alt2
+Version: 19.12.1
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -74,6 +74,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Wed Dec 11 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.1-alt1
+- New version.
+
 * Wed Dec 04 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.12.0-alt2
 - add armh to exclusive arches, there is nothing exclusive about it
 
