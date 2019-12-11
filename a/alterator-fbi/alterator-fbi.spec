@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.45
+Version: 5.46
 Release: alt1
 
 Source: %name-%version.tar
@@ -22,7 +22,8 @@ Requires: alterator >= 5.0-alt1
 Requires: alterator-l10n >= 2.7-alt4
 Requires: alterator-sslkey
 Requires: gettext
-Requires: alterator-l10n >= 0.15
+Requires: alterator-l10n >= 2.9.50
+Requires: /etc/cron.d
 
 Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
@@ -152,6 +153,16 @@ fi ||:
 
 
 %changelog
+* Wed Dec 11 2019 Paul Wolneykien <manowar@altlinux.org> 5.46-alt1
+- Fix: Use 'systemctl poweroff' to shutdown the system in the case
+  of systemd.
+- Use catch/message-and-ignore to always re-read the parameters.
+- Added catch/message-and-ignore proc.
+- Fix/improve: Require /etc/cron.d.
+- Fix: Require alterator-l10n >= 2.9.50.
+- Fix/improve: Additional checks for the crond service.
+- Fix/improve: Reload crond service after schedule update.
+
 * Tue Dec 03 2019 Paul Wolneykien <manowar@altlinux.org> 5.45-alt1
 - Power module:
   -- Added support for reboot, suspend and hibernate
