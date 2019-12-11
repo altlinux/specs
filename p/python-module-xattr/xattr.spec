@@ -2,7 +2,7 @@
 %define  descr Python wrapper for extended filesystem attributes
 
 Name:    python-module-%oname
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: %descr
@@ -63,5 +63,8 @@ popd
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.7-alt1
+- Build new version 0.9.7.
+
 * Thu Dec 27 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt1
 - Initial build for Sisyphus.
