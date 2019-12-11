@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: plastex
-Version: 0.9.2
-Release: alt1.1.qa1
+Version: 2.1
+Release: alt1
 
 Summary: Plastex is a Python-based LaTeX document processing framework
 Summary(ru_RU.UTF-8): Plastex - средство для обработки документов LaTex, написанное на Python
@@ -10,18 +12,15 @@ Group: Publishing
 Url: http://plastex.sourceforge.net
 BuildArch: noarch
 
-Packager: Anton Chernyshov <ach@altlinux.org>
 Source0: %name-%version.tgz
 Source1: %name.pdf
 
-BuildPreReq: python-devel
+BuildRequires(pre): rpm-build-python3
 
 Requires: dvipng
 Requires: ghostscript
 Requires: texlive-latex-base
 
-# Automatically added by buildreq on Mon Nov 01 2010 (-bi)
-BuildRequires: python-devel
 
 %description
 plasTeX is a LaTeX document processing framework written entirely in Python. 
@@ -38,23 +37,28 @@ Plastex - средство для обработки документов LaTex,
 %prep
 %setup -n %name
 
-%install
-%__python setup.py install --root=%buildroot
-mkdir -p %buildroot/%_defaultdocdir/%name-%version/licenses
-cp licenses/* %buildroot/%_defaultdocdir/%name-%version/licenses/
-cp INSTALL  %buildroot/%_defaultdocdir/%name-%version/
-cp LICENSE  %buildroot/%_defaultdocdir/%name-%version/
-cp README   %buildroot/%_defaultdocdir/%name-%version/
-cp TODO     %buildroot/%_defaultdocdir/%name-%version/
-cp %{SOURCE1} %buildroot/%_defaultdocdir/%name-%version/
-%find_lang %name
+%build
+%python3_build
 
-%files -f %name.lang
+%install
+%python3_install
+
+mkdir -p %buildroot/%_defaultdocdir/%name-%version/licenses
+
+cp licenses/* %buildroot/%_defaultdocdir/%name-%version/licenses/
+cp %{SOURCE1} %buildroot/%_defaultdocdir/%name-%version/
+
+%files
+%doc LICENSE README.md
 %_bindir/*
-%python_sitelibdir/*
-%doc %_defaultdocdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Dec 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1-alt1
+- Version updated to 2.1
+- porting on python3
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1.1.qa1
 - NMU: applied repocop patch
 
