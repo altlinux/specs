@@ -1,9 +1,9 @@
 Name: vdr
 Version: 2.2.0
-Release: alt6
+Release: alt7
 
 Summary: Digital satellite receiver box with advanced features
-License: GPL
+License: GPLv2
 Group: Video
 Url: http://www.tvdr.de
 
@@ -238,7 +238,7 @@ sed -e 's,^#PREFIX.\+$,PREFIX = %prefix,' \
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
 
 %build
-(cd PLUGINS/src/xineliboutput && sh configure)
+(cd PLUGINS/src/xineliboutput && sh configure  --disable-opengl)
 
 %make_build
 
@@ -573,6 +573,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Wed Dec 11 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt7
+- fix build with gcc9
+
 * Sat Nov 24 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt6
 - fix build with kernel headers >= 4.19
 
