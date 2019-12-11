@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -14,7 +14,7 @@ Source: %name-%version-%release.tar
 
 Requires: libnetlink = %version-%release
 Provides: iproute = %version-%release
-Obsoletes: iproute < %version
+Obsoletes: iproute < %version, %name-doc < %version
 
 # Automatically added by buildreq on Mon Jan 07 2019
 BuildRequires: flex libcap-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel
@@ -24,15 +24,7 @@ BuildRequires: flex libcap-devel libdb4-devel libelf-devel libiptables-devel lib
 %description
 The iproute package contains networking utilities (ip and rtmon, for
 example) which are designed to use the advanced networking capabilities
-of the Linux 2.4.x and 2.6.x kernel.
-
-%package doc
-Summary: Documentation for Advanced IP routing and network device configuration tools
-Group: Networking/Other
-BuildArch: noarch
-
-%description doc
-Documentation for iproute2.
+of the Linux kernel.
 
 %package -n arpd
 Summary: The arpd daemon
@@ -67,7 +59,6 @@ This package contains libnetlink dynamic library headers.
 
 %install
 %makeinstall_std LIBDIR=%_libdir
-cp -a doc/actions README* %buildroot%_docdir/%name/
 mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
 pushd %buildroot/sbin
 rm rtpr
@@ -102,9 +93,7 @@ done
 %_man7dir/*
 %_man8dir/*
 %_datadir/bash-completion/completions/tc
-
-%files doc
-%_docdir/%name/
+%doc README* doc/actions
 
 %files -n arpd
 %_sbindir/arpd
@@ -119,6 +108,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon Nov 25 2019 Dmitry V. Levin <ldv@altlinux.org> 5.4.0-alt1
+- 5.3.0 -> 5.4.0.
+
 * Tue Sep 24 2019 Dmitry V. Levin <ldv@altlinux.org> 5.3.0-alt1
 - 5.2.0 -> 5.3.0.
 
