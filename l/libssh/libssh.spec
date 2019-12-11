@@ -3,8 +3,8 @@
 %def_disable gcrypt
 
 Name: libssh
-Version: 0.9.2
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -96,6 +96,10 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Wed Dec 11 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
+- new version
+- security (Fixes: CVE-2019-14889)
+
 * Tue Dec 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.9.2-alt2
 - fixed path:
   + /etc/ssh/ -> /etc/openssh/
