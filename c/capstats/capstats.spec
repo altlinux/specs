@@ -1,10 +1,10 @@
 Name: capstats
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: A command-line tool collecting packet statistics
 
-License: %bsd
+License: BSD-3-Clause
 Url: https://github.com/zeek/capstats
 Group: Networking/Other
 
@@ -15,7 +15,6 @@ Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libpcap-devel
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: zeek-cmake
 
 %description
@@ -40,10 +39,12 @@ ln -s %_datadir/zeek-cmake/ cmake
 %_bindir/%name
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.26-alt2
+- NMU: Fix license.
+
 * Sun Jun 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
 - rewrite spec, use cmake directly
 - use external cmake scripts used in Zeek
 
 * Fri Dec 26 2014 Andriy Stepanov <stanv@altlinux.ru> 0.21-alt1
 - Build for ALTLinux
-
