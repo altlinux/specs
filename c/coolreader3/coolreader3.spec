@@ -2,17 +2,16 @@
 
 Name:     coolreader3
 Version:  3.2.32
-Release:  alt2
+Release:  alt3
 
-Summary: E-Book reader
+Summary:  E-Book reader
 License:  %gpl2only
 Group:    Text tools
 
-Url:      http://coolreader.org
-#URL: http://sourceforge.net/projects/crengine
+Url:      https://github.com/buggins/coolreader/
+#URL:     http://sourceforge.net/projects/crengine
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
-# https://github.com/buggins/coolreader
 Source0: %name-%version.tar
 
 Source1: %real_name-16.png
@@ -82,6 +81,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.32-alt3
+- Fix URL (Closes: #36164).
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 3.2.32-alt2
 - Build new version.
 
