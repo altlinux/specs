@@ -3,10 +3,10 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Summary: Sphinx themes for Pallets and related projects.
-License: %bsd
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://www.palletsprojects.com/
 # https://github.com/pallets/pallets-sphinx-themes
@@ -15,7 +15,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-licenses
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-devel
 
@@ -63,5 +62,8 @@ popd
 
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt2
+- NMU: Fix license.
+
 * Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.3-alt1
 - Initial build for Sisyphus
