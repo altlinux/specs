@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
-%define mono_version 4.9.3
-%define major 4.19
+%define mono_version 4.9.4
+%define major 4.20
 
 Name: wine
 Version: %major.1
@@ -102,6 +102,7 @@ Requires: glibc-pthread glibc-nss
 Requires: webclient
 
 Requires: wine-gecko = %gecko_version
+Conflicts: wine-mono < %mono_version
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -478,6 +479,14 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Nov 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.20.1-alt1
+- new version (4.20.1) with rpmgs script
+- update patch set
+- update wine-mono require to 4.9.4
+
+* Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.19.2-alt1
+- improve patchapply.sh, update patches
+
 * Sat Nov 02 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.19.1-alt1
 - new version 4.19.1 (with rpmrb script)
 - make GetDriveType() always return DRIVE_FIXED for C: (eterbug #14223)
