@@ -1,6 +1,6 @@
 Name:    gcompris-qt
-Version: 0.96
-Release: alt2
+Version: 0.97
+Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -10,6 +10,7 @@ URL:     http://www.gcompris.net
 
 Source:  %name-%version.tar
 Source1: qml-box2d.tar
+# Get from http://gcompris.net/download/qt/src/gcompris-qt-%version.tar.xz
 Source2: po-%version.tar
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -92,6 +93,9 @@ tar xf %SOURCE2
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 0.97-alt1
+- New version.
+
 * Thu Apr 25 2019 Andrey Cherepanov <cas@altlinux.org> 0.96-alt2
 - Add strict requirement of libqt5-svg.
 - Add static library for build with old kf5-kdoctools.
