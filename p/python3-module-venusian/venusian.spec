@@ -1,29 +1,31 @@
 %define oname venusian
 
-%def_with python3
 %def_with bootstrap
+%def_without docs
 
-Name: python-module-%oname
-Version: 1.0
-Release: alt2.2
+Name: python3-module-%oname
+Version: 3.0.0
+Release: alt1
+
 Summary: A library for deferring decorator actions
 License: BSD-derived
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/venusian
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # git://github.com/Pylons/venusian.git
 Source: %name-%version.tar
-Patch1: %name-%version-alt-docs-tune.patch
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
-#BuildPreReq: python-module-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+%if_with docs
+BuildRequires: python3-module-sphinx
 %endif
+
+%add_python3_req_skip doesnt
+%if_with bootstrap
+%add_python3_req_skip doesnt.exist
+%endif
+
 
 %description
 Venusian is a library which allows framework authors to defer decorator
@@ -31,40 +33,11 @@ actions. Instead of taking actions when a function (or class) decorator
 is executed at import time, you can defer the action usually taken by
 the decorator until a separate "scan" phase.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A library for deferring decorator actions (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Venusian is a library which allows framework authors to defer decorator
-actions. Instead of taking actions when a function (or class) decorator
-is executed at import time, you can defer the action usually taken by
-the decorator until a separate "scan" phase.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Venusian (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%add_python3_req_skip doesnt
-%if_with bootstrap
-%add_python3_req_skip doesnt.exist
-%endif
-
-%description -n python3-module-%oname-tests
-Venusian is a library which allows framework authors to defer decorator
-actions. Instead of taking actions when a function (or class) decorator
-is executed at import time, you can defer the action usually taken by
-the decorator until a separate "scan" phase.
-
-This package contains tests for Venusian.
-%endif
-
 %package tests
 Summary: Tests for Venusian
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%add_python_req_skip doesnt
+%add_python3_req_skip doesnt
 
 %description tests
 Venusian is a library which allows framework authors to defer decorator
@@ -74,9 +47,10 @@ the decorator until a separate "scan" phase.
 
 This package contains tests for Venusian.
 
+%if_with docs
 %package pickles
 Summary: Pickles for Venusian
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Venusian is a library which allows framework authors to defer decorator
@@ -97,67 +71,57 @@ is executed at import time, you can defer the action usually taken by
 the decorator until a separate "scan" phase.
 
 This package contains documentation for Venusian.
+%endif
 
 %prep
 %setup
-%patch1 -p1
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+%if_with docs
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
+
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd docs
+%make pickle
+%make html
+cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 popd
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd docs
-ln -s %_datadir/pylons_sphinx_theme _themes
-%make pickle
-%make html
-cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
-popd
+cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
+%endif
 
 %files tests
-%python_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/tests
 %endif
 
+
 %changelog
+* Thu Dec 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
+- Version updated to 3.0.0
+- build for python2 disabled
+
 * Sun May 20 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2.2
 - rebuild with python3.6
 
