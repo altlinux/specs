@@ -1,17 +1,15 @@
 Name: xfce4-stopwatch-plugin
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Stopwatch plugin for the Xfce panel
-License: %bsd
+License: BSD-2-Clause
 Group: Graphical desktop/XFce
 Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
@@ -51,5 +49,8 @@ automatically.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt2
+- NMU: Fix license.
+
 * Fri Jun 14 2019 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Initial build.
