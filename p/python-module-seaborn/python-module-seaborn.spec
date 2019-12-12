@@ -1,9 +1,9 @@
 Name: python-module-seaborn
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Seaborn: statistical data visualization
-License: BSD (3-clause)
+License: BSD-3-Clause
 Group: Sciences/Other
 
 URL: https://github.com/mwaskom/seaborn
@@ -42,5 +42,8 @@ Some of the features that seaborn offers are
 %python_sitelibdir_noarch/seaborn-%{version}*
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt2
+- NMU: Fix license.
+
 * Wed Jun 21 2017 Terechkov Evgenii <evg@altlinux.org> 0.7.1-alt1
 - Initial build for ALT Linux Sisyphus
