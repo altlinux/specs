@@ -6,9 +6,10 @@
 %define api_ver %api_ver_base.1
 %def_disable static
 %def_enable introspection
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -17,7 +18,7 @@ License: LGPLv2+
 Url: https://gnome.org
 
 %if_disabled snapshot
-Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -26,7 +27,7 @@ Source: %_name-%version.tar
 %define gtk_ver 3.2
 %define archive_ver 3.2.0
 
-BuildRequires: gnome-common intltool gtk-doc
+BuildRequires: autoconf-archive gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libarchive-devel >= %archive_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -124,6 +125,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Sun Feb 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
