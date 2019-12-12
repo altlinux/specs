@@ -1,5 +1,5 @@
 Name:           kamoso
-Version:        19.11.90
+Version:        19.12.0
 Release:        alt1
 
 Group:          Video
@@ -73,6 +73,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_K5notif/%name.notifyrc
 
 %changelog
+* Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.0-alt1
+- New version.
+
 * Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 19.11.90-alt1
 - New version.
 
