@@ -1,10 +1,10 @@
 Name: ledger
 Version: 3.1.aed3709
-Release: alt3
+Release: alt4
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
-License: %bsd
+License: BSD-3-Clause
 Group: Office
 Url: http://www.ledger-cli.org/
 
@@ -17,7 +17,7 @@ Patch1: ledger-upstream-boost.patch
 
 Requires: libledger = %version-%release
 
-BuildPreReq: cmake rpm-macros-cmake rpm-build-licenses
+BuildPreReq: cmake rpm-macros-cmake
 
 # manual removed: python3 ruby ruby-stdlibs  python-module-cmd2 python-module-mwlib python-module-protobuf
 # Automatically added by buildreq on Sat Aug 15 2015
@@ -131,6 +131,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.aed3709-alt4
+- NMU: Fix license.
+
 * Mon Jul 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.aed3709-alt3
 - NMU: rebuilt with boost-1.67.0
 
@@ -158,4 +161,3 @@ This package contains emacs libraries to ease use of ledger.
 
 * Fri Feb 29 2008 Alexey Voinov <voins@altlinux.ru> 2.6.0.90-alt1
 - initial build
-
