@@ -2,10 +2,10 @@
 
 Name:    conserver
 Version: 8.2.2
-Release: alt1
+Release: alt2
 
 Summary:  Serial console server daemon/client
-License:  %bsd
+License: BSD-3-Clause
 
 Group:   System/Servers
 URL:     http://www.conserver.com/
@@ -18,7 +18,6 @@ Patch:  certificate-auth.patch
 Patch1: conserver-no-exampledir.patch
 Patch2: conserver-gssapi.patch
 
-BuildRequires: rpm-build-licenses
 BuildRequires: libssl-devel
 BuildRequires: libpam-devel
 BuildRequires: libkrb5-devel
@@ -112,6 +111,9 @@ fi
 %_man1dir/console.1*
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 8.2.2-alt2
+- NMU: Fix license.
+
 * Thu Sep 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.2-alt1
 - Updated to upstream version 8.2.2.
 
@@ -123,4 +125,3 @@ fi
 
 * Tue Nov 17 2009 Andriy Stepanov <stanv@altlinux.ru> 8.1.16-alt1
 - ALT: initial build
-
