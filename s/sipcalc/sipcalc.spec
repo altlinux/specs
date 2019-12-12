@@ -3,10 +3,10 @@
 
 Name: sipcalc
 Version: 1.1.5
-Release: alt1.qa1
+Release: alt2
 
 Summary: Advanced console-based ip subnet calculator
-License: %bsd
+License: BSD-3-Clause
 Group: Networking/Other
 Url: http://www.routemeister.net/projects/sipcalc/
 
@@ -14,8 +14,6 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 Sipcalc is an advanced console-based IP subnet calculator. It can take
@@ -39,6 +37,9 @@ of information about a given subnet.
 %_man1dir/*
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt2
+- NMU: Fix license.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -50,4 +51,3 @@ of information about a given subnet.
 
 * Sun Oct 19 2008 Artem Zolochevskiy <azol@altlinux.ru> 1.1.4-alt1
 - initial build for Sisyphus
-
