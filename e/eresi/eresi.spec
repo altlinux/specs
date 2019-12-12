@@ -1,6 +1,6 @@
 Name: eresi
 Version: 0.83
-Release: alt2.1
+Release: alt3
 
 Summary: The ERESI Reverse Engineering Software Interface
 
@@ -14,6 +14,7 @@ ExclusiveArch: x86_64 i586
 Source: %name-%version.tar
 
 Patch: 0001-fix-underlinking-when-linking-with-Wl-as-needed.patch
+Patch1: eresi-fix-glibc-2.28.patch
 
 BuildRequires: libssl-devel
 
@@ -41,6 +42,8 @@ The ERESI Reverse Engineering Software Interface
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+
 %__subst "s|termcap|tinfo|g" ./configure
 
 %build
@@ -92,6 +95,9 @@ rm -fv %buildroot%_bindir/kedbg*
 %_man1dir/eresi.*
 
 %changelog
+* Thu Dec 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.83-alt3
+- fix build
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.83-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
