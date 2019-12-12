@@ -1,9 +1,9 @@
 Name: xar
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: The XAR project aims to provide an easily extensible archive format
-License: %bsd
+License: BSD-3-Clause
 Group: Archiving/Compression
 Url: https://github.com/mackyle/xar
 Source: %name-%version.tar
@@ -15,7 +15,6 @@ Requires: lib%name = %version-%release
 ExclusiveArch: i586 x86_64
 
 # Automatically added by buildreq on Sat Dec 17 2011
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: bzlib-devel libacl-devel libe2fs-devel libssl-devel libxml2-devel xsltproc zlib-devel liblzma-devel
 
 %description
@@ -106,6 +105,9 @@ find .
 %_libdir/*.so
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt3
+- NMU: Fix license.
+
 * Thu Dec 20 2018 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt2
 - Fixed build of failure, got from lost part of PATH.
 
