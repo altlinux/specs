@@ -1,9 +1,9 @@
 %define oname xlsxwriter
-
+%def_with python2
 %def_with python3
 
 Name:    python-module-%oname
-Version: 1.2.2
+Version: 1.2.6
 Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
@@ -16,11 +16,13 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
+%if_with python2
 BuildRequires: python-module-alabaster
 BuildRequires: python-module-docutils
 BuildRequires: python-module-html5lib
-BuildRequires: python-module-objects.inv
 BuildRequires: python-module-pytest
+%endif
+BuildRequires: python-module-objects.inv
 BuildRequires: time
 
 %if_with python3
@@ -72,7 +74,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -q -n %oname-%version
-
 %if_with python3
 cp -R . -T ../python3
 %endif
@@ -81,8 +82,9 @@ cp -R . -T ../python3
 ln -s ../objects.inv -t dev/docs/source/
 
 %build
+%if_with python2
 %python_build_debug
-
+%endif
 %if_with python3
 pushd ../python3
 %python3_build_debug
@@ -100,17 +102,21 @@ for i in *; do
 done
 popd
 %endif
-
+%if_with python2
 %python_install
+%endif
 
+%if_with python2
 %make -C dev/docs pickle
+cp -R dev/docs/build/pickle -t %buildroot%python_sitelibdir/%oname/
+%endif
 %make -C dev/docs html
 
-cp -R dev/docs/build/pickle -t %buildroot%python_sitelibdir/%oname/
-
 %check
+%if_with python2
 python setup.py test
 py.test -vv
+%endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -118,6 +124,7 @@ py.test3 -vv
 popd
 %endif
 
+%if_with python2
 %files
 %doc Changes *.md *.rst examples dev/performance
 %_bindir/*
@@ -129,6 +136,7 @@ popd
 
 %files pickles
 %python_sitelibdir/*/pickle
+%endif
 
 %files docs
 %doc docs/* dev/docs/build/html
@@ -141,6 +149,12 @@ popd
 %endif
 
 %changelog
+* Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.6-alt1
+- New version.
+
+* Thu Nov 14 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1
+- New version.
+
 * Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - New version.
 
