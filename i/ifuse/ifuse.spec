@@ -1,13 +1,20 @@
 Name: ifuse
 Version: 1.1.3
-Release: alt4
+Release: alt5
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
 License: LGPLv2+
 URL: http://www.libimobiledevice.org/
 
+%if_disabled snapshot
 Source: %url/downloads/%name-%version.tar.bz2
+%else
+# VCS: https://github.com/libimobiledevice/ifuse
+Source: %name-%version.tar
+%endif
+
+Requires: fuse
 
 BuildRequires: libfuse-devel libimobiledevice-devel >= 1.1.4 glib2-devel
 
@@ -34,6 +41,9 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %doc AUTHORS README
 
 %changelog
+* Thu Dec 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt5
+- updated to 1.1.3-6-ge75d32c
+
 * Mon Feb 23 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt4
 - rebuilt against libimobiledevice.so.6
 

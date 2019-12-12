@@ -1,11 +1,12 @@
 %def_enable snapshot
+%def_enable check
 %define _localstatedir %_var
-%define git 08d9ec0
+%define git g9af2b12
 %define _group usbmux
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt0.2.g%git
+Release: alt0.3.g%git
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -21,7 +22,7 @@ Source: %name-%version.tar
 
 %define plist_ver 1.11
 %define usb_ver 1.0.9
-%define imobiledevice_ver 1.1.6
+%define imobiledevice_ver 1.2.1
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: libplist-devel >= %plist_ver
@@ -38,12 +39,16 @@ the device to be accessed simultaneously.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %pre
 /usr/sbin/groupadd -rf %_group ||:
@@ -55,9 +60,13 @@ the device to be accessed simultaneously.
 /lib/udev/rules.d/39-%name.rules
 %_unitdir/%name.service
 %_man8dir/%name.*
-%doc AUTHORS README
+%doc AUTHORS README* NEWS
 
 %changelog
+* Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt0.3.gg9af2b12
+- updated to 1.1.0-66-g9af2b12
+- %%check section
+
 * Fri Jun 22 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.1-alt0.2.g08d9ec0
 - Add usbmux user.
 
