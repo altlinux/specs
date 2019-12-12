@@ -6,7 +6,7 @@
 %define oname Enable
 Name: python-module-%oname
 Version: 4.8.0
-Release: alt1
+Release: alt2
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -16,10 +16,12 @@ URL: https://github.com/enthought/enable/
 # https://github.com/enthought/enable.git
 Source: enable-%version.tar
 
+Patch: use_system_freetype.patch
+
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: libnumpy-devel
+BuildRequires: libnumpy-devel libfreetype-devel
 BuildRequires: python-module-Cython
 %if_disabled bootstrap
 BuildRequires: python-module-Pyrex
@@ -134,6 +136,7 @@ This package contains development documentation for Enable project.
 
 %prep
 %setup -n enable-%version
+%patch -p1
 
 %if_with python3
 rm -rf ../python3
@@ -239,6 +242,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %endif
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt2
+- Build with system freetype (Closes: #36385).
+
 * Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt1
 - Updated to upstream version 4.8.0.
 - Built modules for python-3.
