@@ -2,11 +2,11 @@
 
 Name:    trickle
 Version: 1.07
-Release: alt3
+Release: alt4
 
 Summary: a portable lightweight userspace bandwidth shaper
 
-License: %bsd
+License: BSD-3-Clause
 Group:   Networking/Other
 URL:     https://github.com/mariusae/trickle
 
@@ -19,8 +19,6 @@ Patch0:  %name-1.07-debian-autoreconf_patch.patch
 Patch1:  %name-1.07-debian-library_path.patch
 Patch2:  %name-1.07-debian-man_pages.patch
 Patch3:  %name-1.07-debian-trickle-overload.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Apr 17 2016
 # optimized out: python-base python-modules python3
@@ -71,6 +69,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%{name}d.conf
 %_libdir/%name
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.07-alt4
+- NMU: Fix license.
+
 * Mon Sep 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.07-alt3
 - NMU: fixed build.
 
