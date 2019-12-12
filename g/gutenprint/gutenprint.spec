@@ -1,6 +1,6 @@
 Name: gutenprint
-Version: 5.3.1
-Release: alt2
+Version: 5.3.3
+Release: alt1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 Group: Publishing
@@ -12,10 +12,12 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: http://download.sourceforge.net/gimp-print/%name-%version.tar.bz2
 Patch0: gutenprint-5.3.1-alt-fixes.patch
 Patch1: gutenprint-5.2.9-alt-makefile.patch
-Patch2: gutenprint-5.3.1-alt-LFS.patch
+Patch2: gutenprint-5.3.3-alt-LFS.patch
+Patch3: gutenprint-alt-link-plugins-with-libraries.patch
 
 BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
 BuildRequires: libusb-devel
+BuildRequires: chrpath
 
 %description
 Gutenprint is a package of high quality printer drivers for Linux and
@@ -86,6 +88,7 @@ This package contains PPDs for gutenprint-cups.
 %patch0 -p2
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 %undefine _configure_gettext
@@ -93,9 +96,7 @@ This package contains PPDs for gutenprint-cups.
 find m4* -type f -name \*.m4 -print0 |
 	xargs -r0 grep -lxZ 'dnl Copyright (C) .* Free Software Foundation, Inc\.' -- |
 	xargs -r0 rm -v --
-rm m4*/libtool.m4
-mkdir m4local
-
+#rm m4*/libtool.m4
 %autoreconf
 %configure \
 	--enable-shared \
@@ -119,6 +120,19 @@ mkdir -p %buildroot%_docdir
 mv %buildroot%_datadir/%name/doc %buildroot%docdir
 find %buildroot%_libdir/%name/ -name \*.la -delete
 chmod +rx %buildroot%_prefix/lib/cups/backend/gutenprint*+usb
+
+# Remove standard library path from rpath
+for file in \
+  %buildroot%_bindir/* \
+  %buildroot%_sbindir/cups-genppd.5.3 \
+  %buildroot%_libdir/gimp/*/plug-ins/* \
+  %buildroot%_libdir/*.so.* \
+  %buildroot%_libexecdir/cups/driver/* \
+  %buildroot%_libexecdir/cups/filter/* 
+do \
+  chrpath --delete ${file}
+done
+
 %find_lang %name
 %set_verify_elf_method strict
 
@@ -170,6 +184,9 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Tue Dec 03 2019 Andrey Cherepanov <cas@altlinux.org> 1:5.3.3-alt1
+- New version.
+
 * Thu Oct 31 2019 Lenar Shakirov <snejok@altlinux.ru> 1:5.3.1-alt2
 - Make gutenprint-cups-ppds noarch
 
