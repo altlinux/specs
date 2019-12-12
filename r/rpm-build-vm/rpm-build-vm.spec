@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -67,11 +67,12 @@ install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
 %post
 # We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
 # so initrd is needed to preload them before mounting rootfs.
-KERN=$(ls /boot/vmlinuz-*)
-KVER=${KERN#/boot/vmlinuz-}
-# Create /boot/initrd-$KVER.img
-# This will take ~5 sec.
-time make-initrd --no-checks --config=%_libexecdir/%name/config.mk --kernel=$KVER
+
+ls /boot/vmlinuz-* | while read KERN; do
+	KVER=${KERN#/boot/vmlinuz-}
+	echo "Generating initrd for $KERN"
+	make-initrd --no-checks --config=%_libexecdir/%name/config.mk --kernel=$KVER
+done
 
 # Fix permissions to boot the installed kernel
 (
@@ -120,6 +121,10 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Thu Dec 12 2019 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
+- Initialize cpu and mem to the max, support share_network=1,
+  handle multiple kernels using --kernel= option.
+
 * Sat Aug 31 2019 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - Improvements corresponding to v1.2.
 
