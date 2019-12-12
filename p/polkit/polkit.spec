@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.116
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Tue Dec 10 2019 Yuri N. Sedunov <aris@altlinux.org> 0.116-alt2
+- updated to 0.116-10-gb806f0c (fixed memory leaks)
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 0.116-alt1
 - 0.116
 
