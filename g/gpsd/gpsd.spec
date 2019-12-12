@@ -4,16 +4,14 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.19
-Release: alt2
-License: %bsd
+Release: alt3
+License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 Source: %name-%version.tar
 Requires: libgps%abiversion = %version-%release
-
-BuildPreReq:	rpm-build-licenses
 
 BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc
 
@@ -162,6 +160,9 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.19-alt3
+- NMU: Fix license.
+
 * Sun Oct 20 2019 Sergey Y. Afonin <asy@altlinux.org> 3.19-alt2
 - switched to python 3
 - built with asciidoc
