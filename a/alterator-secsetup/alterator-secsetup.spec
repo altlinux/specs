@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 1.0
+Version: 1.2
 Release: alt1
 
 Source: %name-%version.tar
@@ -35,5 +35,11 @@ install -m 0644 macrosblock.service %buildroot/%_unitdir/
 %_unitdir/*
 
 %changelog
+* Thu Dec 12 2019 Ivan Razzhivin <underwit@altlinux.org> 1.2-alt1
+- add additional parameters
+
+* Wed Dec 11 2019 Ivan Razzhivin <underwit@altlinux.org> 1.1-alt1
+- add support AltHa (Alt Hardening)
+
 * Mon Nov 18 2019 Ivan Razzhivin <underwit@altlinux.org> 1.0-alt1
 - initial build
