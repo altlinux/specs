@@ -1,29 +1,22 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+
 %define oname repoze.filesafe
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.2
-#Release: alt2.gi20140506.1
+Release: alt2
+
 Summary: Transaction-aware file creation
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/repoze/repoze.filesafe
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.filesafe.git
 Source0: https://pypi.python.org/packages/55/7a/de63694ea21de0f5e5f50d692e5cfaa6071a531af212b57bcb7de5080378/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+%py3_requires repoze transaction zope.interface
 
-%py_requires repoze transaction zope.interface
 
 %description
 repoze.filesafe provides utilities methods to handle creation
@@ -31,33 +24,9 @@ of files on the filesystem safely by integrating with the ZODB package's
 transaction manager.  It can be used in combination with repoze.tm (or
 repoze.tm2) for use in WSGI environments.
 
-%package -n python3-module-%oname
-Summary: Transaction-aware file creation
-Group: Development/Python3
-%py3_requires repoze transaction zope.interface
-
-%description -n python3-module-%oname
-repoze.filesafe provides utilities methods to handle creation
-of files on the filesystem safely by integrating with the ZODB package's
-transaction manager.  It can be used in combination with repoze.tm (or
-repoze.tm2) for use in WSGI environments.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for repoze.filesafe
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-repoze.filesafe provides utilities methods to handle creation
-of files on the filesystem safely by integrating with the ZODB package's
-transaction manager.  It can be used in combination with repoze.tm (or
-repoze.tm2) for use in WSGI environments.
-
-This package contains tests for repoze.filesafe.
-
 %package tests
 Summary: Tests for repoze.filesafe
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -71,61 +40,34 @@ This package contains tests for repoze.filesafe.
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
-%doc *.txt docs/*.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/test*
-
-%files tests
-%python_sitelibdir/*/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt docs/*.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
-%endif
+
 
 %changelog
+* Thu Dec 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2-alt2
+- build for python2 disabled
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1
 - automated PyPI update
 
