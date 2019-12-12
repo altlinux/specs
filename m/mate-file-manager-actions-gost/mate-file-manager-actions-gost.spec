@@ -1,16 +1,16 @@
 Summary: Simple scripts for encrypt and digest files with openssl and caja
 Name: mate-file-manager-actions-gost
 Version: 4
-Release: alt1
+Release: alt2
 Group: Graphical desktop/MATE
-License: GPL-2.0+
+License: GPL-2.0-or-later
 
 Url: https://git.altlinux.org/people/lvol/packages/mate-file-manager-actions-gost
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 BuildRequires: mate-file-manager-actions gnome-icon-theme
-Requires: mate-file-manager-actions gnome-icon-theme fonts-ttf-google-droid-sans-mono diffutils
+Requires: mate-file-manager-actions gnome-icon-theme fonts-ttf-google-droid-sans-mono diffutils openssl-gost-engine
 
 BuildArch: noarch
 
@@ -57,6 +57,9 @@ cp -a %SOURCE14 %buildroot%_datadir/file-manager/actions/
 cp -a %SOURCE15 %buildroot%_datadir/file-manager/actions/
 cp -a %SOURCE16 %buildroot%_datadir/file-manager/actions/
 
+%post
+control openssl-gost enabled
+
 %files
 %_bindir/*
 %dir %_datadir/file-manager/actions
@@ -66,6 +69,10 @@ cp -a %SOURCE16 %buildroot%_datadir/file-manager/actions/
 %exclude %_iconsdir/gnome/48x48/status/dialog-information.png
 
 %changelog
+* Thu Dec 12 2019 Leontiy Volodin <lvol@altlinux.org> 4-alt2
+- Added openssl-gost-engine to Requires.
+- Translated desktop files.
+
 * Fri Nov 22 2019 Leontiy Volodin <lvol@altlinux.org> 4-alt1
 - Added md5, sha1 and sha256 checksum calculation.
 - Added comparison of selected files.
