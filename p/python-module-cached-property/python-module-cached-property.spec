@@ -4,18 +4,17 @@
 
 Name: python-module-%oname
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: A decorator for caching properties in classes.
 
-License: %bsd
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://github.com/pydanny/cached-property
 
 Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-python
 BuildRequires: python-devel python-module-distribute
 %if_with python3
@@ -77,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt2
+- NMU: Fix license.
+
 * Tue Dec 4 2018 Vladimir Didenko <cow@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
