@@ -1,8 +1,8 @@
-%define pg_ver 11
+%define pg_ver 12
 
 Name: postgis
 Version: 2.5.3
-Release: alt1
+Release: alt2
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
@@ -113,6 +113,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt2
+- Rebuild with PostgreSQL 12.
+
 * Tue Aug 13 2019 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt1
 - New version.
 
