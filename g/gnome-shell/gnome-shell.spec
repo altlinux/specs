@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -182,6 +182,9 @@ GNOME Shell.
 %prep
 %setup
 %patch3 -b .shells
+# st fuul path to gsettings
+sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.service
+
 # fix rpath
 subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 # browser plugin dir
@@ -254,6 +257,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Wed Oct 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

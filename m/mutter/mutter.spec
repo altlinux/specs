@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.34
 %define api_ver 5
@@ -14,8 +14,8 @@
 %def_disable egl_device
 
 Name: mutter
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -213,6 +213,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.2-alt1
+- 3.34.2
+
 * Sun Dec 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.1-alt2
 - updated to 3.34.1-66-gc0e76186d
 
