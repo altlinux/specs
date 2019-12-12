@@ -7,12 +7,12 @@
 
 Name: python-module-django-%modulename
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
 Summary: Django Template Blocks with extra functionality
-License: %bsd
+License: BSD-3-Clause
 Group: Development/Python
 
 Url: http://django-sekizai.readthedocs.org/
@@ -44,7 +44,6 @@ BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-django python3-module-setupdocs
 %endif
 
-BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-setuptools python3-module-yaml
 BuildRequires: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-setupdocs python3-module-django python3-module-setupdocs rpm-build-python3 time
@@ -124,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt2
+- Fix license.
+
 * Fri Jan 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Build new version.
 
