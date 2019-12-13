@@ -1,52 +1,32 @@
-%define snapshot_date 20060721
-%define srcname %name-%version
+%define _unpackaged_files_terminate_build 1
 
 Name: pingus
 Version: 0.7.6
-Release: alt2.1
-
+Release: alt3
 
 Summary: A free Lemmings clone
 Summary(ru_RU.UTF8): Свободный клон Lemmings
 License: GPL
 Group: Games/Arcade
 Url: http://pingus.seul.org
+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: %name.16.xpm
 Source2: %name.32.xpm
 Source3: %name.48.xpm
+Source4: CMakeLists.txt
 
-Source7:        pingus.png
-
-Patch0:         pingus-0.7.0-cflags.patch
-Patch6:         pingus-0.7.2-gcc43.patch
-
-Patch7:         pingus-0.7.2-gcc44.patch
-Patch8:         pingus-0.7.6-alt-VERSION.patch
-
-Patch9:         pingus-0.7.6-upstream-std-header.patch
-
-#Patch1: pingus-0.6.0-alt-gcc33.patch
-#Patch2: pingus-0.6.0-alt-gcc34.patch
-
-# remove 25092007:
-#Patch3:         pingus-20060721-gettext.patch
-#Patch4:         pingus-20060721-datapath.patch
-
-# old, remove 28092007:
-#BuildPreReq: gcc3.2-c++
-#requires: clanlib0.8 clanlib0.8-sdl clanlib0.8-gui clanlib0.8-mikmod clanlib0.8-sound clanlib0.8-vorbis libxml2 zlib
-#ruildRequires: xorg-x11-libs xorg-x11-devel clanlib0.8-devel clanlib0.8-gui clanlib0.8-sdl clanlib0.8-mikmod clanlib0.8-sound clanlib0.8-vorbis gcc-c++ libjpeg libmikmod-devel libogg libpng-devel libstdc++-devel libvorbis libxml2-devel zlib-devel gettext
+Patch8:  pingus-0.7.6-alt-VERSION.patch
+Patch9:  pingus-0.7.6-upstream-std-header.patch
+Patch10: pingus-0.7.6-upstream-boost-compat.patch
 
 # Automatically added by buildreq on Fri Sep 28 2007
-BuildRequires: esound flex gcc-c++ ghostscript-utils libSDL-devel rcs
-
-BuildRequires:  libSDL_mixer-devel libSDL_image-devel boost-devel libpng-devel
-BuildRequires:  libphysfs-devel scons boost-signals-devel
-
-#BuildPreReq: libssl-devel
+BuildRequires: esound flex gcc-c++ ghostscript-utils libSDL-devel
+BuildRequires: libSDL_mixer-devel libSDL_image-devel boost-devel libpng-devel
+BuildRequires: libphysfs-devel boost-signals-devel
+BuildRequires: cmake
 
 %description
 Pingus is a free Lemmings clone covered under the GPL. Pingus uses SDL,
@@ -61,64 +41,28 @@ SDL, что должно сделать его портируемым на мн�
 играть в X в окне или в полноэкранном режиме.
 
 %prep
-%setup -q 
-#patch6 -p1
-#patch7 -p1
+%setup
 %patch8 -p2
 %patch9 -p1
+%patch10 -p1
+
+cp %SOURCE4 CMakeLists.txt
 
 %build
+%cmake \
+	-DWARNINGS:BOOL=ON \
+	-DBUILD_EXTRA:BOOL=OFF \
+	-DBUILD_TESTS:BOOL=OFF \
+	%nil
 
-export CCFLAGS="%optflags"
-scons
-
+%cmake_build
 
 %install
+%cmakeinstall_std
 
-
-mkdir -p $RPM_BUILD_ROOT%_man6dir
-#./install.sh $RPM_BUILD_ROOT%_prefix
-make PREFIX=%prefix DESTDIR=$RPM_BUILD_ROOT install
-# DESTDIR=%buildroot install
-#prefix=%buildroot%prefix
-
-install -p -m 644 doc/man/%name.6 $RPM_BUILD_ROOT%_man6dir/
-
-
-install -pD -m644 %SOURCE1 $RPM_BUILD_ROOT%_miconsdir/%name.xpm
-install -pD -m644 %SOURCE2 $RPM_BUILD_ROOT%_niconsdir/%name.xpm
-install -pD -m644 %SOURCE3 $RPM_BUILD_ROOT%_liconsdir/%name.xpm
-
-
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/themes/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/metamap/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/wordmaps/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/prefabs/
-
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/controller/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/credits/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/images/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/levels/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/levelsets/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/music/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/sounds/
-#mkdir -p $RPM_BUILD_ROOT%_datadir/%name/data/stories/
-
-
-
-#mv data/sounds/*  $RPM_BUILD_ROOT%_datadir/%name/data/sounds/
-#mv data/controller/*  $RPM_BUILD_ROOT%_datadir/%name/data/controller/
-#mv data/prefabs/*  $RPM_BUILD_ROOT%_datadir/%name/data/prefabs/
-
-#mv data/credits/*  $RPM_BUILD_ROOT%_datadir/%name/data/credits/
-#mv data/levelsets/*  $RPM_BUILD_ROOT%_datadir/%name/data/levelsets/
-#mv data/music/*  $RPM_BUILD_ROOT%_datadir/%name/data/music/
-
-
-#install -m 644 data/metamap/metamap.xml \
-#  $RPM_BUILD_ROOT%_datadir/%name/data/metamap
+install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.xpm
+install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
+install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.xpm
 
 install -m755 -d %buildroot%_desktopdir/
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
@@ -134,20 +78,42 @@ StartupNotify=false
 Categories=Game;ArcadeGame;
 EOF
 
+# revert to previous run script since just starting application without any parameters doesn't work yet
+mv %buildroot%_bindir/%name %buildroot%_bindir/%{name}.bin
+
+cat > %buildroot%_bindir/%name << EOF
+#!/bin/sh
+exec "%_bindir/%{name}.bin" --datadir "%_datadir/%name"
+EOF
+
+chmod +x %buildroot%_bindir/%name
+
+# remove unnecessary files since they just create unnecessary dependencies
+rm -f %buildroot%_datadir/%name/images/fonts/buildset.py
+rm -f %buildroot%_datadir/%name/images/fonts/substractchars.py
+rm -f %buildroot%_datadir/%name/po/extract-levels.guile
+rm -f %buildroot%_datadir/%name/po/extract-po.sh
+rm -f %buildroot%_datadir/%name/po/pingus.pot
+rm -f %buildroot%_datadir/%name/po/update-po.sh
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %_datadir/%name
-%_man1dir/*
 %_man6dir/*
 %_desktopdir/%{name}.desktop
 %_miconsdir/%name.xpm
 %_niconsdir/%name.xpm
 %_liconsdir/%name.xpm
+%_iconsdir/hicolor/scalable/apps/%{name}.svg
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt3
+- Rebuilt with boost-1.71.0 using cmake.
+- Spec cleanup.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
@@ -222,7 +188,7 @@ EOF
 - New Level Editor rewritten from scratch
 - Spec rewritten
 
-* Thu Dec 28 2006 Ilya Mashkin <oddity@altlinux.ru> 0.7.0-alt0.1cvs%snapshot_date
+* Thu Dec 28 2006 Ilya Mashkin <oddity@altlinux.ru> 0.7.0-alt0.1cvs20060721
 - New version from old cvs
 
 * Wed Apr 12 2006 Andrey Brindeew <abr@altlinux.org> 0.6.0-alt7
