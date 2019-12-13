@@ -1,86 +1,59 @@
 %define modname twitter
 
-Name: python-module-%modname
-Version: 3.4.1
+Name: python3-module-%modname
+Version: 3.5
 Release: alt1
 
 Summary: Python Interface for Twitter API
 License: Apache-2.0
-Group: Development/Python
-
+Group: Development/Python3
 Url: https://github.com/bear/python-twitter
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 BuildArch: noarch
 
 Source: twitter-%version.tar
-
-BuildRequires: python-module-setuptools
-BuildRequires: python-devel
-BuildRequires: python-module-pytest-runner
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-sphinx_rtd_theme
-
-%py_requires rfc822 requests requests_oauthlib
+Patch0: fix-build-for-python3.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx 
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-pytest-runner
+BuildRequires: python3-module-pytest-runner python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+
+%py3_requires rfc822py3 requests requests_oauthlib
+%add_python3_req_skip rfc822
+%py3_provides %modname
 
 
 %description
 This library provides a pure python interface for the Twitter API.
 
-%package -n python3-module-%modname
-Summary: Python Interface for Twitter API
-Group: Development/Python3
-%py3_requires rfc822py3 requests requests_oauthlib
-%add_python3_req_skip rfc822
-%py3_provides %modname
-
-%description -n python3-module-%modname
-This library provides a pure python interface for the Twitter API.
-
 %prep
 %setup -n twitter-%version
+%patch0 -p1
 
-rm -rf ../python3
-cp -fR . ../python3
-
-%prepare_sphinx .
+sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-sphinx-build doc/ _build/ doc/*.rst
+export PYTHONPATH=%buildroot%python3_sitelibdir
+sphinx-build-3 doc/ _build/ doc/*.rst
 mkdir man
 cp -fR doc/_build/html/* man/
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc AUTHORS.* CHANGES COPYING LICENSE README.*
-%doc examples/ man/
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
 %doc AUTHORS.* CHANGES COPYING LICENSE README.*
 %doc examples/ man/
 %python3_sitelibdir/*
 
 
 %changelog
+* Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.5-alt1
+- Version updated to 3.5
+- build for python2 disabled
+
 * Fri Mar 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.4.1-alt1
 - Version 3.4.1
 
