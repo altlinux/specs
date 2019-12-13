@@ -1,6 +1,6 @@
 Name: libcmis
 Version: 0.5.2
-Release: alt4.git.172e837
+Release: alt5.git.172e837
 
 Summary: A C++ client library for the CMIS interface
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://github.com/tdf/libcmis
 Source: %name-%version.tar
 Patch: %name-0.4.1-alt2.1.patch
+Patch2: %name-0.5.2-alt-boost-compat.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libcurl)
@@ -45,6 +46,7 @@ command line.
 %prep
 %setup
 %patch -p1
+%patch2 -p2
 
 %build
 touch ChangeLog
@@ -71,6 +73,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.2-alt5.git.172e837
+- Rebuilt with boost-1.71.0.
+
 * Mon Dec 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.2-alt4.git.172e837
 - NMU: upstream master snapshot 172e83762b2b4b300073212ffd841dc90680bb86
 
