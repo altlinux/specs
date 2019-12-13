@@ -3,14 +3,15 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.6
-Release: alt1
+Release: alt2
+
 Summary: Lightweight markup language-based html5 slideshow generator
 License: ASLv2.0
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/landslide
+BuildArch: noarch
 
 # https://github.com/adamzap/landslide.git
 Source: %name-%version.tar
@@ -19,11 +20,6 @@ Patch: landslide-1.1.6-Support-markdown-v3.0.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(docutils)
-BuildRequires: python2.7(jinja2)
-BuildRequires: python2.7(markdown)
-BuildRequires: python2.7(pygments)
-BuildRequires: python2.7(six)
 BuildRequires: python3(docutils)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(markdown)
@@ -32,48 +28,30 @@ BuildRequires: python3(six)
 BuildRequires: python3(tox)
 %endif
 
-%py_requires markdown
-
-%description
-Landslide takes your Markdown, ReST, or Textile file(s) and generates
-fancy HTML5 slideshow.
-
-%package -n python3-module-%oname
-Summary: Lightweight markup language-based html5 slideshow generator
-Group: Development/Python3
 %py3_requires markdown
 
-%description -n python3-module-%oname
+
+%description
 Landslide takes your Markdown, ReST, or Textile file(s) and generates
 fancy HTML5 slideshow.
 
 %prep
 %setup
 %patch -p1
+
 # unpin deps
 sed -i 's/==/>=/g' setup.py requirements.txt
 
-cp -fR . ../python3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
 
-%python_install
-
+%if_with check
 %check
 cat > tox.ini <<EOF
 [testenv]
@@ -81,22 +59,21 @@ commands =
     {envpython} tests.py -v
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
+%endif
 
 %files
 %doc *.md examples
 %_bindir/landslide
-%python_sitelibdir/landslide/
-%python_sitelibdir/landslide-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
-%doc *.md examples
-%_bindir/landslide.py3
 %python3_sitelibdir/landslide/
-%python3_sitelibdir/landslide-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/*.egg-info/
+
 
 %changelog
+* Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.6-alt2
+- build for python2 disabled
+
 * Thu May 09 2019 Stanislav Levin <slev@altlinux.org> 1.1.6-alt1
 - 1.1.3 -> 1.1.6.
 
