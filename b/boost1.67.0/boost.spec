@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -13,9 +13,6 @@
 
 %def_with strict_deps
 %def_with python3
-# some packages aren't ready yet to use cmake files from boost,
-# particularly, packages using boost-python-devel
-%def_without cmake
 
 # Add compatibility links for boost-python-devel and boost-python3-devel
 # TODO: consider removing them later
@@ -44,31 +41,37 @@
 %endif
 
 %define ver_maj 1
-%define ver_min 71
+%define ver_min 67
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt9
 
 Summary: Boost libraries
 License: Boost Software License
 Group: Development/C++
-Url: https://www.boost.org
+Url: http://www.boost.org
 
 Source: boost-%version.tar
-
+Patch4: boost-1.57.0-alt-explicit-st.patch
+Patch5: boost-1.57.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
+Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
+Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
 Patch30: boost-1.63.0-alt-python-paths.patch
 Patch82: boost-1.66.0-fedora-no-rpath.patch
+Patch84: boost-1.66.0-fedora-spirit-abs-overflow.patch
+Patch85: boost-1.67.0-upstream-python.patch
+Patch87: boost-1.66.0-fedora-numpy3.patch
 
 # RISC-V support
+Patch88: boost-1.67.0-add-support-for-risc-v-lp64d.patch
+Patch89: boost-1.67.0-add-detection-of-the-risc-v-architecture.patch
 Patch90: boost-1.67.0-alt-add-riscv-support-to-boostcpp-jam.patch
 Patch91: boost-1.67.0-define-the-riscv-architecture-feature.patch
 
@@ -87,7 +90,9 @@ BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: %mpiimpl-devel
 %endif
 
+#buildreq doesn't do anything sane on this package
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel
+#BuildRequires: libexpat-devel-static libexpat-devel
 
 %if_with devel
 %description
@@ -118,7 +123,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires: %name-devel = %EVR
+Requires: %name-devel = %epoch:%version-%release
 
 %description devel-headers
 The Boost web site provides free peer-reviewed portable C++ source
@@ -137,59 +142,57 @@ This package contains header files only.
 Summary: Boost libraries
 Group: Development/C++
 
-PreReq: %name-devel-headers = %EVR
-Requires: libboost_atomic%version = %EVR
-Requires: libboost_chrono%version = %EVR
-Requires: libboost_container%version = %EVR
-Requires: libboost_contract%version = %EVR
-Requires: libboost_date_time%version = %EVR
-Requires: libboost_graph%version = %EVR
-Requires: libboost_iostreams%version = %EVR
-Requires: libboost_random%version = %EVR
-Requires: libboost_regex%version = %EVR
-Requires: libboost_serialization%version = %EVR
-Requires: libboost_system%version = %EVR
-Requires: libboost_test%version = %EVR
-Requires: libboost_timer%version = %EVR
-Requires: libboost_thread%version = %EVR
+PreReq: %name-devel-headers = %epoch:%version-%release
+Requires: libboost_atomic%version = %epoch:%version-%release
+Requires: libboost_chrono%version = %epoch:%version-%release
+Requires: libboost_container%version = %epoch:%version-%release
+Requires: libboost_contract%version = %epoch:%version-%release
+Requires: libboost_date_time%version = %epoch:%version-%release
+Requires: libboost_graph%version = %epoch:%version-%release
+Requires: libboost_iostreams%version = %epoch:%version-%release
+Requires: libboost_random%version = %epoch:%version-%release
+Requires: libboost_regex%version = %epoch:%version-%release
+Requires: libboost_serialization%version = %epoch:%version-%release
+Requires: libboost_system%version = %epoch:%version-%release
+Requires: libboost_test%version = %epoch:%version-%release
+Requires: libboost_timer%version = %epoch:%version-%release
+Requires: libboost_thread%version = %epoch:%version-%release
 
-Provides: boost-atomic-devel = %EVR
-Obsoletes: boost-atomic-devel < %EVR
-Provides: boost-chrono-devel = %EVR
-Obsoletes: boost-chrono-devel < %EVR
-Provides: boost-datetime-devel = %EVR
-Obsoletes: boost-datetime-devel < %EVR
-Provides: boost-graph-devel = %EVR
-Obsoletes: boost-graph-devel < %EVR
-Provides: boost-iostreams-devel = %EVR
-Obsoletes: boost-iostreams-devel < %EVR
-Provides: boost-regex-common-devel = %EVR
-Obsoletes: boost-regex-common-devel < %EVR
-Provides: boost-regex-devel = %EVR
-Obsoletes: boost-regex-devel < %EVR
-Provides: boost-regex-gcc2-devel = %EVR
-Provides: boost-regex-gcc3-devel = %EVR
+Provides: boost-atomic-devel = %epoch:%version-%release
+Obsoletes: boost-atomic-devel < %epoch:%version-%release
+Provides: boost-chrono-devel = %epoch:%version-%release
+Obsoletes: boost-chrono-devel < %epoch:%version-%release
+Provides: boost-datetime-devel = %epoch:%version-%release
+Obsoletes: boost-datetime-devel < %epoch:%version-%release
+Provides: boost-graph-devel = %epoch:%version-%release
+Obsoletes: boost-graph-devel < %epoch:%version-%release
+Provides: boost-iostreams-devel = %epoch:%version-%release
+Obsoletes: boost-iostreams-devel < %epoch:%version-%release
+Provides: boost-regex-common-devel = %epoch:%version-%release
+Obsoletes: boost-regex-common-devel < %epoch:%version-%release
+Provides: boost-regex-devel = %epoch:%version-%release
+Obsoletes: boost-regex-devel < %epoch:%version-%release
+Provides: boost-regex-gcc2-devel = %epoch:%version-%release
+Provides: boost-regex-gcc3-devel = %epoch:%version-%release
 Obsoletes: boost-regex-gcc2-devel, boost-regex-gcc3-devel, boost-regex-common-devel
-Provides: boost-serialization-devel = %EVR
-Obsoletes: boost-serialization-devel < %EVR
-Provides: boost-system-devel = %EVR
-Obsoletes: boost-system-devel < %EVR
-Provides: boost-test-devel = %EVR
-Obsoletes: boost-test-devel < %EVR
-Provides: boost-timer-devel = %EVR
-Obsoletes: boost-timer-devel < %EVR
-Provides: boost-thread-devel = %EVR
-Obsoletes: boost-thread-devel < %EVR
-Provides: boost-multiprecision-devel = %EVR
-Obsoletes: boost-multiprecision-devel < %EVR
+Provides: boost-serialization-devel = %epoch:%version-%release
+Obsoletes: boost-serialization-devel < %epoch:%version-%release
+Provides: boost-system-devel = %epoch:%version-%release
+Obsoletes: boost-system-devel < %epoch:%version-%release
+Provides: boost-test-devel = %epoch:%version-%release
+Obsoletes: boost-test-devel < %epoch:%version-%release
+Provides: boost-timer-devel = %epoch:%version-%release
+Obsoletes: boost-timer-devel < %epoch:%version-%release
+Provides: boost-thread-devel = %epoch:%version-%release
+Obsoletes: boost-thread-devel < %epoch:%version-%release
 
-Provides: %name-intrusive-devel = %EVR
-Obsoletes: %name-intrusive-devel < %EVR
-Provides: %name-units-devel = %EVR
-Obsoletes: %name-units-devel < %EVR
+Provides: %name-intrusive-devel = %epoch:%version-%release
+Obsoletes: %name-intrusive-devel < %epoch:%version-%release
+Provides: %name-units-devel = %epoch:%version-%release
+Obsoletes: %name-units-devel < %epoch:%version-%release
 
-Provides: %name-process-devel = %EVR
-Obsoletes: %name-process-devel < %EVR
+Provides: %name-process-devel = %epoch:%version-%release
+Obsoletes: %name-process-devel < %epoch:%version-%release
 
 
 %description devel
@@ -208,40 +211,41 @@ Summary: Boost libraries -- complete release
 Group: Development/C++
 BuildArch: noarch
 
-Requires: %name-devel-headers = %EVR
-Requires: %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-Requires: %name-chrono-devel = %EVR
+Requires: %name-devel-headers = %epoch:%version-%release
+Requires: %name-devel = %epoch:%version-%release
+Requires: %name-asio-devel = %epoch:%version-%release
+Requires: %name-chrono-devel = %epoch:%version-%release
 %if_with context
-Requires: %name-context-devel = %EVR
-Requires: %name-coroutine-devel = %EVR
+Requires: %name-context-devel = %epoch:%version-%release
+Requires: %name-coroutine-devel = %epoch:%version-%release
 %endif
-Requires: %name-filesystem-devel = %EVR
-Requires: %name-flyweight-devel = %EVR
-Requires: %name-geometry-devel = %EVR
+Requires: %name-filesystem-devel = %epoch:%version-%release
+Requires: %name-flyweight-devel = %epoch:%version-%release
+Requires: %name-geometry-devel = %epoch:%version-%release
 %if_with mpi
-Requires: %name-graph-parallel-devel = %EVR
+Requires: %name-graph-parallel-devel = %epoch:%version-%release
 %endif
-Requires: %name-interprocess-devel = %EVR
-Requires: %name-intrusive-devel = %EVR
-Requires: %name-locale-devel = %EVR
-Requires: %name-lockfree-devel = %EVR
-Requires: %name-log-devel = %EVR
-Requires: %name-math-devel = %EVR
+Requires: %name-interprocess-devel = %epoch:%version-%release
+Requires: %name-intrusive-devel = %epoch:%version-%release
+Requires: %name-locale-devel = %epoch:%version-%release
+Requires: %name-lockfree-devel = %epoch:%version-%release
+Requires: %name-log-devel = %epoch:%version-%release
+Requires: %name-math-devel = %epoch:%version-%release
 %if_with mpi
-Requires: %name-mpi-devel = %EVR
+Requires: %name-mpi-devel = %epoch:%version-%release
 %endif
-Requires: %name-msm-devel = %EVR
-Requires: %name-polygon-devel = %EVR
-Requires: %name-program_options-devel = %EVR
-Requires: %name-python-devel = %EVR
+Requires: %name-msm-devel = %epoch:%version-%release
+Requires: %name-multiprecision-devel = %epoch:%version-%release
+Requires: %name-polygon-devel = %epoch:%version-%release
+Requires: %name-program_options-devel = %epoch:%version-%release
+Requires: %name-python-devel = %epoch:%version-%release
 %if_with python3
-Requires: %name-python3-devel = %EVR
+Requires: %name-python3-devel = %epoch:%version-%release
 %endif
-Requires: %name-signals-devel = %EVR
-Requires: %name-timer-devel = %EVR
-Requires: %name-units-devel = %EVR
-Requires: %name-wave-devel = %EVR
+Requires: %name-signals-devel = %epoch:%version-%release
+Requires: %name-timer-devel = %epoch:%version-%release
+Requires: %name-units-devel = %epoch:%version-%release
+Requires: %name-wave-devel = %epoch:%version-%release
 
 %description complete
 The Boost web site provides free peer-reviewed portable C++ source
@@ -264,7 +268,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 %description asio-devel
 asio is a cross-platform C++ library for network programming that
@@ -277,8 +281,8 @@ Summary: The Boost Context Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: libboost_context%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_context%version = %epoch:%version-%release
 
 %description context-devel
 Boost.Context is a foundational library that provides a sort of
@@ -296,9 +300,9 @@ Summary: The Boost Coroutine Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: %name-context-devel = %EVR
-Requires: libboost_coroutine%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-context-devel = %epoch:%version-%release
+Requires: libboost_coroutine%version = %epoch:%version-%release
 
 %description coroutine-devel
 Boost.Coroutine provides templates for generalized subroutines which
@@ -319,8 +323,8 @@ Summary: The Boost Filesystem Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: libboost_filesystem%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_filesystem%version = %epoch:%version-%release
 
 %description filesystem-devel
 The Boost Filesystem Library provides portable facilities to query and
@@ -333,8 +337,8 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: %name-interprocess-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-interprocess-devel = %epoch:%version-%release
 
 %description flyweight-devel
 Flyweights are small-sized handle classes granting constant access to
@@ -352,8 +356,8 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: %name-polygon-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-polygon-devel = %epoch:%version-%release
 
 %description geometry-devel
 Boost.Geometry, defines concepts, primitives and algorithms for solving
@@ -376,10 +380,10 @@ Summary: Development files for Parallel Boost Graph Library
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: %name-mpi-devel = %EVR
-Requires: libboost_graph%version = %EVR
-Requires: libboost_graph_parallel%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-mpi-devel = %epoch:%version-%release
+Requires: libboost_graph%version = %epoch:%version-%release
+Requires: libboost_graph_parallel%version = %epoch:%version-%release
 
 %description graph-parallel-devel
 The Parallel Boost Graph Library is an extension to the Boost Graph
@@ -396,8 +400,8 @@ Summary: The Boost Locale Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: libboost_locale%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_locale%version = %epoch:%version-%release
 
 %description locale-devel
 Boost.Locale is a library that provides high quality localization
@@ -412,7 +416,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 %description lockfree-devel
 Boost.Lockfree library provides lockfree data structures, like
@@ -424,8 +428,8 @@ Summary: The Boost Locale Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: libboost_log%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_log%version = %epoch:%version-%release
 
 %description log-devel
 Boost.Log v2 is a library that aims to make logging significantly easier
@@ -440,8 +444,8 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: %name-intrusive-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-intrusive-devel = %epoch:%version-%release
 
 %description interprocess-devel
 Boost.Interprocess provides portable access to shared memory, memory
@@ -450,20 +454,38 @@ and allocators.
 
 It is header-only library. This package contains the headers.
 
+
+# Now boost-intrusive-devel is part of boost-devel-headers,
+# as it is required by boost/thread.hpp
+#
+# %package intrusive-devel
+# Summary: The Boost Intrusive Library development files
+# Group: Development/C++
+# BuildArch: noarch
+# AutoReq: yes, nocpp
+#
+# PreReq: %name-devel = %epoch:%version-%release
+#
+# %description intrusive-devel
+# Boost.Intrusive library provides intrusive containers and algorithms.
+#
+# It is header-only library. This package contains the headers.
+
+
 %package math-devel
 Summary: The Boost Math Library development files.
 Group: Development/C++
 
-PreReq: %name-devel = %EVR
-Requires: libboost_math_c99%version = %EVR
-Requires: libboost_math_c99f%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_math_c99%version = %epoch:%version-%release
+Requires: libboost_math_c99f%version = %epoch:%version-%release
 %if_with long_double
-Requires: libboost_math_c99l%version = %EVR
+Requires: libboost_math_c99l%version = %epoch:%version-%release
 %endif
-Requires: libboost_math_tr1%version = %EVR
-Requires: libboost_math_tr1f%version = %EVR
+Requires: libboost_math_tr1%version = %epoch:%version-%release
+Requires: libboost_math_tr1f%version = %epoch:%version-%release
 %if_with long_double
-Requires: libboost_math_tr1l%version = %EVR
+Requires: libboost_math_tr1l%version = %epoch:%version-%release
 %endif
 
 %description math-devel
@@ -477,9 +499,10 @@ Summary: The Boost MPI Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-PreReq: %name-python-devel = %EVR
-Requires: libboost_mpi%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+PreReq: %name-python-devel = %epoch:%version-%release
+Requires: libboost_mpi%version = %epoch:%version-%release
+Requires: libboost_mpi_python%version = %epoch:%version-%release
 Requires: %mpiimpl-devel
 
 %description mpi-devel
@@ -494,7 +517,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 %description msm-devel
 Ths Boost Meta State Machine (MSM) is a library allowing you to easily
@@ -503,13 +526,31 @@ and quickly define state machines of very high performance.
 It is header-only library. This package contains the headers.
 
 
+%package multiprecision-devel
+Summary: The Boost Multiprecision Library development files
+Group: Development/C++
+BuildArch: noarch
+AutoReq: yes, nocpp
+
+PreReq: %name-devel = %epoch:%version-%release
+
+%description multiprecision-devel
+The Multiprecision Library provides integer, rational and floating-point
+types in C++ that have more range and precision than C++'s ordinary
+built-in types. It consists of a generic interface to the mathematics of
+large numbers as well as a selection of big number back ends provided
+off-the-rack in including interfaces to GMP, MPFR, MPIR, TomMath as well
+as its own collection of Boost-licensed, header-only back ends for
+integers, rationals and floats.
+
+
 %package polygon-devel
 Summary: The Boost Polygon Library development files
 Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 %description polygon-devel
 The Boost.Polygon library provides algorithms focused on manipulating
@@ -526,12 +567,12 @@ Summary: The Boost Filesystem Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
-Requires: libboost_program_options%version = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_program_options%version = %epoch:%version-%release
 
 Obsoletes: program_options-devel
-Provides: program_options-devel  =  %EVR
-Provides: boost-program-options-devel = %EVR
+Provides: program_options-devel  =  %epoch:%version-%release
+Provides: boost-program-options-devel = %epoch:%version-%release
 
 %description program_options-devel
 Boost Program Options library allows program developers to obtain
@@ -541,9 +582,7 @@ conventional methods.
 %package python-headers
 Summary: Boost.Python header files.
 Group: Development/C++
-%if_without cmake
 BuildArch: noarch
-%endif
 AutoReq: yes, nocpp
 
 %description python-headers
@@ -557,15 +596,15 @@ Group: Development/C++
 AutoReq: yes, nocpp
 
 Requires: python-devel = %_python_version
-Requires: %name-python-headers = %EVR
-Requires: libboost_python%version = %EVR
+Requires: %name-python-headers = %epoch:%version-%release
+Requires: libboost_python%version = %epoch:%version-%release
 Requires: libboost_numpy%version = %EVR
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 Obsoletes: boost-python-gcc2-devel, boost-python-gcc3-devel, boost-python-common-devel
-Provides: boost-python-gcc2-devel = %EVR
-Provides: boost-python-gcc3-devel = %EVR
-Provides: boost-python-common-devel = %EVR
+Provides: boost-python-gcc2-devel = %epoch:%version-%release
+Provides: boost-python-gcc3-devel = %epoch:%version-%release
+Provides: boost-python-common-devel = %epoch:%version-%release
 
 %description python-devel
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -585,10 +624,10 @@ Group: Development/C++
 AutoReq: yes, nocpp
 
 Requires: python3-devel = %_python3_abi_version
-Requires: %name-python-headers = %EVR
-Requires: libboost_python3-%version = %EVR
+Requires: %name-python-headers = %epoch:%version-%release
+Requires: libboost_python3-%version = %epoch:%version-%release
 Requires: libboost_numpy3-%version = %EVR
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
 
 %description python3-devel
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -607,7 +646,8 @@ Summary: The Boost Signals Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-PreReq: %name-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: libboost_signals%version = %epoch:%version-%release
 
 %description signals-devel
 The  Boost.Signals  library  is an implementation of a managed signals
@@ -617,14 +657,31 @@ are connected to some set of slots, which are callback receivers (also
 called event targets or subscribers), which are called when the signal
 is "emitted."
 
+
+# Now Boost.Units is part of boost-devel-headers.
+# See https://svn.boost.org/trac/boost/ticket/4876
+#
+# %%package units-devel
+# Summary: The Boost Units Library development files
+# Group: Development/C++
+# BuildArch: noarch
+# AutoReq: yes, nocpp
+#
+# PreReq: %name-devel = %epoch:%version-%release
+#
+# %%description units-devel
+# The Boost.Units library is a C++ implementation of dimensional analysis
+# and unit/quantity manipulation and conversion.
+
+
 %package wave-devel
 Summary: Boost.Wave Library development files.
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires: libboost_wave%version = %EVR
-PreReq: %name-devel = %EVR
-Requires: %name-filesystem-devel = %EVR
+Requires: libboost_wave%version = %epoch:%version-%release
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-filesystem-devel = %epoch:%version-%release
 
 %description wave-devel
 The Boost Wave Library development files.
@@ -669,49 +726,49 @@ with Perforce Jam.
 Summary: Boost libraries
 Group: Development/C++
 
-PreReq: %name-devel = %EVR
-Requires: %name-atomic-devel = %EVR
-Requires: %name-chrono-devel = %EVR
+PreReq: %name-devel = %epoch:%version-%release
+Requires: %name-atomic-devel = %epoch:%version-%release
+Requires: %name-chrono-devel = %epoch:%version-%release
 %if_with context
-Requires: %name-context-devel = %EVR
+Requires: %name-context-devel = %epoch:%version-%release
 %endif
-Requires: %name-filesystem-devel = %EVR
+Requires: %name-filesystem-devel = %epoch:%version-%release
 %if_with mpi
-Requires: %name-graph-parallel-devel = %EVR
-Requires: %name-mpi-devel = %EVR
+Requires: %name-graph-parallel-devel = %epoch:%version-%release
+Requires: %name-mpi-devel = %epoch:%version-%release
 %endif
-Requires: %name-locale-devel = %EVR
-Requires: %name-log-devel = %EVR
-Requires: %name-program_options-devel = %EVR
-Requires: %name-python-devel = %EVR
+Requires: %name-locale-devel = %epoch:%version-%release
+Requires: %name-log-devel = %epoch:%version-%release
+Requires: %name-program_options-devel = %epoch:%version-%release
+Requires: %name-python-devel = %epoch:%version-%release
 %if_with python3
-Requires: %name-python3-devel = %EVR
+Requires: %name-python3-devel = %epoch:%version-%release
 %endif
-Requires: %name-signals-devel = %EVR
-Requires: %name-timer-devel = %EVR
-Requires: %name-wave-devel = %EVR
+Requires: %name-signals-devel = %epoch:%version-%release
+Requires: %name-timer-devel = %epoch:%version-%release
+Requires: %name-wave-devel = %epoch:%version-%release
 
 Obsoletes: program_options-devel-static
-Provides: boost-datetime-devel-static = %EVR
-Provides: boost-filesystem-devel-static = %EVR
-Provides: boost-graph-devel-static = %EVR
-Provides: boost-iostreams-devel-static = %EVR
-Provides: boost-program-options-devel-static = %EVR
-Provides: boost-python-common-devel-static = %EVR
-Provides: boost-python-devel-static = %EVR
-Provides: boost-python-gcc2-devel-static = %EVR
-Provides: boost-python-gcc3-devel-static = %EVR
-Provides: boost-regex-common-devel-static = %EVR
-Provides: boost-regex-devel-static = %EVR
-Provides: boost-regex-gcc2-devel-static = %EVR
-Provides: boost-regex-gcc3-devel-static = %EVR
-Provides: boost-serialization-devel-static = %EVR
-Provides: boost-signals-devel-static = %EVR
-Provides: boost-system-devel-static = %EVR
-Provides: boost-test-devel-static = %EVR
-Provides: boost-thread-devel-static = %EVR
-Provides: boost-wave-devel-static = %EVR
-Provides: program_options-devel-static  =  %EVR
+Provides: boost-datetime-devel-static = %epoch:%version-%release
+Provides: boost-filesystem-devel-static = %epoch:%version-%release
+Provides: boost-graph-devel-static = %epoch:%version-%release
+Provides: boost-iostreams-devel-static = %epoch:%version-%release
+Provides: boost-program-options-devel-static = %epoch:%version-%release
+Provides: boost-python-common-devel-static = %epoch:%version-%release
+Provides: boost-python-devel-static = %epoch:%version-%release
+Provides: boost-python-gcc2-devel-static = %epoch:%version-%release
+Provides: boost-python-gcc3-devel-static = %epoch:%version-%release
+Provides: boost-regex-common-devel-static = %epoch:%version-%release
+Provides: boost-regex-devel-static = %epoch:%version-%release
+Provides: boost-regex-gcc2-devel-static = %epoch:%version-%release
+Provides: boost-regex-gcc3-devel-static = %epoch:%version-%release
+Provides: boost-serialization-devel-static = %epoch:%version-%release
+Provides: boost-signals-devel-static = %epoch:%version-%release
+Provides: boost-system-devel-static = %epoch:%version-%release
+Provides: boost-test-devel-static = %epoch:%version-%release
+Provides: boost-thread-devel-static = %epoch:%version-%release
+Provides: boost-wave-devel-static = %epoch:%version-%release
+Provides: program_options-devel-static  =  %epoch:%version-%release
 
 %description devel-static
 The Boost web site provides free peer-reviewed portable C++ source
@@ -732,7 +789,7 @@ Summary: Boost.Atomic Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_atomic%version
@@ -749,7 +806,7 @@ Summary: Boost.Chrono Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_chrono%version
@@ -776,7 +833,7 @@ Summary: Boost.Contract Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_contract%version
@@ -802,9 +859,9 @@ Summary: Boost.Coroutine Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_context%version = %EVR
-Requires: libboost_thread%version = %EVR
-Requires: libboost_system%version = %EVR
+Requires: libboost_context%version = %epoch:%version-%release
+Requires: libboost_thread%version = %epoch:%version-%release
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_coroutine%version
@@ -823,7 +880,7 @@ switches. The implementation uses Boost.Context for context switching.
 %package -n libboost_date_time%version
 Summary: Boost Date-Time Library.
 Group: Development/C++
-Provides: boost-datetime = %EVR
+Provides: boost-datetime = %epoch:%version-%release
 
 %description -n libboost_date_time%version
 Programming  with  dates  and  times  should  be  almost as simple and
@@ -838,10 +895,10 @@ time intervals.
 %package -n libboost_filesystem%version
 Summary: Filesystem Library
 Group: Development/C++
-Provides: boost-filesystem = %EVR
+Provides: boost-filesystem = %epoch:%version-%release
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_filesystem%version
@@ -852,10 +909,10 @@ manipulate paths, files, and directories.
 %package -n libboost_graph%version
 Summary: Graph Library
 Group: Development/C++
-Provides: boost-graph = %EVR
+Provides: boost-graph = %epoch:%version-%release
 
 %if_with strict_deps
-Requires: libboost_regex%version = %EVR
+Requires: libboost_regex%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_graph%version
@@ -868,8 +925,8 @@ Summary: Parallel Boost Graph Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_serialization%version = %EVR
-Requires: libboost_mpi%version = %EVR
+Requires: libboost_serialization%version = %epoch:%version-%release
+Requires: libboost_mpi%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_graph_parallel%version
@@ -889,8 +946,8 @@ Summary: Boost.Locale Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_thread%version = %EVR
-Requires: libboost_system%version = %EVR
+Requires: libboost_thread%version = %epoch:%version-%release
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_locale%version
@@ -905,10 +962,10 @@ Summary: Boost.Log Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_filesystem%version = %EVR
-Requires: libboost_regex%version = %EVR
-Requires: libboost_thread%version = %EVR
-Requires: libboost_system%version = %EVR
+Requires: libboost_filesystem%version = %epoch:%version-%release
+Requires: libboost_regex%version = %epoch:%version-%release
+Requires: libboost_thread%version = %epoch:%version-%release
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_log%version
@@ -921,7 +978,7 @@ library.
 %package -n libboost_iostreams%version
 Summary: I/O streams Library
 Group: Development/C++
-Provides: boost-iostreams = %EVR
+Provides: boost-iostreams = %epoch:%version-%release
 
 %description -n libboost_iostreams%version
 The Boost Iostreams Library provides various iostreams support.
@@ -930,7 +987,7 @@ The Boost Iostreams Library provides various iostreams support.
 %package -n libboost_math_c99%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_c99%version
 Boost.Math shared library.
@@ -939,7 +996,7 @@ Boost.Math shared library.
 %package -n libboost_math_c99f%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_c99f%version
 Boost.Math shared library.
@@ -948,7 +1005,7 @@ Boost.Math shared library.
 %package -n libboost_math_c99l%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_c99l%version
 Boost.Math shared library.
@@ -958,7 +1015,7 @@ Boost.Math shared library.
 %package -n libboost_math_tr1%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_tr1%version
 Boost.Math shared library.
@@ -967,7 +1024,7 @@ Boost.Math shared library.
 %package -n libboost_math_tr1f%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_tr1f%version
 Boost.Math shared library.
@@ -977,7 +1034,7 @@ Boost.Math shared library.
 %package -n libboost_math_tr1l%version
 Summary: Boost.Math shared library.
 Group: Development/C++
-Provides: boost-math = %EVR
+Provides: boost-math = %epoch:%version-%release
 
 %description -n libboost_math_tr1l%version
 Boost.Math shared library.
@@ -988,14 +1045,28 @@ Boost.Math shared library.
 %package -n libboost_mpi%version
 Summary: Boost.MPI shared library
 Group: Development/C++
-Provides: boost-mpi = %EVR
+Provides: boost-mpi = %epoch:%version-%release
 %if_with strict_deps
-Requires: libboost_serialization%version = %EVR
+Requires: libboost_serialization%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_mpi%version
 Boost.MPI is a library for message passing in high-performance parallel
 applications. This package contains shared library.
+
+%package -n libboost_mpi_python%version
+Summary: Boost.MPI python shared library
+Group: Development/C++
+Provides: boost-mpi-python = %epoch:%version-%release
+%if_with strict_deps
+Requires: libboost_python%version = %epoch:%version-%release
+%endif
+
+%requires_python_ABI_for_files %_libdir/*_mpi_python.so.*
+
+%description -n libboost_mpi_python%version
+Boost.MPI is a library for message passing in high-performance parallel
+applications. This package contains shared library for python bindings.
 %endif
 
 %package -n libboost_program_options%version
@@ -1003,8 +1074,8 @@ Summary: The Boost Program_options Library (Boost.Program_options)
 Group: Development/C++
 
 Obsoletes: program_options
-Provides: program_options = %EVR
-Provides: boost-program-options = %EVR
+Provides: program_options = %epoch:%version-%release
+Provides: boost-program-options = %epoch:%version-%release
 
 %description -n libboost_program_options%version
 The program_options library allows program developers to obtain program
@@ -1017,9 +1088,9 @@ Summary: The Boost Python Library (Boost.Python)
 Group: Development/C++
 
 Obsoletes: boost-python-gcc2, boost-python-gcc3
-Provides: boost-python-gcc2 = %EVR
-Provides: boost-python-gcc3 = %EVR
-Provides: boost-python = %EVR
+Provides: boost-python-gcc2 = %epoch:%version-%release
+Provides: boost-python-gcc3 = %epoch:%version-%release
+Provides: boost-python = %epoch:%version-%release
 
 # Boost.Python shared libraries have unresolved symbols from libpythonX.X.so.
 # This is done intensionally to make it possible to load Python extensions
@@ -1099,9 +1170,9 @@ having useful properties.
 Summary: Regular expressions library for C++
 Group: Development/C++
 Obsoletes: boost-regex-gcc2, boost-regex-gcc3
-Provides: boost-regex-gcc2 = %EVR
-Provides: boost-regex-gcc3 = %EVR
-Provides: boost-regex = %EVR
+Provides: boost-regex-gcc2 = %epoch:%version-%release
+Provides: boost-regex-gcc3 = %epoch:%version-%release
+Provides: boost-regex = %epoch:%version-%release
 
 %description -n libboost_regex%version
 Regular expressions are a form of pattern-matching that are often used
@@ -1118,7 +1189,7 @@ either sed or perl), something that traditional C libraries can not do.
 %package -n libboost_serialization%version
 Summary: The Boost Serialization Library (Boost.Serialization)
 Group: Development/C++
-Provides: boost-serialization = %EVR
+Provides: boost-serialization = %epoch:%version-%release
 
 %description -n libboost_serialization%version
 Here, we use the term "serialization" to mean the reversible
@@ -1131,6 +1202,20 @@ specific rendering of this stream of bytes. This could be a file of
 binary data, text data, XML, or some other created by the user of this
 library.
 
+
+%package -n libboost_signals%version
+Summary: The Boost Signals Library (Boost.Signals)
+Group: Development/C++
+Provides: boost-signals = %epoch:%version-%release
+
+%description -n libboost_signals%version
+The  Boost.Signals  library  is an implementation of a managed signals
+and slots  system. Signals represent callbacks with multiple targets,
+and  are also called publishers or events in similar systems. Signals
+are connected to some set of slots, which are callback receivers (also
+called event targets or subscribers), which are called when the signal
+is "emitted."
+
 %package -n libboost_stacktrace%version
 Summary: The Boost Stacktrace Library (Boost.Stacktrace)
 Group: Development/C++
@@ -1142,7 +1227,7 @@ information about call sequence in a human-readable form.
 %package -n libboost_system%version
 Summary: Boost System Library
 Group: Development/C++
-Provides: boost-system = %EVR
+Provides: boost-system = %epoch:%version-%release
 
 %description -n libboost_system%version
 Boost.System library provides operating system support, including
@@ -1152,7 +1237,7 @@ the diagnostics support that will be part of the C++0x standard library.
 %package -n libboost_test%version
 Summary: Test Library
 Group: Development/C++
-Provides: boost-test = %EVR
+Provides: boost-test = %epoch:%version-%release
 
 %description -n libboost_test%version
 The Boost Test Library provides a matched set of components for writing
@@ -1166,13 +1251,13 @@ Group: Development/C++
 Summary: The Boost Threads Library (Boost.Threads)
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
 %endif
 
 Obsoletes: boost-thread-gcc2, boost-thread-gcc3
-Provides: boost-thread-gcc2 = %EVR
-Provides: boost-thread-gcc3 = %EVR
-Provides: boost-thread = %EVR
+Provides: boost-thread-gcc2 = %epoch:%version-%release
+Provides: boost-thread-gcc3 = %epoch:%version-%release
+Provides: boost-thread = %epoch:%version-%release
 
 %description -n libboost_thread%version
 Boost.Threads allows C++ programs to execute as multiple, asynchronous,
@@ -1189,7 +1274,7 @@ Summary: Boost.Timer Library
 Group: Development/C++
 
 %if_with strict_deps
-Requires: libboost_chrono%version = %EVR
+Requires: libboost_chrono%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_timer%version
@@ -1201,11 +1286,11 @@ clock time, user CPU process time, system CPU process time, and more.
 %package -n libboost_wave%version
 Summary: Boost.Wave Library
 Group: Development/C++
-Provides: boost-wave = %EVR
+Provides: boost-wave = %epoch:%version-%release
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
-Requires: libboost_thread%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
+Requires: libboost_thread%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_wave%version
@@ -1214,10 +1299,10 @@ The Boost Wave Library.
 %package -n libboost_fiber%version
 Summary: Boost.Fiber Library
 Group: Development/C++
-Provides: boost-fiber = %EVR
+Provides: boost-fiber = %epoch:%version-%release
 
 %if_with strict_deps
-Requires: libboost_context%version = %EVR
+Requires: libboost_context%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_fiber%version
@@ -1226,25 +1311,62 @@ The Boost Fiber Library.
 %package -n libboost_type_erasure%version
 Summary: Boost.TypeErasure Library
 Group: Development/C++
-Provides: boost-type_erasure = %EVR
+Provides: boost-type_erasure = %epoch:%version-%release
 
 %if_with strict_deps
-Requires: libboost_system%version = %EVR
-Requires: libboost_thread%version = %EVR
+Requires: libboost_system%version = %epoch:%version-%release
+Requires: libboost_thread%version = %epoch:%version-%release
 %endif
 
 %description -n libboost_type_erasure%version
 The Boost TypeErasure Library.
 
+%if_with mpi
+%if_with devel
+%package -n python-module-boost-mpi
+Summary: Boost.MPI python module
+Group: Development/Python
+%if_with strict_deps
+Requires: libboost_mpi%version = %epoch:%version-%release
+Requires: libboost_mpi_python%version = %epoch:%version-%release
+Requires: libboost_python%version = %epoch:%version-%release
+Requires: libboost_serialization%version = %epoch:%version-%release
+%endif
+
+%description -n python-module-boost-mpi
+Boost.MPI is a library for message passing in high-performance parallel
+applications. This package contains python module.
+
+%endif
+%endif
+
+
 %prep
 
 %setup -n boost-%version
-%patch15 -p2
+%patch4 -p2
+%patch5 -p2
+%patch15 -p1
+%patch23 -p2
 %patch28 -p3
+%patch29 -p2
 %patch30 -p1
 %patch82 -p1
+%patch84 -p1
+
+pushd libs/mpi
+%patch85 -p1
+popd
+
+%patch87 -p1
 
 # RISC-V support
+pushd libs/context
+%patch88 -p1
+popd
+pushd libs/config
+%patch89 -p1
+popd
 %patch90 -p1
 pushd tools/build
 %patch91 -p1
@@ -1291,9 +1413,6 @@ build_boost() {
 	-j$NPROCS \
 	--layout=system \
 	--toolset=gcc \
-%if_without cmake
-	--no-cmake-config \
-%endif
 	variant=release \
 	threading=multi \
 	link=$LINK_BOOST \
@@ -1365,9 +1484,6 @@ install_boost() {
 	-j$NPROCS \
 	--layout=system \
 	--toolset=gcc \
-%if_without cmake
-	--no-cmake-config \
-%endif
 	variant=release \
 	threading=multi \
 	link=$LINK_BOOST \
@@ -1424,6 +1540,20 @@ ln -s libboost_numpy%{python_version_nodots python3}.so libboost_numpy3.so
 popd
 %endif
 
+%endif
+
+# install mpi python module
+%if_with mpi
+%if_with devel
+mkdir -p %buildroot/%python_sitelibdir/boost
+install -Dm644 libs/mpi/build/__init__.py %buildroot/%python_sitelibdir/boost/
+mv %buildroot%_libdir/mpi.so %buildroot/%python_sitelibdir/boost/
+%else
+# The python module won't be created
+# if we are a building just library compat pkgs.
+# (mpi.so belongs exclusively to the python module.)
+rm %buildroot%_libdir/mpi.so
+%endif
 %endif
 
 %if_with devel
@@ -1518,6 +1648,7 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_includedir/%name/flyweight*
 %exclude %_includedir/%name/geometry*
 %exclude %_includedir/%name/interprocess*
+# %%exclude %_includedir/%name/intrusive
 %exclude %_includedir/%name/locale*
 %exclude %_includedir/%name/log/
 %exclude %_includedir/%name/lockfree
@@ -1527,10 +1658,12 @@ rm -f %buildroot%_libdir/*.a || :
 %exclude %_includedir/%name/graph/distributed/
 %endif
 %exclude %_includedir/%name/msm
+%exclude %_includedir/%name/multiprecision
 %exclude %_includedir/%name/polygon
 %exclude %_includedir/%name/program_options*
 %exclude %_includedir/%name/python*
 %exclude %_includedir/%name/signal*
+# %%exclude %_includedir/%name/units*
 %exclude %_includedir/%name/wave*
 
 %files devel
@@ -1549,33 +1682,8 @@ rm -f %buildroot%_libdir/*.a || :
 %endif
 %exclude %_libdir/*_program_options*.so
 %exclude %_libdir/*_python*.so
+%exclude %_libdir/*_signals*.so
 %exclude %_libdir/*_wave*.so
-%exclude %_libdir/*boost_numpy2*.so
-%if_with python_compat_symlinks
-%exclude %_libdir/libboost_numpy.so
-%exclude %_libdir/libboost_numpy-mt.so
-%endif
-%if_with python3
-%exclude %_libdir/*boost_numpy3*.so
-%endif
-%if_with cmake
-%_libdir/cmake/*
-%if_with context
-%exclude %_libdir/cmake/boost_context-%version
-%exclude %_libdir/cmake/boost_coroutine-%version
-%endif
-%exclude %_libdir/cmake/boost_filesystem-%version
-%exclude %_libdir/cmake/boost_locale-%version
-%exclude %_libdir/cmake/boost_log-%version
-%exclude %_libdir/cmake/boost_math*-%version
-%if_with mpi
-%exclude %_libdir/cmake/boost_mpi*-%version
-%exclude %_libdir/cmake/boost_graph_parallel-%version
-%endif
-%exclude %_libdir/cmake/boost_program_options-%version
-%exclude %_libdir/cmake/boost_python*-%version
-%exclude %_libdir/cmake/boost_wave-%version
-%endif
 
 %dir %boost_doc/
 %doc %boost_doc/LICENSE_1_0.txt
@@ -1589,24 +1697,15 @@ rm -f %buildroot%_libdir/*.a || :
 %files context-devel
 %_includedir/%name/context
 %_libdir/*_context*.so
-%if_with cmake
-%_libdir/cmake/boost_context-%version
-%endif
 
 %files coroutine-devel
 %_includedir/%name/coroutine
 %_libdir/*_coroutine*.so
-%if_with cmake
-%_libdir/cmake/boost_coroutine-%version
-%endif
 %endif
 
 %files filesystem-devel
 %_includedir/%name/filesystem*
 %_libdir/*_filesystem*.so
-%if_with cmake
-%_libdir/cmake/boost_filesystem-%version
-%endif
 
 %files flyweight-devel
 %_includedir/%name/flyweight*
@@ -1619,20 +1718,18 @@ rm -f %buildroot%_libdir/*.a || :
 %_includedir/%name/graph/parallel/
 %_includedir/%name/graph/distributed/
 %_libdir/*_graph_parallel*.so
-%if_with cmake
-%_libdir/cmake/boost_graph_parallel-%version
-%endif
 %endif
 
 %files interprocess-devel
 %_includedir/%name/interprocess*
 
+# goes to boost-devel-headers
+# %%files intrusive-devel
+# %_includedir/%name/intrusive
+
 %files locale-devel
 %_includedir/%name/locale*
 %_libdir/*_locale*.so
-%if_with cmake
-%_libdir/cmake/boost_locale-%version
-%endif
 
 %files lockfree-devel
 %_includedir/%name/lockfree
@@ -1640,27 +1737,23 @@ rm -f %buildroot%_libdir/*.a || :
 %files log-devel
 %_includedir/%name/log/
 %_libdir/*_log*.so
-%if_with cmake
-%_libdir/cmake/boost_log-%version
-%endif
 
 %files math-devel
+#includes go to boost-devel package
+#%_includedir/%name/math*
 %_libdir/*_math*.so
-%if_with cmake
-%_libdir/cmake/boost_math*-%version
-%endif
 
 %if_with mpi
 %files mpi-devel
 %_includedir/%name/mpi
 %_libdir/*_mpi*.so
-%if_with cmake
-%_libdir/cmake/boost_mpi*-%version
-%endif
 %endif
 
 %files msm-devel
 %_includedir/%name/msm
+
+%files multiprecision-devel
+%_includedir/%name/multiprecision
 
 %files polygon-devel
 %_includedir/%name/polygon
@@ -1668,15 +1761,9 @@ rm -f %buildroot%_libdir/*.a || :
 %files program_options-devel
 %_includedir/%name/program_options*
 %_libdir/*_program_options*.so
-%if_with cmake
-%_libdir/cmake/boost_program_options-%version
-%endif
 
 %files python-headers
 %_includedir/%name/python*
-%if_with cmake
-%_libdir/cmake/boost_python*-%version
-%endif
 
 %files python-devel
 %_libdir/*boost_python2*.so
@@ -1696,13 +1783,14 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files signals-devel
 %_includedir/%name/signal*
+%_libdir/*_signals*.so
+
+# %%files units-devel
+# %%_includedir/%name/units*
 
 %files wave-devel
 %_includedir/%name/wave*
 %_libdir/*_wave*.so
-%if_with cmake
-%_libdir/cmake/boost_wave-%version
-%endif
 
 
 %files doc
@@ -1790,6 +1878,9 @@ rm -f %buildroot%_libdir/*.a || :
 %if_with mpi
 %files -n libboost_mpi%version
 %_libdir/*_mpi.so.*
+
+%files -n libboost_mpi_python%version
+%_libdir/*_mpi_python.so.*
 %endif
 
 %files -n libboost_program_options%version
@@ -1819,6 +1910,9 @@ rm -f %buildroot%_libdir/*.a || :
 %_libdir/*_serialization*.so.*
 %_libdir/*_wserialization*.so.*
 
+%files -n libboost_signals%version
+%_libdir/*_signals*.so.*
+
 %files -n libboost_stacktrace%version
 %_libdir/*_stacktrace*.so.*
 
@@ -1845,6 +1939,13 @@ rm -f %buildroot%_libdir/*.a || :
 
 %files -n libboost_type_erasure%version
 %_libdir/*_type_erasure*.so.*
+
+%if_with mpi
+%if_with devel
+%files -n python-module-boost-mpi
+%python_sitelibdir/boost
+%endif
+%endif
 
 %if_with devel
 # Since 1.31.0 and until 1.34.1 /usr/include/boost was a symbolic link
@@ -1879,9 +1980,8 @@ done
 
 
 %changelog
-* Fri Nov 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.71.0-alt1
-- Updated to upstream version 1.71.0.
-- Spec cleanup.
+* Thu Dec 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.67.0-alt9
+- Built boost-1.67.0 compat libraries package.
 
 * Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1:1.67.0-alt8
 - Don't disable mpi knob on e2k by default anymore.
