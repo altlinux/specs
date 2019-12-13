@@ -1,6 +1,6 @@
 Name: vcmi
 Version: 0.99
-Release: alt4
+Release: alt5
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
@@ -10,6 +10,14 @@ URL: http://wiki.vcmi.eu/index.php?title=Main_Page
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch1: vcmi-boost-1.66.patch
+Patch2: vcmi-boost-1.66-2.patch
+# https://github.com/vcmi/vcmi/pull/615
+Patch3: vcmi-boost-1.66-3.patch
+Patch4: vcmi-boost-1.66-4.patch
+Patch5: vcmi-boost-1.66-5.patch
+Patch6: vcmi-boost-1.66-6.patch
+Patch7: vcmi-boost-1.66-7.patch
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: doxygen
@@ -72,6 +80,12 @@ VCMI это фанатский проект с открытым исходным
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
     
 %cmake -DLIB_DIR=%_lib/%name \
        -DCMAKE_INSTALL_LIBDIR=%_lib \
@@ -95,6 +109,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Wed Dec 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt5
+- Rebuilt with boost-1.71.0.
+
 * Fri Jun 22 2018 Anton Midyukov <antohami@altlinux.org> 0.99-alt4
 - Rebuilt with ffmpeg 4.0
 
