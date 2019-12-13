@@ -1,5 +1,7 @@
-%define lvm2version 2.03.6
-%define dmversion 1.02.165
+%define _unpackaged_files_terminate_build 1
+
+%define lvm2version 2.03.7
+%define dmversion 1.02.167
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -28,7 +30,7 @@ Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
 Release: alt1
-License: GPL
+License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
 Url: http://sources.redhat.com/lvm2
@@ -484,6 +486,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Thu Dec 12 2019 Alexey Shabalin <shaba@altlinux.org> 2.03.7-alt1
+- 2.03.7
+
 * Fri Oct 25 2019 Alexey Shabalin <shaba@altlinux.org> 2.03.6-alt1
 - 2.03.6
 
