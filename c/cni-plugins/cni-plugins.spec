@@ -1,6 +1,6 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit 485be65581341430f9106a194a98f0f2412245fb
+%global commit d5efdfe1f6d6e8e9e9494e3f43be54f76c0f8fd6
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,7 +15,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -59,6 +59,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Fri Dec 13 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Tue Sep 10 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
@@ -71,9 +74,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.4-alt1
 - 0.7.4
 
-* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt2%ubt
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt2
 - rebuild for aarch64
 
-* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt1%ubt
+* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.7.1-alt1
 - Initial package
 
