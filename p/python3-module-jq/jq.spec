@@ -1,102 +1,60 @@
 %define oname jq
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.6
-Release: alt1.1.1
+Release: alt2
+
 Summary: Lightweight and flexible JSON processor
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/jq/
 
 # https://github.com/mwilliamson/jq.py.git
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: libjq-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython python-module-nose
-BuildRequires: python-module-tox
-BuildRequires: python-module-html5lib python-module-notebook
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython python3-module-nose
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-html5lib python3-module-notebook
-%endif
+BuildRequires: libjq-devel
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 jq is a lightweight and flexible JSON processor.
 
 This project contains Python bindings for jq.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Lightweight and flexible JSON processor
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-jq is a lightweight and flexible JSON processor.
-
-This project contains Python bindings for jq.
-%endif
-
 %prep
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-cython jq.pyx
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 cython3 jq.pyx
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-python setup.py build_ext -i
-nosetests tests -v
-%if_with python3
-pushd ../python3
-python3 setup.py test
-python3 setup.py build_ext -i
+%__python3 setup.py test
+%__python3 setup.py build_ext -i
 nosetests3 tests -v
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.6-alt2
+- build for python2 disabled
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
