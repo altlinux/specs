@@ -1,29 +1,21 @@
 %define modname pyvfs
-%define buildroot %_topdir/BUILDROOT
 
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 0.2.10
-Release: alt1
+Release: alt2
 
 Summary: Simple python VFS library
 License: GPLv3+
-Group: Development/Python
+Group: Development/Python3
 URL: https://github.com/svinota/pyvfs
 BuildArch: noarch
 
 Source: pyvfs-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-setuptools
-BuildRequires: python-devel
-
-Requires: python-module-py9p >= 1.0.6-alt1
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-devel
+BuildRequires: python3-module-objects.inv python3-module-sphinx
+
+Requires: python3-module-py9p >= 1.0.6-alt1
 
 
 %description
@@ -36,60 +28,35 @@ The library can be used to create own servers as well as deploy
 bundled applications, e.g. pyvfs.objectfs -- the library, that allows
 to represent Python objects as files.
 
-%package -n python3-module-%modname
-Summary: Simple python VFS library
-Group: Development/Python
-
-%description -n python3-module-%modname
-PyVFS is a simple VFS library written in Python. It consists of
-several layers, allowing to use different low-level protocol
-implementations. Now you can choose between 9p (9p2000.u) and
-FUSE.
-
-The library can be used to create own servers as well as deploy
-bundled applications, e.g. pyvfs.objectfs -- the library, that allows
-to represent Python objects as files.
-
 %prep
 %setup -n pyvfs-%version
 
-rm -rf ../python3
-cp -fR . ../python3
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-  
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
 make force-version
-%python_build
-
-pushd ../python3
-make force-version
 %python3_build
-popd
 
-
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 mkdir man
 cp -fR docs/_build/html/* man/
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc README* LICENSE man/
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
-%doc README* LICENSE man/
 %python3_sitelibdir/*
 
+
 %changelog
+* Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.10-alt2
+- build for python2 disabled
+
 * Fri Mar 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.10-alt1
 - Version 0.2.10
 
