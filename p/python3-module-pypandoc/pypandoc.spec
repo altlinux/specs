@@ -1,85 +1,52 @@
 %define oname pypandoc
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.3
-Release: alt3.git20150226.1
+Release: alt4
+
 Summary: Thin wrapper for pandoc
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pypandoc/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/bebraw/pypandoc.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools pandoc
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires: pandoc
 
-%py_provides %oname
-Requires: pandoc
-
-%description
-Thin wrapper for "pandoc" (MIT).
-
-%package -n python3-module-%oname
-Summary: Thin wrapper for pandoc
-Group: Development/Python3
 %py3_provides %oname
 Requires: pandoc
 
-%description -n python3-module-%oname
+
+%description
 Thin wrapper for "pandoc" (MIT).
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.3-alt4
+- build for python3 disabled
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.3-alt3.git20150226.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
