@@ -3,7 +3,7 @@
 %def_disable apport
 
 Name: plank
-Version: %ver_major.4
+Version: %ver_major.89
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -18,13 +18,14 @@ Requires: bamfdaemon dconf
 %define gtk_ver 3.10
 %define glib_ver 2.40
 %define bamf_ver 0.2.92
+%define vala_ver 0.34
 
-BuildRequires: intltool xmllint help2man
+BuildRequires: vala-tools >= %vala_ver xmllint help2man
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libbamf3-devel >= %bamf_ver libgee0.8-devel
 BuildRequires: libwnck3-devel libXi-devel libXfixes-devel
+BuildRequires: libgnome-menus-devel 
 BuildRequires: xvfb-run dbus-tools-gui
-BuildRequires: vala-tools
 %{?_enable_dbusmenu:BuildRequires: libdbusmenu-gtk3-devel}
 
 %description
@@ -104,13 +105,15 @@ This package provides Vala language bindings for plank library.
 %_desktopdir/plank.desktop
 %dir %_libdir/plank
 %dir %_libdir/plank/docklets
+%_libdir/plank/docklets/libdocklet-applications.so
+%_libdir/plank/docklets/libdocklet-battery.so
 %_libdir/plank/docklets/libdocklet-clippy.so
 %_libdir/plank/docklets/libdocklet-clock.so
 %_libdir/plank/docklets/libdocklet-cpumonitor.so
 %_libdir/plank/docklets/libdocklet-desktop.so
 %_libdir/plank/docklets/libdocklet-trash.so
 %_datadir/glib-2.0/schemas/net.launchpad.plank.gschema.xml
-%_datadir/appdata/plank.appdata.xml
+%_datadir/metainfo/plank.appdata.xml
 
 %if_enabled apport
 %_sysconfdir/apport/crashdb.conf.d/plank-crashdb.conf
@@ -137,6 +140,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.11.89-alt1
+- 0.11.89
+
 * Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
 - 0.11.4
 
