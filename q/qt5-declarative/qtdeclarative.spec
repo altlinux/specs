@@ -4,12 +4,12 @@
 
 Name: qt5-declarative
 Version: 5.12.5
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
 Url: http://qt.io/
-License: LGPLv2 / GPLv3
+License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-qml.tar
@@ -25,6 +25,7 @@ Source4: find-requires.sh
 %define __find_requires %SOURCE4
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
@@ -122,8 +123,11 @@ QML modules by some Alt Linux Team Policy compatible way.
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
 mv rpm-build-qml src/
+mkdir bin_add
+ln -s %__python3 bin_add/python
 
 %build
+export PATH=$PWD/bin_add:$PATH
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
@@ -245,6 +249,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Fri Dec 13 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt3
+- build with python3
+
 * Fri Oct 18 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt2
 - build docs
 
