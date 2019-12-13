@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.2.12
-Release: alt3
+Release: alt4
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -305,7 +305,7 @@ cd locale
 make pot
 mv cups_ru.po cups_old_ru.po
 msgmerge cups_old_ru.po cups.pot -C ../alt_ru.po -o cups_ru.po
-python ../pofix.py cups_ru.po
+python2 ../pofix.py cups_ru.po
 )
 
 %install
@@ -410,6 +410,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.*
 
 %changelog
+* Fri Dec 13 2019 Ivan A. Melnikov <iv@altlinux.org> 2.2.12-alt4
+- Explicitly use python2 in %%build to fix FTBFS
+
 * Mon Nov 11 2019 Fr. Br. George <george@altlinux.ru> 2.2.12-alt3
 - Add wheel to system-groups list
 
