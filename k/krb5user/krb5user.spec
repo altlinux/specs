@@ -1,6 +1,6 @@
 Name: krb5user
 Version: 0.1.2
-Release: alt3.qa2.1
+Release: alt3.qa3
 
 Summary: User helper library for MIT Kerberos
 
@@ -69,6 +69,9 @@ scons install --install-sandbox=%buildroot --libdir=%_libdir
 %python_sitelibdir/*
 
 %changelog
+* Fri Nov 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt3.qa3
+- Rebuilt with boost-1.71.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt3.qa2.1
 - NMU: rebuilt with boost-1.67.0
 
