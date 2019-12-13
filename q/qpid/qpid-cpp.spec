@@ -10,7 +10,7 @@
 
 Name: qpid
 Version: 1.39.0
-Release: alt1
+Release: alt2
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -214,9 +214,16 @@ Python bindings for qmfgen.
 %prep
 %setup
 
+# replace generic python in shebangs with versioned python
+find . -type f | xargs sed -i \
+	-e 's:!/usr/bin/python$:!/usr/bin/python%_python_version:' \
+	-e 's:!/usr/bin/env python$:!/usr/bin/env python%_python_version:' \
+	%nil
+
 %build
 %cmake_insource \
 	-DENABLE_WARNINGS:BOOL=OFF \
+	-DENABLE_WARNING_ERROR:BOOL=OFF \
 	-DDOC_INSTALL_DIR:PATH=%_pkgdocdir \
 	%{?_disable_python:-DBUILD_BINDING_PYTHON:BOOL=OFF} \
 	%{?_disable_ruby:-DBUILD_BINDING_RUBY:BOOL=OFF} \
@@ -231,7 +238,7 @@ Python bindings for qmfgen.
 mkdir -p -m0755 %buildroot{%_bindir,%_unitdir,%_initdir,%_tmpfilesdir}
 
 pushd management/python
-python setup.py install \
+%__python setup.py install \
     --install-purelib %python_sitelibdir \
     --root %buildroot
 popd
@@ -410,6 +417,9 @@ rm -f %buildroot%_bindir/*.bat
 %doc %_pkgdocdir
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.39.0-alt2
+- Rebuilt with boost-1.71.0.
+
 * Thu Jan 31 2019 Alexey Shabalin <shaba@altlinux.org> 1.39.0-alt1
 - new version 1.39.0
 - disable build bindings
