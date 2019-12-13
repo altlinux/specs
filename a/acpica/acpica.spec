@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20190509
+Version: 20190816
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -42,6 +42,7 @@ Patch14: str-trunc-warn.patch
 Patch15: ptr-cast.patch
 Patch16: aslcodegen.patch
 Patch17: facp.patch
+Patch18: badexit.patch
 
 BuildRequires: bison flex
 
@@ -112,6 +113,7 @@ This version of the tools is being released under GPLv2 license.
 %patch15 -p1 -b .ptr-cast
 %patch16 -p1 -b .aslcodegen
 %patch17 -p1 -b .facp
+%patch18 -p1 -b .badexit
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -184,18 +186,6 @@ cd tests
 # misc tests
 ./run-misc-tests.sh %buildroot%_bindir %version
 
-# Template tests
-cd templates
-make
-if [ -f diff.log ]
-then
-    if [ -s diff.log ]
-    then
-        exit 1                  # implies errors occurred
-    fi
-fi
-cd ..
-
 
 %files
 %doc documents/changes.txt source/compiler/new_table.txt
@@ -203,6 +193,9 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Fri Dec 13 2019 Alexey Shabalin <shaba@altlinux.org> 20190816-alt1
+- 20190816
+
 * Thu Aug 01 2019 Alexey Shabalin <shaba@altlinux.org> 20190509-alt1
 - 20190509
 
