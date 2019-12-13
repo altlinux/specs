@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt4
+Release: alt5
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -11,6 +11,10 @@ Url: http://www.pokerth.net/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+# https://github.com/pokerth/pokerth/issues/368
+Patch1: PokerTH-upstream-boost-compat-1.patch
+Patch2: PokerTH-upstream-boost-compat-2.patch
 
 BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
 
@@ -44,6 +48,11 @@ This package contents data files for %name.
 %prep
 %setup
 %patch -p1
+
+pushd src/third_party/websocketpp
+%patch1 -p1
+%patch2 -p1
+popd
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -79,6 +88,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt5
+- Rebuilt with boost-1.71.0.
+
 * Fri Jul 20 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt4
 - Remove bundled font (Closes: #25328).
 
