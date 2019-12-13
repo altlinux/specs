@@ -1,12 +1,14 @@
 Name: ncmpcpp
 Version: 0.8.1
-Release: alt1.1
+Release: alt2
 
 Summary: ncurses-based client for the Music Player Daemon (MPD)
 
 Group: Sound
 License: GPLv2+
 URL: http://ncmpcpp.rybczak.net/
+
+ExcludeArch: aarch64
 
 Source: %name-%version.tar
 # git://git.altlinux.org/gears/n/ncmpcpp.git
@@ -46,6 +48,9 @@ doesn't have. It's been also rewritten from scratch in C++.
 %_man1dir/%name.1*
 
 %changelog
+* Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt2
+- Excluded from aarch64 and rebuilt with new boost-1.71.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
