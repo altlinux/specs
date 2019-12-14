@@ -3,7 +3,7 @@
 
 Name: liblxqt
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Core utility library for LxQt components
 License: LGPL
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+Patch: liblxqt-0.14.1-fix_translate_load.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
@@ -41,9 +42,10 @@ This package provides the development files for LXQt library.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%cmake -DUPDATE_TRANSLATIONS=ON
 %cmake_build
 
 %install
@@ -64,6 +66,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sat Dec 14 2019 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt2
+- fix load qt5 translation (Thanks zerg@)
+
 * Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt1
 - new version 0.14.1
 
