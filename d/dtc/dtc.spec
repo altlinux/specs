@@ -2,17 +2,16 @@
 %def_without python
 
 Name: dtc
-Version: 1.5.0.0.20.2431
+Version: 1.5.1
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Development/Tools
 Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: flex bison
 %{?_with_python:BuildRequires: swig python-devel}
 %{?_with_docs:BuildRequires: texlive-base texlive-latex-extra}
@@ -26,6 +25,7 @@ readable source format, and creates a "dtb", or binary format as output.
 %package -n libfdt
 Summary: Flat Device Trees manipulation library
 Group: System/Libraries
+License: GPL-2.0-or-later OR BSD-2-Clause
 
 %description -n libfdt
 This is a library containing functions for manipulating Flat Device
@@ -118,6 +118,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Sun Dec 15 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt1
+- 1.5.1 release
+
 * Sat Jun 01 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.0.0.20.2431-alt1
 - v1.5.0-20-g243176c
 - build without python
