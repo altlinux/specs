@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20191021
+Version: 20191212
 Release: alt1
 
 Summary: PLATON is a versatile SHELX compatible multipurpose crystallographic tool
-License: Academic non-commercial use only
+License: ALT-Proprietary-PLATON
 Group: Sciences/Chemistry
 
 Url: http://www.platonsoft.nl/platon/
@@ -48,6 +48,7 @@ determination and refinement with a program system called
 'SYSTEM-S'.
 
 ------------------------------------------------------------
+PLATON is free of charge for Academics.
 
 Please note that commecrial users should apply for a license:
 http://www.cryst.chem.uu.nl/platon/pl030000.html
@@ -154,6 +155,9 @@ install -pm644 doc/pl000314_files/* %buildroot%_defaultdocdir/%name/pl000314_fil
 %_defaultdocdir/%name
 
 %changelog
+* Mon Dec 16 2019 Denis G. Samsonenko <ogion@altlinux.org> 20191212-alt1
+- new version
+
 * Fri Oct 25 2019 Denis G. Samsonenko <ogion@altlinux.org> 20191021-alt1
 - new version
 
