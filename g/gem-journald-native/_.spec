@@ -3,12 +3,12 @@
 
 Name:          gem-%pkgname
 Version:       1.0.11
-Release:       alt1.2
+Release:       alt1.3
 Summary:       systemd-journal logging interface wrapper for ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/journald-native
-%vcs           https://github.com/theforeman/journald-native.git
+Vcs:           https://github.com/theforeman/journald-native.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -73,6 +73,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.11-alt1.3
+- ! spec tag
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.11-alt1.2
 - fixed (!) spec
 

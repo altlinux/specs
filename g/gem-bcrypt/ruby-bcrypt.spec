@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       3.1.13
-Release:       alt1.2
+Release:       alt1.3
 Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords
 License:       MIT
 Group:         Development/Ruby
@@ -14,8 +14,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Provides:      %pkgname-ruby ruby-%pkgname
-Obsoletes:     %pkgname-ruby ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 bcrypt() is a sophisticated and secure hash algorithm designed by The
@@ -75,6 +76,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.13-alt1.3
+- ! spec obsoletes/provides pair
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.13-alt1.2
 - fixed (!) spec
 

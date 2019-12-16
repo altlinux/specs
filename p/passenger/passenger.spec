@@ -3,14 +3,14 @@
 %define        module_package_name apache2-mod_%pkgname
 
 Name:          %pkgname
-Version:       6.0.2
+Version:       6.0.4
 Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нгинкс
 Group:         System/Servers
-License:       other
+License:       MIT
 Url:           https://github.com/phusion/passenger
-%vcs           https://github.com/phusion/passenger.git
+Vcs:           https://github.com/phusion/passenger.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -184,9 +184,13 @@ fi
 %apache2_libexecdir/%mod_name.so
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 6.0.4-alt1
+- ^ 6.0.2 -> 6.0.4
+- ! spec tags
+
 * Fri Jun 28 2019 Pavel Skrylev <majioa@altlinux.org> 6.0.2-alt1
-^ v6.0.2
-^ gemified with Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 4.0.60 -> 6.0.2
 
 * Sun Jul 17 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.60-alt1
 - Update to last 4.0.x release

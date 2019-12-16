@@ -3,7 +3,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.10.5
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPLv2+ and MIT
 Group:         Other
@@ -14,11 +14,15 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       pyagentx-v%pyagentx_version.tar.gz
+Source2:       pcsd
+Source3:       known-hosts
+Patch:         compat.patch
 
 %add_python3_req_skip pyagentx
-Requires:      ruby-pcsd = %version
 Requires:      python3-module-pcs = %version
 Requires:      python3-module-snmp = %version
+Obsoletes:     pcs-pcsd < %EVR
+Provides:      pcs-pcsd = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
@@ -27,6 +31,7 @@ BuildRequires: python3-devel python3-module-setuptools
 
 %description
 Pacemaker/Corosync configuration system with remote access
+Pacemaker/Corosync gui/cli configuration system and daemon
 
 
 %package       -n python3-module-pcs
@@ -34,24 +39,10 @@ Summary:       Python module for pacemaker/corosync gui/cli configuration system
 Group:         Other
 BuildArch:     noarch
 Requires:      %name = %version
-Requires:      ruby-pcsd = %version
-Requires:      pacemaker
+Requires:      pacemaker >= 2.0.3-alt2
 
 %description   -n python3-module-pcs
 Python module for pacemaker/corosync gui/cli configuration system and daemon
-
-
-%package       -n ruby-pcsd
-Summary:       Pacemaker/Corosync cli and gui for configuration system
-Group:         Other
-Requires:      %name = %version
-Requires:      corosync
-Requires:      openssl
-Obsoletes:     pcs-pcsd
-Provides:      pcs-pcsd
-
-%description   -n ruby-pcsd
-Pacemaker/Corosync gui/cli configuration system and daemon
 
 
 %package       -n python3-module-snmp
@@ -59,10 +50,10 @@ Group:         Other
 Summary:       Pacemaker cluster SNMP agent
 License:       GPLv2 or BSD-2-Clause
 Requires:      %name = %EVR
-Requires:      pacemaker
+Requires:      pacemaker >= 2.0.3-alt2
 Requires:      net-snmp
-Obsoletes:     pcs-snmp
-Provides:      pcs-snmp
+Obsoletes:     pcs-snmp < %EVR
+Provides:      pcs-snmp = %EVR
 
 %description   -n python3-module-snmp
 SNMP agent that provides information about pacemaker cluster to the master
@@ -71,7 +62,7 @@ agent (snmpd).
 
 %prep
 %setup
-sed -e "s,vendor/bundle/ruby,/usr/lib/ruby," -i pcs/settings_default.py
+%patch -p1
 sed -e "s,/usr/lib/pcsd/vendor/bundle/ruby,/usr/lib/ruby," -i pcsd/pcsd-ruby.service
 mkdir -p pcs/bundled/tmp
 tar xf %SOURCE1 -C pcs/bundled/tmp
@@ -79,7 +70,7 @@ tar xf %SOURCE1 -C pcs/bundled/tmp
 %build
 make BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
      PYAGENTX_LIB_DIR=%buildroot%_libexecdir/pcs/bundled
-%ruby_build
+%ruby_build --use=pcsd --alias=pcs --join=bin:lib
 
 %install
 mkdir -p %buildroot%_libexecdir/pcs
@@ -96,14 +87,16 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/
      DEST_SYSTEMD_SYSTEM=%buildroot%systemd_unitdir \
 
 install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
+install -Dm 0755 %SOURCE2 %buildroot%_initdir/pcsd
+install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 
 %check
 %ruby_test
 
-%post          -n ruby-pcsd
+%post
 %post_service pcsd
 
-%preun         -n ruby-pcsd
+%preun
 %preun_service pcsd
 
 %post          -n python3-module-snmp
@@ -124,9 +117,8 @@ install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 %exclude %_man8dir/pcs_snmp_agent.*
 %_sysconfdir/bash_completion.d/pcs
 %_libexecdir/pcs/pcs_internal
-
-%files         -n ruby-pcsd
 %_sbindir/pcsd
+%_initdir/pcsd
 %_libexecdir/pcsd
 %_sysconfdir/logrotate.d/pcsd
 %_sysconfdir/pam.d/pcsd
@@ -136,6 +128,7 @@ install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 %_logrotatedir/pcsd.logrotate
 %systemd_unitdir/pcsd.service
 %systemd_unitdir/pcsd-ruby.service
+%_localstatedir/pcsd/known-hosts
 
 %files         -n python3-module-snmp
 %config(noreplace) %_sysconfdir/sysconfig/pcs_snmp_agent
@@ -147,6 +140,11 @@ install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 
 
 %changelog
+* Fri Apr 03 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.5-alt2
+- + proper patch to fix config
+- + pcsd init script
+- + joint pcs and ruby-pcsd
+
 * Wed Mar 18 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.5-alt1
 - ^ 0.10.4 -> 0.10.5 (closes #36898)
 - fixed ! pcsd start (closes #37837)

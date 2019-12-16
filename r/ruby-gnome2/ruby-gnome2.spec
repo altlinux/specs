@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
 Version:       3.4.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -49,18 +49,18 @@ BuildRequires: libXtst-devel
 BuildRequires: libthai-devel
 BuildRequires: libdatrie-devel
 BuildRequires: bzlib-devel
-BuildRequires: ruby-rcairo-devel
 BuildRequires: glib2-devel
 BuildRequires: libgio-devel
 BuildRequires: libpango-devel
 BuildRequires: gst-plugins-devel
 BuildRequires: gcc-c++
+BuildRequires: gem-cairo-devel
 
-BuildRequires: ruby-pkg-config
-BuildRequires: ruby-native-package-installer
-BuildRequires: ruby-rcairo
-BuildRequires: ruby-rake
-BuildRequires: ruby-mechanize
+BuildRequires: gem(pkg-config)
+BuildRequires: gem(native-package-installer)
+#BuildRequires: gem(mechanize)
+BuildRequires: gem-cairo
+BuildRequires: gem-rake
 
 Requires:      gem(atk)
 Requires:      gem(cairo-gobject)
@@ -1134,6 +1134,9 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1.1
+- ! build required package names
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1
 - updated (^) 3.3.8 -> 3.4.1
 

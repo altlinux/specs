@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       0.1.0
-Release:       alt1
+Release:       alt2.1
 Summary:       LibIDN Ruby Bindings
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/deepfryed/idn-ruby
-%vcs           https://github.com/deepfryed/idn-ruby.git
+Vcs:           https://github.com/deepfryed/idn-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -28,6 +28,8 @@ Summary:       Development files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Requires:      libidn-devel
 
 %description   devel
 Development files for %gemname gem.
@@ -58,5 +60,11 @@ Development files for %gemname gem.
 %ruby_includedir/idn*
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt2.1
+- ! spec tags
+
+* Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt2
+- ! spec according to changelog rules
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt1
-+ packaged gem with usage Ruby Policy 2.0
+- + packaged gem with usage Ruby Policy 2.0

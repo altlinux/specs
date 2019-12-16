@@ -2,7 +2,7 @@
 
 Name: libstfl0
 Version: 0.24
-Release: alt6
+Release: alt6.1
 
 %define oname stfl
 
@@ -23,6 +23,7 @@ Patch3: stfl-0.24-alt-warnings.patch
 
 # Automatically added by buildreq on Fri Mar 03 2017
 # optimized out: libncurses-devel libtinfo-devel perl perl-devel python-base python-modules ruby ruby-stdlibs swig-data
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: libncursesw-devel libruby-devel perl-Encode swig
 %{?_with_python: BuildRequires: python-devel}
 
@@ -106,6 +107,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 0.24-alt6.1
+- ! build by adding proper build requires
+
 * Mon Nov 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt6
 - Disabled Python 2 module.
 

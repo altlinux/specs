@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       0.2.2
-Release:       alt2.2
+Release:       alt2.3
 Summary:       A Ruby library for managing Linux process and file capabilities
 License:       MIT
 Group:         Development/Ruby
@@ -17,8 +17,8 @@ BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Cap2 is a Ruby library for managing the POSIX 1003.1e capabilities available in
@@ -79,6 +79,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.2-alt2.3
+- ! spec's obsoletes/provides pair
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.2-alt2.2
 - fixed (!) spec
 

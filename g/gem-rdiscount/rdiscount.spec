@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.2.0.1
-Release:       alt4.2
+Release:       alt4.3
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -12,7 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(ronn)
+#BuildRequires: gem(ronn)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
@@ -98,6 +98,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Fri Apr 03 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.3
+- * minor in build requires
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.2
 - fixed (!) spex
 

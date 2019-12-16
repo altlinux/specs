@@ -3,12 +3,12 @@
 
 Name:          gem-%pkgname
 Version:       1.15.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Headless Webkit driver for Capybara
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/thoughtbot/capybara-webkit
-%vcs           https://github.com/thoughtbot/capybara-webkit.git
+Vcs:           https://github.com/thoughtbot/capybara-webkit.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -77,5 +77,8 @@ export PATH=/usr/share/qt5/bin:$PATH
 
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.15.1-alt1.1
+- ! spec tag
+
 * Thu Sep 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.15.1-alt1
 - + packaged gem with usage Ruby Policy 2.0

@@ -2,13 +2,13 @@
 %define        pkgname oga
 
 Name:          gem-%pkgname
-Version:       2.15
-Release:       alt1.1
+Version:       2.17
+Release:       alt1
 Summary:       Oga is an XML/HTML parser written in Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://gitlab.com/yorickpeterse/oga
-%vcs           https://gitlab.com/yorickpeterse/oga.git
+Vcs:           https://gitlab.com/yorickpeterse/oga.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -20,10 +20,10 @@ BuildRequires: gem(simplecov)
 BuildRequires: gem(kramdown)
 BuildRequires: gem(benchmark-ips) >= 2.0
 BuildRequires: gem(rake-compiler)
-BuildRequires: gem(ruby-ll) >= 2.1
+BuildRequires: gem-ruby-ll >= 2.1
 BuildRequires: gem(ast)
-BuildRequires: gem(ox)
-BuildRequires: gem(nokogiri)
+BuildRequires: gem-ox
+BuildRequires: gem-nokogiri
 BuildRequires: ragel
 BuildRequires: /usr/bin/ruby-ll
 
@@ -93,6 +93,10 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 2.17-alt1
+- ^ 2.15 -> 2.17
+- ! spec tag
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.15-alt1.1
 - ! spec according to changelog rules
 
