@@ -2,7 +2,7 @@
 %def_without system_spdlog
 Name: fuse-cryfs
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -53,6 +53,11 @@ rm -rf vendor/spdlog/
 %__subst "s|spdlog||" src/cpp-utils/CMakeLists.txt
 %endif
 
+# explicitly set python-2
+find . -type f | xargs sed -i \
+	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' \
+	%nil
+
 %build
 %cmake -DBUILD_TESTING=off -DBoost_INCLUDE_DIRS=%_includedir/boost -DBoost_USE_STATIC_LIBS=off -DCMAKE_BUILD_TYPE=RELEASE
 %make_build -C BUILD
@@ -65,6 +70,9 @@ rm -rf vendor/spdlog/
 %_man1dir/*
 
 %changelog
+* Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.10-alt2
+- Rebuilt with boost-1.71.0.
+
 * Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
 - new version 0.9.10 (with rpmrb script)
 
