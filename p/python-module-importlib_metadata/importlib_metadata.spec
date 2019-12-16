@@ -4,10 +4,10 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.23
+Version: 1.3.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
-License: ASL2.0
+License: Apache-2.0
 Group: Development/Python
 BuildArch: noarch
 Url: https://pypi.org/project/importlib-metadata/
@@ -124,6 +124,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/importlib_metadata/
 
 %changelog
+* Mon Dec 16 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 0.23 -> 1.3.0.
+
 * Fri Sep 27 2019 Stanislav Levin <slev@altlinux.org> 0.23-alt1
 - 0.19 -> 0.23.
 

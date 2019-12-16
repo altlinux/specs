@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.14.1
+Version: 3.14.2
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -23,19 +23,6 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python2.7(flaky)
-BuildRequires: python2.7(freezegun)
-BuildRequires: python2.7(pathlib2)
-BuildRequires: python2.7(pip)
-BuildRequires: python2.7(psutil)
-BuildRequires: python2.7(pytest_mock)
-BuildRequires: python2.7(pytest_cov)
-BuildRequires: python2.7(pytest_randomly)
-BuildRequires: python2.7(pytest-xdist)
-BuildRequires: python2.7(virtualenv)
-BuildRequires: python2.7(six)
-BuildRequires: python2.7(toml)
-BuildRequires: python2.7(filelock)
 BuildRequires: python3(flaky)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(pathlib2)
@@ -116,24 +103,16 @@ popd
 %python_install
 
 %check
-sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp %_bindir\/py.test \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+pushd ../python3
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-export PIP_FIND_LINKS=%python_sitelibdir_noarch/virtualenv_support
+export PIP_FIND_LINKS=%python3_sitelibdir_noarch/virtualenv_support
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
 PIP_FIND_LINKS TOX_LIMITED_SHEBANG'
-export TOXENV=py%{python_version_nodots python}
 export TOX_LIMITED_SHEBANG=1
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+export TOXENV=py%{python_version_nodots python3}
 
-export PYTHONPATH=%buildroot%python_sitelibdir_noarch
-%buildroot%_bindir/tox --sitepackages -p auto -o -rv -- -m "not internet"
-
-pushd ../python3
 sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -141,8 +120,6 @@ commands_pre =\
     \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-export TOXENV=py%{python_version_nodots python3}
 %buildroot%_bindir/tox.py3 --sitepackages -p auto -o -rv -- -m "not internet"
 popd
 
@@ -159,6 +136,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Thu Dec 12 2019 Stanislav Levin <slev@altlinux.org> 3.14.2-alt1
+- 3.14.1 -> 3.14.2.
+
 * Fri Nov 15 2019 Stanislav Levin <slev@altlinux.org> 3.14.1-alt1
 - 3.14.0 -> 3.14.1.
 
