@@ -33,8 +33,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.12.5
-Release: alt2
+Version: 5.12.6
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -544,7 +544,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.12.5
+Version: 5.12.6
 __EOF__
 
 # rpm macros
@@ -807,6 +807,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Dec 16 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1
+- new version
+
 * Fri Nov 22 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt2
 - fix python requires
 - fix license tag
