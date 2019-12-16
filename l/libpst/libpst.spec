@@ -1,6 +1,6 @@
 Name: libpst
 Version: 0.6.68
-Release: alt2.1
+Release: alt2.2
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
@@ -82,6 +82,9 @@ Python interface to libpst (for reading Outlook files)
 %patch1 -p1
 
 %build
+# add hack for proper python-2 detection
+export ac_cv_path_PYTHON=$(which python2)
+
 %autoreconf
 %configure \
 	--enable-libpst-shared \
@@ -121,6 +124,9 @@ install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
 %python_sitelibdir/*.so
 
 %changelog
+* Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.68-alt2.2
+- Rebuilt with boost-1.71.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.68-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
