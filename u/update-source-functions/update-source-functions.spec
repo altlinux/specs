@@ -1,6 +1,6 @@
 Name: update-source-functions
 Version: 0.1.10
-Release: alt1
+Release: alt2
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
 License: GPLv3
@@ -9,7 +9,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: python-module-simplejson
+Requires: python3(simplejson)
 
 %description
 This package contains the set of Shell functions intended to help with
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt2
+- Switch to Python 3.
+
 * Thu Jul 10 2014 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt1
 - update_srcdir: Fix: strip 1 path component by default.
 
