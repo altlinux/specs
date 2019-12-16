@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.12.8
+Version: 0.12.9
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -64,7 +64,6 @@ Requires: %name-qt = %version-%release
 %package doc
 Summary:  Documenation for development using %{name}
 Group:	  Development/Documentation
-BuildArch: noarch
 
 %description doc
 %{summary}.
@@ -74,7 +73,11 @@ BuildArch: noarch
 
 %build
 %meson  -Dqt=true \
+%ifnarch %{ix86}
 	-Ddocs=true \
+%else
+	-Ddocs=false \
+%endif
 	-Dstemming=true
 %meson_build
 
@@ -131,6 +134,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Dec 16 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.9-alt1
+- New version.
+
 * Tue Aug 20 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.8-alt1
 - New version.
 
