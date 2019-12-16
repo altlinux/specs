@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.10.0.614.gitc9c510b8
-Release: alt1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -92,7 +92,7 @@ command line interface for XML-RPC Daemon
 %patch -p1
 
 %build
-%add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
+%add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)
 %cmake_insource \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_SKIP_RPATH:BOOL=yes \
@@ -173,6 +173,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Wed Nov 13 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.10.0.614.gitc9c510b8-alt2
+- Fixed build.
+
 * Mon May 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.10.0.614.gitc9c510b8-alt1
 - Build from last commit (Closes: #36783).
 - Change build scheme.
