@@ -3,12 +3,12 @@
 
 Name: qt4-webkit
 Version: 2.3.4
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Group: System/Libraries
 Summary: WebKit library for the Qt4 GUI toolkit
-License: LGPLv2 / GPLv3
+License: GPL-3.0-with-exceptions or LGPL-2.1-with-exceptions
 Url: http://trac.webkit.org/wiki/QtWebKit
 
 Source: qtwebkit-%version.tar
@@ -30,7 +30,7 @@ Patch108: buffer-ranges.patch
 # Automatically added by buildreq on Sat May 16 2015 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer1.0-devel kde4libs libGL-devel libX11-devel libXext-devel libXrender-devel libcloog-isl4 libdbusmenu-qt2 libfreetype-devel libgio-devel libgnome-keyring libgpg-error libgst-plugins1.0 libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-location libqt4-network libqt4-opengl libqt4-script libqt4-sensors libqt4-sql libqt4-svg libqt4-test libqt4-xml libqt4-xmlpatterns libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-encodings python-modules-xml ruby ruby-stdlibs xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: flex gcc-c++ git-core gperf gst-plugins1.0-devel libdb4-devel libjpeg-devel libsqlite3-devel libsubversion-auth-gnome-keyring libsubversion-auth-kwallet libudev-devel libwebp-devel libxslt-devel perl-Term-ANSIColor phonon-devel python-module-google python-modules-json qt4-mobility-devel rpm-build-ruby subversion zlib-devel-static
-BuildRequires: flex gcc-c++ gperf
+BuildRequires: rpm-build-python flex gcc-c++ gperf
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-app-1.0)
 %endif
@@ -73,6 +73,9 @@ Conflicts: qt4-devel <= 4.8.6-alt4
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
+
+mkdir bin
+ln -s %__python bin/python
 
 %build
 %remove_optflags '-g'
@@ -130,6 +133,10 @@ done
 %_pkgconfigdir/QtWebKit.pc
 
 %changelog
+* Mon Dec 16 2019 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt8
+- fix to build with new python2
+- update license tag
+
 * Tue Jun 25 2019 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt7
 - simplify features
 
