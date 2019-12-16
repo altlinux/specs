@@ -1,6 +1,6 @@
 Name: gcc-common
 Version: 1.4.24
-Release: alt2
+Release: alt3
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL-2.0-or-later
@@ -149,7 +149,7 @@ By installing this package, you immediately run the test for gcc_wrapper.
 
 %files checkinstall
 
-%post checkinstall
+%pre checkinstall
 %{?_gcc_version:export GCC_VERSION=%_gcc_version}
 gcc_wrapper --version
 gcc --version
@@ -197,6 +197,10 @@ cpp --version
 %_bindir/gnat*
 
 %changelog
+* Mon Dec 16 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.24-alt3
+- checkinstall: changed %%post to %%pre, to workaround
+  rpm > 4.0.4 that ignores %%post exit status.
+
 * Mon Nov 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.24-alt2
 - Packaged gdc wrapper.
 
