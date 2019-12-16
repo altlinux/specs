@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 # clang 4.0.1 is not supported, only missing clang 3.9
-%def_with ClangCodeModel
+%def_without ClangCodeModel
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.9.2
-Release: alt4
+Version: 4.11.0
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
-License: GPLv3 with exceptions
+License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
 Group:   Development/Tools
 
 Url:     http://qt-project.org/wiki/Category:Tools::QtCreator
@@ -33,6 +33,7 @@ Provides: qbs = 1.14.0
 Obsoletes: qbs < 1.14.0
 
 BuildRequires(pre): qt5-base-devel >= 5.9.0
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: qt5-designer >= 5.9.0
 BuildRequires: qt5-script-devel >= 5.9.0
@@ -102,6 +103,10 @@ sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
 	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
+# Use Python3 for Python scripts
+subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
+	src/shared/qbs/src/3rdparty/python/bin/dmgbuild \
+	src/libs/qt-breakpad/qtbreakpadsymbols
 
 %build
 export QTDIR=%_qt5_prefix
@@ -150,8 +155,14 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Dec 16 2019 Andrey Cherepanov <cas@altlinux.org> 4.11.0-alt1
+- New version.
+- Build without ClangCodeModel due to the lack of LLVM 8.x in repository.
+- Fix license.
+- Set python3 as interpreter of Python scripts.
+
 * Fri Nov 08 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt4
-- Add to requirements qt5-translations and qt5-tools.
+- Add to requirements qt5-tran slations and qt5-tools.
 
 * Fri Nov 01 2019 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt3
 - Add Qt5 build environment to build Qt project (ALT #37403).
