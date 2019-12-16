@@ -12,12 +12,12 @@
 %def_with system_tzdata
 
 Name: libical
-Version: 3.0.6
+Version: 3.0.7
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
-License: LGPL2.1+/MPL-1.0
+License: LGPL-2.1-only or MPL-2.0
 Url: https://github.com/%name
 
 %if_disabled snapshot
@@ -195,6 +195,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Mon Dec 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
+- 3.0.7
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
 - 3.0.6
 
