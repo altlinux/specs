@@ -1,9 +1,9 @@
 Name: tintii
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: A photo editor for colour-select effects
-License: BSD (revised)
+License: GPL-2.0
 Group: Graphics
 
 Url: http://www.indii.org/software/tintii
@@ -66,6 +66,9 @@ install -pDm644 %SOURCE3 %buildroot%_miconsdir/%name.png
 %doc README
 
 %changelog
+* Mon Dec 16 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt2
+- Fixed license.
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 2.9.0-alt1
 - new version (watch file uupdate)
 
