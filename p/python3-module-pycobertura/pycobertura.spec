@@ -3,12 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.10.5
-Release: alt2
+Release: alt3
+
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/pycobertura/
 
@@ -19,11 +20,6 @@ Patch: pycobertura-0.10.5-Fix-Pytest4.x-compatibility-error.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(click.testing)
-BuildRequires: python2.7(colorama)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(pytest_cov)
-BuildRequires: python2.7(tabulate)
 BuildRequires: python3(click.testing)
 BuildRequires: python3(colorama)
 BuildRequires: python3(mock)
@@ -32,17 +28,10 @@ BuildRequires: python3(tabulate)
 BuildRequires: python3(tox)
 %endif
 
-%py_provides %oname
-
-%description
-A Cobertura coverage report parser written in Python.
-
-%package -n python3-module-%oname
-Summary: A Cobertura coverage report parser written in Python
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 A Cobertura coverage report parser written in Python.
 
 %prep
@@ -54,26 +43,11 @@ sed -i 's/,\?<.*//g' test-requirements.txt
 grep -qsF 'setuptools_git' setup.py || exit 1
 sed -i -e 's|setuptools_git|setuptools|g' setup.py
 
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-
-%python_install
 
 %check
 export LC_ALL=en_US.UTF-8
@@ -81,27 +55,24 @@ sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc *.md
 %_bindir/*
-%exclude %_bindir/*.py3
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
-%doc *.md
-%_bindir/*.py3
 %python3_sitelibdir/*
 
+
 %changelog
+* Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.10.5-alt3
+- build for python2 disabled
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.10.5-alt2
 - Fixed testing against Pytest 5.
 
