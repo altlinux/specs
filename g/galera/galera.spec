@@ -3,7 +3,7 @@
 %def_enable system_asio
 
 Name: galera
-Version: 26.4.2
+Version: 26.4.3
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -111,6 +111,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Mon Dec 16 2019 Alexey Shabalin <shaba@altlinux.org> 26.4.3-alt1
+- 26.4.3
+
 * Fri Aug 09 2019 Alexey Shabalin <shaba@altlinux.org> 26.4.2-alt1
 - 26.4.2
 
@@ -123,20 +126,20 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 * Wed Nov 28 2018 Alexey Shabalin <shaba@altlinux.org> 25.3.24-alt1
 - 25.3.24
 
-* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 25.3.23-alt2%ubt
+* Fri Aug 31 2018 Alexey Shabalin <shaba@altlinux.org> 25.3.23-alt2
 - rebuild with openssl-1.1
 - build with system asio-devel
 
-* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 25.3.23-alt1%ubt
+* Wed Jul 11 2018 Alexey Shabalin <shaba@altlinux.ru> 25.3.23-alt1
 - 25.3.23
 
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 25.3.22-alt2%ubt
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 25.3.22-alt2
 - NMU: rebuilt with boost-1.67.0
 
-* Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.22-alt1%ubt
+* Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.22-alt1
 - 25.3.22
 
-* Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.20-alt1%ubt
+* Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.20-alt1
 - 25.3.20
 
 * Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 25.3.19-alt1
