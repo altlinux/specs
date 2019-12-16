@@ -1,9 +1,11 @@
 %def_enable snapshot
 
-%define ver_major 0.1
-%define soname %ver_major.1
+%define ver_major 0.2
+%define soname 0
+%define xdg_name org.gnome.Portal
 
 %def_enable gtk_doc
+%def_enable test
 
 Name: libportal
 Version: %ver_major
@@ -25,6 +27,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver gtk-doc
+%{?_enable_test:BuildRequires: libgtk+3-devel pkgconfig(gstreamer-audio-1.0)}
 
 %description
 %name provides GIO-style async APIs for most Flatpak portals.
@@ -50,11 +53,22 @@ Conflicts: %name < %EVR
 
 This package provides development documentations for %name.
 
+%package tests
+Summary: Tests for %name
+Group: Development/Other
+Requires: %name = %EVR
+Requires: gst-plugins-base1.0
+
+%description tests
+This package provides portal-test application for checking functionality
+of the installed %name.
+
+
 %prep
 %setup
 
 %build
-%meson
+%meson %{?_enable_test:-Dbuild-portal-test=true}
 %meson_build
 
 %install
@@ -69,6 +83,7 @@ This package provides development documentations for %name.
 %doc README*
 
 %files devel
+
 %_includedir/%name
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
@@ -78,8 +93,19 @@ This package provides development documentations for %name.
 %_datadir/gtk-doc/html/%name
 %endif
 
+%if_enabled test
+%files tests
+%_bindir/portal-test
+%_desktopdir/%{xdg_name}Test.desktop
+%_datadir/dbus-1/services/org.gnome.PortalTest.service
+%_datadir/%{xdg_name}Test/
+%endif
 
 %changelog
+* Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.2-alt1
+- 0.2
+- new -tests subpackage
+
 * Thu Nov 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.1-alt1
 - 0.1
 

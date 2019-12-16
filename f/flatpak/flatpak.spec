@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.5.0
+Version: 1.5.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 %define flatpak_user %name
 
 %define ostree_ver 2018.9
-%define bwrap_ver 0.2.1
+%define bwrap_ver 0.4.0
 %define libarchive_ver 2.8.0
 
 Requires: lib%name = %version-%release
@@ -156,6 +156,10 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
 %_prefix/lib/systemd/user-environment-generators/60-%name
+%_prefix/lib/systemd/user/flatpak-oci-authenticator.service
+%_libexecdir/%name-oci-authenticator
+%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
+%_datadir/dbus-1/services/org.flatpak.Authenticator.Oci.service
 %_man5dir/*
 %doc NEWS README.md
 %{?_enable_docs:%doc %_docdir/%name/}
@@ -174,6 +178,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Sun Nov 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
