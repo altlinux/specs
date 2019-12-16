@@ -6,8 +6,8 @@
 #
 
 Name: rpm-build-vm
-Version: 1.4
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -137,6 +137,9 @@ vm-run --verbose --overlay=ext4 uname
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.1-alt1
+- Quickfix of 1.4 (MAXMEM handling).
+
 * Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4-alt2
 - Optimize spec.
 - Add checkinstall package.
