@@ -41,7 +41,7 @@
 # name-version-release
 %define rname licq
 %define ver 1.8.2
-%define rlz alt2
+%define rlz alt3
 
 %define common_summary Multi-protocol IM-client (icq,jabber,msn) written on C++
 
@@ -679,6 +679,9 @@ popd
 
 ########################################################
 %changelog
+* Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.2-alt3
+- Rebuilt with boost-1.71.0.
+
 * Tue Sep 18 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.8.2-alt2
 - rebuilt without ssl
 - added noarch for devel subpackage
