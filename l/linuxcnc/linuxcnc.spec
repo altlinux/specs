@@ -6,7 +6,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.14
-Release: alt3
+Release: alt4
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -149,12 +149,19 @@ cp %SOURCE1 src/rtapi/sys/io.h
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
 
+# explicitly set python-2
+find . -type f | xargs sed -i \
+	-e '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' \
+	-e '1s:^#!/usr/bin/python$:#!/usr/bin/python%__python_version:' \
+	%nil
+
 %build
 pushd src
 %autoreconf
 %configure \
     --enable-non-distributable=yes \
     --with-realtime=uspace \
+    --with-python=$(which python2) \
     %if_with docs
     --enable-build-documentation=pdf \
     %endif
@@ -278,6 +285,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.14-alt4
+- Rebuilt with boost-1.71.0.
+
 * Tue Oct 01 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.14-alt3
 - Added ExclusiveArch tag to limit architectures to aarch64, alpha, %%arm,
   ia64, %%ix86, and x86_64.
