@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -121,6 +121,9 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
+- Limit 32-bit system memory.
+
 * Thu Dec 12 2019 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
 - Initialize cpu and mem to the max, support share_network=1,
   handle multiple kernels using --kernel= option.
