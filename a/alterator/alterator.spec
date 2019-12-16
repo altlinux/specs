@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.4
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 5.4-alt2
+- Fixed failing tests: Explicitly set ru_RU.UTF-8 locale.
+
 * Fri Jun 07 2019 Paul Wolneykien <manowar@altlinux.org> 5.4-alt1
 - Added new type: ipv4-address-range ("192.168.0.1-255", etc.).
 - Added new type: ipv4-address-range-list ("192.168.0.1-255
