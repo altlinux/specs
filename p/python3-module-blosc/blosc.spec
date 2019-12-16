@@ -1,32 +1,37 @@
+%define _unpackaged_files_terminate_build 1
 %define oname blosc
 
-%def_with python3
+%def_without check
+%def_with docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.5.1
-Release: alt2
+Release: alt3
+
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://python-blosc.blosc.org/
 
 # https://github.com/Blosc/python-blosc.git
 Source: %name-%version.tar
-Patch0: %name-%version-arm.patch
+Patch0: python-module-blosc-%version-arm.patch
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: libblosc-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-nose python-module-numpy-testing python-module-pytest
-BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-numpydoc
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-numpy-testing python3-module-pytest
+BuildRequires: libblosc-devel
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-numpydoc
+%endif
+%if_with check
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pytest
 %endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 Blosc (http://blosc.org) is a high performance compressor optimized for
@@ -42,7 +47,7 @@ This is a Python package that wraps it.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -59,9 +64,10 @@ This is a Python package that wraps it.
 
 This package contains tests for %oname.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Blosc (http://blosc.org) is a high performance compressor optimized for
@@ -76,43 +82,6 @@ regular-spaced values, etc.
 This is a Python package that wraps it.
 
 This package contains pickles for %oname.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: A Python wrapper for the extremely fast Blosc compression library
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Blosc (http://blosc.org) is a high performance compressor optimized for
-binary data. It has been designed to transmit data to the processor
-cache faster than the traditional, non-compressed, direct memory fetch
-approach via a memcpy() OS call.
-
-Blosc works well for compressing numerical arrays that contains data
-with relatively low entropy, like sparse data, time series, grids with
-regular-spaced values, etc.
-
-This is a Python package that wraps it.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Blosc (http://blosc.org) is a high performance compressor optimized for
-binary data. It has been designed to transmit data to the processor
-cache faster than the traditional, non-compressed, direct memory fetch
-approach via a memcpy() OS call.
-
-Blosc works well for compressing numerical arrays that contains data
-with relatively low entropy, like sparse data, time series, grids with
-regular-spaced values, etc.
-
-This is a Python package that wraps it.
-
-This package contains tests for %oname.
 %endif
 
 %prep
@@ -120,75 +89,58 @@ This package contains tests for %oname.
 %ifnarch %ix86 x86_64
 %patch0 -p1
 %endif
-%if_with python3
-cp -fR . ../python3
+
+%if_with docs
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug \
-	--blosc=%prefix
-
-%if_with python3
-pushd ../python3
-%python3_build_debug \
-	--blosc=%prefix
-popd
-%endif
+%python3_build_debug --blosc=%prefix
 
 %install
-%python_install \
-	--blosc=%prefix
+%python3_install --blosc=%prefix
 
-%if_with python3
-pushd ../python3
-%python3_install \
-	--blosc=%prefix
-popd
-%endif
-
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc pickle
 %make -C doc html
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
+%if_with check
 %check
-cd ~
-export PYTHONPATH=%buildroot%python_sitelibdir
-nosetests -v --with-doctest %oname
-%if_with python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
 nosetests3 -v --with-doctest %oname
 %endif
 
 %files
-%doc *.rst doc/_build/html bench
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/test*
+%doc *.rst bench
+%if_with docs
+%doc doc/_build/html
+%endif
+%python3_sitelibdir/*
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
+%endif
+%exclude %python3_sitelibdir/*/test*
 
 %files tests
-%python_sitelibdir/*/test*
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst doc/_build/html bench
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+
+%if_with docs
+%files pickles
+%python3_sitelibdir/*/pickle
 %endif
 
+
 %changelog
+* Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.1-alt3
+- build for python2 disabled
+
 * Tue May 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt2
 - fixed build on non-x86
 
