@@ -1,12 +1,12 @@
 %def_enable snapshot
 
 Name: zam-plugins
-Version: 3.11
+Version: 3.12
 Release: alt1
 
 Summary: A collection of LV2/LADSPA/JACK audio plugins
 Group: Sound
-License: GPLv2+ and ISC
+License: GPL-2.0-only and ISC
 Url: http://www.zamaudio.com/
 
 %if_disabled snapshot
@@ -77,7 +77,7 @@ rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
 
 %files
 %_bindir/*
-%doc README.md
+%doc README.md NOTICE.*
 
 %files -n lv2-zam-plugins
 %_libdir/lv2/*
@@ -85,9 +85,12 @@ rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
 
 %files -n ladspa-zam-plugins
 %_libdir/ladspa/*
-%doc README.md
+%doc README.md NOTICE.*
 
 %changelog
+* Mon Dec 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.12-alt1
+- 3.12
+
 * Wed Jul 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.11-alt1
 - updated to 3.11-7-gd211bff
 
