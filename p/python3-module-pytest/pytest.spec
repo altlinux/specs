@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.1
+Version: 5.3.2
 Release: alt1
 
 Summary: Python test framework
@@ -109,15 +109,17 @@ tox.py3 --sitepackages -v
 %files
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test3
-%python3_sitelibdir/pytest.py
+%python3_sitelibdir/pytest/
 %python3_sitelibdir/_pytest/
-%python3_sitelibdir/__pycache__/
 %python3_sitelibdir/pytest-*.egg-info/
 
 %files -n pytest3
 %_bindir/pytest3
 
 %changelog
+* Mon Dec 16 2019 Stanislav Levin <slev@altlinux.org> 5.3.2-alt1
+- 5.3.1 -> 5.3.2.
+
 * Tue Nov 26 2019 Stanislav Levin <slev@altlinux.org> 5.3.1-alt1
 - 5.2.4 -> 5.3.1.
 

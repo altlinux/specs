@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.2.2
-Release: alt4
+Release: alt5
 Summary: pytest fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -29,15 +29,6 @@ BuildRequires: python-module-sphinx_py3doc_enhanced_theme
 BuildRequires: git-core
 BuildRequires: python3(tox)
 
-BuildRequires: python2.7(aspectlib)
-BuildRequires: python2.7(cpuinfo)
-BuildRequires: python2.7(elasticsearch)
-BuildRequires: python2.7(freezegun)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(pathlib)
-BuildRequires: python2.7(pygal)
-BuildRequires: python2.7(pytest-xdist)
-BuildRequires: python2.7(statistics)
 BuildRequires: python3(aspectlib)
 BuildRequires: python3(cpuinfo)
 BuildRequires: python3(elasticsearch)
@@ -147,13 +138,11 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
 -e '/^setenv[ ]*=$/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}-nocov,\
-py%{python_version_nodots python3}-nocov
-tox.py3 --sitepackages -p auto -o -rv
+export TOXENV=py%{python_version_nodots python3}-nocov
+tox.py3 --sitepackages -rv
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -178,6 +167,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %endif
 
 %changelog
+* Tue Dec 17 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt5
+- Fixed testing against Pytest 5.3.2.
+
 * Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt4
 - Fixed testing against Pytest 5.2.
 
