@@ -1,17 +1,17 @@
 Name: blas
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 Version: 3.9.2
-Release: alt1
+Release: alt2
 Group: System/Libraries
 URL: http://www.netlib.org/blas/
-License: Public Domain
+License: ALT-Public-Domain
 Summary: Basic Linear Algebra Reference implementation
 
 Source: %name-%version.tar
 Patch0: make-libdir.patch
 Patch1: x86-32-do-not-optimize.patch
 
-BuildRequires: gcc-fortran texlive-latex-recommended
+BuildRequires: gcc-fortran texlive-dist texlive-latex-recommended
 
 %description
 Basic Linear Algebra Reference implementation.
@@ -153,5 +153,10 @@ install -m0644 -t %buildroot%_man3dir man/man*/*.3
 %doc debian/patched-docs/cinterface.pdf
 
 %changelog
+* Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 3.9.2-alt2
+- Fixed the License tag: ALT-Public-Domain.
+- Fix: Rqeuire texlive-dist to fix can't find file 'dehypht.tex'
+  error.
+
 * Tue Jan 17 2012 Paul Wolneykien <manowar@altlinux.ru> 3.9.2-alt1
 - Initial build for ALT Linux. Based on the Ubuntu package.
