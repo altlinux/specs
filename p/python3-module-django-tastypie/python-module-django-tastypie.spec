@@ -1,39 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name django-tastypie
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 0.14.2
-Release: alt1
-Group: Development/Python
-License: BSD License
+Release: alt2
+
 Summary: Creating delicious APIs for Django apps since 2010
+License: BSD License
+Group: Development/Python3
 URL: https://github.com/toastdriven/django-tastypie.git
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires: python3-module-sphinx
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
 %description
-Creating delicious APIs for Django apps since 2010
-There are other, better known API frameworks out there for Django. You need to
-assess the options available and decide for yourself. That said, here are some
-common reasons for tastypie.
-
-%package -n python3-module-%module_name
-Summary: Creating delicious APIs for Django apps since 2010
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 Creating delicious APIs for Django apps since 2010
 There are other, better known API frameworks out there for Django. You need to
 assess the options available and decide for yourself. That said, here are some
@@ -55,56 +38,38 @@ This package contains documentation for %module_name.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 
 %files
 %doc AUTHORS LICENSE README.rst TODO
 %doc BACKWARDS-INCOMPATIBLE.txt CONTRIBUTING
-%python_sitelibdir/tastypie*
-%python_sitelibdir/django_tastypie*
+%python3_sitelibdir/tastypie*
+%python3_sitelibdir/django_tastypie*
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%module_name
-%doc AUTHORS LICENSE README.rst TODO
-%doc BACKWARDS-INCOMPATIBLE.txt CONTRIBUTING
-%python3_sitelibdir/tastypie*
-%python3_sitelibdir/django_tastypie*
-%endif
 
 %changelog
+* Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.14.2-alt2
+- build for python2 disabled
+
 * Tue Jul 16 2019 Grigory Ustinov <grenka@altlinux.org> 0.14.2-alt1
 - Build new version.
 
