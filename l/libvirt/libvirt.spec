@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _vpath_builddir %_target_platform
 
 # like subst_with, but replacing '_' with '-'
 %define subst_with_dash() %{expand:%%(echo '%%{subst_with %1}' | sed 's/_/-/g')}
@@ -179,7 +180,7 @@
 %endif
 
 Name: libvirt
-Version: 5.8.0
+Version: 5.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -233,7 +234,7 @@ Requires: %name-libs = %EVR
 %{?_with_numactl:BuildRequires: libnuma-devel}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_phyp:BuildRequires: libssh2-devel}
-%{?_with_netcf:BuildRequires: netcf-devel}
+%{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
 %{?_with_esx:BuildRequires: libcurl-devel}
 %{?_with_hyperv:BuildRequires: libwsman-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
@@ -249,6 +250,7 @@ BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: libacl-devel
+BuildRequires: glib2-devel >= 2.48
 BuildRequires: perl-Pod-Parser perl-XML-XPath
 BuildRequires: libxml2-devel xml-utils xsltproc
 BuildRequires: python3 python3-devel
@@ -792,35 +794,14 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
 
-# Nightly edk2.git-ovmf-x64
-LOADERS="%_datadir/edk2.git/ovmf-x64/OVMF_CODE-pure-efi.fd:%_datadir/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd"
-# Nightly edk2.git-ovmf-ia32
-LOADERS="$LOADERS:%_datadir/edk2.git/ovmf-ia32/OVMF_CODE-pure-efi.fd:%_datadir/edk2.git/ovmf-ia32/OVMF_VARS-pure-efi.fd"
-# Nightly edk2.git-aarch64
-LOADERS="$LOADERS:%_datadir/edk2.git/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2.git/aarch64/vars-template-pflash.raw"
-# Nightly edk2.git-arm
-LOADERS="$LOADERS:%_datadir/edk2.git/arm/QEMU_EFI-pflash.raw:%_datadir/edk2.git/arm/vars-template-pflash.raw"
-
-# edk2-ovmf, x86_64
-LOADERS="$LOADERS:%_datadir/edk2/ovmf/OVMF_CODE.fd:%_datadir/edk2/ovmf/OVMF_VARS.fd"
-# edk2-ovmf, x86_64, with Secure Boot
-LOADERS="$LOADERS:%_datadir/edk2/ovmf/OVMF_CODE.secboot.fd:%_datadir/edk2/ovmf/OVMF_VARS.secboot.fd"
-# edk2-ovmf-ia32
-LOADERS="$LOADERS:%_datadir/edk2/ovmf-ia32/OVMF_CODE.fd:%_datadir/edk2/ovmf-ia32/OVMF_VARS.fd"
-# edk2-ovmf-ia32, with Secure Boot
-LOADERS="$LOADERS:%_datadir/edk2/ovmf-ia32/OVMF_CODE.secboot.fd:%_datadir/edk2/ovmf-ia32/OVMF_VARS.fd"
-# edk2-aarch64
-LOADERS="$LOADERS:%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw:%_datadir/edk2/aarch64/vars-template-pflash.raw"
-# edk2-arm
-LOADERS="$LOADERS:%_datadir/edk2/arm/QEMU_EFI-pflash.raw:%_datadir/edk2/arm/vars-template-pflash.raw"
-
-%define with_loader_nvram $LOADERS
-
 ./bootstrap --no-git --gnulib-srcdir=gnulib-%name-%version
+%define _configure_script ../configure
+mkdir %_vpath_builddir
+pushd %_vpath_builddir
 %configure \
+		--enable-dependency-tracking \
 		--with-runstatedir=%_runtimedir \
 		--disable-static \
-		--disable-rpath \
 		--with-packager-version="%release" \
 		--with-init-script=systemd \
 		--with-qemu-user=%qemu_user \
@@ -870,17 +851,17 @@ LOADERS="$LOADERS:%_datadir/edk2/arm/QEMU_EFI-pflash.raw:%_datadir/edk2/arm/vars
 		%{subst_with audit} \
 		%{subst_with_dash driver_modules} \
 		%{subst_with dtrace} \
-		%{subst_with_dash wireshark} \
 		%{subst_with_dash bash_completion} \
 		%{subst_with_dash nss_plugin} \
-		--with-loader-nvram=%with_loader_nvram \
 		%{subst_with sasl}
 
-
 %make_build
+popd
 
 %install
+pushd %_vpath_builddir
 %makeinstall_std
+popd
 
 # Install sysv init scripts
 %if_with libvirtd
@@ -963,7 +944,9 @@ rm -rf %buildroot%_man7dir
 %endif
 
 %check
+pushd %_vpath_builddir
 %make_build check VIR_TEST_DEBUG=1 ||:
+popd
 
 %pre login-shell
 %_sbindir/groupadd -r -f virtlogin
@@ -1400,6 +1383,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Dec 16 2019 Alexey Shabalin <shaba@altlinux.org> 5.10.0-alt1
+- 5.10.0
+
 * Mon Oct 14 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.0-alt1
 - 5.8.0
 
