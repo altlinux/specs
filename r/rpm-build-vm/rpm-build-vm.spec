@@ -7,7 +7,7 @@
 
 Name: rpm-build-vm
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -49,6 +49,15 @@ than fakeroot.
 
 This is similar to multiple vm scripts, virtme, vido, and eudyptula-boot.
 
+%package checkinstall
+Summary: Checkinstall for vm-run
+Group: Development/Other
+BuildArch: noarch
+PreReq: %name = %EVR
+
+%description checkinstall
+Run checkinstall tests for vm-run.
+
 %prep
 %setup
 
@@ -61,8 +70,7 @@ install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
 %files
 %_bindir/vm-run
 %_sbindir/vm-init
-%_libexecdir/%name/sbin/init-bin
-%_libexecdir/%name/config.mk
+%_libexecdir/%name
 
 %post
 # We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
@@ -73,6 +81,7 @@ ls /boot/vmlinuz-* | while read KERN; do
 	echo "Generating initrd for $KERN"
 	make-initrd --no-checks --config=%_libexecdir/%name/config.mk --kernel=$KVER
 done
+rm -rf /tmp/make-initrd.*
 
 # Fix permissions to boot the installed kernel
 (
@@ -116,11 +125,22 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 # endif for QEMU un-supported arches
 %endif
 
+%files checkinstall
+
+%pre checkinstall
+set -ex
+vm-run --verbose uname
+vm-run --verbose --overlay=ext4 uname
+
 %pre
 # Only allow to install inside of hasher.
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4-alt2
+- Optimize spec.
+- Add checkinstall package.
+
 * Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
 - Limit 32-bit system memory.
 
