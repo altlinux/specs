@@ -1,9 +1,9 @@
 Name: supertux2
-Version: 0.6.0
-Release: alt2.1
+Version: 0.6.1
+Release: alt1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
-License: GPLv3
+License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
 Group: Games/Arcade
 Url: https://www.supertux.org/
 
@@ -16,14 +16,12 @@ Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
-Patch: supertux2-alt-fix-translations.patch
-
 Requires: %name-data = %version-%release
 
 # Automatically added by buildreq on Mon Oct 01 2012 (-bi)
 # WTF? vorbis-tools? really?
 BuildPreReq: cmake rpm-macros-cmake
-BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel
+BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel libfribidi-devel
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -52,7 +50,6 @@ This is package contains data files for supertux2.
 
 %prep
 %setup -n SuperTux-v%version-Source
-%patch -p2
 
 %build
 %cmake_insource \
@@ -95,6 +92,10 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Dec 16 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.1-alt1
+- New version (0.6.1) with rpmgs script.
+- Updated License in spec.
+
 * Tue Dec 25 2018 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt2.1
 - Fixed Russian translations in settings
 
