@@ -6,11 +6,11 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
-License: %gpl2plus, %fdl
+License: GPLv2+ and LGPLv2+ and MIT
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-desktop
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -23,7 +23,7 @@ Requires: icon-theme-hicolor
 # use pnp.ids from hwdatabase package
 Requires: hwdatabase >= 0.3.31-alt1
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+BuildPreReq: rpm-build-gnome
 
 # From configure.in
 BuildPreReq: intltool >= 0.35
@@ -53,7 +53,6 @@ for the Cinnamon desktop.
 %package -n %name-schemas
 Summary: A collection of GSettings schemas for Cinnamon
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
 BuildArch: noarch
 
 %description -n %name-schemas
@@ -62,7 +61,6 @@ A collection of GSettings schemas for Cinnamon
 %package -n %name-data
 Summary: Data files for Cinnamon desktop libraries
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
 
 %description -n %name-data
 Data files for Cinnamon desktop libraries
@@ -70,7 +68,6 @@ Data files for Cinnamon desktop libraries
 %package -n lib%name
 Summary: Cinnamon desktop core libraries
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
 Requires: %name-schemas
 Requires: %name-data
 
@@ -81,7 +78,6 @@ Cinnamon desktop libraries.
 Summary: Cinnamon desktop development libraries and includes
 Group: Development/GNOME and GTK+
 Requires: lib%name = %version-%release
-License: %lgpl2plus, %fdl
 
 %description -n lib%name-devel
 Cinnamon desktop libraries and header files for creating GNOME applications.
@@ -91,7 +87,6 @@ Cinnamon desktop libraries and header files for creating GNOME applications.
 Summary: Cinnamon desktop develop libraries and includes
 Group: Development/GNOME and GTK+
 Requires: lib%name-devel = %version-%release
-License: %lgpl2plus
 
 %description -n lib%name-devel-static
 Cinnamon desktop static libraries for creating Cinnamon applications.
@@ -159,6 +154,10 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue Dec 17 2019 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
+- 4.4.1
+- fix license tag
+
 * Tue Nov 19 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

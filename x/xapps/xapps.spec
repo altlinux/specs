@@ -3,7 +3,7 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -182,6 +182,9 @@ XAppStatusIcon applet for mate panel
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Tue Dec 17 2019 Vladimir Didenko <cow@altlinux.org> 1.6.8-alt1
+- 1.6.8
+
 * Wed Dec 11 2019 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt1
 - 1.6.7
 
