@@ -1,41 +1,22 @@
-%define module_name django-json-rpc
+%define oname django-json-rpc
 
-%define git_commit 0d98fb
-
-%def_with python3
-
-Name: python-module-%module_name
-Version: 0.6.2
-Release: alt2.git%git_commit.2
+Name: python3-module-%oname
+Version: 0.7.1
+Release: alt1
 
 Summary: Simple Reference JSON-RPC Implementation for Django
-
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://github.com/samuraisam/django-json-rpc
-Packager: Denis Klimov <zver@altlinux.org>
+BuildArch: noarch
 
 # https://github.com/samuraisam/django-json-rpc.git
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-%setup_python_module %module_name
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
 
 
 %description
-Simple Reference JSON-RPC Implementation for Django
-
-%package -n python3-module-%module_name
-Summary: Simple Reference JSON-RPC Implementation for Django
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 Simple Reference JSON-RPC Implementation for Django
 
 %prep
@@ -46,42 +27,26 @@ sed -i -e "s/packages=\['jsonrpc'\]/packages=['django_jsonrpc']/" setup.py
 sed -i -e "s/package_data={'jsonrpc'/package_data={'django_jsonrpc'/" setup.py
 mv jsonrpc django_jsonrpc
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc README.*
-%python_sitelibdir/django_jsonrpc*
-%python_sitelibdir/django_json_rpc*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc README.*
 %python3_sitelibdir/django_jsonrpc*
 %python3_sitelibdir/django_json_rpc*
-%endif
+
 
 %changelog
+* Tue Dec 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt1
+- Version updated to 0.7.1
+- build for python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.2-alt2.git0d98fb.2
 - (NMU) rebuild with python3.6
 
