@@ -2,8 +2,8 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -82,6 +82,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man8/slick-greeter.8.*
 
 %changelog
+* Tue Dec 17 2019 Vladimir Didenko <cow@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Wed Dec 11 2019 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt2
 - add orca to requirements (closes: #37604)
 
