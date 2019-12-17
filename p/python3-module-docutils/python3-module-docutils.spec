@@ -1,130 +1,49 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname docutils
-%def_without python3
-%def_disable check
-
+%def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.14
-Release: alt3
-%setup_python_module %oname
-Name: %packagename
+Version: 0.15.2
+Release: alt1
+Name: python3-module-%oname
 License: public domain, Python, BSD, GPL (see COPYING.txt)
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 
 URL: http://docutils.sourceforge.net/
-
-# git://repo.or.cz/docutils.git
-Source: %oname-%version.tar
-Patch: docutils-ALT-disable_assert.patch
-
-Conflicts: Zope-docutils
-Conflicts: python-module-docutils-compat
-Obsoletes: python-module-docutils-compat
-
-%if_with python3
+# https://pypi.org/project/docutils/
+Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
+BuildRequires: python3-devel
 %add_python3_req_skip pygments
 %add_python3_req_skip pygments.formatter
-%endif
-%add_python_req_skip pygments
 
-%description
+%description 
 Docutils is a modular system for processing documentation
 into useful formats, such as HTML, XML, and LaTeX.  For
 input Docutils supports reStructuredText, an easy-to-read,
 what-you-see-is-what-you-get plaintext markup syntax.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Docutils -- Python 3 Documentation Utilitie
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Docutils is a modular system for processing documentation
-into useful formats, such as HTML, XML, and LaTeX.  For
-input Docutils supports reStructuredText, an easy-to-read,
-what-you-see-is-what-you-get plaintext markup syntax.
-%endif
 
 %prep
-%setup -q -n %oname-%version
-%patch -p2
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup -q
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-find -type f -name '*.py' -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
-find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in *; do
-	mv $i $(basename $i .py).py3
-done
-popd
-%endif
-
-%python_install --optimize=2
-
-pushd %buildroot%_bindir
-for i in *.py; do
-	mv $i $(basename $i .py)
-done
-popd
-
-mkdir -p %buildroot%_datadir/%modulename
-cp -a tools %buildroot%_datadir/%modulename
-find %buildroot{%_datadir,%python_sitelibdir} -type f -name '*.py' -exec sed -i 's|%_bindir/python|%_bindir/python2.7|' -- '{}' +
-find %buildroot{%_datadir,%python_sitelibdir} -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python2.7|' -- '{}' +
-
-#install -p -m644 docutils/utils/roman.py \
-#	%buildroot%python_sitelibdir
 
 %check
-export LC_ALL=en_US.UTF-8
-
-python test/alltests.py
-
-%if_with python3
-pushd ../python3
-python3 test/alltests.py
-popd
-%endif
+python3 test3/alltests.py
 
 %files
-%doc docs *.txt
-%_datadir/%modulename
-%python_sitelibdir/*
-%_bindir/rst*
-%if_with python3
-%exclude %_bindir/*.py3
-
-%files -n python3-module-%oname
-%_bindir/*.py3
+%_bindir/*
 %python3_sitelibdir/*
-%endif
 
 %changelog
-* Tue Dec 17 2019 Anton Farygin <rider@altlinux.ru> 0.14-alt3
-- built python3 version of the docutils from separate package (python3-module-docutils) 
-- convert shebang to python2
+* Tue Dec 17 2019 Anton Farygin <rider@altlinux.ru> 0.15.2-alt1
+- 0.14 -> 0.15.2
+- renamed to python3-module-docutils
 
 * Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14-alt2
 - Renamed resulting binaries, removed .py suffix (Closes: #35274).
