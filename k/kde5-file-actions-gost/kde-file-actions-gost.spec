@@ -1,6 +1,6 @@
 %define rname kde-file-actions-gost
 Name: kde5-file-actions-gost
-Version: 0.1
+Version: 0.2
 Release: alt1
 %K5init altplace
 
@@ -47,5 +47,8 @@ done
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Tue Dec 17 2019 Sergey V Turchin <zerg at altlinux dot org> 0.2-alt1
+- check for GOST ciphers
+
 * Wed Dec 11 2019 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1
 - initial build
