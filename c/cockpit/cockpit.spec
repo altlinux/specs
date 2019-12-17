@@ -10,6 +10,7 @@
 %def_with basic
 %def_with optional
 %def_with doc
+%def_with pcp
 
 %ifarch aarch64 x86_64 ppc64le
 %def_enable docker
@@ -19,8 +20,6 @@
 %def_with check
 
 # currently are not packaged on ALTLinux
-# https://pcp.io/
-%def_without pcp
 # https://github.com/dm-vdo/vdo
 %def_with vdo
 # http://www.freedesktop.org/software/PackageKit
@@ -30,7 +29,7 @@
 ###############################################################################
 
 Name: cockpit
-Version: 208
+Version: 209
 Release: alt1
 
 Summary: Web Console for Linux servers
@@ -61,7 +60,7 @@ BuildRequires: xmlto
 %endif
 
 %if_with pcp
-BuildRequires: pcp-libs-devel
+BuildRequires: libpcopilot-devel
 %endif
 
 %if_with check
@@ -157,6 +156,7 @@ This package contains the Cockpit shell and system configuration interfaces.
 Summary: Cockpit admin interface package for configuring realmd
 Group: System/Base
 BuildArch: noarch
+Requires: realmd
 
 %description realmd
 This package contains the Cockpit realmd configuration interfaces.
@@ -187,6 +187,7 @@ This package contains the Cockpit systemd configuration interfaces.
 Summary: Cockpit admin interface package for configuring tuned
 Group: System/Base
 BuildArch: noarch
+Requires: tuned
 
 %description tuned
 This package contains the Cockpit tuned configuration interfaces.
@@ -214,6 +215,9 @@ Requires: glib2 >= 2.37.4
 
 %description ws
 The Cockpit Web Service listens on the network, and authenticates users.
+
+If sssd-dbus is installed, you can enable client certificate/smart card
+authentication via SSSD/FreeIPA.
 
 ###############################################################################
 
@@ -287,7 +291,7 @@ Requires: udisks2-module-lvm2
 # not packaged in ALT
 # Requires: udisks2-iscsi >= 2.6
 Requires: multipath-tools
-Requires: python-module-dbus
+Requires: python3(dbus)
 
 %description storaged
 The Cockpit component for managing storage.  This package uses udisks.
@@ -408,6 +412,18 @@ grep -rl '/usr/bin/true' | xargs sed -i 's/\/usr\/bin\/true/\/bin\/true/g'
 
 grep -qr '/usr/bin/false' || exit 1
 grep -rl '/usr/bin/false' | xargs sed -i 's/\/usr\/bin\/false/\/bin\/false/g'
+
+%if_with pcp
+# pcp name in ALTLinux is pcopilot due to name conflicts
+grep -rl -- '\(-lpcp\|#include <pcp/\)' | xargs \
+    sed -i \
+        -e 's/-lpcp/-lpcopilot/g' \
+        -e 's/#include <pcp\//#include <pcopilot\//g'
+sed -i \
+    -e 's/AC_CHECK_LIB(pcp/AC_CHECK_LIB(pcopilot/g' \
+    -e 's/pcp\//pcopilot\//g' \
+    configure.ac
+%endif
 
 %build
 %autoreconf
@@ -547,6 +563,7 @@ done
 %doc %_man8dir/cockpit-ws.8.*
 %doc %_man8dir/cockpit-tls.8.*
 %doc %_man8dir/remotectl.8.*
+%doc %_man8dir/pam_cockpit_cert.8.*
 %doc %_man8dir/pam_ssh_add.8.*
 %config(noreplace) %_sysconfdir/cockpit/ws-certs.d/
 %config(noreplace) %_sysconfdir/pam.d/cockpit
@@ -569,6 +586,7 @@ done
 %_tmpfilesdir/cockpit-tempfiles.conf
 %_sbindir/remotectl
 /%_lib/security/pam_ssh_add.so
+/%_lib/security/pam_cockpit_cert.so
 %_libexecdir/cockpit-ws
 %_libexecdir/cockpit-wsinstance-factory
 %_libexecdir/cockpit-tls
@@ -643,14 +661,11 @@ fi
 %if_with pcp
 %files pcp
 %_libexecdir/cockpit-pcp
-%_localstatedir/lib/pcp/config/pmlogconf/tools/cockpit
+%_sharedstatedir/pcp/config/pmlogconf/tools/cockpit
 %_datadir/cockpit/pcp/
 
 %post pcp
-# HACK - https://bugzilla.redhat.com/show_bug.cgi?id=1185764
-# We can't use "systemctl reload-or-try-restart" since systemctl might
-# be out of sync with reality.
-/usr/share/pcp/lib/pmlogger condrestart
+%post_service pcp
 %endif
 
 %if_with dashboard
@@ -672,6 +687,10 @@ fi
 %endif # build optional extension packages
 
 %changelog
+* Tue Dec 17 2019 Stanislav Levin <slev@altlinux.org> 209-alt1
+- 208 -> 209.
+- Built with Performance Co-Pilot framework.
+
 * Fri Nov 29 2019 Stanislav Levin <slev@altlinux.org> 208-alt1
 - 202 -> 208.
 
