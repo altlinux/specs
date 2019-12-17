@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.25.13
+Version: 1.26.0
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -59,7 +59,7 @@ BuildRequires: libavahi-devel libavahi-glib-devel
 BuildRequires: fonts-ttf-dejavu
 
 # Make sure we get postscriptdriver tags.
-BuildRequires: python-module-cups
+BuildRequires: python3-module-cups
 
 Requires: poppler-utils
 Requires: /usr/bin/gs
@@ -191,6 +191,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Dec 17 2019 Anton Farygin <rider@altlinux.ru> 1.26.0-alt1
+- new version 1.26.0
+
 * Mon Dec 02 2019 Anton Farygin <rider@altlinux.ru> 1.25.13-alt1
 - new version 1.25.13
 
