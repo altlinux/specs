@@ -2,7 +2,7 @@
 
 Name: aircrack-ng
 Version: 1.5.2
-Release: alt1
+Release: alt2
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -37,6 +37,17 @@ auditing wireless networks.
 %setup
 %patch0 -p1
 
+# change python shebangs to python2
+find . -name '*.py' | xargs sed -i \
+	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python2|' \
+	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' \
+	%nil
+
+find scripts -type f | xargs sed -i \
+	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python2|' \
+	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' \
+	%nil
+
 %build
 %autoreconf
 %configure --with-sqlite3 --with-experimental --with-ext-scripts
@@ -60,6 +71,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_defaultdocdir/%name
 
 %changelog
+* Tue Dec 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt2
+- Fixed build with python.
+
 * Tue Jan 22 2019 Egor Zotov <egorz@altlinux.org> 1.5.2-alt1
 - Update to upstream version 1.5.2
 - Don't install airgraph-ng
