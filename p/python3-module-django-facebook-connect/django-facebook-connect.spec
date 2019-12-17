@@ -1,45 +1,29 @@
 %define oname django-facebook-connect
 
-%def_with python3
 %def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.2
-Release: alt2
+Release: alt3
+
 Summary: Add facebook connect authentication to your Django website
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-facebook-connect/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/noamsu/django-facebook-connect.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
 
-%description
-This package adds facebook connect authentication to a Django web site.
-Many of the existing packages are either out of date, using soon to be
-deprecated facebook apis (along with out of date documentation), or
-simply do not work quite right.
-
-This package is small, does not have external dependencies, and should
-"just work".
-
-%package -n python3-module-%oname
-Summary: Add facebook connect authentication to your Django website
-Group: Development/Python3
 %if_with bootstrap
 %add_python3_req_skip django.conf.urls.defaults
 %endif
 
-%description -n python3-module-%oname
+
+%description
 This package adds facebook connect authentication to a Django web site.
 Many of the existing packages are either out of date, using soon to be
 deprecated facebook apis (along with out of date documentation), or
@@ -51,40 +35,26 @@ This package is small, does not have external dependencies, and should
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.md
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Dec 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt3
+- build for python2 disabled
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt2
 - rebuild with python3.6
 
