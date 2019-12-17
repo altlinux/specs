@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: rng-tools
-Version: 6.7
-Release: alt3
+Version: 6.9
+Release: alt1
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -13,14 +13,6 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.default
 Source3: %name.service
-
-# latest upstream fixes, remove after version > 6.7
-# get rid of compiler warning on unused variables
-Patch100: 0002-Remove-superfluous-variables.patch
-# Urandom test may fail, but this may happen periodically as urandom
-# is best-effort source of random data
-# https://github.com/nhorman/rng-tools/issues/48
-Patch101: 0001-Don-t-fail-on-urandom-test-failures.patch
 
 # Automatically added by buildreq on Wed Apr 03 2019
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config
@@ -43,9 +35,6 @@ to the system kernel's /dev/random machinery.
 
 %prep
 %setup
-
-%patch100 -p1
-%patch101 -p1
 
 %build
 ./autogen.sh
@@ -78,6 +67,10 @@ make check
 %_man8dir/rngd.8*
 
 %changelog
+* Tue Dec 17 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.9-alt1
+- Version 6.9
+- remove obsolete patches
+
 * Tue May 28 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.7-alt3
 - add upstream patch skipping periodical urandom test failures
 
