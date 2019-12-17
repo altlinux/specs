@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.209
-Release: alt3
+Release: alt4
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -53,7 +53,8 @@ OpenVZ Virtual Environments.
 
 %build
 #make_build CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
-%make CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
+#%make CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version-%release\\\""
+%make CFLAGS="%optflags -D_GNU_SOURCE -DVERSION=\\\"%version\\\""
 
 %install
 make install \
@@ -125,6 +126,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Mon Dec 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt4
+- compatibility with libvirt
+
 * Thu Dec 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt3
 - fix License
 
