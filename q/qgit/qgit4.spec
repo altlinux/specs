@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgit
-Version: 2.8
+Version: 2.9
 Release: alt1
 Epoch: 1
 
@@ -51,13 +51,16 @@ qmake-qt5 qgit.pro
 %make_build 
 
 %install
-install -pD -m755 bin/qgit %buildroot%_bindir/%name
+install -pDm755 bin/qgit %buildroot%_bindir/%name
 
 %files
-%doc README
+%doc README.adoc
 %_bindir/%name
 
 %changelog
+* Tue Dec 17 2019 Ivan A. Melnikov <iv@altlinux.org> 1:2.9-alt1
+- new version
+
 * Tue Mar 26 2019 Ivan A. Melnikov <iv@altlinux.org> 1:2.8-alt1
 - new version
 - build with qt5
