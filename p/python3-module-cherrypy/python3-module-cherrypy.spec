@@ -1,7 +1,7 @@
 %define modulename cherrypy
 
 Name: python3-module-%modulename
-Version: 18.3.0
+Version: 18.5.0
 Release: alt1
 Summary: CherryPy is a pythonic, object-oriented web development framework
 License: BSD
@@ -14,22 +14,29 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch0: python3-module-cherrypy-disable-codecov_button.patch
 Patch1: python3-module-cherrypy-python3-shebang.patch
+Patch2: %name-%version-%release.patch
 
 Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
 Conflicts: python-module-cherrypy <= 14.2.0-alt1.1
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-graphviz
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-simplejson
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-cov-core
+BuildRequires: python3-module-objgraph
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-sugar
 BuildRequires: python3-module-pytest-services >= 1.3.1
 BuildRequires: python3-module-rst.linker
 BuildRequires: python3-module-jaraco.packaging
+BuildRequires: python3-module-jaraco.collections
 BuildRequires: python3-module-memcached
+BuildRequires: python3-module-cheroot-tests
+BuildRequires: python3-module-routes
 BuildRequires: python3(tox)
 BuildRequires: python3(pip)
 BuildRequires: python3(portend)
@@ -86,6 +93,7 @@ This package contains documentation for CherryPy.
 %setup 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i "s/f'/'/;s/f\"/\"/" docs/conf.py
 
 %prepare_sphinx3 .
@@ -105,7 +113,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 rm -rf %buildroot%python3_sitelibdir/*/tutorial
 
 %check
-LANG=C.utf-8 %{__python3} -m pytest --ignore=build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -v
 
 %files
 %_bindir/cherryd
@@ -121,6 +132,13 @@ LANG=C.utf-8 %{__python3} -m pytest --ignore=build
 %python3_sitelibdir/*/test
 
 %changelog
+* Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 18.5.0-alt1
+- 18.5.0
+- enabled tests
+
+* Sun Oct 06 2019 Anton Farygin <rider@altlinux.ru> 18.3.0-alt2
+- fixed build with cheroot 7.0.0-alt1
+
 * Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 18.3.0-alt1
 - 18.3.0
 - added conflicts with python-module-cherrypy for python-2.7 (closes: #37292)
