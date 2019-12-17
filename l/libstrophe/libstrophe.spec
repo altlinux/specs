@@ -1,12 +1,13 @@
 Name: libstrophe
 # configure.ac:AC_INIT([libstrophe], [0.8-snapshot], [jack@metajack.im])
-Version: 0.9.2
-Release: alt1.1
+Version: 0.9.3
+Release: alt1
 Summary: A lightweight XMPP client library written in C
 Group: System/Libraries
 License: GPLv3
-# TODO update from git
-Source: %version.tar.gz
+Url: http://strophe.im/libstrophe
+# https://github.com/strophe/libstrophe
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jul 22 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel perl pkg-config python-base
@@ -64,6 +65,10 @@ make check
 %_libdir/*.a
 
 %changelog
+* Tue Dec 17 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt1
+- Build new version.
+- Build from git.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.2-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
