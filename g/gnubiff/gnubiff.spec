@@ -3,8 +3,8 @@
 %def_with password
 
 Name: %_name
-Version: 2.2.15
-Release: alt1.2
+Version: 2.2.17
+Release: alt1
 
 Summary: gnubiff is a mail notifier that displays headers when new mail has arrived.
 License: %gpl3plus w/exception for OpenSSL
@@ -60,7 +60,7 @@ gnubiff features include:
     %{?_with_password:--with-password-string="andthentherewere3"} \
     --enable-expert \
     --disable-gnome \
-		--disable-rpath
+    --disable-rpath
 
 %make_build
 
@@ -81,6 +81,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %doc README ChangeLog COPYING THANKS TODO NEWS AUTHORS
 
 %changelog
+* Tue Dec 17 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.17-alt1
+- Build new version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.2.15-alt1.2
 - NMU: Rebuild with new openssl 1.1.0.
 
