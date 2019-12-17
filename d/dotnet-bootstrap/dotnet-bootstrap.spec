@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sdkversion 3.0.100
-%define coreversion 3.0.0
+%define sdkversion 3.1.100
+%define coreversion 3.1.0
 
 Name: dotnet-bootstrap
-Version: 3.0.0
-Release: alt1.qa1
+Version: 3.1.0
+Release: alt1
 
 Summary: .NET Core SDK binaries
 
@@ -16,11 +16,11 @@ Group: Development/Other
 # To check we manually update download url
 # FIXME: broken due sdk/core versions mismatch
 #%define downloadversion 2.1.403
-# from https://www.microsoft.com/net/download/dotnet-core/2.1
+# from https://www.microsoft.com/net/download/dotnet-core/3.1
 
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/886b4a4c-30af-454b-8bec-81c72b7b4e1f/d1a0c8de9abb36d8535363ede4a15de6/dotnet-sdk-3.0.100-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/d731f991-8e68-4c7c-8ea0-fad5605b077a/49497b5420eecbd905158d86d738af64/dotnet-sdk-3.1.100-linux-x64.tar.gz
 Source: %name-%version.tar
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/cbc83a0e-895c-4959-99d9-21cd11596e64/b0e59c2ba2bd3ef0f592acbeae7ab27d/dotnet-sdk-3.0.100-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/5a4c8f96-1c73-401c-a6de-8e100403188a/0ce6ab39747e2508366d498f9c0a0669/dotnet-sdk-3.1.100-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -58,7 +58,8 @@ https://github.com/dotnet/core/blob/master/release-notes/download-archives/%vers
 %ifarch aarch64
 rm -rf packs/ host/ shared/
 tar xfv %SOURCE2
-sed -E -i -e "s@CURL_OPENSSL_3@\x0URL_OPENSSL_3@" shared/Microsoft.NETCore.App/3.0.0/System.Net.Http.Native.so
+
+sed -E -i -e "s@CURL_OPENSSL_3@\x0URL_OPENSSL_3@" shared/Microsoft.NETCore.App/%coreversion/System.Net.Http.Native.so
 %endif
 
 %install
@@ -71,31 +72,32 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 
 cd %buildroot%_libdir/%name
 
+# See also https://bugzilla.altlinux.org/show_bug.cgi?id=37413
 strip \
-	shared/Microsoft.NETCore.App/3.0.0/libmscordbi.so \
-	shared/Microsoft.NETCore.App/3.0.0/libmscordaccore.so \
-	shared/Microsoft.NETCore.App/3.0.0/libhostpolicy.so \
-	shared/Microsoft.NETCore.App/3.0.0/libdbgshim.so \
-	shared/Microsoft.NETCore.App/3.0.0/libcoreclrtraceptprovider.so \
-	shared/Microsoft.NETCore.App/3.0.0/libcoreclr.so \
-	shared/Microsoft.NETCore.App/3.0.0/libclrjit.so \
-	shared/Microsoft.NETCore.App/3.0.0/createdump \
-	shared/Microsoft.NETCore.App/3.0.0/System.Security.Cryptography.Native.OpenSsl.so \
-	shared/Microsoft.NETCore.App/3.0.0/System.Net.Security.Native.so \
-	shared/Microsoft.NETCore.App/3.0.0/System.Net.Http.Native.so \
-	shared/Microsoft.NETCore.App/3.0.0/System.Native.so \
-	shared/Microsoft.NETCore.App/3.0.0/System.IO.Compression.Native.so \
-	shared/Microsoft.NETCore.App/3.0.0/System.Globalization.Native.so \
-	sdk/3.0.100/AppHostTemplate/apphost \
+	shared/Microsoft.NETCore.App/%coreversion/libmscordbi.so \
+	shared/Microsoft.NETCore.App/%coreversion/libmscordaccore.so \
+	shared/Microsoft.NETCore.App/%coreversion/libhostpolicy.so \
+	shared/Microsoft.NETCore.App/%coreversion/libdbgshim.so \
+	shared/Microsoft.NETCore.App/%coreversion/libcoreclrtraceptprovider.so \
+	shared/Microsoft.NETCore.App/%coreversion/libcoreclr.so \
+	shared/Microsoft.NETCore.App/%coreversion/libclrjit.so \
+	shared/Microsoft.NETCore.App/%coreversion/createdump \
+	shared/Microsoft.NETCore.App/%coreversion/System.Security.Cryptography.Native.OpenSsl.so \
+	shared/Microsoft.NETCore.App/%coreversion/System.Net.Security.Native.so \
+	shared/Microsoft.NETCore.App/%coreversion/System.Net.Http.Native.so \
+	shared/Microsoft.NETCore.App/%coreversion/System.Native.so \
+	shared/Microsoft.NETCore.App/%coreversion/System.IO.Compression.Native.so \
+	shared/Microsoft.NETCore.App/%coreversion/System.Globalization.Native.so \
+	sdk/%sdkversion/AppHostTemplate/apphost \
 %ifarch x86_64
-	packs/Microsoft.NETCore.App.Host.linux-x64/3.0.0/runtimes/linux-x64/native/libnethost.so \
-	packs/Microsoft.NETCore.App.Host.linux-x64/3.0.0/runtimes/linux-x64/native/apphost \
+	packs/Microsoft.NETCore.App.Host.linux-x64/%coreversion/runtimes/linux-x64/native/libnethost.so \
+	packs/Microsoft.NETCore.App.Host.linux-x64/%coreversion/runtimes/linux-x64/native/apphost \
 %endif
 %ifarch aarch64
-	packs/Microsoft.NETCore.App.Host.linux-arm64/3.0.0/runtimes/linux-arm64/native/libnethost.so \
-	packs/Microsoft.NETCore.App.Host.linux-arm64/3.0.0/runtimes/linux-arm64/native/apphost \
+	packs/Microsoft.NETCore.App.Host.linux-arm64/%coreversion/runtimes/linux-arm64/native/libnethost.so \
+	packs/Microsoft.NETCore.App.Host.linux-arm64/%coreversion/runtimes/linux-arm64/native/apphost \
 %endif
-	host/fxr/3.0.0/libhostfxr.so \
+	host/fxr/%coreversion/libhostfxr.so \
 	dotnet \
 	#
 
@@ -136,6 +138,10 @@ strip \
 %_libdir/%name/dotnet
 
 %changelog
+* Mon Dec 16 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version (3.1.0) with rpmgs script
+- .NET Core 3.1.0 - December 3, 2019
+
 * Fri Nov 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.0-alt1.qa1
 - Dropped hack for ld-linux path on aarch64.
 
