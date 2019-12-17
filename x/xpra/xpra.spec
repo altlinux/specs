@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 3.0
+Version: 3.0.3
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -20,13 +20,14 @@ BuildRequires(pre): rpm-build-ubt
 %def_without ffmpeg_static
 %endif
 
+BuildRequires(pre): rpm-build-python3
+
 BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libxkbfile-devel libpam0-devel libsystemd-devel
 
-# TODO use gtk3
-BuildRequires: python-module-pygtk-devel python-module-pycairo-devel
+BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
 
 # Video
-BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python-module-yuicompressor
+BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python3-module-yuicompressor
 
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static
@@ -39,19 +40,22 @@ BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
 BuildRequires: libogg-devel libopus-devel libflac-devel libspeex-devel libvorbis-devel libwavpack-devel liblame-devel libtwolame-devel libmad-devel
 
 # GL
-BuildRequires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate
-Requires: python-module-pygtkglext python-module-OpenGL python-module-OpenGL_accelerate
+BuildRequires: python3-module-OpenGL python3-module-OpenGL_accelerate
+Requires: python3-module-OpenGL python3-module-OpenGL_accelerate
 
-BuildRequires: python-module-Pillow python-module-websockify
+BuildRequires: python3-module-Pillow python3-module-websockify
 
 BuildRequires: xorg-server brotli
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
-BuildPreReq: python-module-Cython >= 0.20
+BuildPreReq: python3-module-Cython >= 0.20
 
 AutoReq: yes, nomingw
 
-%add_python_req_skip win32security pyopencl
+%add_python3_req_skip win32security pyopencl xpra.platform.win32.common xpra.net.mdns
+
+# prefer dbus notification
+%add_python3_req_skip pynotify
 
 BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
 
@@ -66,7 +70,7 @@ Requires: libwebp
 
 Requires: xorg-xvfb setxkbmap
 
-Requires: python-module-pyinotify python-module-rencode python-module-lz4
+Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4
 
 %description
 Xpra is 'screen for X': it allows you to run X programs,
@@ -95,9 +99,11 @@ If connecting from a remote machine, you would use something like (or you can al
 %prep
 %setup
 %__subst "s|-Werror|-Wall|g" setup.py
+find xpra -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
+%__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|" scripts/* cups/*
 
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
-%__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
+#__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
 
 # move systemd service to correct %_unitdir
 %__subst "s|/bin/systemctl|NONONO|g" setup.py
@@ -108,10 +114,10 @@ If connecting from a remote machine, you would use something like (or you can al
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
-%python_build --without-mdns
+%python3_build --without-mdns
 
 %install
-%python_install --without-mdns
+%python3_install --without-mdns
 mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 mkdir -p %buildroot%_udevrulesdir/
@@ -121,6 +127,9 @@ install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
 # TODO
 rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 
+# remove obsoleted (python2 only) examples
+rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
+
 %pre
 %_sbindir/groupadd -r -f xpra &>/dev/null ||:
 
@@ -129,7 +138,7 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/*
 %_libexecdir/%name/
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_desktopdir/*
 %_iconsdir/*
 %_man1dir/*
@@ -150,6 +159,10 @@ rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Wed Dec 11 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
+- new version 3.0.3 (with rpmrb script)
+- switch to python3
+
 * Sat Oct 12 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
 - new version 3.0 (with rpmrb script)
 
