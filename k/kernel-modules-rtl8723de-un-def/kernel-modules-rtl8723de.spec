@@ -5,10 +5,10 @@
 
 %define module_name	rtl8723de
 %define module_version	5.1.1.8
-%define module_release alt13
+%define module_release alt14
 
 %define flavour		un-def
-%define karch %ix86 x86_64
+%define karch %ix86 x86_64 aarch64 ppc64le
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
@@ -64,12 +64,15 @@ make \
     ARCH=%base_arch \
     CROSS_COMPILE= \
     KSRC=%_usrsrc/linux-%kversion-%flavour \
+    M=${PWD} \
+    -C %_usrsrc/linux-%kversion-%flavour \
     modules \
-    USER_EXTRA_CFLAGS="-Wno-error=incompatible-pointer-types" \
     #
 
 %install
-install -D -m 644 8723de.ko %buildroot/%module_dir/rtl8723de.ko
+KMOD_FILE=8723de.ko
+[ -f rtl8723de/rtl8723de.ko ] && KMOD_FILE=rtl8723de/rtl8723de.ko
+install -D -m 644 $KMOD_FILE %buildroot/%module_dir/rtl8723de.ko
 
 %files
 %module_dir
@@ -77,6 +80,9 @@ install -D -m 644 8723de.ko %buildroot/%module_dir/rtl8723de.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Dec 18 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt14
+- using rtlwifi_new for new kernels
 
 * Wed Jul 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt13
 - add separate sources for kernnels 4.15 up to 5.0
