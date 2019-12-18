@@ -9,9 +9,8 @@
 %def_enable vqsim
 
 Name: corosync
-Version: 3.0.2
-Release: alt3
-
+Version: 3.0.3.0.18.g89b0d
+Release: alt1
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
@@ -169,7 +168,7 @@ install -p -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconf
 %_datadir/augeas/lenses/*
 %endif
 %dir %_localstatedir/lib/corosync
-%attr(700, root, root) %_logdir/cluster
+%attr(750, root, adm) %_logdir/cluster
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
@@ -196,6 +195,9 @@ install -p -m 644 init/corosync.sysconfig.example %buildroot%_sysconfdir/sysconf
 %endif
 
 %changelog
+* Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.3.0.18.g89b0d-alt1
+- upstream snapshot 89b0d62f8bd9d5ba90db5a37866c029b821da838
+
 * Tue Jul 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt3
 - add libknet1-crypto-nss-plugin dependency
 
