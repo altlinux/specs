@@ -1,25 +1,20 @@
 %define oname django-order
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.0.7
-Release: alt1.git20110915.2
+Release: alt2
+
 Summary: Django app allowing users to manually order objects via admin
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-order/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/praekelt/django-order.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 Provides an additional order tool within admin with which objects can be
@@ -29,7 +24,7 @@ were ordered by users via admin.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -40,75 +35,32 @@ were ordered by users via admin.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: Django app allowing users to manually order objects via admin
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Provides an additional order tool within admin with which objects can be
-ordered by any number of arbitrary settings defined fields. A
-user_order_by queryset method allows for retrieval of objects as they
-were ordered by users via admin.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Provides an additional order tool within admin with which objects can be
-ordered by any number of arbitrary settings defined fields. A
-user_order_by queryset method allows for retrieval of objects as they
-were ordered by users via admin.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|core.urlresolvers|urls|' order/utils.py
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
-
-%files tests
-%python_sitelibdir/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests.*
 %python3_sitelibdir/*/*/tests.*
-%endif
+
 
 %changelog
+* Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.7-alt2
+- build for python2 disabled
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.7-alt1.git20110915.2
 - (NMU) rebuild with python3.6
 
