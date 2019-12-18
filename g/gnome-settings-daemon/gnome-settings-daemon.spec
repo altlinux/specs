@@ -18,7 +18,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -34,7 +34,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.56.0
 %define gtk_ver 3.16
-%define gnome_desktop_ver 3.29.90.1
+%define gnome_desktop_ver 3.34.2
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define gsds_ver 3.33.0
@@ -186,6 +186,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Wed Dec 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Sat Oct 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
