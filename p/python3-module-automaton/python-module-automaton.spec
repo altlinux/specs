@@ -1,27 +1,13 @@
 %define sname automaton
 
-Name: python-module-%sname
+Name: python3-module-%sname
 Version: 1.15.0
-Release: alt1
+Release: alt2
 Summary: Friendly state machines for python
-Group: Development/Python
+Group: Development/Python3
 License: ASL 2.0
 Url: https://wiki.openstack.org/wiki/Oslo#automaton
 Source: %sname-%version.tar.gz
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-sphinx >= 1.1.2
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
-BuildRequires: python-module-reno
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-debtcollector >= 1.2.0
-BuildRequires: python-module-prettytable >= 0.7.2
-
-BuildRequires: python-module-oslotest >= 3.2.0
-BuildRequires: python-module-testtools >= 2.2.0
-BuildRequires: python-module-doc8 >= 0.6.0
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -41,27 +27,11 @@ Friendly state machines for python.
 
 %package tests
 Summary: Tests for %sname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
 This package contains tests for %sname.
-
-%package -n python3-module-%sname
-Summary: Friendly state machines for python.
-Group: Development/Python3
-
-%description -n python3-module-%sname
-Friendly state machines for python.
-
-%package -n python3-module-%sname-tests
-Summary: Tests for %sname
-Group: Development/Python3
-Requires: python3-module-%sname = %EVR
-
-%description -n python3-module-%sname-tests
-This package contains tests for %sname.
-
 
 %package doc
 Summary: Friendly state machines for python - documentation
@@ -76,25 +46,14 @@ Friendly state machines for python (documentation)
 # Remove bundled egg-info
 rm -rf %sname.egg-info
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 # generate html docs
-sphinx-build doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
@@ -102,23 +61,19 @@ rm -rf html/.{doctrees,buildinfo}
 #python setup.py test
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%sname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%sname-tests
+%files tests
 %python3_sitelibdir/*/tests
 
 %files doc
 %doc html README.rst
 
 %changelog
+* Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt2
+- Build without python2.
+
 * Sat Dec 08 2018 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
 - 1.15.0
 
