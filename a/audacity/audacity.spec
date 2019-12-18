@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.3.3
-Release: alt1
+Release: alt2
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -10,9 +10,6 @@ Url: http://audacity.sourceforge.net/
 # Source0: https://github.com/audacity/audacity/archive/Audacity-%{version}.tar.gz
 # https://www.fosshub.com/Audacity.html/audacity-manual-%{version}.zip
 Source0: %name-minsrc-%version.tar
-Source2: %name-48x48.xpm
-Source3: %name-32x32.xpm
-Source4: %name-16x16.xpm
 Source6: %name-%version-help-en.tar
 
 # Debian patches are from https://salsa.debian.org/multimedia-team/audacity/tree/master/debian/patches
@@ -22,33 +19,34 @@ Source6: %name-%version-help-en.tar
 Patch20: Debian-0004-desktop.patch
 Patch50: NetBSD-ALT-Session-directory-in-home.patch
 Patch60: ALT-system-sbsms.patch
-Patch140: Fedora-libmp3lame-default.patch
 Patch170: ALT-Remove-warning-about-alpha-version.patch
 
-# Patents on mp3 (liblame) expired in April 2017
-BuildRequires: gcc-c++ libportaudio2-devel libstdc++-devel-static libfftw3-devel gettext-devel libjpeg-devel ladspa_sdk liblame-devel
-BuildRequires: libflac++-devel >= 1.3.1
-BuildRequires: libflac-devel >= 1.3.1
-# pkconfig BuildRequires are based on ROSA's spec: https://abf.io/import/audacity/blob/rosa2016.1/audacity.spec
-# and OpenSUSE's spec: https://build.opensuse.org/package/view_file/openSUSE:Leap:15.0/audacity/audacity.spec
-BuildRequires: desktop-file-utils shared-mime-info
-BuildRequires: libopencore-amrnb0 libopencore-amrwb0
-BuildRequires: ImageMagick zip
-# For Audacity 2.2.2, we need wxWidgets 3.0, built without STL, either gtk3 or gtk2
+BuildRequires: gcc-c++
+BuildRequires: gettext-devel
+BuildRequires: ImageMagick
+BuildRequires: ladspa_sdk
+BuildRequires: liblame-devel
+# Requires wxWidgets built without STL
 BuildRequires: libwxGTK3.1-devel >= 3.1.1-alt2
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(libavformat)
+BuildRequires: zip
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(fftw3)
 BuildRequires: pkgconfig(flac++)
 BuildRequires: pkgconfig(id3tag)
+BuildRequires: pkgconfig(flac)
+BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(lilv-0)
+BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(mad)
 BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(sbsms)
 BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(soundtouch)
 BuildRequires: pkgconfig(soxr)
@@ -61,7 +59,6 @@ BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
 BuildRequires: pkgconfig(zlib)
-BuildRequires: libsbsms-devel
 # %%autopatch macro appeared in 4.0.4-alt133
 BuildRequires: rpm-build >= 4.0.4-alt133
 
@@ -95,7 +92,6 @@ For the most up to date manual content, use the on-line manual.
 %setup -n %name-src-%version
 %autopatch -p1
 
-grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0/" || true
 sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffect.cpp
 
 %build
@@ -103,23 +99,27 @@ sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffec
 # what leads to build errors, but it's empty in release tarballs
 [ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
 
-%ifarch mips mipsel mips32 mips64
+%ifarch %mips
 export LDFLAGS="${LDFLAGS} -latomic"
 %endif
 
-aclocal -I m4
 %autoreconf
 
 # From SUSE's spec about PortAudio:
-# 'This [using system PortAudio] would require to patch our portaudio package with "PortMixer"...
-# an extra API that never got integrated in PortAudio'
+# "This [using system PortAudio] would require to patch our portaudio package with "PortMixer"...
+# an extra API that never got integrated in PortAudio".
+# Patents on mp3 (liblame) expired in April 2017.
 %configure \
 	--enable-sse \
-	--enable-dynamic-loading=no \
-	--disable-dynamic-loading \
 	--enable-nyquist \
 	--enable-ladspa \
 	--enable-vst \
+	--disable-dynamic-loading \
+%ifnarch %ix86 x86_64 %e2k
+	--disable-sse \
+%else
+	--enable-sse \
+%endif
 	--with-expat=system \
 	--with-ffmpeg=system \
 	--with-lame=system \
@@ -137,20 +137,12 @@ aclocal -I m4
 	--with-portaudio=local \
 	--with-midi=local \
 	--without-xaudio \
-	--with-widgetextra=local \
-%ifnarch %ix86 x86_64 %e2k
-	--disable-sse
-%else
-	--enable-sse
-%endif
+	--with-widgetextra=local
 
 %make_build
 
 %install
 %makeinstall_std
-[ ! -f %buildroot%_liconsdir/%name.xpm ] && install -pDm644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
-[ ! -f %buildroot%_niconsdir/%name.xpm ] && install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
-[ ! -f %buildroot%_miconsdir/%name.xpm ] && install -pDm644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
 tar -xf %SOURCE6 -C %buildroot%_datadir/%name
 rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
@@ -159,10 +151,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt todo.txt
 %_bindir/*
 %_mandir/man?/*
-%_iconsdir/*/*/apps/%name.*
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
+%_liconsdir/%name.png
+%_niconsdir/%name.png
+%_miconsdir/%name.png
+%_iconsdir/*/*/apps/%name.svg
 %dir %_datadir/%name
 %exclude %_datadir/%name/help
 %_datadir/%name/*
@@ -177,6 +169,18 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+
+* Wed Dec 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.3-alt2
+- Drop Fedora-libmp3lame-default.patch because dlopen()-ing libmp3lame
+  is switched off by --disable-dynamic-loading (system one is linked)
+- Drop incorrect replacement libmp3lame.so -> libmp3lame.so.0:
+  it replaced libmp3lame.so.0 -> libmp3lame.so.0.0 and had no sense
+  due to target code being under false #ifdef
+- Drop installing downstream XPM icons near upstream PNGs and SVG
+- Use %%mips macro
+- Clean up configure options a bit (no functional changes)
+- Drop explicit aclocal, %%autoreconf is enough
+- Clean up BuildRequires, delete odd ones, use pkgconfig() where possible
 
 * Sun Nov 24 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.3-alt1
 - Version 2.3.3
