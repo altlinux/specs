@@ -1,58 +1,34 @@
 %define module_name django-notification
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 0.2.2
-Release: alt1
-Group: Development/Python
-License: MIT License
+Release: alt2
+
 Summary: User notification management for the Django web framework
+License: MIT License
+Group: Development/Python3
 URL: http://github.com/Star2Billing/django-notification
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
+
 
 %description
-User notification management for the Django web framework
-
-%package -n python3-module-%module_name
-Summary: User notification management for the Django web framework
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 User notification management for the Django web framework
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+sed -i 's|NoArgsCommand|BaseCommand|' $(find ./ -name 'emit_notices.py')
+
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -60,17 +36,14 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc AUTHORS CHANGELOG LICENSE README docs/*
-%python_sitelibdir/django_notification*
-%python_sitelibdir/notification*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc AUTHORS CHANGELOG LICENSE README docs/*
 %python3_sitelibdir/django_notification*
 %python3_sitelibdir/notification*
-%endif
+
 
 %changelog
+* Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.2-alt2
+- build for python2 disabled
+
 * Tue Jul 16 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
 - Build new version.
 
