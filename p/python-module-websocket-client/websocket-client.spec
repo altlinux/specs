@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.54.0
+Version: 0.56.0
 Release: alt1
 Summary: WebSocket client for python. hybi13 is supported
 License: BSD
@@ -119,6 +119,9 @@ popd
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Dec 18 2019 Vladimir Didenko <cow@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Mon Jan 14 2019 Alexey Shabalin <shaba@altlinux.org> 0.54.0-alt1
 - 0.54.0
 
