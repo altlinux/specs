@@ -1,61 +1,34 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+
 %define module_name django-picklefield
 
-%def_with python3
+Name: python3-module-%module_name
+Version: 2.0.0
+Release: alt1
 
-Name: python-module-%module_name
-Version: 0.3.2
-#Release: alt1.git20131115.1
-Group: Development/Python
-License: BSD License
 Summary: django-picklefield provides an implementation of a pickled object field
+License: BSD License
+Group: Development/Python3
 URL: http://github.com/gintas/django-picklefield.git
-Source0: https://pypi.python.org/packages/9c/22/602e6d010248786d72b70c7ca16b0d19ec513897a39861a957a092a77b08/%{module_name}-%{version}.tar.gz
 
-BuildRequires: python-module-setuptools
-%if_with python3
+Source0: %name-%version.tar.gz
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-%endif
+BuildRequires: python3-module-django
+
 
 %description
 django-picklefield provides an implementation of a pickled object field.
 Such fields can contain any picklable objects.
 
-%package -n python3-module-%module_name
-Summary: django-picklefield provides an implementation of a pickled object field
-Group: Development/Python
-
-%description -n python3-module-%module_name
-django-picklefield provides an implementation of a pickled object field.
-Such fields can contain any picklable objects.
-
 %prep
-%setup -q -n %{module_name}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -63,17 +36,15 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 
 %files
 %doc README.rst PKG-INFO
-%python_sitelibdir/django_picklefield*
-%python_sitelibdir/picklefield*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc README.rst PKG-INFO
 %python3_sitelibdir/django_picklefield*
 %python3_sitelibdir/picklefield*
-%endif
+
 
 %changelog
+* Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt1
+- Version updated to 2.0.0
+- build for python2 disabled
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
 - automated PyPI update
 
