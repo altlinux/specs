@@ -1,7 +1,7 @@
 Name: easypaint
 Epoch: 1
 Version: 0.1.1
-Release: alt3
+Release: alt3.1
 Summary: Easy graphic editing program
 License: MIT
 Group: Graphics
@@ -52,6 +52,9 @@ done
 %_miconsdir/*
 
 %changelog
+* Wed Dec 18 2019 Anton Midyukov <antohami@altlinux.org> 1:0.1.1-alt3.1
+- Fix link to tracker again (Closes: 37477)
+
 * Sun Dec 15 2019 Anton Midyukov <antohami@altlinux.org> 1:0.1.1-alt3
 - Added system translation preload for qt5
 
