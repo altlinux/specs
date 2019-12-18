@@ -24,7 +24,7 @@ BuildRequires: gcc-c++
 
 Name:           python-module-pycxx
 Version:        7.1.3
-Release:        alt1
+Release:        alt2
 Summary:        Write Python extensions in C++
 
 Group:          Development/Other
@@ -90,7 +90,7 @@ for Python 3.  There is no non-devel package needed.
 
 
 %build
-python setup.py build
+%{__python} setup.py build
 
 
 %install
@@ -157,6 +157,9 @@ test "$(pkg-config --modversion PyCXX)" = "%{version}"
 
 
 %changelog
+* Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 7.1.3-alt2
+- Fixed FTBFS.
+
 * Wed Jul 10 2019 Grigory Ustinov <grenka@altlinux.org> 7.1.3-alt1
 - Build new version.
 
