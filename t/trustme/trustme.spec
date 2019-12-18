@@ -1,6 +1,6 @@
 Name: trustme
 Version: 0.7
-Release: alt5.qa2
+Release: alt6
 
 Summary: Encrypted notepad
 License: %gpl2only
@@ -30,6 +30,11 @@ Encrypted notepad, also used on Maemo
 sed -i '1 c#!/usr/bin/env python' ./trustme.py ./mktest.py ./Crypto/Cipher/tests.py ./TrustMe/DataStore.py
 sed -i '/compileall/ d' makefile
 
+# fix python shebangs
+find . -type f -print0 |
+    xargs -r0 grep -lZ '^#![[:space:]]*%_bindir/.*python$' -- |
+    xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python$@\1%__python@' --
+
 %build
 make build
 
@@ -48,6 +53,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.png
 
 %changelog
+* Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 0.7-alt6
+- Fixed python shebang.
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt5.qa2
 - NMU: reverted repocop patch
 
