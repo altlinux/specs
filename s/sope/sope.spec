@@ -7,9 +7,9 @@
 
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
-Version:      4.1.1
+Version:      4.2.0
 Release:      alt1
-License:      GPL
+License:      GPL-2.0+
 URL:          http://sogo.nu/
 Group:        Development/Objective-C
 Packager:     Andrey Cherepanov <cas@altlinux.org>
@@ -288,6 +288,10 @@ if [ "$1" = "0" ] ; then # last uninstall
 fi
 
 %changelog
+* Wed Dec 18 2019 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- New version.
+- Fix license tag.
+
 * Fri Nov 01 2019 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
 - New version.
 
