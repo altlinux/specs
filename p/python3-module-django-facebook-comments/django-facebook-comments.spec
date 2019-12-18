@@ -1,26 +1,23 @@
 %define oname django-facebook-comments
 
-%def_with python3
 %def_with bootstrap
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.5
-Release: alt2
+Release: alt3
+
 Summary: Drop-in facebook comments for django
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-facebook-comments/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # hg clone https://bitbucket.org/sirpengi/django-facebook-comments
 Source: %name-%version.tar
-BuildArch: noarch
+Patch: porting-on-python3.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 django-facebook-comments is a reusable Django app to place facebook
@@ -31,58 +28,28 @@ one which just places in a facebook comment box, and one which caches
 the facebook comment box (using their api) so that content will be in
 the rendered html (some people like this for SEO purposes).
 
-%package -n python3-module-%oname
-Summary: Drop-in facebook comments for django
-Group: Development/Python3
-%if_with bootstrap
-%add_python3_req_skip django.conf.urls.defaults
-%endif
-
-%description -n python3-module-%oname
-django-facebook-comments is a reusable Django app to place facebook
-comment boxes in your templates.
-
-This app basically provides two templatetags to use in your templates,
-one which just places in a facebook comment box, and one which caches
-the facebook comment box (using their api) so that content will be in
-the rendered html (some people like this for SEO purposes).
-
 %prep
 %setup
+%patch0 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst dfc_test_app
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst dfc_test_app
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt3
+- porting on python3
+
 * Sat May 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt2
 - rebuild with python3.6
 
