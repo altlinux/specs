@@ -1,15 +1,15 @@
 Name: socat2
 Version: 2.0.0
-Release: alt6
+Release: alt7
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
-License: GPL
+License: GPL-2.0-only
 Group: Networking/Other
 Url: http://www.dest-unreach.org/socat/
-Packager: Kirill A. Shutemov <kas@altlinux.org>
 
 Source: socat.tar
 Patch:	socat2-libssl1.1.patch
+Patch1: socat2-make-j.patch
 
 Conflicts: socat
 
@@ -27,6 +27,7 @@ named pipes, and pseudo terminals.
 %prep
 %setup -q -n socat
 %patch -p1
+%patch1 -p1
 
 %build
 autoconf
@@ -48,6 +49,9 @@ echo '#define HAVE_DEV_PTMX 1' >> config.h
 %doc README* EXAMPLES FAQ SECURITY CHANGES doc/*.html doc/*.css
 
 %changelog
+* Wed Dec 18 2019 Fr. Br. George <george@altlinux.ru> 2.0.0-alt7
+- Fix parallel build
+
 * Wed Oct 10 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt6
 - Rebuild without libwrap.
 
