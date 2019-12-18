@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191115
+Version: 20191218
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Dec 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20191218-alt1
+- upstream changes (GIT c4586ff):
+  + Update AMD cpu microcode (thx John Allen)
+  + inside-secure: add new "mini" firmware for the EIP197 driver (thx Pascal van Leeuwen)
+  + WHENCE: Add raspberry-pi4 SDIO file (thx Josh Boyer)
+  + qcom: update venus firmware files for v5.4 (thx Dikshita Agarwal)
+  + cxgb4: Update firmware to revision 1.24.11.0 (thx Vishal Kulkarni)
+  + brcm: Add BCM43455 NVRAM for Raspberry Pi 4 B (thx Matthias Brugger)
+  + qcom: Add SDM845 Compute DSP firmware (thx Bjorn Andersson)
+  + qcom: Add SDM845 Audio DSP firmware (thx Bjorn Andersson)
+  + qcom: Add SDM845 modem firmware (thx Bjorn Andersson)
+
 * Thu Nov 21 2019 Cronbuild Service <cronbuild@altlinux.org> 20191115-alt1
 - upstream changes (GIT e8a0f4c):
   + rtl_nic: add firmware rtl8168fp-3 (thx Heiner Kallweit)
