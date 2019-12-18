@@ -7,9 +7,9 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.8.0.1
+Version: 0.8.0.3
 Release: alt1
-License: BSD3
+License: BSD-3-Clause
 Packager: Grigory Ustinov <grenka@altlinux.org>
 Group: Development/Haskell
 Url: https://hackage.haskell.org/package/vector-algorithms
@@ -39,5 +39,8 @@ algorithms may be added.
 %files -f %name-files.all
 
 %changelog
+* Tue Dec 17 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.0.3-alt1
+- Build new version.
+
 * Thu Aug 29 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.0.1-alt1
 - Build new version for ghc8.6.4.
