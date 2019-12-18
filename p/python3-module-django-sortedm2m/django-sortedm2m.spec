@@ -1,77 +1,69 @@
 %define _unpackaged_files_terminate_build 1
 %define oname django-sortedm2m
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 1.3.3
+Name: python3-module-%oname
+Version: 3.0.0
 Release: alt1
+
 Summary: Drop-in replacement for django's many to many field with sorted relations
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-sortedm2m/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/gregmuellegger/django-sortedm2m.git
-Source0: https://pypi.python.org/packages/7c/b5/f09fb9e492f0a6193b17ece580663563d153949b3f323a49a0efd2bcf459/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+# https://github.com/gregmuellegger/django-sortedm2m.git
+Source0: %name-%version.tar.gz
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
 sortedm2m is a drop-in replacement for django's own ManyToManyField. The
 provided SortedManyToManyField behaves like the original one but
 remembers the order of added relations.
 
-%package -n python3-module-%oname
-Summary: Drop-in replacement for django's many to many field with sorted relations
+%package tests
+Summary: Tests for %name
 Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
-%description -n python3-module-%oname
+%description tests
 sortedm2m is a drop-in replacement for django's own ManyToManyField. The
 provided SortedManyToManyField behaves like the original one but
 remembers the order of added relations.
 
-%prep
-%setup -q -n %{oname}-%{version}
+This package contains tests for %name.
 
-%if_with python3
-cp -fR . ../python3
-%endif
+%prep
+%setup
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+
+mv sortedm2m_tests/ test_project/ %buildroot%python3_sitelibdir/sortedm2m/
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
+%doc *.rst example/
 %python3_sitelibdir/*
-%endif
+%exclude %python3_sitelibdir/sortedm2m/sortedm2m_tests
+%exclude %python3_sitelibdir/sortedm2m/test_project
+
+%files tests
+%python3_sitelibdir/sortedm2m/sortedm2m_tests
+%python3_sitelibdir/sortedm2m/test_project
+
 
 %changelog
+* Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
+- Version updated to 3.0.0
+- build for python2 disabled
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1
 - automated PyPI update
 
