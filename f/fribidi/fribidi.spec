@@ -5,12 +5,12 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: Bi-directional scripts support
-License: %lgpl21plus
-Group: Development/C
+License: LGPLv2+ and UCD
+Group: System/Internationalization
 Url: https://github.com/%name/%name/
 
 %if_disabled snapshot
@@ -19,6 +19,10 @@ Source: %url/releases/download/v%version/%name-%version.tar.bz2
 #VCS: https://github.com/fribidi/fribidi.git
 Source: %name-%version.tar
 %endif
+
+# restore mistakenly removed fribidi_log2vis_get_embedding_levels()
+# reverse part of d569512f20a9ad940b81bbac85f055b07729d760
+Patch: fribidi-1.0.8-restore-fribidi_log2vis_get_embedding_levels.patch
 
 Requires: lib%name = %version-%release
 
@@ -67,6 +71,7 @@ programs which will use fribidi.
 
 %prep
 %setup
+%patch -p1 -R
 
 %build
 %meson \
@@ -103,6 +108,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Dec 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7 (ported to Meson build system)
 
