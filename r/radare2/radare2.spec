@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 3.9.0
+Version: 4.1.0
 Release: alt1
 License: %lgpl3plus
 Group: Development/Tools
@@ -8,7 +8,7 @@ Url: http://radare.org/
 Source: %name-%version.tar
 Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash liblz4-devel meson
+BuildRequires: rpm-build-licenses libzip-devel zlib-devel libmagic-devel git-core libnss-mdns python3-module-yieldfrom java-devel-default jna python-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel
 
 # bundled sdb ./shlr/sdb/README.md
 # bundled js0n ./shlr/sdb/src/json/README
@@ -43,6 +43,7 @@ Development files for %name package.
   -Duse_sys_openssl=true  \
   -Duse_libuv=true        \
   -Duse_sys_capstone=true
+%meson_build
 
 %install
 %meson_install
@@ -72,6 +73,9 @@ ln -s radare2 %buildroot/usr/bin/r2
 %_datadir/zsh
 
 %changelog
+* Thu Dec 19 2019 Nikita Ermakov <arei@altlinux.org> 4.1.0-alt1
+- Update to 4.1.0.
+
 * Tue Sep 17 2019 Nikita Ermakov <arei@altlinux.org> 3.9.0-alt1
 - Update to 3.9.0.
 
