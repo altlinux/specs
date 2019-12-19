@@ -2,7 +2,7 @@
 %define oname imap_tools
 
 Name: python3-module-%oname
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: Work with IMAP protocol easy and effective
 License: MIT
@@ -40,6 +40,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %doc LICENSE README.*
 
 %changelog
+* Thu Dec 19 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.11.0-alt1
+- New version
+
 * Sun Dec 15 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.0-alt1
 - New version
 
