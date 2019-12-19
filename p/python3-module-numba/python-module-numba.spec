@@ -1,10 +1,10 @@
 %define  oname numba
 
 Name:    python3-module-%oname
-Version: 0.45.1
+Version: 0.46.0
 Release: alt1
 
-Summary: compiling Python code using LLVM
+Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
 License: BSD
 Group:   Development/Python3
@@ -14,7 +14,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: gcc-c++ libgomp8-devel libnumpy-devel libnumpy-py3-devel
+BuildRequires: gcc-c++ libgomp9-devel libnumpy-devel libnumpy-py3-devel
 BuildRequires: python3-module-six
 
 Source:  %oname-%version.tar
@@ -45,7 +45,9 @@ mv %buildroot%_bindir/numba %buildroot%_bindir/numba3
 mv %buildroot%_bindir/pycc %buildroot%_bindir/pycc3
 %endif
 
-rm -rf %buildroot/%python_sitelibdir3/numba/tests
+%if "3"==""
+rm -rf %buildroot/%python_sitelibdir/numba/tests
+%endif
 
 %files
 %_bindir/numba3
@@ -55,5 +57,8 @@ rm -rf %buildroot/%python_sitelibdir3/numba/tests
 %doc CHANGE_LOG *.rst
 
 %changelog
+* Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
+- Build new version.
+
 * Thu Sep 05 2019 Grigory Ustinov <grenka@altlinux.org> 0.45.1-alt1
 - Initial build for Sisyphus (Closes: #35680).
