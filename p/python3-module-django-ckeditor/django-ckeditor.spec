@@ -1,35 +1,22 @@
 %define oname django-ckeditor
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 5.6.1
-Release: alt1
+Release: alt2
+
 Summary: Django admin CKEditor integration
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-ckeditor/
+BuildArch: noarch
 
 # https://github.com/shaunsephton/django-ckeditor.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-Django admin CKEditor integration. Provides a RichTextField and
-CKEditorWidget utilizing CKEditor with image upload and browsing support
-included.
-
-%package -n python3-module-%oname
-Summary: Django admin CKEditor integration
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Django admin CKEditor integration. Provides a RichTextField and
 CKEditorWidget utilizing CKEditor with image upload and browsing support
 included.
@@ -37,39 +24,24 @@ included.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.6.1-alt2
+- build for python2 disabled
+
 * Mon Dec 24 2018 Grigory Ustinov <grenka@altlinux.org> 5.6.1-alt1
 - Build new version.
 
