@@ -1,6 +1,15 @@
+%define _rundir /run
+%define gname haclient
+%define uname hacluster
+
+%add_findreq_skiplist */ocf/resource.d/.isolation/*
+%add_findreq_skiplist */ocf/resource.d/pacemaker/*
+
+%def_disable doc
+
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -24,13 +33,7 @@ BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: help2man xsltproc
 BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel libservicelog-devel
 BuildRequires: libcorosync-devel
-BuildRequires: publican inkscape asciidoc
-
-%define gname haclient
-%define uname hacluster
-
-%add_findreq_skiplist */ocf/resource.d/.isolation/*
-%add_findreq_skiplist */ocf/resource.d/pacemaker/*
+%{?_enable_doc:BuildRequires: publican inkscape asciidoc}
 
 %description
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -115,6 +118,7 @@ Summary: Test framework for cluster-related technologies like Pacemaker
 Group: System/Servers
 Requires: resource-agents
 Requires: procps-ng
+Requires: %name-cli = %version-%release
 Requires: psmisc
 BuildArch: noarch
 
@@ -166,12 +170,16 @@ manager.
 	--with-initdir=%_initdir	\
 	--enable-systemd	\
 	--disable-upstart	\
+	--with-systemdsystemunitdir=%_unitdir	\
+	--with-runstatedir=%_rundir	\
 	--localstatedir=%_var	\
+	--with-daemon-user=%uname	\
+	--with-daemon-group=%gname	\
 	--with-version=%version-%release
 
 subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefile
 
-%make_build V=0
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -317,6 +325,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_includedir/pacemaker
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_datadir/pkgconfig/*.pc
 
 %files schemas
 %dir %_datadir/pacemaker
@@ -325,6 +334,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/api
 
 %changelog
+* Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.3-alt1
+- New version.
+- disable build doc (error build publican on i586)
+
 * Sun Jun 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.2-alt1
 - New version.
 
