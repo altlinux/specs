@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.6.2
+Version:  1.6.4
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -13,15 +13,17 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
-Patch1: makefile_remove_dev_stdin_usage.patch
+Patch1: fix-source-name-in-man.patch
 Patch2: makefile_not_create_link_docs.patch
 Patch3: makefile_remove_prefix_tmpfile_and_systemd.patch
+Patch4: makefile_fix_docker_documentation_install_and_generation.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel
+BuildRequires: /proc
 
 Requires: conmon >= 2.1
 Requires: cni cni-plugins containers-common
@@ -42,6 +44,7 @@ Conflicts: docker-ce
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
@@ -70,6 +73,9 @@ export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
 %doc *.md
 
 %changelog
+* Thu Dec 12 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.4-alt1
+- new version 1.6.4
+
 * Tue Oct 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.2-alt1
 - new version 1.6.2
 
