@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 7.9p1
-Release: alt2.gost
+Release: alt3.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -10,7 +10,7 @@ Url: http://www.openssh.com/portable.html
 # git://git.altlinux.org/gears/o/openssh.git
 Source: %name-%version-%release.tar
 
-%define confdir %_sysconfdir/%name
+%define confdir %_sysconfdir/%oname
 %define _chrootdir /var/empty
 %define docdir %_docdir/%name-%version
 %def_with pam_userpass
@@ -25,6 +25,7 @@ Source: %name-%version-%release.tar
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
 
+Conflicts: openssh
 Requires: %oname-clients-gostcrypto = %EVR
 Requires: %oname-server-gostcrypto = %EVR
 
@@ -41,12 +42,14 @@ BuildRequires: zlib-devel
 Summary: OpenSSH common files
 Group: Networking/Remote access
 Provides: openssh-common = %EVR
+Conflicts: openssh-common
 Conflicts: %name < %EVR
 
 %package -n %oname-clients-gostcrypto
 Summary: OpenSSH Secure Shell protocol clients
 Group: Networking/Remote access
 Provides: openssh-clients = %EVR
+Conflicts: openssh-clients
 Requires: %oname-common-gostcrypto = %EVR
 Requires: openssl-gost-engine >= 1.1.0.3.0.255.ge3af41d-alt1
 
@@ -54,12 +57,14 @@ Requires: openssl-gost-engine >= 1.1.0.3.0.255.ge3af41d-alt1
 Summary: OpenSSH helper program for hostbased authentication
 Group: Networking/Remote access
 Provides: openssh-keysign = %EVR
+Conflicts: openssh-keysign
 Requires: %oname-clients-gostcrypto = %EVR
 
 %package -n %oname-server-gostcrypto
 Summary: OpenSSH Secure Shell protocol daemon
 Group: System/Servers
 Provides: openssh-server = %EVR
+Conflicts: openssh-server
 Requires(pre,post): %oname-server-control-gostcrypto = %EVR
 Requires: %_chrootdir, syslogd-daemon
 Requires: openssl-gost-engine >= 1.1.0.3.0.255.ge3af41d-alt1
@@ -71,12 +76,14 @@ Summary: Control rules for the OpenSSH server configuration
 License: GPLv2+
 Group: System/Servers
 Provides: openssh-server-control = %EVR
+Conflicts: openssh-server-control
 Requires: %oname-common-gostcrypto = %EVR
 
 %package -n %oname-askpass-common-gostcrypto
 Summary: OpenSSH common passphrase dialog infrastructure
 Group: Networking/Remote access
 Provides: openssh-askpass-common = %EVR
+Conflicts: openssh-askpass-common
 Requires: %oname-common-gostcrypto = %EVR
 Provides: %_libexecdir
 
@@ -323,6 +330,10 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Dec 19 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt3.gost
+- Moved config dir to /etc/openssh .
+- Added Conflicts to default openssh subpackages.
+
 * Mon Nov 25 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.9p1-alt2.gost
 - Add gost algorithms:
   + MACs: grasshopper-mac and hmac-streebog-{256,512};
