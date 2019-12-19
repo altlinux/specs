@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: libvirt-glib
-Version: 2.0.0
-Release: alt3
+Version: 3.0.0
+Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
 License: LGPLv2+
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 %define glib_ver 2.38.0
 %define libxml2_ver 2.0.0
 
-BuildRequires: intltool
+BuildRequires: gettext
 BuildRequires: libvirt-devel >= %libvirt_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -212,6 +212,9 @@ gtkdocize --copy
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- new version 3.0.0
+
 * Sat Sep 28 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt3
 - fixed build docs
 
