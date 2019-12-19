@@ -66,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.2.7
+Version: 19.2.8
 Release: alt1
 Epoch: 4
 License: MIT
@@ -447,6 +447,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Thu Dec 19 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.8-alt1
+- 19.2.8
+
 * Thu Dec 05 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.7-alt1
 - 19.2.7
 
