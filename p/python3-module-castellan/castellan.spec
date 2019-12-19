@@ -1,7 +1,7 @@
 %define oname castellan
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: Generic Key Manager interface for OpenStack
 License: ASLv2.0
@@ -70,6 +70,9 @@ rm -rf %oname.egg-info
 #%doc  doc/build/html
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 - Build without python2.
