@@ -1,34 +1,16 @@
 %define oname debtcollector
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.22.0
-Release: alt1
+Release: alt2
 Summary: A collection of Python deprecation patterns and strategies
-Group: Development/Python
+Group: Development/Python3
 
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/debtcollector
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
-
-# fix autoreq
-%py_requires funcsigs
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-wrapt >= 1.7.0
-BuildRequires: python-module-funcsigs >= 1.0.0
-
-BuildRequires: python-module-fixtures
-
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx >= 4.7.0
-BuildRequires: python-module-reno >= 2.5.0
-BuildRequires: python-module-doc8 >= 0.6.0
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -53,7 +35,6 @@ It is a collection of functions/decorators which is used to signal a user when
 * a keyword is renamed
 * further customizing the emitted messages
 
-
 %package doc
 Summary: Documentation for the debtcollector module
 Group: Development/Documentation
@@ -63,32 +44,11 @@ Documentation for the debtcollector module
 
 %package tests
 Summary: Tests for %oname library
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 
 %description tests
 Tests for %oname library.
-
-
-%package -n python3-module-%oname
-Summary: A collection of Python deprecation patterns and strategies
-Group: Development/Python3
-
-%description -n python3-module-%oname
-It is a collection of functions/decorators which is used to signal a user when
-*  a method (static method, class method, or regular instance method) or a class
-    or function is going to be removed at some point in the future.
-* to move a instance method/property/class from an existing one to a new one
-* a keyword is renamed
-* further customizing the emitted messages
-
-%package -n python3-module-%oname-tests
-Summary: Tests for futurist library
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n python3-module-%oname-tests
-Tests for futurist library.
 
 %prep
 %setup -n %oname-%version
@@ -101,42 +61,24 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 rm -rf {test-,}requirements.txt
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 # doc
 # generate html docs
-sphinx-build doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc README.rst CONTRIBUTING.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 
 %files doc
@@ -144,6 +86,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.22.0-alt2
+- Build without python2.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.22.0-alt1
 - Automatically updated to 1.22.0.
 
