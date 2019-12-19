@@ -1,7 +1,7 @@
 %define oname futurist
 
 Name: python3-module-%oname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python3
@@ -69,6 +69,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
+- Automatically updated to 1.10.0.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - Automatically updated to 1.9.0.
 - Build without python2.
