@@ -1,10 +1,10 @@
 %define oname xlib
 
 %def_with python3
-#%%def_with check
+%def_without check
 
 Name: python-module-%oname
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Python X Library
@@ -118,6 +118,9 @@ popd
 %doc examples doc/html/*.html
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.26-alt1
+- Build new version 0.26.
+
 * Tue May 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.25-alt1
 - New version 0.25
 
