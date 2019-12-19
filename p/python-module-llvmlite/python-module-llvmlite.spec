@@ -1,14 +1,14 @@
 %define  oname llvmlite
 
 Name:    python-module-%oname
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
 License: BSD-2-Clause
 Group:   Development/Python
-URL:     https://github.com/numba/llvmlite
+URL:     https://pypi.org/project/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -42,6 +42,8 @@ following approach:
 %setup -n %oname-%version
 
 %build
+%remove_optflags -frecord-gcc-switches
+%add_optflags -grecord-gcc-switches
 export CXX="clang++"
 export LLVM_CONFIG=%_bindir/llvm-config
 %python_build
@@ -55,5 +57,8 @@ export LLVM_CONFIG=%_bindir/llvm-config
 %doc *.rst
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.30.0-alt1
+- Build new version.
+
 * Thu Sep 05 2019 Grigory Ustinov <grenka@altlinux.org> 0.29.0-alt1
 - Initial build for Sisyphus.
