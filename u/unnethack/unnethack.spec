@@ -1,6 +1,6 @@
 Name: unnethack
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: An enhancement to the dungeon exploration game NetHack
 Source: %version.tar.gz
 Group: Games/Adventure
@@ -23,6 +23,8 @@ sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefi
 
 %build
 LIBS=-lgsl %configure --enable-curses-graphics
+make include/autoconf_paths.h
+make -C util recover
 %make_build
 
 %install
@@ -41,6 +43,9 @@ mv %buildroot%_datadir/unnethack/unnethack %buildroot%_bindir/unnethack.bin && l
 %attr(664,root,games) %_localstatedir/%name/[^sbl]*
 
 %changelog
+* Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 5.2.0-alt2
+- Fix parallel build
+
 * Wed Oct 16 2019 Fr. Br. George <george@altlinux.ru> 5.2.0-alt1
 - Autobuild version bump to 5.2.0
 
