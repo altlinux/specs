@@ -1,7 +1,7 @@
 %define        gemname sqlite3
 
 Name:          sqlite3-ruby
-Version:       1.4.1
+Version:       1.4.2
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine
 Group:         Development/Ruby
@@ -64,6 +64,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Thu Dec 19 2019 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version.
+
 * Tue Jun 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
 - Bump to 1.4.1
 
