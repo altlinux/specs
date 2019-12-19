@@ -1,39 +1,24 @@
 %define oname django-debug-toolbar
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: A debug/profiling overlay for Django
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://github.com/dcramer/django-debug-toolbar
 BuildArch: noarch
 
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-django
-BuildRequires: python-module-sphinx
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-django
-BuildPreReq: python3-module-sphinx
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-django
+BuildRequires: python3-module-sphinx
+BuildRequires: python-tools-2to3
 
 
 %description
-This is a fork of Rob Hudson's Debug Toolbar. It includes an
-alternative style, performance optimizations, and some panels which
-may not be available in the main repository.
-
-%package -n python3-module-%oname
-Summary: A debug/profiling overlay for Django
-Group: Development/Python3
-
-%description -n python3-module-%oname
 This is a fork of Rob Hudson's Debug Toolbar. It includes an
 alternative style, performance optimizations, and some panels which
 may not be available in the main repository.
@@ -53,31 +38,26 @@ This package contains documentation for %name
 %prep
 %setup -n %oname-%version
 
-cp -fR . ../python3
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+
+sed -i 's|from.*Command|# from.*Command|' \
+    $(find ./ -name 'debugsqlshell.py')
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
-
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
 
 export PYTHONPATH=$PWD
 %make -C docs man
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst LICENSE example/
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc README.rst LICENSE example/
 %python3_sitelibdir/*
 
@@ -86,6 +66,9 @@ popd
 
 
 %changelog
+* Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.9.1-alt2
+- build for python2 disabled
+
 * Mon Apr 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9.1-alt1
 - Updated version to 1.9.1
 
