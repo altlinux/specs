@@ -62,7 +62,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1816,6 +1816,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Thu Dec 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:244.1-alt1
+- 244.1 (v244-stable branch)
+
 * Wed Dec 04 2019 Alexey Shabalin <shaba@altlinux.org> 1:244-alt1
 - 244
 - switch default-hierarchy to unified (cgroup-v2)
