@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        78.0.3904.108
+Version:        79.0.3945.79
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -77,11 +77,12 @@ Patch019: 0019-ALT-allow-to-override-clang-through-env-variables.patch
 Patch020: 0020-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch021: 0021-ALT-Add-missing-header-on-aarch64.patch
 Patch022: 0022-GENTOO-Clang-allows-detection-of-these-builtins.patch
-Patch023: 0023-FEDORA-gcc-DohUpgradeEntry-nonconst.patch
-Patch024: 0024-FEDORA-gcc-size_t-fix.patch
-Patch025: 0025-FEDORA-vtable-symbol-undefined.patch
-Patch026: 0026-FEDORA-remove-noexcept.patch
-Patch027: 0027-Add-missing-include-for-unique_ptr.patch
+Patch023: 0023-GCC-use-brace-initializer-for-DohUpgrade-vector.patch
+Patch024: 0024-FEDORA-vtable-symbol-undefined.patch
+Patch025: 0025-FEDORA-remove-noexcept.patch
+Patch026: 0026-IWYU-include-algorithm-to-use-std-lower_bound-in-ui-.patch
+Patch027: 0027-IWYU-launch_manager.h-uses-std-vector.patch
+Patch028: 0028-IWYU-include-cstdint-in-register_context.h-as-it-use.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -232,6 +233,7 @@ tar -xf %SOURCE1
 %patch025 -p1
 %patch026 -p1
 %patch027 -p1
+%patch028 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -318,7 +320,6 @@ gn_arg closure_compile=false
 # Remove debug
 gn_arg is_debug=false
 gn_arg symbol_level=0
-gn_arg remove_webcore_debug_symbols=true
 
 gn_arg enable_nacl=%{is_enabled nacl}
 gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
@@ -505,6 +506,47 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Dec 16 2019 Alexey Gladkov <legion@altlinux.ru> 79.0.3945.79-alt1
+- New version (79.0.3945.79).
+- Security fixes:
+  - CVE-2019-13725: Use after free in Bluetooth.
+  - CVE-2019-13726: Heap buffer overflow in password manager.
+  - CVE-2019-13727: Insufficient policy enforcement in WebSockets.
+  - CVE-2019-13728: Out of bounds write in V8.
+  - CVE-2019-13729: Use after free in WebSockets.
+  - CVE-2019-13730: Type Confusion in V8.
+  - CVE-2019-13732: Use after free in WebAudio.
+  - CVE-2019-13734: Out of bounds write in SQLite.
+  - CVE-2019-13735: Out of bounds write in V8.
+  - CVE-2019-13736: Integer overflow in PDFium.
+  - CVE-2019-13737: Insufficient policy enforcement in autocomplete.
+  - CVE-2019-13738: Insufficient policy enforcement in navigation.
+  - CVE-2019-13739: Incorrect security UI in Omnibox.
+  - CVE-2019-13740: Incorrect security UI in sharing.
+  - CVE-2019-13741: Insufficient validation of untrusted input in Blink.
+  - CVE-2019-13742: Incorrect security UI in Omnibox.
+  - CVE-2019-13743: Incorrect security UI in external protocol handling.
+  - CVE-2019-13744: Insufficient policy enforcement in cookies.
+  - CVE-2019-13745: Insufficient policy enforcement in audio.
+  - CVE-2019-13746: Insufficient policy enforcement in Omnibox.
+  - CVE-2019-13747: Uninitialized Use in rendering.
+  - CVE-2019-13748: Insufficient policy enforcement in developer tools.
+  - CVE-2019-13749: Incorrect security UI in Omnibox.
+  - CVE-2019-13750: Insufficient data validation in SQLite.
+  - CVE-2019-13751: Uninitialized Use in SQLite.
+  - CVE-2019-13752: Out of bounds read in SQLite.
+  - CVE-2019-13753: Out of bounds read in SQLite.
+  - CVE-2019-13754: Insufficient policy enforcement in extensions.
+  - CVE-2019-13755: Insufficient policy enforcement in extensions.
+  - CVE-2019-13756: Incorrect security UI in printing.
+  - CVE-2019-13757: Incorrect security UI in Omnibox.
+  - CVE-2019-13758: Insufficient policy enforcement in navigation.
+  - CVE-2019-13759: Incorrect security UI in interstitials.
+  - CVE-2019-13761: Incorrect security UI in Omnibox.
+  - CVE-2019-13762: Insufficient policy enforcement in downloads.
+  - CVE-2019-13763: Insufficient policy enforcement in payments.
+  - CVE-2019-13764: Type Confusion in V8.
+
 * Mon Dec 02 2019 Alexey Gladkov <legion@altlinux.ru> 78.0.3904.108-alt1
 - New version (78.0.3904.108).
 - Security fixes:
