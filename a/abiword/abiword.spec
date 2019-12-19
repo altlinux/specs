@@ -12,16 +12,16 @@
 %def_enable collabnet
 
 Name: abiword
-Version: %ver_major.2
-Release: alt6
+Version: %ver_major.4
+Release: alt1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
-License: GPL
+License: GPL-2.0
 Url: http://www.abisource.com/
 
 %if_disabled snapshot
-Source: http://www.abisource.com/downloads/abiword/%version/source/%name-%version.tar.gz
+Source: https://github.com/AbiWord/abiword/archive/release-%version/%name-%version.tar.gz
 %else
 # VCS: https://github.com/AbiWord/abiword.git
 Source: %name-%version.tar
@@ -31,12 +31,6 @@ Source: %name-%version.tar
 Source11: abiword.mime
 Source12: abiword.keys
 Source13: abiword.xml
-
-# ABI-3-0-0-STABLE branch
-# 6b55f5fd8e1eb03248db3113f123653c93e352f1 (no tags)
-Patch: abiword-3.0.2-up.patch
-
-Patch10: abiword-3.0.2-deb-libical-3.0.patch
 
 #fedora patches
 Patch11: abiword-2.8.3-desktop.patch
@@ -50,7 +44,7 @@ Conflicts: %name-light
 
 Requires: %name-data = %version-%release
 
-BuildRequires: autoconf-archive gcc-c++ boost-devel libreadline-devel flex
+BuildRequires: autoconf-archive gcc-c++ boost-devel libappstream-glib-devel libreadline-devel flex
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
@@ -139,18 +133,14 @@ Requires: %name-gir = %version-%release
 Python bindings for developing with AbiWord library
 
 %prep
-%setup
-%patch -p1 -b .up
-
-# fedora patches
-%patch10 -p1 -b .libical
+%setup %{?_disable_snapshot:-n %name-release-%version}
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
 %patch13 -p0 -b .librevenge
 
 %build
 %add_optflags -std=c++11 -D_FILE_OFFSET_BITS=64
-%autoreconf
+NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-print \
 	--enable-plugins \
@@ -182,6 +172,7 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %exclude %_libdir/abiword-%ver_major/plugins/*.la
 %{?_enable_collabnet:%_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.AbiCollab.service}
 %{?_enable_collabnet:%_datadir/telepathy/clients/AbiCollab.client}
+%doc README COPYRIGHT.TXT
 
 %files data
 %_desktopdir/%name.desktop
@@ -189,6 +180,7 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %_datadir/%name-%ver_major/
 %_datadir/mime-info/*
 %_datadir/mime/packages/*
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/*
 
 %files devel
@@ -205,6 +197,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu Dec 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
+- 3.0.4
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt6
 - rebuilt against libebook-contacts-1.2.so.3 (eds-3.34)
 
