@@ -1,7 +1,7 @@
 %define oname oslo.concurrency
 
 Name: python3-module-%oname
-Version: 3.30.0
+Version: 3.31.0
 Release: alt1
 
 Summary: OpenStack oslo.concurrency library
@@ -76,6 +76,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 3.31.0-alt1
+- Automatically updated to 3.31.0.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.30.0-alt1
 - Automatically updated to 3.30.0.
 - Build without python2.
