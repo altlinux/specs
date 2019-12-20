@@ -1,6 +1,6 @@
 Name: eject
 Version: 2.1.5
-Release: alt3.qa1
+Release: alt4
 
 Summary: A program that ejects removable media using software control
 Group: System/Kernel and hardware
@@ -17,6 +17,7 @@ Patch2: eject-2.1.5-alt-mntent.patch
 Patch3: eject-2.1.5-alt-supersubmount.patch
 Patch4: eject-2.1.5-alt-i18n.patch
 Patch5: eject-2.1.5-alt-usage-stdout.patch
+Patch6: eject-2.1.5-fix-for-glibc2.30.patch
 
 %description
 Eject allows removable media (typically a CD-ROM, floppy disk, tape,
@@ -33,6 +34,7 @@ install -pm644 %_sourcedir/ru.po po/
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 %build
 autoreconf -fisv
@@ -50,6 +52,9 @@ autoreconf -fisv
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 2.1.5-alt4
+- Fixed FTBFS.
+
 * Wed Apr 24 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
