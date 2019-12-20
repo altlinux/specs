@@ -1,61 +1,31 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.2
 %define oname z3c.discriminator
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.2
-#Release: alt3.1
+Release: alt4
+
 Summary: Provides a formalism for marking adapter specifications as discriminators
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/z3c.discriminator/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Patch0: fix-import.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+%py3_requires zope.configuration zope.interface
 
-%py_requires zope.configuration zope.interface
 
 %description
 z3c.discriminator provides a formalism for marking adapter
 specifications as discriminators in the sense that they will be used
 only for adapter lookup, not instantiation.
 
-%package -n python3-module-%oname
-Summary: Provides a formalism for marking adapter specifications as discriminators
-Group: Development/Python3
-%py3_requires zope.configuration zope.interface
-
-%description -n python3-module-%oname
-z3c.discriminator provides a formalism for marking adapter
-specifications as discriminators in the sense that they will be used
-only for adapter lookup, not instantiation.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for z3c.discriminator
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 %py3_requires zope.component.testing zope.testing
-
-%description -n python3-module-%oname-tests
-z3c.discriminator provides a formalism for marking adapter
-specifications as discriminators in the sense that they will be used
-only for adapter lookup, not instantiation.
-
-This package contains tests for z3c.discriminator.
-
-%package tests
-Summary: Tests for z3c.discriminator
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.component.testing zope.testing
 
 %description tests
 z3c.discriminator provides a formalism for marking adapter
@@ -66,62 +36,36 @@ This package contains tests for z3c.discriminator.
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%patch -p2
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %files
-%doc *.txt docs/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt docs/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
+
 
 %changelog
+* Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt4
+- build for python2 disabled
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.2-alt3.2
 - Rebuild with python3.7.
 
