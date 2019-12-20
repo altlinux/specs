@@ -1,6 +1,6 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt5.1
+Release: alt6
 
 Summary: Cute hard drive monitoring applet
 License: GPL
@@ -14,6 +14,7 @@ Source3: wmhdplop.1
 Patch0: wmhdplop-0.9.9-alt-font-path-fix.patch
 Patch1: wmhdplop-0.9.9-alt-makefile.patch
 Patch2: wmhdplop-0.9.9-alt-configure.patch
+Patch3: wmhdplop-0.9.9-fix-for-glibc2.30.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Dec 06 2008
@@ -63,6 +64,7 @@ Try to launch openoffice and enjoy the wmhdplop show!
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %configure
@@ -85,6 +87,9 @@ install -pD -m755 gkhdplop.so %buildroot%_libdir/gkrellm2/plugins/gkhdplop.so
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
+* Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.9-alt6
+- Fixed FTBFS.
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.9-alt5.1
 - Fixed build with gcc 4.7
 
