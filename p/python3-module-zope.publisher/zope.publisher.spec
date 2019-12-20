@@ -1,46 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.publisher
 
-# skip for now due to cyclic deps
-%def_disable check
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Epoch: 1
-Version: 4.3.2
-Release: alt4
+Version: 5.1.1
+Release: alt1
 
-Summary: The Zope publisher publishes Python objects on the web
+Summary: The Zope publisher publishes Python objects on the web (Python3)
 License: ZPLv2.1
-Group: Development/Python
-# Source-git https://github.com/zopefoundation/zope.publisher.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.publisher
+#Git: https://github.com/zopefoundation/zope.publisher.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-Patch1: %oname-fix-tests.patch
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-zope.browser
-BuildRequires: python-module-zope.component
-BuildRequires: python-module-zope.component-tests
-BuildRequires: python-module-zope.contenttype
-BuildRequires: python-module-zope.i18n
-BuildRequires: python-module-zope.interface-tests
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.security
-BuildRequires: python-module-zope.security-tests
-BuildRequires: python-module-zope.deferredimport
-BuildRequires: python-module-zope.hookable
-BuildRequires: python-module-zope.deprecation
-BuildRequires: python-module-zope.event
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
@@ -57,32 +38,6 @@ BuildRequires: python3-module-zope.deprecation
 BuildRequires: python3-module-zope.event
 %endif
 
-%py_requires zope.browser
-%py_requires zope.component
-%py_requires zope.configuration
-%py_requires zope.contenttype
-%py_requires zope.event
-%py_requires zope.exceptions
-%py_requires zope.i18n
-%py_requires zope.interface
-%py_requires zope.location
-%py_requires zope.proxy
-%py_requires zope.security
-%py_requires zope.deferredimport
-%py_requires zope.hookable
-%py_requires zope.deprecation
-
-
-%description
-zope.publisher allows you to publish Python objects on the web. It has
-support for plain HTTP/WebDAV clients, web browsers as well as XML-RPC
-and FTP clients. Input and output streams are represented by request and
-response objects which allow for easy client interaction from Python.
-The behaviour of the publisher is geared towards WSGI compatibility.
-
-%package -n python3-module-%oname
-Summary: The Zope publisher publishes Python objects on the web
-Group: Development/Python3
 %py3_requires zope.browser
 %py3_requires zope.component
 %py3_requires zope.configuration
@@ -98,35 +53,22 @@ Group: Development/Python3
 %py3_requires zope.hookable
 %py3_requires zope.deprecation
 
-%description -n python3-module-%oname
+%description
 zope.publisher allows you to publish Python objects on the web. It has
 support for plain HTTP/WebDAV clients, web browsers as well as XML-RPC
 and FTP clients. Input and output streams are represented by request and
 response objects which allow for easy client interaction from Python.
 The behaviour of the publisher is geared towards WSGI compatibility.
 
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for zope.publisher
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 %py3_requires zope.testrunner
 %py3_requires zope.testing
 Requires: python3-module-zope.security-tests
 Requires: python3-module-zope.component-tests
 Requires: python3-module-zope.interface-tests
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
-%package tests
-Summary: Tests for zope.publisher
-Group: Development/Python
-Requires: %name = %EVR
-%py_requires zope.testrunner
-%py_requires zope.testing
-Requires: python-module-zope.security-tests
-Requires: python-module-zope.component-tests
-Requires: python-module-zope.interface-tests
 
 %description tests
 This package contains tests for %oname.
@@ -134,29 +76,12 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p2
-
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -165,33 +90,27 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 export PYTHONPATH=src
-zope-testrunner --test-path=src -vv
-
-pushd ../python3
 zope-testrunner3 --test-path=src -vv
-popd
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/test*
-
-%files tests
-%python_sitelibdir/*/*/test*
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:5.1.1-alt1
+- NMU: 4.3.2 -> 5.1.1
+- Remove python2 module build
+- Remove ubt tag from changelog
+- Enable check
+- Remove obsolete fix-tests patch
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.3.2-alt4
 - NMU: remove rpm-build-ubt from BR:
 
@@ -201,7 +120,7 @@ popd
 * Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.3.2-alt2
 - Tests fixed
 
-* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 1:4.3.2-alt1%ubt
+* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 1:4.3.2-alt1
 - 4.2.1 -> 4.3.2
 
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.2.1-alt1.1.1

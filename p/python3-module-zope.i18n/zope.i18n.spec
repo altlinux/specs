@@ -1,38 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.i18n
 
-%def_without check
+%def_with check
 
-Name: python-module-%oname
-Version: 4.6.2
-Release: alt4
+Name: python3-module-%oname
+Version: 4.7.0
+Release: alt1
 
 Summary: Zope Internationalization Support
 License: ZPLv2.1
-Group: Development/Python
-# Source-git: https://github.com/zopefoundation/zope.i18n.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.i18n
+#Git: https://github.com/zopefoundation/zope.i18n.git
 
 Source: %name-%version.tar
 Patch0: %oname-fix-tests.patch
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-gettext
-BuildRequires: python-module-pytz
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.component
-BuildRequires: python-module-zope.component-tests
-BuildRequires: python-module-zope.i18nmessageid
-BuildRequires: python-module-zope.schema
-BuildRequires: python-module-zope.deprecation
-BuildRequires: python-module-zope.publisher
 BuildRequires: python3-module-gettext
 BuildRequires: python3-module-pytz
 BuildRequires: python3-module-zope.testing
@@ -45,12 +33,12 @@ BuildRequires: python3-module-zope.deprecation
 BuildRequires: python3-module-zope.publisher
 %endif
 
-%py_requires zope.deprecation
-%py_requires zope.schema
-%py_requires zope.i18nmessageid
-%py_requires zope.component
-%py_requires zope.deferredimport
-%py_requires zope.hookable
+%py3_requires zope.deprecation
+%py3_requires zope.schema
+%py3_requires zope.i18nmessageid
+%py3_requires zope.component
+%py3_requires zope.deferredimport
+%py3_requires zope.hookable
 
 %description
 This package implements several APIs related to internationalization and
@@ -60,44 +48,13 @@ localization.
 * Gettext-based message catalogs for message strings.
 * Locale discovery for Web-based requests.
 
-%package -n python3-module-%oname
-Summary: Zope Internationalization Support (Python 3)
-Group: Development/Python3
-
-%py3_requires zope.deprecation
-%py3_requires zope.schema
-%py3_requires zope.i18nmessageid
-%py3_requires zope.component
-%py3_requires zope.deferredimport
-%py3_requires zope.hookable
-
-%description -n python3-module-%oname
-This package implements several APIs related to internationalization and
-localization.
-
-* Locale objects for all locales maintained by the ICU project.
-* Gettext-based message catalogs for message strings.
-* Locale discovery for Web-based requests.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for zope.i18n (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 Requires: python3-module-zope.component-tests
 %py3_requires zope.publisher
 %py3_requires zope.testrunner
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
-%package tests
-Summary: Tests for zope.i18n
-Group: Development/Python
-Requires: %name = %EVR
-Requires: python-module-zope.component-tests
-%py_requires zope.testing
-%py_requires zope.publisher
-%py_requires zope.testrunner
 
 %description tests
 This package contains tests for %oname.
@@ -106,27 +63,11 @@ This package contains tests for %oname.
 %setup
 %patch0 -p2
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -135,26 +76,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 export PYTHONPATH=src
-zope-testrunner --test-path=src -vv
-
-pushd ../python3
 zope-testrunner3 --test-path=src -vv
-popd
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/zope/i18n/testing.*
-%exclude %python_sitelibdir/zope/i18n/tests
-%exclude %python_sitelibdir/zope/i18n/locales/tests
-
-%files tests
-%python_sitelibdir/zope/i18n/testing.*
-%python_sitelibdir/zope/i18n/tests
-%python_sitelibdir/zope/i18n/locales/tests
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -163,13 +87,19 @@ popd
 %exclude %python3_sitelibdir/zope/i18n/tests
 %exclude %python3_sitelibdir/zope/i18n/locales/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/zope/i18n/testing.*
 %python3_sitelibdir/zope/i18n/*/testing.*
 %python3_sitelibdir/zope/i18n/tests
 %python3_sitelibdir/zope/i18n/locales/tests
 
 %changelog
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt1
+- NMU: 4.6.2 -> 4.7.0
+- Remove python2 module build
+- Remove ubt tag from changelog
+- Enable check
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt4
 - NMU: remove rpm-build-ubt from BR:
 
@@ -182,7 +112,7 @@ popd
 * Thu Mar 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.6.2-alt1
 - Version updated to 4.6.2
 
-* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 4.3.1-alt1%ubt
+* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 4.3.1-alt1
 - 4.1.0 -> 4.3.1
 
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1
