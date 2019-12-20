@@ -2,7 +2,7 @@
 
 Name: wdm
 Version: 1.28
-Release: alt19
+Release: alt20
 
 Summary: WINGs Display Manager
 License: GPL
@@ -124,6 +124,9 @@ install -pDm755 %SOURCE4 %buildroot%_sysconfdir/firsttime.d/wdm
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.28-alt20
+- Fixed FTBFS.
+
 * Tue Jun 05 2018 Michael Shigorin <mike@altlinux.org> 1.28-alt19
 - disable xconsole by default (see /etc/X11/wdm/Xsetup_0,
   set XCONSOLE=yes in /etc/sysconfig/xinitrc if really needed)
