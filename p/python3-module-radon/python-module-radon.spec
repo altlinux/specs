@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Various code metrics for Python code
 
@@ -37,17 +37,17 @@ rm -r */lib/radon/tests
 
 %install
 %python3_install
-%if "3"=="3"
-mv %buildroot%_bindir/radon %buildroot%_bindir/radon3
-%endif
 
 %files
 %doc CHANGELOG README.rst
-%_bindir/radon3
+%_bindir/radon
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0.0-alt2
+- build for python2 disabled
+
 * Mon Sep 23 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Build new version.
 
