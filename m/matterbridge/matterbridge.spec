@@ -1,8 +1,7 @@
 %global import_path github.com/42wim/matterbridge
-%global commit bad19901730d51416ebb12882840703e9743502b
 
 Name: matterbridge
-Version: 1.16.1
+Version: 1.16.3
 Release: alt1
 
 Summary: A simple chat bridge
@@ -45,6 +44,7 @@ Natively supported:
 * Reddit
 * Facebook messenger
 * Discourse
+* Counter-Strike, half-life and more
 
 %prep
 %setup
@@ -57,10 +57,9 @@ export GOPATH="$BUILDDIR:%go_path"
 
 pushd .gopath/src/%import_path
 export VERSION=%version
-export COMMIT=%commit
 export BRANCH=altlinux
 export CODENAME=montdor
-export DATE="$(date '+%%Y-%%m-%%d' $SOURCE_DATE_EPOCH)"
+export DATE="$(date '+%%Y-%%m-%%d' ${SOURCE_DATE_EPOCH:+-d$SOURCE_DATE_EPOCH})"
 export GOFLAGS="-mod=vendor"
 go generate
 %gobuild
@@ -87,6 +86,12 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Fri Dec 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.3-alt1
+- Updated to 1.16.3.
+
+* Tue Nov 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.2-alt1
+- Updated to 1.16.2.
+
 * Sun Oct 27 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1
 - Initial build for ALT Sisyphus.
 
