@@ -1,6 +1,6 @@
 Name: connector
-Version: 1.8.5
-Release: alt2
+Version: 1.8.6
+Release: alt1
 
 Summary: Remote desktop chooser
 License: GPL
@@ -37,7 +37,8 @@ install -pDm644 %name.man %buildroot%_man1dir/%name.1
 %find_lang --with-man %name
 install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 install -pDm644 %name.xml %buildroot%_datadir/mime/packages/%name.xml
-install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+mkdir -p %buildroot%_iconsdir
+cp -r icons/hicolor %buildroot%_iconsdir/
 
 %files -f %name.lang
 %_bindir/%name
@@ -50,9 +51,18 @@ install -pDm644 emblem %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 %_datadir/mime/packages/%name.xml
-%_iconsdir/hicolor/64x64/apps/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Dec 17 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.6-alt1
+- Added 'drag-and-drop' for create label of the connection
+- Added the possibility to open Remmina and RDP files
+- Updated emblem; added icons of different sizes
+- FreeRDP:
+ + Added input field for additional user parameters
+ + Fixed work connections from previous version
+- Added keys 'help' and 'version' for cmdline; updated man
+
 * Thu Nov 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.8.5-alt2
 - Fixed version
 
