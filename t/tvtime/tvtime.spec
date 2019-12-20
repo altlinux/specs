@@ -1,6 +1,6 @@
 Name: tvtime
 Version: 1.0.11
-Release: alt1
+Release: alt2
 
 Summary: A high quality TV viewer
 License: GPLv2+ and LGPLv2+
@@ -15,6 +15,7 @@ Source3: tvtime-1.0.2-icons.tar.bz2
 Source4: tvtime.desktop
 
 Patch0: tvtime-1.0.2-alt-tango.patch
+Patch1: tvtime-1.0.11-fix-for-glibc2.30.patch
 Patch3: tvtime-1.0.8-alt-confdir.patch
 Patch301: tvtime-1.0.2-alt-drop-freefont.patch
 
@@ -32,6 +33,7 @@ card and displays it on a computer monitor or projector.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 %patch3 -p1
 %patch301 -p1
 tar xf %SOURCE3
@@ -63,6 +65,9 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %_mandir/*/man?/*.*
 
 %changelog
+* Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.11-alt2
+- Fixed FTBFS.
+
 * Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 1.0.11-alt1
 - new version (watch file uupdate)
 
