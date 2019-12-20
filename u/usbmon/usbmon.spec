@@ -1,5 +1,5 @@
 Name: usbmon
-Version: 6
+Version: 6.1
 Release: alt1
 
 Summary: A basic front-end to usbmon
@@ -36,6 +36,9 @@ install -p -m 755 -t %buildroot%_sbindir usbmon
 %_man8dir/usbmon.8*
 
 %changelog
+* Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 6.1-alt1
+- Build new version.
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 6-alt1
 - new version 6 (with rpmrb script)
 
@@ -44,4 +47,3 @@ install -p -m 755 -t %buildroot%_sbindir usbmon
 
 * Wed Dec 01 2010 Denis Baranov <baraka@altlinux.org> 5.4-alt1
 - Initial build for ALTLinux
-
