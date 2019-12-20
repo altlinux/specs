@@ -3,14 +3,14 @@
 %endif
 
 Name: mongo
-Version: 4.2.1
-Release: alt2
-
+Version: 4.2.2
+Release: alt1.1
 Summary: mongo client shell and tools
-License: SSPL 1.0
+License: SSPL-1.0
+
 Group: Development/Databases
 
-Url: http://www.mongodb.org
+Url: https://www.mongodb.org
 Source: %name-%version.tar
 Packager: Vladimir Didenko <cow@altlinux.org>
 
@@ -198,6 +198,13 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Dec 20 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt1.1
+- remove duplicated Url tag
+
+* Tue Dec 17 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt1
+- 4.2.2
+- fix license name
+
 * Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 4.2.1-alt2
 - added ppc64el, %%e2k to ExclusiveArch:
 - conditional valgrind build dependency
