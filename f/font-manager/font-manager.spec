@@ -9,11 +9,11 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.5
-Release: alt2
+Version: 0.7.7
+Release: alt1
 
 Summary: A font management application for the GNOME desktop
-License: GPLv3
+License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: http://fontmanager.github.io/
 
@@ -28,19 +28,17 @@ Patch: font-manager-0.7.5-alt-build.patch
 Requires: file-roller
 
 %define vala_ver 0.42
-%define nautilus_python_ver 1.2.2-alt2
 
-%if_with nautilus
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel nautilus-python >= %nautilus_python_ver
-%add_python3_path %_datadir/nautilus-python/extensions
-%endif
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
+%if_with nautilus
+BuildRequires(pre): rpm-build-gnome
+BuildRequires: libnautilus-devel
+%endif
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -60,7 +58,7 @@ Enlightenment, and even KDE.
 %patch
 
 %build
-%meson -Ddisable_pycompile=true \
+%meson \
 	%{?_with_nautilus:-Dnautilus=true}
 %meson_build
 
@@ -82,11 +80,14 @@ Enlightenment, and even KDE.
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name1.appdata.xml
-%{?_with_nautilus:%_datadir/nautilus-python/extensions/*}
-%doc README CHANGELOG
+%{?_with_nautilus:%nautilus_extdir/*.so}
+%doc README* CHANGELOG
 
 
 %changelog
+* Fri Dec 20 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
+- updated to 0.7.7-2-g456d80b
+
 * Sat Apr 27 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt2
 - fixed build (ALT #36689)
 
