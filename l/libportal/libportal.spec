@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.2
+%define ver_major 0.3
 %define soname 0
 %define xdg_name org.gnome.Portal
 
@@ -102,6 +102,9 @@ of the installed %name.
 %endif
 
 %changelog
+* Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.3-alt1
+- 0.3
+
 * Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.2-alt1
 - 0.2
 - new -tests subpackage
