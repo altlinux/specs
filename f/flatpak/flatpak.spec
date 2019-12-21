@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -178,6 +178,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
