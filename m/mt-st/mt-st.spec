@@ -1,6 +1,6 @@
 Name: mt-st
 Version: 1.1
-Release: alt1.qa1
+Release: alt2
 
 Summary: Programs to control tape device operations
 License: GPL
@@ -11,6 +11,8 @@ Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 # ftp://ftp.ibiblio.org/pub/Linux/system/backup/mt-st-%version.tar.gz
 Source: mt-st-%version.tar
 
+Patch: mt-st-1.1-fix-for-glibc2.30.patch
+
 %description
 The mt-st package contains the mt and st tape drive management programs.
 Mt (for magnetic tape drives) and st (for SCSI tape devices) can control
@@ -18,6 +20,7 @@ rewinding, ejecting, skipping files and blocks and more.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make_build
@@ -32,6 +35,9 @@ rewinding, ejecting, skipping files and blocks and more.
 %doc README* *.lsm stinit.def.examples
 
 %changelog
+* Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.1-alt2
+- Fixed FTBFS.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
