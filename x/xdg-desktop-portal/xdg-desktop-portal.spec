@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -19,7 +19,7 @@ Source: %url/releases/download/%version/%name-%version.tar.xz
 %define portal_ver 0.2
 
 Requires: dbus
-Requires: flatpak >= 1.5.0
+Requires: flatpak >= 1.6.0
 Requires: /usr/bin/fusermount
 Requires: pipewire
 Requires: geoclue2 >= %geoclue_ver
@@ -89,6 +89,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
