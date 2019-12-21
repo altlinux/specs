@@ -1,6 +1,6 @@
 Name: vifm
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: Two pane file manager with vi-like keybindings
 License: GPLv2
@@ -21,6 +21,9 @@ to learn a new set of commands.
 
 %prep
 %setup
+# fix python shebang
+# absolutely dont care what happens in this file. It's for OS X
+sed -i "s:\(\/usr\/bin\/\)env python:\1python3:" data/vifm-media-osx
 
 %build
 %autoreconf
@@ -44,6 +47,9 @@ to learn a new set of commands.
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt2
+- Fix python shebang.
+
 * Tue Jul 30 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
 - Build new version.
 
