@@ -4,7 +4,7 @@
 
 Name: ltrace
 Version: 0.7.91.0.198.git82c6640
-Release: alt2
+Release: alt3
 
 Summary: Tracks runtime library calls from dynamically linked executables
 License: GPLv2+
@@ -24,6 +24,7 @@ Patch3: ltrace-0.7.91.0.198.git82c6640-disable_long_double_test_wchar.patch
 Patch4: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
 %{?_without_glibc_debuginfo:
 Patch5: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
+Patch6: ltrace-0.7.91.0.198.git82c6640-make_gcc_happy_with_null.patch
 
 BuildRequires: libelf-devel elfutils-devel gcc-c++
 %{?!_without_check:%{?!_disable_check:
@@ -67,6 +68,7 @@ Ltrace перехватывает и выводит все выполняемы�
 %patch4 -p1
 %{?_without_glibc_debuginfo:
 %patch5 -p1}
+%patch6 -p1
 
 %build
 %autoreconf
@@ -89,6 +91,9 @@ Ltrace перехватывает и выводит все выполняемы�
 %exclude %_docdir/%name
 
 %changelog
+* Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt3
+- Fixed FTBFS for gcc9.
+
 * Wed Nov 28 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt2
 - Temporary disabled tests, because of new gcc.
 
