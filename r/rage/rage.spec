@@ -1,6 +1,6 @@
 Name: rage
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: EFL Video Player
 License: BSD
@@ -80,6 +80,9 @@ Here is a list of all the things it can do:
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Sun Dec 22 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt2
+- build current snapshot
+
 * Sat Aug 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
