@@ -1,5 +1,5 @@
 %global import_path https://github.com/justjanne/powerline-go
-%global commit 2426b2e3cb7507197b13cc8c0389d0e820f23900
+%global commit c9f514f4d67478f055bd07db4ef30a08a19740cf
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name: powerline-go
-Version: 1.13.0
+Version: 1.15.0
 Release: alt1
 Summary: A beautiful and useful low-latency prompt for your shell, written in go
 
@@ -57,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sun Dec 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Sun Nov 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt1
 - Initial build for ALT
 
