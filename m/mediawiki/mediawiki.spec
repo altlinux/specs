@@ -1,8 +1,8 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.33
+%define major 1.34
 
 Name: mediawiki
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -132,6 +132,9 @@ Obsoletes: mediawiki-extensions-ReplaceText
 # since 1.33
 Obsoletes: mediawiki-extensions-StubManager
 
+# since 1.34
+Provides: mediawiki-extensions-Scribunto
+
 %description -n %name-common
 %summary
 
@@ -181,6 +184,8 @@ Requires: %name-common = %version-%release
 %patch -p2
 %patch1 -p2
 
+%__subst "s|/usr/bin/python|/usr/bin/python3|" extensions/ConfirmEdit/*.py
+
 %install
 mkdir -p %buildroot%_mediawikidir/
 
@@ -197,8 +202,13 @@ rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
 rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
 rm -rf %buildroot%_mediawikidir/resources/lib/oojs-ui/update-oojs-ui.sh
+
 rm -fr %buildroot%_mediawikidir/includes/zhtable
+rm -rf %buildroot%_mediawikidir/maintenance/language/zhtable
+
 rm -rf %buildroot%_mediawikidir/vendor/zordius/lightncandy/build/
+
+rm -rf %buildroot%_mediawikidir//extensions/Scribunto/includes/engines/LuaStandalone/binaries/
 
 find %buildroot%_mediawikidir/ \
   \( -name .htaccess -or -name \*.cmi \) \
@@ -324,6 +334,10 @@ exit 0
 
 
 %changelog
+* Sun Dec 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.34.0-alt1
+- new version 1.34.0 (with rpmrb script)
+- CVE-2019-19709
+
 * Sat Oct 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.33.1-alt1
 - new version 1.33.1 (with rpmrb script)
 - CVE-2019-16738
