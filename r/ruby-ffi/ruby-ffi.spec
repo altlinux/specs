@@ -1,19 +1,18 @@
 %define        pkgname ffi
 
 Name:          ruby-%pkgname
-Version:       1.11.1
+Version:       1.11.3
 Release:       alt1
 Summary:       Ruby foreign function interface
 Group:         Development/Ruby
 License:       BSD
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Url:           https://github.com/ffi/ffi/wiki
-%vcs           https://github.com/ffi/ffi.git
+Vcs:           https://github.com/ffi/ffi.git
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
-BuildRequires: vim
 BuildRequires: gem(rspec)
 BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
@@ -77,13 +76,17 @@ Documentation files for %gemname gem.
 %ruby_includedir/ffi*
 
 %changelog
+* Sun Dec 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.11.3-alt1
+- updated (^) 1.11.1 -> 1.11.3
+- fixed (!) spec's changelog, Vcs tag, minor others
+
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.11.1-alt1
-^ v1.11.1
-! spec
+- updated (^) 1.10.0 -> 1.11.1
+- fixed (!) spec
 
 * Tue Feb 05 2019 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
-- Bump to 1.10.0;
-- Use Ruby Policy 2.0.
+- updated (^) 1.9.25 -> 1.10.0
+- updated (^) -> Ruby Policy 2.0
 
 * Wed Aug 29 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.25-alt1.1
 - Rebuild for new Ruby autorequirements.
