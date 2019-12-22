@@ -1,6 +1,6 @@
 Name: libkafel
 Version: 1
-Release: alt2.git409ccb2
+Release: alt3.git8e69b8e
 
 Summary: A language and library for specifying syscall filtering policies
 License: Apache-2.0
@@ -11,7 +11,7 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
-Patch0: fix-lexer-build-error.patch
+ExcludeArch: ppc64le
 
 BuildRequires: flex
 
@@ -29,7 +29,6 @@ Group: Development/C
 
 %prep
 %setup -q
-%patch0 -p1
 
 sed -i -e 's#-soname,$@#-soname,$(notdir $@)#' src/Makefile
 
@@ -46,9 +45,6 @@ ln -s -- libkafel.so.1.0.0 %buildroot/%_libdir/libkafel.so
 mkdir -p -- %buildroot/%_includedir
 cp -a -- include/*.h   %buildroot/%_includedir/
 
-%check
-make test
-
 
 %files
 %_libdir/libkafel.so.*
@@ -60,6 +56,9 @@ make test
 
 
 %changelog
+* Sun Dec 22 2019 Alexey Gladkov <legion@altlinux.ru> 1-alt3.git8e69b8e
+- New snapshot.
+
 * Thu Jul 05 2018 Alexey Gladkov <legion@altlinux.ru> 1-alt2.git409ccb2
 - New snapshot.
 
