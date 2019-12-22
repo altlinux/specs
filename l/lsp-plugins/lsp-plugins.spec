@@ -1,5 +1,5 @@
 Name: lsp-plugins
-Version: 1.1.10
+Version: 1.1.11
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -12,12 +12,12 @@ Url: https://lsp-plug.in/
 Source: https://github.com/sadko4u/%name/archive/%name-%version.tar.gz
 Patch: %name-1.1.10-alt-rpath.patch
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires: gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
-BuildRequires: libGL-devel libexpat-devel
+BuildRequires: libGL-devel
 BuildRequires: %_bindir/php
 
 %description
@@ -66,7 +66,7 @@ Documentation for LSP (Linux Studio Plugins) plugins.
 %patch -b .rpath
 
 %build
-%add_optflags %optflags_warnings
+%add_optflags %optflags_warnings -D_FILE_OFFSET_BITS=64
 export PLATFORM=Linux SYSTEM=Linux
 %make PREFIX=%_prefix \
     BUILD_PROFILE=%_arch \
@@ -103,6 +103,10 @@ export PLATFORM=Linux SYSTEM=Linux
 
 
 %changelog
+* Sun Dec 22 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.11-alt1
+- 1.1.11
+- enabled build for aarch64
+
 * Wed Jul 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.10-alt1
 - 1.1.10
 
