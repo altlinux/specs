@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit ff383cdc0420217e3460dabe17db54f8557d95b6
+%global commit 23bc63d43a8dc05f53afa46e3526ebb5578f3d88
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.7.8
+Version:	1.7.9
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -52,10 +52,10 @@ events, and performing analytics.
 # $ dep ensure -vendor-only
 # popd
 # $ git rm -rf vendor
-# $ cp -r ~go/src/github.com/influxdata/influxdb/vendor ./
+# $ cp -r $HOME/go/src/github.com/influxdata/influxdb/vendor ./
 # $ git add --force vendor
 # $ git commit -m "update go pkgs by dep ensure -vendor-only"
-# $ rm -rf ~/go/src/github.com/influxdata/influxdb
+# $ rm -rf $HOME/go/src/github.com/influxdata/influxdb
 
 
 export BUILDDIR="$PWD/.gopath"
@@ -130,6 +130,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Sun Dec 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.9-alt1
+- 1.7.9
+
 * Wed Sep 11 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.8-alt1
 - 1.7.8
 
