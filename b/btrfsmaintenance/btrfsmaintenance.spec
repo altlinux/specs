@@ -1,6 +1,6 @@
 Name: btrfsmaintenance
 Version: 0.4.2
-Release: alt3
+Release: alt4
 Summary: Scripts for btrfs periodic maintenance tasks
 License: GPLv2
 Group: System/Base
@@ -78,6 +78,11 @@ install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%n
 %_presetdir/80-btrfsmaintenance.preset
 
 %changelog
+
+* Sun Dec 22 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt4
+- Update to git master df43313e (21.12.2019)
+- Prevent running balance, trim, scrub at the same time by flocking
+  (main change from upstream)
 
 * Fri May 31 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt3
 - Fix %%post and %%preun scripts:
