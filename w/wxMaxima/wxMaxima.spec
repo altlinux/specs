@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 19.12.1
+Version: 19.12.2
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -19,6 +19,9 @@ BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libwxGTK3.0-devel libpango-devel libxml2-devel zlib-devel makeinfo
 
 ExclusiveArch: %ix86 x86_64 armh aarch64 %e2k
+
+Provides: wxmaxima = %EVR
+Obsoletes: wxmaxima < %EVR
 
 %description
 wxMaxima is a wxWidgets GUI for the computer algebra system Maxima.
@@ -74,6 +77,11 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.2-alt1
+- New version.
+- Provides wxmaxima.
+- Complete Russian translations (thanks Olesya Gerasimenko).
+
 * Wed Dec 11 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.1-alt1
 - New version.
 
