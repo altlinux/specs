@@ -1,19 +1,19 @@
 Name:    installer-feature-online-repo
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Make online repositories available
 License: GPL
 Group:   System/Configuration/Other
+
 Url:     http://www.altlinux.org/Installer/beans
-BuildArch: noarch
-Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %name-%version.tar
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+BuildArch: noarch
 
 %description
 Make online repositories available
-
-Requires: chrooted
 
 %prep
 %setup
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Dec 23 2019 Michael Shigorin <mike@altlinux.org> 0.18-alt1
+- No public repos for e2k for now, unfortunately.
+
 * Tue Jun 04 2019 Andrey Cherepanov <cas@altlinux.org> 0.17-alt1
 - Change default update source to yandex mirror.
 
