@@ -17,7 +17,7 @@
 %endif
 
 Name: libvpx6
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -100,6 +100,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Mon Dec 23 2019 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - enabled AVX/AVX2 on x86_64
