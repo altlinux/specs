@@ -8,7 +8,7 @@
 
 Name: kde5-connect
 Version: 1.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -18,6 +18,7 @@ License: GPLv2+
 
 Provides: %rname = %version
 Provides: kde-connect = %version kdeconnect-kde = %version
+Requires: libqt5-quickparticles
 Requires: /usr/bin/sshfs qca-qt5-ossl
 Requires: kf5-kirigami
 
@@ -135,6 +136,9 @@ KF5 library
 %_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Dec 23 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt2
+- fix requires
+
 * Thu Dec 19 2019 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
 - new version
 
