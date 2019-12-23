@@ -1,6 +1,6 @@
 Name: btrfsmaintenance
 Version: 0.4.2
-Release: alt4
+Release: alt5
 Summary: Scripts for btrfs periodic maintenance tasks
 License: GPLv2
 Group: System/Base
@@ -77,7 +77,32 @@ install -m 644 -D sysconfig.btrfsmaintenance %buildroot%_sysconfdir/sysconfig/%n
 %_unitdir/btrfs-trim.timer
 %_presetdir/80-btrfsmaintenance.preset
 
+%check
+# Check correctness of the config
+set -efu
+. %buildroot%_sysconfdir/sysconfig/%name
+echo "$BTRFS_LOG_OUTPUT"
+echo "$BTRFS_DEFRAG_PATHS"
+echo "$BTRFS_DEFRAG_PERIOD"
+echo "$BTRFS_DEFRAG_MIN_SIZE"
+echo "$BTRFS_BALANCE_MOUNTPOINTS"
+echo "$BTRFS_BALANCE_PERIOD"
+echo "$BTRFS_BALANCE_DUSAGE"
+echo "$BTRFS_BALANCE_MUSAGE"
+echo "$BTRFS_SCRUB_MOUNTPOINTS"
+echo "$BTRFS_SCRUB_PERIOD"
+echo "$BTRFS_SCRUB_PRIORITY"
+echo "$BTRFS_SCRUB_READ_ONLY"
+echo "$BTRFS_TRIM_PERIOD"
+echo "$BTRFS_TRIM_MOUNTPOINTS"
+echo "$BTRFS_ALLOW_CONCURRENCY"
+
 %changelog
+
+* Mon Dec 23 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt5
+- Fix git merge mistake
+- Add simple test to prevent such mistakes in /etc/sysconfig/btrfsmaintenance
+  in the future
 
 * Sun Dec 22 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt4
 - Update to git master df43313e (21.12.2019)
