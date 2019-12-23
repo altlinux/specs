@@ -1,27 +1,31 @@
-%set_automake_version 1.11
-%ifnarch riscv64
-%def_enable qt4
+%def_without java
+%ifarch riscv64
+%def_without qt
+%def_without qt5
+%else
+%def_with qt
+%def_with qt5
 %endif
 
 Name: zbar
-Version: 0.10
-Release: alt10
+Version: 0.23
+Release: alt1
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
 
 Group: Graphics
-License: GPLv2
-Url: http://zbar.sourceforge.net/
-Source: %name-%version.tar
-Patch1: 0001-Description-Linux-2.6.38-and-later-do-not-support-th.patch
-Patch2: python-zbar-import-fix-am.patch
+License: GPLv2+
+Url: https://github.com/mchehab/zbar
+Source: %name-%version.tar.gz
 
-# Automatically added by buildreq on Thu Apr 04 2013
-# optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXv-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-pygobject-devel python-modules python-modules-compiler xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ libImageMagick-devel libv4l-devel python-module-pygtk-devel
+# Automatically added by buildreq on Thu Dec 19 2019
+# optimized out: at-spi2-atk docbook-dtds docbook-style-xsl fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXv-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libpango-devel libqt5-core libqt5-gui libqt5-widgets libqt5-x11extras libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel perl pkg-config python-modules python2-base python3 python3-base qt5-base-devel sh4 xml-common xml-utils xorg-proto-devel xsltproc
+BuildRequires: glibc-devel-static libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
 
-%{?_enable_qt4:BuildRequires: libqt4-devel}
+%if_with qt5
+BuildRequires: qt5-x11extras-devel
+%endif
 
 %description
 Zbar is the utils and library for scanning and decoding bar codes from
@@ -47,7 +51,6 @@ bar code scanner.
 %package -n %libname-devel
 Group: Development/C++
 Summary: Bar code library extra development files
-Requires: %libname = %version
 
 %description -n %libname-devel
 Zbar is a library for scanning and decoding bar codes from various
@@ -62,7 +65,6 @@ developing applications that read bar codes with this library.
 %package -n %libname-devel-static
 Group: Development/C++
 Summary: Bar code library extra development files and static libraries
-Requires: %libname = %version
 
 %description -n %libname-devel-static
 Zbar is a library for scanning and decoding bar codes from various
@@ -74,12 +76,11 @@ with a minimal memory footprint.
 This package contains additional static libraries used for
 developing applications that read bar codes with this library.
 
-%package -n %libname-gtk
+%package -n %libname-gtk3
 Group: Development/GNOME and GTK+
-Summary: Bar code reader GTK widget
-Requires: %libname = %version
+Summary: Bar code reader GTK3 widget
 
-%description -n %libname-gtk
+%description -n %libname-gtk3
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -89,12 +90,11 @@ with a minimal memory footprint.
 This package contains a bar code scanning widget for use with GUI
 applications based on GTK+-2.0.
 
-%package -n %libname-gtk-devel
+%package -n %libname-gtk3-devel
 Group: Development/GNOME and GTK+
 Summary: Bar code reader GTK widget extra development files
-Requires: %libname-gtk = %version, %libname-devel = %version
 
-%description -n %libname-gtk-devel
+%description -n %libname-gtk3-devel
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -102,15 +102,14 @@ flexible, layered architecture features a fast, streaming interface
 with a minimal memory footprint.
 
 This package contains header files and additional libraries used for
-developing GUI applications based on GTK+-2.0 that include a bar code
+developing GUI applications based on GTK+-3.0 that include a bar code
 scanning widget.
 
-%package -n %libname-gtk-devel-static
+%package -n %libname-gtk3-devel-static
 Group: Development/GNOME and GTK+
-Summary: Bar code reader GTK widget extra development files and static libraries
-Requires: %libname-gtk = %version, %libname-devel = %version
+Summary: Bar code reader GTK3 widget extra development files and static libraries
 
-%description -n %libname-gtk-devel-static
+%description -n %libname-gtk3-devel-static
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -118,14 +117,14 @@ flexible, layered architecture features a fast, streaming interface
 with a minimal memory footprint.
 
 This package contains header files and additional static libraries used for
-developing GUI applications based on GTK+-2.0 that include a bar code
+developing GUI applications based on GTK+-3.0 that include a bar code
 scanning widget.
 
-%package -n python-module-%name
-Group: Development/Python
-Summary: Bar code reader PyGTK widget
+%package -n python3-module-%name
+Group: Development/Python3
+Summary: Bar code reader PyGTK3 widget
 
-%description -n python-module-zbar
+%description -n python3-module-zbar
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -135,12 +134,26 @@ with a minimal memory footprint.
 This package contains a bar code scanning widget for use in GUI
 applications based on PyGTK.
 
-%if_enabled qt4
-%package -n %libname-qt
-Group: Development/KDE and QT
-Summary: Bar code reader Qt widget
+%package gtk
+Group: Graphics
+Summary: Bar code camera reader GTK3 aplication
 
-%description -n %libname-qt
+%description gtk
+%summary
+
+%if_with qt5
+%package qt5
+Group: Graphics
+Summary: Bar code camera reader Qt5 aplication
+
+%description qt5
+%summary
+
+%package -n %libname-qt5
+Group: Development/KDE and QT
+Summary: Bar code reader Qt5 widget
+
+%description -n %libname-qt5
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -148,14 +161,13 @@ flexible, layered architecture features a fast, streaming interface
 with a minimal memory footprint.
 
 This package contains a bar code scanning widget for use with GUI
-applications based on Qt4.
+applications based on Qt5.
 
-%package -n %libname-qt-devel
+%package -n %libname-qt5-devel
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget extra development files
-Requires: %libname-qt = %version, %libname-devel = %version
 
-%description -n %libname-qt-devel
+%description -n %libname-qt5-devel
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -163,15 +175,14 @@ flexible, layered architecture features a fast, streaming interface
 with a minimal memory footprint.
 
 This package contains header files and additional libraries used for
-developing GUI applications based on Qt4 that include a bar code
+developing GUI applications based on Qt5 that include a bar code
 scanning widget.
 
-%package -n %libname-qt-devel-static
+%package -n %libname-qt5-devel-static
 Group: Development/KDE and QT
-Summary: Bar code reader Qt widget extra development files and static libraries
-Requires: %libname-qt = %version, %libname-devel = %version
+Summary: Bar code reader Qt5 widget extra development files and static libraries
 
-%description -n %libname-qt-devel-static
+%description -n %libname-qt5-devel-static
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -179,102 +190,92 @@ flexible, layered architecture features a fast, streaming interface
 with a minimal memory footprint.
 
 This package contains header files and additional static libraries used for
-developing GUI applications based on Qt4 that include a bar code
+developing GUI applications based on Qt5 that include a bar code
 scanning widget.
 %endif
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-for F in `grep -rl dprintf *`; do
-sed -i.dprintf 's/dprintf/debprintf/g' $F
-done
+# TODO
+sed -i 's/gtk+-2.0/gtk+-3.0/' zbar-gtk.pc.in
+sed -i 's/Qt/Qt5/g;s/Qt54/Qt5/g' zbar-qt.pc.in
 
 %build
 %autoreconf
-%configure %{!?_enable_qt4:--without-qt}
-
-#	--without-qt
-#	--without-xshm \
-#	--without-xv \
-#	--without-npapi \
-#	--without-gtk \
-#	--without-python \
-#	--without-imagemagick \
-#	--disable-libtool-lock \
-#	--disable-pthread \
-#	--disable-video \
-#	--disable-assert
+export LIBS=-lm
+%configure \
+	%{subst_with qt} \
+	%{subst_with qt5} \
+	%{subst_with java} \
+	--with-python=python3 \
+	--with-gtk=gtk3 \
+	--with-gir=yes \
 
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 
-%files -n %libname
-%_libdir/%libname.so.*
-%doc %_docdir/%name/COPYING
-%doc %_docdir/%name/INSTALL
-%doc %_docdir/%name/NEWS
-%doc %_docdir/%name/README
-%doc %_docdir/%name/TODO
-%doc %_docdir/%name/LICENSE
-
 %files
 %_bindir/zbarimg
 %_bindir/zbarcam
 %_man1dir/*
 
+%files -n %libname
+%_libdir/%libname.so.*
+%doc %_docdir/%name/[^H]*.md
+
 %files -n %libname-devel
-%doc %_docdir/%name/HACKING
+%doc %_docdir/%name/HACKING*
 %_libdir/%libname.so
 %_pkgconfigdir/%name.pc
 %_includedir/%name.h
-%_includedir/%name/Exception.h
-%_includedir/%name/Symbol.h
-%_includedir/%name/Image.h
-%_includedir/%name/Scanner.h
-%_includedir/%name/Decoder.h
-%_includedir/%name/ImageScanner.h
-%_includedir/%name/Video.h
-%_includedir/%name/Window.h
-%_includedir/%name/Processor.h
+%_includedir/%name/*.h
+%exclude %_includedir/%name/*gtk.h
+%exclude %_includedir/%name/Q*
 
 %files -n %libname-devel-static
 %_libdir/%libname.a
 
-%files -n %libname-gtk
+%files -n %libname-gtk3
 %_libdir/libzbargtk.so.*
 
-%files -n %libname-gtk-devel
+%files -n %libname-gtk3-devel
 %_libdir/libzbargtk.so
 %_pkgconfigdir/zbar-gtk.pc
-%_includedir/%name/zbargtk.h
+%_includedir/%name/*gtk.h
 
-%files -n %libname-gtk-devel-static
+%files -n %libname-gtk3-devel-static
 %_libdir/libzbargtk.a
 
-%files -n python-module-%name
-%python_sitelibdir/%name.la
-%python_sitelibdir/%name.so
-%python_sitelibdir/zbarpygtk.la
-%python_sitelibdir/zbarpygtk.so
+%files -n python3-module-%name
+%python3_sitelibdir/*.so
 
-%if_enabled qt4
-%files -n %libname-qt
+%files gtk
+%_bindir/*gtk
+
+%if_with qt5
+%files qt5
+%_bindir/*qt
+
+%files -n %libname-qt5
 %_libdir/libzbarqt.so.*
 
-%files -n %libname-qt-devel
+%files -n %libname-qt5-devel
 %_libdir/libzbarqt.so
 %_pkgconfigdir/zbar-qt.pc
 %_includedir/%name/Q*.h
 
-%files -n %libname-qt-devel-static
+%files -n %libname-qt5-devel-static
 %_libdir/libzbarqt.a
 %endif
 
 %changelog
+* Fri Dec 20 2019 Fr. Br. George <george@altlinux.ru> 0.23-alt1
+- Huge version update
+- Switch to python3/qt5/gtk3
+- Autobuild version bump to 0.23
+
 * Mon Aug 05 2019 Nikita Ermakov <arei@altlinux.org> 0.10-alt10
 - NMU: Disable qt4 for RISC-V.
 
