@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.15
+Version: 0.9.16
 Release: alt1
 
 Summary: Update kernel and modules
@@ -42,6 +42,9 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 %_sbindir/remove-old-kernels
 
 %changelog
+* Fri Dec 20 2019 Oleg Solovyov <mcpain@altlinux.org> 0.9.16-alt1
+- NMU: do not call apt when there are no kernels to remove
+
 * Thu Dec 19 2019 Oleg Solovyov <mcpain@altlinux.org> 0.9.15-alt1
 - NMU: protect latest kernel from removing (Closes: #34314)
 - NMU: add "-a|--all" option to remove kernels with all flavours
