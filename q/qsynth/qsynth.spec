@@ -1,13 +1,13 @@
 %def_enable qt5
 
 Name: qsynth
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
 Summary(ru_RU.UTF-8): QSynth - это графическая надстройка над FluidSynth
 Group: Sound
-License: GPL
+License: GPL-2.0-or-later
 Url: http://%name.sourceforge.net
 
 Packager: Yuri N. Sedunov <aris@altlinux.ru>
@@ -68,6 +68,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Mon Oct 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
