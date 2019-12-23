@@ -2,7 +2,7 @@
 %def_without python2
 
 Name:    python-module-%modulename
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
+- New version.
+
 * Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 0.5.3-alt1
 - New version.
 - Build without Python2 support.
