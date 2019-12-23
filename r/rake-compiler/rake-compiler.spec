@@ -2,7 +2,7 @@
 %define        gemname rake-compiler
 
 Name:          %pkgname
-Version:       1.0.8
+Version:       1.0.9
 Release:       alt1
 Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue.
 License:       MIT
@@ -52,6 +52,9 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt1
+- New version.
+
 * Wed Nov 06 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.8-alt1
 - New version.
 
