@@ -1,12 +1,12 @@
 %define write_group users
 
 Name:           leiningen
-Version:        2.8.1
-Release:        alt2
+Version:        2.9.1
+Release:        alt1
 Summary:        Leiningen is for automating Clojure projects without setting your hair on fire
 
 Group:          Development/Java
-License:        Eclipse Public License
+License:        EPL-1.0
 URL:            https://leiningen.org/
 Source0:        %name-%version.tar
 Source1:        leiningen-%version-standalone.zip
@@ -15,7 +15,7 @@ Source3: 	lein-classpath
 Patch1:         alt-lein-use-offline-repo.patch
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  java-devel >= 1.8.0
 BuildRequires:  /proc
 BuildRequires:  clojure
 
@@ -59,6 +59,10 @@ find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|
 %attr(775,root,%write_group) %config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
 
 %changelog
+* Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 2.9.1-alt1
+- New version.
+- Fix License in spec according SPDX.
+
 * Fri Dec 15 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt2
 - Fix repository directories and config file permissions.
 - Spec cleanup.
