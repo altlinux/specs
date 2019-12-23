@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.34
@@ -42,11 +42,11 @@
 
 Name: totem
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
-License: GPLv2/LGPL
+License: GPL-2.0 and LGPL-2.0
 Url: https://wiki.gnome.org/Apps/Videos
 
 %if_enabled snapshot
@@ -402,6 +402,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt2
+- updated to V_3_34_1-3-g167008cb2 (fixed GLI #212)
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
