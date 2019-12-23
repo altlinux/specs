@@ -1,9 +1,11 @@
 %def_enable snapshot
-%def_disable python3
+%def_disable python
+%def_disable python2
+%def_enable check
 
 Name: libplist
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
@@ -19,8 +21,10 @@ Source: %name-%version.tar
 Patch: libplist-2.0.0-alt-e2k-lcc123.patch
 
 BuildRequires: gcc-c++ xml-utils
-BuildRequires: python-devel python-module-Cython
-%{?_enable_python3:BuildRequires: python3-devel rpm-build-python3 python3-module-Cython}
+%{?_enable_python:BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-Cython}
+%{?_enable_python2:BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-Cython}
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -73,20 +77,23 @@ Python3 libraries and bindings for %name
 %prep
 %setup -a0
 %patch -p1 -b .e2k
-# for python2 only
-subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' m4/ac_python_devel.m4
-mv %name-%version py3build
+%{?_enable_python2:mv %name-%version py2build
+subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' py2build/m4/ac_python_devel.m4
+}
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64 %optflags_shared
 %autoreconf
-%configure --disable-static
+%configure --disable-static CC=gcc \
+%{?_enable_python:PYTHON=%__python3} \
+%{?_disable_python:--without-cython}
+
 %make_build
 
-%if_enabled python3
-pushd py3build
-%add_optflags %optflags_shared
+%if_enabled python2
+pushd py2build
 %autoreconf
-%configure --disable-static PYTHON=%__python3
+%configure --disable-static PYTHON=%__python
 %make_build
 popd
 %endif
@@ -94,16 +101,19 @@ popd
 %install
 %makeinstall_std
 
-%if_enabled python3
-pushd py3build
+%if_enabled python2
+pushd py2build
 %makeinstall_std
 popd
 %endif
 
+%check
+%make check
+
 %files
 %_bindir/plistutil
 %_libdir/libplist.so.*
-%doc AUTHORS README
+%doc AUTHORS README* NEWS
 
 %files devel
 %_includedir/plist/
@@ -117,19 +127,26 @@ popd
 %files -n %{name}mm-devel
 %_includedir/plist/plist++.h
 %_libdir/libplist++.so
-%_libdir/pkgconfig/libplist++.pc
+%_pkgconfigdir/libplist++.pc
 
+%if_enabled python2
 %files -n python-module-%name
 %python_sitelibdir/plist.so
 %exclude %python_sitelibdir/plist.la
+%endif
 
-%if_enabled python3
+%if_enabled python
 %files -n python3-module-%name
 %python3_sitelibdir/plist.so
 %exclude %python3_sitelibdir/plist.la
 %endif
 
 %changelog
+* Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- updated to 2.1.0-11-g878d0d8
+- disabled useless python support
+- new %%check section
+
 * Tue Jan 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
 - updated to 2.0.0-27-g3f96731
 - mike@: applied e2k patch to work around lcc-1.23's lack of gcc5 builtins
