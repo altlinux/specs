@@ -1,6 +1,6 @@
 Name: alterator-luks
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -38,6 +38,9 @@ alterator module for for change LUKS passphrase
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Dec 24 2019 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt1
+- Don't change password on inactive containers (Closes: #37662)
+
 * Tue Mar 27 2018 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt2
 - fix "no key available with this passphrase" (Closes: #31895)
 
