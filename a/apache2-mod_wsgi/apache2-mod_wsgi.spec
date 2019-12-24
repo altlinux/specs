@@ -3,12 +3,12 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 4.6.8
+Version: 4.7.0
 Release: alt1
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 # Source-git: https://github.com/GrahamDumpleton/mod_wsgi
 Url: http://www.modwsgi.org
 
@@ -94,6 +94,9 @@ popd
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Tue Dec 24 2019 Stanislav Levin <slev@altlinux.org> 4.7.0-alt1
+- 4.6.8 -> 4.7.0.
+
 * Fri Oct 11 2019 Stanislav Levin <slev@altlinux.org> 4.6.8-alt1
 - 4.6.7 -> 4.6.8.
 
