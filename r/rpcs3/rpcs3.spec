@@ -1,5 +1,5 @@
-%define git_ver 9212
-%define git_commit 6a4ba9d562193228fc90e0d73252775cfafb20b2
+%define git_ver 9250
+%define git_commit e54438d3a7f07fed2366c1de7eeb286443787fe3
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -8,7 +8,7 @@
 %define libusb_commit 7cfa00e9d723f10167b4d71bceebf2b4b2cbd70e
 %define yaml_cpp_commit eca9cfd64899525d0a61abb0553849676a0fe511
 %define xx_hash_version 0.6.5
-%define llvm_commit 9836c299733ee5ef14760cd5bdae27e8233d2393
+%define llvm_commit 2e038bff1082175b510a2e8336edf897af9b87a3
 %define cereal_version 1.2.0
 %define faudio_version 19.10
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
@@ -127,6 +127,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Dec 24 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9250-alt1
+- Version 0.0.7.9250
+
 * Sat Dec 07 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9212-alt1
 - Version 0.0.7-9212
 
