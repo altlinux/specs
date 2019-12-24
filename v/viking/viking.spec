@@ -1,11 +1,11 @@
 Name:		viking
 Version:	1.7.0
-Release:	alt1
+Release:	alt2
 
 Summary:	GPS data editor and analyzer
 
 Group:		Sciences/Geosciences
-License:	GPLv2
+License:	GPL-2.0-or-later
 URL:		http://sourceforge.net/projects/viking/
 Source0:	%{name}-%{version}.tar
 
@@ -37,7 +37,18 @@ ln -s /usr/share/gnome-doc-utils/gnome-doc-utils.make
 %makeinstall
 find %buildroot/usr/share/gnome/help/viking/ -type l -delete
 
+#warning: Installed (but unpackaged) file(s) found:
+rm -f %buildroot/usr/share/icons/hicolor/icon-theme.cache
+
+#hack for fix https://bugzilla.altlinux.org/37674
+pushd po
+make install DESTDIR=%buildroot
+popd
+
 %find_lang %name
+
+%check
+make check
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO doc/
@@ -50,6 +61,11 @@ find %buildroot/usr/share/gnome/help/viking/ -type l -delete
 %_datadir/viking
 
 %changelog
+* Tue Dec 24 2019 Sergey Y. Afonin <asy@altlinux.org> 1.7.0-alt2
+- packed localization (ALT #37674)
+- updated %%License to SPDX syntax, changed to GPL-2.0-or-later
+- added %%check section
+
 * Thu Oct 17 2019 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
