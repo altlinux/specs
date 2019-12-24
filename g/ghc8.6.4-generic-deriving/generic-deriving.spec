@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.13
+Version: 1.13.1
 Release: alt1
 
 Summary: Generic programming library for generalised deriving.
@@ -38,6 +38,9 @@ Generic programming library for generalised deriving.
 %files -f %name-files.all
 
 %changelog
+* Tue Dec 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt1
+- Build new version.
+
 * Wed Aug 28 2019 Grigory Ustinov <grenka@altlinux.org> 1.13-alt1
 - Build new version.
 
