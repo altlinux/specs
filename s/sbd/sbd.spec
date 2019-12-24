@@ -2,7 +2,7 @@
 
 Name:     sbd
 Version:  1.4.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Storage-based death
 License:  GPLv2+
@@ -18,6 +18,8 @@ BuildRequires: libaio-devel libpacemaker-devel
 BuildRequires: glib2-devel corosync libcorosync-devel libuuid-devel libqb-devel libxml2-devel
 BuildRequires: /usr/bin/pod2man
 
+Requires: corosync dlm pacemaker pacemaker-remote
+
 %define _localstatedir %_var
 
 %description
@@ -27,6 +29,7 @@ This package contains the storage-based death functionality.
 Summary:  Storage-based death environment for regression tests
 License:  GPLv2+
 Group:    System/Servers
+Requires: %name = %EVR
 
 %description tests
 This package provides an environment + testscripts for
@@ -83,6 +86,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed*
 
 %changelog
+* Tue Dec 24 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt2
+- add Requires for corosync, pacemaker and dlm packages
+
 * Mon Dec 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
 - initial import for ALT
 
