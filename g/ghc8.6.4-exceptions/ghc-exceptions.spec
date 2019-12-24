@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 License: BSD3
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -38,5 +38,8 @@ Extensible optionally-pure exceptions.
 %files -f %name-files.all
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.4-alt1
+- Build new version.
+
 * Thu Aug 29 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.3-alt1
 - Build new version for ghc8.6.4.
