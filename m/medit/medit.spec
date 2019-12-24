@@ -1,6 +1,6 @@
 Name: medit
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Multiplatform GTK+2 text editor
 License: GPLv2+
@@ -59,6 +59,9 @@ rm -f %buildroot%_iconsdir/hicolor/icon-theme.cache
 %_man1dir/%name.*
 
 %changelog
+* Tue Dec 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt3
+- Fix previous mistaken update.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
 - Update russian translation.
 
