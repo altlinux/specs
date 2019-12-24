@@ -1,66 +1,42 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150613.1.1.1
 %define oname zope.sendmail
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 4.0.2
-#Release: alt1.dev0.git20150613.1
+Name: python3-module-%oname
+Version: 5.0
+Release: alt1
 Summary: Zope sendmail
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.sendmail/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+#Git: https://github.com/zopefoundation/zope.sendmail.git
 
-# https://github.com/zopefoundation/zope.sendmail.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-transaction python-module-zope.i18nmessageid
-BuildPreReq: python-module-zope.schema python-module-zope.configuration
-BuildPreReq: python-module-zope.security python-module-zope.testing
-BuildPreReq: python-module-zope.component-tests
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-transaction python3-module-zope.i18nmessageid
-BuildPreReq: python3-module-zope.schema python3-module-zope.configuration
-BuildPreReq: python3-module-zope.security python3-module-zope.testing
-BuildPreReq: python3-module-zope.component-tests
+BuildRequires: python3-devel python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-transaction
+BuildRequires: python3-module-zope.i18nmessageid
+BuildRequires: python3-module-zope.schema
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.component-tests
 %endif
 
-%py_requires zope transaction zope.i18nmessageid zope.interface
-%py_requires zope.schema zope.component zope.configuration
+%py3_requires zope transaction zope.i18nmessageid zope.interface
+%py3_requires zope.schema zope.component zope.configuration
 
 %description
 zope.sendmail is a package for email sending from Zope 3 applications.
 
-%package -n python3-module-%oname
-Summary: Zope sendmail
-Group: Development/Python3
-%py3_requires zope transaction zope.i18nmessageid zope.interface
-%py3_requires zope.schema zope.component zope.configuration
-
-%description -n python3-module-%oname
-zope.sendmail is a package for email sending from Zope 3 applications.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Zope sendmail
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.security zope.component
-
-%description -n python3-module-%oname-tests
-zope.sendmail is a package for email sending from Zope 3 applications.
-
-This package contains tests for Zope sendmail.
-
 %package tests
 Summary: Tests for Zope sendmail
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.security zope.component
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires zope.security zope.component
 
 %description tests
 zope.sendmail is a package for email sending from Zope 3 applications.
@@ -70,24 +46,11 @@ This package contains tests for Zope sendmail.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -98,49 +61,37 @@ for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
-
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
 
 %check
-python setup.py test -v
-%if_with python3
-pushd ../python3
-python3 setup.py test -v
-popd
-%endif
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Tue Dec 24 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.0-alt1
+- NMU: 4.0.2 -> 5.0
+- Remove python2 module build
+- Rearrange unittests execution
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1.dev0.git20150613.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
