@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 4.2.0
+Version: 4.6.0
 Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
 
-License: GPL
+License: GPLv2
 Group: File tools
 Url: http://calibre-ebook.com/
 
@@ -131,6 +131,7 @@ BuildRequires: libgpg-error-devel >= 1.36
 BuildRequires: libgcrypt-devel >= 1.8.4
 
 BuildRequires: libhunspell-devel >= 1.7.0
+BuildRequires: libhyphen-devel
 
 %py3_use six >= 1.12.0
 %py3_use regex >= 2019.04.14
@@ -167,8 +168,8 @@ TXT, PDF, LRS и FB2.
 # don't check for new upstream version
 #patch -p1
 #patch1 -p1
-# FIXME: does not effect
-%__subst "s|python2|python3|" src/*/*.py src/*/*/*.py src/*/*/*/*.py
+find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python2*$|#!/usr/bin/python3|"
+find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
 
 # we put sip for python3 to sip3 dir
 %__subst "s|'share', 'sip'|'share', 'sip3'|" setup/build_environment.py
@@ -194,9 +195,12 @@ rm -rfv %buildroot%_libdir/calibre/tinycss/tests
 
 #chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
-rm -f %buildroot%_bindir/calibre-uninstall
+rm -fv %buildroot%_bindir/calibre-uninstall
 rm -rf %buildroot%_datadir/%name/fonts/liberation/
+rm -fv %buildroot%_datadir/%name/calibre-portable.*
 install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
+
+rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 
 %files -f %name.lang
 %doc README.md Changelog.yaml
@@ -212,6 +216,12 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Tue Dec 24 2019 Vitaly Lipatov <lav@altlinux.ru> 4.6.0-alt1
+- new version 4.6.0 (with rpmrb script)
+
+* Wed Dec 11 2019 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt1
+- new version 4.5.0 (with rpmrb script)
+
 * Fri Oct 25 2019 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
 - new version (4.2.0) with rpmgs script
 
