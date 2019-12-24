@@ -1,59 +1,41 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.2
 %define oname zope.server
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 3.9.0
-#Release: alt2.1
+Name: python3-module-%oname
+Version: 4.0.2
+Release: alt1
 Summary: Zope Server (Web and FTP)
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.server/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+#Git: https://github.com/zopefoundation/zope.server.git
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.publisher
+BuildRequires: python3-module-paste
+BuildRequires: python3-module-zope.component-tests
 %endif
 
-%py_requires zope zope.interface zope.publisher zope.security
+%py3_requires zope zope.interface zope.publisher zope.security
 
 %description
 This package contains generic base classes for channel-based servers,
 the servers themselves and helper objects, such as tasks and requests.
 
-%package -n python3-module-%oname
-Summary: Zope Server (Web and FTP)
-Group: Development/Python3
-%py3_requires zope zope.interface zope.publisher zope.security
-
-%description -n python3-module-%oname
-This package contains generic base classes for channel-based servers,
-the servers themselves and helper objects, such as tasks and requests.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.server
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing zope.i18n zope.component
-
-%description -n python3-module-%oname-tests
-This package contains generic base classes for channel-based servers,
-the servers themselves and helper objects, such as tasks and requests.
-
-This package contains tests for zope.server.
-
 %package tests
 Summary: Tests for zope.server
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing zope.i18n zope.component
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires zope.testing zope.i18n zope.component
 
 %description tests
 This package contains generic base classes for channel-based servers,
@@ -64,64 +46,48 @@ This package contains tests for zope.server.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/*/tests
-%endif
 
 %changelog
+* Tue Dec 24 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.0.2-alt1
+- NMU: 3.9.0 -> 4.0.2
+- Remove python2 module build
+- Add unittests execution
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 3.9.0-alt2.2
 - Rebuild with python3.7.
 
