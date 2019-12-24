@@ -10,9 +10,9 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.12.0
+Version: 1.12.2
 Release: alt1%git_date
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: https://cgit.freedesktop.org/ModemManager/ModemManager/
@@ -21,8 +21,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
@@ -51,7 +49,7 @@ a loadable plugin interface to add work-arounds for
 non standard devices.
 
 %package devel
-License: %lgpl2plus
+License: LGPLv2+
 Group: Development/C
 Summary: Headers for adding ModemManager support to applications
 
@@ -68,7 +66,7 @@ BuildArch: noarch
 %summary
 
 %package -n libmm-glib
-License: %lgpl2plus
+License: LGPLv2+
 Summary: Libraries for adding ModemManager support to applications that use glib
 Group: System/Libraries
 
@@ -77,7 +75,7 @@ This package contains the libraries that make it easier to use some
 ModemManager functionality from applications that use glib.
 
 %package -n libmm-glib-devel
-License: %lgpl2plus
+License: LGPLv2+
 Summary: Development files for libmm-glib
 Group: Development/C
 Requires: libmm-glib = %version-%release
@@ -234,6 +232,10 @@ fi
 %endif
 
 %changelog
+* Tue Dec 24 2019 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
+- Don't use rpm-build-licenses.
+- Updated to 1.12.2.
+
 * Wed Nov 06 2019 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
 
