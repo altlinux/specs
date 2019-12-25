@@ -16,8 +16,8 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 3.14.1.1
-Release: alt3
+Version: 3.15.0.0
+Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -195,6 +195,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Sat Jan 11 2020 Anton Midyukov <antohami@altlinux.org> 3.15.0.0-alt1
+- New version 3.15.0.0
+
 * Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 3.14.1.1-alt3
 - fix python3 shebang and syntax for utils
 - fix Group
