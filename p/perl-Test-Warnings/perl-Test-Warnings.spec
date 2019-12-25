@@ -20,12 +20,12 @@ BuildRequires: perl-podlators
 %endif
 
 Name:		perl-Test-Warnings
-Version:	0.027
-Release:	alt1_1
+Version:	0.028
+Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-Warnings
-Source0:	https://cpan.metacpan.org/modules/by-module/Test/Test-Warnings-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -99,11 +99,14 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
-%doc --no-dereference LICENCE
+%doc LICENCE examples
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1_1
 - update to new release by fcimport
 
