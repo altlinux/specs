@@ -2,15 +2,15 @@
 %define module FCGI
 
 Name: perl-%module
-Version: 0.78
-Release: alt1.2
+Version: 0.79
+Release: alt1
 
 Summary: Fast CGI module for perl
 License: OpenMarket
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/FCGI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -26,7 +26,7 @@ usage and redistribution of this module, and for a DISCLAIMER OF ALL
 WARRANTIES.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,6 +41,9 @@ WARRANTIES.
 #*.fpl
 
 %changelog
+* Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.79-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1.2
 - rebuild with new perl 5.28.1
 
