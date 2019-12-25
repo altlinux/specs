@@ -1,6 +1,6 @@
 Name: nextcloud-client
-Version: 2.5.2
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -82,6 +82,9 @@ ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Tue Dec 24 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.1-alt1
+- new version (ALT#37647)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt2
 - NMU: remove rpm-build-ubt from BR:
 
