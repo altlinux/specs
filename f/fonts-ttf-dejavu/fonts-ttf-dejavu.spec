@@ -3,7 +3,7 @@
 
 Name: fonts-ttf-%fname
 Version: 2.37
-Release: alt1
+Release: alt2
 
 Summary: A font family based on the Bitstream Vera Fonts with a wider set of characters
 License: Freely distributable
@@ -51,6 +51,9 @@ install -m644 -pD fontconfig/{??-unhint-small-dejavu*.conf,??-dejavu*.conf} \
 %doc AUTHORS BUGS LICENSE NEWS README* status.txt unicover.txt
 
 %changelog
+* Wed Dec 25 2019 Fr. Br. George <george@altlinux.ru> 2.37-alt2
+- Rebuild for eliminating symlink
+
 * Sun Jul 31 2016 Michael Shigorin <mike@altlinux.org> 2.37-alt1
 - new version (watch file uupdate)
 
