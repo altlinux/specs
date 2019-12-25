@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191218
+Version: 20191220
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Wed Dec 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20191220-alt1
+- upstream changes (GIT 6871bff):
+  + ath10k: WCN3990 hw1.0: add firmware
+    WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1 (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.9.0.2-00070 (thx Kalle Valo)
+  + ath10k: QCA988X hw2.0: update firmware-5.bin to 10.2.4-1.0-00047 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to
+    10.4-3.9.0.2-00070 (thx Kalle Valo)
+  + ath10k: QCA9887 hw1.0: update firmware-5.bin to 10.2.4-1.0-00047 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update board-2.bin (thx Kalle Valo)
+
 * Wed Dec 18 2019 Cronbuild Service <cronbuild@altlinux.org> 20191218-alt1
 - upstream changes (GIT c4586ff):
   + Update AMD cpu microcode (thx John Allen)
