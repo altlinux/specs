@@ -1,8 +1,8 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 2.0
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
 License: MIT
@@ -40,6 +40,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %exclude %python3_sitelibdir/jaraco/__pycache__/__init__*
 
 %changelog
+* Wed Dec 25 2019 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Sun Oct 06 2019 Anton Farygin <rider@altlinux.ru> 2.0-alt2
 - excluded jaraco init against file conflicts with jaraco.packaging
 
