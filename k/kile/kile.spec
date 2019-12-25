@@ -6,7 +6,7 @@
 %define Name Kile
 %define oname kile
 Name: kile
-Version: 2.9.92
+Version: 2.9.93
 Release: alt1
 Summary: LaTeX source editor - TeX shell
 Group: Publishing
@@ -87,6 +87,9 @@ rm -fr %buildroot%_docdir/%oname
 %_datadir/metainfo/*
 
 %changelog
+* Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 2.9.93-alt1
+- update to 3.0 beta 3
+
 * Tue Sep 17 2019 Anton Midyukov <antohami@altlinux.org> 2.9.92-alt1
 - update to 3.0 beta 2
 
