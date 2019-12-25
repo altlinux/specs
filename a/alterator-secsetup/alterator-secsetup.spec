@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Source: %name-%version.tar
@@ -20,7 +20,7 @@ alterator module for managing security settings
 %setup -q
 
 %build
-%make_build RPM_V413=$(rpm --version | cut -d. -f2) LIB_PREFIX=%_libdir
+%make_build RPM_V413=$(rpm --version | cut -d. -f2) LIBDIR=%_libdir
 
 %install
 %makeinstall 
@@ -38,6 +38,10 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %config(noreplace) %_sysctldir/*
 
 %changelog
+* Wed Dec 25 2019 Ivan Razzhivin <underwit@altlinux.org> 1.4-alt1
+- add button apply
+- show message if the alt hardening module is inactive
+
 * Fri Dec 13 2019 Ivan Razzhivin <underwit@altlinux.org> 1.3-alt1
 - add sysctl default config for AltHa
 - settings are saved after reboot
