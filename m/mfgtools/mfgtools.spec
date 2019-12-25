@@ -1,5 +1,5 @@
 Name: mfgtools
-Version: 1.2.135
+Version: 1.3.124
 Release: alt1
 Summary: Freescale/NXP I.MX Chip image deploy tools
 License: BSD
@@ -17,7 +17,7 @@ Patch3: alt-fix-progress-indicator.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: libzip-devel bzip2-devel zlib-devel libusb-devel
+BuildRequires: libzip-devel bzip2-devel zlib-devel libusb-devel libssl-devel
 
 Provides: uuu
 
@@ -28,7 +28,7 @@ Freescale/NXP I.MX Chip image deploy tools:
 %prep
 %setup -n %name
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
@@ -74,5 +74,8 @@ EOT
 %_sysconfdir/udev/rules.d/*
 
 %changelog
+* Wed Dec 25 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.124-alt1
+- updated to 1.3.124
+
 * Mon Jun 17 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.2.135-alt1
 - initial build for Sisyphus
