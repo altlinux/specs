@@ -3,27 +3,22 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 4.6.0
-Release: alt4
+Name: python3-module-%oname
+Version: 4.7.0
+Release: alt1
 
 Summary: Object annotation mechanism
 License: ZPLv2.1
-Group: Development/Python
-# Source-git: https://github.com/zopefoundation/zope.annotation.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.annotation
+#Git: https://github.com/zopefoundation/zope.annotation.git
+BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-zope.interface
-BuildRequires: python-module-zope.component
-BuildRequires: python-module-zope.location
-BuildRequires: python-module-zope.proxy
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.component
@@ -31,48 +26,20 @@ BuildRequires: python3-module-zope.location
 BuildRequires: python3-module-zope.proxy
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
-BuildRequires: python-module-BTrees
-BuildRequires: python-module-coverage
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-BTrees
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 %endif
-
-%py_requires zope.interface zope.component zope.location zope.proxy
 
 %description
 This package provides a mechanism to store additional information about
 objects without need to modify object class.
 
-%package -n python3-module-%oname
-Summary: Object annotation mechanism
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This package provides a mechanism to store additional information about
-objects without need to modify object class.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-%py3_requires zope.testing zope.testrunner
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname
-
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires zope.testing zope.testrunner
+%py3_requires zope.testing zope.testrunner
 
 %description tests
 This package contains tests for %oname
@@ -81,27 +48,11 @@ This package contains tests for %oname
 %setup
 %patch0 -p1
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -109,45 +60,50 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
+# cancel coverage execution during unit testing
+sed -i 's|btrees,||g' tox.ini
+sed -i 's|-m zope.testrunner |-m zope-testrunner3 |g' tox.ini
+sed -i 's|coverage run [ -a]\{0,\}-m||g' tox.ini
+sed -i 's|[[:space:]]coverage|#coverage|g' tox.ini
+# cancel docbuild tests
+sed -i 's|sphinx|#py3_sphinx|g' tox.ini
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+sed -i '/setenv =$/a \
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
 
-export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox --sitepackages -e py%{python_version_nodots python} -v
-
-pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
-popd
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Wed Dec 18 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt1
+- NMU: 4.6.0 -> 4.7.0
+- Remove python2 module build
+- Remove ubt tags from changelog
+- Rearrange unittests execution
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.0-alt4
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.6.0-alt3
-- NMU: remove %ubt from release
+- NMU: remove ubt from release
 
-* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2%ubt
+* Mon Aug 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.0-alt2
 - Fixed tests.
 
-* Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1%ubt
+* Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1
 - 4.4.2 -> 4.6.0
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.4.2-alt1.dev0.git20150613.1.1.1.1
