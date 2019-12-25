@@ -1,23 +1,30 @@
 %define oname zope.deprecation
 
-Name: python-module-%oname
+%def_with check
+
+Name: python3-module-%oname
 Epoch: 1
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
-Summary: Zope 3 Deprecation Infrastructure
+Summary: Zope 3 Deprecation Infrastructure (Python 3)
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.deprecation/
-# git://github.com/zopefoundation/zope.deprecation.git
+#Git: https://github.com/zopefoundation/zope.deprecation.git
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-sphinx-devel
+%endif
 
-%py_requires zope
-
+%py3_requires zope
 
 %description
 When we started working on Zope 3.1, we noticed that the hardest part of
@@ -27,42 +34,12 @@ properties. This package provides a simple function called
 'deprecated(names, reason)' to deprecate the previously mentioned Python
 objects.
 
-%package -n python3-module-%oname
-Summary: Zope 3 Deprecation Infrastructure (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-When we started working on Zope 3.1, we noticed that the hardest part of
-the development process was to ensure backward-compatibility and
-correctly mark deprecated modules, classes, functions, methods and
-properties. This package provides a simple function called
-'deprecated(names, reason)' to deprecate the previously mentioned Python
-objects.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for Zope 3 Deprecation Infrastructure (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 %py3_requires zope.testing
 %add_python3_req_skip deprecation
-
-%description -n python3-module-%oname-tests
-When we started working on Zope 3.1, we noticed that the hardest part of
-the development process was to ensure backward-compatibility and
-correctly mark deprecated modules, classes, functions, methods and
-properties. This package provides a simple function called
-'deprecated(names, reason)' to deprecate the previously mentioned Python
-objects.
-
-This package contains tests for Zope 3 Deprecation Infrastructure.
-
-%package tests
-Summary: Tests for Zope 3 Deprecation Infrastructure
-Group: Development/Python
-Requires: %name = %EVR
-%py_requires zope.testing
-%add_python_req_skip deprecation
 
 %description tests
 When we started working on Zope 3.1, we noticed that the hardest part of
@@ -77,55 +54,50 @@ This package contains tests for Zope 3 Deprecation Infrastructure.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
+%check
+sed -i 's|coverage run [ -a]\{0,\}-m||g' tox.ini
+sed -i 's|coverage|#coverage|g' tox.ini
+sed -i 's|zope.testrunner |zope-testrunner3 |g' tox.ini
+# cancel docbuild tests
+sed -i 's|sphinx|#py3_sphinx|g' tox.ini
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+sed -i '/setenv =$/a \
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+
 %files
-%doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/__pycache__/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/__pycache__/tests.*
 
-
 %changelog
+* Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 1:4.4.0-alt2
+- NMU: Remove python2 module build
+- Add unittests execution
+
 * Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:4.4.0-alt1
 - Version updated to 4.4.0
 
