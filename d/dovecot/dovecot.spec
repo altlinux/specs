@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.7.2
-Release: alt3
+Release: alt3.1
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -174,9 +174,6 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 
 %dir %_cachedir/dovecot
 %dir %_cachedir/dovecot/indexes
-%dir /run/dovecot
-%dir /run/dovecot/empty
-%dir /run/dovecot/login
 %dir %_localstatedir/dovecot
 
 %_tmpfilesdir/%name.conf
@@ -212,6 +209,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 2.3.7.2-alt3.1
+- not packaged /run/dovecot
+
 * Sat Nov 30 2019 Anton Midyukov <antohami@altlinux.org> 2.3.7.2-alt3
 - Create _tmpfilesdir/dovecot.conf (Closes: 37554)
 - Replace /var/run -> /run, /var/lock -> /run/lock
