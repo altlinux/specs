@@ -1,35 +1,40 @@
+%define _unpackaged_files_terminate_build 1
 %define oname persistent
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 4.2.4.2
-Release: alt1.1.1.qa1
-
-%setup_python_module %oname
+Name: python3-module-%oname
+Version: 4.5.1
+Release: alt1
 
 Summary: Translucent persistent objects
-License: ZPL 2.1
-Group: Development/Python
-
+License: ZPL-2.1
+Group: Development/Python3
 Url: http://www.zope.org/Products/ZODB
+#Git: https://github.com/zopefoundation/persistent.git
 
-# https://github.com/zopefoundation/persistent.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-repoze.sphinx.autointerface
-BuildRequires: python-devel python-module-coverage python-module-nose python-module-setuptools python-module-zope
-BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
-%if_with python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-coverage python3-module-nose python3-module-setuptools python3-module-zope
+BuildRequires: python3-module-alabaster 
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-objects.inv
+BuildRequires: python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-dev
+%if_with check
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-zope
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-manuel
+BuildRequires: python3-module-manuel-tests
 %endif
 
-%py_provides persistent.TimeStamp
+%py3_provides persistent.TimeStamp
 
 %description
 This package contains a generic persistence implementation for Python.
@@ -48,7 +53,7 @@ Python. It forms the core protocol for making objects interact
 
 %package tests
 Summary: Tests for translucent persistent objects
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -56,101 +61,60 @@ This package contains a generic tests persistence implementation for
 Python. It forms the core protocol for making objects interact
 "transparently" with a database such as the ZODB.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Sample python3 module specfile
-Group: Development/Python
-%py3_provides persistent.TimeStamp
-
-%description -n python3-module-%oname
-This specfile is provided as sample specfile for python3 module
-packages. It contains most of usual tags and constructions used in such
-specfiles.
-
-%package -n python3-module-%oname-tests
-Summary: Sample python3 module tests specfile
-Group: Development/Python
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This specfile is provided as sample specfile for python3 module tests
-packages. It contains most of usual tags and constructions used in such
-specfiles.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -a . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|py3_sphinx-build|' docs/Makefile
+%prepare_sphinx3 .
+ln -s ../objects.inv3 docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
 install -p -m644 persistent/_compat.h \
 	%buildroot%_includedir/python%_python3_version%_python3_abiflags/
-popd
-%endif
 
-%python_install
-install -p -m644 persistent/_compat.h \
-	%buildroot%_includedir/python%_python_version/
-
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python}-pure-cffi -v
-
-%if_with python3
-pushd ../python3
 export PYTHONPATH=%python3_sitelibdir:%python3_sitelibdir_noarch
+sed -i 's|zope-testrunner|zope-testrunner3|g' tox.ini
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+
 TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
-popd
-%endif
 
 %files
-%doc *.txt
-%_includedir/python%_python_version
-%python_sitelibdir/%oname/
-%exclude %python_sitelibdir/%oname/test*
-%python_sitelibdir/*.egg-info
-
-%files tests
-%python_sitelibdir/%oname/test*
-
-%files docs
-%doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt
 %_includedir/python%_python3_version%_python3_abiflags
 %python3_sitelibdir/%oname/
 %exclude %python3_sitelibdir/%oname/test*
 %python3_sitelibdir/*.egg-info
 
-%files -n python3-module-%oname-tests
+%files docs
+%doc docs/_build/html/*
+
+%files tests
 %python3_sitelibdir/%oname/test*
-%endif
 
 %changelog
+* Tue Jan 14 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.5.1-alt1
+- NMU: 4.2.4.2 -> 4.5.1
+- Remove python2 module build
+- Rearrange unittests execution
+- Fix license
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.2.4.2-alt1.1.1.qa1
 - NMU: applied repocop patch
 

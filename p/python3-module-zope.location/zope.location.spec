@@ -3,33 +3,23 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: Zope Location
 License: ZPLv2.1
-Group: Development/Python
-# Source-git: https://github.com/zopefoundation/zope.location.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.location/
+#Git: https://github.com/zopefoundation/zope.location.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.interface
-BuildRequires: python-module-zope.schema
-BuildRequires: python-module-zope.proxy
-BuildRequires: python-module-zope.copy
-BuildRequires: python-module-zope.component
-BuildRequires: python-module-zope.configuration
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.interface
@@ -40,37 +30,16 @@ BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.configuration
 %endif
 
-%py_requires zope.interface
-%py_requires zope.schema
-%py_requires zope.proxy
-%py_requires zope.configuration
-%py_requires zope.component
+%py3_requires zope.configuration
+%py3_requires zope.component
 
 %description
 In Zope3, location are special objects that has a structural location.
 
-%package -n python3-module-%oname
-Summary: Zope Location
-Group: Development/Python3
-%py3_requires zope.configuration
-%py3_requires zope.component
-
-%description -n python3-module-%oname
-In Zope3, location are special objects that has a structural location.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Zope Location
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
 %package tests
 Summary: Tests for Zope Location
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires zope.copy
 
 %description tests
 This package contains tests for %oname.
@@ -78,27 +47,11 @@ This package contains tests for %oname.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install 
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -107,31 +60,21 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 export PYTHONPATH=src
-zope-testrunner --test-path=src -vv
-
-pushd ../python3
 zope-testrunner3 --test-path=src -vv
-popd
 
 %files
-%doc LICENSE.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/zope/location/tests
-
-%files tests
-%python_sitelibdir/zope/location/tests
-
-%files -n python3-module-%oname
 %doc LICENSE.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/location/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/zope/location/tests
 
 %changelog
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.2-alt2
+- NMU: remove python2 module build
+
 * Mon Apr 29 2019 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1
 - Build new version.
 
