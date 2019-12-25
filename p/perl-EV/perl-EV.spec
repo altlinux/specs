@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist EV
 Name: perl-%dist
-Version: 4.30
+Version: 4.31
 Release: alt1
 
 Summary: Perl interface to libev, a high performance full-featured event loop
@@ -38,6 +38,9 @@ detailed information.
 %perl_vendor_autolib/EV
 
 %changelog
+* Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.31-alt1
+- automated CPAN update
+
 * Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.30-alt1
 - automated CPAN update
 
