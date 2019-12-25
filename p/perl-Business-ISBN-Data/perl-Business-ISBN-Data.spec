@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISBN-Data
-Version: 20140910.003
+Version: 20191107
 Release: alt1
 
 Summary: data pack for Business::ISBN
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Business-ISBN-Data-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 11 2007
 BuildRequires: perl-devel perl(LWP/Simple.pm)
@@ -60,7 +60,7 @@ If you make updates, please send them to me so I can include them in
 future releases.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -68,9 +68,13 @@ future releases.
 %perl_vendor_install
 
 %files
+%doc README.pod Changes LICENSE examples
 %perl_vendor_privlib/Business*
 
 %changelog
+* Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 20191107-alt1
+- automated CPAN update
+
 * Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 20140910.003-alt1
 - automated CPAN update
 
