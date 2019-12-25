@@ -1,7 +1,7 @@
 %define with_docs 0
 
 Name: tacitus
-Version: 0.2
+Version: 0.3
 Release: alt1
 Group: System/Base
 Summary: Set sort-of-actual time on systems without RTC.
@@ -65,6 +65,9 @@ rm -rf %buildroot
 
 
 %changelog
+* Wed Dec 25 2019 Gremlin from Kremlin <gremlin@altlinux.org> 0.3-alt1
+- one more bash-specific fix
+
 * Wed Oct 02 2019 Gremlin from Kremlin <gremlin@altlinux.org> 0.2-alt1
 - fix running with damned bash
 - enable (though not recommended) use with systemd
