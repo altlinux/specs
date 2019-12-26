@@ -1,5 +1,5 @@
 Name: npm
-Version: 6.11.3
+Version: 6.13.4
 Release: alt1
 
 Summary: A package manager for node
@@ -15,7 +15,9 @@ BuildRequires(pre): rpm-macros-nodejs
 
 #BuildRequires: node >= 6.9
 #Requires:	node >= 6.9
-Requires: npm(node-gyp) = 3.8.0
+
+# Note! Change version with new npm
+Requires: npm(node-gyp) = 5.0.5
 
 BuildArch:	noarch
 
@@ -63,6 +65,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Dec 25 2019 Vitaly Lipatov <lav@altlinux.ru> 6.13.4-alt1
+- new version 6.13.4 (with rpmrb script)
+
 * Sat Oct 26 2019 Vitaly Lipatov <lav@altlinux.ru> 6.11.3-alt1
 - new version 6.11.3 (with rpmrb script)
 

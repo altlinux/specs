@@ -1,5 +1,5 @@
 Name: node-gyp
-Version: 3.8.0
+Version: 5.0.5
 Release: alt1
 
 Summary: Node.js native addon build tool
@@ -11,11 +11,10 @@ Url: https://github.com/TooTallNate/node-gyp
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source-url: http://registry.npmjs.org/node-gyp/-/node-gyp-%version.tgz
-# Note: see .gear/gear-sources created with rpmgs -f from etersoft-build-utils
 # Source-url: https://github.com/nodejs/node-gyp/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-#Source1: %name-sources-%version.tar
+# Note: see .gear/predownloaded-production created with rpmgs -f from etersoft-build-utils
 Source2: %name-production-%version.tar
 
 Source10: addon-rpm.gypi
@@ -49,15 +48,20 @@ Requires: gyp
 
 #this is the standard set of headers expected to build any node native module
 Requires: rpm-build-nodejs
+
 #we also need a C++ compiler to actually build stuff ;-)
 # TODO: what about toolchain?
-Requires: gcc-c++ make
+# See https://bugzilla.altlinux.org/show_bug.cgi?id=37687
+#Requires: gcc-c++
+Requires: make
 #Patch33: addon-rpm.gypi.patch
 
 %description
 node-gyp is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js, which takes away the pain of dealing with the
 various differences in build platforms.
+
+Install gcc-c++ package for compiling native addon modules for Node.js.
 
 %prep
 %setup -a 2
@@ -102,6 +106,10 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Thu Dec 26 2019 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
+- new version (5.0.5) with rpmgs script
+- drop gcc-c++ requires (ALT bug 37687)
+
 * Sat Oct 06 2018 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
 - new version (3.8.0) with rpmgs script
 
