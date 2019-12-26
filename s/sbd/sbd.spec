@@ -2,7 +2,7 @@
 
 Name:     sbd
 Version:  1.4.1
-Release:  alt2
+Release:  alt3
 
 Summary:  Storage-based death
 License:  GPLv2+
@@ -35,6 +35,16 @@ Requires: %name = %EVR
 This package provides an environment + testscripts for
 regression-testing sbd.
 
+%package tests-devel
+Summary:  Storage-based death environment for regression tests
+License:  GPLv2+
+Group:    System/Servers
+Requires: %name = %EVR
+
+%description tests-devel
+This package provides a shared library symlink for
+regression-testing sbd.
+
 %prep
 %setup
 %patch1 -p1
@@ -64,11 +74,7 @@ find %buildroot -name '*.a' -type f -print0 | xargs -0 rm -f
 find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
 %post
-%post_service sbd
-%post_service sbd_remote
 %preun
-%preun_service sbd
-%preun_service sbd_remote
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -84,8 +90,15 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %dir %_datadir/%name
 %_datadir/%name/regressions.sh
 %_libdir/libsbdtestbed*
+%exclude %_libdir/libsbdtestbed.so
+
+%files tests-devel
+%_libdir/libsbdtestbed.so
 
 %changelog
+* Thu Dec 26 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt3
+- add tests-devel package
+
 * Tue Dec 24 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt2
 - add Requires for corosync, pacemaker and dlm packages
 
