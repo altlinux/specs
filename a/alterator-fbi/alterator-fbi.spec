@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.47
+Version: 5.48
 Release: alt1
 
 Source: %name-%version.tar
@@ -153,6 +153,9 @@ fi ||:
 
 
 %changelog
+* Thu Dec 26 2019 Paul Wolneykien <manowar@altlinux.org> 5.48-alt1
+- Fix: Make the continue URL work again.
+
 * Fri Dec 13 2019 Paul Wolneykien <manowar@altlinux.org> 5.47-alt1
 - Fix/improve: Just touch /etc/cron.d in order to reload the schedule.
 
