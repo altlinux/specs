@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.0.15.0
+Version: 1.0.15.1
 Release: alt1
 License: MIT
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -43,6 +43,9 @@ BuildRequires: ghc8.6.4-vector-algorithms
 %files -f %name-files.all
 
 %changelog
+* Thu Dec 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.15.1-alt1
+- Build new version.
+
 * Tue Dec 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.15.0-alt1
 - Build new version.
 
