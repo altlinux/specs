@@ -1,9 +1,9 @@
 Name: libupnpp
-Version: 0.16.1
+Version: 0.17.1
 Release: alt1
 
 Summary: C++ wrapper for libupnp
-License: GPL
+License: LGPLv2.1
 Group: System/Libraries
 Url: http://www.lesbonscomptes.com/upmpdcli
 
@@ -47,6 +47,9 @@ This package contains development part of %name
 %_pkgconfigdir/libupnpp.pc
 
 %changelog
+* Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.17.1-alt1
+- 0.17.1 released
+
 * Thu Sep 20 2018 Alexey Shabalin <shaba@altlinux.org> 0.16.1-alt1
 - 0.16.1 released
 

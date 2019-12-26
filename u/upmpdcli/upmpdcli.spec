@@ -1,24 +1,23 @@
-%def_with python3
-
 Name: upmpdcli
-Version: 1.3.3
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
-License: GPL
+License: LGPLv2.1
 Group: Sound
-
 Url: http://www.lesbonscomptes.com/upmpdcli
+
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.14.1
-BuildRequires: libmicrohttpd-devel jsoncpp-devel
+BuildRequires: libmicrohttpd-devel jsoncpp-devel rpm-build-python3
 
 %package plugins
 Summary: %name plugins
 Group: Sound
 Requires: %name = %version-%release
 BuildArch: noarch
+AutoReq: yes, nopython
 
 %description
 %name implements an UPnP Media Renderer, using MPD to perform
@@ -71,6 +70,14 @@ rm -rf %buildroot%_datadir/%name/web
 %preun
 %preun_service upmpdcli
 
+# self-contained:
+%add_python3_req_skip StreamDecoder
+%add_python3_req_skip cmdtalkplugin
+%add_python3_req_skip conftree routing session
+%add_python3_req_skip tidalapi tidalapi.models
+%add_python3_req_skip upmplgutils
+%add_python3_req_skip uprclindex uprclinit uprclsearch uprclutils
+
 %files
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/upmpdcli
@@ -84,21 +91,24 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name
 %exclude %_datadir/%name/Analog-Input
 %exclude %_datadir/%name/cdplugins
+%exclude %_datadir/%name/radio_scripts
 %exclude %_datadir/%name/rdpl2stream
 %exclude %_datadir/%name/src_scripts
 %_man1dir/%name.1*
 
 %dir %attr(0770,root,_upmpd) %_cachedir/%name
 
-%if_without python3
 %files plugins
 %_datadir/%name/Analog-Input
 %_datadir/%name/cdplugins
+%_datadir/%name/radio_scripts
 %_datadir/%name/rdpl2stream
 %_datadir/%name/src_scripts
-%endif
 
 %changelog
+* Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
+- 1.4.2 released
+
 * Sat Mar 23 2019 Michael Shigorin <mike@altlinux.org> 1.3.3-alt2
 - introduced python3 knob disabling python2 plugins (on by default)
 
