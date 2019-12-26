@@ -1,6 +1,6 @@
 Summary: Simple scripts for pack and unpack files with ark and caja
 Name: mate-file-manager-actions-ark
-Version: 1
+Version: 2
 Release: alt1
 Group: Graphical desktop/MATE
 License: GPL-2.0-or-later
@@ -10,7 +10,7 @@ Url: https://git.altlinux.org/people/lvol/packages/mate-file-manager-actions-ark
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 BuildRequires: mate-file-manager-actions gnome-icon-theme
-Requires: mate-file-manager-actions gnome-icon-theme kde5-profile kde5-ark
+Requires: mate-file-manager-actions gnome-icon-theme kde5-profile kde5-ark zenity
 
 BuildArch: noarch
 
@@ -49,5 +49,8 @@ cp -a %SOURCE12 %buildroot%_datadir/file-manager/actions/
 %exclude %_iconsdir/gnome/48x48/actions/document-save.png
 
 %changelog
+* Thu Dec 26 2019 Leontiy Volodin <lvol@altlinux.org> 2-alt1
+- Rewritten extract script because native dialog doesn't work.
+
 * Wed Dec 25 2019 Leontiy Volodin <lvol@altlinux.org> 1-alt1
 - Initial build for ALT Sisyphus.
