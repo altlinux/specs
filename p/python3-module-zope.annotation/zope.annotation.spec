@@ -5,14 +5,13 @@
 
 Name: python3-module-%oname
 Version: 4.7.0
-Release: alt1
+Release: alt2
 
 Summary: Object annotation mechanism
 License: ZPLv2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.annotation
 #Git: https://github.com/zopefoundation/zope.annotation.git
-BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -88,6 +87,10 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Dec 26 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt2
+- Rollback to arch dependent build to guarantee all Zope modules
+  are at the same location
+
 * Wed Dec 18 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.7.0-alt1
 - NMU: 4.6.0 -> 4.7.0
 - Remove python2 module build
