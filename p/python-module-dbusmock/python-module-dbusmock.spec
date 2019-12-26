@@ -1,10 +1,11 @@
 %define modname dbusmock
 %define _name python-%modname
+%def_enable python2
 %def_enable check
 
 Name: python-module-dbusmock
 Version: 0.18.3
-Release: alt1
+Release: alt2
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -21,15 +22,21 @@ BuildArch: noarch
 
 Requires: dbus
 
-BuildRequires: rpm-build-gir
-BuildRequires: python-devel python-module-setuptools
 # for python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-setuptools
+%if_enabled python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
+%endif
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower
-BuildRequires: python-module-setuptools python-module-nose python-module-dbus python-modules-json
-BuildRequires: python3-module-setuptools python3-module-nose python3-module-dbus
-BuildRequires: python3-module-pyflakes
+BuildRequires: python3-module-setuptools python3-module-nose python3-module-dbus-gobject
+BuildRequires: python3-module-pyflakes python3-module-pycodestyle
+%if_enabled python2
+BuildRequires: python-module-setuptools python-module-nose python-module-dbus-gobject
+BuildRequires: python-modules-json python-module-pycodestyle
+%endif
 # polkit tests fail since 0.115-alt4
 #BuildRequires: polkit
 %endif
@@ -58,38 +65,48 @@ See %_docdir/%name-%version/README.rst for more information.
 
 
 %prep
-%setup -n %_name-%version -a0
-mv %_name-%version py3build
+%setup -n %_name-%version %{?_enable_python2:-a0
+mv %_name-%version py2build}
 
 %build
-%python_build
-pushd py3build
 %python3_build
+%if_enabled python2
+pushd py2build
+%python_build
 popd
+%endif
 
 %install
-%python_install
-pushd py3build
 %python3_install
+%if_enabled python2
+pushd py2build
+%python_install
 popd
+%endif
 
-%if_enabled check
 %check
-python setup.py test
-pushd py3build
 python3 setup.py test
+%if_enabled python2
+pushd py2build
+python setup.py test
 popd
 %endif
 
 %files
+%if_enabled python2
 %python_sitelibdir_noarch/%modname/
 %doc NEWS README.* PKG-INFO
+%endif
 
 %files -n python3-module-%modname
 %python3_sitelibdir_noarch/%modname/
 
 
 %changelog
+* Thu Dec 26 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt2
+- fixed BR after python-module-dbus split
+- made python2 build optional
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
 - 0.18.3
 
