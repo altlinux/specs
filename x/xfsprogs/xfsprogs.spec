@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -144,6 +144,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Dec 26 2019 Anton Farygin <rider@altlinux.ru> 5.4.0-alt1
+- 5.4.0
+
 * Thu Nov 21 2019 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
 - 5.3.0
 - packaged tool, systemd units and timer for scrubbing xfs partitions
