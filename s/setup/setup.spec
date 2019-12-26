@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.15
+Version: 2.2.16
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -72,6 +72,9 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.16-alt1
+- /etc/group: added vmusers
+
 * Thu Aug 24 2017 Alexey Gladkov <legion@altlinux.ru> 2.2.15-alt1
 - Dropped /etc/csh.* (closes: #33676).
 - /etc/profile.d/proxy.*sh: learned no_proxy env (closes: #33258).
