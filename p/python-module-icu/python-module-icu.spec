@@ -2,16 +2,17 @@
 
 %define modulename icu
 
-%def_with python3
+%def_with python2
 
 Name: python-module-%modulename
-Version: 2.3.1
-Release: alt2
+# python3 setup.py -V|tail -1
+Version: 2.4.2
+Release: alt1
 
-%setup_python_module %modulename
+%{?_with_python2:%setup_python_module %modulename}
 
 Summary: Python extension wrapping the ICU C++ API
-License: ISC-style
+License: MIT
 Group: Development/Python
 
 Url: http://pyicu.osafoundation.org/
@@ -21,63 +22,68 @@ Url: http://pyicu.osafoundation.org/
 # VCS: https://github.com/ovalhub/pyicu.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libicu-devel python-devel
-BuildRequires: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ libicu-devel
 BuildRequires: python3-devel python3-module-setuptools
+
+%if_with python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
 %endif
 
 %description
 PyICU - Python extension wrapping the ICU C++ API.
 
-%if_with python3
 %package -n python3-module-%modulename
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
 
 %description -n python3-module-%modulename
 PyICU - Python extension wrapping the ICU C++ API.
-%endif
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
+%if_with python2
+cp -fR . ../python2
 %endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
+
+%if_with python2
+pushd ../python2
+%python_build
 popd
 %endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
+
+%if_with python2
+pushd ../python2
+%python_install
 popd
 %endif
 
+%if_with python2
 %files
 %python_sitelibdir/*
 #%exclude %python_sitelibdir/*.egg-info
 %doc CREDITS README* CHANGES samples/
+%endif
 
-%if_with python3
 %files -n python3-module-%modulename
 %python3_sitelibdir/*
 #%exclude %python3_sitelibdir/*.egg-info
 %doc CREDITS README* CHANGES samples/
-%endif
+
 
 %changelog
+* Fri Dec 27 2019 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+- made python2 build optional
+- fixed License tag
+
 * Sun Oct 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt2
 - updated to v2.3.1-30-g5fb711a (compatible with icu-65.1)
 
