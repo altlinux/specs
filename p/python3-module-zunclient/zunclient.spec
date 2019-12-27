@@ -3,7 +3,7 @@
 %define oname zunclient
 
 Name:       python3-module-%oname
-Version:    3.5.0
+Version:    3.6.0
 Release:    alt1
 
 Summary:    Client Library for Zun
@@ -98,6 +98,11 @@ rm -rf doc/build/html/.doctrees doc/build/html/.buildinfo
 %endif
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
+- Automatically updated to 3.6.0.
+- Added watch file.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Automatically updated to 3.5.0.
 - Build without python2.

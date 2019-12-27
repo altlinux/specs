@@ -1,7 +1,7 @@
 %define oname osc-lib
 
 Name: python3-module-%oname
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: OpenStackClient (aka OSC) is a command-line client for OpenStack
 Group: Development/Python3
@@ -73,6 +73,11 @@ rm -fr build/sphinx/html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt1
+- Automatically updated to 1.15.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.14.1-alt1
 - Automatically updated to 1.14.1.
 - Build without python2.

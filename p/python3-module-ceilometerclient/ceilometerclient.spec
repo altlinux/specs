@@ -1,8 +1,8 @@
 %define oname ceilometerclient
 
 Name: python3-module-%oname
-Version: 2.8.1
-Release: alt2
+Version: 2.9.0
+Release: alt1
 Summary: Python API and CLI for OpenStack Ceilometer
 Group: Development/Python3
 License: ASL 2.0
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-prettytable >= 0.7
 BuildRequires: python3-module-keystoneauth1 >= 2.1.0
@@ -21,9 +21,9 @@ BuildRequires: python3-module-oslo.i18n >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-oslo.utils >= 3.17.0
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-requests >= 2.5.2
+BuildRequires: python3-module-requests >= 2.8.1
 BuildRequires: python3-module-stevedore >= 1.10.0
-BuildRequires: python3-module-keystoneauth1
+BuildRequires: python3-module-keystoneauth1 >= 2.1.0
 
 %description
 This is a client library for Ceilometer built on the Ceilometer API. It
@@ -83,6 +83,10 @@ rm -rf html/.doctrees html/.buildinfo
 #%%doc doc/build/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
+- Automatically updated to 2.9.0.
+- Added watch file.
+
 * Sun Oct 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt2
 - Build without python2.
 

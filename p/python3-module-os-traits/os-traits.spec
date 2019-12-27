@@ -1,7 +1,7 @@
 %define oname os-traits
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A library containing standardized trait strings
@@ -73,6 +73,11 @@ rm -fr doc/build/html/.buildinfo
 %doc README.rst doc/build/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+- Added watch file.
+- Renamed spec file.
+
 * Wed Oct 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 - Build without python2.

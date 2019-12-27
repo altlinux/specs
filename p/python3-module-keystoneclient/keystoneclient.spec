@@ -1,7 +1,7 @@
 %define oname keystoneclient
 
 Name:       python3-module-%oname
-Version:    3.21.0
+Version:    3.22.0
 Release:    alt1
 
 Summary:    Client library for OpenStack Identity API
@@ -90,6 +90,11 @@ rm -f doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.22.0-alt1
+- Automatically updated to 3.22.0.
+- Added watch file.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.21.0-alt1
 - Automatically updated to 3.21.0.
 - Build without python2.
