@@ -1,58 +1,46 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname zope.authentication
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 4.2.1
-#Release: alt1.1
+Name: python3-module-%oname
+Version: 4.4.0
+Release: alt1
+
 Summary: Definition of authentication basics for the Zope Framework
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.authentication/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+#Git: https://github.com/zopefoundation/zope.authentication.git
 
-Source0: https://pypi.python.org/packages/c0/f0/88ace1a23decf050835ec4bacc53cf01135b83f81ade4b0ae772894fb10d/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+
+BuildRequires: python3-devel python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-BTrees
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.browser
+BuildRequires: python3-module-zope.component
 %endif
 
-%py_requires zope zope.browser zope.component zope.i18nmessageid
-%py_requires zope.interface zope.schema zope.security
+%py3_requires zope zope.browser zope.component zope.i18nmessageid
+%py3_requires zope.interface zope.schema zope.security
 
 %description
 This package provides a definition of authentication concepts for use in
 Zope Framework.
 
-%package -n python3-module-%oname
-Summary: Definition of authentication basics for the Zope Framework
-Group: Development/Python3
-%py3_requires zope zope.browser zope.component zope.i18nmessageid
-%py3_requires zope.interface zope.schema zope.security
-
-%description -n python3-module-%oname
-This package provides a definition of authentication concepts for use in
-Zope Framework.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.authentication
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-This package provides a definition of authentication concepts for use in
-Zope Framework.
-
-This package contains tests for zope.authentication.
-
 %package tests
 Summary: Tests for zope.authentication
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -62,61 +50,46 @@ Zope Framework.
 This package contains tests for zope.authentication.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
+%patch0 -p1
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+# FIXME: this is a hack to invoke /usr/bin/coverage3 from python3-module-coverage
+# while tox.ini tries to invoke /usr/bin/coverage
+# Is coverage{3} needed during package buildtime unittesting at all?
+sed -i 's|coverage r|coverage3 r|g' tox.ini
+
+# export PIP_INDEX_URL=http://host.invalid./
+
+export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Thu Dec 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt1
+- NMU: 4.2.1 -> 4.4.0
+- Remove python2 module build
+- Add unittests execution
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
 - automated PyPI update
 
