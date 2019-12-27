@@ -7,16 +7,12 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfplll
-Version:        5.3.0
+Version:        5.3.1
 Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/fplll/fplll
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
-# https://github.com/fplll/fplll/pull/398
-Patch0:         0001-Fix-out-of-bounds-vector-accesses-in-Pruner-enforce.patch
-# https://github.com/cr-marcstevens/snippets/pull/1
-Patch1:         0002-Eliminate-race-condition-in-thread-pool.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  help2man
@@ -67,8 +63,6 @@ the functionality of %{name}.
 
 %prep
 %setup -q -n fplll-%{version}
-%patch0 -p1
-%patch1 -p1
 
 
 # Fix broken test for a bool type
@@ -135,6 +129,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.1-alt1_1
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_1
 - update to new release by fcimport
 
