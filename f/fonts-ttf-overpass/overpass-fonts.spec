@@ -8,7 +8,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-overpass
 Version:	3.0.4
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Typeface based on the U.S. interstate highway road signage type system
 License:	OFL or LGPLv2+
 URL:		https://github.com/RedHatBrand/overpass/
@@ -139,6 +139,9 @@ fi
 %{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_2
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_1
 - update to new release by fcimport
 
