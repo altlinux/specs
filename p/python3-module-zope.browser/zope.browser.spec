@@ -3,57 +3,36 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 2.2.0
-Release: alt3
+Name: python3-module-%oname
+Version: 2.3
+Release: alt1
 
-Summary: Shared Zope Toolkit browser components
+Summary: Shared Zope Toolkit browser components (Python3)
 License: ZPLv2.1
-Group: Development/Python
-# Source-git: https://github.com/zopefoundation/zope.browser.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.browser
+#Git: https://github.com/zopefoundation/zope.browser.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.interface
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.interface
 %endif
 
-%py_requires zope.interface
+%py3_requires zope
 
 %description
 This package provides shared browser components for the Zope Toolkit.
 
-%package -n python3-module-%oname
-Summary: Shared Zope Toolkit browser components (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-This package provides shared browser components for the Zope Toolkit.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
 %package tests
-Summary: Tests for zope.browser
-Group: Development/Python
+Summary: Tests for %oname (Python3)
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -61,27 +40,12 @@ This package contains tests for %oname.
 
 %prep
 %setup
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -90,40 +54,32 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 export PYTHONPATH=src
-zope-testrunner --test-path=src -vv
-
-pushd ../python3
 zope-testrunner3 --test-path=src -vv
-popd
 
 %files
-%doc LICENSE.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/zope/browser/tests.*
-
-%files tests
-%python_sitelibdir/zope/browser/tests.*
-
-%files -n python3-module-%oname
 %doc LICENSE.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/browser/tests.*
 %exclude %python3_sitelibdir/zope/browser/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/zope/browser/tests.*
 %python3_sitelibdir/zope/browser/*/tests.*
 
 %changelog
+* Thu Dec 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.3-alt1
+- NMU: 2.2.0 -> 2.3
+- Remove python2 module build
+- Remove ubt tags from changelog
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove ubt from release
 
-* Wed Mar 07 2018 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1%ubt
+* Wed Mar 07 2018 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.0 -> 2.2.0
 
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.0-alt1.1.1.1
