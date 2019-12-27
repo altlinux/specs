@@ -1,3 +1,4 @@
+Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate pkgconfig(gcr-3) pkgconfig(gmime-3.0) pkgconfig(gtk+-3.0) pkgconfig(gtkspell3-3.0) pkgconfig(libsecret-1) pkgconfig(webkitgtk-3.0) pkgconfig(zlib)
 # END SourceDeps(oneline)
@@ -5,14 +6,13 @@ BuildRequires: /usr/bin/desktop-file-validate pkgconfig(gcr-3) pkgconfig(gmime-3
 %define _localstatedir %{_var}
 Summary:	A Usenet newsreader for GNOME/GTK+
 Name:		pan
-Version:	0.145
-Release:	alt1_2
+Version:	0.146
+Release:	alt1_1
 Epoch:		1
 License:	GPLv2
-Group:		Networking/WWW
 Source0:	http://pan.rebelbase.com/download/releases/%{version}/source/%{name}-%{version}.tar.bz2
 URL:		http://pan.rebelbase.com/
-BuildRequires:  gcc-c++
+BuildRequires:	gcc-c++
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext-tools libasprintf-devel
 BuildRequires:	intltool
@@ -73,6 +73,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/pan.1*
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.146-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.145-alt1_2
 - update to new release by fcimport
 
