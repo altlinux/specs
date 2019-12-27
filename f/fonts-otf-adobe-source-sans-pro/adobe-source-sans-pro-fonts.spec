@@ -1,24 +1,22 @@
 Group: System/Fonts/True type
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 %define oldname adobe-source-sans-pro-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname source-sans-pro
 %global fontconf 63-%{fontname}.conf
 
-%global roman_version 2.045
-%global italic_version 1.095
-%global github_tag %{roman_version}R-ro/%{italic_version}R-it
-%global source_dir %{fontname}-%(tr "/" "-" <<<%{github_tag})
-
 Name:           fonts-otf-adobe-source-sans-pro
-Version:        %{roman_version}
+Version:        3.006
 Release:        alt1_1
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
-URL:            https://github.com/adobe-fonts/source-sans-pro/
+URL:            https://github.com/adobe-fonts/%{fontname}/
 # Can't build fonts without nonfree softwares
-Source0:        %{url}/archive/%{github_tag}/%{oldname}-%{version}.tar.gz
+Source0:        %{url}/releases/download/%{version}R/%{fontname}-%{version}R.zip
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -33,16 +31,8 @@ print.
 
 
 %prep
-%setup -q -n %{source_dir}
+%setup -q -n %{fontname}-%{version}R
 
-
-# Fix permissions
-chmod 0644 LICENSE.txt README.md
-
-# Fix wrong EOLs
-sed -i.orig "s/\r//" LICENSE.txt && \
-touch -r LICENSE.txt.orig LICENSE.txt && \
-rm LICENSE.txt.orig
 
 
 %build
@@ -100,11 +90,14 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc README.md
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE.md
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 2.045-alt1_1
 - update to new release by fcimport
 
