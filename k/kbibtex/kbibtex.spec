@@ -3,14 +3,14 @@
 
 Name: kbibtex
 Version: 0.9
-Release: alt1
+Release: alt1.1
 Summary: A BibTeX editor for Qt5 and KDE5
 License: %gpl2plus
 Group: Publishing
 URL: http://home.gna.org/%oname
 Source: %oname-%version.tar
 #Patch: %oname-%version-%release.patch
-#Requires: lib%{oname}part4 = %version-%release
+Requires: lib%{oname}part9 = %EVR
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses rpm-build-kf5 rpm-macros-cmake
@@ -46,10 +46,10 @@ RTF and XML/HTML. As %Name is using KDE's KParts technology.
 Summary: %Name KParts BibTeX library for Qt5 and KDE5
 Group: System/Libraries
 Conflicts: lib%{oname}part3
-Conflicts: lib%{oname}part4
+Obsoletes: lib%{oname}part4
 
 %description -n lib%{oname}part9
-%Name is a BibTeX library for Qt4 and KDE4 to edit bibliographies
+%Name is a BibTeX library for Qt5 and KDE5 to edit bibliographies
 used with LaTeX. Features include comfortable input masks, starting
 web queries (e. g. Google or PubMed) and exporting to PDF, PostScript,
 RTF and XML/HTML. This package contains KDE's KParts technology library.
@@ -86,6 +86,11 @@ RTF and XML/HTML. This package contains KDE's KParts technology library.
 %_K5srv/*
 
 %changelog
+* Wed Dec 25 2019 Anton Midyukov <antohami@altlinux.org> 0.9-alt1.1
+- require libkbibtexpart9 again
+- obsoletes libkbibtexpart4 (needed for upgrade)
+- fix descriptions
+
 * Tue Sep 17 2019 Anton Midyukov <antohami@altlinux.org> 0.9-alt1
 - build last stable release for Qt5 and KDE5 (Closes: 36079)
 
