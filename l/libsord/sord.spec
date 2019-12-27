@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libpcre-devel
@@ -10,13 +10,13 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.16.2
+%define version 0.16.4
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.16.2
-Release:    alt1_3
+Version:    0.16.4
+Release:    alt1_1
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
@@ -26,8 +26,7 @@ Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
 BuildRequires: glib2-devel libgio libgio-devel
-BuildRequires: python
-BuildRequires: python-devel
+BuildRequires: python3
 BuildRequires: libserd-devel >= 0.30.0
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -62,7 +61,7 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
 %build
 
 export LINKFLAGS="%{__global_ldflags}"
-%{__python} waf configure \
+python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -70,12 +69,12 @@ export LINKFLAGS="%{__global_ldflags}"
     --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
-%{__python} waf build -v %{?_smp_mflags}
+python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} %{__python} waf install
+DESTDIR=%{buildroot} python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
-install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
+install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 
 %files
 %{_docdir}/%{oldname}
@@ -95,6 +94,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_3
 - update to new release by fcimport
 
