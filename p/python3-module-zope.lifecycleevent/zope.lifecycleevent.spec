@@ -3,33 +3,23 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 4.2.0
-Release: alt3
+Name: python3-module-%oname
+Version: 4.3
+Release: alt1
 
 Summary: Object life-cycle events
 License: ZPLv2.1
-Group: Development/Python
-# Source-git https://github.com/zopefoundation/zope.lifecycleevent.git
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.lifecycleevent
+#Git: https://github.com/zopefoundation/zope.lifecycleevent.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-zope.event
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.interface
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.component
-BuildRequires: python-module-zope.component-tests
-BuildRequires: python-module-zope.configuration
-BuildRequires: python-module-coverage
 BuildRequires: python3-module-zope.event
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.interface
@@ -40,7 +30,7 @@ BuildRequires: python3-module-zope.configuration
 BuildRequires: python3-module-coverage
 %endif
 
-%py_requires zope.interface zope.event
+%py3_requires zope
 
 %description
 In Zope, events are used by components to inform each other about
@@ -49,59 +39,23 @@ relevant new objects and object modifications.
 To keep all subscribers up to date it is indispensable that the life
 cycle of an object is accompanied by various events.
 
-%package -n python3-module-%oname
-Summary: Object life-cycle events (Python 3)
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-In Zope, events are used by components to inform each other about
-relevant new objects and object modifications.
-
-To keep all subscribers up to date it is indispensable that the life
-cycle of an object is accompanied by various events.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for zope.lifecycleevent (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 %py3_requires zope.configuration zope.testrunner
 
 %description -n python3-module-%oname-tests
 This package contains tests for %oname
 
-%package tests
-Summary: Tests for zope.lifecycleevent
-Group: Development/Python
-Requires: %name = %EVR
-%py_requires zope.component zope.configuration zope.testrunner zope.testing
-
-%description tests
-This package contains tests for %oname
-
 %prep
 %setup
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -110,40 +64,32 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 export PYTHONPATH=src
-coverage run -m zope.testrunner --test-path=src -vv
-
-pushd ../python3
 coverage3 run -m zope.testrunner --test-path=src -vv
-popd
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3-alt1
+- NMU: 4.2.0 -> 4.3
+- Remove python2 module build
+- Remove ubt tags from changelog
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove ubt from release
 
-* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
 - 4.1.1 -> 4.2.0
 
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20141229.1.1.1
