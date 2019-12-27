@@ -6,7 +6,7 @@ BuildRequires: swig
 %define _localstatedir %{_var}
 Name:           4ti2
 Version:        1.6.9
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
 %global relver %(tr . _ <<< %{version})
@@ -18,6 +18,7 @@ Source1:        4ti2.module.in
 # Deal with a boolean variable that can somehow hold the value 2
 Patch0:         %{name}-maxnorm.patch
 
+BuildRequires:  environment(modules)
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  libglpk-devel
@@ -30,7 +31,7 @@ BuildRequires:  tex(epic.sty)
 Provides:       bundled(gnulib)
 
 Requires:       4ti2-libs = %{version}-%{release}
-Requires:       environment-modules
+Requires:       environment(modules)
 Source44: import.info
 
 %description
@@ -38,7 +39,7 @@ A software package for algebraic, geometric and combinatorial problems
 on linear spaces.
 
 This package uses Environment Modules.  Prior to invoking the binaries,
-you must run "module load 4ti2-%%{arch}" to modify your PATH.
+you must run "module load 4ti2-%{_arch}" to modify your PATH.
 
 %package devel
 Group: System/Libraries
@@ -60,6 +61,7 @@ spaces.
 %setup -q
 %patch0 -p0
 
+
 # Add a missing executable bit
 chmod a+x ltmain.sh
 
@@ -72,7 +74,7 @@ mv -f NEWS.utf8 NEWS
 sed -i 's/c++0x/c++11/g' configure
 
 %build
-%configure --enable-shared --disable-static --enable-fiber
+%configure --enable-shared --disable-static
 
 # Get rid of undesirable hardcoded rpaths; workaround libtool reordering
 # -Wl,--as-needed after all the libraries.
@@ -106,17 +108,15 @@ mkdir -p %{buildroot}%{_libdir}/4ti2
 mv %{buildroot}%{_bindir} %{buildroot}%{_libdir}/4ti2
 
 # Make the environment-modules file
-mkdir -p %{buildroot}%{_datadir}/Modules/modulefiles/
+mkdir -p %{buildroot}%{_modulesdir}
 # Since we're doing our own substitution here, use our own definitions.
-sed 's#@LIBDIR@#'%{_libdir}/4ti2'#g;' < %SOURCE1 >%{buildroot}%{_datadir}/Modules/modulefiles/4ti2-%{_arch}
+sed 's#@LIBDIR@#'%{_libdir}/4ti2'#g;' < %SOURCE1 >%{buildroot}%{_modulesdir}/4ti2-%{_arch}
 
 # We don't need or want libtool files
 rm -f %{buildroot}%{_libdir}/*.la
 
 # We don't want documentation in _datadir
 rm -fr %{buildroot}%{_datadir}/4ti2/doc
-
-
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
@@ -125,7 +125,7 @@ make check
 %files
 %doc doc/4ti2_manual.pdf
 %{_libdir}/4ti2/
-%{_datadir}/Modules/modulefiles/4ti2-%{_arch}
+%{_modulesdir}/4ti2-%{_arch}
 
 %files devel
 %{_includedir}/4ti2/
@@ -139,6 +139,9 @@ make check
 %{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_4
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_2
 - new version
 
