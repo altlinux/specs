@@ -6,8 +6,8 @@ Group: System/Fonts/True type
 %global fontconf 75-%{fontname}.conf
 
 Name:           fonts-ttf-levien-inconsolata
-Version:        2.012
-Release:        alt1_3
+Version:        3.000
+Release:        alt1_1
 Summary:        Inconsolata fonts
 
 License:        OFL
@@ -19,6 +19,7 @@ Source2:        %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 BuildRequires:  fontforge libfontforge
+BuildRequires:  git-core
 Source44: import.info
 
 %description
@@ -91,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.012-alt1_3
 - new version
 
