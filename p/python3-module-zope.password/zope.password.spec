@@ -1,59 +1,48 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname zope.password
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
-Version: 4.2.0
-#Release: alt1.1
+Name: python3-module-%oname
+Version: 4.3.1
+Release: alt1
 Summary: Password encoding and checking utilities
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.password/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/ce/4f/8e428a92fce1c7f7764ea66c4884fe3fd4295242dd6e46aa6cf67b6a1e67/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-bcrypt
+BuildRequires: python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.browser
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
 %endif
 
-%py_requires zope zope.component zope.configuration zope.interface
+%py3_requires zope zope.component zope.configuration zope.interface
 
 %description
 This package provides a password manager mechanism. Password manager is
 an utility object that can encode and check encoded passwords.
 
-%package -n python3-module-%oname
-Summary: Password encoding and checking utilities
-Group: Development/Python3
-%py3_requires zope zope.component zope.configuration zope.interface
-
-%description -n python3-module-%oname
-This package provides a password manager mechanism. Password manager is
-an utility object that can encode and check encoded passwords.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.password
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.schema
-
-%description -n python3-module-%oname-tests
-This package provides a password manager mechanism. Password manager is
-an utility object that can encode and check encoded passwords.
-
-This package contains tests for zope.password.
-
 %package tests
 Summary: Tests for zope.password
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.schema
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires zope.schema
 
 %description tests
 This package provides a password manager mechanism. Password manager is
@@ -62,26 +51,13 @@ an utility object that can encode and check encoded passwords.
 This package contains tests for zope.password.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -91,31 +67,19 @@ pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
 done
-popd
-%endif
 
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
+%check
+# FIXME: this is a hack to invoke /usr/bin/coverage3 from python3-module-coverage
+# while tox.ini tries to invoke /usr/bin/coverage
+# Is coverage{3} needed during package buildtime unittesting at all?
+sed -i 's|coverage r|coverage3 r|g' tox.ini
+sed -i 's|zope-testrunner|zope-testrunner3|g' tox.ini
+sed -i 's|sphinx-build|py3_sphinx-build|g' tox.ini
+
+export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir:src
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/test*
-
-%files tests
-%python_sitelibdir/*/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
@@ -123,12 +87,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
-%endif
 
 %changelog
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt1
+- NMU: 4.2.0 -> 4.3.1
+- Remove python2 module build
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
 - automated PyPI update
 
