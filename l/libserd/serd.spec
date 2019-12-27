@@ -1,5 +1,4 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
 BuildRequires: waf
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -10,7 +9,7 @@ Group: System/Libraries
 %global maj 0
 
 Name:           libserd
-Version:        0.30.0
+Version:        0.30.2
 Release:        alt1_1
 Summary:        A lightweight C library for RDF syntax
 
@@ -21,8 +20,7 @@ Source0:        http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  python
-BuildRequires:  python-devel
+BuildRequires:  python3
 BuildRequires:  gcc
 Source44: import.info
 Provides: serd = %{version}-%{release}
@@ -55,7 +53,7 @@ sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 
 %build
 
-%{__python} waf configure \
+python3 waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -63,10 +61,10 @@ sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
     --docdir=%{_docdir} \
     --test \
     --docs 
-%{__python} waf build -v %{?_smp_mflags}
+python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} %{__python} waf install
+DESTDIR=%{buildroot} python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 # Move devel docs to the right directory
 install -d %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}
@@ -87,6 +85,9 @@ mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldnam
 %{_includedir}/%{oldname}-%{maj}/
 
 %changelog
+* Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.30.2-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.30.0-alt1_1
 - update to new release by fcimport
 
