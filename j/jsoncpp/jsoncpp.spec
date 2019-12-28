@@ -1,7 +1,7 @@
 
 Name: jsoncpp
 Version: 1.8.4
-Release: alt4
+Release: alt5
 %define rname jsoncpp
 %define sover 19
 %define libname lib%rname%sover
@@ -16,7 +16,8 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Jun 11 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
 #BuildRequires: cmake doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw gcc-c++ graphviz libdb4-devel python-module-google python-modules-compiler rpm-build-python3 rpm-build-ruby
-BuildRequires: cmake doxygen gcc-c++ graphviz rpm-build-python python-modules kde-common-devel
+BuildRequires: cmake doxygen gcc-c++ graphviz kde-common-devel
+BuildRequires: rpm-build-python3
 
 %description
 %name is an implementation of a JSON (http://json.org) reader and writer in
@@ -59,7 +60,7 @@ This package contains the documentation for %name
   -DBUILD_SHARED_LIBS=ON \
   #
 # build docs
-python doxybuild.py --with-dot --doxygen %_bindir/doxygen
+%__python3 doxybuild.py --with-dot --doxygen %_bindir/doxygen
 
 %install
 %Kinstall
@@ -80,16 +81,19 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 #%_docdir/%name/
 
 %changelog
+* Sat Dec 28 2019 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt5
+- build with python3
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt4
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
-- NMU: remove %ubt from release
+- NMU: remove ubt from release
 
-* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt2%ubt
+* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt2
 - fix package specfile
 
-* Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt1%ubt
+* Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt1
 - new version
 
 * Tue Apr 05 2016 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt1
