@@ -1,6 +1,6 @@
 Name: autossh
 Version: 1.4g
-Release: alt3
+Release: alt4
 
 Summary: Automatically restart SSH sessions and tunnels
 License: BSD-style
@@ -40,19 +40,18 @@ export ac_cv_path_ssh=ssh
 %install
 install -pD -m755 autossh %buildroot%_bindir/autossh
 install -pD -m644 autossh.1 %buildroot%_man1dir/autossh.1
-install -pD -m644 autossh@.service %buildroot%_unitdir/autossh@.service
 install -pD -m644 autossh@.service %buildroot%_libexecdir/systemd/user/autossh@.service
-mkdir -pm755 %buildroot%_sysconfdir/autossh
 
 %files
 %doc CHANGES README README.ALT autossh.conf.sample autossh.host rscreen
-%dir %_sysconfdir/autossh
 %_bindir/*
 %_man1dir/*
-%_unitdir/*
 %_libexecdir/systemd/user/*
 
 %changelog
+* Sat Dec 28 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt4
+- Dropped system instance service template: use user instances instead.
+
 * Thu Nov 07 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt3
 - Fixed systemd service file.
 
