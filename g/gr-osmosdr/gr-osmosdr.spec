@@ -1,19 +1,34 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.1.4
-Release: alt4.20180627
+Release: alt5.20190514
 License: GPLv3+
 Group: Engineering
 Summary: Common software API for various radio hardware
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: gr-osmosdr-0.1.1-pkgconfig-fix.patch
+Patch0: gr-osmosdr-0.1.1-pkgconfig-fix.patch
+Patch1: gr-osmosdr-0.1.4-gnuradio38-blocks-fix.patch
+Patch2: gr-osmosdr-0.1.4-python3-fix.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ python-devel libgnuradio-devel boost-program_options-devel doxygen
-BuildRequires: graphviz swig rtl-sdr-devel uhd-devel hackrf-devel libbladerf-devel
-BuildRequires: python-module-Cheetah
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
+BuildRequires: cmake gcc-c++
+BuildRequires: gnuradio-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: doxygen
+BuildRequires: graphviz
+BuildRequires: swig
+BuildRequires: rtl-sdr-devel
+BuildRequires: uhd-devel
+BuildRequires: hackrf-devel
+BuildRequires: libbladerf-devel
+BuildRequires: liborc-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-mako
+BuildRequires: liblog4cpp-devel
+BuildRequires: mpir-devel
+BuildRequires: libgmp-devel
 
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
@@ -43,23 +58,37 @@ Documentation files for gr-osmosdr.
 %setup
 
 %patch0 -p1 -b .pkgconfig-fix
+%patch1 -p1 -b .gnuradio38-blocks-fix
+%patch2 -p1 -b .python3-fix
+
+# TODO fix the lib location nicer way
+sed -i 's|/lib/|/%_lib/|g' CMakeLists.txt
 
 %build
-%cmake -DENABLE_DOXYGEN=on -DGR_PKG_DOC_DIR=%_docdir/%name ..
-# it contains some sort of dependencies issue, force building swig stuff first. TODO: remove it later
-%cmake_build _osmosdr_swig
-%cmake_build
+mkdir build
+pushd build
+%cmake_insource -DENABLE_DOXYGEN=on -DGR_PKG_DOC_DIR=%_docdir/%name ..
+# parallel build is broken
+make
+popd
 
 %install
-%cmakeinstall_std
+pushd build
+%makeinstall_std
+popd
+
+# fix docs
+mkdir -p %buildroot%_docdir/%name
+mv %buildroot%_docdir/gnuradio*/* %buildroot%_docdir/%name
+rmdir %buildroot%_docdir/gnuradio*
 
 %files
+%doc AUTHORS COPYING
 %exclude %_docdir/%name/html
 %exclude %_docdir/%name/xml
-%doc AUTHORS COPYING
 %_bindir/*
 %_libdir/*.so.*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_datadir/gnuradio/grc/blocks/*
 
 %files devel
@@ -72,6 +101,10 @@ Documentation files for gr-osmosdr.
 %doc %_docdir/%name/xml
 
 %changelog
+* Sun Nov 24 2019 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt5.20190514
+- New snapshot
+- Fix build with gnuradio 3.8
+
 * Thu Feb 07 2019 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt4.20180627
 - New snapshot
 

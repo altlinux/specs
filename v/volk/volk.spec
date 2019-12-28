@@ -1,6 +1,6 @@
 Name: volk
-Version: 1.4
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
 Summary: Vector-Optimized Library of Kernels
 License: GPLv3
 Group: Development/C++
@@ -39,21 +39,26 @@ VOLK:
 - is a free library, currently offered under the GPLv3 license;
 - provides an abstraction of optimized math routines targetting several SIMD processors.
 
-%package -n python-module-%name
-Summary: The Python bindings for VOLK
-Group: Development/Python
-BuildRequires: python-module-six
-BuildRequires: python-module-mako
+%package -n python3-module-%name
+Summary: The Python 3 bindings for VOLK
+Group: Development/Python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-six
+BuildRequires: python3-module-mako
 Requires: lib%name = %version
 
-%description -n python-module-%name
-Python module for VOLK.
+%description -n python3-module-%name
+Python 3 module for VOLK.
 
 %prep
 %setup
 
 %build
-%cmake
+%cmake \
+	-DGR_PYTHON_DIR=%python3_sitelibdir \
+	-DPYTHON_EXECUTABLE=%__python3
+
 %cmake_build
 
 %install
@@ -72,10 +77,13 @@ Python module for VOLK.
 %_pkgconfigdir/*
 %_libdir/cmake/%name
 
-%files -n python-module-%name
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %changelog
+* Fri Nov 22 2019 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt1.1
 - NMU: rebuilt with boost-1.67.0
 
