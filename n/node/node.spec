@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 6.11.3
+%define npmver 6.13.4
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 10.17
+%define major 10.18
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -308,6 +308,7 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 # deps/http_parser
 #_includedir/node/nameser.h
 #_datadir/node/common.gypi
+%_rpmlibdir/nodejs_native.req
 %_rpmlibdir/nodejs_native.req.files
 #%_datadir/node/sources
 
@@ -319,6 +320,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Dec 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.18.0-alt1
+- new version 10.18.0 (with rpmrb script)
+- npm >= 6.13.4 (security fix)
+
 * Sat Oct 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.17.0-alt1
 - new version 10.17.0 (with rpmrb script)
 - npm >= 6.11.3
