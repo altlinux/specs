@@ -7,7 +7,7 @@
 
 Name: rpm-build-vm
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -122,9 +122,6 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 %files
 %_bindir/vm-run
 
-# endif for QEMU un-supported arches
-%endif
-
 %files checkinstall
 
 %pre checkinstall
@@ -132,11 +129,17 @@ set -ex
 vm-run --verbose uname
 vm-run --verbose --overlay=ext4 uname
 
+# endif for QEMU un-supported arches
+%endif
+
 %pre
 # Only allow to install inside of hasher.
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Sat Dec 28 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.1-alt2
+- Fix build on unsupported arches.
+
 * Mon Dec 16 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.1-alt1
 - Quickfix of 1.4 (MAXMEM handling).
 
