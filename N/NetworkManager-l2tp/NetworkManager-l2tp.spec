@@ -1,5 +1,5 @@
-%define nm_version 1.1.90
-%define nm_applet_version 1.1.90
+%define nm_version 1.8.0
+%define nm_applet_version 1.8.0
 %define nm_applet_name NetworkManager-applet-gtk
 #define git_date .git20170115
 %define git_date %nil
@@ -10,13 +10,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.12
+Version: 1.8.0
 Release: alt1%git_date
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
 Url: http://www.gnome.org/projects/NetworkManager/
-# git://github.com/nm-l2tp/NetworkManager-l2tp.git
+Vcs: git://github.com/nm-l2tp/NetworkManager-l2tp.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Requires: NetworkManager-daemon >= %nm_version
@@ -27,7 +27,6 @@ Requires: ppp = %ppp_version
 Requires: strongswan
 
 BuildRequires: ppp-devel
-BuildRequires: rpm-build-licenses
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
 %if_with libnm_glib
@@ -37,6 +36,9 @@ BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
+# We consider it as system library
+BuildRequires: libssl-devel
+BuildRequires: libnss-devel
 BuildRequires: intltool gettext
 
 %description
@@ -44,7 +46,7 @@ This package contains software for integrating the l2tp VPN software
 with NetworkManager.
 
 %package gtk
-License: %gpl2plus
+License: GPLv2+
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -102,6 +104,13 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Dec 26 2019 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Add libnss-devel to BR.
+- Add libssl-devel to BR.
+- Use rpm Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.8.0.
+
 * Fri Mar 15 2019 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt1
 - Don't pull gnome-keyring.
 - Updated to 1.2.12.
