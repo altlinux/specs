@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.7.2
+Version: 0.9.0
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -7,6 +7,7 @@ URL: https://github.com/Alexays/Waybar.git
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
+Source1: xkb-layout.py
 Patch0: waybar-config.patch
 
 BuildRequires(pre): rpm-build-xdg
@@ -40,6 +41,9 @@ BuildRequires: libnl-devel
 # mpd module
 # BuildRequires: libmpdclient-devel
 
+%define _libexecdir %_prefix/libexec
+%define helperdir %_libexecdir/%name
+
 %description
 %summary.
 
@@ -54,14 +58,22 @@ BuildRequires: libnl-devel
 %install
 %meson_install
 
+mkdir -p -- %buildroot/%helperdir
+install -m 755 -- %SOURCE1 %buildroot/%helperdir/
+
 %check
 %meson_test
 
 %files
 %_bindir/%name
 %_xdgconfigdir/%name
+%helperdir
 
 %changelog
+* Sat Dec 28 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.0-alt1
+- New version (0.9.0)
+- Add xkb-layout module
+
 * Thu Aug 08 2019 Alexey Gladkov <legion@altlinux.ru> 0.7.2-alt1
 - New version (0.7.2)
 
