@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.11
-Release: alt2
+Version: 0.9.12.1
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -236,6 +236,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sun Dec 29 2019 Andrey Cherepanov <cas@altlinux.org> 0.9.12.1-alt1
+- New version.
+
 * Mon Oct  7 2019 Ivan Zakharyaschev <imz@altlinux.org> 0.9.11-alt2
 - Keep keys in /etc/xrdp/ on upgrade and removal. (Important on upgrade
   from <= 0.9.3-alt1, which used to own these files. They would be removed,
