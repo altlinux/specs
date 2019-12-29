@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 2.1
+%define ver_major 2.2
 # no rules to make shared libudffs now
 %def_disable shared
 
@@ -70,6 +70,9 @@ BuildRequires: libudev-devel libncurses-devel libreadline-devel
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Sun Dec 29 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+
 * Sat Dec 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 
