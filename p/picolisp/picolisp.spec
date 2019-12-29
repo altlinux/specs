@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 19.6
+Version: 19.12
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -53,6 +53,9 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Sun Dec 29 2019 Michael Shigorin <mike@altlinux.org> 19.12-alt1
+- new version (watch file uupdate)
+
 * Mon Jul 01 2019 Michael Shigorin <mike@altlinux.org> 19.6-alt1
 - new version (watch file uupdate)
 
