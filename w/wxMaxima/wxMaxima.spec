@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 19.12.2
+Version: 19.12.4
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -35,7 +35,7 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup
-bzcat %SOURCE5 >locales/wxMaxima/ru.po
+#bzcat %SOURCE5 >locales/wxMaxima/ru.po
 %patch -p1
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -77,6 +77,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Sun Dec 29 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.4-alt1
+- New version.
+
 * Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 19.12.2-alt1
 - New version.
 - Provides wxmaxima.
