@@ -1,17 +1,21 @@
 Name: googlecl
 Version: 0.9.13
-Release: alt1.1.qa1
-Summary: GoogleCL brings Google services to the command line
+Release: alt2
 
-Group: Development/Python
+Summary: GoogleCL brings Google services to the command line
 License: Apache License 2.0
+Group: Development/Python3
 Url: http://code.google.com/p/googlecl/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: port-on-python3.patch
 
-BuildArch: noarch
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
+%py3_requires %name
+
 
 %description
 GoogleCL brings Google services to the command line.
@@ -29,24 +33,47 @@ $ google picasa create --album "Cat Photos" ~/photos/cats/*.jpg
 Youtube
 $ google youtube post --category Education killer_robots.avi
 
+%package -n python3-module-%name
+Summary: GoogleCL brings Google services to the command line
+Group: Development/Python3
+
+%description -n python3-module-%name
+GoogleCL brings Google services to the command line.
+
+This package contains python3 module for %name.
+
 %prep
 %setup -q
+%patch0 -p1
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
+%python3_build
 
 %install
-%__python setup.py install --skip-build --root %buildroot
+%__python3 setup.py install --skip-build --root %buildroot
 mkdir -p %buildroot/%_man1dir/
 install -p man/google.1 %buildroot/%_man1dir/
 
 %files
 %doc README.config README.txt
 %_bindir/google
-%python_sitelibdir/*
 %_man1dir/*
 
+%files -n python3-module-%name
+%python3_sitelibdir/*
+
+
 %changelog
+* Mon Dec 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.13-alt2
+- porting on python3
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt1.1.qa1
 - NMU: applied repocop patch
 

@@ -1,27 +1,24 @@
 %define oname gdata
 
-%def_without python3
-
-Name: python-module-gdata
+Name: python3-module-gdata
 Version: 2.0.18
-Release: alt3.git20160102
+Release: alt4
 
 Summary: A Python module for accessing online Google services
-
-Group: Development/Python
+Group: Development/Python3
 License: Apache-2.0
 Url: https://github.com/google/gdata-python-client
+BuildArch: noarch
 
 # Source0-git:	https://github.com/google/gdata-python-client.git
 Source: %name-%version-%release.tar
+Patch0: port-on-python3.patch
 
-BuildArch: noarch
-
-BuildRequires: python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
+
+%add_python3_req_skip google.appengine.api google.appengine.ext
+
 
 %description
 This is a Python module for accessing online Google services, such as:
@@ -49,74 +46,55 @@ and other
 
 This package contains documentation for %oname.
 
-%package -n python3-module-%oname
-Summary: A Python module for accessing online Google services
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This is a Python module for accessing online Google services, such as:
-- Blogger
-- Calendar
-- Picasa Web Albums
-- Spreadsheets
-- YouTube
-- Notebook
-and other
-
 %prep
 %setup
+%patch0 -p1
 
-%if_with python3
-cp -fR . ../python3
-rm -f ../python3/samples/apps/emailsettings_pop_settings.py
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+rm -f samples/apps/emailsettings_pop_settings.py
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-chmod -x samples/*/*.py
-rm -rf src/gdata/Crypto/test.py
-rm -rf src/gdata/Crypto/Util/test.py
-
-%if_with python3
-pushd ../python3
 %python3_build
+
 chmod -x samples/*/*.py
+
 rm -rf src/gdata/Crypto/test.py
 rm -rf src/gdata/Crypto/Util/test.py
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
+
 chmod -x samples/*/*.py
+
 rm -rf src/gdata/Crypto/test.py
 rm -rf src/gdata/Crypto/Util/test.py
-popd
-%endif
+
+install -d %buildroot%python3_sitelibdir/%oname/finance
+install -d %buildroot%python3_sitelibdir/%oname/finance/__pycache__
+
+for i in $(find src/%oname/finance -name '*.py')
+do
+    install -p -m644 $i %buildroot%python3_sitelibdir/%oname/finance/
+done
+for i in $(find src/%oname/finance/__pycache__ -name '*.pyc')
+do
+    install -p -m644 $i %buildroot%python3_sitelibdir/%oname/finance/__pycahce__
+done
 
 %files
-%doc *.txt
-%python_sitelibdir/atom/
-%python_sitelibdir/gdata/
-%python_sitelibdir/*.egg-info
-
-%files docs
-%doc pydocs/*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/atom/
 %python3_sitelibdir/gdata/
 %python3_sitelibdir/*.egg-info
-%endif
+
+%files docs
+%doc pydocs/*
+
 
 %changelog
+* Mon Dec 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.18-alt4
+- porting on python3
+
 * Fri Jun 16 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.18-alt3.git20160102
 - update to the latest commit
 - cleanup spec, fix dir packing
