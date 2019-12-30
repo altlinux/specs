@@ -6,12 +6,12 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_enable python
-%def_disable check
+%def_disable python
+%def_enable check
 
 Name: libgupnp-igd
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
@@ -23,9 +23,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+# 63531558a16ac2334a from new-gupnp branch
+Patch: libgupnp-igd-0.2.5-up-gupnp-1.2.patch
+
+%define gupnp_ver 1.2.1
 
 BuildRequires(pre): rpm-build-gir
-BuildRequires: libgupnp-devel >= 0.18
+BuildRequires: libgupnp1.2-devel >= %gupnp_ver
 BuildRequires: glib2-devel >= 2.26 gtk-doc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgupnp-gir-devel}
 %{?_enable_python:BuildRequires: python-module-pygobject-devel python-module-pygtk-devel}
@@ -97,6 +101,7 @@ This package provides Python bindings for gUPnP-IGD
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -117,12 +122,12 @@ This package provides Python bindings for gUPnP-IGD
 %doc AUTHORS README ChangeLog
 
 %files devel
-%_libdir/pkgconfig/*
-%_libdir/*.so
 %_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*
 
-%files devel-doc
-%_datadir/gtk-doc/html/*
+%{?_enable_gtk_doc:%files devel-doc
+%_datadir/gtk-doc/html/*}
 
 %if_enabled introspection
 %files gir
@@ -132,12 +137,16 @@ This package provides Python bindings for gUPnP-IGD
 %_girdir/GUPnPIgd-%api_ver.gir
 %endif
 
-%files -n python-module-%name
+%{?_enable_python:%files -n python-module-%name
 %python_sitelibdir/gupnp/*
-
-%exclude %python_sitelibdir/gupnp/*.la
+%exclude %python_sitelibdir/gupnp/*.la}
 
 %changelog
+* Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt3
+- rebuilt aganst gupnp-1.2
+- disabled python2 support
+- enabled check
+
 * Mon Jan 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt2
 - updated to 0.2.5-3-gedd78a6 (fixed BGO #790165)
 
