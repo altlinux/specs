@@ -1,10 +1,13 @@
+# force to use GDK_BACKEND=x11 while wxWidgets wxGLCanvas
+# do not support Wayland
+%def_enable gdk_x11
 # Python scripting interface disabled by default since 2018.0.0
 %def_enable hsi
 # lapack support disabled by default
 %def_disable lapack
 
 Name: hugin
-Version: 2019.0.0
+Version: 2019.2.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -12,9 +15,9 @@ Group: Graphics
 License: GPLv2+
 Url: http://hugin.sourceforge.net/
 
+#tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
-Patch2: hugin-2019.0.0-fc-exiv2-0.27.patch
 
 BuildPreReq: libpano13-devel boost-devel >= 1.34 libwxGTK3.0-devel >= 3.0.0
 BuildPreReq: boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
@@ -44,16 +47,13 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup
 %patch1 -p2
-%patch2 -p1 -b .exiv2
-
-# fix shebang for python3
-find src/hugin_script_interface/ -name "*.py" -print0| xargs -r0 sed -i "s@/usr/bin/env python@/usr/bin/python3@" --
 
 %build
 # reenable RPTHs because libraries in private subdirectory
 %cmake -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	%{?_enable_gdk_x11:-DUSE_GDKBACKEND_X11:BOOL=ON} \
 	%{?_enable_hsi:-DBUILD_HSI:BOOL=ON} \
 	%{?_enable_lapack:-DENABLE_LAPACK:BOOL=ON} \
 	-DPYTHON_EXECUTABLE=%__python3
@@ -90,6 +90,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.2.0-alt1
+- 2019.2.0
+
 * Sun Aug 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.0.0-alt1
 - 2019.0.0
 - built against libexiv2-0.27
