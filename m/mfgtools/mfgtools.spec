@@ -1,14 +1,14 @@
 Name: mfgtools
 Version: 1.3.124
-Release: alt1
+Release: alt2
+
 Summary: Freescale/NXP I.MX Chip image deploy tools
 License: BSD
 Group: System/Kernel and hardware
+
 Url: https://github.com/NXPmicro/mfgtools
-
-Packager: Pavel Nakonechnyi <zorg@altlinux.org>
-
 Source: %name.tar
+Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
 Patch0: alt-avoid-gen_vers-call.patch
 Patch1: allow-true-dynamic-linking-for-Linux-build.patch
@@ -34,6 +34,11 @@ Freescale/NXP I.MX Chip image deploy tools:
 
 mkdir -p libuuu/gen
 echo "#define GIT_VERSION \"lib%version\"" > libuuu/gen/gitversion.h
+
+%ifarch %e2k
+# unsupported as of lcc 1.23.20
+sed -i 's,-no-pie,,' uuu/CMakeLists.txt
+%endif
 
 %build
 %cmake
@@ -74,6 +79,10 @@ EOT
 %_sysconfdir/udev/rules.d/*
 
 %changelog
+* Mon Dec 30 2019 Michael Shigorin <mike@altlinux.org> 1.3.124-alt2
+- E2K: avoid lcc-unsupported option
+- minor spec cleanup
+
 * Wed Dec 25 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.124-alt1
 - updated to 1.3.124
 
