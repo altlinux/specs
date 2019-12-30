@@ -1,9 +1,9 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-#define gitrev .gitcddfd12
+#define gitrev .gitde74029
 
 Name: %realname
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 Epoch:3
 
@@ -56,7 +56,6 @@ Recommends: iftop, mutt
 %patch0 -p1
 
 %build
-sed -i 's/ IceWM.jpg//' lib/CMakeLists.txt
 %cmake	-DPREFIX=%_prefix \
 	-DCFGDIR=%_sysconfdir/X11/%realname \
 	-DLIBDIR=%_x11x11dir/%realname \
@@ -121,6 +120,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Wed Dec 25 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.3-alt1
+- 1.6.3
+
 * Thu Oct 03 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.2-alt1
 - 1.6.2
 - asciidoc replaced to asciidoctor
