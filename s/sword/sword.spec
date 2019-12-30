@@ -3,12 +3,12 @@
 
 Name: sword
 Version: %major.1
-Release: alt4
+Release: alt5
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
 
-License: GPL
+License: GPL2
 Url: http://www.crosswire.org/sword
 Group: Databases
 
@@ -17,6 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 #Source0: http://www.crosswire.org/download/ftpmirror.tmp/pub/sword/source/v1.5/%name-%version.tar.bz2
 Source: http://www.crosswire.org/ftpmirror/pub/sword/source/v%major/%name-%version.tar
 Source2: sword_icons.tar
+Patch: https://src.fedoraproject.org/rpms/sword/raw/fddb031c123743bc8dc622d48e65a73727cc398f/f/sword-1.8.1-integer-types.diff
 
 Requires: lib%name = %version
 
@@ -57,6 +58,7 @@ will need to develop applications which will use the SWORD Bible Framework.
 
 %prep
 %setup
+%patch -p1
 
 %ifarch %e2k
 # mcst#4060
@@ -115,6 +117,9 @@ make tests
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 30 2019 Ildar Mulyukov <ildar@altlinux.ru> 1.8.1-alt5
+- fix ppc64le build (closes #37665)
+
 * Fri May 24 2019 Michael Shigorin <mike@altlinux.org> 1.8.1-alt4
 - fix build with lcc-1.23 on e2k
 
