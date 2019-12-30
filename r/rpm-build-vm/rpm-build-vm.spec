@@ -7,7 +7,7 @@
 
 Name: rpm-build-vm
 Version: 1.4.1
-Release: alt2
+Release: alt3
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -72,6 +72,13 @@ install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
 %_sbindir/vm-init
 %_libexecdir/%name
 
+%files checkinstall
+
+%pre checkinstall
+set -ex
+vm-run --verbose uname
+vm-run --verbose --overlay=ext4 uname
+
 %post
 # We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
 # so initrd is needed to preload them before mounting rootfs.
@@ -122,13 +129,6 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 %files
 %_bindir/vm-run
 
-%files checkinstall
-
-%pre checkinstall
-set -ex
-vm-run --verbose uname
-vm-run --verbose --overlay=ext4 uname
-
 # endif for QEMU un-supported arches
 %endif
 
@@ -137,6 +137,9 @@ vm-run --verbose --overlay=ext4 uname
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Mon Dec 30 2019 Ivan A. Melnikov <iv@altlinux.org> 1.4.1-alt3
+- Fix build on qemu-less architectures (closes: #37629).
+
 * Sat Dec 28 2019 Vitaly Chikunov <vt@altlinux.org> 1.4.1-alt2
 - Fix build on unsupported arches.
 
