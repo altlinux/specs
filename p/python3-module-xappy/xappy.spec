@@ -1,18 +1,22 @@
 %define oname xappy
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.6.0
-Release: alt1.svn20110316
+Release: alt2
+
 Summary: Easy-to-use interface to the Xapian search engine
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/xappy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # http://xappy.googlecode.com/svn/trunk/
 Source: %name-%version.tar
-BuildArch: noarch
+Patch0: port-on-python3.patch
 
-BuildPreReq: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
 
 %description
 The "xappy" python module is an easy-to-use interface to the Xapian
@@ -42,21 +46,31 @@ This package contains documentation for xappy.
 
 %prep
 %setup
+%patch0 -p1
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc AUTHORS ChangeLog README
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
 %doc docs/* examples
 
+
 %changelog
+* Mon Dec 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt2
+- porting on python3
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.svn20110316
 - Version 0.6.0
 
