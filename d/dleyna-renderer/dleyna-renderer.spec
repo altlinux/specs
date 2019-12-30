@@ -3,14 +3,15 @@
 
 %define _name dleyna
 %define api_ver 1.0
+%define gupnp_api_ver 1.2
 
 Name: %_name-renderer
 Version: 0.6.0
-Release: alt1
+Release: alt3
 
 Summary: Service for interacting with Digital Media Renderers
 Group: System/Servers
-License: LGPLv2.1
+License: LGPL-2.1
 Url: https://01.org/%_name/
 
 %if_disabled snapshot
@@ -19,8 +20,10 @@ Source: https://01.org/%_name/sites/default/files/downloads/%name-%version.tar.g
 #VCS: https://github.com/01org/dleyna-renderer.git
 Source: %name-%version.tar
 %endif
+# https://github.com/intel/dleyna-renderer/pull/167
+Patch: %name-0.6.0-up-gupnp-1.2.patch
 
-BuildRequires: libgio-devel libgssdp-devel libgupnp-devel
+BuildRequires: libgio-devel libgssdp%gupnp_api_ver-devel libgupnp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel libgupnp-dlna-devel libsoup-devel
 BuildRequires: libdleyna-core-devel
 
@@ -39,6 +42,7 @@ developing applications that use %name-service.
 
 %prep
 %setup
+%patch -p1 -b .gupnp-1.2
 
 %build
 %autoreconf
@@ -65,6 +69,13 @@ developing applications that use %name-service.
 
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt3
+- ported to gupnp-1.2 (
+  see https://github.com/intel/dleyna-renderer/pull/167)
+
+* Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
+- updated BR
+
 * Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
