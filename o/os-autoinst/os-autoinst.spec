@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt7
+Release: alt8
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -50,6 +50,8 @@ BuildRequires: perl(Test/Exception.pm)
 BuildRequires: perl-IO-stringy
 BuildRequires: perl(File/Touch.pm)
 BuildRequires: perl(XML/SemanticDiff.pm)
+BuildRequires: perl-Pod-Spell
+BuildRequires: ispell
 #BuildConflicts: pve-qemu-aux pve-qemu-img
 BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
@@ -126,6 +128,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Dec 30 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt8
+- update to current version
+
 * Tue Oct 29 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt7
 - update to current version
 
