@@ -3,8 +3,8 @@
 
 Name: fonts-ttf-roboto
 Version: 1.0
-Release: alt1
-License: Apache 2
+Release: alt2
+License: Apache-2.0
 Summary: Android Roboto Fonts
 Url: http://code.google.com/android/
 Group: System/Fonts/True type
@@ -32,5 +32,8 @@ cp %SOURCE1 .
 %doc COPYING
 
 %changelog
+* Fri Dec 27 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt2
+- Fixed license tag.
+
 * Fri Oct 26 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1
 - initial build from Suse
