@@ -1,5 +1,5 @@
 Name: smartmontools
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
@@ -83,6 +83,9 @@ rm %buildroot%docdir/{ChangeLog,COPYING,INSTALL}
 %docdir
 
 %changelog
+* Tue Dec 31 2019 Michael Shigorin <mike@altlinux.org> 7.1-alt1
+- Updated to 7.1.
+
 * Mon Dec 31 2018 Michael Shigorin <mike@altlinux.org> 7.0-alt1
 - Updated to 7.0.
 
