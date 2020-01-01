@@ -1,25 +1,37 @@
+%def_enable snapshot
 %define _name vigra
 %def_disable static
 %def_with hdf5
+# required https://github.com/hmeine/vigraqt
+%def_disable python
+%if_enabled python
+%define modname %{_name}numpy
+%endif
 
 Name: lib%_name
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: Generic Programming for Computer Vision
 License: MIT
 Group: System/Libraries
 Url: http://ukoethe.github.io/%_name
 
-# VCS https://github.com/ukoethe/%name/
+%if_disabled snapshot
 Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-1/%_name-%version-src.tar.gz
+%else
+# VCS https://github.com/ukoethe/%name/
+Source: %_name-%version.tar
+%endif
 # partially deimproved FindOpenEXR
 Patch: vigra-1.11.0-alt-findexr.patch
 
-# Automatically added by buildreq on Wed Jun 13 2007
+# for vigra-config
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ cmake libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: openexr-devel doxygen
 %{?_with_hdf5:BuildRequires: libhdf5-devel}
+%{?_enable_python:BuildRequires: boost-python3-devel libnumpy-devel}
 %ifnarch e2k
 BuildRequires: libgomp-devel
 %endif
@@ -35,7 +47,7 @@ algorithms and data structures.
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: %_name-devel
 Obsoletes: %_name-devel
 
@@ -46,24 +58,40 @@ applications which will use %name.
 %package devel-doc
 Summary: Development documentation for vigra library
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 Provides: %_name-devel-doc
 Obsoletes: %_name-devel-doc
 BuildArch: noarch
 
 %description devel-doc
-Development documentation for vigra library.
+Development documentation for VIGRA library.
+
+%if_enabled python
+%package -n python3-module-%modname
+Summary: Python3 bindings for VIGRA
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description -n python3-module-%modname
+This package provides Python3 bindings for VIGRA library.
+%endif
 
 %prep
 %setup -n %_name-%version
 %patch
+# fix shebang
+sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
+
 %ifarch e2k
 # unsupported as of lcc 1.21.20
 sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 %endif
 
 %build
-%cmake -DWITH_VIGRANUMPY:BOOL=OFF \
+%add_optflags -D_FILE_OFFSET_BITS=64
+%cmake \
+%{?_disable_python:-DWITH_VIGRANUMPY:BOOL=OFF} \
+%{?_enable_python:-DWITH_VIGRANUMPY:BOOL=ON -DPYTHON_VERSION=3} \
 %if_with hdf5
 	-DWITH_HDF5:BOOL=ON \
 %endif
@@ -89,10 +117,17 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 %files devel-doc
 %_datadir/doc/%_name/
 
-%exclude %_datadir/doc/%{_name}numpy
+%if_enabled python
+%files -n python3-module-%modname
+%python3_sitelibdir/%_name/
+%_libdir/%modname/VigranumpyConfig.cmake
+%endif
 
 
 %changelog
+* Tue Dec 31 2019 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt2
+- updated to 1-11-1-45-g8acd73a5
+
 * Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt1
 - 1.11.1
 
