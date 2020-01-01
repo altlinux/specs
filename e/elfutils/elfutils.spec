@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.177
+Version: 0.178.0.15.5de5
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -14,7 +14,16 @@ Requires: libelf = %EVR
 %def_enable static
 %def_enable check
 
-BuildRequires: bzlib-devel flex liblzma-devel libstdc++-devel zlib-devel
+BuildRequires: gettext
+BuildRequires: bison
+BuildRequires: flex
+
+# libstdc++ demangle support
+BuildRequires: gcc-c++
+
+# compression support
+BuildRequires: bzlib-devel liblzma-devel zlib-devel
+
 %{?_enable_check:BuildRequires: /proc}
 
 %define _gnu %nil
@@ -164,7 +173,8 @@ cd %buildtarget
 	--disable-silent-rules \
 	--enable-dependency-tracking \
 	--enable-maintainer-mode \
-	--program-prefix=eu-
+	--program-prefix=eu- \
+	--disable-debuginfod
 %make_build
 
 %install
@@ -195,6 +205,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strings
 %_bindir/eu-strip
 %_bindir/eu-unstrip
+%_man1dir/eu-*
 
 %files devel
 
@@ -220,7 +231,6 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n libdw
 %_libdir/libdw-*.so
 %_libdir/libdw*.so.*
-%_libdir/elfutils/
 
 %files -n libdw-devel
 %_includedir/dwarf.h
@@ -236,7 +246,6 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n libdw-devel-static
 %dir %_includedir/elfutils/
 %_libdir/libdw.a
-%_libdir/libebl.a
 %endif
 
 %files -n libelf -f %name.lang
@@ -253,6 +262,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/elfutils/version.h
 %_libdir/libelf.so
 %_pkgconfigdir/libelf.pc
+%_man3dir/elf_*
 
 %if_enabled static
 %files -n libelf-devel-static
@@ -260,6 +270,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Dec 23 2019 Dmitry V. Levin <ldv@altlinux.org> 0.178.0.15.5de5-alt1
+- elfutils-0.177 -> elfutils-0.178-15-g5de5dc7d.
+
 * Tue Aug 13 2019 Dmitry V. Levin <ldv@altlinux.org> 0.177-alt1
 - elfutils-0.176-43-g1b1433d5 -> elfutils-0.177.
 
