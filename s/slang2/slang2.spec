@@ -1,9 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+%def_enable static
+
 Name: slang2
 Version: 2.3.2
-Release: alt3
+Release: alt4
 
 Summary: The shared library for the S-Lang extension language
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
 Url: http://www.jedsoft.org/slang/
 
@@ -22,8 +25,6 @@ Patch13: slang-2.3.2-slarray-ub.patch
 # optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
 BuildRequires: libICE-devel libX11-devel libncurses-devel libpcre-devel libpng-devel
 
-%def_enable static
-
 %package slsh
 Summary: S-Lang shell
 Group: System/Libraries
@@ -41,10 +42,12 @@ Requires: lib%name = %version-%release
 Provides: libslang-devel = %version
 Obsoletes: libslang-devel < %version
 
+%if_enabled static
 %package -n lib%name-devel-static
 Summary: The static library for development using S-Lang
 Group: Development/C
 Requires: lib%name-devel = %version-%release
+%endif
 
 %description
 S-Lang is an interpreted language and a programming library.  The
@@ -78,10 +81,12 @@ This package contains the S-Lang extension language development libraries
 and header files which you'll need if you want to develop S-Lang based
 applications.
 
+%if_enabled static
 %description -n lib%name-devel-static
 This package contains the S-Lang extension language static libraries
 which you'll need if you want to develop S-Lang based statically linked
 applications.
+%endif
 
 %prep
 %setup -n slang-%version
@@ -96,6 +101,8 @@ applications.
 %build
 #https://bugzilla.altlinux.org/36424#c17
 %add_optflags -fno-strict-overflow
+
+%add_optflags %(getconf LFS_CFLAGS)
 
 export ac_cv_func_snprintf=yes ac_cv_func_vsnprintf=yes
 %configure \
@@ -144,13 +151,23 @@ export TERM="xterm"
 %_includedir/*
 %_pkgconfigdir/*.pc
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Wed Jan 01 2020 Sergey Y. Afonin <asy@altlinux.org> 2.3.2-alt4
+- enabled LFS support
+- updated %%License to SPDX syntax
+- improvements in spec-file:
+ + added "%%define _unpackaged_files_terminate_build 1"
+ + properly quoted "%%optflags" in changelog
+ + fixed using "%%def_enable static"
+
 * Tue Apr 09 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt3
 - added slang-2.3.2-slarray-ub.patch (fixed UB in slarray, ALT #36424#c25)
-- added -fno-strict-overflow to %optflags (ALT #36424#c17)
+- added -fno-strict-overflow to %%optflags (ALT #36424#c17)
 
 * Mon Apr 08 2019 Sergey Y. Afonin <asy@altlinux.ru> 2.3.2-alt2
 - fixed gcc8 optimization on i586 (ALT #36424)
