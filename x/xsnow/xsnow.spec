@@ -1,53 +1,53 @@
 Name: xsnow
-Version: 1.42
-Release: alt4.qa1
+Version: 2.0.15
+Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
-License: MIT
+License: GPL
 Group: Toys
 
-Url: http://dropmix.xs4all.nl/rick/Xsnow/
-Source0: %url/xsnow-%version.tar.gz
-Source1: xsnow.png
-Patch: xsnow-1.42-misc.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+Url: https://www.ratrabbit.nl/ratrabbit/content/xsnow/introduction
+Source0: xsnow-%version.tar.gz
+Packager: Alexei Mezin <alexvm@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Рождественская игрушка для X Window
-Summary(uk_UA.KOI8-U): Р╕здвяна цяцька для X Window
+Summary(ru_RU.UTF8):  п²п╣п╪п╫п╬п╤п╨п╬ п╫п╬п╡п╬пЁп╬п╢п╫п╣пЁп╬ п╫п╟я│я┌я─п╬п╣п╫п╦я▐ п╫п╟ я─п╟п╠п╬я┤п╦п╧ я│я┌п╬п╩
 
-# Automatically added by buildreq on Fri Oct 30 2009
-BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
+# Automatically added by buildreq on Wed Jan 01 2020
+# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base python3-dev sh4 xorg-proto-devel
+###BuildRequires: i586-libxcb libXpm-devel libXt-devel libdb4-devel libdbus-devel libgtk+3-devel libxml2-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel
+
+###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
 %description
 The Xsnow toy provides a continual gentle snowfall, trees, and Santa
 Claus flying his sleigh around the screen.  Xsnow is only for the X
 Window System, though; consoles just get coal.
 
-%description -l ru_RU.KOI8-R
-Xsnow добавляет снегопад, елки и оленей к новогоднему фону экрана.
-
-%description -l uk_UA.KOI8-U
-Xsnow дода╓ хуртовину, смереки та олен╕в до новор╕чного тла екрану.
+%description -l ru_RU.UTF8
+Xsnow п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╟п╫п╦п╪п╦я─п╬п╡п╟п╫п╫я▀п╣ я│п╫п╣п╤п╦п╫п╨п╦ п╦ п║п╟п╫я┌я┐ п╫п╟ п╬п╩п╣п╫я▐я┘ п╫п╟ я─п╟п╠п╬я┤п╦п╧ я│я┌п╬п╩.
 
 %prep
 %setup
-%patch -p1
 
 %build
-xmkmf -a
+%configure
 %make
 
 %install
-%makeinstall_std install.man
-install -pDm644 %SOURCE1 %buildroot%_liconsdir/%name.png
+%makeinstall_std
 
 %files
 %doc README
-%_bindir/*
-%_man1dir/*
-%_liconsdir/*
+%_gamesbindir/*
+%_man6dir/*
+%_pixmapsdir/*
+%_desktopdir/*
 
 %changelog
+* Wed Jan 01 2020 Alexei Mezin <alexvm@altlinux.org> 2.0.15-alt1
+- New version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.42-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
