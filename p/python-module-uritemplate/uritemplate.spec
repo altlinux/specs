@@ -3,11 +3,11 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Python implementation of RFC6570, URI Template
-License: Apache Software License
+License: Apache-2.0 or BSD-3-Clause
 Group: Development/Python
 
 Url: https://pypi.python.org/pypi/uritemplate
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Build new version.
+
 * Mon May 20 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Build new version.
 
