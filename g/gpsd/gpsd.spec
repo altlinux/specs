@@ -3,8 +3,8 @@
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.19
-Release: alt3
+Version: 3.20
+Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -13,7 +13,7 @@ Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 Source: %name-%version.tar
 Requires: libgps%abiversion = %version-%release
 
-BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc
+BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel
 
 BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-anyjson python3-module-serial
 
@@ -121,7 +121,7 @@ scons \
 DESTDIR=%buildroot scons install udev-install
 
 %files
-%doc README INSTALL COPYING
+%doc README.adoc INSTALL.adoc COPYING
 %_sbindir/gpsd
 %_sbindir/gpsdctl
 %_unitdir/gpsd.service
@@ -160,6 +160,10 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 02 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt1
+- 3.20
+- added libgtk+3-devel to BuildRequires (is needed for xgps)
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 3.19-alt3
 - NMU: Fix license.
 
