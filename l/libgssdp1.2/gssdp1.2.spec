@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -20,7 +20,7 @@ Url: http://www.gupnp.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.44
+BuildRequires: gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.54
 BuildRequires: vala-tools rpm-build-vala libvala-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel}
 %{?_enable_sniffer:BuildRequires: libgtk+3-devel >= 3.12}
@@ -122,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
