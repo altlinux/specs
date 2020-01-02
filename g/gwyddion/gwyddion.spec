@@ -1,14 +1,14 @@
 %def_with kde4
 
 Name: gwyddion
-Version: 2.49
-Release: alt1.1
+Version: 2.55
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
 
 Group: Sciences/Other
-License: GNU GPL
+License: GPLv2+
 Url: http://gwyddion.net/
 
 # Source-url: http://sourceforge.net/projects/gwyddion/files/gwyddion/%version/gwyddion-%version.tar.xz/download
@@ -16,9 +16,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro libGConf-devel
 
-BuildRequires: GConf gcc-c++ imake libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
+BuildRequires: GConf gcc-c++  libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
 BuildRequires: libxml2-devel perl-Pod-Usage python-module-distribute python-module-pygtk-devel
-BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel chrpath libruby-devel
+BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
 
 # File Format and some features support
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
@@ -37,7 +37,7 @@ BuildPreReq: perl-podlators libpng-devel
 %add_python_req_skip %pkgdatadir
 
 # Stop auto picking wrong deps!
-%add_findreq_skiplist %pkglibexecdir/plugins/process/*
+%add_findreq_skiplist %pkglibexecdir/plugins/*
 
 
 %package -n %libname
@@ -53,14 +53,6 @@ Requires: %libname = %version-%release
 Summary: Docs for Gwyddion module development
 Group: Development/C
 BuildArch: noarch
-
-%package thumbnailer-gconf
-Summary: GConf schemas for gwyddion-thumbnailer integration
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-Requires(pre):   GConf2
-Requires(post):  GConf2
-Requires(preun): GConf2
 
 %package thumbnailer-kde4
 Summary: KDE4 gwyddion thumbnailer module
@@ -97,10 +89,6 @@ This package also contains sample plug-ins in various programming languages.
 %description -n lib%name-doc
 This package contains the API docmentation.
 
-%description thumbnailer-gconf
-GConf schemas that register gwyddion-thumbnailer as thumbnailer for SPM files
-in GNOME and XFce.
-
 %description thumbnailer-kde4
 Gwyddion-thumbnailer based KDE thumbnail creator extension module for SPM
 files.
@@ -114,7 +102,7 @@ Python tools for Gwyddion module development
 # Don't install .la files.
 sed -i '/# Install the pseudo-library/,/^$/d' ltmain.sh
 # Replace universal %%_bindir/env shbang with the real thing.
-sed -i '1s/env *//' plugins/process/*.{py,rb,pl}
+sed -i '1s/env *//' plugins/*.{py,rb,pl}
 
 sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
 sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
@@ -131,8 +119,9 @@ autoconf -f
 	CFLAGS='%optflags' CXXFLAGS='%optflags' \
 	%{?_with_kde4:--with-kde4-thumbnailer} \
 	--disable-rpath \
-	--with-gconf-schema-file-dir=%_sysconfdir/gconf/schemas \
-	--enable-library-bloat 
+	--enable-library-bloat \
+	--with-gl \
+	--with-gtksourceview
 %make_build
 
 %install
@@ -147,25 +136,11 @@ install pixmaps/%name.png %buildroot%_pixmapsdir
 # fixed libtool with some crap.
 find %buildroot -name \*.la -print0 | xargs -0 rm -f
 
-# I cannot express this as %%files in a sensible manner, especially not when
-# python byte-compilation kicks in.  Set permissions in the filesystem.
-find %buildroot%pkglibexecdir -type f -print0 | xargs -0 chmod 755
-find %buildroot%pkglibexecdir -type f -name \*.rgi -print0 | xargs -0 chmod 644
-
 # Perl, Python, and Ruby modules are private, remove the Perl man page.
 rm -f %buildroot%_man3dir/Gwyddion::dump.*
 
 mkdir -p %buildroot%python_sitelibdir
 mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
-
-%pre thumbnailer-gconf
-%gconf2_uninstall
-
-%post thumbnailer-gconf
-%gconf2_install
-
-%preun thumbnailer-gconf
-%gconf2_uninstall
 
 %files -f %name.lang
 %_bindir/%name
@@ -206,6 +181,7 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/mime/packages/%name.xml
 %dir %_datadir/thumbnailers
 %_datadir/thumbnailers/%name.thumbnailer
+%_datadir/metainfo/*.xml
 
 %files -n %libname
 %_libdir/*.so.*
@@ -240,13 +216,6 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkglibdir/ruby/gwyddion/*
 %dir %pkglibdir/ruby/gwyddion
 %dir %pkglibdir/ruby
-# Use filesystem permissions here.
-%pkglibexecdir/plugins/file/*
-%pkglibexecdir/plugins/process/*
-%dir %pkglibexecdir/plugins/file
-%dir %pkglibexecdir/plugins/process
-%dir %pkglibexecdir/plugins
-%dir %pkglibexecdir
 
 %files -n lib%name-doc
 # Documentation
@@ -264,9 +233,7 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %doc %dir %_gtkdocdir/libgwymodule
 %doc %dir %_gtkdocdir
 %doc %dir %_datadir/gtk-doc
-
-%files thumbnailer-gconf
-%_sysconfdir/gconf/schemas/*.schemas
+%doc %_docdir/%name/*
 
 %if_with kde4
 %files thumbnailer-kde4
@@ -278,6 +245,10 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Thu Jan 02 2020 Alexei Mezin <alexvm@altlinux.org> 2.55-alt1
+- new version
+- drop depreciated plugins support and GNOME thumbnaler
+
 * Wed Jul 24 2019 Michael Shigorin <mike@altlinux.org> 2.49-alt1.1
 - introduce kde4 knob (on by default)
 
