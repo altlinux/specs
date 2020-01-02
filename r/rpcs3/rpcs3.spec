@@ -1,5 +1,5 @@
-%define git_ver 9250
-%define git_commit e54438d3a7f07fed2366c1de7eeb286443787fe3
+%define git_ver 9300
+%define git_commit 341fdf7eb14763fd06e2eab9a4b2b8f1adf9fdbd
 
 %define glslang_version 7.11.3214
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -14,7 +14,7 @@
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 
 Name: rpcs3
-Version: 0.0.7.%git_ver
+Version: 0.0.8
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -26,7 +26,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-Source0: https://github.com/RPCS3/%name/archive/%git_commit/%name-%git_commit.tar.gz
+Source0: https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source1: https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
 Source2: https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source3: https://github.com/zeux/pugixml/archive/%pugixml_commit/pugixml-%pugixml_commit.tar.gz
@@ -68,7 +68,7 @@ BuildPreReq: libswresample-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 %__mv -Tf ../glslang-%glslang_version Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
@@ -127,6 +127,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Jan 02 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt1
+- Version 0.0.8
+
 * Tue Dec 24 2019 Nazarov Denis <nenderus@altlinux.org> 0.0.7.9250-alt1
 - Version 0.0.7.9250
 
