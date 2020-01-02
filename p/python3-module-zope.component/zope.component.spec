@@ -3,41 +3,37 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.6
 Release: alt1
 
 Summary: Zope Component Architecture (Python3)
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.component
 #Git: https://github.com/zopefoundation/zope.component.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-persistent
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python-module-zope.configuration
-BuildRequires: python-module-zope.event
-BuildRequires: python-module-zope.location
-BuildRequires: python-module-zope.security
-BuildRequires: python-module-zope.deferredimport
-BuildRequires: python-module-zope.hookable
-BuildRequires: python-module-zope.deprecation
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-persistent
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-zope.location
+BuildRequires: python3-module-zope.deferredimport
+BuildRequires: python3-module-zope.hookable
+BuildRequires: python3-module-zope.deprecation
 %endif
 
-%py_requires zope.interface zope.event zope.configuration
-%py_requires zope.deferredimport zope.deprecation
-%py_requires zope.hookable zope.i18nmessageid
-%py_requires zope.proxy zope.schema zope.security
+%py3_requires zope
 
 %description
 This package is intended to be independently reusable in any Python
@@ -48,10 +44,10 @@ Together with the 'zope.interface' package, it provides facilities for
 defining, registering and looking up components.
 
 %package tests
-Summary: Tests for zope.component
-Group: Development/Python
+Summary: Tests for zope.component (Python 3)
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires zope.testing zope.testrunner zope.configuration
+%py3_requires zope.testing zope.testrunner
 
 %description tests
 This package contains tests for %oname
@@ -61,46 +57,47 @@ This package contains tests for %oname
 %patch0 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
+%python3_install
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
 %endif
 
 %check
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
 # cancel docbuild tests
 sed -i 's|\.\[docs\]||g' tox.ini
-sed -i 's|sphinx-build|#sphinx-build|g' tox.ini
+sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python2}: _PYTEST_BIN=%_bindir\/zope-testrunner\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
 commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
 
-tox --sitepackages -e py%{python_version_nodots python2} -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/test*
-%exclude %python_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 %files tests
-%python_sitelibdir/*/*/test*
-%python_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 
 %changelog
-* Thu Jan 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6-alt1
+* Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.6-alt1
 - NMU: 4.5 -> 4.6
-- Remove python3 module build
+- Remove python2 module build
 - Remove ubt tag from changelog
 - Rearrange unittests execution
 
