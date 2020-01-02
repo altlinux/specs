@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -20,7 +20,7 @@ Url: http://www.gupnp.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgssdp%ver_major-devel >= %ver_major libgio-devel >= 2.40.0
+BuildRequires: libgssdp%ver_major-devel >= %version libgio-devel >= 2.58.0
 BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%ver_major-gir-devel}
@@ -118,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Thu May 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
