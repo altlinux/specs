@@ -3,10 +3,11 @@
 %define _name libsigc++
 %define ver_major 3.0
 %define api_ver 3.0
+%def_enable docs
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -21,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ mm-common >= 0.9.12
 BuildRequires: docbook-style-xsl doxygen graphviz xsltproc
 
@@ -51,18 +53,23 @@ This package provides API documentation of libsigc++ library.
 %setup -n %_name-%version
 
 %build
-mm-common-prepare -f
-%autoreconf
-%configure --disable-static
-%make_build DOCBOOK_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/html/chunk.xsl
+%{?_disable_snapshot:mm-common-get -f untracked/build_scripts/ untracked/docs/docs}
+
+%meson \
+%{?_enable_snapshot:-Dmaintainer-mode=true} \
+%{?_enable_docs:-Dbuild-documentation=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %define docdir %_docdir/libsigc++-%api_ver
+%{?_disable_docs:mkdir -p %buildroot%docdir}
 install -pm644 AUTHORS NEWS README* %buildroot%docdir/
 
 %check
-%make_build -k check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -75,12 +82,17 @@ install -pm644 AUTHORS NEWS README* %buildroot%docdir/
 %_includedir/*
 %_pkgconfigdir/*
 
+%if_enabled docs
 %files doc
 %docdir
 %exclude %docdir/[ANR]*
 %doc %_datadir/devhelp/books/*
+%endif
 
 %changelog
+* Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2 (ported to Meson build system)
+
 * Thu Sep 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
