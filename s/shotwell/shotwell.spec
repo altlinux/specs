@@ -9,12 +9,12 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
-License: LGPL
+License: CC-BY-SA-3.0 and LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Apps/Shotwell
 
 %if_disabled snapshot
@@ -95,6 +95,10 @@ mode, and export them to share with others.
 
 
 %changelog
+* Fri Jan 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.30.8-alt1
+- 0.30.8
+- fixed License tag
+
 * Tue Aug 20 2019 Yuri N. Sedunov <aris@altlinux.org> 0.30.7-alt1
 - 0.30.7
 
