@@ -2,14 +2,15 @@
 
 Name: libcroco
 Version: %ver_major.13
-Release: alt1.1
+Release: alt2
 
 Summary: A CSS2 parsing library
-License: LGPL
+License: LGPL-2.0
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-0.6.13-alt-croco-config.patch
 
 %define glib_ver 2.0
 %define libxml2_ver 2.4.23
@@ -62,6 +63,7 @@ for detecting errors both in CSS code and in the CSS parser itself.
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -98,6 +100,10 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %_bindir/csslint-%ver_major
 
 %changelog
+* Fri Jan 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt2
+- fixed croco-config (ALT #37715)
+- fixed License tag
+
 * Sun Apr 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1.1
 - gtk-doc explicitly required for autoconf
 
