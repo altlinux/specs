@@ -1,4 +1,4 @@
-ExclusiveArch: x86_64
+#ExclusiveArch: %{ix86} x86_64
 %set_verify_elf_method relaxed
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		java3d
 Version:	1.5.2
-Release:	alt2_15jpp8
+Release:	alt3_15jpp8
 Summary:	The Java 3D API
 Group:		Development/Java
 License:	BSD, GPL
@@ -42,7 +42,7 @@ Patch7:		typedef.patch
 BuildRequires:	ant
 BuildRequires:	ant-junit
 BuildRequires:	glibc-devel
-%ifnarch %{arm} aarch64
+%ifnarch %{arm} aarch64 ppc64le
 BuildRequires:	jogl
 %endif
 BuildRequires:	javapackages-local
@@ -144,6 +144,8 @@ for c in $(find . -name "*.class"); do
 done
 
 sed -i 's, -lnsl,,' j3d-core/src/native/ogl/build*.xml
+sed -i '/GLsizeiptr/d;/GLintptr/d' j3d-core/src/native/ogl/gldefs.h
+
 
 %build
 export ANT_OPTS=-Xmx256m
@@ -202,7 +204,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/j3dcore.jar
 %{_javadir}/%{name}/j3dutils-%{version}.jar
 %{_javadir}/%{name}/j3dutils.jar
+%ifnarch %{arm} aarch64 ppc64le
 %{_libdir}/libj3dcore-ogl.so
+%endif
 
 %files examples
 %doc j3d-examples/*.txt j3d-examples/*.html
@@ -218,6 +222,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jan 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt3_15jpp8
+- fixed i586
+
 * Wed Dec 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_15jpp8
 - new version
 
