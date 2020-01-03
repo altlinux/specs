@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.5
-Release: alt7.c29f478ab
+Release: alt8.c29f478ab
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -148,6 +148,7 @@ popd
 %_datadir/mime/packages/scribus.xml
 %_iconsdir/hicolor/*/apps/scribus.png
 %_libdir/%name/
+%attr(0755,root,root) %_libdir/%name/plugins/*.so
 %_man1dir/*
 %exclude %_mandir/de
 %exclude %_mandir/pl
@@ -171,6 +172,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu Jan 02 2020 Paul Wolneykien <manowar@altlinux.org> 1:1.5.5-alt8.c29f478ab
+- Fixed execute permission for *.so plugins (closes: 36962).
+
 * Fri Sep 20 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.5-alt7.c29f478ab
 - update to c29f478abf03dc5ac0fd9cd21d0feb589a91d7eb
 
