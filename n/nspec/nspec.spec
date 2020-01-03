@@ -1,9 +1,9 @@
 Name: nspec
-Version: 15.5598
-Release: alt3
+Version: 16.5639
+Release: alt1
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
-License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2019
+License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2020
 Group: Sciences/Other
 URL: http://www.nanoscantech.ru/en/
 Packager: Alexei Mezin <alexvm@altlinux.org>
@@ -11,16 +11,19 @@ Vendor: ALT Linux Team
 
 Source: %name-%version.tar.gz
 
-BuildRequires(pre): rpm-macros-qt4
+BuildRequires(pre): rpm-macros-qt5
 
 
 # Automatically added by buildreq on Fri Dec 15 2017
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libgtkglext-devel libpango-devel libpangox-compat libpangox-compat-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-widgets libstdc++-devel libusb-compat pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-devel zlib-devel
 ## QT5 deps
-##BuildRequires: bzlib-devel i586-libxcb kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs
+##BuildRequires: bzlib-devel kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs
+BuildRequires: kf5-kimageformats libdb4-devel libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel python3-module-mpl_toolkits python3-module-yieldfrom qt5-connectivity-devel 
+BuildRequires: qt5-imageformats qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-sensors-devel qt5-serialbus-devel qt5-x11extras-devel
+
 
 ## QT4 deps
-BuildRequires: gcc-c++ glibc-devel-static libgwyddion-devel libqt4-webkit-devel libusb-compat-devel libusb-devel phonon-devel ruby ruby-stdlibs
+##BuildRequires: gcc-c++ glibc-devel-static libgwyddion-devel libqt4-webkit-devel libusb-compat-devel libusb-devel phonon-devel ruby ruby-stdlibs
 
 
 %description
@@ -67,7 +70,7 @@ find -type f -name '*.cpp' -o -name '*.hpp' |
 %build
 echo -e "%version-%release\n" >> src/data/nst_build.txt
 # Build without third party hardware support (spectrometers, CCD cameras, photon counters etc.) and obsolete FTDI chip
-%qmake_qt4 "CONFIG += no_external_deps no_ftdi" nst.pro
+%qmake_qt5 "CONFIG += no_external_deps no_ftdi" nst.pro
 # non-SMP make
 %make
 
@@ -115,6 +118,13 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Thu Jan 02 2020 Alexei Mezin <alexvm@altlinux.org> 16.5639-alt1
+- New version with new user interface 
+- Build with Qt5
+
+* Wed Aug 21 2019 Alexei Mezin <alexvm@altlinux.org> 15.5602-alt1
+- New version. Many interface enchancements
+
 * Thu Aug 08 2019 Alexei Mezin <alexvm@altlinux.org> 15.5598-alt3
 - E2K: strip UTF-8 BOM (thanks to Michael Shigorin <mike@altlinux.org>)
 - dropped BR: selinux-policy
