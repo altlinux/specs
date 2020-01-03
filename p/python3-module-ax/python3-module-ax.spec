@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -43,6 +43,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Jan 03 2020 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
+- Functions for working with ranges of versions.
+
 * Fri Dec 20 2019 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
 - Optimized 'printer' module;
 - Modified procedure of version comparisment.
