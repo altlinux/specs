@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Group: Networking/Mail
@@ -16,8 +16,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define ver_base 3.28
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.34.2
-%define eds_ver 3.34.2
+%define evolution_ver 3.34.3
+%define eds_ver 3.34.3
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Jan 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
+- 3.34.3
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
