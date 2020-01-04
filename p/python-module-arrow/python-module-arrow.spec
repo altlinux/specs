@@ -4,7 +4,7 @@
 %def_disable python2_tests
 
 Name: python-module-%modname
-Version: 0.15.4
+Version: 0.15.5
 Release: alt1
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -104,6 +104,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.15.5-alt1
+- 0.15.5
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt1
 - 0.15.4
 - disabled python2 build
