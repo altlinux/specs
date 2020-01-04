@@ -5,32 +5,29 @@
 %def_with python2
 
 %define upname libtorrent-rasterbar
-%define soname 9
+%define soname 10
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.1.13
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD
 Group: System/Libraries
-
 Url: https://www.rasterbar.com/products/libtorrent/
+
 # https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
-Patch: %name-1.1.9-fedora-system-tommath.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
 BuildRequires: libssl-devel
-BuildRequires: gcc-c++ zlib-devel
-BuildRequires: glibc-devel glibc-core
+BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
-BuildRequires: boost-multiprecision-devel
 BuildRequires: python3-devel boost-python3-devel
 BuildRequires: libGeoIP-devel
-BuildRequires: libtommath-devel
 
 %if_with python2
 BuildRequires: python-devel boost-python-devel
@@ -61,8 +58,6 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n %name%soname
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
-# TODO: remove this obsolete on next soname change
-Obsoletes: %name <= 3:1.1.9-alt1
 
 %description -n %name%soname
 libTorrent is designed to avoid redundant copying and storing of data
@@ -138,7 +133,6 @@ python-3 bindings to libTorrent.
 
 %prep
 %setup
-%patch -p1
 
 mkdir -p build-aux
 touch build-aux/config.rpath
@@ -148,18 +142,15 @@ cp -r . ../build-python2
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing -DTORRENT_USE_WSTRING=1 -DTORRENT_EXPORT_EXTRA=1
-%add_optflags -I%_includedir/tommath
+%ifarch %e2k
+# -std=c++03 by default as of lcc 1.23.20
+%add_optflags -std=c++11
+%endif
 
 %if_with python2
 pushd ../build-python2
 
 export PYTHON=%_bindir/python2
-
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
 
 %autoreconf
 %configure \
@@ -227,6 +218,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.3-alt1
+- Updated to upstream version 1.2.3.
+
 * Thu Nov 07 2019 Michael Shigorin <mike@altlinux.org> 3:1.1.13-alt2
 - E2K: explicit -std=c++11
 - Minor spec cleanup
