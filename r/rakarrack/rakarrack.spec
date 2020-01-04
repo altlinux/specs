@@ -1,6 +1,6 @@
 Name: rakarrack
 Version: 0.6.2
-Release: alt5.git20140722
+Release: alt6.git20140722
 
 Summary: Guitar effects for Linux
 License: GPLv2+
@@ -9,6 +9,8 @@ Group: Sound
 Url: http://rakarrack.sourceforge.net/
 Source: %name-%version.tar
 Patch: %name-%version-fedora-format-security.patch
+Patch1: rakarrack-0.6.1-debian-fix-segfault.patch
+Patch2: rakarrack-0.6.2-alt-restore-font-size.patch
 
 BuildRequires: alsa-utils gcc-c++ jackit-devel libXext-devel libXft-devel
 BuildRequires: libXpm-devel libalsa-devel libfltk-devel libjpeg-devel
@@ -48,6 +50,9 @@ This package contains data files and documentation for Rakarrack.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+
 %ifarch %e2k
 # E2K: lcc 1.23.20 doesn't do this particular option
 # (but does the other one so --disable-vectorize looks worse)
@@ -65,7 +70,7 @@ sed -i 's,-fvar-tracking-assignments-toggle,,' configure.ac
 	--enable-sse2 \
 %endif
 	--enable-jack-session \
-	--enable-datadir=yes \
+	--enable-datadir=no \
 	--enable-docdir=yes
 
 %make_build
@@ -87,6 +92,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/doc/%name
 
 %changelog
+* Sat Jan 04 2020 Ivan A. Melnikov <iv@altlinux.org> 0.6.2-alt6.git20140722
+- Fix default resources path.
+- Fix possible segfault on startup via patch from Debian.
+- Fix saving and restoring of font size.
+
 * Sun Oct 27 2019 Michael Shigorin <mike@altlinux.org> 0.6.2-alt5.git20140722
 - E2K: avoid lcc-unsupported options.
 - Minor spec cleanup.
