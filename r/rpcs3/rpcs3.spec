@@ -1,7 +1,7 @@
 %define git_ver 9300
 %define git_commit 341fdf7eb14763fd06e2eab9a4b2b8f1adf9fdbd
 
-%define glslang_version 7.11.3214
+%define glslang_version 7.13.3496
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
@@ -15,7 +15,7 @@
 
 Name: rpcs3
 Version: 0.0.8
-Release: alt1.1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -129,6 +129,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Jan 04 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt2
+- Update glslang to 7.13.3496
+
 * Fri Jan 03 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt1.1
 - build with python3
 - don't gzip sources
