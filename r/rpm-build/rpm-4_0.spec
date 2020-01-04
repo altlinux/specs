@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt136
+Release: alt137
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -406,6 +406,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sat Jan 04 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt137
+- Fixed %%autopatch and %%patch regression introduced in previous release.
+
 * Fri Jan 03 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt136
 - Generate requirements on binaries used in systemd service files
   (by Anton V. Boyarshinov)
