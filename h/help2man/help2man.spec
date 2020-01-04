@@ -1,5 +1,5 @@
 Name: help2man
-Version: 1.47.10
+Version: 1.47.12
 Release: alt1
 
 Summary: help2man creates simple man pages from the output of programs
@@ -19,8 +19,8 @@ Patch: help2man-1.40.4-alt-runas.patch
 Requires: coreutils
 
 %if_enabled nls
-%define lib_suffix %nil
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
+%global lib_suffix %nil
+%{expand:%%global lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
 Requires: preloadable_libintl.so%lib_suffix
 BuildRequires: perl-Locale-gettext
 %endif
@@ -62,6 +62,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' help2man.*.1
 %doc ChangeLog NEWS README* THANKS help2man.h2m
 
 %changelog
+* Sat Jan 04 2020 Dmitry V. Levin <ldv@altlinux.org> 1.47.12-alt1
+- 1.47.10 -> 1.47.12.
+
 * Sat Mar 23 2019 Dmitry V. Levin <ldv@altlinux.org> 1.47.10-alt1
 - 1.47.8 -> 1.47.10.
 
