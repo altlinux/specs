@@ -14,11 +14,11 @@
 %def_disable magnatune
 
 Name: rhythmbox
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%rev
 
 Summary: Music Management Application
-License: GPL
+License: GPL-2.0
 Group: Sound
 Url: https://wiki.gnome.org/Apps/Rhythmbox
 
@@ -54,6 +54,7 @@ Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: gnome-icon-theme
 Requires: gnome-icon-theme-symbolic
+Requires: libpeas-python3-loader
 
 Provides: %name-plugins-audiocd
 Provides: %name-plugins-generic-player
@@ -69,7 +70,7 @@ Provides: python%__python3_version(rhythmdb)
 Provides: python3(rb)
 Provides: python3(rhythmdb)
 
-BuildRequires(pre): browser-plugins-npapi-devel rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: glib2-devel >= %glib_ver
@@ -217,15 +218,6 @@ Requires: %name = %version-%release
 Plugin to the Rhythmbox music manager that provides
 inhibit Power Manager from suspending the machine while playing
 
-%package plugins-mozilla
-Summary: Browser plugin for Rhythmbox
-Group: Sound
-Requires: %name = %version-%release
-Requires: browser-plugins-npapi
-
-%description plugins-mozilla
-Plugin for Mozilla based browsers to handle itms:// links
-
 %package plugins-im-status
 Summary: IM status plugin for Rhythmbox
 Group: Sound
@@ -339,8 +331,7 @@ This virtual package installs all Rhythmbox plugins
 
 %build
 %autoreconf
-export MOZILLA_PLUGINDIR=%browser_plugins_path
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
@@ -362,7 +353,7 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS DOCUMENTERS MAINTAINERS ChangeLog README* NEWS THANKS %buildroot%pkgdocdir/
 bzip2 -9 %buildroot%pkgdocdir/ChangeLog
-ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
+ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 
 %find_lang --with-gnome %name
 
@@ -430,9 +421,6 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %files plugins-power-manager
 %_libdir/%name/plugins/power-manager/
 
-%files plugins-mozilla
-%browser_plugins_path/librhythmbox-itms-detection-plugin.so
-%exclude %browser_plugins_path/librhythmbox-itms-detection-plugin.la
 
 %files plugins-im-status
 %_libdir/%name/plugins/im-status/
@@ -470,13 +458,12 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %{?_disable_magnatune:%exclude %_libdir/%name/plugins/magnatune/}
 %_libdir/%name/plugins/context/
 %_libdir/%name/plugins/replaygain/
-%_libdir/%name/plugins/sendto/
 %_libdir/%name/plugins/webremote/
+%_libdir/%name/plugins/listenbrainz/
 %{?_enable_zeitgeist:%_libdir/%name/plugins/rbzeitgeist/}
 %{?_enable_soundcloud:%_libdir/%name/plugins/soundcloud/}
 
 %exclude %_libdir/%name/plugins/*/*.la
-%exclude %browser_plugins_path/*.la
 
 %files plugins
 
@@ -488,6 +475,10 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Jan 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
+- 3.4.4 (removed sendto, mozilla plugins; new listenbrainz plugin)
+- fixed License tag
+
 * Sun Jan 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
