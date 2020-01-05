@@ -1,14 +1,14 @@
 %define cfg %_builddir/%name-%version/
 # See https://svn.freepascal.org/svn/lazarus/tags/lazarus_2_0_2/ for example
-%define rev 61675
+%define rev 62500
 
 Name:    lazarus
-Version: 2.0.4
+Version: 2.0.6
 Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
-License: GPL and modified LGPL
+License: GPL-2.0-only and LGPL-2.0-only
 Group:   Development/Other
 Url:     http://www.lazarus-ide.org/
 
@@ -234,6 +234,9 @@ rm -rf %buildroot$LAZARUSDIR/lcl/interfaces/qt5/cbindings
 %_libdir/libQt5Pas.so
 
 %changelog
+* Tue Nov 05 2019 Andrey Cherepanov <cas@altlinux.org> 1:2.0.6-alt1
+- New version.
+
 * Fri Aug 09 2019 Andrey Cherepanov <cas@altlinux.org> 1:2.0.4-alt1
 - New version.
 
