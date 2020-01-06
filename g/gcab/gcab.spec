@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -16,7 +16,7 @@ Release: alt1
 
 Summary: M$ Cabinet archive library and tool
 Group: File tools
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/msitools
 
 #VCS: git://git.gnome.org/gcab
@@ -28,7 +28,8 @@ Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildRequires: meson git gtk-doc glib2-devel
+BuildRequires(pre): meson
+BuildRequires: git gtk-doc libgio-devel >= 2.62
 BuildRequires: gobject-introspection-devel zlib-devel
 BuildRequires: vala-tools
 
@@ -148,6 +149,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 - %%check section, new libgcab-tests subpackage
