@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.11
+Version: 0.9.12
 Release: alt1
 
 Summary: Permanently install Live system
@@ -63,6 +63,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon Jan 06 2020 Anton Midyukov <antohami@altlinux.org> 0.9.12-alt1
+- copy kernel from /images/boot if not in /images/sylinux/alt0
+
 * Tue Apr 23 2019 Anton Midyukov <antohami@altlinux.org> 0.9.11-alt1
 - Not restart systemd-logind
 
