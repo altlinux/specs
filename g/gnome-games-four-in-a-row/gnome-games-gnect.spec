@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Four in a row game
@@ -55,6 +55,9 @@ line can be horizontal, vertical or diagonal.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
+- 3.34.3
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
