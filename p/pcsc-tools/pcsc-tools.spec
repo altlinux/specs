@@ -1,5 +1,5 @@
 Name:           pcsc-tools
-Version:        1.5.4
+Version:        1.5.5
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -11,6 +11,7 @@ Source1:	%name.watch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libpcsclite-devel >= 1.2.9
+BuildRequires:  python2-base
 BuildRequires:  perl-pcsc
 BuildRequires:  perl-Gtk3
 Requires:       pcsc-lite
@@ -61,6 +62,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Mon Jan 06 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
+- New version.
+
 * Fri Dec 14 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
 - New version.
 
