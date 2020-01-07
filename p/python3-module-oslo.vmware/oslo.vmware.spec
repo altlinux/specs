@@ -1,8 +1,8 @@
 %define oname oslo.vmware
 
 Name: python3-module-%oname
-Version: 2.31.0
-Release: alt2
+Version: 2.34.1
+Release: alt1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python3
 License: ASL 2.0
@@ -32,6 +32,7 @@ BuildRequires: python3-module-lxml >= 3.4.1
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 The Oslo project intends to produce a python library containing infrastructure
@@ -85,6 +86,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.34.1-alt1
+- Automatically updated to 2.34.1.
+- Added watch file.
+- Renamed spec file.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 2.31.0-alt2
 - Build without python2.
 

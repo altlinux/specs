@@ -1,7 +1,7 @@
 %define oname oslo.utils
 
 Name: python3-module-%oname
-Version: 3.41.2
+Version: 3.42.1
 Release: alt1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python3
@@ -82,6 +82,11 @@ rm -rf build/sphinx/html/.{doctrees,buildinfo}
 %doc build/sphinx/html LICENSE
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.42.1-alt1
+- Automatically updated to 3.42.1.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.41.2-alt1
 - Automatically updated to 3.41.2.
 - Build without python2.

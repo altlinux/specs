@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Command Line Interface Formulation Framework
@@ -23,7 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-pyparsing >= 2.1.0
-BuildRequires: python3-module-cmd2 >= 0.8.0
+BuildRequires: python3-module-cmd2 >= 0.6.7
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-yaml >= 3.10.0
@@ -91,6 +91,11 @@ PYTHONPATH=. nosetests3
 %endif
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.17.0-alt1
+- Automatically updated to 2.17.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.16.0-alt1
 - Automatically updated to 2.16.0.
 - Build without python2.

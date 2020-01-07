@@ -1,7 +1,7 @@
 %define oname oslo.log
 
 Name: python3-module-%oname
-Version: 3.44.1
+Version: 3.45.1
 Release: alt1
 
 Summary: OpenStack oslo.log library
@@ -92,6 +92,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc build/sphinx/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.45.1-alt1
+- Automatically updated to 3.45.1.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.44.1-alt1
 - Automatically updated to 3.44.1.
 - Build without python2.

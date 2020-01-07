@@ -1,7 +1,7 @@
 %define oname oslo.i18n
 
 Name: python3-module-%oname
-Version: 3.24.0
+Version: 3.25.0
 Release: alt1
 Summary: OpenStack i18n library
 Group: Development/Python3
@@ -81,6 +81,11 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %doc doc/build/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.25.0-alt1
+- Automatically updated to 3.25.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.24.0-alt1
 - Automatically updated to 3.24.0.
 - Build without python2.

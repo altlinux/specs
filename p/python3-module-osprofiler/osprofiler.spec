@@ -1,7 +1,7 @@
 %define oname osprofiler
 
 Name: python3-module-%oname
-Version: 2.8.2
+Version: 2.9.0
 Release: alt1
 Summary: OpenStack cross-project profiling library
 Group: Development/Python3
@@ -80,6 +80,11 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
+- Automatically updated to 2.9.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.2-alt1
 - Automatically updated to 2.8.2.
 - Build without python2.

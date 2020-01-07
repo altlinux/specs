@@ -1,7 +1,7 @@
 %define oname oslo.config
 
 Name:       python3-module-%oname
-Version:    6.11.1
+Version:    6.12.0
 Release:    alt1
 
 Summary:    OpenStack common configuration library
@@ -96,6 +96,11 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 6.12.0-alt1
+- Automatically updated to 6.12.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 6.11.1-alt1
 - Automatically updated to 6.11.1.
 - Build without python2.

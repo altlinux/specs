@@ -1,7 +1,7 @@
 %define oname tooz
 
 Name: python3-module-%oname
-Version: 1.66.2
+Version: 1.67.1
 Release: alt1
 Summary: Coordination library for distributed systems
 Group: Development/Python3
@@ -35,7 +35,7 @@ BuildRequires: python3-module-psycopg2
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-kazoo
 BuildRequires: python3-module-zake
-BuildRequires: python3-module-stevedore
+BuildRequires: python3-module-stevedore >= 1.16.0
 
 %description
 The Tooz project aims at centralizing the most common distributed
@@ -87,6 +87,11 @@ rm -fr build/sphinx/html/.buildinfo
 %doc build/sphinx/html
 
 %changelog
+* Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.67.1-alt1
+- Automatically updated to 1.67.1.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.66.2-alt1
 - Automatically updated to 1.66.2.
 - Build without python2.
