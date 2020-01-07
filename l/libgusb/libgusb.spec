@@ -8,19 +8,19 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: GLib wrapper around libusb1
 Group: System/Libraries
-License: %lgpl2plus
+License: LGPL-2.1
 Url: https://gitorious.org/gusb/
 
 # VCS: https://github.com/hughsie/libgusb.git
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
-BuildRequires(pre): meson rpm-build-licenses
-BuildRequires: libgio-devel >= 2.44 libusb-devel >= 1.0.19
+BuildRequires(pre): meson
+BuildRequires: libgio-devel >= 2.44 libusb-devel >= 1.0.22
 BuildRequires: gobject-introspection-devel
 %{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_vala:BuildRequires: vala-tools}
@@ -110,6 +110,9 @@ applications that use GUsb library.
 %endif
 
 %changelog
+* Tue Jan 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 - updated License tag
