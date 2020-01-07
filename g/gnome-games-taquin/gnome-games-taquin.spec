@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-taquin
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Gnome tiles game
@@ -54,6 +54,9 @@ Move tiles so that they reach their places.
 %doc AUTHORS NEWS COPYING*
 
 %changelog
+* Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
+- 3.34.3
+
 * Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

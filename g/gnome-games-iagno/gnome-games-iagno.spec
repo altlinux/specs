@@ -6,12 +6,12 @@
 %define xdg_name org.gnome.Reversi
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Gnome version of Othello (Reversi) board game
 Group: Games/Boards
-License: %gpl3plus
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Iagno
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -21,7 +21,7 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.40.0
 %define gtk_ver 3.22.23
 
-BuildRequires(pre): meson rpm-build-licenses
+BuildRequires(pre): meson
 BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
@@ -55,6 +55,9 @@ Othello.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 - updated License tag
