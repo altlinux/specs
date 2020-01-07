@@ -5,16 +5,14 @@
 %define soversion 7
 
 Name: libwebp
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
-License: BSD
+License: BSD-3-Clause
 Group: System/Libraries
 Url: http://webmproject.org/
 Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
-# init only
-Patch: %name-0.4.1-alt-lfs.patch
 
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel
 BuildRequires: libfreeglut-devel
@@ -65,9 +63,9 @@ images more efficiently.
 
 %prep
 %setup
-%patch -b .lfs
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
 	%{subst_enable libwebpmux} \
@@ -123,6 +121,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Tue Jan 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sun Jul 14 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
