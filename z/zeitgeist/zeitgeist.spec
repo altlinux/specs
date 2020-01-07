@@ -7,16 +7,17 @@
 
 %define pkgdocdir %_docdir/lib%name-%version
 
+%def_disable python2
 %def_enable fts
 %def_enable docs
 
 Name: zeitgeist
 Version: %major.2
-Release: alt1.1
+Release: alt2
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
-License: LGPLv3+ and LGPLv3
+License: LGPL-2.1 and GPL-2.0
 # zeitgeist/loggers/iso_strptime.py is LGPLv3 and the rest LGPLv3+
 Url: https://launchpad.net/zeitgeist
 
@@ -35,16 +36,16 @@ Requires: lib%name%api_ver = %version-%release
 %define tp_glib_ver 0.18
 
 # can't do buildreq correctly
-BuildRequires: python-devel python-module-rdflib
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-rdflib
 BuildRequires: gcc-c++ libsqlite3-devel libdbus-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libjson-glib-devel
 BuildRequires: libxapian-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-rdflib
 BuildRequires: pkgconfig(systemd)
+%{?_enable_python2:BuildRequires: python-devel python-module-rdflib}
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 # for autoreconf
 BuildRequires: gettext-tools
@@ -146,36 +147,39 @@ This package contains development documentation for the Zeitgeist library.
 %prep
 %setup
 %setup -D -c
-subst 's/_have/have/' {*/,}data/completions/%name-daemon
-mv %name-%version py3build
-pushd py3build
 %patch1
-popd
+subst 's/_have/have/' {*/,}data/completions/%name-daemon
+%{?_enable_python2:mv %name-%version py2build}
 
 %build
 %define opts --disable-static %{subst_enable fts}
 %autoreconf
 %configure %opts \
-	PYTHON=%__python
+%{subst_enable docs} \
+	PYTHON=%__python3
 %make_build
 
-pushd py3build
+%if_enabled python2
+pushd py2build
 %autoreconf
 %configure %opts \
-    %{subst_enable docs} \
-    PYTHON=/usr/bin/python3
+    PYTHON=%__python
 %make_build
 popd
+%endif
 
 %install
 %makeinstall_std
-pushd py3build
+
+%if_enabled python2
+pushd py2build
 %makeinstall_std
+%endif
+
 %if_enabled docs
 install -d -m755 %buildroot%pkgdocdir
 cp -aR doc/lib%name/{docs_c/html,docs_vala} %buildroot%pkgdocdir
 %endif
-popd
 
 %find_lang %name
 
@@ -197,8 +201,10 @@ popd
 %_prefix/lib/systemd/user/%name-fts.service
 %endif
 
+%if_enabled python2
 %files -n python-module-%name%api_ver
 %python_sitelibdir_noarch/zeitgeist/
+%endif
 
 %files -n python3-module-%name%api_ver
 %python3_sitelibdir_noarch/zeitgeist/
@@ -226,6 +232,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- updated to v1.0.2-1-gb5c00e80 (fixed build with gettext >= 0.20)
+- disabled python2 support
+
 * Sat Jun 01 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1.1
 - fixed build without docs
 
