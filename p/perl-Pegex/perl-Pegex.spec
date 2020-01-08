@@ -6,12 +6,12 @@ BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pegex
-Version:        0.70
-Release:        alt1_5
+Version:        0.72
+Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Pegex
-Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Pegex-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Pegex-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -69,10 +69,13 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc Changes CONTRIBUTING README example
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1_5
 - update to new release by fcimport
 
