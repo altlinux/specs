@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -20,7 +20,7 @@ Group: System/Libraries
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
-License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
+License: GPL-2.0-or-later and LGPL-2.0-or-later and MIT
 Url: https://wiki.gnome.org/action/show/Projects/Gjs
 
 %if_enabled snapshot
@@ -120,6 +120,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.58.4-alt1
+- 1.58.4
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.58.3-alt1
 - 1.58.3
 
