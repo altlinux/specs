@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Filesys-Notify-Simple
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Filesys::Notify::Simple - Simple and dumb file system watcher
@@ -31,11 +32,14 @@ a fallback to the full directory scan if they're not available.
 %perl_vendor_install
 
 %files
-%doc LICENSE README* Changes
+%doc README* Changes
 %perl_vendor_privlib/Filesys/Notify/Simple*
 %doc Changes
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- new version
+
 * Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
