@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 2.29
+Version: 3.003
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -35,7 +35,7 @@ LaTeX, and so on.
 %perl_vendor_install
 
 %files
-%doc	README Changes TODO HACKING INSTALL
+%doc	Changes HACKING README.md
 
 	%perl_vendor_archlib/Template.pm
 %dir	%perl_vendor_archlib/Template
@@ -63,6 +63,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 2.29-alt1
 - automated CPAN update
 
