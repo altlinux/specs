@@ -4,12 +4,12 @@
 %def_disable check
 
 Name: grilo
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Content discovery framework
 Group: Sound
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -151,6 +151,9 @@ mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_majo
 %endif
 
 %changelog
+* Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- 0.3.11
+
 * Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
 - 0.3.10
 
