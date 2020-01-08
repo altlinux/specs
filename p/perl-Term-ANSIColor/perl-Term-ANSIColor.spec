@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Term-ANSIColor
 Name: perl-Term-ANSIColor
-Version: 4.06
+Version: 5.00
 Release: alt1
 
 Summary: Color output using ANSI escape sequences
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RR/RRA/Term-ANSIColor-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RR/RRA/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ text attributes or to apply a set of attributes to a string and reset
 the current text attributes at the end of that string.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 rm t/pod*.t
@@ -36,10 +36,13 @@ rm t/pod*.t
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md docs examples
 %perl_vendor_privlib/Term
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 5.00-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.06-alt1
 - automated CPAN update
 
