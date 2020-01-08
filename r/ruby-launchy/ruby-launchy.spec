@@ -1,8 +1,9 @@
 %define        pkgname launchy
+%define        apppkg ruby-launchy-app
 
 Name:          ruby-%pkgname
 Version:       2.4.3
-Release:       alt2
+Release:       alt3
 Summary:       A helper for launching cross-platform applications in a fire and forget manner.
 License:       ISC
 Group:         Development/Ruby
@@ -38,16 +39,18 @@ Documentation files for %gemname gem.
 Файлы сведений для самоцвета %gemname.
 
 
-%package       -n %pkgname
+%package       -n %apppkg
 Summary:       Executable file for %gemname gem
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+Obsoletes:     launchy <= 2.4.3-alt2
+Conflicts:     launchy <= 2.4.3-alt2
 
-%description   -n %pkgname
+%description   -n %apppkg
 Executable file for %gemname gem.
 
-%description   -n %pkgname -l ru_RU.UTF8
+%description   -n %apppkg -l ru_RU.UTF8
 Исполнямка для %gemname самоцвета.
 
 
@@ -71,11 +74,14 @@ Executable file for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
-%files         -n %pkgname
+%files         -n %apppkg
 %_bindir/%{pkgname}*
 
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.3-alt3
+- NMU: renamed launchy subpackage (closes: #37462)
+
 * Sat Jul 20 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt2
 - Use Ruby Policy 2.0
 
