@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Data-ICal
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Generates iCalendar (RFC 2445) calendar files
@@ -61,6 +61,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Data/*
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
