@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-DBus
 Name: perl-%dist
-Version: 1.1.0
-Release: alt1.2
+Version: 1.2.0
+Release: alt1
 
 Summary: Perl extension for the DBus message system
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DANBERR/Net-DBus-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DANBERR/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: libdbus-devel perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Twig
@@ -21,7 +21,7 @@ DBus, but should work with later versions too, providing the API changes
 have not been too drastic.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ have not been too drastic.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1.2
 - rebuild with new perl 5.28.1
 
