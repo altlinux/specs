@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,12 +8,12 @@ BuildRequires: perl-Filter
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Module-Compile
-Version:        0.37
-Release:        alt1_6
+Version:        0.38
+Release:        alt1
 Summary:        Perl Module Compilation
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Module-Compile
-Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Compile-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
@@ -62,11 +63,13 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_6
 - update to new release by fcimport
 
