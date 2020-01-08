@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.3.1
-Release: alt9.git88131ec5
+Version: 1.4.0
+Release: alt1.rc1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -65,6 +65,9 @@ Clementine is a modern music player and library organizer
 
 
 %changelog
+* Wed Jan 8 2020 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt1.rc1
+- New version
+
 * Tue Oct 01 2019 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt9.git88131ec5
 - Add mising buildrequires
 
