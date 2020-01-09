@@ -1,16 +1,19 @@
-Name: python-module-intelhex
+%define oname intelhex
+
+Name: python3-module-%oname
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Python module for manipulating Intel HEX files
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/bialix/intelhex
+BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildArch: noarch
-BuildRequires: python-module-setuptools
+BuildRequires(pre): python3-module-setuptools
+
 
 %description
 %summary
@@ -19,16 +22,20 @@ BuildRequires: python-module-setuptools
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/*.py
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.1-alt2
+- porting on python3
+
 * Tue Dec 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
 - 2.2.1 released
 
