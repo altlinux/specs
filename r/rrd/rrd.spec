@@ -1,6 +1,6 @@
 Name: rrd
-Version: 1.7.0
-Release: alt1.2
+Version: 1.7.2
+Release: alt1
 
 
 %define native rrdtool
@@ -13,7 +13,7 @@ Release: alt1.2
 %define	_localstatedir	/var
 
 Summary: RRD - round robin database
-License: %gpl2plus with exceptions
+License: %gpl2plus
 Group: Development/Databases
 
 Url: http://oss.oetiker.ch/rrdtool
@@ -24,7 +24,7 @@ Source2: rrdcached.sysconfig
 
 Source10: MRTG-HOWTO
 
-Patch0: rrd-1.4.5-alt-build-tcl.patch
+Patch0: rrd-1.7.2-alt-build-tcl.patch
 Patch1: rrdtool-1.4.5-automake-1.11.2.patch
 Patch2: rrdtool-1.4.7-alt-DSO.patch
 Patch3: rrdtool-1.5.3-top-dir.patch
@@ -350,8 +350,7 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 
 %if_with tcl
 %files tcl
-%_tcllibdir/tcl*.so
-%_tcldatadir/tcl%name%version/
+%_libdir/tcl*.so
 %endif
 
 # TODO:
@@ -359,6 +358,9 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Thu Jan 09 2020 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1
+- 1.7.0 -> 1.7.2 (closes: #37648)
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1.2
 - rebuild with new perl 5.28.1
 
