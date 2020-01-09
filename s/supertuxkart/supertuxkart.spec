@@ -1,8 +1,8 @@
 Name: supertuxkart
-Version: 1.0
+Version: 1.1
 Release: alt1
 
-License: GPL
+License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
 Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
@@ -19,12 +19,13 @@ Source: %name-%version-src.tar.gz
 # for aarch64 support
 BuildRequires(pre): libGLES
 BuildRequires: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel
-BuildRequires: libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
+BuildRequires: libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel libXrandr-devel
 BuildRequires: ctest gcc-c++ libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs libbluez-devel glibc-devel
 #ccmake ctest gcc-c++ glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs
-BuildRequires: zlib-devel libpng-devel libjpeg-devel libfreetype-devel libXrandr-devel libharfbuzz-devel
-BuildRequires: libGLEW-devel libnettle-devel libenet-devel libGLES-devel bzlib-devel
+BuildRequires: zlib-devel libpng-devel libjpeg-devel libfreetype-devel libharfbuzz-devel
+BuildRequires: libGLEW-devel libssl-devel libenet-devel libGLES-devel bzlib-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-x11-devel
+BuildRequires: libmcpp-devel libsqlite3-devel
 
 Requires: %name-data >= %version
 
@@ -50,7 +51,7 @@ find %buildroot -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name 
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
 %files
-#doc README CHANGELOG NETWORKING
+#doc README.md CHANGELOG.md NETWORKING.md
 %_bindir/*
 %_desktopdir/%name.desktop
 %_datadir/%name
@@ -62,6 +63,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_iconsdir/hicolor/128x128/apps/*
 
 %changelog
+* Thu Jan 09 2020 Leontiy Volodin <lvol@altlinux.org> 1.1-alt1
+- Update to upstream version 1.1
+
 * Mon Apr 22 2019 Leontiy Volodin <lvol@altlinux.org> 1.0-alt1
 - Update to upstream version 1.0
 
