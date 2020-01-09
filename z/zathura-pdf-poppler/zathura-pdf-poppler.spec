@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-pdf-poppler
-Version: 0.2.9
+Version: 0.3.0
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
-License: %bsdstyle
+License: Zlib
 Group: Office
 
-URL: http://pwmt.org/projects/zathura/plugins/zathura-pdf-poppler
-# https://git.pwmt.org/pwmt/zathura-pdf-poppler.git
+URL: https://pwmt.org/projects/%name/
+Vcs: https://git.pwmt.org/pwmt/zathura-pdf-poppler.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses meson
+BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libpoppler-glib-devel libcairo-devel
@@ -43,6 +43,12 @@ the poppler rendering engine.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Used Vcs tag.
+- Fixed license.
+- Fixed URL.
+- Updated to 0.3.0.
+
 * Thu Apr 19 2018 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
 - Updated to 0.2.9.
 
