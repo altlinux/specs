@@ -3,13 +3,14 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.40.2
+Version: 1.41.1
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.service.watch
 
 BuildArch: noarch
 
@@ -85,6 +86,11 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.41.1-alt1
+- Automatically updated to 1.41.1.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.40.2-alt1
 - Automatically updated to 1.40.2.
 - Build without python2.

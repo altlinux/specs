@@ -1,13 +1,14 @@
 %define oname oslo.db
 
 Name: python3-module-%oname
-Version: 5.0.2
+Version: 6.0.0
 Release: alt1
 Summary: OpenStack oslo.db library
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.db.watch
 
 BuildArch: noarch
 
@@ -86,6 +87,11 @@ Tests for the Oslo database handling library.
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
+- Automatically updated to 6.0.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 5.0.2-alt1
 - Automatically updated to 5.0.2.
 - Build without python2.

@@ -1,13 +1,14 @@
 %define oname oslo.versionedobjects
 
 Name: python3-module-%oname
-Version: 1.36.1
+Version: 1.37.0
 Release: alt1
 Summary: OpenStack oslo.versionedobjects library
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.versionedobjects.watch
 
 BuildArch: noarch
 
@@ -86,6 +87,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.37.0-alt1
+- Automatically updated to 1.37.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.36.1-alt1
 - Automatically updated to 1.36.1.
 - Build without python2.
