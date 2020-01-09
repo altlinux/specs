@@ -1,22 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+
 %define mname IPy
+
 Name: python3-module-%mname
-Version: 0.83
+Version: 1.0.0
 Release: alt1
+
 Summary: Python module for handling IPv4 and IPv6 Addresses and Networks
-URL: https://github.com/haypo/python-ipy
-# https://github.com/haypo/python-ipy.git
-Source0: https://pypi.python.org/packages/88/28/79162bfc351a3f1ab44d663ab3f03fb495806fdb592170990a1568ffbf63/IPy-%{version}.tar.gz
 License: BSD
 Group: Development/Python3
+URL: https://github.com/haypo/python-ipy
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python3 python3-base
-BuildRequires: rpm-build-python3
+# https://github.com/haypo/python-ipy.git
+Source0: https://pypi.python.org/packages/88/28/79162bfc351a3f1ab44d663ab3f03fb495806fdb592170990a1568ffbf63/IPy-%{version}.tar.gz
 
-#BuildRequires: python3-devel python-tools-2to3
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 IPy is a Python module for handling IPv4 and IPv6 Addresses and Networks in
@@ -34,10 +35,14 @@ Addresses and Networks.
 %python3_install --compile
 
 %files
-%doc AUTHORS ChangeLog README example
+%doc AUTHORS ChangeLog README.rst example/
 %python3_sitelibdir/*
 
+
 %changelog
+* Thu Jan 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt1
+- Version updated to 1.0.0
+
 * Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - automated PyPI update
 
