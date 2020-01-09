@@ -9,7 +9,7 @@ of the 'zope.i18n' package.
 %def_with check
 
 Name: %fname-docs
-Version: 4.3.1
+Version: 5.0.0
 Release: alt1
 
 %if "-docs"==""
@@ -20,7 +20,7 @@ Summary: Documentation for %oname
 Group: Development/Documentation
 %endif
 
-License: ZPLv2.1
+License: ZPL-2.1
 # Source-git https://github.com/zopefoundation/zope.i18nmessageid.git
 Url: http://pypi.python.org/pypi/zope.i18nmessageid
 Source: %name-%version.tar
@@ -114,6 +114,10 @@ python3 setup.py test -v
 %endif
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Build new version.
+- Fix license.
+
 * Fri Dec 28 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt1
 - Build new version.
 
