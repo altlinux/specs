@@ -1,5 +1,5 @@
 Name: atf-rockchip
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -32,6 +32,9 @@ install -pm0644 -D build/rk3399/release/bl31/bl31.elf \
 %_datadir/atf/rk3399/bl31.elf
 
 %changelog
+* Thu Jan 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
+- 2.2 released
+
 * Mon Apr 15 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
 - 2.1 released
 
