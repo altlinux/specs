@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.6.0
+Version: 4.7.1
 Release: alt1
 
 Summary: Zope interfaces package
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python
 # Source-git https://github.com/zopefoundation/zope.interface.git
 Url: http://www.python.org/pypi/zope.interface
@@ -151,6 +151,10 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt1
+- Build new version 4.7.1.
+- Fix license.
+
 * Fri Apr 19 2019 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Build new version without bootstrap.
 
