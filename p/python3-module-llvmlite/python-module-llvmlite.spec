@@ -1,7 +1,7 @@
 %define  oname llvmlite
 
 Name:    python3-module-%oname
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -57,6 +57,9 @@ export LLVM_CONFIG=%_bindir/llvm-config
 %doc *.rst
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.31.0-alt1
+- Build new version.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.30.0-alt1
 - Build new version.
 
