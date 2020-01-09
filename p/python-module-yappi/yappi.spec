@@ -1,7 +1,7 @@
 %define  oname yappi
 
 Name:    python-module-%oname
-Version: 1.0
+Version: 1.2.3
 Release: alt1
 
 Summary: Yet Another Python Profiler, but this time support Multithread/CPU time profiling
@@ -38,5 +38,8 @@ mv %buildroot%_bindir/yappi %buildroot%_bindir/yappi
 %python_sitelibdir/*%{oname}*
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt1
+- Build new version.
+
 * Sun Aug 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.0-alt1
 -  Initial build for Sisphus.
