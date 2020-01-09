@@ -1,11 +1,11 @@
 %global pypi_name easy-thumbnails
 
 Name: python-module-%pypi_name
-Version: 2.6
+Version: 2.7
 Release: alt1
 Summary: Easy thumbnails for Django
 Group: Development/Python
-License: BSD
+License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/easy-thumbnails
 Source: %name-%version.tar
 
@@ -21,9 +21,6 @@ application for Django 1.8+
 %prep
 %setup
 
-# Remove bundled egg-info
-#rm -rf %pypi_name.egg-info
-
 %build
 %python_build
 
@@ -34,6 +31,10 @@ application for Django 1.8+
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 2.7-alt1
+- Build new version.
+- Fix license.
+
 * Tue Mar 05 2019 Grigory Ustinov <grenka@altlinux.org> 2.6-alt1
 - Build new version.
 
