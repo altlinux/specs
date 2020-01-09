@@ -3,12 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.10
+Version: 1.9.11
 Release: alt1
 Summary: Subversion support for python
-License: Apache License
+License: Apache-1.1
 Group: Development/Python
-Url: http://pysvn.tigris.org/
+Url: https://pysvn.sourceforge.io/
 
 Source0: pysvn-%version.tar
 
@@ -44,7 +44,7 @@ cp -fR . ../python3
 
 %build
 pushd Source
-python setup.py configure \
+%__python setup.py configure \
     --apr-inc-dir=/usr/include/apr-1 \
     --apu-inc-dir=/usr/include/apu-1 \
     --norpath
@@ -55,7 +55,7 @@ popd
 %if_with python3
 pushd ../python3
 pushd Source
-python3 setup.py configure \
+%__python3 setup.py configure \
     --apr-inc-dir=/usr/include/apr-1 \
     --apu-inc-dir=/usr/include/apu-1 \
     --norpath
@@ -86,6 +86,11 @@ popd
 %endif
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.11-alt1
+- Build new version.
+- Fix license.
+- Fix url.
+
 * Thu Aug 01 2019 Grigory Ustinov <grenka@altlinux.org> 1.9.10-alt1
 - Build new version.
 
@@ -128,6 +133,6 @@ popd
 * Sat Jan 26 2008 Grigory Batalov <bga@altlinux.ru> 1.5.2-alt1.1
 - Rebuilt with python-2.5.
 
-* Tue Jan 02 2008 Gennady Kovalev <gik@altlinux.ru> 1.5.2-alt1
+* Wed Jan 02 2008 Gennady Kovalev <gik@altlinux.ru> 1.5.2-alt1
 - Initial build
 
