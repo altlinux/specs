@@ -1,13 +1,14 @@
 %define oname oslo.i18n
 
 Name: python3-module-%oname
-Version: 3.25.0
+Version: 3.25.1
 Release: alt1
 Summary: OpenStack i18n library
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/oslo.i18n
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.i18n.watch
 BuildArch: noarch
 
 Provides: python3-module-oslo-i18n = %EVR
@@ -81,6 +82,10 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %doc doc/build/html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.25.1-alt1
+- Automatically updated to 3.25.1.
+- Added watch file.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.25.0-alt1
 - Automatically updated to 3.25.0.
 - Added watch file.

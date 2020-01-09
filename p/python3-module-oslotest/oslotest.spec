@@ -3,13 +3,14 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.8.1
+Version: 3.9.0
 Release: alt1
 Summary: OpenStack test framework
 License: ASLv2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/oslotest/
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslotest.watch
 BuildArch: noarch
 
 BuildRequires: git-core
@@ -95,6 +96,11 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.9.0-alt1
+- Automatically updated to 3.9.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
 - Automatically updated to 3.8.1.
 - Build without python2.

@@ -1,7 +1,7 @@
 %define oname oslo.reports
 
 Name: python3-module-%oname
-Version: 1.30.0
+Version: 1.31.1
 Release: alt1
 
 Summary: Openstack common reports library
@@ -11,6 +11,7 @@ License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.reports.watch
 
 BuildArch:      noarch
 
@@ -83,6 +84,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc README.rst LICENSE
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.31.1-alt1
+- Automatically updated to 1.31.1.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.0-alt1
 - Automatically updated to 1.30.0.
 - Build without python2.

@@ -1,7 +1,7 @@
 %define oname oslo.log
 
 Name: python3-module-%oname
-Version: 3.45.1
+Version: 3.45.2
 Release: alt1
 
 Summary: OpenStack oslo.log library
@@ -11,6 +11,7 @@ License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.log.watch
 
 BuildArch: noarch
 
@@ -92,6 +93,10 @@ rm -rf html/.{doctrees,buildinfo}
 %doc build/sphinx/html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.45.2-alt1
+- Automatically updated to 3.45.2.
+- Added watch file.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.45.1-alt1
 - Automatically updated to 3.45.1.
 - Added watch file.

@@ -1,13 +1,14 @@
 %define oname os-brick
 
 Name: python3-module-%oname
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 Summary: OpenStack Cinder brick library for managing local volume attaches
 Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: os-brick.watch
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.privsep >= 1.23.0
+BuildRequires: python3-module-oslo.privsep >= 1.32.0
 BuildRequires: python3-module-oslo.service >= 1.24.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-requests >= 2.14.2
@@ -85,6 +86,11 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %doc README.rst doc/build/html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1
+- Automatically updated to 2.11.0.
+- Added watch file.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
 - Automatically updated to 2.10.0.
 - Build without python2.
