@@ -1,12 +1,12 @@
 Name:           python3-module-pyghmi
-Version:        1.4.1
-Release:        alt2
+Version:        1.5.3
+Release:        alt1
 
 Summary:        Python General Hardware Management Initiative (IPMI and others)
 
 Group:          Development/Python3
-License:        ASL 2.0
-URL:            https://github.com/stackforge/pyghmi
+License:        Apache-2.0
+URL:            https://pypi.org/project/pyghmi
 
 Source0:        %name-%version.tar
 
@@ -67,6 +67,11 @@ popd
 %doc doc/build/html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.3-alt1
+- Build new version.
+- Fix license.
+- Fix url.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt2
 - Build with docs.
 
