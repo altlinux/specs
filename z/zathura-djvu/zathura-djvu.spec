@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-djvu
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: DjVU support for zathura
-License: %bsdstyle
+License: Zlib
 Group: Office
 
-URL: http://pwmt.org/projects/zathura/plugins/%name
-# https://git.pwmt.org/pwmt/zathura-djvu.git
+URL: https://pwmt.org/projects/%name/
+Vcs: https://git.pwmt.org/pwmt/zathura-djvu.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses meson
+BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libcairo-devel libdjvu-devel
@@ -43,6 +43,12 @@ the djvulibre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
+- Used Vcs tag.
+- Fixed license.
+- Fixed URL.
+- Updated to 0.2.9.
+
 * Thu Apr 19 2018 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
 - Updated to 0.2.8.
 

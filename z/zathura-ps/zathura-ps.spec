@@ -2,18 +2,18 @@
 
 Name: zathura-ps
 Version: 0.2.6
-Release: alt1
+Release: alt2
 
 Summary: PostScript support for zathura
-License: %bsdstyle
+License: Zlib
 Group: Office
 
-URL: http://pwmt.org/projects/zathura/plugins/%name
-# https://git.pwmt.org/pwmt/zathura-ps.git
+URL: https://pwmt.org/projects/%name/
+Vcs: https://git.pwmt.org/pwmt/zathura-ps.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses meson
+BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libcairo-devel libspectre-devel
@@ -43,6 +43,11 @@ the libspectre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt2
+- Used Vcs tag.
+- Fixed license.
+- Fixed URL.
+
 * Thu Apr 19 2018 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1
 - Updated to 0.2.6.
 

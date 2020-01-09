@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 
 Summary: A lightweight document viewer
-License: %bsdstyle
+License: Zlib
 Group: Office
 Url: https://pwmt.org/projects/%name/
-# git://pwmt.org/zathura.git
+Vcs: git://pwmt.org/zathura.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses meson
+BuildRequires(pre): meson
 BuildRequires: libgirara-devel >= 0.3.2-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libsynctex-devel
@@ -30,6 +30,9 @@ Conflicts: zatura-cb < 0.1.2-alt2
 %description
 zathura is a highly customizable and functional document viewer based on
 the girara user interface library and several document libraries.
+
+This package contains ALT-specific changes so it is NOT original software
+from https://pwmt.org.
 
 %package devel
 Summary: Development files for %name
@@ -75,6 +78,12 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
+- Added ALT-specific note to description.
+- Used Vcs tag.
+- Fixed licensde
+- Updated to 0.4.5.
+
 * Tue Sep 24 2019 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt2
 - Enable libseccomp support.
 - Generate and package icons.

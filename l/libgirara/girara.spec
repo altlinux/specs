@@ -3,19 +3,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
-License: %bsdstyle
+License: Zlib
 Group: System/Libraries
 URL: https://pwmt.org/projects/girara
-# https://git.pwmt.org/pwmt/girara.git
+Vcs: https://git.pwmt.org/pwmt/girara.git
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses meson
+BuildRequires(pre): meson
 
 BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel libpango-devel
 BuildRequires: intltool
@@ -60,6 +60,11 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt1
+- Used Vcs tag.
+- Fixed license.
+- Updated to 0.3.4.
+
 * Mon Sep 16 2019 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
 - Updated to 0.3.3.
 
