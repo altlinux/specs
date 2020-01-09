@@ -1,31 +1,20 @@
 %define oname oslo.rootwrap
 
-Name: python-module-%oname
-Version: 5.16.1
+Name: python3-module-%oname
+Version: 5.17.1
 Release: alt1
 Summary: Oslo Rootwrap
 
-Group: Development/Python
+Group: Development/Python3
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: oslo.rootwrap.watch
 
 BuildArch:      noarch
 
-Provides: python-module-oslo-rootwrap = %EVR
-Obsoletes: python-module-oslo-rootwrap < %EVR
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-six >= 1.10.0
-
-BuildRequires: python-module-sphinx >= 1.6.2
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
-BuildRequires: python-module-reno >= 2.5.0
-BuildRequires: python-module-mock >= 2.0.0
-BuildRequires: python-module-fixtures >= 3.0.0
-
+Provides: python3-module-oslo-rootwrap = %EVR
+Obsoletes: python3-module-oslo-rootwrap < %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -45,27 +34,10 @@ from OpenStack services.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-This package contains tests for %oname.
-
-%package -n python3-module-%oname
-Summary: OpenStack oslo.rootwrap library
-Group: Development/Python3
-Provides: python3-module-oslo-rootwrap = %EVR
-
-%description -n python3-module-%oname
-The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
-from OpenStack services.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
 This package contains tests for %oname.
 
 %package doc
@@ -83,57 +55,37 @@ Documentation for the Oslo rootwrap handling library.
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
-
 
 # generate html docs
-sphinx-build doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%python_install
-mv %buildroot%_bindir/oslo-rootwrap \
-   %buildroot%_bindir/oslo-rootwrap.py2
-mv %buildroot%_bindir/oslo-rootwrap-daemon \
-   %buildroot%_bindir/oslo-rootwrap-daemon.py2
-
-pushd ../python3
 %python3_install
-popd
-
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/*
-%_bindir/oslo-rootwrap.py2
-%_bindir/oslo-rootwrap-daemon.py2
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%oname
 %python3_sitelibdir/*
 %_bindir/oslo-rootwrap
 %_bindir/oslo-rootwrap-daemon
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 
 %files doc
 %doc html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.17.1-alt1
+- Automatically updated to 5.17.1.
+- Added watch file.
+- Renamed spec file.
+- Build without python2.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 5.16.1-alt1
 - Automatically updated to 5.16.1.
 
