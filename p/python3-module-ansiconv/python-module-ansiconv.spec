@@ -1,15 +1,19 @@
-Name: python-module-ansiconv
-Version: 1.0.0
-Release: alt1.1
-Summary: A Python module for converting ANSI coded text and converts it to either plain text or HTML
+%define oname ansiconv
 
-Group: Text tools
+Name: python3-module-%oname
+Version: 1.0.0
+Release: alt2
+
+Summary: A Python module for converting ANSI coded text and converts it to either plain text or HTML
 License: MIT
+Group: Text tools
 Url: https://bitbucket.org/dhrrgn/ansiconv
+BuildArch: noarch
+
 Source0: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 A Python module for converting ANSI coded text and converts it to either plain text or HTML.
@@ -20,16 +24,21 @@ Documentation: http://pythonhosted.org/ansiconv/
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/ansiconv*
+%python3_sitelibdir/ansiconv*
+%python3_sitelibdir/__pycache__/
 %doc README.md
 
+
 %changelog
+* Thu Jan 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt2
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
