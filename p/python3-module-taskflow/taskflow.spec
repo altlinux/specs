@@ -1,7 +1,7 @@
 %define oname taskflow
 
 Name: python3-module-%oname
-Version: 3.7.1
+Version: 3.8.0
 Release: alt1
 Epoch: 1
 
@@ -12,6 +12,7 @@ License: ASL 2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: taskflow.watch
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-futurist >= 1.2.0
 BuildRequires: python3-module-fasteners >= 0.7.0
-BuildRequires: python3-module-networkx >= 1.10
+BuildRequires: python3-module-networkx >= 2.1.0
 BuildRequires: python3-module-contextlib2 >= 0.4.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-jsonschema >= 2.6.0
@@ -99,6 +100,10 @@ python3 setup.py build_sphinx
 %doc doc/build/html
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.8.0-alt1
+- Automatically updated to 3.8.0.
+- Added watch file.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1:3.7.1-alt1
 - Automatically updated to 3.7.1.
 - Build with docs.
