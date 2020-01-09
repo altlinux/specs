@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libhandy
-Version: 0.0.12
+Version: 0.0.13
 Release: alt1
 
 Summary: Library with GTK+3 widgets for mobile devices
@@ -106,6 +106,9 @@ xvfb-run -s -noreset %meson_test
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Jan 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.0.13-alt1
+- 0.0.13
+
 * Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.0.12-alt1
 - 0.0.12
 
