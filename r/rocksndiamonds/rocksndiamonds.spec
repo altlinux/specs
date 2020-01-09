@@ -1,9 +1,9 @@
 Name: rocksndiamonds
-Version: 4.1.3.0
+Version: 4.1.4.0
 Release: alt1
 
 Summary: A boulderdash like game
-License: GPL
+License: GPL-2.0
 Group: Games/Arcade
 
 Url: http://www.artsoft.org/rocksndiamonds
@@ -81,6 +81,10 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.4.0-alt1
+- Build new version.
+- Fix license.
+
 * Fri May 24 2019 Grigory Ustinov <grenka@altlinux.org> 4.1.3.0-alt1
 - Build new version.
 
