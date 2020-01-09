@@ -16,11 +16,11 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
-License: %gpl2plus
+License: GPL-2.0 and LGPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -35,7 +35,7 @@ Patch: gnome-desktop-3.32.1.2-alt-e2k.patch
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome rpm-build-gir
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 
 BuildRequires: yelp-tools gtk-doc
 BuildRequires: libgdk-pixbuf-devel >= 2.36.5
@@ -60,7 +60,7 @@ GNOME Desktop provides the core libraries for the gnome desktop.
 %package -n lib%name
 Summary: GNOME desktop core libraries
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: LGPL-2.0
 Requires: icon-theme-hicolor
 Requires: udev-hwdb
 Requires: bubblewrap
@@ -73,7 +73,7 @@ Gnome 3 desktop libraries.
 Summary: GNOME 3 desktop development libraries and includes
 Group: Development/GNOME and GTK+
 Requires: lib%name = %version-%release
-License: %lgpl2plus, %fdl
+License: LGPL-2.0 and FDL-1.1
 
 %description -n lib%name-devel
 Gnome 3 desktop libraries and header files for creating GNOME applications.
@@ -82,7 +82,7 @@ Gnome 3 desktop libraries and header files for creating GNOME applications.
 Summary: GNOME 3 desktop development documentation
 Group: Development/Documentation
 Conflicts: lib%name-devel < %version
-License: %lgpl2plus, %fdl
+License: LGPL-2.0 and FDL-1.1
 BuildArch: noarch
 
 %description -n lib%name-devel-doc
@@ -93,7 +93,7 @@ Development documentation for Gnome 3 desktop library.
 Summary: GNOME 3 desktop develop libraries and includes
 Group: Development/GNOME and GTK+
 Requires: lib%name-devel = %version-%release
-License: %lgpl2plus
+License: LGPL-2.0
 
 %description -n lib%name-devel-static
 Gnome 3 desktop static libraries for creating GNOME applications.
@@ -185,6 +185,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
+- 3.34.3
+
 * Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
