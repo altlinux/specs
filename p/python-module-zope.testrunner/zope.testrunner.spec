@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Zope testrunner script
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python
 # Source-git: https://github.com/zopefoundation/zope.testrunner.git
 Url: http://pypi.python.org/pypi/zope.testrunner
@@ -131,6 +131,10 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.1-alt1
+- Build new version 5.1.
+- Fix license.
+
 * Fri Apr 19 2019 Grigory Ustinov <grenka@altlinux.org> 5.0-alt1
 - Build new version.
 
