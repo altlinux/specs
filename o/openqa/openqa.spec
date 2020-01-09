@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt7
+Release: alt8
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -34,6 +34,7 @@ Source0: %name-%version.tar
 Source1: cache.tar
 #Please check $ git grep geekotest
 Patch0: addpseudouser.patch
+Patch1: rmservices.patch
 BuildArch: noarch
 
 BuildRequires: %t_requires
@@ -41,7 +42,7 @@ BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl-Package-Generator
 BuildRequires: perl(Mojo/SQLite.pm)
 BuildRequires: spectool
-BuildRequires: postgresql-server
+BuildRequires: postgresql10-server
 BuildRequires: systemd
 BuildRequires: ruby-sass
 BuildRequires: ruby-rb-inotify
@@ -182,6 +183,7 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 %setup -n %name-%version
 tar xf %SOURCE1 -C assets
 %patch0 -p1
+%patch1 -p1
 sed -i -e 's|../webfonts/|https://use.fontawesome.com/releases/v5.0.10/webfonts/|g' assets/cache/use.fontawesome.com/releases/v5.0.10/css/all.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
@@ -192,6 +194,9 @@ sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' e
 sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
+#These services are not used.
+rm -rf systemd/openqa-vde_switch.service
+rm -rf systemd/openqa-slirpvde.service
 
 %build
 %make_build
@@ -228,6 +233,8 @@ mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
 rm -f t/24-worker-overall.t
+rm -f t/40-script_openqa-clone-custom-git-refspec.t
+rm -f t/42-screenshots.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
 
@@ -283,6 +290,8 @@ fi
 %_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.timer
+%_unitdir/openqa-enqueue-asset-and-result-cleanup.service
+%_unitdir/openqa-enqueue-asset-and-result-cleanup.timer
 # web libs
 %_datadir/openqa/templates
 %_datadir/openqa/public
@@ -331,8 +340,6 @@ fi
 %_unitdir/openqa-worker.target
 %_unitdir/openqa-worker@.service
 %_unitdir/openqa-worker-no-cleanup@.service
-%_unitdir/openqa-slirpvde.service
-%_unitdir/openqa-vde_switch.service
 %_tmpfilesdir/openqa.conf
 %_datadir/openqa/script/worker
 %dir %_localstatedir/openqa/pool
@@ -367,6 +374,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Mon Dec 30 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt8
+- update to current version
+
 * Tue Oct 29 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt7
 - update to current version
 
