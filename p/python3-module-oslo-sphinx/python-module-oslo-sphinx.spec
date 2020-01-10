@@ -1,22 +1,22 @@
-##%%global sname oslo.sphinx
+%define oname oslo-sphinx
 
-Name:       python-module-oslo-sphinx
+Name:       python3-module-%oname
 Version:    1.1
-Release:    alt1
-Summary:    OpenStack Sphinx Extensions
+Release:    alt2
 
-Group:      Development/Python
+Summary:    OpenStack Sphinx Extensions
 License:    ASL 2.0
+Group:      Development/Python3
 URL:        https://launchpad.net/oslo
+BuildArch:  noarch
+
 Source0:    %{name}-%{version}.tar
 
-BuildArch:  noarch
-Requires:   python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr
-BuildRequires: python-module-d2to1
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-d2to1
+
 
 %description
 The Oslo project intends to produce a python library containing
@@ -29,25 +29,30 @@ OpenStack.
 
 %prep
 %setup
+
 # Remove bundled egg-info
 rm -rf oslo_sphinx.egg-info
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%{python_sitelibdir}/oslo
-%{python_sitelibdir}/*.egg-info
-%{python_sitelibdir}/*-nspkg.pth
+%python3_sitelibdir/oslo
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
+
 
 %changelog
+* Fri Jan 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt2
+- porting on python3
+
 * Tue Jul 15 2014 Lenar Shakirov <snejok@altlinux.ru> 1.1-alt1
 - First build for ALT (based on Fedora 1.1-2.fc21.src)
 
