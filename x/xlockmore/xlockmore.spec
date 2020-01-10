@@ -1,6 +1,6 @@
 Name: xlockmore
 Version: 5.61
-Release: alt1
+Release: alt2
 
 Summary: An X terminal locking program
 License: MIT
@@ -49,6 +49,9 @@ X sessions.
 %patch0006 -p2
 #patch0007 -p2
 %patch0008 -p2
+
+# XXX hack out boxed moide than hangs
+sed -i 's/#define MODE_boxed/#undef MODE_boxed/' xlock/mode.h
 
 %build
 cp /usr/share/aclocal/ax_pthread.m4 .
@@ -110,6 +113,9 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Fri Jan 10 2020 Fr. Br. George <george@altlinux.ru> 5.61-alt2
+- Hack out 'boxed' mode that loops
+
 * Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 5.61-alt1
 - Autobuild version bump to 5.61
 
