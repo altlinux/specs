@@ -2,24 +2,35 @@
 %define mname collective
 %define oname %mname.monkeypatcher
 
-Name: python-module-%oname
-Version: 1.1.3
-Release: alt1.1
+%def_with check
+
+Name: python3-module-%oname
+Version: 1.2
+Release: alt1
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/collective.monkeypatcher/
+#Git: https://github.com/plone/collective.monkeypatcher.git
 
-# https://github.com/plone/collective.monkeypatcher.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python2.7(zope.interface) python2.7(zope.schema) python2.7(zope.component) python2.7(zope.component.testing) python2.7(zope.configuration.xmlconfig)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-%py_provides %oname
-Requires: python-module-%mname = %EVR
-%py_requires zope.component zope.schema zope.interface zope.event
-%py_requires zope.configuration
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.schema
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.configuration
+%endif
+
+%py3_provides %oname
+Requires: python3-module-%mname = %EVR
+%py3_requires zope.component zope.schema zope.interface zope.event
+%py3_requires zope.configuration
 
 %description
 Sometimes, a monkey patch is a necessary evil.
@@ -34,9 +45,9 @@ persistent Control_Panel entry.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires zope.component.testing
+%py3_requires zope.component.testing
 
 %description tests
 Sometimes, a monkey patch is a necessary evil.
@@ -51,48 +62,63 @@ persistent Control_Panel entry.
 
 This package contains tests for %oname.
 
-%package -n python-module-%mname
+%package -n python3-module-%mname
 Summary: Core files of %mname
-Group: Development/Python
+Group: Development/Python3
 
-%description -n python-module-%mname
+%description -n python3-module-%mname
 Core files of %mname.
 
 %prep
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-install -p -m644 %mname/__init__.py \
-	%buildroot%python_sitelibdir/%mname/
+install -p -m644 build/lib/%mname/__init__.py \
+	%buildroot%python3_sitelibdir/%mname/
 
 %check
-python setup.py test
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.rst docs/*
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/*-nspkg.pth
-%exclude %python_sitelibdir/%mname/*/tests
-%exclude %python_sitelibdir/%mname/__init__.py*
+%doc *.rst
+%python3_sitelibdir/%mname/*
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
+%exclude %python3_sitelibdir/%mname/*/tests
+%exclude %python3_sitelibdir/%mname/__init__.py*
 
 %files tests
-%python_sitelibdir/%mname/*/tests
+%python3_sitelibdir/%mname/*/tests
 
-%files -n python-module-%mname
-%dir %python_sitelibdir/%mname
-%python_sitelibdir/%mname/__init__.py*
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/%mname
+%python3_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri Jan 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.2-alt1
+- NMU: 1.1.3 -> 1.2
+- Remove python2 module build
+- Rearrange unittests execution
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
