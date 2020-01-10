@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.18.3
-Release: alt2
+Version: 0.19
+Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel python-module-setuptools
 %endif
 %if_enabled check
-BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower
+BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
 BuildRequires: python3-module-setuptools python3-module-nose python3-module-dbus-gobject
 BuildRequires: python3-module-pyflakes python3-module-pycodestyle
 %if_enabled python2
@@ -62,7 +62,6 @@ and it is hard (or impossible without root privileges) to set the state
 of the real services to what you expect in your tests.
 
 See %_docdir/%name-%version/README.rst for more information.
-
 
 %prep
 %setup -n %_name-%version %{?_enable_python2:-a0
@@ -103,6 +102,9 @@ popd
 
 
 %changelog
+* Fri Jan 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.19-alt1
+- 0.19
+
 * Thu Dec 26 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt2
 - fixed BR after python-module-dbus split
 - made python2 build optional
