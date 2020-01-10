@@ -10,17 +10,17 @@ BuildRequires: /usr/bin/db2html
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
 Version:	1.8.3
-Release:	alt3_3
+Release:	alt4_1.gitd958bf9
 Group:		Graphical desktop/MATE
-License:	GPLv2+ and LGPLv2+
+License:	GPL-2.0-or-later and LGPL-2.0-or-later
 
 URL:		https://github.com/raveit65/%{oldname}
 Source0:	https://github.com/raveit65/%{oldname}/releases/download/v%{version}/%{oldname}-%{version}.tar.xz
 
 # only for rhel
-Patch1:     caja-actions_0001-Revert-No-version-in-documentation-install-path.patch
+Patch1: caja-actions_0001-Revert-No-version-in-documentation-install-path.patch
 Patch2: 1002_cross.patch
-Patch10: caja-actions-1.8.3-alt-fix-doc-build-gtk-doc-1.27.patch
+Patch3: caja-actions-1.8.3-alt-fix-doc-build-gtk-doc.patch
 
 BuildRequires:	mate-file-manager-devel
 BuildRequires:	libuuid-devel
@@ -63,19 +63,17 @@ with caja-actions.
 
 # move doc dir for rhel
 %if 0%{?rhel}
-%patch1 -p1 -b .0001
+%patch1 -p2
 NOCONFIGURE=1 ./autogen.sh
 %endif
-%patch2 -p1
-%patch10 -p1
+#patch2 -p1
+%patch3 -p2
 
 %build
 %autoreconf
 %configure \
-    --enable-gtk-doc \
     --enable-html-manuals \
-    --enable-pdf-manuals \
-    --enable-deprecate
+    --enable-pdf-manuals
 
 %make_build 
 
@@ -106,19 +104,11 @@ rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/MAINTAINERS
 
 %find_lang %{oldname} --with-gnome --all-name
 
-
 %check
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
-
 %files
 %doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
-%exclude %{_docdir}/caja-actions/AUTHORS
-%exclude %{_docdir}/caja-actions/COPYING
-%exclude %{_docdir}/caja-actions/COPYING-DOCS
-%exclude %{_docdir}/caja-actions/ChangeLog
-%exclude %{_docdir}/caja-actions/NEWS
-%exclude %{_docdir}/caja-actions/README
 %{_bindir}/caja-actions-run
 %{_bindir}/caja-actions-config-tool
 %{_bindir}/caja-actions-new
@@ -159,12 +149,14 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 %files devel
 %{_includedir}/caja-actions/
-%dir %{_datadir}/gtk-doc
-%dir %{_datadir}/gtk-doc/html
-%{_datadir}/gtk-doc/html/caja-actions-3/
-
+#%%dir %{_datadir}/gtk-doc
+#%%dir %{_datadir}/gtk-doc/html
+#%%{_datadir}/gtk-doc/html/caja-actions-3/
 
 %changelog
+* Fri Jan 10 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.3-alt4_1.gitd958bf9
+- Built from git (with Russian translation by Olesya Gerasimenko).
+
 * Tue Sep 17 2019 Leontiy Volodin <lvol@altlinux.org> 1.8.3-alt3_3
 - Fixed cross build.
 - Excluded docs in caja-actions.
