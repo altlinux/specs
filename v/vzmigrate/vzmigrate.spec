@@ -1,6 +1,6 @@
 Name:     vzmigrate
-Version:  7.0.124
-Release:  alt6
+Version:  7.0.125
+Release:  alt1
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -79,6 +79,9 @@ make install \
 %doc *.md
 
 %changelog
+* Fri Jan 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.125-alt1
+- 7.0.125
+
 * Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.124-alt6
 - fix FTB and C++11 warning
 
