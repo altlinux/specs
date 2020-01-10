@@ -1,12 +1,12 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.67.0
+Version: 7.68.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
-License: MPL or MIT
+License: MITX
 Group: Networking/File transfer
 Url: http://curl.haxx.se
 
@@ -150,6 +150,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Fri Jan 10 2020 Anton Farygin <rider@altlinux.ru> 7.68.0-alt1
+- 7.68.0
+
 * Mon Nov 11 2019 Anton Farygin <rider@altlinux.ru> 7.67.0-alt1
 - 7.67.0
 
