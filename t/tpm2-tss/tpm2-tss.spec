@@ -1,12 +1,12 @@
 %define udevrules_prefix 60-
 %define soname 0
 Name: tpm2-tss
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
 # is under TCGL(Trusted Computing Group License).
-License: BSD and TCGL
+License: BSD-2-Clause
 Url: https://github.com/tpm2-software/tpm2-tss
 Source0: %name-%version.tar
 Source1: %name.watch
@@ -113,6 +113,9 @@ use tpm2-tss.
 %_mandir/man7/tss2*.7.*
 
 %changelog
+* Fri Jan 10 2020 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1
+- 2.3.2
+
 * Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.3.1-alt2
 - add tss user and group (ALT #37279)
 
