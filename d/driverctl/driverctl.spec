@@ -1,7 +1,7 @@
 
 Name:		driverctl
 Version:	0.110
-Release:	alt11
+Release:	alt12
 Summary:	Device driver control utility
 
 Group:      System/Configuration/Hardware
@@ -35,13 +35,14 @@ by default.
 %prep
 %setup -q
 sed -i 's|/usr/lib/udev/vfio_name|/lib/udev/vfio_name|' 89-vfio-uio.rules
+sed -i 's|/usr/sbin/driverctl|/sbin/driverctl|' driverctl@.service
 
 %install
 %makeinstall_std SBINDIR=/sbin
 
 %files
 %doc README TODO
-/sbin//driverctl
+/sbin/driverctl
 %_udevrulesdir/*.rules
 %_udevrulesdir/../vfio_name
 %_unitdir/driverctl@.service
@@ -50,6 +51,9 @@ sed -i 's|/usr/lib/udev/vfio_name|/lib/udev/vfio_name|' 89-vfio-uio.rules
 %_man8dir/driverctl.8*
 
 %changelog
+* Fri Jan 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.110-alt12
+- Fixed ExecStart in systemd unit
+
 * Mon Dec 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.110-alt11
 - Initial build
 
