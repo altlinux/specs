@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Source: %name-%version.tar
@@ -38,6 +38,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %config(noreplace) %_sysctldir/*
 
 %changelog
+* Fri Jan 10 2020 Ivan Razzhivin <underwit@altlinux.org> 1.5-alt1
+- add tty blocking
+
 * Wed Dec 25 2019 Ivan Razzhivin <underwit@altlinux.org> 1.4-alt1
 - add button apply
 - show message if the alt hardening module is inactive
