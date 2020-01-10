@@ -38,7 +38,7 @@
 
 Name: node
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -278,6 +278,13 @@ rm -rf %buildroot/usr/share/doc/node/lldbinit
 # drop tapset file
 rm -rf %buildroot%_datadir/systemtap/tapset
 
+# pack node include tarball required to gyp building
+mkdir -p /usr/src/tmp/%name-v%{version}/include/ %{buildroot}%{_datadir}/node/
+cp -rp %{buildroot}%{_includedir}/%name /usr/src/tmp/%name-v%{version}/include/
+cd /usr/src/tmp/
+tar -zcf %{buildroot}%{_datadir}/%name/%name-v%{version}-headers.tar.gz %name-v%{version}
+
+
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
@@ -292,7 +299,7 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 
 %files devel
 %dir %_includedir/node/
-#dir %_datadir/node/
+%_datadir/%name/*gz
 %if_without systemuv
 %_includedir/node/uv*
 %endif
@@ -320,6 +327,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Jan 16 2020 Pavel Skrylev <majioa@altlinux.org> 10.18.0-alt2
+- added (+) tarball for node include headers to devel package
+
 * Thu Dec 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.18.0-alt1
 - new version 10.18.0 (with rpmrb script)
 - npm >= 6.13.4 (security fix)

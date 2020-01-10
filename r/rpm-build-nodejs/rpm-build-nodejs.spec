@@ -1,13 +1,14 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
 
-License: GPL
+License: GPLv2+
 Group: Development/Other
-URL: http://www.altlinux.org/Node.JS_Policy
+Url: http://www.altlinux.org/Node.JS_Policy
+BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: macros.nodejs-tap
@@ -18,8 +19,10 @@ Patch1: nodejs.req-alt.patch
 Patch2: nodejs.req-alt-rpmbuild404.patch
 Patch3: nodejs.req-alt-utf8.patch
 
-BuildArch: noarch
-Provides: nodejs-packaging = %version
+Provides:      nodejs-packaging = %version
+Requires:      npm
+Requires:      node-devel
+Requires:      node-gyp
 
 %description
 RPM helper scripts and build environment
@@ -30,8 +33,10 @@ See %url for detailed %pkg packaging policy.
 %package -n rpm-macros-%pkg
 Summary: RPM helper macros for building %pkg packages
 
-License: GPL
+License: GPLv2+
 Group: Development/Other
+
+Requires:      rpm-build-%pkg
 
 %description -n rpm-macros-%pkg
 RPM macros for building %pkg packages.
@@ -80,6 +85,11 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Fri Jan 10 2020 Pavel Skrylev <majioa@altlinux.org> 0.20.3-alt1
+- added (+) short npm build and install macros scripts
+- fixed (*) license
+- fixed (*) dependencies
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.20.2-alt1
 - utf-8 patch (closes: #36427)
 
