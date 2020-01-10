@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -75,6 +75,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: gnu-efi libefivar-devel
+Requires: gcab
 Provides: fwupdate
 Obsoletes: fwupdate
 %endif
@@ -175,6 +176,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libexecdir/fwupd/fwupdtool
 %_libexecdir/fwupd/fwupdagent
 %_libexecdir/fwupd/fwupdoffline
+%_libexecdir/fwupd/fwupdtpmevlog
 %_datadir/bash-completion/completions/*
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 %if_enabled uefi
@@ -235,6 +237,8 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
+%_libdir/fwupd-plugins-3/libfu_plugin_tpm.so
+%_libdir/fwupd-plugins-3/libfu_plugin_tpm_eventlog.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fastboot.so
 %_libdir/fwupd-plugins-3/libfu_plugin_nitrokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_rts54hid.so
@@ -250,9 +254,10 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_logitech_hidpp.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_prometheus.so
 %if_enabled dell
-%_libdir/fwupd-plugins-3/libfu_plugin_synapticsmst.so
+%_libdir/fwupd-plugins-3/libfu_plugin_synaptics_mst.so
 %endif
 %if_enabled dummy
+%_libdir/fwupd-plugins-3/libfu_plugin_invalid.so
 %_libdir/fwupd-plugins-3/libfu_plugin_test.so
 %endif
 %_libdir/fwupd-plugins-3/libfu_plugin_thelio_io.so
@@ -297,6 +302,12 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Fri Jan 10 2020 Anton Farygin <rider@altlinux.ru> 1.3.6-alt1
+- 1.3.6
+
+* Fri Dec 27 2019 Anton Farygin <rider@altlinux.ru> 1.3.5-alt2
+- added gcab to requires list (used in firmware_packager.py)
+
 * Mon Dec 02 2019 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 
