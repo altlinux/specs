@@ -1,11 +1,11 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.59
-%define kernel_rt_release	rt24
+%define kernel_sublevel		.90
+%define kernel_rt_release	rt35
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt8.%kernel_rt_release
+Release: alt1.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -43,7 +43,7 @@ Release: alt8.%kernel_rt_release
 %brp_strip_none /boot/*
 
 Summary: The Linux kernel with PREEMPT_RT patches (Real-Time Linux)
-License: GPL
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://wiki.linuxfoundation.org/realtime/
 # git://git.kernel.org/pub/scm/linux/kernel/git/rt/linux-stable-rt.git
@@ -480,6 +480,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jan 09 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.90-alt1.rt35
+- Update to v4.19.90-rt35.
+
 * Sun Nov 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt8.rt24
 - Add some more std-def =y options.
 
