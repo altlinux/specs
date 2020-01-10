@@ -1,21 +1,22 @@
 %define oname tcpwatch
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 1.3.1
-Release: alt1.1
+Release: alt2
+
 Summary: TCP monitoring and logging tool with support for HTTP 1.1
 License: ZPLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/tcpwatch/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-modules-tkinter
+Source: %name-%version.tar
 
-%py_provides %oname
-%py_requires Tkinter
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3 python3-modules-tkinter
+
+%py3_provides %oname
+
 
 %description
 TCPWatch is a utility written in Python that lets you monitor forwarded
@@ -26,21 +27,30 @@ and debugging protocol implementations and web services.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Jan 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.1-alt2
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
