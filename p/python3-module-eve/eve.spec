@@ -1,38 +1,36 @@
 %define oname eve
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
-Version: 0.7.5
-Release: alt1.1
+%def_without docs
+
+Name: python3-module-%oname
+Version: 0.7.8
+Release: alt1
 Summary: REST API framework powered by Flask, MongoDB and good intentions
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/Eve/
 
 # https://github.com/nicolaiarocci/eve.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Patch1: %oname-0.7.5-alt-build.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-cerberus python-module-events
-BuildRequires: python-module-pytest
-BuildRequires: python-module-flask-pymongo
-BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-sphinxcontrib-embedly
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-cerberus python3-module-events
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flask-pymongo
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-simplejson
 %endif
 
-%py_provides %oname
-%py_requires flask_pymongo
+%py3_provides %oname
+%py3_requires flask_pymongo
 
 %description
 Powered by Flask, MongoDB, Redis and good intentions Eve allows to
@@ -41,7 +39,7 @@ RESTful Web Services.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -51,34 +49,9 @@ RESTful Web Services.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: REST API framework powered by Flask, MongoDB and good intentions
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires flask_pymongo
-
-%description -n python3-module-%oname
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-This package contains tests for %oname.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Powered by Flask, MongoDB, Redis and good intentions Eve allows to
@@ -103,70 +76,50 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%if_with docs
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
+%if_with docs
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
+
+cp -fR ~/code/eve.docs/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
-
-%make -C docs pickle
-%make -C docs html
-
-cp -fR ~/code/eve.docs/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc AUTHORS CHANGES *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc ~/code/eve.docs/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS CHANGES *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
 %endif
 
+%files tests
+%python3_sitelibdir/*/tests
+
 %changelog
+* Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.8-alt1
+- Build new version.
+- Build without python2.
+- Build without docs, because they use too old api.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.5-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

@@ -1,39 +1,39 @@
 %define  modulename testfixtures
-%def_with python3
-%def_without docs
+%def_with docs
+%def_with check
 
-Name:    python-module-%modulename
+Name:    python3-module-%modulename
 Version: 6.10.0
-Release: alt1
+Release: alt2
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
-Group:   Development/Python
+Group:   Development/Python3
 URL:     http://www.simplistix.co.uk/software/python/testfixtures
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-BuildRequires: python2.7(sybil) python2.7(mock) python2.7(django.db) python2.7(zope.component)
-BuildRequires: python2.7(pkginfo)
-BuildRequires: python-module-twisted-logger
-BuildRequires: python-module-twisted-core-test
-BuildRequires: python-module-service-identity
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
-BuildRequires: python3(sybil) python3(django.db) python3(zope.component)
 BuildRequires: python3-module-twisted-logger
 BuildRequires: python3-module-twisted-core-test
 BuildRequires: python3-module-service-identity
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sybil
+BuildRequires: python3-module-django
+BuildRequires: python3-module-zope.component
 %endif
+
 %if_with docs
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-sybil
+BuildRequires: python3-module-django
+BuildRequires: python3-module-zope.component
 %endif
 
 Source:  %modulename-%version.tar
@@ -43,48 +43,22 @@ Source:  %modulename-%version.tar
 TestFixtures is a collection of helpers and mock objects that are useful
 when writing unit tests or doc tests.
 
-%if_with python3
-%package -n python3-module-%modulename
-Group: Development/Python3
-Summary:        A collection of helpers and mock objects for unit tests and doc tests
-
-%description -n python3-module-%modulename
-TestFixtures is a collection of helpers and mock objects that are useful
-when writing unit tests or doc tests.
-%endif
-
 %prep
 %setup -n %modulename-%version
 
-%if_with python3
-cp -a . ../python3
-%endif
-
 %if_with docs
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if_with docs
-PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build
+PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build-3
 mv docs/_build/html ./
 rm -rf docs/_build
 %endif
@@ -92,35 +66,21 @@ rm -rf docs/_build
 %check
 rm -rf build
 rm -f testfixtures/tests/test_django/test_compare.py
-PYTHONPATH=$(pwd) py.test testfixtures/tests
-
-%if_with python3
-pushd ../python3
-rm -rf build
-rm -f testfixtures/tests/test_django/test_compare.py
 PYTHONPATH=$(pwd) py.test3 testfixtures/tests
-popd
-%endif
 
 %files
 %doc README.rst docs
 %if_with docs
 %doc html
 %endif
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%modulename
-%doc README.rst docs
-%if_with docs
-%doc html
-%endif
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
+* Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt2
+- Build without python2.
+- Build with docs.
+
 * Wed Jun 19 2019 Andrey Cherepanov <cas@altlinux.org> 6.10.0-alt1
 - New version.
 
