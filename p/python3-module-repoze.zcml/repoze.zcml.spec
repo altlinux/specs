@@ -1,28 +1,32 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.b1.git20141211.2
+%define _unpackaged_files_terminate_build 1
 %define oname repoze.zcml
 
-%def_with python3
+%def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0
-#Release: alt1.b1.git20141211.1
+Release: alt2.b1.git20141211
 Summary: Simplified ZCML directives, reduced dependencies
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/repoze/repoze.zcml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+#Git: https://github.com/repoze/repoze.zcml.git
 
-# https://github.com/repoze/repoze.zcml.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-transaction
+BuildRequires: python3-module-zope.component >= 3.5.0
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-zope.testing
 %endif
 
-%py_requires repoze zope.component zope.configuration
+%py3_requires repoze zope.component zope.configuration
 
 %description
 ``repoze.zcml`` is a package which provides basic ZCML directives for
@@ -32,40 +36,11 @@ doesn't need the more advanced features of the "stock" directive types
 of the same names present in ``zope.configuration`` (e.g. permissions,
 and trusted adapters/utilities).
 
-%package -n python3-module-%oname
-Summary: Simplified ZCML directives, reduced dependencies
-Group: Development/Python3
-%py3_requires repoze zope.component zope.configuration
-
-%description -n python3-module-%oname
-``repoze.zcml`` is a package which provides basic ZCML directives for
-the Zope Component Architecture (such as ``utility``, ``subscriber``,
-and ``adapter``).  You should use ``repoze.zcml`` if your application
-doesn't need the more advanced features of the "stock" directive types
-of the same names present in ``zope.configuration`` (e.g. permissions,
-and trusted adapters/utilities).
-
-%package -n python3-module-%oname-tests
-Summary: Tests for repoze.zcml
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
-
-%description -n python3-module-%oname-tests
-``repoze.zcml`` is a package which provides basic ZCML directives for
-the Zope Component Architecture (such as ``utility``, ``subscriber``,
-and ``adapter``).  You should use ``repoze.zcml`` if your application
-doesn't need the more advanced features of the "stock" directive types
-of the same names present in ``zope.configuration`` (e.g. permissions,
-and trusted adapters/utilities).
-
-This package contains tests for repoze.zcml.
-
 %package tests
 Summary: Tests for repoze.zcml
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires zope.testing
 
 %description tests
 ``repoze.zcml`` is a package which provides basic ZCML directives for
@@ -80,61 +55,38 @@ This package contains tests for repoze.zcml.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+sed -i 's|python setup|python3 setup|g' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt docs/*.rst *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt docs/*.rst *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
 
 %changelog
+* Fri Jan 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0-alt2.b1.git20141211
+- NMU: Remove python2 module build
+- Add unittests execution
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0-alt1.b1.git20141211.2
 - Rebuild with python3.7.
 
