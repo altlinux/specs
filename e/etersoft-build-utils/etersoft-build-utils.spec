@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jan 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
+- use distro_info (ALT bug 37712)
+- gitask: add -m <message> support for run and commit commands
+- add p9 sources.list
+
 * Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
 - rpmbs: add .gear/postdownload-hook support (use git command to change files)
 - rpmgs: skip repack for the same ext, just commit the file
