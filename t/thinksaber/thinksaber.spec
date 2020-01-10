@@ -1,9 +1,9 @@
 Name: thinksaber
 Version: 0.4
-Release: alt1.1.1
+Release: alt2
 
 Summary: Turn your HDAPS-enabled Thinkpad into Jedi's Lightsabre
-License: GPL v2
+License: GPL-2.0
 Group: Toys
 
 Url: http://elfsternberg.com/projects/thinksaber/
@@ -44,11 +44,15 @@ install -pDm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 
 %files
 %_bindir/*
-%tsdir/*.wav
+%tsdir
 %_sysconfdir/sysconfig/%name
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.4-alt2
+- Transferred to python3.
+- Fixed license.
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4-alt1.1.1
 - Rebuild with Python-2.7
 
