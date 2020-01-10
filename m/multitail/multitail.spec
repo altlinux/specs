@@ -2,7 +2,7 @@ Summary: multitail lets you view one or multiple files like the original tail pr
 Summary(ru_RU.KOI8-R): multitail позволяет просматривать один или несколько файлов
 Name: multitail
 Version: 6.5.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Monitoring
 Source: %name-%version.tgz
@@ -31,10 +31,17 @@ multitail позволяет просматривать один или несколько файлов подобно оригинальной
 %prep
 %setup -q -n %name-%version
 
+#%build
+#make_build
+
 %build
-%make_build
+%make_build CFLAGS="%{optflags}" CONFIG_FILE=%{_sysconfdir}/%{name}.conf
 
 %install
+# Create necessary directories
+mkdir -p %{buildroot}%{_sysconfdir}
+%make_install PREFIX=%{_prefix} CONFIG_FILE=%{buildroot}%{_sysconfdir}/%{name}.conf
+
 install -D -m 755 $RPM_BUILD_DIR/%name-%version/%name $RPM_BUILD_ROOT/%_bindir/%name
 install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.1 $RPM_BUILD_ROOT/%_man1dir/%name.1
 install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf 
@@ -48,6 +55,9 @@ bzip2 -9 $RPM_BUILD_ROOT/%_man1dir/multitail.1
 %doc INSTALL readme.txt license.txt manual.html %name.conf
 
 %changelog
+* Fri Jan 10 2020 Ilya Mashkin <oddity@altlinux.ru> 6.5.0-alt2
+- Try to find/to not ignoring multitail.conf file (Closes: #37738) 
+
 * Wed Jan 08 2020 Ilya Mashkin <oddity@altlinux.ru> 6.5.0-alt1
 - 6.5.0
 
