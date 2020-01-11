@@ -1,31 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20091201.1
-%def_disable check
-
+%define _unpackaged_files_terminate_build 1
 %define mname bda
 %define oname %mname.cache
-Name: python-module-%oname
-Version: 1.1.3
-#Release: alt2.git20091201
+
+%def_with check
+
+Name: python3-module-%oname
+Version: 1.3.0
+Release: alt1
 Summary: Simple caching infrastructure
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/bda.cache/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+#Git: https://github.com/bluedynamics/bda.cache.git
 
-# https://github.com/bluedynamics/bda.cache.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-interlude python-module-pytest python-module-zope.component python-module-zope.testing
-#BuildPreReq: python-module-setuptools-tests
-#BuildPreReq: python-module-memcached
-#BuildPreReq: python-module-zope.component
-#BuildPreReq: python-module-interlude
-#BuildPreReq: python-module-zope.testing
+BuildRequires(pre): rpm-build-python3
 
-%py_provides %oname
-Requires: python-module-%mname = %EVR
-#%py_requires zope.component
+%if_with check
+BuildRequires: python3-module-interlude
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.testing
+%endif
+
+%py3_provides %oname
+Requires: python3-module-%mname = %EVR
+Requires: python3-module-memcached
+%py3_requires zope.component
 
 %description
 This package is designed to be used by applications which require
@@ -36,9 +38,9 @@ interface.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-#%py_requires zope.testing
+%py3_requires zope.testing
 
 %description tests
 This package is designed to be used by applications which require
@@ -49,52 +51,56 @@ interface.
 
 This package contains tests for %oname.
 
-%package -n python-module-%mname
+%package -n python3-module-%mname
 Summary: Core files of %mname
-Group: Development/Python
+Group: Development/Python3
 
-%description -n python-module-%mname
+%description -n python3-module-%mname
 Core files of %mname.
 
 %prep
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 install -p -m644 src/bda/__init__.py \
-	%buildroot%python_sitelibdir/bda/
+	%buildroot%python3_sitelibdir/bda/
 
 %check
-python setup.py test
-rm -fR build
-py.test
+python3 setup.py test
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/%mname/*/tests
-%exclude %python_sitelibdir/%mname/__init__.py*
+%python3_sitelibdir/%mname/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%mname/*/tests
+%exclude %python3_sitelibdir/%mname/__init__.py*
+%exclude %python3_sitelibdir/*-nspkg.pth
 
 %files tests
-%python_sitelibdir/%mname/*/tests
+%python3_sitelibdir/%mname/*/tests
 
-%files -n python-module-%mname
-%dir %python_sitelibdir/%mname
-%python_sitelibdir/%mname/__init__.py*
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/%mname
+%python3_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Sat Jan 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.3.0-alt1
+- NMU: 1.1.3 -> 1.3.0
+- Remove python2 module build
+- Rearrange unittests execution
+- Add memcached to R:
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt2.git20091201.1
 - (AUTO) subst_x86_64.
-
 
 * Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.3-alt2.git20091201
 - disabled tests

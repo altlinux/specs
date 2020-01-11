@@ -1,24 +1,28 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+%define _unpackaged_files_terminate_build 1
 %define mname bda.calendar
 %define oname %mname.base
-Name: python-module-%oname
+
+%def_with check
+
+Name: python3-module-%oname
 Version: 1.2.2
-#Release: alt1
+Release: alt2
 Summary: Base common calendaring features: Convinience or not coverd yet
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/bda.calendar.base/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
-BuildPreReq: python-module-pytz python-module-zope.interface
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-zope.interface
+BuildRequires: python-tools-2to3
 
-%py_provides %oname
-Requires: python-module-%mname = %EVR
-%py_requires zope.interface
+%py3_provides %oname
+Requires: python3-module-%mname = %EVR
+%py3_requires zope.interface
 
 %description
 bda.calendar.base contains functions adressing programmers all-day tasks
@@ -29,45 +33,50 @@ with timezones. An TimezoneFactory can be provided in the specific
 application to i.e. be aware of the users timezone (i.e. in case of
 webapps).
 
-%package -n python-module-%mname
+%package -n python3-module-%mname
 Summary: Core files of %mname
-Group: Development/Python
-%py_provides %mname
-%py_requires bda
+Group: Development/Python3
+%py3_provides %mname
+%py3_requires bda
 
-%description -n python-module-%mname
+%description -n python3-module-%mname
 Core files of %mname.
 
 %prep
 %setup
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 install -p -m644 src/bda/calendar/__init__.py \
-	%buildroot%python_sitelibdir/bda/calendar/
+	%buildroot%python3_sitelibdir/bda/calendar/
 
 %check
-python setup.py test
+python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/bda/calendar/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/bda/calendar/__init__.py*
+%python3_sitelibdir/bda/calendar/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/bda/calendar/__init__.py*
+%exclude %python3_sitelibdir/*.pth
 
-%files -n python-module-%mname
-%dir %python_sitelibdir/bda/calendar
-%python_sitelibdir/bda/calendar/__init__.py*
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/bda/calendar
+%python3_sitelibdir/bda/calendar/__init__.py*
 
 %changelog
+* Sat Jan 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.2.2-alt2
+- NMU: Remove python2 module build
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
