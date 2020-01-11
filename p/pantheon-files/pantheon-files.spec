@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 4.2
+%define ver_major 4.3
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -10,7 +10,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
-License: GPLv3
+License: GPL-3.0
 Group: File tools
 Url: https://github.com/elementary/%_name
 
@@ -28,16 +28,19 @@ Provides: %rdn_name = %version-%release
 #Suggests: tumbler-plugins-extra
 Requires: polkit zeitgeist tumbler elementary-icon-theme
 
+%define granite_ver 5.2.5
+
 BuildRequires(pre): meson
 BuildRequires: intltool libappstream-glib-devel
 BuildRequires: vala-tools libsqlite3-devel libgtk+3-devel
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
-BuildRequires: libxkbcommon-devel libgranite-vala
+BuildRequires: libxkbcommon-devel libgranite-vala >= %granite_ver
 BuildRequires: libzeitgeist2.0-devel libplank-devel libplank-vala
 BuildRequires: libpolkit-devel
 BuildRequires: libcanberra-devel libcanberra-vala
 BuildRequires: libcloudproviders-devel
+BuildRequires: libgit2-glib-devel
 
 %description
 The simple, powerful, and sexy file manager from elementary.
@@ -100,6 +103,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Sat Jan 11 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
+- updated to 4.3.0-3-gac90956e
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
