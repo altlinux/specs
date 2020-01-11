@@ -1,20 +1,24 @@
+%define _unpackaged_files_terminate_build 1
 %define mname collective.js
 %define oname %mname.showmore
-Name: python-module-%oname
+
+%def_with check
+
+Name: python3-module-%oname
 Version: 1.0
-Release: alt1.a4.1
+Release: alt2.a4
 Summary: JS add-on to show/hide parts of a page
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/collective.js.showmore/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-%py_provides %oname
-%py_requires %mname
+%py3_provides %oname
+%py3_requires %mname
 
 %description
 collective.js.showmore provides a JQuery plugin.
@@ -39,27 +43,30 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-install -d %buildroot%python_sitelibdir/collective/js
+install -d %buildroot%python3_sitelibdir/collective/js
 cp -fR collective/js/showmore \
-	%buildroot%python_sitelibdir/collective/js/
-cp -fR *.egg-info %buildroot%python_sitelibdir/
+	%buildroot%python3_sitelibdir/collective/js/
+cp -fR *.egg-info %buildroot%python3_sitelibdir/
 
 %check
-python setup.py test
+python3 setup.py test
 
 %files
 %doc *.txt docs/*
-%python_sitelibdir/collective/js/showmore
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/collective/js/showmore/tests
+%python3_sitelibdir/collective/js/showmore
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/collective/js/showmore/tests
 
 %files tests
-%python_sitelibdir/collective/js/showmore/tests
+%python3_sitelibdir/collective/js/showmore/tests
 
 %changelog
+* Fri Jan 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0-alt2.a4
+- NMU: Remove python2 module build
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0-alt1.a4.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
