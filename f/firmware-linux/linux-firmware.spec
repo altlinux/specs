@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20191220
+Version: 20200107
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,23 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sat Jan 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200107-alt1
+- upstream changes (GIT 67d4ff5):
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2000.2714 (thx Ido Schimmel)
+  + radeon: update oland rlc microcode from amdgpu (thx Alex Deucher)
+  + amdgpu: update vega20 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update vega12 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update vega10 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update picasso microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update raven2 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update raven microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update navi10 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: update navi14 microcode for 19.50 (thx Alex Deucher)
+  + amdgpu: add TA microcode for Raven asics (thx Alex Deucher)
+  + qed: Add firmware 8.42.2.0 (thx Michal Kalderon)
+  + qcom: Switch SDM845 WLAN firmware (thx Bjorn Andersson)
+  + add NXP firmware licence file (thx Ganapathi Bhat)
+
 * Wed Dec 25 2019 Cronbuild Service <cronbuild@altlinux.org> 20191220-alt1
 - upstream changes (GIT 6871bff):
   + ath10k: WCN3990 hw1.0: add firmware
