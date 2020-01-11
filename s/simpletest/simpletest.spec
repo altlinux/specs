@@ -5,12 +5,12 @@
 
 Name:     simpletest
 Version:  8
-Release:  alt1
+Release:  alt2
 
-Summary:  Simple uname test.
+Summary:  Simple toolchain test
 License:  GPL-3
 Group:    Other
-Url:      https://altlinux.org
+Url:      http://git.altlinux.org/people/bircoph/packages/simpletest.git
 
 Packager: Andrew Savchenko <bircoph@altlinux.org>
 
@@ -27,7 +27,7 @@ BuildPreReq: e2k32-glibc
 # from the corresponding ld.so interpreter.
 %filter_from_requires \:/lib.*\( = \|(\): s:^\(/usr\)\?/lib32/::
 %endif
-%if_enabled profiler
+%if_enabled profile
 BuildRequires: lcc1.23 >= 1.23.20-alt5
 %endif
 %endif
@@ -75,6 +75,10 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Sat Jan 11 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt2
+- Update summary
+- Fix macro type, thanks ldv@ for noticing.
+
 * Sat Jan 11 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt1
 - Add gcc support.
 - Disable m32 tests for non-e2k arches. It can be used on x86_64,
