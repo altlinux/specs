@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 %define _localstatedir %{_var}
 Name:           libpagemap
 Version:        0.0.1 
-Release:        alt1_25
+Release:        alt1_26
 Summary:        Pagemap interface library
 
 Group:          System/Libraries
@@ -33,6 +33,7 @@ Development files for %{name}.
 %build
 cd libpagemap-%{version}
 make CFLAGS="%{optflags}"
+sed -i 1s,python,python2, pagemapdata.py
 
 %install
 cd libpagemap-%{version}
@@ -53,6 +54,9 @@ install -D -p -m 755 pagemapdata.py $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/
 %{_libdir}/libpagemap.so
 
 %changelog
+* Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_26
+- fixed build
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_25
 - update to new release by fcimport
 
