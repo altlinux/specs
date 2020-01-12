@@ -1,21 +1,23 @@
 %define _name libxml++
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 3.0
 
+%def_enable check
+
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
-License: LGPLv2+
-Url: http://libxmlplusplus.sourceforge.net/
+License: LGPL-2.1
+Url: https://libxmlplusplus.sourceforge.net/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildPreReq: mm-common
 BuildRequires: libxml2-devel >= 2.7.7
-BuildRequires: doxygen gcc-c++ libglibmm-devel >= 2.46.0
+BuildRequires: doxygen gcc-c++ libglibmm-devel >= 2.32.0
 
 %description
 libxml++ is a C++ wrapper for the libxml2 XML parser library.
@@ -42,14 +44,15 @@ This package contains the development documentation for libxml++ library.
 %prep
 %setup -n %_name-%version
 
-#sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
-
 %build
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -66,6 +69,11 @@ This package contains the development documentation for libxml++ library.
 %_docdir/%_name-%api_ver/*
 
 %changelog
+* Sun Jan 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+- enabled %%check
+- fixed License tag
+
 * Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
