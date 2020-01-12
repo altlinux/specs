@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.19
-%define kernel_sublevel .94
+%define kernel_sublevel .95
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -58,7 +58,11 @@ Patch0: %name-%version-%release.patch
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
 %else
+%if "%sub_flavour" == "debug"
+ExclusiveArch: i586 x86_64 ppc64le
+%else
 ExclusiveArch: i586 x86_64 ppc64le aarch64
+%endif
 %endif
 
 %define make_target bzImage
@@ -684,6 +688,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging
 
 %changelog
+* Sun Jan 12 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.95-alt1
+- v4.19.95
+
 * Thu Jan 09 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.94-alt1
 - v4.19.94
 
