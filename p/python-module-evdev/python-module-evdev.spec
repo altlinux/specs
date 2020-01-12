@@ -3,12 +3,12 @@
 %def_disable python2
 
 Name: python-module-%modname
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Python bindings to the generic input event interface
 Group: Development/Python
-License: 3-clause BSD
+License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/%modname
 
 Source: https://pypi.io/packages/source/e/%modname/%modname-%version.tar.gz
@@ -40,22 +40,24 @@ in the kernel directly to userspace through character devices that are
 typically located in /dev/input/
 
 %prep
-%setup -n %modname-%version -a0
-cp -a %modname-%version py3build
+%setup -n %modname-%version %{?_enable_python2:-a0
+cp -a %modname-%version py2build}
 
 %build
-%{?_enable_python2:%python_build}
-
-pushd py3build
 %python3_build
-popd
+
+%{?_enable_python2:
+pushd py2build
+%python_build
+popd}
 
 %install
-%{?_enable_python2:%python_install}
-
-pushd py3build
 %python3_install
-popd
+
+%{?_enable_python2:
+pushd py2build
+%python_install
+popd}
 
 %if_enabled python2
 %files
@@ -70,6 +72,9 @@ popd
 %doc README*
 
 %changelog
+* Sun Jan 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
