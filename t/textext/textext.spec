@@ -6,7 +6,7 @@
 Summary: Editable LaTeX objects for Inkscape
 Name: 	 %{name}
 Version: %{version}
-Release: alt1_2
+Release: alt1_3
 Source0: %{name}-%{version}.tar.lzma
 License: BSD
 Group: 	 Graphics
@@ -27,19 +27,23 @@ creation.
 %prep
 %setup -q -c %{name}-%{version}
 %patch33 -p0
+sed -i 1s,python,python2, textext.py
 
 %install
-%__rm -rf %{buildroot}
-%__mkdir -p %{buildroot}%{_datadir}/inkscape/extensions
+rm -rf %{buildroot}
+mkdir -p %{buildroot}%{_datadir}/inkscape/extensions
 
-%__install -m 644 textext.inx %{buildroot}%{_datadir}/inkscape/extensions/
-%__install -m 755 textext.py %{buildroot}%{_datadir}/inkscape/extensions/
+install -m 644 textext.inx %{buildroot}%{_datadir}/inkscape/extensions/
+install -m 755 textext.py %{buildroot}%{_datadir}/inkscape/extensions/
 
 %files
 %{_datadir}/inkscape/extensions/textext.*
 
 
 %changelog
+* Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1_3
+- fixed build
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1_2
 - import from Mandriva 2011
 
