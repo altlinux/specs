@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:		evemu
 Version:	2.7.0
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Event Device Query and Emulation Program
 Group:		Development/Other
 License:	GPLv3+
@@ -48,8 +48,7 @@ dynamically linked with evemu.
 Summary:	Event Device Query and Emulation Program Development Package
 Group:		Development/Other
 Requires:       %{libname} = %{version}-%{release}
-Requires:	pkg-config
-Requires:	python-base python-tools-2to3
+Requires:	pkgconfig
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
@@ -79,7 +78,7 @@ find %{buildroot} -name '*.la' -delete
 %{_bindir}/%{name}-play
 %{_bindir}/%{name}-record
 %{_bindir}/%{name}-event
-%{_mandir}/man1/%{name}-*.1.*
+%{_mandir}/man1/%{name}-*.1*
 
 %files -n %{libname}
 %{_libdir}/lib%{name}.so.%{major}
@@ -94,6 +93,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_2
+- fixed build
+
 * Sat Apr 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_1
 - to Sisyphus as dependency for frame
 
