@@ -18,7 +18,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt3_30
+Release:	alt4_30
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -76,15 +76,9 @@ Requires:	hspell libhspell
 The %{name}-gtk package contains a GUI application that uses %{name}.
 
 %package        -n python-module-libhocr
-%{?python_provide:%python_provide python2-libhocr}
-# Remove before F30
-Provides: %{name}-python = %{version}-%{release}
-Provides: %{name}-python = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	python > 2.5
 Provides:	python(hocr) = %{version}-%{release}
 
 %description    -n python-module-libhocr
@@ -146,6 +140,8 @@ for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -ty
 	chrpath -d $i ||:
 done
 
+sed -i 1s,python,python2, %buildroot%{python_sitelibdir_noarch}/*.py \
+  %buildroot%{_bindir}/hocr-gtk %buildroot%{_bindir}/sane-pygtk
 
 %files
 %doc %dir %{hocrdocdir}
@@ -184,6 +180,9 @@ done
 
 
 %changelog
+* Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt4_30
+- fixed build
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt3_30
 - fixed self-br thanks to rider@
 
