@@ -1,9 +1,9 @@
 Name: git-cola
-Version: 3.5
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: A highly caffeinated git gui
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Development/Tools
 
 Url: https://git-cola.github.io
@@ -12,12 +12,13 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Nov 08 2019 (-bi)
-# optimized out: python-base python-modules python2-base python3 python3-base rpm-build-python3 sh4 tzdata
-BuildRequires: rpm-macros-sphinx3 python3-module-sphinx python3-dev rpm-build-gir tk
-BuildRequires: xmlto asciidoc mercurial rpm-macros-sphinx3
+# Automatically added by buildreq on Mon Jan 13 2020 (-bi)
+# optimized out: python-modules python-modules-compiler python-modules-email python-modules-encodings python2-base python3 python3-base rpm-build-python3 sh4 tzdata
+BuildRequires(pre): python-module-sphinx-devel
+BuildRequires: python-modules-distutils python-sphinx-objects.inv python3-dev rpm-build-gir tcl
+BuildRequires: asciidoc mercurial
 # hasher tests:
-Requires: python3-module-pyinotify python3-module-PyQt5
+Requires: python-module-pyinotify python-module-PyQt5
 
 %description
 A sweet, carbonated git gui known for its sugary flavour
@@ -26,16 +27,17 @@ and caffeine-inspired features.
 %prep
 %setup
 
-sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
-	$(find ./ -name '*.py')
+# fix python shebangs
+sed -i 's|/usr/bin/env python|%__python|' $(find ./ -name '*.py')
+sed -i 's|/usr/bin/env python|%__python|' share/git-cola/bin/git-xbase
 
-%prepare_sphinx3 share/doc/%name
+%prepare_sphinx share/doc/%name
 
 %build
-%python3_build
+%python_build
 
 %install
-%python3_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
+%python_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
 #make DESTDIR=%buildroot prefix=%prefix install-doc
 #make DESTDIR=%buildroot prefix=%prefix install-html
 %find_lang %name
@@ -49,9 +51,14 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 %_datadir/appdata/git-dag.appdata.xml
 %_docdir/git-cola
 #_man1dir/*
-%python3_sitelibdir/*
+%python_sitelibdir/*
 
 %changelog
+* Mon Jan 13 2020 Leontiy Volodin <lvol@altlinux.org> 3.6-alt1
+- New version 3.6
+- Cleaned buildrequires.
+- Built with python2 and python3.
+
 * Fri Nov 08 2019 Leontiy Volodin <lvol@altlinux.org> 3.5-alt2
 - Switched to python3.
 
