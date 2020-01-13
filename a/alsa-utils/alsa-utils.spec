@@ -2,11 +2,11 @@
 
 Name: alsa-utils
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
-License: GPL-2.0-or-later
+License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://www.alsa-project.org
@@ -104,6 +104,10 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Mon Jan 13 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt3
+- cherry-picked upstream commit 3c740d90490abe64c86c667934ba5d990817b873
+  (closes: #37757)
+
 * Sun Dec 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.1-alt2
 - added systemd knob (on by default)
 - spec: corrected license field (use specific SPDX identifier)
