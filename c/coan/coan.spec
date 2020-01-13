@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt1_20
+Release:	alt2_20
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 License:	BSD
 URL:		http://coan2.sourceforge.net/
@@ -23,7 +23,7 @@ BuildRequires:	python
 # python package no longer provides /usr/bin/python, and so we need
 # this extra package for the unversioned binary.
 %if 0%{fedora} >= 29
-BuildRequires:  python-base
+#BuildRequires:  python-base
 %endif
 # For pod2man:
 BuildRequires:  perl-podlators
@@ -93,6 +93,9 @@ done
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt2_20
+- fixed build
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_20
 - update to new release by fcimport
 
