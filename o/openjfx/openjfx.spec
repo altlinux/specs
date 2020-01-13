@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           openjfx
 Version:        8.0.202
-Release:        alt1_5.b07jpp8
+Release:        alt1_8.b07jpp8
 Summary:        Rich client application platform for Java
 
 #fxpackager is BSD
@@ -27,10 +27,11 @@ Patch1:         0001-Change-SWT-and-Lucene.patch
 Patch2:         0002-Allow-build-to-work-on-newer-gradles.patch
 Patch3:         0003-fix-cast-between-incompatible-function-types.patch
 Patch4:         0004-Fix-Compilation-Flags.patch
+Patch5:         0005-fxpackager-extract-jre-accept-symlink.patch
+Patch6:         0006-Drop-SWT-32bits-and-Lucene.patch
 
 ExclusiveArch:  %{ix86} x86_64
 
-Requires:       javapackages-tools
 Requires:       java
 
 BuildRequires:  gradle-local
@@ -42,7 +43,9 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.antlr:antlr:3.1.3)
 BuildRequires:  mvn(org.antlr:stringtemplate)
 BuildRequires:  mvn(org.apache.ant:ant)
+%ifarch s390x x86_64 aarch64 ppc64le
 BuildRequires:  mvn(org.eclipse.swt:swt)
+%endif
 
 BuildRequires:  pkgconfig(gtk+-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
@@ -82,8 +85,8 @@ Summary: OpenJFX Source Bundle
 
 %package javadoc
 Group: Development/Java
-BuildArch: noarch
 Summary: Javadoc for %{name}
+#BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
@@ -91,16 +94,24 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n rt-8u202-b07
 %patch0 -p1
+%ifarch s390 %{arm} %{ix86}
+%patch -P 6 -p1
+%else
 %patch1 -p1
+%endif
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-
+%patch5 -p1
+ 
 cp %{SOURCE1} .
 
 cat > gradle.properties << EOF
 COMPILE_WEBKIT = false
 COMPILE_MEDIA = false
+%ifarch s390 %{arm} %{ix86}
+COMPILE_SWT = false
+%endif 
 BUILD_JAVADOC = true
 BUILD_SRC_ZIP = true
 GRADLE_VERSION_CHECK = false
@@ -114,10 +125,19 @@ find -name '*.jar' -delete
 rm -rf modules/media/src/main/native/gstreamer/3rd_party/glib
 rm -rf modules/media/src/main/native/gstreamer/gstreamer-lite
 
+#Drop SWT for 32 bits build
+%ifarch s390 %{arm} %{ix86}
+rm -rf modules/swt
+rm -rf modules/graphics/src/main/java/com/sun/glass/ui/swt
+rm -rf modules/builders/src/main/java/javafx/embed/swt
+%endif 
+
+sed -i 's,"-Werror","-Wsized-deallocation",' buildSrc/*.gradle
+
 %build
 #Tests do not run by default, tests in web fails and one test in graphics fail:
 #UnsatisfiedLinkError: libjavafx_iio.so: undefined symbol: jpeg_resync_to_restart
-gradle-local --no-daemon --offline
+gradle-local --no-daemon --offline --info
 
 %install
 install -d -m 755 %{buildroot}%{openjfxdir}
@@ -166,6 +186,9 @@ ln -s %{openjfxdir}/bin/javapackager %{buildroot}%{_bindir}
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 8.0.202-alt1_8.b07jpp8
+- fixed build
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 8.0.202-alt1_5.b07jpp8
 - new version
 
