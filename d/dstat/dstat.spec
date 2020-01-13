@@ -1,20 +1,24 @@
 Name: dstat
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Versatile vmstat, iostat and ifstat replacement
-License: GPL
+License: GPL-2.0
 Group: Monitoring
 
 URL: http://dag.wieers.com/home-made/dstat
 Packager: Michael Shigorin <mike@altlinux.org>
+# 0.7.4 from https://github.com/dagwieers/dstat
 Source: %url/%name-%version.tar.bz2
+Source1: dstat.desktop
 
-Requires: python
+Patch1: use-python3-compatible-way-of-checking-instance-type.patch
+Patch2: use-collections.abc-instead-of-collections.patch
+
+Requires: python3
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Jul 23 2005 (-bi)
-BuildRequires: python-base python-modules-compiler python-modules-encodings rpm-build-python
+BuildRequires: python3-base rpm-build-python3
 
 %description
 Dstat is a versatile replacement for vmstat, iostat and ifstat.
@@ -43,22 +47,32 @@ interprete real-time data as easy as possible.
 
 %prep
 %setup
+# replace env by python
+sed -i 's/#!\/usr\/bin\/env python/#!\/usr\/bin\/python3/' dstat
+%patch1 -p1
+%patch2 -p1
 
 %build
 %install
 %makeinstall
 
+install -D -m 0644 "%SOURCE1" "%buildroot%_datadir/applications/%name.desktop"
+
 %files
 %doc AUTHORS ChangeLog README* TODO
 %doc %_man1dir/*
-#%config(noreplace) %_sysconfdir/dstat.conf
 %_bindir/*
 %_datadir/%name/
-
-# FIXME:
-# - dstat -dfncl bails out with division by zero!
+%_datadir/applications/dstat.desktop
 
 %changelog
+* Mon Jan 13 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt1
+- 0.7.4
+- Transferred on python3.
+- Fixed license.
+- Fixed dstat -dfncl bailed out with division by zero.
+- Added desktop file.
+
 * Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
 - 0.7.3
 
