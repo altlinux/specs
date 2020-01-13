@@ -12,13 +12,16 @@
 
 Name:           %_name-gtk
 Version:        1.23.1
-Release:        alt1
+Release:        alt2
 Summary:        Document viewer
 
-License:        GPLv2+ and GFDL
+License:        GPLv2+ and GFDL-1.1+
 Group:          Publishing
 URL:            https://github.com/mate-desktop/atril
 Source0:        %name-%version.tar
+# Russian translation updates
+Source1:        ru.po
+Source2:        help_ru.po
 Patch:          %_name-%version-%release.patch
 
 BuildRequires:  libgtk+3-devel
@@ -109,6 +112,8 @@ backend development.
 Summary: Atril backend for dvi files
 Group: Publishing
 Requires: %name = %{version}-%{release}
+# For /usr/bin/mktexpk  at least
+Requires: texlive
 Conflicts: mate-document-viewer-devel
 
 %description dvi
@@ -154,6 +159,8 @@ This package contains a backend to let atril display ePub documents.
 %prep
 %setup
 %patch -p1
+cp -a %SOURCE1 po/ru.po
+cp -a %SOURCE2 help/ru/ru.po
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -278,6 +285,11 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Mon Jan 13 2020 Mikhail Efremov <sem@altlinux.org> 1.23.1-alt2
+- dvi: Require texlive (closes: #37704).
+- Update Russian translation (thx Olesya Gerasimenko).
+- Fix license.
+
 * Fri Aug 23 2019 Mikhail Efremov <sem@altlinux.org> 1.23.1-alt1
 - Updated to 1.23.1.
 
