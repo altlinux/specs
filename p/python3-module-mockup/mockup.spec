@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname mockup
-Name: python-module-%oname
-Version: 2.1.6
-Release: alt1.1
+
+Name: python3-module-%oname
+Version: 3.1.1
+Release: alt1
+
 Summary: A collection of client side patterns for faster and easier web development
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/mockup/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/plone/mockup.git
-Source0: https://pypi.python.org/packages/23/64/3d078c318aa8f5979fbe09f1fa5dbf1d4c6710aa22b8e3a714199dcd0d5c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-BuildPreReq: python-modules-json
+# https://github.com/plone/mockup.git
+Source0: %name-%version.tar.gz
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 Plone Mockup is an ongoing effort to modernize Plone's javascript
@@ -32,7 +32,7 @@ The Goals of Mockup:
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -42,26 +42,31 @@ story.
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
+
 
 %changelog
+* Mon Jan 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.1.1-alt1
+- Version updated to 3.1.1
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
