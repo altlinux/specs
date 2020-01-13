@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-deve
 
 Name:          gemrb
 Version:       0.8.5
-Release:       alt1_1
+Release:       alt2_1
 Summary:       Port of the original Infinity (Game) Engine
 Group:         Games/Adventure
 License:       GPLv2+
@@ -59,6 +59,8 @@ supported games can be found at www.gemrb.org
 rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
 rm -f %{buildroot}%{_docdir}/%{name}/INSTALL
 
+sed -i 1s,python,python2, %buildroot%_bindir/extend2da.py
+
 %files
 %doc AUTHORS COPYING NEWS README
 %doc %{_docdir}/%{name}/en/
@@ -75,6 +77,9 @@ rm -f %{buildroot}%{_docdir}/%{name}/INSTALL
 
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt2_1
+- fixed build
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_1
 - update by mgaimport
 
