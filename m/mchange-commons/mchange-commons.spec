@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mchange-commons
 Version:       0.2.11
-Release:       alt2_8jpp8
+Release:       alt2_9jpp8
 Summary:       A collection of general purpose utilities for c3p0
 License:       LGPLv2 or EPL
 URL:           https://github.com/swaldman/mchange-commons-java
@@ -29,7 +26,6 @@ BuildRequires: log4j12
 BuildRequires: slf4j
 BuildRequires: typesafe-config
 BuildRequires: python
-BuildRequires: python-base
 
 BuildArch:     noarch
 Source44: import.info
@@ -63,9 +59,10 @@ cp -pr /usr/share/sbt/ivy-local .
 
 %build
 # XXX: Link deps, I understand this is a temp measure until sbt gains real xmvn integration
-./climbing-nemesis.py com.typesafe config any ivy-local --version 1.2.1
-./climbing-nemesis.py log4j log4j 12 ivy-local --version 1.2.14
-./climbing-nemesis.py org.slf4j slf4j-api any ivy-local --version 1.7.5
+# XXX: Switch to Python 3 before Fedora 32
+python2 climbing-nemesis.py com.typesafe config any ivy-local --version 1.2.1
+python2 climbing-nemesis.py log4j log4j 12 ivy-local --version 1.2.14
+python2 climbing-nemesis.py org.slf4j slf4j-api any ivy-local --version 1.7.5
 
 export SBT_BOOT_DIR=$PWD/boot
 export SBT_IVY_DIR=$PWD/ivy-local
@@ -83,6 +80,9 @@ sbt package make-pom doc
 %doc --no-dereference LICENSE*
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2_9jpp8
+- fixed build
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2_8jpp8
 - new version
 
