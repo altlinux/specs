@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-mageia-compat
-BuildRequires: /usr/bin/python gcc-c++ python3-devel
+BuildRequires: gcc-c++ python3-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/python gcc-c++ python3-devel
 
 Name:           libmsym
 Version:        0.2.3
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Molecular point group symmetry lib
 License:        MIT
 Group:          System/Libraries
@@ -92,6 +92,9 @@ Python 3 bindings for %{name}.
 
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_3
+- fixed build
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_3
 - new version
 
