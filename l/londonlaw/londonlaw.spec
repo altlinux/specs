@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/desktop-file-install
@@ -9,10 +10,9 @@ BuildRequires: texlive-collection-latexrecommended
 
 Name:           londonlaw
 Version:        0.3.0
-Release:        alt2_0.9.pre2
+Release:        alt2_0.12.pre2
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
-Group:          Games/Other
 URL:            http://github.com/anyc/londonlaw
 Source0:        http://github.com/anyc/londonlaw/archive/v0.3.0_pre2.tar.gz
 Source1:        %{name}.desktop
@@ -20,7 +20,7 @@ Source2:        %{name}-server.desktop
 BuildRequires:  python-devel python-module-wx3.0 ghostscript-utils ghostscript ImageMagick-tools
 BuildRequires:  tex(latex) tex(fullpage.sty) desktop-file-utils
 BuildArch:      noarch
-Requires:       python-module-wx3.0 python-module-twisted-conch python-module-twisted-conch-gui python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx python-module-twisted-core-test python-module-twisted-logger python-module-twisted-mail python-module-twisted-names python-module-twisted-news python-module-twisted-pair python-module-twisted-positioning python-module-twisted-runner python-module-twisted-web python-module-twisted-words icon-theme-hicolor
+Requires:       python-module-wx3.0 python-module-twisted icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -37,6 +37,7 @@ Law features an attractive map overlaid on high-resolution satellite imagery.
 %prep
 %setup -q -n %{name}-%{version}_pre2
 chmod +x setup.py
+sed -i 's|/usr/bin/env python|/usr/bin/env python2|' setup.py londonlaw/london-*
 
 
 %build
@@ -67,6 +68,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 
 %changelog
+* Tue Jan 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_0.12.pre2
+- fixed build
+
 * Tue May 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_0.9.pre2
 - fixed build
 
