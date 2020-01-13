@@ -25,7 +25,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2
+Release: alt3
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -40,6 +40,8 @@ Source44: import.info
 Patch0: brltty-cppflags.patch
 Patch1: brltty-4.5-alt-fix-python-syntax.patch
 Patch2: fix-speechd-includes.patch
+Patch3: convert-to-python3.patch
+Patch4: brltty-5.6-fix_brltty-systemd-wrapper_path.patch
 
 %define cython_ver 0.18
 
@@ -207,6 +209,8 @@ pushd $d
 %qIF_ver_gteq %libspeechd_ver 0.8
 %patch2 -p2
 %endif
+%patch3 -p2
+%patch4 -p2
 popd
 done
 
@@ -307,6 +311,8 @@ install -D -p -m644 Autostart/Udev/rules %buildroot%_udevrulesdir/95-%name.rules
 %make -C Autostart/Systemd SYSTEMD_UNITS_DIRECTORY=%buildroot%_unitdir install
 mkdir -p %buildroot%_unitdir
 #install -m 644 Autostart/Systemd/*.{service,path} %buildroot%_unitdir/
+
+# fix 
 
 chmod +x %buildroot%_bindir/%name-config
 
@@ -415,6 +421,10 @@ chmod +x %buildroot%_bindir/%name-config
 %endif
 
 %changelog
+* Mon Jan 13 2019 Anton Midyukov <antohami@altlinux.org> 5.6-alt3
+- Convert to python3 latex-access.ctb
+- Fixed PATH to brltty-systemd-wrapper in brltty@.service
+
 * Mon Jul 02 2018 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt2
 - updated buildreqs
 
