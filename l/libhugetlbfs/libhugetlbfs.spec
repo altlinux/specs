@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name: libhugetlbfs
 Version: 2.20
-Release: alt1_8
+Release: alt2_8
 Summary: A library which provides easy access to huge pages of memory
 License: LGPLv2+
 URL: https://github.com/libhugetlbfs/libhugetlbfs
@@ -73,6 +73,7 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
+sed -i 1s,python,python2, %buildroot%_bindir/huge_page_setup_helper.py
 
 %files
 %doc --no-dereference LGPL-2.1
@@ -116,6 +117,9 @@ done
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 2.20-alt2_8
+- fixed build
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_8
 - update to new release by fcimport
 
