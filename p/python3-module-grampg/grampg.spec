@@ -1,21 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname grampg
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.3.0
-Release: alt1.1
+Release: alt2
+
 Summary: Simple and flexible password generation library
 License: AGPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/grampg/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/84/6f/63cee4b51ee20b737606c3e682673f3d4c9697fae7147e9bc5beefa42e58/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+Source0: https://pypi.python.org/packages/84/6f/63cee4b51ee20b737606c3e682673f3d4c9697fae7147e9bc5beefa42e58/%{oname}-%{version}.tar.gz
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx-devel
+
+%py3_provides %oname
+
 
 %description
 The grampg (cue to Grumpy Admin Password Generator, and pronounced
@@ -34,7 +37,7 @@ declarative line.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -55,26 +58,30 @@ declarative line.
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %oname-%version
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
+
 
 %changelog
+* Mon Jan 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt2
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
