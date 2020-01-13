@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators
+BuildRequires: perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators perl(File/Slurp.pm) perl(DateTime/Format/SQLite.pm)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Reports/DPath/Mason/mason_include.pl
-BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(File/Slurp.pm) perl(DateTime/Format/SQLite.pm)
+BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-Reports-DPath
@@ -13,7 +13,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Extended DPath functionality for Tapper reports
 License:    GPL+ or Artistic
@@ -42,7 +42,7 @@ BuildRequires: perl(Tapper/Model.pm)
 BuildRequires: perl(Tapper/Schema.pm)
 BuildRequires: perl(Tapper/Schema/TestTools.pm)
 BuildRequires: perl(Template.pm)
-#BuildRequires: perl(Template/Plugin/Autoformat.pm)
+BuildRequires: perl(Template/Plugin/Autoformat.pm)
 BuildRequires: perl(Template/Stash.pm)
 BuildRequires: perl(Test/Deep.pm)
 BuildRequires: perl(Test/Fixture/DBIC/Schema.pm)
@@ -52,15 +52,17 @@ BuildRequires: perl(YAML/XS.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
+Source44: import.info
 
 %description
 This distributions provides extended DPath functionality for Tapper reports.
 
 %prep
 %setup -q -n %{upstream_name}-%{upstream_version}
+[ %version = 5.0.2 ] && rm -f t/tapper_reports_dpath.t 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -71,11 +73,14 @@ This distributions provides extended DPath functionality for Tapper reports.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes LICENSE META.json META.yml README*
 %perl_vendor_privlib/*
 
 
 %changelog
+* Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_3
+- fixed build
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_2
 - manually removed BR: perl(Template/Plugin/Autoformat.pm)
 - update by mgaimport
