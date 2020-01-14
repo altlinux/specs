@@ -1,19 +1,19 @@
 %define oname initgroups
-Name: python-module-%oname
-Version: 2.14.0
-Release: alt1.dev0.git20150618.1
+
+Name: python3-module-%oname
+Version: 4.0
+Release: alt1
+
 Summary: Convenience uid/gid helper function used in Zope2
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/initgroups/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/initgroups.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
-%py_provides %oname
 
 %description
 initgroups provides a convenience function to deal with user / group ids
@@ -23,19 +23,29 @@ on Unix-style systems.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
+
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir/
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
-%doc *.txt
-%python_sitelibdir/*
+%doc *.rst
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0-alt1
+- Version updated to 4.0
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.14.0-alt1.dev0.git20150618.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
