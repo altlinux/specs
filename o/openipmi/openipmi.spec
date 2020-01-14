@@ -2,15 +2,15 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.27
+Version: 2.0.28
 Release: alt1
-License: LGPL
+License: LGPLv2.1
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libpopt-devel python3-devel libnet-snmp-devel
+BuildRequires: libpopt-devel python3-devel libnet-snmp-devel rpm-build-python3
 BuildRequires: libncurses-devel libssl-devel tkinter swig
 BuildRequires: glib2-devel tcl-devel libedit-devel libreadline-devel
 
@@ -82,6 +82,7 @@ export CFLAGS="-fPIC $RPM_OPT_FLAGS"
 %configure --disable-static \
 	   --with-tcl=yes \
 	   --with-tk=yes \
+	   --with-tkinter=yes \
 	   --with-tclcflags='-I/usr/include' \
 	   --with-pythoninstall=%python3_sitelibdir \
 	   --with-python=%__python3
@@ -166,6 +167,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Tue Jan 14 2020 Anton Farygin <rider@altlinux.ru> 2.0.28-alt1
+- 2.0.28
+
 * Wed Oct 02 2019 Anton Farygin <rider@altlinux.ru> 2.0.27-alt1
 - 2.0.27
 - build with python3
