@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 91
+%define somajor 94
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 81
+%define minor 84
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -66,7 +66,7 @@ Source: %rname-%version.tar
 Source1: MacroPushRequiredVars.cmake
 Patch1: 0001-Revert-Remove-the-Qt4-frontend.patch
 Patch10: alt-e2k.patch
-Patch11: alt-poppler-0.80-qt4.patch
+Patch11: alt-poppler-0.84-qt4.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -406,8 +406,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Tue Jan 14 2020 Sergey V Turchin <zerg@altlinux.org> 0.81.0-alt2
-- build only compat library
+* Fri Jan 10 2020 Sergey V Turchin <zerg@altlinux.org> 0.84.0-alt1
+- new version
 
 * Fri Oct 04 2019 Sergey V Turchin <zerg@altlinux.org> 0.81.0-alt1
 - new version
