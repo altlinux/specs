@@ -1,15 +1,15 @@
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Summary: Console Jabber Client
 Summary(pl):	CJC - konsolowy klient Jabbera
 Name: cjc
 %setup_python_module %name
-License: GPL
+License: GPL-2.0
 Group: Networking/Instant messaging
 Source0: http://cjc.jajcus.net/downloads/cjc-%version.tar.gz
 # svn checkout http://cjc.jajcus.net/svn/cjc/trunk cjc
 # make version ChangeLog
-Url: http://cjc.jajcus.net
+Url: https://github.com/Jajcus/cjc
 BuildArch: noarch
 Packager: Fr. Br. George <george@altlinux.ru>
 BuildRequires: xsltproc docbook-style-xsl
@@ -18,10 +18,6 @@ Requires: %packagename = %version
 %description
 A Jabber client for text terminals with user interface similar to
 those known from popular IRC clients.
-
-%description -l pl
-Klient Jabbera dla terminali tekstowych z interfejsem u¿ytkownika
-podobnym do tego znanego z popularnych klientów IRC.
 
 %package -n %packagename
 Group: Development/Python
@@ -37,6 +33,10 @@ This package provides a module for CJC.
 %prep
 %setup -n cjc-%version
 sed -i "/CACERT_FILE_LOCATIONS =/a'/usr/share/ca-certificates/ca-bundle.crt'," cjc/tls.py
+grep -rl '#!/usr/bin/python' * | while read f; do
+	sed -i 's@#!/usr/bin/python@#!/usr/bin/python2@' "$f"
+done
+sed -i  '/python -c/d' Makefile
 
 %build
 %make prefix=%prefix XSL_DIR=/usr/share/xml/docbook/xsl-stylesheets
@@ -56,6 +56,9 @@ mv %buildroot%_datadir/cjc/cjc %buildroot%python_sitelibdir/
 %_datadir/cjc
 
 %changelog
+* Tue Jan 14 2020 Fr. Br. George <george@altlinux.ru> 1.2.1-alt3
+- Switch upstream to GH (in memory of)
+
 * Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 1.2.1-alt2
 - Add ALT ca-certs
 
