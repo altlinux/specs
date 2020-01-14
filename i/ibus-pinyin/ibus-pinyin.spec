@@ -1,7 +1,7 @@
 
 Name:       ibus-pinyin
 Version:    1.5.0
-Release:    alt4
+Release:    alt5
 Summary:    The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License:    GPLv2+
@@ -10,6 +10,7 @@ URL:        http://code.google.com/p/ibus
 Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:     ibus-pinyin-fixes-lua-compile.patch
 Patch1:     ibus-pinyin-support-set-content-type-method.patch
+Patch2:     ibus-pinyin-fix-python3.patch
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
@@ -34,6 +35,7 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 #./autogen.sh
@@ -59,6 +61,9 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Jan 14 2020 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt5
+- use python3 interpreter
+
 * Wed Aug 21 2019 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt4
 - rebuild with python3
 
