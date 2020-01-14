@@ -1,22 +1,24 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+%define _unpackaged_files_terminate_build 1
 %define mname hurry
 %define oname %mname.filesize
-Name: python-module-%oname
+
+%def_with check
+
+Name: python3-module-%oname
 Version: 0.9
-#Release: alt1
+Release: alt2
 Summary: A simple Python library for human readable file sizes (or anything sized in bytes)
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/hurry.filesize/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-%py_provides %oname
-%py_requires %mname
+%py3_provides %oname
+%py3_requires %mname
 
 %description
 hurry.filesize a simple Python library that can take a number of bytes
@@ -39,28 +41,32 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
+python3 setup.py test
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/%mname/*/tests.*
+%python3_sitelibdir/%mname/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/%mname/*/tests.*
+%exclude %python3_sitelibdir/*-nspkg.pth
 
 %files tests
-%python_sitelibdir/%mname/*/tests.*
+%python3_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Sat Jan 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9-alt2
+- NMU: Remove python2 module build
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
