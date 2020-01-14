@@ -21,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.6
+Version: 1.20.7
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -308,6 +308,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Jan 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.7-alt1
+- 1.20.7
+
 * Mon Nov 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.6-alt1
 - 1.20.6
 
