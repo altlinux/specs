@@ -1,5 +1,5 @@
 Name: nano
-Version: 4.2
+Version: 4.7
 Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Tue Jan 14 2020 Artem Zolochevskiy <azol@altlinux.org> 4.7-alt1
+- update to 4.7
+
 * Thu May 23 2019 Artem Zolochevskiy <azol@altlinux.org> 4.2-alt1
 - update to 4.2
 
