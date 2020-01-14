@@ -1,31 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
 %define oname z3c.memhunt.objgraph
-Name: python-module-%oname
+
+%def_without tests
+
+Name: python3-module-%oname
 Version: 0.1dev.r118724
-#Release: alt2.1
+Release: alt3
+
 Summary: Help locate and diagnose memory leaks in zope applications
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.memhunt.objgraph/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-python3
+%py3_requires guppy objgraph
 
-%py_requires guppy objgraph
 
 %description
 z3c.memhunt.objgraph was created to help locate and diagnose memory
 leaks in zope applications. This package uses objgraph and guppy to help
 with this task.
 
+%if_with tests
 %package tests
 Summary: Tests for z3c.memhunt.objgraph
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py3_requires zope.testing
 
 %description tests
 z3c.memhunt.objgraph was created to help locate and diagnose memory
@@ -33,31 +35,41 @@ leaks in zope applications. This package uses objgraph and guppy to help
 with this task.
 
 This package contains tests for z3c.memhunt.objgraph.
+%endif
 
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+    %buildroot%python3_sitelibdir/
 %endif
 
-touch %buildroot%python_sitelibdir/z3c/memhunt/__init__.py
+touch %buildroot%python3_sitelibdir/z3c/memhunt/__init__.py
 
 %files
 %doc *.txt docs/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/*/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%if_with tests
+%files tests
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 
 %changelog
+* Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1dev.r118724-alt3
+- porting on python3
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1dev.r118724-alt2.1.1
 - (AUTO) subst_x86_64.
 
