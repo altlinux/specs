@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	74
+%define drelease	86
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -20,7 +20,7 @@ Version: %dversion.%drelease
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
-License: OpenSource
+License: ImageMagick
 Group: Graphics
 Url: http://www.imagemagick.org/
 
@@ -217,6 +217,7 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %exclude %_docdir/%name-%dversion/www/Magick++
 
 %files -n lib%name%mversion.%soname
+%doc LICENSE
 %dir %_libdir/%mgkdir-%dversion-%soname
 %dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev
 %dir %_libdir/%mgkdir-%dversion-%soname/modules-%qlev/coders
@@ -251,6 +252,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue Jan 14 2020 Anton Farygin <rider@altlinux.ru> 6.9.10.86-alt1
+- new version 6.9.10.86
+
 * Mon Nov 25 2019 Anton Farygin <rider@altlinux.ru> 6.9.10.74-alt1
 - new version 6.9.10.74
 
