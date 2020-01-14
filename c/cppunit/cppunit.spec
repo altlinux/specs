@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: cppunit
-Version: 1.14.0
+Version: 1.15.1
 Release: alt1
 
 Summary: C++ port of the famous JUnit framework for unit testing
@@ -78,6 +78,10 @@ make check
 %endif
 
 %changelog
+* Tue Jan 14 2020 Nikita Ermakov <arei@altlinux.org> 1.15.1-alt1
+- Update to 1.15.1.
+- Update link in the autobuild.watch.
+
 * Thu Jul 20 2017 Fr. Br. George <george@altlinux.ru> 1.14.0-alt1
 - Upstream switch to LO/FD
 - Autobuild version bump to 1.14.0
