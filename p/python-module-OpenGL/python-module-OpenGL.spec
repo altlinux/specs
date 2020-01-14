@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.1a1
-Release: alt2
+Version: 3.1.5
+Release: alt1
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой OpenGL
@@ -13,7 +13,7 @@ Group: Development/Python
 License: see license.txt
 Url: http://pyopengl.sourceforge.net
 
-Source: PyOpenGL-%version.tar
+Source: PyOpenGL-%version.tar.gz
 Patch: PyOpenGL-swig.patch
 Patch1: %name.patch
 
@@ -21,14 +21,11 @@ BuildArch: noarch
 
 %setup_python_module OpenGL
 
-#add_python_req_skip WGL__init__
 %py_requires OpenGL_accelerate
 
 BuildPreReq: python-module-setuptools python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-devel
-%endif
 
 %description
 OpenGL bindings for Python including support for GL extensions,
@@ -39,6 +36,10 @@ Summary: A Python module for interfacing with the OpenGL library
 Group: Development/Python3
 %py3_requires OpenGL_accelerate
 %add_python3_req_skip OpenGL.GLES3.OES
+%add_python3_req_skip OpenGL.raw.DISABLED
+%add_python3_req_skip OpenGL.raw.DISABLED._types
+%add_python3_req_skip OpenGL.raw.GLSC2
+%add_python3_req_skip OpenGL.raw.GLSC2._types
 
 %description -n python3-module-%oname
 OpenGL bindings for Python including support for GL extensions,
@@ -48,7 +49,7 @@ GLU, WGL, GLUT, GLE, and Tk
 Summary: PyOpenGL tests
 Group: Development/Python3
 Requires: python3-module-%oname =  %EVR
-%add_python3_req_skip pygame
+###add_python3_req_skip pygame
 
 %description -n python3-module-%oname-tests
 PyOpenGL tests.
@@ -99,49 +100,29 @@ Requires: python3-module-%oname = %EVR
 %prep
 %setup -n PyOpenGL-%version
 
-find tests/ -type f -name '*.py' -exec \
-	sed -i 's|#! %_bindir/env python|#!%_bindir/python|' '{}' +
 
-%if_with python3
-rm -fR ../python3
-cp -fR . ../python3
-pushd ../python3
+cp -a tests tests3
 find tests -type f -name '*.py' -exec \
-	sed -i 's|#!%_bindir/python|#!%_bindir/python3|' '{}' +
-find tests -type f -name '*.py' -exec 2to3 -w -n '{}' +
+	sed -i 's|#! %_bindir/env python|#!%_bindir/python2|' '{}' +
 
-# In Python 3.7 async is a keyword, and so we can't have a module named async
-# https://github.com/mcfletch/pyopengl/issues/14
-mv OpenGL/GL/SGIX/async.py OpenGL/GL/SGIX/async_.py
-
-mv OpenGL/raw/GL/SGIX/async.py OpenGL/raw/GL/SGIX/async_.py
-
-sed -i -e 's/from OpenGL.raw.GL.SGIX.async/from OpenGL.raw.GL.SGIX.async_/g' OpenGL/GL/SGIX/async_.py
-
-popd
-%endif
+find tests3 -type f -name '*.py' -exec \
+	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python_build_debug -b build2
+sed -i '/import itertools/afrom __future__ import print_function' build2/lib/OpenGL/EGL/debug.py
+%python3_build_debug -b build3
 
 %install
+rm -f build && ln -s build2 build
 %python_install
 touch tests/__init__.py
 cp -fR tests %buildroot/%python_sitelibdir/%modulename/
 
-%if_with python3
-pushd ../python3
+rm -f build && ln -s build3 build
 %python3_install
-touch tests/__init__.py
-cp -fR tests %buildroot/%python3_sitelibdir/%modulename/
-popd
-%endif
+touch tests3/__init__.py
+cp -fR tests3 %buildroot/%python3_sitelibdir/%modulename/tests
 
 %files
 %python_sitelibdir/*.egg-info
@@ -155,7 +136,6 @@ popd
 %files tk
 %python_sitelibdir/OpenGL/Tk
 
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%modulename/
@@ -167,13 +147,15 @@ popd
 
 %files -n python3-module-%oname-tk
 %python3_sitelibdir/OpenGL/Tk
-%endif
 
 %changelog
+* Tue Jan 14 2020 Fr. Br. George <george@altlinux.ru> 3.1.5-alt1
+- Version up
+
 * Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt2
 - Fix build with python-3.7
 
-* Sat Jan 27 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt1%ubt
+* Sat Jan 27 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt1
 - New version 3.1.1a1 (Closes: 34485)
 - New subpackages python-module-tk and python3-module-tk
 
