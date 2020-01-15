@@ -1,14 +1,15 @@
 # vim: set ft=spec: -*- rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
 
-%def_without check
+%def_with    check
 %def_with    python3
 
 Name: breezy
-Version: 3.0.1
-Release: alt3
+Version: 3.0.2
+Release: alt1
 
 Summary: Breezy is a fork of decentralized revision control system Bazaar
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Development/Other
 
 Url: https://github.com/breezy-team/breezy.git
@@ -16,9 +17,7 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 
 Source: %name-%version.tar
 
-Patch0: %name-%version-alt.patch
-
-BuildPreReq: rpm-build-licenses
+#Patch0: %name-%version-alt.patch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -37,25 +36,25 @@ BuildRequires: python-module-configobj
 %endif
 
 %if_with check
-#python2
-BuildRequires: python-modules
-BuildRequires: python-module-six
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-configobj
-BuildRequires: python-module-dulwich
-BuildRequires: python-module-sphinx
-#BuildRequires: python-module-sphinx[contrib]-epytext
-BuildRequires: python-module-Cython
-BuildRequires: python-module-Pyrex
-#python3
+
+%if_with python3
 BuildRequires: python3-module-docutils
 BuildRequires: python3-module-paramiko
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-subunit
 BuildRequires: python3-module-dulwich
 BuildRequires: python3-module-subunit
-BuildRequires: python3-module-configobj
-BuildRequires: python3-module-six
+
+%else
+BuildRequires: python-modules
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-dulwich
+BuildRequires: python-module-sphinx
+#BuildRequires: python-module-sphinx[contrib]-epytext
+BuildRequires: python-module-Pyrex
+
+%endif
+
 %endif
 
 %if_with python3
@@ -113,7 +112,7 @@ package contain documentation and examples for using Bazaar.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -146,7 +145,13 @@ cp -a breezy/locale %buildroot%_datadir
 %find_lang %name
 
 %check
-%make_build check
+%if_with python3
+%python3_build check
+
+%else
+%python_build check
+
+%endif
 
 %files -f %name.lang
 %_bindir/*
@@ -196,6 +201,10 @@ cp -a breezy/locale %buildroot%_datadir
 %breezy_docdir/contrib
 
 %changelog
+* Mon Jan 13 2020 Anatoly Kitaykin <cetus@altlinux.org> 3.0.2-alt1
+- Release 3.0.2
+- Check enabled
+
 * Mon Aug 12 2019 Anatoly Kitaikin <cetus@altlinux.org> 3.0.1-alt3
 - Git plugin path fix
 
