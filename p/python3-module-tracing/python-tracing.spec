@@ -1,29 +1,21 @@
-%define oldname python-tracing
-%global pkgname tracing
+%define oname tracing
 
-Name: python-module-tracing
+Name: python3-module-%oname
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: Python debug logging helper
-
 License: GPLv3+
-Group: Development/Python
-Url: http://liw.fi/%pkgname/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
-Source44: import.info
-
+Group: Development/Python3
+Url: http://liw.fi/%oname/
 BuildArch: noarch
 
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-# END SourceDeps(oneline)
+Source: %name-%version.tar
+Source44: import.info
 
-BuildRequires: python-module-sphinx
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx
+
 
 %description
 The Python library tracing helps with logging debug messages. It
@@ -38,33 +30,40 @@ This module provides a way to turn such debugging or tracing messages
 on and off, based on the filename they occur in. The logging can that
 be left in the code, and only enabled when it is needed.
 
-%package -n python-module-tracing-doc
+%package docs
 Group: Other
-Summary: Documentation for %pkgname
+Summary: Documentation for %oname
 
-%description -n python-module-tracing-doc
-This package contains the documentation for %pkgname, a Python debug
+%description docs
+This package contains the documentation for %oname a Python debug
 logging helper.
 
 %prep
-%setup -n %oldname-%version
+%setup
+
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python_build
+%python3_build
+
 # Build documentation
 make -C doc html
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc COPYING NEWS README
-%python_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/*
 
-%files -n python-module-tracing-doc
+%files docs
 %doc doc/_build/html/* example.py
 
+
 %changelog
+* Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
+- porting on python3
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - new version 0.9 (with rpmrb script)
 
