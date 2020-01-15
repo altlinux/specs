@@ -1,5 +1,5 @@
 %define kernel_base_version	4.19
-%define kernel_sublevel        .92
+%define kernel_sublevel        .96
 %define kernel_extra_version	%nil
 
 Name: kernel-image-lts
@@ -256,6 +256,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Jan 15 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.96-alt1
+- 4.19.96
+
 * Mon Jan 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.19.92-alt1
 - 4.19.92
 
