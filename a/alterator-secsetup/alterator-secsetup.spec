@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Source: %name-%version.tar
@@ -38,6 +38,12 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %config(noreplace) %_sysctldir/*
 
 %changelog
+* Wed Jan 15 2020 Ivan Razzhivin <underwit@altlinux.org> 1.8-alt1
+- if user is not selected do not show tty list
+- multiselect for tty
+- correct user list
+- correct tty list
+
 * Fri Jan 10 2020 Ivan Razzhivin <underwit@altlinux.org> 1.7-alt1
 - small fixes
 
