@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.19
+%define ver_major 0.20
 %define api_ver 1
 
 %def_disable static
@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -24,6 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #VCS: git://git.gnome.org/libsecret
 Source: %name-%version.tar
 %endif
+Patch: %name-0.20.0-alt-python3_shebang.patch
 
 %define glib_ver 2.44.0
 %define vala_ver 0.17.2.12
@@ -37,8 +38,8 @@ BuildRequires: gtk-doc xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_check:
-BuildRequires: /proc dbus-tools-gui python3-module-dbus
-BuildRequires: python3-module-pygobject python3-module-mock libgjs}
+BuildRequires: /proc fuse-gvfs dbus-tools-gui python3-module-dbus-gobject
+BuildRequires: python3-module-pygobject3 python3-module-mock libgjs}
 
 %ifarch %valgrind_arches
 BuildRequires: valgrind-devel
@@ -94,8 +95,9 @@ GObject introspection devel data for %name.
 
 %prep
 %setup
-find . -name "*.py" -print0 | xargs -r0 sed -i 's|\(#\!/usr/bin/env python\)|\13|' --
+%patch -p1
 
+%build
 %meson \
 %{?_disable_gtk_doc:-Dgtk_doc=false} \
 %{?_disable_vala:-Dvapi=false}
@@ -140,6 +142,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Mon Jan 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Sat Sep 28 2019 Yuri N. Sedunov <aris@altlinux.org> 0.19.1-alt2
 - updated to 0.19.1-2-g67680a6 (fixed build w/o valgrind)
 
