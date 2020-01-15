@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.0
-Release: alt3
+Release: alt3.1
 
 Summary: libmagic bindings
 License: GPLv3
@@ -18,10 +18,10 @@ BuildRequires: libmagic-devel
 
 %py3_provides %oname
 
-%ifarch i586
-Requires: libmagic.so.%sover
-%else
+%if "%_lib" == "lib64"
 Requires: libmagic.so.%sover()(64bit)
+%else
+Requires: libmagic.so.%sover
 %endif
 
 
@@ -59,6 +59,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Wed Jan 15 2020 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt3.1
+- use correct dependency on all 32-bit platforms
+
 * Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt3
 - porting on python3
 
