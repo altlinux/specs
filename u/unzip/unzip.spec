@@ -1,11 +1,11 @@
 Name: unzip
 Version: 6.0
-Release: alt2.qa1
+Release: alt3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: An utility for unpacking zip archives
-License: distributable (BSD-based)
+License: Info-ZIP
 Group: Archiving/Compression
 
 Url: http://www.info-zip.org/
@@ -59,6 +59,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Wed Jan 15 2020 Nikita Ermakov <arei@altlinux.org> 6.0-alt3
+- Update license to meet the SPDX.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
