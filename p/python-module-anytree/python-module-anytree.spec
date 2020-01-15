@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 2.7.3
+Version: 2.8.0
 Release: alt1
 
 Summary: Python Tree Data Structure Library
@@ -78,6 +78,9 @@ popd
 %doc README.rst
 
 %changelog
+* Wed Jan 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
 - 2.7.3
 - disabled python2 build
