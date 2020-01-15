@@ -1,17 +1,20 @@
 %define oname ExtensionClass
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 4.3.0
-Release: alt1.1
+Release: alt2
+
 Summary: Metaclass for subclassable extension types
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/ExtensionClass/
 
 # https://github.com/zopefoundation/ExtensionClass.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-nose
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-nose
+
 
 %description
 ExtensionClass:
@@ -38,7 +41,7 @@ attached to and will receive that instance object as a first parameter
 
 %package tests
 Summary: Tests for ExtensionClass, ComputedAttribute and MethodObject
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -49,24 +52,28 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
-nosetests
+%__python3 setup.py test
+nosetests3
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
 
 %files tests
-%python_sitelibdir/*/tests.*
+%python3_sitelibdir/*/tests.*
+
 
 %changelog
+* Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.0-alt2
+- porting on python3
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
