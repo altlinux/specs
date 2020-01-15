@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define beta -beta2
+%define beta %nil
 %define gst_api_ver 1.0
 
 # no more these plugins
@@ -7,11 +7,11 @@
 %def_disable ipod
 
 Name: exaile
-Version: 4.0.0
-Release: alt0.2
+Version: 4.0.2
+Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
-License: GPLv2
+License: GPL-2.0
 Group: Sound
 Url: http://www.exaile.org
 
@@ -32,7 +32,7 @@ Source: %name-%version.tar
 %add_typelib_req_skiplist typelib(GtkosxApplication)
 
 BuildRequires(pre): rpm-build-gir rpm-build-python
-BuildRequires: python-devel python-module-pygobject3 rpm-build-gir
+BuildRequires: python-devel python-module-pygobject3
 BuildRequires: help2man bash-completion
 
 # explicitly required gtk+3
@@ -119,6 +119,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Tue Jan 14 2020 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2 release
+
 * Fri Jul 20 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt0.2
 - updated to 4.0.0-rc1-14-g15b337f
 
