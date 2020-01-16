@@ -1,22 +1,20 @@
 %define modulename turbokid
 
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 1.0.6
-Release: alt1.svn20100918
+Release: alt2
 
 Summary: provides a template engine plug-in for the Kid templating engine
 License: MIT
-Group: Development/Python
-
+Group: Development/Python3
 Url: http://docs.turbogears.org/TurboKid
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Apr 03 2009
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
 
-%setup_python_module %modulename
 
 %description
 This package provides a template engine plugin, allowing you
@@ -33,7 +31,7 @@ http://kid-templating.org
 
 %package tests
 Summary: Tests for TurboKid
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -42,21 +40,27 @@ This package contains tests for TurboKid.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/tests
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename/
+%exclude %python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/*.egg-info
 
 %files tests
-%python_sitelibdir/%modulename/tests
+%python3_sitelibdir/%modulename/tests
+
 
 %changelog
+* Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.6-alt2
+- porting on python3
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.svn20100918
 - Version 1.0.6
 
