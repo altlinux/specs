@@ -3,14 +3,14 @@
 %define        plugname rails
 
 Name:          vim-plugin-%plugname
+Epoch:         1
 Version:       5.4
-Release:       alt1
-Serial:        1
+Release:       alt2
 Summary:       Ruby on Rails: easy file navigation, enhanced syntax highlighting, and more
 Group:         Editors
-License:       Charityware (Vim)
+License:       Vim
 Url:           https://www.vim.org/scripts/script.php?script_id=1567
-# VCS:         https://github.com/tpope/vim-rails.git
+Vcs:           https://github.com/tpope/vim-rails.git
 Packager:      VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -55,6 +55,10 @@ in your .vimrc file.
 %vim_plugin_dir/*
 
 %changelog
+* Thu Jan 16 2020 Pavel Skrylev <majioa@altlinux.org> 1:5.4-alt2
+- added (+) upstream gear
+- fixed (*) spec: license, vcs, epoch
+
 * Wed Jul 03 2019 Pavel Skrylev <majioa@altlinux.org> 1:5.4-alt1
 - Added remote source vcs
 - Bump to 5.4
