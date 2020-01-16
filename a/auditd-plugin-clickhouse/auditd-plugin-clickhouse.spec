@@ -6,7 +6,7 @@
 #    and increase release for all subsequent versions made on same day.
 
 Name:    auditd-plugin-clickhouse
-Version: 20191217
+Version: 20200116
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -19,6 +19,7 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
 BuildRequires: libclickhouse-cpp-devel
 BuildRequires: libaudit-devel
+BuildRequires: /usr/bin/ctest libgtest-devel
 
 %description
 Plugin for Auditd daemon for sending data into Clickhouse database
@@ -33,12 +34,30 @@ Plugin for Auditd daemon for sending data into Clickhouse database
 %install
 %cmakeinstall_std
 
+mkdir -pv %buildroot%_localstatedir/auditd-plugin-clickhouse
+
+%check
+pushd BUILD
+ctest
+popd
+
 %files
 %config(noreplace) %_sysconfdir/audisp/auditd-clickhouse-datatypes.json
 %config(noreplace) %_sysconfdir/audisp/auditd-clickhouse.conf
 %config(noreplace) %_sysconfdir/audisp/plugins.d/auditd-plugin-clickhouse.conf
+%config(noreplace) %_sysconfdir/logrotate.d/auditd-plugin-clickhouse-logrotate.conf
 %_prefix/libexec/auditd-plugin-clickhouse
+%attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200116-alt1
+- New fields added to database table.
+- All unknown fields encountered are saved into database.
+- Fixed crash when processing NULL strings.
+- Fixed warnings for some audit data types.
+- Implemented logging.
+- Implemented audit data serialization and temporary storing before sending
+  to database.
+
 * Tue Dec 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20191217-alt1
 - Initial build for ALT
