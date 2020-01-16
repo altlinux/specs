@@ -1,36 +1,45 @@
-%define version 0.8.11
-%define release alt1
-%setup_python_module selector
+%define oname selector
+
+Name: python3-module-%oname
+Version: 0.8.11
+Release: alt2
 
 Summary: WSGI delegation based on URL path and method.
-Name: %packagename
-Version: %version
-Release: %release.1
-Source0: %modulename.tar
+
 License: LGPL
 Group: Development/Python
-BuildArch: noarch
 URL: http://lukearno.com/projects/selector/
 Packager: Sergey Alembekov <rt@altlinux.ru>
+BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-module-resolver
+Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-resolver
+
 
 %description
 %summary
 
 %prep
-%setup -q -n %modulename
+%setup
 
 %build
-%__python setup.py build
+%__python3 setup.py build
 
 %install
-%__python setup.py install --root=%buildroot --optimize=2 --record=INSTALLED_FILES
+%__python3 setup.py install --root=%buildroot --optimize=2
 
-%files -f INSTALLED_FILES
+%files
 %defattr(-,root,root)
+%doc COPYING README
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.11-alt2
+- porting on python3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.11-alt1.1
 - Rebuild with Python-2.7
 
