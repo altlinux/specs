@@ -1,36 +1,43 @@
-%define version 0.2.1
-%define release alt1
-%setup_python_module resolver
+%define oname resolver
+
+Name: python3-module-%oname
+Version: 0.2.1
+Release: alt2
 
 Summary: Resolve specially formated statements to Python objects.
-Name: %packagename
-Version: %version
-Release: %release.1
-Source0: %modulename.tar
+
 License: LGPL
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 URL: http://lukearno.com/projects/resolver/
+BuildArch: noarch
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
-BuildRequires: python-module-setuptools
+Source0: %oname.tar
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 %summary
 
 %prep
-%setup -q -n %modulename
+%setup -q -n %oname
 
 %build
-%__python setup.py build
+%__python3 setup.py build
 
 %install
-%__python setup.py install --root=%buildroot --optimize=2 --record=INSTALLED_FILES
+%__python3 setup.py install --root=%buildroot --optimize=2
 
-%files -f INSTALLED_FILES
+%files
 %defattr(-,root,root)
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt2
+- porting on python3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.1-alt1.1
 - Rebuild with Python-2.7
 
