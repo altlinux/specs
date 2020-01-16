@@ -1,6 +1,6 @@
 Name: node-gyp
 Version: 5.0.5
-Release: alt1
+Release: alt2
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -37,11 +37,9 @@ Patch1: node-gyp-addon-gypi.patch
 # use the system gyp
 Patch2: node-gyp-system-gyp.patch
 
-BuildRequires: node-devel rpm-build-nodejs
-
 BuildRequires(pre): rpm-macros-nodejs
 
-BuildRequires: gcc-c++ python-devel
+#BuildRequires: gcc-c++ python-devel node-devel 
 
 #gyp is the actual build framework node-gyp uses
 Requires: gyp
@@ -106,6 +104,10 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt2
+- drop buildreqs (we skip build here)
+- switch to python3
+
 * Thu Dec 26 2019 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
 - new version (5.0.5) with rpmgs script
 - drop gcc-c++ requires (ALT bug 37687)
