@@ -1,5 +1,5 @@
 Name:           translate-shell
-Version:        0.9.6.10
+Version:        0.9.6.11
 Release:        alt1
 Summary:        A command-line online translator
 
@@ -44,6 +44,9 @@ sed -i 's|/usr/bin/env bash|/bin/bash|' build/trans
 %_man1dir/trans.1*
 
 %changelog
+* Thu Jan 16 2020 Alexey Gladkov <legion@altlinux.ru> 0.9.6.11-alt1
+- New version (0.9.6.11).
+
 * Thu Jun 27 2019 Alexey Gladkov <legion@altlinux.ru> 0.9.6.10-alt1
 - First build for ALT Linux.
 
