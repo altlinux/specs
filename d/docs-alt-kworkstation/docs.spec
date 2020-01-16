@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.90
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Thu Jan 16 2020 Elena Mishina <lepata@altlinux.org> 8.90-alt4
+- desktop-software add discover
+- desktop-software add ksysguard
+- update screenshots
+
 * Mon Dec 23 2019 Elena Mishina <lepata@altlinux.org> 8.90-alt3
 - updated to latest public distr
 
