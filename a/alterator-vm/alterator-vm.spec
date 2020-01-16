@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Mon Jan 20 2020 Slava Aseev <ptrnine@altlinux.org> 0.4.10-alt1
+- Catch lvm2 VG shrink exception
+
 * Thu Dec 12 2019 Slava Aseev <ptrnine@altlinux.org> 0.4.9-alt1
 - Show "Unknown" for volumes with unknown fs
 
