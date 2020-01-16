@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Removes commented-out code from Python files
 
@@ -10,14 +10,15 @@ License: MIT
 Group:   Development/Python3
 URL:     https://github.com/myint/eradicate
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-
+Packager:  Grigory Ustinov <grenka@altlinux.org>
 BuildArch: noarch
 
 Source:  %oname-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+
+Conflicts: python-module-%oname
+
 
 %description
 With modern revision control available, there is no reason to save
@@ -36,15 +37,15 @@ which is valid Python syntax, but is probably not code.)
 %install
 %python3_install
 
-%if "3"=="3"
-mv %buildroot%_bindir/eradicate %buildroot%_bindir/eradicate3
-%endif
-
 %files
 %doc README.rst
-%_bindir/eradicate3
+%_bindir/eradicate
 %python3_sitelibdir/*
 
+
 %changelog
+* Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
+- Porting on Python3.
+
 * Wed Apr 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.0-alt1
-- Initial build for Sisyphus
+- Initial build for Sisyphus.
