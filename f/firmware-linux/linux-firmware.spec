@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200107
+Version: 20200113
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Jan 17 2020 Cronbuild Service <cronbuild@altlinux.org> 20200113-alt1
+- upstream changes (GIT 9c340bd):
+  + amdgpu: update navi10 firmware for 19.50 (thx Alex Deucher)
+  + amdgpu: Add navi10 TA ucode (thx Alex Deucher)
+  + mediatek: update MT8173 VPU firmware to v1.1.3 (thx gtk_ruiwang)
+
 * Sat Jan 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200107-alt1
 - upstream changes (GIT 67d4ff5):
   + Mellanox: Add new mlxsw_spectrum firmware xx.2000.2714 (thx Ido Schimmel)
