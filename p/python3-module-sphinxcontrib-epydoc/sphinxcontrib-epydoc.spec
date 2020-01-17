@@ -1,17 +1,19 @@
 %define oname sphinxcontrib-epydoc
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.6
-Release: alt1
+Release: alt2
+
 Summary: Sphinx extension epydoc
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/sphinxcontrib-epydoc/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 A Sphinx extension to cross-reference epydoc-generated documentation.
@@ -20,16 +22,20 @@ A Sphinx extension to cross-reference epydoc-generated documentation.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
+- Porting on Python3.
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
 - Version 0.6
 
