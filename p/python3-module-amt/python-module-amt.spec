@@ -1,16 +1,21 @@
-Name: python-module-amt
-Version: 0.7.0
-Release: alt1
-Summary: Tools for interacting with Intel's Active Management Technology
+%define oname amt
 
-Group: Development/Python
+Name: python3-module-%oname
+Version: 0.8.0
+Release: alt1
+
+Summary: Tools for interacting with Intel's Active Management Technology
 License: Apache
+Group: Development/Python3
 URL: https://pypi.python.org/pypi/amt/
+BuildArch: noarch
+
 Source0: %name-%version.tar
 
-BuildArch: noarch
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+
+Conflicts: python-module-%oname
+
 
 %description
 AMT is a light weight hardware control interface put into some Intel
@@ -41,17 +46,21 @@ are, comes from that code. Refactored for a more minimal usage.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/amtctrl
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.0-alt1
+- Version updated to 0.8.0
+- porting on python3.
+
 * Tue May 23 2017 Lenar Shakirov <snejok@altlinux.ru> 0.7.0-alt1
 - Initial build for ALT
-
 
