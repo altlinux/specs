@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 7.0
+%define major 7.1
 %define somajor 7
 #define _localstatedir /var
 %def_enable epoll
@@ -19,7 +19,7 @@ Release: alt1
 
 Summary: Cluster File System
 
-License: GPLv2/LGPLv3+
+License: GPLv2 and LGPLv3+
 Group: System/Base
 Url: https://www.gluster.org/
 
@@ -347,8 +347,9 @@ like Pacemaker.
 
 %prep
 %setup
+%__subst "s|python ||" tools/gfind_missing_files/gfind_missing_files.sh
 # Increase soname version of libs to major version
-%__subst "s|VERSION=\"0:1:0\"|VERSION=\"%somajor:1:0\"|" configure.ac
+%__subst "s|VERSION=\"0:\([01]\):0\"|VERSION=\"%somajor:\1:0\"|" configure.ac
 
 # due log2 in 6.0
 #__subst "s|libgfrpc_la_LIBADD =|libgfrpc_la_LIBADD = -lm|" rpc/rpc-lib/src/Makefile.am
@@ -446,17 +447,18 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_logrotatedir/glusterfs
 
 install -D -p -m 644 extras/glusterfs.vim %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
 %if_without ocf
-rm -rf %buildroot%_libexecdir/ocf/
+rm -fv %buildroot%_libexecdir/ocf/
 %endif
 %if_disabled rdma
-rm -rf %buildroot%glusterlibdir/rpc-transport/rdma*
+rm -fv %buildroot%glusterlibdir/rpc-transport/rdma*
 %endif
 
-rm -rf %buildroot%_sbindir/conf.py
+rm -fv %buildroot%_sbindir/conf.py
 # FIXME: uses python 2 syntax
 # see also https://bugzilla.redhat.com/show_bug.cgi?id=1590193
-rm -rf %buildroot%_sbindir/gcron.py
-rm -rf %buildroot%_sbindir/snap_scheduler.py
+rm -fv %buildroot%_sbindir/gcron.py
+rm -fv %buildroot%_sbindir/snap_scheduler.py
+
 
 # TODO: selinux
 # rm HACK due S10selinux-label-brick.sh: line 46: syntax error near unexpected token `('
@@ -465,7 +467,7 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-
 rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fcontext.sh
 
 # remove cloudsync-plugins
-rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
+rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.so}
 
 %post server
 %post_service glusterd
@@ -664,6 +666,13 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/cloudsyncs3.so
 %endif
 
 %changelog
+* Mon Dec 23 2019 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt1
+- new version 7.1 (with rpmrb script)
+
+* Wed Dec 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt2
+- fix libgfapi.so.* filename conflict (ALT bug 37603)
+- drop python 2 scripts
+
 * Thu Nov 14 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
 - new version (7.0) with rpmgs script
 
