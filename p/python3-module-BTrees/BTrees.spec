@@ -4,29 +4,24 @@
 %def_with check
 %def_with bootstrap
 
-Name: python-module-%oname
-Version: 4.4.1
-Release: alt3
+Name: python3-module-%oname
+Version: 4.6.1
+Release: alt1
 
 Summary: Scalable persistent object containers
-License: ZPLv2.1
-Group: Development/Python
-# https://github.com/zopefoundation/BTrees.git
+License: ZPL-2.1
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/BTrees
+#Git: https://github.com/zopefoundation/BTrees.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-macros-sphinx3
 
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-repoze.sphinx.autointerface
-BuildRequires: python-module-persistent
-BuildRequires: python-module-setuptools
-%if_without bootstrap
-BuildRequires: python-module-ZODB
-%endif
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-persistent
 %if_without bootstrap
@@ -34,13 +29,8 @@ BuildRequires: python3-module-ZODB
 %endif
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-virtualenv
-BuildRequires: python-module-transaction
-%if_without bootstrap
-BuildRequires: python-module-ZODB-tests
-%endif
 BuildRequires: python3-module-tox
+BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-transaction
 %if_without bootstrap
@@ -48,7 +38,7 @@ BuildRequires: python3-module-ZODB-tests
 %endif
 %endif
 
-%py_requires zope.interface
+%py3_requires zope.interface
 
 %define overview							   \
 BTrees: scalable persistent components.					   \
@@ -63,7 +53,7 @@ resolution of conflicts detected by that mechannism.			   \
 %description %overview
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -77,78 +67,62 @@ BuildArch: noarch
 %description docs
 This package contains documentation for %oname.
 
-%package -n python3-module-%oname
-Summary: Scalable persistent object containers
-Group: Development/Python3
-
-%description -n python3-module-%oname
-%overview
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+%prepare_sphinx3 .
+ln -s ../objects.inv3 docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v
+# remove pyproject.toml as it interferes unittests execution
+rm ./pyproject.toml
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
+sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
 
-pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
-popd
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3\
+    \/bin\/cp {env:_DOCTEST_BIN:} \{envbindir\}\/py3_sphinx-build\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py3_sphinx-build' tox.ini
+
+sed -i '/setenv =$/a\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+    py%{python_version_nodots python3}: _DOCTEST_BIN=%_bindir\/py3_sphinx-build' tox.ini
+
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files docs
-%doc docs/_build/html/*
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files docs
+%doc docs/_build/html/*
+
+%files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Jan 13 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.1-alt1
+- NMU: 4.4.1 -> 4.6.1
+- Remove python2 module build
+- Rearrange unittest execution
+- Fix license
+
 * Mon Apr 08 2019 Grigory Ustinov <grenka@altlinux.org> 4.4.1-alt3
 - Bootstrap for python3.7.
 

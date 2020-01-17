@@ -1,26 +1,31 @@
 %define oname zope.deferredimport
-%def_without check
 
-Name: python-module-%oname
-Version: 4.3
+%def_with check
+
+Name: python3-module-%oname
+Version: 4.3.1
 Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.deferredimport/
-# https://github.com/zopefoundation/zope.deferredimport.git
+#Git: https://github.com/zopefoundation/zope.deferredimport.git
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-zope.proxy python-module-zope.testrunner
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-zope.proxy python3-module-zope.testrunner
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 
-%py_requires zope zope.proxy
+%if_with check
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-module-zope.proxy
+BuildRequires: python3-module-zope.testrunner
+%endif
 
+%py3_requires zope zope.proxy
 
 %description
 Often, especially for package modules, you want to import names for
@@ -29,38 +34,11 @@ zope.deferredimport package provided facilities for defining names in
 modules that will be imported from somewhere else when used. You can
 also cause deprecation warnings to be issued when a variable is used.
 
-%package -n python3-module-%oname
-Summary: Allows you to perform imports names that will be resolved when used in the code
-Group: Development/Python3
-%py3_requires zope zope.proxy
-
-%description -n python3-module-%oname
-Often, especially for package modules, you want to import names for
-convenience, but not actually perform the imports until necessary. The
-zope.deferredimport package provided facilities for defining names in
-modules that will be imported from somewhere else when used. You can
-also cause deprecation warnings to be issued when a variable is used.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.deferredimport
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
-
-%description -n python3-module-%oname-tests
-Often, especially for package modules, you want to import names for
-convenience, but not actually perform the imports until necessary. The
-zope.deferredimport package provided facilities for defining names in
-modules that will be imported from somewhere else when used. You can
-also cause deprecation warnings to be issued when a variable is used.
-
-This package contains tests for zope.deferredimport.
-
 %package tests
-Summary: Tests for zope.deferredimport
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires zope.testing
 
 %description tests
 Often, especially for package modules, you want to import names for
@@ -69,11 +47,11 @@ zope.deferredimport package provided facilities for defining names in
 modules that will be imported from somewhere else when used. You can
 also cause deprecation warnings to be issued when a variable is used.
 
-This package contains tests for zope.deferredimport.
+This package contains tests for %oname.
 
 %package examples
 Summary: Example files for %oname
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %EVR
 
@@ -84,26 +62,11 @@ Example files for %oname.
 %setup
 mv src/zope/deferredimport/samples ./
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -113,41 +76,42 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 install -d %buildroot%_docdir/%name
 cp -fR samples %buildroot%_docdir/%name
 
-%if_with check
 %check
-python setup.py test -v
+sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
+# cancel docbuild tests
+sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
+sed -i '/\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
 
-pushd ../python3
-python3 setup.py test -v
-popd
-%endif
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
 
 %files examples
 %doc %_docdir/%name/samples
 
-
 %changelog
+* Wed Dec 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt1
+- NMU: 4.3 -> 4.3.1
+- Remove python2 module build
+- Rearrange unittests execution
+
 * Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.3-alt1
 - Version updated to 4.3
 
