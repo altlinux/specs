@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Source: %name-%version.tar
@@ -38,6 +38,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %config(noreplace) %_sysctldir/*
 
 %changelog
+* Fri Jan 17 2020 Ivan Razzhivin <underwit@altlinux.org> 1.10-alt1
+- fix desktop file
+
 * Wed Jan 15 2020 Ivan Razzhivin <underwit@altlinux.org> 1.9-alt1
 - ui fix
 
