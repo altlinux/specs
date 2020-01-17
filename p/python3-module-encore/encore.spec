@@ -1,19 +1,22 @@
 %define oname encore
-Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.dev.git20141208
+
+Name: python3-module-%oname
+Version: 0.7.0
+Release: alt1
+
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/enthought/encore
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/enthought/encore.git
 Source: %oname-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-sphinx-devel graphviz
-BuildPreReq: python-module-pydot
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx graphviz
+BuildRequires: python3-module-pydot python-tools-2to3
+
 
 %description
 This package consists of a collection of core utility packages useful for
@@ -35,7 +38,7 @@ This package contains documentation for encore.
 
 %package pickles
 Summary: Pickles for encore
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 This package consists of a collection of core utility packages useful for
@@ -47,7 +50,7 @@ This package contains pickles for encore.
 
 %package tests
 Summary: Tests for encore
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -61,41 +64,47 @@ This package contains tests for encore.
 %prep
 %setup
 
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
 %make -C docs pickle
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc LICENSE.txt README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/*/*/*/tests
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/testing
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/*/testing
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
 
 %files docs
 %doc docs/build/html/*
 
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files tests
-%python_sitelibdir/*/*/*/tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/testing
+%python3_sitelibdir/*/testing
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+
 
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.0-alt1
+- Version updated to 0.7.0
+- porting on python3.
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.dev.git20141208
 - Version 0.6.1.dev
 
