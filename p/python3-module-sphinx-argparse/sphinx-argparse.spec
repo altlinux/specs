@@ -1,22 +1,27 @@
 %define oname sphinx-argparse
-Name: python-module-%oname
-Version: 0.1.13
-Release: alt1.git20140818.1.1
+
+Name: python3-module-%oname
+Version: 0.2.5
+Release: alt1
+
 Summary: Sphinx extension that automatically document argparse commands and options
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinx-argparse/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/ribozz/sphinx-argparse.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-sphinx-devel
-BuildPreReq: python-module-sphinx_rtd_theme
-BuildPreReq: python-module-pytest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx python3-module-pytest
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-pytest python3-module-commonmark0.7
 
-%py_provides sphinxarg
+Requires: python3-module-commonmark0.7
+
+%py3_provides sphinxarg
+
 
 %description
 Sphinx extension that automatically document argparse commands and
@@ -24,7 +29,7 @@ options.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Sphinx extension that automatically document argparse commands and
@@ -46,37 +51,41 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-py.test
+%__python3 setup.py test
 
 %files
 %doc *.md
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
+
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt1
+- Version updated to 0.2.5
+- porting on python3.
+
 * Mon Jun 10 2019 Stanislav Levin <slev@altlinux.org> 0.1.13-alt1.git20140818.1.1
 - Added missing dep on Pytest.
 
