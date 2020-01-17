@@ -1,82 +1,48 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename geventutil
 
-%def_with python3
-
-Name: python-module-geventutil
+Name: python3-module-geventutil
 Version: 0.0.1
-Release: alt1.hg20120114.1.2
+Release: alt2.hg20120114
 
 Summary: Random utilities for gevent
 
-Group: Development/Python
+Group: Development/Python3
 
 License: MIT
 Url: https://bitbucket.org/denis/gevent-playground/overview
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # hg clone https://bitbucket.org/denis/gevent-playground
+
 Source: %name-%version.tar
 
-#BuildPreReq: rpm-build-python
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python-tools-2to3
-%endif
-
+BuildRequires: python3-dev
+BuildRequires: python-tools-2to3
+BuildRequires: time
 BuildArch: noarch
 
-%setup_python_module %modulename
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
-
 %description
-Random utilities for gevent.
-
-%package -n python3-module-%modulename
-Summary: Random utilities for gevent
-Group: Development/Python3
-
-%description -n python3-module-%modulename
 Random utilities for gevent.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
-%python_sitelibdir/%{modulename}*
-
-%if_with python3
-%files -n python3-module-%modulename
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Jan 16 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.0.1-alt2.hg20120114
+- NMU: remove python2 module build
+- Cleanup spec
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.1-alt1.hg20120114.1.2
 - (NMU) rebuild with python3.6
 
