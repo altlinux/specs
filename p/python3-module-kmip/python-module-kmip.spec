@@ -2,20 +2,20 @@
 
 Name:    python3-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: Open source Python implementation of the KMIP specification.
 
 License: ASL 2.0
 Group:   Development/Python3
 URL:     https://github.com/OpenKMIP/PyKMIP
+BuildArch: noarch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
-BuildArch: noarch
+Conflicts: python-module-%oname
 
 Source:  %oname-%version.tar
 
@@ -40,25 +40,18 @@ for conducting cryptographic operations. Supported object types include:
 
 %install
 %python3_install
-%if "3"==""
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py2
-done
-popd
-%endif
 
 %files
-%if "3"=="3"
+%doc *.rst
 %_bindir/pykmip-server
-%else
-%_bindir/pykmip-server.py2
-%endif
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%doc *.rst
+
 
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt2
+- Porting on Python3.
+
 * Thu Aug 08 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
 - Build new version.
 
