@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.1.0
-Release: alt9
+Release: alt10
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -45,6 +45,9 @@ Patch14: 0014-poppler071.patch
 Patch15: 0015-poppler071.patch
 Patch16: 0016-poppler074.patch
 Patch17: 0017-poppler074.patch
+# Magea
+Patch30: calligra-poppler-0.82.patch
+Patch31: calligra-poppler-0.83.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -197,6 +200,7 @@ Requires: %name-common = %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+#
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -205,6 +209,10 @@ Requires: %name-common = %EVR
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+#
+%patch30 -p1
+%patch31 -p1
+#
 %patch103 -p1
 
 %build
@@ -434,6 +442,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Fri Jan 17 2020 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt10
+- fix compile with new Poppler
+
 * Wed Sep 18 2019 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt9
 - fix compile with new Qt
 
