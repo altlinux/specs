@@ -1,23 +1,26 @@
 %define oname pynzb
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.1.0
-Release: alt1.git20090510.1
+Release: alt2
+
 Summary: Unified API for parsing NZB files, several concrete implementations included
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pynzb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/ericflo/pynzb.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch0: port-on-python3.patch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-lxml python-module-nose
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-lxml python3-module-nose
 
-%py_provides %oname
-%py_requires lxml
-%add_python_req_skip xml
+%py3_provides %oname
+# %%py3_requires lxml
+# %%add_python3_req_skip xml
+
 
 %description
 NZB is an XML-based file format for retrieving posts from NNTP (Usenet)
@@ -27,7 +30,7 @@ those many one-off NZB parsers into one simple interface.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -40,26 +43,33 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
-nosetests
+%if 0
+%__python3 setup.py test
+nosetests3
+%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
 
 %files tests
-%python_sitelibdir/*/tests.*
+%python3_sitelibdir/*/tests.*
+
 
 %changelog
+* Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.0-alt1.git20090510.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
