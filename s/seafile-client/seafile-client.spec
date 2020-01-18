@@ -1,6 +1,6 @@
 Name: seafile-client
-Version: 7.0.2
-Release: alt2
+Version: 7.0.5
+Release: alt1
 
 Summary: Seafile gui client on QT bassed
 
@@ -61,6 +61,9 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Sat Jan 18 2020 Vitaly Lipatov <lav@altlinux.ru> 7.0.5-alt1
+- new version 7.0.5 (with rpmrb script)
+
 * Mon Oct 14 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.2-alt2
 - add russian localization to the desktop file (ALT bug 33772)
 
