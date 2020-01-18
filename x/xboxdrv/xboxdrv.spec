@@ -1,6 +1,6 @@
 Name: xboxdrv
 Version: 0.8.8
-Release: alt1
+Release: alt2
 
 Summary: Xbox/Xbox360 USB Gamepad Driver for Userspace
 License: GPLv3
@@ -9,7 +9,8 @@ Group: Other
 Url: http://pingus.seul.org/~grumbel/%name/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://pingus.seul.org/~grumbel/%name/%name-linux-%version.tar.bz2
+Source: https://gitlab.com/%name/%name/-/archive/v%version/%name-v%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: boost-devel-headers
 BuildRequires: gcc-c++
@@ -36,7 +37,8 @@ for you or if you want more configurabity. If the xpad kernel driver
 works for you there is no need to try this driver.
 
 %prep
-%setup -n %name-linux-%version
+%setup -n %name-v%version
+%patch0 -p1
 
 %build
 %make_build PREFIX=%_prefix
@@ -51,6 +53,16 @@ works for you there is no need to try this driver.
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jan 18 2020 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt2
+- Fix 60 seconds delay
+- Fix build with python
+
+* Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt0.M70P.1
+- Build for branch p7
+
+* Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt0.M70T.1
+- Build for branch t7
+
 * Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt1
 - Version 0.8.8
 
