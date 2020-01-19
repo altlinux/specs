@@ -1,6 +1,6 @@
 Name: rbdoom3bfg
-Version: 1.1.0
-Release: alt1.1
+Version: 1.2.0
+Release: alt1
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
@@ -9,7 +9,6 @@ Group: Games/Arcade
 Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
 Source: %name-%version.tar
 Source2: %name.png
-Source3: %name.desktop
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 %e2k
@@ -44,9 +43,9 @@ $HOME/.rbdoom3bfg/
 
 %prep
 %setup
-sed -i 's,-march=native,-mcpu=native,' \
+%__subst 's,-march=native,-mcpu=native,' \
 	neo/CMakeLists.txt neo/libs/rapidjson/CMakeLists.txt
-sed -i 's,-m64,,' neo/libs/zlib/configure
+%__subst 's,-m64,,' neo/libs/zlib/configure
 
 %build
 %cmake_insource \
@@ -64,12 +63,24 @@ sed -i 's,-m64,,' neo/libs/zlib/configure
 %make_build
 
 %install
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name.desktop << EOF
+[Desktop Entry]
+Name=rbdoom3bfg
+Comment=Doom 3 BFG Edition port for Linux
+Comment[ru]=Порт Doom 3 BFG Edition для Linux
+Exec=rbdoom3bfg
+Icon=rbdoom3bfg
+Terminal=false
+Type=Application
+Categories=Game;ArcadeGame;
+EOF
+
 mkdir -p %buildroot%_gamesbindir/
 mkdir -p %buildroot%_gamesdatadir/%name
 install -m 0755 ./RBDoom3BFG %buildroot%_gamesbindir/%name
 mkdir -p %buildroot/%_iconsdir
 install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
-install -Dpm0644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc COPYING.txt README.txt
@@ -79,6 +90,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/%name.png
 
 %changelog
+* Sun Jan 19 2020 Artyom Bystrov <arbars@altlinux.org> 1.2.0-alt1
+- Update version to 1.2.0
+
 * Thu Oct 24 2019 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1.1
 - E2K: fixed build (disable SIMD)
 - minor spec/gear cleanup
