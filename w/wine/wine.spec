@@ -1,7 +1,8 @@
 %def_enable static
-%define gecko_version 2.47
+%define gecko_version 2.47.1
 %define mono_version 4.9.4
-%define major 4.20
+%define major 5.0
+%define rel -rc6
 
 Name: wine
 Version: %major.1
@@ -18,9 +19,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/4.x/wine-%major.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/5.0/wine-%major%rel.tar.xz
 Source: %name-%version.tar
-# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major.tar.gz
+# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%rel.tar.gz
 Source1: %name-staging-%version.tar
 
 Source3: %name-%version-desktop.tar
@@ -388,6 +389,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/*.vxd.so
 %endif
 
+%_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
 %_libdir/wine/*.dll.so
@@ -479,6 +481,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.1-alt1
+- new version (5.0.1) with rpmgs script
+- based on wine 5.0-rc6
+- update wine-gecko require to 2.47.1
+
 * Mon Nov 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.20.1-alt1
 - new version (4.20.1) with rpmgs script
 - update patch set

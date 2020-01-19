@@ -1,9 +1,9 @@
-%define gecko_version 2.47
+%define gecko_version 2.47.1
 %define mono_version 4.9.4
 
 Name: wine-vanilla
-Version: 4.20
-Release: alt1
+Version: 5.0
+Release: alt0.rc6
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -343,6 +343,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/*.vxd.so
 %endif
 
+%_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
 %_libdir/wine/*.dll.so
@@ -353,6 +354,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
+%_datadir/wine/winebus.inf
 %_datadir/wine/winehid.inf
 %_datadir/wine/l_intl.nls
 %_datadir/wine/fonts/
@@ -431,6 +433,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt0.rc6
+- pre release 5.0-RC6
+- wine-gecko 2.47.1
+
 * Sun Nov 17 2019 Vitaly Lipatov <lav@altlinux.ru> 4.20-alt1
 - new version 4.20
 - strict require wine-mono 4.9.4
