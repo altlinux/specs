@@ -2,7 +2,7 @@
 %define api_ver 0.14
 
 Name: retro-gtk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
@@ -12,7 +12,7 @@ Url: https://git.gnome.org/browse/%name
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.50
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(epoxy)
@@ -100,6 +100,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Sun Jan 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
+- 0.18.1
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
