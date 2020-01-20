@@ -2,16 +2,22 @@
 
 %def_enable lvs
 %def_enable vrrp
+%def_enable bfd
+%def_enable fwmark
 %def_enable snmp
+%def_disable dbus
 %def_enable sha1
+%def_enable regex
+%def_enable json
 %def_enable routes
 %def_enable libiptc
+%def_enable libipset
+%def_enable nftables
 %def_enable libnl
-%def_enable regex
 
 Name: keepalived
 Version: 2.0.19
-Release: alt1
+Release: alt2
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -25,7 +31,8 @@ Patch: 0002-update-systemd-unit-file.patch
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
-%{?_enable_libipset:BuildRequires: libipset-devel}
+%{?_enable_libipset:BuildRequires: pkgconfig(libipset)}
+%{?_enable_nftables:BuildRequires: pkgconfig(libnftnl) pkgconfig(libmnl)}
 %{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
@@ -55,16 +62,24 @@ sed -i 's,"O0",0,' lib/utils.c
 %configure \
 	--with-kernel-dir=/usr/include/linux-default \
 	--enable-strict-config-checks \
-        %{subst_enable lvs} \
-        %{subst_enable vrrp} \
-        %{subst_enable sha1} \
-        %{subst_enable routes} \
-        %{subst_enable libiptc} \
-        %{subst_enable libipset} \
-        %{subst_enable libnl} \
-        %{subst_enable regex} \
-        %{?_enable_snmp:--enable-snmp --enable-snmp-rfc} \
-        --with-init=systemd
+	--enable-dynamic-linking \
+	%{subst_enable lvs} \
+	%{subst_enable vrrp} \
+	%{subst_enable bfd} \
+	%{subst_enable fwmark} \
+	%{?_enable_snmp:--enable-snmp --enable-snmp-rfc} \
+	%{subst_enable dbus} \
+	%{subst_enable regex} \
+	%{subst_enable json} \
+	%{subst_enable sha1} \
+	%{subst_enable routes} \
+	%{subst_enable libiptc} \
+	%{subst_enable libipset} \
+	%{subst_enable nftables} \
+	%{subst_enable libnl} \
+	--with-init=systemd \
+	--with-systemdsystemunitdir=%_unitdir
+
 GIT_TIMESTAMP=`cat gitstamp`
 printf '#define GIT_DATE        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%m/%d,%Y"` >lib/git-commit.h
 printf '#define GIT_YEAR        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%Y"` >>lib/git-commit.h
@@ -107,6 +122,14 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Mon Jan 20 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.19-alt2
+- update build options; enable support:
+  + bfd
+  + fwmark
+  + json
+  + libipset
+  + nftables
+
 * Wed Oct 23 2019 Anton Farygin <rider@altlinux.ru> 2.0.19-alt1
 - 2.0.19
 
