@@ -1,9 +1,9 @@
 %def_disable snapshot
 %def_enable x11
-%def_disable check
+%def_enable check
 
 Name: libxkbcommon
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -97,6 +97,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jan 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Oct 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
