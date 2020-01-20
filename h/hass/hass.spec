@@ -1,5 +1,5 @@
 Name: hass
-Version: 0.104.1
+Version: 0.104.3
 Release: alt1
 
 Summary: Home automation platform
@@ -15,7 +15,7 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %package core
 Summary: Home automation platform
 Group: System/Servers
-Requires: python3-module-hass-frontend >= 20200108.0
+Requires: python3-module-hass-frontend >= 20200108.2
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -58,7 +58,12 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %_sbindir/useradd -r -g _hass -d %_localstatedir/hass -s /dev/null \
 	-c 'Home Assistant' -n _hass &> /dev/null ||:
 
+%set_python3_req_method strict
+# optional
 %add_python3_req_skip av
+%add_python3_req_skip colorlog colorlog.escape_codes
+%add_python3_req_skip custom_components
+%add_python3_req_skip hbmqtt.broker
 
 %files core -f core.files
 %_sysconfdir/sysconfig/hass
@@ -73,6 +78,12 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Jan 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.104.3-alt1
+- 0.104.3 released
+
+* Mon Jan 20 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.104.2-alt1
+- 0.104.2 released
+
 * Fri Jan 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.104.1-alt1
 - 0.104.1 released
 
