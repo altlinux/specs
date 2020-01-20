@@ -3,32 +3,47 @@
 %define oname pandas
 
 %def_disable check
+%def_without docs
 
-Name: python-module-%oname
-Version: 0.23.4
-Release: alt2
-
+Name: python3-module-%oname
+Version: 0.25.3
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 
-Url: http://pandas.pydata.org/
+Url: https://pandas.pydata.org
 
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
-Patch1: %oname-alt-static-variables.patch
+Patch1: %oname-alt-docs.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-BuildRequires: libnumpy-devel python-module-Cython python-module-notebook python-module-numpy-testing python-module-pathlib
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: xvfb-run python2.7(nbsphinx)
+BuildRequires: python3-devel
+# TODO: remove libnumpy-devel when libnumpy-py3-devel is fixed
+BuildRequires: libnumpy-devel
+BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-numpy
+BuildRequires: python3(scipy) python3(xlrd)
+%if_enabled check
+BuildRequires: xvfb-run
+BuildRequires: python3(openpyxl)
+BuildRequires: python3-module-numpy-testing python3(tables.tests)
+%endif
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-objects.inv
+BuildRequires: pandoc
+BuildRequires: xvfb-run python3(nbsphinx)
+BuildRequires: python3-module-notebook
+BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotlib.sphinxext.plot_directive)
+%endif
 
-%setup_python_module %oname
-%py_requires pytz pandas.util.testing dateutil numpy sqlalchemy numexpr
-%py_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
-%py_requires oauth2client apiclient gflags tables
-%py_requires statsmodels.stats.multitest
+%add_python3_req_skip feather
+%add_python3_req_skip pyarrow
+%py3_requires pytz dateutil numpy sqlalchemy numexpr
+%py3_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
+%py3_requires oauth2client apiclient gflags tables statsmodels
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -37,9 +52,10 @@ for the Python programming language.
 
 %package tests
 Summary: Tests for pandas
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-%py_requires numpy.ma.testutils pymysql psycopg2
+%py3_requires numpy.ma.testutils pymysql psycopg2
+%py3_requires statsmodels.stats.multitest
 
 %description tests
 pandas is an open source, BSD-licensed library providing
@@ -47,6 +63,19 @@ high-performance, easy-to-use data structures and data analysis tools
 for the Python programming language.
 
 This package contains tests for pandas.
+
+%package docs
+Summary: Documentation for pandas
+Group: Development/Documentation
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description docs
+pandas is an open source, BSD-licensed library providing
+high-performance, easy-to-use data structures and data analysis tools
+for the Python programming language.
+
+This package contains documentation for pandas.
 
 %prep
 %setup
@@ -57,37 +86,59 @@ sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
 	%oname/_version.py
 
+%if_with docs
+%prepare_sphinx3 doc
+ln -s ../objects.inv doc/source/
+%endif
+
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
-# It is the file in the package whose name matches the format emacs or vim uses 
-# for backup and autosave files. It may have been installed by  accident.
-find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-# failsafe cleanup if the file is declared as %%doc
-find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+%if_with docs
+pushd doc
+PYTHONPATH=$(echo ../build/lib.*) xvfb-run ./make.py html
+popd
+%endif
 
 %check
-xvfb-run python setup.py test
+xvfb-run python3 setup.py test
 
 %files
 %doc *.md
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/test*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/testing.py
+%exclude %python3_sitelibdir/*/conftest.py
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/_test*
+%exclude %python3_sitelibdir/*/*/conftest.*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/_test*
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/test*
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/testing.py
+%python3_sitelibdir/*/conftest.py
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/_test*
+%python3_sitelibdir/*/*/conftest.*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/_test*
+
+%if_with docs
+%files docs
+%doc doc/build/html
+%endif
 
 %changelog
-* Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.4-alt2
-- Rebuilt without python-3 support.
+* Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.25.3-alt1
+- Updated to upstream version 0.25.3 (Closes: #37445).
+- Built python-2 subpackage separately.
 
 * Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.4-alt1
 - Updated to upstream version 0.23.4.
