@@ -1,26 +1,29 @@
-%define modname lettuce
+%define oname lettuce
 
-Name: python-module-%modname
-Version: 0.2.16
+Name: python3-module-%oname
+Version: 0.2.23
 Release: alt1
-Summary: Behaviour Driven Development for Python
-Group: Development/Python
-License: GPLv3+
-URL: http://lettuce.it/
 
+Summary: Behaviour Driven Development for Python
+License: GPLv3+
+Group: Development/Python3
+URL: http://lettuce.it/
 BuildArch: noarch
 
-%setup_python_module %modname
+Source: %oname-%version.tar
+Patch0: fix-import.patch
 
-Source: %modname-%version.tar
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-fuzzywuzzy
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-mox
+BuildRequires: python3-module-nose
+BuildRequires: python-tools-2to3
 
-BuildRequires: python-module-fuzzywuzzy
-BuildRequires: python-module-lxml
-BuildRequires: python-module-mock
-BuildRequires: python-module-mox
-BuildRequires: python-module-nose
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-sure
+Requires: python3-module-sure
+
+Conflicts: python-module-%oname
+
 
 %description
 Lettuce is an extremely useful and charming tool for BDD (Behavior
@@ -33,27 +36,38 @@ describe the behavior of a certain system, without imagining those
 descriptions will automatically test the system during its development.
 
 %prep
-%setup -n %modname-%version
+%setup -n %oname-%version
+%patch0 -p1
+
+pushd %oname
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+popd
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
+%if 0
 export PYTHONPATH=`pwd`
-nosetests -s tests/unit
-nosetests -s tests/functional
+nosetests3 -s tests/unit
+nosetests3 -s tests/functional
+%endif
 
 %files
 %doc COPYING README.md
-%python_sitelibdir/%modname/
-%exclude %python_sitelibdir/%modname/django/tests
-%python_sitelibdir/*.egg-info
-%_bindir/lettuce
+%python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/django/tests
+%python3_sitelibdir/*.egg-info
+
 
 %changelog
+* Mon Jan 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.23-alt1
+- Version updated to 0.2.23
+- porting on python3.
+
 * Sat Mar 30 2013 Ivan A. Melnikov <iv@altlinux.org> 0.2.16-alt1
 - New version.
 
