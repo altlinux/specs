@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20190918
-%define orig_rev %nil
+%define orig_timestamp 20191115
+%define orig_rev .2
 
 Name: firmware-intel-ucode
-Version: 11
+Version: 12
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,29 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Jan 20 2020 L.A. Kostis <lakostis@altlinux.ru> 2:12-alt1.20191115.2
+- Sync with Debian 3.20191115.2:
+  + New upstream microcode datafile 20191115
+  + Microcode rollbacks (closes: debian #946515, LP#1854764):
+    sig 0x00050654, pf_mask 0xb7, 2019-07-31, rev 0x2000064, size 33792
+  + Avoids hangs on warm reboots (cold boots work fine) on HEDT and
+    Xeon processors with signature 0x50654.
+    https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/issues/21
+  + Updated Microcodes:
+    sig 0x000406e3, pf_mask 0xc0, 2019-10-03, rev 0x00d6, size 101376
+    sig 0x000506e3, pf_mask 0x36, 2019-10-03, rev 0x00d6, size 101376
+    sig 0x000806e9, pf_mask 0x10, 2019-10-15, rev 0x00ca, size 100352
+    sig 0x000806e9, pf_mask 0xc0, 2019-09-26, rev 0x00ca, size 100352
+    sig 0x000806ea, pf_mask 0xc0, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000806eb, pf_mask 0xd0, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000806ec, pf_mask 0x94, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000906e9, pf_mask 0x2a, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000906ea, pf_mask 0x22, 2019-10-03, rev 0x00ca, size 99328
+    sig 0x000906eb, pf_mask 0x02, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000906ec, pf_mask 0x22, 2019-10-03, rev 0x00ca, size 99328
+    sig 0x000906ed, pf_mask 0x22, 2019-10-03, rev 0x00ca, size 100352
+    sig 0x000a0660, pf_mask 0x80, 2019-10-03, rev 0x00ca, size 91136
+
 * Mon Oct 07 2019 L.A. Kostis <lakostis@altlinux.ru> 2:11-alt1.20190918
 - Sync with Debian 3.20190918.1:
   + New upstream microcode datafile 20190918
