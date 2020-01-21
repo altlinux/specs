@@ -5,7 +5,7 @@
 %def_enable xhost_root
 
 Name: gparted
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -117,6 +117,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Tue Jan 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu May 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0 (ported to Gtkmm3)
 - removed obsolete dmraid.patch
