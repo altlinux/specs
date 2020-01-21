@@ -7,7 +7,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 3.0.7
+Version: 3.0.8
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -113,7 +113,7 @@ extensions.
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %endif
-%cmake
+%cmake -D BUILD_sharkd=off
 %cmake_build
 
 %install
@@ -194,6 +194,7 @@ _EOF_
 %_miconsdir/wireshark.png
 %_niconsdir/wireshark.png
 %_liconsdir/wireshark.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_xdgmimedir/packages/%name.xml
 %_datadir/appdata/wireshark.appdata.xml
 
@@ -218,6 +219,12 @@ _EOF_
 
 
 %changelog
+* Tue Jan 21 2020 Anton Farygin <rider@altlinux.ru> 3.0.8-alt1
+- 3.0.8
+- disabled sharkd build
+- fixes:
+   * BT ATT dissector crash. CVE-2020-7045
+
 * Mon Dec 09 2019 Anton Farygin <rider@altlinux.ru> 3.0.7-alt1
 - 3.0.7
 - fixes:
