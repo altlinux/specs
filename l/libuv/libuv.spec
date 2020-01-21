@@ -1,5 +1,5 @@
 Name: libuv
-Version: 1.34.0
+Version: 1.34.1
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -11,9 +11,10 @@ Url: https://github.com/libuv/libuv
 # Source-url: https://github.com/libuv/libuv/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel gyp
+# https://github.com/nodejs/help/issues/2099
+Patch: b3e814460b4dfa1523c3d299301b49915ace6034.patch
 
-%add_python_req_skip TestCommon
+BuildRequires: gcc-c++ openssl-devel zlib-devel
 
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract IOCP on Windows
@@ -30,6 +31,7 @@ libuv header and build tools.
 
 %prep
 %setup
+%patch -p1
 
 %build
 # due option hack in autogen.sh
@@ -57,6 +59,11 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Tue Jan 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.34.1-alt1
+- new version 1.34.1 (with rpmrb script)
+- drop python-devel and gyp from buildreqs
+- fix node fail if /proc is not mounted (https://github.com/nodejs/help/issues/2099)
+
 * Fri Jan 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1.34.0-alt1
 - new version 1.34.0 (with rpmrb script)
 
