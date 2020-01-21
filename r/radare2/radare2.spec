@@ -1,8 +1,8 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
-License: %lgpl3plus
+License: LGPL-3.0-or-later
 Group: Development/Tools
 Url: http://radare.org/
 Source: %name-%version.tar
@@ -24,7 +24,7 @@ A reverse engineering framework and command line tools.
 
 %package devel
 Summary: Development files for %name
-License: %lgpl3plus
+License: LGPL-3.0-or-later
 Group: Development/Tools
 Requires: %name = %version-%release
 %description devel
@@ -34,6 +34,7 @@ Development files for %name package.
 %setup
 
 %build
+sed -i "s;^gittip = 'unknown'$;gittip = '%version-%release';g" meson.build
 %meson                    \
   -Duse_sys_magic=true    \
   -Duse_sys_zip=true      \
@@ -73,6 +74,11 @@ ln -s radare2 %buildroot/usr/bin/r2
 %_datadir/zsh
 
 %changelog
+* Tue Jan 21 2020 Nikita Ermakov <arei@altlinux.org> 4.2.0-alt1
+- Update to 4.2.0.
+- Change liciense to meet SPDX format.
+- Fix gittip in meson.build.
+
 * Fri Dec 20 2019 Nikita Ermakov <arei@altlinux.org> 4.1.1-alt1
 - Update to 4.1.1.
 
