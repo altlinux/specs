@@ -6,7 +6,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -77,6 +77,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Tue Jan 21 2020 Yuri N. Sedunov <aris@altlinux.org> 5.5.1-alt1
+- updated to 5.5.1-16-gf4b09f8e
+
 * Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 5.5.0-alt1
 - updated to 5.5.0-22-g75c6e722
 
