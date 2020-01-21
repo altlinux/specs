@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q3.5
+Version: 2019.Q4.5
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -25,7 +25,7 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel
+BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel libssl-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -38,6 +38,7 @@ Source3: spvgen.tar.xz
 Source4: llvm.tar.xz
 Source5: metrohash.tar.xz
 Source6: amd_icd.json
+Source7: cwpack.tar.xz
 
 Patch1: spvgen-alt-shared.patch
 
@@ -51,7 +52,7 @@ platforms, including support for recently released GPUs and compatibility with
 AMD developer tools.
 
 %prep
-%setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5
+%setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7
 pushd %_builddir/spvgen
 %patch1 -p2
 popd
@@ -69,6 +70,7 @@ export GCC_VERSION=7 \
 	-DBUILD_WAYLAND_SUPPORT=ON \
 %endif
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
+        -DXGL_CWPACK_PATH=%_builddir/cwpack \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 %cmake_build
@@ -88,6 +90,17 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Jan 18 2020 L.A. Kostis <lakostis@altlinux.ru> 2019.Q4.5-alt1
+- added cwpack library.
+- 2019-12-19 update:
+  + llvm: cc0df5ace776584f5f7c0c20704d28f445f0e074
+  + spvgen: ce06cb5e3116ba77a22c3278dfeadfd865a8977c
+  + cwpack: b601c88aeca7a7b08becb3d32709de383c8ee428
+  + xgl: 7e13a8bd0bb57d3cfb3bc014f6b26a8c9bb8bfd9
+  + pal: 40af910391fb8c287cb37bf520c41310bf88d405
+  + llpc: 2efe41812964c88aa38a80c66939ce44ae493fd4
+- icd.json: bump vulkan api version.
+
 * Thu Aug 29 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.Q3.5-alt1
 - added modified metrohash library.
 - 2019-8-26 update:
