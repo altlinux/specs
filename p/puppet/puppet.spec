@@ -2,7 +2,7 @@
 %define        confdir        ext/redhat
 
 Name:          %pkgname
-Version:       6.11.1
+Version:       6.12.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
@@ -158,6 +158,9 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 %ruby_gemdocdir
 
 %changelog
+* Tue Jan 21 2020 Andrey Cherepanov <cas@altlinux.org> 6.12.0-alt1
+- New version.
+
 * Fri Dec 06 2019 Pavel Skrylev <majioa@altlinux.org> 6.11.1-alt1
 - updated (^) 6.10.1 -> 6.11.1
 - removed (-) deep_merge gem out of spec
