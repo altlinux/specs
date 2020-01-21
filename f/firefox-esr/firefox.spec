@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        68.4.1
+Version:        68.4.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -387,6 +387,11 @@ done
 %_datadir/applications/firefox-wayland.desktop
 
 %changelog
+* Tue Jan 21 2020 Andrey Cherepanov <cas@altlinux.org> 68.4.2-alt1
+- New ESR version (68.4.2).
+- Bugs fixed:
+  + Fixed various issues opening files with spaces in their path (bug 1601905, bug 1602726).
+
 * Wed Jan 08 2020 Andrey Cherepanov <cas@altlinux.org> 68.4.1-alt1
 - New ESR version (68.4.1).
 - Fixed:
