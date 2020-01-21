@@ -2,7 +2,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.20.4
+Version: 1.22.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -16,6 +16,7 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires: glib2-devel libgio-devel libgudev-devel
 BuildRequires: python-modules-json
+BuildRequires: autoconf-archive
 BuildRequires: gtk-doc help2man
 
 %define _unpackaged_files_terminate_build 1
@@ -105,6 +106,10 @@ make check
 
 
 %changelog
+* Tue Jan 21 2020 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt1
+- BR: Add autoconf-archive.
+- Updated to 1.22.0.
+
 * Tue Dec 24 2019 Mikhail Efremov <sem@altlinux.org> 1.20.4-alt1
 - Don't use rpm-build-licenses.
 - Updated to 1.20.4.
