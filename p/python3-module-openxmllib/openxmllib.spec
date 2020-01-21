@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
+
 %define oname openxmllib
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1.1
+Release: alt2
+
 Summary: Provides resources to handle OpenXML documents
 License: GPLv2
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/openxmllib/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/3c/df/cdb840bad7bfd3148a972313403463c6fb5e7eb5a540ae9d2c8acac54b88/%{oname}-%{version}.zip
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-lxml
-BuildPreReq: python-module-nose
+Source0: https://pypi.python.org/packages/3c/df/cdb840bad7bfd3148a972313403463c6fb5e7eb5a540ae9d2c8acac54b88/%{oname}-%{version}.zip
+Patch0: port-on-python3.patch
 
-%py_provides %oname
-%py_requires lxml
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-lxml python3-module-urllib3
+BuildRequires: python3-module-nose
+BuildRequires: python-tools-2to3 unzip
+
+%py3_provides %oname
+%py3_requires lxml
+
 
 %description
 openxmllib is a set of tools that deals with the new ECMA 376 office
@@ -25,22 +30,31 @@ file formats known as OpenXML.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch0 -p2
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%if 0
+%__python3 setup.py test
+%endif
 
 %files
 %doc README.rst PKG-INFO COPYING doc
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Jan 21 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.1-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
