@@ -1,8 +1,9 @@
 %def_disable zeitgeist
+%def_disable settings
 
 Name: qt5-phonon
 Version: 4.11.1
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -99,9 +100,11 @@ ln -s `relative %_bindir/phononsettings-5 %_kf5_bin/phononsettings` %buildroot/%
 
 %K5find_qtlang libphonon_qt
 
+%if_enabled settings
 %files
 %_bindir/phononsettings-5
 %_kf5_bin/phononsettings
+%endif
 
 %files common -f libphonon_qt.lang
 
@@ -125,6 +128,9 @@ ln -s `relative %_bindir/phononsettings-5 %_kf5_bin/phononsettings` %buildroot/%
 %_pkgconfigdir/phonon4qt5.pc
 
 %changelog
+* Tue Jan 21 2020 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- don't package settings tool
+
 * Fri Jan 17 2020 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
