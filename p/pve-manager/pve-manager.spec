@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.0.7
-Release: alt7
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -79,6 +79,8 @@ Patch43: pve-mini-journalreader-getopt.patch
 Patch44: 0001-usb-Enable-USB3-for-Spice-USB-passthrough.patch
 Patch45: qemu-server-xhci.patch
 Patch46: pve-manager-timezone.patch
+Patch47: pve-widget-toolkit-ComboGrid-mark-multiSelect.patch
+Patch48: pve-widget-toolkit-ComboGrid-multiSelect.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -193,6 +195,8 @@ This is used to implement the PVE REST API
 %patch44 -p0 -b .usb3
 %patch45 -p0 -b .xhci
 %patch46 -p0 -b .timezone
+%patch47 -p0
+%patch48 -p0
 
 find -name Makefile | while read m; do
 	sed -i '/^.*\/usr\/share\/dpkg.*/d' $m;
@@ -576,6 +580,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Tue Jan 21 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt8
+- pve-widget-toolkit: merged some upstream patches
+
 * Wed Jan 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.0.7-alt7
 - fixed get/set timezone
 
