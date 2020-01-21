@@ -1,27 +1,26 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150320.1.1
 %define oname ContrailOnlineCAClient
 
-%def_disable check
+%def_without docs
 
-Name: python-module-%oname
-Version: 0.2.1
-#Release: alt1.git20150320
+Name: python3-module-%oname
+Version: 0.5.1
+Release: alt1
+
 Summary: Certificate Authority Web Service
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/ContrailOnlineCAClient/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/cedadev/online_ca_client.git
 Source: %name-%version.tar
+Patch0: fix-concat-types.patch
 
-BuildPreReq: python-module-setuptools python-module-epydoc
-BuildPreReq: python-module-ndg-httpsclient graphviz
-BuildPreReq: python-modules-logging
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six
+BuildRequires: python3-module-requests-oauthlib python3-module-requests
 
-%py_provides contrail.security.onlineca.client
-%py_requires contrail.security.onlineca ndg.httpsclient logging
+%add_python3_req_skip requests.packages.urllib3.exceptions
+
 
 %description
 Provides the client interface for an online Certificate Authority
@@ -37,6 +36,7 @@ username should be set as this needed to configure the subject name of
 the certificate requested. If authentication succeeds, an X.509
 certificate is returned.
 
+%if_with docs
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -47,10 +47,11 @@ Provides the client interface for an online Certificate Authority
 web-service.
 
 This package contains documentation for %oname.
+%endif
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -61,35 +62,48 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%python_build_debug
+%python3_build_debug
 
+%if_with docs
 %make -C documentation
+%endif
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
+%if 0
+%__python3 setup.py test
+%endif
 
 %files
 %doc *.md
-%python_sitelibdir/contrail/security/onlineca/client
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/contrail/security/onlineca/client/test
+%_bindir/*
+%python3_sitelibdir/contrail/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/contrail/security/onlineca/client/test
 
 %files tests
-%python_sitelibdir/contrail/security/onlineca/client/test
+%python3_sitelibdir/contrail/security/onlineca/client/test
 
+%if_with docs
 %files docs
 %doc documentation/*
+%endif
+
 
 %changelog
+* Tue Jan 21 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.1-alt1
+- Version updated to 0.5.1
+- porting on python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.git20150320.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
