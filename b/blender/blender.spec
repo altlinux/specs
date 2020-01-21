@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blender
-Version: 2.80
-Release: alt1
+Version: 2.81
+Release: alt1.a
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -13,6 +13,8 @@ URL: https://www.blender.org
 Source: %name-%version.tar
 
 # git submodules
+# before updating submodules via script don't forget
+# to update relative submodule paths into absolute ones
 Source1: locale-%version.tar
 Source2: addons-%version.tar
 Source3: addons_contrib-%version.tar
@@ -49,6 +51,7 @@ BuildRequires: libopencolorio-devel
 BuildRequires: openexr-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libglog-devel libgflags-devel eigen3-devel
+BuildRequires: libXxf86vm-devel libXrender-devel
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -57,6 +60,7 @@ BuildRequires: libglog-devel libgflags-devel eigen3-devel
 %add_python3_req_skip _freestyle
 %add_python3_req_skip bgl
 %add_python3_req_skip blf
+%add_python3_req_skip idprop.types
 %add_python3_req_skip gpu
 %add_python3_req_skip io_scene_gltf2.blender.com
 %add_python3_req_skip io_scene_gltf2.blender.exp
@@ -158,6 +162,7 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
+	-DWITH_TBB:BOOL=OFF \
 	-DPYTHON_VERSION="%_python3_version" \
 	-DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
@@ -185,6 +190,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Tue Jan 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.81-alt1.a
+- Updated to upstream version 2.81a.
+
 * Wed Jul 31 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.80-alt1
 - Updated to upstream version 2.80.
 
