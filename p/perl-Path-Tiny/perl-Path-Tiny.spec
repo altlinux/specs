@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(Cwd.pm) perl(Digest.pm) perl(Digest/SHA.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.108
+Version: 0.110
 Release: alt1
 Summary: File path utility
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_privlib/P*
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.110-alt1
+- automated CPAN update
+
 * Wed Aug 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1
 - automated CPAN update
 
