@@ -3,7 +3,7 @@
 
 Name: wine-vanilla
 Version: 5.0
-Release: alt0.rc6
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -433,6 +433,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt1
+- wine 5.0 release
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0-alt0.rc6
 - pre release 5.0-RC6
 - wine-gecko 2.47.1
