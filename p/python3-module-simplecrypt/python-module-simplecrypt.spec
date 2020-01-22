@@ -1,45 +1,46 @@
-%define  modulename simplecrypt
+%define  oname simplecrypt
 
-Name:    python-module-%modulename
+Name:    python3-module-%oname
 Version: 4.1.7
-Release: alt2
+Release: alt3
 
 Summary: Simple, secure encryption and decryption for Python
 License: Public Domain
-Group:   Development/Python
+Group:   Development/Python3
 URL:     https://pypi.python.org/pypi/simple-crypt
-
-
-BuildRequires: rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-distribute
-BuildRequires: python-module-pycrypto
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pycrypto
+
+Source:  %oname-%version.tar
+
 
 %description
 Simple Crypt encrypts and decrypts data. It has two functions, encrypt and decrypt.
 
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 
 %build
 cd simple-crypt
-%python_build
+%python3_build
 
 %install
 cd simple-crypt
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
 %doc simple-crypt/README.*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-info
 
 
 %changelog
+* Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.1.7-alt3
+- Porting on Python3.
+
 * Mon Mar 27 2017 Denis Medvedev <nbr@altlinux.org> 4.1.7-alt2
 - README packed
 
