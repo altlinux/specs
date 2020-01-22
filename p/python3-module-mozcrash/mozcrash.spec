@@ -1,21 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname mozcrash
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 1.0
-Release: alt1.1
+Release: alt2
+
 Summary: Library for printing stack traces from minidumps left behind by crashed processes
 License: MPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/mozcrash/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/fa/a7/5caf82d2d44ac2bea78dbd6465ec11e692f408ed15dd65adad4438d49745/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-BuildPreReq: python-module-mozfile python-module-mozlog
+Source0: https://pypi.python.org/packages/fa/a7/5caf82d2d44ac2bea78dbd6465ec11e692f408ed15dd65adad4438d49745/%{oname}-%{version}.tar.gz
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-mozfile python3-module-mozlog
+BuildRequires: python-tools-2to3 python3-module-mozinfo
+BuildRequires: python3-module-six
+
 
 %description
 Library for printing stack traces from minidumps left behind by crashed
@@ -24,20 +27,26 @@ processes.
 %prep
 %setup -q -n %{oname}-%{version}
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc PKG-INFO
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
