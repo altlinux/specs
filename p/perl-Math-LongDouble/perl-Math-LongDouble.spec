@@ -6,8 +6,8 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
-Release: alt1.2
+Version: 0.21
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.2
 - rebuild with new perl 5.28.1
 
