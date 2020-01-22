@@ -53,7 +53,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: Boost Software License
@@ -66,6 +66,7 @@ Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 Patch30: boost-1.63.0-alt-python-paths.patch
 Patch82: boost-1.66.0-fedora-no-rpath.patch
+Patch83: boost-1.72.0-gentoo-revert-cease-dependence-on-range.patch
 
 # RISC-V support
 Patch90: boost-1.67.0-alt-add-riscv-support-to-boostcpp-jam.patch
@@ -1289,6 +1290,7 @@ applications. This package contains python module.
 %patch28 -p3
 %patch30 -p1
 %patch82 -p1
+%patch83 -p1
 
 # RISC-V support
 %patch90 -p1
@@ -1963,6 +1965,9 @@ done
 
 
 %changelog
+* Wed Jan 22 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.72.0-alt2
+- Fixed issue in boost coroutine module.
+
 * Tue Jan 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.72.0-alt1
 - Updated to upstream version 1.72.0.
 
