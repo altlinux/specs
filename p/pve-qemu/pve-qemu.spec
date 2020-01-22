@@ -6,7 +6,7 @@
 
 Name: pve-%rname
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -228,34 +228,32 @@ export CFLAGS="%optflags"
 	--localstatedir=%_localstatedir \
 	--extra-cflags="%optflags" \
 	--disable-werror \
-        --disable-sdl \
         --audio-drv-list="alsa" \
-        --enable-virglrenderer \
-        --enable-vnc  \
-        --enable-spice  \
-        --enable-curl \
-        --enable-linux-aio \
-        --enable-libusb  \
-        --enable-usb-redir \
-        --enable-seccomp  \
-        --enable-libiscsi  \
-        --enable-rbd  \
-        --enable-glusterfs \
-        --enable-gnutls  \
-        --enable-numa  \
-        --enable-jemalloc  \
-        --enable-xfsctl \
-        --enable-virtfs \
-	--disable-capstone \
-	--disable-gtk \
-        --disable-strip \
-        --disable-xen \
-        --disable-smartcard \
-        --disable-libnfs \
-        --disable-libxml2 \
+        --disable-capstone \
+        --disable-gtk \
         --disable-guest-agent \
         --disable-guest-agent-msi \
-	--disable-rdma
+        --disable-libnfs \
+        --disable-libxml2 \
+        --disable-sdl \
+        --disable-smartcard \
+        --disable-strip \
+        --disable-xen \
+        --enable-virglrenderer \
+        --enable-curl \
+        --enable-glusterfs \
+        --enable-gnutls \
+        --enable-jemalloc \
+        --enable-libiscsi \
+        --enable-libusb \
+        --enable-linux-aio \
+        --enable-numa \
+        --enable-rbd \
+        --enable-seccomp \
+        --enable-spice \
+        --enable-usb-redir \
+        --enable-virtfs \
+        --enable-xfsctl
 
 %make_build V=1
 
@@ -365,6 +363,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Wed Jan 22 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:4.1.1-alt2
+- 4.1.1-2
+
 * Mon Nov 25 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:4.1.1-alt1
 - 4.1.1-1
 
