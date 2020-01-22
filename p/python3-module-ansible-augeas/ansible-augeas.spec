@@ -1,24 +1,34 @@
-%define _ansibledir %python_sitelibdir/ansible/modules
+%define _ansibledir %python3_sitelibdir/ansible/modules
 
-Name: python-module-ansible-augeas
+%define oname ansible-augeas
+
+Name: python3-module-%oname
+Version: 1.0.0
+Release: alt1
+
 Summary: Augeas module for ansible
-Version: 0.0.1
-Release: alt5
-
-Group: System/Libraries
 License: GPLv3+
+Group: System/Libraries
 Url: https://github.com/paluh/ansible-augeas.git
+BuildArch: noarch
+
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
-BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
 Obsoletes: ansible-augeas < %EVR
 
 # Ansible requires python 2.4+, so we require augeas module for python2:
-Requires: python-module-augeas
+Requires: python3-module-augeas
+
 # python bindings dont work without low-level library:
 Requires: libaugeas
+
 # module is useless without ansible:
 Requires: ansible >= 1.8
+
 
 %description
 Augeas module which exposes simple API for `match`, `set` and `rm`
@@ -26,18 +36,25 @@ operations. You can execute commands one by one or in chunk.
 
 %prep
 %setup
-# %%patch0 -p1
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 
 %install
-install -pD -m 644 augeas %buildroot%_ansibledir/files/augeas.py # modules have .py extension since ansible-1.8
+install -pD -m 644 library/augeas.py %buildroot%_ansibledir/files/augeas.py
 
 %files
-%_ansibledir/files/augeas.py
 %doc README.md
+%_ansibledir/files/augeas.py
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt1
+- Version updated to 1.0.0
+- porting on python3.
+
 * Sat Nov  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt5
 - Obsoletes etc.: For cleanliness, let's leave just it without Provides
   (as it was, but with %%EVR for future;
