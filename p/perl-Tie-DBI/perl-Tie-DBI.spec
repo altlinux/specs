@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Tie-DBI
 Name: perl-%dist
-Version: 1.06
+Version: 1.08
 Release: alt1
 
 Summary: Tie Perl hashes to DBI relational databases
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/Tie-DBI-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +24,7 @@ the hash key, and another becomes the value.  Once tied, all the standard
 hash operations work, including iteration over keys and values.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +33,13 @@ hash operations work, including iteration over keys and values.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/Tie
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
