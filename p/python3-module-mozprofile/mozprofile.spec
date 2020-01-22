@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.28
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: Library to create and modify Mozilla application profiles
 License: MPLv2.0
@@ -47,7 +47,11 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %_bindir/*
 %python3_sitelibdir/*
 
+
 %changelog
+* Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.0-alt1
+- Version updated to 2.4.0
+
 * Tue Jan 21 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.28-alt2
 - Porting on python3.
 
