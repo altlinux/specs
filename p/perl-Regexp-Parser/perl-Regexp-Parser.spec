@@ -17,7 +17,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %add_findreq_skiplist */Perl6/Rule*
 
 Name: perl-Regexp-Parser
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: base class for parsing regexes
@@ -57,6 +57,9 @@ YAPE::Regex modules.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
