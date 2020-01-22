@@ -7,21 +7,19 @@
 %def_disable libs_subpackage
 %def_disable dbus
 
-# it uses webkit
+# atril _itself_ uses webkit with it
+# (via libatrilview.so.*)
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.23.1
-Release:        alt2
+Version:        1.23.2
+Release:        alt1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL-1.1+
 Group:          Publishing
 URL:            https://github.com/mate-desktop/atril
 Source0:        %name-%version.tar
-# Russian translation updates
-Source1:        ru.po
-Source2:        help_ru.po
 Patch:          %_name-%version-%release.patch
 
 BuildRequires:  libgtk+3-devel
@@ -35,7 +33,6 @@ BuildRequires:  libspectre-devel
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  libtool
-BuildRequires:  intltool
 BuildRequires:  t1lib-devel
 BuildRequires:  xml-utils
 BuildRequires:  yelp-tools
@@ -53,6 +50,7 @@ BuildRequires:  libX11-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libgxps-devel
+BuildRequires:  libsynctex-devel
 
 # for the caja properties page
 #BuildRequires: mate-file-manager-devel
@@ -159,8 +157,6 @@ This package contains a backend to let atril display ePub documents.
 %prep
 %setup
 %patch -p1
-cp -a %SOURCE1 po/ru.po
-cp -a %SOURCE2 help/ru/ru.po
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -281,10 +277,15 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %files epub
 %{_libdir}/atril/3/backends/libepubdocument.so*
 %{_libdir}/atril/3/backends/epubdocument.atril-backend
-%{_libdir}/atril/3/backends/epub/
 %endif
 
 %changelog
+* Wed Jan 22 2020 Mikhail Efremov <sem@altlinux.org> 1.23.2-alt1
+- BR: Dropped intltool.
+- BR: Added libsynctex-devel.
+- Used Russian translation from upstream.
+- Updated to 1.23.2.
+
 * Mon Jan 13 2020 Mikhail Efremov <sem@altlinux.org> 1.23.1-alt2
 - dvi: Require texlive (closes: #37704).
 - Update Russian translation (thx Olesya Gerasimenko).
