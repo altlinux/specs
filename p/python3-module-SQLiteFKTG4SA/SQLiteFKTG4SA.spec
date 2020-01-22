@@ -1,22 +1,25 @@
 %define oname SQLiteFKTG4SA
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.1.2
-Release: alt1.hg20110601.1
+Release: alt2
+
 Summary: SQLite Foreign Key Trigger Generator for SQLAlchemy
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/SQLiteFKTG4SA/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # hg clone https://bitbucket.org/rsyring/sqlitefktg4sa
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-modules-sqlite3
-BuildPreReq: python-module-SQLAlchemy python-module-elixir
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-SQLAlchemy python-tools-2to3
 
-%py_provides sqlitefktg4sa
-%py_requires sqlalchemy elixir
+%py3_provides sqlitefktg4sa
+%py3_requires sqlalchemy
+
 
 %description
 This project exists because SQLite parses fk column constraints but does
@@ -29,19 +32,25 @@ FKs automatically, and this project was born.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.2-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1.hg20110601.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
