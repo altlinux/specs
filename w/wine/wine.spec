@@ -2,10 +2,10 @@
 %define gecko_version 2.47.1
 %define mono_version 4.9.4
 %define major 5.0
-%define rel -rc6
+%define rel %nil
 
 Name: wine
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 1
 
@@ -227,6 +227,9 @@ Group: System/Libraries
 Requires: lib%name = %EVR
 Conflicts: libwine-vanilla-twain
 
+# Runtime linked (via dl_open)
+Requires: libsane
+
 %description -n lib%name-twain
 This package contains the library for Twain support.
 
@@ -262,13 +265,13 @@ develop programs which make use of Wine.
 %prep
 %setup -a 1 -a 5
 # Apply wine-staging patches
-wine-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
+%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
 # Apply local patches
-wine-patches/patchapply.sh
+%name-patches/patchapply.sh
 
 %build
 %ifarch aarch64
@@ -285,6 +288,7 @@ export CC=clang
 	--without-oss \
 	--without-capi \
 	--without-hal \
+        --without-mingw \
 	--with-xattr
 
 %__make depend
@@ -481,6 +485,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.2-alt1
+- new version 5.0.2 (with rpmrb script)
+- wine 5.0 release
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.1-alt1
 - new version (5.0.1) with rpmgs script
 - based on wine 5.0-rc6
