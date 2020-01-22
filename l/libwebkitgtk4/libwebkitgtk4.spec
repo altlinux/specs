@@ -31,12 +31,12 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
-License: %bsd %lgpl2plus
+License: LGPL-2.0
 Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
@@ -44,11 +44,10 @@ Source1: webkit2gtk.env
 # Source/cmake/BubblewrapSandboxChecks.cmake
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
-Patch10: webkitgtk-2.27.1-up-icu-65.1.patch
 
 %define bwrap_ver 0.3.1
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-licenses rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake rpm-build-gir
 BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
@@ -213,7 +212,6 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch -b .bwrap
-%patch10 -p2 -b .icu65
 
 # fix libWPEBackend-fdo soname
 sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
@@ -341,6 +339,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Wed Jan 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.26.3-alt1
+- 2.26.3
+
 * Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt1
 - 2.26.2
 
