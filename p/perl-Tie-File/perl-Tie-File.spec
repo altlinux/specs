@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Tie-File
 Name: perl-%dist
-Version: 1.00
+Version: 1.01
 Release: alt1
 
 Summary: Access the lines of a disk file via a Perl array
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/Tie-File-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ Tie::File represents a regular text file as a Perl array.
 Each element in the array corresponds to a record in the file.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,9 +30,13 @@ Each element in the array corresponds to a record in the file.
 %perl_vendor_install
 
 %files
+%doc ChangeLog COPYING README
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
