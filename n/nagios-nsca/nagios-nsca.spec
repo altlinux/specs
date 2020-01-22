@@ -1,6 +1,6 @@
 Name: nagios-nsca
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: Nagios addon to send check results to a central monitoring server
 
@@ -10,6 +10,8 @@ Url: https://sourceforge.net/projects/nagios/
 
 Source: nsca-%version.tar
 
+Patch0: nsca.cfg-2.9.2-alt.patch
+Patch1: nsca.xinetd-2.9.2-alt.patch
 BuildRequires: libnsl2-devel libsocket libmcrypt-devel
 
 Requires: nagios xinetd
@@ -50,6 +52,8 @@ This package provides the send_nsca utility running on the client.
 
 %prep
 %setup -n nsca-%version
+%patch0 -p2
+%patch1 -p2
 
 %build
 #%autoreconf
@@ -60,7 +64,7 @@ This package provides the send_nsca utility running on the client.
 #%makeinstall_std
 install -D -m 0644 sample-config/nsca.cfg %buildroot%_sysconfdir/nagios/nsca.cfg
 install -D -m 0644 sample-config/send_nsca.cfg %buildroot%_sysconfdir/nagios/send_nsca.cfg
-install -D -m 0644 sample-config/nsca.xinetd %buildroot%_sysconfdir/xined.d/nsca
+install -D -m 0644 sample-config/nsca.xinetd %buildroot%_sysconfdir/xinetd.d/nsca
 install -D -m 0755 src/nsca %buildroot%_sbindir/nsca
 install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 
@@ -68,7 +72,7 @@ install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 #%make_build check
 
 %files
-%_sysconfdir/xined.d/nsca
+%config(noreplace) %_sysconfdir/xinetd.d/nsca
 %_sbindir/nsca
 %config(noreplace) %_sysconfdir/nagios/nsca.cfg
 %doc Changelog LEGAL README SECURITY
@@ -79,6 +83,11 @@ install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 %doc Changelog LEGAL README SECURITY
 
 %changelog
+* Wed Jan 22 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2-alt2
+- Fix: Do not replace xinetd.d/nsca config.
+- Patching configuration files (paths).
+- Fixed the xinetd.d path typo.
+
 * Tue Jan 21 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2-alt1
 - Initial release for Sisyphus.
 
