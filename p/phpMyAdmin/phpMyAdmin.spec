@@ -1,6 +1,6 @@
 Name: phpMyAdmin
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -89,7 +89,8 @@ Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache2-mod_php7 >= 7.0.0
 Requires: apache2-base
-Requires: php7-mysqli
+# needed MYSQLI_TYPE_JSON exists only in mysqlnd
+Requires: php7-mysqlnd-mysqli
 Requires: php7-mcrypt
 Requires: php7-mbstring
 Requires: php7-gd2
@@ -172,6 +173,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt2
+- use php7-mysqlnd-mysqli (contains MYSQLI_TYPE_JSON)
+
 * Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt1
 - new version 5.0.1 (with rpmrb script)
 - PMASA-2020-1 is an SQL injection vulnerability
