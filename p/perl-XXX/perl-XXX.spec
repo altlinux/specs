@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Pod.pm) perl-podlators
+BuildRequires: perl(Test/Pod.pm) perl-podlators perl(YAML/PP.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-XXX
-Version:        0.33
+Version:        0.35
 Release:        alt1
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            https://metacpan.org/release/XXX
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/XXX-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - automated CPAN update
 
