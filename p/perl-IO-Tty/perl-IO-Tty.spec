@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Tty
 Name: perl-%dist
-Version: 1.12
-Release: alt2.1
+Version: 1.14
+Release: alt1
 
 Summary: interface to pseudo tty's
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/IO-Tty-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 # always loaded when available
 Requires: perl-IO-Stty
@@ -21,7 +21,7 @@ BuildRequires: perl-IO-Stty perl-devel
 IO::Tty and IO::Pty provide an interface to pseudo tty's
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %if "%([ -c /dev/tty ] || echo no)" == "no"
@@ -34,11 +34,14 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README.md
 %perl_vendor_archlib/IO
 %perl_vendor_autolib/IO
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.12-alt2.1
 - rebuild with new perl 5.28.1
 
