@@ -1,7 +1,7 @@
 
 Name: vzctl
-Version: 7.0.209
-Release: alt4
+Version: 7.0.215
+Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -126,6 +126,12 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Wed Jan 22 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.215-alt1
+- 7.0.215
+
+* Thu Dec 19 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt5
+- vzgetpa: /bin/bash as in all other OVZ scripts
+
 * Mon Dec 16 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt4
 - compatibility with libvirt
 
