@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.39
-Release: alt1.1
+Version: 1.40
+Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
 License: GPL or Artistic
@@ -33,6 +33,9 @@ collection of objects without duplication.
 %perl_vendor_autolib/Set
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.39-alt1.1
 - rebuild with new perl 5.28.1
 
