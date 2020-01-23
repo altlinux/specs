@@ -1,13 +1,13 @@
 Name: liblangtag
-Version: 0.6.2
-Release: alt3
+Version: 0.6.3
+Release: alt1
 
 Summary: An interface library to access tags for identifying languages
 License: (LGPLv3+ or MPLv2.0) and UCD
 Group: System/Libraries
 
 Url: http://tagoh.bitbucket.org/liblangtag/
-Source: https://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
+Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Sun Jul 28 2013
 # optimized out: gnu-config pkg-config
@@ -79,6 +79,9 @@ LD_LIBRARY_PATH=`pwd`/liblangtag/.libs make check
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 0.6.3-alt1
+- Autobuild version bump to 0.6.3
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 0.6.2-alt3
 - Replace e2k arch name with %%e2k macro (grenka@)
 - Minor spec cleanup
