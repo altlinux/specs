@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
 
 Name: kde5-dev-scripts
-Version: 19.08.1
-Release: alt2
+Version: 19.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,9 @@ popd
 %_K5data/*/
 
 %changelog
+* Thu Jan 23 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.1-alt1
+- new version
+
 * Mon Jan 13 2020 Sergey V Turchin <zerg@altlinux.org> 19.08.1-alt2
 - build with python3 only
 

@@ -3,8 +3,8 @@
 %define rname kcachegrind
 
 Name: kde5-%rname
-Version: 19.08.1
-Release: alt2
+Version: 19.12.1
+Release: alt1
 %K5init
 
 Summary: GUI to profilers such as Valgrind
@@ -62,6 +62,9 @@ sed -i \
 %_K5data/%rname/
 
 %changelog
+* Thu Jan 23 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.1-alt1
+- new version
+
 * Mon Jan 13 2020 Sergey V Turchin <zerg@altlinux.org> 19.08.1-alt2
 - build with python3
 
