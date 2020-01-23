@@ -1,5 +1,5 @@
 Name: makedepend
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: create dependencies in makefiles
@@ -36,6 +36,9 @@ tion.  Any  #include,  directives  can  reference  files  having  other
 %_man1dir/*
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
