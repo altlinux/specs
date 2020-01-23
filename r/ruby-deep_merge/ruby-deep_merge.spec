@@ -3,7 +3,7 @@
 
 Name: 	       ruby-%pkgname
 Version:       1.2.1
-Release:       alt2
+Release:       alt3
 Summary:       Recursive merging for Ruby hashes
 License:       MIT
 Group:         Development/Ruby
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     gem(%pkgname) < %version
 
 %description
 Deep Merge is a simple set of utility functions for Hash. It permits you
@@ -60,6 +61,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Jan 23 2020 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt3
+- Added (+) proper obsolete dependency for older gems
+
 * Fri Dec 06 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt2
 - Use Ruby Policy 2.0
 
