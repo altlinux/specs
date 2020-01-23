@@ -1,10 +1,12 @@
 %define oname PyQtWebEngine
 
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+# Note: check QtWebEngine subst below
+%define webenginever %(rpm -q --qf '%%{VERSION}' libqt5-webengine | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
 Version: 5.13.1
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Qt WebEngine 5
 
@@ -51,7 +53,7 @@ Python bindings for the Qt WebEngine C++ class library.
 
 %prep
 %setup
-%__subst "s|QtWebEngine_5_12_4|QtWebEngine_5_12_4 QtWebEngine_5_12_5|" sip/*/*.sip
+%__subst "s|QtWebEngine_5_12_4|QtWebEngine_5_12_4 QtWebEngine_%webenginever|" sip/*/*.sip
 
 subst "s|/lib'$|/%_lib'|g" configure.py
 find . -type f -name \*.pro -o -name '*.pro-in' -print0 |while read -r -d '' f; do
@@ -100,6 +102,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %_qt5_datadir/qsci/api/python/*
 
 %changelog
+* Thu Jan 23 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt2
+- rebuild with QtWebEngine 5.12.6 (ALT bug 37911)
+
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt1
 - Initial build for ALT Sisyphus
 
