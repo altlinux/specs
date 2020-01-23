@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 2.0
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: Practical and minimal image viewer
 License: GPLv3
@@ -42,6 +42,9 @@ rm -rf %buildroot%_datadir/licenses/%name
 %doc LICENSE
 
 %changelog
+* Thu Jan 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.0-alt1
+- New version
+
 * Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 2.0-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - minor spec cleanup
