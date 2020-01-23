@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.35
-Release: alt2
+Version: 1.36
+Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
 License: GPLv2
@@ -120,6 +120,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.36-alt1
+- Autobuild version bump to 1.36
+
 * Mon Jun 10 2019 Fr. Br. George <george@altlinux.ru> 1.35-alt2
 - Chenge terminal/browser defaults (Closes: #36855)
 

@@ -1,5 +1,5 @@
 Name: geany-plugins
-Version: 1.35
+Version: 1.36
 Release: alt1
 %define geany_ver %version
 
@@ -90,6 +90,9 @@ sed -i '/^geanyluadir/s@.*@geanyluadir = %_libdir/geany@' geanylua/Makefile.am
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.36-alt1
+- Autobuild version bump to 1.36
+
 * Wed May 22 2019 Fr. Br. George <george@altlinux.ru> 1.35-alt1
 - Autobuild version bump to 1.35
 
