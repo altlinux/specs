@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -137,6 +137,9 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Thu Jan 23 2020 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
+- Fix `Multiple devices detected in same VirtFS export' warning.
+
 * Thu Jan 23 2020 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
 - aarch64: Make use of KVM.
 
