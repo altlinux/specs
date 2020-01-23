@@ -5,16 +5,16 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.22
-%define nss_version   3.47.1
-%define rust_version  1.35.0
-%define cargo_version 1.35.0
+%define nspr_version  4.24
+%define nss_version   3.49.1
+%define rust_version  1.40.0
+%define cargo_version 1.40.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        71.0
+Version:        72.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -34,6 +34,7 @@ Source8:        firefox.c
 Source9:        firefox-prefs.js
 Source10:       firefox-l10n.txt
 Source11:       l10n.tar
+Source12:       firefox-privacy-prefs.js
 
 ### Start Patches
 Patch001: 0001-ALT-fix-werror-return-type.patch
@@ -45,9 +46,8 @@ Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch009: 0009-ALT-Fix-aarch64-build.patch
-Patch010: 0010-FEDORA-wayland-cache-missing.patch
-Patch011: 0011-MOZILLA-1568569-Linux-video-is-semi-transparent-on-W.patch
-Patch012: 0012-MOZILLA-1593408-Wayland-WebRender-Maximized-windows-.patch
+Patch010: 0010-MOZILLA-1568569-Linux-video-is-semi-transparent-on-W.patch
+Patch011: 0011-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -168,6 +168,25 @@ Requires:	rpm-build-mozilla.org
 These helper macros provide possibility to rebuild
 firefox packages by some Alt Linux Team Policy compatible way.
 
+%package -n firefox-config-privacy
+Summary:	Firefox configuration with the paranoid privacy settings
+Group:		System/Configuration/Networking
+BuildArch:	noarch
+
+Requires: %name = %version-%release
+
+%description -n firefox-config-privacy
+Settings disable:
+* obsolete ssl protocols;
+* safebrowsing, trackingprotection and other requests to third-party services;
+* telemetry;
+* webrtc;
+* the social features;
+* dns and network predictors/prefetch;
+* and some more...
+
+Most likely you don't need to use this package.
+
 %prep
 %setup -q -n firefox-%version -c
 
@@ -183,7 +202,6 @@ firefox packages by some Alt Linux Team Policy compatible way.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
-%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -315,7 +333,8 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE9 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
@@ -403,6 +422,8 @@ rm -rf -- \
 )
 
 %files
+%dir %_sysconfdir/firefox
+%dir %_sysconfdir/firefox/pref
 %_altdir/firefox
 %_bindir/firefox
 %firefox_prefix
@@ -423,7 +444,26 @@ rm -rf -- \
 %files -n rpm-build-firefox
 %_rpmmacrosdir/firefox
 
+%files -n firefox-config-privacy
+%config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
+
 %changelog
+* Thu Jan 23 2020 Alexey Gladkov <legion@altlinux.ru> 72.0.2-alt1
+- New release (72.0.2).
+- Security fixes:
+  + CVE-2019-17015: Memory corruption in parent process during new content process initialization on Windows
+  + CVE-2019-17016: Bypass of @namespace CSS sanitization during pasting
+  + CVE-2019-17017: Type Confusion in XPCVariant.cpp
+  + CVE-2019-17018: Windows Keyboard in Private Browsing Mode may retain word suggestions
+  + CVE-2019-17019: Python files could be inadvertently executed upon opening a download
+  + CVE-2019-17020: Content Security Policy not applied to XSL stylesheets applied to XML documents
+  + CVE-2019-17021: Heap address disclosure in parent process during content process initialization on Windows
+  + CVE-2019-17022: CSS sanitization does not escape HTML tags
+  + CVE-2019-17023: NSS may negotiate TLS 1.2 or below after a TLS 1.3 HelloRetryRequest had been sent
+  + CVE-2019-17024: Memory safety bugs fixed in Firefox 72 and Firefox ESR 68.4
+  + CVE-2019-17025: Memory safety bugs fixed in Firefox 72
+  + CVE-2019-17026: IonMonkey type confusion with StoreElementHole and FallibleStoreElement
+
 * Thu Dec 05 2019 Alexey Gladkov <legion@altlinux.ru> 71.0-alt1
 - New release (71.0).
 - Update license tag.
