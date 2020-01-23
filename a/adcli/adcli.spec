@@ -1,8 +1,8 @@
 
 Name: adcli
-Version: 0.8.2
+Version: 0.9.0
 
-Release: alt3
+Release: alt1
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -10,6 +10,8 @@ Group: Networking/Other
 Url: http://cgit.freedesktop.org/realmd/adcli
 Source: %name-%version.tar
 Patch: %name-%version.patch
+
+Requires: libsasl2-plugin-gssapi
 
 BuildRequires: intltool
 BuildRequires: /usr/bin/krb5-config
@@ -21,13 +23,23 @@ BuildRequires: xmlto
 adcli is a library and tool for joining an Active Directory domain using
 standard LDAP and Kerberos calls.
 
+%package doc
+Summary: adcli documentation
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+adcli is a tool for joining an Active Directory domain using
+standard LDAP and Kerberos calls. This package contains its
+documentation.
+
 %prep
 %setup
 %patch -p1
 
 %build
 %autoreconf
-%configure --disable-static --disable-silent-rules
+%configure --disable-static --disable-silent-rules --enable-strict
 %make_build
 
 
@@ -40,9 +52,15 @@ standard LDAP and Kerberos calls.
 %files
 %_sbindir/adcli
 %doc AUTHORS COPYING ChangeLog NEWS README
-%_mandir/*/*
+%_man8dir/*
+
+%files doc
+%doc %_datadir/doc/adcli
 
 %changelog
+* Thu Jan 23 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt3
 - NMU: remove rpm-build-ubt from BR:
 
