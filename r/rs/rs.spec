@@ -1,7 +1,7 @@
 Name: rs
-Version: 11.2
+Version: 12.1
 Release: alt1
-Source: rs-11.2.tar
+Source: rs-12.1.tar
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/%name
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Reshape a data array
@@ -34,6 +34,9 @@ install %name.1 %buildroot%_man1dir/
 %_man1dir/%name.*
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 12.1-alt1
+- Autobuild version bump to 12.1
+
 * Tue Oct 16 2018 Fr. Br. George <george@altlinux.ru> 11.2-alt1
 - Autobuild version bump to 11.2
 
