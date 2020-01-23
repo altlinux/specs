@@ -1,22 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define oname mongoquery
-Name: python-module-%oname
-Version: 1.3.2
-Release: alt1.git20170921.1
+
+Name: python3-module-%oname
+Version: 1.3.5
+Release: alt1
+
 Summary: A python implementation of mongodb queries
 License: Public domain
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/mongoquery/
+BuildArch: noarch
 
 # https://github.com/kapouille/mongoquery.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-unittest2
-BuildRequires: python-module-pytest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-unittest2
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 A utility library that provides a MongoDB-like query language for
@@ -28,21 +31,25 @@ by JSON or YAML parsers.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 export PYTHONPATH=$PWD
-py.test -vv
+py.test3 -vv
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 23 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.5-alt1
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1.git20170921.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
