@@ -1,5 +1,5 @@
 Name: MUMPS
-Version: 1.70
+Version: 1.71
 Release: alt1
 Summary: Massachusetts General Hospital Utility Multi-Programming System
 Group: Development/Other
@@ -32,6 +32,9 @@ install -D utils %buildroot%_datadir/mumps/utils
 %_datadir/mumps
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.71-alt1
+- Autobuild version bump to 1.71
+
 * Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 1.70-alt1
 - Autobuild version bump to 1.70
 
