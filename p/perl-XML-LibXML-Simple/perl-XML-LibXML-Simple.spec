@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML-Simple
 Name: perl-%dist
-Version: 0.99
+Version: 1.01
 Release: alt1
 
 Summary: XML::LibXML based XML::Simple clone
@@ -28,10 +28,13 @@ None.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README README.md
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 
