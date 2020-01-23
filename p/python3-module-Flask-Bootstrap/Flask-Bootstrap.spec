@@ -1,23 +1,28 @@
 %define oname Flask-Bootstrap
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 3.3.0.2
-Release: alt2.dev1.git20141109.1
+Release: alt3
+
 Summary: Ready-to-use Twitter-bootstrap for use in Flask
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/Flask-Bootstrap/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/mbr/flask-bootstrap.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-module-flask
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-sphinx_readable_theme
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-flask-appconfig
+BuildRequires: python3-module-flask-wtf
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3-module-sphinx_readable_theme
 
-%py_provides flask_bootstrap
-%py_requires flask
+%py3_requires flask
+%py3_provides flask_bootstrap
+
 
 %description
 Flask-Bootstrap packages Bootstrap into an extension that mostly
@@ -27,7 +32,7 @@ application.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Flask-Bootstrap packages Bootstrap into an extension that mostly
@@ -53,37 +58,40 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 export PYTHONPATH=$PWD
 %make -C docs pickle
 %make -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc CHANGES DEVELOPMENT *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc run_sample_app.py sample_application docs/_build/html
 
+
 %changelog
+* Thu Jan 23 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0.2-alt3
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0.2-alt2.dev1.git20141109.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
