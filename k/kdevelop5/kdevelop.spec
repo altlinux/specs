@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kdevelop5
-Version: 5.3.2
-Release: alt2
+Version: 5.4.80
+Release: alt1
 Summary: A cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
 Group: Development/Tools
 License: GPLv2
@@ -70,14 +70,21 @@ chmod +x %buildroot/%_bindir/kdevelop5
 %_kf5_xdgapp/*
 %_libdir/cmake/KDevelop
 %_includedir/kdevelop
-%_sysconfdir/kf5/*
+
+%_datadir/knsrcfiles/*
+%_datadir/qlogging-categories5/*
 
 %_includedir/kdevplatform
 %_libdir/cmake/KDevPlatform
 %_K5link/*
-%_libdir/*.so
 
 %changelog
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 5.4.80-alt1
+- Autobuild version bump to 5.4.80
+
+* Mon Nov 18 2019 Fr. Br. George <george@altlinux.ru> 5.4.4-alt1
+- Autobuild version bump to 5.4.4
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
 - Rebuild witn new okteta
 
