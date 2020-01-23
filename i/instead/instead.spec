@@ -1,7 +1,7 @@
 
 Name: instead
-Version: 2.4.1
-Release: alt1.1
+Version: 3.3.1
+Release: alt1
 Group: Games/Adventure
 License: GPLv2
 Summary: STEAD text adventures/visual novels engine
@@ -10,9 +10,9 @@ Url: http://instead.syscall.ru
 Source: %version.tar.gz
 Patch: %name-1.7.0-Rules.make.system.patch
 
-# Automatically added by buildreq on Mon Apr 14 2014
-# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server zlib-devel
-BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libgtk+2-devel lua-devel
+# Automatically added by buildreq on Thu Jan 23 2020
+# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libharfbuzz-devel libpango-devel libsasl2-3 libstdc++-devel python-modules python2-base sh4 zlib-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ glibc-devel-static libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libgtk+2-devel lua-devel
 
 %description
 INSTEAD was designed to interpret the games that are the mix of visual novels,
@@ -46,16 +46,16 @@ GUI-версия интерпретатора текстовых приключ�
 %prep
 %setup
 %patch -p2
-cat > subst <<@@@
-sed -i --follow-symlinks -e '\${x;s/./&/;x;t;q 1};'"\$1"';T;x;s/.*/./;x' "\$2"
-@@@
-chmod +x subst
+##cat > subst <<@@@
+##sed -i --follow-symlinks -e '\${x;s/./&/;x;t;q 1};'"\$1"';T;x;s/.*/./;x' "\$2"
+##@@@
+##chmod +x subst
 
 for N in 16 32 48 64 128; do convert -resize ${N}x${N} icon/sdl_%name.png ${N}x${N}.png; done
-./subst 's@char \*games_sw = NULL@char *games_sw = "%_localstatedir/%name/games"@' src/sdl-instead/main.c
+##./subst 's@char \*games_sw = NULL@char *games_sw = "%_localstatedir/%name/games"@' src/sdl-instead/main.c
 
 %build
-%cmake
+%cmake -DCMAKE_C_FLAGS:PATH="-I /usr/include/harfbuzz"
 %cmake_build
 
 %install
@@ -64,8 +64,7 @@ for N in 16 32 48 64 128; do install -pD ${N}x${N}.png %buildroot/%_iconsdir/hic
 mkdir -p %buildroot%_localstatedir/%name/games
 
 %files
-%doc %_defaultdocdir/%name
-%doc doc/examples
+%doc doc
 %dir %_datadir/%name
 %dir %attr(1775,root,games) %_localstatedir/%name/games
 %_datadir/%name/*
@@ -79,6 +78,10 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 3.3.1-alt1
+- Autobuild version bump to 3.3.1
+- Switch to SDL2
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1.1
 - rebuild with new lua 5.3
 
