@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Mail-AuthenticationResults
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Coverage/TrustPod.pm) perl(Scalar/Util.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(base.pm) perl(lib.pm) perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Coverage/TrustPod.pm) perl(Scalar/Util.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(base.pm) perl(lib.pm) perl(strict.pm) perl(warnings.pm) perl(JSON.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.20180923
-Release: alt2
+Version: 1.20200108
+Release: alt1
 Summary: Object Oriented Authentication-Results header class
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MB/MBRADSHAW/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -39,10 +39,13 @@ Object Oriented Authentication-Results email headers
 %perl_vendor_install
 
 %files
-%doc README README.md Changes LICENSE
+%doc README README.md Changes
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.20200108-alt1
+- automated CPAN update
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 1.20180923-alt2
 - to Sisyphus as MAIL-DCIM dep
 
