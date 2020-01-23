@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.30.1
-Release: alt3
+Version: 3.31.0
+Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -199,6 +199,10 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Thu Jan 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.31.0-alt1
+- 3.31.0 (Fixes: CVE-2019-19923, CVE-2019-19924, CVE-2019-19925,
+  CVE-2019-19926).
+
 * Sun Dec 01 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.30.1-alt3
 - Enabled fts4 module (need for fossil 2.10).
 - Enabled fts3_parenthesis.
