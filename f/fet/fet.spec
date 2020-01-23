@@ -3,7 +3,7 @@
 #	- fet doesn't respect locale settings
 #
 Name: fet
-Version: 5.40.2
+Version: 5.40.3
 Release: alt1
 
 Summary: FET is open source free software for automatically scheduling the timetable
@@ -141,6 +141,9 @@ done
 %_datadir/%name/examples
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 5.40.3-alt1
+- Autobuild version bump to 5.40.3
+
 * Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 5.40.2-alt1
 - Autobuild version bump to 5.40.2
 
