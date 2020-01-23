@@ -1,5 +1,5 @@
 Name: libchipmunk
-Version: 7.0.2
+Version: 7.0.3
 Release: alt1
 Summary: Physics engine for 2D games
 
@@ -67,6 +67,9 @@ sed -i 's@target_link_libraries(chipmunk m)@target_link_libraries(chipmunk m pth
 %_bindir/*
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 7.0.3-alt1
+- Autobuild version bump to 7.0.3
+
 * Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 7.0.2-alt1
 - Autobuild version bump to 7.0.2
 
