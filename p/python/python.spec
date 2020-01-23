@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.17
-Release: alt3
+Release: alt4
 
 %define package_name		%real_name
 %define weight			1001
@@ -30,7 +30,7 @@ Release: alt3
 %global _optlevel 3
 
 Summary: An interpreted, interactive object-oriented programming language
-License: PSF
+License: Python-2.0
 Group: Development/Python
 URL: http://www.python.org/
 Packager: Python Development Team <python@packages.altlinux.org>
@@ -68,6 +68,7 @@ Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
 Patch24: python-2.7.10-python-config-ldflags-alt.patch
 Patch25: python2-platform-osrelease.patch
+Patch26: python-ignore-env-trust-security.patch
 
 # TODO: send upstream
 Patch31: python-2.7.14-alt-test_resource-skip-impossible.patch
@@ -724,6 +725,7 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch23 -p1
 %patch24 -p2
 %patch25 -p1
+%patch26 -p1
 
 %patch31 -p2
 #patch32 -p2
@@ -1176,6 +1178,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu Jan 23 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.7.17-alt4
+- 'Trusted mode' added
+- License tag fixed
+
 * Mon Nov 11 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.17-alt3
 - Built without python-base (moved to its own package).
 
