@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.20.1.19
-Release: alt3
+Release: alt4
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -60,12 +60,12 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: cmake
+BuildRequires: python3
 BuildRequires: gettext-devel
 BuildRequires: libgdiplus-devel >= 2.10
 BuildRequires: pkg-config
 BuildRequires: valgrind-devel
 BuildRequires: zlib-devel
-BuildRequires: python-modules-json
 BuildRequires: perl-Pod-Usage
 
 # http://www.mono-project.com/docs/about-mono/releases/4.0.0/#npgsql
@@ -373,7 +373,6 @@ data providers.
 Summary: sqlite database connectivity for Mono
 Group: Development/Other
 Requires: %name-core = %EVR
-Requires: sqlite
 Conflicts: mono4-data-sqlite < %EVR
 Obsoletes: mono4-data-sqlite
 Provides: mono4-data-sqlite = %EVR
@@ -562,6 +561,8 @@ find . -type f -iname '*.cs' -print0 | xargs -0 \
 # modifications for Mono 4
 %__subst "s#mono/2.0#mono/4.5#g" data/mono-nunit.pc.in
 
+%__subst "s|python|python3|" mono/mini/Makefile*
+
 %if_enabled bootstrap
 export PATH=$PATH:mcs/class/lib/monolite-linux/
 %endif
@@ -586,6 +587,8 @@ export PATH=$PATH:mcs/class/lib/monolite-linux/
 %endif
 
 %makeinstall_std
+
+rm -fv %buildroot%_bindir/mono-heapviz
 
 # copy the mono.snk key into /etc/pki/mono
 mkdir -p %buildroot%_sysconfdir/pki/mono
@@ -681,7 +684,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %_bindir/csc-dim
 %_monodir/4.5/csc.*
 %_monodir/4.5/dim
-%_bindir/mono-heapviz
+#_bindir/mono-heapviz
 %_bindir/mprof-report
 %_man1dir/certmgr.1*
 %_man1dir/chktrust.1*
@@ -1144,6 +1147,11 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Thu Jan 23 2020 Vitaly Lipatov <lav@altlinux.ru> 5.20.1.19-alt4
+- drop sqlite require from mono-data-sqlite
+- use python3 for internal build scripts
+- disable mono-heapviz packing (uses obsoleted python PIL module)
+
 * Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt3
 - Moved *.so libraries out of devel subpackages (Closes: #36979)
 - Switched to mcs compiler
