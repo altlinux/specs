@@ -1,6 +1,6 @@
 Name: freedink
-Version: 108.4
-Release: alt2
+Version: 109.6
+Release: alt1
 Summary: Adventure and role-playing game
 Group: Games/Adventure
 #BuildRequires: fontconfig-devel libffi-devel gcc-c++
@@ -10,8 +10,9 @@ Source: %name-%version.tar.gz
 
 Requires: freedink-engine = %version-%release  freedink-dfarc freedink-data
 
-# Automatically added by buildreq on Wed Sep 23 2009
-BuildRequires: fontconfig-devel help2man libSDL-devel libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcheck-devel
+# Automatically added by buildreq on Thu Jan 23 2020
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libSDL2-devel libfreetype-devel libstdc++-devel pkg-config python2-base sh4
+BuildRequires: fontconfig-devel gcc-c++ help2man libSDL2_gfx-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libglm-devel
 
 %description
 Dink Smallwood is an adventure/role-playing game, similar to Zelda,
@@ -45,11 +46,13 @@ This package contains the game engine alone.
 
 %prep
 %setup
+sed -i 's@SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "0");@@' src/input.cpp
+# RPM/BUILD/freedink-109.6/src/input.cpp:  SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "0");
 
 %build
 # Using '--disable-embedded-resources' because 'rpmbuild' will remove
 # them anyway (so it can make the -debuginfo package -- too bad :/)
-%configure --disable-embedded-resources
+%configure --disable-embedded-resources --disable-tests
 %make
 
 %install
@@ -67,8 +70,14 @@ cat %name-gnulib.lang >> %name.lang
 %_datadir/%name/
 %_datadir/pixmaps/*
 %_mandir/man6/*
+%_iconsdir/hicolor/scalable/apps/freedink.svg
+%_datadir/metainfo/freedink.appdata.xml
 
 %changelog
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 109.6-alt1
+- Autobuild version bump to 109.6
+- Switch to SDL2
+
 * Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 108.4-alt2
 - Rebuild with new SDL
 
@@ -102,20 +111,20 @@ cat %name-gnulib.lang >> %name.lang
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.08.20090120-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
-* Wed Feb  4 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090120-2
+* Wed Feb 04 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090120-2
 - Apply Fedora font rename: liberation-fonts -> liberation-sans-fonts
 
 * Tue Jan 20 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090120-1
 - New upstream release (fix engine freeze in some DinkC scripts)
 
-* Wed Jan  9 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090109-2
+* Fri Jan 09 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090109-2
 - Bump version to fix build tag issue
 
-* Wed Jan  9 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090109-1
+* Fri Jan 09 2009 Sylvain Beucler <beuc@beuc.net> - 1.08.20090109-1
 - New upstream release
 - Declare .mo translation catalogs
 
-* Sun Oct  5 2008 Sylvain Beucler <beuc@beuc.net> - 1.08.20080920-4
+* Sun Oct 05 2008 Sylvain Beucler <beuc@beuc.net> - 1.08.20080920-4
 - Use liberation-fonts in all distro versions
 
 * Wed Sep 24 2008 Sylvain Beucler <beuc@beuc.net> - 1.08.20080920-3
