@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Inline
 Name: perl-%dist
-Version: 0.83
+Version: 0.86
 Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
@@ -9,14 +9,14 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 Requires: gcc >= 4.1
 Requires: perl(Parse/RecDescent.pm)
 
 # Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-Inline-Files perl-Parse-RecDescent perl-Test-Warn perl(Encode.pm)
+BuildRequires: perl-Inline-Files perl-Parse-RecDescent perl-Test-Warn perl(Encode.pm) perl(JSON/PP.pm)
 
 %description
 Inline lets you write Perl subroutines in other programming languages
@@ -45,6 +45,9 @@ rm -f %buildroot%perl_vendor_privlib/Inline/MakeMaker/Changes
 %doc	%perl_vendor_privlib/Inline/*.pod
 
 %changelog
+* Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
+- automated CPAN update
+
 * Mon Apr 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - automated CPAN update
 
