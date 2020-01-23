@@ -1,6 +1,6 @@
 Name: pxview
 Version: 0.2.5
-Release: alt3
+Release: alt4
 
 Summary: View Paradox DB files
 
@@ -14,7 +14,7 @@ Source: http://prdownloads.sourceforge.net/pxlib/%{name}_%version.orig.tar.bz2
 Patch0: pxview-0.2.5-alt-DSO.patch
 
 # Automatically added by buildreq on Tue Feb 06 2007
-BuildRequires: docbook-utils gcc-c++ libgsf-devel libpx-devel perl-XML-Parser sqlite-devel
+BuildRequires: docbook-utils gcc-c++ libgsf-devel libpx-devel perl-XML-Parser
 
 %description
 pxview is quite simple command line program which has been originally
@@ -27,6 +27,7 @@ into SQL or CSV format.
 %setup
 %patch0 -p2
 %__subst "s|/usr/lib|%_libdir|g" configure*
+
 # man pages are build by docbook2man
 %__subst 's#docbook-to-man#docbook2man#g' configure*
 %__subst 's#docbook-to-man $<.*#docbook2man $<#g' doc/Makefile*
@@ -38,7 +39,6 @@ done
 %build
 CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
 %configure \
-	--with-sqlite \
 	--with-gsf
 %make_build
 
@@ -53,6 +53,9 @@ CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
 %_man1dir/*
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt4
+- rebuild without sqlite
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt3
 - rebuild without w3c-markup-validator-libs
 
