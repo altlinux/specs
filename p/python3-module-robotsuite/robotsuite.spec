@@ -1,22 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname robotsuite
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1.1
+Release: alt2
+
 Summary: Robot Framework test suite for Python unittest framework
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/robotsuite/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/collective/robotsuite.git
 Source0: https://pypi.python.org/packages/8c/b2/b035fc0b3cbf73c97b1384f996cfd620f28f17ce272aed08ff712bd9b026/%{oname}-%{version}.tar.gz
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-lxml
-BuildPreReq: python-module-six python-module-unittest2
-BuildPreReq: python-module-robotframework
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-six python3-module-unittest2
+BuildRequires: python3-module-robotframework
+
 
 %description
 This is an experimental package for wrapping Robot Framework test suites
@@ -27,19 +29,23 @@ tests as plone.testing's layered test suites.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 23 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
