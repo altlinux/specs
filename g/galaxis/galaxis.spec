@@ -1,5 +1,5 @@
 Name: galaxis
-Version: 1.9
+Version: 1.10
 Release: alt1
 Url: http://www.catb.org/~esr/galaxis/
 Source0: %name-%version.tar.gz
@@ -32,6 +32,9 @@ install %name.6 %buildroot%_man6dir/
 %_gamesbindir/%name
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.10-alt1
+- Autobuild version bump to 1.10
+
 * Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 1.9-alt1
 - Autobuild version bump to 1.9
 
