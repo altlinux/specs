@@ -1,6 +1,6 @@
 Name: ff-clone
-Version: 1.1
-Release: alt2.1
+Version: 1.2
+Release: alt1
 Summary: Get all (mostly two) fishes out
 License: Public domain
 Group: Games/Puzzles
@@ -51,6 +51,9 @@ mkdir -p %buildroot%_gamesbindir %buildroot%_gamesdatadir/%name
 %_gamesbindir/%name
 
 %changelog
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.2-alt1
+- Autobuild version bump to 1.2
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1
 - NMU: rebuild with new lua 5.1
 
