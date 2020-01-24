@@ -49,7 +49,6 @@
 %endif
 
 # Then the hypervisor drivers that talk via a native remote protocol
-%def_with phyp
 %ifarch %ix86 x86_64
 %def_with esx
 %else
@@ -104,7 +103,6 @@
 %def_without vbox
 %def_without libxl
 %def_without vmware
-%def_without phyp
 %def_without esx
 %def_without hyperv
 %def_without network
@@ -180,7 +178,7 @@
 %endif
 
 Name: libvirt
-Version: 5.10.0
+Version: 6.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -233,7 +231,6 @@ Requires: %name-libs = %EVR
 %{?_with_storage_vstorage:BuildRequires: /usr/sbin/vstorage}
 %{?_with_numactl:BuildRequires: libnuma-devel}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
-%{?_with_phyp:BuildRequires: libssh2-devel}
 %{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
 %{?_with_esx:BuildRequires: libcurl-devel}
 %{?_with_hyperv:BuildRequires: libwsman-devel}
@@ -250,12 +247,12 @@ BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: libacl-devel
-BuildRequires: glib2-devel >= 2.48
-BuildRequires: perl-Pod-Parser perl-XML-XPath
+BuildRequires: glib2-devel >= 2.48 libgio-devel
 BuildRequires: libxml2-devel xml-utils xsltproc
 BuildRequires: python3 python3-devel
+BuildRequires: python3-module-docutils
 BuildRequires: zlib-devel
-BuildRequires: iproute2 perl-Pod-Parser
+BuildRequires: iproute2
 BuildRequires: dmidecode
 BuildRequires: libtirpc-devel
 BuildRequires: glibc-utils
@@ -816,7 +813,6 @@ pushd %_vpath_builddir
 		%{subst_with vbox} \
 		%{subst_with libxl} \
 		%{subst_with vmware} \
-		%{subst_with phyp} \
 		%{subst_with esx} \
 		%{subst_with hyperv} \
 		%{subst_with network} \
@@ -1383,6 +1379,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
+- 6.0.0
+
 * Mon Dec 16 2019 Alexey Shabalin <shaba@altlinux.org> 5.10.0-alt1
 - 5.10.0
 

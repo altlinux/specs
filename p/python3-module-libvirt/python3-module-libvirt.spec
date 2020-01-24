@@ -1,36 +1,23 @@
 
 Summary: Python bindings for the libvirt library
-Name: python-module-libvirt
-Version: 5.10.0
+Name: python3-module-libvirt
+Version: 6.0.0
 Release: alt1
 Url: http://libvirt.org
 #git://libvirt.org/libvirt-python.git
 Source: %name-%version.tar
 License: LGPLv2+
-Group: Development/Python
+Group: Development/Python3
 
 Requires: libvirt-client
 BuildRequires: libvirt-devel >= 2.0.0
-BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python-devel python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 
-Obsoletes: libvirt-python < %version-%release
-Provides: libvirt-python = %version-%release
-
-%description
-The libvirt-python package contains a module that permits applications
-written in the Python programming language to use the interface
-supplied by the libvirt library to use the virtualization capabilities
-of recent versions of Linux (and other OSes).
-
-%package -n python3-module-libvirt
-Summary: The libvirt virtualization API python3 binding
-License: LGPLv2+
-Group: Development/Python3
 Obsoletes: libvirt-python3 < %version-%release
 Provides: libvirt-python3 = %version-%release
 
-%description -n python3-module-libvirt
+%description
 The libvirt-python package contains a module that permits applications
 written in the Python programming language to use the interface
 supplied by the libvirt library to use the virtualization capabilities
@@ -40,22 +27,20 @@ of recent versions of Linux (and other OSes).
 %setup -q
 
 %build
-%python_build
 %python3_build
 
 %install
-%python_install
 %python3_install
 
 %files
-%python_sitelibdir/*
-%doc  NEWS README COPYING COPYING.LESSER examples
-
-%files -n python3-module-libvirt
 %python3_sitelibdir/*
 %doc  NEWS README COPYING COPYING.LESSER examples
 
 %changelog
+* Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
+- 6.0.0
+- Drop support for python 2
+
 * Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 5.10.0-alt1
 - new version 5.10.0
 
