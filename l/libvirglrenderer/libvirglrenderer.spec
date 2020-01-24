@@ -1,6 +1,6 @@
 
 Name: libvirglrenderer
-Version: 0.8.0.0.34.4ac3a04c
+Version: 0.8.1.0.17.g845bc48
 Release: alt1
 
 Summary: Virgl Rendering library
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildRequires(pre): meson
 BuildRequires: pkgconfig(libdrm) >= 2.4.50
 BuildRequires: pkgconfig(gbm) >= 18.0.0
-BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(epoxy) >= 1.5.4
 
 %description
 The virgil3d rendering library is a library used by
@@ -63,6 +63,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.1.0.17.g845bc48-alt1
+- upstream commit 845bc4889b2398921aee2fd62b883cddd1a1ac19
+
 * Fri Oct 11 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.0.0.34.4ac3a04c-alt1
 - upstream commit 4ac3a04cb8a4b0d419bccbb7798b59aa098487a6
 
