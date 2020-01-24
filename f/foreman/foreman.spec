@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.22.0
-Release:       alt2
+Release:       alt3
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -17,7 +17,7 @@ Source5:       %name.tmpfiles
 # Source6:       dynflowd.sysconfig
 # Source7:       dynflowd.service
 Source8:       %name.service
-Source9:       node_modules.tar.xz
+Source9:       %name-production-%version.tar
 Patch:         patch.patch
 Patch1:        sass.patch
 
@@ -28,7 +28,7 @@ BuildRequires: ruby-gem(asciidoctor)
 BuildRequires: elfutils
 BuildRequires: glibc-core
 BuildRequires: libX11-devel
-BuildRequires: libnss-devel
+#BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
 BuildRequires: fontconfig
 BuildRequires: libfreetype-devel
@@ -42,6 +42,10 @@ Requires:      libnss
 Requires:      libnspr
 Requires:      fontconfig
 Requires:      libfreetype
+
+Requires:      node-sass
+BuildRequires:      node-sass
+
 %gem_replace_version rails ~> 5.2.2
 %gem_replace_version graphql ~> 1.9
 %gem_replace_version jquery-ui-rails ~> 6.0
@@ -59,6 +63,7 @@ Requires:      libfreetype
 
 # npmjs
 %add_verify_elf_skiplist %_libdir/%name/**/*
+# used binaries in node_modules
 ExclusiveArch: x86_64
 
 %description
@@ -86,8 +91,7 @@ Foreman code documentation.
 
 
 %prep
-%setup
-tar --keep-directory-symlink -Jxf %SOURCE9
+%setup -a 9
 %patch -p1
 # TODO remove when patternfly-sass gem will be upgraded to new font-awesome-sass v5
 %patch1 -p1
@@ -250,6 +254,10 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 %ruby_ridir/*
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.22.0-alt3
+- drop libnss-devel buildreq
+- update node_modules with node.js >= 13
+
 * Mon Nov 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.22.0-alt2
 - changed (*) license
 - fixed (!) requires and required service

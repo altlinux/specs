@@ -1,6 +1,6 @@
 Name: node-gyp
 Version: 5.0.5
-Release: alt2
+Release: alt3
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -22,13 +22,10 @@ Source10: addon-rpm.gypi
 BuildArch: noarch
 
 # we do not need any module provides here
-AutoProv: yes,nonodejs
-AutoReq: yes,nonodejs
+AutoProv: yes,nonodejs,noruby,notex
+AutoReq: yes,nonodejs,noruby,notex
 
 Provides: npm(node-gyp) = %version
-
-# These patches are Fedora-specific for the moment, although I'd like to find
-# a way to support this kind of stuff upstream.
 
 # use RPM installed headers by default instead of downloading a source tree
 # for the currently running node version
@@ -37,12 +34,17 @@ Patch1: node-gyp-addon-gypi.patch
 # use the system gyp
 Patch2: node-gyp-system-gyp.patch
 
+# use system node dir (/usr)
+Patch3: node-gyp-system-nodedir.patch
+
+# use python3 only
+Patch4: node-gyp-python3.patch
+
 BuildRequires(pre): rpm-macros-nodejs
 
-#BuildRequires: gcc-c++ python-devel node-devel 
-
+# TODO: compare with internal
 #gyp is the actual build framework node-gyp uses
-Requires: gyp
+Requires: gyp >= 0.1.h.e87d37d6
 
 #this is the standard set of headers expected to build any node native module
 Requires: rpm-build-nodejs
@@ -52,7 +54,6 @@ Requires: rpm-build-nodejs
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=37687
 #Requires: gcc-c++
 Requires: make
-#Patch33: addon-rpm.gypi.patch
 
 %description
 node-gyp is a cross-platform command-line tool written in Node.js for compiling
@@ -64,10 +65,15 @@ Install gcc-c++ package for compiling native addon modules for Node.js.
 %prep
 %setup -a 2
 #patch1 -p1
-#patch2 -p1
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
 # use system gyp
-#__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
+%__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
+
+# fix -fPIC using on ix86
+%__subst 's| and target_arch!="ia32"||' addon.gypi
 
 #nodejs_fixdep request 2.x
 #nodejs_fixdep npmlog 3
@@ -75,6 +81,7 @@ Install gcc-c++ package for compiling native addon modules for Node.js.
 #nodejs_fixdep semver 2.1
 #patch33 -p0
 
+# drop internal gyp
 rm -rf gyp/
 mkdir gyp/
 # compat hack
@@ -90,7 +97,7 @@ ln -s %_bindir/gyp gyp/gyp_main.py
 
 mkdir -p %buildroot%nodejs_sitelib/node-gyp/
 cp -pr addon*.gypi bin lib gyp node_modules package.json %buildroot%nodejs_sitelib/node-gyp/
-cp -p %SOURCE10 %buildroot%nodejs_sitelib/node-gyp/addon-rpm.gypi
+#cp -p %SOURCE10 %buildroot%nodejs_sitelib/node-gyp/addon-rpm.gypi
 
 mkdir -p %buildroot%_bindir
 ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
@@ -104,6 +111,10 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Mon Jan 20 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt3
+- use system node include dir to binary build (ALT bug 36349)
+- first use python3 to gyp run
+
 * Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt2
 - drop buildreqs (we skip build here)
 - switch to python3

@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 10.18
+%define major 13.6
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -14,6 +14,7 @@
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
 %global v8_abi 6.9
+# 7.7.299
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -21,7 +22,7 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.28.0
+%global libuv_abi 1.34.0
 %def_with systemuv
 
 %global libicu_abi 6.4
@@ -29,8 +30,11 @@
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
 
-%global libnghttp2_abi 1.39.2
+%global libnghttp2_abi 1.40.0
 %def_with systemnghttp2
+
+# to use internal llhttp
+%def_without systemhttp-parser
 
 %def_disable check
 
@@ -53,15 +57,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
 
-Patch: node-disable-external-libs.patch
-
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
-BuildRequires: python-devel gcc-c++ zlib-devel
+BuildRequires: python3-devel gcc-c++ zlib-devel
 
 BuildRequires: gyp
-BuildRequires: python-modules-json python-module-simplejson
+BuildRequires: python3-module-simplejson
 
 %if_with systemv8
 %define libv8_package libv8-nodejs
@@ -86,7 +88,9 @@ BuildRequires: libicu-devel >= %libicu_abi
 BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 %endif
 
-BuildRequires: libhttp-parser-devel
+%if_with systemhttp-parser
+BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
+%endif
 BuildRequires: libcares-devel >= 1.11.0
 
 BuildRequires: curl
@@ -99,10 +103,14 @@ Obsoletes: node.js < %version-%release
 Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
 
-# use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
-%_tune_parallel_build_by_procsize 3000
+# /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
+%ifarch %ix86
+%define optflags_debug -g0
+%endif
 
-%add_python_req_skip TestCommon
+# use no more than system_memory/1400 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
+%_tune_parallel_build_by_procsize 1400
+
 %add_findreq_skiplist %{_datadir}/node/sources/*
 
 %description
@@ -113,8 +121,9 @@ network programs.
 %package devel
 Summary:        Devel package for Node.js
 Group:          Development/Other
-License:        GPL
-BuildArch:      noarch
+License:        MIT license
+# arch depended info in .gypi
+#BuildArch:      noarch
 Provides:	nodejs-devel = %version-%release
 Requires:	%name = %version
 Requires:       gcc-c++ zlib-devel libcares-devel
@@ -162,7 +171,6 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup
-%patch -p2
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
@@ -176,16 +184,22 @@ rm -rf deps/icu-small/
 
 %if_with systemuv
 rm -rf deps/uv/
+%__subst "s|deps/uv/uv.gyp ||" Makefile
+%__subst "s|.*../uv/uv.gyp:libuv.*||" deps/uvwasi/uvwasi.gyp
 %endif
 
 %if_with systemnghttp2
 rm -rf deps/nghttp2/
 %endif
 
+# disable external libs
 # TODO:
 # deps/gtest
 rm -rf tools/gyp
-rm -rf deps/zlib deps/openssl deps/cares deps/http-parser
+rm -rf deps/zlib deps/openssl deps/cares
+# make no sense for a first build
+%__subst "s|deps/zlib/zlib.gyp||" Makefile
+
 
 %if_without npm
 #true
@@ -196,19 +210,27 @@ ln -s %_libexecdir/node_modules/npm deps/npm
 
 # use rpm's cflags
 %__subst "s|'cflags': \[\],|'cflags': ['%optflags'],|" ./configure.py
+# fix cflags wrap in outputted config.json
+%__subst "s|indent=2|indent=2,width=160|" ./configure.py
 # TODO: move to upstream?
 %ifarch mipsel
 %__subst "s|'libraries': \[\],|'libraries': ['-latomic'],|" ./configure.py
 %endif
 
 %build
+# hack against
+# gyp: Error importing pymod_do_mainmodule (GN-scraper): No module named GN-scraper while loading dependencies of /tmp/.private/lav/RPM/BUILD/node-12.14.1/node.gyp
+export PYTHONPATH=$(pwd)/tools/v8_gypfiles
+
 ./configure \
     --prefix=%_prefix \
     --shared-zlib \
 %if_with systemicu
     --with-intl=system-icu \
 %endif
+%if_with systemhttp-parser
     --shared-http-parser \
+%endif
     --shared-cares \
 %if_with systemssl
     --shared-openssl \
@@ -279,10 +301,10 @@ rm -rf %buildroot/usr/share/doc/node/lldbinit
 rm -rf %buildroot%_datadir/systemtap/tapset
 
 # pack node include tarball required to gyp building
-mkdir -p /usr/src/tmp/%name-v%{version}/include/ %{buildroot}%{_datadir}/node/
-cp -rp %{buildroot}%{_includedir}/%name /usr/src/tmp/%name-v%{version}/include/
-cd /usr/src/tmp/
-tar -zcf %{buildroot}%{_datadir}/%name/%name-v%{version}-headers.tar.gz %name-v%{version}
+#mkdir -p %name-v%version/include/
+#cp -rp %buildroot%_includedir/%name %name-v%version/include/
+#mkdir -p %buildroot%_datadir/node/
+#tar -zcf %buildroot%_datadir/%name/%name-v%version-headers.tar.gz %name-v%version
 
 
 %files
@@ -299,7 +321,7 @@ tar -zcf %{buildroot}%{_datadir}/%name/%name-v%{version}-headers.tar.gz %name-v%
 
 %files devel
 %dir %_includedir/node/
-%_datadir/%name/*gz
+#%_datadir/%name/%name-v%version-headers.tar.gz
 %if_without systemuv
 %_includedir/node/uv*
 %endif
@@ -307,6 +329,7 @@ tar -zcf %{buildroot}%{_datadir}/%name/%name-v%{version}-headers.tar.gz %name-v%
 %_includedir/node/v8*
 %endif
 %_includedir/node/node*
+%_includedir/node/js_native_api*
 # deps/cares
 #_includedir/node/ares*
 %_includedir/node/common.gypi
@@ -327,6 +350,20 @@ tar -zcf %{buildroot}%{_datadir}/%name/%name-v%{version}-headers.tar.gz %name-v%
 %endif
 
 %changelog
+* Mon Jan 20 2020 Vitaly Lipatov <lav@altlinux.ru> 13.6.0-alt2
+- make node-devel as arch
+- drop tarball with node include headers (see ALT bug 36349)
+- add fixes for ix86 build
+
+* Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 13.6.0-alt1
+- new version 13.6.0 (with rpmrb script)
+- libuv >= 1.34.0
+- switch to python3
+
+* Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 12.14.1-alt1
+- new version 12.14.1 (with rpmrb script)
+- build without system http-parser (use bundled llhttp 2.0.1)
+
 * Thu Jan 16 2020 Pavel Skrylev <majioa@altlinux.org> 10.18.0-alt2
 - added (+) tarball for node include headers to devel package
 
