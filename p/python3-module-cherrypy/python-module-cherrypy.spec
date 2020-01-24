@@ -1,19 +1,15 @@
 %define modulename cherrypy
 
-%def_without python2
-%def_with python3
-%def_without docs
+%def_with docs
 
-Name: python-module-%modulename
+Name: python3-module-%modulename
 Version: 18.5.0
-Release: alt1
-
-%setup_python_module %modulename
+Release: alt2
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
-License: BSD
-Group: Development/Python
 
+License: BSD-3-Clause
+Group: Development/Python3
 URL: http://www.cherrypy.org
 BuildArch: noarch
 
@@ -21,34 +17,30 @@ BuildArch: noarch
 Source: %modulename-%version.tar
 Patch: disable-codecov_button.patch
 
-Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
-
-BuildRequires: python-module-setuptools_scm
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 %if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-jaraco.collections
+BuildRequires: python3-module-zc
+BuildRequires: python3-module-zc.lockfile
+BuildRequires: python3-module-portend
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-cheroot-tests
 %endif
 BuildRequires: python3-module-setuptools_scm
-BuildRequires: python-module-alabaster
-BuildRequires: python-module-coverage
-BuildRequires: python-module-docutils
-BuildRequires: python-module-html5lib
-BuildRequires: python-module-nose
-BuildRequires: python-module-objects.inv
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-rst.linker
 BuildRequires: python3-module-jaraco.packaging
 BuildRequires: python3-module-cheroot
 BuildRequires: time
-%endif
 
-%add_python_req_skip win32api
-%add_python_req_skip win32con
-%add_python_req_skip win32event
-%add_python_req_skip win32service
-%add_python_req_skip win32serviceutil
+%add_python3_req_skip win32api
+%add_python3_req_skip win32con
+%add_python3_req_skip win32event
+%add_python3_req_skip win32service
+%add_python3_req_skip win32serviceutil
+%add_python3_req_skip sqlobject
 
 %description
 Your CherryPy powered web applications are in fact stand-alone Python
@@ -58,7 +50,7 @@ but it's possible to run a CherryPy application behind it.
 
 %package tests
 Summary: Tests for CherryPy
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -71,7 +63,7 @@ This package contains tests for CherryPy.
 
 %package pickles
 Summary: Pickles for CherryPy
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Your CherryPy powered web applications are in fact stand-alone Python
@@ -94,45 +86,10 @@ but it's possible to run a CherryPy application behind it.
 
 This package contains documentation for CherryPy.
 
-%if_with python3
-%package -n python3-module-%modulename
-Summary: CherryPy is a pythonic, object-oriented web development framework (Python 3)
-Group: Development/Python3
-%add_python3_req_skip win32api
-%add_python3_req_skip win32con
-%add_python3_req_skip win32event
-%add_python3_req_skip win32service
-%add_python3_req_skip win32serviceutil
-%add_python3_req_skip sqlobject
-
-%description -n python3-module-%modulename
-Your CherryPy powered web applications are in fact stand-alone Python
-applications embedding their own multi-threaded web server. You can deploy
-them anywhere you can run Python applications. Apache is not required,
-but it's possible to run a CherryPy application behind it.
-
-%package -n python3-module-%modulename-tests
-Summary: Tests for CherryPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%modulename = %version-%release
-
-%description -n python3-module-%modulename-tests
-Your CherryPy powered web applications are in fact stand-alone Python
-applications embedding their own multi-threaded web server. You can deploy
-them anywhere you can run Python applications. Apache is not required,
-but it's possible to run a CherryPy application behind it.
-
-This package contains tests for CherryPy (Python 3).
-%endif
-
 %prep
 %setup -n %modulename-%version
 %patch -p1
 sed -i "s/f'/'/;s/f\"/\"/" docs/conf.py
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %if_with docs
 %prepare_sphinx3 .
@@ -141,76 +98,53 @@ ln -s ../objects.inv docs/
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%if_with python2
-%python_build
-%endif
-%if_with python3
-pushd ../python3
 subst 's|%_bindir/python|%_bindir/python3|' \
       cherrypy/process/servers.py cherrypy/test/sessiondemo.py
 %python3_build
-popd
-%endif
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%if_with python3
-pushd ../python3
 %python3_install
-popd
 mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
-%endif
-%if_with python2
-%python_install
+
+%if_with docs
+export PYTHONPATH=$PWD
+pushd docs
+python3 /usr/bin/sphinx-build-3 -b html -d build/doctrees . build/html
+python3 /usr/bin/sphinx-build-3 -b pickle -d build/doctrees . build/pickle
+popd
 %endif
 
 %if_with docs
-export PYTHONPATH=%_builddir/python3
-pushd docs
-%if_with python2
-python3 /usr/bin/sphinx-build -b pickle -d build/doctrees . build/pickle
-%endif
-python3 /usr/bin/sphinx-build -b html -d build/doctrees . build/html
-popd
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%modulename/
 %endif
 
-%if_with python2
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%modulename/
-%endif
-
-%if_with python2
 %files
 %doc cherrypy/tutorial
-%_bindir/cherryd
-%python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/pickle
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/*/test
+%_bindir/cherryd3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test
+%if_with docs
+%exclude %python3_sitelibdir/%modulename/pickle
 
 %files pickles
-%python_sitelibdir/%modulename/pickle
+%python3_sitelibdir/%modulename/pickle
+%endif
 
 %files tests
-%python_sitelibdir/*/test
-%endif
+%python3_sitelibdir/*/test
 
 %if_with docs
 %files docs
 %doc docs/build/html/*
 %endif
 
-%if_with python3
-%files -n python3-module-%modulename
-%doc cherrypy/tutorial
-%_bindir/cherryd3
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
-
-%files -n python3-module-%modulename-tests
-%python3_sitelibdir/*/test
-%endif
-
 %changelog
+* Fri Jan 24 2020 Grigory Ustinov <grenka@altlinux.org> 18.5.0-alt2
+- Got rid of python2 support (Closes: #37898).
+- Build with docs.
+- Fix license.
+
 * Wed Jan 22 2020 Andrey Cherepanov <cas@altlinux.org> 18.5.0-alt1
 - New version (ALT #37898).
 - Build without docs.
