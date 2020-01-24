@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200113
+Version: 20200121
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Jan 24 2020 Cronbuild Service <cronbuild@altlinux.org> 20200121-alt1
+- upstream changes (GIT 1eb2408):
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + nvidia: add TU102/TU104/TU106 signed firmware (thx Gourav Samaiya)
+
 * Fri Jan 17 2020 Cronbuild Service <cronbuild@altlinux.org> 20200113-alt1
 - upstream changes (GIT 9c340bd):
   + amdgpu: update navi10 firmware for 19.50 (thx Alex Deucher)
