@@ -1,23 +1,27 @@
 %define oname BlazeUtils
-Name: python-module-%oname
-Version: 0.5.2
-Release: alt1.1
+
+Name: python3-module-%oname
+Version: 0.6.1
+Release: alt1
+
 Summary: A collection of python utility functions and classes
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/BlazeUtils/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/ea/6b/d966ca26c756e3c7d5cc6bffe288c38bf0d6955e1f8c6580190b4c05b940/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-wrapt
-BuildPreReq: python-module-mock python-module-nose
-BuildPreReq: python-module-xlwt python-module-xlrd
-BuildPreReq: python-module-docutils python-module-SQLAlchemy
+Source0: %name-%version.tar
 
-%py_provides blazeutils
-%py_requires xlwt wrapt xlrd docutils sqlalchemy
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six
+BuildRequires: python3-module-wrapt
+# for tests
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-SQLAlchemy
+
+%py3_provides blazeutils
+
 
 %description
 BlazeUtils is a library to hold common tools for the Blaze library
@@ -29,7 +33,7 @@ family:
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -43,27 +47,33 @@ family:
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+
+rm -f blazeutils/tests/_bad_import_deeper.py
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
-nosetests
+%__python3 setup.py test
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/testing.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing.*
 
 %files tests
-%python_sitelibdir/*/testing.*
+%python3_sitelibdir/*/testing.*
+
 
 %changelog
+* Fri Jan 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt1
+- Version updated to 0.6.1
+- porting on python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
