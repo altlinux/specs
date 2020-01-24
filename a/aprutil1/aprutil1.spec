@@ -8,6 +8,8 @@
 %def_without libdb47
 %def_without libdb48
 
+%def_without sqlite2
+
 # for set libdb default
 %define libdb_name libdb
 %define libdb_v1 4
@@ -68,14 +70,14 @@
 
 Name: aprutil%aprver
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
 License: %asl
 Url: http://apr.apache.org/
 
-#Source url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
+# Source-url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
 Source: apr-util-%version.tar
 
 Patch1: aprutil1-1.6.1-alt-mysql8-transition.patch
@@ -166,6 +168,7 @@ Requires: lib%name = %version-%release
 This package provides the MySQL driver for the apr-util DBD
 (database abstraction) interface.
 
+%if_with sqlite2
 %package -n lib%name-sqlite2
 Group: System/Libraries
 Summary: APR utility library SQLite DBD driver
@@ -175,6 +178,8 @@ Requires: lib%name = %version-%release
 %description -n lib%name-sqlite2
 This package provides the SQLite driver for the apr-util DBD
 (database abstraction) interface.
+
+%endif
 
 %package -n lib%name-sqlite3
 Group: System/Libraries
@@ -230,7 +235,9 @@ autoheader && autoconf
 	--with-installbuilddir=%_datadir/apr-%aprver/build \
 	--includedir=%_includedir/apu-%aprver \
 	--with-berkeley-db --with-dbm=%dbm_type \
-	--with-sqlite3 --with-sqlite2 --with-mysql --with-pgsql \
+	--with-sqlite3 \
+	%{subst_with sqlite2} \
+	--with-mysql --with-pgsql \
 	--enable-dbd-dso \
 	--with-ldap \
 	%{subst_enable static}
@@ -274,8 +281,10 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %files -n lib%name-mysql
 %_libdir/apr-util-%aprver/apr_dbd_mysql*.so
 
+%if_with sqlite2
 %files -n lib%name-sqlite2
 %_libdir/apr-util-%aprver/apr_dbd_sqlite2*.so
+%endif
 
 %files -n lib%name-sqlite3
 %_libdir/apr-util-%aprver/apr_dbd_sqlite3*.so
@@ -287,6 +296,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt3
+- rebuild with sqlite2 disabled
+
 * Mon Mar 04 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.6.1-alt2
 - Fix FTBFS against libmysqlclient21
 
