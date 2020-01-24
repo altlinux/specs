@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname   topkg
 Name: ocaml-topkg
-Version: 1.0.0
-Release: alt3
+Version: 1.0.1
+Release: alt1
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -69,6 +69,9 @@ rm -rf %buildroot%prefix/doc/%oname
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.0.0-alt3
 - rebuilt with ocaml-4.08
 
