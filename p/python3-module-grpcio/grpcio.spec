@@ -3,10 +3,10 @@
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.22.0
+Version: 1.26.0
 Release: alt1
 Summary: HTTP/2-based RPC framework
-License: Apache 2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/grpcio
 
@@ -58,6 +58,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.26.0-alt1
+- Updated to upstream version 1.26.0 (Closes: #37909)
+
 * Tue Aug 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.22.0-alt1
 - Updated to upstream version 1.22.0.
 - Disabled build for python-2.
