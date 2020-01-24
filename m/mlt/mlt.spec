@@ -18,8 +18,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.16.0
-Release: alt4
+Version: 6.18.0
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -217,6 +217,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot/%python3_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Fri Jan 24 2020 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
+- new version
+
 * Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 6.16.0-alt4
 - introduced libvidstab knob (on by default)
 - E2K: explicit -std=c++11; avoid lcc-unsupported option
