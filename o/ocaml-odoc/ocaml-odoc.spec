@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-odoc
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -23,6 +23,10 @@ BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: ocaml-migrate-parsetree-devel
+# for check
+BuildRequires: ocaml-markup-devel
+BuildRequires: ocaml-alcotest-devel
+BuildRequires: ocaml-sexplib-devel
 
 %description
 odoc is a documentation generator for OCaml. It reads doc comments ,
@@ -36,16 +40,25 @@ delimited with (** ... *), and outputs HTML.
 %make_build
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --mandir=%buildroot/%_mandir --docdir=%buildroot/%_docdir
-mv %buildroot/%_docdir/odoc %buildroot/%_docdir/%name-%version
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+mkdir -p %buildroot/%_docdir
+mv %buildroot/%_prefix/doc/odoc %buildroot/%_docdir/%name-%version
+
+%check
+dune runtest
 
 %files
 %_docdir/*
 %_bindir/odoc
 %_datadir/odoc
 %_libdir/ocaml/odoc
+%_libdir/ocaml/dune_odoc_test
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+- enabled tests
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
