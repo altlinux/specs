@@ -2,13 +2,14 @@
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
 %def_with   	jit
+%def_without sqlite2
 %define prov3() \
 Provides:  gambas3-%{*} = %EVR \
 Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.14.2
+Version:	3.14.3
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -66,7 +67,9 @@ BuildRequires:	libSDL2_image-devel
 BuildRequires:	libSDL2_mixer-devel
 BuildRequires:	libSDL2_ttf-devel
 BuildRequires:	libsqlite3-devel
+%if_with sqlite2
 BuildRequires:	libsqlite-devel
+%endif
 BuildRequires:	libssl-devel
 BuildRequires:	libtool
 BuildRequires:	libunixODBC-devel
@@ -126,7 +129,9 @@ Requires:      %name-gb-db-form = %version-%release
 Requires:      %name-gb-db-mysql = %version-%release
 Requires:      %name-gb-db-odbc = %version-%release
 Requires:      %name-gb-db-postgresql = %version-%release
+%if_with sqlite2
 Requires:      %name-gb-db-sqlite2 = %version-%release
+%endif
 Requires:      %name-gb-db-sqlite3 = %version-%release
 Requires:      %name-gb-dbus = %version-%release
 Requires:      %name-gb-db = %version-%release
@@ -409,6 +414,7 @@ Requires:	%name-runtime = %version-%release
 %description gb-db-postgresql
 This component allows you to access PostgreSQL databases.
 
+%if_with sqlite2
 %package gb-db-sqlite2
 Summary:	Gambas3 component package for db.sqlite2
 Group:		Development/Tools
@@ -417,6 +423,7 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-db-sqlite2
 This component allows you to access SQLite 2 databases.
+%endif
 
 %package gb-db-sqlite3
 Summary:	Gambas3 component package for db.sqlite3
@@ -1104,9 +1111,6 @@ Requires:	%name-runtime = %version-%release
 This package contains the Gambas3 component for making the GUI of
 terminal applications.
 
-%description gb-form-terminal
-This package contains the Gambas3 component for terminal in form.
-
 %package gb-form-print
 Summary:	Gambas3 component package for print form
 Group:		Development/Tools
@@ -1312,9 +1316,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/gambas3/gb.db.postgresql.*
 %appdir/info/gb.db.postgresql.*
 
+%if_with sqlite2
 %files gb-db-sqlite2
 %_libdir/gambas3/gb.db.sqlite2.*
 %appdir/info/gb.db.sqlite2.*
+%endif
 
 %files gb-db-sqlite3
 %_libdir/gambas3/gb.db.sqlite3.*
@@ -1681,6 +1687,12 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.print.*
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.14.3-alt1
+- new version 3.14.3
+
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.14.2-alt2
+- NMU: build without sqlite2
+
 * Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 3.14.2-alt1
 - New version.
 
