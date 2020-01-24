@@ -1,23 +1,22 @@
 %define oname BlazeForm
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.1
-Release: alt1.1
+Release: alt2
+
 Summary: A library for generating and validating HTML forms
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/BlazeForm/
-
-Source: %{oname}-%{version}.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-module-FormEncode
-BuildRequires: python-module-BlazeUtils python-module-webhelpers
-BuildRequires: python-module-nose python-module-DNS
-BuildRequires: python2.7(webhelpers2)
+Source: %oname-%version.tar
 
-%py_provides blazeform
-%py_requires formencode blazeutils webhelpers
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-FormEncode
+BuildRequires: python3-module-BlazeUtils
+BuildRequires: python3-module-WebHelpers2
+
 
 %description
 BlazeForm is a library designed to facilitate the
@@ -33,22 +32,26 @@ Features:
 * few dependencies: FormEncode, BlazeUtils, WebHelpers
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %oname-%version
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Jan 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
