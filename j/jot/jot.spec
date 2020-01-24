@@ -1,8 +1,11 @@
 Name: jot
-Version: 11.2
+Version: 12.1
 Release: alt1
-Source: jot-11.2.tar
+Source: jot-12.1.tar
 Patch: %name-urandom.patch
+Patch1: %name-12.1-nocap.patch
+Patch2: %name-12.1-nonegperc.patch
+Patch3: %name-12.1-posix.patch
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/jot
 Summary: jot is a simple tool that prints random or sequential data
 Summary (ru_RU.UTF-8): Выводит данные по возрастанию, убыванию по одному элементу на строку
@@ -21,9 +24,12 @@ Athena jot (или просто jot) выводит данные, обычно �
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-cc -D'__FBSDID(x)=' -D'arc4random()=random()' -O2 %name.c -o %name
+cc -D'__FBSDID(x)=' -D'arc4random()=random()' -g -O2 %name.c -o %name
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_man1dir
@@ -34,7 +40,15 @@ install %name.1 %buildroot%_man1dir/
 %_bindir/%name
 %_man1dir/%name.*
 
+%check
+sed -n '/REGRESSION_TEST/s@.*`\(.*\)., `\(jot .*\).)@./\2 | cmp tests/regress.\1.out -@p' < tests/regress.sh | sh -e
+
 %changelog
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 12.1-alt1
+- Autobuild version bump to 12.1
+- Fix negative precision bug
+- Turn off GNU getopt extension
+
 * Tue Oct 16 2018 Fr. Br. George <george@altlinux.ru> 11.2-alt1
 - Autobuild version bump to 11.2
 
