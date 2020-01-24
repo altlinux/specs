@@ -1,32 +1,26 @@
 %define oname numpy-stl
-%def_disable check
 
-Name: python-module-%oname
-Version: 1.3.6
-Release: alt2.git20141210.1
+Name: python3-module-%oname
+Version: 2.10.1
+Release: alt1
+
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/numpy-stl/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/WoLpH/numpy-stl.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python-module-objects.inv python-module-pytest-cov python-module-pytest-flakes python-module-pytest-pep8 python-module-setuptools
-BuildRequires: python-module-sphinx-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-python_utils
+BuildRequires: python3-module-pytest python3-module-pytest-runner
+BuildRequires: python3-module-docutils python3-module-sphinx
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-pytest libnumpy-devel
-#BuildPreReq: python-module-argparse python-module-cov-core
-#BuildPreReq: python-module-coverage python-module-docutils
-#BuildPreReq: python-module-execnet python-tools-pep8 pyflakes
-#BuildPreReq: python-module-pytest-cache python-module-pytest-cov
-#BuildPreReq: python-module-pytest-flakes python-module-pytest-pep8
-#BuildPreReq: python-module-sphinx-devel python-module-python_utils
+%py3_provides stl
 
-%py_provides stl
 
 %description
 Simple library to make working with STL files (and 3D objects in
@@ -38,28 +32,30 @@ fastest STL editing libraries for Python available.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %make -C docs html
 
 %check
 rm -fR build conf.py*
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst docs/_build/html
 %_bindir/*
-%python_sitelibdir/stl
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/stl
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jan 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.10.1-alt1
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.6-alt2.git20141210.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
