@@ -1,7 +1,8 @@
+%def_without sqlite2
 Name: sqliteodbc
 Summary: ODBC driver for SQLite
 Version: 0.9996
-Release: alt1
+Release: alt2
 Source: %name-%version.tar.gz
 Patch: sqliteodbc-0.993-alt-odbcinstext.patch
 Group: Databases
@@ -10,10 +11,13 @@ License: BSD
 
 # Automatically added by buildreq on Tue Jun 18 2013
 # optimized out: libunixODBC-devel
-BuildRequires: libiodbc-devel libsqlite-devel libsqlite3-devel libxml2-devel zlib-devel
+BuildRequires: libiodbc-devel libsqlite3-devel libxml2-devel zlib-devel
+%if_with sqlite2
+BuildRequires: libsqlite-devel 
+%endif
 
 %description
-ODBC driver for SQLite interfacing SQLite 2.x and/or 3.x using the
+ODBC driver for SQLite interfacing using the
 unixODBC or iODBC driver managers. For more information refer to
 http://www.sqlite.org    -  SQLite engine
 http://www.unixodbc.org  -  unixODBC Driver Manager
@@ -32,7 +36,9 @@ rm aclocal.m4
 %install
 mkdir -p %buildroot%_libdir
 make install DESTDIR=%buildroot
+%if_with sqlite2
 rm -f %buildroot%_libdir/libsqliteodbc*.{a,la}
+%endif
 rm -f %buildroot%_libdir/libsqlite3odbc*.{a,la}
 rm -f %buildroot%_libdir/libsqlite3_mod_*.{a,la}
 
@@ -100,6 +106,9 @@ fi
 %_libdir/*.so*
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9996-alt2
+- NMU: rebuild without sqlite2 support
+
 * Mon Aug 20 2018 Fr. Br. George <george@altlinux.ru> 0.9996-alt1
 - Autobuild version bump to 0.9996
 
