@@ -3,7 +3,7 @@
 
 Name: sechooser
 Version: 0.2.2
-Release: alt6
+Release: alt7
 
 Summary: Selinux user range chooser
 License: GPL
@@ -61,6 +61,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Fri Jan 24 2020 Denis Medvedev <nbr@altlinux.org> 0.2.2-alt7
+- revert DRI3 commit, it should be done system-wide.
+
 * Fri Jan 24 2020 Denis Medvedev <nbr@altlinux.org> 0.2.2-alt6
 - Force disabling of DRI3 by setting the corresponding value in ENV
 
