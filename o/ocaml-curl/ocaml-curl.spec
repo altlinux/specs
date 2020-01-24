@@ -5,8 +5,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 0.8.2
-Release: alt3
+Version: 0.9.0
+Release: alt1
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -65,6 +65,9 @@ make -C examples clean
 %pkgsitelib/*.mli
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 0.9.0-alt1
+- 0.9.0
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.8.2-alt3
 - rebuilt with ocaml-4.08
 
