@@ -16,24 +16,29 @@ relational or object oriented databases.
 %define oname tables
 
 %def_with python3
+%def_without python2
 %def_enable check
 
 Name: py%oname
 Version: 3.5.2
-Release: alt1
+Release: alt2
 Epoch: 1
+
 Summary: Managing hierarchical datasets
+
 License: MIT
 Group: Development/Python
 Url: http://www.pytables.org/
 
 # https://github.com/PyTables/PyTables.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
+Requires: python3-module-%oname = %EVR
+
+
+%if_with python2
 %add_findreq_skiplist %python_sitelibdir/%oname/contrib/nctoh5.py
-%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
-
-Requires: python-module-%oname = %EVR
+%add_python_req_skip sqlite
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-module-numpydoc python-module-numpy-addons
@@ -41,21 +46,27 @@ BuildPreReq: python-module-lxml python-module-numpy
 BuildPreReq: python-module-docutils python-module-matplotlib
 BuildPreReq: python-module-sphinx
 BuildPreReq: python-module-numexpr-tests
-BuildPreReq: python-devel python-module-Pyrex libnumpy-devel
-BuildPreReq: libhdf5-devel liblzo2-devel bzlib-devel
-BuildPreReq: xsltproc inkscape fop
-BuildPreReq: java-devel-default docbook-tldp-xsl docbook-dtds
+BuildPreReq: python-devel python-module-Pyrex
 BuildPreReq: python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
-#BuildPreReq: texlive-latex-recommended libblosc-devel
-BuildPreReq: libblosc-devel
 BuildRequires: python-module-sphinx_rtd_theme ipython python-module-pathlib2
 BuildRequires: python-module-mock
+%endif
+
+BuildRequires: libnumpy-devel
+BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
+BuildRequires: xsltproc inkscape fop
+BuildRequires: java-devel-default docbook-tldp-xsl docbook-dtds
+#BuildPreReq: texlive-latex-recommended libblosc-devel
+BuildRequires: libblosc-devel
+
 %if_with python3
+%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
-BuildPreReq: python3-module-distribute python3-module-Cython
-BuildPreReq: python3-module-numexpr-tests
+BuildRequires: python3-module-distribute python3-module-Cython
+BuildRequires: python3-module-numexpr-tests
 BuildRequires: python3-module-mock
 %endif
 
@@ -114,6 +125,7 @@ BuildArch: noarch
 
 This package contains documentation for PyTables.
 
+%if_with python2
 %package -n python-module-%oname
 Summary: Managing hierarchical datasets
 Group: Development/Python
@@ -147,6 +159,8 @@ Requires: python-module-%oname = %EVR
 
 This package contains benchmarks for PyTables.
 
+%endif
+
 %prep
 %setup
 %if_with python3
@@ -162,7 +176,9 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %build
 %add_optflags -fno-strict-aliasing
 export NPY_NUM_BUILD_JOBS=%__nprocs
+%if_with python2
 %python_build_debug --hdf5=%hdf5dir
+%endif
 %if_with python3
 pushd ../python3
 %python3_build_debug --hdf5=%hdf5dir
@@ -184,25 +200,32 @@ done
 popd
 %endif
 
+%if_with python2
 %python_install --hdf5=%hdf5dir --root=%buildroot
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make_build -C doc pickle
 %make_build -C doc html
+%endif
 
 install -d %buildroot%_docdir/%name/pdf
 install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.txt THANKS \
     %buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
+
+%if_with python2
 #install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
 cp -fR doc/build/html %buildroot%_docdir/%name/
 
 cp -fR examples %buildroot%python_sitelibdir/%oname/
 
 cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
+%if_with python2
 %make check
+%endif
 %if_with python3
 pushd ../python3
 %make check PYTHON=python3
@@ -215,6 +238,7 @@ popd
 %exclude %_bindir/*.py3
 %endif
 
+%if_with python2
 %files -n python-module-%oname
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/examples
@@ -229,6 +253,7 @@ popd
 
 %files -n python-module-%oname-bench
 %python_sitelibdir/%oname/bench
+%endif
 
 %if_with python3
 %files py3
@@ -254,6 +279,10 @@ popd
 %_docdir/%name
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.2-alt2
+- disable build python2 submodules
+- stop using obsoleted sqlite module
+
 * Fri Jul 19 2019 Grigory Ustinov <grenka@altlinux.org> 1:3.5.2-alt1
 - Build new version.
 
