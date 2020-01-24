@@ -1,6 +1,6 @@
 Name: nagios-nsca
 Version: 2.9.2
-Release: alt2
+Release: alt3
 
 Summary: Nagios addon to send check results to a central monitoring server
 
@@ -12,6 +12,9 @@ Source: nsca-%version.tar
 
 Patch0: nsca.cfg-2.9.2-alt.patch
 Patch1: nsca.xinetd-2.9.2-alt.patch
+Patch2: nsca-send-host-in-config-%version.patch
+Patch3: nsca-custom-notifications-%version.patch
+
 BuildRequires: libnsl2-devel libsocket libmcrypt-devel
 
 Requires: nagios xinetd
@@ -54,6 +57,8 @@ This package provides the send_nsca utility running on the client.
 %setup -n nsca-%version
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 #%autoreconf
@@ -83,6 +88,15 @@ install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 %doc Changelog LEGAL README SECURITY
 
 %changelog
+* Fri Jan 24 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2-alt3
+- Support send/receive of custom notifications.
+- send_nsca: The default configuration path is now
+  /etc/nagios/send_nsca.cfg
+- send_nsca: Now the host address can be specified in the
+  configuration file.
+- Apply the custom notifications patch
+- xinetd.d/nsca: Set type = UNLISTED (thx lakostis@).
+
 * Wed Jan 22 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2-alt2
 - Fix: Do not replace xinetd.d/nsca config.
 - Patching configuration files (paths).
