@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.20.3
+Version: 0.20.4
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -23,6 +23,8 @@ Provides:      nodejs-packaging = %version
 Requires:      npm
 Requires:      node-devel
 Requires:      node-gyp
+# still used in node-gyp
+Requires:      rpm-build-python3
 
 %description
 RPM helper scripts and build environment
@@ -85,6 +87,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Mon Jan 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.20.4-alt1
+- node-gyp: drop --tarball
+
 * Fri Jan 10 2020 Pavel Skrylev <majioa@altlinux.org> 0.20.3-alt1
 - added (+) short npm build and install macros scripts
 - fixed (*) license
