@@ -1,10 +1,10 @@
 Name: perl
 Version: 5.28.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
-License: GPL or Artistic
+License: Artistic-1.0 OR GPL-2.0-or-later
 Group: Development/Perl
 URL: http://www.perl.org
 Packager: Perl Maintainers Team <cpan@packages.altlinux.org>
@@ -38,6 +38,8 @@ Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 # mail from Oleg Solovyov; see patch body
 Patch21: perl-5.24.3-alt-solovyov.patch
 Patch22: perl-5.28.1-alt-viy-caretx-chroot-support.patch
+Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
+Patch24: perl-5.28.2-fix-Time-Local-test-2020.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
@@ -352,6 +354,8 @@ equivalent text will have identical binary representations.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
+%patch24 -p1
 %patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
@@ -1069,6 +1073,11 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Thu Jan 23 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:5.28.2-alt2
+- Licence tag fixed
+- build in year 2020 fixed (Time-Local)
+- 'trust mode' implemented by mcpain@
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.28.2-alt1
 - 5.28.1 -> 5.28.2
 
