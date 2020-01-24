@@ -2,23 +2,21 @@
 
 %define bname frei0r
 %define major_ver 1
-%define minor_ver 6
+%define minor_ver 7
 
 Name: %bname-plugins
-Version: %major_ver.%minor_ver.1
-Release: alt2
+Version: %major_ver.%minor_ver.0
+Release: alt1
 
 Summary: Frei0r - a minimalistic plugin API for video effects
-License: %lgpl2plus
+License: GPL-2.0+
 Group: Video
 
 Url: https://frei0r.dyne.org
 # git https://github.com/dyne/frei0r.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
 BuildRequires: libgavl-devel >= 0.2.3
 BuildRequires: doxygen fonts-ttf-dejavu graphviz
@@ -95,6 +93,9 @@ ln -s config.h include/cvconfig.h
 %endif
 
 %changelog
+* Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Wed Oct 03 2018 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt2
 - fix build with opencv >= 3.4.2
 
