@@ -8,12 +8,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.4.1
-Release: alt2
+Version: 4.4.2
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
-License: MPLv2.0
+License: MPL-2.0
 Group: System/Servers
 Url: https://www.isc.org/dhcp/
 
@@ -84,8 +84,6 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
-Patch0040: 0040-server-Fix-error-message.patch
-Patch0041: 0041-Fix-build-with-gcc-9.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -239,8 +237,6 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
-%patch0040 -p2
-%patch0041 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -567,6 +563,11 @@ fi
 # }}}
 
 %changelog
+* Fri Jan 24 2020 Mikhail Efremov <sem@altlinux.org> 1:4.4.2-alt1
+- Fixed license tag.
+- Updated patches.
+- Updated to 4.4.2.
+
 * Fri Oct 25 2019 Mikhail Efremov <sem@altlinux.org> 1:4.4.1-alt2
 - Don't use deprecated PreReq.
 - Fixed build on e2kv4 through %%e2k macro (by Michael Shigorin).
