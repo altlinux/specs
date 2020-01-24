@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with firebird
+%def_without sqlite2
 %def_disable doc
 
 Name: libdbi-drivers
 Version: 0.9.0
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Database drivers for libdbi
@@ -19,7 +20,9 @@ Patch: 0001-freetds-resolve-compile-error-with-1.0.patch
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: gcc-c++ libdbi-devel zlib-devel
 BuildRequires: libMySQL-devel postgresql-devel
-BuildRequires: libfreetds-devel libsqlite-devel libsqlite3-devel
+BuildRequires: libfreetds-devel
+BuildRequires: libsqlite3-devel
+%{?_with_sqlite2:BuildRequires: libsqlite-devel}
 %{?_with_firebird:BuildRequires: firebird-devel docbook-style-dsssl jadetex}
 %{?_enable_doc:BuildRequires: docbook-style-dsssl jadetex openjade}
 
@@ -57,6 +60,7 @@ This driver provides connectivity to PostgreSQL database servers through the
 libdbi database independent abstraction layer. Switching a program's driver
 does not require recompilation or rewriting source code.
 
+%if_with sqlite2
 %package dbd-sqlite
 Summary: SQLite driver for libdbi
 Group: System/Libraries
@@ -70,6 +74,8 @@ connections by using this framework.
 This driver provides connectivity to SQLite database servers through the libdbi
 database independent abstraction layer. Switching a program's driver does not
 require recompilation or rewriting source code.
+
+%endif
 
 %package dbd-sqlite3
 Summary: SQLite3 driver for libdbi
@@ -167,7 +173,9 @@ sed -i "s|/lib\b|/%_lib|g" acinclude.m4
 %configure \
     --with-mysql \
     --with-pgsql \
+%if_with sqlite2
     --with-sqlite \
+%endif
     --with-sqlite3 \
     --with-freetds \
     --with-freetds-incdir=%_includedir \
@@ -188,7 +196,9 @@ sed -i "s|/lib\b|/%_lib|g" acinclude.m4
 install -d %buildroot%_includedir/dbi
 install -pm0644 drivers/mysql/dbd_mysql.h %buildroot%_includedir/dbi/
 install -pm0644 drivers/pgsql/dbd_pgsql.h %buildroot%_includedir/dbi/
+%if_with sqlite2
 install -pm0644 drivers/sqlite/dbd_sqlite.h %buildroot%_includedir/dbi/
+%endif
 install -pm0644 drivers/sqlite3/dbd_sqlite3.h %buildroot%_includedir/dbi/
 install -pm0644 drivers/freetds/dbd_freetds.h %buildroot%_includedir/dbi/
 %if_with firebird
@@ -199,7 +209,9 @@ install -pm0644 drivers/firebird/dbd_firebird.h %buildroot%_includedir/dbi/
 # fix some docs
 cp -a drivers/mysql/TODO TODO.mysql
 cp -a drivers/pgsql/TODO TODO.pgsql
+%if_with sqlite2
 cp -a drivers/sqlite/TODO TODO.sqlite
+%endif
 cp -a drivers/sqlite3/TODO TODO.sqlite3
 %if_with firebird
 cp -a drivers/firebird/TODO TODO.firebird
@@ -220,9 +232,11 @@ rm -f %buildroot%_libdir/dbd/*.la
 %doc drivers/pgsql/README
 %_libdir/dbd/libdbdpgsql.so
 
+%if_with sqlite2
 %files dbd-sqlite
 %doc drivers/sqlite/README
 %_libdir/dbd/libdbdsqlite.so
+%endif
 
 %files dbd-sqlite3
 %doc drivers/sqlite3/README
@@ -252,6 +266,9 @@ rm -f %buildroot%_libdir/dbd/*.la
 %endif
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.9.0-alt6
+- build without sqlite2 support
+
 * Tue Jul 02 2019 Michael Shigorin <mike@altlinux.org> 1:0.9.0-alt5
 - introduced firebird knob (on by default)
 - replaced builddoc variable with docs knob (off by default),
