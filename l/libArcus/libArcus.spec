@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 3.6.0
-Release: alt2
+Version: 4.4.1
+Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -42,6 +42,9 @@ Communication library between internal components for Ultimaker software
 %setup
 %patch -p1
 
+# https://github.com/Ultimaker/libArcus/pull/94#issuecomment-505376760
+sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
+
 %build
 %cmake -DBUILD_EXAMPLES:BOOL=OFF \
        -DCMAKE_SKIP_RPATH:BOOL=ON
@@ -63,6 +66,9 @@ Communication library between internal components for Ultimaker software
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jan 25 2020 Anton Midyukov <antohami@altlinux.org> 4.4.1-alt1
+- New version 4.4.1
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 

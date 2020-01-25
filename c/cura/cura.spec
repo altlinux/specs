@@ -6,8 +6,8 @@
 
 Name: cura
 Epoch: 1
-Version: 3.6.0
-Release: alt2.1
+Version: 4.4.1
+Release: alt1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -17,10 +17,24 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
+# Fedora patch
+Patch0: 0001-Force-to-open-with-X11.patch
+
+# OpenSUSE path
+# PATCH-FIX-OPENSUSE disable-code-style-check.patch code style is no distro buisiness
+Patch1:         disable-code-style-check.patch
+# PATCH-FIX-OPENSUSE fix-runtime.patch
+Patch2:         fix-runtime.patch
+# PATCH-FIX-OPENSUSE fix-crash-on-start.patch
+Patch3:         fix-crash-on-start.patch
+
+
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: dos2unix
 BuildRequires: python3-devel
@@ -52,11 +66,17 @@ Cura prepares your model for 3D printing. For novices, it makes it easy to get
 great results. For experts, there are over 200 settings to adjust to your
 needs. As it's open source, our community helps enrich it even more.
 
+# see: https://github.com/Ultimaker/Cura/issues/5142
+%define cura_cloud_api_root https://api.ultimaker.com
+%define cura_cloud_api_version 1
+%define cura_cloud_account_api_root https://account.ultimaker.com
+
 %prep
 %setup
-
-# The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
-rm setup.py
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Wrong end of line encoding
 dos2unix docs/How_to_use_the_flame_graph_profiler.md
@@ -66,6 +86,10 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 
 %build
 %cmake -DCURA_VERSION:STRING=%version \
+       -DCURA_BUILDTYPE=RPM \
+       -DCURA_CLOUD_API_ROOT:STRING=%cura_cloud_api_root \
+       -DCURA_CLOUD_API_VERSION:STRING=%cura_cloud_api_version \
+       -DCURA_CLOUD_ACCOUNT_API_ROOT:STRING=%cura_cloud_account_api_root \
        -DLIB_SUFFIX:STR=
 %cmake_build
 
@@ -74,14 +98,10 @@ dos2unix docs/How_to_use_the_flame_graph_profiler.md
 
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
-# fix directories appdata
-mv %buildroot%_datadir/metainfo %buildroot%_datadir/appdata
-
-
 %check
 %if 0%{?with_check}
 python3 -m pip freeze
-python3 -m pytest -v
+python3 -m pytest -v -k "not TestCollidesWithAreas"
 %endif
 
 desktop-file-validate %buildroot%_datadir/applications/%name.desktop
@@ -91,13 +111,16 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %python3_sitelibdir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/%name-icon.png
 %_datadir/mime/packages/%name.xml
 %_bindir/%name
 %_libexecdir/%name
 
 %changelog
+* Sat Jan 25 2020 Anton Midyukov <antohami@altlinux.org> 1:4.4.1-alt1
+- New version 4.4.1
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.6.0-alt2.1
 - NMU: remove rpm-build-ubt from BR:
 
