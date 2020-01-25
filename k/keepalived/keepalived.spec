@@ -16,8 +16,8 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.0.19
-Release: alt2
+Version: 2.0.20
+Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -122,6 +122,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Sat Jan 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.20-alt1
+- 2.0.20
+
 * Mon Jan 20 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.19-alt2
 - update build options; enable support:
   + bfd
