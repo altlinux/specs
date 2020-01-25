@@ -2,16 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.88
-Release: alt2
+Version: 1.90
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
 Group: Development/Tools
 
 Url: https://github.com/danmar/cppcheck
-# git://github.com/danmar/cppcheck.git
+# Source-url: https://github.com/danmar/cppcheck/archive/%version.tar.gz
 Source: %name-%version.tar
+
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
 Patch3: cppcheck-1.87-cfgdir.patch
@@ -19,15 +20,18 @@ Patch4: cppcheck-1.72-test_32.patch
 Patch5: 1939.patch
 Patch6: 1943.patch
 Patch7: cppcheck-1.88-tinyxml.patch
-Patch8: cppcheck-1.88-translations.patch
+Patch8: cppcheck-1.90-translations.patch
 Patch9: cppcheck-1.88-alt-pcre.patch
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-charts-devel
 BuildRequires: cmake
 BuildRequires: ctest
-BuildRequires: docbook-style-xsl libpcre-devel python-modules-compiler python-modules-encodings xsltproc
+BuildRequires: docbook-style-xsl libpcre-devel xsltproc
 BuildRequires: libtinyxml2-devel
+BuildRequires(pre): rpm-build-python3
+
+%add_python3_req_skip cppcheckdata
 
 %description
 Static analysis of C/C++ code. Checks for: memory leaks, mismatching
@@ -46,17 +50,22 @@ Requires: %name = %EVR
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 
 %ifnarch x86_64
 %patch4 -p1
 %endif
 
-%patch5 -p1
-%patch6 -p1
+#patch5 -p1
+#patch6 -p1
 %patch7 -p1
-%patch8 -p1
+%patch8 -p2
 %patch9 -p2
+
+# fix /usr/share/cppcheck path
+%__subst 's|project(Cppcheck)|project(%name)|' CMakeLists.txt
+
+%__subst 's|/usr/bin/env python|%__python3|' htmlreport/cppcheck-htmlreport
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -75,7 +84,6 @@ rm -r externals/tinyxml
 	-DBUILD_GUI:BOOL=ON \
 	-DWITH_QCHART:BOOL=ON \
 	-DBUILD_TESTS:BOOL=ON \
-	-DCFGDIR=%_datadir/cppcheck/cfg/ \
 	%nil
 
 %cmake_build
@@ -96,14 +104,6 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 # Install htmlreport
 install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-htmlreport
 
-install -d %buildroot%_datadir/%name/addons
-
-for i in addons/*.py addons/y2038/*.py addons/*.json; do
-	install -pD -m 755 $i %buildroot%_datadir/%name/addons/
-done
-
-[ -e %buildroot%_datadir/%name/addons/__init__.py ] && rm -f %buildroot%_datadir/%name/addons/__init__.py
-
 %check
 %cmake_build check
 
@@ -112,7 +112,10 @@ done
 %_bindir/%name
 %_bindir/%name-htmlreport
 %_man1dir/%name.1*
-%_datadir/%name
+%dir %_datadir/%name/
+%_datadir/%name/addons/
+%_datadir/%name/cfg/
+%_datadir/%name/platforms/
 %exclude %_datadir/%name/lang
 
 %files gui
@@ -123,6 +126,10 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jan 25 2020 Vitaly Lipatov <lav@altlinux.ru> 1.90-alt1
+- NMU: new version 1.90 (with rpmrb script)
+- cleanup build, switch to python3
+
 * Sat Aug 31 2019 Michael Shigorin <mike@altlinux.org> 1.88-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
