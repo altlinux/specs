@@ -8,7 +8,7 @@
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -126,6 +126,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Jan 25 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
