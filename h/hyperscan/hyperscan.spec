@@ -1,6 +1,6 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
-%define major 5.1
+%define major 5.2
 %define libname libhyperscan%major
 %define develname libhyperscan-devel
 
@@ -85,6 +85,9 @@ needed for developing Hyperscan applications.
 %_includedir/hs/
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+
 * Mon May 06 2019 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
 - new version 5.1.1 (with rpmrb script)
 
