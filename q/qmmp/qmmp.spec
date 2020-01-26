@@ -1,5 +1,5 @@
 %define branch 0.12
-%define svn svn9010
+%define svn svn9218
 
 %define rel alt1
 
@@ -28,7 +28,7 @@
 %define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK ARCHIVE_PLUGIN"
 %endif
 
-Version: %branch.3
+Version: %branch.7
 Epoch: 1
 Name: qmmp
 Release: %rel.%svn
@@ -974,6 +974,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Jan 26 2020 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.7-alt1.svn9218
+- 0.12.7 svn9218 version
+
 * Sun Jul 21 2019 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.3-alt1.svn9010
 - 0.12.3 svn9010 version
 
