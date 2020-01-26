@@ -1,5 +1,4 @@
-# TODO: use packaged fonts instead of .gear/telegram-desktop-postsubmodules/Telegram/lib_ui/fonts
-# TODO: build QR, external, json11 separately
+# TODO: build external, json11 separately
 
 # other variant: Debug
 %define buildmode Release
@@ -8,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -26,6 +25,7 @@ Source2: %name-postsubmodules-%version.tar
 Patch1: cmake_helpers-system-variant.patch
 Patch2: cmake_helpers-system-gsl.patch
 Patch3: 0001-add-ppc64-and-e2k-build-support.patch
+Patch4: cmake_helpers-system-qrcode.patch
 
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
@@ -87,8 +87,8 @@ BuildRequires: libva-devel libdrm-devel
 
 # libs from Telegram project
 BuildRequires: libtgvoip-devel >= 2.4.4
-BuildRequires: libcrl-devel >= 0.9
 BuildRequires: librlottie-devel >= 0.0.1
+BuildRequires: libqrcodegen-cpp-devel
 
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel >= 1:2.1.0
@@ -138,6 +138,7 @@ or business messaging needs.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %if_with ffmpeg_static
@@ -152,7 +153,18 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
     -DTDESKTOP_API_ID=182015 \
     -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
-    -DVARIANT_INCLUDE_DIRS=%_includedir/libvariant
+    -DVARIANT_INCLUDE_DIRS=%_includedir/libvariant \
+    -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
+    -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
+    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=ON \
+    -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
+    -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
+    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
+    -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
+    -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
+    %nil
+# check later: -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON
 
 %make_build
 
@@ -186,8 +198,13 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
+- new version (1.9.8) with rpmgs script
+- build with system libqrcodegen-cpp-devel
+- return build settings
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
-- new version 1.9.8 (with rpmrb script)
+- new version 1.9.7 (with rpmrb script)
 - switched to the upstream cmake build
 
 * Thu Nov 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.15-alt2
