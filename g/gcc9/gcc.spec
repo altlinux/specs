@@ -2,12 +2,13 @@
 
 Name: gcc%gcc_branch
 Version: 9.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
-License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
+License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
+
 Group: Development/C
 Url: https://gcc.gnu.org/
 
@@ -16,7 +17,8 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20190827
+%define snapshot 20200123
+
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -2125,6 +2127,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sun Jan 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt3
+- Updated to git://gcc.gnu.org/git/gcc.git vendors/redhat/heads/gcc-9-branch
+  commit 98ca79bc91558a8ccaf487acc861a50425faf5af.
+- Fixed License tag.
+
 * Mon Nov 11 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt2
 - gdc: add R: gcc-gdc-common.
 
