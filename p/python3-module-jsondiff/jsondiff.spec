@@ -1,7 +1,7 @@
 %define oname jsondiff
 
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Diff JSON and JSON-like structures in Python
@@ -37,8 +37,12 @@ python3 setup.py test
 %files
 %doc *.rst
 %_bindir/jsondiff
+%_bindir/jdiff
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 27 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - initial build for ALT Sisyphus
