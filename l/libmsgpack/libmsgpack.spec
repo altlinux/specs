@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 3.2.0
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: Binary-based efficient object serialization library
 
@@ -68,6 +68,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack/
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1 (with rpmrb script)
+
 * Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.0-alt2
 - Fixed use of vrefbuffer.hpp header on ppc64le.
 
