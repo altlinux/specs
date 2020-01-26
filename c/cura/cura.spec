@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 4.4.1
-Release: alt1
+Release: alt1.1
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -27,8 +27,6 @@ Patch1:         disable-code-style-check.patch
 Patch2:         fix-runtime.patch
 # PATCH-FIX-OPENSUSE fix-crash-on-start.patch
 Patch3:         fix-crash-on-start.patch
-
-
 
 BuildArch: noarch
 
@@ -52,6 +50,7 @@ Requires: python3-module-savitar = %version
 Requires: Uranium = %version
 Requires: qt5-quickcontrols
 Requires: qt5-quickcontrols2
+Requires: qt5-graphicaleffects
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials = %version
 Requires: 3dprinter-udev-rules
@@ -118,6 +117,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Sun Jan 26 2020 Anton Midyukov <antohami@altlinux.org> 1:4.4.1-alt1.1
+- Fix requires
+
 * Sat Jan 25 2020 Anton Midyukov <antohami@altlinux.org> 1:4.4.1-alt1
 - New version 4.4.1
 
