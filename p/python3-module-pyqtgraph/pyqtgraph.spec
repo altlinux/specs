@@ -9,7 +9,7 @@
 
 Name: python3-module-%modulename
 Version: 0.11.0
-Release: alt1.rc0
+Release: alt2.rc0
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -38,7 +38,8 @@ BuildRequires: python3-module-scipy
 BuildRequires: xvfb-run
 %endif
 
-%add_python3_req_skip PySide2
+# skip optional dependencies
+%add_python3_req_skip PyQt4 PySide PySide2 matplotlib.backends.backend_qt4agg
 
 %description
 PyQtGraph is a pure-python graphics and GUI library built on PyQt5 / PySide2
@@ -67,5 +68,8 @@ PYTHONDONTWRITEBYTECODE=1 xvfb-run -a py.test3 -k "not (test_ImageItem or test_I
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Jan 26 2020 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt2.rc0
+- skip optional dependencies (PyQt4, PySide)
+
 * Thu Dec 26 2019 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1.rc0
 - 0.11.0 release candidate 0
