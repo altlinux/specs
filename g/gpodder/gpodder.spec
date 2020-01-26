@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.10.11
+Version: 3.10.12
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -83,6 +83,9 @@ PYTHON=python3 %make unittest
 
 
 %changelog
+* Sun Jan 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.12-alt1
+- 3.10.12
+
 * Mon Sep 30 2019 Yuri N. Sedunov <aris@altlinux.org> 3.10.11-alt1
 - 3.10.11
 
