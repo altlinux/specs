@@ -6,8 +6,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 3.6.0
-Release: alt4
+Version: 4.4.1
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -36,7 +36,6 @@ BuildRequires:  python3-module-shapely
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: Uranium-3.6.0-Support-Pytest-4-config.warn-is-no-more.patch
 
 %description
 %summary
@@ -51,11 +50,6 @@ related applications.
 
 %prep
 %setup
-%patch -p1
-
-# empty file. appending to the end to make sure we are not overriding
-# a non empty file in the future
-echo '# empty' >> UM/Settings/ContainerRegistryInterface.py
 
 %build
 # there is no arch specific content, so we set LIB_SUFFIX to nothing
@@ -81,9 +75,7 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-
-# https://github.com/Ultimaker/Uranium/issues/394
-python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
+python3 -m pytest -v -k "not TestPolygon"
 %endif
 
 %files -f uranium.lang
@@ -97,6 +89,9 @@ python3 -m pytest -v -k "not TestContainerStack and not TestContainerRegistry"
 %doc html LICENSE
 
 %changelog
+* Sat Jan 25 2020 Anton Midyukov <antohami@altlinux.org> 4.4.1-alt1
+- New version 4.4.1
+
 * Thu Oct 03 2019 Stanislav Levin <slev@altlinux.org> 3.6.0-alt4
 - Fixed testing.
 
