@@ -1,45 +1,33 @@
+# TODO: use packaged fonts instead of .gear/telegram-desktop-postsubmodules/Telegram/lib_ui/fonts
+# TODO: build QR, external, json11 separately
+
 # other variant: Debug
 %define buildmode Release
 
 %define ffmpeg_version 3.4
 %def_without ffmpeg_static
 
-# Precompiled supports only for gcc now
-%def_without clang
-%def_without libcxx
-
 Name: telegram-desktop
-Version: 1.8.15
-Release: alt2
+Version: 1.9.7
+Release: alt1
 
-Summary: Telegram is a messaging app with a focus on speed and security
+Summary: Telegram Desktop messaging app
 
-License: %gpl3only
+License: GPLv3 with OpenSSL exception
 Group: Networking/Instant messaging
 Url: https://telegram.org/
 
-# Source-url: https://github.com/telegramdesktop/tdesktop/archive/v%version.tar.gz
+# Source-git: https://github.com/telegramdesktop/tdesktop.git
 Source: %name-%version.tar
 
-Source2: %name-cmake-%version.tar
+Source2: %name-postsubmodules-%version.tar
 
-#Patch1: 0001_add-cmake.patch
-Patch3: 0003_qt-plugins.patch
-Patch5: 0005_Downgrade-Qt-version.patch
-Patch6: 0006_fix-static-qt-functions.patch
-#Patch9: 0001-use-correct-executable-path.patch
-Patch15: 0015-disable-resource-fonts.patch
-Patch16: 0016-fix-lzma.patch
-#Patch17: 0017-ligsl-microsoft-fix.patch
-Patch18: 0018-fix-linking.patch
-Patch19: 0019-fix-add-ppc64-e2k-support.patch
+# See https://github.com/EasyCoding/tgbuild
+Patch1: cmake_helpers-system-variant.patch
+Patch2: cmake_helpers-system-gsl.patch
+Patch3: 0001-add-ppc64-and-e2k-build-support.patch
 
-# ix86 disabled due to memory limits:
-# /usr/bin/ld.default: error: CMakeFiles/Telegram.dir/generated/scheme.cpp.o(.eh_frame) is too large (0xdddd8 bytes)
-# /usr/bin/ld.default: error in CMakeFiles/Telegram.dir/generated/scheme.cpp.o(.eh_frame); no .eh_frame_hdr table will be created
-#ExcludeArch: %ix86
-
-BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
 BuildRequires(pre): rpm-macros-kde-common-devel
 
 BuildRequires(pre): rpm-build-compat >= 2.1.5
@@ -48,14 +36,15 @@ BuildRequires(pre): rpm-build-intro >= 2.1.5
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 3000
 
+# minimalize memory using
 %ifarch %ix86
 %define optflags_debug -g0
 %endif
 
-BuildRequires: gcc-c++ libstdc++-devel gyp python3
+BuildRequires: gcc-c++ libstdc++-devel python3
 
-# cmake 3.13 due to add_compiler_definitions
-BuildRequires: cmake >= 3.13
+# cmake 3.16 as in CMakeLists.txt
+BuildRequires: cmake >= 3.16
 
 BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
 # needs for smiles and emojicons
@@ -67,17 +56,23 @@ Requires: libqt5-core >= %_qt5_version
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
 
+BuildRequires: libenchant2-devel
+
 # for autoupdater (included ever if disabled)
+# TODO:
 BuildRequires: liblzma-devel
 
 # for SourceFiles/mtproto/connection.cpp
 BuildRequires: libzip-devel
 
 BuildRequires: zlib-devel >= 1.2.8
+BuildRequires: libxxhash-devel
+BuildRequires: liblz4-devel
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
 #BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
 #BuildRequires: libXi-devel libSM-devel libICE-devel libdbus-devel libXfixes-devel
+# TODO:
 BuildRequires: libX11-devel
 
 # GTK 3.0 integration
@@ -93,16 +88,12 @@ BuildRequires: libva-devel libdrm-devel
 # libs from Telegram project
 BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: libcrl-devel >= 0.9
-
-BuildRequires: libxxhash-devel
-
 BuildRequires: librlottie-devel >= 0.0.1
-BuildRequires: liblz4-devel
 
 # C++ sugar
-BuildRequires: libmicrosoft-gsl-devel >= 20180615
+BuildRequires: libmicrosoft-gsl-devel >= 1:2.1.0
 BuildRequires: libvariant-devel
-BuildRequires: librange-v3-devel >= 0.9.1
+BuildRequires: librange-v3-devel >= 0.10.0
 
 # FIXME: libva need only for linking, extra deps?
 
@@ -117,14 +108,6 @@ BuildRequires: libavformat-devel >= %ffmpeg_version
 BuildRequires: libavutil-devel >= %ffmpeg_version
 BuildRequires: libswscale-devel >= %ffmpeg_version
 BuildRequires: libswresample-devel >= %ffmpeg_version
-%endif
-
-%if_with clang
-BuildRequires: clang
-%remove_optflags -frecord-gcc-switches
-%endif
-%if_with libcxx
-%add_optflags -stdlib=libc++
 %endif
 
 Requires: dbus
@@ -152,69 +135,45 @@ or business messaging needs.
 
 %prep
 %setup -a2
-#patch1 -p1
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
-#patch5 -p1
-%patch6 -p1
-#patch9 -p1
-%patch15 -p1
-#patch17 -p2
-%patch18 -p2
-%patch19 -p2
-
-# some hack with precompiled headers (cmake TODO)
-cat Telegram/SourceFiles/mtproto/mtp_pch.h >>Telegram/SourceFiles/stdafx.h
-
-./Telegram/gen_source_list.sh
-
-# MacOS things will conflicts with binary name, so delete Telegram dir
-rm -rf Telegram/Telegram/
-# remove fonts from resources
-rm -rf Telegram/Resources/fonts/
 
 %build
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
-cd Telegram
-%if_with clang
-export CC=clang
-export CXX=clang++
-%endif
+
 # due precompiled headers
 export CCACHE_SLOPPINESS=pch_defines,time_macros
-cd SourceFiles/codegen
-%cmake_insource
-%make_build
-cd -
-%cmake_insource \
-%if_with libcxx
-    -DLLVM_ENABLE_LIBCXX=ON
-%else
-    %nil
-%endif
+
+# AppID for Basealt build
+# got from https://core.telegram.org/api/obtaining_api_id
+%cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
+    -DTDESKTOP_API_ID=182015 \
+    -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
+    -DVARIANT_INCLUDE_DIRS=%_includedir/libvariant
+
 %make_build
 
 %install
+%makeinstall_std
 # XDG files
-install -m644 -D lib/xdg/telegramdesktop.desktop %buildroot%_desktopdir/%name.desktop
 install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
 install -m644 -D lib/xdg/telegramdesktop.appdata.xml %buildroot%_datadir/appdata/telegram-desktop.appdata.xml
-for i in 16 32 48 64 128 256; do
-    install -m644 -D Telegram/Resources/art/icon$i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/telegram.png
-done
 
-#cd out/%buildmode
-install -D Telegram/Telegram %buildroot%_bindir/%name
 ln -s %name %buildroot%_bindir/Telegram
 ln -s %name %buildroot%_bindir/telegram
+ln -s %name %buildroot%_bindir/telegramdesktop
 
 %files
 %_bindir/%name
+%_bindir/telegramdesktop
 %_bindir/Telegram
 %_bindir/telegram
-%_desktopdir/%name.desktop
+%_desktopdir/telegramdesktop.desktop
 %_Kservices/tg.protocol
+%_datadir/metainfo/telegramdesktop.appdata.xml
 %_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
 %_iconsdir/hicolor/32x32/apps/telegram.png
@@ -222,13 +181,17 @@ ln -s %name %buildroot%_bindir/telegram
 %_iconsdir/hicolor/64x64/apps/telegram.png
 %_iconsdir/hicolor/128x128/apps/telegram.png
 %_iconsdir/hicolor/256x256/apps/telegram.png
+%_iconsdir/hicolor/512x512/apps/telegram.png
 #_man1dir/*
 %doc README.md
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
+- new version 1.9.8 (with rpmrb script)
+- switched to the upstream cmake build
+
 * Thu Nov 14 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.15-alt2
 - enable build for i586 (with -g0)
-- fix unexpected canonicalization unexpectedly shrank by one character (in Qt's paths)
 
 * Tue Oct 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.8.15-alt1
 - new version 1.8.15 (with rpmrb script)
