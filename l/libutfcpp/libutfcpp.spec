@@ -1,6 +1,6 @@
 %define uglyver 2_3_4
 Name: libutfcpp
-Version: 2.3.4
+Version: 3.1
 Release: alt1
 
 Summary: A library for handling UTF-8 encoded strings
@@ -42,6 +42,9 @@ A library for handling UTF-8 encoded strings.
 %_includedir/utf8.h
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
+- new version 3.1 (with rpmrb script)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
 - initial build for ALT Linux Sisyphus
 
