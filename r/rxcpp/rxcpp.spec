@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without check
+%def_with check
 
 Name:    rxcpp
 Version: 4.0.0
-Release: alt1
+Release: alt2
+
 Summary: Reactive Extensions for C++
+
 License: Apache 2.0
 Group:   Development/C++
 URL:     https://github.com/ReactiveX/RxCpp
@@ -17,7 +19,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: cmake ctest
-BuildRequires: catch2-devel
+BuildRequires: catch-devel
 BuildRequires: doxygen
 BuildRequires: graphviz
 
@@ -43,15 +45,13 @@ This package contains the API-documentation for %{name}.
 %prep
 %setup
 
-# Fix path to catch.
-sed -i.catch -e 's!\${RXCPP_DIR}/ext/catch/include!%{_includedir}/catch!g' \
-  projects/CMake/shared.cmake
+%__subst "/-Werror/d" projects/CMake/shared.cmake
 
 %build
-%cmake
+%cmake_insource
 # it's not necessary to build project if tests are skipped
 %if_with check
-%make -C BUILD
+%make_build
 %endif
 
 # Build docs
@@ -60,13 +60,13 @@ doxygen doxygen.conf
 popd
 
 %install
-%cmakeinstall_std
+%makeinstall_std
 
 mkdir -p %buildroot%_includedir
 mv %buildroot%_prefix/%name %buildroot%_includedir/%name
 
 %check
-pushd BUILD/build/test
+pushd build/test
 ctest --output-on-failure
 popd
 
@@ -78,5 +78,9 @@ popd
 %doc projects/doxygen/html
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt2
+- enable build test (use catch1 really)
+- cleanup spec, use cmake_insource
+
 * Tue Jul 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt1
 - Initial build for ALT.
