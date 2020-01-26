@@ -2,7 +2,7 @@
 
 Name: clean-lib-argenv
 Version: 1.0.3
-Release: alt2
+Release: alt3
 Summary: Clean low level interface to command line and environment
 Summary(ru_RU.UTF-8): Библиотека параметров командной строки для языка Clean
 License: BSD license
@@ -50,6 +50,9 @@ touch "/usr/lib64/clean/ArgEnv/Clean System Files"/*.o
 %_libdir/*
 
 %changelog
+* Sun Jan 26 2020 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt3
+- Rebuild with new compiler.
+
 * Thu Dec 05 2019 Andrey Bergman <vkni@altlinux.org> 1.0.3-alt2
 - Rebuild with new compiler.
 
