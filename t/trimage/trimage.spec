@@ -1,5 +1,5 @@
 Name: trimage
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 License: MIT
 Summary: Tool for Losslessly Optimizing PNG and JPEG Files
@@ -8,12 +8,11 @@ Group: Graphics
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 Requires: advancecomp
 Requires: jpegoptim
 Requires: optipng
 Requires: pngcrush
-Requires: python-module-PyQt4
 Requires: icon-theme-hicolor
 BuildArch: noarch
 
@@ -30,20 +29,24 @@ dragging and dropping and various command line options.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 %__subst 's|#!/bin|#!/usr/bin|' %buildroot%_bindir/*
 
 %files
-%doc COPYING README resources/todo
+%doc COPYING README.md
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_mandir/man?/*
 %_desktopdir/trimage.desktop
 %_iconsdir/hicolor/scalable/apps/trimage.svg
 
 %changelog
+* Sun Jan 26 2020 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
+- new version 1.0.6
+- build with python3
+
 * Fri Aug 26 2016 Anton Midyukov <antohami@altlinux.org> 1.0.5-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 32411).
