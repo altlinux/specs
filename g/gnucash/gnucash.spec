@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=relaxed
 
 # TODO:fix build Python bindings
-%def_enable python
+%def_disable python
 %def_with aqbanking
 
 Name: 	 gnucash
 Version: 3.7
-Release: alt1
+Release: alt2
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -38,7 +38,7 @@ BuildRequires: libofx-devel libreadline-devel slib-guile
 BuildRequires: libdconf-devel
 BuildRequires: libdbi-devel
 BuildRequires: libdbi-drivers-devel
-BuildRequires: libdbi-drivers-dbd-sqlite
+BuildRequires: libdbi-drivers-dbd-sqlite3
 BuildRequires: libdbi-drivers-dbd-mysql
 BuildRequires: libdbi-drivers-dbd-pgsql
 BuildRequires: swig
@@ -201,6 +201,10 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7-alt2
+- NMU: use buildreq libdbi-drivers-dbd-sqlite3 for sqlite
+- disable python bindings
+
 * Mon Oct 14 2019 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
 - New version.
 
