@@ -11,7 +11,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.18
+Version: 8.0.19
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -54,7 +54,7 @@ Patch0: mysql-%version.patch
 # ALTLinux
 Patch1: mysql-8.0.18-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mysql-8.0.12-alt-client.patch
+Patch4: mysql-8.0.19-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.12-alt-mysql_config-libs.patch
@@ -87,19 +87,19 @@ Summary: Shared libraries for MySQL
 Summary(ru_RU.UTF-8): Динамические библиотеки для MySQL
 License: LGPL
 Group: System/Libraries
-Provides: libMySQL = %version
-Obsoletes: libMySQL < %version
+Provides: libMySQL = %EVR
+Obsoletes: libMySQL < %EVR
 
 %package -n libmysqlclient%soname-devel
 Summary: Development header files and libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
 Group: Development/C
-Requires: libmysqlclient%soname = %version-%release
-Provides: MySQL-devel = %version mysql-devel = %version
-Obsoletes: MySQL-devel < %version mysql-devel < %version
-Provides: libMySQL-devel = %version
-Obsoletes: libMySQL-devel < %version
+Requires: libmysqlclient%soname = %EVR
+Provides: MySQL-devel = %EVR mysql-devel = %EVR
+Obsoletes: MySQL-devel < %EVR mysql-devel < %EVR
+Provides: libMySQL-devel = %EVR
+Obsoletes: libMySQL-devel < %EVR
 Conflicts: libmariadb-devel
 Provides: libmysqlclient-devel = %EVR
 
@@ -109,8 +109,8 @@ Summary(ru_RU.UTF-8): Интерфейс прикладного уровня д�
 License: LGPL
 Group: Development/C
 Requires: libmysqlclient%soname-devel = %EVR
-Provides: libMySQL-devel-static = %version
-Obsoletes: libMySQL-devel-static < %version
+Provides: libMySQL-devel-static = %EVR
+Obsoletes: libMySQL-devel-static < %EVR
 Conflicts: libmariadb-devel-static
 
 %package client
@@ -118,19 +118,19 @@ Summary: MySQL Client
 Summary(ru_RU.UTF-8): Клиент MySQL
 License: GPL
 Group: Databases
-Provides: mysql-client = %version
-Obsoletes: mysql-client < %version
+Provides: mysql-client = %EVR
+Obsoletes: mysql-client < %EVR
 
 %package server
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
 License: GPL
 Group: Databases
-Requires(pre): MySQL-client = %version-%release
+Requires(pre): MySQL-client = %EVR
 Requires(pre): shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
-Provides: mysql-server = %version MySQL = %version mysql = %version community-mysql = %version
-Obsoletes: mysql-server < %version MySQL < %version mysql < %version
+Provides: mysql-server = %EVR MySQL = %EVR mysql = %EVR community-mysql = %EVR
+Obsoletes: mysql-server < %EVR MySQL < %EVR mysql < %EVR
 Conflicts: mariadb-server-control
 
 %package server-perl
@@ -138,7 +138,7 @@ Summary: Perl utils for MySQL-server
 Summary(ru_RU.UTF-8): Perl-утилиты для MySQL-server
 License: GPL
 Group: Databases
-Requires: MySQL-server = %version-%release, perl-DBD-mysql
+Requires: MySQL-server = %EVR, perl-DBD-mysql
 BuildArch: noarch
 
 %if_with mysql_router
@@ -147,8 +147,8 @@ Summary: MySQL Router
 Summary(ru_RU.UTF-8): MySQL Router
 License: GPL
 Group: Databases
-Provides: mysql-router = %version
-Obsoletes: mysql-router < %version
+Provides: mysql-router = %EVR
+Obsoletes: mysql-router < %EVR
 %endif
 
 %define see_base For a description of MySQL see the base MySQL RPM or %url
@@ -773,6 +773,11 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Sun Jan 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.19-alt1
+- new version
+- spec: switch to strict dependencies
+- update alt-client patch
+
 * Fri Dec 06 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.18-alt1
 - new version
 - update patches: chroot, alt-disable-run-libmysql_api_test
