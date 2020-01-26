@@ -2,10 +2,9 @@
 # TODO: botocore
 
 %def_with plugins
-%define acme_version 0.29.0
 
 Name: certbot
-Version: 0.39.0
+Version: 1.1.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -23,6 +22,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+
+%define acme_version %version
 
 Requires: python3-module-zope.component
 Requires: python3-module-zope.interface >= 4.1.0
@@ -146,14 +147,15 @@ Certbot dns_route53 plugin.
 %setup
 
 %build
+cd certbot
 %python3_build
 
-cd certbot-apache
+cd ../certbot-apache
 %python3_build
 cd ../certbot-nginx
 %python3_build
 #cd ../certbot-postfix
-#%python_build
+#python_build
 cd ../certbot-dns-route53
 %python3_build
 cd ../certbot-dns-rfc2136
@@ -161,14 +163,15 @@ cd ../certbot-dns-rfc2136
 
 
 %install
+cd certbot
 %python3_install --install-purelib=%certbotdir
 
-cd certbot-apache
+cd ../certbot-apache
 %python3_install --install-purelib=%certbotdir
 cd ../certbot-nginx
 %python3_install --install-purelib=%certbotdir
 #cd ../certbot-postfix
-#%python_install --install-purelib=%certbotdir
+#python_install --install-purelib=%certbotdir
 cd ../certbot-dns-route53
 %python3_install --install-purelib=%certbotdir
 cd ../certbot-dns-rfc2136
@@ -250,6 +253,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Sat Oct 26 2019 Vitaly Lipatov <lav@altlinux.ru> 0.39.0-alt1
 - new version 0.39.0 (with rpmrb script)
 
