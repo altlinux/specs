@@ -1,6 +1,6 @@
 %define oname duktape
 Name: libduktape
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Embeddable Javascript engine library
@@ -75,6 +75,9 @@ install -m 755 duk %buildroot%_bindir/duk
 %_bindir/duk
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- new version 2.4.0 (with rpmrb script)
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 
