@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.4.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -26,11 +26,11 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use canonicaljson >= 1.1.3
 %py3_use signedjson >= 1.0.0
 %py3_use pynacl >= 1.2.1
-%py3_use idna >= 2
+%py3_use idna >= 2.5
 %py3_use service-identity >= 18.1.0
 # logcontext handling relies on the ability to cancel inlineCallbacks
 # (https://twistedmatrix.com/trac/ticket/4632) which landed in Twisted 18.7.
-%py3_use twisted-core >= 18.7.0
+%py3_use twisted-core >= 18.9.0
 %py3_use treq >= 15.1
 # Twisted has required pyopenssl 16.0 since about Twisted 16.6.
 %py3_use OpenSSL >= 16.0.0
@@ -43,7 +43,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use sortedcontainers >= 1.4.4
 %py3_use psutil >= 2.0.0
 %py3_use pymacaroons-pynacl >= 0.13.0
-%py3_use msgpack >= 0.5.0
+%py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
 %py3_use six >= 1.10
 # prometheus_client 0.4.0 changed the format of counter metrics
@@ -59,6 +59,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 # "email.enable_notifs"
 %py3_use jinja2 >= 2.9
 %py3_use bleach >= 1.4.3
+%py3_use typing_extensions >= 3.7.4
 # "acme": ["txacme>=0.9.2"],
 
 %py3_use pysaml2 >= 4.5.0
@@ -114,6 +115,9 @@ ln -sr %buildroot%_libexecdir/%name/synctl %buildroot%_sbindir/synctl
 mkdir -p %buildroot%_tmpfilesdir/
 echo "D /var/run/synapse 0710 _synapse _synapse -" >%buildroot%_tmpfilesdir/%name.conf
 
+# remove benchmark test
+rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
+
 %pre
 /usr/sbin/groupadd -r -f _synapse
 /usr/sbin/useradd -r -g _synapse -d /var/lib/synapse -s /dev/null -c 'Synapse user' _synapse >/dev/null 2>&1 ||:
@@ -133,6 +137,8 @@ fi
 %_libexecdir/%name/sync_room_to_group.pl
 %_libexecdir/%name/generate_config
 %_libexecdir/%name/generate_signing_key.py
+%_libexecdir/%name/export_signing_key
+%_libexecdir/%name/generate_log_config
 %_sbindir/synctl
 %_unitdir/matrix-synapse.service
 %_tmpfilesdir/%name.conf
@@ -144,6 +150,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Tue Oct 15 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
