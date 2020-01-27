@@ -1,5 +1,5 @@
 Name: libdwarf
-Version: 20180527
+Version: 20200114
 Release: alt1
 
 Summary: Library to access the DWARF Debugging file format
@@ -57,18 +57,13 @@ to access DWARF debug information.
 %__subst "s|@dwfzlib@|@dwfzlib@ -lelf|" libdwarf/Makefile.in
 
 %build
-%configure --enable-shared --disable-nonshared
-LD_LIBRARY_PATH="../libdwarf" %make_build SONAME="%soname"
+%autoreconf
+%configure --enable-shared --disable-static
+%make_build
 
 %install
-install -pDm 0644 libdwarf/dwarf.h         %buildroot%_includedir/libdwarf/dwarf.h
-#install -pDm 0644 libdwarf/libdwarf.a      %buildroot%_libdir/libdwarf.a
-
-install -pDm 0644 libdwarf/libdwarf.h      %buildroot%_includedir/libdwarf/libdwarf.h
-install -pDm 0755 libdwarf/libdwarf.so     %buildroot%_libdir/%sofullname
-ln      -s        %sofullname            %buildroot%_libdir/%soname
-ln      -s        %sofullname            %buildroot%_libdir/libdwarf.so
-install -pDm 0755 dwarfdump/dwarfdump     %buildroot%_bindir/dwarfdump
+%makeinstall_std
+rm -rfv %buildroot%_datadir/libdwarf/libdwarf-devel/
 
 %files
 %doc libdwarf/ChangeLog libdwarf/README libdwarf/COPYING libdwarf/LIBDWARFCOPYRIGHT libdwarf/LGPL.txt
@@ -79,14 +74,20 @@ install -pDm 0755 dwarfdump/dwarfdump     %buildroot%_bindir/dwarfdump
 
 %files devel
 %doc libdwarf/*.pdf
-%_includedir/libdwarf
+%_includedir/libdwarf.h
+%_includedir/dwarf.h
 %_libdir/libdwarf.so
 
 %files tools
 %doc dwarfdump/README dwarfdump/ChangeLog dwarfdump/COPYING dwarfdump/DWARFDUMPCOPYRIGHT dwarfdump/GPL.txt
 %_bindir/dwarfdump
+%_man1dir/*
+%_datadir/dwarfdump/
 
 %changelog
+* Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 20200114-alt1
+- new version 20200114 (with rpmrb script)
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 20180527-alt1
 - new version 20180527 (with rpmrb script)
 
