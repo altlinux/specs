@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 2.8.5
-Release: alt3.git.e4021a9
+Release: alt4.git.e4021a9
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -226,6 +226,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.5-alt4.git.e4021a9
+- Ported fix from different branch.
+
 * Fri Jan 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.5-alt3.git.e4021a9
 - Pulled updates from upstream, including memory leak fixes.
 
