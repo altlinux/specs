@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.3.7
+Version: 1.3.10
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -240,8 +240,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_datadir/metainfo/*.appdata.xml
 %_datadir/mime/*/*.xml
 %_datadir/applications/*.desktop
-%_iconsdir/hicolor/*/actions/*.*
-%_iconsdir/hicolor/*/apps/*.*
+%_iconsdir/hicolor/*/actions/*
+%_iconsdir/hicolor/*/apps/*
+%_iconsdir/hicolor/apps/*
+%_iconsdir/hicolor/*/panel/*
 %_iconsdir/hicolor/*/emblems/remmina-sftp-symbolic.svg
 %_iconsdir/hicolor/*/emblems/remmina-ssh-symbolic.svg
 %_datadir/%name
@@ -298,6 +300,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jan 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.10-alt1
+- 1.3.10
+
 * Mon Dec 09 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.7-alt1
 - 1.3.7
 - drop local localization ru.po
