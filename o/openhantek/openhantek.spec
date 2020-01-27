@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 2.16
+Version: 3.0.1
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ License: GPLv3
 Group: Engineering
 Url: http://openhantek.org/
 
-# Source-url: https://github.com/OpenHantek/OpenHantek6022/archive/v%version.tar.gz
+# Source-url: https://github.com/OpenHantek/OpenHantek6022/archive/%version.tar.gz
 Source: %name-%version.tar
 
 
@@ -46,6 +46,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_udevrulesdir/60-hantek.rules
 
 %changelog
+* Mon Jan 27 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.0.1-alt1
+- new version (3.0.1) with rpmgs script
+
 * Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1:2.16-alt1
 - new version 2.16 (with rpmrb script)
 
