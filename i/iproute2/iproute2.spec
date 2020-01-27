@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 5.4.0
+Version: 5.5.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -108,6 +108,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon Jan 27 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5.0-alt1
+- 5.4.0 -> 5.5.0.
+
 * Mon Nov 25 2019 Dmitry V. Levin <ldv@altlinux.org> 5.4.0-alt1
 - 5.3.0 -> 5.4.0.
 
@@ -345,7 +348,7 @@ done
 - Recompressed postscript documentation with bzip2 since
   our postscript viewer (gv) can show bzipped documents.
 
-* Tue Dec 27 2000 Alexander Bokovoy <ab@avilink.net> 2.2.4-ipl9mdk
+* Wed Dec 27 2000 Alexander Bokovoy <ab@avilink.net> 2.2.4-ipl9mdk
 - Wrong dependency caused by wrong path (/sbin/arping) in example
   script dhcp-client-script fixed.
 
