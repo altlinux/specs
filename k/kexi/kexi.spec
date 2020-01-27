@@ -18,7 +18,7 @@
 
 Name: kexi
 Version: 3.2.0
-Release: alt2
+Release: alt4
 %K5init no_altplace
 
 Group: Databases
@@ -159,6 +159,11 @@ Requires: %name-common = %EVR
 %prep
 %setup
 %patch1 -p1
+%ifarch %e2k
+# strip UTF-8 BOM for lcc < 1.24
+find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' |
+	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+%endif
 
 %build
 %K5build \
@@ -228,6 +233,12 @@ done
 %_libdir/libkexidatatable%sover.so.*
 
 %changelog
+* Mon Jan 27 2020 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt4
+- fix to build with new Qt
+
+* Wed Sep 04 2019 Michael Shigorin <mike@altlinux.org> 3.2.0-alt3
+- E2K: strip UTF-8 BOM for lcc < 1.24
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 
