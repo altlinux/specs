@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 5.1
+%define ver_major 5.2
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -20,6 +20,7 @@ BuildArch: noarch
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): meson
+BuildRequires: inkscape xcursorgen
 
 %description
 The official elementary icons are designed to be simple and appealing.
@@ -47,6 +48,10 @@ theme.
 %doc README*
 
 %changelog
+* Mon Jan 27 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
+- 5.2.0
+- updated BR
+
 * Fri Nov 08 2019 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
 - 5.1.0
 
