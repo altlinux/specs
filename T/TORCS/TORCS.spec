@@ -1,73 +1,60 @@
-# TODO: update to new version 1.3.1 when released (at dec 2008 not yet)
-
-# FIXME mainstream author please (does not known about as-needed)
-AutoReq: nolib
-
-# hack for fix https://bugzilla.altlinux.org/show_bug.cgi?id=16145
-Requires: freeglut plib libalut
-
 # due libs in nonstandard place
 %set_verify_elf_method unresolved=relaxed
 %add_findprov_lib_path %_libdir/torcs/lib
 
 Name: TORCS
-Version: 1.3.0
-Release: alt7
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
+Version: 1.3.7
+Release: alt1
 Summary: The Open Racing Car Simulator
-License: GPL
+License: GPL-2.0
 Group: Games/Sports
 Url: http://torcs.sourceforge.net/
 
-Source: http://prdownloads.sf.net/torcs/%name-%version-src.tar.bz2
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: %name-%version.tar
+Source1: %name.desktop
+Source2:  %name.appdata.xml
+
 # mandatory
-Source1: http://prdownloads.sf.net/torcs/%name-%version-src-robots-base.tar.bz2
-Source2: http://prdownloads.sf.net/torcs/%name-%version-src-robots-berniw.tar.bz2
-Source3: http://prdownloads.sf.net/torcs/%name-%version-src-robots-bt.tar.bz2
-Source4: http://prdownloads.sf.net/torcs/%name-%version-src-robots-olethros.tar.bz2
 Source11: %name.16.xpm
 Source12: %name.32.xpm
 Source13: %name.48.xpm
 
-Patch0: torcs-1.3.0.patch
-Patch3: torcs-1.2.4-alt-remove-gdb.patch
-Patch4: torcs-1.3.7-isnan.patch
-
-# Thanks, SUSE
-Patch13: torcs-alut.diff
-Patch14: torcs-stringcompare.diff
-Patch15: torcs-gcc43.patch
-Patch16: torcs-glibc.patch
-
-Patch17: TORCS-1.3.0-alt-libpng15.patch
+Patch0: torcs-1.3.6-gcc7.patch
+Patch1: torcs-1.3.7-isnan.patch
 
 Requires: %name-data = %version
-#Requires: %name-data-tracks = %version
-#Requires: %name-data-cars = %version
+# hack for fix https://bugzilla.altlinux.org/show_bug.cgi?id=16145
+Requires: freeglut plib libalut
 
 # Automatically added by buildreq on Sun Nov 30 2008
-BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel libXrandr-devel libXrender-devel libalut-devel libexpat-devel libfreeglut-devel libpng-devel plib-devel rpm-build-java rpm-build-mono xorg-cf-files xorg-sdk libXxf86vm-devel
-
+BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel
+BuildRequires: libXrandr-devel libXrender-devel libalut-devel libexpat-devel
+BuildRequires: libfreeglut-devel libpng-devel plib-devel xorg-cf-files xorg-sdk
+BuildRequires: libXxf86vm-devel libogg-devel libvorbis-devel libopenal-devel
 %description
 A 3D racing car simulator using OpenGL.
 
-%prep
-%setup -q -n torcs-%version
-%setup -q -T -D -b 1 -n torcs-%version
-%setup -q -T -D -b 2 -n torcs-%version
-%setup -q -T -D -b 3 -n torcs-%version
-%setup -q -T -D -b 4 -n torcs-%version
+%package data
+Summary:        Data files for TORCS
+Group:          Games/Sports
+Requires:       %name = %version
+BuildArch:      noarch
 
-%patch
-%patch3 -p1
-%patch4 -p1
-#patch13
-%patch14
-%patch15
-%patch16
-%patch17 -p2
+Conflicts: %name-data-tracks < 1.3.7
+Obsoletes: %name-data-tracks < 1.3.7
+Conflicts: %name-data-cars < 1.3.7
+Obsoletes: %name-data-cars < 1.3.7
+
+%description data
+Architecture independent data files for The Open Racing Car Simulator.
+
+%prep
+%setup
+
+%patch0 -p1
+%patch1 -p1
 
 # replace nonunicode symbols in all XMLs
 find ./ -name "*.xml" -print0 | xargs -0 sed -i "s|\xE9|e|g"
@@ -78,14 +65,18 @@ export CFLAGS="$CFLAGS -fPIC"
 export CXXFLAGS="$CXXFLAGS -fPIC"
 autoconf
 %configure --x-libraries=%_libdir
-# no SMP build (fix mainstream author please)
+
 %make
 
 %install
-%makeinstall_std
+make V=1 install DESTDIR=%{buildroot}
+make V=1 datainstall DESTDIR=%{buildroot}
 
 # Menu
-install -D -m 644 %name.desktop %buildroot%_desktopdir/%name.desktop
+install -D -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+
+#Appdata
+install -D -m 644 %SOURCE2 %buildroot%_datadir/appdata/torcs.appdata.xml
 
 # Icons
 install -m 644 -D %SOURCE11 %buildroot%_miconsdir/%name.xpm
@@ -93,17 +84,29 @@ install -m 644 -D %SOURCE12 %buildroot%_niconsdir/%name.xpm
 install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 
 %files
-%doc README.linux README
+%doc README COPYING
 %_bindir/*
 %_libdir/torcs/
-%dir %_gamesdatadir/torcs/
-%_gamesdatadir/torcs/*
 %_desktopdir/*
+%_datadir/appdata/torcs.appdata.xml
 %_miconsdir/%name.xpm
 %_niconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
+%files data
+%dir %_gamesdatadir/torcs/
+%_gamesdatadir/torcs/*
+
 %changelog
+* Tue Jan 21 2020 Artyom Bystrov <arbars@altlinux.org> 1.3.7-alt1
+- Update to 1.3.7
+- Total rework in process of building
+- Removed old patches, added 1 new.
+- Added possibility to build 2 RPM packages from 1 SRPM package.
+- Spec refactoring (thx grenka@).
+- Added appdata file (thx grenka@).
+- Added conflicts+obsoletes: TORCS-data cars + TORCS-data-tracks.
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt7
 - fix build
 
@@ -197,21 +200,3 @@ install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 
 * Fri Apr 4 2003 Alexander Belov <asbel@mail.ru> 1.2.0-alt1
 - Sisyphus first release
-
-* Mon Mar 24 2003 Eric Espié <Eric.Espie@free.fr> 1.2.0
-- new version
-
-* Mon Jul 15 2002 Eric Espié <Eric.Espie@free.fr> 1.1.0-2
-- improved specfile
-
-* Sat Jul 13 2002 Eric Espié <Eric.Espie@free.fr> 1.1.0
-- version 1.1.0
-
-* Mon Dec 17 2001 Eric Espié <Eric.Espie@free.fr> 1.0.0
-- version 1.0.0 final
-
-* Sun Dec  9 2001 Eric Espié <Eric.Espie@free.fr> 1.0.0-rc5
-- installation updates
-
-* Sat Dec  8 2001 Eric Espié <Eric.Espie@free.fr> 1.0.0-rc4
-- initial RPM
