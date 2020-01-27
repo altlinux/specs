@@ -1,6 +1,6 @@
 Name: libdwarf
 Version: 20200114
-Release: alt1
+Release: alt2
 
 Summary: Library to access the DWARF Debugging file format
 
@@ -64,6 +64,8 @@ to access DWARF debug information.
 %install
 %makeinstall_std
 rm -rfv %buildroot%_datadir/libdwarf/libdwarf-devel/
+mkdir -p %buildroot%_includedir/%name/
+mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 %files
 %doc libdwarf/ChangeLog libdwarf/README libdwarf/COPYING libdwarf/LIBDWARFCOPYRIGHT libdwarf/LGPL.txt
@@ -74,8 +76,8 @@ rm -rfv %buildroot%_datadir/libdwarf/libdwarf-devel/
 
 %files devel
 %doc libdwarf/*.pdf
-%_includedir/libdwarf.h
-%_includedir/dwarf.h
+%_includedir/%name/libdwarf.h
+%_includedir/%name/dwarf.h
 %_libdir/libdwarf.so
 
 %files tools
@@ -85,6 +87,9 @@ rm -rfv %buildroot%_datadir/libdwarf/libdwarf-devel/
 %_datadir/dwarfdump/
 
 %changelog
+* Mon Jan 27 2020 Vitaly Lipatov <lav@altlinux.ru> 20200114-alt2
+- fix conflict with libwf-devel (ALT bug 37935)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 20200114-alt1
 - new version 20200114 (with rpmrb script)
 
