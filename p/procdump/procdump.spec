@@ -1,5 +1,5 @@
 Name:     procdump
-Version:  1.0.1
+Version:  1.1
 Release:  alt1
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
@@ -47,6 +47,9 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Mon Jan 27 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- new version 1.1 (with rpmrb script)
+
 * Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
