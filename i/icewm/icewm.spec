@@ -1,9 +1,8 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
-#define gitrev .gitde74029
 
 Name: %realname
-Version: 1.6.3
+Version: 1.6.4.0.2.397480d
 Release: alt1
 Epoch:3
 
@@ -66,6 +65,7 @@ Recommends: iftop, mutt
 	-DCONFIG_LIBRSVG=on \
 	-DCONFIG_GUIEVENTS=on \
 	-DICESOUND="ALSA,OSS" \
+	-DENABLE_LTO=on \
 	-DXTERMCMD=xvt
 pushd BUILD
 %make_build
@@ -120,6 +120,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Mon Jan 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.4.0.2.397480d-alt1
+- 1.6.4
+
 * Wed Dec 25 2019 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.6.3-alt1
 - 1.6.3
 
