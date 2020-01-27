@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.12.9
+Version: 0.12.10
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -30,6 +30,7 @@ BuildRequires: publican
 BuildRequires: qt5-base-devel
 BuildRequires: xmlto
 BuildRequires: gtk-doc
+BuildRequires: libsoup-devel
 
 #Requires: appstream-data
 
@@ -134,6 +135,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Jan 24 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.10-alt1
+- New version.
+
 * Mon Dec 16 2019 Andrey Cherepanov <cas@altlinux.org> 0.12.9-alt1
 - New version.
 
