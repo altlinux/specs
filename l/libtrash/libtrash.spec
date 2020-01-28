@@ -1,20 +1,19 @@
-Name: libtrash
-Version: 3.3
-Release: alt1
+Name:       libtrash
+Version:    3.3
+Release:    alt2
 
-Summary: %name - a trash can for GNU/Linux
-License: GNU GPL
-Group: System/Libraries
+Summary:    %name - a trash can for GNU/Linux
+License:    GNU GPL
+Group:      System/Libraries
+Url:        http://pages.stern.nyu.edu/~marriaga/software/libtrash/
 
-Url: http://pages.stern.nyu.edu/~marriaga/software/libtrash/
-Source: http://pages.stern.nyu.edu/~marriaga/software/libtrash/%name-%version.tgz
-Source1: %name.README.ALT
-Source2: %name-profile.tar.bz2
+Source:     http://pages.stern.nyu.edu/~marriaga/software/libtrash/%name-%version.tgz
+Source1:    %name.README.ALT
+Source2:    %name-profile.tar.bz2
 
-BuildPreReq: /proc
+BuildRequires: /proc
+BuildRequires: python3-devel python-tools-2to3
 
-# Automatically added by buildreq on Sun Jan 06 2008
-BuildRequires: python-base
 
 %description
 This is the homepage of libtrash, the shared library which, when
@@ -40,6 +39,13 @@ This package contains development files of %name.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
+sed -i 's|python|&3|' src/Makefile
+
 %build
 %make_build
 cp %SOURCE1 README.ALT
@@ -62,7 +68,11 @@ install -p -m644 src/*.h %buildroot%_includedir/
 %_includedir/*
 %_libdir/%name.so
 
+
 %changelog
+* Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3-alt2
+- Porting on Python3.
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
 - Version 3.3
 
