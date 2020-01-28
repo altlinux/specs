@@ -1,17 +1,19 @@
-Name: apt-blacklist
-Version: 0.01.2
-Release: alt1
+Name:       apt-blacklist
+Version:    0.01.2
+Release:    alt2
 
-Summary: Forbids installation of packages based on some criteria
-License: GPLv3+
-Group: System/Configuration/Packaging
+Summary:    Forbids installation of packages based on some criteria
+License:    GPLv3+
+Group:      System/Configuration/Packaging
+Packager:   Andrey Rahmatullin <wrar@altlinux.ru>
 
-BuildArch: noarch
+BuildArch:  noarch
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
+Source0:    %name-%version.tar
+Patch0:     port-on-python3.patch
 
-Source0: %name-%version.tar
-Requires: python-module-rpm >= 4.13.0
+Requires:   python3-module-rpm >= 4.13.0
+
 
 %description
 This small tool checks packages that apt wants to install and aborts the
@@ -23,6 +25,7 @@ and inform about packager changes for authors from %_sysconfdir/%name/watch.
 
 %prep
 %setup
+%patch0 -p1
 
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir/%name}
@@ -40,7 +43,11 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/10-%name.conf
 %config(noreplace) %_sysconfdir/%name/warning
 %config(noreplace) %_sysconfdir/%name/watch
 
+
 %changelog
+* Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.01.2-alt2
+- Porting on Python3.
+
 * Sun May 14 2017 Terechkov Evgenii <evg@altlinux.org> 0.01.2-alt1
 - Fix for rpm installation without pubkey
 
