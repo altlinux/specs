@@ -1,12 +1,17 @@
-Summary: utility to change location / fault LED for enclosure
-Name: encled
-Version: 2018
-Release: alt2
-License: GPLv2+
-Group: System/Configuration/Hardware
-Url: https://github.com/amarao/sdled
-Source0: %name-%version.tar
-BuildArch: noarch
+Name:       encled
+Version:    2018
+Release:    alt3
+
+Summary:    utility to change location / fault LED for enclosure
+License:    GPLv2+
+Group:      System/Configuration/Hardware
+Url:        https://github.com/amarao/sdled
+
+BuildArch:  noarch
+
+Source0:    %name-%version.tar
+Patch0:     port-on-python3.patch
+
 
 %description
 Encled - utility to change location / fault LED for enclosure.
@@ -21,19 +26,26 @@ but empty disk slots too.
 
 %prep
 %setup
+%patch0 -p1
+
 %build
+
 %install
 install -p -m 755 -D encled %buildroot%_sbindir/encled
 install -p -m 755 -D sdled %buildroot%_sbindir/sdled
 install -p -m 644 -D encled.8 %buildroot%_man8dir/encled.8
 
 %files
+%doc README
+%_man8dir/encled.8*
 %_sbindir/encled
 %_sbindir/sdled
-%_man8dir/encled.8*
-%doc README
+
 
 %changelog
+* Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 2018-alt3
+- Porting on Python3.
+
 * Sat Nov 23 2019 Terechkov Evgenii <evg@altlinux.org> 2018-alt2
 - /usr/bin/python -> /usr/bin/python2
 
