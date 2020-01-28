@@ -1,7 +1,7 @@
 # TODO: build with external lxqt_wallet, with kwallet support
 Name: sirikali
-Version: 1.4.0
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: A Qt/C++ GUI front end to ecryptfs-simple,cryfs,gocryptfs,securefs and encfs
 License: GPL-2.0+
@@ -85,6 +85,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 %_datadir/metainfo/sirikali.appdata.xml
 
 %changelog
+* Tue Jan 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version 1.4.2 (with rpmrb script)
+
 * Mon Oct 14 2019 Michael Shigorin <mike@altlinux.org> 1.4.0-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - minor spec cleanup
