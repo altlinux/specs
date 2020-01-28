@@ -1,5 +1,5 @@
 Name: slowhttptest
-Version: 1.7
+Version: 1.8.1
 Release: alt1
 
 Summary: SlowHTTPTest is a highly configurable tool that simulates some Application Layer Denial of Service attacks
@@ -44,6 +44,9 @@ the server.
 %_man1dir/*
 
 %changelog
+* Tue Jan 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- new version 1.8.1 (with rpmrb script)
+
 * Thu Aug 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - new version (1.7) with rpmgs script
 
