@@ -1,24 +1,28 @@
 %define Name BTIER
-Name: btier
 %define module_name %name
-Version: 1.3.0
 %define rel %nil
-Release: alt1
-Summary: %Name - a blockdevice that provides automated tiered storage
-License: GPLv2
-Group: System/Base
-URL: http://sourceforge.net/projects/tier/
-Source: %name-%version%rel.tar
-Patch: %name-%version-%release.patch
-ExclusiveOS: Linux
 
-BuildRequires: rpm-build-kernel xz
+Name:       btier
+Version:    1.3.0
+Release:    alt2
+
+Summary:    %Name - a blockdevice that provides automated tiered storage
+License:    GPLv2
+Group:      System/Base
+URL:        http://sourceforge.net/projects/tier/
+
+Source:     %name-%version%rel.tar
+Patch:      %name-%version-%release.patch
+Patch1:     fix-code-style.patch
+
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: python-tools-2to3 xz
+
 
 %description
 %name is a kernel block device that creates a tiered device out of multiple
 smaller devices with automatic migration and smart placement of data chunks based
 up-on access patterns.
-
 
 %package utils
 Summary: %name utilities
@@ -33,7 +37,6 @@ This package contains:
   - btier_setup - the setup utility for %name
   - btier_inspect - a tool that can be used to backup and restore btier metadata
 
-
 %package doc
 Summary: %name documentation
 Group: Documentation
@@ -44,7 +47,6 @@ BuildArch: noarch
 smaller devices with automatic migration and smart placement of data chunks based
 up-on access patterns.
 This package contains %name documentation.
-
 
 %package -n kernel-source-%name
 Summary: sources for %name kernel module
@@ -57,15 +59,18 @@ smaller devices with automatic migration and smart placement of data chunks base
 up-on access patterns.
 This package contains sources for %name kernel module.
 
-
 %prep
 %setup -q -n %name-%version%rel
 %patch -p1
+%patch1 -p1
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
 
 %build
 %make_build CC="%__cc %optflags" cli/btier_setup cli/btier_inspect
-
 
 %install
 install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources,%_docdir/%name-%version/examples/fio}
@@ -79,21 +84,21 @@ gzip -9c ChangeLog > %buildroot%_docdir/%name-%version/ChangeLog.gz
 
 tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
 
-
 %files utils
 %_sbindir/*
 %_man1dir/*
 
-
 %files doc
 %_docdir/%name-%version
-
 
 %files -n kernel-source-%name
 %_usrsrc/kernel
 
 
 %changelog
+* Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
+- Porting on Python3.
+
 * Sun Jun 15 2014 Led <led@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 - update to kernel API >= 3.14
