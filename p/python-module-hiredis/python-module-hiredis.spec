@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 28 2020 Vladimir Didenko <cow@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Fri Sep 27 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
