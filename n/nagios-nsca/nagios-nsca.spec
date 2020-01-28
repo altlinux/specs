@@ -1,5 +1,5 @@
 Name: nagios-nsca
-Version: 2.9.2
+Version: 2.9.2.1
 Release: alt3
 
 Summary: Nagios addon to send check results to a central monitoring server
@@ -88,7 +88,13 @@ install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 %doc Changelog LEGAL README SECURITY
 
 %changelog
-* Fri Jan 24 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2-alt3
+* Tue Jan 28 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt3
+- Fix/improve: Log error on an unexpected message type.
+
+* Tue Jan 28 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt2
+- Added support for sending host and service comments.
+
+* Fri Jan 24 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt1
 - Support send/receive of custom notifications.
 - send_nsca: The default configuration path is now
   /etc/nagios/send_nsca.cfg
