@@ -1,22 +1,23 @@
-Name: getmail
-Version: 4.46.0
-Release: alt1
+Name:       getmail
+Version:    5.14
+Release:    alt1
 
-Summary: POP3 mail retriever with reliable Maildir delivery
-License: GPL
-Group: Networking/Mail
+Summary:    POP3 mail retriever with reliable Maildir delivery
+License:    GPL
+Group:      Networking/Mail
+Url:        http://pyropus.ca/software/getmail
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-Url: http://pyropus.ca/software/getmail
-Source: %name-%version.tar.gz
+BuildArch:  noarch
 
-# Automatically added by buildreq on Sat Jun 11 2005
-BuildRequires: python-modules-compiler python-modules-encodings
-BuildRequires: python-devel >= 2.5.0
-BuildArch: noarch
+Source:     %name-%version.tar.gz
+Patch0:     port-on-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
 
 Summary(ru_RU.KOI8-R): Выкачивание почты по POP3 с надежной доставкой в Maildir
 Summary(uk_UA.KOI8-U): Витягування пошти за POP3 ╕з над╕йним постачанням до Maildir
+
 
 %description
 getmail is intended as a simple replacement for fetchmail for those people
@@ -40,29 +41,32 @@ mbox, але не по NFS.  Написаний на Python.
 
 %prep -q
 %setup
+%patch0 -p2
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install \
-	--optimize=2 \
-	--record=INSTALLED_FILES
+%python3_install --optimize=2
 
-# need to tag docs as such
-grep -vE '%_docdir|%_mandir' INSTALLED_FILES > filelist
-# license in package header and common-licenses
-rm docs/COPYING
+pushd docs
+mv CHANGELOG THANKS COPYING BUGS TODO ../
+popd
 
-# Produce bytecode
-python %_libdir/python%_python_version/compileall.py \
-	-d %_libdir/%name/ %buildroot/%_libdir/%name/
-
-%files -f filelist
-%doc docs/*[^1]
+%files
+%doc COPYING docs/
 %doc %_man1dir/*
+%_bindir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.14-alt1
+- Version updated to 5.14
+- porting on python3.
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.46.0-alt1
 - Version 4.46.0
 
