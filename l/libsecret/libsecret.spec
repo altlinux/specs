@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -142,6 +142,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Tue Jan 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
+- 0.20.1
+
 * Mon Jan 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
