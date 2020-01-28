@@ -7,8 +7,8 @@
 
 
 Name: kf5-%rname
-Version: 2.6.0
-Release: alt3
+Version: 2.6.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libKGantt.so.*
 
 %changelog
+* Tue Jan 28 2020 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt1
+- new version
+
 * Fri Jan 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.0-alt3
 - Updated devel dependencies
 
