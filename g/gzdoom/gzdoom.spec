@@ -1,5 +1,5 @@
 Name: gzdoom
-Version: 4.2.0
+Version: 4.3.3
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -11,8 +11,11 @@ Url: http://zdoom.org
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.png
+
+Patch0: gzdoom-4.3.3-dl.patch
+Patch1: gzdoom-4.3.3-sse2.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz
@@ -43,12 +46,15 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 %prep
 %setup -n %name-%version
 
+%patch0 -p1
+%patch1 -p1
+
 %build
 %cmake_insource \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_SHARED_LINKER_FLAGS="" \
 	-DCMAKE_EXE_LINKER_FLAGS="" -DCMAKE_MODULE_LINKER_FLAGS="" \
-	-DINSTALL_PK3_PATH=%_datadir/doom/ 
+	-DINSTALL_PK3_PATH=%_datadir/doom/
 
 %make_build
 
@@ -76,6 +82,10 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 %files
+%dir /usr/share/icons/hicolor/64x64
+%dir /usr/share/icons/hicolor/64x64/apps
+%dir /usr/share/icons/hicolor/128x128
+%dir /usr/share/icons/hicolor/128x128/apps
 %_bindir/%name
 %_docdir/%name
 %_datadir/doom
@@ -83,6 +93,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Jan 27 2020 Artyom Bystrov <arbars@altlinux.org> 4.3.3-alt1
+- Update version to 4.3.3
+- Add patches for correct building for i586, aarch64, ppc64le
+
 * Fri Sep 06 2019 Artyom Bystrov <arbars@altlinux.org> 4.2.0-alt1
 - initial build for ALT Sisyphus
-
