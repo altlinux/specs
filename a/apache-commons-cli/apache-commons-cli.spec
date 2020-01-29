@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-cli
 Version:        1.4
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Command Line Interface Library for Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/cli/
@@ -37,6 +34,7 @@ command line arguments and options.
 %setup -q -n commons-cli-%{version}-src
 %patch0 -p1
 
+
 # Compatibility links
 %mvn_alias : org.apache.commons:commons-cli
 %mvn_file : commons-cli %{name}
@@ -52,6 +50,9 @@ command line arguments and options.
 %doc README.md RELEASE-NOTES.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_8jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_6jpp8
 - new version
 
