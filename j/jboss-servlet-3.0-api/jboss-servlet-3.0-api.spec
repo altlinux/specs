@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.0-api
 Version:          1.0.2
-Release:          alt1_11jpp8
+Release:          alt1_13jpp8
 Summary:          Java Servlet 3.0 API
 License:          CDDL
 Url:              http://www.jboss.org
@@ -58,6 +55,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE README cddl.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_13jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_11jpp8
 - new version
 
