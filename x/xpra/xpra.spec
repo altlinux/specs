@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 3.0.3
+Version: 3.0.5
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -159,6 +159,9 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.5-alt1
+- new version 3.0.5 (with rpmrb script)
+
 * Wed Dec 11 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
 - new version 3.0.3 (with rpmrb script)
 - switch to python3
