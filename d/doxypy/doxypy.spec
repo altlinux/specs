@@ -1,18 +1,19 @@
 Name: doxypy
 Version: 0.4.2
-Release: alt1.git20100706.1
+Release: alt2
+
 Summary: doxypy is an input filter for Doxygen
 License: GPLv2
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/doxypy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/0xCAFEBABE/doxypy.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-BuildRequires: python-module-pytest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytest python-tools-2to3
+
 
 %description
 doxypy is an input filter for Doxygen. It reformats python comments to
@@ -25,25 +26,31 @@ document code redundantly.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
 pushd src
-%python_build_debug
+%python3_build_debug
 popd
 
 %install
 pushd src
-%python_install
+%python3_install
 popd
 
 %check
-py.test test/src/test.py
+py.test3 test/src/test.py
 
 %files
 %doc README doc/*
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.2-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1.git20100706.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
