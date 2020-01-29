@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -38,7 +35,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt4_20jpp8
+Release:        alt4_22jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -49,7 +46,6 @@ Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  java-devel
 BuildRequires:  javapackages-local
 Source44: import.info
 
@@ -107,6 +103,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt4_22jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt4_20jpp8
 - new version
 
