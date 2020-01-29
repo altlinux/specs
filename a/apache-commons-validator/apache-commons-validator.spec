@@ -1,17 +1,14 @@
 Epoch: 1
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name      commons-validator
 
 Name:             apache-%{short_name}
 Version:          1.5.0
-Release:          alt1_8jpp8
+Release:          alt1_10jpp8
 Summary:          Apache Commons Validator
 License:          ASL 2.0
 URL:              http://commons.apache.org/validator/
@@ -68,6 +65,9 @@ sed -i 's/\r//' NOTICE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_10jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1_8jpp8
 - new version
 
