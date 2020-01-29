@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global spec_ver 3.0
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-interceptor
 Version:          1.0.1
-Release:          alt2_20jpp8
+Release:          alt2_22jpp8
 Summary:          Java EE: Interceptor API v3.0
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -21,7 +18,6 @@ URL:              http://geronimo.apache.org/
 Source0:          %{spec_name}-%{version}.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    java-devel
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
@@ -62,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_22jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_20jpp8
 - new version
 
