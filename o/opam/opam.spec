@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -66,8 +66,7 @@ The %name-doc package contains documentation for using %name.
 %build
 %configure
 
-make all
-make man
+make
 
 %install
 %makeinstall_std LIBINSTALL_DIR=%buildroot%_libdir/ocaml
@@ -79,7 +78,6 @@ rm -rf %buildroot%prefix/doc
 %doc AUTHORS CONTRIBUTING.md
 %_bindir/%name
 %_bindir/%name-installer
-%_libdir/ocaml/opam-installer
 %_mandir/man1/%name.1*
 %_mandir/man1/%name-*.1*
 
@@ -89,6 +87,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.0.6-alt1
+- 2.0.6
+
 * Sat Aug 10 2019 Anton Farygin <rider@altlinux.ru> 2.0.5-alt1
 - 2.0.5
 

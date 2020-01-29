@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ocamlfuse
 Version: 2.7.1
-Release: alt8
+Release: alt9
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -10,7 +10,7 @@ Url: https://opam.ocaml.org/packages/ocamlfuse/
 Source: %name-%version.tar
 BuildRequires: libfuse-devel
 BuildRequires: ocaml ocaml-camlidl ocaml-camlidl-devel ocaml-findlib ocaml-ocamldoc
-BuildRequires: dune opam
+BuildRequires: ocaml-dune-devel opam
 Provides: ocaml-fuse = %EVR
 Obsoletes: ocaml-fuse < %EVR
 
@@ -61,6 +61,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/ocamlfuse/*.ml*
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt9
+- build with dune-2
+
 * Sat Apr 06 2019 Anton Farygin <rider@altlinux.ru> 2.7.1-alt8
 - renamed to ocaml-ocamlfuse
 - build from upstream git with dune

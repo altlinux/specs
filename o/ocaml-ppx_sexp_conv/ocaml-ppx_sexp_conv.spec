@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
@@ -31,7 +31,7 @@ developing applications that use %name.
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.org LICENSE.md CHANGES.md
@@ -66,6 +66,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 

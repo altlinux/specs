@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname parsexp
 Name: ocaml-%libname
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
@@ -51,8 +51,8 @@ developing applications that use %name.
 dune build -p %libname 
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
-rm -rf %buildroot/usr/doc
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+rm -rf %buildroot/usr/share/doc
 
 %check
 dune runtest
@@ -76,6 +76,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 

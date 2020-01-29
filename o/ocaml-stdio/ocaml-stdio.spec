@@ -1,10 +1,10 @@
 %set_verify_elf_method textrel=relaxed
 %define oname stdio
 Name: ocaml-%oname
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: Standard IO library for OCaml
-License: Apache 2.0
+License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
@@ -12,7 +12,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: dune >= 1.8
 BuildRequires: opam
-BuildRequires: ocaml-base  >= 0.12
+BuildRequires: ocaml-base  >= 0.13
 
 %description
 Stdio implements simple input/output functionalities for OCaml.
@@ -40,7 +40,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %ona
 rm -rf %buildroot/usr/doc
 
 %check
-jbuilder runtest
+dune runtest
 
 %files
 %doc README.org LICENSE.md
@@ -62,6 +62,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/dune-package
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
