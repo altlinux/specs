@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javassist
 Version:        3.18.1
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
 URL:            http://www.csg.is.titech.ac.jp/~chiba/%{name}/
@@ -75,6 +72,9 @@ mkdir runtest
 %doc License.html
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_12jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_10jpp8
 - new version
 
