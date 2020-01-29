@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          jackson-dataformats-text
 Version:       2.9.8
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Jackson standard text-format data format backends
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-dataformats-text
@@ -106,6 +106,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_3jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
 - new version
 
