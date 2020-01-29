@@ -1,15 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_27jpp8
+Release:       alt3_29jpp8
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -117,6 +116,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_29jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_27jpp8
 - new version
 
