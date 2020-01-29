@@ -6,9 +6,9 @@ BuildRequires: zip
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # TODO:
@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jing-trang
 Version:        20151127
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -190,6 +190,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_8jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_6jpp8
 - new version
 
