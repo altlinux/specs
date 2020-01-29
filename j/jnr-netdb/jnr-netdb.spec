@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:    jnr-netdb
 Version: 1.1.6
-Release: alt1_5jpp8
+Release: alt1_7jpp8
 Summary: Network services database access for java
 License: ASL 2.0
 URL:     https://github.com/jnr/%{name}/
@@ -48,6 +48,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_7jpp8
+- fc update
+
 * Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_5jpp8
 - fc update & java 8 build
 
