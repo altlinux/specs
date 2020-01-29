@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global artifactId javax.servlet-api
 
 Name:           glassfish-servlet-api
 Version:        3.1.0
-Release:        alt3_16jpp8
+Release:        alt3_18jpp8
 Summary:        Java Servlet API
 License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:            http://servlet-spec.java.net
@@ -21,7 +18,6 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  jvnet-parent
 BuildRequires:  maven-local
 BuildRequires:  maven-plugin-bundle
@@ -70,6 +66,9 @@ cp -p src/main/resources/META-INF/README .
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_16jpp8
 - new version
 
