@@ -3,8 +3,8 @@ Group: File tools
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global         gituser         syvaidya
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           OpenStego
 Version:        0.7.3
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
@@ -30,7 +30,6 @@ Patch0:         %{name}-antbuild.patch
 
 BuildArch:      noarch
 
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
@@ -107,6 +106,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_5jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.3-alt1_3jpp8
 - new version
 
