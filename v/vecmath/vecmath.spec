@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 41fddda1a4f430e45bef0154e1fdfe5671025f1e
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          vecmath
 Version:       1.6.0
-Release:       alt1_0.11.20130710git41fdddajpp8
+Release:       alt1_0.13.20130710git41fdddajpp8
 Summary:       The 3D vector math Java package, javax.vecmath
 # License is GNU General Public License, version 2, with the Classpath Exception
 License:       GPLv2 with exceptions
@@ -25,7 +22,6 @@ Patch0:        vecmath-javadoc.patch
 BuildArch:     noarch
 
 BuildRequires: ant
-BuildRequires: java-devel >= 1.6.0
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 Source44: import.info
@@ -62,6 +58,9 @@ sed -e "s|<version>1.5.2</version>|<version>1.6.0</version>|" %{SOURCE1} > %{nam
 %doc COPYRIGHT.txt LICENSE.txt LICENSE-SPEC.html
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0.13.20130710git41fdddajpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0.11.20130710git41fdddajpp8
 - new version
 
