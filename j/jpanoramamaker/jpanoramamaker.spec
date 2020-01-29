@@ -3,8 +3,8 @@ Group: Toys
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorv 5
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jpanoramamaker
 Version:        %{majorv}.%{minorv}
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -23,7 +23,6 @@ Source0:        http://jpanoramamaker.wz.cz/fedora/%{name}-%{version}.src.tar.gz
 Source1:        %{name}.appdata.xml
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  swing-layout
 BuildRequires:  desktop-file-utils
@@ -115,6 +114,9 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_11jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_10jpp8
 - new version
 
