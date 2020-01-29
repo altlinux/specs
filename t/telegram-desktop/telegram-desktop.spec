@@ -7,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 1.9.8
+Version: 1.9.9
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -28,7 +28,7 @@ Patch3: 0001-add-ppc64-and-e2k-build-support.patch
 Patch4: cmake_helpers-system-qrcode.patch
 
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
-BuildRequires(pre): rpm-macros-kde-common-devel
+#BuildRequires(pre): rpm-macros-kde-common-devel
 
 BuildRequires(pre): rpm-build-compat >= 2.1.5
 BuildRequires(pre): rpm-build-intro >= 2.1.5
@@ -163,6 +163,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
+    -DTDESKTOP_FORCE_GTK_FILE_DIALOG:BOOL=ON \
     %nil
 # check later: -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON
 
@@ -171,7 +172,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %install
 %makeinstall_std
 # XDG files
-install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
+#install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
 install -m644 -D lib/xdg/telegramdesktop.appdata.xml %buildroot%_datadir/appdata/telegram-desktop.appdata.xml
 
 ln -s %name %buildroot%_bindir/Telegram
@@ -184,7 +185,7 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_bindir/Telegram
 %_bindir/telegram
 %_desktopdir/telegramdesktop.desktop
-%_Kservices/tg.protocol
+#_Kservices/tg.protocol
 %_datadir/metainfo/telegramdesktop.appdata.xml
 %_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
@@ -198,6 +199,11 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt1
+- new version 1.9.9 (with rpmrb script)
+- enable TDESKTOP_FORCE_GTK_FILE_DIALOG
+- dropped tg.protocol packing
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
 - new version (1.9.8) with rpmgs script
 - build with system libqrcodegen-cpp-devel
