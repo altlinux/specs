@@ -1,21 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+
 Name: unique-sam
 Version: 0.2.4
-Release: alt1.1
+Release: alt2
+
 Summary: Analyse sam file and keep the unique aligment record
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/unique-sam/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/dlmeduLi/unique-sam.git
 Source0: https://pypi.python.org/packages/03/16/51c6c02140d2ce6ab9d71615341bdb0383d0a137e790868445161f93cb9b/%{name}-%{version}.tar.gz
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-module-libsam
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-libsam
 
-%py_provides unique_sam
-%py_requires libsam
+%py3_provides unique_sam
+%py3_requires libsam
+
 
 %description
 Unique-Sam is a simple command line tool to remove the duplicated
@@ -29,20 +32,24 @@ the duplicated alignments.
 %setup -q 
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst PKG-INFO
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.4-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.4-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
