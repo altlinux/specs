@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit_hash 1dead92
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_16jpp8
+Release:        alt2_18jpp8
 Summary:        Pure-java port of asmjit
 
 License:        MIT
@@ -58,6 +55,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_16jpp8
 - new version
 
