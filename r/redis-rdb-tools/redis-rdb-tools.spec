@@ -1,29 +1,26 @@
+%define pyname rdbtools
+
 Name: redis-rdb-tools
 Version: 0.1.13
-Release: alt1
+Release: alt2
 
 Summary: Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
-
-Url: https://rdbtools.com
 License: MIT License
 Group: Databases
-
+Url: https://rdbtools.com
 Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+BuildArch: noarch
 
 # Source-url: https://github.com/sripathikrishnan/redis-rdb-tools/archive/rdbtools-%version.tar.gz
 Source: %name-%version.tar
+Patch0: port-on-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+Requires: python3-module-%pyname = %EVR
 
 Provides: rdbtools = %EVR
 
-# (highly recommended to speed up parsing)
-Requires: python-module-lzf
-
-BuildRequires: python-modules-json
-
-# for ./run_tests
-BuildRequires: python-module-redis-py python-modules-unittest
-
-BuildArch: noarch
 
 %description
 Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
@@ -37,25 +34,53 @@ In addition, rdbtools provides utilities to:
 * Convert dump files to JSON
 * Compare two dump files using standard diff tools
 
+%package -n python3-module-%pyname
+Summary: Python3 module for %name
+Group: Development/Python3
+
+%description -n python3-module-%pyname
+This package contains python3 module for %name.
+
 %prep
 %setup
+%patch0 -p2
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ \( -name '*.py' -o -name 'run_tests' \))
+
+%package -n python3-module-%pyname-tests
+Summary: Tests for %pyname
+Group: Development/Python3
+Requires: python3-module-%pyname = %EVR
+
+%description -n python3-module-%pyname-tests
+This package contains tests for %pyname.
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
-%check
-./run_tests
+cp -fR tests/ %buildroot%python3_sitelibdir/%pyname/
 
 %files
-%doc README.md
+%doc README.md docs/
 %_bindir/rdb
 %_bindir/redis-memory-for-key
 %_bindir/redis-profiler
-%python_sitelibdir/*
+
+%files -n python3-module-%pyname
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%pyname/tests/
+
+%files -n python3-module-%pyname-tests
+%python3_sitelibdir/%pyname/tests/
+
 
 %changelog
+* Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.13-alt2
+- Porting on Python3.
+
 * Sat Dec 01 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1.13-alt1
 - initial build for ALT Linux Sisyphus
