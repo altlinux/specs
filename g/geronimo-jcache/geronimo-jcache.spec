@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          geronimo-jcache
 Version:       1.0
-Release:       alt1_0.7.alpha.1jpp8
+Release:       alt1_0.9.alpha.1jpp8
 Summary:       Apache Geronimo JCache Spec 1.0
 License:       ASL 2.0
 URL:           http://geronimo.apache.org/
@@ -64,6 +64,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.9.alpha.1jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.7.alpha.1jpp8
 - new version
 
