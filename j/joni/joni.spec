@@ -1,22 +1,21 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             joni
 Version:          2.1.3
-Release:          alt2_9jpp8
+Release:          alt2_11jpp8
 Summary:          Java port of Oniguruma regexp library 
 License:          MIT
 URL:              http://github.com/jruby/%{name}
 Source0:          https://github.com/jruby/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.zip
 Patch1:           joni-remove-useless-wagon-dependency.patch
 
-BuildRequires:    java-devel
 BuildRequires:    jcodings
 BuildRequires:    jpackage-utils
 BuildRequires:    junit
@@ -72,6 +71,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_11jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_9jpp8
 - new version
 
