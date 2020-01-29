@@ -2,7 +2,7 @@
 
 Name: sway
 Version: 1.4
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -32,7 +32,7 @@ BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwlc0-devel
 BuildRequires: libwlc-devel >= 0.0.10
-BuildRequires: libwlroots-devel
+BuildRequires: libwlroots-devel >= 0.10.1-alt2
 BuildRequires: meson
 BuildRequires: scdoc
 BuildRequires: time
@@ -45,7 +45,6 @@ Requires: swayidle
 
 Requires: dmenu-wl
 Requires: %name-data
-Requires(post): /sbin/setcap
 
 %description
 Sway is a drop-in replacement for the i3 window manager, but for Wayland
@@ -84,9 +83,6 @@ rm -rf -- \
 	%buildroot/%_datadir/zsh \
 	#
 
-%post
-/sbin/setcap cap_sys_admin=eip %_bindir/%name
-
 %files
 %doc LICENSE
 %doc README.md
@@ -110,6 +106,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Fri Mar 27 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.4-alt2
+- Remove privilege escalation.
+
 * Wed Mar 25 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.4-alt1
 - New version (1.4)
 
