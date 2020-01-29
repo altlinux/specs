@@ -1,19 +1,24 @@
 %define oname functest
-Name: python-module-%oname
-Version: 0.8.8
-Release: alt2.1
-Summary: Functional test framework
-License: ASLv2.0
-Group: Development/Python
-Url: https://pypi.python.org/pypi/functest/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Name:       python3-module-%oname
+Version:    0.8.8
+Release:    alt3
 
-BuildPreReq: python-module-setuptools
-BuildArch: noarch
+Summary:    Functional test framework
+License:    ASLv2.0
+Group:      Development/Python3
+Url:        https://pypi.python.org/pypi/functest/
 
-%py_provides %oname
+BuildArch:  noarch
+
+Source:     %name-%version.tar
+Patch0:     port-on-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+
+%py3_provides %oname
+Conflicts: python-module-%oname
+
 
 %description
 Functest is a test tool/framework for testing in python.
@@ -23,12 +28,13 @@ hierarchies, and distributed result reporting.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 # There is a file in the package with a name starting with <tt>._</tt>, 
 # the file name pattern used by Mac OS X to store resource forks in non-native 
@@ -38,17 +44,20 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 # for ones installed as %%doc
 find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 
-
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc PKG-INFO
 %_bindir/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/tests
+
 
 %changelog
+* Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.8-alt3
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.8-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
