@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-parent
 Version:        47
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Apache Commons Parent Pom
 License:        ASL 2.0
 URL:            https://commons.apache.org/commons-parent-pom.html
@@ -62,6 +59,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:47-alt1_4jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:47-alt1_2jpp8
 - new version
 
