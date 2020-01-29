@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_19jpp8
+Release:	alt2_21jpp8
 Summary:	Universal Description, Discovery and Integration registry API for Java
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
@@ -70,6 +70,9 @@ zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_21jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_19jpp8
 - new version
 
