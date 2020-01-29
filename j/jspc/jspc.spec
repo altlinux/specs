@@ -1,10 +1,9 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jspc
 Version:       2.0
-Release:       alt1_0.24.alpha.3jpp8
+Release:       alt1_0.25.alpha.3jpp8
 Summary:       Compile JSPs under Maven
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/jspc/
@@ -25,7 +24,6 @@ Source0:       %{name}-%{namedversion}-src-svn.tar.gz
 Source1:       %{name}-mp-plugin.xml
 Patch0:        %{name}-ant-groovyc.patch
 
-BuildRequires: java-devel
 BuildRequires: maven-local
 
 BuildRequires: apache-resource-bundles
@@ -180,6 +178,9 @@ jar uf  %{name}-maven-plugin/target/%{name}-maven-plugin-2.0-alpha-3.jar META-IN
 %doc LICENSE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.25.alpha.3jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.24.alpha.3jpp8
 - new version
 
