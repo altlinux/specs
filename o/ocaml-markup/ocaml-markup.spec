@@ -2,13 +2,14 @@
 %define libname markup
 %define libnamelwt %libname-lwt
 Name: ocaml-%libname
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: Error-recovering streaming HTML5 and XML parsers.
-License: BSD Like
+License: MIT
 Group: Development/ML
 Url: https://github.com/aantron/markup.ml
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1 opam dune >= 1.4.0
 BuildRequires: ocaml-uutf-devel ocaml-lwt-devel ocaml-bisect_ppx-devel ocaml-migrate-parsetree-devel ocaml-result-devel
@@ -37,6 +38,7 @@ Requires: %name = %EVR
 Summary: Development files for programs which will use the %name-lwt
 Group: Development/ML
 Requires: %name-lwt = %EVR
+Requires: ocaml-bisect_ppx-devel
 
 %description lwt
 Adapter between Markup.ml and Lwt
@@ -47,13 +49,13 @@ programs which use %name-lwt
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml markup-lwt.install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml markup.install
+dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md README.md
@@ -83,6 +85,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml mark
 %_libdir/ocaml/%libnamelwt/*.mli
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 

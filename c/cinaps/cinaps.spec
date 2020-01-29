@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: cinaps
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: Trivial metaprogramming tool.
 License: Apache-2.0
@@ -22,16 +22,21 @@ the OCaml code.
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %name.install
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.org
 %dir %_libdir/ocaml/%name
 %_bindir/cinaps
 %_libdir/ocaml/%name/META
+%_libdir/ocaml/%name/dune-package
 %_libdir/ocaml/%name/opam
+%_libdir/ocaml/%name/runtime
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 

@@ -2,7 +2,7 @@
 %define oname configurator
 Name: ocaml-%oname
 Version: 0.11.0
-Release: alt4
+Release: alt5
 Summary: Helper library for gathering system configuration
 Group: Development/ML
 License: ASL 2.0
@@ -41,14 +41,15 @@ developing applications that use %name.
 %setup
 
 %build
-jbuilder build --verbose -p %oname %_smp_mflags
+dune upgrade
+dune build --verbose -p %oname %_smp_mflags
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
 rm -rf %buildroot/usr/doc
 
 %check
-jbuilder runtest
+dune runtest
 
 %files
 %doc LICENSE.txt
@@ -70,6 +71,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/*.ml*
 
 %changelog
+* Tue Jan 28 2020 Anton Farygin <rider@altlinux.ru> 0.11.0-alt5
+- migrate from jbuilder to dune
+
 * Wed Mar 13 2019 Anton Farygin <rider@altlinux.ru> 0.11.0-alt4
 - rebuilt with dune-1.8 and ocaml-base-0.12.0
 

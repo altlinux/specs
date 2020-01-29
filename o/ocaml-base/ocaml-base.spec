@@ -1,16 +1,16 @@
 %set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.12.2
+Version: 0.13.0
 Release: alt1
 Summary: Full standard library replacement for OCaml
-License: Apache 2.0
+License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
-BuildRequires: dune >= 1.8
+BuildRequires: ocaml-dune-devel
 BuildRequires: opam
 BuildRequires: ocaml-sexplib0-devel  >= 0.12
 
@@ -37,14 +37,14 @@ developing applications that use %name.
 %setup
 
 %build
-jbuilder build --verbose -p %oname %_smp_mflags
+dune build --verbose -p %oname %_smp_mflags
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
 rm -rf %buildroot/usr/doc
 
 %check
-jbuilder runtest
+dune runtest
 
 %files
 %doc README.org LICENSE.md
@@ -52,6 +52,7 @@ jbuilder runtest
 %dir %_libdir/ocaml/%oname/md5
 %dir %_libdir/ocaml/%oname/caml
 %dir %_libdir/ocaml/%oname/shadow_stdlib
+%dir %_libdir/ocaml/%oname/base_internalhash_types
 %_libdir/ocaml/%oname/META
 %_libdir/ocaml/%oname/*.cmi
 %_libdir/ocaml/%oname/*.cma
@@ -64,7 +65,9 @@ jbuilder runtest
 %_libdir/ocaml/%oname/*/*.cmxa
 %_libdir/ocaml/%oname/*/*.cmxs
 %_libdir/ocaml/stublibs/dllbase_stubs.so
+%_libdir/ocaml/stublibs/dllbase_internalhash_types_stubs.so
 %_libdir/ocaml/%oname/runtime.js
+%_libdir/ocaml/%oname/base_internalhash_types/runtime.js
 
 %files devel
 %_libdir/ocaml/%oname/opam
@@ -79,9 +82,12 @@ jbuilder runtest
 %_libdir/ocaml/%oname/*/*.cmx
 %_libdir/ocaml/%oname/*/*.ml
 %_libdir/ocaml/%oname/*/*.mli
-%_libdir/ocaml/%oname/internalhash.h
+%_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Thu Jan 16 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.12.2-alt1
 - 0.12.2
 

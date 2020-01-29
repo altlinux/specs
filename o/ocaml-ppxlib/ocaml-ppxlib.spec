@@ -1,14 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppxlib
 Name: ocaml-%libname
-Version: 0.8.1
+Version: 0.12.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
 Url: https://github.com/ocaml-ppx/ppxlib
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam  ocaml-compiler-libs-devel cinaps ocaml-result-devel
+BuildRequires: ocaml-findlib-devel dune opam  ocaml-compiler-libs-devel cinaps ocaml-result-devel ocaml-re-devel
 BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel ocaml-ppx_derivers-devel
 
 %description
@@ -36,7 +36,10 @@ developing applications that use %name.
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+
+%check
+dune runtest
 
 %files
 %doc README.md LICENSE.md CHANGES.md
@@ -71,6 +74,12 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
+* Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 0.9.0-alt1
+- 0.9.0
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 

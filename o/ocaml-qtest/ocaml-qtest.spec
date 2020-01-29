@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qtest
 Name: ocaml-%libname
-Version: 2.9
+Version: 2.10.1
 Release: alt1
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
@@ -33,7 +33,7 @@ developing applications that use %name.
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 
 %files
 %doc README.adoc HOWTO.adoc
@@ -57,6 +57,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt1
+- 2.10.1
+
 * Wed Nov 07 2018 Anton Farygin <rider@altlinux.ru> 2.9-alt1
 - first build for ALT
 
