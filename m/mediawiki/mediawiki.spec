@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -63,6 +63,8 @@ Requires: webserver-common
 Requires: php7-libs >= 7.0.0
 Requires: php7-dom php7-fileinfo php7-mbstring php7-mcrypt php7-xmlreader
 Requires: diffutils
+Requires: php7-opcache
+Requires: pear-Mail >= 1.4.1
 
 AutoProv:no
 AutoReq:yes,nomingw32,nomingw64,noerlang,noruby
@@ -334,6 +336,10 @@ exit 0
 
 
 %changelog
+* Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.34.0-alt2
+- add pear-Mail requires
+- add php7-opcache requires (ALT bug 31471)
+
 * Sun Dec 22 2019 Vitaly Lipatov <lav@altlinux.ru> 1.34.0-alt1
 - new version 1.34.0 (with rpmrb script)
 - CVE-2019-19709
