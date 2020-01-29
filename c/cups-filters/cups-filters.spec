@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.26.2
+Version: 1.27.0
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -94,7 +94,7 @@ This is the development package for OpenPrinting CUPS filters and backends.
 %package -n cups-backend-serial
 Epoch: 1
 Summary: serial backend for cups
-License: GPL
+License: GPLv2
 Group: System/Servers
 
 %description -n cups-backend-serial
@@ -191,6 +191,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 1.27.0-alt1
+- new version 1.27.0
+
 * Wed Jan 15 2020 Anton Farygin <rider@altlinux.ru> 1.26.2-alt1
 - new version 1.26.2
 
