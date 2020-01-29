@@ -1,7 +1,7 @@
 # TODO: build to upstream
 Name: zopfli
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: Zlib compatible better compressor
 
@@ -110,6 +110,9 @@ ln -s libzopflipng.so.%version %buildroot%_libdir/libzopflipng.so.1
 
 
 %changelog
+* Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt3
 - fix parallel build issue
 
