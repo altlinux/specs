@@ -1,8 +1,8 @@
-%define nspr_version 4.23-alt1
+%define nspr_version 4.24-alt1
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.47.1
+Version:	3.49.1
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -269,8 +269,16 @@ EOF
 
 %files -n lib%name-nssckbi-checkinstall
 
+# https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Jan 23 2020 Alexey Gladkov <legion@altlinux.ru> 3.49.1-alt1
+- New version (3.49.1).
+- Security fixes:
+  + CVE-2019-17023: Additional HRR Tests
+- Certificate Authority Changes:
+  + Add Entrust Root Certification Authority - G4 Cert
+
 * Mon Dec 02 2019 Alexey Gladkov <legion@altlinux.ru> 3.47.1-alt1
 - New version (3.47.1).
 - Security fixes:
