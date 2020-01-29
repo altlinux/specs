@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global spec_ver 1.3
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-saaj
 Version:          1.1
-Release:          alt2_22jpp8
+Release:          alt2_24jpp8
 Summary:          Java EE: SOAP with Attachments API Package v1.3
 License:          ASL 2.0 and W3C
 
@@ -19,7 +16,6 @@ URL:              http://geronimo.apache.org/
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
@@ -68,6 +64,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_24jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_22jpp8
 - new version
 
