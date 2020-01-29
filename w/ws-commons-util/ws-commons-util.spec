@@ -1,15 +1,12 @@
 Epoch: 1
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ws-commons-util
 Version:        1.0.2
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
@@ -81,6 +78,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_11jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_9jpp8
 - new version
 
