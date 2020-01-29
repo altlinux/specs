@@ -3,8 +3,8 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global git_commit e0fdedc
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jvyamlb
 Version:        0.2.5
-Release:        alt1_18jpp8
+Release:        alt1_20jpp8
 Summary:        YAML processor for JRuby
 
 License:        MIT
@@ -27,7 +27,6 @@ BuildArch:      noarch
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  bytelist
-BuildRequires:  java-devel
 BuildRequires:  jcodings
 BuildRequires:  joda-time
 BuildRequires:  jpackage-utils
@@ -71,6 +70,9 @@ cp -p lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_20jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_18jpp8
 - new version
 
