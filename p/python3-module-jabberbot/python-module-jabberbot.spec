@@ -1,23 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename jabberbot
+%define oname jabberbot
 
-Name: python-module-%modulename
+Name: python3-module-%oname
 Version: 0.16
-Release: alt1
-
-%setup_python_module %modulename
+Release: alt2
 
 Summary: A simple jabber/xmpp bot framework
 License: GPLv3+
-Group: Development/Python
-
+Group: Development/Python3
 Url: http://thpinfo.com/2007/python-jabberbot
+
 BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/82/e7/36cc193d99498cc42ac8909e2b028202ac7ac6ec8c615f61d5331dbdbba4/jabberbot-%{version}.tar.gz
 
-BuildPreReq: %py_dependencies setuptools xmpp DNS
-Requires: python-module-xmpp
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-xmpp python-tools-2to3
+
+Requires: python3-module-xmpp
+
 
 %description
 Programming your own Jabber bot can be fun and helpful. This is
@@ -30,18 +31,25 @@ with your Python scripts.
 %prep
 %setup -q -n jabberbot-%{version}
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc examples README AUTHORS
-%python_sitelibdir/*.py*
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/*.py*
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/__pycache__/%oname.*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.16-alt2
+- Porting on Python3.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated PyPI update
 
