@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.9.2
+Version: 2.9.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.3-alt1
+- rpmgs: add support for update of remotes branches
+- rpmgs: update predownloaded in any case
+- rpmgs: drop npm and node-gyp node modules from predownloaded
+- rpmgs: check *.watch file in the root dir too
+- rpmgs: empty version support
+- fix 'major' define using
+- rpmgs: add composer.json support
+
 * Fri Jan 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
 - use distro_info (ALT bug 37712)
 - gitask: add -m <message> support for run and commit commands
