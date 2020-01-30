@@ -1,25 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
 %define oldname sx
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-Summary: Tool to extract reports and run plug-ins against those extracted reports
-Name: libsx
-Version: 2.17
-Release: alt1_9
-URL: http://fedorahosted.org/sx
-Source0: https://git.fedorahosted.org/cgit/sx.git/snapshot/%{oldname}-%{version}.tar.gz
-License: GPLv2
-Group: System/Libraries
-BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools
-Requires: python
-Source44: import.info
+Name:       libsx
+Version:    2.17
+Release:    alt2
+
+Summary:    Tool to extract reports and run plug-ins against those extracted reports
+License:    GPLv2
+Group:      System/Libraries
+URL:        http://fedorahosted.org/sx
+
+BuildArch:  noarch
+
+Source0:    https://git.fedorahosted.org/cgit/sx.git/snapshot/%{oldname}-%{version}.tar.gz
+Source44:   import.info
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
 Provides: sx = %{version}-%{release}
+
 
 %description
 sxconsole is a tool used to extract various report types and then
@@ -30,23 +29,31 @@ sysreport/sosreports but has been expanded to include any report that
 has a class defined.
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -n %oldname-%version -q
+
+sed -i 's|wb|w|' lib/%oldname/__init__.py
+
+find -type f \( -name '*.py' -o -name 'sxconsole' \) \
+                            -exec 2to3 -w -n '{}' +
 
 %build
-%{__python} setup.py build
+%__python3 setup.py build
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-%{__python} setup.py install --optimize 1 --root=${RPM_BUILD_ROOT}
+%__python3 setup.py install --optimize 1 --root=${RPM_BUILD_ROOT}
 
 %files
 %doc LICENSE AUTHORS PKG-INFO CHANGELOG
 %doc doc/*
-%{_bindir}/sxconsole
-%{python_sitelibdir_noarch}/*
+%_bindir/sxconsole
+%python3_sitelibdir_noarch/*
 
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.17-alt2
+- Porting on Python3.
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_9
 - update to new release by fcimport
 
