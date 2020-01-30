@@ -1,20 +1,24 @@
-Name: scato
-Version: 0.3.7
-Release: alt1
-Group: Education
-Summary: Scalable Tortoise is a programming language to drive the tortoise, that can draw lines with different width and colors
-Summary(ru_RU.KOI8-R): Язык для создания рисунков, посредством программирования действий воображаемой черепашки
-License: BSD
-Url: http://code.google.com/p/scato
-Source: %name-%version.tar.gz
-# rm -rf doc; wget -P doc -E -H -k -K -p http://code.google.com/p/scato/wiki/{language_manual_ru,menu_overview_ru,language_manual_ru,history_ru,overview_ru,implementation_ru,features_and_changes_ru,features_and_changes,examples,menu_overview,BNF_ru,BNF}
-Source1: doc.tar
-BuildArch: noarch
-%setup_python_module %name
-Requires: %packagename = %version
+Name:       scato
+Version:    0.3.7
+Release:    alt2
 
-# Automatically added by buildreq on Thu Jul 08 2010
-BuildRequires: python-devel
+Summary:    Scalable Tortoise is a programming language to drive the tortoise, that can draw lines with different width and colors
+Summary(ru_RU.KOI8-R): Язык для создания рисунков, посредством программирования действий воображаемой черепашки
+
+License:    BSD
+Group:      Education
+Url:        http://code.google.com/p/scato
+BuildArch:  noarch
+
+Source:     %name-%version.tar.gz
+Source1:    doc.tar
+Patch0:     port-on-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
+Requires: python3-module-%name = %version
+
 
 %description
 Scato (Scalable Tortoise) is a programming language to drive the
@@ -41,33 +45,39 @@ Scato -- развитый черепаший язык (язык для создания рисунков,
 развивается с учётом пожеланий преподавателей и уже был представлен на
 нескольких педагогических конференциях.
 
-%package -n %packagename
+%package -n python3-module-%name
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Summary: Supplemental module for %name
 
-%description -n %packagename
+%description -n python3-module-%name
 Supplemental module for %name, %summary
 
 %prep
 %setup
 tar xvf %SOURCE1
+%patch0 -p2
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
-# TODO documentation
 %files
 %doc README doc/*
 %_bindir/*
 
-%files -n %packagename
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.7-alt2
+- Porting on Python3.
+
 * Sun Dec 23 2012 Fr. Br. George <george@altlinux.ru> 0.3.7-alt1
 - Autobuild version bump to 0.3.7
 
