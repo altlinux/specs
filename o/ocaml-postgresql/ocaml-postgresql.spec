@@ -1,14 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname postgresql
 Name: ocaml-%libname
-Version: 4.5.0
+Version: 4.5.2
 Release: alt1
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
-License: LGPLv3 with exceptions
+License: LGPLv2.1
 Url: https://github.com/mmottl/postgresql-ocaml
 Source0: %name-%version.tar
-BuildRequires: dune
+BuildRequires: ocaml-dune-devel
 BuildRequires: ocaml
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-stdio-devel
@@ -35,8 +35,8 @@ developing applications that use %name.
 dune build -p %libname 
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
-rm -rf %buildroot/usr/doc
+dune install --destdir=%buildroot
+rm -rf %buildroot/usr/share/doc
 chrpath -d %buildroot%_libdir/ocaml/stublibs/dllpostgresql_stubs.so
 
 
@@ -63,6 +63,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 4.5.2-alt1
+- 4.5.2
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 4.5.0-alt1
 - 4.5.0
 
