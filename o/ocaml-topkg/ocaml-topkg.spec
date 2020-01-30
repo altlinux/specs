@@ -2,7 +2,7 @@
 %define oname   topkg
 Name: ocaml-topkg
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -38,7 +38,7 @@ developing applications that use %name.
 %setup
 
 %build
-sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
+sed -i 's,%%%%VERSION_NUM%%%%,%version,g;s,result,,g' pkg/META
 ocaml pkg/pkg.ml "build"
 
 
@@ -69,6 +69,9 @@ rm -rf %buildroot%prefix/doc/%oname
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.0.1-alt2
+- drop package 'result' require from META
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
