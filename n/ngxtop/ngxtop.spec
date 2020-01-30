@@ -1,20 +1,19 @@
-Name: ngxtop
-Version: 0.0.2
-Release: alt1
+Name:       ngxtop
+Version:    0.0.2
+Release:    alt2
 
-Summary:  Real-time metrics for nginx server
+Summary:    Real-time metrics for nginx server
+License:    MIT
+Group:      Monitoring
+Url:        https://github.com/lebinh/ngxtop
+Packager:   Vitaly Lipatov <lav@altlinux.ru>
 
-Url: https://github.com/lebinh/ngxtop
-License: MIT
-Group: Monitoring
+BuildArch:  noarch
 
-Source: %name-%version.tar
+Source:     %name-%version.tar
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+BuildRequires(pre): rpm-build-python3
 
-BuildArch: noarch
-
-BuildRequires: python-module-distribute
 
 %description
 ngxtop parses your nginx access log and outputs useful,
@@ -44,16 +43,20 @@ See sample usages below for some ideas about what you can do with it.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/%name
-%python_sitelibdir/%name/
-%python_sitelibdir/%{name}*.egg-info/
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{name}*.egg-info/
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.2-alt2
+- Porting on Python3.
+
 * Sun Dec 06 2015 Vitaly Lipatov <lav@altlinux.ru> 0.0.2-alt1
 - initial build for ALT Linux Sisyphus
