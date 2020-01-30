@@ -1,6 +1,6 @@
 Name: spdlog
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Super fast C++ logging library
 
@@ -40,7 +40,7 @@ applications that use %name.
 
 %prep
 %setup
-%__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" include/spdlog/fmt/bundled/format.h
+#__subst "s|CHAR_WIDTH|SPDLOG_CHAR_WIDTH|g" include/spdlog/fmt/bundled/format.h
 
 %build
 %cmake -DSPDLOG_BUILD_SHARED=ON \
@@ -49,6 +49,8 @@ applications that use %name.
 
 %install
 %cmakeinstall_std
+# enable external libfmt using
+%__subst "s|// #define SPDLOG_FMT_EXTERNAL|#define SPDLOG_FMT_EXTERNAL|" %buildroot%_includedir/spdlog/tweakme.h
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/BUILD
@@ -66,6 +68,9 @@ export LD_LIBRARY_PATH=$(pwd)/BUILD
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
+- patch tweakme.h to use external libfmt for the library clients (ALT bug 37969)
+
 * Tue Jan 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 - build a library, with external libfmt
