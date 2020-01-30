@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ssl
 Version: 0.5.9
-Release: alt1
+Release: alt2
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with exemptions
 Group: Development/ML
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Sun Jan 06 2008
 BuildRequires: ocaml-findlib libssl-devel
-BuildRequires(pre): ocaml dune opam
+BuildRequires: ocaml ocaml-dune-devel opam 
 
 %description
 This package contains OCaml bindings for libssl.
@@ -35,7 +35,7 @@ developing applications that use %name.
 %make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %_libdir/ocaml/ssl
@@ -50,6 +50,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/ssl/*.mli
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 0.5.9-alt2
+- fix for build with dune-2.x
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.5.9-alt1
 - 0.5.9
 
