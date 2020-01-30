@@ -1,20 +1,20 @@
-%define version 2.0.2
-%define release alt2
+Name:       texml
+Version:    2.0.2
+Release:    alt3
 
-%setup_python_module texml
+Summary:    TeXML: an XML syntax for TeX (LaTeX, ConTeXt)
+License:    MIT
+Group:      Publishing
+Url:        http://getfo.org/texml/
 
-Summary: TeXML: an XML syntax for TeX (LaTeX, ConTeXt)
-Name: texml
-Version: %version
-Release: %release
-Source: %modulename-%version.tar
-License: MIT
-Group: Publishing
-BuildArch: noarch
-Url: http://getfo.org/texml/
+BuildArch:  noarch
 
-BuildRequires: python-devel python-modules-compiler
-BuildRequires: python-modules-encodings python-modules-xml
+Source:     %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+# BuildRequires: python-modules-encodings python-modules-xml
+
 
 %description
 TeXML is an XML syntax for TeX. The processor transforms the TeXML
@@ -25,22 +25,26 @@ generate [La]TeX or ConTeXt files.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build_debug
+%python3_build_debug
                
 %install
-%python_build_install --optimize=2 \
-                          --record=INSTALLED_FILES
-# texml.1 may be compressed, INSTALLED_FILES becomes incorrect
-sed -i 's/texml.1/texml.1*/' INSTALLED_FILES
+%python3_build_install --optimize=2
 
-%files -f INSTALLED_FILES
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
+%files
 %dir %_docdir/texml-%version
+%_bindir/%{name}*
+%_docdir/%{name}-%{version}/*
+%_mandir/man1/%{name}.1.xz
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt3
+- Porting on Python3.
+
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
 - Updated spec to allow any man page compression.
 
