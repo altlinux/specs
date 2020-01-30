@@ -1,18 +1,19 @@
-Name: docopts
-Version: 0.6.1
-Release: alt1
+Name:       docopts
+Version:    0.6.1
+Release:    alt2
 
-Summary: shell interface for docopt, the CLI description language
+Summary:    shell interface for docopt, the CLI description language
+License:    MIT
+Group:      Development/Python3
+Url:        https://github.com/docopt/docopts
 
-License: MIT
-Group: Development/Python
-Url: https://github.com/docopt/docopts
+BuildArch:  noarch
 
-Source: %name-%version.tar
+Source:     %name-%version.tar
 
-BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-docopt
 
-BuildRequires: python-module-setuptools python-module-docopt
 
 %description
 docopts parses the command line argument vector argv according
@@ -25,16 +26,20 @@ needs of most scripts.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/%name
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt2
+- Porting on Python3.
+
 * Sat Feb 16 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - Initial build for ALTLinux Sisyphus
 
