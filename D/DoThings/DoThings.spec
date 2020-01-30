@@ -1,37 +1,44 @@
-Name: DoThings
-Version: 0.2
-Release: alt1.git20150320.1
-Summary: Simple To-Do-List in Termial
-License: BSD
-Group: Toys
-Url: https://pypi.python.org/pypi/DoThings/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Name:       DoThings
+Version:    0.2
+Release:    alt2
+
+Summary:    Simple To-Do-List in Termial
+License:    BSD
+Group:      Toys
+Url:        https://pypi.python.org/pypi/DoThings/
+
+BuildArch:  noarch
 
 # https://github.com/MarzinZ/things.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch0: port-on-python3.patch
 
-BuildPreReq: python-module-setuptools python-module-docopt
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-docopt python-tools-2to3
 
-%py_provides things
-%py_requires docopt
+%py3_provides things
+%py3_requires docopt
+
 
 %description
 An easy to-do-list in Terminal.
 
 %prep
 %setup
+%patch0 -p1
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 export PATH=$PATH:%buildroot%_bindir
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 things "test"
 things all
 things done 1
@@ -40,9 +47,13 @@ things all
 %files
 %doc *.md example.png
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt2
+- Porting on Python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt1.git20150320.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
