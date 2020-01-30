@@ -2,7 +2,7 @@
 %define libname fpath
 Name:           ocaml-%libname
 Version:        0.7.2
-Release:        alt2
+Release:        alt3
 Summary:        File system paths for OCaml
 License:        ISC
 Group:          Development/ML
@@ -11,7 +11,7 @@ Url:            http://erratique.ch/software/fpath
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: ocaml-astring
+BuildRequires: ocaml-astring ocaml-result
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -51,6 +51,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 0.7.2-alt3
+- added ocaml-result BR
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 0.7.2-alt2
 - rebuilt with ocaml-4.08
 
