@@ -2,7 +2,7 @@
 
 Name: ocaml-biniou
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD
@@ -42,10 +42,7 @@ developing applications that use %name.
 make all
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p %buildroot%_bindir
-mkdir -p $OCAMLFIND_DESTDIR
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 # avoid potential future name conflict
 mv %buildroot%_bindir/{,ocaml-}bdump
@@ -67,6 +64,9 @@ mv %buildroot%_bindir/{,ocaml-}bdump
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
+- built with dune-2.x
+
 * Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 

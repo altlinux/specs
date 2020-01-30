@@ -2,18 +2,18 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-easy-format
-Version: 1.3.1
-Release: alt4
+Version: 1.3.2
+Release: alt1
 Summary: High-level and functional interface to the Format module
 License: BSD
 Group: Development/ML
 Url: https://opam.ocaml.org/packages/easy-format/
 # https://github.com/mjambon/easy-format
-Source0: %name-%version.tar
+Source: %name-%version.tar
+Patch0: ocaml-easy-format-suse-fixbuild.patch 
 BuildRequires: ocaml >= 4.04
-BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamldoc
-BuildRequires: jbuilder
+BuildRequires: dune
 BuildRequires: opam
 
 %description
@@ -46,15 +46,16 @@ developing applications that use %name.
 
 %prep
 %setup
-sed -i.add-debuginfo 's/ocamlopt/ocamlopt -g/;s/ocamlc \(-[co]\)/ocamlc -g \1/' Makefile
+%patch0 -p1
 
 %build
 make
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
+
+%check
+make check
 
 %files
 %doc LICENSE
@@ -63,11 +64,15 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %exclude %_libdir/ocaml/*/*.mli
 
 %files devel
-%doc LICENSE README.md Changes
+%doc LICENSE README.md CHANGES.md
 %_libdir/ocaml/*/*.cmx
 %_libdir/ocaml/*/*.mli
 
 %changelog
+* Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+- added patch from suse to fix build with dune-2.x and ocaml 4.08
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt4
 - rebuilt with ocaml-4.08
 
