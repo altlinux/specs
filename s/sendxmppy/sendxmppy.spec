@@ -1,17 +1,17 @@
 Name: sendxmppy
 Version: 0.5.1
-Release: alt1.1
+Release: alt2
 
 Summary: XMPP message sender from CLI
-
 License: BSD
 Group: Networking/Instant messaging
 Url: http://git.altlinux.org/people/zver/packages/sendxmppy.git
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 XMPP message sender from CLI
@@ -20,14 +20,20 @@ XMPP message sender from CLI
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install --record=INSTALLED_FILES
+%python3_install
 
-%files -f INSTALLED_FILES
+%files
+%_bindir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.1-alt2
+- Porting on Python3.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.1-alt1.1
 - Rebuild with Python-2.7
 
