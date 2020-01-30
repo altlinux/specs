@@ -3,7 +3,7 @@
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -46,8 +46,7 @@ developing applications that use %name.
 make all
 
 %install
-mkdir -p %buildroot%_libdir/ocaml
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md
@@ -71,6 +70,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/*/*.ml
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt2
+- built with dune-2.x
+
 * Thu Mar 14 2019 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
