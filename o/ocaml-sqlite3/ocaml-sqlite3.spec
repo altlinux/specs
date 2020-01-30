@@ -1,16 +1,16 @@
 %set_verify_elf_method textrel=relaxed
 %define module sqlite3
 Name: ocaml-%module
-Version: 4.4.1
+Version: 5.0.1
 Release: alt1
 
 Summary: OCaml library for accessing SQLite3 databases
-License: GPL
+License: MIT
 Group: Development/ML
 Url: http://www.ocaml.info/home/ocaml_sources.html
 Source: http://www.ocaml.info/ocaml_sources/%name-%version.tar
 
-BuildRequires: ocaml-findlib libsqlite3-devel ocaml-ocamldoc dune opam ocaml-base ocaml-stdio ocaml-configurator
+BuildRequires: ocaml-findlib libsqlite3-devel ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-stdio ocaml-configurator
 Provides:	ocaml4-%module
 Obsoletes:	ocaml4-%module
 
@@ -34,8 +34,7 @@ Runtime part of OCaml library for accessing SQLite3 databases
 make
 
 %install
-mkdir -p %buildroot%_libdir/ocaml
-dune install --destdir=%buildroot --libdir=%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md CHANGES.md README.md TODO.md
@@ -45,6 +44,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/stublibs/*.so
 
 %changelog
+* Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1
+- 5.0.1
+
 * Wed Feb 13 2019 Anton Farygin <rider@altlinux.ru> 4.4.1-alt1
 - 4.4.1
 
