@@ -2,7 +2,7 @@
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.2
-Release: alt2
+Release: alt3
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
@@ -32,7 +32,7 @@ sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc README.md LICENSE CHANGELOG.md
@@ -57,6 +57,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 0.5.2-alt3
+- rebuilt by dune-2.x
+
 * Sat Aug 03 2019 Anton Farygin <rider@altlinux.ru> 0.5.2-alt2
 - rebuilt with ocaml-4.08
 
