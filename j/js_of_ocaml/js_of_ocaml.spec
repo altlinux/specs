@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
-Version: 3.4.0
-Release: alt3
+Version: 3.5.2
+Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -22,6 +22,7 @@ BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-reactiveData-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-yojson-devel
+BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_tools-devel
 BuildRequires: ocaml-ppx_deriving-devel
 BuildRequires: dune opam
@@ -69,12 +70,11 @@ files for developing applications that use %name.
 make
 
 %install
-for instfile in *.install;do \
-   opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --mandir=%buildroot%_mandir $instfile; \
-done
+dune install --destdir=%buildroot
 
 %files
 %_bindir/js_of_ocaml
+%_bindir/jsoo_fs
 %_bindir/jsoo_minify
 %_bindir/jsoo_mkcmis
 %_bindir/jsoo_mktop
@@ -100,6 +100,8 @@ done
 %files -n ocaml-%name-devel
 %doc examples
 %doc LICENSE README.md examples
+%_libdir/ocaml/js_of_ocaml-ppx/ppx.exe
+%_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 %_libdir/ocaml/%{name}*/dune-package
 %_libdir/ocaml/%{name}*/*.ml
 %_libdir/ocaml/%{name}*/*.mli
@@ -115,6 +117,9 @@ done
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 3.5.2-alt1
+- 3.5.2
+
 * Sat Aug 03 2019 Anton Farygin <rider@altlinux.ru> 3.4.0-alt3
 - rebuilt with ocaml 4.08
 
