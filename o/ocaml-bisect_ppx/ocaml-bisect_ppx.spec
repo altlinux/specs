@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname bisect_ppx
 Name: ocaml-%libname
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 Summary: Code coverage for OCaml
 Group: Development/ML
 License: MPL2
@@ -42,30 +42,30 @@ developing applications that use %name.
 %make_build
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --mandir=%buildroot/%_mandir --docdir=%buildroot/%_docdir bisect_ppx.install
+dune install --destdir=%buildroot
 
 %files
 %doc README.md LICENSE
 %_bindir/bisect-ppx-report
 %dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/ppx.exe
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
+%_libdir/ocaml/%{libname}*/META
+%_libdir/ocaml/%{libname}*/ppx.exe
+%_libdir/ocaml/%{libname}*/opam
+%_libdir/ocaml/%{libname}*/*.cmi
+%_libdir/ocaml/%{libname}*/*.cma
 %dir %_libdir/ocaml/%libname/runtime
 %_libdir/ocaml/%libname/runtime/*.cmi
 %_libdir/ocaml/%libname/runtime/*.cma
 
 
 %files devel
-%_libdir/ocaml/%libname/*.ml*
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%_libdir/ocaml/%{libname}*/*.ml*
+%_libdir/ocaml/%{libname}*/*.cmx
+%_libdir/ocaml/%{libname}*/*.cmt*
+%_libdir/ocaml/%{libname}*/dune-package
+%_libdir/ocaml/%{libname}*/*.a
+%_libdir/ocaml/%{libname}*/*.cmxa
+%_libdir/ocaml/%{libname}*/*.cmxs
 %_libdir/ocaml/%libname/runtime/*.ml*
 %_libdir/ocaml/%libname/runtime/*.a
 %_libdir/ocaml/%libname/runtime/*.cmxa
@@ -74,6 +74,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml --ma
 %_libdir/ocaml/%libname/runtime/*.cmxs
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.4.1-alt2
 - rebuilt with ocaml-4.08
 
