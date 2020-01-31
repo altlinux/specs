@@ -1,22 +1,22 @@
-Name:    pydxcluster
-Version: 2.21
-Release: alt2
+Name:       pydxcluster
+Version:    2.21
+Release:    alt3
 
-Summary: pyDxCluster is python (tk) HAM Dx Cluster for Linux users
-License: GPLv3
-Group:   Communications
-URL:     http://sourceforge.net/projects/pydxcluster/
+Summary:    pyDxCluster is python (tk) HAM Dx Cluster for Linux users
+License:    GPLv3
+Group:      Communications
+URL:        http://sourceforge.net/projects/pydxcluster/
+Packager:   Andrey Cherepanov <cas@altlinux.org>
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-BuildRequires: python-module-pygame
-BuildRequires: python-module-requests
-BuildRequires: python-modules-tkinter
-
-BuildArch: noarch
+BuildArch:  noarch
 
 Source:  pyDXCluster_v2_21.tar.gz
 Patch:   pydxcluster-use-system-config.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pygame python3-module-requests
+BuildRequires: python3-modules-tkinter python-tools-2to3
+
 
 %description
 pyDxCluster is python (tk) HAM Dx Cluster for Linux users
@@ -41,6 +41,11 @@ Feautres:
 %setup -c %name-%version
 %patch -p2
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
+    $(find ./ -name '*.py')
+
 %install
 install -Dm0755 pyDxCluster_v2_21.py %buildroot%_bindir/%name
 install -d %buildroot%_datadir/%name
@@ -52,7 +57,11 @@ cp pydxcluster.cfg default.col bell.wav %buildroot%_datadir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
 
+
 %changelog
+* Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.21-alt3
+- Porting on Python3.
+
 * Mon Nov 30 2015 Andrey Cherepanov <cas@altlinux.org> 2.21-alt2
 - Fix playing reminders
 
