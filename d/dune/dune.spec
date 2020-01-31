@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
 Version: 2.1.3
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -46,7 +46,7 @@ description of your project and Dune will do the rest.
 ./dune.exe build @install
 
 %install
-./dune.exe install --destdir=%buildroot --mandir=%_mandir
+./dune.exe install --destdir=%buildroot
 
 %files
 %doc README.md CHANGES.md
@@ -115,6 +115,9 @@ description of your project and Dune will do the rest.
 
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 2.1.3-alt2
+- default mandir changed from /usr/man to /usr/share/man
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.1.3-alt1
 - 2.1.3
 
