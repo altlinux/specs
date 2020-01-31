@@ -1,6 +1,6 @@
 Name: phpMyAdmin
 Version: 5.0.1
-Release: alt2
+Release: alt3
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -120,7 +120,11 @@ Install this package if you need phpMyAdmin for apache 2.4 and php7.
 
 %install
 mkdir -p %buildroot%webserver_webappsdir
+
 cp config.sample.inc.php config.inc.php
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=37954
+echo "\$cfg['TempDir'] = '/tmp';" >> config.inc.php
+
 cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 
 # remove unneeded
@@ -143,7 +147,7 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #__subst 's|--dir--|%apache2_extra_available|g' %buildroot%_controldir/%name-apache2
 
 %post
-%__subst "s|\(blowfish_secret'\] = \)''|\1'$(pwgen -0s1)'|" %webserver_webappsdir/%name/config.inc.php
+%__subst "s|\(blowfish_secret'\] = \)''|\1'$(pwgen -0s1 32)'|" %webserver_webappsdir/%name/config.inc.php
 
 #pre apache2
 #pre_control %name-apache2
@@ -173,6 +177,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt3
+- fix blowfish_secret length, add tmp dir path (ALT bug 37954)
+
 * Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt2
 - use php7-mysqlnd-mysqli (contains MYSQLI_TYPE_JSON)
 
@@ -608,6 +615,6 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 - built for ALT Linux
 - spec adapted from PLD
 
-* Mon Oct 01 2002 PLD Team <feedback@pld.org.pl> 2.3.1-1
+* Tue Oct 01 2002 PLD Team <feedback@pld.org.pl> 2.3.1-1
 All persons listed below can be reached at <cvs_login>@pld.org.pl
 ppv, blues, kloczek, orzech, pioklo, qboosh, tiwek
