@@ -1,11 +1,11 @@
 Name: sqlmap
-Version: 1.3.10
+Version: 1.4
 Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
 
 Group: Monitoring
-License: GPL
+License: GPLv2
 Url: http://sqlmap.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -17,14 +17,12 @@ BuildArch: noarch
 
 BuildPreReq: rpm-build-intro
 
-%add_findreq_skiplist %_datadir/%name/udf/mysql/linux/*/*.so
-%add_findreq_skiplist %_datadir/%name/udf/postgresql/linux/*/*/*.so
-%add_verify_elf_skiplist %_datadir/%name/udf/postgresql/linux/*/*/*.so
-%add_verify_elf_skiplist %_datadir/%name/udf/mysql/linux/*/*.so
+BuildRequires: perl-Net-RawIP perl-NetPacket
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-paste
 
-# Automatically added by buildreq on Sat Jan 21 2012 (-bi)
-# optimized out: python-base python-module-peak python-modules-compiler
-BuildRequires: perl-Net-RawIP perl-NetPacket python-module-paste
+%add_python3_lib_path %_datadir/%name
+%add_python3_req_skip thirdparty.six.moves
 
 %description
 sqlmap is an open source penetration testing tool that automates the process of
@@ -38,9 +36,12 @@ out-of-band connections.
 %prep
 %setup
 %remove_repo_info
-# Drop shebang from non-executable python files
-find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/env python[[:digit:]]aa" {} \;
-find . -type f -and -name '*.py' -and ! -executable -exec  sed -i "sa#!%_bindir/env pythonaa" {} \;
+find . -type f -and -name '*.py' -exec sed -i "s|#!%_bindir/env python2\?\$|#!%__python3|" {} \;
+%__subst "s|#!/usr/bin/env python$|#!%__python3|" sqlmap.py sqlmapapi.py
+
+# remove obsoleted bundled modules
+%__subst "s|thirdparty.chardet|chardet|" lib/{core,request}/*.py
+rm -rfv thirdparty/{xdot,chardet}
 
 %install
 install -d -m 755 %buildroot%_datadir/%name
@@ -48,6 +49,7 @@ install -m 755 sqlmap.py %buildroot%_datadir/%name
 install -m 755 sqlmapapi.py %buildroot%_datadir/%name
 cp -pr data %buildroot%_datadir/%name/
 cp -pr extra %buildroot%_datadir/%name/
+rm -rfv %buildroot%_datadir/%name/extra/shutils/
 cp -pr lib %buildroot%_datadir/%name/
 cp -pr plugins %buildroot%_datadir/%name/
 cp -pr tamper %buildroot%_datadir/%name/
@@ -77,6 +79,10 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- new version 1.4 (with rpmrb script)
+- cleanup build, switch to python3
+
 * Sun Oct 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 1.3.10-alt1
 - new version 1.3.10
 
