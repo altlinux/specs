@@ -1,26 +1,22 @@
-%def_with python3
+%define oname 3parclient
 
-Name: python-module-3parclient
-Version: 4.2.2
-Release: alt2
-Summary: HPE 3PAR REST Python Client
+%def_without tests
 
-Group: Development/Python
-License: Apache License, Version 2.0
-Url: https://pypi.python.org/pypi/python-3parclient
-Source0: %name-%version.tar
+Name:       python3-module-%oname
+Version:    4.2.2
+Release:    alt3
 
+Summary:    HPE 3PAR REST Python Client
+License:    Apache License, Version 2.0
+Group:      Development/Python3
+Url:        https://pypi.python.org/pypi/python-3parclient
 
-BuildArch: noarch
+BuildArch:  noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+Source0:    %name-%version.tar
 
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-%endif
+
 
 %description
 This is a Client library that can talk to the HPE 3PAR Storage array.
@@ -33,12 +29,13 @@ the command line interface over an SSH connection.
 
 The HP 3PAR Rest Client (hp3parclient) is now considered deprecated.
 
-%if_with python3
-%package -n python3-module-3parclient
-Summary: HPE 3PAR REST Python Client
+%if_with tests
+%package tests
+Summary: Tests for %oname
 Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
-%description -n python3-module-3parclient
+%description tests
 This is a Client library that can talk to the HPE 3PAR Storage array.
 The 3PAR storage array has a REST web service interface and a command
 line interface. This client library implements a simple interface
@@ -47,46 +44,36 @@ library is used to communicate with the REST interface.
 The python paramiko library is used to communicate with
 the command line interface over an SSH connection.
 
-The HP 3PAR Rest Client (hp3parclient) is now considered deprecated.
+This package contains tests for %oname.
 %endif
 
 %prep
 %setup
 
-rm -rfv ./test/
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
+
+mv %buildroot%python3_sitelibdir/test/ \
+   %buildroot%python3_sitelibdir/hpe%{oname}/test/
 
 %files
 %doc README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-3parclient
-%doc README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/hpe%{oname}/test/
+
+%if_with tests
+%files tests
+%python3_sitelibdir/hpe%{oname}/test/
 %endif
 
+
 %changelog
+* Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.2-alt3
+- Build for python2 disabled.
+
 * Mon Oct 02 2017 Lenar Shakirov <snejok@altlinux.ru> 4.2.2-alt2
 - Remove "test" dir from sources (ALT bug: 33948)
 
