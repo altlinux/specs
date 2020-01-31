@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-uutf
-Version: 1.0.1
-Release: alt4
+Version: 1.0.2
+Release: alt1
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
@@ -45,6 +45,7 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files
 %doc README.md CHANGES.md
 %dir %_libdir/ocaml/uutf
+%_libdir/ocaml/uutf/opam
 %_libdir/ocaml/uutf/META
 %_libdir/ocaml/uutf/*.cma
 %_libdir/ocaml/uutf/*.cmi
@@ -61,6 +62,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/uutf/*.mli
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.0.1-alt4
 - rebuilt with ocaml-4.08
 
