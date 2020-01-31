@@ -12,7 +12,7 @@
 # OR JUST run $ rpmrb NEWVERSION instead of all above
 
 Name: composer
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -74,6 +74,9 @@ install -m 0644 .gear/composer.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace)  %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
+- new version 1.9.2 (with rpmrb script)
+
 * Sat Nov 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
 - new version 1.9.1
 
