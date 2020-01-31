@@ -1,8 +1,8 @@
 %define oname freenx-server
 %define hooksroot rx-etersoft
 Name: rx-etersoft
-Version: 1.4.3
-Release: alt1
+Version: 1.4.4
+Release: alt2
 
 Summary: Freenx application/thin-client server
 Group: Networking/Remote access
@@ -157,8 +157,8 @@ fi
 %_datadir/misc/%name.outformat
 %endif
 
-%_bindir/nx-session-launcher
-%attr(4711,nx,root) %_bindir/nx-session-launcher-suid
+#%_bindir/nx-session-launcher
+#%attr(4711,nx,root) %_bindir/nx-session-launcher-suid
 %_bindir/nxacl.app
 %_bindir/nxacl.sample
 %_bindir/nxcheckload
@@ -190,6 +190,14 @@ fi
 %attr(2750,root,nx) %_var/lib/%name/db/
 
 %changelog
+* Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt2
+- skip nx-session-launcher* packing (obsoleted python2 script for ConsoleKit)
+
+* Thu Nov 21 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.4.4-alt1
+- rewrite rxsetup to use epm
+- rxsetup: run me under root user
+- nxloadconfig: fix mate detection, add support for mate-terminal (eterbug #14314)
+
 * Mon Nov 18 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.4.3-alt1
 - fix session_close (eterbug #13765)
 
