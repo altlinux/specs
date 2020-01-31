@@ -3,7 +3,7 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo
-Version:      4.2.0
+Version:      4.3.0
 Release:      alt1
 
 License:      GPL-2.0+ and LGPL-2.1+
@@ -15,7 +15,6 @@ URL:          https://sogo.nu/
 #  git submodule update
 #  cd UI/WebServerResources
 #  npm install
-#  ./node_modules/bower/bin/bower install
 #  ./node_modules/grunt/bin/grunt build
 
 Group:        Communications
@@ -59,7 +58,7 @@ BuildRequires: libwbxml-devel
 BuildRequires: openchange-devel
 %endif
 BuildRequires: zlib-devel
-BuildRequires: python-module-samba-DC
+BuildRequires: python3-module-samba
 
 %description
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -428,6 +427,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Jan 27 2020 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+
 * Wed Dec 18 2019 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version.
 - Fix license tag.
