@@ -1,27 +1,22 @@
+%define oname sshpt
 
-%define modulename sshpt
+Name:       %oname
+Version:    1.3.15
+Release:    alt1
 
-Name: %modulename
-Version: 1.3.11
-Release: alt1
+Summary:    SSH Power Tool - Run commands and copy files to multiple servers simultaneously WITHOUT pre-shared keys
+License:    %gpl3plus
+Group:      Networking/Remote access
+Url:        http://code.google.com/p/sshpt
+BuildArch:  noarch
 
-%setup_python_module %modulename
+Source:     %name-%version.tar
 
-Summary: SSH Power Tool - Run commands and copy files to multiple servers simultaneously WITHOUT pre-shared keys
-License: %gpl3plus
-Group: Networking/Remote access
+BuildRequires(pre): rpm-build-python3 rpm-build-licenses
 
-Url: http://code.google.com/p/sshpt
-BuildArch: noarch
+Provides: python3-module-%oname = %version-%release
+Requires: python3-module-paramiko
 
-Source: %name-%version.tar
-
-Requires: python-module-paramiko >= 1.16.0
-Provides: python-module-%modulename = %version-%release
-
-BuildRequires(pre): rpm-macros-branch
-BuildPreReq: rpm-build-licenses
-BuildPreReq: python-module-setuptools
 
 %description
 The SSH Power Tool (sshpt) enables you to execute commands and upload
@@ -34,18 +29,21 @@ for easy importing into spreadsheets, databases, or data mining applications.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %_bindir/%name
-%doc README.txt
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
+* Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.15-alt1
+- Version updated to 1.3.15
+- porting on python3.
+
 * Tue Oct 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.11-alt1
 - 1.3.11
 
