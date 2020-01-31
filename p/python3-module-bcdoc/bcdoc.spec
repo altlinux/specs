@@ -1,90 +1,52 @@
 %define oname bcdoc
 
-%def_with python3
+Name:       python3-module-%oname
+Version:    0.16.0
+Release:    alt4
 
-Name: python-module-%oname
-Version: 0.16.0
-Release: alt3.git20150617
-Summary: ReST document generation tools for botocore
-License: ASLv2.0
-Group: Development/Python
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/bcdoc/
+Summary:    ReST document generation tools for botocore
+License:    ASLv2.0
+Group:      Development/Python
+Url:        https://pypi.python.org/pypi/bcdoc/
+
+BuildArch:  noarch
 
 # https://github.com/boto/bcdoc.git
 # branch: develop
-Source: %name-%version.tar
+Source:     %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-six python-module-docutils
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six python3-module-docutils
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
-
-%description
-Tools to help document botocore-based projects.
-
-%package -n python3-module-%oname
-Summary: ReST document generation tools for botocore
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 Tools to help document botocore-based projects.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-py.test
-
-%if_with python3
-pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 py.test3
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.16.0-alt4
+- Build for python2 disabled.
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.0-alt3.git20150617
 - Updated build dependencies.
 
