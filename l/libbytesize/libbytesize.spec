@@ -3,12 +3,12 @@
 %def_enable check
 
 Name: lib%_name
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: A library for working with sizes in bytes
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1
 Url: https://github.com/storaged-project/%name
 
 %if_disabled snapshot
@@ -82,6 +82,9 @@ the library from Python 3 easier and more convenient.
 
 
 %changelog
+* Sat Feb 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+
 * Fri Jul 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 
