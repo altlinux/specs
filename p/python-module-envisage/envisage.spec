@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with python3
+%def_without python2
 
 %define oname envisage
 
 Name:           python-module-%oname
 Version:        4.7.2
-Release:        alt1
+Release:        alt2
 Summary:        Extensible Application Framework
 Group:          Development/Python
 License:        BSD
@@ -19,14 +20,17 @@ Source:        %name-%version.tar
 
 Patch1:        %oname-alt-docs.patch
 
+%if_with python2
 BuildRequires(pre): python-module-setupdocs python-module-sphinx-devel
 BuildRequires: python-devel python-module-setuptools
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 %endif
 
+%if_with python2
 Requires: python-module-apptools
 
 Provides: python-module-EnvisageCore = %EVR
@@ -36,6 +40,7 @@ Obsoletes: python-module-EnvisagePlugins < %EVR
 
 %add_findprov_skiplist %python_sitelibdir/%oname/plugins/*
 %add_findreq_skiplist  %python_sitelibdir/%oname/plugins/*
+%endif
 
 %if_with python3
 %add_findprov_skiplist %python3_sitelibdir/%oname/plugins/*
@@ -132,10 +137,14 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with python2
 %prepare_sphinx .
+%endif
 
 %build
+%if_with python2
 %python_build
+%endif
 
 %if_with python3
 pushd ../python3
@@ -143,12 +152,17 @@ pushd ../python3
 popd
 %endif
 
+%if_with python2
 export PYTHONPATH=$PWD
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
+%endif
 
 %install
+%if_with python2
 %python_install
+cp -fR pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %if_with python3
 pushd ../python3
@@ -156,8 +170,7 @@ pushd ../python3
 popd
 %endif
 
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
-
+%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc CHANGES.txt README.rst
@@ -184,6 +197,7 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -209,6 +223,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 4.7.2-alt2
+- NMU: disable build python2 module
+
 * Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.2-alt1
 - Updated to upstream version 4.7.2.
 - Built modules for python-3.

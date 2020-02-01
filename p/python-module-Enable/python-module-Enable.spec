@@ -2,11 +2,12 @@
 
 %def_with python3
 %def_enable bootstrap
+%def_without python2
 
 %define oname Enable
 Name: python-module-%oname
 Version: 4.8.0
-Release: alt2
+Release: alt3
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -20,9 +21,15 @@ Patch: use_system_freetype.patch
 
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
-BuildRequires: python-devel python-module-setuptools
 BuildRequires: libnumpy-devel libfreetype-devel
+
+%if_with python2
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython
+%add_python_req_skip macport mac_context hypothesis
+%add_python_req_skip tvtk
+%endif
+
 %if_disabled bootstrap
 BuildRequires: python-module-Pyrex
 BuildRequires: python-module-sphinx-devel python-module-Pygments
@@ -35,9 +42,6 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
 %endif
-
-%add_python_req_skip macport mac_context hypothesis
-%add_python_req_skip tvtk
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -152,7 +156,9 @@ rm -rf enable/enable/vtk_backend
 
 %build
 %add_optflags -fno-strict-aliasing
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -166,7 +172,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
@@ -174,12 +182,14 @@ pushd ../python3
 popd
 %endif
 
+%if_with python2
 rm -fR %buildroot%python_sitelibdir/enthought/kiva/mac
 rm -f $(find %buildroot%python_sitelibdir -name '*mac*.py*')
 
 # remove shebangs from files
 find %buildroot%python_sitelibdir -type f -name '*.py' -exec \
 	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
+%endif
 
 %if_with python3
 rm -fR %buildroot%python3_sitelibdir/enthought/kiva/mac
@@ -195,6 +205,7 @@ install -d %buildroot%python_sitelibdir/enable
 cp -fR pickle %buildroot%python_sitelibdir/enable/
 %endif
 
+%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc *.rst CHANGES.txt
@@ -212,6 +223,7 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %python_sitelibdir/*/example*
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
+%endif
 
 %if_disabled bootstrap
 %files pickles
@@ -242,6 +254,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %endif
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt3
+- NMU: build without python2 modules
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt2
 - Build with system freetype (Closes: #36385).
 

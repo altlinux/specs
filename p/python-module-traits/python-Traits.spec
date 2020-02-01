@@ -3,10 +3,11 @@
 %define oname traits
 
 %def_with python3
+%def_without python2
 
 Name:           python-module-%oname
 Version:        5.1.2
-Release:        alt1
+Release:        alt2
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -22,9 +23,11 @@ Source: Traits-%version.tar
 
 Patch1: %oname-alt-docs.patch
 
+%if_with python2
 BuildRequires(pre): python-module-sphinx-devel
 BuildRequires: python-module-setuptools libnumpy-devel python-devel
 BuildRequires: python-module-Pygments
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -117,12 +120,16 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with python2
 %prepare_sphinx .
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -131,7 +138,9 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
@@ -139,13 +148,16 @@ pushd ../python3
 popd
 %endif
 
+%if_with python2
 # pickles
 install -d %buildroot%python_sitelibdir/%oname
 export PYTHONPATH=%buildroot%python_sitelibdir
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
+%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc README.rst CHANGES.rst
@@ -167,6 +179,7 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -184,6 +197,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt2
+- NMU: build without python2
+
 * Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt1
 - Updated to upstream version 5.1.2.
 - Built modules for python-3.

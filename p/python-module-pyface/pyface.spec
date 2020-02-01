@@ -1,13 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with python3
+%def_without python2
+%if_with python2
 %def_with docs
+%else
+%def_without docs
+%endif
 
 %define oname pyface
 
 Name: python-module-%oname
 Version: 6.1.2
-Release: alt1
+Release: alt2
 Summary: Traits-capable windowing framework
 
 Group: Development/Python
@@ -20,8 +25,10 @@ Source: %name-%version.tar
 
 Patch1: %oname-alt-docs.patch
 
+%if_with python2
 BuildRequires: python-module-setuptools python-devel
 BuildRequires: python-module-setupdocs
+%endif
 
 %if_with docs
 BuildRequires(pre): python-module-sphinx-devel
@@ -129,7 +136,9 @@ ln -s ../objects.inv docs/source/
 %endif
 
 %build
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -143,7 +152,9 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
@@ -156,6 +167,7 @@ popd
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc CHANGES.txt README.rst
@@ -181,6 +193,7 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/*/*/*/testing.py*
 %python_sitelibdir/%oname/*/*/*/gui_test_assistant.py*
 %python_sitelibdir/%oname/*/*/*/modal_dialog_tester.py*
+%endif
 
 %if_with docs
 %files docs
@@ -224,6 +237,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 6.1.2-alt2
+- NMU: disable build python2 module
+
 * Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2-alt1
 - Updated to upstream version 6.1.2.
 - Built modules for python-3.
