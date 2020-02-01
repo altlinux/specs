@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		3131fdac04
+%define svnrev		b93f5c4fc0
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 4.4.4
+Version: 4.4.5
 Release: alt1
 Epoch: 1
 
@@ -299,11 +299,6 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/c
 
 %autoreconf
 
-# we must call this for produce dbsync.h
-#pushd create/schema
-#./gen.pl c >../../include/dbsync.h
-#popd
-
 %configure --with-mysql \
 	--with-net-snmp \
 	--enable-server \
@@ -421,7 +416,6 @@ install -m0755 src/%{name}_proxy/%{name}_proxy_pgsql %buildroot%_sbindir
 
 # conf files
 install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%name
-#install -m0640 misc/conf/%{name}_agentd/userparameter_{examples,mysql}.conf %buildroot%_sysconfdir/%name
 install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.conf
 
 # frontends
@@ -637,6 +631,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Sat Feb 01 2020 Alexei Takaseev <taf@altlinux.org> 1:4.4.5-alt1
+- 4.4.5
+- Cleanup spec
+
 * Fri Dec 20 2019 Alexei Takaseev <taf@altlinux.org> 1:4.4.4-alt1
 - 4.4.4
 
