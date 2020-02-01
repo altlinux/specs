@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-odoc
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
 License: ISC
@@ -42,7 +42,7 @@ delimited with (** ... *), and outputs HTML.
 %install
 dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 mkdir -p %buildroot/%_docdir
-mv %buildroot/%_prefix/doc/odoc %buildroot/%_docdir/%name-%version
+mv %buildroot/%_docdir/odoc %buildroot/%_docdir/%name-%version
 
 %check
 dune runtest
@@ -55,6 +55,9 @@ dune runtest
 %_libdir/ocaml/dune_odoc_test
 
 %changelog
+* Sat Feb 01 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt2
+- fix for build with dune changes
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 - enabled tests
