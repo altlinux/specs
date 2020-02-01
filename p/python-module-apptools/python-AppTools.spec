@@ -3,10 +3,16 @@
 %define oname apptools
 
 %def_with python3
+%def_without python2
+
+%if_with python2
+%def_with doc
+%endif
 
 Name:           python-module-%oname
 Version:        4.4.0
-Release:        alt4
+Release:        alt5
+
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -20,22 +26,31 @@ Patch1:         %oname-%version-alt-build.patch
 
 BuildArch:      noarch
 
+%if_with python2
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
-BuildRequires: python-module-traits-tests python-module-wx python-module-tables-tests xvfb-run
+BuildRequires: python-module-traits-tests python-module-wx python-module-tables-tests
 BuildRequires: python-module-numpy-testing
+%if_with doc
+BuildRequires: python-module-setupdocs ython-module-sphinx-devel
+%endif
+%endif
+
+BuildRequires: xvfb-run unzip
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+#uildRequires: python3-module-setupdocs python3-module-sphinx-devel
 BuildRequires: python-tools-2to3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-traits-tests python3-module-numpy-testing
 BuildRequires: python3(tables) python3(tables.tests) python3(pandas)
 %endif
 
+%if_with python2
 %py_requires %oname.help.help_plugin.examples_preferences
 %add_python_req_skip examples_preferences
+%endif
 
 %description
 The AppTools project includes a set of packages that Enthought has
@@ -59,6 +74,7 @@ functionality that is commonly needed by many applications
 
 and many more.
 
+%if_with python2
 %package tests
 Summary: Tests for AppTools
 Group: Development/Python
@@ -70,6 +86,7 @@ The AppTools project includes a set of packages that Enthought has
 found useful in creating a number of applications.
 
 This package contains tests for AppTools.
+%endif
 
 %if_with python3
 %package -n python3-module-%oname
@@ -156,12 +173,18 @@ pushd ../python3
 find ./ -name '*.py' -exec 2to3 -w -n '{}' +
 find ./ -name '*.py' | xargs sed -i -e 's:email.MIMEBase:email.mime.base:g'
 popd
+
 %endif
 
+%if_with doc
 %prepare_sphinx docs/source
+%endif
+
 
 %build
+%if_with python2
 %python_build
+%endif
 
 %if_with python3
 pushd ../python3
@@ -169,11 +192,17 @@ pushd ../python3
 popd
 %endif
 
+%if_with python2
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
+%endif
 
 %install
+%if_with python2
 %python_install -O1
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR pickle %buildroot%python_sitelibdir/%oname/
+%endif
 install -p -m644 %SOURCE1 README.fedora
 
 %if_with python3
@@ -182,13 +211,12 @@ pushd ../python3
 popd
 %endif
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
-
 %check
 # remove buggy test
+%if_with python2
 rm examples/permissions/server/test_client.py
 xvfb-run py.test
+%endif
 
 %if_with python3
 pushd ../python3
@@ -198,6 +226,7 @@ xvfb-run py.test3
 popd
 %endif
 
+%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc README.fedora README.rst
@@ -213,13 +242,18 @@ popd
 %python_sitelibdir/%oname/*/*/test*
 %python_sitelibdir/%oname/*/*/example*
 %python_sitelibdir/%oname/*/*/*/example*
+%endif
 
+%if_with doc
 %files docs
 %doc examples html
+%endif
 
+%if_with python2
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -241,6 +275,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt5
+- build with python2 modules disabled
+
 * Mon Jul 22 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt4
 - Built modules for python-3.
 

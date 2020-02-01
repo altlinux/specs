@@ -3,11 +3,12 @@
 %define oname traitsui
 
 %def_with python3
-%def_disable bootstrap
+%def_without python2
+%def_enable bootstrap
 
 Name: python-module-%oname
 Version: 6.1.1
-Release: alt1
+Release: alt2
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python
 License: BSD, EPL and LGPL
@@ -19,12 +20,16 @@ Source: %oname-%version.tar
 
 Patch1: %oname-alt-docs.patch
 
+%if_with python2
 BuildRequires: python-module-setuptools python-devel
+%endif
+
 %if_disabled bootstrap
 BuildRequires(pre): python-module-sphinx-devel
 BuildRequires: python-module-setupdocs
 BuildRequires: python-module-traits
 %endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs
@@ -131,7 +136,9 @@ ln -s ../objects.inv docs/source/
 %endif
 
 %build
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -145,7 +152,9 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
@@ -158,6 +167,7 @@ popd
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+%if_with python2
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -167,6 +177,11 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 
+%files tests
+%python_sitelibdir/*/tests
+%python_sitelibdir/*/*/tests
+%endif
+
 %if_disabled bootstrap
 %files docs
 %doc docs/build/html docs/*.txt docs/*.ppt docs/*.pdf
@@ -174,10 +189,6 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %files pickles
 %python_sitelibdir/%oname/pickle
 %endif
-
-%files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
@@ -192,6 +203,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt2
+- NMU: build without python2
+
 * Fri Jul 19 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
 - Updated to upstream version 6.1.1.
 - Built modules for python-3.
