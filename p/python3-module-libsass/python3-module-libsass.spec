@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.19.4
-Release: alt1
+Release: alt2
 
 Summary: A straightforward binding of libsass for Python
 License: MIT
@@ -19,6 +19,8 @@ BuildRequires: libsass-devel >= 3.4.9
 
 Source:  %modulename-python-%version.tar
 
+%set_verify_elf_method strict
+
 %description
 This package provides a simple Python extension module sass which is
 binding LibSass (written in C/C++ by Hampton Catlin and Aaron Leung).
@@ -29,6 +31,7 @@ nor Node.js.
 
 %prep
 %setup -n %modulename-python-%version
+%__subst "s|-lstdc++|-lsass|" setup.py
 pkg-config --modversion libsass > .libsass-upstream-version
 
 %build
@@ -39,13 +42,18 @@ pkg-config --modversion libsass > .libsass-upstream-version
 
 %files
 %doc CONTRIBUTING.rst README.rst
-%_bindir/*
+%_bindir/sassc
+%_bindir/pysassc
 %python3_sitelibdir/__pycache__/*.pyc
 %python3_sitelibdir/*.so
 %python3_sitelibdir/sass*
+%python3_sitelibdir/pysassc.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.19.4-alt2
+- fix libsass linking (ALT bug 37998)
+
 * Mon Nov 04 2019 Andrey Cherepanov <cas@altlinux.org> 0.19.4-alt1
 - New version.
 
