@@ -2,7 +2,7 @@
 %define zmgid_final _webserver
 
 Name: zoneminder
-Version: 1.34.0
+Version: 1.34.1
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -147,6 +147,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Feb 03 2020 Anton Farygin <rider@altlinux.ru> 1.34.1-alt1
+- 1.34.1
+
 * Tue Jan 21 2020 Anton Farygin <rider@altlinux.ru> 1.34.0-alt1
 - 1.34.0 (fixes: CVE-2019-13072, CVE-2019-6777, CVE-2019-8429, CVE-2019-8428,
 	  CVE-2019-8427, CVE-2019-8426, CVE-2019-8425, CVE-2019-8424, CVE-2019-8423,
