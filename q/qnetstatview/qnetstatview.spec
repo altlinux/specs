@@ -1,5 +1,5 @@
 Name:		qnetstatview
-Version:	1.5.5
+Version:	1.5.6
 Release:	alt1
 Summary:	Shows detailed listings of all TCP and UDP endpoints
 Group:		Networking/Other
@@ -36,6 +36,9 @@ Shows detailed listings of all TCP and UDP endpoints.
 %{_datadir}/polkit-1/actions/org.pkexec.qnetstatview.policy
 
 %changelog
+* Mon Feb 3 2020 Alexander Danilov  <admsasha@altlinux.org> 1.5.6-alt1
+- release 1.5.6
+
 * Thu Dec 26 2019 Alexander Danilov  <admsasha@altlinux.org> 1.5.5-alt1
 - release 1.5.5
 
