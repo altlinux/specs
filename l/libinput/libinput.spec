@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 
 Summary: Input devices library
@@ -19,7 +19,7 @@ Url: http://www.freedesktop.org/wiki/Software/libinput/
 %if_disabled snapshot
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %else
-#VCS: git://anongit.freedesktop.org/wayland/libinput
+# VCS: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
 %endif
 
@@ -146,6 +146,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Mon Feb 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
+- 1.15.1
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0
 
