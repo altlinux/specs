@@ -1,25 +1,19 @@
 Name: cplay-ng
-Version: 2.0.3
-Release: alt1.git20150320.1
+Version: 3.0.0
+Release: alt1
+
 Summary: A curses front-end for various audio players
 License: GPLv2+
 Group: Sound
 Url: https://pypi.python.org/pypi/cplay-ng/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/xi/cplay-ng.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools python-modules-curses
-BuildPreReq: python-module-babel python-module-libmagic
-BuildPreReq: python-module-alsaaudio python-module-mutagen
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-modules-logging
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-modules-curses python3-module-nose
 
-%py_provides cplay
-Requires: python-module-libmagic
-%py_requires curses alsaaudio mutagen logging
 
 %description
 cplay-ng is a curses front-end for various audio players. It aims to
@@ -35,25 +29,26 @@ recent developments (e.g. python3) and adding new features.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
-
-install -d %buildroot%_man1dir
-install -p -m644 *.1 %buildroot%_man1dir/
+%python3_install
 
 %check
-python setup.py test
-nosetests -v
+%__python3 setup.py test
+nosetests3 -v
 
 %files
-%doc AUTHORS ChangeLog TODO *.rst *.list
+%doc AUTHORS ChangeLog README.rst LICENSE
 %_bindir/*
-%python_sitelibdir/*
-%_man1dir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
+- Version updated to 3.0.0
+- porting to python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.3-alt1.git20150320.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
