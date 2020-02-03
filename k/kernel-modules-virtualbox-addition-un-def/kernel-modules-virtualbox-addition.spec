@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
-%define module_version  5.2.34
-%define module_release	alt4
+%define module_version  6.1.2
+%define module_release	alt1
 
 %define flavour		un-def
-%define karch %ix86 x86_64
+%define karch x86_64
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-un-def
 
@@ -28,8 +28,6 @@ ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
 
 Patch0: vboxcommon-5.4.patch
-Patch1: vboxdrv-5.4.patch
-Patch2: vboxvideo-5.4.patch
 
 BuildPreReq: gcc-c++
 BuildRequires: perl
@@ -101,16 +99,12 @@ your kernel.
 tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 pushd kernel-source-%guest_module_name-%module_version
 %patch0 -p1
-%patch1 -p1
 popd
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 pushd kernel-source-%vfs_module_name-%module_version
 %patch0 -p1
 popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
-pushd kernel-source-%video_module_name-%module_version
-%patch2 -p1
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -141,6 +135,15 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 22 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.2-alt1
+- Updated template for virtualbox 6.1.2
+
+* Fri Dec 27 2019 Valery Sinelnikov <greh@altlinux.org> 6.1.0-alt2
+- Fixed build with un-def kernel-5.4 for virtualbox 6.1.0
+
+* Fri Dec 20 2019 Valery Sinelnikov <greh@altlinux.org> 6.1.0-alt1
+- Updated template for virtualbox 6.1.0
 
 * Thu Dec 12 2019 Evgeny Sinelnikov <sin@altlinux.org> 5.2.34-alt4
 - Fixed build with un-def kernel-5.4
