@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
@@ -27,7 +27,7 @@ BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-dev
 BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel libXrandr-devel libdbus-devel
 BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
 BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler xsltproc
-BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0) python3-devel python3-module-Cython
+BuildRequires: pkgconfig(mate-window-settings-2.0) python3-devel python3-module-Cython
 BuildRequires: libpcre-devel libXdmcp-devel libdrm-devel libfribidi-devel libpixman-devel libpng-devel
 
 %description
@@ -110,6 +110,9 @@ rm -fr %buildroot%_datadir/cmake*
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Feb 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.0-alt2
+- updated build dependencies
+
 * Fri Mar 22 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.0-alt1
 - 0.9.14.0
 
