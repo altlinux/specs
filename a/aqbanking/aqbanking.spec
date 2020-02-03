@@ -1,6 +1,6 @@
 Name:     aqbanking
-Version:  5.99.40
-Release:  alt0.beta
+Version:  6.0.1
+Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
 License:  GPLv2+
@@ -11,7 +11,9 @@ URL:      http://www.aquamaniac.de/aqbanking/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Patch1:   %name-build-typedefs.patch
 
+BuildRequires: astyle
 BuildRequires: doxygen
 BuildRequires: gcc-c++
 BuildRequires: ktoblzcheck-devel
@@ -106,6 +108,7 @@ AqBanking4 Handbook (PDF)
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %undefine _configure_gettext
@@ -215,6 +218,9 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %_docdir/%name/
 
 %changelog
+* Tue Feb 04 2020 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
+- New version.
+
 * Thu Oct 10 2019 Andrey Cherepanov <cas@altlinux.org> 5.99.40-alt0.beta
 - New version (beta for kmymoney).
 

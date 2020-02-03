@@ -1,7 +1,7 @@
 %define lib_name libalkimia5
 
 Name:    libalkimia
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: A library with common classes and functionality used by finance applications for the KDE SC
@@ -59,7 +59,8 @@ Headers and other files for develop with %name.
 
 %build
 %K5init no_altplace
-%K5build -DCMAKE_SKIP_RPATH=1
+%K5build -DCMAKE_SKIP_RPATH=1 \
+         -DAPPDATA_INSTALL_DIR=%_datadir
 
 %install
 %K5install
@@ -72,8 +73,8 @@ Headers and other files for develop with %name.
 %files -n alkimia -f alkimia.lang
 %_bindir/onlinequoteseditor*
 %_K5qml/org/kde/alkimia
-%_datadir/alkimia5
 %_desktopdir/kf5/*.desktop
+%_datadir/alkimia5
 %_iconsdir/hicolor/*/apps/onlinequoteseditor*
 %_datadir/metainfo/*.appdata.xml
 %_K5data/plasma/plasmoids/org.wincak.foreigncurrencies2
@@ -88,6 +89,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Wed Jan 29 2020 Andrey Cherepanov <cas@altlinux.org> 8.0.3-alt1
+- New version.
+
 * Thu Oct 10 2019 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
 - New version.
 

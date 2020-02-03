@@ -1,9 +1,9 @@
 Name:     libchipcard
-Version:  5.1.3
-Release:  alt0.1.beta
+Version:  5.1.4
+Release:  alt0.1.rc1
 
 Summary:  A library for easy access to smart cards (chipcards)
-License:  LGPL
+License:  LGPL-2.1
 Group:    System/Libraries
 Url:      http://www.libchipcard.de/
 
@@ -44,7 +44,6 @@ programs using LibChipCard.
 
 %package tools
 Summary: Terminal tools and daemons for LibChipCard
-License: GPL
 Group: Communications
 Requires: %name = %version
 Provides: libchipcard2-tools
@@ -103,6 +102,9 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 %attr(754,root,root) %_initrddir/chipcardd
 
 %changelog
+* Fri Feb 07 2020 Andrey Cherepanov <cas@altlinux.org> 5.1.4-alt0.1.rc1
+- New version.
+
 * Mon Oct 28 2019 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt0.1.beta
 - New version.
 

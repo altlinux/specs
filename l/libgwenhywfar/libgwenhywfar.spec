@@ -2,8 +2,8 @@
 %def_with qt5
 
 Name:     libgwenhywfar
-Version:  4.99.22rc6
-Release:  alt0.1
+Version:  5.1.2
+Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
@@ -89,7 +89,7 @@ compiling programs using Gwenhywfar.
 
 %prep
 %setup -q -n %origname-%version
-%patch1 -p2
+%patch1 -p1
 %patch2 -p1
 
 %build
@@ -164,6 +164,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Tue Feb 04 2020 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt1
+- New version.
+
 * Thu Oct 10 2019 Andrey Cherepanov <cas@altlinux.org> 4.99.22rc6-alt0.1
 - New version.
 
