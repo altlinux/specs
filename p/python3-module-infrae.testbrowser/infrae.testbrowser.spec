@@ -1,59 +1,31 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.2
 %define oname infrae.testbrowser
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.2
-#Release: alt2.1
+Release: alt3
+
 Summary: Sane functionnal test browser for WSGI applications
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/infrae.testbrowser/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Patch0: fix-incompatibility.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: python-tools-2to3
 
-%py_requires infrae lxml zope.interface
+%py3_requires infrae lxml zope.interface
+
 
 %description
 infrae.testbrowser is test browser for WSGI applications sharing the
 same ideas than zope.testbrowser. It only has lxml and zope.interface as
 dependency.
 
-%package -n python3-module-%oname
-Summary: Sane functionnal test browser for WSGI applications
-Group: Development/Python3
-%py3_requires infrae lxml zope.interface
-
-%description -n python3-module-%oname
-infrae.testbrowser is test browser for WSGI applications sharing the
-same ideas than zope.testbrowser. It only has lxml and zope.interface as
-dependency.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for infrae.testbrowser
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-infrae.testbrowser is test browser for WSGI applications sharing the
-same ideas than zope.testbrowser. It only has lxml and zope.interface as
-dependency.
-
-This package contains tests for infrae.testbrowser.
-
 %package tests
 Summary: Tests for infrae.testbrowser
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -62,14 +34,6 @@ same ideas than zope.testbrowser. It only has lxml and zope.interface as
 dependency.
 
 This package contains tests for infrae.testbrowser.
-
-%package -n python-module-infrae
-Summary: Core package for infrae
-Group: Development/Python
-%py_provides infrae
-
-%description -n python-module-infrae
-Core package for infrae.
 
 %package -n python3-module-infrae
 Summary: Core package for infrae
@@ -81,59 +45,26 @@ Core package for infrae.
 
 %prep
 %setup
+%patch0 -p2
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-install -p -m644 src/infrae/__init__.py \
-	%buildroot%python_sitelibdir/infrae
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
+    %buildroot%python3_sitelibdir/
 %endif
+
 install -p -m644 src/infrae/__init__.py \
-	%buildroot%python3_sitelibdir/infrae
-%endif
+    %buildroot%python3_sitelibdir/infrae
 
 %files
-%doc *.txt docs/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/infrae/__init__.*
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%files -n python-module-infrae
-%python_sitelibdir/infrae/__init__.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt docs/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
@@ -141,15 +72,18 @@ install -p -m644 src/infrae/__init__.py \
 %exclude %python3_sitelibdir/infrae/__init__.*
 %exclude %python3_sitelibdir/infrae/__pycache__/__init__.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-infrae
 %python3_sitelibdir/infrae/__init__.*
 %python3_sitelibdir/infrae/__pycache__/__init__.*
-%endif
+
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt3
+- Build for python2 disabled.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt2.2
 - Rebuild with python3.7.
 
