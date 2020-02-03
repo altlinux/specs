@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 3.0.105
+Version: 3.0.109
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -118,6 +118,7 @@ MooseFS network packet dump utility
 export PYTHON=/usr/bin/python3
 %autoreconf
 %configure \
+	--disable-static \
 	--with-default-user=%_username \
 	--with-default-group=%_groupname \
 	--with-systemdsystemunitdir=%_unitdir
@@ -305,6 +306,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Mon Feb 03 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.109-alt1
+- 3.0.109
+
 * Wed May 29 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.105-alt1
 - 3.0.105
 
