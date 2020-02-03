@@ -4,26 +4,22 @@
 %def_with docs
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 6.0.0
-Release: alt2
+Release: alt3
+
 Summary: Sort lists naturally
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/natsort/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/SethMMorton/natsort.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(hypothesis)
-BuildRequires: python2.7(pathlib)
-BuildRequires: python2.7(pytest_cov)
-BuildRequires: python2.7(pytest-mock)
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(pytest-mock)
@@ -31,24 +27,18 @@ BuildRequires: python3(tox)
 %endif
 
 %if_with docs
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python2.7(sphinx_rtd_theme)
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3(sphinx_rtd_theme)
 %endif
 
+
 %description
-Natural sorting for python.
-
-%package -n python3-module-%oname
-Summary: Sort lists naturally
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Natural sorting for python.
 
 %if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Natural sorting for python.
@@ -85,40 +75,20 @@ sed -i \
 -e '/pytest --doctest-modules/d' \
 tox.ini
 
-cp -fR . ../python3
-
-%if_with docs
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-%endif
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-
-%python_install
 
 %if_with docs
 export PYTHONPATH=$PWD
 pushd docs
-sphinx-build -b pickle -d build/doctrees . build/pickle
-sphinx-build -b html -d build/doctrees . build/html
+sphinx-build-3 -b pickle -d build/doctrees . build/pickle
+sphinx-build-3 -b html -d build/doctrees . build/html
 popd
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
@@ -126,38 +96,35 @@ sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -rv
 
 %files
 %doc *.rst
 %_bindir/natsort
-%python_sitelibdir/natsort/
-%python_sitelibdir/natsort-%version-py%_python_version.egg-info/
+%python3_sitelibdir/natsort/
+%python3_sitelibdir/*.egg-info/
 
 %if_with docs
-%exclude %python_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/html/*
 %endif
 
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/natsort.py3
-%python3_sitelibdir/natsort/
-%python3_sitelibdir/natsort-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt3
+- Build for python2 disabled.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 6.0.0-alt2
 - Fixed testing against Pytest 5.
 
