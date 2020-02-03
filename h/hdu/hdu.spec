@@ -1,18 +1,21 @@
-Name: hdu
-Version: 0.2.3.9
-Release: alt1
-Summary: Human-friendly summary of disk usage
+Name:       hdu
+Version:    0.2.3.9
+Release:    alt2
 
-Group: File tools
-License: GPLv3+
-Url: https://bitbucket.org/norok2/hdu
+Summary:    Human-friendly summary of disk usage
+License:    GPLv3+
+Group:      File tools
+Url:        https://bitbucket.org/norok2/hdu
+Packager:   Evgenii Terechkov <evg@altlinux.org>
 
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-Packager: Evgenii Terechkov <evg@altlinux.org>
+BuildArch:  noarch
 
-BuildArch: noarch
-BuildRequires: python-module-setuptools python-module-setuptools_scm
+Source:     %name-%version.tar
+Patch:      %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
+
 
 %description
 Human-friendly summary of disk usage.
@@ -22,17 +25,21 @@ Human-friendly summary of disk usage.
 
 %build
 subst 's/version=None/version="%version"/' setup.py
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%_bindir/%name
-%python_sitelibdir/%{name}*
 %doc README
+%_bindir/%name
+%python3_sitelibdir/%{name}*
+
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.3.9-alt2
+- Porting on Python3.
+
 * Sat Feb 13 2016 Terechkov Evgenii <evg@altlinux.org> 0.2.3.9-alt1
 - 0.2.3.9
 
