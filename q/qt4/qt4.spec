@@ -21,7 +21,7 @@
 %def_enable docs
 %def_enable sql_pgsql
 %def_enable sql_odbc
-%def_enable sql_sqlite2
+%def_disable sql_sqlite2
 %def_enable sql_ibase
 %def_disable sql_tds
 %def_enable gtkstyle
@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt20
+%define rlz alt21
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -54,7 +54,7 @@ Release: %rlz
 Group: System/Libraries
 Summary: Shared library for the Qt%major GUI toolkit
 Url: http://qt-project.org/
-License: GPLv3 / LGPLv2.1
+License: LGPL-2.1-only or GPL-3.0-only
 
 Requires: lib%name
 Requires: %name-sql
@@ -1488,6 +1488,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Mon Feb 03 2020 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt21
+- build without sqlite2 driver (Closes: 37986)
+
 * Wed Nov 13 2019 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt20
 - fix compile with gcc9
 
