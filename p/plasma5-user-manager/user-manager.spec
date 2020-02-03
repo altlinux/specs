@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.17.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace
 
@@ -58,6 +58,9 @@ Add, remove or edit system users.
 %_K5data/user-manager/
 
 %changelog
+* Mon Feb 03 2020 Slava Aseev <ptrnine@altlinux.org> 1:5.17.5-alt3
+- Change reserve hashing prefix to "$2y$" bcrypt
+
 * Mon Feb 03 2020 Slava Aseev <ptrnine@altlinux.org> 1:5.17.5-alt2
 - Fix sddm.conf path
 - Use gost-yescrypt password hashing by default
