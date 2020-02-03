@@ -1,26 +1,18 @@
-# SPEC file for dosage package
+Name:       dosage
+Version:    2.15
+Release:    alt2
 
-Name:    dosage
-Version: 2.15
-Release: alt1
+Summary:    a commandline webcomic downloader and archiver
+License:    %mit
+Group:      Other
+URL:        https://github.com/wummel/dosage
 
-Summary: a commandline webcomic downloader and archiver
+BuildArch:  noarch
 
-License: %mit
-Group:   Other
-URL:     https://github.com/wummel/dosage
+Source0:    %name-%version.tar
 
-BuildArch: noarch
+BuildRequires(pre): rpm-build-licenses rpm-build-python3
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
-
-Source0: %name-%version.tar
-
-BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Wed Sep 10 2014
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings
-BuildRequires: python-module-distribute python-module-google python-module-zope
 
 %description
 Dosage is designed to keep a local copy of specific webcomics
@@ -34,20 +26,22 @@ webcomic's site layout makes this impossible).
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc doc/changelog.txt doc/dosage.txt doc/README.txt
 %_bindir/%name
 %_man1dir/*
-%python_sitelibdir/%{name}lib*
-%python_sitelibdir/*egg-info
-%python_sitelibdir/_dosage*
+%python3_sitelibdir/*
+
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.15-alt2
+- Porting to python3.
+
 * Wed Sep 10 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.15-alt1
 - New version 2.15
 
