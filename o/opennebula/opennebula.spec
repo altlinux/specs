@@ -1,5 +1,5 @@
 
-%global commit 8bd6804c4cebf455dc1a383574a4bf35a86fdbc8
+%global commit 45f6d6dfeefafeec04300edfc19f2771de7bcb5c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %define oneadmin_home /var/lib/one
@@ -8,15 +8,15 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.8.5
+Version: 5.10.1
 Release: alt1
-License: Apache
+License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.org
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-ruby rpm-build-python3
+BuildRequires(pre): rpm-build-ruby rpm-build-python3 rpm-macros-nodejs
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel libxmlrpc-devel liblzma-devel
@@ -33,11 +33,13 @@ BuildRequires: gem(nokogiri)
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
-BuildRequires: node node-gyp npm node-devel
+BuildRequires: node node-gyp npm node-devel node-sass libsass
 BuildRequires: ronn
 BuildRequires: groff-base
 
 %gem_replace_version highline ~> 2.0
+%gem_replace_version i18n ~> 1.0
+%gem_replace_version activesupport ~> 5.2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -247,17 +249,14 @@ OpenNebula provisioning tool
 %prep
 %setup
 
-# add symlink to node headers
-node_ver=$(node -v | sed -e "s/v//")
-mkdir -p src/sunstone/public/node_modules/.node-gyp/$node_ver/include
-ln -s %_includedir/node src/sunstone/public/node_modules/.node-gyp/$node_ver/include/node
-echo "9" > src/sunstone/public/node_modules/.node-gyp/$node_ver/installVersion
+ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
+ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
 
 find . -type f -exec subst 's,^#!/usr/bin/env ruby,#!%__ruby,' {} \;
 
+
 %build
 export PATH="$PATH:$PWD/src/sunstone/public/node_modules/.bin"
-export npm_config_devdir="$PWD/src/sunstone/public/node_modules/.node-gyp"
 
 pushd src/sunstone/public
 npm rebuild
@@ -316,29 +315,34 @@ rm -rf %buildroot%_libexecdir/ruby/gems/*/doc
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-econe.service %buildroot%_unitdir/opennebula-econe.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-hem.service  %buildroot%_unitdir/opennebula-hem.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
 
 # Init scripts
 install -p -D -m 755 share/pkgs/ALT/opennebula %buildroot%_initdir/opennebula
-install -p -D -m 755 share/pkgs/ALT/opennebula-sunstone %buildroot%_initdir/opennebula-sunstone
-install -p -D -m 755 share/pkgs/ALT/opennebula-gate  %buildroot%_initdir/opennebula-gate
 install -p -D -m 755 share/pkgs/ALT/opennebula-econe %buildroot%_initdir/opennebula-econe
 install -p -D -m 755 share/pkgs/ALT/opennebula-flow  %buildroot%_initdir/opennebula-flow
+install -p -D -m 755 share/pkgs/ALT/opennebula-gate  %buildroot%_initdir/opennebula-gate
+install -p -D -m 755 share/pkgs/ALT/opennebula-hem  %buildroot%_initdir/opennebula-hem
 install -p -D -m 755 share/pkgs/ALT/opennebula-novnc %buildroot%_initdir/opennebula-novnc
+install -p -D -m 755 share/pkgs/ALT/opennebula-sunstone %buildroot%_initdir/opennebula-sunstone
 
-install -p -D -m 644 share/pkgs/ALT/opennebula.conf %buildroot%_tmpfilesdir/opennebula.conf
-install -p -D -m 644 share/pkgs/ALT/opennebula-node.conf %buildroot%_tmpfilesdir/opennebula-node.conf
+install -p -D -m 644 share/pkgs/tmpfiles/opennebula.conf %buildroot%_tmpfilesdir/opennebula.conf
+install -p -D -m 644 share/pkgs/tmpfiles/opennebula-node.conf %buildroot%_tmpfilesdir/opennebula-node.conf
 
 install -p -D -m 644 share/pkgs/ALT/opennebula-polkit.rules %buildroot%_sysconfdir/polkit-1/rules.d/50-opennebula.rules
 
 # sudoers
 mkdir -p %buildroot%_sysconfdir/sudoers.d
-install -p -D -m 440 share/pkgs/ALT/opennebula.sudoers %buildroot%_sysconfdir/sudoers.d/opennebula
+install -p -D -m 440 share/pkgs/sudoers/alt/opennebula %buildroot%_sysconfdir/sudoers.d/opennebula
+install -p -D -m 440 share/pkgs/sudoers/opennebula-node %buildroot%_sysconfdir/sudoers.d/opennebula-node
+install -p -D -m 440 share/pkgs/sudoers/opennebula-node-lxd %buildroot%_sysconfdir/sudoers.d/opennebula-node-lxd
+install -p -D -m 440 share/pkgs/sudoers/opennebula-server %buildroot%_sysconfdir/sudoers.d/opennebula-server
 
 # logrotate
 mkdir -p %buildroot%_logrotatedir
@@ -352,7 +356,6 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 
 # node-lxd
 install -p -D -m 755 src/vmm_mad/remotes/lib/lxd/svncterm_server/svncterm_server %buildroot%_bindir/svncterm_server
-install -p -D -m 440 src/vmm_mad/remotes/lib/lxd/opennebula-lxd %buildroot%_sysconfdir/sudoers.d/opennebula-lxd
 install -p -D -m 755 src/vmm_mad/remotes/lib/lxd/catfstab %buildroot%_bindir/catfstab
 install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modprobe %buildroot%_sysconfdir/modprobe.d/opennebula-lxd.conf
 install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modules %buildroot%_sysconfdir/modules-load.d/opennebula-lxd.conf
@@ -458,15 +461,16 @@ fi
 %files node-kvm
 %config(noreplace) %_sysconfdir/polkit-1/rules.d/50-opennebula.rules
 %config(noreplace) %_sysconfdir/sysctl.d/bridge-nf-call.conf
+%config(noreplace) %_sysconfdir/sudoers.d/opennebula-node
 %_tmpfilesdir/opennebula-node.conf
 
 %files node-lxd
 %doc README.opennebula-lxd
 %_bindir/svncterm_server
 %_bindir/catfstab
-%config(noreplace) %_sysconfdir/sudoers.d/opennebula-lxd
 %config(noreplace) %_sysconfdir/modprobe.d/opennebula-lxd.conf
 %config(noreplace) %_sysconfdir/modules-load.d/opennebula-lxd.conf
+%config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-lxd
 
 # %files node-xen
 
@@ -487,9 +491,10 @@ fi
 #%ruby_sitelibdir/DriverExecHelper.rb
 #%ruby_sitelibdir/cloud/CloudClient.rb
 
-%_libexecdir/one/ruby/OpenNebula.rb
 %_libexecdir/one/ruby/scripts_common.rb
 %_libexecdir/one/ruby/vcenter_driver
+%_libexecdir/one/ruby/nsx_driver.rb
+%_libexecdir/one/ruby/nsx_driver
 
 #%rubygem_specdir/opennebula*
 #%exclude %rubygem_specdir/opennebula-cli*
@@ -582,15 +587,22 @@ fi
 
 
 %files server
+%config(noreplace) %_sysconfdir/sudoers.d/opennebula-server
 %_unitdir/opennebula.service
 %_unitdir/opennebula-scheduler.service
+%_unitdir/opennebula-hem.service
 %_initdir/opennebula
+%_initdir/opennebula-hem
 
 %_bindir/mm_sched
 
 %_bindir/one
 %_bindir/oned
 %_bindir/onedb
+%_bindir/onehem-server
+%_bindir/onehook
+
+%_libexecdir/one/onehem
 
 %_datadir/one/examples
 %_datadir/one/esx-fw-vnc
@@ -623,11 +635,11 @@ fi
 %config(noreplace) %_sysconfdir/one/hm/*
 %config(noreplace) %_sysconfdir/one/oned.conf
 %config(noreplace) %_sysconfdir/one/sched.conf
+%config(noreplace) %_sysconfdir/one/onehem-server.conf
 %config(noreplace) %_sysconfdir/one/vmm_exec/*
 %config(noreplace) %_sysconfdir/one/az_driver.conf
 %config %_sysconfdir/one/az_driver.default
 %config %_sysconfdir/one/vcenter_driver.default
-%config %_sysconfdir/one/packet_driver.default
 %config(noreplace) %_sysconfdir/one/auth/server_x509_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/ldap_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
@@ -679,6 +691,13 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Mon Jan 27 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.1-alt1
+- 5.10.1
+- use system node-gyp and node-sass for build
+
+* Wed Nov 27 2019 Alexey Shabalin <shaba@altlinux.org> 5.10.0-alt1
+- 5.10.0
+
 * Thu Sep 26 2019 Alexey Shabalin <shaba@altlinux.org> 5.8.5-alt1
 - 5.8.5
 
