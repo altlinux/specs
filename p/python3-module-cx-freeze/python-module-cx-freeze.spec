@@ -1,38 +1,24 @@
-Version: 5.0
-Release: alt1.hg20141226.1.1.1
-%setup_python_module cx_Freeze
-%define origname cx-freeze
+%define oname cx-freeze
 
-%def_with python3
+Name: python3-module-%oname
+Version: 6.1
+Release: alt1
 
-Name: python-module-%origname
 Summary: Scripts and modules for freezing Python scripts into executables
 License: PSF
+Group: Development/Python3
 URL: http://cx-freeze.sourceforge.net/
-Provides: cx_Freeze
-# hg clone https://bitbucket.org/anthony_tuininga/cx_freeze
-Source: %origname-%version.tar.bz2
-Group: Development/Python
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-sphinx-devel
-%if_with python3
+Source: %oname-%version.tar.bz2
+
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python3-devel rpm-build-python3 time
+BuildRequires: python3-module-sphinx chrpath
 
-#BuildRequires: python3-devel python-tools-2to3
-%endif
-AutoReq: yes, nopython
+Conflicts: python-module-%oname
+Provides: cx_Freeze
 
-%py_provides cx_Freeze
-#py_requires elementtree.ElementTree datetime decimal cairo gio
-#py_requires pangocairo_git pango_git atk_git
-#py_requires numpy wx PyQt4 sip
-#py_requires _strptime xml.etree.ElementTree os
-#py_requires zlib
+%add_python3_req_skip BUILD_CONSTANTS
+
 
 %description
 cx_Freeze is a set of scripts and modules for freezing Python scripts into
@@ -57,37 +43,6 @@ called library.zip and place all modules in this zip file. The final two options
 are necessary when creating an RPM since the RPM builder automatically strips
 executables.
 
-%if_with python3
-%package -n python3-module-%origname
-Summary: Scripts and modules for freezing Python 3 scripts into executables
-Group: Development/Python
-AutoReq: yes, nopython
-%py_provides cx_Freeze
-
-%description -n python3-module-%origname
-cx_Freeze is a set of scripts and modules for freezing Python scripts into
-executables in much the same way that py2exe and py2app do. It requires Python
-2.3 or higher since it makes use of the zip import facility which was introduced
-in that version.
-
-There are three different ways to use cx_Freeze. The first is to use the
-included freeze script which works well for simple scripts. The second is to
-create a distutils setup script which can be used for more complicated
-configuration or to retain the configuration for future use. The third method
-involves working directly with the classes and modules used internally by
-cx_Freeze and should be reserved for complicated scripts or extending or
-embedding.
-
-There are three different options for producing executables as well. The first
-option is the only one that was available in earlier versions of cx_Freeze, that
-is appending the zip file to the executable itself. The second option is
-creating a private zip file with the same name as the executable but with the
-extension .zip. The final option is the default which is to create a zip file
-called library.zip and place all modules in this zip file. The final two options
-are necessary when creating an RPM since the RPM builder automatically strips
-executables.
-%endif
-
 %package samples
 Summary: Samples for cx_Freeze
 Group: Development/Documentation
@@ -104,72 +59,43 @@ This package contains samples for cx_Freeze.
 %prep
 %setup
 
-rm -f test/samples/invalid_syntax.py
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python_build_debug
-%if_with python3
-pushd ../python3
-sed -i 's|\(libname =.*\)|\1 + "%_python3_abiflags"|' setup.py
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
-popd
-%endif
 
 %make -C doc html
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-
-for i in $(find %buildroot%python3_sitelibdir/cx_Freeze/ -type d)
-do
-	touch $i/__init__.py
-done
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i py3_$i
-done
-popd
-%endif
-
-%python_install
-
-for i in $(find %buildroot%python_sitelibdir/cx_Freeze/ -type d)
-do
-	touch $i/__init__.py
-done
 
 rm -f $(find %buildroot -name 'windist*')
 
+for i in $(find %buildroot%python3_sitelibdir/cx_Freeze/ -type d)
+do
+    touch $i/__init__.py
+done
+
+for i in %buildroot%python3_sitelibdir/cx_Freeze/bases/Console*
+do
+    chrpath -d $i
+done
+
 %files
-%doc *.txt doc/_build/html/*
+%doc README.md doc/build/html/*
 %_bindir/*
-%if_with python3
-%exclude %_bindir/py3_*
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/samples
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/samples
 
 %files samples
 %doc cx_Freeze/samples
 
-%if_with python3
-%files -n python3-module-%origname
-%doc *.txt doc/_build/html/*
-%_bindir/py3_*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/samples
-%endif
 
 %changelog
+* Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.1-alt1
+- Version updated to 6.1
+- build for python2 disabled.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0-alt1.hg20141226.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
