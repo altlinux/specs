@@ -1,6 +1,6 @@
 Name: planner
 Version: 0.14.6
-Release: alt2
+Release: alt3
 
 Summary: Planner - project management application
 Summary(ru_RU.UTF-8): Программа управления проектами Planner
@@ -15,6 +15,9 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source: http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%name-%version.tar
 Source1: %name-%version.ru.po
 #Patch: %name-%version.patch
+
+Patch1: %name-window.c.patch
+Patch2: %name-main.c.patch
 
 # Automatically added by buildreq on Sat Jun 26 2010
 BuildRequires: desktop-file-utils gtk-doc intltool libglade-devel libgnomeui-devel librarian libxslt-devel libgsf-devel
@@ -60,7 +63,8 @@ Libraries needed to develop for planner.
 
 %prep
 %setup
-#%patch -p0
+%patch1 -p0
+%patch2 -p0
 cp -f %SOURCE1 po/ru.po
 # https://bugzilla.altlinux.org/show_bug.cgi?id=35056
 #__subst "s|sr@Latn|sr@latin|" po/LINGUAS
@@ -127,6 +131,10 @@ rm -rf %buildroot%_datadir/locale/sr@Latn/
 
 
 %changelog
+* Tue Feb 04 2020 Pavel Vainerman <pv@altlinux.ru> 0.14.6-alt3
+- update ru.po
+- added patches
+
 * Tue Jun 19 2018 Vitaly Lipatov <lav@altlinux.ru> 0.14.6-alt2
 - cleanup and recode spec
 
