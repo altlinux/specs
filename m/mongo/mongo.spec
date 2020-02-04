@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.2.2
-Release: alt1.1
+Version: 4.2.3
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -169,6 +169,8 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %exclude %_man1dir/mongorestore.1*
 %exclude %_man1dir/mongostat.1*
 %exclude %_man1dir/mongotop.1*
+%exclude %_man1dir/mongoldap.1*
+%exclude %_man1dir/mongoreplay.1*
 
 %files server-mongod
 %doc README LICENSE-Community.txt
@@ -198,6 +200,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Tue Feb 4 2020 Vladimir Didenko <cow@altlinux.org> 4.2.3-alt1
+- 4.2.3
+
 * Fri Dec 20 2019 Vladimir Didenko <cow@altlinux.org> 4.2.2-alt1.1
 - remove duplicated Url tag
 
