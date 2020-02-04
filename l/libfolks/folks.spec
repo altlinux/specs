@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name folks
 %define ver_major 0.13
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -39,6 +39,7 @@ BuildRequires: vala-tools >= %vala_ver valadoc
 BuildRequires: libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libtelepathy-glib-vala libgee0.8-devel >= %gee_ver
 BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel libgee0.8-gir-devel
+BuildRequires: python3-module-dbusmock
 %{?_enable_eds:BuildRequires: evolution-data-server-devel >= %eds_ver evolution-data-server-gir-devel evolution-data-server-vala}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver libtracker-gir-devel}
@@ -123,6 +124,7 @@ the functionality of the Folks library.
 %_libdir/*.so.*
 %_libdir/%_name/
 %_datadir/glib-2.0/schemas/org.freedesktop.%_name.gschema.xml
+%_datadir/GConf/gsettings/%_name.convert
 %doc AUTHORS README*
 
 %files devel
@@ -130,7 +132,7 @@ the functionality of the Folks library.
 %_bindir/%_name-inspect
 %_includedir/%_name
 %_libdir/*.so
-%_libdir/pkgconfig/%{_name}*.pc
+%_pkgconfigdir/%{_name}*.pc
 
 %files gir
 %_typelibdir/FolksDummy-%api_ver.typelib
@@ -168,6 +170,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue Feb 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.13.2-alt1
+- 0.13.2
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
 - 0.13.1
 
