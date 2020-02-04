@@ -2,14 +2,14 @@
 
 Name: liblensfun
 Version: 0.3.2
-Release: alt3
+Release: alt4
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
-License: LGPLv3 and CC-BY-SA
-Url: http://sourceforge.net/projects/lensfun/
+License: LGPLv3 and CC-BY-SA-3.0
+Url: https://lensfun.github.io
 
-# http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.gz
+# https://github.com/lensfun/lensfun.git
 Source: lensfun-%version.tar
 
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
@@ -39,8 +39,6 @@ adapters in lensfun.
 
 %prep
 %setup -n lensfun-%version
-subst 's/rst2man/rst2man.py3/g' docs/CMakeLists.txt
-subst 's/\t/      /' apps/lensfun-add-adapter
 
 %build
 %cmake \
@@ -80,6 +78,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt4
+- Fixed build.
+
 * Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3
 - NMU: rebuilt with new python3-module-docutils.
 
