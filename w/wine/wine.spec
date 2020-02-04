@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 4.9.4
-%define major 5.0
+%define major 5.1
 %define rel %nil
 
 Name: wine
@@ -19,7 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/5.0/wine-%major%rel.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/5.x/wine-%major%rel.tar.xz
 Source: %name-%version.tar
 # Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major%rel.tar.gz
 Source1: %name-staging-%version.tar
@@ -485,6 +485,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue Feb 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.1.2-alt1
+- new version 5.1.2 (with rpmrb script)
+
 * Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.2-alt1
 - new version 5.0.2 (with rpmrb script)
 - wine 5.0 release
