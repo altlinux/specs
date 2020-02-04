@@ -1,17 +1,20 @@
 Name: pyclewn
 Version: 2.3
-Release: alt1
-License: GPLv2
+Release: alt2
+
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
+License: GPLv2
 Group: Development/Debuggers
-BuildPreReq: rpm-build-vim
-Source: %name-%version.tar.gz
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed May 02 2012
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-logging
-BuildRequires: python-devel vim-console
-%add_python_req_skip msvcrt win32con win32console win32gui win32pipe
+Source: %name-%version.tar.gz
+Patch0: port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3 rpm-build-vim
+BuildRequires: vim-console
+
+%add_python3_req_skip msvcrt win32con win32console win32gui win32pipe
+
 
 %description
 Pyclewn allows using vim as a front end to a debugger. Pyclewn currently
@@ -28,19 +31,21 @@ used when the debugger allows it, for example after using the attach or
 tty gdb commands or using the --tty option with pdb. On Windows, gdb
 pops up a console attached to the program to debug.
 
-%setup_python_module %name
-%package -n %packagename
-Group: Development/Python
+%package -n python3-module-%name
+Group: Development/Python3
 Summary: Supplemental module for %name
-%description -n %packagename
+
+%description -n python3-module-%name
 Supplemental module for %name
 
 %prep
 %setup -n %name-%version
+%patch0 -p2
+
 # hack out " (ALT Linux)" from gdb version
 sed -i 's@lines.next()@lines.next().replace(" (ALT Linux)","")@' lib/clewn/gdb.py
 cat > %name <<@@@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 
 import clewn.vim as vim
 vim.main()
@@ -48,12 +53,14 @@ vim.main()
 
 %build
 export EDITOR=/usr/bin/vim
-%python_build
+%python3_build
+
 vim -S lib/clewn/runtime/pyclewn-%version.vmb +:q
 
 %install
 export EDITOR=/usr/bin/vim
-%python_install
+%python3_install
+
 mkdir -p %buildroot%vim_runtime_dir
 cp -a $HOME/.vim/* %buildroot%vim_runtime_dir/
 install -D %name %buildroot%_bindir/%name
@@ -65,10 +72,14 @@ install -D %name %buildroot%_bindir/%name
 %exclude %vim_runtime_dir/doc/tags
 %_bindir/*
 
-%files -n %packagename
-%python_sitelibdir_noarch/*
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/*
+
 
 %changelog
+* Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.3-alt2
+- Build for python2 disabled.
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 2.3-alt1
 - Autobuild version bump to 2.3
 
