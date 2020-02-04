@@ -1,20 +1,18 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.9.2
+Version: 3.10.0
 Release: alt1
 
 Summary: A framework for managing DNS information 
-License: %bsdstyle
+License: BSD-2-Clause
 Group: System/Configuration/Networking
 
-URL: http://roy.marples.name/projects/%name
+URL: https://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Source1: test
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-licenses
 
 Requires: filesystem >= 2.3.5
 
@@ -143,6 +141,12 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Tue Feb 04 2020 Mikhail Efremov <sem@altlinux.org> 3.10.0-alt1
+- resolvconf.conf: Update dynamic_order option.
+- Update url.
+- Fix license.
+- Updated to 3.10.0.
+
 * Mon Sep 23 2019 Mikhail Efremov <sem@altlinux.org> 3.9.2-alt1
 - Package PowerDNS subscriber.
 - pdns_recursor: Fix service name.
