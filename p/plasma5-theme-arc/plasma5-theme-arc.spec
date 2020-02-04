@@ -2,7 +2,7 @@
 
 Name: plasma5-theme-arc
 Version: 20180614
-Release: alt1
+Release: alt2
 Summary: Arc KDE customization
 License: GPLv3
 Group: Graphical desktop/KDE
@@ -44,5 +44,8 @@ for Plasma 5 desktop with a few additions and extras.
 %doc LICENSE AUTHORS
 
 %changelog
+* Tue Feb 04 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180614-alt2
+- Update from upstream git 04873ca
+
 * Wed Dec 18 2019 Alexander Makeenkov <amakeenk@altlinux.org> 20180614-alt1
 - Initial build for ALT

@@ -2,7 +2,7 @@
 
 Name: plasma5-theme-adapta
 Version: 20180828
-Release: alt1
+Release: alt2
 Summary: Adapta KDE customization
 License: GPLv3
 Group: Graphical desktop/KDE
@@ -39,5 +39,8 @@ rm -f %buildroot%_datadir/wallpapers/src/mountain.svg
 %doc LICENSE
 
 %changelog
+* Tue Feb 04 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180828-alt2
+- Update from upstream git ae539ff
+
 * Thu Dec 19 2019 Alexander Makeenkov <amakeenk@altlinux.org> 20180828-alt1
 - Initial build for ALT
