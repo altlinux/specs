@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%define oname imap_tools
+%define mname imap_tools
 
-Name: python3-module-%oname
-Version: 0.11.0
+Name: python3-module-%mname
+Version: 0.12.0
 Release: alt1
-Summary: Work with IMAP protocol easy and effective
-License: MIT
+Summary: Working with email and mailbox using IMAP protocol
+License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/ikvk/imap_tools
 Source: %name-%version.tar
+Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
@@ -16,10 +17,27 @@ BuildRequires: python3-module-setuptools
 
 %description
 Features:
-- transparent work with letter attributes
-- work with letters in directories (copy, delete, flag, move, seen)
-- work with directories (list, set, get, create, exists, rename, delete, status)
+- Parsed email message attributes
+- Query builder for searching emails
+- Work with emails in folders (copy, delete, flag, move, seen)
+- Work with mailbox folders (list, set, get, create, exists, rename, delete, status)
+- No dependencies
 
+%package -n %name-tests
+Summary: Tests for %name
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n %name-tests
+This package contains tests for %name.
+
+%package -n %name-examples
+Summary: Examples for %name
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n %name-examples
+This package contains examples for %name.
 
 %prep
 %setup
@@ -29,17 +47,28 @@ Features:
 
 %install
 %python3_install
-mkdir -p %buildroot%python3_sitelibdir/%oname/tests
-mkdir -p %buildroot%python3_sitelibdir/%oname/examples
-install -m 0644 tests/* %buildroot%python3_sitelibdir/%oname/tests
-install -m 0644 examples/* %buildroot%python3_sitelibdir/%oname/examples
+cp -pr tests %buildroot%python3_sitelibdir/%mname
+cp -pr examples %buildroot%python3_sitelibdir/%mname
 rm -rf %buildroot%python3_sitelibdir/tests
 
 %files
-%python3_sitelibdir/*
-%doc LICENSE README.*
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%mname/tests
+%exclude %python3_sitelibdir/%mname/examples
+%doc LICENSE README.rst
+
+%files -n %name-tests
+%python3_sitelibdir/%mname/tests
+
+%files -n %name-examples
+%python3_sitelibdir/%mname/examples
 
 %changelog
+* Tue Feb 04 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.12.0-alt1
+- Updated to new version
+- Moved tests and examples in separate packages
+
 * Thu Dec 19 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.11.0-alt1
 - New version
 
