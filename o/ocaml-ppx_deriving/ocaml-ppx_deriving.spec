@@ -2,7 +2,7 @@
 %define libname ppx_deriving
 Name: ocaml-%libname
 Version: 4.4
-Release: alt1
+Release: alt2
 Summary: Type-driven code generation for OCaml >=4.02
 License: MIT
 Group: Development/ML
@@ -33,7 +33,7 @@ developing applications that use %name.
 make build
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
+dune install --destdir=%buildroot
 
 %files
 %doc README.md LICENSE.txt CHANGELOG.md
@@ -56,6 +56,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %lib
 %_libdir/ocaml/%libname/*/*.mli
 
 %changelog
+* Tue Feb 04 2020 Anton Farygin <rider@altlinux.ru> 4.4-alt2
+- used the dune to install
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 4.4-alt1
 - 4.4
 
