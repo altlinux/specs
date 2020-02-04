@@ -7,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 
 Group: Publishing
 Summary: A program for printing sheet music
@@ -57,6 +57,7 @@ subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' 
 
 %build
 %configure \
+	PYTHON=python2 \
 	--with-ncsb-dir=/usr/share/fonts/type1/urw \
 	--disable-documentation
 
@@ -99,6 +100,9 @@ done
 %_emacslispdir/%{name}*.el
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt3
+- Fixed build.
+
 * Fri Mar 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt2
 - Rebuilt with guile18 (Closes: #36005)
 
