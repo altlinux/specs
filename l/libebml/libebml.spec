@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libebml
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 Summary: Extensible Binary Meta Language access library
-License: GPL/QPL
+License: LGPL-2.1-or-later and BSD
 Group: System/Libraries
 
 Url: http://www.matroska.org
@@ -37,6 +37,8 @@ Files needed to build programs using libebml
 %cmakeinstall_std
 
 %files
+%doc LICENSE*
+%doc README* ChangeLog* CODE_OF_CONDUCT*
 %_libdir/*.so.*
 
 %files devel
@@ -46,6 +48,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.10-alt1
+- Updated to upstream version 1.3.10.
+
 * Thu Jul 25 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.9-alt1
 - Updated to upstream version 1.3.9.
 
