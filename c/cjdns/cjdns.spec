@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cjdns
-Version: 20.4
+Version: 20.5
 Release: alt1
 
 Summary: Encrypted networking for regular people
@@ -222,6 +222,9 @@ done
 %_bindir/graphStats
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.5-alt1
+- Updated to upstream version 20.5.
+
 * Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20.4-alt1
 - Updated to upstream version 20.4.
 - Got rid of -Werror build flag.
