@@ -1,25 +1,29 @@
-Summary: Scientific Python Development Environment
 Name: spyder
-Version: 2.3.9
+Version: 4.0.1
 Release: alt1
-Source0: http://spyderlib.googlecode.com/files/%name-%version.zip
-Source1: %name.desktop
+
+Summary: Scientific Python Development Environment
+
 License: MIT
 Group: Development/Python
-Url: http://spyderlib.googlecode.com/
+Url: https://www.spyder-ide.org/
 
-%setup_python_module spyderlib
-%add_python_req_skip _winreg
+# Source0-url: https://github.com/spyder-ide/spyder/archive/v%version.tar.gz
+Source0: %name-%version.tar
+Source1: %name.desktop
+
+#add_python_req_skip _winreg
 
 BuildArch: noarch
-Requires: python-module-matplotlib-qt4
-Requires: python-module-%name-plugins
-# IPython bug
-Requires: python-module-zmq
 
-# Automatically added by buildreq on Sun Jul 29 2012
-# optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-jinja2 python-module-setuptools python-module-simplejson python-modules python-modules-compiler python-modules-email python-modules-encodings
-BuildRequires: python-module-jinja2-tests python-module-sphinx unzip
+BuildRequires(pre): rpm-build-python3
+
+Requires: python3-module-matplotlib-qt5
+#Requires: python3-module-%name-plugins
+# IPython bug
+#Requires: python-module-zmq
+
+BuildRequires: python3-module-jinja2-tests python3-module-sphinx
 
 %description
 Spyder is a Python development environment with tons of features:
@@ -53,52 +57,59 @@ Spyder may also be used as a PyQt4 extension library (module 'spyderlib').
 For example, the Python interactive shell widget used in Spyder may be
 embedded in your own PyQt4 application.
 
-%package -n %packagename
+%package -n python3-module-%name
 Group: Development/Python
 Summary: Supplemental python module for %name
-%description -n %packagename
+%description -n python3-module-%name
 Supplemental python module for %name
 
-%package -n python-module-%name-plugins
+%package -n python3-module-%name-plugins
 Group: Development/Python
 Summary: Plugins module for %name
 Requires: pylint, python-module-rope
-%description -n python-module-%name-plugins
+%description -n python3-module-%name-plugins
 Plugins module for %name
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 install -d -m755 %buildroot%_datadir/applications
-install -d -m755 %buildroot%_datadir/pixmaps
+#install -d -m755 %buildroot%_datadir/pixmaps
 
 install -D -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # TODO png
-install -D -m644 spyderlib/images/spyder.svg %buildroot%_iconsdir/hires/scalable/apps/%name.svg
+install -D -m644 spyder/images/spyder.svg %buildroot%_iconsdir/hires/scalable/apps/%name.svg
+rm -fv %buildroot/usr/share/icons/*.png
+rm -fv %buildroot%python3_sitelibdir/spyder/utils/introspection/old_fallback.py
+rm -rf %buildroot%_bindir/spyder_win_post_install.py
 
 %files
 %doc README.md
 %_desktopdir/*.desktop
 %_iconsdir/hires/*/apps/*
-%_pixmapsdir/spyder.png
-%_bindir/*
-%python_sitelibdir/%name-*egg-info
+#_pixmapsdir/spyder.png
+%_datadir/metainfo/*
+%_bindir/spyder3
+%python3_sitelibdir/%name-*egg-info
 
-%files -n %packagename
+%files -n python3-module-%name
 # TODO strange place for documentation
 #python_sitelibdir/spyderlib/doc
-%python_sitelibdir/spyderlib
+%python3_sitelibdir/spyder/
 
-%files -n python-module-%name-plugins
-%python_sitelibdir/spyderplugins
+#files -n python3-module-%name-plugins
+#python3_sitelibdir/spyderplugins/
 
 %changelog
+* Sat Feb 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- NMU: build new version (python3)
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 2.3.9-alt1
 - Autobuild version bump to 2.3.9
 
