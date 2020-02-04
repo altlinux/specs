@@ -1,5 +1,5 @@
 Name: libfmt
-Version: 5.3.0
+Version: 6.1.2
 Release: alt1
 
 Summary: An open-source formatting library for C++
@@ -7,6 +7,7 @@ License: BSD
 Group: System/Libraries
 Url: http://fmtlib.net/
 
+# https://github.com/fmtlib/fmt.git
 Source: %name-%version.tar
 
 BuildRequires: cmake ctest gcc-c++
@@ -29,16 +30,15 @@ This package contains development part of fmt.
 %setup
 
 %build
-cmake  	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
+%cmake_insource \
 	-DFMT_PKGCONFIG_DIR=%_pkgconfigdir \
 	-DBUILD_SHARED_LIBS=ON \
-	.
+	%nil
 
-%make_build
+%make_build VERBOSE=1
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 make test
 
 %install
@@ -55,5 +55,8 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2-alt1
+- Updated to upstream version 6.1.2.
+
 * Wed Jan 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.3.0-alt1
 - initial
