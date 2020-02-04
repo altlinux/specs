@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define oname manhole
 
-%def_with docs
-%def_with check
+%def_without docs
+%def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.6.0
-Release: alt3
+Release: alt4
 Summary: Debugging manhole for python applications 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/manhole/
 
 # https://github.com/ionelmc/python-manhole.git
@@ -20,18 +20,14 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python2.7(sphinx)
-BuildRequires: python2.7(sphinx_rtd_theme)
-BuildRequires: python2.7(sphinx_py3doc_enhanced_theme)
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python3(sphinx_py3doc_enhanced_theme)
 %endif
 
 %if_with check
 BuildRequires: /proc
 BuildRequires: /dev/pts
-BuildRequires: python2.7(process_tests)
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(requests)
-BuildRequires: python2.7(subprocess32)
 BuildRequires: python3(process_tests)
 BuildRequires: python3(requests)
 BuildRequires: python3(tox)
@@ -47,24 +43,10 @@ application and waiting for a connection).
 Access to the socket is restricted to the application's effective user
 id or root.
 
-%package -n python3-module-%oname
-Summary: Debugging manhole for python applications 
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Manhole is in-process service that will accept unix domain socket
-connections and present the stacktraces for all threads and an
-interactive prompt. It can either work as a python daemon thread waiting
-for connections at all times or a signal handler (stopping your
-application and waiting for a connection).
-
-Access to the socket is restricted to the application's effective user
-id or root.
-
 %if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Manhole is in-process service that will accept unix domain socket
@@ -100,41 +82,26 @@ This package contains documentation for %oname.
 %setup
 %patch -p1
 
-cp -fR . ../python3
-
 %if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-
-%python_install
 
 %if_with docs
 export PYTHONPATH=$PWD/src
 pushd docs
-sphinx-build -b pickle -d _build/doctrees . _build/pickle
-sphinx-build -b html -d _build/doctrees . _build/html
+sphinx-build-3 -b pickle -d _build/doctrees . _build/pickle
+sphinx-build-3 -b html -d _build/doctrees . _build/html
 popd
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
@@ -147,39 +114,35 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
 -e '/setenv =/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 -e '/pytest-travis-fold/d' \
 tox.ini
 export PIP_NO_INDEX=YES
 export MANHOLE_TEST_TIMEOUT=30
 export TOX_TESTENV_PASSENV='MANHOLE_TEST_TIMEOUT'
-%define py_nodot py%{python_version_nodots python}
 %define py3_nodot py%{python_version_nodots python3}
-export TOXENV=%py_nodot-normal-normal-nocov,%py3_nodot-normal-normal-nocov
+export TOXENV=%py3_nodot-normal-normal-nocov
 %_bindir/tox.py3 --sitepackages -v
 
 %files
 %doc *.rst
 %_bindir/*
-%exclude %_bindir/*.py3
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %if_with docs
-%exclude %python_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 %endif
 
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
 
 %changelog
+* Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt4
+- Porting on Python3.
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.6.0-alt3
 - Fixed testing against Pytest 5.
 
