@@ -14,11 +14,11 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 37.0.0
+Version: 43.0.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
-License: GPL
+License: GPL-2
 Group: Video
 URL: https://mkvtoolnix.download/
 
@@ -50,7 +50,7 @@ files and create (mkvmerge) Matroska files from other media files.
 %if_enabled gui
 %package gui
 Summary: GUI for mkvmerge including a chapter editor
-License: GPL
+License: GPL-2
 Group: Video
 Provides: mmg = %EVR
 Provides: mkvmerge-gui = %EVR
@@ -69,7 +69,7 @@ write chapters directly to Matroska files.
 
 %package -n mkvinfo
 Summary: Tool for print information about tracks in Matroska files
-License: GPL
+License: GPL-2
 Group: Video
 
 %description -n mkvinfo
@@ -128,7 +128,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 
 %files -f %name.lang
-%doc COPYING AUTHORS NEWS.md README.md examples
+%doc COPYING
+%doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
+%doc examples
 %_bindir/mkvextract
 %_bindir/mkvmerge
 %_bindir/mkvpropedit
@@ -140,12 +142,16 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %_iconsdir/hicolor/*/apps/mkvpropedit.*
 
 %files -n mkvinfo -f mkvinfo.lang
+%doc COPYING
+%doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
 %_bindir/mkvinfo
 %_man1dir/mkvinfo.*
 %_iconsdir/hicolor/*/apps/mkvinfo.*
 
 %if_enabled gui
 %files gui -f %name-gui.lang
+%doc COPYING
+%doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
 %_bindir/%name-gui
 %_man1dir/%name-gui.*
 %_iconsdir/hicolor/*/apps/%name-gui.*
@@ -157,12 +163,17 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 
 %if_with tools
 %files tools
+%doc COPYING
+%doc AUTHORS NEWS.md README.md CODE_OF_CONDUCT.md
 %_bindir/base64tool
 %_bindir/*parser
 %_bindir/ebml_validator
 %endif
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 43.0.0-alt1
+- Updated to upstream version 43.0.0.
+
 * Mon Sep 02 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 37.0.0-alt1
 - Updated to upstream version 37.0.0.
 
