@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name:           ocaml-gsl
-Version:        1.24.0
+Version:        1.24.1
 Release:        alt1
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
@@ -15,7 +15,7 @@ Obsoletes:	ocaml4-gsl
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libgsl-devel ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc dune opam
+BuildRequires: libgsl-devel ocaml-findlib ocaml-ocamlbuild ocaml-ocamldoc ocaml-dune-devel opam
 BuildRequires: ocaml-base-devel ocaml-stdio-devel
 
 %package devel
@@ -42,7 +42,6 @@ programs which use interface to GSL (GNU scientific library)
 %install
 dune install \
          --destdir=%buildroot \
-         --libdir=%_libdir/ocaml \
          --verbose \
          --profile release
 
@@ -64,6 +63,9 @@ dune install \
 %exclude %_libdir/ocaml/gsl/*.ml*
 
 %changelog
+* Tue Feb 04 2020 Anton Farygin <rider@altlinux.ru> 1.24.1-alt1
+- 1.24.1
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.24.0-alt1
 - 1.24.0
 
