@@ -1,24 +1,24 @@
-# TODO: binary preprocessor
 Name: webgrind
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Xdebug Profiling Web Frontend in PHP
-
 License: BSD License
 Group: System/Servers
 Url: https://github.com/jokkedk/webgrind
 
+BuildArch: noarch
+
 # Source-url: https://github.com/jokkedk/webgrind/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildArch: noarch
-
-BuildPreReq: rpm-build-apache2 rpm-macros-webserver-common
+BuildRequires(pre): rpm-build-apache2 rpm-macros-webserver-common rpm-build-python3
+BuildRequires: python-tools-2to3
 
 AutoReq:yes,nomingw32,nomingw64
 
 Requires: graphviz
+
 
 %description
 Webgrind is a Xdebug profiling web frontend in PHP.
@@ -36,6 +36,11 @@ for Xdebug Profiling Web Frontend in PHP.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
+
 %build
 %if 0
 # TODO arch subpackage
@@ -46,23 +51,21 @@ for Xdebug Profiling Web Frontend in PHP.
 mkdir -p %buildroot%webserver_webappsdir
 cp -a . %buildroot%webserver_webappsdir/%name
 
-# remove unneeded
-#rm -rf %buildroot%webserver_webappsdir/%name/test/
-
 %files
 %doc README.md
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
-#exclude %webserver_webappsdir/%name/bin/
-#config(noreplace) %webserver_webappsdir/%name/.htaccess
-# yes, will notify about duplicate file
-#attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 
 %if 0
 %files preprocessor
 %webserver_webappsdir/%name/bin/
 %endif
 
+
 %changelog
+* Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.0-alt2
+- Porting to python3.
+
 * Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - initial build for ALT Sisyphus
+
