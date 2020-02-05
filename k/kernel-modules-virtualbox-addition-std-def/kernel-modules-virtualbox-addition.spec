@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.2
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch x86_64
+%define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -135,6 +135,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 05 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.2-alt2
+- Rebuild with i586 support
 
 * Wed Jan 22 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.2-alt1
 - Updated template for virtualbox 6.1.2
