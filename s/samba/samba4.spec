@@ -59,8 +59,8 @@
 %endif
 
 Name:    samba
-Version: 4.10.11
-Release: alt2
+Version: 4.10.13
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -989,8 +989,6 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 %_fixperms %buildroot%perl_vendor_privlib
 
 # remove tests form python modules
-rm -rf %buildroot%python_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
-rm -f %buildroot%python_sitelibdir/samba/third_party/iso8601/test_*.py
 rm -rf %buildroot%python3_sitelibdir/samba/{tests,subunit,external/subunit,external/testtool}
 rm -f %buildroot%python3_sitelibdir/samba/third_party/iso8601/test_*.py
 %if_with separate_heimdal_server
@@ -1322,7 +1320,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_libdir/libsamba-credentials.so
 %_samba_libdir/libsamba-errors.so
 %_samba_libdir/libsamba-hostconfig.so
-#_samba_libdir/libsamba-policy.so
 %_samba_libdir/libsamba-util.so
 %_samba_libdir/libsamdb.so
 %_samba_libdir/libsmbconf.so
@@ -1332,13 +1329,13 @@ TDB_NO_FSYNC=1 %make_build test
 
 %_pkgconfigdir/dcerpc.pc
 %_pkgconfigdir/dcerpc_samr.pc
+%_pkgconfigdir/dcerpc_server.pc
 %_pkgconfigdir/ndr.pc
 %_pkgconfigdir/ndr_krb5pac.pc
 %_pkgconfigdir/ndr_nbt.pc
 %_pkgconfigdir/ndr_standard.pc
 %_pkgconfigdir/samba-credentials.pc
 %_pkgconfigdir/samba-hostconfig.pc
-#_pkgconfigdir/samba-policy.pc
 %_pkgconfigdir/samba-util.pc
 %_pkgconfigdir/samdb.pc
 
@@ -1358,7 +1355,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_libdir/libsamba-credentials.so.*
 %_samba_libdir/libsamba-errors.so.*
 %_samba_libdir/libsamba-hostconfig.so.*
-#_samba_libdir/libsamba-policy.so.*
 %_samba_libdir/libsamba-util.so.*
 %_samba_libdir/libsamdb.so.*
 %_samba_libdir/libsmbconf.so.*
@@ -1438,10 +1434,8 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libsamba-cluster-support-samba4.so
 %_samba_mod_libdir/libsamba-debug-samba4.so
 %_samba_mod_libdir/libsamba-modules-samba4.so
-#_samba_mod_libdir/libsamba-net-samba4.so
 %_samba_mod_libdir/libsamba-security-samba4.so
 %_samba_mod_libdir/libsamba-sockets-samba4.so
-#_samba_mod_libdir/libsamba-python-samba4.so
 %_samba_mod_libdir/libsamdb-common-samba4.so
 %_samba_mod_libdir/libsecrets3-samba4.so
 %_samba_mod_libdir/libserver-id-db-samba4.so
@@ -1801,6 +1795,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jan 24 2020 Evgeny Sinelikov <sin@altlinux.org> 4.10.13-alt1
+- Update to latest stable release of the Samba 4.10
+- Security fixes:
+  + CVE-2019-14902: Replication of ACLs set to inherit down a subtree on AD Directory not automatic
+  + CVE-2019-14907: Crash after failed character conversion at log level 3 or above
+  + CVE-2019-19344: Use after free during DNS zone scavenging in Samba AD DC
+
 * Thu Jan 23 2020 Grigory Ustinov <grenka@altlinux.org> 4.10.11-alt2
 - Build without python2 support
 - Get rid of ubt macros
