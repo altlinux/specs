@@ -11,7 +11,7 @@
 
 Name: fio
 Version: 3.17
-Release: alt1
+Release: alt1.1
 
 Summary: IO testing tool
 License: GPLv2
@@ -22,6 +22,7 @@ Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: libaio-devel zlib-devel
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
@@ -68,6 +69,7 @@ This package conteon gtk frontend for %name
 %prep
 %setup
 %patch -p1
+find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 
 %build
 ./configure \
@@ -101,6 +103,9 @@ This package conteon gtk frontend for %name
 %_bindir/gfio
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1.1
+- NMU: real drop python2 deps
+
 * Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1
 - NMU: build new version
 - use libglusterfs-devel instead of libglusterfs3-devel
