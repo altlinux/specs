@@ -1,24 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_without doc
+
 Name: blitz
 Summary: C++ class library for scientific computing
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Group: Sciences/Mathematics
-License: LGPL v3
+License: LGPLv3 or BSD-3-Clause or Artistic-2.0
 URL: https://github.com/blitzpp/blitz
 
 # https://github.com/blitzpp/blitz.git
 Source: %name-%version.tar
 
-Patch1: %name-alt-version.patch
+Patch1: %name-%version-alt-build.patch
 
 Requires: lib%name = %EVR
 
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel
+BuildRequires: cmake
+BuildRequires: ctest
+%if_with doc
 BuildRequires: doxygen graphviz
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+BuildRequires: /usr/bin/pdflatex
+%endif
 
 %description
 Blitz++ is a C++ class library for scientific computing which provides
@@ -51,6 +58,7 @@ generators, and small vectors.
 
 This package contains development files of Blitz++.
 
+%if_with doc
 %package -n lib%name-devel-doc
 Summary: Documentation for Blitz++
 Group: Development/Documentation
@@ -63,6 +71,7 @@ high performance. Blitz++ provides dense arrays and vectors, random number
 generators, and small vectors.
 
 This package contains development documentation for Blitz++.
+%endif
 
 %package examples
 Summary: Examples for Blitz++
@@ -81,60 +90,63 @@ This package contains examples for Blitz++.
 %setup
 %patch1 -p1
 
-sed -i -e "s:@@VERSION@@:%version:g" configure.ac
-
 %build
 export CC="gcc -pthread"
 export CXX="g++ -pthread"
 
-%autoreconf
-%configure \
-%if "%_lib" == "lib64"
-	--enable-64bit \
-%endif
-	--enable-shared \
-	--enable-optimize \
-	--enable-threadsafe \
-	--enable-fortran \
-	--with-blas=%prefix
+%cmake \
+	-DBUILD_DOC:BOOL=%{with doc} \
+	-DBUILD_TESTING:BOOL=ON \
+	-DBZ_THREADSAFE:BOOL=ON \
+	%nil
 
-%make_build
-%make info html
+%if_with doc
+%cmake_build VERBOSE=1 blitz-doc
+%endif
+
+%cmake_build testsuite
+%cmake_build examples
 
 %install
 export CC="gcc -pthread"
 export CXX="g++ -pthread"
 
-%makeinstall_std install-info install-html
-
-bzip2 -9 ChangeLog*
-
-mv %buildroot%_docdir/%name-%version %buildroot%_docdir/%name
-
-rm -f %buildroot%_libdir/libblitz.a
+%cmakeinstall_std
 
 %check
-%make_build check-testsuite
+export LD_LIBRARY_PATH=%buildroot%_libdir
+
+%cmake_build check-testsuite
+%cmake_build check-examples
 
 %files
-%doc AUTHORS COPYING* COPYRIGHT ChangeLog.* LEGAL LICENSE README TODO
+%doc COPYING* COPYRIGHT LEGAL LICENSE
+%doc AUTHORS ChangeLog* README.md
+%if_with doc
 %_infodir/*
+%endif
 
 %files -n lib%name
 %_libdir/*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
+%_libdir/cmake/*
 %_includedir/*
 %_pkgconfigdir/*
 
+%if_with doc
 %files -n lib%name-devel-doc
 %doc %_docdir/%name
+%endif
 
 %files examples
 %doc examples
 
 %changelog
+* Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
+- Updated to upstream version 1.0.2.
+
 * Fri May 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
 - Updated to upstream version 1.0.1.
 
