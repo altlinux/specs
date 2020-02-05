@@ -1,15 +1,25 @@
+%def_without python2
+
 %define oname influxdb
 
 Name: python-module-%oname
+Version: 5.2.2
+Release: alt2
+
+Summary: Python client for InfluxDB
+
 License: MIT
 Group: Development/Python
-Summary: Python client for InfluxDB
-Version: 5.2.2
-Release: alt1
 Url: https://github.com/influxdata/influxdb-python
+
 Source: %name-%version.tar
+
 BuildArch: noarch
+
+%if_with python2
 BuildRequires: python-devel python-module-setuptools
+%endif
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 
@@ -43,15 +53,20 @@ This package contains tests for %oname.
 %setup
 
 %build
+%if_with python2
 %python_build -b build2
+%endif
 %python3_build -b build3
 
 %install
+%if_with python2
 ln -sf build2 build
 %python_install
+%endif
 ln -sf build3 build
 %python3_install
 
+%if_with python2
 %files
 %python_sitelibdir/*
 %doc docs/source examples README.rst
@@ -59,6 +74,7 @@ ln -sf build3 build
 
 %files tests
 %python_sitelibdir/%oname/tests
+%endif
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*
@@ -69,6 +85,9 @@ ln -sf build3 build
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt2
+- rebuild without python2 subpackage
+
 * Thu Mar 21 2019 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
 - 5.2.2
 - add python3 package
