@@ -20,11 +20,11 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.2.1
+Version: 4.2.3
 Release: alt1
 
 Summary: mongo client shell and tools
-License: ASL 2.0
+License: Apache-2.0
 Url: https://github.com/mongodb/mongo-tools
 Group: Development/Databases
 
@@ -73,6 +73,11 @@ install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/*
 
 %changelog
+* Wed Feb 5 2020 Vladimir Didenko <cow@altlinux.org> 4.2.3-alt1
+- 4.2.3
+- update man pages
+- fix license name
+
 * Fri Oct 25 2019 Vladimir Didenko <cow@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
