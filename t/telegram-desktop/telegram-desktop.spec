@@ -8,7 +8,7 @@
 
 Name: telegram-desktop
 Version: 1.9.9
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -16,10 +16,8 @@ License: GPLv3 with OpenSSL exception
 Group: Networking/Instant messaging
 Url: https://telegram.org/
 
-# Source-git: https://github.com/telegramdesktop/tdesktop.git
+# Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
-
-Source2: %name-postsubmodules-%version.tar
 
 # See https://github.com/EasyCoding/tgbuild
 Patch1: cmake_helpers-system-variant.patch
@@ -134,11 +132,23 @@ or business messaging needs.
 
 
 %prep
-%setup -a2
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+
+rm -rf Telegram/ThirdParty/variant \
+	Telegram/ThirdParty/GSL \
+	Telegram/ThirdParty/Catch \
+	Telegram/ThirdParty/xxHash \
+	Telegram/ThirdParty/lz4 \
+	Telegram/ThirdParty/libtgvoip \
+	Telegram/ThirdParty/rlottie \
+	Telegram/ThirdParty/QR
+# TODO:
+# Telegram/ThirdParty/expected
+
 
 %build
 %if_with ffmpeg_static
@@ -199,6 +209,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt2
+- return to build from full tarball
+
 * Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt1
 - new version 1.9.9 (with rpmrb script)
 - enable TDESKTOP_FORCE_GTK_FILE_DIALOG
