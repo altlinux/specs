@@ -1,5 +1,5 @@
 Name: dm-secdel
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: dm-linear with secure deletion on discard
@@ -12,6 +12,7 @@ Url: https://github.com/vt-alt/dm-secdel
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def
 
 %description
 Linear device-mapper target with secure deletion on discard.
@@ -35,6 +36,10 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 mkdir %buildroot/etc
 echo '# <target name> <source device> <options>' > %buildroot/etc/secdeltab
 
+%check
+# do dummy build of the module
+make KDIR=$(echo /lib/modules/*/build) VERSION=%version
+
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
@@ -52,6 +57,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Wed Feb 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt1
+- Fix building for 5.4.
+
 * Mon Oct 07 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.6-alt1
 - Replace audit record with dmesg message.
 
