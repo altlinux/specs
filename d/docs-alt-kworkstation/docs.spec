@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.90
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed Feb 05 2020 Elena Mishina <lepata@altlinux.org> 8.90-alt5
+- update to 8.95
+- update desktop-software section
+
 * Thu Jan 16 2020 Elena Mishina <lepata@altlinux.org> 8.90-alt4
 - desktop-software add discover
 - desktop-software add ksysguard
