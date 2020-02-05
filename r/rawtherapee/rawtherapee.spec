@@ -8,19 +8,21 @@
 %define xdg_name com.rawtherapee.RawTherapee
 
 Name: rawtherapee
-Version: 5.7%{?_enable_snapshot:.%git_distance}
+Version: 5.8%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
 Group: Graphics
-URL: http://www.rawtherapee.com/
+URL: https://www.rawtherapee.com
 
 %if_enabled snapshot
-# use full archive not git-archive to avoid dancing around version
+#VCS: https://github.com/Beep6581/RawTherapee
 Source: rawtherapee-%version.tar
 %else
-Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
+# use full archive not git-archive to avoid dancing around version
+#Source: %url/shared/source/%name-%version.tar.xz
+Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
 %endif
 
 %define gtk_ver 3.24.7
@@ -83,6 +85,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Wed Feb 05 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt1
+- 5.8
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 5.7-alt1
 - 5.7
 
