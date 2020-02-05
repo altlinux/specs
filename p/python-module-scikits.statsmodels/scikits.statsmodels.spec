@@ -2,14 +2,17 @@
 %define oname %mname.statsmodels
 
 %def_with python3
+%def_without python2
 %def_without doc
 %def_disable check
 
 Name: python-module-%oname
 Epoch: 1
 Version: 0.8.0
-Release: alt1.1
+Release: alt2
+
 Summary: Statistical computations and models for use with SciPy
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/statsmodels/
@@ -17,28 +20,36 @@ Url: https://pypi.python.org/pypi/statsmodels/
 # https://github.com/statsmodels/statsmodels.git
 Source: %name-%version.tar
 
+BuildRequires: libnumpy-devel 
+
+%if_with python2
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: libnumpy-devel python-module-Cython python-module-ipyparallel python-module-numpy-testing python-module-pandas-tests
+BuildRequires: python-module-Cython python-module-ipyparallel python-module-numpy-testing python-module-pandas-tests
+
+%py_provides %oname
+%py_requires numpy scipy pandas patsy matplotlib cvxopt
+%py_requires statsmodels.stats.multitest
+%add_python_req_skip models
+%endif
+
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: fonts-bitmap-misc python-module-alabaster python-module-matplotlib-sphinxext
 %endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-ipyparallel python3-module-numexpr-tests python3-module-numpy-testing
 %endif
 
-%py_provides %oname
-%py_requires numpy scipy pandas patsy matplotlib cvxopt
-%py_requires statsmodels.stats.multitest
-%add_python_req_skip models
 
 %description
 Statsmodels is a Python package that provides a complement to scipy for
 statistical computations including descriptive statistics and estimation
 and inference for statistical models.
 
+%if_with python2
 %package tests
 Summary: Tests for %oname
 Group: Development/Python
@@ -51,6 +62,7 @@ statistical computations including descriptive statistics and estimation
 and inference for statistical models.
 
 This package contains tests for %oname.
+%endif
 
 %if_with python3
 %package -n python3-module-%oname
@@ -120,7 +132,9 @@ ln -s ../objects.inv docs/source/
 
 %build
 %add_optflags -fno-strict-aliasing
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -129,6 +143,7 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
 for i in $(find %buildroot%python_sitelibdir -name '*test*') \
 	$(find %buildroot%python_sitelibdir -name '*xamp*')
@@ -136,6 +151,7 @@ do
 	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
 	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
 done
+%endif
 
 %if_with python3
 pushd ../python3
@@ -160,13 +176,16 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
+%if_with python2
 xvfb-run python setup.py test
+%endif
 %if_with python3
 pushd ../python3
 xvfb-run python3 setup.py test
 popd
 %endif
 
+%if_with python2
 %files -f %oname.notests
 %doc *.md *.rst README_l1.txt
 %python_sitelibdir/*
@@ -175,6 +194,7 @@ popd
 %endif
 
 %files tests -f %oname.tests
+%endif
 
 %if_with doc
 %files pickles
@@ -199,6 +219,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.8.0-alt2
+- NMU: disable build python2 module
+
 * Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.8.0-alt1.1
 - (NMU) Rebuilt with python-3.6.4.
 
