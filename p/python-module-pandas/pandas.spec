@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.23.4
-Release: alt2
+Release: alt3
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -28,7 +28,6 @@ BuildRequires: xvfb-run python2.7(nbsphinx)
 %py_requires pytz pandas.util.testing dateutil numpy sqlalchemy numexpr
 %py_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
 %py_requires oauth2client apiclient gflags tables
-%py_requires statsmodels.stats.multitest
 
 %description
 pandas is an open source, BSD-licensed library providing
@@ -86,6 +85,9 @@ xvfb-run python setup.py test
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.23.4-alt3
+- Drop wrong statsmodels.stats.multitest require
+
 * Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.4-alt2
 - Rebuilt without python-3 support.
 
