@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	rtl8812au
-%define module_version  7502.20191011
+%define module_version  7502.20200205
 
 #### MODULE SOURCES ####
 Name: kernel-source-rtl8812au
@@ -39,6 +39,10 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Feb 05 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 7502.20200205-alt1
+- updated from git
+- build with kernel >=5.4 fixed
+
 * Fri Nov  8 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 7502.20191011-alt1
 - resurrect in sisyphus
 - updated from git
