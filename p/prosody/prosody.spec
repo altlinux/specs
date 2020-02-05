@@ -1,5 +1,5 @@
 Name: prosody
-Version: 0.11.3
+Version: 0.11.4
 Release: alt1
 
 Summary: Modern XMPP communication server
@@ -15,6 +15,7 @@ Requires: openssl lua-module-luaexpat lua-module-luasocket lua-module-luafilesys
 Source0: %name-%version.tar
 Source1: %name.cfg.lua
 Source2: %name.service
+Source10: autobuild.watch
 
 %description
 %summary
@@ -53,6 +54,10 @@ cp %SOURCE2 %buildroot/%systemd_unitdir
 %_man1dir/*
 
 %changelog
+* Wed Feb 05 2020 Grigory Ustinov <grenka@altlinux.org> 0.11.4-alt1
+- new version 0.11.4
+- add watch file
+
 * Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.11.3-alt1
 - Build new version.
 
