@@ -2,11 +2,13 @@
 
 # Recommended versioning scheme for this package:
 # 1. If no sources are changed, just increase release.
-# 2. If sources are changed, use current date as version in format YYYYMMDD,
+# 2. If sources are changed, use current date as version in format YYYYMMDD.DBNUM,
 #    and increase release for all subsequent versions made on same day.
+# 3. DBNUM is incremented for each release with database format is changed:
+#    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20200127
+Version: 20200130.3
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -50,6 +52,11 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Thu Jan 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200130.3-alt1
+- Optimized memory consumption.
+- Added new field to database.
+- Minor logging improvements.
+
 * Mon Jan 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200127-alt1
 - Fixed excessive logging of writes.
 - Fixed memory consumption by logging entries if logging is disabled.
