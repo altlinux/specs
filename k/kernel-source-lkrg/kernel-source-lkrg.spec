@@ -3,7 +3,7 @@
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt2
+Release: alt3
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -13,6 +13,7 @@ Url:  https://www.openwall.com/lkrg/
 
 # repacked https://www.openwall.com/lkrg/lkrg-%version.tar.gz
 Source: %module_name-%version.tar
+Patch1: 0001-ALT-Fix-FTBFS-for-Kernel-5.3.patch
 
 ExclusiveArch: i586 x86_64 aarch64
 BuildRequires(pre): kernel-build-tools
@@ -33,6 +34,9 @@ This package contains the LKRG sources.
 
 %prep
 %setup -q -c
+pushd %module_name-%version
+%autopatch -p2
+popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -42,6 +46,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Feb 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt3
+- Fixed FTBFS for kernel 5.3+ on aarch64.
+
 * Thu Aug 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt2
 - Built for aarch64.
 
