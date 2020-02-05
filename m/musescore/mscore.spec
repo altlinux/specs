@@ -1,13 +1,13 @@
 %define rname mscore
-%define mversion 3.3
+%define mversion 3.4
 
 Name: musescore
-Version: 3.3.4
+Version: 3.4.1
 Release: alt1
 
 Summary: Music notation and composition software
 
-License: GPL2
+License: GPLv2
 Group: Sound
 Url: https://musescore.org
 
@@ -23,7 +23,7 @@ BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
 BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
 BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
 BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel libportmidi-devel
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-webengine-devel qt5-quickcontrols2-devel
 
 %description
 Music notation and composition software
@@ -92,6 +92,10 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Feb 05 2020 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt1
+- Build new version 3.4.1.
+- Fix license.
+
 * Thu Dec 26 2019 Grigory Ustinov <grenka@altlinux.org> 3.3.4-alt1
 - Build new version 3.3.4.
 
