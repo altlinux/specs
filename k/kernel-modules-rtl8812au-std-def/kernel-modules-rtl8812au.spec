@@ -1,5 +1,5 @@
 %define module_name rtl8812au
-%define module_version 7502.20191011
+%define module_version 7502.20200205
 %define module_release alt1
 
 %define flavour	std-def
