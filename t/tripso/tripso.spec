@@ -1,6 +1,6 @@
 Name: tripso
-Version: 1.0
-Release: alt3
+Version: 1.1
+Release: alt1
 
 Summary: Translation of IPv4 Security Options (IPSO) Labels
 License: GPLv2
@@ -46,6 +46,9 @@ make KDIR=$(echo /lib/modules/*/build) VERSION=%version xt_TRIPSO.ko
 /%_lib/iptables/*.so
 
 %changelog
+* Wed Feb 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
+- Compatibility drop v3.19, add v5.3.
+
 * Tue Oct 01 2019 Vitaly Chikunov <vt@altlinux.org> 1.0-alt3
 - Fix build of kernel module.
 
