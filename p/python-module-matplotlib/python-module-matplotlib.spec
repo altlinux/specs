@@ -12,7 +12,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt4
+Release: alt5
 
 Summary: Matlab(TM) style python plotting package
 
@@ -113,8 +113,6 @@ Summary: qt5 backend for %oname (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 %py3_requires PyQt5
-#fix me!!!
-Requires: python3-module-%oname-qt4 = %version-%release
 
 %description -n python3-module-%oname-qt5
 qt5 backend for %oname.
@@ -172,8 +170,6 @@ Summary: qt5 backend for %oname
 Group: Development/Python
 Requires: %name = %version-%release
 %py_requires PyQt5
-#fix me!!!
-Requires: %name-qt5 = %version-%release
 
 %description qt5
 qt5 backend for %oname.
@@ -396,13 +392,13 @@ done
 %if_with qt5
 %files qt5
 %python_sitelibdir/matplotlib/backends/backend_qt5*
+%python_sitelibdir/matplotlib/backends/qt_editor
+%python_sitelibdir/matplotlib/backends/qt*_compat.*
 %endif
 
 %if_with qt4
 %files qt4
 %python_sitelibdir/matplotlib/backends/backend_qt4*
-%python_sitelibdir/matplotlib/backends/qt*_compat.*
-%python_sitelibdir/matplotlib/backends/qt_editor
 %endif
 
 %files sphinxext
@@ -481,13 +477,13 @@ done
 %files -n python3-module-%oname-qt5
 %python3_sitelibdir/matplotlib/backends/backend_qt5*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5*
+%python3_sitelibdir/matplotlib/backends/qt*_compat.*
+%python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
+%python3_sitelibdir/matplotlib/backends/qt_editor
 
 %files -n python3-module-%oname-qt4
 %python3_sitelibdir/matplotlib/backends/backend_qt4*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
-%python3_sitelibdir/matplotlib/backends/qt*_compat.*
-%python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
-%python3_sitelibdir/matplotlib/backends/qt_editor
 
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
@@ -498,6 +494,9 @@ done
 %endif
 
 %changelog
+* Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.3-alt5
+- Updated interpackage dependencies (Closes: #38030).
+
 * Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 2.2.3-alt4
 - Dropped runtime dependency on Pytest.
 
