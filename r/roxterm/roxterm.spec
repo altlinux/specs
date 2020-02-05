@@ -1,7 +1,7 @@
 
 Name: roxterm
 Version: 3.1.4
-Release: alt3
+Release: alt4
 
 Summary: A tabbed, VTE/GTK+ based terminal emulator
 License: GPL
@@ -31,11 +31,11 @@ with a small footprint.
 %setup
 
 %build
-python ./mscript.py configure PREFIX=/usr
-python ./mscript.py build
+python2 ./mscript.py configure PREFIX=/usr
+python2 ./mscript.py build
 
 %install
-python ./mscript.py install DESTDIR=%buildroot
+python2 ./mscript.py install DESTDIR=%buildroot
 %find_lang %name
 
 %files -f %name.lang
@@ -50,6 +50,9 @@ python ./mscript.py install DESTDIR=%buildroot
 %_datadir/roxterm/*
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 3.1.4-alt4
+- Fixed FTBFS.
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 3.1.4-alt3
 - get rid of gcc4.7 BR:
 - minor spec cleanup

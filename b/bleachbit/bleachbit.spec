@@ -1,6 +1,6 @@
 Name:     bleachbit
 Version:  2.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
 License:  GPLv3+
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
 Patch1:   %name-apt-rpm-specific.patch
 Patch2:   %name-regression-fix.patch
+Patch3:   %name-v2.2-Specify-Python-version.patch
 
 BuildArch:      noarch
 
@@ -28,8 +29,7 @@ and history list of many common programs.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %build
 make -C po local 
@@ -54,6 +54,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Wed Feb 05 2020 Stanislav Levin <slev@altlinux.org> 2.2-alt2
+- Fixed FTBS.
+
 * Thu Apr 11 2019 Andrey Cherepanov <cas@altlinux.org> 2.2-alt1
 - New version.
 

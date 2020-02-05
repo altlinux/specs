@@ -1,24 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname setuptools_scm
+%def_with check
 
-Name: python-module-%oname
-Version: 3.3.3
-Release: alt3
+Name: python3-module-%oname
+Version: 3.5.0
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/setuptools_scm/
-Packager: Python Development Team <python at packages.altlinux.org>
+Url: https://pypi.org/project/setuptools-scm/
 
 # https://github.com/pypa/setuptools_scm.git
 Source: %name-%version.tar
 Patch1: %oname-2.1.0-alt-tests.patch
 
-%py_provides setuptools-scm
+BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: git-core
+BuildRequires: mercurial
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
+
+%py3_provides setuptools-scm
 Requires: git-core mercurial
-%py_requires setuptools
+%py3_requires setuptools
 
 %description
 setuptools_scm is a simple utility for the setup_requires feature of
@@ -39,20 +48,37 @@ rm ./src/setuptools_scm/win_py31_compat.py
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
-%python_build_debug
+%python3_build_debug
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
-%python_install
+%python3_install
+
+%check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export TESTS_NO_NETWORK=1
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
+export TOXENV=py%{python_version_nodots python3}-test
+tox.py3 --sitepackages -r -vv
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
-* Fri Apr 24 2020 Stanislav Levin <slev@altlinux.org> 3.3.3-alt3
-- Moved Python3 subpackage out to its own package.
+* Wed Feb 19 2020 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 3.3.3 -> 3.5.0.
 
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 3.3.3-alt2
 - Fixed testing against Pytest 5.

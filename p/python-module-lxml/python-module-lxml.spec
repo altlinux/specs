@@ -6,7 +6,7 @@
 
 Name: python-module-lxml
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -126,9 +126,9 @@ CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
 FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
-python test.py -p -v
-PYTHONPATH=src python src/lxml/tests/selftest.py
-PYTHONPATH=src python src/lxml/tests/selftest2.py
+python2 test.py -p -v
+PYTHONPATH=src python2 src/lxml/tests/selftest.py
+PYTHONPATH=src python2 src/lxml/tests/selftest2.py
 %if_with python3
 pushd ../python3
 cp -l build/lib.linux-*/lxml/*.so src/lxml/
@@ -150,6 +150,9 @@ popd
 %doc doc samples
 
 %changelog
+* Wed Apr 29 2020 Stanislav Levin <slev@altlinux.org> 4.5.0-alt2
+- Fixed FTBFS.
+
 * Tue Mar 17 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Build new version
 - Disable bootstrap knob.

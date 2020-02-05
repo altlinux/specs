@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.0
-Release: alt2
+Release: alt3
 
 Summary: Pytest plugin to randomly order tests and control random.seed
 License: BSD 3-Clause
@@ -67,6 +67,7 @@ setenv =\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -v
@@ -78,6 +79,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/pytest_randomly-*.egg-info/
 
 %changelog
+* Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 3.1.0-alt3
+- Fixed FTBFS.
+
 * Mon Dec 02 2019 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2
 - Fixed testing against Pytest 5.3+.
 

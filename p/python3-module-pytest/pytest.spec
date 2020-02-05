@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.3.2
-Release: alt2
+Release: alt3
 
 Summary: Python test framework
 License: MIT
@@ -104,6 +104,7 @@ ln -s pytest3 %buildroot%_bindir/pytest-3
 # add workaround for https://github.com/pytest-dev/pytest/issues/6297
 export TERM=xterm
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -v
@@ -121,6 +122,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest-3
 
 %changelog
+* Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.3.2-alt3
+- Fixed FTBFS.
+
 * Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.3.2-alt2
 - NMU: added py.test-3 & pytest-3 compat symlinks
 

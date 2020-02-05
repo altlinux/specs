@@ -1,7 +1,7 @@
 Summary: A disassembly framework
 Name: capstone
 Version: 4.0.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: Development/Tools
 Url: http://capstone-engine.org/
@@ -49,6 +49,9 @@ This package contains java bindings for %name.
 
 %prep
 %setup
+# versioned Python
+find -type f -name Makefile -exec \
+sed -i 's/^PYTHON2 = python[[:space:]]*$/PYTHON2 = python2/g' {} \;
 
 %build
 DESTDIR=%buildroot CFLAGS="%optflags" LIBDIRARCH=%_lib INCDIR="%_includedir" %make_build
@@ -108,6 +111,9 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_javadir/
 
 %changelog
+* Wed Feb 05 2020 Stanislav Levin <slev@altlinux.org> 4.0.1-alt2
+- Fixed FTBS.
+
 * Fri Feb 1 2019 Nikita Ermakov <arei@altlinux.org> 4.0.1-alt1
 - Updated to 4.0.1.
 

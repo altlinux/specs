@@ -11,7 +11,7 @@ sethook method and changing its implementation.  All users of the \
 function, including those that imported it, will see the change.
 
 Name: %fname
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 %if ""==""
@@ -111,6 +111,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 5.0.0 -> 5.0.1.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Build new version.
 - Fix license.

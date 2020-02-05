@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt2.1
+Release: alt2.1.1
 Summary: A library for making charts with Python
 License: LGPLv3
 Group: Development/Python
@@ -80,7 +80,7 @@ popd
 %python_install
 
 %check
-python setup.py test
+python2 setup.py test
 #if_with python3
 %if 0
 pushd ../python3
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 0.7.0-alt2.1.1
+- Fixed FTBFS.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.0-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

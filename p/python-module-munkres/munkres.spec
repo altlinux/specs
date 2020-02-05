@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.6
-Release: alt2.git20131103.2
+Release: alt3.git20131103.2
 Summary: Munkres algorithm for the Assignment Problem
 License: BSD
 Group: Development/Python
@@ -84,7 +84,7 @@ popd
 %endif
 
 %check
-python %oname.py
+python2 %oname.py
 %if_with python3
 pushd ../python3
 python3 %oname.py
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.0.6-alt3.git20131103.2
+- Fixed FTBFS.
+
 * Tue Apr 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt2.git20131103.2
 - Rebuild with python3.7.
 

@@ -3,86 +3,72 @@
 
 %def_with check
 
-Name: python-module-%mname
+Name: python3-module-%mname
 Epoch: 1
-Version: 42.0.0
-Release: alt2
+Version: 46.1.3
+Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/pypa/setuptools.git
 Url: https://pypi.org/project/setuptools/
-
-Provides: python-module-distribute = %EVR
-Obsoletes: python-module-distribute <= 0.6.35-alt1
-
-Requires: python-module-pkg_resources = %EVR
-# setuptools has commands for doing binary builds; for them to work always:
-Requires: python-devel
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python %py_dependencies distutils
+BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: /dev/shm
-BuildRequires: python-module-futures
-BuildRequires: python-module-pytest
-BuildRequires: python-module-pytest-cov
-BuildRequires: python-module-pytest-virtualenv
-BuildRequires: python-module-virtualenv
-BuildRequires: python-module-path
-BuildRequires: python-module-mock
-BuildRequires: python-module-pip
-BuildRequires: python-module-wheel
-BuildRequires: python-module-contextlib2
-BuildRequires: python-module-pytest-fixture-config
-BuildRequires: python-module-pytest-flake8
-BuildRequires: python-module-tox
+BuildRequires: python3(mock)
+BuildRequires: python3(pip)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_virtualenv)
+BuildRequires: python3(tox)
+BuildRequires: python3(virtualenv)
+BuildRequires: python3(wheel)
+
 # For the tests of the setuptools commands to do binary builds:
-BuildPreReq: python-devel
+BuildPreReq: python3-dev
 %endif
 
 BuildArch: noarch
 
-%package -n python-module-pkg_resources
-Summary: Package Discovery and Resource Access for Python2 libraries
-Group: Development/Python
-# Not separated yet:
-Conflicts: python-module-%mname < 39.2.0-alt3
+Provides: python3-module-distribute = %EVR
+Requires: python3-module-pkg_resources = %EVR
+# setuptools has commands for doing binary builds; for them to work always:
+Requires: python3-dev
+# skip requires of self
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
 
-%package docs
-Summary: Documentation for Setuptools
-Group: Development/Documentation
-Provides: python-module-distribute-docs = %EVR
+%package -n python3-module-pkg_resources
+Summary: Package Discovery and Resource Access for Python3 libraries
+Group: Development/Python3
+# Not separated yet:
+Conflicts: python3-module-%mname < 39.2.0-alt3
 
 %description
-Setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
+Setuptools is a collection of enhancements to the Python3 distutils
+that allow you to more easily build and distribute Python3 packages,
 especially ones that have dependencies on other packages.
 
-%description docs
-Distribute is intended to replace Setuptools as the standard method for
-working with Python module distributions.
-
-This package contains documentation for Distribute.
-
-%description -n python-module-pkg_resources
-The "pkg_resources" module distributed with "setuptools" provides an API
-for Python libraries to access their resource files, and for extensible
-applications and frameworks to automatically discover plugins.  It also
-provides runtime support for using C extensions that are inside zipfile-format
-eggs, support for merging packages that have separately-distributed modules or
-subpackages, and APIs for managing Python's current "working set" of active
-packages.
-
-Any Python code can make use of pkg_resources at runtime (unlike setuptools,
+%global pkg_resources_desc The "pkg_resources" module distributed with "setuptools" provides an API\
+for Python libraries to access their resource files, and for extensible\
+applications and frameworks to automatically discover plugins.  It also\
+provides runtime support for using C extensions that are inside zipfile-format\
+eggs, support for merging packages that have separately-distributed modules or\
+subpackages, and APIs for managing Python's current "working set" of active\
+packages.\
+\
+Any Python code can make use of pkg_resources at runtime (unlike setuptools,\
 whose purpose is preparing packages).
 
-This package contains pkg_resources for Python2.
+%description -n python3-module-pkg_resources
+%pkg_resources_desc
+
+This package contains pkg_resources for Python3.
 
 %prep
 %setup
@@ -95,20 +81,17 @@ rm -f setuptools/*.exe
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 
 %build
-python2 bootstrap.py
-%global python_setup_buildrequires %nil
-%python_build_debug
+python3 bootstrap.py
+%global python3_setup_buildrequires %nil
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 rm %buildroot%_bindir/easy_install
-ln -s easy_install-%_python_version -T %buildroot%_bindir/easy_install
+ln -s easy_install-%_python3_version -T %buildroot%_bindir/easy_install3
 
 %check
-# bundled `pip` doesn't support PEP517 well for now
-# https://github.com/pypa/setuptools/issues/1644
-rm pyproject.toml
 sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -116,23 +99,24 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
 -e '/^setenv[ ]*=/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test' \
+    py3: _PYTEST_BIN=%_bindir\/py.test3' \
 tox.ini
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export PIP_FIND_LINKS=%python_sitelibdir/virtualenv_support
-export TOXENV=py%{python_version_nodots python}
-tox --sitepackages -v
+export TOXENV=py3
+tox.py3 --sitepackages -vv -r -- --ignore pavement.py
 
 %files
 %doc LICENSE *.rst
-%_bindir/easy_install
-%_bindir/easy_install-%_python_version
-%python_sitelibdir/setuptools
-%python_sitelibdir/easy_install.*
+%_bindir/easy_install3
+%_bindir/easy_install-%_python3_version
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/setuptools
+%python3_sitelibdir/easy_install.*
 
-%files -n python-module-pkg_resources
+%files -n python3-module-pkg_resources
 %doc LICENSE
-%python_sitelibdir/pkg_resources
+%python3_sitelibdir/pkg_resources
 # People write "setuptools" in *.egg-info/requires.txt (or in setup.py's requires)
 # even if they use only the pkg_resources part;
 # if setuptools-*.egg-info is not present, pkg_resources.load_entry_point() fails
@@ -141,17 +125,11 @@ tox --sitepackages -v
 # if having incomplete setuptools code.
 # Our autoreqs will take over the duty of tracking the real dependencies.
 # (In future, we could patch their requires.txt.)
-%python_sitelibdir/setuptools-%version-*.egg-info
-
-%files docs
-%doc docs/*.txt
+%python3_sitelibdir/setuptools-%version-*.egg-info
 
 %changelog
-* Mon Feb 03 2020 Stanislav Levin <slev@altlinux.org> 1:42.0.0-alt2
-- Moved Python3 subpackage out to its own package.
-
-* Sun Nov 24 2019 Stanislav Levin <slev@altlinux.org> 1:42.0.0-alt1
-- 41.4.0 -> 42.0.0.
+* Tue Apr 21 2020 Stanislav Levin <slev@altlinux.org> 1:46.1.3-alt1
+- 41.4.0 -> 46.1.3.
 
 * Mon Oct 07 2019 Stanislav Levin <slev@altlinux.org> 1:41.4.0-alt1
 - 41.2.0 -> 41.4.0.

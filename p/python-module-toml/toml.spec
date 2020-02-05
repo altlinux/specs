@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt3
+Release: alt4
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
@@ -87,6 +87,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/toml-*.egg-info/
 
 %changelog
+* Mon Apr 27 2020 Stanislav Levin <slev@altlinux.org> 0.10.0-alt4
+- Applied upstream fix.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.10.0-alt3
 - Fixed testing against Pytest 5.
 

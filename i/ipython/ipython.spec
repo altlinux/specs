@@ -3,7 +3,7 @@
 
 Name: ipython
 Version: 5.5.0
-Release: alt3
+Release: alt4
 
 %setup_python_module IPython
 
@@ -22,7 +22,7 @@ Patch1: %name-%version-alt-docs.patch
 %add_findreq_skiplist %python_sitelibdir/IPython/utils/eventful.py
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
-BuildRequires: python-module-setuptools pyjsdoc
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-zmq
 BuildRequires: python-module-tornado python-modules-sqlite3
 BuildRequires: python-module-jsonschema python-module-traitlets
@@ -216,6 +216,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Feb 06 2020 Stanislav Levin <slev@altlinux.org> 5.5.0-alt4
+- Fixed FTBFS.
+
 * Fri May 11 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.5.0-alt3
 - rebuild with python3.6
 
