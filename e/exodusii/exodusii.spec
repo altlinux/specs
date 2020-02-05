@@ -7,7 +7,7 @@ Name: exodusii
 Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt3.git20150119
+Release: alt4.git20150119
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -152,6 +152,9 @@ mv nemesis/README README.Nemesis
 %python_sitelibdir/*
 
 %changelog
+* Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt4.git20150119
+- Fixed build.
+
 * Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 6.09.0-alt3.git20150119
 - NMU: fixed LIB_SUFFIX= on non-x86_64
 
