@@ -10,7 +10,7 @@
 %def_enable http
 
 Name: fio
-Version: 3.13
+Version: 3.17
 Release: alt1
 
 Summary: IO testing tool
@@ -21,12 +21,13 @@ Url: http://git.kernel.dk/?p=fio.git;a=summary
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libaio-devel zlib-devel python-module-sphinx
+BuildRequires: libaio-devel zlib-devel
+BuildRequires: python3-module-sphinx
 
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
 %{?_enable_rbd:BuildRequires: ceph-devel}
-%{?_enable_gfapi:BuildRequires: libglusterfs3-devel}
+%{?_enable_gfapi:BuildRequires: libglusterfs-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel}
 %{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
 
@@ -76,7 +77,7 @@ This package conteon gtk frontend for %name
 	--extra-cflags="%optflags"
 
 %make_build V=1 EXTFLAGS="%optflags"
-%make_build -C doc html
+%make_build -C doc html SPHINXBUILD=sphinx-build-3
 
 %install
 %make_install DESTDIR=%buildroot install prefix=%_prefix mandir=%_mandir
@@ -100,6 +101,11 @@ This package conteon gtk frontend for %name
 %_bindir/gfio
 
 %changelog
+* Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1
+- NMU: build new version
+- use libglusterfs-devel instead of libglusterfs3-devel
+- use python3 only
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.13-alt1
 - 3.13
 - disable support ceph on 32-bit arch
