@@ -6,7 +6,7 @@
 #    and increase release for all subsequent versions made on same day.
 
 Name:    auditd-plugin-clickhouse
-Version: 20200116
+Version: 20200127
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -50,6 +50,15 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Mon Jan 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200127-alt1
+- Fixed excessive logging of writes.
+- Fixed memory consumption by logging entries if logging is disabled.
+- Fixed memory leak in audit data parsing.
+- Fixed issue when some data may be not attempted to be written to DB
+  when separate writer thread is used.
+- Improved performance by reducing data copying.
+- Input data buffer size configuration is removed.
+
 * Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200116-alt1
 - New fields added to database table.
 - All unknown fields encountered are saved into database.
