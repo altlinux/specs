@@ -4,17 +4,19 @@
 %def_with python2
 
 Name: python-module-%modname
-Version: 0.29.14
+Version: 0.29.15
 Release: alt1
 
 Summary: C-extensions for Python
 Group: Development/Python
-License: Python
+License: Apache-2.0
 Url: http://www.cython.org
 
-Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
+#Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
+#VCS: https://github.com/cython/cython.git
+Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
 
-Provides: %modname = %version-%release
+Provides: %modname = %EVR
 Conflicts: python-module-Cython0.18
 
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
@@ -43,7 +45,7 @@ code.
 %package tests
 Summary: Cython test suit
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: python-module-Cython0.18-tests
 
 %description tests
@@ -65,7 +67,7 @@ This package provides modules for testing Cython using unittest.
 %package debugger
 Summary: Cython debugger
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gdb
 
 %description debugger
@@ -109,7 +111,7 @@ code.
 Summary: Cython test suit for Python3
 Group: Development/Python3
 Conflicts: python3-module-Cython0.18-tests
-Requires: python3-module-%modname = %version-%release
+Requires: python3-module-%modname = %EVR
 
 %description -n python3-module-%modname-tests
 Cython is a language that makes writing C extensions for the Python3
@@ -130,7 +132,7 @@ This package provides modules for testing Cython using unittest.
 %package -n python3-module-%modname-debugger
 Summary: Cython debugger for Python3
 Group: Development/Python3
-Requires: python3-module-%modname = %version-%release
+Requires: python3-module-%modname = %EVR
 Requires: gdb
 
 %description -n python3-module-%modname-debugger
@@ -150,7 +152,7 @@ code.
 This package provides modules for debugging Cython programms.
 
 %prep
-%setup -n %modname-%version
+%setup -n cython-%version
 %if_with python2
 rm -rf ../python2
 cp -a . ../python2
@@ -227,6 +229,10 @@ done
 %endif
 
 %changelog
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.15-alt1
+- 0.29.15
+- fixed License tag
+
 * Sat Nov 02 2019 Yuri N. Sedunov <aris@altlinux.org> 0.29.14-alt1
 - 0.29.14
 - made python2 build optional
