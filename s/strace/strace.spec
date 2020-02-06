@@ -1,5 +1,5 @@
 Name: strace
-Version: 5.4.0.7.a41d0
+Version: 5.5
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -82,6 +82,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README README-linux-ptrace
 
 %changelog
+* Thu Feb 06 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5-alt1
+- v5.4-7-ga41d025fa -> v5.5.
+
 * Tue Dec 03 2019 Dmitry V. Levin <ldv@altlinux.org> 5.4.0.7.a41d0-alt1
 - v5.4 -> v5.4-7-ga41d025fa.
 - Removed -utils subpackage that contained unsupported strace-graph utility.
