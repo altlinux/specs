@@ -1,11 +1,12 @@
-%def_enable python3
+%define _unpackaged_files_terminate_build 1
+%def_enable python2
 
 Name: cracklib
 Version: 2.9.7
-Release: alt1
+Release: alt2
 
 Summary: A password-checking library.
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://github.com/%name/%name
 
@@ -13,9 +14,11 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 
 Requires: %name-utils = %version-%release
 
-BuildRequires: rpm-build-licenses python-devel libX11-devel libICE-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel libX11-devel libICE-devel
 BuildRequires: zlib-devel
-%{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
+%{?_enable_python2:BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel}
 
 %package utils
 Summary: The CrackLib utilities for the build dictionaries.
@@ -75,19 +78,20 @@ This package includes Python3 module for Cracklib.
 
 %prep
 %setup -n %name-%version
-%setup -D -c -n %name-%version
-mv %name-%version py3build
+%{?_enable_python2:%setup -D -c -n %name-%version
+mv %name-%version py2build}
 
 %build
+export PYTHON=python3
+export am_cv_python_version=%__python3_version%_python3_abiflags
 %autoreconf
 %configure \
 	--disable-static
 %make_build
 
-%if_enabled python3
-pushd py3build
-export PYTHON=python3
-export am_cv_python_version=%__python3_version%_python3_abiflags
+%if_enabled python2
+pushd py2build
+export PYTHON=python2
 %autoreconf
 %configure \
 	--disable-static \
@@ -99,18 +103,18 @@ popd
 %install
 %makeinstall_std
 
-%ifarch x86_64
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_enabled python3
-pushd py3build
-%makeinstall_std
-
-%ifarch x86_64
+%if "%_libsuff" == "64"
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
+%endif
+
+%if_enabled python2
+pushd py2build
+%makeinstall_std
+
+%if "%_libsuff" == "64"
+mv %buildroot%python_sitelibdir_noarch/* \
+	%buildroot%python_sitelibdir/
 %endif
 popd
 %endif
@@ -142,17 +146,23 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %files utils
 %_sbindir/*
 
-%files -n python-module-%name
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.la
-
-%if_enabled python3
 %files -n python3-module-%name
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.la
+
+%if_enabled python2
+%files -n python-module-%name
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*.la
 %endif
 
+
 %changelog
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt2
+- fixed build python modules for aarch64 and ppc64le
+- made python2 module optional
+- fixed License tag
+
 * Tue Apr 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt1
 - 2.9.7 (fixed CVE-2016-6318)
 
@@ -201,7 +211,7 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 * Wed Dec 24 2008 Alexey Rusakov <ktirf@altlinux.org> 2.8.13-alt1
 - new version (2.8.13)
 - added Packager tag
-- specified the license more explicitly (GPL -> %gpl2plus)
+- specified the license more explicitly (GPL -> %%gpl2plus)
 - made download URL mirror-agnostic
 - removed no more needed ldconfig calls in post/postun scripts
 

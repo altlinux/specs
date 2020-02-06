@@ -3,7 +3,7 @@
 
 Name: revelation
 Version: %ver_major.14
-Release: alt1
+Release: alt1.1
 
 Summary: Keyring management program for the GNOME Desktop
 License: %gpl2plus
@@ -11,12 +11,13 @@ Group: Graphical desktop/GNOME
 Url: http://revelation.olasagasti.info/
 #Url: http://oss.codepoet.no/%name
 
+#VCS: https://github.com/mikelolasagasti/revelation.git
 #Source: %name.tar
 Source: ftp://oss.codepoet.no/%name/%name-%version.tar.bz2
 Patch: %name-0.4.12-alt1-configure.patch
 
 %define GConf_ver 2.10.0
-PreReq: GConf >= %GConf_ver
+Requires(pre): GConf >= %GConf_ver
 
 BuildRequires: rpm-build-gnome rpm-build-licenses
 BuildRequires: shared-mime-info intltool desktop-file-utils
@@ -36,6 +37,8 @@ This a keyring management program for the GNOME Desktop.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|\(/usr/bin/python\)|\12|
+         s|\(/usr/bin/\)env \(python\)|\1\22|' src/%name.py src/*/*.py
 
 %build
 %autoreconf
@@ -87,6 +90,9 @@ fi
 %config %gconf_schemasdir/%name.schemas
 
 %changelog
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.14-alt1.1
+- add explicit python2 in all shebangs
+
 * Mon Jan 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.14-alt1
 - 0.14.4
 
