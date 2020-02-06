@@ -3,22 +3,22 @@
 
 %def_without check
 
-Name: python-module-%oname
-Version: 6.0.0.2
-Release: alt1
+Name:       python3-module-%oname
+Version:    6.0.0.2
+Release:    alt1
 
-Summary: libclang python bindings
-License: MIT
-Group: Development/Python
-Url: https://pypi.python.org/pypi/clang/
-BuildArch: noarch
+Summary:    libclang python bindings
+License:    MIT
+Group:      Development/Python3
+Url:        https://pypi.python.org/pypi/clang/
 
-Source0: %name-%version.tar
+BuildArch:  noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools python-module-nose
+Source0:    %name-%version.tar
 
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-nose python-tools-2to3
+
 Requires: clang
 
 
@@ -28,27 +28,48 @@ https://github.com/llvm-mirror/clang/tree/master/bindings/python
 
 This is a fork. Mainly for Pypi packaging purposes.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description tests
+This is the python bindings subdir of llvm clang repository.
+https://github.com/llvm-mirror/clang/tree/master/bindings/python
+
+This is a fork. Mainly for Pypi packaging purposes.
+
+This package contains tests for %oname.
+
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
+
+mv tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
-%doc *.txt
-%python_sitelibdir/*
+%doc LICENSE README.txt examples/
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests/
+
+%files tests
+%python3_sitelibdir/%oname/tests/
 
 
 %changelog
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0.2-alt1
 - Version updated to 6.0.0.2
-- build for python3 removal.
+- build for python2 disabled.
 
 * Fri Mar 16 2018 Oleg Solovyov <mcpain@altlinux.org> 5.0-alt1
 - version 5.0
