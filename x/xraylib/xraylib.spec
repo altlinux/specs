@@ -1,23 +1,21 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
 
 Name: xraylib
-Version: 3.1.0
-Release: alt2.git20141114
+Version: 3.3.0
+Release: alt1
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD
 Group: Sciences/Physics
 Url: https://github.com/tschoonj/xraylib
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tschoonj/xraylib.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-fortran gcc-c++ swig
-BuildPreReq: python-devel python-module-Cython libnumpy-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-Cython libnumpy-py3-devel
-%endif
+BuildRequires: gcc-fortran gcc-c++ swig
+BuildRequires: python3-devel python3-module-Cython libnumpy-py3-devel
+# TODO: remove libnumpy-devel when libnumpy-py3-devel is fixed
+BuildRequires: libnumpy-devel
 
 %description
 This is xraylib, a library for X-ray matter interactions cross sections
@@ -42,18 +40,6 @@ for X-ray fluorescence applications.
 
 This package contains development files of %name.
 
-%package -n python-module-%name
-Summary: Python bindings of %name
-Group: Development/Python
-Requires: lib%name = %EVR
-%py_provides %name
-
-%description -n python-module-%name
-This is xraylib, a library for X-ray matter interactions cross sections
-for X-ray fluorescence applications.
-
-This package contains python bindings of %name.
-
 %package -n python3-module-%name
 Summary: Python bindings of %name
 Group: Development/Python3
@@ -69,61 +55,34 @@ This package contains python bindings of %name.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%autoreconf
-%configure \
-	--enable-static=no \
-	--enable-python-integration \
-	--disable-perl
-%make_build
-
-%if_with python3
-pushd ../python3
 export PYTHON=python3
 export PYTHON_VERSION=%_python3_version
 export CYTHON=cython3
 sed -i 's|(SWIG)|(SWIG) -py3|' $(find ./ -name Makefile.am)
+
 %autoreconf
 %configure \
 	--enable-static=no \
 	--enable-python-integration \
 	--disable-perl
 %make_build
-popd
-%endif
 
 %install
 %makeinstall_std
-rm -f %buildroot%python_sitelibdir/*.la
+sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+	%buildroot%_bindir/%name
+rm -f %buildroot%python3_sitelibdir/*.la
 %if "%_lib" == "lib64"
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-
-%if_with python3
-pushd ../python3
-%make_install DESTDIR=$PWD/buildroot install
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	buildroot%_bindir/%name
-install -m755 buildroot%_bindir/%name %buildroot%_bindir/%name.py3
-rm -f buildroot%python3_sitelibdir/*.la
-install -d %buildroot%python3_sitelibdir
-mv buildroot%python3_sitelibdir/* \
-	%buildroot%python3_sitelibdir/
-%if "%_lib" == "lib64"
-mv buildroot%python3_sitelibdir_noarch/* \
+mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-popd
-%endif
+
+%files
+%_bindir/%name
 
 %files -n lib%name
-%doc AUTHORS BUGS Changelog README TODO
+%doc AUTHORS BUGS Changelog README* TODO
 %_libdir/*.so.*
 %_datadir/%name
 
@@ -132,18 +91,16 @@ popd
 %_libdir/*.so
 %_pkgconfigdir/*
 
-%files -n python-module-%name
-%doc example/*.py
-%_bindir/%name
-%python_sitelibdir/*
-
-%if_with python3
 %files -n python3-module-%name
-%_bindir/%name.py3
-%python3_sitelibdir/*
-%endif
+%python3_sitelibdir/*.py
+%python3_sitelibdir/*.so
+%python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Feb 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
+- Updated to upstream version 3.3.0 (Closes: #38044).
+- Disabled python-2.
+
 * Thu May 10 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.0-alt2.git20141114
 - fixed packaging on 64bit arches other than x86_64
 
