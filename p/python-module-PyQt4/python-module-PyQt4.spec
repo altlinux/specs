@@ -4,16 +4,18 @@
 
 Name: python-module-%oname
 Version: 4.12.3
-Release: alt1
+Release: alt2
+
 Summary: Python bindings for Qt4
+
 License: GPL
 Group: Development/Python
+URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 %setup_python_module %oname
 
 # Source0-url: http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-%version/PyQt4_gpl_x11-%version.tar.gz
 Source0: PyQt-x11-gpl.tar
-URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
 #BuildPreReq: %py_package_dependencies dbus-devel
@@ -24,6 +26,7 @@ BuildRequires(pre): python-module-sip-devel
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils fontconfig libGL-devel libX11-devel libXext-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-devel libqt4-gui libqt4-help libqt4-location libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sensors libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip
 BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel
+BuildRequires: python2-base
 
 #BuildRequires: gcc-c++ libqt4-devel lout
 #BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
@@ -134,7 +137,7 @@ export QT4DIR=%_qt4dir
 #popd
 
 #echo 'yes' | python configure-ng.py \
-echo 'yes' | python configure.py \
+echo 'yes' | python2 configure.py \
 	--debug \
 	--verbose \
 	-q %_qt4dir/bin/qmake \
@@ -234,6 +237,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.12.3-alt2
+- add python2-base buildreq to use python2
+
 * Tue Oct 08 2019 Vitaly Lipatov <lav@altlinux.ru> 4.12.3-alt1
 - new version 4.12.3 (with rpmrb script)
 
