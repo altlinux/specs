@@ -2,7 +2,7 @@
 
 Name:       exe
 Version:    2.4.1
-Release:    alt3
+Release:    alt4
 
 Summary:    Tool to create and publish open educational resources.
 
@@ -108,6 +108,9 @@ rm -f %buildroot%_datadir/pixmaps/exe.xpm
 
 
 %changelog
+* Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.1-alt4
+- dependency on python2 webassets bypassed
+
 * Thu Aug 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.4.1-alt3
 - requires fixed (Closes #36989)
 
