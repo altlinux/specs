@@ -1,10 +1,10 @@
 %define oname bottle
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.13
-Release: alt2
+Release: alt3
 Summary: Fast and simple WSGI-framework for small web-applications
 License: MIT
 Group: Development/Python
@@ -138,6 +138,9 @@ cp -fR build/docs/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt3
+- build python2 only
+
 * Thu May 17 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.13-alt2
 - rebuild with python3.6
 
