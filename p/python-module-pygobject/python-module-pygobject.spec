@@ -7,11 +7,11 @@
 
 Name: python-module-pygobject
 Version: %major.7
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for GObject
 
-License: LGPL
+License: LGPL-2.1
 Group: Development/Python
 Url: http://www.pygtk.org/
 
@@ -72,8 +72,12 @@ facilitate the creation of Python bindings.
 
 %prep
 %setup -n %oname-%version
+# fix shebang python->python2
+find ./ -name "*.py" -print0 | xargs -r0 sed -i 's|\(^#![[:space:]]*/usr/bin/\)env \(python\)|\1\22|' --
 
 %build
+%add_optflags %(getconf LFS_CFLAGS) %(pkg-config --libs python2)
+export PYTHON=%_bindir/python2
 %autoreconf
 %configure --with-pic --disable-static \
 	%{subst_enable introspection}
@@ -89,7 +93,7 @@ mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__pyt
 %make check
 
 %files
-%_libdir/libpyglib-2.0-python.so.*
+%_libdir/libpyglib-2.0-python*.so.*
 %python_sitelibdir/pygtk.*
 %python_sitelibdir/gobject
 %python_sitelibdir/glib
@@ -98,7 +102,7 @@ mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__pyt
 
 %files devel
 %_bindir/pygobject-codegen-2.0
-%_libdir/libpyglib-2.0-python.so
+%_libdir/libpyglib-2.0-python*.so
 %_includedir/python%__python_version/pygtk
 %python_sitelibdir/gtk-%gtk_api_ver/dsextras.*
 %_datadir/pygobject/2.0
@@ -118,6 +122,10 @@ mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__pyt
 %endif
 
 %changelog
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.7-alt1.1
+- rebuilt with latest pycairo
+- fixed license tag
+
 * Thu Dec 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.28.7-alt1
 - 2.28.7
 

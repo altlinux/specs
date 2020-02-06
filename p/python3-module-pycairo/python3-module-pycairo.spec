@@ -1,12 +1,13 @@
 %def_disable snapshot
+%def_with doc
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.18
+%define ver_major 1.19
 
-Name: python-module-%oname
-Version: %ver_major.2
-Release: alt2
+Name: python3-module-%oname
+Version: %ver_major.0
+Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python
@@ -21,12 +22,13 @@ Source: %oname-%version.tar
 %def_with bootstrap
 %endif
 
-%setup_python_module %modname
-
-BuildRequires(pre): rpm-build-python
 BuildRequires: libcairo-devel >= 1.13.1
-BuildRequires: python-devel
-%{?_with_bootstrap:BuildRequires: python-module-Pygments}
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel
+%{?_with_bootstrap:BuildRequires: python3-module-Pygments}
+%{?_with_doc:
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: texlive-latex-base python3-module-sphinx-devel python3-module-sphinx_rtd_theme}
 
 %description
 The Pycairo bindings are designed to match the cairo C API as closely as
@@ -35,7 +37,7 @@ a more 'Pythonic' way.
 
 %package devel
 Summary: Development files for pycairo
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description devel
@@ -49,31 +51,105 @@ BuildArch: noarch
 %description docs
 Documentation for pycairo.
 
+%package tests
+Summary: Tests for pycairo
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Documentation for pycairo.
+
+%package examples
+Summary: Examples for pycairo
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description examples
+Examples for pycairo.
+
+%package pickles
+Summary: Pickles for pycairo
+Group: Development/Python3
+
+%description pickles
+Pickles for pycairo.
+
 %prep
 %setup -n %oname-%version
 
 # fix pc-file install
 subst 's|\"lib\"|"%_lib"|' setup.py
 
+%{?_with_doc:%prepare_sphinx3 docs}
+
 %build
-%python_build
+# incomplete support
+%define opts --pkgconfigdir=%_pkgconfigdir
+%python3_build
+%{?_with_doc:%make -C docs}
 
 %install
-%python_install
+%python3_install
+
+# docs
+install -d %buildroot%_docdir/%name-%version
+install -p -m644 NEWS README* \
+	%buildroot%_docdir/%name-%version
+
+%if_with doc
+cp -fR docs/_build/reference %buildroot%_docdir/%name-%version/
+
+# pickles
+install -d %buildroot%python3_sitelibdir/%oname/pickle
+cp -fR docs/_build/.doctrees/* %buildroot%python3_sitelibdir/%oname/pickle/
+
+# tests and examples
+cp -fR examples tests %buildroot%python3_sitelibdir/%modname/
+for i in $(find %buildroot%python3_sitelibdir/%modname/examples -type d)
+do
+	touch $i/__init__.py
+done
+
+%pre pickles
+rm -fR %python3_sitelibdir/%oname/pickle
+%endif # doc
 
 %files
-%python_sitelibdir/%modulename
-%doc NEWS README*
+%python3_sitelibdir/%modname/
+%if_with doc
+%exclude %python3_sitelibdir/%modname/tests
+%exclude %python3_sitelibdir/%modname/examples
+%endif
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/NEWS
+%doc %_docdir/%name-%version/README*
 
 %files devel
 %dir %_includedir/%oname
-%_includedir/%oname/pycairo.h
-%_pkgconfigdir/%oname.pc
+%_includedir/%oname/py3cairo.h
+%_pkgconfigdir/py3cairo.pc
 
+%if_with doc
+%files docs
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version
+%exclude %_docdir/%name-%version/NEWS
+%exclude %_docdir/%name-%version/README*
+
+%files tests
+%python3_sitelibdir/%modname/tests
+
+%files examples
+%python3_sitelibdir/%modname/examples
+
+%files pickles
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle/
+%endif
 
 %changelog
-* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
-- removed python3 support (the last version supporting Python 2.7 is 1.18.x)
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0 (python3 only)
 - removed common-devel subpackage
 
 * Sat Oct 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
