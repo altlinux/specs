@@ -1,8 +1,19 @@
+
+# Upstream issue: https://github.com/apitrace/apitrace/issues/258
+# Fedora
 # Filter GLIBC_PRIVATE Requires, see wrappers/dlsym.cpp
 #define __filter_GLIBC_PRIVATE 1
 
+# ROSA
+# Exclude libc.so.6(GLIBC_PRIVATE) because it's not provided.
+#define __noautoreq '(.*)GLIBC_PRIVATE(.*)'
+
+# ALT as in http://www.sisyphus.ru/en/srpm/Sisyphus/gcc7/spec
+# Allow use __libc_dlsym and __libc_dlopen_mode
+%filter_from_requires /^libc.so.6(GLIBC_PRIVATE)/d
+
 Name: apitrace
-Version: 7.1
+Version: 9.0
 Release: alt2
 
 Summary: Tools for tracing OpenGL
@@ -19,23 +30,30 @@ Source2: qapitrace.appdata.xml
 
 # Unbundle gtest
 Patch: apitrace-7.1_gtest.patch
+Patch1: apitrace-unbundle-brotli.patch
+Patch2: apitrace-gcc10.patch
 
 # due https://bugzilla.altlinux.org/show_bug.cgi?id=35067
 %remove_optflags -O2
 %add_optflags -O1
 
-BuildRequires: cmake ctest
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-webkit-devel
-BuildRequires: python-devel
-BuildRequires: libpng-devel
+# internal
+%add_python3_req_skip highlight
+
+BuildRequires: cmake ctest rpm-macros-cmake
+BuildRequires: libpng-devel libbrotli-devel
 BuildRequires: libsnappy-devel
 BuildRequires: desktop-file-utils
 #BuildRequires: libappstream-glib
 BuildRequires: libgtest-devel
-BuildRequires: libdwarf-devel
+BuildRequires: libdwarf-devel libprocps-devel
+
 # for gui tools
 BuildRequires: libX11-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-webkit-devel
+
+BuildRequires(pre): rpm-build-python3
 
 #Requires: %name-libs = %version-%release
 # scripts/snapdiff.py
@@ -71,21 +89,20 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+# fix WRAPPER_DIR
+%__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
 
-# Remove bundled libraries, except khronos headers and libbacktrace
-# TODO:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1507659
-#rm -rfv `ls -1d thirdparty/* | grep -Ev "(khronos|md5|libbacktrace)"`
-
-# Fix shebangs
-#find scripts -name '*.py' | xargs sed -i '1s|^#!.*python|#!%__python2|'
+# Remove bundled libraries, except khronos headers and libbacktrace
+rm -rf `ls -1d thirdparty/* | grep -Ev "(khronos|md5|libbacktrace|crc32c)"`
 
 # Fix spurious-executable-perm
 chmod -x retrace/glretrace_main.cpp
 
 %build
-%cmake_insource
+%cmake_insource -DENABLE_STATIC_SNAPPY=OFF -DENABLE_STATIC_LIBSTDCXX=OFF -DENABLE_STATIC_LIBGCC=OFF
 %make_build
 
 %install
@@ -129,6 +146,14 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt2
+- fix build, drop thirdparty dirs
+- build with system brotli
+
+* Thu Dec 12 2019 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt1
+- new version 9.0 (with rpmrb script)
+- switch to python3
+
 * Thu Jun 21 2018 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt2
 - fix build with eat memory bug in gcc
 
