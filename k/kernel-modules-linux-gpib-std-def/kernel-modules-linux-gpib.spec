@@ -1,6 +1,6 @@
 %define module_name     linux-gpib
 %define module_version  4.3.0
-%define module_release  alt2
+%define module_release  alt3
 %define flavour std-def
 %define karch   %ix86 x86_64 aarch64 ppc64le
 
