@@ -1,11 +1,13 @@
 
 %global modname alembic
 
+%def_without python2
 %def_with python3
+%def_without test
 
 Name: python-module-alembic
-Version: 1.0.5
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
 
@@ -15,15 +17,17 @@ Url: http://pypi.python.org/pypi/alembic
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pypi.python.org/packages/source/a/%modname/%modname-%version.tar.gz
+# Source-url: https://pypi.python.org/packages/source/a/%modname/%modname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires: help2man
+
+%if_with python2
 %py_provides alembic.migration alembic.environment
 
 BuildRequires(pre): rpm-build-python
-
-BuildRequires: help2man
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-mako
@@ -35,6 +39,7 @@ BuildRequires: python-module-nose
 BuildRequires: python-module-mock
 BuildRequires: python-module-SQLAlchemy-tests
 BuildRequires: python-module-pytest
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -96,26 +101,26 @@ Requires: python3-module-%modname = %EVR
 This package contains tests for %modname.
 
 %prep
-%setup -n %modname-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
+%if_with python2
 %python_build
-
-mkdir bin
-echo 'python -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
-chmod 0755 bin/alembic
-help2man --version-string %{version} --no-info -s 1 bin/alembic > alembic.1
+#mkdir bin
+#echo 'python -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
+#chmod 0755 bin/alembic
+%endif
 
 %if_with python3
 pushd ../python3
 %python3_build
-mkdir bin
-echo 'python3 -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
-chmod 0755 bin/alembic
+#mkdir bin
+#echo 'python3 -c "import alembic.config; alembic.config.main()" $*' > bin/alembic
+#chmod 0755 bin/alembic
 popd
 %endif
 
@@ -124,34 +129,54 @@ popd
 pushd ../python3
 %python3_install
 popd
+%if_with python2
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
 done
 popd
 %endif
+%endif
 
+%if_with python2
 %python_install
-mkdir -p %buildroot%_man1dir/
-install -m 0644 alembic.1 %buildroot%_man1dir/alembic.1
+%endif
 
+#mkdir -p %buildroot%_man1dir/
+#help2man --version-string %{version} --no-info -s 1 bin/alembic > %buildroot%_man1dir/alembic.1
+
+%if_with test
 %check
-python setup.py test
+%if_with python2
+%python_test
+%endif
+%if_with python3
+pushd ../python3
+%python3_test
+%endif
+%endif
 
+%if_with python2
 %files
 %doc README.rst LICENSE CHANGES docs
 %_bindir/%modname
-%_man1dir/alembic.1*
+#_man1dir/alembic.1*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing
 
 %files tests
 %python_sitelibdir/*/testing
+%endif
 
 %if_with python3
 %files -n python3-module-%modname
 %doc README.rst LICENSE CHANGES docs
+%if_with python2
 %_bindir/%modname.py3
+%else
+%_bindir/%modname
+%endif
+#_man1dir/alembic.1*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/testing
 
@@ -160,6 +185,10 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+- disable python2 module
+
 * Fri Jan 25 2019 Stanislav Levin <slev@altlinux.org> 1.0.5-alt2
 - Dropped BR on python argparse.
 
