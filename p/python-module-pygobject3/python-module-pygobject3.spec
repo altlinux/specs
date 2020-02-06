@@ -11,11 +11,11 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for GObject
 Group: Development/Python
-License: LGPL
+License: LGPL-2.1
 Url: http://www.pygtk.org/
 
 %if_disabled snapshot
@@ -202,6 +202,10 @@ popd
 %endif
 
 %changelog
+* Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1.1
+- rebuilt with latest pycairo
+- fixed license tag
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
