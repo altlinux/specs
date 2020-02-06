@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt8
+Release: alt9
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -84,6 +84,7 @@ Requires: openqa-common = %EVR
 Requires: openqa-client = %EVR
 Requires: perl(URI.pm)
 Requires: perl(LWP/Protocol/https.pm)
+Requires: perl(Getopt/Long/Descriptive.pm)
 Requires: optipng
 Requires: dbus
 Requires: perl(YAML/XS.pm)
@@ -163,6 +164,15 @@ This package contains the openQA client script, along with several
 other useful tools and support files. The client script is a convenient
 helper for interacting with the openQA REST API.
 
+%package python-scripts
+Summary:        Additional scripts in python
+Group:          Development/Tools
+Requires:       python3-module-requests python3-module-future
+
+
+%description python-scripts
+Additional scripts for the use of openQA in the python programming language.
+
 %package local-db
 Summary: Helper package to ease setup of postgresql DB
 Group: Development/Tools
@@ -212,6 +222,9 @@ ln -s %_datadir/openqa/script/client %buildroot%_bindir/openqa-client
 ln -s %_datadir/openqa/script/clone_job.pl %buildroot%_bindir/openqa-clone-job
 ln -s %_datadir/openqa/script/dump_templates %buildroot%_bindir/openqa-dump-templates
 ln -s %_datadir/openqa/script/load_templates %buildroot%_bindir/openqa-load-templates
+ln -s %_datadir/openqa/script/openqa-clone-custom-git-refspec %buildroot%_bindir/openqa-clone-custom-git-refspec
+ln -s %_datadir/openqa/script/openqa-validate-yaml %buildroot%_bindir/openqa-validate-yaml
+ln -s %_datadir/openqa/script/openqa-label-all %buildroot%_bindir/openqa-label-all
 
 #These files are not needed
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
@@ -233,6 +246,7 @@ mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
 rm -f t/24-worker-overall.t
+rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/42-screenshots.t
 # we don't really need the tidy test
@@ -245,6 +259,9 @@ export TEST_PG="DBI:Pg:dbname=openqa_test;host=%buildroot/DB"
 OBS_RUN=1 prove -l -r
 pg_ctl -D %buildroot/DB stop
 rm -rf %buildroot/DB
+
+%post
+%tmpfiles_create %_tmpfilesdir/openqa-webui.conf
 
 %pre
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -290,8 +307,11 @@ fi
 %_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.timer
-%_unitdir/openqa-enqueue-asset-and-result-cleanup.service
-%_unitdir/openqa-enqueue-asset-and-result-cleanup.timer
+%_unitdir/openqa-enqueue-asset-cleanup.service
+%_unitdir/openqa-enqueue-asset-cleanup.timer
+%_unitdir/openqa-enqueue-result-cleanup.service
+%_unitdir/openqa-enqueue-result-cleanup.timer
+%_tmpfilesdir/openqa-webui.conf
 # web libs
 %_datadir/openqa/templates
 %_datadir/openqa/public
@@ -309,8 +329,6 @@ fi
 %_datadir/openqa/script/modify_needle
 %_datadir/openqa/script/openqa-livehandler
 %_datadir/openqa/script/openqa-workercache
-%_datadir/openqa/script/openqa-clone-custom-git-refspec
-%_datadir/openqa/script/openqa-label-all
 %dir %_localstatedir/openqa/share
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/db
@@ -319,6 +337,10 @@ fi
 %dir %_localstatedir/openqa/share/tests
 %_localstatedir/openqa/testresults
 %ghost %attr(0640,_geekotest,root) %_localstatedir/openqa/db/db.sqlite
+
+%files python-scripts
+%_datadir/openqa/script/openqa-label-all
+%_bindir/openqa-label-all
 
 %files common
 %doc COPYING
@@ -362,10 +384,14 @@ fi
 %_datadir/openqa/lib/OpenQA/Client.pm
 %_datadir/openqa/script/configure-web-proxy
 %_datadir/openqa/script/openqa-clone-job
+%_datadir/openqa/script/openqa-clone-custom-git-refspec
+%_datadir/openqa/script/openqa-validate-yaml
 %_bindir/openqa-client
 %_bindir/openqa-clone-job
 %_bindir/openqa-dump-templates
 %_bindir/openqa-load-templates
+%_bindir/openqa-clone-custom-git-refspec
+%_bindir/openqa-validate-yaml
 
 %files doc
 %doc docs/*
@@ -374,6 +400,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Wed Feb 05 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt9
+- update to current version
+
 * Mon Dec 30 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt8
 - update to current version
 

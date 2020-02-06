@@ -2,13 +2,14 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt8
+Release: alt9
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
 Url: https://github.com/os-autoinst/os-autoinst/
 Source: %name-%version.tar
 Patch0: fixdependencies.patch
+Patch1: fixstartvmuefi.patch
 
 BuildRequires: perlcritic
 BuildRequires: autoconf
@@ -91,6 +92,7 @@ This package contains Open vSwitch support for os-autoinst.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 sed  -i 's/ my $thisversion = qx{git -C $dirname rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
 sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
 rm -f t/99-full-stack.t
@@ -128,6 +130,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Feb 04 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt9
+- update to current version
+
 * Mon Dec 30 2019 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt8
 - update to current version
 
