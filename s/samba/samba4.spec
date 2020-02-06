@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba
-Version: 4.10.13
+Version: 4.11.6
 Release: alt1
 
 Group:   System/Servers
@@ -139,22 +139,22 @@ BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.1.16
+BuildRequires: libtalloc-devel >= 2.2.0
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.9.39
+BuildRequires: libtevent-devel >= 0.10.0
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.3.18
+BuildRequires: libtdb-devel >= 1.4.2
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 1.5.6
+%define ldb_version 2.0.8
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -194,6 +194,15 @@ Requires: %name-winbind-common = %version-%release
 Requires(pre): %name-common = %version-%release
 %endif
 Conflicts: %name-dc-mitkrb5
+
+# Workaround for unneeded python2.7 requires
+%add_python_req_skip bisect
+%add_python_req_skip ctypes
+%add_python_req_skip json
+%add_python_req_skip logging
+%add_python_req_skip ldb
+%add_python_req_skip tdb
+%add_python_req_skip xml
 
 %description dc
 Samba as Active Directory Domain Services (AD DS) also called a domain controller,
@@ -845,6 +854,10 @@ printf '#!/bin/bash\nexport PYTHONPATH="%_samba_dc_mod_libdir/python%_python3_ve
 printf "%_bindir/samba-tool\t%_samba_dc_mod_libdir/bin/samba-tool\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/bin/samba-tool
 
+printf '#!/bin/bash\nexport PYTHONPATH="%_samba_dc_mod_libdir/python%_python3_version"\nexec %_sbindir/samba_downgrade_db.py3 "$@"\n' >%buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
+printf "%_sbindir/samba_downgrade_db\t%_samba_dc_mod_libdir/sbin/samba_downgrade_db\t50\n" >> %buildroot%_altdir/samba-heimdal
+chmod 0755 %buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
+
 %makeinstall_std
 
 rm -f %buildroot%_altdir/samba-mit
@@ -874,6 +887,11 @@ mv %buildroot%_bindir/samba-tool %buildroot%_bindir/samba-tool.py3
 printf '#!/bin/bash\nexec %_bindir/samba-tool.py3 "$@"\n' >%buildroot%_samba_mod_libdir/bin/samba-tool
 printf "%_bindir/samba-tool\t%_samba_mod_libdir/bin/samba-tool\t20\n" > %buildroot%_altdir/samba-mit-dc-client
 chmod 0755 %buildroot%_samba_mod_libdir/bin/samba-tool
+
+mv %buildroot%_sbindir/samba_downgrade_db %buildroot%_sbindir/samba_downgrade_db.py3
+printf '#!/bin/bash\nexec %_sbindir/samba_downgrade_db.py3 "$@"\n' >%buildroot%_samba_mod_libdir/sbin/samba_downgrade_db
+printf "%_bindir/samba_downgrade_db\t%_samba_mod_libdir/sbin/samba_downgrade_db\t20\n" >> %buildroot%_altdir/samba-mit-dc-client
+chmod 0755 %buildroot%_samba_mod_libdir/sbin/samba_downgrade_db
 
 %endif
 
@@ -1016,9 +1034,6 @@ cp -a docs-xml/output/htmldocs %buildroot%_defaultdocdir/%rname/
 /bin/rm -f %buildroot%_man7dir/libsmbclient.7*
 %endif
 
-# Install pidl/lib/Parse/Pidl/Samba3/Template.pm
-cp -a pidl/lib/Parse/Pidl/Samba3/Template.pm %buildroot%_datadir/perl5/Parse/Pidl/Samba3/
-
 # Copy libsamba_util private headers
 mkdir -p %buildroot%_includedir/samba-4.0/private/lib/util/charset
 cp lib/util/*.h %buildroot%_includedir/samba-4.0/private/lib/util
@@ -1109,6 +1124,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/samba_dnsupdate
 %_sbindir/samba_spnupdate
 %_sbindir/samba_upgradedns
+%_sbindir/samba_downgrade_db
 %else #!separate_heimdal_server
 %doc COPYING README.md WHATSNEW.txt
 %doc examples/autofs examples/LDAP examples/misc
@@ -1134,6 +1150,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/sbin/samba_dnsupdate
 %_samba_mod_libdir/sbin/samba_spnupdate
 %_samba_mod_libdir/sbin/samba_upgradedns
+%_samba_mod_libdir/sbin/samba_downgrade_db
 
 %files -n task-samba-dc-mitkrb5
 %endif
@@ -1143,6 +1160,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_altdir/samba-mit-dc-client
 %_samba_mod_libdir/bin/samba-tool
 %_bindir/samba-tool.py3
+%_sbindir/samba_downgrade_db.py3
 %else
 %_bindir/samba-tool
 %endif
@@ -1150,6 +1168,7 @@ TDB_NO_FSYNC=1 %make_build test
 %if_with doc
 %_man8dir/samba-tool.8*
 %_man8dir/samba-gpupdate.8*
+%_man8dir/samba_downgrade_db.8*
 %endif #doc
 %endif #dc
 
@@ -1329,7 +1348,6 @@ TDB_NO_FSYNC=1 %make_build test
 
 %_pkgconfigdir/dcerpc.pc
 %_pkgconfigdir/dcerpc_samr.pc
-%_pkgconfigdir/dcerpc_server.pc
 %_pkgconfigdir/ndr.pc
 %_pkgconfigdir/ndr_krb5pac.pc
 %_pkgconfigdir/ndr_nbt.pc
@@ -1404,6 +1422,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libflag-mapping-samba4.so
 %_samba_mod_libdir/libgenrand-samba4.so
 %_samba_mod_libdir/libgensec-samba4.so
+%_samba_mod_libdir/libgpo-samba4.so
 %_samba_mod_libdir/libgse-samba4.so
 %_samba_mod_libdir/libgpext-samba4.so
 %if_with dc
@@ -1426,9 +1445,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libndr-samba4.so
 %_samba_mod_libdir/libnet-keytab-samba4.so
 %_samba_mod_libdir/libnetif-samba4.so
-%_samba_mod_libdir/libnon-posix-acls-samba4.so
 %_samba_mod_libdir/libnpa-tstream-samba4.so
 %_samba_mod_libdir/libposix-eadb-samba4.so
+%_samba_mod_libdir/libprinter-driver-samba4.so
 %_samba_mod_libdir/libprinting-migrate-samba4.so
 %_samba_mod_libdir/libregistry-samba4.so
 %_samba_mod_libdir/libsamba-cluster-support-samba4.so
@@ -1795,6 +1814,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Feb 06 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.6-alt1
+- Update to newest release of Samba 4.11
+
 * Fri Jan 24 2020 Evgeny Sinelikov <sin@altlinux.org> 4.10.13-alt1
 - Update to latest stable release of the Samba 4.10
 - Security fixes:
