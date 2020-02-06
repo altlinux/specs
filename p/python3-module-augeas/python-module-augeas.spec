@@ -1,76 +1,52 @@
-%define oname augeas
-
 %define _unpackaged_files_terminate_build 1
 
-Name: python-module-%oname
-Version: 1.0.3
-Release: alt2
-Summary: Python bindings to augeas
-Group: Development/Python
-License: LGPLv2+
-Url: http://augeas.net/
-Source0: %oname-%version.tar
+%define oname augeas
 
-BuildArch: noarch
+Name:       python3-module-%oname
+Version:    1.0.3
+Release:    alt3
 
-BuildRequires: libaugeas python-devel python-modules-unittest rpm-build-python3
+Summary:    Python bindings to augeas
+License:    LGPLv2+
+Group:      Development/Python3
+Url:        http://augeas.net/
 
-BuildRequires: python-module-setuptools python-module-cffi
+BuildArch:  noarch
+
+Source0:    %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-module-cffi
+BuildRequires: libaugeas python3-module-cffi
 
 Requires: libaugeas
+
 
 %description
-python-augeas is a set of Python bindings around augeas.
-
-%package -n python3-module-%oname
-Summary: Python bindings to augeas
-Group: Development/Python3
-Requires: libaugeas
-
-%description -n python3-module-%oname
 python-augeas is a set of Python bindings around augeas.
 
 %prep
 %setup -n augeas-%version
 
-rm -rf ../python3
-cp -fR . ../python3
-sed -i 's|python|python3|' ../python3/test/Makefile
+sed -i 's|python|python3|' ./test/Makefile
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 %make check
 
-pushd ../python3
-%make check
-popd
-
 %files
-%doc COPYING AUTHORS README.txt
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc COPYING AUTHORS README.txt
 %python3_sitelibdir/*
 
 
 %changelog
+* Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt3
+- Build for python2 disabled.
+
 * Wed Apr 04 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt2
 - Added unpackaged files
 
