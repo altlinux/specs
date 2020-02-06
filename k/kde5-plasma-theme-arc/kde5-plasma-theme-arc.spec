@@ -2,12 +2,13 @@
 
 Name: kde5-plasma-theme-arc
 Version: 20180614
-Release: alt3
+Release: alt4
 Summary: Arc KDE customization
 License: GPLv3
 Group: Graphical desktop/KDE
 Url: https://github.com/PapirusDevelopmentTeam/arc-kde
 Source: %name-%version.tar
+Patch1: alt-fix-install-dir.patch
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
@@ -18,32 +19,36 @@ for Plasma 5 desktop with a few additions and extras.
 
 %prep
 %setup
+%patch1 -p1
 
 %install
 %makeinstall_std
 
 %files
-%_datadir/Kvantum/Arc
-%_datadir/Kvantum/ArcDark
-%_datadir/Kvantum/ArcDarker
-%_datadir/aurorae/themes/Arc
-%_datadir/aurorae/themes/Arc-Dark
-%_datadir/color-schemes/Arc.colors
-%_datadir/color-schemes/ArcDark.colors
-%_datadir/konsole/Arc.colorscheme
-%_datadir/konsole/ArcDark.colorscheme
-%_datadir/konversation/themes/papirus
-%_datadir/konversation/themes/papirus-dark
-%_datadir/plasma/desktoptheme/Arc-Color
-%_datadir/plasma/desktoptheme/Arc-Dark
-%_datadir/plasma/look-and-feel/com.github.varlesh.arc-dark
-%_datadir/wallpapers/Arc
-%_datadir/wallpapers/Arc-Dark
-%_datadir/yakuake/skins/arc
-%_datadir/yakuake/skins/arc-dark
+%_datadir/kf5/Kvantum/Arc
+%_datadir/kf5/Kvantum/ArcDark
+%_datadir/kf5/Kvantum/ArcDarker
+%_datadir/kf5/aurorae/themes/Arc
+%_datadir/kf5/aurorae/themes/Arc-Dark
+%_datadir/kf5/color-schemes/Arc.colors
+%_datadir/kf5/color-schemes/ArcDark.colors
+%_datadir/kf5/konsole/Arc.colorscheme
+%_datadir/kf5/konsole/ArcDark.colorscheme
+%_datadir/kf5/konversation/themes/papirus
+%_datadir/kf5/konversation/themes/papirus-dark
+%_datadir/kf5/plasma/desktoptheme/Arc-Color
+%_datadir/kf5/plasma/desktoptheme/Arc-Dark
+%_datadir/kf5/plasma/look-and-feel/com.github.varlesh.arc-dark
+%_datadir/kf5/wallpapers/Arc
+%_datadir/kf5/wallpapers/Arc-Dark
+%_datadir/kf5/yakuake/skins/arc
+%_datadir/kf5/yakuake/skins/arc-dark
 %doc LICENSE AUTHORS
 
 %changelog
+* Thu Feb 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180614-alt4
+- Fix installation directory
+
 * Thu Feb 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180614-alt3
 - Renamed package to kde5-plasma-theme-arc
 

@@ -2,12 +2,13 @@
 
 Name: kde5-plasma-theme-adapta
 Version: 20180828
-Release: alt3
+Release: alt4
 Summary: Adapta KDE customization
 License: GPLv3
 Group: Graphical desktop/KDE
 Url: https://github.com/PapirusDevelopmentTeam/adapta-kde
 Source: %name-%version.tar
+Patch1: alt-fix-install-dir.patch
 Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
@@ -18,27 +19,31 @@ for Plasma 5 desktop with a few additions and extras.
 
 %prep
 %setup
+%patch1 -p1
 
 %install
 %makeinstall_std
-rm -f %buildroot%_datadir/wallpapers/src/mountain.svg
+rm -f %buildroot%_datadir/kf5/wallpapers/src/mountain.svg
 
 %files
-%_datadir/Kvantum/Adapta
-%_datadir/Kvantum/AdaptaNokto
-%_datadir/aurorae/themes/Adapta
-%_datadir/color-schemes/Adapta.colors
-%_datadir/color-schemes/AdaptaNokto.colors
-%_datadir/konsole/Adapta.colorscheme
-%_datadir/konsole/AdaptaNokto.colorscheme
-%_datadir/plasma/desktoptheme/Adapta
-%_datadir/plasma/look-and-feel/com.github.varlesh.adapta
-%_datadir/wallpapers/Adapta
-%_datadir/yakuake/skins/adapta-nokto
-%_datadir/yakuake/skins/adapta
+%_datadir/kf5/Kvantum/Adapta
+%_datadir/kf5/Kvantum/AdaptaNokto
+%_datadir/kf5/aurorae/themes/Adapta
+%_datadir/kf5/color-schemes/Adapta.colors
+%_datadir/kf5/color-schemes/AdaptaNokto.colors
+%_datadir/kf5/konsole/Adapta.colorscheme
+%_datadir/kf5/konsole/AdaptaNokto.colorscheme
+%_datadir/kf5/plasma/desktoptheme/Adapta
+%_datadir/kf5/plasma/look-and-feel/com.github.varlesh.adapta
+%_datadir/kf5/wallpapers/Adapta
+%_datadir/kf5/yakuake/skins/adapta-nokto
+%_datadir/kf5/yakuake/skins/adapta
 %doc LICENSE
 
 %changelog
+* Thu Feb 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180828-alt4
+- Fix installation directory
+
 * Thu Feb 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180828-alt3
 - Renamed package to kde5-plasma-theme-adapta
 
