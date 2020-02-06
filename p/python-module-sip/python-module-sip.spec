@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.19.19
-Release: alt1
+Release: alt2
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 %endif
 BuildRequires(pre): rpm-build-python
-BuildRequires: flex gcc-c++ python-devel 
+BuildRequires: flex gcc-c++ python2-base python-devel
 
 
 %description
@@ -116,7 +116,7 @@ Header files for sip
 %build
 mkdir python
 pushd python
-python ../configure.py --debug -d %python_sitelibdir
+python2 ../configure.py --debug -d %python_sitelibdir
 
 sed -i 's|^\(CPPFLAGS.*\)|\1 -g -I%python_includedir|' */Makefile
 %make_build
@@ -124,14 +124,14 @@ popd
 
 mkdir python-PyQt4
 pushd python-PyQt4
-python ../configure.py --debug -d %python_sitelibdir \
+python2 ../configure.py --debug -d %python_sitelibdir \
 	--sip-module=PyQt4.sip
 %make_build
 popd
 
 mkdir python-PyQt5
 pushd python-PyQt5
-python ../configure.py --debug -d %python_sitelibdir \
+python2 ../configure.py --debug -d %python_sitelibdir \
 	--sip-module=PyQt5.sip
 %make_build
 popd
@@ -232,6 +232,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.19.19-alt2
+- fix build: add python2-base buildreq
+
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 4.19.19-alt1
 - new version 4.19.19 (with rpmrb script)
 
