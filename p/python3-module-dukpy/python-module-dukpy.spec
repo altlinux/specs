@@ -1,27 +1,22 @@
 %define modulename dukpy
 
 %def_without check
-%def_with bootstrap
 
-Name: python-module-dukpy
+Name: python3-module-dukpy
 Version: 0.2.2
 Release: alt2
 
 Summary: Simple JavaScript interpreter for Python
 Url: https://pypi.python.org/pypi/dukpy/
 License: MIT License
-Group: Development/Python
+Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://pypi.io/packages/source/d/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-
-%if_with bootstrap
-%add_python_req_skip webassets webassets.filter
-%endif
+BuildRequires(pre): rpm-build-python3
 
 
 %description
@@ -37,18 +32,18 @@ actually crash your program as it is mostly implemented in C.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.2-alt2
-- dependency on webassets skiped (nmu py2->py3)
+- Build for python2 disabled.
 
 * Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt1
 - new version 0.2.2 (with rpmrb script)
