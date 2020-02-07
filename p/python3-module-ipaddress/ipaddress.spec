@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ipaddress
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.18
 Release: alt2
 
@@ -14,10 +14,7 @@ BuildArch: noarch
 # https://github.com/phihag/ipaddress.git
 Source0: https://pypi.python.org/packages/4e/13/774faf38b445d0b3a844b65747175b2e0500164b7c28d78e34987a5bfe06/%{oname}-%{version}.tar.gz
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
 
 
 %description
@@ -27,24 +24,23 @@ Port of the 3.3+ ipaddress module to 2.6 and 2.7.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
-%__python test_ipaddress.py
+%__python3 setup.py test
+%__python3 test_ipaddress.py
 
 %files
 %doc README*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.18-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.18-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
