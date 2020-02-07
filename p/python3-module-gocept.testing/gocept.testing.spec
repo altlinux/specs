@@ -1,23 +1,26 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
 %define mname gocept
 %define oname %mname.testing
-Name: python-module-%oname
+
+%def_without check
+
+Name: python3-module-%oname
 Version: 1.10.1
-#Release: alt1
+Release: alt2
+
 Summary: A collection of test helpers, additional assertions, and the like
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/gocept.testing/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools python-module-mock
-BuildPreReq: python-module-six python-module-pytest-cov
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-mock python3-module-six
+BuildRequires: python3-module-pytest-cov
 
-%py_provides %oname
-%py_requires %mname mock six
+%py3_provides %oname
+%py3_requires %mname mock six
+
 
 %description
 This package collects various helpers for writing tests.
@@ -26,25 +29,29 @@ This package collects various helpers for writing tests.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
-py.test -vv
+%__python3 setup.py test
+py.test3 -vv
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%mname/*
+%python3_sitelibdir/*.egg-info
+
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10.1-alt2
+- Porting on python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10.1-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
