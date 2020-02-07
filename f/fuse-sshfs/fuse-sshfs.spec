@@ -1,5 +1,5 @@
 Name: fuse-sshfs
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 
 Summary: SSH filesystem using FUSE
@@ -10,7 +10,6 @@ Url: https://github.com/libfuse/sshfs
 # repacked https://github.com/libfuse/sshfs/releases/download/sshfs-%version/sshfs-%version.tar.xz
 Source: sshfs-%version.tar
 Source1: sshfs.watch
-Patch1: 0001-ALT-python3-docutils-rst2man.patch
 
 BuildRequires: libfuse3-devel >= 3.1.0 meson python3-module-docutils
 Requires: openssh-clients
@@ -39,7 +38,6 @@ that codebase, so he rewrote it. Features of this implementation are:
 
 %prep
 %setup -q -n sshfs-%version
-%patch1 -p2
 
 %build
 %meson
@@ -56,6 +54,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Fri Feb 07 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.0-alt1
+- Updated 3.7.0.
+
 * Fri Nov 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6.0-alt1
 - Updated to 3.6.0.
 - Packed watch file in the sourcerpm.
