@@ -2,7 +2,7 @@
 
 Name:       exe
 Version:    2.4.1
-Release:    alt4
+Release:    alt5
 
 Summary:    Tool to create and publish open educational resources.
 
@@ -17,7 +17,6 @@ BuildArch:  noarch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: desktop-file-utils
-BuildRequires: python-module-glob2
 BuildRequires: python-module-distutils-extra
 
 Requires: python-module-%name = %EVR
@@ -108,6 +107,9 @@ rm -f %buildroot%_datadir/pixmaps/exe.xpm
 
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.1-alt5
+- build requires fixed.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.1-alt4
 - dependency on python2 webassets bypassed
 
