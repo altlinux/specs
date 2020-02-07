@@ -7,7 +7,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -155,6 +155,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Feb 07 2020 Andrey Cherepanov <cas@altlinux.org> 4.11.1-alt1
+- New version.
+
 * Mon Dec 16 2019 Andrey Cherepanov <cas@altlinux.org> 4.11.0-alt1
 - New version.
 - Build without ClangCodeModel due to the lack of LLVM 8.x in repository.
