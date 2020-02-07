@@ -1,18 +1,19 @@
-
 Name:           targetcli
+Version:        2.1.fb49
+Release:        alt2
+
+Summary:        An administration shell for storage targets
+
 License:        ASL 2.0
 Group:          System/Libraries
-Summary:        An administration shell for storage targets
-Version:        2.1.fb49
-Release:        alt1
-URL:             https://github.com/open-iscsi/targetcli-fb
+URL:            https://github.com/open-iscsi/targetcli-fb
+
 Source:         %name-%version.tar
+
 BuildArch:      noarch
 
 Requires: target-restore
 Requires: python3-module-%name = %EVR
-
-BuildRequires: python-devel python-module-setuptools
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -21,13 +22,6 @@ BuildRequires: python3-devel python3-module-setuptools
 An administration shell for configuring iSCSI, FCoE, and other
 SCSI targets, using the TCM/LIO kernel target subsystem. FCoE
 users will also need to install and use fcoe-utils.
-
-%package -n python-module-%name
-Summary:        An administration shell for storage targets
-Group:          Development/Python
-
-%description -n python-module-%name
-An administration shell for storage targets
 
 %package -n python3-module-%name
 Summary:        An administration shell for storage targets
@@ -43,23 +37,12 @@ An administration shell for storage targets
 sed -i "s/__version__ = .*/__version__ = '%version'/g" \
 	%name/__init__.py
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
+%python3_build_debug
 bzip2 --stdout targetcli.8 > targetcli.8.bz2
 
-pushd ../python3
-%python3_build
-popd
-
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 mkdir -p %buildroot%_man8dir/
 install -m 644 targetcli.8.bz2 %buildroot%_man8dir/
@@ -69,14 +52,14 @@ install -m 644 targetcli.8.bz2 %buildroot%_man8dir/
 %doc COPYING README.md
 %_man8dir/targetcli.8.*
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.fb49-alt2
+- use python3 only (drop python2 module)
+
 * Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.1.fb49-alt1
 - 2.1.fb49
 - switch to python3
