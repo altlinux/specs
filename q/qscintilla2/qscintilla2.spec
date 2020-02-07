@@ -9,12 +9,12 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define oname qscintilla2
 %define suff 15
 Name: %oname
-Version: 2.11.2
+Version: 2.11.4
 Release: alt1
-License: GPL
+License: GPLv3
 Group: Development/KDE and QT
 
-Source: qscintilla-gpl-%version.tar
+Source: QScintilla-%version.tar
 Patch1: %name-%version-alt-build.patch
 
 Url: https://riverbankcomputing.com/software/qscintilla
@@ -249,7 +249,7 @@ BuildArch: noarch
 Documentation for %oname
 
 %prep
-%setup -n QScintilla-gpl-%version
+%setup -n QScintilla-%version
 %patch1 -p2
 %if_with qt4
 ln -s Qt4Qt5 Qt4
@@ -335,7 +335,7 @@ cp -fR Qt5 ../Qt5
 # Python bindings for PyQt4
 %if_with qt4
 pushd Python-qt4
-python configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
+python2 configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
 	--qmake=%_qt4dir/bin/qmake
 %make_build
 popd
@@ -343,7 +343,7 @@ popd
 
 # Python bindings for PyQt5
 pushd Python-qt5
-python configure.py --debug -n ../Qt5 -o ../Qt5 \
+python2 configure.py --debug -n ../Qt5 -o ../Qt5 \
 	--qmake=%_qt5_bindir/qmake \
 	--pyqt=PyQt5
 %make_build
@@ -487,7 +487,7 @@ install -m644 Qt5/Qsci/*.h %buildroot%_qt5_headerdir/Qsci/
 mkdir -p %buildroot%_docdir/%libname-%version
 cp -a doc/Scintilla %buildroot%_docdir/%libname-%version
 cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
-cp ChangeLog NEWS README %buildroot%_docdir/%libname-%version
+cp ChangeLog NEWS LICENSE %buildroot%_docdir/%libname-%version
 
 rm -rf %buildroot/%python_sitelibdir/QScintilla-%version.dist-info
 rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
@@ -574,6 +574,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Fri Feb 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.4-alt1
+- Updated to upstream version 2.11.4.
+
 * Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.2-alt1
 - Updated to upstream version 2.11.2.
 - Removed disabled qt3 support.
