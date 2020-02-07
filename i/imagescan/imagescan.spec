@@ -1,11 +1,11 @@
-%define utsushi_version 0.61.0
+%define utsushi_version 0.62.0
 
 Name:     imagescan
-Version:  3.61.0
+Version:  3.62.0
 Release:  alt1
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
-License:  GPLv3
+License:  GPL-3.0+
 Group:    Other
 Url:      http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
@@ -133,6 +133,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Fri Feb 07 2020 Andrey Cherepanov <cas@altlinux.org> 3.62.0-alt1
+- New version.
+
 * Tue Nov 05 2019 Andrey Cherepanov <cas@altlinux.org> 3.61.0-alt1
 - New version.
 
