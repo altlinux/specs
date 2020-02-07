@@ -1,89 +1,51 @@
 %define oname functools32
 
-%def_without python3
-
 Name: python-module-%oname
 Version: 3.2.3.2
-Release: alt1.git20150711.1
+Release: alt2
+
 Summary: Backport of the functools module from Python 3.2.3 for use on 2.7 and PyPy
 License: PSF
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/functools32/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/MiCHiLU/python-functools32.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
 
 %py_provides %oname
+
 
 %description
 This is a backport of the functools standard library module from Python
 3.2.3 for use on Python 2.7 and PyPy. It includes new features lru_cache
 (Least-recently-used cache decorator).
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Backport of the functools module from Python 3.2.3 for use on 2.7 and PyPy
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-This is a backport of the functools standard library module from Python
-3.2.3 for use on Python 2.7 and PyPy. It includes new features lru_cache
-(Least-recently-used cache decorator).
-%endif
-
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
-
 %install
 %python_install
 
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
-
 %check
-python test_functools32.py -v
-%if_with python3
-pushd ../python3
-python3 test_functools32.py -v
-popd
-%endif
+%__python test_functools32.py -v
 
 %files
 %doc ChangeLog *.rst
 %python_sitelibdir/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc ChangeLog *.rst
-%python3_sitelibdir/*
-%endif
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.3.2-alt2
+- Rebuild with new setuptools
+- removal build for python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.2.3.2-alt1.git20150711.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
