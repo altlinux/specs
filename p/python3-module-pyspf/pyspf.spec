@@ -1,28 +1,22 @@
-%define version 2.0.13
-%define release alt0.1
-%def_with python3
-%setup_python_module pyspf
+%define oname pyspf
 
-Name: %{packagename}
-Version: %version
-Release: %release
-Summary: Python module and programs for SPF (Sender Policy Framework)
+Name:       python3-module-%oname
+Version:    2.0.13
+Release:    alt1
 
-Group: Development/Python
-License: Python Software Foundation License
-Url: https://github.com/sdgathman/pyspf/
-Source0: pyspf-%version.tar
+Summary:    Python module and programs for SPF (Sender Policy Framework)
+License:    Python Software Foundation License
+Group:      Development/Python3
+Url:        https://github.com/sdgathman/pyspf/
+Packager:   L.A. Kostis <lakostis@altlinux.ru>
 
-%if_with python3
+BuildArch:  noarch
+
+Source0:    pyspf-%version.tar
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
+Requires: python3-module-ipaddress python3-module-dns
 
-Requires: python-module-ipaddr python-module-dns
-
-BuildArch: noarch
-
-Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 %description
 SPF does email sender validation.  For more information about SPF,
@@ -32,54 +26,25 @@ This SPF client is intended to be installed on the border MTA, checking
 if incoming SMTP clients are permitted to send mail.  The SPF check
 should be done during the MAIL FROM:<...> command.
 
-%package -n python3-module-%modulename
-Summary: Python3 module and programs for SPF (Sender Policy Framework)
-Group: Development/Python3
-Requires: python3-module-ipaddress python3-module-dns
-
-%description -n python3-module-%modulename
-SPF does email sender validation.  For more information about SPF,
-please see http://openspf.org
-
-This SPF client is intended to be installed on the border MTA, checking
-if incoming SMTP clients are permitted to send mail.  The SPF check
-should be done during the MAIL FROM:<...> command.
-
 %prep
-%setup -q -n %modulename-%version
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -q -n %oname-%version
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
-
-%if_with python3
-pushd ../python3
 %python3_install --record=INSTALLED_FILES3
-popd
-%endif
 
-%files -f INSTALLED_FILES
-%exclude %_bindir/*
+%files
 %doc CHANGELOG PKG-INFO README test
-
-%if_with python3
-%files -n python3-module-%modulename -f ../python3/INSTALLED_FILES3
-%doc CHANGELOG PKG-INFO README test
+%_bindir/*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.13-alt1
+- Build for python2 disabled.
+
 * Sat Sep 28 2019 L.A. Kostis <lakostis@altlinux.ru> 2.0.13-alt0.1
 - 2.0.13.
 - build python3 module.

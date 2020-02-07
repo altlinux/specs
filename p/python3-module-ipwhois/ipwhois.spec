@@ -4,59 +4,38 @@
 %def_with check
 %def_with docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
+
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/ipwhois/
+
+BuildArch: noarch
 
 # https://github.com/secynic/ipwhois.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(dns)
-BuildRequires: python2.7(ipaddr)
-BuildRequires: python2.7(nose)
 BuildRequires: python3(dns)
 BuildRequires: python3(nose)
 %endif
 
-%py_requires ipaddr
-
 %if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python2.7(sphinx)
-BuildRequires: python2.7(sphinx_rtd_theme)
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
 %endif
 
-%description
-ipwhois is a Python package focused on retrieving and parsing whois data
-for IPv4 and IPv6 addresses.
-
-Features:
-* Parses a majority of whois fields in to a standard dictionary
-* IPv4 and IPv6 support
-* Referral whois support
-* Supports REST queries (useful if whois is blocked from your network)
-* Proxy support for REST queries
-* Recursive network parsing for IPs with parent/children networks listed
-* Python 2.6+ and 3.3+ supported
-* Useful set of utilities
-* BSD license
-
-%package -n python3-module-%oname
-Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
-Group: Development/Python3
 %add_python3_path %_bindir/
 %add_python3_compile_exclude %_bindir/
 
-%description -n python3-module-%oname
+
+%description
 ipwhois is a Python package focused on retrieving and parsing whois data
 for IPv4 and IPv6 addresses.
 
@@ -74,7 +53,7 @@ Features:
 %if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 ipwhois is a Python package focused on retrieving and parsing whois data
@@ -98,60 +77,43 @@ This package contains pickles for %oname.
 %setup
 %patch -p1
 
-cp -fR . ../python3
-
-%if_with docs
-%prepare_sphinx %oname/docs
-ln -s ../objects.inv %oname/docs/source/
-%endif
+sed -i 's|sphinx-build|sphinx-build-3|' %oname/docs/Makefile
 
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %if_with docs
 export PYTHONPATH=$PWD
 %make -C %oname/docs pickle
 %make -C %oname/docs html
-cp -fR ipwhois-docs/pickle %buildroot%python_sitelibdir/%oname/
+
+cp -fR ipwhois-docs/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-nosetests -v -w ipwhois --exclude="(online|stress)"
-pushd ../python3
 nosetests3 -v -w ipwhois --exclude="(online|stress)"
-popd
 
 %files
 %doc *.rst
-%python_sitelibdir/ipwhois-%version-py%_python_version.egg-info/
-%python_sitelibdir/ipwhois/
+%_bindir/*
+%python3_sitelibdir/ipwhois/
+%python3_sitelibdir/*.egg-info/
 %if_with docs
 %doc ipwhois-docs/html
-%exclude %python_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 %endif
 
-%files -n python3-module-%oname
-%doc *.rst
-%_bindir/ipwhois_cli.py
-%_bindir/ipwhois_utils_cli.py
-%python3_sitelibdir/ipwhois-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/ipwhois/
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt2
+- Build for python2 disabled.
+
 * Sat Feb 16 2019 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 0.15.1 -> 1.1.0.
 - Dropped dependency on sphinxcontrib.napoleon.
