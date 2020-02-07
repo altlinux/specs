@@ -1,8 +1,8 @@
 Name: clickhouse
-Version: 19.16.2.2
-Release: alt2
-Summary: open source distributed column-oriented DBMS
-License: Apache License 2.0
+Version: 19.17.8.54
+Release: alt1
+Summary: Open-source distributed column-oriented DBMS
+License: Apache-2.0
 Group: Databases
 Url: https://clickhouse.yandex/
 
@@ -143,6 +143,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Fri Feb 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 19.17.8.54-alt1
+- Updated to stable upstream version 19.17.8.54.
+
 * Thu Dec 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 19.16.2.2-alt2
 - Rebuilt with boost-1.71.0.
 
