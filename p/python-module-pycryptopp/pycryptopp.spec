@@ -2,13 +2,12 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt2
+Release: alt3
 
 Summary: Python wrappers for a few algorithms from the Crypto++ library
 License: GPLv2+ or other (see copyright)
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pycryptopp/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-git: https://github.com/tahoe-lafs/pycryptopp.git
 Source: %name-%version.tar
@@ -16,13 +15,15 @@ Source: %name-%version.tar
 # fix build with libcryptopp >= 6 https://gist.github.com/skydrome/bb9665fc0b449167bb25a57b45829ca8
 Patch1: libcryptopp-6.patch
 
-BuildPreReq: gcc-c++ git-core
-BuildPreReq: libcryptopp-devel >= 6
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-ecdsa python-module-ed25519
+BuildRequires(pre): rpm-build-python
+BuildRequires: gcc-c++ git-core
+BuildRequires: libcryptopp-devel >= 6
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-ecdsa
 
 %py_provides %oname
-%py_requires ecdsa ed25519
+%py_requires ecdsa
+
 
 %description
 pycryptopp is a python wrapper around a few algorithms from the Crypto++
@@ -60,7 +61,7 @@ git tag %oname-%version -m "%oname-%version"
 rm -rf %_docdir/pycryptopp/
 
 %check
-python setup.py test
+%__python setup.py test
 
 %files
 %doc COPYING* copyright *.rst
@@ -72,7 +73,11 @@ python setup.py test
 %python_sitelibdir/*/test*
 %python_sitelibdir/*/bench
 
+
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt3
+- Rebuild with new setuptools.
+
 * Sun Nov 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt2
 - rebuild with libcryptopp.so.7
 
