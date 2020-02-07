@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.3.0
-Release: alt2
+Release: alt3
 
 Summary: Get CPU info with pure Python 2 & 3
 License: MIT
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-python3
 # /proc is needed for tests
 BuildRequires: /proc
 
-Conflicts: python-module-%oname
+Conflicts: python-module-%oname <= 3.3.0-alt2
 
 
 %description
@@ -44,6 +44,9 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt3
+- Version in conflict on py2 module added.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt2
 - Build for python3 disabled.
 

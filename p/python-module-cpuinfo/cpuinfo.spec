@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.3.0
-Release: alt2
+Release: alt3
 
 Summary: Get CPU info with pure Python 2 & 3
 License: MIT
@@ -37,11 +37,14 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 
 %files
 %doc README.rst
-%_bindir/*
+%exclude %_bindir/*
 %python_sitelibdir/*
 
 
 %changelog
+* Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt3
+- Binary file excluded (conflict with module on py3).
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt2
 - Rebuild with new setuptools
 - removal python3 build.
