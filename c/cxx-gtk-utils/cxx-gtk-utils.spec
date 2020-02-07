@@ -2,7 +2,7 @@
 %define oname c++-gtk-utils
 
 Name: cxx-gtk-utils
-Version: %major.18
+Version: %major.19
 Release: alt1
 
 Summary: lightweight library for programming GTK+ programs using C++ in POSIX (unix-like) environment
@@ -77,6 +77,9 @@ rm -rf %buildroot%_docdir/
 %_libdir/libcxx-gtk-utils-3-%major.so
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.19-alt1
+- new version 2.2.19 (with rpmrb script)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.18-alt1
 - new version 2.2.18 (with rpmrb script)
 
