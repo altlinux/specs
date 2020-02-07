@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200121
+Version: 20200207
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,20 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Feb 07 2020 Cronbuild Service <cronbuild@altlinux.org> 20200207-alt1
+- upstream changes (GIT 6f89735):
+  + rtl_nic: update firmware for RTL8153A (thx Hayes Wang)
+  + rtl_bt: Update RTL8822C BT FW to V0x0998_C2B4 (thx Max Chou)
+  + add firmware for MT7622 (thx Ryder Lee)
+  + add version 2 for MT7615E (thx Ryder Lee)
+  + amdgpu: update to latest navi10 firmware from 19.50 (thx Alex Deucher)
+  + Revert "radeon: update oland rlc microcode from amdgpu" (thx Alex Deucher)
+  + amlogic: update video decoder firmwares (thx Maxime Jourdan)
+  + amdgpu: add renoir firmware for 19.50 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 19.50 (thx Alex Deucher)
+  + nfp: update Agilio SmartNIC flower firmware to rev AOTC-2.12.A.13 (thx Louis Peens)
+  + qca: update bluetooth firmware for QCA6174 (thx Kalle Valo)
+
 * Fri Jan 24 2020 Cronbuild Service <cronbuild@altlinux.org> 20200121-alt1
 - upstream changes (GIT 1eb2408):
   + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
