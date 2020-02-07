@@ -1,6 +1,6 @@
 Name: git-cola
 Version: 3.6
-Release: alt1
+Release: alt2
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -12,13 +12,16 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Jan 13 2020 (-bi)
-# optimized out: python-modules python-modules-compiler python-modules-email python-modules-encodings python2-base python3 python3-base rpm-build-python3 sh4 tzdata
-BuildRequires(pre): python-module-sphinx-devel
-BuildRequires: python-modules-distutils python-sphinx-objects.inv python3-dev rpm-build-gir tcl
-BuildRequires: asciidoc mercurial
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sphinx-devel
+#BuildRequires: rpm-build-gir tcl
+BuildRequires: asciidoc
 # hasher tests:
-Requires: python-module-pyinotify python-module-PyQt5
+Requires: python3-module-pyinotify python3-module-PyQt5
+
+AutoProv:yes,nopython
+# skip internal module reqs
+%add_python3_req_skip cola cola.i18n cola.models cola.widgets
 
 %description
 A sweet, carbonated git gui known for its sugary flavour
@@ -28,18 +31,16 @@ and caffeine-inspired features.
 %setup
 
 # fix python shebangs
-sed -i 's|/usr/bin/env python|%__python|' $(find ./ -name '*.py')
-sed -i 's|/usr/bin/env python|%__python|' share/git-cola/bin/git-xbase
+sed -i 's|/usr/bin/env python|%__python3|' $(find ./ -name '*.py')
+sed -i 's|/usr/bin/env python|%__python3|' share/git-cola/bin/git-xbase
 
-%prepare_sphinx share/doc/%name
+%prepare_sphinx3 share/doc/%name
 
 %build
-%python_build
+%python3_build_debug
 
 %install
-%python_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
-#make DESTDIR=%buildroot prefix=%prefix install-doc
-#make DESTDIR=%buildroot prefix=%prefix install-html
+%python3_install
 %find_lang %name
 
 %files -f %name.lang
@@ -51,9 +52,12 @@ sed -i 's|/usr/bin/env python|%__python|' share/git-cola/bin/git-xbase
 %_datadir/appdata/git-dag.appdata.xml
 %_docdir/git-cola
 #_man1dir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt2
+- NMU: build truly python3
+
 * Mon Jan 13 2020 Leontiy Volodin <lvol@altlinux.org> 3.6-alt1
 - New version 3.6
 - Cleaned buildrequires.
