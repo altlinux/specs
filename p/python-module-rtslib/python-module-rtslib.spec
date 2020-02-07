@@ -1,29 +1,30 @@
+%def_without doc
 
 Name:           python-module-rtslib
+Version:        2.1.fb69
+Release:        alt2
+
+Summary:        API for Linux kernel LIO SCSI target
+
 License:        ASL 2.0
 Group:          Development/Python
-Summary:        API for Linux kernel LIO SCSI target
-Version:        2.1.fb69
-Release:        alt1
 URL:            https://github.com/open-iscsi/rtslib-fb
+
 Source:         %name-%version.tar
 
 BuildArch:      noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-six
-BuildRequires: python-module-pyudev
-BuildRequires: python-module-kmod
-
-BuildRequires: python-module-epydoc
+%if_with doc
+BuildRequires: python3-module-epydoc
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six
-BuildRequires: python-module-pyudev
-BuildRequires: python-module-kmod
+BuildRequires: python3-module-pyudev
+BuildRequires: python3-module-kmod
 
-Requires: python-module-kmod
+Requires: python3-module-kmod
 
 %package doc
 Summary:        Documentation for python-rtslib
@@ -63,29 +64,20 @@ sed 's|/var/target|/var/lib/target|' -i rtslib/root.py
 sed -i "s/__version__ = .*/__version__ = '%version'/g" \
 	rtslib/__init__.py
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
 gzip --stdout doc/targetctl.8 > doc/targetctl.8.gz
 gzip --stdout doc/saveconfig.json.5 > doc/saveconfig.json.5.gz
 
-%python_build
+%python3_build_debug
 
+%if_with doc
 mkdir -p doc/html
 epydoc --no-sourcecode --html -n rtslib -o doc/html rtslib/*.py
-
-pushd ../python3
-%python3_build
-popd
+%endif
 
 %install
-%python_install
-mkdir -p %buildroot{%_man8dir,%_man5dir,%_unitdir,%_sysconfdir/target/backup,%_localstatedir/target/{pr,alua}}
-
-pushd ../python3
 %python3_install
-popd
+mkdir -p %buildroot{%_man8dir,%_man5dir,%_unitdir,%_sysconfdir/target/backup,%_localstatedir/target/{pr,alua}}
 
 install -m 644 systemd/target.service %buildroot%_unitdir/target.service
 install -m 644 doc/targetctl.8.gz %buildroot%_man8dir/
@@ -96,11 +88,6 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 
 %preun -n target-restore
 %preun_service target
-
-%files
-%doc COPYING README.md doc/getting_started.md
-%python_sitelibdir/*
-
 
 %files -n python3-module-rtslib
 %doc COPYING README.md doc/getting_started.md
@@ -117,10 +104,16 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 %_man8dir/targetctl.8.*
 %_man5dir/saveconfig.json.5.*
 
+%if_with doc
 %files doc
 %doc doc/html
+%endif
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.fb69-alt2
+- build python3 only
+- add def_without doc to disable epydoc
+
 * Fri Dec 21 2018 Alexey Shabalin <shaba@altlinux.org> 2.1.fb69-alt1
 - 2.1.fb69
 - add target-restore package
