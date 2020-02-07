@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.8.5
-Release: alt1
+Release: alt2
 
 Summary: A sphinx extension for embedding sequence diagram using seqdiag
 
@@ -13,7 +13,6 @@ URL:     https://github.com/blockdiag/sphinxcontrib-seqdiag
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
@@ -36,5 +35,8 @@ Source:  %modulename-%version.tar
 %doc *.rst
 
 %changelog
+* Mon Jan 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.5-alt2
+- Porting on Python3.
+
 * Sun Sep 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.5-alt1
 - Initial build for Sisyphus.
