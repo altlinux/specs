@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.13
-Release: alt3
+Release: alt4
 Summary: Fast and simple WSGI-framework for small web-applications
 License: MIT
 Group: Development/Python
@@ -115,9 +115,11 @@ sphinx-build -b pickle -d build/docs/doctrees docs build/docs/pickle
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR build/docs/pickle %buildroot%python_sitelibdir/%oname/
 
+rm -fv %buildroot%_bindir/bottle.py
+
 %files
 %doc AUTHORS *.rst
-%_bindir/*
+#_bindir/bottle.py
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
@@ -138,6 +140,9 @@ cp -fR build/docs/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt4
+- drop /usr/bin/dir/bootle.py (ALT bug 38057)
+
 * Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt3
 - build python2 only
 
