@@ -1,7 +1,7 @@
 %define oname TuxMathScrabble
 Name: tuxmathscrabble
 Version: 0.7.4
-Release: alt1.1
+Release: alt2
 
 Summary: A math version of the popular board game for ages 4-40
 
@@ -22,7 +22,7 @@ Source: http://prdownloads.sourceforge.net/tuxmathscrabble/%name-%version.tar
 Patch: TuxMathScrabble-0.7.4-fixpath.patch
 
 # Automatically added by buildreq on Sun Jul 06 2008
-BuildRequires: python-base
+BuildRequires: python2-base
 
 # due font links
 Requires: fonts-ttf-freefont
@@ -39,6 +39,8 @@ his own pieces as well as performing various animated antics.
 %prep
 %setup
 %patch
+
+%__subst "s|#!/usr/bin/env python|#!/usr/bin/python2|" tuxmathscrabble.py
 
 # replace font with links
 rm -f Font/arial.ttf
@@ -75,6 +77,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt2
+- use python2
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.4-alt1.1
 - Rebuild with Python-2.7
 
