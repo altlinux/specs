@@ -7,8 +7,8 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 1.9.9
-Release: alt2
+Version: 1.9.10
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -20,9 +20,6 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 # See https://github.com/EasyCoding/tgbuild
-Patch1: cmake_helpers-system-variant.patch
-Patch2: cmake_helpers-system-gsl.patch
-Patch3: 0001-add-ppc64-and-e2k-build-support.patch
 Patch4: cmake_helpers-system-qrcode.patch
 
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
@@ -91,7 +88,10 @@ BuildRequires: libqrcodegen-cpp-devel
 # C++ sugar
 BuildRequires: libmicrosoft-gsl-devel >= 1:2.1.0
 BuildRequires: libvariant-devel
+BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.10.0
+
+BuildRequires: libdbusmenu-qt5-devel
 
 # FIXME: libva need only for linking, extra deps?
 
@@ -133,9 +133,6 @@ or business messaging needs.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 rm -rf Telegram/ThirdParty/variant \
@@ -145,9 +142,8 @@ rm -rf Telegram/ThirdParty/variant \
 	Telegram/ThirdParty/lz4 \
 	Telegram/ThirdParty/libtgvoip \
 	Telegram/ThirdParty/rlottie \
-	Telegram/ThirdParty/QR
-# TODO:
-# Telegram/ThirdParty/expected
+	Telegram/ThirdParty/QR \
+	Telegram/ThirdParty/expected
 
 
 %build
@@ -209,6 +205,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.10-alt1
+- new version 1.9.10 (with rpmrb script)
+
 * Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt2
 - return to build from full tarball
 
