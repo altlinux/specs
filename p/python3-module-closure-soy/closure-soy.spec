@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 20121221
-Release: alt2
+Release: alt3
 
 Summary: Google Closure's Soy templates packaged for Python
 License: BSD
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-closure
+
+Conflicts: python-module-closure-soy
+Obsoletes: python-module-closure-soy
 
 %py3_provides closure_soy
 %py3_requires closure
@@ -49,6 +52,9 @@ package.
 
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 20121221-alt3
+- add conflicts/obsoletes to python-module-closure-soy
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 20121221-alt2
 - Build for python2 disabled.
 
