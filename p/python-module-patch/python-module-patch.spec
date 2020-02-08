@@ -4,7 +4,7 @@
 %define modulename patch
 Name: python-module-patch
 Version: 1.16
-Release: alt1.qa1
+Release: alt2
 
 Summary: Library to parse and apply unified diffs
 
@@ -51,6 +51,7 @@ cp -fR . ../python3
 
 %install
 install -D -m755 patch.py %buildroot%python_sitelibdir/patch.py
+sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python2|g" %buildroot%python_sitelibdir/patch.py
 install -D -m755 patch.py %buildroot%python3_sitelibdir/patch.py
 sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|g" %buildroot%python3_sitelibdir/patch.py
 
@@ -66,6 +67,9 @@ sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|g" %buildroot%python3_sitel
 
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt2
+- use python2 in the script
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.qa1
 - NMU: applied repocop patch
 
