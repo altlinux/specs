@@ -3,7 +3,7 @@
 
 Name: childsplay
 Version: 3.4
-Release: alt1
+Release: alt2
 
 License: GPLv3+
 Group: Games/Educational
@@ -237,7 +237,7 @@ mkdir -p %buildroot%_bindir/
 cat <<EOF >%buildroot%_bindir/%name
 #!/bin/sh
 cd %_datadir/%name/
-python childsplay.py
+python2 childsplay.py
 EOF
 chmod a+x %buildroot%_bindir/%name
 
@@ -332,6 +332,9 @@ install -m644 lib/SPData/themes/childsplay/logo_cp_64x64.png %buildroot%_datadir
 
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt2
+- run with python2 command
+
 * Thu May 23 2019 Leontiy Volodin <lvol@altlinux.org> 3.4-alt1
 - new version 3.4
 
