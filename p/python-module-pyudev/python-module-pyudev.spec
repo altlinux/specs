@@ -1,11 +1,13 @@
+%def_without python2
 %def_with python3
+# wait for new wx
+%def_without wx
 
 #add_findreq_skiplist %python_sitelibdir/pyudev/*
 
 Name: python-module-pyudev
 Version: 0.21.0
-Release: alt1.1
-%setup_python_module pyudev
+Release: alt2
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -16,16 +18,16 @@ BuildArch: noarch
 
 Source: pyudev-%version.tar
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+%if_with python2
+%setup_python_module pyudev
+BuildRequires: python-module-setuptools
+%endif
 
 #BuildRequires: libudev-devel python-devel python-module-distribute
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:      python3-devel
-#BuildRequires:      python3-module-distribute
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -137,10 +139,12 @@ service found in modern linux systems.
 %endif
 
 %prep
-%setup -q -n pyudev-%version
+%setup -n pyudev-%version
 
 %build
+%if_with python2
 %python_build
+%endif
 
 %if_with python3
 %python3_build
@@ -151,8 +155,11 @@ service found in modern linux systems.
 %python3_install
 %endif
 
+%if_with python2
 %python_install
+%endif
 
+%if_with python2
 %files
 %doc CHANGES.rst COPYING README.rst
 %python_sitelibdir/pyudev
@@ -180,6 +187,7 @@ service found in modern linux systems.
 
 %files -n python-module-pyudev-wx
 %python_sitelibdir/pyudev/wx.p*
+%endif
 
 %if_with python3
 %files -n python3-module-pyudev
@@ -207,13 +215,19 @@ service found in modern linux systems.
 %files -n python3-module-pyudev-pyside
 %python3_sitelibdir/pyudev/pyside.p*
 
+%if_with wx
 %files -n python3-module-pyudev-wx
 %python3_sitelibdir/pyudev/wx.p*
+%endif
 %endif
 
 
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt2
+- NMU: disable build python2 modules
+- disable wx subpackage (need new wx module)
+
 * Mon Nov 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.21.0-alt1.1
 - split bindings
 
