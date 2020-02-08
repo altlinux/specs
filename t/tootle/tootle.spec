@@ -1,6 +1,6 @@
 Name: tootle
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Simple Mastodon client
 
@@ -12,6 +12,7 @@ Url: https://github.com/bleakgrey/tootle
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch: fix-build-on-vala-46.patch
 
 #BuildRequires: hicolor-icon-theme
 BuildRequires: meson >= 0.40.0
@@ -34,6 +35,7 @@ support.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -53,6 +55,9 @@ support.
 %_datadir/metainfo/com.github.bleakgrey.tootle.appdata.xml
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt2
+- fix build with vala 4.6
+
 * Fri Jan 04 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - initial build for ALT Sisyphus
 
