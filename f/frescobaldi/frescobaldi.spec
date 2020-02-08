@@ -1,5 +1,5 @@
 Name: frescobaldi
-Version: 3.0.1
+Version: 3.1.1
 Release: alt1
 
 Summary: LilyPond music score editor
@@ -68,6 +68,9 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
+- new version 3.1.1 (with rpmrb script)
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - build new python3 version
 
