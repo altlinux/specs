@@ -1,9 +1,9 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.7.6
-Epoch: 1
+Version: 1.7.8
 Release: alt1
+Epoch: 1
 
 Summary: C++ class library for symbolic calculations
 
@@ -15,11 +15,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: https://ginac.de/ginac-%version.tar
 
-# manually removed: xorg-sdk  rpm-build-java rpm-build-mono rpm-build-seamonkey
-# Automatically added by buildreq on Wed Dec 03 2008
-BuildRequires: flex gcc-c++ libcln-devel libncurses-devel libreadline-devel python-modules
+BuildRequires: python3
+BuildRequires: flex gcc-c++ libcln-devel libncurses-devel libreadline-devel
 BuildRequires: makeinfo
-#BuildRequires: doxygen tetex-dvips tetex-latex transfig
 
 %description
 GiNaC is Not a Cocktail.
@@ -92,6 +90,9 @@ rm -fv %buildroot/usr/lib/ginac-excompiler
 %_infodir/*.info*
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.8-alt1
+- new version 1.7.8 (with rpmrb script)
+
 * Tue Jun 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.6-alt1
 - new version 1.7.6 (with rpmrb script)
 
