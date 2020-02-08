@@ -1,6 +1,6 @@
 Name: nagios-plugins-nginx
 Version: 1.0.1
-Release: alt1.1
+Release: alt2
 
 Summary: Nagios(R) plug-in for checking nginx status
 License: GPL
@@ -33,6 +33,9 @@ install -m755 check_nginx %buildroot%plugindir/
 %plugindir/check_nginx
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
+- use python2 for the script
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt1.1
 - Rebuild with Python-2.7
 
