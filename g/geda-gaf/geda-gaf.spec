@@ -6,7 +6,7 @@
 
 Name: geda-gaf
 Version: %major.2
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Design Automation toolkit for electronic design
@@ -21,8 +21,10 @@ Source: http://ftp.geda-project.org/geda-gaf/unstable/v%major/%version/geda-gaf-
 
 Patch: %name.patch
 
-# Automatically added by buildreq on Tue Mar 30 2010
-BuildRequires: desktop-file-utils flex git-core glibc-devel groff-base guile22-devel libgtk+2-devel makeinfo
+BuildRequires: desktop-file-utils flex git-core glibc-devel guile22-devel libgtk+2-devel makeinfo
+BuildRequires: groff-base groff-extra
+# https://bugzilla.altlinux.org/show_bug.cgi?id=13685
+BuildRequires: groff-ps
 
 %description
 The GPL Electronic Design Automation (gEDA) project has produced and
@@ -129,6 +131,9 @@ Several utilities for the gEDA project.
 %setup
 %patch -p2
 %__subst "s|guile-2.0|guile-2.2|" m4/geda-guile.m4
+find -type f | xargs %__subst "s|/usr/bin/python\$|/usr/bin/python2|"
+find -type f | xargs %__subst "s|#! */usr/bin/python\$|/usr/bin/python2|"
+find -type f | xargs %__subst "s|#! */usr/bin/env python\$|/usr/bin/python2|"
 
 %build
 %autoreconf
@@ -314,6 +319,9 @@ rm -f %buildroot/%_datadir/mime/version
 %_man1dir/tragesym.1.*
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.2-alt2
+- fix build (add missed groff-extra, fix python2 using)
+
 * Mon Jun 25 2018 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.2-alt1
 - new version (1.9.2) with rpmgs script
 
