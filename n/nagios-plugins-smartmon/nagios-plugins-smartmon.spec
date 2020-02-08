@@ -1,6 +1,6 @@
 Name: nagios-plugins-smartmon
 Version: 1.1
-Release: alt3.1
+Release: alt4
 
 Summary: Nagios(R) plug-in for checking SMART parameters
 License: GPL
@@ -38,6 +38,9 @@ install -m755 bin/* %buildroot%plugindir/
 %plugindir/check_smartmon
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt4
+- use python2 for the script
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt3.1
 - Rebuild with Python-2.7
 
