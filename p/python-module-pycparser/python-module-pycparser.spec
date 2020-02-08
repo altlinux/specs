@@ -3,7 +3,7 @@
 
 Name: python-module-pycparser
 Version: 2.19
-Release: alt1
+Release: alt2
 
 Summary: C parser in Python
 
@@ -22,7 +22,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Mon Apr 08 2013
 # optimized out: python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules python-modules-compiler python-modules-email
 BuildRequires: python-module-paste
-%{?!_with_bootstrap:BuildRequires: python-module-mwlib}
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 %endif
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.19-alt2
+- drop mwlib buildrequire
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.19-alt1
 - new version 2.19 (with rpmrb script)
 
