@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.6.3
+Version: 6.6.4
 Release: alt1
 
 Summary: Source code tag system
@@ -46,6 +46,7 @@ the Web.
 
 %prep
 %setup
+%__subst "s|^#!/usr/bin/env python\$|#!/usr/bin/env python3|" plugin-factory/pygments_parser.py*
 #patch -p2
 
 %build
@@ -79,6 +80,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 6.6.4-alt1
+- new version 6.6.4 (with rpmrb script)
+
 * Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 6.6.3-alt1
 - new version 6.6.3 (with rpmrb script)
 
