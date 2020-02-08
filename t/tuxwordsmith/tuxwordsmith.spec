@@ -3,7 +3,7 @@
 
 Name: tuxwordsmith
 Version: 0.6.7
-Release: alt1.1.1
+Release: alt2
 
 Summary: Scrabble like game for young children
 
@@ -19,7 +19,7 @@ Source2: %oname.png
 Patch: %name.patch
 
 # Automatically added by buildreq on Mon Jul 07 2008
-BuildRequires: python-base
+BuildRequires: python2-base
 
 %description
 TuxWordSmith is similar to the classic word game "Scrabble", but with unicode
@@ -40,6 +40,7 @@ characters.
 %prep
 %setup -q -n %oname
 %patch
+%__subst "s|#!/usr/bin/env python|#!/usr/bin/python2|" tuxwordsmith
 #find -type d -name .svn -print0 | xargs -0 rm -rf {} \;
 
 %install
@@ -76,6 +77,9 @@ install -Dm 644 %SOURCE2 %buildroot%_pixmapsdir/%name.png
 %pkgdata/
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.7-alt2
+- use python2
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.7-alt1.1.1
 - Rebuild with Python-2.7
 
