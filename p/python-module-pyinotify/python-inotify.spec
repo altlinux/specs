@@ -1,12 +1,15 @@
 %def_with python3
 
-Summary:       Monitor filesystem events with Python under Linux
 Name:          python-module-pyinotify
 Version:       0.9.6
-Release:       alt1
+Release:       alt2
+
+Summary:       Monitor filesystem events with Python under Linux
+
 License:       MIT
 Group:         Development/Python
 URL:           https://github.com/seb-m/pyinotify
+
 # https://github.com/seb-m/pyinotify.git
 Source0:       %name-%version.tar
 Source1:       pyinotify
@@ -66,6 +69,8 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%__subst "s|#!/usr/bin/env python|#!/usr/bin/env python2|" python2/examples/*.py
+
 %build
 %python_build
 
@@ -105,6 +110,9 @@ cp -a python2/examples/* %buildroot%_datadir/pyinotify
 %_datadir/pyinotify
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt2
+- run scripts via python2
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.9.6-alt1
 - 0.9.6
 
