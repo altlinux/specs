@@ -1,13 +1,13 @@
 Epoch: 1
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dvipdfm /usr/bin/makeindex gcc-c++ texlive-latex-base
+BuildRequires: /usr/bin/dvipdfm /usr/bin/makeindex gcc-c++ texlive-latex-base texlive-dist
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           gnucap
 Version:        0.35
-Release:        alt123.2
+Release:        alt124
 Summary:        The Gnu Circuit Analysis Package
 Group:          Engineering
 License:        GPLv2+
@@ -65,6 +65,9 @@ rm examples/Makefile*
 
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.35-alt124
+- add BR: texlive-dist (fix missed dehypht.tex)
+
 * Thu May 30 2019 Michael Shigorin <mike@altlinux.org> 1:0.35-alt123.2
 - dropped self-BR:
 - E2K: avoid hevea (not built yet)
