@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.42.1
-Release: alt1
+Release: alt2
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -16,6 +16,9 @@ Url: https://pypi.python.org/pypi/tqdm
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-nose python3-module-flake8 python3-module-coverage
@@ -49,6 +52,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.42.1-alt2
+- add conflicts/obsoletes for python-module-tqdm (due bindir/tqdm)
+
 * Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 4.42.1-alt1
 - build separate python3 module
 - new version 4.42.1 (with rpmrb script)
