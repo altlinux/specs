@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt1
+Release:        alt2
 Epoch:          2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
@@ -21,7 +21,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-decorator >= 4.3.0
 BuildRequires: python-module-numpy >= 1.15.0
 BuildRequires: python-module-scipy >= 1.1.0
-BuildRequires: python-module-pandas >= 0.23.3
+#BuildRequires: python-module-pandas >= 0.23.3
 BuildRequires: python-module-matplotlib >= 2.2.2
 BuildRequires: python-module-pygraphviz >= 1.5
 BuildRequires: python-module-pydot >= 1.2.4
@@ -43,7 +43,7 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-decorator >= 4.3.0
 BuildRequires: python3-module-numpy >= 1.15.0
 BuildRequires: python3-module-scipy >= 1.1.0
-BuildRequires: python3-module-pandas >= 0.23.3
+#BuildRequires: python3-module-pandas >= 0.23.3
 BuildRequires: python3-module-matplotlib >= 2.2.2
 BuildRequires: python3-module-pygraphviz >= 1.5
 BuildRequires: python3-module-pydot >= 1.2.4
@@ -283,6 +283,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/*/*/*/tests
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2:2.2-alt2
+- drop panda buildrequire
+
 * Mon Dec 24 2018 Alexey Shabalin <shaba@altlinux.org> 2:2.2-alt1
 - 2.2
 
