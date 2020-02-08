@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.12.18
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Fast and simple WSGI-framework for small web-applications
@@ -15,6 +15,9 @@ Url: https://pypi.python.org/pypi/bottle/
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 #BuildRequires: rpm-macros-sphinx3
@@ -61,6 +64,9 @@ This package contains documentation for %oname.
 
 
 %changelog
+* Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.18-alt2
+- add conflicts/obsoletes against python-module-bottle (due bindir/bottle.py)
+
 * Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.18-alt1
 - build python3 module from scratch repo
 - revert to stable 0.12.x release
