@@ -3,7 +3,7 @@
 
 Name: cracklib
 Version: 2.9.7
-Release: alt2
+Release: alt2.1
 
 Summary: A password-checking library.
 License: LGPL-2.1-or-later
@@ -92,6 +92,7 @@ export am_cv_python_version=%__python3_version%_python3_abiflags
 %if_enabled python2
 pushd py2build
 export PYTHON=python2
+export am_cv_python_version=%__python_version
 %autoreconf
 %configure \
 	--disable-static \
@@ -158,6 +159,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 
 %changelog
+* Sat Feb 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt2.1
+- fixed build of python2 module
+
 * Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt2
 - fixed build python modules for aarch64 and ppc64le
 - made python2 module optional
