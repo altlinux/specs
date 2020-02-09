@@ -1,9 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%def_without python2
+%def_with python3
+
 Name: qhexedit2
 Version: 0.8.3
-Release: alt2
+Release: alt3
 
 Summary: Binary Editor for Qt
 License: LGPLv2
@@ -15,15 +18,22 @@ Source1: qhexedit.desktop
 Patch: qhexedit2_build.patch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-BuildRequires: rpm-build-python rpm-build-python3
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
+
+%if_with python2
+BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-sip-devel
-BuildRequires: python3-module-sip-devel
 BuildRequires: python-module-PyQt5-devel
-BuildRequires: python3-module-PyQt5-devel
 BuildRequires: python-module-enum34
+%endif
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sip-devel
+BuildRequires: python3-module-PyQt5-devel
+%endif
 
 Requires: %name-qt5-libs = %EVR
 
@@ -56,6 +66,7 @@ BuildArch: noarch
 %description doc
 The %name-doc package contains the documentation and examples for %name.
 
+%if_with python2
 %package -n python-module-%name-qt5
 Summary: %name Qt5 Python bindings
 Group: Development/Python
@@ -63,6 +74,7 @@ Requires: %name-qt5-libs = %EVR
 
 %description -n python-module-%name-qt5
 %name Qt5 Python bindings.
+%endif
 
 %package -n python-module-%name-qt5-devel
 Summary: Development files for the %name Qt5 Python bindings
@@ -73,6 +85,7 @@ Requires: sip-devel
 %description -n python-module-%name-qt5-devel
 Development files for the %name Qt5 Python bindings.
 
+%if_with python3
 %package -n python3-module-%name-qt5
 Summary: %name Qt5 Python3 bindings
 Group: Development/Python3
@@ -89,6 +102,7 @@ Requires: python3-module-sip-devel
 
 %description -n python3-module-%name-qt5-devel
 Development files for the %name Qt5 Python3 bindings
+%endif
 
 %prep
 %setup
@@ -110,10 +124,14 @@ LDFLAGS="%optflags -Wl,--as-needed" %qmake_qt5 ../src/qhexedit.pro
 %make_build
 popd
 
+%if_with python2
 # Build sip bindings, qt5, python2
-USE_QT5=1 CFLAGS="%optflags" python setup.py build --build-base=build-python-qt5
+USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python-qt5
+%endif
+%if_with python3
 # Build sip bindings, qt5, python3
-USE_QT5=1 CFLAGS="%optflags" python3 setup.py build --build-base=build-python3-qt5
+USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5
+%endif
 # Build application
 mkdir build-example
 pushd build-example
@@ -144,10 +162,14 @@ EOF
 
 # Python bindings
 # Distutils does not support --build-base with install, you need to build also...
-USE_QT5=1 CFLAGS="%optflags" python setup.py build --build-base=build-python2-qt5 install --skip-build --root %buildroot
-USE_QT5=1 CFLAGS="%optflags" python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
+%if_with python2
+USE_QT5=1 CFLAGS="%optflags" %__python setup.py build --build-base=build-python2-qt5 install --skip-build --root %buildroot
 install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip/qhexedit/qhexedit.sip
+%endif
+%if_with python3
+USE_QT5=1 CFLAGS="%optflags" %__python3 setup.py build --build-base=build-python3-qt5 install --skip-build --root %buildroot
 install -Dpm 0644 src/qhexedit.sip %buildroot%_datadir/sip3/qhexedit/qhexedit.sip
+%endif
 
 # Application
 install -Dpm 0755 build-example/qhexedit %buildroot%_bindir/qhexedit
@@ -171,21 +193,28 @@ desktop-file-install --dir=%buildroot%_desktopdir/ %SOURCE1
 %doc src/license.txt
 %doc doc/html
 
+%if_with python2
 %files -n python-module-%name-qt5
 %python_sitelibdir/qhexedit-qt5.so
 %python_sitelibdir/QHexEdit_qt5-%version-*.egg-info
 
 %files -n python-module-%name-qt5-devel
 %_datadir/sip/qhexedit/
+%endif
 
+%if_with python3
 %files -n python3-module-%name-qt5
 %python3_sitelibdir/qhexedit-qt5.*.so
 %python3_sitelibdir/QHexEdit_qt5-%version-*.egg-info
 
 %files -n python3-module-%name-qt5-devel
 %_datadir/sip3/qhexedit/
+%endif
 
 %changelog
+* Sun Feb 09 2020 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt3
+- Disable build python2 bindings
+
 * Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 0.8.3-alt2
 - E2K: explicit -std=c++11
 - minor spec cleanup
