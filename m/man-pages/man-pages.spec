@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 5.4
+Version: 5.5
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -71,11 +71,6 @@ The scripts for man-pages maintenance tasks.
 They may be useful for downstream man-pages package maintainers or for
 man-pages translators.
 
-%description -l ru_RU.UTF8
-The scripts for man-pages maintenance tasks.
-They may be useful for downstream man-pages package maintainers or for
-man-pages translators.
-
 %prep
 %setup -b1
 
@@ -99,6 +94,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Sun Feb 09 2020 Dmitry V. Levin <ldv@altlinux.org> 5.5-alt1
+- 5.4 -> 5.5.
+
 * Wed Nov 20 2019 Dmitry V. Levin <ldv@altlinux.org> 5.4-alt1
 - 5.3 -> 5.4.
 
@@ -764,7 +762,7 @@ find %buildroot%_mandir -type f -print0 |
 * Fri Jan 03 2003 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.54-alt1
 - 1.54
 
-* Wed Sep 03 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.53-alt2
+* Tue Sep 03 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.53-alt2
 - 1.53
 
 * Wed Aug 07 2002 Stanislav Ievlev <inger@altlinux.ru> 1.52-alt2
@@ -777,7 +775,7 @@ find %buildroot%_mandir -type f -print0 |
 * Mon Jul 29 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.52-alt1
 - 1.52
 
-* Wed Jun 20 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.51-alt1
+* Thu Jun 20 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.51-alt1
 - 1.51
 
 * Fri Jun 14 2002 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.48-alt2
