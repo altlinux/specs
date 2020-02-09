@@ -5,7 +5,7 @@
 
 Name:       python3-module-%oname
 Version:    0.12.1
-Release:    alt2
+Release:    alt3
 
 Summary:    Media asset management for Python, with glue code for various web frameworks
 License:    BSD
@@ -22,6 +22,10 @@ BuildRequires(pre): rpm-build-python3
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
+
+# due the same /usr/bin/webassets
+Conflicts: python-module-webassets
+Obsoletes: python-module-webassets
 
 %py3_provides %oname
 %add_python3_req_skip webassets.six.moves
@@ -94,7 +98,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc AUTHORS CHANGES *.rst
-%_bindir/*
+%_bindir/webassets
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test.*
 %if_with docs
@@ -112,6 +116,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.12.1-alt3
+- add conflicts/obsoletes to python-module-webassets
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.12.1-alt2
 - Porting on python3.
 
