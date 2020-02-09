@@ -4,11 +4,11 @@
 %def_disable check
 
 Name: %_name-qt5
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Qt XMPP library
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Group: Development/KDE and QT
 Url: https://github.com/%_name-project/%_name
 
@@ -17,8 +17,10 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 
 Conflicts: lib%_name
 
+%define qt_ver 5.7
+
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ qt5-base-devel
+BuildRequires: gcc-c++ qt5-base-devel >= %qt_ver
 BuildRequires: libspeex-devel libtheora-devel libvpx-devel libopus-devel doxygen
 %{?_enable_check:BuildRequires: /proc ctest}
 
@@ -129,6 +131,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Sun Feb 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- enabled check
+- fixed License tag
+
 * Wed Oct 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
