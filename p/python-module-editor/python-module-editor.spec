@@ -4,7 +4,7 @@
 
 Name: python-module-editor
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: Programmatically open an editor, capture the result
 
@@ -53,6 +53,7 @@ rm -rf %pypi_name.egg-info
 %install
 %python_install
 chmod a+x %buildroot%python_sitelibdir/editor.py
+%__subst "s|python$|python2|g" %buildroot%python_sitelibdir/editor.py
 
 %if 0%with_python3
 %python3_install
@@ -78,6 +79,9 @@ chmod a+x %buildroot%python3_sitelibdir/editor.py
 %endif
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt2
+- use python2 in the script
+
 * Tue Jun 11 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
 - new version 1.0.4 (with rpmrb script)
 
