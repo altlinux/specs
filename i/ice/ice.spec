@@ -1,6 +1,6 @@
 %define major 3.7
 Name: ice
-Version: %major.1
+Version: %major.3
 Release: alt1
 
 Summary: Files common to all Ice packages
@@ -12,7 +12,7 @@ Url: http://www.zeroc.com/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: fix missed /usr
-ExcludeArch: aarch64
+#ExcludeArch: aarch64
 
 # Source-url: https://github.com/zeroc-ice/ice/archive/v%version.tar.gz
 Source: Ice-%version.tar
@@ -113,6 +113,7 @@ icebox, iceboxnet, icepatch2server and related files.
 %prep
 %setup -a1 -n Ice-%version
 
+find -name "*.py" | xargs %__subst "s|#! */usr/bin/env python\$|#!/usr/bin/python2|"
 sed -i 's|-Werror||' config/Make.rules.Linux
 #sed -i 's|\(\$(CPPFLAGS)\)|\1 -g -fpermissive|g' \
 #	$(find ./ -name Makefile) config/Make.rules
@@ -133,8 +134,14 @@ mkdir -p %buildroot%_datadir/Ice-%version
 mv %buildroot/bin %buildroot/%_bindir
 ## clean libs
 #mv %buildroot/lib/ImportKey.class %buildroot%_datadir/Ice-%version
+
 ## libs
+%ifarch ppc64le
+mv %buildroot/lib %buildroot%_libdir
+%else
 mv %buildroot/%_lib %buildroot%_libdir
+%endif
+
 ## includes
 mv %buildroot/include %buildroot%_includedir
 # man
@@ -287,6 +294,10 @@ fi
 
 
 %changelog
+* Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
+- new version 3.7.3 (with rpmrb script)
+- use python2 for scripts
+
 * Mon Dec 17 2018 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt1
 - new version (3.7.1) with rpmgs script
 
