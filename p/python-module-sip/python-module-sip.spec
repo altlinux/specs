@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.19.19
-Release: alt2
+Release: alt3
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -170,13 +170,14 @@ popd
 %install
 %if_with python3
 %makeinstall_std -C python3
+%makeinstall_std -C python3-PyQt4
+%makeinstall_std -C python3-PyQt5
+
 mv %buildroot%_bindir/sip %buildroot%_bindir/sip3
 sed -i 's|%_datadir/sip|%_datadir/sip3|' \
 	%buildroot%python3_sitelibdir/sipconfig.py
 sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 	%buildroot%python3_sitelibdir/sipconfig.py
-%makeinstall_std -C python3-PyQt4
-%makeinstall_std -C python3-PyQt5
 %endif
 %makeinstall_std -C python
 %makeinstall_std -C python-PyQt4
@@ -232,6 +233,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Sat Feb 08 2020 Anton Midyukov <antohami@altlinux.org> 4.19.19-alt3
+- fix PATH to sip3 (it was broken in 4.19.13-alt1)
+
 * Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.19.19-alt2
 - fix build: add python2-base buildreq
 
