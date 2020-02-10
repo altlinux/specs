@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 2.1.3
-Release: alt2
+Version: 2.2.0
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -69,6 +69,7 @@ description of your project and Dune will do the rest.
 %_man1dir/dune-rules.1*
 %_man1dir/dune-runtest.1*
 %_man1dir/dune-subst.1*
+%_man1dir/dune-test.1*
 %_man1dir/dune-uninstall.1*
 %_man1dir/dune-utop.1*
 %_man5dir/dune-config.5*
@@ -89,6 +90,7 @@ description of your project and Dune will do the rest.
 %_libdir/ocaml/dune*/*.cma
 %_libdir/ocaml/dune*/*.cmi
 %_libdir/ocaml/dune-private-libs/*/*.cma
+%_libdir/ocaml/dune-private-libs/*/*.cmxa
 %_libdir/ocaml/dune-private-libs/*/*.cmi
 %_libdir/ocaml/dune*/*.cmxs
 %_libdir/ocaml/dune-private-libs/*/*.cmxs
@@ -110,11 +112,13 @@ description of your project and Dune will do the rest.
 %_libdir/ocaml/dune*/*.cmxa
 %_libdir/ocaml/dune-private-libs/*/*.a
 %_libdir/ocaml/dune-private-libs/*/*.cmx
-%_libdir/ocaml/dune-private-libs/*/*.cmxa
 
 
 
 %changelog
+* Mon Feb 10 2020 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 2.1.3-alt2
 - default mandir changed from /usr/man to /usr/share/man
 
