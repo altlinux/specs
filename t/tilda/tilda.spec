@@ -1,5 +1,5 @@
 Name: tilda
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: A Linux terminal taking after the likeness of many terminals from fps games
@@ -10,8 +10,8 @@ Url: https://github.com/lanoxx/%name
 Source: %url/archive/%name-%version.tar.gz
 
 BuildRequires: flex libgtk+3-devel >= 3.10.0
-BuildRequires: libconfuse-devel libvte3-devel
-BuildRequires: desktop-file-utils
+BuildRequires: libconfuse-devel libvte3-devel >= 0.40 libpcre2-devel
+BuildRequires: libappstream-glib-devel desktop-file-utils
 
 Summary(ru_RU.UTF-8): Терминал Linux, имитирующий многие терминалы из FPS-игр
 
@@ -25,6 +25,7 @@ the desktop until a key is pressed.
 %setup -n %name-%name-%version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
 %make_build
@@ -44,11 +45,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS ChangeLog README.md TODO.md
 
 
 %changelog
+* Mon Feb 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sat Feb 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
