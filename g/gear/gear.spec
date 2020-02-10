@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -38,8 +38,8 @@ See %_docdir/%name-%version/QUICKSTART.ru_RU.UTF-8 for details.
 
 %build
 %make_build
-asciidoc ABOUT.ru.utf8
-asciidoc QUICKSTART.ru.utf8
+asciidoc docs/ABOUT.ru.utf8
+asciidoc docs/QUICKSTART.ru.utf8
 
 %check
 make check
@@ -56,9 +56,13 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %_bindir/*
 %_datadir/%name
 %_mandir/man?/*
-%doc QUICKSTART* ABOUT*
+%doc docs/QUICKSTART* docs/ABOUT*
 
 %changelog
+* Mon Feb 10 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.0-alt1
+- gear-update: made --ignore-exclude the default behaviour (closes: #37371),
+  added --honor-exclude option.
+
 * Tue Mar 06 2018 Dmitry V. Levin <ldv@altlinux.org> 2.2.0-alt1
 - gear-srpmimport: honor RPMFILE_SPECFILE.
 - gear-changelog (by Alexey Gladkov):
