@@ -1,6 +1,7 @@
+%def_without doc
 Name: gnustep-make
 Version: 2.6.6
-Release: alt20.svn20140202
+Release: alt21.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -9,7 +10,9 @@ Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
 
 BuildRequires: clang-devel libgnustep-objc2-devel star
-BuildPreReq: texlive-latex-base texi2html
+%if_with doc
+BuildRequires: texlive-latex-base texi2html
+%endif
 
 Requires: gnustep-dirs
 
@@ -65,15 +68,19 @@ export CXXFLAGS="%optflags"
 	--enable-native-objc-exceptions \
 	--enable-debug-by-default
 
+%if_with doc
 %make_build -C Documentation \
 	GNUSTEP_MAKEFILES=$PWD
+%endif
 
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 %makeinstall_std
 
+%if_with doc
 %makeinstall_std -C Documentation \
 	GNUSTEP_MAKEFILES=$PWD
+%endif
 
 sed -i 's|-march=i586||g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
 sed -i 's|-mtune=i586||g' $(find %buildroot -type f)
@@ -133,9 +140,14 @@ rm -f %buildroot%_infodir/*
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %files doc
+%if_with doc
 %_docdir/GNUstep
+%endif
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.6-alt21.svn20140202
+- disable doc subpackage
+
 * Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.6-alt20.svn20140202
 - Built for aarch64 architecture.
 
