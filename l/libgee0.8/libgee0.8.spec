@@ -4,11 +4,11 @@
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
-License: LGPL
+License: LGPL-2.1
 Group: System/Libraries
 Url: http://live.gnome.org/Libgee
 
@@ -111,6 +111,9 @@ applications with %name.
 %endif
 
 %changelog
+* Mon Feb 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
+- 0.20.3
+
 * Mon Aug 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
 - 0.20.2
 
