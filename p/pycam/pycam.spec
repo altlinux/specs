@@ -1,33 +1,32 @@
 Name: pycam
-Version: 0.6.3
-Release: alt1
+Version: 0.7.0
+Release: alt1.20200112
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
 License: GPLv3+
-Url: http://sourceforge.net/projects/%name/
+Url: https://github.com/SebKuzminsky/pycam
 BuildArch: noarch
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: desktop-categories.patch
-Buildrequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
+Patch1: pycam-0.7.0-fix_build_man.patch
+Buildrequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: ccache
 BuildRequires: desktop-file-utils
 BuildRequires: help2man
-%add_python_req_skip ode
-%add_python_req_skip openvoronoi
-Requires: python-module-pygtkglext
+BuildRequires: pytest3
+BuildRequires: python3-module-svg python3-module-svg-path
+%add_python3_req_skip openvoronoi
 Requires: inkscape
 Requires: pstoedit
-%py_requires guppy
 
 # Needed because it owns the icon directories
 Requires: icon-theme-hicolor
 
-# Segmentation Fault with libfreeglut!!!
-Requires: libGLUT
+Requires: libfreeglut
 
 %description
 PyCAM is a toolpath generator for 3-axis CNC machining. It loads 3D
@@ -40,6 +39,7 @@ PyCAM supports a wide range of toolpath strategies for 3D models and
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 for f in ./*.{txt,TXT} ./Changelog; do
     iconv -f iso-8859-1 -t utf-8 $f |sed 's|\r||g' > $f.utf8
@@ -47,19 +47,25 @@ for f in ./*.{txt,TXT} ./Changelog; do
     mv $f.utf8 $f
 done
 
+# fix version
+sed -i 's/0.0-unknown/%version/' pycam/__init__.py
+
 %build
-%python_build
-pushd man
-make
-popd
+%python3_build
+make man
+
+%check
+pytest3 .
 
 %install
-%python_install
+%python3_install
+sed -i 's|/usr/bin/env python|%__python3|g' \
+    %buildroot%_bindir/*
 
 desktop-file-install  --dir=%buildroot%_desktopdir \
     share/desktop/%name.desktop
 
-pushd %buildroot%python_sitelibdir/%name/
+pushd %buildroot%python3_sitelibdir/%name/
 # remove shebang lines from top of module files
 for lib in `find . -path "*.py"`; do
     echo $lib
@@ -85,13 +91,17 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %files
 %doc Changelog COPYING.TXT LICENSE.TXT README.md technical_details.txt
 %_datadir/%name/
-%_bindir/%name
+%_bindir/*
 %_desktopdir/pycam.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/%name.1.*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
+* Sun Jan 12 2020 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1.20200112
+- new snapshot (future 0.7.0)
+- update Url
+
 * Sun May 13 2018 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
 - New version 0.6.3
 
