@@ -3,7 +3,7 @@
 
 Name: nicotine-plus
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: The client program for the SoulSeek filesharing system
 Summary(ru_RU.UTF-8): Клиент для файлообменной сети SoulSeek
@@ -26,7 +26,7 @@ Obsoletes: nicotine
 
 # manually removed: eric
 # Automatically added by buildreq on Sat May 26 2007
-BuildRequires: python-devel python-module-pygobject python-module-pyvorbis python-modules-compiler
+BuildRequires: python-devel python-module-pygobject python-modules-compiler
 
 BuildPreReq: rpm-build-python
 
@@ -102,6 +102,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/nicotine/
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.1-alt2
+- fix build requires.
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version (1.4.1) with rpmgs script
 - cleanup spec, change sources to github
