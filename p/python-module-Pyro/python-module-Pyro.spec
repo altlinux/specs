@@ -2,17 +2,21 @@
 
 Name: python-module-%oname
 Version: 3.16
-Release: alt1.1
+Release: alt2
+
 Summary: Python Remote Objects
-Group: Development/Python
 License: MIT
+Group: Development/Python
 URL: https://pypi.python.org/pypi/Pyro/
-Source: Pyro-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel
-BuildPreReq: python-module-setuptools
+Source: Pyro-%version.tar.gz
+
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
+
 %py_requires json wsgiref
+
 
 %description
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -71,21 +75,6 @@ free!
 
 This package contains documentation for Pyro.
 
-%package pickles
-Summary: Pickles for for Pyro
-Group: Development/Python
-
-%description pickles
-Pyro is an acronym for PYthon Remote Objects. It is an advanced and
-powerful Distributed Object Technology system written entirely in
-Python, that is designed to be very easy to use. It resembles Java's
-Remote Method Invocation (RMI). It has less similarity to CORBA - which
-is a system- and language independent Distributed Object Technology and
-has much more to offer than Pyro or RMI. But Pyro is small, simple and
-free!
-
-This package contains pickles for Pyro.
-
 %prep
 %setup
 
@@ -96,7 +85,7 @@ This package contains pickles for Pyro.
 %python_install
 
 %check
-python setup.py test
+%__python setup.py test
 
 %files
 %doc LICENSE *.txt
@@ -117,7 +106,12 @@ python setup.py test
 %files docs
 %doc docs/*
 
+
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.16-alt2
+- Rebuild with new setuptools
+- cleanup spec.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.16-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
