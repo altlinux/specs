@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Feb 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.4-alt1
+- gitask: convert space(s) in messages to underscores
+- rpmgs: improve update git repo from upstream
+
 * Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.3-alt1
 - rpmgs: add support for update of remotes branches
 - rpmgs: update predownloaded in any case
