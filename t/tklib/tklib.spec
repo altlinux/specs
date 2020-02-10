@@ -2,7 +2,7 @@
 %add_tcl_req_skip TclOO
 
 Name: tklib
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: A Tk standard library
@@ -14,14 +14,17 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-tcl >= 0.2.1-alt2
 BuildRequires: tcl >= 8.4.0-alt1 tcllib tk
 
-# git://git.altlinux.org/gears/t/tklib.git
-Source: %name-%version-%release.tar
+# repacked https://core.tcl-lang.org/tklib/tarball/tklib-%version.tar.gz
+Source: %name-%version.tar
+Patch1: 0001-ALT-TEA.patch
+Patch2: 0002-ALT-fix-shebangs-and-use-unversioned-interpreters.patch
 
 %description
 Tklib is a collection of utility modules for tk.
 
 %prep
-%setup -n %name-%version-%release
+%setup
+%autopatch -p2
 
 %install
 %configure
@@ -35,6 +38,9 @@ find examples -type f -print0 |xargs -r0 chmod 0644 --
 %_mandir/mann/*
 
 %changelog
+* Mon Feb 10 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt1
+- Updated to 0.7.
+
 * Wed Oct 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6-alt1
 - 0.6
 
