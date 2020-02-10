@@ -1,41 +1,25 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname libsam
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.8
-Release: alt1.1
+Release: alt2
+
 Summary: Bio-Informatics sam file libraries
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/libsam/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/dlmeduLi/libsam.git
 Source0: https://pypi.python.org/packages/2e/19/ac09eee4abd444761eec581941a35b93c0597ba79643dcb5079398be5ac7/%{oname}-%{version}.tar.gz
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
-%py_provides %oname
-
-%description
-Libsam is a collection of SAM/BAM file related python library. Packaged
-included in this library include:
-
-    samparser: A robust sam file format checker and parser
-
-%package -n python3-module-%oname
-Summary: Bio-Informatics sam file libraries
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+
+%description
 Libsam is a collection of SAM/BAM file related python library. Packaged
 included in this library include:
 
@@ -44,47 +28,24 @@ included in this library include:
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst PKG-INFO
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst PKG-INFO
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.8-alt2
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.8-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
