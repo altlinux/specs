@@ -1,93 +1,53 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname ratelim
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.1.6
-Release: alt2.1
+Release: alt3
+
 Summary: Makes it easy to respect rate limits
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/ratelim/
+BuildArch: noarch
 
 # https://github.com/themiurgo/ratelim.git
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-decorator
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-decorator
-%endif
 
-%py_provides %oname
-%py_requires decorator
+%py3_provides %oname
+%py3_requires decorator
+
 
 %description
 Ratelim is a simple Python library that limits the number of times a
 function can be called in during a time interval. It is particularly
 useful when using online APIs, which commonly enforce rate limits.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Makes it easy to respect rate limits
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires decorator
-
-%description -n python3-module-%oname
-Ratelim is a simple Python library that limits the number of times a
-function can be called in during a time interval. It is particularly
-useful when using online APIs, which commonly enforce rate limits.
-%endif
-
 %prep
 %setup -q -n %{oname}-%{version}
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.6-alt3
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
