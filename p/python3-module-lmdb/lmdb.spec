@@ -1,95 +1,50 @@
 %define oname lmdb
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.93
-Release: alt1.1.1
+Release: alt2
+
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 License: OpenLDAP BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/lmdb/
 
 # https://github.com/dw/py-lmdb.git
 Source: %name-%version.tar
 
-BuildRequires: liblmdb-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-memsink
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: liblmdb-devel
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
-%py_requires memsink
 
 %description
 Universal Python binding for the LMDB 'Lightning' Database.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Universal Python binding for the LMDB 'Lightning' Database
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Universal Python binding for the LMDB 'Lightning' Database.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export LMDB_FORCE_SYSTEM=1
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
 export LMDB_FORCE_SYSTEM=1
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-export LMDB_FORCE_SYSTEM=1
-python setup.py build_ext -i
-export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
-%if_with python3
-pushd ../python3
-python3 setup.py build_ext -i
+%__python3 setup.py build_ext -i
 export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
-popd
-%endif
 
 %files
 %doc ChangeLog *.md docs/*.rst examples LICENSE
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc ChangeLog *.md docs/*.rst examples LICENSE
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.93-alt2
+- Build for python2 disabled.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.93-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
