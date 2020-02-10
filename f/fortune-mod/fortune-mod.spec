@@ -1,21 +1,22 @@
-# vim: set ft=spec: -*- spec -*-
+%define _unpackaged_files_terminate_build 1
 
 Name: fortune-mod
-Version: 1.99.1
-Release: alt5.qa3
+Version: 2.28.0
+Release: alt1
 
 Summary: A program which will display a fortune
-License: BSD
+License: BSD-4-Clause-UC
 Group: Games/Other
 Url: https://github.com/shlomif/fortune-mod
 
-Requires: fortune = %version-%release
-Requires: fortunes = %version-%release
+Requires: fortune = %EVR
+Requires: fortunes = %EVR
 
 Source: %name-%version.tar
-Source1: kernelnewbies-fortunes.tar
-Source2: bofh-excuses.tar
-Patch: %name-%version-%release.patch
+Patch0: fortune-dir-2.28.patch
+
+BuildRequires: cmake gcc-c++ librecode-devel
+BuildRequires: perl-autodie shlomif-cmake-modules rinutils
 
 %description
 Fortune-mod contains the ever-popular fortune program, which will
@@ -26,8 +27,8 @@ wisdom each time they log in.
 %package -n fortune
 Summary: A program which will display a fortune
 Group: Games/Other
-Provides: %_gamesdatadir/fortune
-Provides: %_gamesdatadir/fortune/off
+Provides: %_datadir/%_gamesdir/fortune
+Provides: %_datadir/%_gamesdir/fortune/off
 
 %description -n fortune
 Fortune-mod contains the ever-popular fortune program, which will
@@ -39,6 +40,7 @@ You may wish to install some fortunes-* packages.
 
 %package -n fortunes
 Summary: fortune-mod: fortunes
+BuildArch: noarch
 Group: Games/Other
 PreReq: %_gamesdatadir/fortune
 
@@ -47,6 +49,7 @@ Fortune-mod: standard fortunes
 
 %package -n fortunes-offensive
 Summary: fortune-mod: offensive fortunes
+BuildArch: noarch
 Group: Games/Other
 PreReq: %_gamesdatadir/fortune/off
 
@@ -65,46 +68,40 @@ race, if needs be.  Needs be.
        --H. Allen Smith, "Rude Jokes"
 
 %prep
-%setup
-%patch -p1
+%setup -q %name-%version
+%patch0 -p1
 
 %build
-%make_build COOKIEDIR=%_gamesdatadir/fortune \
-	FORTDIR=%_bindir BINDIR=%_bindir
-%make_build COOKIEDIR=%_gamesdatadir/fortune \
-	fortune/fortune.man
+cd %name
+%cmake -DNO_OFFENSIVE=FALSE
+
+%cmake_build
 
 %install
-%make_install	FORTDIR=%buildroot/%_bindir \
-	COOKIEDIR=%buildroot%_gamesdatadir/fortune \
-	BINDIR=%buildroot/%_bindir \
-	BINMANDIR=%buildroot/%_mandir/man1 \
-	FORTMANDIR=%buildroot/%_mandir/man6 \
-	install
-
-tar xvf %SOURCE1 -C %buildroot%_gamesdatadir/fortune/
-tar xvf %SOURCE2 -C %buildroot%_gamesdatadir/fortune/
+cd %name
+%cmakeinstall_std
+mv %{buildroot}/usr/games/fortune %{buildroot}/usr/bin/fortune
 
 %files
 
 %files -n fortune
-%doc README ChangeLog TODO
-%_bindir/fortune
-%_bindir/strfile
-%_bindir/unstr
-%_mandir/man?/*
-%dir %_gamesdatadir/fortune
-%dir %_gamesdatadir/fortune/off
+%_bindir/*
+%dir %_datadir/%_gamesdir/fortune
+%dir %_datadir/%_gamesdir/fortune/off
+%_man1dir/*
+%_man6dir/*
 
 %files -n fortunes
-%_gamesdatadir/fortune/*
-%exclude %_gamesdatadir/fortune/off
+%_datadir/%_gamesdir/fortune/*
+%exclude %_datadir/%_gamesdir/fortune/off
 
 %files -n fortunes-offensive
-%doc Offensive
-%_gamesdatadir/fortune/off/*
+%_datadir/%_gamesdir/fortune/off/*
 
 %changelog
+* Wed Jun 24 2020 Konstantin Rybakov <kastet@altlinux.org> 2.28.0-alt1
+- Updated to upstream version 2.28.0
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.99.1-alt5.qa3
 - NMU: added URL
 
