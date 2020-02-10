@@ -1,37 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname selenium
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.0.2
-Release: alt2.1
+Release: alt3
+
 Summary: Python bindings for Selenium
 License: ASL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/selenium/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/0c/42/20c235e604bf736bc970c1275a78c4ea28c6453a0934002f95df9c49dad0/%{oname}-%{version}.tar.gz
 Patch: selenium-use-without-bundled-libs.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-%endif
+
 
 %description
-Python language bindings for Selenium WebDriver.
-
-The selenium package is used automate web browser interaction from
-Python.
-
-%package -n python3-module-%oname
-Summary: Python bindings for Selenium
-Group: Development/Python3
-
-%description -n python3-module-%oname
 Python language bindings for Selenium WebDriver.
 
 The selenium package is used automate web browser interaction from
@@ -41,27 +27,11 @@ Python.
 %setup -q -n %{oname}-%{version}
 %patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -70,22 +40,16 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 find %buildroot -type f -name '*.so' -exec rm -f '{}' +
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.2-alt3
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0.2-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
