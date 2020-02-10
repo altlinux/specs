@@ -1,22 +1,22 @@
 %define oname manuel
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.10.1
 Release: alt2
 
 Summary: Manuel lets you build tested documentation
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/manuel/
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-six python-module-zope.testing
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-six python3-module-zope.testing
+BuildRequires: python-tools-2to3
 
-%py_requires six
+%py3_requires six
 
 
 %description
@@ -24,9 +24,9 @@ Manuel lets you build tested documentation.
 
 %package tests
 Summary: Tests for Manuel
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py3_requires zope.testing
 
 %description tests
 Manuel lets you build tested documentation.
@@ -45,28 +45,29 @@ This package contains documentation for Manuel.
 %prep
 %setup
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test -v
+%__python3 setup.py test -v
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/test*
 
 %files tests
-%python_sitelibdir/%oname/test*
+%python3_sitelibdir/%oname/test*
 
 
 %changelog
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10.1-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Tue Apr 23 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.1-alt1
 - update to 1.10.1 to fix build
