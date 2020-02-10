@@ -1,90 +1,50 @@
 %define oname pcap
-%def_with python3
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Epoch: 1
 Version: 1.2.2
-Release: alt1
+Release: alt2
+
 Summary: Simplified object-oriented Python extension module for libpcap
-Url: https://github.com/hellais/pypcap
 License: BSD
-Group: Development/Python
+Group: Development/Python3
+Url: https://github.com/hellais/pypcap
 
 # https://github.com/hellais/pypcap.git
 Source: %name-%version.tar.gz
 
 Patch: eed8796.patch
 
-BuildRequires: libpcap-devel
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
+BuildRequires: libpcap-devel
 
-Provides: python-module-pypcap = %EVR
-Conflicts: python-module-pypcap < %EVR
-Obsoletes: python-module-pypcap
-Provides: python-module-kbandla-pypcap = %EVR
-Obsoletes: python-module-kbandla-pypcap
 
 %description
 PyPcap is simplified object-oriented Python extension module for libpcap
 - the current tcpdump.org version, the legacy version shipping with some
 of the BSD operating systems
 
-%if_with python3
-%package -n python3-module-%oname
-Group: Development/Python3
-Summary:        Simplified object-oriented Python extension module for libpcap
-
-%description -n python3-module-%oname
-PyPcap is simplified object-oriented Python extension module for libpcap
-- the current tcpdump.org version, the legacy version shipping with some
-of the BSD operating systems
-%endif
-
 %prep
 %setup
 %patch -p1
 
-%if_with python3
-cp -a . ../python3
-%endif
-
 %build
-python setup.py config
-%python_build
-python setup.py build
-
-%if_with python3
-pushd ../python3
-python3 setup.py config
+%__python3 setup.py config
 %python3_build
-python3 setup.py build
-popd
-%endif
+%__python3 setup.py build
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc Changelog.md LICENSE README.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc Changelog.md LICENSE README.rst
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1:1.2.2-alt2
+- Build for python2 disabled.
+
 * Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.2.2-alt1
 - Build new version for python3.7.
 
