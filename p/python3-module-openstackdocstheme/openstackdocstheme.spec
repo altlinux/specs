@@ -1,14 +1,13 @@
 %define     oname openstackdocstheme
-%def_with   python3
 
-Name:       python-module-%oname
-Version:    1.31.1
+Name:       python3-module-%oname
+Version:    1.31.2
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
 
 License:    Apache-2.0
-Group:      Development/Python
+Group:      Development/Python3
 Url:        https://pypi.org/project/openstackdocstheme
 #           https://github.com/openstack/openstackdocstheme
 
@@ -18,23 +17,9 @@ Source:     %name-%version.tar
 
 BuildArch:  noarch
 
-BuildRequires: python-module-pbr
-
-%if_with python3
 BuildRequires: python3-module-pbr
-%endif
 
 %description
-OpenStack Sphinx Theme
-
-Theme and extension support for Sphinx documentation that is published to
-docs.openstack.org. Intended for use by OpenStack projects.
-
-%package -n python3-module-%oname
-Summary:  Sphinx theme for RST-sourced documentation published to docs.openstack.org
-Group: Development/Python3
-
-%description -n python3-module-%oname
 OpenStack Sphinx Theme
 
 Theme and extension support for Sphinx documentation that is published to
@@ -46,47 +31,28 @@ docs.openstack.org. Intended for use by OpenStack projects.
 # Prevent doc build warnings from causing a build failure
 sed -i '/warning-is-error/d' setup.cfg
 
-%if_with python3
-cp -a . ../python3
-%endif
-
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
 mkdir -p %buildroot%python3_sitelibdir_noarch/%oname/theme
 cp -r %oname/theme/* \
 %buildroot%python3_sitelibdir_noarch/%oname/theme
-popd
-%endif
-
-mkdir -p %buildroot%python_sitelibdir_noarch/%oname/theme
-cp -r %oname/theme/* \
-%buildroot%python_sitelibdir_noarch/%oname/theme
-%python_install
 
 %files
 %doc README.rst
-%_bindir/*
-%python_sitelibdir_noarch/%oname
-%python_sitelibdir_noarch/*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.rst
+%_bindir/docstheme-build-pdf
+%_bindir/docstheme-build-translated.sh
+%_bindir/docstheme-lang-display-name.py
 %python3_sitelibdir_noarch/%oname
 %python3_sitelibdir_noarch/*.egg-info
-%endif
 
 %changelog
+* Tue Feb 11 2020 Grigory Ustinov <grenka@altlinux.org> 1.31.2-alt1
+- Build new version.
+- Drop python2 support.
+
 * Fri Aug 23 2019 Grigory Ustinov <grenka@altlinux.org> 1.31.1-alt1
 - Build new version.
 - Remove docs.
