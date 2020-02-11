@@ -15,7 +15,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -46,7 +46,7 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
 BuildRequires: swig
-BuildRequires: python-module-Cython python-module-Pyrex
+BuildRequires: python-module-Cython
 BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -944,6 +944,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1:1.15.4-alt4
+- Fixed build requires.
+
 * Fri Sep 13 2019 Vladimir Didenko <cow@altlinux.org> 1:1.15.4-alt3
 - Remove dependency on scons (it is not required anymore)
 

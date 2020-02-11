@@ -2,7 +2,7 @@
 
 Name: python-module-Pygments
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Source1: autobuild.watch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-Pyrex
 BuildRequires: python-module-docutils
 BuildRequires: python-module-objects.inv
 BuildRequires: python-module-alabaster
@@ -228,6 +227,9 @@ popd
 
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.2-alt2
+- Fixed build requires.
+
 * Sat Jun 29 2019 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - new version 2.4.2
 

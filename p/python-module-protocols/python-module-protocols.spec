@@ -5,7 +5,7 @@
 
 Name: python-module-protocols
 Version: 1.0
-Release: alt0.1.1.2.1.1
+Release: alt1
 
 Summary: Open Protocols and Component Adaptation for Python
 
@@ -19,7 +19,7 @@ Source: http://files.turbogears.org/eggs/%srcname-%srcver.tar.bz2
 
 # manually removed: pybliographic 
 # Automatically added by buildreq on Mon Nov 20 2006
-BuildRequires: python-module-Pyrex python-modules-encodings python-module-setuptools
+BuildRequires: python-modules-encodings python-module-setuptools
 
 %add_python_req_skip zope
 %py_provides protocols
@@ -43,6 +43,9 @@ fragile 'isinstance' if type() comparisons.
 %python_sitelibdir/*
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt1
+- Fixed build requires.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt0.1.1.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
