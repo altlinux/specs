@@ -24,14 +24,14 @@
 
 Name: lsb
 Version: 4.0
-Release: alt10
+Release: alt11
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
 License: GPLv2
 Url: http://www.linuxbase.org/
 Group: System/Base
-Packager: Andriy Stepanov <stanv@altlinux.ru>
+
 Source1: README.alt
 
 # 20.4 Installation and Removal of Init Scripts
@@ -43,7 +43,7 @@ Source12: remove_initd
 # XXX:
 Source21: lsbinstall
 
-Exclusivearch: %ix86 x86_64 %e2k aarch64 mipsel
+ExclusiveArch: %ix86 x86_64 %e2k aarch64 mipsel
 
 Requires: lsb-core = %version
 Requires: lsb-cxx = %version
@@ -472,8 +472,8 @@ Requires: perl-bignum
 # Submodule Python
 # http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Python
 # http://dev.linuxfoundation.org/navigator/browse/intlang.php?cmd=list-modules&ILid=2
-Requires: /usr/bin/python2
-Requires: python2-base >= 2.4.2
+Requires: %__python
+#Requires: python2-base >= 2.4.2
 Requires: python-modules
 %description languages
 The languages requirements for LSB compliance.
@@ -686,6 +686,11 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt11
+- remove obsoleted packager line
+- use __python instead of /usr/bin/python2
+- drop python2-base require
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt10
 - fix licence name
 - require python2
