@@ -1,49 +1,23 @@
 %define rname tagpy
 
-%def_with python3
-
-Name: python-module-tagpy
+Name: python3-module-%rname
 Version: 2013.1
-Release: alt2.git20130711.1.1.1.1.2
+Release: alt3
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://mathema.tician.de/software/tagpy
 
 # http://git.tiker.net/trees/tagpy.git
 Source: %name-%version.tar
 
-#Buildrequires: python-devel boost-python-devel libtag-devel gcc-c++
-#Buildrequires: python-module-setuptools ctags
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel boost-python3-devel
-#BuildPreReq: python3-module-setuptools
-%endif
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: boost-python-headers elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-dev
-BuildRequires: boost-devel-headers boost-python-devel boost-python3-devel gcc-c++ libtag-devel python-module-setuptools python3-module-setuptools rpm-build-python3
+BuildRequires: boost-devel-headers boost-python3-devel gcc-c++ libtag-devel
+
 
 %description
-TagPy is a set of Python bindings for Scott Wheeler's TagLib.
-It builds upon Boost.Python, a wrapper generation library which is part
-of the Boost set of C++ libraries.
-
-Just like TagLib, TagPy can:
-
-  * read and write ID3 tags of version 1 and 2, with many supported
-    frame types for version 2 (in MPEG Layer 2 and MPEG Layer 3, FLAC
-    and MPC),
-  * access Xiph Comments in Ogg Vorbis Files and Ogg Flac Files,
-  * access APE tags in Musepack and MP3 files.
-
-%package -n python3-module-%rname
-Summary: TagPy is a set of Python bindings for TagLib
-Group: Development/Python3
-
-%description -n python3-module-%rname
 TagPy is a set of Python bindings for Scott Wheeler's TagLib.
 It builds upon Boost.Python, a wrapper generation library which is part
 of the Boost set of C++ libraries.
@@ -59,47 +33,25 @@ Just like TagLib, TagPy can:
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%add_optflags -fpermissive
-export CC=g++
-./configure.py \
-	--taglib-inc-dir=%_includedir/taglib \
-	--boost-python-libname=boost_python-mt
-%python_build_debug
+%__python3 configure.py \
+    --taglib-inc-dir=%_includedir/taglib \
+    --boost-python-libname=boost_python3-mt
 
-%if_with python3
-pushd ../python3
-python3 configure.py \
-	--taglib-inc-dir=%_includedir/taglib \
-	--boost-python-libname=boost_python3-mt
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files 
 %doc README*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%rname
-%doc README*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 2013.1-alt3
+- Build for python2 disabled.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2013.1-alt2.git20130711.1.1.1.1.2
 - NMU: rebuilt with boost-1.67.0
 
