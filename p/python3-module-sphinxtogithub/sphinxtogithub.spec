@@ -1,20 +1,22 @@
 %define oname sphinxtogithub
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1.dev.git20131026.1
+Release: alt2
+
 Summary: Script to prepare Sphinx html output for github pages
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinxtogithub/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/michaeljones/sphinx-to-github.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch0: port-on-python3.patch
 
-BuildPreReq: python-module-setuptools
-
+BuildRequires(pre): rpm-build-python3
 %py_provides %oname
+
 
 %description
 This project is designed to help you get around the github-pages Jekyll
@@ -22,23 +24,28 @@ behaviour of ignoring top level directories starting with an underscore.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
 %_bindir/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt2
+- Porting on python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.dev.git20131026.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
