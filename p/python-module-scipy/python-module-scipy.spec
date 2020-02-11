@@ -12,7 +12,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt5
+Release: alt6
 
 Summary: SciPy is the library of scientific codes
 
@@ -38,7 +38,7 @@ Patch1: fix-unicode-use.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: gcc-c++ gcc-fortran liblapack-devel libnumpy-devel libnumpy-py3-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests  python3-module-numpy-testing rpm-build-python3 time vixie-cron
+BuildPreReq: gcc-c++ gcc-fortran liblapack-devel libnumpy-devel libnumpy-py3-devel python-module-Cython python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests  python3-module-numpy-testing rpm-build-python3 time vixie-cron
 
 #BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
 #BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
@@ -235,6 +235,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt6
+- Fixed build requires.
+
 * Wed Oct 02 2019 Stanislav Levin <slev@altlinux.org> 1.2.0-alt5
 - Dropped dependency on tests packages.
 

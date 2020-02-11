@@ -1,6 +1,6 @@
 Name: python-module-spidermonkey
 Version: 0.0.10
-Release: alt5
+Release: alt6
 Summary: JavaScript/python bridge
 License: MIT
 Group: Development/Python
@@ -8,7 +8,7 @@ Url: http://pypi.python.org/pypi/python-spidermonkey
 
 Source0: python-spidermonkey-%version.tar
 
-BuildPreReq: python-module-setuptools python-module-Pyrex
+BuildPreReq: python-module-setuptools
 BuildRequires: libnspr-devel python-module-nose
 
 %description
@@ -37,6 +37,9 @@ mkdir -p %buildroot
 %files -f INSTALLED_FILES
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.10-alt6
+- Fixed build requires.
+
 * Wed Aug 07 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.0.10-alt5
 - Fixed build on aarch64 and ppc64le.
 
