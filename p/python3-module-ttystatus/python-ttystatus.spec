@@ -1,30 +1,27 @@
 %define oldname python-ttystatus
 %global pkgname ttystatus
 
-Name: python-module-ttystatus
+Name: python3-module-ttystatus
 Version: 0.34
-Release: alt1
+Release: alt2
 
 Summary: Progress and status updates on terminals for Python
-
 License: GPLv3+
-Group: Development/Python
+Group: Development/Python3
 Url: http://liw.fi/%pkgname/
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
-Source44: import.info
 
 BuildArch: noarch
 
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-# END SourceDeps(oneline)
+Source: http://code.liw.fi/debian/pool/main/p/%oldname/%{oldname}_%version.orig.tar.gz
+Source44: import.info
+Patch0: port-on-python3.patch
 
-#BuildRequires: python-module-coverage-test-runner
-BuildRequires: python-module-sphinx python-module-alabaster
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-modules-curses
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-alabaster
+
 
 %description
 ttystatus is a Python library for showing progress reporting and
@@ -39,40 +36,48 @@ are set by the user. Every time a value is updated, widgets get
 updated (although the terminal is only updated every so often to give
 user time to actually read the output).
 
-%package -n python-module-ttystatus-doc
+%package doc
 Group: Other
 Summary: Documentation for %pkgname
 
-%description -n python-module-ttystatus-doc
+%description doc
 This package contains the documentation for %pkgname, a Python
 library providing progress and status updates on terminals.
 
 %prep
 %setup -n %pkgname-%version
+%patch0 -p2
+
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python_build
+%python3_build
+
 # Build documentation
-make
+%make
 
 %install
-%python_install
+%python3_install
 
 %check
 exit 0
 # CoverageTestRunner trips up on build directory;
 # since we've already done the install phase, remove it first
 rm -rf build
-make check
+%make check
 
 %files
 %doc COPYING NEWS README
-%python_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/*
 
-%files -n python-module-ttystatus-doc
+%files doc
 %doc doc/_build/html/*
 
+
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.34-alt2
+- Porting to python3.
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.34-alt1
 - new version 0.34 (with rpmrb script)
 
