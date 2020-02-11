@@ -1,33 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define modname markdown
+
 %def_enable check
 
-Name: python-module-%modname
-Version: 3.1.1
-Release: alt2
+Name: python3-module-%modname
+Version: 3.2
+Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
-Group: Development/Python
+Group: Development/Python3
 License: BSD-3-Clause
 Url: http://pypi.python.org/pypi/Markdown/
 
 #VCS: git://github.com/waylan/Python-Markdown.git
 Source: https://pypi.io/packages/source/M/Markdown/Markdown-%{version}.tar.gz
 
-%setup_python_module %modname
-
 BuildArch: noarch
+Requires: python3-module-Pygments
 
-Conflicts: discount
-%py_provides %modname
-
-Requires: python-module-Pygments
-
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-yaml python-modules-logging
-BuildRequires: python-module-nose python-module-coverage
-BuildRequires: python-modules-xml python-module-Pygments
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-nose python3-module-coverage
+BuildRequires: python3-module-Pygments
 
 %description
 Markdown is a plain text formatting syntax designed to be as readable as
@@ -50,25 +45,25 @@ This package contains documentation for Markdown.
 %setup -n Markdown-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-ln -s %{modname}_py %buildroot%_bindir/%modname
-
+%python3_install
+mv %buildroot%_bindir/%{modname}_py \
+	%buildroot%_bindir/%{modname}_py3
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-nosetests -v
-%buildroot%_bindir/%modname README.md >README.html
+export PYTHONPATH=%buildroot%python3_sitelibdir
+nosetests3 -v
+%buildroot%_bindir/%{modname}_py3 README.md >README.html
 
 %files
-%_bindir/%modname
-%_bindir/%{modname}_py
-%python_sitelibdir/*
+%_bindir/%{modname}_py3
+%python3_sitelibdir/*
+
 
 %changelog
-* Fri Feb 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt2
-- removed python3 subpackage (3.1.1 is last python2 supporting version)
+* Fri Feb 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
+- 3.2 (python3 only)
 - enabled check
 - fixed License tag
 
