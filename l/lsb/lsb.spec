@@ -23,10 +23,12 @@
 %endif
 
 Name: lsb
-Summary: The skeleton package defining packages needed for LSB compliance
 Version: 4.0
-Release: alt9
-License: GPL
+Release: alt10
+
+Summary: The skeleton package defining packages needed for LSB compliance
+
+License: GPLv2
 Url: http://www.linuxbase.org/
 Group: System/Base
 Packager: Andriy Stepanov <stanv@altlinux.ru>
@@ -470,8 +472,8 @@ Requires: perl-bignum
 # Submodule Python
 # http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Python
 # http://dev.linuxfoundation.org/navigator/browse/intlang.php?cmd=list-modules&ILid=2
-Requires: /usr/bin/python
-Requires: python-base >= 2.4.2
+Requires: /usr/bin/python2
+Requires: python2-base >= 2.4.2
 Requires: python-modules
 %description languages
 The languages requirements for LSB compliance.
@@ -684,6 +686,10 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt10
+- fix licence name
+- require python2
+
 * Wed Oct 02 2019 Ivan A. Melnikov <iv@altlinux.org> 4.0-alt9
 - mipsel support
 
