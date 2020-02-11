@@ -1,7 +1,8 @@
-%define oversion 4.4-0.94
+%define bashversion 4.4
+%define oversion 1.0.1
 
 Name: bashdb
-Version: 4.4_0.94
+Version: %{bashversion}_%oversion
 Release: alt1
 
 Summary: BASH with Debugger and Improved Debug Support and Error Handling
@@ -12,8 +13,8 @@ Group: Shells
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-# Source-url: http://prdownloads.sf.net/bashdb/%name-%oversion.tar
-Source: http://prdownloads.sf.net/bashdb/%name-%version.tar
+# Source-url: http://prdownloads.sf.net/bashdb/%name-%bashversion-%oversion.tar.bz2
+Source: %name-%version.tar
 Patch0: bashdb-alt-use-mktemp.patch
 Patch1: bashdb-alt-fix-builtin.patch
 
@@ -34,6 +35,8 @@ debugger for bash that has been written.
 %patch0 -p2
 %patch1 -p2 -b .fix
 
+%__subst "s|/usr/bin/env python\$|/usr/bin/env python3|" lib/term-highlight.py
+
 %build
 export CFLAGS="$CFLAGS %optflags %optflags_shared"
 
@@ -51,7 +54,7 @@ mkdir -p -- %buildroot%_libexecdir/bash
 mv -f -- %buildroot/%_datadir/%name/builtin/* %buildroot%_libexecdir/bash
 
 %files
-%doc README THANKS NEWS TODO
+%doc README.md THANKS NEWS TODO
 %_bindir/*
 %_datadir/%name/
 %_libexecdir/bash/*
@@ -59,6 +62,9 @@ mv -f -- %buildroot/%_datadir/%name/builtin/* %buildroot%_libexecdir/bash
 %_man1dir/*
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.4_1.0.1-alt1
+- new version (4.4_1.0.1) with rpmgs script
+
 * Thu Jul 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4_0.94-alt1
 - Updated to upstream version 4.4_0.94.
 
