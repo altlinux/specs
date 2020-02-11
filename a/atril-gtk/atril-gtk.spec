@@ -12,7 +12,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.23.2
+Version:        1.24.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -280,6 +280,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Tue Feb 11 2020 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
+- Updated to 1.24.0.
+
 * Wed Jan 22 2020 Mikhail Efremov <sem@altlinux.org> 1.23.2-alt1
 - BR: Dropped intltool.
 - BR: Added libsynctex-devel.
