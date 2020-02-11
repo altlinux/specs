@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 3.96
+%define ver_major 3.98
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -18,7 +18,8 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudprint
-%def_enable cloudproviders
+# 3.98: undefined reference on gtk_popover_new_from_model
+%def_disable cloudproviders
 %def_enable vulkan
 # File box-packing.ltr.nodes does not exist
 %def_disable install_tests
@@ -30,7 +31,7 @@ Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
-License: %lgpl2plus
+License: LGPL-2.0-or-later
 Url: http://www.gtk.org
 
 %if_enabled snapshot
@@ -211,7 +212,7 @@ the functionality of the installed GTK+3 packages.
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
 # The license
-ln -sf %_licensedir/LGPL-2 COPYING
+ln -sf %_licensedir/LGPL-2.0-or-later COPYING
 
 %find_lang --output=gtk40.lang gtk40 gtk40-properties
 
@@ -336,6 +337,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.98.0-alt1
+- 3.98.0
+
 * Tue May 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.96.0-alt1
 - 3.96.0
 
