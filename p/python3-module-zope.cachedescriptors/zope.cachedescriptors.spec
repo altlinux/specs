@@ -1,32 +1,22 @@
 %define oname zope.cachedescriptors
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: Method and property caching decorators
-
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.cachedescriptors/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: https://pypi.io/packages/source/z/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-zope.testrunner
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-zope.testrunner
-%endif
+BuildRequires: python3-module-zope.testrunner
 
-%py_requires zope
+%py3_requires zope
+
 
 %description
 Cached descriptors cache their output. They take into account instance
@@ -37,39 +27,9 @@ Cached descriptors cache their data in _v_ attributes, so they are also
 useful for managing the computation of volatile attributes for
 persistent objects.
 
-%package -n python3-module-%oname
-Summary: Method and property caching decorators
-Group: Development/Python3
-%py3_requires zope
-
-%description -n python3-module-%oname
-Cached descriptors cache their output. They take into account instance
-attributes that they depend on, so when the instance attributes change,
-the descriptors will change the values they return.
-
-Cached descriptors cache their data in _v_ attributes, so they are also
-useful for managing the computation of volatile attributes for
-persistent objects.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.cachedescriptors
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Cached descriptors cache their output. They take into account instance
-attributes that they depend on, so when the instance attributes change,
-the descriptors will change the values they return.
-
-Cached descriptors cache their data in _v_ attributes, so they are also
-useful for managing the computation of volatile attributes for
-persistent objects.
-
-This package contains tests for zope.cachedescriptors.
-
 %package tests
 Summary: Tests for zope.cachedescriptors
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -86,69 +46,37 @@ This package contains tests for zope.cachedescriptors.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
+    %buildroot%python3_sitelibdir/
 %endif
 
 %check
-python setup.py test -v
-%if_with python3
-pushd ../python3
-python3 setup.py test -v
-popd
-%endif
+%__python3 setup.py test -v
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-
-%files tests
-%python_sitelibdir/*/*/tests.*
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
+
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.1-alt2
+- Build for python2 disabled.
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
 - new version 4.3.1 (with rpmrb script)
 
