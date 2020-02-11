@@ -9,7 +9,7 @@
 
 Name: bzr
 Version: 2.7.0
-Release: %branch_release alt3.bzr20170317
+Release: %branch_release alt4
 
 Summary: Bazaar is a decentralized revision control system
 License: %gpl2plus
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Thu Aug 20 2009 (-bi)
-BuildRequires: python-module-Pyrex python-modules-compiler python-modules-email python-modules-logging zlib-devel
+BuildRequires: python-module-Cython python-modules-compiler python-modules-email python-modules-logging zlib-devel
 
 %{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-docutils}}}}}
 %{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-paramiko}}}}}
@@ -126,6 +126,9 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.7.0-alt4
+- Fixed build requires.
+
 * Thu Nov 30 2017 Anatoly Kitaykin <cetus@altlinux.org> 2.7.0-alt3.bzr20170317
 - Bugfix upgrade to trunk
 
