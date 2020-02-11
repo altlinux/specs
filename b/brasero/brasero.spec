@@ -18,7 +18,7 @@
 
 Name: brasero
 Version: %ver_major.2
-Release: alt5
+Release: alt6
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -33,6 +33,7 @@ Source: %name-%version.tar
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
+Patch3: %name-3.12.2-alt-gtk-doc-1.30.patch
 
 Requires: lib%name = %version-%release
 
@@ -146,6 +147,7 @@ GObject introspection devel data for the Brasero
 %patch -p1 -b .link
 %patch1 -p1 -b .button_underline
 %patch2 -b .schemas_convert
+%patch3 -b .gtk_doc 
 
 %build
 %autoreconf
@@ -240,6 +242,10 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt6
+- updated to 3.12.2-73-g3e31ccd5
+- fixed build with gtk-doc-1.30
+
 * Mon Jun 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt5
 - updated to 3.12.2-62-gbd1a4d5b
 - Requires: +dconf, +tracker if "search" enabled (ALT #36887)
