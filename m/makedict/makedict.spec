@@ -1,11 +1,11 @@
 Name: makedict
 Version: 0.4.1_beta1
-Release: alt2.git.ga70119
+Release: alt3.git.ga70119
 
 Summary: XDXF based converter from any dictionary format to any
 
 Group: System/Libraries
-License: GPL2
+License: GPLv2
 Url: http://xdxf.sf.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -23,6 +23,7 @@ XDXF based converter from any dictionary format to any.
 %prep
 %setup -n %name
 %__subst "s|lib/makedict-codecs|share/makedict-codecs|g" CMakeLists.txt
+%__subst "s|/usr/bin/env python\$|/usr/bin/env python2|" src/*.py
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX:=%prefix \
@@ -45,6 +46,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt3.git.ga70119
+- use python2
+
 * Thu Jan 29 2015 Ildar Mulyukov <ildar@altlinux.ru> 0.4.1_beta1-alt2.git.ga70119
 - new upstream source
 
