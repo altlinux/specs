@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Feb 05 2020 Oleg Solovyov <mcpain@altlinux.org> 0.4.11-alt1
+- Detect and show encrypted volumes on unpartitioned disks
+
 * Mon Jan 20 2020 Slava Aseev <ptrnine@altlinux.org> 0.4.10-alt1
 - Catch lvm2 VG shrink exception
 
