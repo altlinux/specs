@@ -1,20 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname sphinx-paramlinks
-Name: python-module-%oname
+
+Name: python3-module-%oname
 Version: 0.3.2
-Release: alt1.1
+Release: alt2
+
 Summary: Allows param links in Sphinx function/method descriptions to be linkable
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinx-paramlinks/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 Source0: https://pypi.python.org/packages/68/66/35fd8994e7c380f0272af0fc4b729272fd61a5f209a5ca4b2ee38d92ca68/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-module-setuptools
-BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-docutils python3-module-sphinx
 
-%py_provides sphinx_paramlinks
+%py3_provides sphinx_paramlinks
+
 
 %description
 A Sphinx extension which allows :param: directives within Python
@@ -27,19 +31,23 @@ the SQLAlchemy project and related projects.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.2-alt2
+- Porting to python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
