@@ -1,6 +1,7 @@
 %define hdf5dir %_libdir/hdf5-seq
 
 %def_with python3
+%def_without check
 
 %define descr \
 HDF5 for Python (h5py) is a general-purpose Python interface to the \
@@ -23,7 +24,7 @@ presented using a dictionary metaphor, indexed by name.
 
 Name: h5py
 Version: 2.9.0
-Release: alt2
+Release: alt3
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -33,8 +34,9 @@ Url: http://www.h5py.org/
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel libnumpy-devel libhdf5-devel
-BuildRequires: libsz2-devel python-module-Cython python-module-Pyrex
+BuildRequires: libsz2-devel python-module-Cython python-module-Cython
 BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: python-module-setuptools python-module-six
 BuildRequires: python-module-pkgconfig python-module-unittest2
@@ -171,10 +173,10 @@ cp -fR lzf %buildroot%_docdir/%name/
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
 
 %check
-python setup.py test
+%__python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 popd
 %endif
 
@@ -207,6 +209,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.9.0-alt3
+- Fixed build requires.
+
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 2.9.0-alt2
 - Added missing dep on `numpy.testing`.
 
