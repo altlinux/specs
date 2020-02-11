@@ -1,45 +1,34 @@
 %define mname dogpile
 %define oname %mname.cache
 
-%def_with python3
+%def_without docs
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
+
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/dogpile.cache/
 
 # https://bitbucket.org/zzzeek/dogpile.cache.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-coverage
-BuildRequires: python-module-nose python-module-mock
-BuildRequires: python-module-mako
-BuildRequires: python-module-decorator
-BuildRequires: python-module-sphinx-devel python-module-changelog
-BuildRequires: python-module-sphinx-paramlinks
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-nose python3-module-mock
-BuildRequires: python3-module-mako
-BuildRequires: python3-module-decorator
-%endif
+BuildRequires: python3-module-coverage python3-module-nose
+BuildRequires: python3-module-mock python3-module-mako
+BuildRequires: python3-module-decorator python-tools-2to3
 
-Provides: python-module-dogpile-cache = %EVR
-Obsoletes: python-module-dogpile-cache < %EVR
-Provides: python-module-dogpile-core = %EVR
-Obsoletes: python-module-dogpile-core < %EVR
+Provides: python3-module-dogpile-cache = %EVR
+Obsoletes: python3-module-dogpile-cache < %EVR
+Provides: python3-module-dogpile-core = %EVR
+Obsoletes: python3-module-dogpile-core < %EVR
 
-%py_provides %oname
-%py_provides %mname.core
+%py3_provides %oname
+%py3_provides %mname.core
 
-BuildRequires(pre): rpm-macros-sphinx
 
 %description
 A caching API built around the concept of a "dogpile lock", which allows
@@ -55,33 +44,10 @@ dogpile.cache in a more efficient and succinct manner, and all the cruft
 (Beaker's internals were first written in 2005) relegated to the trash
 heap.
 
-%package -n python3-module-%oname
-Summary: A caching front-end based on the Dogpile lock
-Group: Development/Python3
-Provides: python3-module-dogpile-cache = %EVR
-Obsoletes: python3-module-dogpile-cache < %EVR
-Provides: python3-module-dogpile-core = %EVR
-Obsoletes: python3-module-dogpile-core < %EVR
-%py3_provides %oname
-%py3_provides %mname.core
-
-%description -n python3-module-%oname
-A caching API built around the concept of a "dogpile lock", which allows
-continued access to an expiring data value while a single thread
-generates a new value.
-
-dogpile.cache builds on the dogpile.core locking system, which
-implements the idea of "allow one creator to write while others read" in
-the abstract. Overall, dogpile.cache is intended as a replacement to the
-Beaker caching system, the internals of which are written by the same
-author. All the ideas of Beaker which "work" are re-implemented in
-dogpile.cache in a more efficient and succinct manner, and all the cruft
-(Beaker's internals were first written in 2005) relegated to the trash
-heap.
-
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 A caching API built around the concept of a "dogpile lock", which allows
@@ -101,71 +67,54 @@ continued access to an expiring data value while a single thread
 generates a new value.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
+%if_with docs
+sed -i 's|sphinx-build|sphinx-build-3|' docs/build/Makefile
 %endif
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/build/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+%if_with docs
 %make -C docs/build pickle
 %make -C docs/build html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/build/output/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/build/output/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/output/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
 %endif
 
+
 %changelog
+* Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt2
+- Build for python2 disabled.
+
 * Mon Apr 22 2019 Alexey Shabalin <shaba@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
