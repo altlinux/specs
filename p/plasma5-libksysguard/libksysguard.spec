@@ -8,7 +8,7 @@
 
 Name: plasma5-%rname
 Version: 5.17.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -92,6 +92,7 @@ KF5 library
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %EVR
+Requires: /usr/bin/lsof
 %description -n %liblsofui
 KF5 library
 
@@ -157,6 +158,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Wed Feb 12 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.17.5-alt2
+- update requires
+
 * Thu Jan 09 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.17.5-alt1
 - new version
 
