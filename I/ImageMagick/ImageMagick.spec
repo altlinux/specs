@@ -1,13 +1,12 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	86
+%define drelease	92
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
 %define sonamepp	8
 
-%def_enable rsvg
-%def_enable x
+%def_with rsvg
 %ifarch %e2k
 # lcc's openmp implementation is way too old
 %def_disable openmp
@@ -44,12 +43,13 @@ BuildPreReq: libpng-devel
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel libtiff-devel libwmf-devel libxml2-devel perl-devel xdg-utils xorg-cf-files
 
 BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath liblqr-devel libltdl-devel perl-parent
+BuildRequires: libheif-devel libraw-devel libraqm-devel libflif-devel libzstd-devel libfftw3-devel
 
 %{?!_with_bootstrap:BuildRequires: libdjvu-devel openexr-devel transfig libopenjpeg2.0-devel}
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 
-%if_enabled rsvg
-BuildRequires: librsvg-devel libpixman-devel
+%if_with rsvg
+BuildRequires: librsvg-devel
 %endif
 
 Requires: %name-tools %name-doc
@@ -67,9 +67,17 @@ Group: System/Libraries
 Provides: %name-lib = %version
 Obsoletes: %name-lib < %version
 Obsoletes: lib%name < %EVR
+Requires: lib%name%mversion-common = %EVR
 
 %description -n lib%name%mversion.%soname
 %name is a powerful image display, conversion and manipulation libraries.
+
+%package -n lib%name%mversion-common
+Summary: Common files for %name
+Group: System/Libraries
+
+%description -n lib%name%mversion-common
+Common files for lib%{name}.
 
 %package -n lib%{name}++%mversion.%sonamepp
 Summary: %name shared libraries
@@ -161,7 +169,6 @@ subst 's,2.69,2.68,' configure.ac
 	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
-	%{subst_enable x} \
 	%{subst_enable openmp} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
 	%{subst_enable static}
@@ -201,6 +208,8 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+
+%files -n lib%name%mversion-common
 %dir %_datadir/%mgkdir-%mversion
 %dir %_sysconfdir/%name-%mversion
 %_datadir/%mgkdir-%mversion/*
@@ -252,6 +261,13 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 6.9.10.92-alt1
+- new version 6.9.10.92
+- fixed build with librsvg
+- enabled HEIC, RAW, RAQM, FLIF, FFTW and ZSTD formats
+- files needed for the shared library have been moved from tools to common
+  package (closes: #37961)
+
 * Tue Jan 14 2020 Anton Farygin <rider@altlinux.ru> 6.9.10.86-alt1
 - new version 6.9.10.86
 
