@@ -4,8 +4,8 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.16.3
-Release: alt2
+Version: 2.16.4
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache
@@ -146,6 +146,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Wed Feb 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.4-alt1
+- Version 2.16.4
+
 * Tue Nov 05 2019 Nazarov Denis <nenderus@altlinux.org> 2.16.3-alt2
 - Fix conflict libmbedx509 with hiawatha package less than 10.10 (ALT #37417)
 
