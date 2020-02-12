@@ -1,7 +1,7 @@
 %define rname alt-app-starter
 
 Name: %rname
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 %K5init altplace
 
@@ -34,6 +34,7 @@ BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
 Requires: qt5-translations
+Requires: /usr/bin/xvt
 
 %description
 Alt-App-Starter is the tool to quickly run programs as another user.
@@ -61,6 +62,13 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 %_K5xdgapp/*.desktop
 
 %changelog
+* Wed Feb 12 2020 Pavel Moseev <mars@altlinux.org>  1.1.4-alt1
+- fix launch of console applications (closes: #37872)
+- add tooltip for launching console applications (closes: #37979)
+- fix program behavior when entering an invalid password (closes: #38053)
+- fix some user interface elements
+- update translation
+
 * Thu Feb 06 2020 Pavel Moseev <mars@altlinux.org>  1.1.3-alt1
 - fix launch of console applications (closes: #37872)
 - upgrade the utility description in the spec file (closes: #37978)
