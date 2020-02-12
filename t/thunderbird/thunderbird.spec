@@ -12,7 +12,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	68.4.2
+Version:	68.5.0
 Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
@@ -534,6 +534,17 @@ chmod a+r *.xpi
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 68.5.0-alt1
+- New version (68.5.0).
+- Fixed:
+  + CVE-2020-6793 Out-of-bounds read when processing certain email messages
+  + CVE-2020-6794 Setting a master password post-Thunderbird 52 does not delete unencrypted previously stored passwords
+  + CVE-2020-6795 Crash processing S/MIME messages with multiple signatures
+  + CVE-2020-6797 Extensions granted downloads.open permission could open arbitrary applications on Mac OSX
+  + CVE-2020-6798 Incorrect parsing of template tag could result in JavaScript injection
+  + CVE-2020-6792 Message ID calculcation was based on uninitialized data
+  + CVE-2020-6800 Memory safety bugs fixed in Thunderbird 68.5
+
 * Mon Feb 03 2020 Andrey Cherepanov <cas@altlinux.org> 68.4.2-alt1
 - New version.
 
