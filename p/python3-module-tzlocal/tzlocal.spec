@@ -1,24 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define oname tzlocal
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.3
 Release: alt2
 
 Summary: tzinfo object for the local timezone
 License: CC0 1.0 Universal
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/tzlocal/
 BuildArch: noarch
 
 # https://github.com/regebro/tzlocal.git
 Source0: https://pypi.python.org/packages/d3/64/e4b18738496213f82b88b31c431a0e4ece143801fb6771dddd1c2bf0101b/%{oname}-%{version}.tar.gz
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytz
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytz
 
-%py_provides %oname
+%py3_provides %oname
 
 
 %description
@@ -46,30 +45,31 @@ This package contains tests for %oname.
 %prep
 %setup -q -n %{oname}-%{version}
 
-sed -i 's|@PYVER@|%_python_version|' tzlocal/unix.py
+sed -i 's|@PYVER@|%_python3_version|' tzlocal/unix.py
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
 
 %files tests
-%python_sitelibdir/*/test*
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
