@@ -1,12 +1,15 @@
 %define oname pycountry
 
-Name: python-module-%oname
+%define py3name python3-module-%oname
+%define py3dir %py3name-%version
+
+Name: %py3name
 Version: 1.10
 Release: alt2
 
 Summary: ISO country, subdivision, language, currency and script definitions
 License: LGPLv2.1
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/pycountry
 
 # hg clone https://bitbucket.org/gocept/pycountry
@@ -15,9 +18,8 @@ Patch10: %name-%version-alt-python3.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-nose
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-nose
 
 
 %description
@@ -26,7 +28,7 @@ their translations.
 
 %package tests
 Summary: Tests ISO country, subdivision, language, currency and script definitions
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %EVR
 
@@ -39,28 +41,29 @@ definitions and their translations.
 %patch10 -p1
 
 %build
-%python_build_debug
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
-nosetests
+%__python3 setup.py test
+nosetests3
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests.*
+%exclude %python3_sitelibdir/%oname/__pycache__/tests.*
 
 %files tests
-%python_sitelibdir/%oname/tests.*
+%python3_sitelibdir/%oname/tests.*
+%python3_sitelibdir/%oname/__pycache__/tests.*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
