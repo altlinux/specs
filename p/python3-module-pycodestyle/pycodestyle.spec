@@ -1,24 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pycodestyle
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.5.0
 Release: alt2
 
 Summary: Python style guide checker
-Group: Development/Python
 License: Expat
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.org/project/pycodestyle/
+BuildArch: noarch
 
 # https://github.com/PyCQA/pycodestyle.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-
-%if_with check
-BuildRequires: python2.7(json)
-%endif
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(tox)
 
 
 %description
@@ -29,27 +26,32 @@ conventions in PEP 8.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
+
+pushd %buildroot%_bindir
+for i in $(ls); do
+    mv $i $i.py3
+done
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-# tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
-%_bindir/pycodestyle
-%python_sitelibdir/pycodestyle.py*
-%python_sitelibdir/pycodestyle-%version-py%_python_version.egg-info/
+%_bindir/pycodestyle.py3
+%python3_sitelibdir/pycodestyle.py
+%python3_sitelibdir/__pycache__/pycodestyle.cpython-*
+%python3_sitelibdir/pycodestyle-%version-py%_python3_version.egg-info/
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.5.0-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
