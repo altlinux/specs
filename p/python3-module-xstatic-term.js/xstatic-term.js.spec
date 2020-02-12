@@ -2,23 +2,22 @@
 %define oname %mname-term.js
 %define pypi_name XStatic-term.js
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.0.7.0
 Release: alt2
 
 Summary: term.js (XStatic packaging standard)
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-%mname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-%mname
 
-%py_provides %mname.pkg.termjs
-%py_requires %mname.pkg
+%py3_provides %mname.pkg.termjs
+%py3_requires %mname.pkg
 
 
 %description
@@ -31,25 +30,24 @@ files.
 %setup -n %pypi_name-%version
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/%mname/pkg/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/*.pth
+%python3_sitelibdir/%mname/pkg/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*.pth
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.7.0-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.7.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
