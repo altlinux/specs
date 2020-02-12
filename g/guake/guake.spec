@@ -1,5 +1,5 @@
 Name:    guake
-Version: 3.6.3
+Version: 3.7.0
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -24,7 +24,6 @@ Requires: dbus
 Requires: notification-daemon
 
 Patch1: guake-alt-fix-ru-l10n.patch
-Patch2: guake-alt-fix-sitelibdir-path.patch
 Patch3: guake-alt-add-glade-l10n.patch
 
 BuildRequires: desktop-file-utils
@@ -36,7 +35,6 @@ just need to press a key to invoke him, and press again to hide.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 
 %build
@@ -45,18 +43,11 @@ export PBR_VERSION="%version"
 
 %install
 export PBR_VERSION="%version"
-%makeinstall_std prefix=%_prefix
+%makeinstall_std PREFIX=%_prefix
 install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/autostart/guake.desktop
-
 # Remove compiled gscheme
 rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
-
 %find_lang %name
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--add-category=System \
-	--add-category=GTK \
-	%buildroot%_desktopdir/guake.desktop
 
 %files -f %name.lang
 %doc COPYING NEWS.rst README.rst
@@ -64,13 +55,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_sysconfdir/xdg/autostart/guake.desktop
 %_datadir/%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/Guake*.egg-info
+%python3_sitelibdir/guake*.egg-info
 %_pixmapsdir/%name.png
 %_desktopdir/*.desktop
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
+- New version.
+
 * Tue May 14 2019 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt1
 - New version.
 
