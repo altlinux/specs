@@ -2,22 +2,21 @@
 
 %define oname mimeparse
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.6.0
 Release: alt4
 
 Summary: Basic functions for handling mime-types in python
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/python-mimeparse
 
 # https://github.com/dbtsai/python-mimeparse.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(json)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(json)
 
 
 %description
@@ -42,23 +41,22 @@ Contents:
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python mimeparse_test.py
+%__python3 mimeparse_test.py
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt4
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3.qa1
 - NMU: remove rpm-build-ubt from BR:
