@@ -8,7 +8,7 @@
 
 Name:    qt-creator
 Version: 4.11.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -155,6 +155,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 4.11.1-alt2
+- Add Russian localization to desktop file (ALT #36851).
+
 * Fri Feb 07 2020 Andrey Cherepanov <cas@altlinux.org> 4.11.1-alt1
 - New version.
 
