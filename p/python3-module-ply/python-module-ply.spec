@@ -3,21 +3,21 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.11
 Release: alt2
 
 Summary: lex and yacc python implementation
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.dabeaz.com/ply/
 BuildArch: noarch
 
 # Source-url: https://pypi.io/packages/source/p/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 
 %description
@@ -28,26 +28,25 @@ and yacc.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
 pushd test
-%__python testlex.py -v
-%__python testyacc.py -v
+%__python3 testlex.py -v
+%__python3 testyacc.py -v
 popd
 
 %files
-%doc CHANGES doc/*.html example/
-%python_sitelibdir/*
+%doc CHANGES doc/*.html
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.11-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 3.11-alt1
 - new version 3.11 (with rpmrb script)
