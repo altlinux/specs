@@ -1,6 +1,6 @@
 Name: xclip
 Version: 0.13
-Release: alt2
+Release: alt3
 
 Packager: Nikita Ermakov <arei@altlinux.org>
 
@@ -11,6 +11,7 @@ Group: System/XFree86
 Url: https://github.com/astrand/xclip
 Source: %name-%version.tar
 Patch1: xclip-0.12-setsid.patch
+Patch2: Make-xclip-exit-when-it-loses-the-selection-71.patch
 
 BuildRequires: libICE-devel libXmu-devel
 
@@ -25,6 +26,7 @@ forwarding has already been setup.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -40,6 +42,9 @@ make DESTDIR=%buildroot install install.man
 %_bindir/*
 
 %changelog
+* Wed Feb 12 2020 Nikita Ermakov <arei@altlinux.org> 0.13-alt3
+- Fix xclip to exit when it loses selection.
+
 * Fri Nov 15 2019 Nikita Ermakov <arei@altlinux.org> 0.13-alt2
 - Drop imake BR.
 
