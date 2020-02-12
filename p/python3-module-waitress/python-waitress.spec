@@ -3,25 +3,28 @@
 %define oname waitress
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2.1
 Release: alt3
 
 Summary: Waitress WSGI server
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 
 Url: https://pypi.org/project/waitress/
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(json)
-BuildRequires: python2.7(nose)
+BuildRequires: python3(nose)
+BuildRequires: python3(tox)
 %endif
+
+Conflicts: python-module-%oname
+
 
 %description
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -38,13 +41,13 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %patch -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 # don't package tests
-# rm -r %buildroot{%python_sitelibdir}/%oname/tests
+# rm -r %buildroot{%python3_sitelibdir}/%oname/tests
 
 %check
 # we won't use coverage in tox
@@ -56,20 +59,19 @@ commands_pre =\
     cp %_bindir\/nosetests3 \{envbindir\}\/nosetests\
     sed -i \x27s/\\x27nosetests-.*\\x27/\\x27nosetests\\x27/g;1c #!{envpython}\x27 {envbindir}/nosetests' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-# tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
-%_bindir/waitress-serve
-%python_sitelibdir/waitress/
-%python_sitelibdir/waitress-%version-py%_python_version.egg-info/
+%_bindir/*
+%python3_sitelibdir/waitress/
+%python3_sitelibdir/waitress-%version-py%_python3_version.egg-info/
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt3
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Mon Feb 25 2019 Stanislav Levin <slev@altlinux.org> 1.2.1-alt2
 - Fixed test (test_functional.SleepyThreadTests, closes: #36156).
