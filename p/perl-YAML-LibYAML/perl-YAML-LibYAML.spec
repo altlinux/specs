@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -21,12 +22,12 @@ BuildRequires: perl-Filter
 
 Name:           perl-YAML-LibYAML
 Epoch:          1
-Version:        0.80
-Release:        alt1_1
+Version:        0.81
+Release:        alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        https://cpan.metacpan.org/modules/by-module/YAML/YAML-LibYAML-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
 Patch0:         YAML-LibYAML-0.79-Unbundled-libyaml.patch
 
 # Build
@@ -115,12 +116,14 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes CONTRIBUTING README
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.81-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.80-alt1_1
 - update to new release by fcimport
 
