@@ -2,23 +2,22 @@
 %define oname %mname-html5shiv
 %define pypi_name XStatic-html5shiv
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.6.1
 Release: alt4
 
 Summary: html5shiv (XStatic packaging standard)
 License: MIT & GPLv2
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-%mname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-%mname
 
-%py_provides %mname.pkg.html5shiv
-%py_requires %mname.pkg
+%py3_provides %mname.pkg.html5shiv
+%py3_requires %mname.pkg
 
 
 %description
@@ -31,10 +30,10 @@ files.
 %setup -n %pypi_name-%version
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
@@ -43,18 +42,17 @@ files.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt
-%python_sitelibdir/%mname/pkg/*
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%mname/pkg/*
+%python3_sitelibdir/*.egg-info
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.6.1-alt4
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 removal.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.6.1-alt3.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
