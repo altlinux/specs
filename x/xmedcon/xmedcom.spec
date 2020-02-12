@@ -1,9 +1,8 @@
 Name: xmedcon
-Version: 0.16.1
-Release: alt2
-
+Version: 0.16.2
+Release: alt1
 Summary: A medical image conversion utility and library
-License: GPL-2.0
+License: GPLv2 and LGPLv2.1
 Group: Graphics
 
 Url: http://xmedcon.sourceforge.net
@@ -69,6 +68,9 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_datadir/aclocal/*
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 0.16.2-alt1
+- 0.16.2
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt2
 - NMU: Fix license.
 
