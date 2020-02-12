@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Dancer
 Name: perl-%module_name
-Version: 1.3512
+Version: 1.3513
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -32,16 +32,19 @@ to scale to much more complex applications.
 %perl_vendor_install
 
 %files
-%doc AUTHORS LICENSE CONTRIBUTORS README Changes examples
+%doc AUTHORS CONTRIBUTORS README Changes examples
 %_bindir/dancer
 %_man1dir/dancer.1*
 %perl_vendor_privlib/Dancer*
 %dir %perl_vendor_privlib/HTTP
 %dir %perl_vendor_privlib/HTTP/Tiny
 %perl_vendor_privlib/HTTP/Tiny/NoProxy.pm
-%doc LICENSE Changes README*
+%doc Changes README*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.3513-alt1
+- automated CPAN update
+
 * Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 1.3512-alt1
 - automated CPAN update
 
