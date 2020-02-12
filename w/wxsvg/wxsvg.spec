@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: wxsvg
-Version: 1.5.20
+Version: 1.5.22
 Release: alt1
 Epoch: 1
 
@@ -78,6 +78,9 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 1:1.5.22-alt1
+- 1.5.22
+
 * Wed Aug 28 2019 Anton Farygin <rider@altlinux.ru> 1:1.5.20-alt1
 - 1.5.20
 
