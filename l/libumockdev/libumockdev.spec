@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.14
+Version: 0.14.1
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -121,6 +121,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Wed Feb 12 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
 - 0.14
 - fixed License tag
