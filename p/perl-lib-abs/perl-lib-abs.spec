@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-lib-abs
-Version:        0.93
-Release:        alt2_16
+Version:        0.95
+Release:        alt1
 Summary:        Module lib that makes relative path absolute to caller
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/lib-abs
-Source0:        https://cpan.metacpan.org/authors/id/M/MO/MONS/lib-abs-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/MO/MONS/lib-abs-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -62,10 +63,13 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_16
 - update to new release by fcimport
 
