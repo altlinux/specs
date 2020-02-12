@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: A markdown parser for docutils
 License: MIT
@@ -13,7 +13,6 @@ BuildArch: noarch
 Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 Source0: %name-%version.tar
-Patch0: fix-import.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -24,7 +23,6 @@ This allows you to write CommonMark inside of Docutils & Sphinx projects.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python3_build
@@ -39,6 +37,9 @@ This allows you to write CommonMark inside of Docutils & Sphinx projects.
 
 
 %changelog
+* Tue Feb 11 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1.1
+- NMU: rebuild with python3-module-commonmark.
+
 * Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt1
 - Version updated to 0.6.0
 - porting on python3.
