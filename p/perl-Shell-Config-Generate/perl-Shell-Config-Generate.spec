@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Shell/Guess.pm) perl(Test2/API.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.33
+Version: 0.34
 Release: alt1
 Summary: Portably generate config for any shell
 Group: Development/Perl
@@ -29,10 +29,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README LICENSE author.yml Changes example
+%doc README author.yml Changes example
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- automated CPAN update
+
 * Thu Dec 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - automated CPAN update
 
