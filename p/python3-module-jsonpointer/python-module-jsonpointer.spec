@@ -1,20 +1,19 @@
 %global pypi_name jsonpointer
 %global github_name python-json-pointer
 
-Name:           python-module-%pypi_name
-Version:        2.0
-Release:        alt2
-Summary:        Resolve JSON Pointers in Python
-Group:          Development/Python
+Name:       python3-module-%pypi_name
+Version:    2.0
+Release:    alt2
+Summary:    Resolve JSON Pointers in Python
+Group:      Development/Python3
 
-License:        BSD
-URL:            https://github.com/stefankoegl/%github_name
-Source0:        %name-%version.tar
+License:    BSD
+URL:        https://github.com/stefankoegl/%github_name
+Source0:    %name-%version.tar
 
-BuildArch:      noarch
-BuildRequires:  python-devel python-module-setuptools
+BuildArch:  noarch
 
-BuildRequires(pre):  rpm-build-python
+BuildRequires(pre): rpm-build-python3
 
 
 %description
@@ -24,30 +23,24 @@ Library to resolve JSON Pointers according to RFC 6901.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py2
-done
-popd
+export LC_ALL=en_US.UTF-8
+%python3_install
 
 %check
-%__python tests.py
+%__python3 tests.py
 
 %files
 %doc README.md
-%_bindir/*.py2
-%python_sitelibdir/*
+%_bindir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Tue Jan 15 2019 Alexey Shabalin <shaba@altlinux.org> 2.0-alt1
 - 2.0
