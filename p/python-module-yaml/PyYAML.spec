@@ -3,12 +3,12 @@
 %def_with python3
 
 Name: python-module-yaml
-Version: 5.2
+Version: 5.3
 Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 
-License: MIT/X Consortium
+License: MIT
 Group: Development/Python
 Url: https://github.com/yaml/pyyaml
 #BuildArch: noarch
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.3-alt1
+- 5.3 released
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 5.2-alt1
 - Build new version 5.2.
 
