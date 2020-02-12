@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pkgconfig
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2.2
 Release: alt2
 
 Summary: Interface Python with pkg-config
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pkgconfig/
 BuildArch: noarch
 
@@ -15,9 +15,9 @@ BuildArch: noarch
 Source0: https://pypi.python.org/packages/9d/ba/80910bbed2b4e646a6adab4474d2e506744c260c7002a0e6b41ef8750d8d/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-module-nose
+BuildRequires: python3-module-nose
 
-%py_provides %oname
+%py3_provides %oname
 
 
 %description
@@ -28,24 +28,23 @@ line tool and supports Python 2.6+.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
-nosetests -v
+%__python3 setup.py test
+nosetests3 -v
 
 %files
 %doc *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.2-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
