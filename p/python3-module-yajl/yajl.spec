@@ -1,23 +1,19 @@
 %define oname yajl
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.3.6
 Release: alt2
 
 Summary: A CPython module for Yet-Another-Json-Library
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/yajl/
 
 # https://github.com/rtyler/py-yajl.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-
-%py_provides %oname
-%py_requires cjson
-
-BuildRequires: libyajl1-devel python-module-cjson python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libyajl1-devel python3-module-pytest
 
 
 %description
@@ -29,26 +25,25 @@ written by Lloyd Hilaiel.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
-%__python setup.py build_ext -i
+%__python3 setup.py test
+%__python3 setup.py build_ext -i
 export PYTHONPATH=$PWD
-%__python tests/unit.py
+%__python3 tests/unit.py
 
 %files
 %doc README.markdown compare.py
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.6-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt1.git20140530.1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
