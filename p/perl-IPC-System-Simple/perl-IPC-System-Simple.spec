@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(English.pm) perl(Fatal.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-IPC-System-Simple 
-Version:	1.25
-Release:	alt2_1
+Version:	1.26
+Release:	alt1
 License:	GPL+ or Artistic 
 Group:		Development/Perl
 Summary:	Run commands simply, with detailed diagnostics 
 URL:		http://search.cpan.org/dist/IPC-System-Simple
-Source0:	http://search.cpan.org/CPAN/authors/id/P/PJ/PJF/IPC-System-Simple-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/J/JK/JKEENAN/IPC-System-Simple-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(BSD/Resource.pm)
 BuildRequires:	perl(Carp.pm)
@@ -63,10 +63,13 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} %{buildroot}
 
 %files
-%doc Changes LICENSE README examples/
+%doc Changes README examples/ examples
 %{perl_vendor_privlib}/IPC/
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.25-alt2_1
 - Sisyphus build
 
