@@ -1,12 +1,12 @@
 %define oname webencodings
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.1
 Release: alt2
 
 Summary: Character encoding aliases for legacy web content
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/webencodings/
 
 BuildArch: noarch
@@ -14,10 +14,8 @@ BuildArch: noarch
 # Source-url: https://pypi.io/packages/source/w/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+%py3_provides %oname
 
 
 %description
@@ -25,7 +23,7 @@ This is a Python implementation of the WHATWG Encoding standard.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -38,28 +36,29 @@ This package contains tests for %oname.
 
 %build
 export LC_ALL=en_US.UTF-8
-%python_build_debug
+%python3_build_debug
 
 %install
 export LC_ALL=en_US.UTF-8
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests.*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
+%exclude %python3_sitelibdir/*/*/tests.*
 
 %files tests
-%python_sitelibdir/*/tests.*
+%python3_sitelibdir/*/tests.*
+%python3_sitelibdir/*/*/tests.*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.1-alt2
-- Rebuild with new setuptools
-- removal build for python2.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
