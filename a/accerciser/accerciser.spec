@@ -2,12 +2,12 @@
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
 Group: Accessibility
-License: BSD
+License: BSD-3-Clause
 Url: https://wiki.gnome.org/Apps/Accerciser
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -16,12 +16,11 @@ BuildArch: noarch
 
 Requires: python3-module-%name = %version-%release
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
+%add_python3_path %_datadir/%name
+%filter_from_requires '/python3\(gi\.repository\.GLib\)/d'
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: rpm-build-licenses rpm-build-gnome libappstream-glib-devel
+BuildRequires: rpm-build-gnome libappstream-glib-devel
 BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
 
@@ -58,7 +57,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS README COPYING NEWS
 %_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
@@ -68,11 +66,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
 %_datadir/icons/hicolor/symbolic/apps/accerciser-symbolic.svg
 %_datadir/metainfo/accerciser.appdata.xml
+%doc AUTHORS README COPYING NEWS
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Feb 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+- updated dependencies
+- fixed License tag
+
 * Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 
