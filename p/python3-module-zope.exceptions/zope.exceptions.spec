@@ -3,27 +3,27 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.2.0
 Release: alt5
 
 Summary: Zope Exceptions
 License: ZPLv2.1
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/zopefoundation/zope.exceptions.git
 Url: http://pypi.python.org/pypi/zope.exceptions
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-zope.interface
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-zope.interface
 
 %if_with check
-BuildRequires: python-module-zope.testrunner
+BuildRequires: python3-module-zope.testrunner
 %endif
 
-%py_requires zope zope.interface
+%py3_requires zope zope.interface
+
 
 %description
 This package contains exception interfaces and implementations which are
@@ -32,7 +32,7 @@ packages.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -46,33 +46,33 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-        %buildroot%python_sitelibdir/
+%python3_install
+
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+        %buildroot%python3_sitelibdir/
 %endif
 
 %check
-%__python setup.py test -v
+%__python3 setup.py test -v
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests
 
 %files tests
-%python_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/tests
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt5
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt4
 - NMU: remove rpm-build-ubt from BR:
