@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 3.006
+Version: 3.007
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -63,6 +63,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.007-alt1
+- automated CPAN update
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1
 - automated CPAN update
 
