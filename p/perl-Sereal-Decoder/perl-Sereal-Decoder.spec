@@ -7,8 +7,8 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires: libzstd-devel
 
 Name: perl-%module_name
-Version: 4.007
-Release: alt2
+Version: 4.011
+Release: alt1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
@@ -55,6 +55,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.011-alt1
+- automated CPAN update
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.007-alt2
 - build with system zstd (closes: #36407)
 
