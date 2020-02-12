@@ -1,18 +1,18 @@
 %define oname gmpy
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.17
 Release: alt2
 
 Summary: General MultiPrecision arithmetic for Python
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://code.google.com/p/gmpy/
 
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: libgmp-devel python-devel python-modules-unittest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libgmp-devel
 
 
 %description
@@ -38,18 +38,18 @@ This package contains documentation and tests for GMPY.
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-%__python test/gmpy_test.py
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 test/gmpy_test.py
 rm -f test/*.pyc
 
 %files
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
 %doc doc test
@@ -57,7 +57,7 @@ rm -f test/*.pyc
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.17-alt2
-- Rebuild with new setuptools.
+- Build for python2 disabled.
 
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.17-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
