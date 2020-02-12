@@ -3,17 +3,15 @@
 
 Name: ccache
 Version: 3.7.7
-Release: alt1
+Release: alt2
 
 Summary: Compiler cache
-
 License: GPLv3+
 Group: Development/Tools
-Url: http://ccache.dev/
 
+Url: http://ccache.dev/
 # Source-git: https://github.com/ccache/ccache.git
 Source: %name-%version.tar
-
 #Patch1: ccache-fedora-rounding.patch
 Patch2: ccache-alt-version.patch
 
@@ -30,20 +28,19 @@ BuildRequires: zlib-devel
 %description
 ccache is a compiler cache. It acts as a caching pre-processor to
 C/C++ compilers, using the -E compiler switch and a hash to detect
-when a compilation can be satisfied from cache. This often results in
-a 5 to 10 times speedup in common compilations.
+when a compilation can be satisfied from cache. This often results
+in a 5 to 10 times speedup in common compilations.
 
 %prep
 %setup
 #patch1 -p1
 %patch2 -p1
 rm -rfv zlib/
-
-sed -i -e "s:@VERSION@:%version:g" dev.mk.in
+sed -i "s:@VERSION@:%version:g" dev.mk.in
 
 %build
 %autoreconf
-%configure
+%configure %{!?_with_doc:--disable-man}
 %make_build
 
 %if_with doc
@@ -62,12 +59,16 @@ EOF
 %doc LICENSE.adoc README.md GPL-3.0.txt
 %if_with doc
 %doc doc
-%endif
 %_man1dir/ccache.1*
+%endif
 %_bindir/ccache
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Wed Feb 12 2020 Michael Shigorin <mike@altlinux.org> 3.7.7-alt2
+- fix doc knob (manpage depends on it now too)
+- minor spec cleanup
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.7-alt1
 - new version 3.7.7 (with rpmrb script)
 - fix URL, fix Source URL
