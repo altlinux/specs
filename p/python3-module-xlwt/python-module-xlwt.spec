@@ -1,13 +1,13 @@
 %define oname xlwt
 
-Name: python-module-xlwt
+Name: python3-module-xlwt
 Version: 1.3.0
 Release: alt2
 
 Summary: Library to generate spreadsheet files compatible with Microsoft Excel versions 95 to 2003.
 
 License: BSD-style
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.python-excel.org/
 BuildArch: noarch
 
@@ -15,11 +15,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %oname-%version.tar
 #VCS: https://github.com/python-excel/xlwt
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
-Requires: python >= 2.4
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 
 %description
@@ -33,22 +30,22 @@ packages outside the standard Python distribution.
 %setup -q -n %oname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%__python setup.py install --root=$RPM_BUILD_ROOT --optimize=2 --record=INSTALLED_FILES
+%python3_install
 
 mkdir -p %buildroot%_defaultdocdir/%name/
 cp -av README.rst docs examples %buildroot%_defaultdocdir/%name/
 
-%files -f INSTALLED_FILES
+%files
 %doc %_defaultdocdir/%name/
+%python3_sitelibdir/%{oname}*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version
