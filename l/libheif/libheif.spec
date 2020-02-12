@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -51,6 +51,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Fri Dec 20 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
