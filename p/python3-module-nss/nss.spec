@@ -2,28 +2,27 @@
 
 %define mname nss
 
-Name: python-module-%mname
+Name: python3-module-%mname
 Version: 1.0.1
 Release: alt5
 
 Summary: Python binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
 License: MPLv2.0 or GPLv2+ or LGPLv2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.mozilla.org/projects/security/pki/python-nss
 
 # hg clone https://hg.mozilla.org/projects/python-nss
 Source: %name-%version.tar
 
-%py_provides %mname
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-six
+BuildRequires: python3-module-six
 # for tests
 BuildRequires: nss-utils
+
+%py3_provides %mname
 
 
 %description
@@ -44,24 +43,23 @@ python-nss exposes elements of NSPR.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
-%__python test/run_tests -i
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 test/run_tests -i
 
 %files
 %doc LICENSE* README doc/ChangeLog
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt5
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4
 - NMU: remove rpm-build-ubt from BR:
