@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pysendfile
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0.1
 Release: alt3
 
 Summary: Python interface to the sendfile(2) system call
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 
 Url: https://pypi.org/project/pysendfile/
 # Source-git: https://github.com/giampaolo/pysendfile
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-dev
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev
 
 
 %description
@@ -29,24 +29,23 @@ file over a socket (e.g. FTP).
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-PYTHONPATH="%buildroot%python_sitelibdir" %__python test/test_sendfile.py
+PYTHONPATH="%buildroot%python3_sitelibdir" python3 test/test_sendfile.py
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/sendfile.so
-%python_sitelibdir/pysendfile-*.egg-info/
+%python3_sitelibdir/sendfile.cpython-*.so
+%python3_sitelibdir/pysendfile-*.egg-info/
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.1-alt3
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.0.1-alt2
 - added explicit BR: python{,3}-dev to ease e2k python upgrade
