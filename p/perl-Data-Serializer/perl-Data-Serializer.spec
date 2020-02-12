@@ -16,7 +16,7 @@
 
 
 Name: perl-Data-Serializer
-Version: 0.60
+Version: 0.65
 Release: alt1
 
 Summary: %m_name - Modules that serialize data structures
@@ -28,7 +28,7 @@ Url: http://search.cpan.org/dist/Data-Serializer/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEELY/Data-Serializer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEELY/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 29 2008 (-bi)
 BuildRequires: perl-Config-General perl-Crypt-Blowfish perl-Crypt-CBC perl-Digest-SHA perl-Digest-SHA1 perl-FreezeThaw perl-JSON perl-JSON-XS perl-Log-Agent perl-Module-Build perl-PHP-Serialization perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Dumper perl-XML-Simple perl-YAML-Syck perl-version
@@ -39,7 +39,7 @@ modules currently available. Adds the functionality of both compression and
 encryption.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -48,10 +48,13 @@ encryption.
 
 %files
 %perl_vendor_privlib/*
-%doc Changes README INSTALL examples
+%doc Changes README examples
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
