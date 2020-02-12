@@ -1,21 +1,20 @@
 %define oname xstatic
 %define pypi_name XStatic
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.1
 Release: alt3
 
 Summary: XStatic base package with minimal support code
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
 
-%py_provides %oname
+%py3_provides %oname
 
 
 %description
@@ -30,26 +29,25 @@ packages.
 %setup -n %pypi_name-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-install -p -m644 %oname/__init__.py %buildroot%python_sitelibdir/%oname/
-cp -fR %oname/pkg %buildroot%python_sitelibdir/%oname/
+%python3_install
+install -p -m644 %oname/__init__.py %buildroot%python3_sitelibdir/%oname/
+cp -fR %oname/pkg %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
 
 
 %changelog
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt3
-- Rebuild with new setuptools
-- removal build for python3.
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
