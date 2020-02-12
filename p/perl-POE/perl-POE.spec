@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist POE
 Name: perl-%dist
-Version: 1.367
+Version: 1.368
 Release: alt1
 
 Summary: Portable multitasking and networking framework for any event loop
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,7 +32,7 @@ hosts optional XS modules for POE if speed is more desirable than
 portability.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,10 +46,13 @@ portability.
 %add_findreq_skiplist */POE/Test/Sequence.pm
 
 %files
-%doc CHANGES README
+%doc CHANGES README HISTORY examples
 %perl_vendor_privlib/POE*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.368-alt1
+- automated CPAN update
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.367-alt1
 - automated CPAN update
 
