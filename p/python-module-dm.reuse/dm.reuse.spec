@@ -1,22 +1,20 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
 %define mname dm
 %define oname %mname.reuse
+
 Name: python-module-%oname
 Version: 1.1
-#Release: alt1
+Release: alt2
+
 Summary: Support for object reuse with slight modifications
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/dm.reuse/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
-
 %py_provides %oname
 %py_requires %mname
+
 
 %description
 Utilities to reuse (slightly modified) objects in new contexts.
@@ -53,7 +51,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
+%__python setup.py test
 
 %files
 %doc PKG-INFO
@@ -64,7 +62,11 @@ python setup.py test
 %files tests
 %python_sitelibdir/%mname/*/tests.*
 
+
 %changelog
+* Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt2
+- Rebuilded with new setuptools.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
