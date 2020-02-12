@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     11
 %define postgresql_minor     5
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -826,6 +826,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 12 2020 Alexei Takaseev <taf@altlinux.org> 11.5-alt4
+- Fix priv checks for ALTER <object> DEPENDS ON EXTENSION (Fixes CVE-2020-1720)
+
 * Tue Feb 04 2020 Alexei Takaseev <taf@altlinux.org> 11.5-alt3
 - Add patch from 1C:
     * 00016-empty_materialize.patch
