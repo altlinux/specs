@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           joda-convert
 Version:        1.9.2
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java library for conversion to and from standard string formats
 License:        ASL 2.0
 URL:            https://github.com/JodaOrg/joda-convert/
@@ -54,6 +51,9 @@ sed -i s/\r// *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_6jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_4jpp8
 - new version
 
