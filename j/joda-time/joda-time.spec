@@ -1,17 +1,14 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global tzversion tzdata2017b
 
 Name:             joda-time
 Version:          2.9.9
-Release:          alt1_4.tzdata2017bjpp8
+Release:          alt1_6.tzdata2017bjpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -81,6 +78,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_6.tzdata2017bjpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_4.tzdata2017bjpp8
 - new version
 
