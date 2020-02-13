@@ -1,16 +1,13 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           geronimo-ejb
 Version:        1.0
-Release:        alt4_22jpp8
+Release:        alt4_24jpp8
 Summary:        Java EE: EJB API v3.1
 License:        ASL 2.0
 URL:            http://geronimo.apache.org
@@ -67,6 +64,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_24jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_22jpp8
 - new version
 
