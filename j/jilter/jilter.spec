@@ -2,14 +2,14 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jilter
 Version:        1.2
-Release:        alt1_16jpp8
+Release:        alt1_18jpp8
 Summary:        Sendmail milter protocol for Java
 
 License:        Sendmail
@@ -18,7 +18,6 @@ Source0:        http://downloads.sourceforge.net/sendmail-jilter/%{version}/jilt
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant-junit
 BuildRequires:  log4j
 BuildRequires:  junit
@@ -79,6 +78,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_16jpp8
 - new version
 
