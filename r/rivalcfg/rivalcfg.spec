@@ -1,21 +1,21 @@
-%define git %nil
+Name:       rivalcfg
+Version:    3.6.0
+Release:    alt2
 
-Name: rivalcfg
-Version: 3.6.0
-Release: alt1
+Summary:    Configure SteelSeries Rival gaming mice
+License:    DWTFYWTPL
+Group:      System/Configuration/Hardware
+Url:        https://github.com/flozz/rivalcfg
 
-Summary: Configure SteelSeries Rival gaming mice
-License: DWTFYWTPL
-Group: System/Configuration/Hardware
-Url: https://github.com/flozz/rivalcfg
-Source0: %name-%version.tar
-Patch: %name-%version-%release.patch
+Packager:   L.A. Kostis <lakostis@altlinux.org>
+BuildArch:  noarch
 
-Packager: L.A. Kostis <lakostis@altlinux.org>
+Source0:    %name-%version.tar
+Patch:      %name-%version-%release.patch
 
-BuildArch: noarch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
-BuildRequires(pre): python-devel python-module-setuptools
 
 %description
 rivalcfg is a small CLI utility program that allows you to configure
@@ -25,15 +25,19 @@ SteelSeries Rival gaming mice on Linux.
 %setup
 %patch -p1
 
+sed -i 's|#!/usr/bin/env python|&3|' setup.py
+
 %build
-CFLAGS="%optflags" python setup.py build
+CFLAGS="%optflags" %__python3 setup.py build
 
 %install
-python setup.py install --root %buildroot --record=INSTALLED_FILES
+%__python3 setup.py install --root %buildroot --record=INSTALLED_FILES
+
 mkdir -p %buildroot%_udevrulesdir
 install -m644 rivalcfg/data/99-steelseries-rival.rules %buildroot%_udevrulesdir/
+
 cat << EOF > %buildroot%_bindir/%name
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from rivalcfg import __main__
 
@@ -42,10 +46,16 @@ EOF
 
 %files -f INSTALLED_FILES
 %doc README* LICENSE* doc/*.md
-%exclude %python_sitelibdir_noarch/%name-%{version}*
+%python3_sitelibdir_noarch/%name/__pycache__/
+%python3_sitelibdir_noarch/%name/*/__pycache__/
+%exclude %python3_sitelibdir_noarch/%name-%{version}*
 %_udevrulesdir/*.rules
 
+
 %changelog
+* Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.6.0-alt2
+- Porting on python3.
+
 * Fri Sep 13 2019 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt1
 - 3.6.0.
 
