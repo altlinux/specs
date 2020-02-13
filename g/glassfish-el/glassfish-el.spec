@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-el
 Version:       3.0.1
-Release:       alt1_0.10.b08jpp8
+Release:       alt1_0.13.b08jpp8
 Summary:       J2EE Expression Language Implementation
 License:       CDDL-1.1 or GPLv2 with exceptions
 URL:           http://uel.java.net
@@ -49,7 +46,7 @@ The main goals are:
 %package api
 Group: Development/Java
 Summary:       Expression Language 3.0 API
-License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
+License:       (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 
 %description api
 Expression Language 3.0 API.
@@ -57,7 +54,7 @@ Expression Language 3.0 API.
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
-License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
+License:       (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 BuildArch: noarch
 
 %description javadoc
@@ -167,6 +164,9 @@ cp -p api/src/main/javadoc/doc-files/*-spec-license.html .
 %doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.13.b08jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.10.b08jpp8
 - new version
 
