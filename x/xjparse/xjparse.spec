@@ -3,19 +3,18 @@ Group: Text tools
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		xjparse
 Version:	1.0
-Release:	alt1_19jpp8
+Release:	alt1_21jpp8
 Summary:	Wrapper for the Xerces XML Schema validator
 License:	ASL 2.0
 URL:		http://nwalsh.com/java/xjparse
 Source0:	http://nwalsh.com/java/xjparse/xjparse-src-%{version}.zip
 BuildArch:	noarch
-BuildRequires:	java-devel
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
 BuildRequires:  xml-commons-resolver
@@ -51,6 +50,9 @@ install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 %{_bindir}/xjparse
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_21jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_19jpp8
 - new version
 
