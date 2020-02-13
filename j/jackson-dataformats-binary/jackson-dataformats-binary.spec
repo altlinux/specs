@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jackson-dataformats-binary
 Version:       2.9.8
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Jackson standard binary data format backends
 # One file is BSD licensed: protobuf/src/main/resources/descriptor.proto
 License:       ASL 2.0 and BSD
@@ -154,6 +154,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_3jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
 - new version
 
