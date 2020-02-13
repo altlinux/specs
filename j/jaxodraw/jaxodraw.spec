@@ -3,8 +3,8 @@ Group: Engineering
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global major 2.0
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_22jpp8
+Release:	alt1_24jpp8
 Summary:	A Java program for drawing Feynman diagrams
 License:	GPLv2+
 URL:		http://jaxodraw.sourceforge.net/
@@ -29,7 +29,6 @@ BuildArch:	noarch
 BuildRequires:	ant
 BuildRequires:	desktop-file-utils
 # java-devel, we need at least 1.6.0
-BuildRequires:	java-devel >= 1.6.0
 BuildRequires:	jpackage-utils
 # Unit testing capabilities
 BuildRequires:	ant-junit
@@ -157,6 +156,9 @@ EOF
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_24jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_22jpp8
 - new version
 
