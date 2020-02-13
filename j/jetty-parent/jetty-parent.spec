@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jetty-parent
 Version:        19
-Release:        alt2_19jpp8
+Release:        alt2_21jpp8
 Summary:        Jetty parent POM file
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -44,6 +41,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 19-alt2_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 19-alt2_19jpp8
 - new version
 
