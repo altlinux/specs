@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           jnr-enxio
 Version:        0.19
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Unix sockets for Java
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
@@ -61,6 +61,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_4jpp8
+- fc update
+
 * Sat Jul 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_2jpp8
 - fc update & java 8 build
 
