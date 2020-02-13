@@ -14,9 +14,9 @@
 
 Name: bacula9
 Version: 9.4.4
-Release: alt2
+Release: alt3
 
-License: AGPLv3
+License: AGPL-3.0
 Summary: Network based backup program
 Group: Archiving/Backup
 
@@ -609,7 +609,7 @@ rm -fr %buildroot%_sysconfdir/baculum/Config-web-lighttpd
 rm -f %buildroot%_sysconfdir/baculum/baculum-api-lighttpd.conf
 rm -f %buildroot%_sysconfdir/baculum/baculum-web-lighttpd.conf
 rm -f %buildroot%_sbindir/bacula
-rm -f %buildroot%_datadir/bacula/scripts/{bacula,bacula-ctl-*,startmysql,stopmysql,bconsole,make_catalog_backup}
+rm -f %buildroot%_datadir/bacula/scripts/{bacula,bacula-ctl-*,startmysql,stopmysql,bconsole}
 rm -f %buildroot%_prefix%_unitdir/baculum-api-lighttpd.service
 rm -f %buildroot%_prefix%_unitdir/baculum-web-lighttpd.service
 
@@ -798,6 +798,7 @@ fi
 %_datadir/bacula/scripts/drop_bacula_tables
 %_datadir/bacula/scripts/grant_bacula_privileges
 %_datadir/bacula/scripts/make_bacula_tables
+%_datadir/bacula/scripts/make_catalog_backup
 %_datadir/bacula/scripts/make_catalog_backup.pl
 %_datadir/bacula/scripts/update_bacula_tables
 %_datadir/bacula/scripts/query.sql
@@ -884,6 +885,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt3
+- Restored make_catalog_backup script (Closes: #38083).
+
 * Wed Jul 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt2
 - Updated permissions for baculum.
 - Increased priority of postgresql backend.
