@@ -1,10 +1,10 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit f159b88a16be4d103c7e7beb90e07a92617980b9
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.31.20131227gitf159b88jpp8
+Release:        alt1_0.33.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 License:        GPLv2 with exceptions
@@ -29,7 +29,7 @@ Patch0:         %{name}-build.patch
 # See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
 BuildRequires:  javapackages-local
 
-BuildRequires:  ant java-devel java-1.8.0-javadoc jpackage-utils junit
+BuildRequires:  ant java-1.8.0-javadoc jpackage-utils junit
 Requires:       jpackage-utils
 
 BuildArch:      noarch
@@ -95,6 +95,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.33.20131227gitf159b88jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.31.20131227gitf159b88jpp8
 - new version
 
