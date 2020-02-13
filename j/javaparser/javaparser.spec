@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
 Version:       3.3.5
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Java 1 to 9 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or ASL 2.0
 URL:           http://javaparser.org
@@ -83,6 +80,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.5-alt1_3jpp8
+- fc update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.5-alt1_1jpp8
 - new version
 
