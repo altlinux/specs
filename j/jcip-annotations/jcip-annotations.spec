@@ -2,15 +2,14 @@ Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jcip-annotations
 Version:        1
-Release:        alt3_25.20060626jpp8
+Release:        alt3_27.20060626jpp8
 Summary:        Java annotations for multithreaded software
 
 License:        CC-BY
@@ -25,7 +24,7 @@ BuildRequires:  javapackages-local
 # There is no point in building native libraries, as the sources contain only
 # annotation definitions, so no code would be generated.
 BuildArch:      noarch
-BuildRequires:  java-devel >= 1.5.0 jpackage-utils
+BuildRequires:  jpackage-utils
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -88,6 +87,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_27.20060626jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_25.20060626jpp8
 - new version
 
