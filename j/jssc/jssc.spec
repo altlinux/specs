@@ -1,16 +1,15 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_12jpp8
+Release:	alt1_14jpp8
 License:	GPLv3+
 URL:		http://jssc.scream3r.org
 Source:		https://github.com/scream3r/java-simple-serial-connector/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -24,7 +23,6 @@ Patch0:		%{name}-loadlibrary.patch
 Patch1:		%{name}-jni-fix.patch
 
 BuildRequires:	gcc-c++
-BuildRequires:	java-devel
 BuildRequires:	javapackages-local
 
 Requires:	jpackage-utils
@@ -103,6 +101,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_14jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_12jpp8
 - new version
 
