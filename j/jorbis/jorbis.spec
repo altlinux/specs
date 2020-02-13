@@ -3,13 +3,13 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jorbis
 Version:        0.0.17
-Release:        alt1_19jpp8
+Release:        alt1_21jpp8
 Summary:        Pure Java Ogg Vorbis Decoder
 URL:            http://www.jcraft.com/jorbis/
 License:        LGPLv2+
@@ -21,7 +21,6 @@ Source0:        http://www.jcraft.com/jorbis/%{name}-%{version}.zip
 # the actual patches have been rebased to 0.0.17 !
 Patch0:         jorbis-0.0.17-cortado-fixes.patch
 BuildArch:      noarch
-BuildRequires:  java-devel
 # We used to also package the comment editor example, but that is not so
 # useful to end users (esp. the passing of cmdline args as java defines)
 Obsoletes:      %{name}-comment <= 0.0.17-3
@@ -89,6 +88,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_19jpp8
 - new version
 
