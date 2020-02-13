@@ -7,7 +7,7 @@ Name: exodusii
 Version: 6.09.0
 %define somver 0
 %define sover %somver.%version
-Release: alt4.git20150119
+Release: alt5
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -18,7 +18,9 @@ ExclusiveArch: %ix86 x86_64
 # git://exodusii.git.sourceforge.net/gitroot/exodusii/exodusii
 Source: %name-%version.tar
 Source1: CMakeCache.txt
+Patch0: port-on-python3.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: doxygen graphviz
 BuildPreReq: %mpiimpl-devel cmake libnetcdf-mpi-devel imake
 BuildPreReq: netcdf11-mpi-tools libhdf5-mpi-devel
@@ -69,12 +71,12 @@ Includes the nemesis parallel extension.
 
 This package contains development documentation for EXODUS II.
 
-%package -n python-module-exodus
+%package -n python3-module-exodus
 Summary: Python binding for EXODUS II
-Group: Development/Python
-Requires: lib%name = %EVR
+Group: Development/Python3
+Requires: lib%name-devel = %EVR libnetcdf-devel
 
-%description -n python-module-exodus
+%description -n python3-module-exodus
 EXODUS II is a model developed to store and retrieve transient data for
 finite element analyses. It is used for preprocessing, postprocessing,
 as well as code to code data transfer. ExodusII is based on netcdf.
@@ -84,6 +86,7 @@ This package contains python binding for EXODUS II.
 
 %prep
 %setup
+%patch0 -p1
 install -p -m644 %SOURCE1 exodus
 install -p -m644 %SOURCE1 nemesis
 sed -i "s|@64@|%_libsuff|g" exodus/CMakeCache.txt nemesis/CMakeCache.txt
@@ -100,7 +103,7 @@ cmake \
 	-DSOMVER:STRING="%somver" \
 	-DSOVER:STRING="%sover" \
 	-DNETCDF_SO_ROOT=%_libdir \
-	-DPYTHON_INSTALL=%python_sitelibdir \
+	-DPYTHON_INSTALL=%python3_sitelibdir \
 	.
 %make_build VERBOSE=1
 popd
@@ -148,10 +151,13 @@ mv nemesis/README README.Nemesis
 #doc exodus/html exodus/doc/* nemesis/doc/*
 %doc exodus/html exodus/doc/*
 
-%files -n python-module-exodus
-%python_sitelibdir/*
+%files -n python3-module-exodus
+%python3_sitelibdir/*
 
 %changelog
+* Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.09.0-alt5
+- Porting python binding on python3.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.09.0-alt4.git20150119
 - Fixed build.
 
