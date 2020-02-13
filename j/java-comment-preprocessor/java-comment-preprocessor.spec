@@ -1,10 +1,7 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -24,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	The Most Powerful Multi-Pass Java Preprocessor
 Name:		java-comment-preprocessor
 Version:	6.1.4
-Release:	alt1_4jpp8
+Release:	alt1_6jpp8
 License:	ASL 2.0
 
 URL:		https://github.com/raydac/java-comment-preprocessor
@@ -75,6 +72,7 @@ This package contains the API Documentation for %{name}.
 %setup -q
 %patch0 -p1
 
+
 # remove unpackaged and dangerous deps
 %pom_remove_plugin :animal-sniffer-maven-plugin pom.xml
 %pom_remove_plugin :maven-shade-plugin pom.xml
@@ -100,6 +98,9 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 %doc --no-dereference texts/LICENSE-2.0.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 6.1.4-alt1_6jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 6.1.4-alt1_4jpp8
 - new version
 
