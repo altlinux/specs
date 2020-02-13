@@ -1,19 +1,19 @@
 # on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 4.2.1
+Version: 5.1.1
 Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
-License: LGPLv2+ with exceptions
+License: MIT
 Url: http://ocsigen.org/lwt/
 # https://github.com/ocsigen/lwt
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
-BuildRequires: dune opam ocaml-cppo ocaml-bisect_ppx-devel
+BuildRequires: dune opam ocaml-cppo ocaml-bisect_ppx-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -39,8 +39,7 @@ developing applications that use %name.
 dune build
 
 %install
-mkdir -p %buildroot%_libdir/ocaml/
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc CHANGES README.md
@@ -76,6 +75,10 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 5.1.1-alt1
+- 5.1.1
+- fixed License tag
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 4.2.1-alt1
 - 4.2.1
 
