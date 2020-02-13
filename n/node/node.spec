@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 13.6
+%define major 13.8
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -13,8 +13,7 @@
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 6.9
-# 7.7.299
+%global v8_abi 7.9
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -38,11 +37,15 @@
 
 %def_disable check
 
+# https://nodejs.org/api/n-api.html
+# https://github.com/nodejs/abi-stable-node
+%def_with nodejs_abi
+
 %define oversion %version
 
 Name: node
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -103,6 +106,8 @@ Obsoletes: node.js < %version-%release
 Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
 
+Provides: bundled(llhttp) = 2.0.4
+
 # /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
 %ifarch %ix86
 %define optflags_debug -g0
@@ -162,7 +167,9 @@ License:	MIT License
 Requires:	node
 BuildArch:	noarch
 AutoReq:	yes,nopython
+%if_with nodejs_abi
 Requires:	nodejs(abi) = %{nodejs_abi}
+%endif
 
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
@@ -281,6 +288,7 @@ cp -p common.gypi %{buildroot}%{_datadir}/node
 #tar -xf %{SOURCE0} --directory=%{buildroot}%{_datadir}/node/sources
 %endif
 
+%if_with nodejs_abi
 # ensure Requires are added to every native module that match the Provides from
 # the nodejs build in the buildroot
 install -Dpm0755 %{SOURCE7} %buildroot%_rpmlibdir/nodejs_native.req.files
@@ -290,6 +298,7 @@ echo 'nodejs(abi) = %nodejs_abi'
 echo 'nodejs(v8-abi) = %v8_abi'
 EOF
 chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
+%endif
 
 rm -rf %buildroot/usr/lib/dtrace/
 rm -rf %buildroot/usr/share/doc/node/gdbinit
@@ -338,8 +347,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 # deps/http_parser
 #_includedir/node/nameser.h
 #_datadir/node/common.gypi
+%if_with nodejs_abi
 %_rpmlibdir/nodejs_native.req
 %_rpmlibdir/nodejs_native.req.files
+%endif
 #%_datadir/node/sources
 
 %if_with npm
@@ -350,6 +361,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 13.8.0-alt1
+- new version 13.8.0 (with rpmrb script)
+- CVE-2019-15606, CVE-2019-15605, CVE-2019-15604
+
 * Mon Jan 20 2020 Vitaly Lipatov <lav@altlinux.ru> 13.6.0-alt2
 - make node-devel as arch
 - drop tarball with node include headers (see ALT bug 36349)
