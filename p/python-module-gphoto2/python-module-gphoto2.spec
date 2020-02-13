@@ -1,22 +1,25 @@
 %define modname gphoto2
+%def_disable python2
 
 Name: python-module-%modname
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
 Group: Development/Python
-License: GPLv3
+License: GPL-3.0
 Url: http://pypi.python.org/pypi/%modname
+
 Source: http://pypi.io/packages/source/g/%modname/%modname-%version.tar.gz
 
-BuildRequires: libgphoto2-devel swig
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-
-BuildRequires: python3-devel rpm-build-python3
-BuildRequires: python3-module-distribute
+%define gphoto_ver 2.5
+BuildRequires: libgphoto2-devel >= %gphoto_ver swig
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-distribute
+%if_enabled python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-setuptools python-devel
+%endif
 
 %description
 python-gphoto2 is a comprehensive Python interface (or binding) to
@@ -35,27 +38,31 @@ interface code. This gives direct access to nearly all the libgphoto2_
 functions, but sometimes in a rather un-Pythonic manner.
 
 %prep
-%setup -n %modname-%version -a0
-cp -a %modname-%version py3build
+%setup -n %modname-%version %{?_enable_python2:-a0
+cp -a %modname-%version py2build}
 
 %build
-%python_build
-
-pushd py3build
 %python3_build
-popd
+
+%{?_enable_python2:
+pushd py2build
+%python_build
+popd}
 
 %install
-%python_install
-
-pushd py3build
 %python3_install
-popd
 
+%{?_enable_python2:
+pushd py2build
+%python_install
+popd}
+
+%if_enabled python2
 %files
 %python_sitelibdir/%modname/
 %doc README.rst
 %python_sitelibdir/*.egg-info
+%endif
 
 %files -n python3-module-%modname
 %python3_sitelibdir/%modname/
@@ -67,6 +74,10 @@ popd
 
 
 %changelog
+* Thu Feb 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+- disabled python2 build
+
 * Wed Apr 24 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
