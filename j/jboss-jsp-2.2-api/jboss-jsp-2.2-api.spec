@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt5_19jpp8
+Release:          alt5_21jpp8
 Summary:          JavaServer(TM) Pages 2.2 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
@@ -65,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_19jpp8
 - new version
 
