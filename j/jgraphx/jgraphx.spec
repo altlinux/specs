@@ -1,11 +1,11 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Java Graph Drawing Component
 
 License:        BSD
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_10jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_8jpp8
 - new version
 
