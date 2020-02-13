@@ -2,19 +2,19 @@
 
 %define oname greenlet
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.15
 Release: alt2
 
 Summary: Lightweight in-process concurrent programming
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/greenlet
 
 # https://github.com/python-greenlet/greenlet.git
 Source0: https://pypi.python.org/packages/03/a6/8842d7215e1c54537eb5d0b8fd3e8562cc869b6d193317b11027ff7d8009/%{oname}-%{version}.tar.gz
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 
 
@@ -40,7 +40,7 @@ unmodified interpreter.
 
 %package tests
 Summary: Tests for greenlet
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %version-%release
 
@@ -56,20 +56,20 @@ This package contains tests for greenlet.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test -v
+%__python3 setup.py test -v
 export PYTHONPATH=$PWD
-%__python run-tests.py -n
+%__python3 run-tests.py -n
 
 %files
 %doc AUTHORS LICENSE NEWS README* doc/*.txt
-%python_sitelibdir/*
-%_includedir/python%_python_version/greenlet
+%python3_sitelibdir/*
+%_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %files tests
 %doc tests
@@ -77,7 +77,7 @@ export PYTHONPATH=$PWD
 
 %changelog
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.15-alt2
-- Removed python3 support (built separately).
+- Build for python2 disabled.
 
 * Wed Feb 13 2019 Nikita Ermakov <arei@altlinux.org> 0.4.15-alt1
 - Update to 0.4.15
