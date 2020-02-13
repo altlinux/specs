@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jsf-2.2-api
 Version:       2.2.13
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       JavaServer Faces 2.2 API
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           http://www.jboss.org
@@ -76,6 +73,9 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_7jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_6jpp8
 - new version
 
