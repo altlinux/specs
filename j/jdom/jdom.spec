@@ -1,11 +1,8 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2012, JPackage Project
@@ -40,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_18jpp8
+Release:        alt3_20jpp8
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        Saxpath
@@ -118,6 +115,9 @@ cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_20jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_18jpp8
 - new version
 
