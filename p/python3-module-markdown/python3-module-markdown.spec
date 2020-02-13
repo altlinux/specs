@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 3.2
+Version: 3.2.1
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -62,6 +62,9 @@ nosetests3 -v
 
 
 %changelog
+* Thu Feb 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Fri Feb 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2 (python3 only)
 - enabled check
