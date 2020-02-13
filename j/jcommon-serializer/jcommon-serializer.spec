@@ -2,18 +2,18 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_19jpp8
+Release: alt1_21jpp8
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jfreereport/jcommon-serializer
-BuildRequires: ant java-devel jpackage-utils libbase >= 1.0.0
+BuildRequires: ant jpackage-utils libbase >= 1.0.0
 Requires: jpackage-utils libbase >= 1.0.0
 BuildArch: noarch
 Patch1: jcommon-serializer-0.3.0-depends.patch
@@ -58,6 +58,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_19jpp8
 - new version
 
