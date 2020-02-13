@@ -5,7 +5,7 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Simple scanning utility
@@ -59,6 +59,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
