@@ -1,23 +1,24 @@
 %define modname bsddb3
+%def_enable python2
 # sometime 1 test out of 501 fails only in girar
 %def_disable check
 
 Name: python-module-%modname
-Version: 6.2.6
+Version: 6.2.7
 Release: alt1
 
 Summary: Python bindings for BerkleyDB
 Group: Development/Python
-License: BSD
+License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/bsddb3/
 
 Source: https://pypi.io/packages/source/b/%modname/%modname-%version.tar.gz
 
-BuildRequires: libdb4-devel
-BuildRequires: python-devel
-BuildRequires: python3-devel rpm-build-python3
-# for check
-BuildRequires: /proc python-test python3-test
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libdb4-devel python3-devel
+%{?_enable_python2:BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel}
+%{?_enable_check:BuildRequires: /proc python3-test %{_enable_python2:python-test}}
 
 %description
 This package provides Python wrappers for Berkeley DB                                          .
@@ -32,48 +33,54 @@ This package provides Python3 wrappers for Berkeley DB.
 
 
 %prep
-%setup -n %modname-%version -a0
-mv %modname-%version py3build
+%setup -n %modname-%version %{?_enable_python2:-a0
+mv %modname-%version py2build}
 
 %build
-%python_build
-
-pushd py3build
 %python3_build
-popd
+
+%{?_enable_python2:
+pushd py2build
+%python_build
+popd}
 
 %install
-%python_install
-
-pushd py3build
 %python3_install
-popd
 
-%if_enabled check
+%{?_enable_python2:
+pushd py2build
+%python_install
+popd}
+
 %check
-%__python test.py
-
-pushd py3build
 %__python3 test.py
-popd
-%endif
 
+%{?_enable_python2:
+pushd py2build
+%__python test.py
+popd}
+
+%if_enabled python2
 %files
 %python_sitelibdir/%modname/
 %python_sitelibdir/%modname-%version-py*.egg-info
 %doc ChangeLog *.txt
-
 %exclude %python_sitelibdir/%modname/tests/
+%endif
 
 %files -n python3-module-%modname
 %python3_sitelibdir/%modname/
 %python3_sitelibdir/%modname-%version-py*.egg-info
 
 %exclude %python3_sitelibdir/%modname/tests/
-
 %exclude %_includedir/python*/%modname/bsddb.h
 
 %changelog
+* Thu Feb 13 2020 Yuri N. Sedunov <aris@altlinux.org> 6.2.7-alt1
+- 6.2.7
+- made python2 build optional
+- fixed License tag
+
 * Wed Jul 11 2018 Yuri N. Sedunov <aris@altlinux.org> 6.2.6-alt1
 - 6.2.6
 
