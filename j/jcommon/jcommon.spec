@@ -1,15 +1,12 @@
 Epoch: 0
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: jcommon
 Version: 1.0.23
-Release: alt1_9jpp8
+Release: alt1_11jpp8
 Summary: JFree Java utility classes
 License: LGPLv2+
 # Github: https://github.com/jfree/jcommon
@@ -77,6 +74,9 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_11jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_9jpp8
 - new version
 
