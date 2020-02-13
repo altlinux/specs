@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2019.Q4.5
+Version: 2020.Q1.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -90,6 +90,15 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Feb 12 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.Q1.1-alt1
+- 2020-1-21 update:
+  + llvm: 08268e9955d48ca075b239ae46328694ddff2413
+  + spvgen: 6c9a5cf8789681e31b9cd3df8af245b9aaa2c259
+  + llpc: 93f91d8e6258aec02369b63c3248c9fab15c6956
+  + pal: 9fab16015e522fff05890a045a1e9d8d3c23a636
+  + xgl: 5ee2a33520138966eb5e2745dd3f2e5401d2f3b6
+- icd.json: bump vulkan api version.
+
 * Sat Jan 18 2020 L.A. Kostis <lakostis@altlinux.ru> 2019.Q4.5-alt1
 - added cwpack library.
 - 2019-12-19 update:
