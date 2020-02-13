@@ -3,28 +3,25 @@
 
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0
 Release: alt1
 
 Summary: Cython/lxml based binding for the XML security library -- for lxml 3.x
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/dm.xmlsec.binding/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: libxml2-devel
-BuildRequires: libxmlsec1-devel
-BuildRequires: libxmlsec1-openssl-devel
-BuildRequires: python-module-Cython
-BuildRequires: python-module-lxml
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libxml2-devel libxmlsec1-devel libxmlsec1-openssl-devel
+BuildRequires: python3-module-Cython python3-module-lxml
 
-Requires: python-module-%mname = %EVR
-%py_requires lxml
+Requires: python3-module-%mname = %EVR
+%py3_requires lxml
 
-%py_provides %oname
+%py3_provides %oname
 
 
 %description
@@ -34,7 +31,7 @@ binding to the Gnome XML library libxml2.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -44,21 +41,21 @@ binding to the Gnome XML library libxml2.
 
 This package contains tests for %oname.
 
-%package -n python-module-%mname
+%package -n python3-module-%mname
 Summary: Core files of %mname
-Group: Development/Python
+Group: Development/Python3
 %py_provides %mname
-Requires: python-module-dm = %EVR
+Requires: python3-module-dm = %EVR
 
-%description -n python-module-%mname
+%description -n python3-module-%mname
 Core files of %mname.
 
-%package -n python-module-dm
+%package -n python3-module-dm
 Summary: Core files of dm
-Group: Development/Python
-%py_provides dm
+Group: Development/Python3
+%py3_provides dm
 
-%description -n python-module-dm
+%description -n python3-module-dm
 Core files of dm.
 
 %prep
@@ -69,42 +66,42 @@ sed -i '/transformByHref/s/^/#/' dm/xmlsec/binding/__init__.py
 rm -f src/*.c
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 install -p -m644 dm/__init__.py \
-	%buildroot%python_sitelibdir/dm/
+	%buildroot%python3_sitelibdir/dm/
 install -p -m644 dm/xmlsec/__init__.py \
-	%buildroot%python_sitelibdir/dm/xmlsec/
+	%buildroot%python3_sitelibdir/dm/xmlsec/
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc PKG-INFO
-%python_sitelibdir/dm/xmlsec/*
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/dm/xmlsec/*/tests.*
-%exclude %python_sitelibdir/dm/xmlsec/__init__.py*
+%python3_sitelibdir/dm/xmlsec/*
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/dm/xmlsec/*/tests.*
+%exclude %python3_sitelibdir/dm/xmlsec/__init__.py*
 
 %files tests
-%python_sitelibdir/dm/xmlsec/*/tests.*
+%python3_sitelibdir/dm/xmlsec/*/tests.*
 
-%files -n python-module-%mname
-%dir %python_sitelibdir/dm/xmlsec
-%python_sitelibdir/dm/xmlsec/__init__.py*
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/dm/xmlsec
+%python3_sitelibdir/dm/xmlsec/__init__.py*
 
-%files -n python-module-dm
-%dir %python_sitelibdir/dm
-%python_sitelibdir/dm/__init__.py*
+%files -n python3-module-dm
+%dir %python3_sitelibdir/dm
+%python3_sitelibdir/dm/__init__.py*
 
 
 %changelog
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt1
 - Version updated to 2.0
-- fixed segfault xmlsec.binding upon import.
+- porting on python3.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
