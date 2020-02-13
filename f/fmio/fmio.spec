@@ -2,16 +2,19 @@
 
 Name: fmio
 Version: 2.0.8
-Release: alt2.2.qa1
+Release: alt3
 
 Summary: fmio, FM radio card manipulation utility
 License: BSD
 Group: Sound
-
 Url: http://jumbo.narod.ru/fmio.html
+
+ExclusiveArch: %ix86 x86_64
+
 Source0: http://jumbo.narod.ru/src/fmio/%name-%version.tar.gz
 Source1: http://smile.org.ua/~andy/prj/patch/fmio-gq-wrapper.py
 Source2: README.fedora
+
 Patch0: fmio-2.0.8-build.asp.patch
 Patch1: fmio-2.0.8-sysconfdir.asp.patch
 Patch2: fmio-2.0.8-dyn.asp.patch
@@ -20,12 +23,9 @@ Patch2: fmio-2.0.8-dyn.asp.patch
 Patch3: fmio-2.0.8-nodirectio.patch
 Patch4: fmio-2.0.8-alt-v4l.patch
 
-# Automatically added by buildreq on Sat Nov 06 2010
 BuildRequires: libXext-devel libXpm-devel
+BuildRequires: libv4l-devel
 
-BuildPreReq: libv4l-devel
-
-ExclusiveArch: %ix86 x86_64
 
 %description
 The fmio is a small program to set and change fm radio card parameters.
@@ -101,7 +101,11 @@ install -pm644 %SOURCE2 README.fedora
 %_man1dir/wmfmio.1*
 %config(noreplace) %_sysconfdir/wmfmiorc
 
+
 %changelog
+* Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.8-alt3
+- Porting wrapper on python3.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.8-alt2.2.qa1
 - NMU: rebuilt for updated dependencies.
 
