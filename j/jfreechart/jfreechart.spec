@@ -2,16 +2,16 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_11jpp8
+Release:        alt1_13jpp8
 Summary:        Java chart library
 
 License:        LGPLv2+
@@ -129,6 +129,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_13jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_11jpp8
 - new version
 
