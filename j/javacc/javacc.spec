@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javacc
 Version:        7.0.4
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -135,6 +135,9 @@ ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:7.0.4-alt1_4jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.0.4-alt1_2jpp8
 - new version
 
