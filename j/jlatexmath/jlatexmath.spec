@@ -4,13 +4,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 License:        GPLv2+
@@ -18,7 +18,6 @@ URL:            http://forge.scilab.org/index.php/p/jlatexmath/
 Source0:        http://forge.scilab.org/index.php/p/jlatexmath/downloads/get/%{name}-src-all-%{version}.zip
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 
 Requires:       java
@@ -38,7 +37,6 @@ Group: Development/Other
 Summary:        FOP plug-in for %{name}
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  fop
 
@@ -98,6 +96,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_10jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_9jpp8
 - new version
 
