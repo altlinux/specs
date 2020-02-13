@@ -1,17 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javamail
 Version:        1.5.2
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Java Mail API
 License:        CDDL-1.0 or GPLv2 with exceptions
 URL:            http://www.oracle.com/technetwork/java/javamail
@@ -99,6 +99,9 @@ ln -sf ../%{name}/javax.mail.jar %{buildroot}%{_javadir}/javax.mail/
 %doc mail/src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_11jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_9jpp8
 - new version
 
