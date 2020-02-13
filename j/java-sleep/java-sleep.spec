@@ -2,14 +2,14 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_16jpp8
+Release:	alt1_18jpp8
 Summary:	Multi-paradigm scripting language for Java
 
 License:	LGPLv2+ and BSD
@@ -20,7 +20,6 @@ Patch0:		sleep-bootstrap.patch
 BuildArch:	noarch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	java-devel
 BuildRequires:	ant-contrib
 Requires:	jpackage-utils
 %if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
@@ -99,6 +98,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_16jpp8
 - new version
 
