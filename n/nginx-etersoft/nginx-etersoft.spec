@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.23
+Version: 0.2.24
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,12 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Thu Feb 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.24-alt1
+- add websocket.conf
+- log.conf: add netdata format
+- add detect_browser.conf: set platform to desktop, mobile, tablet, bots
+- add trans-reproxy.inc (use it after store-*.conf)
+
 * Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.23-alt1
 - stat.conf: add stub_status location for netdata (eterbug #13591)
 - add initial fastcgi config
