@@ -19,7 +19,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          apache-log4j-extras
 Version:       1.2.17.1
-Release:       alt1_13jpp8
+Release:       alt1_15jpp8
 Summary:       Apache Extras Companion for Apache log4j
 
 License:       ASL 2.0
@@ -86,6 +86,9 @@ args="-j"
 %endif
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.17.1-alt1_15jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17.1-alt1_13jpp8
 - explicit build with java8
 
