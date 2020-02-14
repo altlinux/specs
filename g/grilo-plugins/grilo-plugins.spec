@@ -6,12 +6,12 @@
 %def_enable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
 %if_disabled snapshot
@@ -29,7 +29,7 @@ BuildRequires(pre): meson
 BuildRequires: gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.44
-BuildRequires: libgrilo-devel >= %ver_major.8
+BuildRequires: libgrilo-devel >= %ver_major.12
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -131,6 +131,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- 0.3.11
+
 * Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
 - 0.3.10
 
