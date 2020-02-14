@@ -1,7 +1,7 @@
 %define rname alt-app-starter
 
 Name: %rname
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 %K5init altplace
 
@@ -62,6 +62,11 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 %_K5xdgapp/*.desktop
 
 %changelog
+* Fri Feb 14 2020 Pavel Moseev <mars@altlinux.org>  1.1.5-alt1
+- update translation
+- update user interface
+- fix launch applications
+
 * Wed Feb 12 2020 Pavel Moseev <mars@altlinux.org>  1.1.4-alt1
 - fix launch of console applications (closes: #37872)
 - add tooltip for launching console applications (closes: #37979)
