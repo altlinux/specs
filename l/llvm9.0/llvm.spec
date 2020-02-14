@@ -1,19 +1,21 @@
 %global v_major 9.0
-%global llvm_svnrel %nil
-%global clang_svnrel %nil
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld%v_major
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
+%ifarch %ix86
+%define optflags_debug -g0
+%else
 %define optflags_debug -g1
+%endif
 
 %def_disable tests
-%def_without clang
+%def_with clang
 
 Name: %llvm_name
 Version: 9.0.1
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -39,22 +41,17 @@ Patch10: llvm-9-alt-python3.patch
 BuildPreReq: /proc
 
 BuildRequires(pre): cmake >= 3.4.3
-# Due to %%_libsuff
 BuildRequires: rpm-build >= 4.0.4-alt112
 BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
 %if_with clang
 BuildRequires: %clang_name %llvm_name-devel %lld_name
-# FIXME!!
-# this should be fixed in rpm macros
-%remove_optflags -frecord-gcc-switches
-
 %else
 BuildRequires: gcc-c++
-%endif #with clang
+%endif
 
 Provides: llvm = %EVR
-Obsoletes: llvm <= 7.0.1
+Obsoletes: llvm < %version
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -66,7 +63,7 @@ of programming tools as well as libraries with equivalent functionality.
 Group: Development/C
 Summary: Libraries and header files for LLVM
 Provides: llvm-devel = %EVR
-Obsoletes: llvm-devel <= 7.0.1
+Obsoletes: llvm-devel < %version
 Requires: %name = %EVR
 
 %description devel
@@ -77,7 +74,7 @@ native programs that use the LLVM infrastructure.
 Summary: Static libraries for LLVM
 Group: Development/C
 Provides: llvm-devel-static = %EVR
-Obsoletes: llvm-devel-static <= 7.0.1
+Obsoletes: llvm-devel-static < %version
 Requires: %name-devel = %EVR
 
 %description devel-static
@@ -96,7 +93,7 @@ Summary: Documentation for LLVM
 Group: Documentation
 BuildArch: noarch
 Provides: llvm-doc = %EVR
-Obsoletes: llvm-doc <= 7.0.1
+Obsoletes: llvm-doc < %version
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
@@ -107,7 +104,7 @@ License: NCSA
 Group: Development/C
 Requires: gcc
 Provides: clang = %EVR
-Obsoletes: clang <= 7.0.1
+Obsoletes: clang < %version
 
 %description -n %clang_name
 clang: noun
@@ -130,7 +127,7 @@ Shared libraries for the clang compiler.
 Summary: Header files for clang
 Group: Development/C
 Provides: clang-devel = %EVR
-Obsoletes: clang-devel <= 7.0.1
+Obsoletes: clang-devel < %version
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel
@@ -140,7 +137,7 @@ This package contains header files for the Clang compiler.
 Summary: Static libraries for clang
 Group: Development/C
 Provides: clang-devel-static = %EVR
-Obsoletes: clang-devel-static <= 7.0.1
+Obsoletes: clang-devel-static < %version
 Requires: %clang_name-devel = %EVR
 
 %description -n %clang_name-devel-static
@@ -152,7 +149,7 @@ License: NCSA
 Group: Development/C
 BuildArch: noarch
 Provides: clang-analyzer = %EVR
-Obsoletes: clang-analyzer <= 7.0.1
+Obsoletes: clang-analyzer < %version
 Requires: %clang_name = %EVR
 
 %description -n %clang_name-analyzer
@@ -166,7 +163,7 @@ Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
 Provides: clang-doc = %EVR
-Obsoletes: clang-doc <= 7.0.1
+Obsoletes: clang-doc < %version
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
@@ -176,7 +173,7 @@ Summary: LLD - The LLVM Linker
 License: NCSA
 Group: Development/C
 Provides: lld = %EVR
-Obsoletes: lld <= 7.0.1
+Obsoletes: lld < %version
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -187,7 +184,7 @@ useful for toolchain developers.
 Summary: Header files for LLD
 Group: Development/C
 Provides: lld-devel = %EVR
-Obsoletes: lld-devel <= 7.0.1
+Obsoletes: lld-devel < %version
 Requires: %lld_name = %EVR
 
 %description -n %lld_name-devel
@@ -198,7 +195,7 @@ Summary: Documentation for LLD
 Group: Documentation
 BuildArch: noarch
 Provides: lld-doc = %EVR
-Obsoletes: lld-doc <= 7.0.1
+Obsoletes: lld-doc < %version
 
 %description -n %lld_name-doc
 Documentation for the LLD linker.
@@ -224,7 +221,11 @@ mv compiler-rt-%version.src projects/compiler-rt
 %build
 %cmake -G Ninja \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
-	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%ifarch %ix86
+        -DCMAKE_C_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
+        -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
+%endif
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;NVPTX;" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
@@ -234,6 +235,10 @@ mv compiler-rt-%version.src projects/compiler-rt
 	-DLLVM_ENABLE_RTTI:BOOL=ON \
 	-DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON \
 	-DLLVM_BINUTILS_INCDIR="%_includedir/bfd" \
+	\
+	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
+	-DCLANG_LINK_CLANG_DYLIB=ON \
+	\
 	%if_with clang
 	-DLLVM_ENABLE_LTO=Thin \
 	-DCMAKE_C_COMPILER=clang \
@@ -275,7 +280,6 @@ mv compiler-rt-%version.src projects/compiler-rt
 	-DSPHINX_EXECUTABLE=%_bindir/sphinx-build-3 \
 	-DLLVM_ENABLE_DOXYGEN:BOOL=OFF \
 	-DLLVM_BUILD_LLVM_DYLIB:BOOL=ON \
-	-DLLVM_DYLIB_EXPORT_ALL:BOOL=ON \
 	-DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
 	-DLLVM_INSTALL_TOOLCHAIN_ONLY:BOOL=OFF \
 	-DPYTHON_EXECUTABLE=%_bindir/python3
@@ -332,8 +336,6 @@ ninja -C BUILD check-all || :
 %_libdir/libLLVM-*.so
 %_libdir/libLTO.so.*
 %_libdir/libRemarks.so.*
-%exclude %_libdir/LLVMgold.so
-%exclude %_libdir/libclang.so.*
 
 %files devel
 %_bindir/llvm-config
@@ -346,7 +348,6 @@ ninja -C BUILD check-all || :
 %_libdir/libRemarks.so
 %_libdir/LLVMHello.so
 %_libdir/BugpointPasses.so
-%exclude %_libdir/libclang.so
 %_datadir/cmake/Modules/llvm
 %exclude %_datadir/cmake/Modules/llvm/LLVMStaticExports.cmake
 
@@ -359,10 +360,10 @@ ninja -C BUILD check-all || :
 %doc BUILD/clang-docs/*
 %_bindir/*clang*
 %_bindir/c-index-test
-%_libdir/clang
 %_man1dir/clang.1*
 
 %files -n %clang_name-libs
+%_libdir/clang
 %_libdir/libclang*.so.*
 
 %files -n %clang_name-devel
@@ -401,6 +402,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Thu Feb 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 9.0.1-alt2
+- build with clang
+
 * Mon Feb 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 9.0.1-alt1
 - 9.0.1
 
