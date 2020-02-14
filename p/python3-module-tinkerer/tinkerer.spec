@@ -1,34 +1,28 @@
 %define oname tinkerer
 
-%def_with python3
+%def_without docs
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.6.0
-Release: alt1.git20170528.1
+Release: alt2
+
 Summary: Sphinx-based blogging engine
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/Tinkerer
 
 # https://github.com/vladris/tinkerer.git
 Source: %name-%version.tar
+Patch0: fix-sphinx-import.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pyquery
-BuildRequires: python-module-objects.inv python-module-alabaster python-module-docutils python-module-html5lib
-BuildRequires: python-module-tox python-module-nose python-module-mock python-module-coverage
-BuildRequires(pre): rpm-macros-sphinx
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
 BuildRequires: python3-module-pyquery
-BuildRequires: python3-module-sphinx python3-module-pbr python3-module-html5lib
-BuildRequires: python3-module-tox python3-module-unittest2 python3-module-nose python3-module-coverage
-%endif
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
-%py_requires jinja2 sphinx babel pyquery
 
 %description
 Tinkerer is a blogging engine/static website generator powered by
@@ -40,27 +34,10 @@ archive, RSS feed generation, comments powered by Disqus and more.
 
 Tinkerer is also highly customizable through Sphinx extensions.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Sphinx-based blogging engine
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires jinja2 sphinx babel pyquery
-
-%description -n python3-module-%oname
-Tinkerer is a blogging engine/static website generator powered by
-Sphinx.
-
-It allows blogging in reStructuredText format, comes with out-of-the-box
-support for post publishing dates, authors, categories, tags, post
-archive, RSS feed generation, comments powered by Disqus and more.
-
-Tinkerer is also highly customizable through Sphinx extensions.
-%endif
-
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Tinkerer is a blogging engine/static website generator powered by
@@ -90,83 +67,54 @@ archive, RSS feed generation, comments powered by Disqus and more.
 Tinkerer is also highly customizable through Sphinx extensions.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv blog/
+%patch0 -p1
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
+
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd blog
+sphinx-build-3 -b pickle -d build/doctrees . build/pickle
+sphinx-build-3 -b html -d build/doctrees . build/html
 popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+cp -fR blog/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%python_install
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd blog
-sphinx-build -b pickle -d build/doctrees . build/pickle
-sphinx-build -b html -d build/doctrees . build/html
-popd
-cp -fR blog/build/pickle %buildroot%python_sitelibdir/%oname/
-
 %check
-python setup.py test -v
-export PYTHONPATH=$PWD
-nosetests -vv --with-cover --cover-package=tinkerer --cover-inclusive
-#if_with python3
 %if 0
-pushd ../python3
-python3 setup.py test -v
+%__python3 setup.py test -v
 export PYTHONPATH=$PWD
 nosetests3 -vv --with-cover --cover-package=tinkerer --cover-inclusive
-popd
 %endif
 
 %files
 %doc CONTRIBUTORS *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc blog/build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CONTRIBUTORS *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
 %endif
 
+
 %changelog
+* Fri Feb 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt2
+- Build for python2 disabled
+- fix sphinx import.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1.git20170528.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
