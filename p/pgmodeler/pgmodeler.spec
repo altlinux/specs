@@ -1,5 +1,5 @@
 Name: pgmodeler
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: PostgreSQL Database Modeler
@@ -24,19 +24,29 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 %setup
 
 %build
-%qmake_qt5 PREFIX=%prefix pgmodeler.pro
+%qmake_qt5 pgmodeler.pro \
+    PREFIX=%prefix \
+    PRIVATEBINDIR=%_libdir/%name/bin \
+    PRIVATELIBDIR=%_libdir/%name \
+    PLUGINSDIR=%_libdir/%name/plugins
+
 %make_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot 
+%makeinstall_std INSTALL_ROOT=%buildroot
 
 %files
 %doc README.md CHANGELOG.md RELEASENOTES.md
-%_bindir/*
+%_bindir/%name
+%_bindir/%name-cli
 %_datadir/%name/
-%_libexecdir/%name/
+%_libdir/%name/
 
 %changelog
+* Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
+- new version 0.9.2 (with rpmrb script)
+- use _libdir
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - new version 0.9.1 (with rpmrb script)
 
