@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 20.01.2
+Version: 20.02.1
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -77,6 +77,13 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Fri Feb 14 2020 Andrey Cherepanov <cas@altlinux.org> 20.02.1-alt1
+- New version.
+- Complete Russian translations (thanks Olesya Gerasimenko).
+
+* Mon Feb 03 2020 Andrey Cherepanov <cas@altlinux.org> 20.02.0-alt1
+- New version.
+
 * Mon Jan 13 2020 Andrey Cherepanov <cas@altlinux.org> 20.01.2-alt1
 - New version.
 - Complete Russian translations (thanks Olesya Gerasimenko).
