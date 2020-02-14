@@ -3,13 +3,13 @@ Group: Games/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           CardManager
 Version:        3
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 License:        BSD
@@ -21,7 +21,6 @@ Patch1:         jdk8-javadoc.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
@@ -103,6 +102,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3-alt1_14jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3-alt1_12jpp8
 - new version
 
