@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           t-digest
 Version:        3.0
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        A new data structure for on-line accumulation of statistics
 License:        ASL 2.0
 URL:            %{url}
@@ -63,6 +63,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICES
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_11jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_9jpp8
 - explicit build with java8
 
