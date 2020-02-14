@@ -10,8 +10,8 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 19.12.1
-Release: alt2
+Version: 19.12.2
+Release: alt1
 %K5init no_appdata
 
 Group: Networking/WWW
@@ -194,6 +194,9 @@ done
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Feb 14 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.2-alt1
+- new version
+
 * Wed Feb 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.1-alt2
 - decrease application priority
 
