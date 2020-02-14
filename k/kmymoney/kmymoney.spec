@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 5.1.1
-Release: alt2
+Release: alt3
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
@@ -17,6 +17,7 @@ Source2: %name.watch
 AutoReq: yes, noperl
 
 BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-python
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-svg-devel
@@ -86,6 +87,9 @@ BuildRequires: python-module-weboob
 Requires: %name-i18n
 
 Obsoletes: kde4-kmymoney
+
+# For weboob python helper requirements
+%add_python_compile_include %_datadir/kmymoney/weboob
 
 %description
 KMyMoney strives to be the best personal finance manager.
@@ -210,6 +214,7 @@ Plugin with national orders for online banking in KMyMoney.
 Summary: Weboob plugin for KMyMoney
 Group:   Office
 Requires: %name = %version-%release
+Requires: python2.7(weboob)
 
 %description weboob
 Plugin for import transactions from Weboob to KMyMoney.
@@ -283,7 +288,8 @@ cp %SOURCE1 po/ru/kmymoney.po
 %_K5srv/kcm_reportsview.desktop
 %_K5srv/kcm_xmlstorage.desktop
 %_datadir/%name/*
-%exclude %_datadir/%name/templates/*
+%exclude %_datadir/%name/templates
+%exclude %_datadir/%name/weboob
 %_datadir/mime/packages/*
 %_K5icon/hicolor/*/apps/%name.png
 %_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
@@ -358,17 +364,22 @@ cp %SOURCE1 po/ru/kmymoney.po
 %_qt5_plugindir/kmymoney/konlinetasks_sepa.so
 
 %files weboob
+%_datadir/%name/weboob
 %_qt5_plugindir/kmymoney/weboob.so
 %_K5xmlgui/weboob
 
 %files plugins
 
 %files i18n -f %name.lang
-%_datadir/%name/templates/*
+%_datadir/%name/templates
 %_K5doc/*/kmymoney/
 %exclude %_K5doc/en
 
 %changelog
+* Sat May 08 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt3
+- Move weboob plugin script to kmymoney-weboob.
+- Set python2.7(weboob) as kmymoney-weboob requirements.
+
 * Fri Feb 26 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt2
 - Complete Russian localization (thanks Olesya Gerasimenko).
 
