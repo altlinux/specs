@@ -1,5 +1,5 @@
 Name: nextcloud-client
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Group: Networking/File transfer
@@ -82,6 +82,9 @@ ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Fri Feb 14 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.2-alt1
+- new version (ALT#38086)
+
 * Tue Dec 24 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.1-alt1
 - new version (ALT#37647)
 
