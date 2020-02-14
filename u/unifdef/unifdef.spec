@@ -1,5 +1,5 @@
 Name: unifdef
-Version: 2.11.25.65842ab
+Version: 2.12
 Release: alt1
 Summary: A tool for removing ifdef'd lines
 License: BSD-2-Clause and BSD-3-Clause
@@ -32,6 +32,9 @@ make test
 %_man1dir/unifdef*
 
 %changelog
+* Fri Feb 14 2020 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
+- unifdef-2.11-25-g65842ab -> unifdef-2.12.
+
 * Fri Jan 04 2019 Dmitry V. Levin <ldv@altlinux.org> 2.11.25.65842ab-alt1
 - Updated to unifdef-2.11-25-g65842ab.
 
