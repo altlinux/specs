@@ -3,12 +3,12 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 1.3.0
-Release: alt2
+Name: python3-module-%oname
+Version: 1.5.0
+Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/importlib-metadata/
 
@@ -16,22 +16,15 @@ Url: https://pypi.org/project/importlib-metadata/
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: python2.7(setuptools_scm)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python2.7(configparser)
-BuildRequires: python2.7(contextlib2)
-BuildRequires: python2.7(importlib_resources)
-BuildRequires: python2.7(json)
-BuildRequires: python2.7(packaging)
-BuildRequires: python2.7(zipp)
-BuildRequires: python2.7(tox)
+BuildRequires: python3(packaging)
+BuildRequires: python3(pyfakefs)
+BuildRequires: python3(tox)
+BuildRequires: python3(zipp)
 %endif
-
-# not autodetected
-%py_requires pathlib2
-%py_requires contextlib2
-%py_requires configparser
 
 %description
 %oname is a library which provides an API for accessing an installed package's
@@ -58,28 +51,34 @@ rm -f pyproject.toml
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
+python3 -c "import sys; sys.exit(\"It's time to remove Python3 module because this one is in standard library\" if sys.version_info[0:2] >= (3, 8) else 0)"
+%python3_install
+
+for i in tests docs;
+do
+    [ -d "%buildroot%python3_sitelibdir/%oname/$i" ] && \
+    { echo "There should be no packaged $i"; exit 1; }
+done
 
 %check
-grep -qsF 'pip<19.1' tox.ini || exit 1
-sed -i -e '/pip<19\.1/d' -e '/install_command/d' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-tox --sitepackages -vv
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -vv
 
 %files
 %doc LICENSE README.rst
-%python_sitelibdir/importlib_metadata-%version-py%_python_version.egg-info/
-%python_sitelibdir/importlib_metadata/
+%python3_sitelibdir/importlib_metadata-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/importlib_metadata/
 
 %changelog
-* Thu Feb 13 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
-- Moved Python3 subpackage out to its own package.
+* Wed Feb 12 2020 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.3.0 -> 1.5.0.
+- Moved Python3 subpackage to its own package.
 
 * Mon Dec 16 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 0.23 -> 1.3.0.
