@@ -1,8 +1,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.28
-Release: alt3
+Version: 1.0.29
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -13,7 +13,7 @@ Url: http://www.sane-project.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://gitlab.com/sane-project/backends/uploads/9e718daff347826f4cfe21126c8d5091/sane-backends-%version.tar
+Source: https://gitlab.com/sane-project/backends/uploads/54f858b20a364fc35d820df935a86478/sane-backends-%version.tar
 #Source1: %name-%version.ru.po
 Source2: %name.xinetd
 
@@ -258,6 +258,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.29-alt1
+- new version (1.0.29) with rpmgs script
+
 * Fri Nov 01 2019 Michael Shigorin <mike@altlinux.org> 1.0.28-alt3
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - minor spec cleanup
