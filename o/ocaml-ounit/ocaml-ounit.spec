@@ -1,19 +1,24 @@
 #/usr/lib/ocaml/oUnit/oUnit.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ounit
-Version: 2.0.8
-Release: alt4
+Version: 2.2.2
+Release: alt1
 Summary: Unit test framework for OCaml
 Group: Development/ML
 License: MIT
 Url: http://ounit.forge.ocamlcore.org/
 # https://github.com/gildor478/ounit
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild
+BuildRequires: ocaml-lwt-devel
+BuildRequires: ocaml-ocplib-endian-devel
+BuildRequires: ocaml-result-devel
+BuildRequires: libev-devel
+BuildRequires: dune
 
 %description
 OUnit is a unit test framework for OCaml. It allows one to easily
@@ -32,33 +37,39 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-./configure --destdir %buildroot
-make all
-make doc
-make test
+dune build @install
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR/stublibs
-make install
+dune install --destdir=%buildroot
+
+%check
+dune runtest
 
 %files
 %doc LICENSE.txt
-%_libdir/ocaml/oUnit
-%exclude %_libdir/ocaml/oUnit/*.a
-%exclude %_libdir/ocaml/oUnit/*.cmxa
-%exclude %_libdir/ocaml/oUnit/*.mli
+%_libdir/ocaml/ounit*
+%exclude %_libdir/ocaml/ounit2-lwt/*.a
+%exclude %_libdir/ocaml/ounit2-lwt/*.cmxa
+%exclude %_libdir/ocaml/ounit*/*/*.a
+%exclude %_libdir/ocaml/ounit*/*/*.cmxa
+%exclude %_libdir/ocaml/ounit*/*/*.mli
 
 %files devel
-%doc LICENSE.txt README.txt
-%doc _build/src/api-ounit.docdir/*
-%_libdir/ocaml/oUnit/*.a
-%_libdir/ocaml/oUnit/*.cmxa
-%_libdir/ocaml/oUnit/*.mli
+%doc LICENSE.txt README.md CHANGES.md
+%_libdir/ocaml/ounit*/*/*.a
+%_libdir/ocaml/ounit*/*/*.cmxa
+%_libdir/ocaml/ounit*/*/*.mli
+%_libdir/ocaml/ounit2-lwt/*.a
+%_libdir/ocaml/ounit2-lwt/*.cmxa
 
 %changelog
+* Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+- turned on tests
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 2.0.8-alt4
 - rebuilt with ocaml-4.08
 
