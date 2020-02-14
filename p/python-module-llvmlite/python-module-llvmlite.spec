@@ -2,7 +2,7 @@
 
 Name:    python-module-%oname
 Version: 0.31.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -14,7 +14,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-dev python-module-setuptools
-BuildRequires: clang llvm-devel libstdc++-devel
+BuildRequires: clang7.0 llvm7.0-devel libstdc++-devel
 %if ""!="3"
 BuildRequires: python-module-enum34
 %endif
@@ -57,6 +57,9 @@ export LLVM_CONFIG=%_bindir/llvm-config
 %doc *.rst
 
 %changelog
+* Fri Feb 14 2020 Grigory Ustinov <grenka@altlinux.org> 0.31.0-alt2
+- Add explicit BR on llvm7, because porting on llvm9 is still not finished.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.31.0-alt1
 - Build new version.
 
