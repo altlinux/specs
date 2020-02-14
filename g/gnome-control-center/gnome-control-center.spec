@@ -11,13 +11,13 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Control Center
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org
+Url: https://www.gnome.org
 
 # par example: git-archive-all.sh --format tar --prefix gnome-control-center-3.2.2/ gnome-control-center-3.2.2.tar
 %if_enabled snapshot
@@ -175,6 +175,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
