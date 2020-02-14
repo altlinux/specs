@@ -7,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 1.9.10
+Version: 1.9.13
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -19,8 +19,7 @@ Url: https://telegram.org/
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
 
-# See https://github.com/EasyCoding/tgbuild
-Patch4: cmake_helpers-system-qrcode.patch
+# Check https://github.com/EasyCoding/tgbuild for patches
 
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
 #BuildRequires(pre): rpm-macros-kde-common-devel
@@ -133,7 +132,6 @@ or business messaging needs.
 
 %prep
 %setup
-%patch4 -p1
 
 rm -rf Telegram/ThirdParty/variant \
 	Telegram/ThirdParty/GSL \
@@ -144,7 +142,6 @@ rm -rf Telegram/ThirdParty/variant \
 	Telegram/ThirdParty/rlottie \
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected
-
 
 %build
 %if_with ffmpeg_static
@@ -167,6 +164,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
+    -DDESKTOP_APP_USE_PACKAGED_QRCODE:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_FORCE_GTK_FILE_DIALOG:BOOL=ON \
@@ -205,6 +203,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.13-alt1
+- new version 1.9.13 (with rpmrb script)
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9.10-alt1
 - new version 1.9.10 (with rpmrb script)
 
