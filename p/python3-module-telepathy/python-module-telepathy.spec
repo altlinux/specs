@@ -1,29 +1,25 @@
-%define version 0.15.19
-%define release alt3
+%define oname telepathy
 
-%setup_python_module telepathy
-
-Name: %packagename
-Version: %version
-Release: %release
+Name: python3-module-%oname
+Version: 0.15.19
+Release: alt4
 
 Summary: Python bindings for telepathy library
 License: LGPL 2.1 or later
-Group: Development/Python
+Group: Development/Python3
 URL: http://telepathy.freedesktop.org/
+BuildArch: noarch
 
 Source0: http://telepathy.freedesktop.org/releases/telepathy-python/telepathy-python-%version.tar.gz
 #Upstream git commit 0c4e6e9f41b24bbb7ea33653b8a81ff79c0ea032
 Patch: python-telepathy-0.15.19-autotools.patch
+Patch1: port-on-python3.patch
 
-Packager: Python Development Team <python@packages.altlinux.org>
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3 xsltproc
 
-Requires: python-module-dbus >= 0.80
+Requires: python3-module-dbus >= 0.80
 
-BuildArch: noarch
-
-# Automatically added by buildreq on Sun Oct 14 2007 (-bi)
-BuildRequires: python-devel python-modules-compiler xsltproc
 
 %description
 Telepathy python bindings for use with python programs.
@@ -31,22 +27,29 @@ Telepathy python bindings for use with python programs.
 %prep
 %setup -n telepathy-python-%version
 %patch -p1
+%patch1 -p2
+
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 #define __libtoolize true
 #autoreconf
 %configure \
-	am_cv_python_pythondir=%python_sitelibdir \
-	am_cv_python_pyexecdir=%python_sitelibdir
+	am_cv_python_pythondir=%python3_sitelibdir \
+	am_cv_python_pyexecdir=%python3_sitelibdir
 
 %install
 %makeinstall_std
 
 %files
 %doc AUTHORS README examples
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Jan 21 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.19-alt4
+- Porting on Python3.
+
 * Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.15.19-alt3
 - bugfix (closes: #27962); added patch from fedora.
 
