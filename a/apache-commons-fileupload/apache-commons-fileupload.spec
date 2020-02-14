@@ -1,10 +1,7 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-commons-fileupload
 Version:        1.4
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
@@ -88,6 +85,9 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 # -----------------------------------------------------------------------------
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1_3jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1_1jpp8
 - new version
 
