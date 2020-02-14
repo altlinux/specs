@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 30
+%define ver_major 31
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -34,6 +34,8 @@ BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: libgio-devel libdbus-devel
 
 %add_python3_path %_datadir/nautilus-python/extensions
+# imports.gi.St.Settings.get()
+%add_typelib_req_skiplist typelib(get)
 
 %description
 GSConnect is a complete implementation of KDE Connect for
@@ -73,6 +75,9 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %doc README.md
 
 %changelog
+* Sun Jan 26 2020 Yuri N. Sedunov <aris@altlinux.org> 31-alt1
+- 31
+
 * Thu Dec 05 2019 Yuri N. Sedunov <aris@altlinux.org> 30-alt1
 - 30
 
