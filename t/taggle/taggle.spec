@@ -3,13 +3,13 @@ Group: Games/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		taggle
 Version:	1.0
-Release:	alt2_15jpp8
+Release:	alt2_17jpp8
 Summary:	An online french word game
 
 License:	GPLv3+
@@ -22,7 +22,6 @@ Source4:	%{name}-server.sh
 
 BuildArch:	noarch
 
-BuildRequires:	java-devel >= 1.6.0
 BuildRequires:	jpackage-utils
 BuildRequires:	desktop-file-utils
 
@@ -101,6 +100,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
 - new version
 
