@@ -1,17 +1,14 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name      commons-email
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Apache Commons Email Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/proper/%{short_name}/
@@ -72,6 +69,9 @@ sed -i -e '/<script>/s/</&lt;/' src/main/java/org/apache/commons/mail/ImageHtmlE
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_5jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_4jpp8
 - new version
 
