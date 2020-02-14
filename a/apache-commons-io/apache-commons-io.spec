@@ -1,15 +1,12 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-io
 Epoch:          1
 Version:        2.6
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
 URL:            http://commons.apache.org/io
@@ -50,6 +47,9 @@ sed -i 's/\r//' *.txt
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_8jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_6jpp8
 - new version
 
