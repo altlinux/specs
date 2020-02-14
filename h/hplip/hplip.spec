@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.19.12
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -160,6 +160,8 @@ Patch12: hplip-3.16.11-alt-fax-setup.patch
 Patch13: hplip-alt-fix-PPD-file-choose-in-qt5.patch
 # Localization files made for old qt3 forms
 Patch14: hplip-alt-use-l10n.patch
+# Use python3 in service file
+Patch15: hplip-alt-use-python3-in-service.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -623,6 +625,7 @@ tar -xf %SOURCE6
 %if_with l10n
 %patch14 -p2
 %endif
+%patch15 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1153,6 +1156,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Feb 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.19.12-alt2
+- Use python3 in service file.
+
 * Mon Dec 16 2019 Andrey Cherepanov <cas@altlinux.org> 1:3.19.12-alt1
 - New version.
 - Added support for the following new Printers:
