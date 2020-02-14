@@ -6,7 +6,7 @@
 %define xdg_name org.gnome.Reversi
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Gnome version of Othello (Reversi) board game
@@ -55,6 +55,9 @@ Othello.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt1
+- 3.34.5
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 
