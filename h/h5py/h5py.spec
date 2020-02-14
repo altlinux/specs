@@ -1,8 +1,7 @@
 %define hdf5dir %_libdir/hdf5-seq
 
-%ifarch ppc64le
-%def_without check
-%endif
+%def_with check
+%def_without docs
 
 %define descr \
 HDF5 for Python (h5py) is a general-purpose Python interface to the \
@@ -24,93 +23,66 @@ supports slicing, and has dtype and shape attributes. HDF5 groups are \
 presented using a dictionary metaphor, indexed by name.
 
 Name:       h5py
-Version:    2.9.0
-Release:    alt4
+Version:    2.10.0
+Release:    alt1
 
 Summary:    Python interface to the Hierarchical Data Format library, version 5
 License:    MIT
-Group:      Development/Python
+Group:      Development/Python3
 Url:        http://www.h5py.org/
 
 #           https://github.com/h5py/h5py.git
 Source:     %name-%version.tar
-Patch1:     %name-%version-alt.patch
+Patch0:     fix-import-lib-numpy-for-py3.patch
+Patch1:     remove-failing-tests.patch
 
-# for all
 BuildRequires: libhdf5-devel
 BuildRequires: libsz2-devel
 
-# for py2
-BuildRequires(pre): rpm-build-python
-BuildRequires: libnumpy-devel
-BuildRequires: python-module-Cython
-BuildRequires: python-module-pkgconfig
-BuildRequires: python-module-six
-BuildRequires: python-module-sphinx-devel
-# for test
-BuildRequires: python-module-numpy-testing
-BuildRequires: python-module-unittest2
-
-#for py3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-pkgconfig
 BuildRequires: python3-module-six
 BuildRequires: python3-module-sphinx-devel
-# for test
+%if_with check
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-unittest2
+%endif
 
 
 %description
-%descr
-
-%package -n python-module-%name
-Summary: Python interface to the Hierarchical Data Format library, version 5
-Group: Development/Python
-%py_requires multiprocessing
-%py_requires h5py.tests
-
-%description -n python-module-%name
 %descr
 
 %package -n python3-module-%name
 Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python3
 %py3_requires h5py.tests
+%add_python3_req_skip Tkinter
 
 %description -n python3-module-%name
 %descr
 
-%package -n python-module-%name-doc
+%if_with docs
+%package -n python3-module-%name-doc
 Summary: Documentation for Python interface to the HDF5
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n python-module-%name-doc
+%description -n python3-module-%name-doc
 %descr
 
 This package contains development documentation for H5PY.
 
-%package -n python-module-%name-pickles
+%package -n python3-module-%name-pickles
 Summary: Pickles for Python interface to the HDF5
-Group: Development/Python
+Group: Development/Python3
 
-%description -n python-module-%name-pickles
+%description -n python3-module-%name-pickles
 %descr
 
 This package contains pickles for H5PY.
-
-%package -n python-module-%name-tests
-Summary: Tests for Python interface to the HDF5
-Group: Development/Python
-Requires: python-module-%name = %version-%release
-
-%description -n python-module-%name-tests
-%descr
-
-This package contains tests for H5PY.
+%endif
 
 %package -n python3-module-%name-tests
 Summary: Tests for Python interface to the HDF5
@@ -124,46 +96,31 @@ This package contains tests for H5PY.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 
-cp -fR . ../python3
-
-sed -i 's|@PYVER@|%_python_version|g' docs/Makefile
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-ln -s ../objects.inv docs_api/
+%if_with docs
+sed -i 's|@PYVER@|%_python3_version|g' docs/Makefile
+sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 
-%__python setup.py configure --hdf5=%hdf5dir
-%__python api_gen.py
-%python_build_debug
-
-pushd ../python3
-python3 setup.py configure --hdf5=%hdf5dir
-python3 api_gen.py
+%__python3 setup.py configure --hdf5=%hdf5dir
+%__python3 api_gen.py
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd docs
 %make html
 %make pickle
 popd
 %make -C docs_api html
-
-install -d %buildroot%python_sitelibdir/%name/examples
-install -p -m644 examples/* %buildroot%python_sitelibdir/%name/examples
-touch %buildroot%python_sitelibdir/%name/examples/__init__.py
 
 install -d %buildroot%_docdir/%name
 cp -fR docs/_build/html %buildroot%_docdir/%name/html
@@ -171,43 +128,42 @@ cp -fR docs_api/_build/html %buildroot%_docdir/%name/api
 cp -fR lzf %buildroot%_docdir/%name/
 
 # pickles
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%name/
+%endif
+
+install -d %buildroot%python3_sitelibdir/%name/examples
+install -p -m644 examples/* %buildroot%python3_sitelibdir/%name/examples
+touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
 
 %check
-%__python setup.py test
-
-pushd ../python3
 %__python3 setup.py test
-popd
-
-%files -n python-module-%name
-%doc licenses *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%name/pickle
-%exclude %python_sitelibdir/%name/examples
-%exclude %python_sitelibdir/*/tests
-
-%files -n python-module-%name-doc
-%_docdir/%name
-
-%files -n python-module-%name-tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/%name/examples
-
-%files -n python-module-%name-pickles
-%dir %python_sitelibdir/%name
-%python_sitelibdir/%name/pickle
 
 %files -n python3-module-%name
 %doc licenses *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/%name/examples
+%if_with docs
+%exclude %python3_sitelibdir/%name/pickle
+
+%files -n python3-module-%name-doc
+%_docdir/%name
+
+%files -n python3-module-%name-pickles
+%dir %python3_sitelibdir/%name
+%python3_sitelibdir/%name/pickle
+%endif
 
 %files -n python3-module-%name-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/%name/examples
 
 
 %changelog
+* Fri Feb 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.10.0-alt1
+- Version updated to 2.10.0
+- build for python2 disabled.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.9.0-alt4
 - Enabled tests (disabled to ppc64le only)
 - cleanup build requires.
