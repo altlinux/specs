@@ -1,11 +1,10 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -22,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           scala
 Version:        2.10.6
-Release:        alt2_15jpp8
+Release:        alt2_17jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 # License was confirmed to be standard BSD by fedora-legal
@@ -77,7 +76,6 @@ Source24:       scala.ant.d
 
 Source31:       scala-bootstript.xml
 
-BuildRequires:  java-devel >= 1.7.0
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  ant-contrib
@@ -358,6 +356,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_17jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_15jpp8
 - new version
 
