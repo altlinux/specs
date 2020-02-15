@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-artifact-resolver
 Version:        1.0
-Release:        alt3_20jpp8
+Release:        alt3_21jpp8
 # Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
 Epoch:          1
 Summary:        Maven Artifact Resolution API
@@ -74,6 +74,9 @@ rm src/test/java/org/apache/maven/shared/artifact/resolver/DefaultProjectDepende
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_21jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_20jpp8
 - new version
 
