@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          randomizedtesting
 Version:       2.5.3
-Release:       alt1_3jpp8
+Release:       alt1_5jpp8
 Summary:       Java Testing Framework
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/randomizedtesting.html
@@ -193,6 +190,9 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_5jpp8
+- fc update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_3jpp8
 - new version
 
