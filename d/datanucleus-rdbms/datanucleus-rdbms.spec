@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 9bd33de81ccdce1c1c448cdd3c0aa8d9480eff9a
@@ -11,13 +8,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:          datanucleus-rdbms
 Version:       3.2.13
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       DataNucleus RDBMS
 License:       ASL 2.0
 URL:           http://www.datanucleus.org/%{name}
 Source:        https://github.com/datanucleus/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
 
-BuildRequires: java-devel
 BuildRequires: mvn(com.mchange:c3p0)
 BuildRequires: mvn(commons-collections:commons-collections)
 BuildRequires: mvn(commons-dbcp:commons-dbcp)
@@ -106,6 +102,9 @@ cp -p META-INF/README.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.13-alt1_10jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.13-alt1_9jpp8
 - new version
 
