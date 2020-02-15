@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_12jpp8
+Release:        alt3_14jpp8
 Summary:        Pure Java SQLite
 
 License:        GPLv2
@@ -82,6 +82,9 @@ ant jars osgi javadoc pom
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_14jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_12jpp8
 - new version
 
