@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global api_version 2.0
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_17jpp8
+Release:       alt2_19jpp8
 Summary:       Java Portlet Specification V2.0
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -72,6 +69,9 @@ sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" po
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_19jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
 - new version
 
