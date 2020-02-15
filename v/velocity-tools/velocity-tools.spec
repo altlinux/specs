@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_20jpp8
+Release:       alt2_22jpp8
 Summary:       Collection of useful tools for Velocity template engine
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
@@ -121,6 +118,9 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_22jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_20jpp8
 - new version
 
