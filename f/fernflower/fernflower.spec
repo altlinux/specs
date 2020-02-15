@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:       fernflower
 Version:    183.5153.8
-Release:    alt1_3jpp8
+Release:    alt1_4jpp8
 Summary:    JIdea's java decompiler
 License:    ASL 2.0 
 URL:        https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
@@ -103,6 +103,9 @@ cp %{name}.zip $RPM_BUILD_ROOT/%{_javadocdir}/
 %endif
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 183.5153.8-alt1_4jpp8
+- fc update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 183.5153.8-alt1_3jpp8
 - new version
 
