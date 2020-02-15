@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           cglib
 Version:        3.2.9
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Code Generation Library for Java
 # ASM MethodVisitor is based on ASM code and therefore
 # BSD-licensed. Everything else is ASL 2.0.
@@ -80,6 +80,9 @@ Documentation for the cglib code generation library.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.2.9-alt1_4jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.9-alt1_2jpp8
 - new version
 
