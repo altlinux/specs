@@ -1,19 +1,16 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
 Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_29jpp8
+Release:        alt1_31jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -88,6 +85,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_31jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_29jpp8
 - new version
 
