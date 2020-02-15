@@ -1,6 +1,6 @@
 Group: Text tools
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define brand JBoss
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:		publican-jboss
 Summary:	Common documentation files for %{brand}
 Version:	2.6
-Release:	alt2_13jpp8
+Release:	alt2_14jpp8
 License:	CC-BY-SA
 # Limited to these arches on RHEL 6 due to PDF + Java limitations
 %if %{RHEL6}
@@ -46,6 +46,9 @@ publican install_brand --path=$RPM_BUILD_ROOT%{_datadir}/publican/Common_Content
 %{_datadir}/publican/Common_Content/%{brand}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_14jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_13jpp8
 - new version
 
