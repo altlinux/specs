@@ -1,14 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           buildnumber-maven-plugin
 Version:        1.3
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Build Number Maven Plugin
 License:        MIT and ASL 2.0
 URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
@@ -94,6 +94,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_14jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_12jpp8
 - new version
 
