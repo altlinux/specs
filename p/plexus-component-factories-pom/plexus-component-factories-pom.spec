@@ -1,16 +1,13 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global artifactId plexus-component-factories
 
 Name:		plexus-component-factories-pom
 Version:	1.0
-Release:	alt1_0.17.alpha11jpp8
+Release:	alt1_0.19.alpha11jpp8
 Summary:	Plexus Component Factories POM
 BuildArch:	noarch
 License:	ASL 2.0
@@ -46,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.19.alpha11jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.17.alpha11jpp8
 - new version
 
