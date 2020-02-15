@@ -1,11 +1,8 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rome
 Version:       1.7.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       RSS and Atom Utilities
 License:       ASL 2.0
 URL:           http://rometools.github.io/rome/
@@ -202,6 +199,9 @@ rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_8jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_7jpp8
 - new version
 
