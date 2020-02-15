@@ -1,10 +1,9 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global  git_commit d0ec879
@@ -15,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt2_17jpp8
+Release:        alt2_19jpp8
 Summary:        A java library for lists of bytes
 
 License:        CPL or GPLv2+ or LGPLv2+
@@ -26,7 +25,6 @@ BuildArch:      noarch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  java-devel
 BuildRequires:  jcodings
 BuildRequires:  jpackage-utils
 BuildRequires:  javapackages-local
@@ -76,6 +74,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_19jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_17jpp8
 - new version
 
