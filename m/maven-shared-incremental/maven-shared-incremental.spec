@@ -1,14 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shared-incremental
 Version:        1.1
-Release:        alt1_16jpp8
+Release:        alt1_18jpp8
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-incremental/
@@ -54,6 +54,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_18jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_16jpp8
 - new version
 
