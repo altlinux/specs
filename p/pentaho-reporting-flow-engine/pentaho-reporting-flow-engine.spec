@@ -3,19 +3,19 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt1_17jpp8
+Release: alt1_19jpp8
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
 Source: http://downloads.sourceforge.net/jfreereport/flow-engine-%{version}.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant java-devel jpackage-utils libbase libserializer
+BuildRequires: ant jpackage-utils libbase libserializer
 BuildRequires: libloader libfonts pentaho-libxml xml-commons-apis
 BuildRequires: librepository sac flute liblayout libformula
 Requires: jpackage-utils libbase >= 1.1.3 libfonts >= 1.1.3
@@ -65,6 +65,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_19jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_17jpp8
 - new version
 
