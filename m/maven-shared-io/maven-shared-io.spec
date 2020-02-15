@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shared-io
 Epoch:          1
 Version:        3.0.0
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        API for I/O support like logging, download or file scanning
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-io
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt1_9jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt1_7jpp8
 - new version
 
