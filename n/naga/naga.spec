@@ -2,15 +2,15 @@ Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global svnrel 82
 
 Name:           naga
 Version:        3.0
-Release:        alt1_12.82svnjpp8
+Release:        alt1_14.82svnjpp8
 Summary:        Simplified Java NIO asynchronous sockets
 
 License:        MIT
@@ -26,7 +26,6 @@ Patch0:		naga-encoding.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 
 Requires:       jpackage-utils
@@ -87,6 +86,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_14.82svnjpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_12.82svnjpp8
 - new version
 
