@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global osginame org.apache.felix.resolver
 
 Name:             felix-osgi-obr-resolver
 Version:          1.8.0
-Release:          alt1_7jpp8
+Release:          alt1_9jpp8
 Summary:          Apache Felix Resolver
 License:          ASL 2.0
 URL:              http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
@@ -61,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_9jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_7jpp8
 - new version
 
