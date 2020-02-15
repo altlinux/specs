@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:       procyon
 Version:    0.5.33
-Release:    alt1_0.2.pre02jpp8
+Release:    alt1_0.3.pre02jpp8
 Summary:    procyon java decompiler and other tools
 License:    ASL 2.0 
 URL:        https://bitbucket.org/mstrobel/procyon/
@@ -449,6 +449,9 @@ popd
 %doc README.md
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.33-alt1_0.3.pre02jpp8
+- fc update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.33-alt1_0.2.pre02jpp8
 - new version
 
