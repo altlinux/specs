@@ -1,10 +1,7 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mvel
 Version:       2.2.8
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
 Url:           https://github.com/mvel
@@ -101,6 +98,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_9jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_7jpp8
 - new version
 
