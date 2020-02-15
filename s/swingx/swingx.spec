@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           swingx
 Version:        1.6.5.1
-Release:        alt2_13jpp8
+Release:        alt2_14jpp8
 Summary:        A collection of Swing components
 License:        LGPLv2
 URL:            https://swingx.java.net/
@@ -92,6 +92,9 @@ find . -name "*.dll" -exec rm -f {} \;
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_14jpp8
+- fc update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_13jpp8
 - build with new mockito
 
