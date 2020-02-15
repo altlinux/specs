@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt7_27jpp8
+Release:        alt7_29jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -66,7 +65,6 @@ BuildRequires:  junit >= 0:3.8
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  javapackages-local
 
 Requires:       junit >= 0:3.8
@@ -167,6 +165,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_29jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt7_27jpp8
 - new version
 
