@@ -6,13 +6,12 @@ BuildRequires: jpackage-1.8-compat
 Name: liquibase
 Summary: Database Refactoring Tool
 Version: 3.6.3
-Release: alt1_1jpp8
+Release: alt1_2jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
 
 Source0: https://github.com/liquibase/liquibase/archive/%{name}-parent-%{version}.tar.gz
 
-BuildRequires: java-devel >= 1.7.0
 BuildRequires: javapackages-tools
 BuildRequires: maven-local
 BuildRequires: mvn(ch.qos.logback:logback-classic)
@@ -158,6 +157,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_2jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_1jpp8
 - new version
 
