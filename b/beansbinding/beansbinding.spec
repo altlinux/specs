@@ -3,13 +3,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_20jpp8
+Release:        alt1_22jpp8
 Summary:        Beans Binding (JSR 295) reference implementation
 
 License:        LGPLv2+
@@ -19,7 +19,6 @@ Patch0:         disable-doclint.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  java-devel
 
 Requires:       java >= 1.6.0
 Requires:       javapackages-tools
@@ -66,6 +65,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_22jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_20jpp8
 - new version
 
