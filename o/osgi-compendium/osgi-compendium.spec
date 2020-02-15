@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           osgi-compendium
 Version:        7.0.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Interfaces and Classes for use in compiling OSGi bundles
 License:        ASL 2.0
 URL:            http://www.osgi.org
@@ -110,6 +110,9 @@ rm -r src/main/java/org/osgi/service/transaction/control/jpa
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_4jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_2jpp8
 - new version
 
