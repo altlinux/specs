@@ -1,5 +1,8 @@
+%define	dict_name engcom
+%define dictdesc The Open English-Russian Dictionary of Computer Terms
+
 Name: engcom
-Version: 1.38
+Version: 1.39
 Release: alt1
 
 Summary: The Open English-Russian Dictionary of Computer Terms
@@ -15,14 +18,9 @@ Source: ftp://download.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%
 
 BuildArchitectures: noarch
 
-# Please do not use buildreq
-BuildPreReq: dict-tools perl-Unicode-Map8 perl-Unicode-String stardict-tools
-
-%define	dict_name engcom
-%define dictdesc The Open English-Russian Dictionary of Computer Terms
-
-# Automatically added by buildreq on Fri Jun 15 2007
-BuildRequires: dict-tools makedict perl-Unicode-Map8 python-module-PyXML python-modules-compiler python-modules-email python-modules-encodings python-modules-logging
+BuildRequires: dict-tools makedict stardict-tools
+BuildRequires: perl-Unicode-String perl-Unicode-Map8 python-module-PyXML
+BuildRequires: python2-base python-modules-compiler python-modules-email python-modules-encodings python-modules-logging
 
 %description
 The %name package contains free (as speech) English-Russian
@@ -153,6 +151,9 @@ cd -
 %_datadir/stardict/dic/*
 
 %changelog
+* Sat Feb 15 2020 Vitaly Lipatov <lav@altlinux.ru> 1.39-alt1
+- cleanup spec, use python2
+
 * Tue Aug 04 2015 Vitaly Lipatov <lav@altlinux.ru> 1.38-alt1
 - cleanup all scripts
 - update words (about 2470 articles)
