@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-plugin-tools
 Version:        3.5.1
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -293,6 +293,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_7jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_5jpp8
 - new version
 
