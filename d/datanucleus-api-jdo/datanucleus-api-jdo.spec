@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 3c0a06622831bd7af6c231c1b5d5398f3afc7271
@@ -11,13 +8,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:          datanucleus-api-jdo
 Version:       3.2.8
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       DataNucleus JDO API plugin
 License:       ASL 2.0
 URL:           https://github.com/datanucleus/datanucleus-api-jdo
 Source:        https://github.com/datanucleus/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
 
-BuildRequires: java-devel
 
 # note this HAS to be jdo-api 3.x, not jdo2-api 2.2
 BuildRequires: mvn(javax.jdo:jdo-api)
@@ -67,6 +63,9 @@ cp -p META-INF/README.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_9jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_8jpp8
 - new version
 
