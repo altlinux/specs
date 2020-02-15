@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The version of Subversion that we are compatible with
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 Epoch:   1
 Name:    svnkit
 Version: 1.8.12
-Release: alt1_6jpp8
+Release: alt1_7jpp8
 Summary: Pure Java library to manage Subversion working copies and repositories
 
 # License located at https://svnkit.com/license.html
@@ -153,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.8.12-alt1_7jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.8.12-alt1_6jpp8
 - new version
 
