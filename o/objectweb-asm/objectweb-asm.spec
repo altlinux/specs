@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           objectweb-asm
 Version:        7.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -164,6 +164,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:7.0-alt1_4jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:7.0-alt1_2jpp8
 - new version
 
