@@ -2,13 +2,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt2_21jpp8
+Release:        alt2_23jpp8
 Summary:        A few useful Java libraries
 License:        MIT
 
@@ -105,6 +105,9 @@ make install \
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_23jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_21jpp8
 - new version
 
