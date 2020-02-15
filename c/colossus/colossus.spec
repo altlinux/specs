@@ -3,8 +3,8 @@ Group: Games/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           colossus
@@ -12,7 +12,7 @@ Name:           colossus
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_11jpp8
+Release:        alt1_13jpp8
 Summary:        Allows people to play Titan against each other or AIs
 
 License:        GPLv2
@@ -35,7 +35,6 @@ BuildArch:      noarch
 
 # Note the intention is to eventually require only java 1.5 for both building
 # and installing. But bug 510243 in gjdoc currently blocks this.
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  jdom
@@ -183,6 +182,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_13jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_11jpp8
 - new version
 
