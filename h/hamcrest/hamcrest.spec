@@ -1,11 +1,8 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2008, JPackage Project
@@ -40,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_25jpp8
+Release:        alt3_27jpp8
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -175,6 +172,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_27jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_25jpp8
 - new version
 
