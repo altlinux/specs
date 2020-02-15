@@ -1,16 +1,13 @@
 Group: Publishing
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit bd245c9
 
 Name:           pcfi
 Version:        2010.08.09
-Release:        alt2_15.20111103gitbd245c9jpp8
+Release:        alt2_17.20111103gitbd245c9jpp8
 Summary:        PDF Core Font Information
 
 License:        BSD
@@ -52,6 +49,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_17.20111103gitbd245c9jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_15.20111103gitbd245c9jpp8
 - new version
 
