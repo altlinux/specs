@@ -3,8 +3,8 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # the package is arch-dependent because scripts contain arch dependent paths
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_29jpp8
+Release:    alt2_31jpp8
 Summary:    Java implementation of the DBus protocol
 License:    AFL or LGPLv2
 URL:        http://freedesktop.org/wiki/Software/DBusBindings
@@ -156,6 +156,9 @@ make install \
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_31jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_29jpp8
 - new version
 
