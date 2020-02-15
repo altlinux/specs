@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_12jpp8
+Release:        alt1_14jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 License:        BSD
@@ -58,6 +58,7 @@ encountered by grammar developers.
 %patch0 -p0
 %patch1 -p0
 
+
 # Remove MacOSX-specific code
 rm -r src/org/antlr/xjlib/appkit/app/MacOS/
 
@@ -105,6 +106,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_14jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_12jpp8
 - new version
 
