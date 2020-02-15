@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shared-utils
 Version:        3.2.1
-Release:        alt1_0.3jpp8
+Release:        alt1_0.5jpp8
 Summary:        Maven shared utility classes
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-utils
@@ -66,6 +66,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_0.5jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_0.3jpp8
 - new version
 
