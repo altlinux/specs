@@ -1,16 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define debug_package %{nil}
 
 Name:     nailgun
 Version:  0.9.1
-Release:  alt2_11jpp8
+Release:  alt2_13jpp8
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 License:  ASL 2.0
 URL:      http://martiansoftware.com/nailgun/
@@ -58,6 +58,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_13jpp8
+- fc update
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_11jpp8
 - fixed arch build
 
