@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define parent plexus
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-i18n
 Version:        1.0
-Release:        alt7_0.13.b10.4jpp8
+Release:        alt7_0.15.b10.4jpp8
 Summary:        Plexus I18N Component
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-i18n
@@ -64,6 +61,9 @@ Javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.15.b10.4jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.13.b10.4jpp8
 - new version
 
