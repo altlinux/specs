@@ -1,14 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt4_21jpp8
+Release:        alt4_23jpp8
 Summary:        Maven Verifier Plugin
 
 License:        ASL 2.0
@@ -17,7 +17,6 @@ Source0:        http://www.apache.org/dist/maven/plugins/%{name}-%{version}-sour
 
 BuildArch: noarch
 
-BuildRequires: java-devel >= 1.6.0
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-plugins-pom
@@ -55,6 +54,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_23jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_21jpp8
 - new version
 
