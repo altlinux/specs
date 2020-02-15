@@ -46,7 +46,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt5_17jpp8
+Release:        alt5_19jpp8
 Epoch:          0
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
@@ -111,6 +111,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt5_19jpp8
+- fc update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt5_17jpp8
 - fc update & java 8 build
 
