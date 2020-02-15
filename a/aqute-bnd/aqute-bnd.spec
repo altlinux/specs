@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           aqute-bnd
 Version:        3.5.0
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0
@@ -208,6 +208,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_8jpp8
+- fc update
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_6jpp8
 - fixed build with osgi-compendium-7
 
