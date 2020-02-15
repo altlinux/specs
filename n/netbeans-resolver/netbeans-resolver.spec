@@ -2,8 +2,8 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define patched_resolver_ver 1.2
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_18jpp8
+Release: alt1_20jpp8
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
 License: ASL 1.1
@@ -26,7 +26,6 @@ Patch2: javadoc-source-version.patch
 
 BuildArch: noarch
 
-BuildRequires: java-devel
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: dos2unix
@@ -79,6 +78,9 @@ cp -rp build/apidocs/resolver %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.resolver.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_20jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_18jpp8
 - new version
 
