@@ -1,11 +1,8 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt2_19jpp8
+Release:          alt2_21jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 License:          LGPLv2+
 URL:              http://code.google.com/p/apiviz/
@@ -83,6 +80,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_19jpp8
 - new version
 
