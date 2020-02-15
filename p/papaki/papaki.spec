@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt2_0.15.Beta3jpp8
+Release:        alt2_0.17.Beta3jpp8
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -46,7 +45,6 @@ Patch2:         %{name}-javadoc.patch
 BuildArch:      noarch
 
 BuildRequires:  javapackages-local
-BuildRequires:  java-devel >= 1.6.0
 
 BuildRequires:  apache-ivy
 BuildRequires:  junit
@@ -117,6 +115,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.17.Beta3jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.15.Beta3jpp8
 - new version
 
