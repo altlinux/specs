@@ -1,15 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    osgi-annotation
 Version: 7.0.0
-Release: alt1_2jpp8
+Release: alt1_4jpp8
 Summary: Annotations for use in compiling OSGi bundles
 
 License: ASL 2.0
@@ -84,6 +83,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_4jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_2jpp8
 - new version
 
