@@ -3,13 +3,13 @@ Group: Engineering
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           imagej
 Version:        1.50
-Release:        alt1_7.hjpp8
+Release:        alt1_9.hjpp8
 Summary:        Image Processing and Analysis in Java
 
 License:        Public Domain
@@ -28,7 +28,6 @@ BuildArch:      noarch
 
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
@@ -131,6 +130,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_9.hjpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1_7.hjpp8
 - new version
 
