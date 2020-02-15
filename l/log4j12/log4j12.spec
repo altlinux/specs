@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_24jpp8
+Release:       alt1_26jpp8
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -197,6 +197,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_26jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_24jpp8
 - new version
 
