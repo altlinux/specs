@@ -3,18 +3,18 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: liblayout
 Version: 0.2.10
-Release: alt1_18jpp8
+Release: alt1_20jpp8
 Summary: CSS based layouting framework
 License: LGPLv2+ and UCD
 Source: http://downloads.sourceforge.net/jfreereport/liblayout-%{version}.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant java-devel jpackage-utils flute libloader
+BuildRequires: ant jpackage-utils flute libloader
 BuildRequires: librepository pentaho-libxml libfonts sac libbase >= 1.1.3
 Requires: jpackage-utils flute libloader >= 1.1.3
 Requires: librepository >= 1.1.3 libfonts >= 1.1.3 sac
@@ -67,6 +67,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_20jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_18jpp8
 - new version
 
