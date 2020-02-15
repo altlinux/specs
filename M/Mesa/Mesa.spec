@@ -66,7 +66,7 @@
 %endif
 
 Name: Mesa
-Version: 19.2.8
+Version: 19.3.4
 Release: alt1
 Epoch: 4
 License: MIT
@@ -82,19 +82,19 @@ Patch: %name-%version.patch
 BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel python-modules libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
+BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python-module-libxml2 python3-module-mako python-module-argparse wayland-protocols
+BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
 %ifarch %radeon_arches
-BuildRequires: llvm-devel clang-devel
+BuildRequires: llvm-devel >= 8.0.0 clang-devel >= 8.0.0
 %ifarch %link_static_llvm_arches
-BuildRequires: llvm-devel-static clang-devel-static
+BuildRequires: llvm-devel-static >= 8.0.0 clang-devel-static >= 8.0.0
 %endif
 %endif
 %ifarch %use_lld_arches
-BuildRequires: lld
+BuildRequires: lld >= 8.0.0
 %endif
 
 %description
@@ -447,6 +447,12 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Fri Feb 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.3.4-alt1
+- 19.3.4
+
+* Tue Feb 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.3.3-alt1
+- 19.3.3
+
 * Thu Dec 19 2019 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.8-alt1
 - 19.2.8
 
