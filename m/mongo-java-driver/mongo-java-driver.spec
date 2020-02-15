@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -18,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		%{?scl_prefix}mongo-java-driver
 Version:	3.6.4
-Release:	alt1_3jpp8
+Release:	alt1_4jpp8
 Summary:	A Java driver for MongoDB
 
 BuildArch:	noarch
@@ -28,7 +25,6 @@ Source0:	https://github.com/mongodb/%{pkg_name}/archive/r%{version}.tar.gz
 Patch0:         %{pkg_name}-gradle-local-fixes.patch
 
 %{!?scl:
-BuildRequires:  java-devel
 }
 BuildRequires:  gradle-local
 BuildRequires:  javapackages-tools
@@ -159,6 +155,9 @@ set -ex
 %doc README.md LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.6.4-alt1_4jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.6.4-alt1_3jpp8
 - new version
 
