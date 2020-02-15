@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           spice-parent
 Version:        26
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Sonatype Spice Components
 License:        ASL 2.0
 URL:            http://github.com/sonatype/oss-parents
@@ -45,6 +42,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 26-alt1_12jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 26-alt1_10jpp8
 - new version
 
