@@ -10,7 +10,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -132,6 +132,9 @@ rm -f data/%xdg_name.desktop{,.in}
 
 
 %changelog
+* Sat Feb 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
+- 3.32.4
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.3-alt1
 - 3.32.3
 
