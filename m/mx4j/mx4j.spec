@@ -1,12 +1,11 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %define _without_tests 1
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -41,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt4_30jpp8
+Release:        alt4_31jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -219,6 +218,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_31jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_30jpp8
 - new version
 
