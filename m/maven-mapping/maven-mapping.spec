@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-mapping
 Version:        3.0.0
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Apache Maven Mapping
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/%{name}/
@@ -51,6 +51,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_10jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_8jpp8
 - new version
 
