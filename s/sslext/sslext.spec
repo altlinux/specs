@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          sslext
 Version:       1.2
-Release:       alt3_15jpp8
+Release:       alt3_17jpp8
 Summary:       Struts SSL Switching Extension
 License:       ASL 1.1
 Url:           http://sslext.sourceforge.net/
@@ -33,7 +30,6 @@ Patch2:        %{name}-%{version}-pom.patch
 # build apis documentation
 Patch3:        %{name}-%{version}-javadocs.patch
 
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 
 BuildRequires: ant
@@ -91,6 +87,9 @@ export CLASSPATH=$(build-classpath tomcat-servlet-api tomcat-jsp-api)
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_17jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_15jpp8
 - new version
 
