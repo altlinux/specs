@@ -2,13 +2,13 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Getopt/Mixed.pm) rpm-build-java
+BuildRequires: perl(Getopt/Mixed.pm)
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           rhino
 Version:        1.7.7.1
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
@@ -60,7 +60,6 @@ Patch1:         %{name}-addOrbitManifest.patch
 URL:            http://www.mozilla.org/rhino/
 
 BuildRequires:  ant
-BuildRequires:  java-devel >= 1.6.0.0
 BuildRequires:  sonatype-oss-parent
 BuildRequires:  javapackages-local
 Requires:       jline
@@ -143,6 +142,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_9jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_7jpp8
 - new version
 
