@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global project_version 1.0-beta-2
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.25.beta2jpp8
+Release:        alt2_0.27.beta2jpp8
 Summary:        Plexus Container-Backed Active Collections
 
 License:        ASL 2.0
@@ -61,6 +58,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.27.beta2jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.25.beta2jpp8
 - new version
 
