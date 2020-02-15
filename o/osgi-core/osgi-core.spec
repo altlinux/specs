@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           osgi-core
 Version:        7.0.0
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        OSGi Core API
 License:        ASL 2.0
 URL:            https://www.osgi.org
@@ -82,6 +79,9 @@ mv META-INF/maven/org.osgi/osgi.core/pom.xml .
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_3jpp8
+- fc update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt1_1jpp8
 - new version
 
