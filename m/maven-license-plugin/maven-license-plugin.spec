@@ -2,15 +2,14 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt6_25jpp8
+Release:        alt6_27jpp8
 Summary:        Maven plugin to update header licenses of source files
 
 License:        ASL 2.0
@@ -24,7 +23,6 @@ Source0:        %{name}-%{version}.tar.xz
 Patch0:         001-mavenlicenseplugin-fixbuild.patch
 BuildArch:      noarch
 
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-local
@@ -90,6 +88,9 @@ mkdir -p $RPM_BUILD_ROOT%{_javadir}
 %files javadoc  -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_27jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt6_25jpp8
 - new version
 
