@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           felix-gogo-shell
 Version:        1.1.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Apache Felix Gogo command line shell for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - explicit build with java8
 
