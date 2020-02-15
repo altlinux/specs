@@ -1,17 +1,14 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atinject
 Version:        1
-Release:        alt7_30.20100611svn86jpp8
+Release:        alt7_32.20100611svn86jpp8
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -33,7 +30,6 @@ Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Patch0:         %{name}-target-1.5.patch
 
 BuildRequires:  javapackages-local
-BuildRequires:  java-devel
 BuildRequires:  junit
 Source44: import.info
 
@@ -98,6 +94,9 @@ mv build/tck/javadoc build/javadoc/tck
 %files tck -f .mfiles-tck
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_32.20100611svn86jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_30.20100611svn86jpp8
 - new version
 
