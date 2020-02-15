@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.apache.felix.framework
 
 Name:           felix-framework
 Version:        5.6.0
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Apache Felix Framework
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -67,6 +64,9 @@ sed -i "/testgetOsNameWithAliases/s//ignore_&/" $(find -name NativeLibraryClause
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_8jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_6jpp8
 - new version
 
