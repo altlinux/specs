@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-surefire
 Version:        2.22.0
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
@@ -69,7 +66,7 @@ BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
 %endif
 
 # PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       libprocps procps
+Requires:       procps
 Source44: import.info
 
 %description
@@ -225,6 +222,9 @@ sed -i /-Xdoclint:all/d pom.xml
 %doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.22.0-alt1_6jpp8
+- fc update
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.22.0-alt1_4jpp8
 - new version
 
