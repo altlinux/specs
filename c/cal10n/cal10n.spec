@@ -2,15 +2,14 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cal10n
 Version:        0.8.1
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
@@ -92,6 +91,9 @@ find . -name \*.jar -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_10jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_8jpp8
 - new version
 
