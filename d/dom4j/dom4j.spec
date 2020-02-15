@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -38,7 +35,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dom4j
 Version:        2.0.0
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -112,6 +109,9 @@ export LANG=en_US.ISO8859-1
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_9jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_7jpp8
 - new version
 
