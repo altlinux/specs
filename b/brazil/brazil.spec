@@ -3,13 +3,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      brazil
 Version:   2.3
-Release:   alt3_20jpp8
+Release:   alt3_22jpp8
 Summary:   Extremely small footprint Java HTTP stack
 License:   SPL
 URL:       https://github.com/mbooth101/brazil
@@ -21,7 +21,6 @@ Source2:   brazil-build.xml
 
 BuildArch:        noarch
 
-BuildRequires:    java-devel
 BuildRequires:    jpackage-utils
 BuildRequires:    ant
 Requires:         jpackage-utils
@@ -87,6 +86,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_22jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_20jpp8
 - new version
 
