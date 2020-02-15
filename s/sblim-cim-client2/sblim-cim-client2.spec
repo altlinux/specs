@@ -3,8 +3,8 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Java CIM Client library
 
 License:        EPL
@@ -25,7 +25,6 @@ Source0:        http://downloads.sourceforge.net/project/sblim/%{name}/%{version
 
 BuildArch:      noarch
 
-BuildRequires:  java-devel >= 1.4
 BuildRequires:  jpackage-utils >= 0:1.5.32
 BuildRequires:  ant >= 0:1.6
 
@@ -125,6 +124,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_12jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_10jpp8
 - new version
 
