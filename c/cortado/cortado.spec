@@ -2,13 +2,13 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cortado
 Version:        0.6.0
-Release:        alt1_17jpp8
+Release:        alt1_19jpp8
 Summary:        Java media framework
 URL:            http://www.theora.org/cortado/
 # The codecs are all LGPLv2+, the jst framework is mixed, the player applet GPL
@@ -16,7 +16,7 @@ License:        LGPLv2+ and GPLv2+
 Source0:        http://downloads.xiph.org/releases/%{name}/%{name}-%{version}.tar.gz
 Patch0:         cortado-0.6.0-javadoc-fix.patch
 BuildArch:      noarch
-BuildRequires:  jpackage-utils java-devel jorbis
+BuildRequires:  jpackage-utils jorbis
 Requires:       java jpackage-utils jorbis
 Source44: import.info
 
@@ -75,6 +75,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_19jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_17jpp8
 - new version
 
