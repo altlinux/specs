@@ -4,13 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: relaxngcc
 Version: 1.12
-Release: alt2_16jpp8
+Release: alt2_18jpp8
 Summary: RELAX NG Compiler Compiler
 
 License: ASL 1.1
@@ -21,7 +21,6 @@ Source0: http://prdownloads.sourceforge.net/relaxngcc/relaxngcc-20031218.zip
 Source1: %{name}-build.xml
 
 BuildRequires: ant
-BuildRequires: java-devel
 BuildRequires: javacc
 BuildRequires: jpackage-utils
 BuildRequires: msv-msv
@@ -127,6 +126,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_18jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_16jpp8
 - new version
 
