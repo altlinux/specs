@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -48,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bsh
 Version:        2.0
-Release:        alt1_14.b6jpp8
+Release:        alt1_16.b6jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -193,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_16.b6jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_14.b6jpp8
 - new version
 
