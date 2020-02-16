@@ -1,15 +1,15 @@
 Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) rpm-build-java unzip
+BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           hsqldb
 Version:        2.4.0
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -202,6 +202,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_7jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1_5jpp8
 - new version
 
