@@ -3,13 +3,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		    flexdock
 Version:        1.2.4
-Release:	    alt1_9jpp8
+Release:	    alt1_11jpp8
 Summary:	    Docking framework for Java Swing GUI apps
 
 
@@ -24,7 +24,6 @@ Patch1:		    flexdock-0001-nojmf.patch
 #Modifies the build process  -- fedora specific
 Patch2:		    flexdock-0002-fedora-build.patch
 
-BuildRequires:	java-devel
 BuildRequires:	ant
 BuildRequires:	jpackage-utils
 BuildRequires:	jgoodies-common
@@ -79,6 +78,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_11jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.4-alt1_9jpp8
 - new version
 
