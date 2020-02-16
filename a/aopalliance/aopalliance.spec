@@ -1,17 +1,14 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           aopalliance
 Epoch:          0
 Version:        1.0
-Release:        alt6_19jpp8
+Release:        alt6_21jpp8
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
 URL:            http://aopalliance.sourceforge.net/
@@ -59,6 +56,9 @@ jar umf %{SOURCE2} build/%{name}.jar
 %files -f .mfiles
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_21jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_19jpp8
 - new version
 
