@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_22jpp8
+Release:	alt2_24jpp8
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -85,6 +82,9 @@ echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_24jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_22jpp8
 - new version
 
