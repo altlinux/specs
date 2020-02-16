@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 1
 Name:          hsqldb1
 Version:       1.8.1.3
-Release:       alt1_16jpp8
+Release:       alt1_18jpp8
 Summary:       HyperSQL Database Engine
 License:       BSD
 URL:           http://hsqldb.sourceforge.net/
@@ -20,7 +20,6 @@ Source1:       http://mirrors.ibiblio.org/pub/mirrors/maven2/hsqldb/hsqldb/1.8.0
 Patch0:        hsqldb-jdbc-4.1.patch
 
 BuildRequires: ant
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: junit
 BuildRequires: glassfish-servlet-api
@@ -94,6 +93,9 @@ popd
 %doc --no-dereference doc/hsqldb_lic.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_16jpp8
 - new version
 
