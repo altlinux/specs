@@ -1,11 +1,8 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api
 Version:          1.2
-Release:          alt1_10jpp8
+Release:          alt1_12jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -99,6 +96,9 @@ cd api
 %doc --no-dereference spec/src/main/doc/license-jcp.%{adoc}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_12jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
 - new version
 
