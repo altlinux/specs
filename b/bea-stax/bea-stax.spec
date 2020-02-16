@@ -1,10 +1,10 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -48,7 +48,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-%{version}.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-%{apiver}.pom
 Name:           bea-stax
 Version:        1.2.0
-Release:        alt4_18jpp8
+Release:        alt4_20jpp8
 License:        ASL 1.1 and ASL 2.0
 BuildArch:      noarch
 
@@ -112,6 +112,9 @@ ant all javadoc
 %doc --no-dereference ASF2.0.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_20jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_18jpp8
 - new version
 
