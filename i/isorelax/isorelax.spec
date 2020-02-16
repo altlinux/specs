@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -45,7 +44,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.25.release20050331jpp8
+Release:        alt1_0.27.release20050331jpp8
 # Parts of VerifierFactory.java were copied from Apache Batik and are
 # under ASL 1.1, everything else is under MIT.
 License:        MIT and ASL 1.1
@@ -106,6 +105,9 @@ ant release
 %doc --no-dereference license.txt
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.27.release20050331jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.25.release20050331jpp8
 - new version
 
