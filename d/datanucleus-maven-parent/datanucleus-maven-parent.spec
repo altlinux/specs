@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit 8e55762cef51784b0308ed4cdcfeceaadb03e1d6
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           datanucleus-maven-parent
 Version:        3.3
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        DataNucleus Maven parent project 
 
 License:        ASL 2.0
@@ -51,6 +48,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_11jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1_9jpp8
 - new version
 
