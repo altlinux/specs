@@ -2,6 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
+%add_findreq_skiplist %_unitdir/local.service
+%add_findreq_skiplist %_unitdir/rc-local.service
 
 %def_enable static_libsystemd
 %def_enable static_libudev
@@ -62,7 +64,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1384,6 +1386,8 @@ fi
 %dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
 %_datadir/systemd/language-fallback-map
+%_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
+%_datadir/dbus-1/services/org.freedesktop.systemd1.service
 
 %if_enabled polkit
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
@@ -1534,6 +1538,7 @@ fi
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.network1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
@@ -1816,6 +1821,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Sun Feb 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:244.3-alt1
+- 244.3 (Fixes: CVE-2020-1712)
+
 * Thu Dec 19 2019 Alexey Shabalin <shaba@altlinux.org> 1:244.1-alt1
 - 244.1 (v244-stable branch)
 
