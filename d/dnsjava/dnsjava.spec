@@ -1,10 +1,7 @@
 Epoch: 0
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Test of properly function library need DNS querys. It work perfectly on my machine and pass all tests.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_16jpp8
+Release:       alt1_18jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -99,6 +96,9 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_18jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_16jpp8
 - new version
 
