@@ -2,8 +2,8 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # SVN info
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_20.svn96jpp8
+Release: alt3_21.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
 License: ASL 2.0
@@ -35,7 +35,6 @@ BuildRequires: ant
 BuildRequires: aqute-bnd
 BuildRequires: felix-osgi-obr
 BuildRequires: felix-osgi-core
-BuildRequires: java-devel >= 1.6.0
 BuildRequires: junit
 BuildRequires: kxml
 BuildRequires: xpp3
@@ -76,6 +75,9 @@ install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_21.svn96jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_20.svn96jpp8
 - new version
 
