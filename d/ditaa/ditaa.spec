@@ -2,21 +2,20 @@ Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
 Version:        0.10
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
 Source0:        https://github.com/stathissideris/ditaa/archive/v%{version}.tar.gz
 Source1:        ditaa.wrapper
 Patch0:         ditaa-0.9-port-to-batik-1.8.patch
 BuildArch:      noarch
-BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
 BuildRequires:  batik
@@ -57,6 +56,9 @@ install -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_javadir}/%{name}.jar
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_8jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_7jpp8
 - new version
 
