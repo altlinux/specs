@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:         codemodel
 Version:      2.6
-Release:      alt2_26jpp8
+Release:      alt2_28jpp8
 Summary:      Java library for code generators
 License:      CDDL-1.1 or GPLv2 with exceptions
 URL:          http://codemodel.java.net
@@ -68,6 +65,9 @@ find . -name '*.jar' -print -delete
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_28jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_26jpp8
 - new version
 
