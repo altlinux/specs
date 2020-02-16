@@ -3,13 +3,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    appframework
 Version: 1.03
-Release: alt2_21jpp8
+Release: alt2_22jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -21,7 +21,6 @@ Patch2:  %{name}-%{version}-disable-doclint.diff
 
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: java-devel >= 1.6.0
 BuildRequires: swing-layout >= 1.0.3
 
 Requires: java >= 1.6.0
@@ -74,6 +73,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_22jpp8
+- fc update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_21jpp8
 - new version
 
