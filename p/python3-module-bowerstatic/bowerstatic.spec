@@ -1,13 +1,12 @@
 %define oname bowerstatic
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9
-Release: alt1.1
+Release: alt2
+
 Summary: A Bower-centric static file server for WSGI
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/bowerstatic/
 
@@ -15,21 +14,13 @@ Url: https://pypi.python.org/pypi/bowerstatic/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest-cov
-BuildRequires: python-module-mock
-BuildRequires: python-module-webtest
-BuildRequires: python-module-alabaster python-module-docutils python-module-objects.inv
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-webtest
-%endif
 
-%py_provides %oname
+%py3_provides %oname
+
 
 %description
 BowerStatic is a WSGI-based framework that you can integrate with your
@@ -38,7 +29,7 @@ resources.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -48,33 +39,9 @@ resources.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A Bower-centric static file server for WSGI
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-BowerStatic is a WSGI-based framework that you can integrate with your
-WSGI-using web application or framework to help it serve static
-resources.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-BowerStatic is a WSGI-based framework that you can integrate with your
-WSGI-using web application or framework to help it serve static
-resources.
-
-This package contains tests for %oname.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 BowerStatic is a WSGI-based framework that you can integrate with your
@@ -99,75 +66,45 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 export PYTHONPATH=$PWD
 %make -C doc pickle
 %make -C doc html
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-rm -fR build
-py.test
-%if_with python3
-pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 rm -fR build
 py.test3
-popd
-%endif
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc doc/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9-alt2
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
