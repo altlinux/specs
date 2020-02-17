@@ -1,39 +1,23 @@
 %define module_name django-pagination
 
-%def_with python3
-
-Name: python-module-%module_name
+Name: python3-module-%module_name
 Version: 1.0.7
-Release: alt3.qa1
+Release: alt4
 
 Summary: django-pagination allows for easy Digg-style pagination without modifying your views
-
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/django-pagination
-
-Source: %module_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python-tools-2to3
-%endif
+Source: %module_name-%version.tar.gz
 
-%setup_python_module %module_name
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-tools-2to3
+
 
 %description
-django-pagination allows for easy Digg-style pagination without
-modifying your views.
-
-%package -n python3-module-%module_name
-Summary: django-pagination allows for easy Digg-style pagination without modifying your views
-Group: Development/Python3
-
-%description -n python3-module-%module_name
 django-pagination allows for easy Digg-style pagination without
 modifying your views.
 
@@ -41,42 +25,24 @@ modifying your views.
 %setup -n %module_name-%version
 find  -type f -name '._*' -exec rm -f '{}' +
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %files
 %doc *.txt docs/*
-%python_sitelibdir/django_pagination-*
-%python_sitelibdir/pagination*
-
-%if_with python3
-%files -n python3-module-%module_name
-%doc *.txt docs/*
 %python3_sitelibdir/django_pagination-*
 %python3_sitelibdir/pagination*
-%endif
+
 
 %changelog
+* Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.7-alt4
+- Build for python2 disabled.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt3.qa1
 - NMU: applied repocop patch
 
