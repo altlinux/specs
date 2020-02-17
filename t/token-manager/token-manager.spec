@@ -6,25 +6,30 @@
 
 %define rev 51687e2
 
-Name:    token-manager
-Version: 0.12
-Release: alt5.git%rev
-Summary: Certificate manager for CryptoPro CSP
+Name:       token-manager
+Version:    0.12
+Release:    alt6.git%rev
 
-License: MIT
-URL: https://github.com/bmakarenko/token-manager
-Packager: Andrey Cherepanov <cas@altlinux.org>
-Group:   Security/Networking
-Source:  %name.tar
-Source1: cpconfig-pam.alt
-Source2: token-manager
+Summary:    Certificate manager for CryptoPro CSP
+License:    MIT
+Group:      Security/Networking
+URL:        https://github.com/bmakarenko/token-manager
 
-BuildPreReq: libpam-devel
-BuildRequires: python-module-PyQt4
-Requires: consolehelper
-Requires: opensc
+Packager:   Andrey Cherepanov <cas@altlinux.org>
+BuildArch:  noarch
 
-BuildArch: noarch
+Source:     %name.tar
+Source1:    cpconfig-pam.alt
+Source2:    token-manager
+
+Patch0:    port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libpam-devel python3-module-PyQt4
+BuildRequires: python-tools-2to3
+
+Requires: consolehelper opensc
+
 
 %description
 A PyQt front-end for Crypto Pro CSP for CentOS 6 and GosLinux by The
@@ -32,6 +37,12 @@ Federal Bailiffs' Service of Russia.
 
 %prep
 %setup -q
+%patch0 -p1
+
+2to3 -w -n $(find ./ -name '*.py')
+
+sed -i 's|python|python3|' $(find ./ \( -name '%{name}.py' \
+                                     -o -name '%{name}.desktop' \) )
 
 %install
 mkdir -p %buildroot/%_bindir
@@ -50,7 +61,11 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/pam.d/cpconfig-%cpro_arch
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
+
 %changelog
+* Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.12-alt6.git51687e2
+- Porting on python3.
+
 * Tue Oct 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.12-alt5.git51687e2
 - Add token-manager executable (ALT #33815).
 
