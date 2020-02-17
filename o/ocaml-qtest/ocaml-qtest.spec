@@ -2,13 +2,14 @@
 %define libname qtest
 Name: ocaml-%libname
 Version: 2.10.1
-Release: alt1
+Release: alt2
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
 Group: Development/ML
 Url: https://github.com/c-cube/ocaml-containers/
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam  ocaml-compiler-libs-devel ocaml-result-devel
+Patch0: %name-%version-%release.patch
+BuildRequires: ocaml-findlib-devel dune opam  ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc 
 
 %description
@@ -28,6 +29,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make
@@ -57,6 +59,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Mon Feb 17 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt2
+- update build requires for new ounit2 and qcheck packages
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt1
 - 2.10.1
 
