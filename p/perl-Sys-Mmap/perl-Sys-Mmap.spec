@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 %define m_distro Sys-Mmap
 Name: perl-%m_distro
-Version: 0.19
-Release: alt1.2
+Version: 0.20
+Release: alt1
 Summary: Perl module to use mmap to map in a file as a Perl variable
 Group: Development/Perl
 License: Artistic/GPL
 Url: http://search.cpan.org/CPAN/authors/id/T/TO/TODDR/Sys-Mmap-0.16.tar.gz
-Source: %m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/Sys-Mmap-%{version}.tar.gz
 Packager: Alex Negulescu <alecs@altlinux.org>
 BuildRequires: libnss-role perl-devel
 
@@ -14,7 +15,7 @@ BuildRequires: libnss-role perl-devel
 perl-Sys-Mmap is a Perl module to use mmap to map in a file as a Perl variable.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n Sys-Mmap-%{version}
 
 %build
 %perl_vendor_build
@@ -28,6 +29,9 @@ perl-Sys-Mmap is a Perl module to use mmap to map in a file as a Perl variable.
 %doc Artistic Changes Copying MANIFEST META.yml README
 
 %changelog
+* Sun Feb 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.2
 - rebuild with new perl 5.28.1
 
