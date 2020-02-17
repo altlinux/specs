@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -19,12 +20,12 @@ BuildRequires: perl(Module/CoreList.pm) perl-podlators
 %endif
 
 Name:           perl-Devel-Hide
-Version:        0.0010
-Release:        alt1_6
+Version:        0.0012
+Release:        alt1
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Devel-Hide
-Source0:        https://cpan.metacpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DC/DCANTRELL/Devel-Hide-%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
@@ -74,6 +75,9 @@ make test
 %{perl_vendor_privlib}/Devel/
 
 %changelog
+* Sun Feb 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.0012-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.0010-alt1_6
 - update to new release by fcimport
 
