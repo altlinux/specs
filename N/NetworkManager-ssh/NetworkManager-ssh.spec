@@ -9,17 +9,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 1.2.10
+Version: 1.2.11
 Release: alt1%git_date
-License: %gpl2plus
+License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
 Url: https://github.com/danfruehauf/NetworkManager-ssh
 # git:git://github.com/danfruehauf/NetworkManager-ssh.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: intltool
 BuildRequires: libnm-devel >= %nm_version
@@ -40,7 +38,6 @@ This package contains software for integrating VPN capabilities with
 the OpenSSH server with NetworkManager.
 
 %package gtk
-License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: %nm_applet_name >= %nm_applet_version
@@ -98,6 +95,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Feb 17 2020 Mikhail Efremov <sem@altlinux.org> 1.2.11-alt1
+- Get rid of rpm-build-licenses.
+- Updated to 1.2.11.
+
 * Wed May 15 2019 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
 - Updated to 1.2.10.
 
