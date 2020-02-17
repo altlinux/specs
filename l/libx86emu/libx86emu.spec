@@ -8,12 +8,11 @@ Name:           libx86emu
 License:        BSD
 Group:          System/Libraries
 Summary:        A small x86 emulation library
-Version:        2.1
+Version:        2.4
 Release:        alt1_1
 URL:		https://github.com/wfeldt/libx86emu.git
-Source:         %{name}-%{version}.tar.xz
+Source:         %{name}-%{version}.tar.gz
 Source44: import.info
-# use sys/io outb, outw ...
 ExclusiveArch: %ix86 x86_64
  
 %description
@@ -43,7 +42,8 @@ Devel files for %{name}
 %setup -q 
  
 %build
-make LIBDIR=%{_libdir}
+echo %{version} > VERSION
+make shared LIBDIR=%{_libdir}
  
 %install
 install -d -m 755 %{buildroot}%{_libdir}
@@ -60,6 +60,9 @@ make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
 
 
 %changelog
+* Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1
+- update by mgaimport
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1
 - new version
 
