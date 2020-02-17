@@ -1,12 +1,11 @@
-
+# coccinelle.spec
 Name:		coccinelle
-# 1.0.7-217-ged1eb8e0
-Version:	1.0.7.0.217.ged1eb8e0
+Version:	1.0.8
 Release:	alt1
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/Kernel
-License:	GPLv2
+License:	GPL-2.0
 Url:		http://coccinelle.lip6.fr/
 
 Source:		%name-%version.tar
@@ -77,6 +76,9 @@ export LD_LIBRARY_PATH=.
 /usr/share/bash-completion/completions/spatch
 
 %changelog
+* Mon Feb 17 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt1
+- Update to 1.0.8.
+
 * Wed Aug 07 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.7.0.217.ged1eb8e0-alt1
 - Update to 1.0.7-217-ged1eb8e0.
 
