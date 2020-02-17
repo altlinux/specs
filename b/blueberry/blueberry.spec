@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -57,6 +57,9 @@ Blueberry applet for Cinnamon
 %_datadir/cinnamon/applets/blueberry@cinnamon.org
 
 %changelog
+* Mon Feb 17 2020 Vladimir Didenko <cow@altlinux.org> 1.3.5-alt1
+- 1.3.5
+
 * Wed Jan 8 2020 Vladimir Didenko <cow@altlinux.org> 1.3.4-alt1
 - 1.3.4
 
