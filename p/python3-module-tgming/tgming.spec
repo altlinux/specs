@@ -2,23 +2,26 @@
 
 %def_without bootstrap
 
-Name: python-module-%oname
-Version: 0.0.8
-Release: alt2.3
+Name:       python3-module-%oname
+Version:    0.0.8
+Release:    alt3
 
-Summary: TurboGears2 Support for Ming MongoDB ORM
-License: MIT
-Group: Development/Python
-Url: http://pypi.python.org/pypi/tgming/
-BuildArch: noarch
+Summary:    TurboGears2 Support for Ming MongoDB ORM
+License:    MIT
+Group:      Development/Python3
+Url:        http://pypi.python.org/pypi/tgming/
 
-Source: %name-%version.tar
+BuildArch:  noarch
 
-BuildRequires: python-devel python-module-setuptools
+Source:     %name-%version.tar
+Patch0:     fix-incompatibility-with-new-zope.interface.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python-tools-2to3
+
+%if_with bootstrap
+%add_python3_req_skip ming
+%endif
 
 
 %description
@@ -26,48 +29,27 @@ tgming is used by TurboGears2 to support ming backend. To create a ming
 project just use quickstart command with --ming option it will
 automatically setup tgming and all the required dependencies.
 
-%package -n python3-module-%oname
-Summary: TurboGears2 Support for Ming MongoDB ORM
-Group: Development/Python3
-%if_with bootstrap
-%add_python3_req_skip ming
-%endif
-
-%description -n python3-module-%oname
-tgming is used by TurboGears2 to support ming backend. To create a ming
-project just use quickstart command with --ming option it will
-automatically setup tgming and all the required dependencies.
-
 %prep
 %setup
+%patch0 -p2
 
-cp -fR . ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
-
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc PKG-INFO *.rst
-%python_sitelibdir/*
-
-%files -n python3-module-%oname
 %doc PKG-INFO *.rst
 %python3_sitelibdir/*
 
 
 %changelog
+* Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.8-alt3
+- Build for python2 disabled.
+
 * Fri May 25 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.0.8-alt2.3
 - rebuild with all requires
 
