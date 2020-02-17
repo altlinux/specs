@@ -4,6 +4,7 @@
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 %add_findreq_skiplist %_unitdir/local.service
 %add_findreq_skiplist %_unitdir/rc-local.service
+%add_findreq_skiplist %_unitdir/quotaon.service
 
 %def_enable static_libsystemd
 %def_enable static_libudev
@@ -65,7 +66,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1247,7 +1248,7 @@ fi
 %_unitdir/*
 
 %if_enabled networkd
-%exclude %_unitdir/*networkd*
+%exclude %_unitdir/*network*
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
 %endif
@@ -1601,9 +1602,8 @@ fi
 # TODO: Provides: /sbin/resolvconf ?
 %exclude /sbin/resolvconf
 %_tmpfilesdir/systemd-network.conf
-%_unitdir/systemd-networkd.*
+%_unitdir/systemd-network*
 %_unitdir/systemd-resolved.*
-%_unitdir/systemd-networkd-wait-online.*
 %_unitdir/altlinux-libresolv*
 %_unitdir/altlinux-openresolv*
 %_unitdir/altlinux-simpleresolv*
@@ -1821,6 +1821,10 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Feb 17 2020 Alexey Shabalin <shaba@altlinux.org> 1:244.3-alt2
+- move systemd-network-generator.service to systemd-networkd package
+- avoid requires quota package
+
 * Sun Feb 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:244.3-alt1
 - 244.3 (Fixes: CVE-2020-1712)
 
