@@ -1,26 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators perl(File/Slurp.pm) perl(DateTime/Format/SQLite.pm)
+BuildRequires: perl(DateTime/Format/SQLite.pm) perl(File/Slurp.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Reports/DPath/Mason/mason_include.pl
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-Reports-DPath
-%define upstream_version 5.0.2
+%define upstream_version 5.0.4
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.4
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Extended DPath functionality for Tapper reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(CHI.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -59,8 +58,7 @@ Source44: import.info
 This distributions provides extended DPath functionality for Tapper reports.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
-[ %version = 5.0.2 ] && rm -f t/tapper_reports_dpath.t 
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -74,11 +72,13 @@ This distributions provides extended DPath functionality for Tapper reports.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README*
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
-
 %changelog
+* Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1_1
+- update by mgaimport
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1
 - automated CPAN update
 
