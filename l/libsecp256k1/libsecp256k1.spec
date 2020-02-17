@@ -6,17 +6,14 @@
 %global libname	lib%{oname}_%{major}
 %global devname	lib%{oname}-devel
 
-%global gdate	20171221
-%define rel	2
-
 Name:		libsecp256k1
 Summary:	Optimized C library for EC operations on curve secp256k1
-Version:	0.1
-Release:	alt1_%{?gdate:0.0.git%gdate.}%{rel}
+Version:	0.20.10
+Release:	alt1_1
 License:	MIT
 Group:		System/Libraries
-Url:		https://github.com/bitcoin-core/secp256k1
-Source0:	%{oname}-%{gdate}.tar.xz
+Url:		https://github.com/Bitcoin-ABC/secp256k1
+Source0:	https://github.com/Bitcoin-ABC/secp256k1/archive/v%{version}/%{oname}-%{version}.tar.gz
 Source44: import.info
 
 %description
@@ -56,7 +53,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains the development files and headers for %{name}.
 
 %prep
-%setup -qn %{oname}-%{?gdate}%{?!gdate:%version}
+%setup -qn %{oname}-%{version}
 
 %build
 autoreconf -vfi
@@ -75,12 +72,15 @@ find %{buildroot} -name "*.la" -delete
 
 %files -n %{devname}
 %{_includedir}/secp256k1.h
+%{_includedir}/secp256k1_schnorr.h
 %{_libdir}/libsecp256k1.so
 %{_libdir}/pkgconfig/libsecp256k1.pc
 
 
-
 %changelog
+* Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 0.20.10-alt1_1
+- update by mgaimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_0.0.git20171221.2
 - update by mgaimport
 
