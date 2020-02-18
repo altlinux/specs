@@ -1,16 +1,19 @@
-Name: s3cmd
-Version: 2.0.2
-Release: alt1
-License: GPL
+Name:       s3cmd
+Version:    2.0.2
+Release:    alt2
 
-Group: Networking/Other
-Url: http://s3tools.org/s3cmd
+Summary:    S3cmd is a tool for managing Amazon S3 storage space
+License:    GPL
+Group:      Networking/Other
+Url:        http://s3tools.org/s3cmd
 
-Source: %name-%version-%release.tar
-# Automatically added by buildreq on Fri Nov 14 2008
-BuildRequires: python-devel python-modules-xml
-BuildArch: noarch
-Summary: S3cmd is a tool for managing Amazon S3 storage space
+BuildArch:  noarch
+
+Source:     %name-%version-%release.tar
+Patch0:     port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+
 
 %description
 S3cmd lets you copy files from/to Amazon S3
@@ -21,21 +24,26 @@ directory tree synchronization.
 
 %prep
 %setup -q -n %name-%version-%release
+%patch0 -p2
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc INSTALL NEWS README.md
 %_bindir/*
 %_man1dir/*.1*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %exclude %_docdir/packages/
 
+
 %changelog
+* Tue Feb 18 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt2
+- Porting to python3.
+
 * Sat Jan 05 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.0.2-alt1
 - v.2.0.2
 
