@@ -2,7 +2,7 @@
 
 Name: itop
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: IT Operations Portal
 License: AGPLv3
@@ -16,8 +16,10 @@ Source0: %name-%version.tar.gz
 Source1: apache2.conf
 Source2: README.ALT
 
+Patch0: port-to-python3.patch
+
 Requires: webserver-common php-engine graphviz
-BuildRequires(pre): rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-webserver-common rpm-build-python3
 
 %description
 IT Operations Portal: a complete open source, ITIL, web based service
@@ -46,6 +48,7 @@ PHP5 dependencies for %name
 %prep
 %setup
 # %setup -T -D -a 1
+%patch0 -p2
 
 %build
 
@@ -130,6 +133,9 @@ fi
 
 
 %changelog
+* Tue Feb 18 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.6.1-alt2
+- py2 -> py3
+
 * Tue Apr 16 2019 Pavel Zilke <zidex at altlinux dot org> 2.6.1-alt1
 - New version 2.6.1
 
