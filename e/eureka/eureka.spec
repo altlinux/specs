@@ -1,5 +1,5 @@
 Name: eureka
-Version: 1.24
+Version: 1.27
 Release: alt1
 Summary: A cross-platform map editor for the classic DOOM games
 Summary(ru_RU.UTF-8): Кросплатформенный редактор карт классического Doom
@@ -8,21 +8,25 @@ License: GPLv2
 Url: http://eureka-editor.sourceforge.net/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source: %name-%version.tar.gz
-Patch0: eureka-1.24-Makefile.patch
-# Automatically added by buildreq on Thu Apr 18 2019
-# optimized out: fontconfig fontconfig-devel libGL-devel libX11-devel libcloog-isl4 libstdc++-devel python-base python-modules python3 python3-base xorg-xproto-devel
+Source: %name-%version.tar
+Patch0: eureka-1.27-Makefile.patch
+
 BuildRequires: gcc-c++
 BuildRequires: binutils
 BuildRequires: make
 BuildRequires: zlib-devel
 BuildRequires: libXext-devel
+BuildRequires: libXcursor-devel
 BuildRequires: libXft-devel
+BuildRequires: libXfixes-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libfltk-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libnss-role
 BuildRequires: libpng-devel
+BuildRequires: libX11-devel
+BuildRequires: libGL-devel
+BuildRequires: xdg-utils
 
 %description
 Eureka is a cross-platform map editor for the classic DOOM games.
@@ -61,6 +65,9 @@ mkdir -p %buildroot%prefix
 %_man6dir/%name.6.xz
 
 %changelog
+* Tue Feb 18 2020 Artyom Bystrov <arbars@altlinux.org> 1.27-alt1
+- Update to 1.27
+
 * Thu Apr 18 2019 Artyom Bystrov <arbars@altlinux.org> 1.24-alt1
 - initial build for ALT Sisyphus
 - getting the Makefile and patch from Mageia's package
