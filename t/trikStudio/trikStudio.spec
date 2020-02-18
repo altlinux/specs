@@ -1,9 +1,11 @@
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist  %_libdir/trikStudio/*.so* %_libdir/trikStudio/plugins/tools/kitPlugins/*.so %_libdir/trikStudio/plugins/tools/*.so %_libdir/trikStudio/plugins/editors/*.so
 %def_without separate_trikruntime
+%def_without sanitize
+%def_without debug
 Name: trikStudio
 Version: 2019.8
-Release: alt1
+Release: alt3
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -15,9 +17,15 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel libubsan-devel-static
+BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel
+# Workaround due project build with -fsanitize=undefined natively
+# https://bugzilla.altlinux.org/show_bug.cgi?id=38106
+#if_with sanitize
+BuildRequires: libubsan-devel-static
+#endif
 BuildRequires: rsync qt5-tools
 
+Requires: libquazip-qt5
 Requires: %name-data = %version-%release
 Conflicts: lib%name
 
@@ -87,7 +95,17 @@ tar -xf qt-solutions.tar.bz2
 popd
 
 %build
-%qmake_qt5 -r CONFIG-=debug CONFIG+=release CONFIG+=no_rpath PREFIX=%_prefix LIBDIR=%_libdir studio.pro
+%qmake_qt5 -r \
+%if_with debug
+    CONFIG+=debug CONFIG-=release \
+%else
+    CONFIG-=debug CONFIG+=release \
+%endif
+%if_with sanitize
+    CONFIG+=!nosanitizers \
+%endif
+    CONFIG+=no_rpath \
+    PREFIX=%_prefix LIBDIR=%_libdir studio.pro
 %make_build
 
 %install
@@ -148,6 +166,14 @@ popd
 %endif
 
 %changelog
+* Tue Feb 18 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt3
+- Build with workaround force requirement to libubsan-devel-static
+- Add missed requirement to libquazip-qt5
+
+* Sun Feb 16 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt2
+- Build with explicitly enable gcc sanitize options needs
+  libubsan-devel-static as build requirement
+
 * Fri Feb 14 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt1
 - Update to 2019.8
 - Change license to Apache-2.0
