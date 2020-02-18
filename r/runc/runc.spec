@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt11.rc9
+Release:        alt12.rc10
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -68,6 +68,10 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Mon Feb 17 2020 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt12.rc10
+- New version
+- Fixes CVE-2019-19921
+
 * Tue Dec 10 2019 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt11.rc9
 - Print user friendly error on cgroups v2
 - Fix license name

@@ -1,5 +1,5 @@
 %global import_path github.com/containerd/containerd
-%global commit 36cf5b690dcc00ff0f34ff7799209050c3d0c59a
+%global commit d76c121f76a5fc8a462dc64594aea72fe18e1178
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -10,12 +10,12 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.3.0
+Version:	1.3.3
 Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
-License:	Apache 2.0
+License:	Apache-2.0
 URL:		https://%import_path
 
 Packager:	Alexey Gladkov <legion@altlinux.ru>
@@ -83,6 +83,11 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Tue Feb 18 2020 Vladimir Didenko <cow@altlinux.org> 1.3.3-alt1
+- 1.3.3
+- Fixes CVE-2019-16884
+- Fix license name
+
 * Thu Oct 10 2019 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
