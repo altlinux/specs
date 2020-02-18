@@ -1,23 +1,17 @@
 %def_disable static
 
 Name: liboping
-Version: 1.6.2
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: Liboping library
-License: GPL v2
+License: LGPLv2.1
 Group: System/Libraries
 
-Url: http://verplant.org/liboping/
-Source0: %url/files/%name-%version.tar.bz2
-Source1: oping.control
-
-Patch: liboping-no-werror.patch
-
-Packager: Michael Shigorin <mike@altlinux.org>
-
-# Automatically added by buildreq on Wed May 13 2009
-BuildRequires: perl-devel chrpath
+Url: https://github.com/octo/liboping
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
+BuildRequires: /usr/bin/pod2man
 
 %description
 liboping is a C library to generate ICMP echo requests, better known
@@ -70,26 +64,15 @@ Statyczna biblioteka liboping.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 
 %build
 %autoreconf
-%configure
+%configure --with-perl-bindings=no
 %make_build
 
 %install
 %makeinstall_std
-install -pDm755 %SOURCE1 %buildroot%_controldir/oping
-for i in $(find %buildroot%prefix -name '*.so'); do
-	chrpath -d $i
-done
-
-%pre -n oping
-%_sbindir/groupadd -r -f netadmin >/dev/null 2>&1
-%pre_control oping
-
-%post -n oping
-%post_control -s netadmin oping
 
 %files
 %doc AUTHORS ChangeLog README
@@ -97,7 +80,6 @@ done
 
 %files -n oping
 %_bindir/oping
-%config %_controldir/oping
 %_man8dir/*
 
 %files devel
@@ -115,6 +97,11 @@ done
 # - scrap gear repo, redo with git://git.verplant.org/liboping.git
 
 %changelog
+* Tue Feb 18 2020 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+- removed suid bit for oping binary and this tool now work only under
+  privileged user
+
 * Wed Dec 05 2018 Grigory Ustinov <grenka@altlinux.org> 1.6.2-alt2
 - Fixed FTBFS (Disabled Werror).
 
