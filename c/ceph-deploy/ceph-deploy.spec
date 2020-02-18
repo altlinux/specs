@@ -4,7 +4,7 @@
 
 Name: ceph-deploy
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 Summary: Deploy Ceph with minimal infrastructure
 License: MIT
@@ -21,7 +21,7 @@ BuildRequires: openssh-clients
 BuildRequires: git
 
 BuildRequires: python3-module-virtualenv
-BuildRequires: python3-module-remoto
+BuildRequires: python3-module-remoto >= 1.1.4
 BuildRequires: python3-module-sphinx
 
 # Tox tests requirements
@@ -83,13 +83,12 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug -b build3
+%python3_build
 
 export PYTHONPATH=$PWD
 %make -C docs man
 
 %install
-ln -snf build3 build
 %python3_install
 
 install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
@@ -108,6 +107,9 @@ install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Tue Feb 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt3
+- master snapshot bcb968a13e0f2643507b06aa8f6249e360e8e742
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.1-alt2
 - build for python2 disabled
 
