@@ -11,14 +11,14 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      6a30dfca03664a0b6bf0646a7d389ee7d0318e6e
+%global commit      369ce74a3ce86a392e39e45d3960ce970fdfac97
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    19.03.5
+Version:    19.03.6
 Release: alt1
 Summary: Automates deployment of containerized applications
-License: ASL 2.0
+License: Apache-2.0
 Group: System/Configuration/Other
 
 %global versuffix ce
@@ -174,6 +174,10 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Tue Feb 18 2020 Vladimir Didenko <cow@altlinux.org> 19.03.6-alt1
+- 19.03.6
+- Fix license name
+
 * Fri Nov 15 2019 Vladimir Didenko <cow@altlinux.org> 19.03.5-alt1
 - 19.03.5
 
