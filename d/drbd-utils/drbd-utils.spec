@@ -1,8 +1,10 @@
 %define _localstatedir %_var
 %def_without xen
+%define githash ed83664dde66b9973bd5f776c1a30dfc5a6d9f5e
+%define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 
 Name: drbd-utils
-Version: 8.9.6
+Version: 9.12.0
 Release: alt1
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -12,14 +14,15 @@ URL: http://www.drbd.org/
 Conflicts: drbd-tools drbd83-tools
 
 Source0: %name-%version.tar
-Source1: drbd-headers.tar
+Source1: %name-headers-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: docbook-style-xsl flex xsltproc
+BuildRequires: gcc-c++ po4a udev libsystemd-devel
 
 %description
-DRBD refers to block devices designed as a building block to form high 
-availability (HA) clusters. This is done by mirroring a whole block device 
+DRBD refers to block devices designed as a building block to form high
+availability (HA) clusters. This is done by mirroring a whole block device
 via an assigned network. DRBD can be understood as network based raid-1.
 
 This packages includes the DRBD administration tools.
@@ -69,7 +72,10 @@ management utility.
 
 %prep
 %setup -q -a1
+tar -xf %SOURCE1 -C drbd-headers
 %patch0 -p1
+(echo -e "#define GITHASH \"%githash\""; \
+ echo -e "#define GITDIFF \"%gitdiff\"") > user/shared/drbd_buildtag.h
 
 %build
 %autoreconf
@@ -79,13 +85,16 @@ management utility.
     --with-pacemaker \
     --with-rgmanager \
     --with-distro=generic
+sed -i "s|WITH_DRBDMON[[:space:]]*=[[:space:]]*no|WITH_DRBDMON = yes|" Makefile user/drbdmon/Makefile
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
 install -Dp -m644 drbd.service %buildroot%_unitdir/drbd.service
-rm -f %buildroot%_man8dir/drbd-overview.8
+install -Dp -m644 scripts/drbd %buildroot%_initdir/drbd
+rm -rf %buildroot%_mandir/ja
+rm -f %buildroot/etc/init.d/drbd
 
 %post
 %post_service drbd
@@ -94,23 +103,29 @@ rm -f %buildroot%_man8dir/drbd-overview.8
 %preun_service drbd
 
 %files
-%doc scripts/drbd.conf.example COPYING ChangeLog README
+%doc scripts/drbd.conf.example COPYING ChangeLog README.md
 %config(noreplace) %_sysconfdir/drbd.conf
 %dir %_sysconfdir/drbd.d
 %config(noreplace) %_sysconfdir/drbd.d/global_common.conf
+%_sysconfdir/ha.d/resource.d/*
+%_initdir/drbd
 %_unitdir/drbd.service
 %_sbindir/drbdsetup
 %_sbindir/drbdadm
 %_sbindir/drbdmeta
-%_sbindir/drbd-overview
+%_sbindir/drbdmon
+%dir /lib/drbd
 /lib/drbd/drbdadm-*
 /lib/drbd/drbdsetup-*
+/lib/udev/rules.d/65-drbd.rules
 %exclude /usr/lib/drbd/crm-*fence-peer.sh
 %exclude /usr/lib/drbd/stonith_admin-fence-peer.sh
+%dir /usr/lib/drbd
 /usr/lib/drbd/*.sh
 /usr/lib/drbd/rhcs_fence
 %dir %_var/lib/drbd
 %_man8dir/drbd*
+%_man7dir/*
 %_man5dir/drbd*
 
 %if_with xen
@@ -119,7 +134,9 @@ rm -f %buildroot%_man8dir/drbd-overview.8
 %endif
 
 %files pacemaker
+%dir /usr/lib/ocf/resource.d/linbit
 /usr/lib/ocf/resource.d/linbit/drbd
+/usr/lib/ocf/resource.d/linbit/drbd.shellfuncs.sh
 /usr/lib/drbd/crm-*fence-peer.sh
 /usr/lib/drbd/stonith_admin-fence-peer.sh
 
@@ -131,6 +148,9 @@ rm -f %buildroot%_man8dir/drbd-overview.8
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Wed Feb 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.0-alt1
+- 9.12.0
+
 * Tue Apr 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 8.9.6-alt1
 - 8.9.6
 
