@@ -1,5 +1,5 @@
 Name: seafile
-Version: 7.0.5
+Version: 7.0.6
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -125,9 +125,12 @@ cp %SOURCE1 .
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 7.0.6-alt1
+- new version 7.0.6 (with rpmrb script)
+
 * Sat Jan 18 2020 Vitaly Lipatov <lav@altlinux.ru> 7.0.5-alt1
 - new version 7.0.5 (with rpmrb script)
-- pack seafile-cli in standalone package
+- pack seaf-cli in standalone package
 - use python3 only
 
 * Fri Aug 30 2019 Vitaly Lipatov <lav@altlinux.ru> 7.0.2-alt1
