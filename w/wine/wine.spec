@@ -1,11 +1,11 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 4.9.4
-%define major 5.1
+%define major 5.2
 %define rel %nil
 
 Name: wine
-Version: %major.2
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -406,7 +406,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_datadir/wine/wine.inf
 %_datadir/wine/winebus.inf
 %_datadir/wine/winehid.inf
-%_datadir/wine/l_intl.nls
+%_datadir/wine/nls/
 %_datadir/wine/fonts/
 
 # move to separate packages
@@ -485,6 +485,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Feb 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+
 * Tue Feb 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.1.2-alt1
 - new version 5.1.2 (with rpmrb script)
 
