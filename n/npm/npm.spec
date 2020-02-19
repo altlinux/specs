@@ -1,6 +1,6 @@
 Name: npm
 Version: 6.13.6
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -42,7 +42,8 @@ rm -rf bin/node-gyp-bin node_modules/node-gyp/ node_modules/.bin/node-gyp node_m
 
 %install
 mkdir -p %buildroot%nodejs_sitelib/%name/ %buildroot%_bindir/
-ln -s %nodejs_sitelib/%name/bin/npm-cli.js %buildroot%_bindir/%name
+ln -s %nodejs_sitelib/%name/bin/npm-cli.js %buildroot%_bindir/npm
+ln -s %nodejs_sitelib/%name/bin/npx-cli.js %buildroot%_bindir/npx
 
 # need inet
 #node cli.js install -g --prefix %buildroot%_prefix
@@ -62,9 +63,13 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 
 %files -n npm
 %_bindir/npm
+%_bindir/npx
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 6.13.6-alt2
+- pack /usr/bin/npx
+
 * Tue Feb 18 2020 Vitaly Lipatov <lav@altlinux.ru> 6.13.6-alt1
 - new version 6.13.6 (with rpmrb script)
 
