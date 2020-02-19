@@ -6,8 +6,8 @@
 %endif
 
 Name: octave
-Version: 5.1.0
-Release: alt3
+Version: 5.2.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -222,6 +222,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Tue Feb 18 2020 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 5.1.0-alt3
 - added Russian package summary/description
 - re-enabled %%check section (except for i586 where it fails)
