@@ -1,5 +1,5 @@
 Name: mk-configure
-Version: 0.31.0
+Version: 0.32.1
 Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
@@ -66,6 +66,9 @@ bmake test
 %_man7dir/*
 
 %changelog
+* Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.32.1-alt1
+- new version 0.32.1 (with rpmrb script)
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.31.0-alt1
 - new version 0.31.0 (with rpmrb script)
 
