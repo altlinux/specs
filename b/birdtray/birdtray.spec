@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: birdtray
-Version: 1.5
+Version: 1.7.0
 Release: alt1
 Summary: Birdtray is a free system tray notification for new mail for Thunderbird
 License: GPLv3 
@@ -9,11 +9,13 @@ Group: Networking/Mail
 Url: https://github.com/gyunaev/birdtray
 Source: %name-%version.tar.gz
 
-BuildRequires(pre): rpm-macros-qt5 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
+BuildRequires: cmake
 BuildRequires: qt5-base-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-tools-devel
 
 %description
 System tray notifications for Thunderbird
@@ -33,35 +35,29 @@ possibly by the time you read these words.
 %setup
 
 %build
-%qmake_qt5 src/birdtray.pro
-%make_build
+%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%buildroot/%prefix
+%cmake_build
 
 %install
-install -D %_builddir/%name-%version/%name  %buildroot%_bindir/%name
-mkdir -p %buildroot%_pixmapsdir
-cp %_builddir/%name-%version/src/res/*.png %buildroot%_pixmapsdir/
-
-mkdir -p %buildroot%_desktopdir
-cat <<EOF >%buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Encoding=UTF-8
-Name=Birdtray
-Comment=Birdtray is a free system tray notification for new mail for Thunderbird
-Comment[ru]=Birdtray - это бесплатная система уведомлений в системном трее для новой почты для Thunderbird
-TryExec=%name
-Exec=%_bindir/%name
-Icon=thunderbird.png
-Terminal=false
-Type=Application
-Categories=Application;Network
-EOF
+mkdir %buildroot
+cd BUILD
+cmake --build . --target install
+sed -i '/Exec=birdtray/i\Comment=Birdtray' %buildroot%_desktopdir/com.ulduzsoft.Birdtray.desktop
 
 %files
-%doc LICENSE README.md
+%doc README.md
 %_bindir/%name
-%_pixmapsdir/*.png
-%_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/*
+%_datadir/metainfo/*
+%_datadir/ulduzsoft/
+%_datadir/ulduzsoft/%name/translations/*.qm
+%_desktopdir/com.ulduzsoft.Birdtray.desktop
 
 %changelog
+* Wed Feb 19 2020 Mikhail Chernonog <snowmix@altlinux.org> 1.7.0-alt1
+- 1.5 -> 1.7.0
+- Update desktop file
+- Update spec file for build using cmake
+
 * Wed May 15 2019 Mikhail Chernonog <snowmix@altlinux.org> 1.5-alt1
 - Initial build for Sisyphus
