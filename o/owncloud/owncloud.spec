@@ -1,6 +1,6 @@
 Name: owncloud
 Version: 10.1.1
-Release: alt1
+Release: alt2
 
 %define installdir %webserver_webappsdir/%name
 
@@ -20,10 +20,11 @@ Requires: php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip php7
 Requires: php7-pdo-driver
 
 Source0: %name-%version.tar
+Patch0: port-on-python3.patch
 
 # Automatically added by buildreq on Mon Oct 03 2016
 # optimized out: python-base python-modules python3
-BuildRequires: python3-base
+BuildRequires(pre): rpm-build-python3
 
 %description
 ownCloud gives you easy and universal access to all of your files.
@@ -50,6 +51,7 @@ nginx web-server default configuration for %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %install
 mkdir -p %buildroot%installdir
@@ -124,6 +126,9 @@ ssl_generate "owncloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Feb 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 10.1.1-alt2
+- py2 -> py3.
+
 * Tue May 07 2019 Evgeniy Korneechev <ekorneechev@altlinux.org> 10.1.1-alt1
 - 10.1.1
 
