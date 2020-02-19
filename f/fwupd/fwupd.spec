@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -237,6 +237,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
+%_libdir/fwupd-plugins-3/libfu_plugin_fresco_pd.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm_eventlog.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fastboot.so
@@ -302,6 +303,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Wed Feb 19 2020 Anton Farygin <rider@altlinux.ru> 1.3.8-alt1
+- 1.3.8
+
 * Sun Feb 02 2020 Anton Farygin <rider@altlinux.ru> 1.3.7-alt1
 - 1.3.7
 
