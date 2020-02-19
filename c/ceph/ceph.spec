@@ -40,8 +40,8 @@
 %endif
 
 Name: ceph
-Version: 14.2.6
-Release: alt2
+Version: 14.2.7
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1525,6 +1525,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 19 2020 Alexey Shabalin <shaba@altlinux.org> 14.2.7-alt1
+- 14.2.7 (Fixes: CVE-2020-1699, CVE-2020-1700)
+
 * Wed Jan 22 2020 Alexey Shabalin <shaba@altlinux.org> 14.2.6-alt2
 - do not enable mgr restful module after installation
 
