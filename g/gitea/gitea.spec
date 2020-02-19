@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:    gitea
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -21,17 +21,17 @@ Url:     https://gitea.io
 
 # https://github.com/go-gitea/gitea
 Source:  %name-%version.tar
-Source1: gopath.tar
 
 Source2: gitea.service
 Source3: gitea.service.d.conf
 Source4: README.ALT
 
-Patch:  ALT_config.patch
-Patch1: make-version.patch
+Patch1: %name-%version.patch
+Patch2: ALT_config.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-bindata
+BuildRequires: npm >= 6.13.6-alt2 node
 BuildRequires: libpam0-devel
 
 Requires: git-core
@@ -42,28 +42,26 @@ of setting up a self-hosted Git service. It is similar to GitHub, Bitbucket,
 and Gitlab. Gitea is a fork of Gogs.
 
 %prep
+# build the JavaScript and CSS files
+# $ npm install
+# $ git add -f node_modules
+# $ git commit -n --no-post-rewrite -m "add node js modules"
+
 %setup
-tar -xvf %SOURCE1
-mv gopath .gopath
-%patch -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-%if_with crutch
-%golang_prepare
-%endif
-
-cd "$BUILDDIR"/src/%import_path
-TAGS="bindata sqlite pam" make VERSION=%version generate all
+TAGS="bindata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make generate all
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
-install -Dm 0755 ".gopath/src/%import_path/%name" %buildroot%_bindir/%name
+install -Dm 0755 %name %buildroot%_bindir/%name
 install -Dm 0644 %SOURCE2 %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_sysconfdir/systemd/system/gitea.service.d
 install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/gitea.service.d/port.conf
@@ -71,8 +69,7 @@ install -Dm 0660 custom/conf/app.ini.sample %buildroot%_sysconfdir/%name/app.ini
 
 # install docs
 mkdir -p %buildroot%_docdir/%name
-install -Dm 0644 ".gopath/src/%import_path/custom/conf/app.ini.sample" \
-%buildroot%_docdir/%name/default-app.ini
+install -Dm 0644 custom/conf/app.ini.sample %buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE4 %buildroot%_docdir/%name/
 
 %pre
@@ -101,6 +98,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Wed Feb 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.1-alt1
+- Build new version.
+
 * Tue Feb 11 2020 Grigory Ustinov <grenka@altlinux.org> 1.11.0-alt1
 - Build new version.
 
