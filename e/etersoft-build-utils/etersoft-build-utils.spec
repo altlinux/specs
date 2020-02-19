@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.9.4
+Version: 2.9.5
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.5-alt1
+- gitask: add support for subtask in add command
+- gitask: remove subtask if a package already in task
+- rpmbs -a: use gita add instead of direct ssh
+- gitask: fix possible race after task new
+
 * Mon Feb 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.4-alt1
 - gitask: convert space(s) in messages to underscores
 - rpmgs: improve update git repo from upstream
