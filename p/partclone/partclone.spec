@@ -1,9 +1,11 @@
 %def_enable xfs
+%def_disable jfs
 %def_enable reiser4
+%def_enable checkfs
 
 Name: partclone
-Version: 0.3.6
-Release: alt0.4.git96f986f
+Version: 0.3.12
+Release: alt1
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -12,28 +14,48 @@ Group: Archiving/Backup
 Url: http://partclone.org
 # Upstream: git://github.com/Thomas-Tsai/partclone.git
 Source: http://download.sourceforge.net/%name/%name-%version.tar
-Patch: partclone-0.3.6-no_fail_mbr.patch
+Patch1: partclone-0.3.6-no_fail_mbr.patch
+Patch2: partclone-0.3.12-few_warns.patch
+Patch3: partclone-0.3.12-checkfs.patch
 
 # Automatically added by buildreq on Fri Dec 04 2015
 # optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
-BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libuuid-devel libvmfs-devel
+BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libuuid-devel
 BuildRequires: libvmfs-devel > 0.2.1-alt1
+BuildRequires: libssl-devel
 %if_enabled xfs
 BuildRequires: libxfs-devel
+%endif
+%if_enabled jfs
+BuildRequires: jfsutils
 %endif
 %if_enabled reiser4
 BuildRequires: libreiser4-devel
 %endif
 
+# Checkfs requires
+%if_enabled checkfs
+BuildRequires: rpm-build-vm
+BuildRequires: e2fsprogs btrfs-progs dosfstools reiserfsprogs hfsprogs ntfs-3g
+%if_enabled xfs
+BuildRequires: xfsprogs
+%endif
+%if_enabled reiser4
+BuildRequires: reiser4progs
+%endif
+%endif
+
 # TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
 
 %description
-A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}
-reiserfs, reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
+A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}%{?_enable_jfs: jfs,}
+reiserfs,%{?_enable_reiser4: reiser4,} btrfs, ntfs, fat, vmfs and hfs+ file systems.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 echo '#define git_version "%version"' > src/version.h
 
 %build
@@ -42,6 +64,7 @@ echo '#define git_version "%version"' > src/version.h
 # switch off configure requirement for correspondent devel packages and
 # configure will fail as if --enable-somefeature was in effect.
 %configure \
+	%{?_enable_checkfs: --enable-fs-test} \
 	--enable-btrfs \
 	--enable-extfs \
 	--enable-reiserfs \
@@ -51,6 +74,7 @@ echo '#define git_version "%version"' > src/version.h
 	--enable-vmfs \
 	%{subst_enable reiser4} \
 	%{subst_enable xfs} \
+	%{subst_enable jfs} \
 	--enable-ncursesw
 %make_build CC="gcc -I/usr/include/vmfs"
 
@@ -58,11 +82,35 @@ echo '#define git_version "%version"' > src/version.h
 %makeinstall_std
 %find_lang %name
 
+%check
+%if_enabled checkfs
+%ifnarch ppc64le
+pushd tests
+vm-run make check || {
+	for fname in *.log; do
+		if [ "$fname" != "test-suite.log" ]; then
+			echo "*** ${fname%%.log} results ***"
+			cat "$fname"
+			echo "******************************"
+			echo
+		fi
+	done
+	false
+}
+popd
+%endif
+%endif
+
 %files -f %name.lang
 %_sbindir/*
 %_man8dir/*
 
 %changelog
+* Wed Feb 19 2020 Leonid Krivoshein <klark@altlinux.org> 0.3.12-alt1
+- Updated to upstream version 0.3.12 from GitHub.
+- Fixed upstream sources for suppress few warnings.
+- Enabled checkfs test suite based on modern vm-run future.
+
 * Wed Jul 31 2019 Michael Shigorin <mike@altlinux.org> 0.3.6-alt0.4.git96f986f
 - introduce reiser4 knob (on by default)
 - minor spec cleanup
