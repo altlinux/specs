@@ -1,6 +1,6 @@
 Name: libglvnd
-Version: 1.2.0
-Release: alt4
+Version: 1.3.0
+Release: alt1
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
@@ -22,8 +22,8 @@ arbitrating OpenGL API calls between multiple vendors on a per-screen basis
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Provides: libGLES-devel
-Obsoletes: libGLES-devel
+Provides: libGLES-devel = %epoch:%version-%release
+Obsoletes: libGLES-devel < %epoch:%version-%release
 Conflicts: libGL-devel < 19.2.2
 
 %description devel
@@ -121,6 +121,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 19 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:1.3.0-alt1
+- 1.3.0
+
 * Tue Nov 26 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:1.2.0-alt4
 - fixed conflicts between libglvnd-devel and libGLES-devel
 
