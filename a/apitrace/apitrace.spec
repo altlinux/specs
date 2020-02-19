@@ -14,7 +14,7 @@
 
 Name: apitrace
 Version: 9.0
-Release: alt2
+Release: alt3
 
 Summary: Tools for tracing OpenGL
 
@@ -101,6 +101,8 @@ rm -rf `ls -1d thirdparty/* | grep -Ev "(khronos|md5|libbacktrace|crc32c)"`
 # Fix spurious-executable-perm
 chmod -x retrace/glretrace_main.cpp
 
+sed -i '1i #!/usr/bin/env python3' scripts/highlight.py
+
 %build
 %cmake_insource -DENABLE_STATIC_SNAPPY=OFF -DENABLE_STATIC_LIBSTDCXX=OFF -DENABLE_STATIC_LIBGCC=OFF
 %make_build
@@ -146,6 +148,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Wed Feb 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 9.0-alt3
+- py2 -> py3 in highlight module.
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt2
 - fix build, drop thirdparty dirs
 - build with system brotli
