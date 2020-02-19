@@ -2,7 +2,7 @@
 
 Name: ocaml-ocamlgraph
 Version: 1.8.8
-Release: alt4
+Release: alt5
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
@@ -66,9 +66,9 @@ make OCAMLBEST=opt OCAMLOPT='ocamlopt.opt -g'
 make doc
 
 %install
-mkdir -p %buildroot%ocamldir
-make OCAMLFIND_DESTDIR=%buildroot%ocamldir install-findlib
-install -m 0755 -p graph.cmxs %buildroot%ocamldir/%libname
+mkdir -p %buildroot%_ocamldir
+make OCAMLFIND_DESTDIR=%buildroot%_ocamldir install-findlib
+install -m 0755 -p graph.cmxs %buildroot%_ocamldir/%libname
 
 # Include all code and examples in the docs
 mkdir -p dox-devel/examples
@@ -85,25 +85,28 @@ install -m 0755 -p view_graph/viewgraph.opt \
 
 %files
 %doc CREDITS FAQ COPYING LICENSE
-%ocamldir/%libname/
-%exclude %ocamldir/*/*.a
-%exclude %ocamldir/*/*.cmxa
-%exclude %ocamldir/*/*.cmx
-%exclude %ocamldir/*/*.o
-%exclude %ocamldir/*/*.mli
+%_ocamldir/%libname/
+%exclude %_ocamldir/*/*.a
+%exclude %_ocamldir/*/*.cmxa
+%exclude %_ocamldir/*/*.cmx
+%exclude %_ocamldir/*/*.o
+%exclude %_ocamldir/*/*.mli
 
 %files devel
 %doc CHANGES README.adoc dox-devel/*
-%ocamldir/*/*.a
-%ocamldir/*/*.cmxa
-%ocamldir/*/*.cmx
-%ocamldir/*/*.o
-%ocamldir/*/*.mli
+%_ocamldir/*/*.a
+%_ocamldir/*/*.cmxa
+%_ocamldir/*/*.cmx
+%_ocamldir/*/*.o
+%_ocamldir/*/*.mli
 
 %files tools
 %_bindir/*
 
 %changelog
+* Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 1.8.8-alt5
+- adaptation for rpm-build-ocaml-1.4
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 1.8.8-alt4
 - rebuilt with ocaml-4.08
 
