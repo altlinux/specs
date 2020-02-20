@@ -2,7 +2,7 @@
 %define module	Convert-UUlib
 
 Name: perl-%module
-Version: 1.6
+Version: 1.62
 Release: alt1
 Epoch: 2
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
@@ -43,6 +43,9 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Thu Feb 20 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.62-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2:1.6-alt1
 - automated CPAN update
 
