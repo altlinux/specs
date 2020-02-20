@@ -1,7 +1,7 @@
 
 Name:    vcmmd
-Version: 7.0.165
-Release: alt4
+Version: 8.0.1
+Release: alt1
 
 Summary: Virtuozzo containers memory management daemon
 License: LGPL-2.1
@@ -47,6 +47,9 @@ echo "INSTALL: " %python3_install
 %config(noreplace) %_sysconfdir/logrotate.d/*
 
 %changelog
+* Wed Feb 05 2020 Andrew A. Vasilyev <andy@altlinux.org> 8.0.1-alt1
+- merge from 8.0.1
+
 * Mon Nov 11 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.165-alt4
 - cleanup spec
 
