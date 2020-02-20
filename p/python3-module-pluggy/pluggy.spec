@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.13.0
 Release: alt2
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/pluggy.git
 Url: https://pypi.python.org/pypi/pluggy
 
@@ -17,16 +17,14 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python2.7(setuptools_scm)
-
-%py_requires importlib_metadata
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools_scm)
 %if_with check
-BuildRequires: python2.7(importlib_metadata)
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(tox)
+BuildRequires: python3(importlib_metadata)
+BuildRequires: python3(tox)
 %endif
+
+%py3_requires importlib_metadata
 
 
 %description
@@ -46,16 +44,16 @@ sed -i '/^include CHANGELOG$/{s/$/.rst/}' MANIFEST.in
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
-%python_build
+%python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_install
+%python3_install
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
+export TOXENV=py%{python_version_nodots python3}
 sed -i -e '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
@@ -63,20 +61,20 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
 -e '/^setenv[ ]*=/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test' \
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 tox.ini
-tox --sitepackages -p auto -o -v -r
+tox.py3 --sitepackages -p auto -o -v -r
 
 
 %files
 %doc LICENSE CHANGELOG.rst README.rst
-%python_sitelibdir/pluggy/
-%python_sitelibdir/pluggy-*.egg-info/
+%python3_sitelibdir/pluggy/
+%python3_sitelibdir/pluggy-*.egg-info/
 
 
 %changelog
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.13.0-alt2
-- python3 support removed (built separately).
+- Build for python2 disabled.
 
 * Wed Oct 16 2019 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
 - 0.12.0 -> 0.13.0.
