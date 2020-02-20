@@ -5,9 +5,6 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define use_lld_arches x86_64
-%define link_static_llvm_arches x86_64
-
 %define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define vulkan_radeon_arches x86_64 ppc64le mipsel
 %define nouveau_arches %ix86 x86_64 aarch64 ppc64le mipsel
@@ -15,10 +12,8 @@
 %define vulkan_intel_arches x86_64
 %define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define armsoc_arches %arm aarch64
-# OpenCL requires static clang libraries
-# which may be built as ThinLTO objects (if lld
-# supports target architecture).
-%define opencl_arches x86_64
+
+%define opencl_arches x86_64 aarch64
 %define gallium_pipe_arches x86_64
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
@@ -66,7 +61,7 @@
 %endif
 
 Name: Mesa
-Version: 19.3.4
+Version: 20.0.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -89,12 +84,6 @@ BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
 %ifarch %radeon_arches
 BuildRequires: llvm-devel >= 8.0.0 clang-devel >= 8.0.0
-%ifarch %link_static_llvm_arches
-BuildRequires: llvm-devel-static >= 8.0.0 clang-devel-static >= 8.0.0
-%endif
-%endif
-%ifarch %use_lld_arches
-BuildRequires: lld >= 8.0.0
 %endif
 
 %description
@@ -220,17 +209,7 @@ DRI drivers for various SoCs
 %setup -q
 %patch -p1
 
-mkdir -p $(pwd)/bin
-%ifarch %use_lld_arches
-ln -s %_bindir/ld.lld $(pwd)/bin/ld
-%endif
-
 %build
-%ifarch %use_lld_arches
-export PATH=$(pwd)/bin:$PATH
-# without this options every lld instance will try to consume all cpus
-%add_optflags -Wl,--no-threads -Wl,--thinlto-jobs=1
-%endif
 %meson \
 	-Dplatforms=x11,wayland,drm \
 	-Ddri-drivers='%{?dri_drivers}' \
@@ -248,11 +227,7 @@ export PATH=$(pwd)/bin:$PATH
 %endif
 %ifarch %radeon_arches
 	-Dllvm=true \
-%ifarch %link_static_llvm_arches
-	-Dshared-llvm=false \
-%else
 	-Dshared-llvm=true \
-%endif
 %endif
 	-Dshared-glapi=true \
 %if_enabled egl
@@ -447,6 +422,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Thu Feb 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.0-alt1
+- 20.0.0
+
 * Fri Feb 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.3.4-alt1
 - 19.3.4
 
