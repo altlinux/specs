@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name JSON-Parse
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.55
-Release: alt3
+Version: 0.56
+Release: alt1
 Summary: Read JSON into a Perl variable
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/B/BK/BKB/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BK/BKB/%{module_name}-%{version}.tar.gz
 
 %description
 A module for parsing JSON. (JSON means "JavaScript Object Notation"
@@ -60,6 +60,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Thu Feb 20 2020 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.55-alt3
 - to Sisyphus as perl-Finance-Quote dep
 
