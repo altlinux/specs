@@ -2,7 +2,7 @@
 
 Name:          npmjs-%pname
 Version:       4.0.3
-Release:       alt1
+Release:       alt2
 Summary:       Fiber support for v8 and Node
 License:       MIT
 Group:         Development/Other
@@ -11,7 +11,7 @@ Vcs:           https://github.com/laverdet/node-fibers.git
 Packager:      Node Team <node@packages.altlinux.ru>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-nodejs
+BuildRequires: rpm-build-nodejs
 
 %description
 Fibers, sometimes called coroutines, are a powerful tool which expose an API to
@@ -36,5 +36,8 @@ asynchronous environment.
 
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt2
+- BR: rpm-build-nodejs
+
 * Fri Jan 10 2020 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1
 - NPM.js package for %pname built for Sisyphus

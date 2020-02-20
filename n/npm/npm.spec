@@ -1,6 +1,6 @@
 Name: npm
-Version: 6.13.6
-Release: alt2
+Version: 6.13.7
+Release: alt1
 
 Summary: A package manager for node
 
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-nodejs
 #Requires:	node >= 6.9
 
 # Note! Change version with new npm
-Requires: npm(node-gyp) = 5.0.5
+Requires: npm(node-gyp) = 5.0.7
 
 BuildArch:	noarch
 
@@ -67,6 +67,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 6.13.7-alt1
+- new version 6.13.7 (with rpmrb script)
+
 * Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 6.13.6-alt2
 - pack /usr/bin/npx
 
