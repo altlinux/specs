@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define lvm2version 2.03.7
-%define dmversion 1.02.167
+%define lvm2version 2.03.8
+%define dmversion 1.02.169
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -486,6 +486,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 2.03.8-alt1
+- 2.03.8
+
 * Thu Dec 12 2019 Alexey Shabalin <shaba@altlinux.org> 2.03.7-alt1
 - 2.03.7
 
