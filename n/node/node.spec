@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 6.13.4
+%define npmver 6.13.7
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 13.8
+%define major 13.9
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -21,10 +21,11 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.34.0
+%global libuv_abi 1.34.2
 %def_with systemuv
 
-%global libicu_abi 6.4
+# use 5.6 as c8
+%global libicu_abi 5.6
 %def_with systemicu
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
@@ -158,6 +159,7 @@ BuildArch: noarch
 %description doc
 Documentation files for %name.
 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=38130
 %if_with npm
 %package -n npm
 Version:	%npmver
@@ -361,6 +363,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt1
+- new version 13.9.0 (security fixes)
+- set libicu >= 5.6
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 13.8.0-alt1
 - new version 13.8.0 (with rpmrb script)
 - CVE-2019-15606, CVE-2019-15605, CVE-2019-15604

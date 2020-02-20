@@ -1,6 +1,6 @@
 Name: node-gyp
-Version: 5.0.5
-Release: alt3
+Version: 5.0.7
+Release: alt1
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -47,7 +47,11 @@ BuildRequires(pre): rpm-macros-nodejs
 Requires: gyp >= 0.1.h.e87d37d6
 
 #this is the standard set of headers expected to build any node native module
-Requires: rpm-build-nodejs
+#Requires: rpm-build-nodejs
+#Requires:      npm
+Requires:      node-devel
+# still used in node-gyp
+Requires:      rpm-build-python3
 
 #we also need a C++ compiler to actually build stuff ;-)
 # TODO: what about toolchain?
@@ -111,6 +115,10 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.7-alt1
+- new version 5.0.7 (with rpmrb script)
+- disable rpm-build-nodejs requires (break a circle)
+
 * Mon Jan 20 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt3
 - use system node include dir to binary build (ALT bug 36349)
 - first use python3 to gyp run
