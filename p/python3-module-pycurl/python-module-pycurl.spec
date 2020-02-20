@@ -1,20 +1,20 @@
 %define oname pycurl
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 7.43.0.2
 Release: alt2
 
 Summary: Python bindings to libcurl
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pycurl.io/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pycurl/pycurl/archive/REL_%oversion.tar.gz
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libcurl-devel libssl-devel
 
 
@@ -27,20 +27,20 @@ This module provides the Python bindings to libcurl.
 %build
 %add_optflags -fno-strict-aliasing
 
-%__python setup.py docstrings
-%python_build_debug
+%__python3 setup.py docstrings
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/*
 %_docdir/%oname/
+%python3_sitelibdir/*
 
 
 %changelog
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 7.43.0.2-alt2
-- python3 support removed (built separately)
+- Build for python2 disabled.
 
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.2-alt1
 - new version 7.43.0.2 (with rpmrb script)
