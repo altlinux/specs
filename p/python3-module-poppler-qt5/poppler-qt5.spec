@@ -1,88 +1,53 @@
 %define oname poppler-qt5
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.24.2
-Release: alt1.git20170214.1.1.1
+Release: alt2
+
 Summary: A Python binding to Poppler-Qt5
 License: LGPLv2.1+
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-poppler-qt5/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/wbsoft/python-poppler-qt5.git
 # tag: v0.24.2
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ qt5-base-devel libpoppler-qt5-devel
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sip-devel python-module-PyQt5-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-sip-devel python3-module-PyQt5-devel
-%endif
+BuildRequires: gcc-c++ qt5-base-devel libpoppler-qt5-devel
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-sip-devel python3-module-PyQt5-devel
+
 
 %description
-A Python binding for libpoppler-qt5 that aims for completeness and for
-being actively maintained.
-
-%package -n python3-module-%oname
-Summary: A Python binding to Poppler-Qt5
-Group: Development/Python3
-
-%description -n python3-module-%oname
 A Python binding for libpoppler-qt5 that aims for completeness and for
 being actively maintained.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export PATH=$PATH:%_qt5_bindir
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug --debug -j6
-popd
-%endif
 
 %install
 export PATH=$PATH:%_qt5_bindir
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-export PATH=$PATH:%_qt5_bindir
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
+%if 0
+%__python3 setup.py test
 %endif
 
 %files
 %doc ChangeLog TODO *.rst demo.py
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc ChangeLog TODO *.rst demo.py
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.24.2-alt2
+- Building for python2 disabled.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.2-alt1.git20170214.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
