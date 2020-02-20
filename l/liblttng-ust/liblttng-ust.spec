@@ -1,5 +1,5 @@
 Name: liblttng-ust
-Version: 2.10.4
+Version: 2.11.0
 Release: alt1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
@@ -11,12 +11,13 @@ Url: http://lttng.org/lttng2.0
 # Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
 Patch100: lttng-gen-tp-shebang.patch
-Patch101: 0001-Fix-namespace-our-gettid-wrapper.patch
 
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: gcc-c++
 BuildRequires: libuserspace-rcu-devel
 BuildRequires: libuuid-devel
+BuildRequires: libnuma-devel
 
 # for man pages
 BuildRequires: asciidoc xmlto
@@ -46,7 +47,6 @@ This package includes documentation and examples for developing programs using L
 %prep
 %setup
 %patch100 -p1
-%patch101 -p1
 
 %build
 # to fix rpath
@@ -87,6 +87,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0 (with rpmrb script)
+
 * Wed Jun 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.10.4-alt1
 - 2.10.4
 - switch to use python3
