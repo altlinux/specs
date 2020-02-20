@@ -1,5 +1,5 @@
 Name: fish
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -12,11 +12,11 @@ URL: http://fishshell.com/
 Source: %name-%version.tar
 
 Requires: man
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libncurses-devel doxygen gcc-c++
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires: libncurses-devel gcc-c++
 BuildRequires: libpcre2-devel >= 10.22
-
-%set_compress_topdir %_mandir
+BuildRequires: cmake
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 fish is a shell geared towards interactive use. Its features are
@@ -36,17 +36,17 @@ done
 
 
 %build
-%autoreconf
-%configure \
-	--with-doxygen \
-	--without-included-pcre2
-%make_build
+%cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 %find_lang %name
 
 rm -f %buildroot%_datadir/fish/completions/docker.fish
+
+%check
+%cmake_build test SHOW_INTERACTIVE_LOG=1
 
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
@@ -67,6 +67,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
@@ -79,16 +82,16 @@ fi
 * Sun Dec 30 2018 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
-* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt2%ubt
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt2
 - fix find altlinux path /etc/openssh for completions
 
-* Sat Feb 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt1%ubt
+* Sat Feb 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt1
 - 2.7.1
 
-* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1%ubt
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1
 - 2.7.0
 
-* Tue Oct 31 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1%ubt
+* Tue Oct 31 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 
 * Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.git20140907
