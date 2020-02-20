@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-PerlIO-Layers
-Version:        0.011
-Release:        alt2_19
+Version:        0.012
+Release:        alt1
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/PerlIO-Layers
-Source0:        https://cpan.metacpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
 BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -57,11 +58,14 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 ./Build test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Thu Feb 20 2020 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.011-alt2_19
 - update to new release by fcimport
 
