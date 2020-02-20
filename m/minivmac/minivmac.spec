@@ -1,14 +1,14 @@
-Name:		minivmac
-Version:	36.02
-Release:	alt1
-Group:		Emulators
-Summary:	MacPlus emulator
-ExclusiveArch:	%ix86 x86_64
-License:	GPLv2
-Source:		%name-%version.src.tgz
+Name: minivmac
+Version: 36.04
+Release: alt1
+Group: Emulators
+Summary: MacPlus emulator
+ExclusiveArch: %ix86 x86_64
+License: GPLv2
+Source: %name-%version.src.tgz
 # wget -r -np -nH --cut-dirs=1 http://www.gryphel.com/c/minivmac/index.html
 # wget -e robots=off -A "*.jpg" -A "*.gif" -A "*.png" -A "*.html" -k -r -p -np https://www.gryphel.com/c/minivmac/index.html
-Source1:	%name.tar
+Source1: %name.tar
 
 # Automatically added by buildreq on Tue Nov 22 2016
 BuildRequires: libX11-devel
@@ -48,6 +48,9 @@ install minivmac minivmacII %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Feb 20 2020 Fr. Br. George <george@altlinux.ru> 36.04-alt1
+- Autobuild version bump to 36.04
+
 * Thu Feb 20 2020 Fr. Br. George <george@altlinux.ru> 36.02-alt1
 - Live upstream is found, versioning changed
 
