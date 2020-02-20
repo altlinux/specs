@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -41,8 +41,9 @@ description of your project and Dune will do the rest.
 %setup -n %name-%version-%release
 
 %build
-./configure --libdir=%_libdir/ocaml
-%make_build release VERSION=%version-%release
+sed -i '/^(name/a (version %version)' dune-project
+./configure --libdir=%_libdir/ocaml --mandir=%_mandir
+%make_build release
 ./dune.exe build @install
 
 %install
@@ -116,6 +117,10 @@ description of your project and Dune will do the rest.
 
 
 %changelog
+* Thu Feb 20 2020 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
+- added information about dune version to dune-project to fix
+  dune --version when building without git
+
 * Mon Feb 17 2020 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
