@@ -1,5 +1,5 @@
 Name: alsa-ucm-conf
-Version: 1.2.1.2
+Version: 1.2.2
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
@@ -31,6 +31,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Thu Feb 20 2020 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Mon Dec 02 2019 Michael Shigorin <mike@altlinux.org> 1.2.1.2-alt1
 - 1.2.1.2
 
