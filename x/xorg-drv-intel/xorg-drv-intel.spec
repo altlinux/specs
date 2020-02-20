@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt10
+Release: alt11
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -57,6 +57,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Thu Feb 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt11
+- git snapshot master.f66d395
+
 * Tue Jun 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt10
 - git snapshot master.6afed33
 - reenabled sna for i586 (closes: #36817)
