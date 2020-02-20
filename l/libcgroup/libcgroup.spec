@@ -2,12 +2,12 @@
 Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
-Version: 0.41
-Release: alt3
+Version: 0.42.2
+Release: alt1
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
-
+# VCS: https://github.com/libcgroup/libcgroup.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -67,15 +67,16 @@ provide scripts to manage that configuration.
 %make DESTDIR=%buildroot install
 
 # install config files
-mkdir -p %buildroot/%_sysconfdir/sysconfig
-cp samples/cgred.conf %buildroot/%_sysconfdir/sysconfig/cgred
-cp samples/cgconfig.sysconfig %buildroot/%_sysconfdir/sysconfig/cgconfig
-cp samples/cgconfig.conf %buildroot/%_sysconfdir/cgconfig.conf
-cp samples/cgrules.conf %buildroot/%_sysconfdir/cgrules.conf
-cp samples/cgsnapshot_blacklist.conf %buildroot/%_sysconfdir/cgsnapshot_blacklist.conf
+mkdir -p %buildroot%_sysconfdir/sysconfig
+cp samples/cgred.conf %buildroot%_sysconfdir/sysconfig/cgred
+cp samples/cgconfig.sysconfig %buildroot%_sysconfdir/sysconfig/cgconfig
+cp samples/cgconfig.conf %buildroot%_sysconfdir/cgconfig.conf
+cp samples/cgrules.conf %buildroot%_sysconfdir/cgrules.conf
+cp samples/cgsnapshot_blacklist.conf %buildroot%_sysconfdir/cgsnapshot_blacklist.conf
 
 rm -f %buildroot/%_lib/security/pam_cgroup.la
-rm -f %buildroot/%_libdir/*.la
+rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/libcgroupfortesting.*
 
 # install unit and sysconfig files
 install -d %buildroot%_unitdir
@@ -104,6 +105,7 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %config(noreplace) %_sysconfdir/cgrules.conf
 %config(noreplace) %_sysconfdir/cgsnapshot_blacklist.conf
 %attr(2711, root, cgred) %_bindir/cgexec
+%attr(2711, root, cgred) %_bindir/cgclassify
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
@@ -125,6 +127,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 0.42.2-alt1
+- 0.42.2
+
 * Wed Aug 28 2019 Alexey Shabalin <shaba@altlinux.org> 0.41-alt3
 - backport several upstream fixes (Fixes: CVE-2018-14348)
 - set Delegate property for cgconfig service to make sure complete
