@@ -20,7 +20,7 @@ BuildRequires: perl(Module/CoreList.pm) perl-podlators
 %endif
 
 Name:           perl-Devel-Hide
-Version:        0.0012
+Version:        0.0013
 Release:        alt1
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
@@ -75,6 +75,9 @@ make test
 %{perl_vendor_privlib}/Devel/
 
 %changelog
+* Thu Feb 20 2020 Igor Vlasenko <viy@altlinux.ru> 0.0013-alt1
+- automated CPAN update
+
 * Sun Feb 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.0012-alt1
 - automated CPAN update
 
