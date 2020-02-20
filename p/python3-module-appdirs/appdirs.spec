@@ -1,22 +1,21 @@
 %define oname appdirs
 
-Name: python-module-%oname
-Version: 1.4.3
-Release: alt2
+Name:       python3-module-%oname
+Version:    1.4.3
+Release:    alt2
 
-Summary: Determining appropriate platform-specific dirs, e.g. a "user data dir"
-License: MIT
-Group: Development/Python
-Url: https://pypi.python.org/pypi/appdirs/
+Summary:    Determining appropriate platform-specific dirs, e.g. a "user data dir"
+License:    MIT
+Group:      Development/Python3
+Url:        https://pypi.python.org/pypi/appdirs/
+
+BuildArch:  noarch
 
 # https://github.com/ActiveState/appdirs.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-
-%py_provides %oname
+BuildRequires(pre): rpm-build-python3
+%py3_provides %oname
 
 
 %description
@@ -27,23 +26,22 @@ dirs, e.g. a "user data dir".
 %setup
 
 %build
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
 %doc *.rst *.md
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
-- Rebuild with new setuptools
-- remove python3 support (built separately).
+- Build for python2 disabled.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
