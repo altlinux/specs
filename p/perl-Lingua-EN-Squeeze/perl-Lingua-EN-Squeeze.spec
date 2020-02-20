@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Squeeze
-Version: 2016.01
+Version: 2020.02
 Release: alt1
 
 Summary: Shorten text to minimum syllables by using hash table lookup and vowel deletion
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Squeeze-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
 BuildRequires: perl-YAML perl-devel
@@ -52,7 +52,7 @@ below. See yourself if it's readable (Yes, it takes some time to get used
 to). The compression ratio is typically 30-40%%.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -65,6 +65,9 @@ to). The compression ratio is typically 30-40%%.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Thu Feb 20 2020 Igor Vlasenko <viy@altlinux.ru> 2020.02-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2016.01-alt1
 - automated CPAN update
 
