@@ -4,7 +4,7 @@
 %define major 3.1
 Name: dotnet-sdk
 Version: %major.100
-Release: alt4
+Release: alt5
 
 Summary: SDK for the .NET Core runtime and libraries
 
@@ -58,7 +58,10 @@ cp -a %_libdir/dotnet-bootstrap/templates/%_dotnet_corerelease/* %buildroot%_dot
 
 # apphost used as executable, f.i. dotnet tool install --global paket will install it in $HOME/.dotnet/tools as paket
 rm -f %buildroot%_dotnet_sdk/AppHostTemplate/apphost
-ln -sr %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
+
+# link deps workaround
+#ln -sr %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
+cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 
 mkdir -p %buildroot%_cachedir/dotnet/NuGetFallbackFolder/
 ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet/sdk/NuGetFallbackFolder
@@ -84,6 +87,9 @@ ln -sr %buildroot%_cachedir/dotnet/NuGetFallbackFolder %buildroot%_libdir/dotnet
 %attr(2775,root,dotnet) %dir %_cachedir/dotnet/NuGetFallbackFolder/
 
 %changelog
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.100-alt5
+- revert apphost copying
+
 * Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.100-alt4
 - add strict dotnet cli requires (SDK unusable without it)
 - replace copy of apphost with link to the original
