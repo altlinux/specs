@@ -3,29 +3,28 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.1.1
 Release: alt2
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyflakes
-
 BuildArch: noarch
 
 # https://github.com/PyCQA/pyflakes.git
 Source: %name-%version.tar
 Source1: pyflakes.1
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+
 %if_with check
-BuildRequires: python2.7(tox)
-BuildRequires: python2.7(json)
+BuildRequires: python3(tox)
 %endif
 
-Provides: pyflakes = %EVR
-Obsoletes: pyflakes < %EVR
+Provides: python3-pyflakes = %EVR
+Obsoletes: python3-pyflakes < %EVR
 
 
 %description
@@ -39,14 +38,17 @@ check on style.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
-install -Dpm 644 %SOURCE1 %buildroot%_man1dir/pyflakes.1
+install -Dpm 644 %SOURCE1 %buildroot%_man1dir/python3-pyflakes.1
 
-rm -r %buildroot%python_sitelibdir/pyflakes/test
+mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
+
+# don't package tests
+rm -r %buildroot%python3_sitelibdir/pyflakes/test
 
 %check
 # we don't want flake8, because pyflakes is its dep
@@ -56,21 +58,20 @@ sed -i \
 tox.ini
 
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-tox --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
 
 %files
 %doc AUTHORS LICENSE README.rst
-%_man1dir/pyflakes.1*
-%_bindir/pyflakes
-%python_sitelibdir/pyflakes/
-%python_sitelibdir/pyflakes-*.egg-info/
+%_man1dir/python3-pyflakes.1*
+%_bindir/pyflakes-py3
+%python3_sitelibdir/pyflakes/
+%python3_sitelibdir/pyflakes-*.egg-info/
 
 
 %changelog
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.1-alt2
-- Rebuild with new setuptools
-- python3 support removed (built separately).
+- Build for python2 disabled.
 
 * Fri Mar 22 2019 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - 2.0.0 -> 2.1.1.
