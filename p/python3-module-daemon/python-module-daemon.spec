@@ -1,28 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-%define modname daemon
+%define oname daemon
 
 %def_with check
 
-Name: python-module-%modname
+Name: python3-module-%oname
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Summary: Library to implement a well-behaved Unix daemon process
 License: Apache-2.0 / GPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/python-daemon/
-Packager: Python Development Team <python@packages.altlinux.org>
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python2.7(json)
-BuildRequires: python2.7(docutils)
 BuildRequires: python3(docutils)
-
 %if_with check
 BuildRequires: python3(lockfile)
 BuildRequires: python3(mock)
@@ -30,17 +26,8 @@ BuildRequires: python3(testscenarios)
 BuildRequires: python3(tox)
 %endif
 
+
 %description
-A well-behaved Unix daemon process is tricky to get right, but the required
-steps are much the same for every daemon program. A DaemonContext instance
-holds the behaviour and configured process environment for the program; use the
-instance as a context manager to enter a daemon state.
-
-%package -n python3-module-%modname
-Summary: Library to implement a well-behaved Unix daemon process
-Group: Development/Python3
-
-%description -n python3-module-%modname
 A well-behaved Unix daemon process is tricky to get right, but the required
 steps are much the same for every daemon program. A DaemonContext instance
 holds the behaviour and configured process environment for the program; use the
@@ -50,47 +37,34 @@ instance as a context manager to enter a daemon state.
 %setup
 %patch -p1
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
-# workaround https://pagure.io/python-daemon/issue/31
-python setup.py egg_info
-%python_build
-
-pushd ../python3
-python3 setup.py egg_info
+%__python3 setup.py egg_info
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 # skip for now PEP517/PEP518
 rm pyproject.toml
+
 # relax requirements
 sed -i '/deps = -r{toxinidir}\/pip-requirements\/test\.txt/d' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
+
 %_bindir/tox.py3 --sitepackages -p auto -o -v -- -ra
 
 %files
 %doc ChangeLog LICENSE.* README doc/*
-%python_sitelibdir/%modname/
-%python_sitelibdir/python_daemon-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%modname
-%doc ChangeLog LICENSE.* README doc/*
-%python3_sitelibdir/%modname/
+%python3_sitelibdir/%oname/
 %python3_sitelibdir/python_daemon-%version-py%_python3_version.egg-info/
 
 
 %changelog
+* Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.3-alt2
+- Build for python2 disabled.
+
 * Mon Feb 18 2019 Stanislav Levin <slev@altlinux.org> 2.2.3-alt1
 - 2.1.2 -> 2.2.3.
 - Enable testing.
