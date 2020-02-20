@@ -1,12 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname zconfig
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.2.0
 Release: alt2
 
 Summary: Python configuration module from Zope
 License: ZPL
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/ZConfig/
 
 BuildArch: noarch
@@ -16,12 +18,13 @@ Source: %name-%version.tar
 # https://github.com/zopefoundation/ZConfig/issues/34
 Patch1: %oname-%version-upstream-schema2html.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-zope.testrunner
-BuildRequires: python2.7(manuel)
-BuildRequires: python2.7(manuel.testing)
-BuildRequires: python2.7(docutils)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-manuel
+BuildRequires: python3-module-manuel-tests
+BuildRequires: python3-module-docutils
+
+Conflicts: python-module-%oname < 3.2.0-alt2
 
 
 %description
@@ -46,9 +49,9 @@ Zope Corporation < zodb-devAATTzope.org>
 
 %package tests
 Summary: Tests for ZConfig
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires zope.testrunner
+%py3_requires zope.testrunner
 
 %description tests
 ZConfig is a configuration library intended for general use. It supports a
@@ -64,28 +67,28 @@ This package contains tests for ZConfig.
 %patch1 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%__python3 setup.py test
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/*/tests
+%_bindir/*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/*/tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/*/tests
 
 
 %changelog
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt2
-- Rebuild with new setuptools
-- python3 support removed (built separately).
+- Build for python2 disabled.
 
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1.1.qa1
 - NMU: applied repocop patch
