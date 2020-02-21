@@ -26,15 +26,15 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.17.5
-Release: alt4
+Version: 5.18.1
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Requires: sddm-theme-breeze
 Requires: %name-qml
@@ -400,6 +400,9 @@ done
 
 
 %changelog
+* Wed Feb 19 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.18.1-alt1
+- new version
+
 * Thu Feb 13 2020 Oleg Solovyov <mcpain@altlinux.org> 1:5.17.5-alt4
 - fix activity runner
 
