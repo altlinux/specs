@@ -14,8 +14,8 @@
 %def_with gtkmm3
 
 %global majorversion    11.0
-%global minorversion    0
-%global toolsbuild      14549434
+%global minorversion    5
+%global toolsbuild      15389592
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -271,6 +271,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 21 2020 Alexey Shabalin <shaba@altlinux.org> 11.0.5-alt1
+- 11.0.5
+
 * Sat Sep 28 2019 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
 - 11.0.0
 
