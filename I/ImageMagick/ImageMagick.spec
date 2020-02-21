@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.10
-%define drelease	92
+%define drelease	94
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -261,6 +261,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 6.9.10.94-alt1
+- new version 6.9.10.94
+
 * Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 6.9.10.92-alt1
 - new version 6.9.10.92
 - fixed build with librsvg
