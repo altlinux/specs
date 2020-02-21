@@ -1,15 +1,15 @@
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.74
+Version: 1.77
 Release: alt1
 
 Summary: Operating systems detector
 License: GPLv2+
 Group: System/Configuration/Boot and Init
-Url: http://packages.debian.org/sid/os-prober
+Url: https://salsa.debian.org/installer-team/os-prober
+#Git: https://salsa.debian.org/installer-team/os-prober.git
 
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source0: %name-%version.tar
 
 Patch: %name-1.42-UUID-rootdev-alt.patch
@@ -60,6 +60,10 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Tue Apr 30 2019 Nikolai Kostrigin <nickel@altlinux.org> 1.77-alt1
+- 1.77 (closes: #37224)
+  + relies on grub-mount
+
 * Fri Mar 03 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.74-alt1
 - 1.74
 
