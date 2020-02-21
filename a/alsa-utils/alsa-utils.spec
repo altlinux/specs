@@ -1,8 +1,8 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -104,6 +104,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Thu Feb 20 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt1
+- 1.2.2
+
 * Mon Jan 13 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.1-alt3
 - cherry-picked upstream commit 3c740d90490abe64c86c667934ba5d990817b873
   (closes: #37757)

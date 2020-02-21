@@ -1,11 +1,11 @@
 %define basever 1.1.0
 
 Name: alsa-tools
-Version: 1.1.7
+Version: 1.2.2
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
-License: GPL
+License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://www.alsa-project.org/
@@ -134,6 +134,9 @@ mkdir -p %buildroot{%udevdir,%_udevrulesdir}
 mv %buildroot%_sysconfdir/hotplug/usb/* %buildroot%udevdir/
 install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 
+# python version should be specified explicitly now that 2 is going away
+sed -i 's,env python,&2,' %buildroot%_bindir/hwmixvolume
+
 %files
 %exclude %_bindir/hdajackretask
 %exclude %_bindir/hwmixvolume
@@ -168,6 +171,11 @@ install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Fri Feb 21 2020 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- hwmixvolume: python2
+- (hopefully) fixed ancient changelog record's bogus date
+
 * Wed Oct 17 2018 Michael Shigorin <mike@altlinux.org> 1.1.7-alt1
 - 1.1.7
 
@@ -387,7 +395,7 @@ install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 - 0.9.0rc6
 - Rebuilt in new environment
 
-* Mon Jun 07 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0rc1-alt1
+* Fri Jun 07 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0rc1-alt1
 - 0.9.0rc1
 
 * Thu Feb 28 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta12-alt1
