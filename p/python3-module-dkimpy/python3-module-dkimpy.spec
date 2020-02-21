@@ -1,6 +1,6 @@
 %define modulename dkim
 Name: python3-module-dkimpy
-Version: 0.9.3
+Version: 1.0.3
 Release: alt1
 Summary: Python 3 module for DKIM and ARC signing and verification
 License: BSD-like
@@ -31,13 +31,16 @@ verification.
 %python3_install
 
 %files
-%doc ChangeLog README LICENSE
+%doc ChangeLog README.md LICENSE
 %_bindir/*
 %_man1dir/*.1*
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/dkimpy-*.egg-info
 
 %changelog
+* Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
 * Thu Sep 05 2019 Anton Farygin <rider@altlinux.ru> 0.9.3-alt1
 - first build for ALT
 
