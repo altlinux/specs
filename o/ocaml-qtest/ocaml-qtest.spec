@@ -2,7 +2,7 @@
 %define libname qtest
 Name: ocaml-%libname
 Version: 2.10.1
-Release: alt2
+Release: alt3
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
 Group: Development/ML
@@ -32,6 +32,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
+sed -i 's/oUnit/ounit2/' src/dune
 make
 
 %install
@@ -59,6 +60,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt3
+- oUnit to ounit2 replace has been moved to specfile
+
 * Mon Feb 17 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt2
 - update build requires for new ounit2 and qcheck packages
 
