@@ -2,7 +2,7 @@
 %define libname stringext
 Name: ocaml-%libname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: Extra string functions for OCaml
 Group: Development/ML
 License: BSD
@@ -32,6 +32,7 @@ developing applications that use %name.
 %setup
 
 %build
+sed -i 's,oUnit,ounit2,' lib_test/dune
 dune build -p %libname 
 
 %install
@@ -63,6 +64,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt2
+- fixed build with ounit-2.2.2
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
