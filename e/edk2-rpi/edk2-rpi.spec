@@ -4,7 +4,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-rpi
 Version: 20191122
-Release: alt1
+Release: alt2
 Summary: UEFI Firmware for Raspberry PI 3 and 4
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -15,6 +15,11 @@ Source3: berkeley-softfloat-3.tar
 Source4: Logo.bmp
 Source5: edk2-platforms.tar
 Source6: edk2-non-osi.tar
+
+# https://github.com/raspberrypi/firmware/tree/master/boot
+Source7: bcm2710-rpi-3-b.dtb
+Source8: bcm2710-rpi-3-b-plus.dtb
+Source9: bcm2711-rpi-4-b.dtb
 
 Patch1: %name-%version.patch
 
@@ -34,6 +39,9 @@ BuildRequires: iasl nasm gcc-c++
 BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
 BuildRequires: bc
+BuildRequires: raspberrypi-firmware
+# build MarkDown
+BuildRequires: pandoc
 
 %description
 EFI Development Kit II
@@ -83,6 +91,11 @@ tar -xf %SOURCE6
 # Install ALT Logo
 cp -f %SOURCE4 edk2-non-osi/Platform/RaspberryPi/Drivers/LogoDxe/
 
+# Update dtb
+cp -f %SOURCE7 edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/bcm2710-rpi-3-b.dtb
+cp -f %SOURCE8 edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/bcm2710-rpi-3-b-plus.dtb
+cp -f %SOURCE9 edk2-non-osi/Platform/RaspberryPi/RPi4/DeviceTree/bcm2711-rpi-4-b.dtb
+
 %build
 source ./edksetup.sh
 
@@ -130,31 +143,56 @@ unset MAKEFLAGS
 #mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
 #source ./edksetup.sh
 
+mkdir -p out
+
 # build Raspberry Pi 3 firmware
 export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
 build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi3/RPi3.dsc
+mv Build/RPi3/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi3_EFI.fd
+rm -r Build/RPi3
 
-# build Raspberry Pi 4 firmware
+# build Raspberry Pi 4 firmware without ACPI
+export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
+build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc \
+  -D ACPI_BASIC_MODE_ENABLE=0 -D PL011_ENABLE=1
+mv Build/RPi4/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi4_EFI.fd
+rm -fr Build/RPi4
+
+# build Raspberry Pi 4 firmware with ACPI
 export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
 build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc \
   -D ACPI_BASIC_MODE_ENABLE=1 -D PL011_ENABLE=1
+mv Build/RPi4/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi4_EFI_ACPI.fd
+rm -fr Build/RPi4
 
 %install
 mkdir -p %buildroot%_datadir/edk2-rpi
-cp -a Build/RPi3/*/FV/RPI_EFI.fd %buildroot%_datadir/edk2-rpi/RPI3_EFI.fd
-cp -a Build/RPi4/*/FV/RPI_EFI.fd %buildroot%_datadir/edk2-rpi/RPI4_EFI.fd
+cp -a out/*.fd %buildroot%_datadir/edk2-rpi/
 
-mkdir -p docs/RPi3
-mkdir -p docs/RPi4
-cp -a edk2-platforms/Platform/RaspberryPi/RPi3/*.md docs/RPi3
-cp -a edk2-platforms/Platform/RaspberryPi/RPi4/*.md docs/RPi4
+mkdir -p out/docs/RPi3
+pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi3/Readme.md -o out/docs/RPi3/Readme.txt
+pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi3/Systems.md -o out/docs/RPi3/Systems.txt
+mkdir -p out/docs/RPi3/DeviceTree
+cp edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/License.txt out/docs/RPi3/DeviceTree
+mkdir -p out/docs/RPi3/TrustedFirmware/
+cp edk2-non-osi/Platform/RaspberryPi/RPi3/TrustedFirmware/License.txt out/docs/RPi3/TrustedFirmware/
+mkdir -p out/docs/RPi4
+pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi4/Readme.md -o out/docs/RPi4/Readme.txt
+mkdir -p out/docs/RPi4/DeviceTree
+cp edk2-non-osi/Platform/RaspberryPi/RPi4/DeviceTree/License.txt out/docs/RPi4/DeviceTree
+mkdir -p out/docs/RPi4/TrustedFirmware/
+cp edk2-non-osi/Platform/RaspberryPi/RPi4/TrustedFirmware/License.txt out/docs/RPi4/TrustedFirmware/
 
 %files
-%doc docs/RPi3 docs/RPi4
+%doc out/docs/{RPi3,RPi4}
 %_datadir/edk2-rpi
 
-
 %changelog
+* Wed Feb 19 2020 Anton Midyukov <antohami@altlinux.org> 20191122-alt2
+- Build two variants for rpi4: with ACPI and without ACPI.
+- Update edk2-platforms (2020-02-19)
+- Update dtb (2020-02-19)
+
 * Thu Jan 23 2020 Anton Midyukov <antohami@altlinux.org> 20191122-alt1
 - edk2-stable201911
 - build as edk2-rpi package (for Raspberry Pi 3 and 4)
