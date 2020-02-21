@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 27.0
+Version: 28.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -31,7 +31,6 @@ BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
-BuildRequires: python-modules
 BuildRequires: /usr/bin/rst2man
 # need haskell :(
 %ifarch %ix86 x86_64
@@ -337,13 +336,11 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %_libexecdir/rdma-init-kernel
 %_libexecdir/rdma-set-sriov-vf
 %_libexecdir/truescale-serdes.cmds
-%_bindir/rxe_cfg
 %_sbindir/rdma-ndd
 %_unitdir/rdma-ndd.service
 %_initdir/rdma-ndd
 %_man7dir/rxe*
 %_man8dir/rdma-ndd.*
-%_man8dir/rxe*
 
 %files devel
 %docdir/MAINTAINERS
@@ -574,13 +571,16 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %_sbindir/srp_daemon
 %_sbindir/run_srp_daemon
 %_udevrulesdir/60-srp_daemon.rules
-%_man1dir/ibsrpdm.1*
-%_man1dir/srp_daemon.1*
-%_man5dir/srp_daemon.service.5*
-%_man5dir/srp_daemon_port@.service.5*
+%_man1dir/ibsrpdm.*
+%_man5dir/srp_daemon.service.*
+%_man5dir/srp_daemon_port@.service.*
+%_man8dir/srp_daemon.*
 %docdir/ibsrpdm.md
 
 %changelog
+* Fri Feb 21 2020 Alexey Shabalin <shaba@altlinux.org> 28.0-alt1
+- 28.0
+
 * Sun Dec 15 2019 Alexey Shabalin <shaba@altlinux.org> 27.0-alt1
 - 27.0
 - merged infiniband-diags project
