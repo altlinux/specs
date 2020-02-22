@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.10.0.646.git93944747
-Release: alt1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: eiskaltdcpp-use_libidn2.patch
 
 BuildRequires: boost-interprocess-devel bzlib-devel cmake gcc-c++
-BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua5.1-devel
+BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua-devel
 BuildRequires: libnotify-devel libpcrecpp-devel qt5-phonon-devel
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-script-devel
 BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI libminiupnpc-devel
@@ -173,6 +173,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Sat Feb 22 2020 Nikita Ermakov <arei@altlinux.org> 2.2.10.0.646.git93944747-alt2
+- Change BR from liblua5.1-devel to more general liblua-devel.
+
 * Tue Dec 31 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.10.0.646.git93944747-alt1
 - Build from last commit (Closes: #37709).
 
