@@ -1,9 +1,9 @@
 Name: isomaster
-Version: 1.3.14
+Version: 1.3.15
 Release: alt1
 
 Summary: An open-source, graphical CD image editor
-License: GPL
+License: GPLv2
 Group: File tools
 
 Url: http://littlesvr.ca/isomaster
@@ -39,6 +39,10 @@ rm -rf %buildroot%_defaultdocdir/bkisofs
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Feb 22 2020 Michael Shigorin <mike@altlinux.org> 1.3.15-alt1
+- new version (watch file uupdate)
+- fixed License:
+
 * Thu Mar 29 2018 Michael Shigorin <mike@altlinux.org> 1.3.14-alt1
 - new version (watch file uupdate)
 
