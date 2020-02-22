@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname uri
 Name: ocaml-%libname
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
@@ -13,8 +13,6 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: opam
 BuildRequires: ocaml-ounit-devel
-BuildRequires: ocaml-sexplib0-devel
-BuildRequires: ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-re-devel
@@ -38,11 +36,12 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %libname 
+# disable build sexp extension
+rm -rf lib_test lib_sexp uri-sexp.opam
+dune build @install
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
-rm -rf %buildroot/usr/doc
+dune install --destdir=%buildroot
 
 # Makes *.cmxs executable such that they will be stripped.
 find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
@@ -87,6 +86,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Sat Feb 01 2020 Anton Farygin <rider@altlinux.ru> 3.1.0-alt1
+- 3.1.0
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 
