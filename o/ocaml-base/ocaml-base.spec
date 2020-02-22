@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define oname base
 Name: ocaml-%oname
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
@@ -11,7 +11,6 @@ Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-dune-devel
-BuildRequires: opam
 BuildRequires: ocaml-sexplib0-devel  >= 0.12
 
 %description
@@ -40,8 +39,7 @@ developing applications that use %name.
 dune build --verbose -p %oname %_smp_mflags
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
-rm -rf %buildroot/usr/doc
+dune install --destdir=%buildroot
 
 %check
 dune runtest
@@ -85,6 +83,9 @@ dune runtest
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Sat Feb 22 2020 Anton Farygin <rider@altlinux.ru> 0.13.1-alt1
+- 0.13.1
+
 * Thu Jan 16 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
