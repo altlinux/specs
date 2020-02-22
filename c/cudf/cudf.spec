@@ -3,11 +3,11 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.9
-Release: alt6
+Release: alt7
 # https://scm.gforge.inria.fr/anonscm/git/cudf/cudf.git
 Source: %name-%version.tar
 Url: http://www.mancoosi.org/cudf/
-License: LGPL
+License: LGPLv3
 Group: Development/ML
 BuildRequires: ocaml ocaml-findlib ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel ocaml-ounit
 
@@ -70,6 +70,7 @@ programs.
 %setup
 
 %build
+sed -i 's,oUnit,ounit2,' _tags
 make all c-lib
 which /usr/bin/ocamlopt > /dev/null && make opt c-lib-opt
 
@@ -95,6 +96,9 @@ make test
 %_libdir/ocaml/cudf
 
 %changelog
+* Sat Feb 22 2020 Anton Farygin <rider@altlinux.ru> 0.9-alt7
+- fixed build with new environment: oUnit now is ounit2
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.9-alt6
 - rebuilt with ocaml-4.08
 
