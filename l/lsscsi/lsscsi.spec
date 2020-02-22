@@ -1,7 +1,5 @@
-%define origver 030r154
-
 Name: lsscsi
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: List SCSI devices (or hosts) and associated information
@@ -25,7 +23,7 @@ Author:
     Doug Gilbert <dgilbert at interlog dot com>
 
 %prep
-%setup -n %name-%origver
+%setup
 
 %build
 %configure
@@ -39,6 +37,10 @@ Author:
 %_man8dir/*
 
 %changelog
+* Sat Feb 22 2020 Michael Shigorin <mike@altlinux.org> 0.31-alt1
+- new version (watch file uupdate)
+- fixed bogus date in ancient changelog
+
 * Mon Jul 23 2018 Michael Shigorin <mike@altlinux.org> 0.30-alt1
 - new version (watch file uupdate)
 - upstream has screwed up the version in tarball, *sigh*
@@ -118,7 +120,7 @@ Author:
 * Sat Jan 18 2003 - dgilbert at interlog dot com
 - output st and osst device file names (rather than "-")
   * lsscsi-0.05
-* Thu Jan 14 2003 - dgilbert at interlog dot com
+* Tue Jan 14 2003 - dgilbert at interlog dot com
 - fix multiple listings of st devices (needed for lk 2.5.57)
   * lsscsi-0.04
 * Thu Jan 09 2003 - dgilbert at interlog dot com
