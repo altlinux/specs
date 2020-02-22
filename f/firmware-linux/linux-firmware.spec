@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200207
+Version: 20200217
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Sat Feb 22 2020 Cronbuild Service <cronbuild@altlinux.org> 20200217-alt1
+- upstream changes (GIT 2277987):
+  + nvidia: add TU116/117 signed firmware (thx Gourav Samaiya)
+  + drm/amdgpu: update to latest 19.50 firmware for raven (thx Alex Deucher)
+  + mediatek: update MT8173 VPU firmware to v1.1.4 (thx gtk_ruiwang)
+
 * Fri Feb 07 2020 Cronbuild Service <cronbuild@altlinux.org> 20200207-alt1
 - upstream changes (GIT 6f89735):
   + rtl_nic: update firmware for RTL8153A (thx Hayes Wang)
