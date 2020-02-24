@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           powermock
 Version:        2.0.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        A Java mocking framework
 
 # Note: api-mockito subpackage is ASL 2.0 and MIT, the rest is ASL 2.0
@@ -273,6 +273,9 @@ rm powermock-core/src/test/java/org/powermock/configuration/support/Configuratio
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_4jpp8
+- fc update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2jpp8
 - new version
 
