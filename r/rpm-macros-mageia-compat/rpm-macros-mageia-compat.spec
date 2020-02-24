@@ -1,9 +1,9 @@
 %define module mageia-compat
 Name: rpm-macros-%module
 Summary: Mageia compatibility set of macro
-Version: 0.057
+Version: 0.058
 Release: alt1
-License: GPL
+License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -21,7 +21,10 @@ Patch: mageia-compat.patch
 
 %install
 install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
-for ext in cmake qt4 qt5 scons ; do
+for ext in cmake ; do
+    install -D -m644 orig/macros.$ext -p %buildroot%_rpmmacrosdir/%module-$ext
+done
+for ext in qt4 qt5 scons ; do
     install -D -m644 orig/$ext.macros -p %buildroot%_rpmmacrosdir/%module-$ext
 done
 
@@ -29,6 +32,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.058-alt1
+- updated mageia cmake
+
 * Mon Apr 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.057-alt1
 - added %%_metainfodir
 
