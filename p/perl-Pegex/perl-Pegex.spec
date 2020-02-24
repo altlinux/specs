@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(XXX.pm) perl-podlators
+BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(XXX.pm) perl-podlators perl(YAML/PP.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pegex
-Version:        0.72
+Version:        0.74
 Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
@@ -73,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
+- automated CPAN update
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 
