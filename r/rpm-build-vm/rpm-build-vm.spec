@@ -7,7 +7,7 @@
 
 Name: rpm-build-vm
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 # `qemu/hw/9pfs/9p-local.c:fchmodat_nofollow' is doing chmod
 # over `/proc/self/fd/%%d'.
 Requires: /proc
+Requires: /dev/kvm
 
 %ifarch %ix86 x86_64
 Requires: qemu-system-x86-core
@@ -137,6 +138,9 @@ install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 [ -d /.host -a -d /.in -a -d /.out ]
 
 %changelog
+* Mon Feb 24 2020 Vitaly Chikunov <vt@altlinux.org> 1.7-alt2
+- Require /dev/kvm.
+
 * Fri Jan 24 2020 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
 - ppc: Make use of KVM.
 
