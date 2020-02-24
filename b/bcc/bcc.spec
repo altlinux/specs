@@ -8,11 +8,11 @@
 %endif
 
 Name:		bcc
-Version:	0.9.0.0.55.ge86e0643
-Release:	alt2
+Version:	0.13.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
-License:	ASL 2.0
+License:	Apache-2.0
 URL:		https://github.com/iovisor/bcc
 # Also libbpf https://github.com/libbpf/libbpf
 # Which is a mirror of bpf-next linux tree's tools/lib/bpf
@@ -31,9 +31,9 @@ BuildRequires:	cmake >= 2.8.7
 BuildRequires:	flex
 BuildRequires:	make
 BuildRequires:	gcc-c++
-BuildRequires:	clang-devel >= 3.7.0
-BuildRequires:	llvm-devel >= 3.7.0
-BuildRequires:	lld
+BuildRequires:	clang-devel >= 9.0.0
+BuildRequires:	llvm-devel >= 9.0.0
+BuildRequires:	lld >= 9.0.0
 BuildRequires:	llvm-devel-static
 BuildRequires:	clang-devel-static
 BuildRequires:	python3-devel
@@ -45,6 +45,8 @@ BuildRequires:	luajit
 BuildRequires:	libluajit-devel
 %endif
 BuildRequires:	/proc
+# Assuming 'kernel' dependency will bring un-def kernel
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-un-def kernel-headers-modules-un-def}}
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -112,6 +114,13 @@ mv %buildroot/usr/share/bcc/man/man8 %buildroot%_man8dir
 pushd %{buildroot}%{_man8dir}
 rename '' bcc- *.gz
 popd
+rm -rf %buildroot/usr/share/bcc/man
+
+%check
+# Simple smoke test
+LD_LIBRARY_PATH=%buildroot%_libdir \
+PYTHONPATH=%buildroot%python3_sitelibdir \
+	vm-run %buildroot%_datadir/bcc/tools/cpudist 1 1
 
 %package -n libbcc
 Summary:	Shared Library for BPF Compiler Collection (BCC)
@@ -167,10 +176,16 @@ Command line tools for BPF Compiler Collection (BCC)
 
 %files -n bcc-tools
 %_bindir/bps
-%_datadir/bcc/tools/
+%_datadir/bcc
 %_man8dir/*
 
 %changelog
+* Mon Feb 24 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt1
+- Update bcc to 0.13.0 with libbpf 0.0.7.
+
+* Sun Feb 23 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.55.ge86e0643-alt3
+- Fix Beekeeper build. Update License tag.
+
 * Sat May 18 2019 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.55.ge86e0643-alt2
 - Fix man pages collide with postfix and perf-tools (closes: #36761)
 
