@@ -9,7 +9,7 @@
 
 Name:		bcc
 Version:	0.13.0
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -22,7 +22,7 @@ URL:		https://github.com/iovisor/bcc
 Source:		%name-%version.tar
 Source1:	libbpf.tar
 
-ExclusiveArch:	x86_64 aarch64
+ExclusiveArch:	x86_64 aarch64 ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): python3-module-setuptools
@@ -117,10 +117,13 @@ popd
 rm -rf %buildroot/usr/share/bcc/man
 
 %check
-# Simple smoke test
-LD_LIBRARY_PATH=%buildroot%_libdir \
-PYTHONPATH=%buildroot%python3_sitelibdir \
+# Simple smoke test, only if KVM is enabled
+# (Will fail on ppc64le w/o KVM).
+if [ -w /dev/kvm ]; then
+	LD_LIBRARY_PATH=%buildroot%_libdir \
+	PYTHONPATH=%buildroot%python3_sitelibdir \
 	vm-run %buildroot%_datadir/bcc/tools/cpudist 1 1
+fi
 
 %package -n libbcc
 Summary:	Shared Library for BPF Compiler Collection (BCC)
@@ -180,6 +183,9 @@ Command line tools for BPF Compiler Collection (BCC)
 %_man8dir/*
 
 %changelog
+* Tue Feb 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt2
+- Add ppc64le build.
+
 * Mon Feb 24 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt1
 - Update bcc to 0.13.0 with libbpf 0.0.7.
 
