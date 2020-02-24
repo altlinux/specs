@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -42,6 +42,11 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Mon Feb 24 2020 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
+- Add licenses:
+  + Add RADVD license (ALT-RADVD) (ALT#38133)
+  + Add OpenPub-1.0 license (ALT-OpenPub-1.0) (ALT#20245)
+
 * Mon Dec 16 2019 Alexey Gladkov <legion@altlinux.ru> 1.8-alt1
 - Add licenses:
   + Add PLATON "license" (ALT-Proprietary-PLATON)
