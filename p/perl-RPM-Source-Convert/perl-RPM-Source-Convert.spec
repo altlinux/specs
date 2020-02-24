@@ -4,14 +4,14 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.680
+Version: 0.681
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: %module - Perl extension for converting SRPM and spec files
 Group: Development/Perl
-License: GPLv2+ or Artistic
+License: GPLv2+ or Artistic-1.0
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
@@ -72,6 +72,9 @@ Utils for porting srpms and spec files from other rpm based distros to Sisyphus
 %_bindir/srpmconvert-*
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.681-alt1
+- new version
+
 * Fri Jan 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.680-alt1
 - new version
 - split srpmbackport and srpmimport subpackages
