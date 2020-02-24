@@ -41,7 +41,7 @@
 Name: lib%bname%sover
 Epoch: 1
 Version: 3.4.6
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -336,6 +336,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/lbpcascades
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.4.6-alt2
+- rebuild with new gbcm
+
 * Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.6-alt1
 - Updated to upstream version 3.4.6.
 

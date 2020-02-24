@@ -1,58 +1,72 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel python-devel rpm-build-java rpm-build-perl rpm-build-python zlib-devel texlive texlive-dist
+BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel rpm-build-java rpm-build-perl zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		gdcm
-Version:	2.8.4
-Release:	alt4_11
-Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
-License:	BSD
-URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
-Source0:	http://sourceforge.net/projects/gdcm/files/gdcm%%202.x/GDCM%%20%{version}/%{name}-%{version}.tar.bz2
-Source1:	http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcmData.tar.gz
+# Enabled by default
+%bcond_with tests
 
-Patch1:	gdcm-2.4.0-usecopyright.patch
-Patch2:	gdcm-2.4.0-install2libarch.patch
-Patch3:	gdcm-2.4.0-no-versioned-dir.patch
-# From http://public.kitware.com/pipermail/vtkusers/2013-February/127377.html
-#Patch4: gdcm-0005-support-vtk6.patch
-Patch6: gdcm-2.6-fix-cmake-config-paths.patch
-Patch7: gdcm-2.8.4-fix-manpage-gen.patch
-Patch8: gdcm-2.8.4-fix-poppler.patch
-Patch9: gdcm-2.8.4-poppler-0.67.0.patch
+Name:       gdcm
+Version:    3.0.1
+Release:    alt1_0
+Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
+License:    BSD
+URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
+# Use github release
+Source0:    https://github.com/malaterre/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source1:    http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcmData.tar.gz
 
-BuildRequires:	libCharLS1-devel
-BuildRequires:	ctest cmake
-BuildRequires:	doxygen
-BuildRequires:	libxslt-devel
-BuildRequires:	docbook5-style-xsl
-BuildRequires:	libexpat-devel
-BuildRequires:	fontconfig-devel
-BuildRequires:	graphviz libgraphviz
-BuildRequires:	libgl2ps-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libtheora-devel
-BuildRequires:	libuuid-devel
-BuildRequires:	libssl-devel
+Patch1: 0001-3.0.1-Use-copyright.patch
+# https://sourceforge.net/p/gdcm/bugs/487/
+Patch2: gdcm-2.8.8-dont_use_EOF.patch
+# Fix for 1687233
+Patch3: 0002-Fix-export-variables.patch
+Patch4: gdcm-3.0.1-poppler-0.84.0.patch
+
+BuildRequires:  libCharLS-devel >= 2.0
+BuildRequires:  ctest cmake
+BuildRequires:  doxygen
+BuildRequires:  libxslt-devel
+BuildRequires:  libdcmtk-devel
+BuildRequires:  docbook5-style-xsl
+BuildRequires:  docbook-style-xsl
+BuildRequires:  libexpat-devel
+BuildRequires:  fontconfig-devel
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  git-core
+BuildRequires:  graphviz libgraphviz
+BuildRequires:  libgl2ps-devel
+BuildRequires:  libogg-devel
+BuildRequires:  libtheora-devel
+BuildRequires:  libuuid-devel
+BuildRequires:  libssl-devel
 BuildRequires:  pkgconfig(libopenjp2)
-#BuildRequires:	/usr/bin/pdflatex
-BuildRequires:	libpoppler-devel
-BuildRequires:	python3-devel
-BuildRequires:	swig
-BuildRequires:	libjson-c-devel
-BuildRequires:	libxml2-devel
-#BuildRequires:	texlive-ec
-#BuildRequires:	vtk-devel
-BuildRequires: gcc gcc-c++
+BuildRequires:  libpoppler-devel
+BuildRequires:  python3-devel
+BuildRequires:  swig
+BuildRequires:  libsqlite3-devel
+BuildRequires:  libjson-c-devel
+BuildRequires:  libxml2-devel
 Source44: import.info
-# debian
-Patch134: poppler0.71.patch
-# me
-Patch135: gdcm-2.8.4-alt-poppler.patch
+
+# BuildRequires:  vtk-devel
+
+# Do not generate latex
+# BuildRequires:  /usr/bin/latex
+# BuildRequires:  /usr/bin/pdflatex
+# BuildRequires:  /usr/bin/dvips
+# BuildRequires:  /usr/bin/epstopdf
+#BuildRequires: texlive-ec
 
 
 %description
@@ -65,69 +79,68 @@ C-MOVE). PS 3.3 & 3.6 are distributed as XML files.
 It also provides PS 3.15 certificates and password based mechanism to
 anonymize and de-identify DICOM datasets.
 
-%package	doc
+%package    doc
 Group: Documentation
-Summary:	Includes html documentation for gdcm
-BuildArch:	noarch
+Summary:    Includes html documentation for gdcm
+BuildArch:  noarch
 
 %description doc
 You should install the gdcm-doc package if you would like to
 access upstream documentation for gdcm.
 
-%package	applications
+%package    applications
 Group: Development/Tools
-Summary:	Includes command line programs for GDCM
-Requires:	%{name} = %{version}-%{release}
+Summary:    Includes command line programs for GDCM
+Requires:   %{name} = %{version}-%{release}
 
 %description applications
 You should install the gdcm-applications package if you would like to
 use command line programs part of GDCM. Includes tools to convert,
 anonymize, manipulate, concatenate, and view DICOM files.
 
-%package	devel
+%package    devel
 Group: Development/Other
-Summary:	Libraries and headers for GDCM
-Requires:	%{name} = %{version}-%{release}
-#Requires:	%{name}-applications = %{version}-%{release}
+Summary:    Libraries and headers for GDCM
+Requires:   %{name} = %{version}-%{release}
+Requires:   %{name}-applications = %{version}-%{release}
 
 %description devel
 You should install the gdcm-devel package if you would like to
 compile applications based on gdcm
 
-%package	examples
+%package    examples
 Group: Development/Other
-Summary:	CSharp, C++, Java, PHP and Python example programs for GDCM
-Requires:	%{name} = %{version}-%{release}
-AutoReq: no
+Summary:    CSharp, C++, Java, PHP and Python example programs for GDCM
+Requires:   %{name} = %{version}-%{release}
 
 %description examples
 GDCM examples
 
 %package -n python3-module-gdcm
 Group: Development/Other
-Summary:	Python binding for GDCM
+Summary:    Python binding for GDCM
 %{?python_provide:%python_provide python3-gdcm}
-Requires:	%{name} = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description -n python3-module-gdcm
 You should install the python3-gdcm package if you would like to
 used this library with python
 
 %prep
-%setup -q
-%setup -T -D -a 1
-%patch1 -p 1
-%patch2 -p 1
-%patch3 -p 1
-%patch6 -p 1
-%patch7 -p 1
-%patch8 -p 1
-%patch9 -p 1
-%patch134 -p1
-%patch135 -p1
+%setup -q -n GDCM-%{version}
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+# Data source
+%setup -n GDCM-%{version} -q -T -D -a 1
 
 # Fix cmake command
 sed -i.backup 's/add_dependency/add_dependencies/' Utilities/doxygen/CMakeLists.txt
+
+# Stop doxygen from producing LaTeX output
+sed -i.backup 's/^GENERATE_LATEX.*=.*YES/GENERATE_LATEX = NO/' Utilities/doxygen/doxyfile.in
 
 # Remove bundled utilities (we use Fedora's ones)
 
@@ -145,91 +158,136 @@ rm -rf Utilities/rle
 rm -rf Utilities/wxWidgets
 
 # Needed for testing:
-#rm -rf Utilities/gdcmmd5 
+#rm -rf Utilities/gdcmmd5
 
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 
-%{fedora_cmake}	.. \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
-	-DGDCM_INSTALL_INCLUDE_DIR=%{_includedir}/%{name} \
-	-DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name} \
-	-DGDCM_INSTALL_MAN_DIR=%{_mandir} \
-	-DGDCM_INSTALL_LIB_DIR=%{_libdir} \
-	-DGDCM_BUILD_TESTING:BOOL=OFF \
-	-DGDCM_DATA_ROOT=../gdcmData/ \
-	-DGDCM_BUILD_EXAMPLES:BOOL=OFF \
-	-DGDCM_DOCUMENTATION:BOOL=OFF \
-	-DGDCM_PDF_DOCUMENTATION:BOOL=OFF \
-	-DGDCM_WRAP_PYTHON:BOOL=ON \
-	-DPYTHON_EXECUTABLE=%{__python3} \
-	-DGDCM_INSTALL_PYTHONMODULE_DIR=%{python3_sitelibdir} \
-	-DGDCM_WRAP_JAVA:BOOL=OFF \
-	-DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
-	-DGDCM_BUILD_APPLICATIONS:BOOL=OFF \
-	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
-	-DGDCM_USE_VTK:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
-	-DGDCM_USE_SYSTEM_EXPAT:BOOL=ON \
-	-DGDCM_USE_SYSTEM_OPENJPEG:BOOL=ON \
-	-DGDCM_USE_SYSTEM_ZLIB:BOOL=ON \
-	-DGDCM_USE_SYSTEM_UUID:BOOL=ON \
-	-DGDCM_USE_SYSTEM_LJPEG:BOOL=OFF \
-	-DGDCM_USE_SYSTEM_OPENSSL:BOOL=ON \
-	-DGDCM_USE_JPEGLS:BOOL=ON \
-	-DGDCM_USE_SYSTEM_LIBXML2:BOOL=ON \
-	-DGDCM_USE_SYSTEM_JSON:BOOL=ON \
-	-DGDCM_USE_SYSTEM_POPPLER:BOOL=ON
+%{fedora_cmake}  .. \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DGDCM_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{name} \
+    -DGDCM_INSTALL_INCLUDE_DIR=%{_includedir}/%{name} \
+    -DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name}-%version \
+    -DGDCM_INSTALL_MAN_DIR=%{_mandir} \
+    -DGDCM_INSTALL_LIB_DIR=%{_libdir} \
+    -DGDCM_BUILD_TESTING:BOOL=ON \
+    -DGDCM_DATA_ROOT=../gdcmData/ \
+    -DGDCM_BUILD_EXAMPLES:BOOL=OFF \
+    -DGDCM_DOCUMENTATION:BOOL=OFF \
+    -DGDCM_WRAP_PYTHON:BOOL=ON \
+    -DPYTHON_EXECUTABLE=%{__python3} \
+    -DGDCM_INSTALL_PYTHONMODULE_DIR=%{python3_sitelibdir} \
+    -DGDCM_WRAP_JAVA:BOOL=OFF \
+    -DGDCM_WRAP_CSHARP:BOOL=OFF \
+    -DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
+    -DGDCM_BUILD_APPLICATIONS:BOOL=ON \
+    -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
+    -DGDCM_USE_VTK:BOOL=OFF \
+    -DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
+    -DGDCM_USE_SYSTEM_EXPAT:BOOL=ON \
+    -DGDCM_USE_SYSTEM_OPENJPEG:BOOL=ON \
+    -DGDCM_USE_SYSTEM_ZLIB:BOOL=ON \
+    -DGDCM_USE_SYSTEM_UUID:BOOL=ON \
+    -DGDCM_USE_SYSTEM_LJPEG:BOOL=OFF \
+    -DGDCM_USE_SYSTEM_OPENSSL:BOOL=ON \
+    -DGDCM_USE_JPEGLS:BOOL=ON \
+    -DGDCM_USE_SYSTEM_LIBXML2:BOOL=ON \
+    -DGDCM_USE_SYSTEM_JSON:BOOL=ON \
+    -DGDCM_USE_SYSTEM_POPPLER:BOOL=ON
 
 #Cannot build wrap_java:
-#	-DGDCM_VTK_JAVA_JAR:PATH=/usr/share/java/vtk.jar no found! 
-#	yum provides */vtk.jar -> No results found
+#   -DGDCM_VTK_JAVA_JAR:PATH=/usr/share/java/vtk.jar no found!
+#   yum provides */vtk.jar -> No results found
 
 popd
 
 %make_build -C %{_target_platform}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
+%makeinstall_std -C %{_target_platform}
 install -d $RPM_BUILD_ROOT%{python3_sitelibdir}
 
-## Cleaning Example dir from cmake cache files + remove 0-length files
-find %{_builddir}/%{?buildsubdir}/Examples -depth -name CMakeFiles | xargs rm -rf
-find %{_builddir}/%{?buildsubdir}/Examples -depth -size 0 | xargs rm -rf
+# Install examples
+install -d $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
+cp -rv ./Examples/* $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
 
-## Moving Example dir into _datadir
-cp -r %{_builddir}/%{?buildsubdir}/Examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
-
+%if %{with tests}
 %check
 # Making the tests informative only for now. Several failing tests (27/228):
 # 11,40,48,49,107-109,111-114,130-135,146,149,,151-154,157,194,216,219
-#make test -C %{_target_platform} || exit 0
+make test -C %{_target_platform} || exit 0
+%endif
 
 %files
-%doc AUTHORS Copyright.txt README.Copyright.txt README.txt
-%{_libdir}/*.so.*
+%doc AUTHORS README.md
+%doc --no-dereference Copyright.txt README.Copyright.txt
+%{_libdir}/libgdcmCommon.so.3.0
+%{_libdir}/libgdcmCommon.so.3.0.1
+%{_libdir}/libgdcmDICT.so.3.0
+%{_libdir}/libgdcmDICT.so.3.0.1
+%{_libdir}/libgdcmDSED.so.3.0
+%{_libdir}/libgdcmDSED.so.3.0.1
+%{_libdir}/libgdcmIOD.so.3.0
+%{_libdir}/libgdcmIOD.so.3.0.1
+%{_libdir}/libgdcmMEXD.so.3.0
+%{_libdir}/libgdcmMEXD.so.3.0.1
+%{_libdir}/libgdcmMSFF.so.3.0
+%{_libdir}/libgdcmMSFF.so.3.0.1
+%{_libdir}/libgdcmjpeg12.so.3.0
+%{_libdir}/libgdcmjpeg12.so.3.0.1
+%{_libdir}/libgdcmjpeg16.so.3.0
+%{_libdir}/libgdcmjpeg16.so.3.0.1
+%{_libdir}/libgdcmjpeg8.so.3.0
+%{_libdir}/libgdcmjpeg8.so.3.0.1
+%{_libdir}/libgdcmmd5.so.3.0
+%{_libdir}/libgdcmmd5.so.3.0.1
+%{_libdir}/libsocketxx.so.1.2
+%{_libdir}/libsocketxx.so.1.2.0
 %dir %{_datadir}/%{name}
-%{_datadir}/%{name}/XML/
-#%exclude %{_docdir}/%{name}/html/
+%{_datadir}/%{name}-3.0/XML/
+#exclude %{_docdir}/%{name}-%version/html/
+#exclude %{_docdir}/%{name}-%version/Examples/
 
-#%files doc
-#%doc %{_docdir}/%{name}/html/
+#files doc
+#doc %{_docdir}/%{name}-%version/html/
 
-#%files applications
-#%{_bindir}/*
-#%doc %{_mandir}/man1/*.1*
+%files applications
+%{_bindir}/gdcmanon
+%{_bindir}/gdcmconv
+%{_bindir}/gdcmdiff
+%{_bindir}/gdcmdump
+%{_bindir}/gdcmgendir
+%{_bindir}/gdcmimg
+%{_bindir}/gdcminfo
+%{_bindir}/gdcmpap3
+%{_bindir}/gdcmpdf
+%{_bindir}/gdcmraw
+%{_bindir}/gdcmscanner
+%{_bindir}/gdcmscu
+%{_bindir}/gdcmtar
+%{_bindir}/gdcmxml
+%doc %{_mandir}/man1/*.1*
 
 %files devel
 %{_includedir}/%{name}/
-%{_libdir}/*.so
+%{_libdir}/libgdcmCommon.so
+%{_libdir}/libgdcmDICT.so
+%{_libdir}/libgdcmDSED.so
+%{_libdir}/libgdcmIOD.so
+%{_libdir}/libgdcmMEXD.so
+%{_libdir}/libgdcmMSFF.so
+%{_libdir}/libgdcmjpeg12.so
+%{_libdir}/libgdcmjpeg16.so
+%{_libdir}/libgdcmjpeg8.so
+%{_libdir}/libgdcmmd5.so
+%{_libdir}/libsocketxx.so
 %{_libdir}/cmake/%{name}/
 
-#%files examples
-#%{_datadir}/%{name}/Examples/
-
 %if 0
+%files examples
+%{_datadir}/%{name}/Examples/
+
 %files -n python3-module-gdcm
 %{python3_sitelibdir}/%{name}*.py
 %{python3_sitelibdir}/_%{name}swig.so
@@ -237,6 +295,10 @@ cp -r %{_builddir}/%{?buildsubdir}/Examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %endif
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0
+- new version
+- build w/o python: not to lock python38 update.
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt4_11
 - fixed build, disabled python. stub for python38 update.
 

@@ -4,7 +4,7 @@
 
 Name: itk-snap
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Summary: Software application used to segment structures in 3D medical images
 Group: Sciences/Medicine
 License: GPLv3
@@ -64,7 +64,8 @@ and extraneous or unrelated features are kept to a minimum. \
 The design also emphasizes interaction and ease of use, \
 with the bulk of the development effort dedicated to the user interface.
 
-%description %_description
+%description 
+%_description
 
 %prep
 %setup
@@ -105,5 +106,8 @@ rm -rf Common/JSon
 %_libdir/lib*.so*
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt2
+- rebuild with new gbcm
+
 * Thu Jul 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt1
 - Initial build for ALT.

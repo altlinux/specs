@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg dicom
 Name: octave-%octpkg
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: dicom: file io for medical images and other data
 
 Group: Sciences/Mathematics
@@ -47,6 +47,9 @@ Digital communications in medicine (DICOM) file io.
 %endif
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2
+- rebuild with gbcm
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1
 - regenerated from template by package builder
 
