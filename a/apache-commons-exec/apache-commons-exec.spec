@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           apache-commons-exec
 Version:        1.3
-Release:        alt1_11jpp8
+Release:        alt1_13jpp8
 Summary:        Java library to reliably execute external processes from within the JVM
 License:        ASL 2.0
 URL:            http://commons.apache.org/exec/
@@ -80,6 +80,9 @@ find -name Exec57Test.java -delete
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_13jpp8
+- fc update
+
 * Thu Jul 18 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_11jpp8
 - new version
 
