@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Type/Utils.pm) perl(Types/Standard.pm) perl(base.pm) perl(overload.pm)
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Type/Utils.pm) perl(Types/Standard.pm) perl(base.pm) perl(overload.pm) perl(Sub/HandlesVia.pm)
 # END SourceDeps(oneline)
 %define module_name MooX-late
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.016
+Version: 0.100
 Release: alt1
 Summary: easily translate Moose code to Moo
 Group: Development/Perl
@@ -93,6 +93,9 @@ will never do more than seven.
 %perl_vendor_privlib/M*
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1
+- automated CPAN update
+
 * Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - automated CPAN update
 
