@@ -1,8 +1,9 @@
-Name:           CharLS
+%define oldname CharLS
+Name:           libCharLS1
 Version:        1.0
-Release:        alt2
+Release:        alt3
 Summary:        JPEG-LS compliant compressor/decompressor codec
-Group:          System/Libraries
+Group:          System/Legacy libraries
 License:        BSD
 URL:            http://charls.codeplex.com
 Source:         %name-%version.tar
@@ -18,24 +19,24 @@ In the program you are writing you can call the CharLS codec and
 pass it bitmaps (sometimes called raster images), to have them 
 encoded to JPEG-LS, or JPEG-LS streams, which CharLS will decode to bitmaps. 
 
-%package -n	lib%name
+%package -n	lib%oldname
 Summary:        JPEG-LS compliant compressor/decompressor codec
 Group:          System/Libraries
 Provides:	libcharls = %version-%release
 
-%description -n lib%name
+%description -n lib%oldname
 CharLS is a JPEG-LS compliant compressor/decompressor codec. 
 In the program you are writing you can call the CharLS codec and 
 pass it bitmaps (sometimes called raster images), to have them 
 encoded to JPEG-LS, or JPEG-LS streams, which CharLS will decode to bitmaps. 
 
-%package -n	lib%name-devel
+%package -n	lib%oldname-devel
 Summary:        Development files for %name
 Group:          System/Libraries
-Requires:       lib%name = %version-%release
+Requires:       lib%oldname = %version-%release
 
-%description -n lib%name-devel
-The %name-devel package contains libraries and header files for
+%description -n lib%oldname-devel
+The %oldname-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
@@ -53,15 +54,20 @@ find . -type f -name '*.txt' -o -name '*.h' -o -name '*.cpp' | xargs dos2unix
 %install
 %cmakeinstall_std
 
-%files -n lib%name
+%files -n lib%oldname
 %doc License.txt
-%_libdir/lib%name.so.*
+%_libdir/lib%oldname.so.*
 
-%files -n lib%name-devel
+%if 0
+%files -n lib%oldname-devel
 %_libdir/*.so
-%_includedir/%name
+%_includedir/%oldname
+%endif
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3
+- compat build
+
 * Sun Jan 12 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0-alt2
 - fix build
 
