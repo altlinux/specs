@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0201
-Release: alt2
+Version: 2.0202
+Release: alt1
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -65,6 +66,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.0202-alt1
+- new version
+
 * Wed Nov 13 2019 Dmitry V. Levin <ldv@altlinux.org> 2.0201-alt2
 - Added to Requires the same version of libxml2 that was used for build.
 
