@@ -33,16 +33,15 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.019
-Version:        2.19.0
-Release:        alt4_9
+%global cpan_version 2.020
+Version:        2.20.0
+Release:        alt1_2
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        https://cpan.metacpan.org/authors/id/C/CH/CHM/PDL-%{cpan_version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/PDL-%{cpan_version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
-Patch1:         perl-PDL-2.8.0-hdf.patch
 # Disable Proj support when it's not compatible, bug #839651
 Patch2:         PDL-2.4.10-Disable-PDL-GIS-Proj.patch
 # Compile Slatec as PIC, needed for ARM
@@ -50,6 +49,7 @@ Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
 # Disable Slatec code crashing on PPC64, bug #1041304
 Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
 Patch5:         PDL-2.17.0-Update-additional-deps-for-Basic-Core.patch
+Patch6:         PDL-2.20.0-Compile-pdl-c-as-PIC.patch
 BuildRequires:  coreutils
 BuildRequires:  libfftw-devel
 BuildRequires:  findutils
@@ -58,7 +58,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  gcc-fortran
 BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
-BuildRequires:  hdf-static hdf-devel
+BuildRequires:  hdf-static hdf hdf-devel
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  perl-devel
@@ -196,7 +196,6 @@ such commercial packages as IDL and MatLab.
 %setup -q -n PDL-%{cpan_version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
-%patch1 -p1 -b .hdf
 %if %{without perl_PDL_enables_proj}
 %patch2 -p1 -b .proj
 %endif
@@ -205,6 +204,7 @@ such commercial packages as IDL and MatLab.
 %patch4 -p1 -b .slatec
 %endif
 %patch5 -p1
+%patch6 -p1
 # Fix shellbang
 sed -e 's,^#!/usr/bin/env perl,%(perl -MConfig -e 'print $Config{startperl}'),' -i Perldl2/pdl2
 %patch33 -p1
@@ -228,7 +228,7 @@ perl -Mblib Doc/scantree.pl %{buildroot}%{perl_vendor_archlib}
 perl -pi -e "s|%{buildroot}/|/|g" %{buildroot}%{perl_vendor_archlib}/PDL/pdldoc.db
 find %{buildroot}%{perl_vendor_archlib} -type f -name "*.pm" | xargs chmod -x
 find %{buildroot} -type f -name '*.bs' -empty -delete
-chmod -R u+w %{buildroot}/*
+# %{_fixperms} %{buildroot}/*
 
 %check
 unset DISPLAY
@@ -237,7 +237,7 @@ make test
 
 %files
 %doc --no-dereference COPYING
-%doc Changes INTERNATIONALIZATION Known_problems README TODO
+%doc Changes INTERNATIONALIZATION README TODO
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -245,6 +245,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.20.0-alt1_2
+- new version
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.19.0-alt4_9
 - update to new release by fcimport
 
