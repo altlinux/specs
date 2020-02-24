@@ -1,14 +1,14 @@
 Name: perl
 Version: 5.28.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
 License: Artistic-1.0 OR GPL-2.0-or-later
 Group: Development/Perl
-URL: http://www.perl.org
-Packager: Perl Maintainers Team <cpan@packages.altlinux.org>
 
+Url: http://www.perl.org
+Packager: Perl Maintainers Team <cpan@packages.altlinux.org>
 Source: perl-%version.tar
 
 Patch01: perl-5.28.0-alt-644-at-ExtUtils-Install.patch
@@ -42,7 +42,7 @@ Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
 Patch24: perl-5.28.2-fix-Time-Local-test-2020.patch
 
 # cpan update patches here. use format below:
-#Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
+Patch50: cpan-update-Scalar-List-Utils-1.50-to-Scalar-List-Utils-1.53.patch
 Patch51: cpan-update-Test-Simple-1.302133-to-Test-Simple-1.302141.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
@@ -356,6 +356,7 @@ equivalent text will have identical binary representations.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch50 -p1
 %patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
@@ -418,11 +419,6 @@ find -name '*.orig' -delete
 %define site_privlib %site_prefix/share/perl/%ver
 %define site_archlib %site_prefix/%_lib/perl/%ver
 
-%ifarch %e2k
-# mcst#2279
-%add_optflags -D_FORTIFY_SOURCE=0
-%endif
-
 sh Configure -ders \
 	-Duse64bitint \
 	-Dusethreads -Duseithreads -Duselargefiles \
@@ -438,11 +434,6 @@ sh Configure -ders \
 	-Dcf_by='%vendor' -Dcf_email='%packager' \
 	-Dmyhostname=localhost -Dperladmin=root@localhost
 
-%ifarch %e2k
-# before lcc-1.23
-cc --version | grep -q '^lcc:1.21' && echo '-lcxa' >> ./ext.libs
-%endif
-
 # kill rpath
 sed -i 's@ -Wl,-rpath,%archlib/CORE@@g' config.sh [Mm]akefile myconfig
 
@@ -453,8 +444,17 @@ sed -i '/man3ext/{s/0/3pm/}' config.sh [Mm]akefile
 # make -lperl symlink
 ln -snf libperl-%ver.so libperl.so
 
-# build the rest (SMP incompatible)
+# build the rest (SMP incompatible on: sparc64 %%arm, according to fedora)
 make
+
+%ifarch %e2k
+# http://bugzilla.altlinux.org/35523 workaround
+rm -f regexec.o libperl-%ver.so ext/re/re_exec.o
+make OPTIMIZE+='%optflags -O1' regexec.o
+make libperl-%ver.so
+make -C ext/re OPTIMIZE+='%optflags -O1' re_exec.o
+make -C ext/re all
+%endif
 
 %check
 export LD_LIBRARY_PATH=$PWD LD_BIND_NOW=1 PERL_DL_NONLAZY=1
@@ -1073,6 +1073,10 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.28.2-alt3
+- Restored E2K patches
+- updated Scalar-List-Utils to 1.53
+
 * Thu Jan 23 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:5.28.2-alt2
 - Licence tag fixed
 - build in year 2020 fixed (Time-Local)
