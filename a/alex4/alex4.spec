@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_28
+Release:        alt2_32
 Summary:        Alex the Allegator 4 - Platform game
-Group:          Games/Other
 License:        GPL+
 URL:            https://obiot.github.io/Alex4-WE/readme.html
 Source0:        http://downloads.sf.net/allegator/Alex4/source%%20and%%20data/alex4src_data.zip
@@ -20,6 +20,7 @@ Patch2:         alex4-dot-files-endian-clean.patch
 Patch3:         alex4-fsf-address.patch
 Patch4:         alex4-ini-comment.patch
 Patch5:         alex4src-warnings.patch
+Patch6:         alex4-fcommon-fix.patch
 BuildRequires:  gcc
 BuildRequires:  liballegro-devel dumb-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
@@ -39,6 +40,8 @@ nice colors guaranteed!
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+
 sed -i 's/\r//' *.txt *.ini
 
 # as-needed
@@ -80,6 +83,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_32
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_28
 - update to new release by fcimport
 
