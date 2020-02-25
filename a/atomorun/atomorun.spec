@@ -1,24 +1,28 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libGL-devel libGLU-devel libSDL-devel
+BuildRequires: /usr/bin/desktop-file-install libGLU-devel libSDL-devel libglvnd-devel
 # END SourceDeps(oneline)
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define prever pre2
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.25.%{prever}
+Release:        alt5_0.31.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
-Group:          Games/Other
 License:        GPL+
 URL:            http://atomorun.whosme.de/index.php
 # the file seems to be gone from upstreams server so no URL
 Source0:        %{name}-%{version}_%{prever}.tar.gz
-Source1:        atomorun.desktop
+Source1:        %{name}.desktop
+Source2:        %{name}.png
+Source3:        %{name}.appdata.xml
 Patch0:         atomorun-1.1-missing-protos.patch
+Patch1:         atomorun-1.1-fcommon-fix.patch
+Patch2:         atomorun-1.1-warnings-fix.patch
+BuildRequires:  gcc
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiff-devel libtiffxx-devel libvorbis-devel
-BuildRequires:  libalsa-devel desktop-file-utils
+BuildRequires:  libalsa-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -30,9 +34,13 @@ nuclear bomb.
 %prep
 %setup -q -n %{name}-%{version}_%{prever}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
 
 
 %build
+export CFLAGS="$RPM_OPT_FLAGS -Wno-pointer-sign"
 %configure
 %make_build
 
@@ -43,26 +51,29 @@ rm $RPM_BUILD_ROOT%{_datadir}/%{name}/pixmaps/atomorun_winicon.ico
 rm -rf $RPM_BUILD_ROOT%{_prefix}/doc/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-  --vendor fedora            \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-install -p -m 644 pixmaps/%{name}_icon.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+install -p -m 644 %{SOURCE2} \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.31.pre2
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.25.pre2
 - update to new release by fcimport
 
