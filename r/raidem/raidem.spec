@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip zlib-devel
 %define _localstatedir %{_var}
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_35
+Release:        alt2_41
 Summary:        2d top-down shoot'em up
-Group:          Games/Other
 License:        zlib
 URL:            http://home.exetel.com.au/tjaden/raidem/
 # This is an exacy copy of the upstream src except that lib/almp3 which is
@@ -23,6 +23,8 @@ Patch4:         raidem-new-api.patch
 Patch5:         raidem-0.3.1-format-security.patch
 Patch6:         raidem-0.3.1-system-flags.patch
 Patch7:         raidem-0.3.1-Makefile-race-condition.patch
+Patch8:		raidem-0.3.1-enum.patch
+Patch9:		raidem-0.3.1-counter-dup.patch
 BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel libAllegroOGG-devel
 BuildRequires:  automake desktop-file-utils gnustep-base-devel
@@ -48,6 +50,8 @@ fun.
 %patch5 -p1 -z .format-security
 %patch6 -p1 -z .system-flags
 %patch7 -p1 -z .race-condition
+%patch8 -p0 -z .enum
+%patch9 -p0 -z .counter
 # remove all included system libs, to avoid using the included system headers.
 mv lib/loadpng .
 rm -fr lib/*
@@ -89,6 +93,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_41
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_35
 - update to new release by fcimport
 
