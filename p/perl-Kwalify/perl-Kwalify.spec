@@ -1,19 +1,23 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IPC/Run.pm) perl(JSON.pm) perl(Scalar/Util.pm) perl(YAML.pm) perl(YAML/Syck.pm) perl(base.pm) perl(overload.pm) perl-podlators
+BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IPC/Run.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(Scalar/Util.pm) perl(YAML.pm) perl(YAML/Syck.pm) perl(YAML/XS.pm) perl(base.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Kwalify
-%define upstream_version 1.22
+%define upstream_version 1.23
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.23
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Kwalify schema for data structures
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/S/SR/SREZIC/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module//%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildArch:  noarch
@@ -32,10 +36,10 @@ validate($schema_data, $data)
     *validate* may be exported.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -46,12 +50,15 @@ validate($schema_data, $data)
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README
+%doc Changes META.json META.yml  README
 %perl_vendor_privlib/*
 /usr/bin/pkwalify
 /usr/share/man/man1/pkwalify.1*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_1
+- update by mgaimport
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - automated CPAN update
 
