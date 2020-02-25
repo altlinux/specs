@@ -1,29 +1,34 @@
-Name:    wcmcommander
+Name: wcmcommander
 Version: 0.20.0
-Release: alt2
+Release: alt3
 
 Summary: WCM Commander is a Far commander clone on Linux
-License: %mit
-Group:   File tools
-URL:	 http://wcm.linderdaum.com/
-#VCS:     https://github.com/corporateshark/WCMCommander
+License: MIT
+Group: File tools
+Url: http://wcm.linderdaum.com/
 
-Source:  %name-%version.tar
+# https://github.com/corporateshark/WCMCommander
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): cmake
-BuildRequires: gcc-c++ libX11-devel libfreetype-devel libsmbclient-devel libssh2-devel samba-common
+BuildRequires(pre): rpm-build-python3
+BuildRequires: cmake gcc-c++ libX11-devel
+BuildRequires: libfreetype-devel libsmbclient-devel
+BuildRequires: libssh2-devel samba-common
 
 Requires: fonts-ttf-dejavu fonts-ttf-liberation
 
-Provides:  walcommander = %name-%version
+Provides: walcommander = %name-%version
 Obsoletes: walcommander < %name-%version
+
 
 %description
 WCM Commander is a Far commander clone on Linux.
 
 %prep
 %setup
+
+sed -i 's|'^#!.*python*'|#!/usr/bin/python3|' \
+                        $(find ./ -name '*.py')
 
 %build
 %cmake
@@ -42,7 +47,11 @@ rm -rf %buildroot%_datadir/wcm/fonts/
 %_desktopdir/*.desktop
 %_pixmapsdir/*.png
 
+
 %changelog
+* Tue Feb 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.20.0-alt3
+- Porting to python3.
+
 * Mon Jun 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt2
 - pack data files
 
