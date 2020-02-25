@@ -7,7 +7,7 @@ BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pegex
-Version:        0.74
+Version:        0.75
 Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
@@ -74,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
 - automated CPAN update
 
