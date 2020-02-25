@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:		libevhtp
 Version:	1.2.18
-Release:	alt1_1
+Release:	alt1_3
 Summary:	A more flexible replacement for libevent's http API
 License:	BSD
 Group:		System/Libraries
@@ -71,14 +71,15 @@ developing applications that use %{name}.
 %setup -q
 %patch0 -p1
 
+
 %build
 %{mageia_cmake} -DEVHTP_BUILD_SHARED:STRING=ON \
        -DEVHTP_USE_JEMALLOC:STRING=ON
 
-%make_build
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 %files -n %{libname}
 %{_libdir}/libevhtp.so.%{major}
@@ -95,6 +96,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.18-alt1_3
+- fixed build
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.18-alt1_1
 - new version
 
