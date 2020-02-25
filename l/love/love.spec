@@ -1,11 +1,12 @@
+BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/lua gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           love
-Version:        11.1
-Release:        alt1_3
+Version:        11.2
+Release:        alt1_2
 Summary:        A free 2D game engine which enables easy game creation in Lua
 Group:          Development/Other
 # All is licensed as zlib with one exception:
@@ -13,8 +14,6 @@ Group:          Development/Other
 License:        zlib and Public domain
 Url:            http://love2d.org
 Source0:        https://bitbucket.org/rude/love/downloads/%{name}-%{version}-linux-src.tar.gz
-Patch0:         love-hg-pthread-linking.patch
-Patch1:         love-gcc8-fix.patch
 
 BuildRequires:  pkgconfig(physfs)
 BuildRequires:  pkgconfig(freetype2)
@@ -28,6 +27,7 @@ BuildRequires:  pkgconfig(theora)
 BuildRequires:  pkgconfig(vorbisfile)
 BuildRequires:  pkgconfig(zlib)
 Source44: import.info
+Patch33: love-gcc8-fix.patch
 
 %description
 LA.VE is an open source, cross platform 2D game engine which uses the
@@ -47,11 +47,10 @@ allowing it to be used for both free and non-free projects.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch33 -p1
+
 
 %build
-autoreconf -fisv
 %configure --bindir=%{_gamesbindir} \
                --with-lua=luajit \
                --enable-gme \
@@ -63,9 +62,16 @@ autoreconf -fisv
 
 find %{buildroot} -name '*.la' -delete
 rm -f %{buildroot}%{_libdir}/lib%{name}.so
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/games} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 11.2-alt1_2
+- update by mgaimport
+
 * Thu Feb 14 2019 Ivan Razzhivin <underwit@altlinux.org> 11.1-alt1_3
 - GCC8 fix
 
