@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:		libsoundio
 Version:	2.0.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	C library for cross-platform real-time audio input and output
 Group:		Sound
 License:	MIT
@@ -62,11 +62,11 @@ developing applications that use %{name}.
 
 %build
 %{mageia_cmake}
-%make_build
+%mageia_cmake_build
 
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 
 %files
@@ -83,6 +83,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
 - update by mgaimport
 
