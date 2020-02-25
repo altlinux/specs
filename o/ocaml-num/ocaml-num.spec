@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-num
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
@@ -8,9 +8,8 @@ License: LGPLv2+ with exceptions
 
 Url: https://github.com/ocaml/num
 Source0: %name-%version.tar
-Patch1: ocaml-num-1.2-Use-DESTDIR.patch
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib-devel
+BuildRequires: ocaml-findlib-devel dune
 
 %description
 This library implements arbitrary-precision arithmetic on big integers
@@ -35,45 +34,42 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
-%make_build all
+dune build @install
 
 %check
-make -j1 test
+dune runtest
 
 %install
-export DESTDIR=$RPM_BUILD_ROOT
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR
-mkdir -p $OCAMLFIND_DESTDIR/stublibs
-make install
-
-find $OCAMLFIND_DESTDIR -name '*.cmti' -delete
+dune install --destdir=%buildroot
 
 %files
 %doc Changelog README.md
 %doc LICENSE
-%_libdir/ocaml/*.cmi
-%_libdir/ocaml/*.cma
-%_libdir/ocaml/*.cmxs
 %_libdir/ocaml/num
-%_libdir/ocaml/num-top
+%_libdir/ocaml/num_top
 %_libdir/ocaml/stublibs/dll*.so
-%exclude %_libdir/ocaml/*.a
-%exclude %_libdir/ocaml/*.cmxa
-%exclude %_libdir/ocaml/*.cmx
-%exclude %_libdir/ocaml/*.mli
+%exclude %_libdir/ocaml/num/*.a
+%exclude %_libdir/ocaml/num/*.cmxa
+%exclude %_libdir/ocaml/num/*/*.a
+%exclude %_libdir/ocaml/num/*/*.cmxa
+%exclude %_libdir/ocaml/num/*/*.cmx
+%exclude %_libdir/ocaml/num/*/*.mli
 
 %files devel
 %doc LICENSE
-%_libdir/ocaml/*.a
-%_libdir/ocaml/*.cmxa
-%_libdir/ocaml/*.cmx
-%_libdir/ocaml/*.mli
+%_libdir/ocaml/num/*/*.a
+%_libdir/ocaml/num/*/*.cmxa
+%_libdir/ocaml/num/*/*.cmx
+%_libdir/ocaml/num/*/*.mli
+%_libdir/ocaml/num/*.a
+%_libdir/ocaml/num/*.cmxa
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.3-alt1
+- 1.3
+
 * Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - 1.2
 
