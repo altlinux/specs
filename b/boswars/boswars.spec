@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           boswars
 Version:        2.7
-Release:        alt1_19.svn160110
+Release:        alt1_21.svn160110
 Summary:        Bos Wars is a futuristic real-time strategy game
 License:        GPLv2
 URL:            http://www.boswars.org/
@@ -50,7 +50,7 @@ rm engine/tolua/*.h engine/tolua/tolua_*.cpp
 
 
 %build
-scons %{?_smp_mflags} opengl=1 CC="gcc $RPM_OPT_FLAGS" CXX="g++ $RPM_OPT_FLAGS" LIBPATH=%{_libdir}
+scons-3 %{?_smp_mflags} opengl=1 CC="gcc $RPM_OPT_FLAGS" CXX="g++ $RPM_OPT_FLAGS" LIBPATH=%{_libdir}
 
 
 %install
@@ -64,9 +64,9 @@ cp -a campaigns graphics intro maps scripts sounds units patches \
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 %{SOURCE2} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
 install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
@@ -82,11 +82,14 @@ install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/man6
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_mandir}/man6/%{name}.6*
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_21.svn160110
+- update to new release by fcimport
+
 * Wed Dec 04 2019 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_19.svn160110
 - fixed build
 
