@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_deriving
 Name: ocaml-%libname
-Version: 4.4
-Release: alt2
+Version: 4.4.1
+Release: alt1
 Summary: Type-driven code generation for OCaml >=4.02
 License: MIT
 Group: Development/ML
@@ -56,6 +56,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/*/*.mli
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 4.4.1-alt1
+- 4.4.1
+
 * Tue Feb 04 2020 Anton Farygin <rider@altlinux.ru> 4.4-alt2
 - used the dune to install
 
