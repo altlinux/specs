@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel libqt4-devel pkgco
 %define _localstatedir %{_var}
 Name:		android-file-transfer
 Version:	3.9
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
@@ -44,11 +44,10 @@ Features:
 
 %build
 %{mageia_cmake} -GNinja
-
-%ninja_build
+%ninja_build -C %{_vpath_builddir}
 
 %install
-%ninja_install -C build
+%ninja_install -C %{_vpath_builddir}
 
 find %{buildroot} -name '*.a' -delete
 
@@ -72,6 +71,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_3
+- fixed build
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_1
 - update by mgaimport
 
