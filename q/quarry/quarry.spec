@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
@@ -5,19 +6,20 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(gthread-2.0)
 %define _localstatedir %{_var}
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_20
+Release:        alt5_27
 Summary:        A multi-purpose board game GUI
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://home.gna.org/quarry/
 Source0:        http://download.gna.org/quarry/quarry-%{version}.tar.gz
 Patch0:         quarry-format-security.patch
 
+BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
 BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires:  librarian
+BuildRequires:  scrollkeeper
+Source44: import.info
 
 %description
 Quarry is a multi-purpose GUI for several board games, at present Go, Amazons
@@ -61,6 +63,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_27
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_20
 - update to new release by fcimport
 
