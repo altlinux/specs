@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,6 +40,11 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Mon Feb 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
+- refactoring with initial docker support
+- evz-openvz: don't use vz commands directly
+- add ports command
+
 * Sun Mar 24 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.3-alt1
 - evz: add enter support
 
