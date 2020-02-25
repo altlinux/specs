@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-devel
+BuildRequires: gcc-c++ libSDL-devel perl(Digest/MD5.pm) python-devel
 # END SourceDeps(oneline)
 %filter_from_requires /^python...._\?GemRB./d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-deve
 
 Name:          gemrb
 Version:       0.8.5
-Release:       alt2_1
+Release:       alt3_1
 Summary:       Port of the original Infinity (Game) Engine
 Group:         Games/Adventure
 License:       GPLv2+
@@ -47,14 +47,17 @@ supported games can be found at www.gemrb.org
 
 
 %build
-%{mageia_cmake} -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF  -DLAYOUT=fhs \
+%{mageia_cmake} \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DLAYOUT=fhs \
        -DLIB_DIR=%{_libdir}/%{name} \
        -DSDL_BACKEND=SDL2 \
        -DOPENGL_BACKEND=OpenGL
-%make_build
+
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
 rm -f %{buildroot}%{_docdir}/%{name}/INSTALL
@@ -77,6 +80,9 @@ sed -i 1s,python,python2, %buildroot%_bindir/extend2da.py
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt3_1
+- fixed build
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt2_1
 - fixed build
 
