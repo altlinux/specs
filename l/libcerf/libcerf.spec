@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
 Version:	1.13
-Release:	alt1_3
+Release:	alt1_4
 Group:		System/Libraries
 License:	MIT
 Url:		http://apps.jcns.fz-juelich.de/libcerf
@@ -57,15 +57,16 @@ This package contains the development files for %{name}.
 %patch1 -p1
 %patch2 -p1
 
+
 %build
 %remove_optflags -frecord-gcc-switches
 # for some reason %ix86 tests fails with gcc
 export CC=clang
 %{mageia_cmake}
-%make_build V=1
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 %check
 %{mageia_ctest}
@@ -85,6 +86,9 @@ export CC=clang
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_4
+- fixed build
+
 * Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_3
 - mga update
 
