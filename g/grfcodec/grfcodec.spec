@@ -1,20 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: Development/Tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #global prever r821
 
 Name:           grfcodec
 Version:        6.0.6
-Release:        alt1_8%{?prever}
+Release:        alt1_13%{?prever}
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
-Group:          Development/Tools
 License:        GPLv2+
 URL:            http://dev.openttdcoop.org/projects/grfcodec
 Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.xz
 #Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.xz
-
+Patch0:         gcc10.patch
+BuildRequires:  gcc-c++
 BuildRequires:  boost-complete libpng-devel
 Source44: import.info
 
@@ -25,6 +23,7 @@ A suite of programs to modify Transport Tycoon Deluxe's GRF files.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -45,6 +44,7 @@ EOF
 make install DESTDIR=%{buildroot}
 
 
+
 %files
 %doc changelog.txt COPYING
 %doc docs/*.txt
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 6.0.6-alt1_13
+- update to new release by fcimport
+
 * Thu Jul 05 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.6-alt1_8
 - use boost-complete
 
