@@ -7,14 +7,15 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.13
-Release: alt4
+Version: 1.15
+Release: alt1
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with exceptions
 Url: http://forge.ocamlcore.org/projects/cryptokit/
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamldoc ocaml-ocamlbuild ocaml-zarith-devel ocaml-findlib zlib-devel chrpath
+BuildRequires: ocaml-oasis-devel
 Provides: ocaml-cryptokit-runtime = %version-%release
 Obsoletes: ocaml-cryptokit-runtime
 
@@ -67,16 +68,19 @@ export OCAMLFIND_DESTDIR=%buildroot%ocamlsitelib
 make install
 
 %files
-%doc LICENSE.txt
+%doc LICENSE
 %pkgsitelib
 %exclude %pkgsitelib/*.mli
 %ocamlstublib/*.so*
 
 %files devel
-%doc README.txt Changes
+%doc README.md Changes
 %pkgsitelib/*.mli
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.15-alt1
+- 1.15
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.13-alt4
 - rebuilt with ocaml-4.08
 
