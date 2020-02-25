@@ -1,14 +1,14 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel python-devel rpm-build-java rpm-build-perl rpm-build-python zlib-devel
+BuildRequires: /usr/bin/castxml /usr/bin/latex java-devel-default libcurl-devel libqt4-devel python-devel rpm-build-java rpm-build-perl rpm-build-python zlib-devel texlive texlive-dist
 # END SourceDeps(oneline)
 BuildRequires: xsltproc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gdcm
 Version:	2.8.4
-Release:	alt3_11
+Release:	alt4_11
 Summary:	Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:	BSD
 URL:		http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -25,7 +25,7 @@ Patch7: gdcm-2.8.4-fix-manpage-gen.patch
 Patch8: gdcm-2.8.4-fix-poppler.patch
 Patch9: gdcm-2.8.4-poppler-0.67.0.patch
 
-BuildRequires:	libCharLS-devel >= 1.0
+BuildRequires:	libCharLS1-devel
 BuildRequires:	ctest cmake
 BuildRequires:	doxygen
 BuildRequires:	libxslt-devel
@@ -88,7 +88,7 @@ anonymize, manipulate, concatenate, and view DICOM files.
 Group: Development/Other
 Summary:	Libraries and headers for GDCM
 Requires:	%{name} = %{version}-%{release}
-Requires:	%{name}-applications = %{version}-%{release}
+#Requires:	%{name}-applications = %{version}-%{release}
 
 %description devel
 You should install the gdcm-devel package if you would like to
@@ -158,17 +158,17 @@ pushd %{_target_platform}
 	-DGDCM_INSTALL_DOC_DIR=%{_docdir}/%{name} \
 	-DGDCM_INSTALL_MAN_DIR=%{_mandir} \
 	-DGDCM_INSTALL_LIB_DIR=%{_libdir} \
-	-DGDCM_BUILD_TESTING:BOOL=ON \
+	-DGDCM_BUILD_TESTING:BOOL=OFF \
 	-DGDCM_DATA_ROOT=../gdcmData/ \
-	-DGDCM_BUILD_EXAMPLES:BOOL=ON \
-	-DGDCM_DOCUMENTATION:BOOL=ON \
+	-DGDCM_BUILD_EXAMPLES:BOOL=OFF \
+	-DGDCM_DOCUMENTATION:BOOL=OFF \
 	-DGDCM_PDF_DOCUMENTATION:BOOL=OFF \
 	-DGDCM_WRAP_PYTHON:BOOL=ON \
 	-DPYTHON_EXECUTABLE=%{__python3} \
 	-DGDCM_INSTALL_PYTHONMODULE_DIR=%{python3_sitelibdir} \
 	-DGDCM_WRAP_JAVA:BOOL=OFF \
 	-DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
-	-DGDCM_BUILD_APPLICATIONS:BOOL=ON \
+	-DGDCM_BUILD_APPLICATIONS:BOOL=OFF \
 	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
 	-DGDCM_USE_VTK:BOOL=OFF \
 	-DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
@@ -205,36 +205,41 @@ cp -r %{_builddir}/%{?buildsubdir}/Examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %check
 # Making the tests informative only for now. Several failing tests (27/228):
 # 11,40,48,49,107-109,111-114,130-135,146,149,,151-154,157,194,216,219
-make test -C %{_target_platform} || exit 0
+#make test -C %{_target_platform} || exit 0
 
 %files
 %doc AUTHORS Copyright.txt README.Copyright.txt README.txt
 %{_libdir}/*.so.*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/XML/
-%exclude %{_docdir}/%{name}/html/
+#%exclude %{_docdir}/%{name}/html/
 
-%files doc
-%doc %{_docdir}/%{name}/html/
+#%files doc
+#%doc %{_docdir}/%{name}/html/
 
-%files applications
-%{_bindir}/*
-%doc %{_mandir}/man1/*.1*
+#%files applications
+#%{_bindir}/*
+#%doc %{_mandir}/man1/*.1*
 
 %files devel
 %{_includedir}/%{name}/
 %{_libdir}/*.so
 %{_libdir}/cmake/%{name}/
 
-%files examples
-%{_datadir}/%{name}/Examples/
+#%files examples
+#%{_datadir}/%{name}/Examples/
 
+%if 0
 %files -n python3-module-gdcm
 %{python3_sitelibdir}/%{name}*.py
 %{python3_sitelibdir}/_%{name}swig.so
 %{python3_sitelibdir}/__pycache__/%{name}*
+%endif
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt4_11
+- fixed build, disabled python. stub for python38 update.
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.8.4-alt3_11
 - fixed build
 
