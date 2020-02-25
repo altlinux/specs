@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/pandoc
 
 Name: libipt
 Version: 2.0.1
-Release: alt1_1
+Release: alt1_2
 SummarY: Intel Processor Trace Decoder Library
 Group:	 Development/Tools
 License: BSD
@@ -57,20 +57,20 @@ or it can be partially or fully integrated into your tool.
 %setup -q -n libipt-%{version}
 
 %build
-%{mageia_cmake} -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%{mageia_cmake} \
        -DPTUNIT:BOOL=ON \
        -DMAN:BOOL=OFF \
-       -DDEVBUILD:BOOL=ON \
-       ..
-make VERBOSE=1 %{?_smp_mflags}
+       -DDEVBUILD:BOOL=ON
+%mageia_cmake_build
 
 %install
-make install DESTDIR=%{buildroot} -C build
+%mageia_cmake_install
+
 %global develdocs howto_libipt.md
 (cd doc;cp -p %{develdocs} ..)
 
 %check
-ctest -V %{?_smp_mflags}
+%{mageia_ctest}
 
 %files -n %libname
 %doc README
@@ -86,6 +86,9 @@ ctest -V %{?_smp_mflags}
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2
+- fixed build
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
 - update by mgaimport
 
