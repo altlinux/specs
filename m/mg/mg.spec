@@ -1,14 +1,18 @@
+Group: Editors
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# workaround for https://github.com/hboetes/mg/issues/12
+%define _legacy_common_support 1
+
 Name:		mg
-Version:	20180408
+Version:	20180927
 Release:	alt1_1
 Summary:	Tiny Emacs-like editor
 
-Group:		Editors
 License:	BSD and ISC and MirOS
 URL:		http://homepage.boetes.org/software/mg/
 Source0:	https://github.com/hboetes/%{name}/archive/%{version}.tar.gz
+BuildRequires:  gcc
 BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:	libbsd-devel >= 0.7.0
 Source44: import.info
@@ -31,9 +35,12 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %files
 %doc README tutorial
 %{_bindir}/mg
-%{_mandir}/man1/mg.1.*
+%{_mandir}/man1/mg.1*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 20180927-alt1_1
+- update to new release by fcimport
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 20180408-alt1_1
 - update to new release by fcimport
 
