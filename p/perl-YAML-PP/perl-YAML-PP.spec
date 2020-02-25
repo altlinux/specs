@@ -7,14 +7,14 @@ BuildRequires: perl(strict.pm) perl(warnings.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.019
-Release: alt2
+Version: 0.020
+Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -41,13 +41,16 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc README CONTRIBUTING.md LICENSE Changes examples
+%doc README CONTRIBUTING.md Changes examples
 %perl_vendor_privlib/Y*
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1
+- automated CPAN update
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.019-alt2
 - to Sisyphus as perl-Pegex dep
 
