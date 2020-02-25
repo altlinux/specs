@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		b93f5c4fc0
+%define svnrev		8cc702429d
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 4.4.5
+Version: 4.4.6
 Release: alt1
 Epoch: 1
 
@@ -551,6 +551,7 @@ fi
 
 %files server-common
 %_bindir/%{name}_get
+%_bindir/%{name}_js
 %config(noreplace) %_sysconfdir/sysconfig/zabbix_server
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_server.conf
 %_man1dir/%{name}_get.*
@@ -631,6 +632,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Feb 25 2020 Alexei Takaseev <taf@altlinux.org> 1:4.4.6-alt1
+- 4.4.6
+
 * Sat Feb 01 2020 Alexei Takaseev <taf@altlinux.org> 1:4.4.5-alt1
 - 4.4.5
 - Cleanup spec
