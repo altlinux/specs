@@ -1,6 +1,6 @@
 Name: iptables
-Version: 1.8.3
-Release: alt2
+Version: 1.8.4
+Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPL-2.0-only
@@ -257,6 +257,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1.8.4-alt1
+- 1.8.3 -> 1.8.4 with assorted backports.
+
 * Mon May 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1.8.3-alt2
 - Removed arepo hack introduced in 1.4.13-alt1 to force generation
   of i586-iptables package required by several other i586-* packages.
@@ -383,7 +386,7 @@ fi
 * Fri Apr 29 2005 Anton D. Kachalov <mouse@altlinux.org> 1.3.1-alt1.1
 - multilib support
 
-* Tue Mar 16 2005 Alexey Voinov <voins@altlinux.ru> 1.3.1-alt1
+* Wed Mar 16 2005 Alexey Voinov <voins@altlinux.ru> 1.3.1-alt1
 - new version (1.3.1)
 - makefile patch updated
 - freebug patch is no longer needed
@@ -513,7 +516,7 @@ fi
 - don't obsolete ipchains either
 - update to 1.1.0
 
-* Mon Jun  4 2000 Bill Nottingham <notting@redhat.com>
+* Sun Jun  4 2000 Bill Nottingham <notting@redhat.com>
 - remove explicit kernel requirement
 
 * Tue May  2 2000 Bernhard Rosenkränzer <bero@redhat.com>
