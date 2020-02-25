@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
 Version: 3.5.2
-Release: alt1
+Release: alt2
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -24,7 +24,7 @@ BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_tools-devel
-BuildRequires: ocaml-ppx_deriving-devel
+BuildRequires: ocaml-compiler-libs-devel
 BuildRequires: dune opam
 BuildRequires: ocaml-ocamldoc
 Requires: ocaml-%name = %version-%release
@@ -45,7 +45,6 @@ specific library to interface with the browser APIs.
 %package -n     ocaml-%name
 Summary: Runtime files for %name
 Group: Development/ML
-Requires: ocaml-ppx_deriving
 Requires: ocaml-lwt
 
 %description -n ocaml-%name
@@ -56,7 +55,6 @@ applications that use %name.
 Summary: Development files for %name
 Group: Development/ML
 Requires: ocaml-%name = %version-%release
-Requires: ocaml-ppx_deriving-devel
 Requires: ocaml-lwt-devel
 
 %description -n ocaml-%name-devel
@@ -117,6 +115,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 3.5.2-alt2
+- cleaned up build requires
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 3.5.2-alt1
 - 3.5.2
 

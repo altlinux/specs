@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-libvirt
-Version: 0.6.1.4
-Release: alt8
+Version: 0.6.1.5
+Release: alt1
 Summary: OCaml binding for libvirt
 Group: System/Libraries
 
@@ -9,25 +9,10 @@ License: LGPLv2+
 Url: http://libvirt.org/ocaml/
 
 Source: http://libvirt.org/sources/ocaml/%name-%version.tar
-
-# Upstream patch to fix int types.
-Patch1: 0001-Use-C99-standard-int64_t-instead-of-OCaml-defined-an.patch
-
-# Upstream patch to add virDomainCreateXML binding.
-Patch2: 0001-Add-a-binding-for-virDomainCreateXML.patch
-
-# Upstream patches to fix error handling.
-Patch3: 0001-Suppress-errors-to-stderr-and-use-thread-local-virEr.patch
-Patch4: 0002-Don-t-bother-checking-return-from-virInitialize.patch
-
-# Upstream patch to remove unused function.
-Patch5: 0001-Remove-unused-not_supported-function.patch
-
-# Upstream patches to tidy up warnings.
-Patch6:         0001-Use-g-warn-error.patch
-Patch7:         0002-Update-dependencies.patch
-
-Patch8: 0001-Use-safe-string-and-fix-the-library.patch
+Patch0: 0001-block_peek-memory_peek-Use-bytes-for-return-buffer.patch
+Patch1: 0001-Make-const-the-return-value-of-caml_named_value.patch
+Patch2: 0002-String_val-returns-const-char-in-OCaml-4.10.patch
+Patch3: 0003-Don-t-try-to-memcpy-into-a-String_val.patch
 
 BuildRequires: ocaml >= 3.10.0
 BuildRequires: ocaml-ocamldoc
@@ -51,14 +36,10 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %build
 %configure
@@ -90,6 +71,9 @@ make install-opt
 %_libdir/ocaml/libvirt/*.mli
 
 %changelog
+* Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 0.6.1.5-alt1
+- 0.6.1.5
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.6.1.4-alt8
 - rebuilt with ocaml-4.08
 

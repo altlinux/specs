@@ -1,6 +1,6 @@
 %define module camlp5
 Name: ocaml-camlp5
-Version: 7.10
+Version: 7.11
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -27,7 +27,7 @@ compilation of older packages (e.g. ocamlnet).
 %patch1 -p1
 
 %build
-./configure --transitional --mandir %_mandir
+./configure --strict --mandir %_mandir
 %make world.opt
 
 sed -e 's,@NAME@,%module,' %SOURCE2 > META
@@ -47,6 +47,9 @@ install -pD -m644 META %buildroot%_libdir/ocaml/site-lib/%module/META
 %_man1dir/*5*.1*
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 7.11-alt1
+- 7.11
+
 * Mon Oct 07 2019 Anton Farygin <rider@altlinux.ru> 7.10-alt1
 - 7.10
 

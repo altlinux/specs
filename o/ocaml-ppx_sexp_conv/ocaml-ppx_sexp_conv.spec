@@ -2,13 +2,13 @@
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/ppx_sexp_conv
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam ocaml-result-devel
+BuildRequires: ocaml-findlib-devel dune opam ocaml-result-devel ocaml-compiler-libs-devel
 BuildRequires: ocaml-sexplib0-devel ocaml-ppxlib-devel ocaml-migrate-parsetree-devel
 
 %description
@@ -66,6 +66,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Mon Mar 02 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt2
+- added ocaml-compiler-libs-devel to Build Requires
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 

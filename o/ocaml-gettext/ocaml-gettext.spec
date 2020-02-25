@@ -1,8 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gettext
-# 0.3.8 currently is not released yet on github, but 0.3.8 published to opam
-Version: 0.3.8
-Release: alt4.gd9509df
+Version: 0.4.1
+Release: alt1
 Summary: OCaml library for i18n
 Group: Development/ML
 
@@ -11,15 +10,13 @@ Url: https://github.com/gildor478/ocaml-gettext
 Source: %name-%version.tar
 
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
+BuildRequires: dune
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-camomile-devel
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
 BuildRequires: libxml2
-BuildRequires: chrpath
-BuildRequires: autoconf
 
 %description
 Ocaml-gettext provides support for internationalization of Ocaml
@@ -36,8 +33,6 @@ Constraints :
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %version-%release
-
-# BZ 446919.
 Requires: ocaml-fileutils-devel >= 0.4.0
 
 %description devel
@@ -48,66 +43,38 @@ developing applications that use %name.
 %setup
 
 %build
-# Parallel builds don't work.
-unset MAKEFLAGS
-autoreconf -fisv
-CFLAGS="$RPM_OPT_FLAGS" \
-./configure \
-  --libdir=%_libdir \
-  --enable-tests \
-  --with-docbook-stylesheet=%_datadir/sgml/docbook/xsl-stylesheets
-make all
+dune build
 
 %install
-# make install in the package is screwed up completely.  Install
-# by hand instead.
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR/stublibs
-mkdir -p %buildroot%_bindir
+dune install --destdir=%buildroot
 
-# Remove *.o files - these shouldn't be distributed.
-find _build -name '*.o' -exec rm {} \;
-
-ocamlfind install gettext _build/lib/gettext/*
-ocamlfind install gettext-stub _build/lib/gettext-stub/*
-install -m 0755 _build/bin/ocaml-gettext %buildroot%_bindir/
-install -m 0755 _build/bin/ocaml-xgettext %buildroot%_bindir/
-
-chrpath --delete $OCAMLFIND_DESTDIR/stublibs/dll*.so
 
 %files
-%doc COPYING
-%_libdir/ocaml/gettext
-%_libdir/ocaml/gettext-stub
-%exclude %_libdir/ocaml/gettext/*.a
-%exclude %_libdir/ocaml/gettext/*.cmxa
-%exclude %_libdir/ocaml/gettext/*.cmx
-%exclude %_libdir/ocaml/gettext-stub/*.a
-%exclude %_libdir/ocaml/gettext-stub/*.cmxa
-%exclude %_libdir/ocaml/gettext-stub/*.cmx
-%exclude %_libdir/ocaml/gettext/*.ml
-%exclude %_libdir/ocaml/gettext/*.mli
-%exclude %_libdir/ocaml/gettext-stub/*.ml
+%doc LICENSE.txt
+%_libdir/ocaml/gettext*
+%exclude %_libdir/ocaml/gettext*/*.a
+%exclude %_libdir/ocaml/gettext*/*.cmxa
+%exclude %_libdir/ocaml/gettext*/*.cmx
+%exclude %_libdir/ocaml/gettext*/*.ml
+%exclude %_libdir/ocaml/gettext*/*.mli
 %_libdir/ocaml/stublibs/*.so
-%_libdir/ocaml/stublibs/*.so.owner
 
 %files devel
-%doc README CHANGELOG TODO
-# %doc build/share/doc/html/*
-%_libdir/ocaml/gettext/*.a
-%_libdir/ocaml/gettext/*.cmxa
-%_libdir/ocaml/gettext/*.cmx
-%_libdir/ocaml/gettext-stub/*.a
-%_libdir/ocaml/gettext-stub/*.cmxa
-%_libdir/ocaml/gettext-stub/*.cmx
-%_libdir/ocaml/gettext/*.ml
-%_libdir/ocaml/gettext/*.mli
-%_libdir/ocaml/gettext-stub/*.ml
+%doc README.md CHANGES.md TODO.md
+%_libdir/ocaml/gettext*/*.a
+%_libdir/ocaml/gettext*/*.cmxa
+%_libdir/ocaml/gettext*/*.cmx
+%_libdir/ocaml/gettext*/*.ml
+%_libdir/ocaml/gettext*/*.mli
 %_bindir/ocaml-gettext
 %_bindir/ocaml-xgettext
+%_man1dir/*.1*
+%_man5dir/*.5*
 
 %changelog
+* Tue Oct 08 2019 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Thu Aug 01 2019 Anton Farygin <rider@altlinux.ru> 0.3.8-alt4.gd9509df
 - build from upstream git with fixes for ocaml-4.08
 

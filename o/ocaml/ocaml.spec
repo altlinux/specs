@@ -3,28 +3,25 @@
 #/usr/lib/ocaml/str.cmxs
 #/usr/lib/ocaml/nums.cmxs
 #/usr/lib/ocaml/bigarray.cmxs
-#/usr/lib/ocaml/graphics.cmxs
 %set_verify_elf_method textrel=relaxed
 # fix for build on armv7
 %remove_optflags -fomit-frame-pointer
 
 Name: ocaml
-Version: 4.08.1
+Version: 4.10.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
-License: QPL & LGPL
+License: LGPLv2.1 with exceptions
 Group: Development/ML
 
 Url: http://caml.inria.fr/
-Packager: %packager
-
 Source0: %name-%version.tar
-Source1: %name.desktop
-Source2: ocaml-reqprov.ml
+Source1: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
 Patch2: ocaml-4.08-alt-mk-reqprov.patch
+Patch3: ocaml-4.10.0-debian-do_not_die_in_output_complete_exe.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildRequires(pre): rpm-build-ocaml >= 1.1.1
@@ -36,39 +33,20 @@ Provides: ocaml4
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
 
-# Better keep those deps explicit, just in case
-BuildRequires: libX11-devel
-
-Requires: %name-runtime = %version-%release
+Requires: %name-runtime = %EVR
 
 %package runtime
 Summary: Runtime part of the OCaml system
 Group: Development/ML
-Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2") 
+Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2")
 # For some reason, this is Requires, not Provides.
 Requires: %_rpmlibdir/ocaml-reqprov
 Obsoletes: ocaml4-runtime
 
-%package graphics
-Summary: Graphics primitives
-Group: Development/ML
-Requires: %name = %version-%release
-Requires: %name-graphics-runtime = %version-%release
-Provides: ocaml4-graphics
-Obsoletes: ocaml4-graphics
-
-%package graphics-runtime
-Summary: Graphics primitives
-Group: Development/ML
-Requires: %name-runtime = %version-%release
-Provides: ocaml4-graphics-runtime
-Obsoletes: ocaml4-graphics-runtime
-
-
 %package ocamldoc
 Summary: The Objective Caml documentation generator
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: ocaml4-ocamldoc
 Obsoletes: ocaml4-ocamldoc
 
@@ -87,20 +65,6 @@ object-oriented programming language from the ML family of languages.
 This package contains the runtime environment needed to run Objective
 Caml bytecode.
 
-%description graphics
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides machine-independent graphics primitives
-and additional graphics primitives for the X Windows system.
-
-%description graphics-runtime
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides machine-independent graphics primitives
-and additional graphics primitives for the X Windows system.
-
 %description ocamldoc
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
@@ -109,58 +73,28 @@ This package provides OCamldoc, a tool that generates documentation
 from special comments embedded in source files.
 
 %prep
-%setup -q -T -b 0
+%setup -T -b 0
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-
-sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
-
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
-./configure -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" world.opt
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" ocamlopt
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" opt opt.opt
+./configure OC_CFLAGS="$CFLAGS" OC_LDFLAGS="$LDFLAGS"  -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
 
-install -pD -m644 %SOURCE2 tools/reqprov.ml
+make world.opt
+make opt
+make opt.opt
+
+install -pD -m644 %SOURCE1 tools/reqprov.ml
 make -C tools reqprov
 
 %install
-make install BINDIR=%buildroot%_bindir LIBDIR=%buildroot%_libdir/ocaml MANDIR=%buildroot%_mandir STUBLIBDIR=%buildroot%_libdir/ocaml/stublibs
-mkdir -p %buildroot%_libdir/ocaml/stublibs
-
+make install DESTDIR=%buildroot
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
-install -p -m644 parsing/asttypes.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 parsing/parsetree.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 bytecomp/cmo_format.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 typing/annot.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 asmcomp/clambda.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
-install -p -m644 asmcomp/cmx_format.{mli,cmi} %buildroot%_libdir/ocaml/
-# install -p -m644 asmcomp/debuginfo.{mli,cmi,cmx} %buildroot%_libdir/ocaml/
-
-# install -p -m644 tools/depend.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
-
-ln -snf ocamlc.opt %buildroot%_bindir/ocamlc
-ln -snf ocamlopt.opt %buildroot%_bindir/ocamlopt
-ln -snf ocamldep.opt %buildroot%_bindir/ocamldep
-ln -snf ocamllex.opt %buildroot%_bindir/ocamllex
-
-# Option -g not available in native code version.
-#ln -snf ocamldoc.opt %buildroot%_bindir/ocamldoc
-
-install -pD -m755 tools/ocamlobjinfo.opt %buildroot%_bindir/ocamlobjinfo
 install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
-
-# Removal of .cmx files prevents global optimization and triggers
-# annoying warning 58 introduced in Ocaml 4.03. This is the
-# reason for commenting out the following lines.
-# find %buildroot%_libdir/ocaml -type f -name '*.cmx' |
-# while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
-
-install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc Changes LICENSE README.adoc
@@ -178,13 +112,20 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/*.*
 %_libdir/ocaml/objinfo_helper
 %exclude %_libdir/ocaml/ld.conf
-%exclude %_libdir/ocaml/*graphics*
 %_libdir/ocaml/caml/
-%_libdir/ocaml/compiler-libs/
 %exclude %_libdir/ocaml/ocamldoc/
 %_libdir/ocaml/threads/
-%_libdir/ocaml/vmthreads/
-%_desktopdir/%name.desktop
+%dir %_libdir/ocaml/compiler-libs
+%_libdir/ocaml/compiler-libs/*.mli
+%_libdir/ocaml/compiler-libs/*.cmt
+%_libdir/ocaml/compiler-libs/*.cmti
+%_libdir/ocaml/compiler-libs/*.cmi
+%_libdir/ocaml/compiler-libs/*.cmo
+%_libdir/ocaml/compiler-libs/*.cma
+%_libdir/ocaml/compiler-libs/*.a
+%_libdir/ocaml/compiler-libs/*.cmxa
+%_libdir/ocaml/compiler-libs/*.cmx
+%_libdir/ocaml/compiler-libs/*.o
 
 %files runtime
 %_bindir/ocamlrun
@@ -194,23 +135,16 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/stublibs/dllcamlstr.so
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
-%_libdir/ocaml/stublibs/dllvmthreads.so
 # ocaml builds raw_spacetime_lib on
 # architectures with 64bit pointers.
 %if "%_lib" == lib64
 %_libdir/ocaml/stublibs/dllraw_spacetime_lib.so
 %endif
-%_libdir/ocaml/target_camlheaderd
-%_libdir/ocaml/target_camlheaderi
+%_libdir/ocaml/camlheaderd
+%_libdir/ocaml/camlheaderi
 
 %dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
-
-%files graphics
-%_libdir/ocaml/*graphics*
-
-%files graphics-runtime
-%_libdir/ocaml/stublibs/dllgraphics.so
 
 %files ocamldoc
 %_bindir/ocamldoc*
@@ -218,6 +152,13 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Sat Feb 22 2020 Anton Farygin <rider@altlinux.ru> 4.10.0-alt1
+- 4.10.0 release
+- removed ocaml-graphics subpackage (available from separate package
+  in opam)
+- fixed License tag: ocaml from version 4.03 is distributed under
+  LGPLv2.1 with linking exceptions
+
 * Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 4.08.1-alt1
 - 4.08.1 release
 

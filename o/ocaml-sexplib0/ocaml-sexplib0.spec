@@ -2,7 +2,7 @@
 %define oname sexplib0
 Name: ocaml-%oname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
@@ -11,7 +11,6 @@ Source0: %name-%version.tar
 BuildRequires: dune
 BuildRequires: ocaml
 BuildRequires: ocaml-num
-BuildRequires: opam
 
 %description
 This library contains functionality for parsing and pretty-printing
@@ -45,8 +44,7 @@ dune build --verbose -p %oname
 dune runtest
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %oname.install
-rm -rf %buildroot/usr/doc
+dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md
@@ -68,6 +66,9 @@ rm -rf %buildroot/usr/doc
 %_libdir/ocaml/sexplib0/*.ml
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt2
+- removed opam build requires
+
 * Tue Jan 28 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0 
 

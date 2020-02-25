@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -11,9 +11,6 @@ Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: dune
 BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-ocamlbuild
-BuildRequires: ocaml-findlib
-BuildRequires: opam
 BuildRequires: ocaml-ppx_derivers
 
 %description
@@ -34,14 +31,10 @@ files for developing applications that use %name.
 %setup
 
 %build
-%make_build
+dune build @install
 
 %install
-mkdir -p %buildroot%_libdir/ocaml
-dune install --destdir=%buildroot --libdir=%_libdir/ocaml
-
-# Makes *.cmxs executable such that they will be stripped.
-find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
+dune install --destdir=%buildroot 
 
 %check
 %make_build test
@@ -59,8 +52,6 @@ find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 %exclude %_libdir/ocaml/*/driver-main/*.cmx
 %exclude %_libdir/ocaml/*/driver-main/*.ml
 
-
-
 %files devel
 %doc README.md MANUAL.md CHANGES.md LICENSE.md
 %_libdir/ocaml/*/*.a
@@ -74,6 +65,9 @@ find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 %_libdir/ocaml/*/driver-main/*.ml
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Thu Jan 16 2020 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 

@@ -1,14 +1,14 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_tools
 Name: ocaml-%libname
-Version: 5.3
+Version: 6.1
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
 Group: Development/ML
 Url: https://github.com/alainfrisch/ppx_tools
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib dune
 
 %description
 Tools for authors of syntactic tools (such as ppx rewriters).
@@ -32,13 +32,10 @@ developing applications that use %name.
 %setup
 
 %build
-make all
+dune build @install
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_libdir/ocaml
-mkdir -p %buildroot/%_libdir/ocaml
-make install
+dune install --destdir=%buildroot
 
 %files
 %doc README.md
@@ -50,16 +47,24 @@ make install
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/dumpast
+%_libdir/ocaml/%libname/ast_lifter
 %_libdir/ocaml/%libname/genlifter
 %_libdir/ocaml/%libname/ppx_metaquot
+%_libdir/ocaml/%libname/metaquot
 %_libdir/ocaml/%libname/rewriter
 
 %files devel
+%_libdir/ocaml/%libname/opam
+%_libdir/ocaml/%libname/dune-package
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.cmt*
 %_libdir/ocaml/%libname/*.mli
+%_libdir/ocaml/%libname/*.ml
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 6.1-alt1
+- 6.1
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 5.3-alt1
 - 5.3
 

@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -53,6 +53,7 @@ sed -i '/^(name/a (version %version)' dune-project
 %doc README.md CHANGES.md
 %_bindir/dune
 %_man1dir/dune.1*
+%_man1dir/dune-describe.1*
 %_man1dir/dune-help.1*
 %_man1dir/dune-printenv.1*
 %_man1dir/dune-promote.1*
@@ -83,9 +84,12 @@ sed -i '/^(name/a (version %version)' dune-project
 %dir %_libdir/ocaml/dune-configurator/
 %dir %_libdir/ocaml/dune-glob/
 %dir %_libdir/ocaml/dune-private-libs/
+%dir %_libdir/ocaml/dune-private-libs/cache/
+%dir %_libdir/ocaml/dune-private-libs/dune_util/
 %dir %_libdir/ocaml/dune-private-libs/dune-lang/
 %dir %_libdir/ocaml/dune-private-libs/dune_re/
 %dir %_libdir/ocaml/dune-private-libs/ocaml-config/
+%dir %_libdir/ocaml/dune-private-libs/xdg/
 %dir %_libdir/ocaml/dune-private-libs/stdune/
 %_libdir/ocaml/dune*/META
 %_libdir/ocaml/dune*/*.cma
@@ -117,6 +121,9 @@ sed -i '/^(name/a (version %version)' dune-project
 
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 

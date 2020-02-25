@@ -1,14 +1,14 @@
 %set_verify_elf_method textrel=relaxed
-%define libname compiler-libs
-Name: ocaml-%libname
-Version: 0.12.0
+%define libname ocaml-compiler-libs
+Name: %libname
+Version: 0.12.1
 Release: alt1
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/ocaml-compiler-libs
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam 
+BuildRequires: ocaml-findlib-devel dune 
 
 %description
 This packages exposes the OCaml compiler libraries repackages under the toplevel
@@ -30,30 +30,34 @@ developing applications that use %name.
 make
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %files
 %doc README.org
-%dir %_libdir/ocaml/%name
-%dir %_libdir/ocaml/%name/bytecomp
-%dir %_libdir/ocaml/%name/common
-%dir %_libdir/ocaml/%name/toplevel
-%dir %_libdir/ocaml/%name/shadow
-%_libdir/ocaml/%name/META
-%_libdir/ocaml/%name/opam
-%_libdir/ocaml/%name/*/*.a
-%_libdir/ocaml/%name/*/*.cmi
-%_libdir/ocaml/%name/*/*.cma
+%dir %_libdir/ocaml/%libname
+%dir %_libdir/ocaml/%libname/bytecomp
+%dir %_libdir/ocaml/%libname/optcomp
+%dir %_libdir/ocaml/%libname/common
+%dir %_libdir/ocaml/%libname/toplevel
+%dir %_libdir/ocaml/%libname/shadow
+%_libdir/ocaml/%libname/META
+%_libdir/ocaml/%libname/opam
+%_libdir/ocaml/%libname/*/*.a
+%_libdir/ocaml/%libname/*/*.cmi
+%_libdir/ocaml/%libname/*/*.cma
 
 %files devel
-%_libdir/ocaml/%name/*/*.ml
-%_libdir/ocaml/%name/*/*.cmx
-%_libdir/ocaml/%name/*/*.cmt*
-%_libdir/ocaml/%name/*/*.cmxa
-%_libdir/ocaml/%name/*/*.cmxs
-%_libdir/ocaml/%name/dune-package
+%_libdir/ocaml/%libname/*/*.ml
+%_libdir/ocaml/%libname/*/*.cmx
+%_libdir/ocaml/%libname/*/*.cmt*
+%_libdir/ocaml/%libname/*/*.cmxa
+%_libdir/ocaml/%libname/*/*.cmxs
+%_libdir/ocaml/%libname/dune-package
 
 %changelog
+* Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 0.12.1-alt1
+- 0.12.1
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
