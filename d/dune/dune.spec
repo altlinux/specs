@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 2.3.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -14,7 +14,7 @@ BuildRequires: ocaml-findlib-devel
 BuildRequires: opam
 
 # Required by tests.
-BuildRequires: ocaml-menhir
+#BuildRequires: ocaml-menhir
 
 %description
 Dune is a build system designed for OCaml/Reason projects only. It focuses
@@ -117,6 +117,9 @@ sed -i '/^(name/a (version %version)' dune-project
 
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Thu Feb 20 2020 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
 - added information about dune version to dune-project to fix
   dune --version when building without git
