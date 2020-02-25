@@ -3,7 +3,7 @@ Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
 Version: 0.42.2
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
@@ -78,6 +78,7 @@ rm -f %buildroot/%_lib/security/pam_cgroup.la
 rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%_libdir/libcgroupfortesting.*
 
+mkdir -p %buildroot%_sysconfdir/cgconfig.d
 # install unit and sysconfig files
 install -d %buildroot%_unitdir
 install -m 644 dist/cgconfig.service %buildroot%_unitdir/
@@ -104,6 +105,7 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %config(noreplace) %_sysconfdir/cgconfig.conf
 %config(noreplace) %_sysconfdir/cgrules.conf
 %config(noreplace) %_sysconfdir/cgsnapshot_blacklist.conf
+%dir %_sysconfdir/cgconfig.d
 %attr(2711, root, cgred) %_bindir/cgexec
 %attr(2711, root, cgred) %_bindir/cgclassify
 %_bindir/*
@@ -127,6 +129,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Tue Feb 25 2020 Alexey Shabalin <shaba@altlinux.org> 0.42.2-alt2
+- fixed start service (package %%_sysconfdir/cgconfig.d dir)
+
 * Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 0.42.2-alt1
 - 0.42.2
 
