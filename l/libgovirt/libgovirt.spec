@@ -13,10 +13,12 @@ Group: Development/C
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1_1
 License: LGPLv2+
-Source0: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Source0: http://download.gnome.org/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Source1: http://download.gnome.org/sources/libgovirt/0.3/%{name}-%{version}.tar.xz.sig
+Source2: etrunko-57E1C130.keyring
 URL: https://gitlab.gnome.org/GNOME/libgovirt
 BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: intltool
@@ -27,6 +29,8 @@ BuildRequires: gobject-introspection-devel
 #needed for make check
 BuildRequires: glib-networking
 BuildRequires: dconf libdconf
+#needed for GPG signature check
+BuildRequires: gnupg gnupg2
 Source44: import.info
 
 %description
@@ -49,6 +53,7 @@ parameters needed to make a SPICE/VNC connection to them.
 Libraries, includes, etc. to compile with the libgovirt library
 
 %prep
+gpgv2 --quiet --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
 %setup -q
 
 %build
@@ -90,6 +95,9 @@ make check
 %endif
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1_1
+- update to new release by fcimport
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1_1
 - update to new release by fcimport
 
