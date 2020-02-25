@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: bombardier
 Version:  0.8.3
-Release:  alt1_9
+Release:  alt1_13
 Summary: The GNU Bombing utility
 
 License: GPLv2+        
 URL: http://packages.debian.org/stable/source/bombardier
-Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu1.tar.gz
+Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu2.tar.xz
 Source1: bombardier.desktop
 Source2: bombardier-logo.png
 Patch0: bombardier-height.patch
@@ -29,7 +29,7 @@ Fly an ncurses plane over an ncurses city, and try to level the buildings.
 %prep
 
 
-%setup -qn bombardier-0.8.3+nmu1
+%setup -qn bombardier-0.8.3+nmu2
 
 %patch0 -p0
 %patch1 -p0
@@ -67,6 +67,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_13
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_9
 - update to new release by fcimport
 
