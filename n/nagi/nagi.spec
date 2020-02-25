@@ -1,11 +1,11 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define _default_patch_fuzz 2
 Summary: An interpreter for AGI games
 Name: nagi
 Version: 2.06
-Release: alt2_20
-Group: Games/Other
+Release: alt2_26
 License: MIT
 URL: http://www.agidev.com/projects/nagi/
 Source0: http://www.agidev.com/dl_files/nagi/nagi_src_-_2002-11-14.tar.gz
@@ -13,6 +13,7 @@ Source1: nagi.sgml
 Patch0: nagi-2.06-debian.patch 
 Patch1: nagi-2.06-build_with_gcc-3.4.patch
 Patch2:nagi-2.06-build_with_gcc-4.0.patch
+BuildRequires:  gcc
 BuildRequires: docbook-utils, libSDL-devel, libSDL-devel
 Source44: import.info
 %description
@@ -28,7 +29,7 @@ Leisure Suit Larry and King's Quest games.
 sed -i s,-lSDLmain,, src/Makefile.linux
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="$RPM_OPT_FLAGS -fcommon"
 cd src
 make -f Makefile.linux
 docbook2man %{SOURCE1} 
@@ -37,7 +38,6 @@ sed -i 's/\r//' license.txt
 sed -i 's/\r//' readme.html
 
 %install
-
 mkdir -p %{buildroot}/%{_bindir}
 install -Dp -m755 bin/nagi %{buildroot}/%{_bindir}/nagi
 mkdir -p %{buildroot}%{_datadir}/nagi
@@ -49,13 +49,17 @@ mkdir -p %{buildroot}%{_mandir}/man1
 install -Dp -m644 src/nagi.1 %{buildroot}%{_mandir}/man1
 
 %files
-%doc license.txt readme.html
+%doc --no-dereference license.txt
+%doc readme.html
 %{_bindir}/nagi 
 %{_datadir}/nagi/
 %config(noreplace) %{_sysconfdir}/nagi/
 %{_mandir}/man1/nagi.1*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_20
 - update to new release by fcimport
 
