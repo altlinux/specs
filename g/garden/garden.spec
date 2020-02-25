@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           garden
 Version:        1.0.9
-Release:        alt1_5
+Release:        alt1_11
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
-Group:          Games/Other
 License:        GPLv3+
 URL:            http://garden.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -41,6 +41,7 @@ you are dealing with a true piece of art...
 
 %build
 autoreconf -if
+export CPPFLAGS="$CPPFLAGS -fcommon"
 %configure 
 %make_build
 
@@ -92,7 +93,8 @@ desktop-file-validate \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files
-%doc README NEWS AUTHORS ChangeLog COPYING
+%doc --no-dereference COPYING
+%doc README NEWS AUTHORS ChangeLog
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
@@ -100,6 +102,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_11
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_5
 - update to new release by fcimport
 
