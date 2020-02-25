@@ -6,19 +6,19 @@ BuildRequires: gcc-c++ perl(Test/More.pm)
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tap
-%define	major	0
-%define	libname	    lib%{name}%{major}
-%define develname   lib%{name}-devel
+%define	major		0
+%define	libname		lib%{name}%{major}
+%define develname	lib%{name}-devel
 
 Name:		tap
 Version:	1.14.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Write tests that implement the Test Anything Protocol
 License:	GPL
 Group:		System/Libraries
 URL:		https://www.shlomifish.org/open-source/projects/libtap/
 Source:		https://web-cpan.shlomifish.org/downloads/libtap-%{version}.tar.xz
-BuildRequires: ccmake cmake ctest
+BuildRequires:	ccmake cmake ctest
 Source44: import.info
 
 %description
@@ -42,7 +42,6 @@ Summary:	Development files for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	lib%{name}0-devel
 
 %description -n	%{develname}
 This package contains development files for %{name}.
@@ -54,10 +53,10 @@ sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 %build
 %{mageia_cmake}
-%make_build CFLAGS+=-UHAVE_LIBPTHREAD
+%mageia_cmake_build CFLAGS+=-UHAVE_LIBPTHREAD
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 %files -n %{libname}
 %doc COPYING NEWS README
@@ -72,6 +71,9 @@ sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_2
+- fixed build
+
 * Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_1
 - update by mgaimport
 
