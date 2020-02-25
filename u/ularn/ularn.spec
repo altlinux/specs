@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_33
+Release:        alt2_35
 Summary:        Simple roguelike game
 
 License:        GPL+
@@ -55,7 +55,7 @@ builddir=`pwd`
 ${builddir}/Makefile.u.SH
 cd ${builddir}
 mv Makefile.u Makefile
-CC="gcc $RPM_OPT_FLAGS" make %{?_smp_mflags}
+CC="gcc $RPM_OPT_FLAGS -fcommon" make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -75,10 +75,13 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 %config(noreplace) %attr (0664,root,games) %{_var}/games/Ularn-scoreboard
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-%doc README README.spoilers GPL CHANGES.text Ularnopts
-
+%doc README README.spoilers CHANGES.text Ularnopts
+%doc --no-dereference GPL
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_35
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_33
 - update to new release by fcimport
 
