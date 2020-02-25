@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++ python-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ python3-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:		evemu
 Version:	2.7.0
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Event Device Query and Emulation Program
 Group:		Development/Other
 License:	GPLv3+
@@ -21,7 +21,7 @@ Source0:	http://www.freedesktop.org/software/%{name}/%{name}-%{version}.tar.xz
 
 BuildRequires:	automake
 BuildRequires:	libtool
-BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(libevdev) >= 0.5
 BuildRequires:	xmlto
 BuildRequires:	asciidoc asciidoc-a2x
@@ -48,7 +48,7 @@ dynamically linked with evemu.
 Summary:	Event Device Query and Emulation Program Development Package
 Group:		Development/Other
 Requires:       %{libname} = %{version}-%{release}
-Requires:	pkgconfig
+Requires:	python3
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
@@ -60,6 +60,7 @@ This package provides headers files for evemu development.
 %setup -q
 
 %build
+export PYTHON=%{__python3}
 autoreconf -vfi
 %configure \
 		--disable-static
@@ -88,11 +89,14 @@ find %{buildroot} -name '*.la' -delete
 %{_includedir}/%{name}.h
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
-%dir %{python_sitelibdir_noarch}/%{name}/
-%{python_sitelibdir_noarch}/%{name}/*
+%dir %{python3_sitelibdir_noarch}/%{name}/
+%{python3_sitelibdir_noarch}/%{name}/*
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_3
+- build w/python3
+
 * Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_2
 - fixed build
 
