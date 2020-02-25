@@ -34,28 +34,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.17.4
-Release: 	alt3
+Version:	3.17.5
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
-License: 	%gpl3plus
+License: 	GPLv3+
 Group: 		Networking/Mail
 
 Url:		https://www.claws-mail.org
+Vcs:		git://git.claws-mail.org/claws.git
 
 Source: %name-%version.tar
 Patch:	%name-%version-%release.patch
 
-# Patches from upstream.
-# Must be dropped with new release.
-Patch1: Fix-crash-in-litehtml_viewer-when-base-tag-has-no-hr.patch
-Patch2: fix-bug-4257-claws-mail-3.17.4-breaks-copy-pasting-f.patch
-Patch3: Fix-wrong-length-value-passed-to-fd_write.patch
-
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq:	autoconf-common gettext-tools
 
@@ -124,10 +117,6 @@ BuildRequires: libytnef-devel
 BuildRequires: libical-devel
 
 # For tools
-# Tools written on python2 are not packaged now.
-# Should be ported to python3.
-#BuildRequires: python
-#BuildRequires:	python-modules-encodings
 BuildPreReq:	perl-MIME-tools
 BuildPreReq:	perl-Text-Iconv
 BuildPreReq:	perl-XML-SimpleObject
@@ -371,7 +360,7 @@ profiles.
 %package	plugin-litehtmlviewer
 Summary:	Viewer plugin for HTML emails, using the litehtml library
 Group:		Networking/Mail
-License:	%gpl3plus,%bsdstyle
+License:	GPLv3+ and BSD-3-Clause
 Requires:	%name = %version-%release
 
 %description	plugin-litehtmlviewer
@@ -594,9 +583,6 @@ you sent or received.
 Summary:	Additional tools for %name
 Group:		Networking/Mail
 Requires:	%name = %version-%release
-# Tools written on python2 are not packaged now.
-# Should be ported to python3.
-#Requires:	python
 
 BuildArch: noarch
 
@@ -609,7 +595,6 @@ additional tools for %name.
 %prep
 %setup
 
-subst "s,\#\!/usr/bin/perl,\#\!/usr/bin/perl -w," tools/OOo2claws-mail.pl
 subst "s,%%f,%%N," ./src/prefs_quote.c
 echo "Libs: -lenchant-2 -lgnutls" >>%name.pc.in
 
@@ -617,9 +602,6 @@ echo "Libs: -lenchant-2 -lgnutls" >>%name.pc.in
 echo 'echo "%version"' >./version
 
 %patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %autoreconf
 
@@ -921,13 +903,22 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/%name/tools/update-po
 %exclude %_datadir/%name/tools/check-appstream.sh
 %exclude %_datadir/%name/tools/ca-certificates.crt
-# These scripts for python2, so don't package them.
-%exclude %_datadir/%name/tools/*.py
+%exclude %_datadir/%name/tools/gitlog2changelog.py
 
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Tue Feb 25 2020 Mikhail Efremov <sem@altlinux.org> 3.17.5-alt1
+- tools: Don't pull dos2unix.
+- tools: Don't package gitlog2changelog.py.
+- tools: Package python scripts again.
+- Drop unneded OOo2claws-mail.pl fix.
+- Add Vcs tag.
+- Drop obsoleted patches.
+- Don't use rpm-build-licenses.
+- Updated to 3.17.5.
+
 * Fri Nov 08 2019 Mikhail Efremov <sem@altlinux.org> 3.17.4-alt3
 - Patch from upstream:
     Fix wrong length value passed to fd_write().
