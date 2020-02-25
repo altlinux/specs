@@ -1,7 +1,7 @@
 %define module mageia-compat
 Name: rpm-macros-%module
 Summary: Mageia compatibility set of macro
-Version: 0.058
+Version: 0.059
 Release: alt1
 License: GPLv2+
 Group: System/Base
@@ -32,6 +32,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.059-alt1
+- set _vpath_builddir to build
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.058-alt1
 - updated mageia cmake
 
