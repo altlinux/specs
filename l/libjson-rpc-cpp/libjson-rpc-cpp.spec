@@ -9,8 +9,8 @@ BuildRequires: gcc-c++
 %define develname libjsonrpccpp-devel
 
 Name:           libjson-rpc-cpp
-Version:        1.2.0
-Release:        alt1_1
+Version:        1.3.0
+Release:        alt1_2
 Summary:        C++ JSON Library
 License:        Public Domain
 Group:          System/Libraries
@@ -64,10 +64,10 @@ Files for building applications with %{name} support.
 	-DCOMPILE_STUBGEN=NO \
 	-DFULL_PATH_LIBDIR=%{_libdir} \
 	-DFULL_PATH_INCLUDEDIR=%{_includedir}
-%make_build
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 %files -n %libname
 %{_libdir}/libjsonrpccpp-*.so.%{jsoncpp_major}
@@ -84,6 +84,9 @@ Files for building applications with %{name} support.
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_2
+- fixed build
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1
 - update by mgaimport
 
