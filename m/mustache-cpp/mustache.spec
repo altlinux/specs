@@ -8,7 +8,7 @@ BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-ninja-build
 %global appname Mustache
 
 Name: mustache-cpp
-Version: 3.2.1
+Version: 4.0
 Release: alt1_2
 
 License: Boost
@@ -66,6 +66,9 @@ install -m 0644 -p %{oldname}.hpp %{buildroot}%{_includedir}
 %{_includedir}/%{oldname}.hpp
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 11 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_2
 - new version
 
