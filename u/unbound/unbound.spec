@@ -2,7 +2,7 @@
 
 Name: unbound
 Version: 1.9.6
-Release: alt2
+Release: alt3
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Tue Feb 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.9.6-alt3
+- update systemd unit for run without pidfile
+
 * Tue Feb 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.9.6-alt2
 - build unbound without python
 - build with systemd support
