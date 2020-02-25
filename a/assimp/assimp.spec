@@ -13,7 +13,7 @@ BuildRequires: gcc-c++ libGLU-devel libglvnd-devel swig unzip
 
 Name:           assimp
 Version:        3.3.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Library to import various 3D model formats into applications
 Group:          Graphics
 License:        BSD
@@ -95,6 +95,7 @@ You need to install it if you want to develop programs using assimp.
 %patch10 -p1
 %patch100 -p1
 
+
 # Get rid of bundled libs so we can't accidentally build against them
 #rm -rf contrib/clipper
 rm -rf contrib/cppunit-1.12.1
@@ -114,13 +115,16 @@ dos2unix CHANGES CREDITS LICENSE Readme.md
 # To use system polyclipping if assimp ever becomes compatible:
 #       -DCLIPPER_LIB_PATH=%%{_libdir} \
 #       -DCLIPPER_INCLUDE_PATH=%%{_includedir}/polyclipping
-%make_build
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_5
+- fixed build
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_4
 - update by mgaimport
 
