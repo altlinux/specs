@@ -1,10 +1,10 @@
+Group: Archiving/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:      arc
 Version:   5.21p
-Release:   alt1_10
+Release:   alt1_16
 Summary:   Arc archiver
-Group:     Archiving/Other
 License:   GPL+
 URL:       http://arc.sourceforge.net/
 Source0:   http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -21,6 +21,10 @@ Patch3:    arc-5.21p-hdrv1-read-fix.patch
 Patch4:    arc-5.21p-fix-arcdie.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1179143
 Patch5:    arc-5.21p-directory-traversel.patch
+Patch6:    arc-5.21p-compiler-warn.patch
+Patch7:    arc-5.21p-fcommon-fix.patch
+
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -36,6 +40,9 @@ but useful if you have old .arc files you need to unpack.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+
 sed -i -e 's,^OPT =.*$,OPT = ${RPM_OPT_FLAGS},' Makefile
 
 
@@ -56,6 +63,9 @@ install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_10
 - update to new release by fcimport
 
