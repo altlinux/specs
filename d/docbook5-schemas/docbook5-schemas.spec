@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(English.pm)
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: xml-utils
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: docbook5-schemas
-Version: 5.0
-Release: alt2_16
-Group: Text tools
+Version: 5.1
+Release: alt1_1
 
 Summary: Norman Walsh's schemas (DTD, Relax NG, W3C schema) for Docbook 5.X
 
@@ -28,7 +28,8 @@ BuildRequires: libxml2 xml-utils
 
 BuildArch: noarch
 
-Source0:  http://www.docbook.org/xml/%{version}/docbook-%{version}.zip
+Source0:  http://www.docbook.org/xml/5.0/docbook-5.0.zip
+Source1:  http://www.docbook.org/xml/5.1/docbook-v5.1-os.zip
 Source44: import.info
 
 %description
@@ -38,8 +39,28 @@ schema for Docbook 5.X. Syntax of those schemas is XML-compliant and is
 developed by the OASIS consortium.
 
 %prep
-%setup -q -n docbook-5.0
+%setup -c -T 
+mkdir 5.0
+mkdir 5.1
 
+#Unzip Docbook 5.0 specification
+cd 5.0
+unzip %{SOURCE0}
+mv docbook-5.0/* .
+#Prepare docs to right place
+mv docs/ ../
+mv README ../
+mv ChangeLog ../
+cd ..
+
+#Unzip Docbook 5.1 specification
+cd 5.1
+unzip %{SOURCE1}
+mv schemas/rng .
+mv schemas/sch .
+mv schemas/catalog.xml .
+mv schemas/docbook.nvdl .
+cd ..
 
 %build
 CATALOG=docbook-5.xml
@@ -56,34 +77,6 @@ do
   %{_bindir}/xmlcatalog --noout --add "system" \
      "http://docbook.org/xml/${v}/dtd/docbook.dtd" \
      "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/docbook.dtd" ${CATALOG}
-  # RNG
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://www.oasis-open.org/docbook/xml/${v}/rng/docbook.rng" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rng" ${CATALOG}
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://docbook.org/xml/${v}/rng/docbook.rng" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rng" ${CATALOG}
-  # RNG+XInclude
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://www.oasis-open.org/docbook/xml/${v}/rng/docbookxi.rng" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rng" ${CATALOG}
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://docbook.org/xml/${v}/rng/docbookxi.rng" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rng" ${CATALOG}
-  # RNC
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://www.oasis-open.org/docbook/xml/${v}/rnc/docbook.rnc" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rnc" ${CATALOG}
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://docbook.org/xml/${v}/rng/docbook.rnc" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rnc" ${CATALOG}
-  # RNC+XInclude
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://www.oasis-open.org/docbook/xml/${v}/rnc/docbookxi.rnc" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rnc" ${CATALOG}
-  %{_bindir}/xmlcatalog --noout --add "uri" \
-     "http://docbook.org/xml/${v}/rng/docbookxi.rnc" \
-     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rnc" ${CATALOG}
   # XSD
   %{_bindir}/xmlcatalog --noout --add "uri" \
      "http://www.oasis-open.org/docbook/xml/${v}/xsd/docbook.xsd" \
@@ -117,6 +110,37 @@ do
   %{_bindir}/xmlcatalog --noout --add "uri" \
      "http://docbook.org/xml/${v}/xsd/xml.xsd" \
      "file://%{_datadir}/xml/docbook5/schema/xsd/${v}/xml.xsd" ${CATALOG}
+done
+for v in 5.0 5.1
+do
+  # RNG
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://www.oasis-open.org/docbook/xml/${v}/rng/docbook.rng" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rng" ${CATALOG}
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://docbook.org/xml/${v}/rng/docbook.rng" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rng" ${CATALOG}
+  # RNG+XInclude
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://www.oasis-open.org/docbook/xml/${v}/rng/docbookxi.rng" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rng" ${CATALOG}
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://docbook.org/xml/${v}/rng/docbookxi.rng" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rng" ${CATALOG}
+  # RNC
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://www.oasis-open.org/docbook/xml/${v}/rnc/docbook.rnc" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rnc" ${CATALOG}
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://docbook.org/xml/${v}/rng/docbook.rnc" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbook.rnc" ${CATALOG}
+  # RNC+XInclude
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://www.oasis-open.org/docbook/xml/${v}/rnc/docbookxi.rnc" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rnc" ${CATALOG}
+  %{_bindir}/xmlcatalog --noout --add "uri" \
+     "http://docbook.org/xml/${v}/rng/docbookxi.rnc" \
+     "file://%{_datadir}/xml/docbook5/schema/rng/${v}/docbookxi.rnc" ${CATALOG}
   # Schematron
   %{_bindir}/xmlcatalog --noout --add "uri" \
      "http://www.oasis-open.org/docbook/xml/${v}/sch/docbook.sch" \
@@ -127,20 +151,12 @@ do
 done
 # ---------------------
 # Build XML catalog files for each Schema
-for v in 5.0
+for v in 5.0 5.1
 do
-  for s in dtd rng sch xsd; do
-   cat=${s}/catalog.xml
+  for s in rng sch; do
+   cat=${v}/${s}/catalog.xml
    %{_bindir}/xmlcatalog --noout --create ${cat}
    case $s in
-    dtd)
-     %{_bindir}/xmlcatalog --noout --add "public" \
-       "-//OASIS//DTD DocBook XML ${v}//EN" \
-       "docbook.dtd" ${cat}
-     %{_bindir}/xmlcatalog --noout --add "system" \
-       "http://www.oasis-open.org/docbook/xml/${v}/dtd/docbook.dtd" \
-       "docbook.dtd" ${cat}
-     ;;
     sch)
      %{_bindir}/xmlcatalog --noout --add "uri" \
        "http://docbook.org/xml/${v}/${s}/docbook.${s}" \
@@ -174,6 +190,23 @@ do
      %{_bindir}/xmlcatalog --noout --add "uri" \
        "http://www.oasis-open.org/docbook/xml/${v}/${s}/docbookxi.rnc" \
        "docbookxi.rnc" ${cat}
+     ;;
+   esac
+  done
+done
+for v in 5.0
+do
+  for s in dtd xsd; do
+   cat=${v}/${s}/catalog.xml
+   %{_bindir}/xmlcatalog --noout --create ${cat}
+   case $s in
+    dtd)
+     %{_bindir}/xmlcatalog --noout --add "public" \
+       "-//OASIS//DTD DocBook XML ${v}//EN" \
+       "docbook.dtd" ${cat}
+     %{_bindir}/xmlcatalog --noout --add "system" \
+       "http://www.oasis-open.org/docbook/xml/${v}/dtd/docbook.dtd" \
+       "docbook.dtd" ${cat}
      ;;
     xsd)
      # http://www.oasis-open.org/docbook/xml/5.0/xsd/docbookxi.xsd
@@ -210,21 +243,21 @@ done
 
 %install
 DOCBOOK5DIR=$RPM_BUILD_ROOT%{_datadir}/xml/docbook5
-for v in 5.0
+for v in 5.0 5.1
 do
-mkdir -p ${DOCBOOK5DIR}/schema/dtd/$v
 mkdir -p ${DOCBOOK5DIR}/schema/rng/$v
 mkdir -p ${DOCBOOK5DIR}/schema/sch/$v
-mkdir -p ${DOCBOOK5DIR}/schema/xsd/$v
-install -m644 dtd/* ${DOCBOOK5DIR}/schema/dtd/$v
-install -m644 rng/* ${DOCBOOK5DIR}/schema/rng/$v
-install -m644 sch/* ${DOCBOOK5DIR}/schema/sch/$v
-install -m644 xsd/* ${DOCBOOK5DIR}/schema/xsd/$v
+install -m644 $v/rng/* ${DOCBOOK5DIR}/schema/rng/$v
+install -m644 $v/sch/* ${DOCBOOK5DIR}/schema/sch/$v
 done
+mkdir -p ${DOCBOOK5DIR}/schema/dtd/5.0
+mkdir -p ${DOCBOOK5DIR}/schema/xsd/5.0
+install -m644 5.0/dtd/* ${DOCBOOK5DIR}/schema/dtd/5.0
+install -m644 5.0/xsd/* ${DOCBOOK5DIR}/schema/xsd/5.0
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -m755 tools/db4-entities.pl $RPM_BUILD_ROOT%{_bindir}
+install -m755 %{version}/tools/db4-entities.pl $RPM_BUILD_ROOT%{_bindir}
 mkdir -p ${DOCBOOK5DIR}/stylesheet/upgrade
-install -m644 tools/db4-upgrade.xsl ${DOCBOOK5DIR}/stylesheet/upgrade
+install -m644 %{version}/tools/db4-upgrade.xsl ${DOCBOOK5DIR}/stylesheet/upgrade
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/xml
 install -m644 docbook-5.xml $RPM_BUILD_ROOT%{_sysconfdir}/xml/docbook-5.xml
@@ -233,18 +266,10 @@ install -m644 docbook-5.xml $RPM_BUILD_ROOT%{_sysconfdir}/xml/docbook-5.xml
 ROOTCATALOG=%{_sysconfdir}/xml/catalog
 if [ -w $ROOTCATALOG ]
 then
-  for v in 5.0
+  for v in 5.0 5.1
   do
   %{_bindir}/xmlcatalog --noout --add "delegatePublic" \
     "-//OASIS//DTD DocBook XML ${v}//EN" \
-    "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
-    $ROOTCATALOG
-  %{_bindir}/xmlcatalog --noout --add "delegateSystem" \
-    "http://docbook.org/xml/${v}/dtd/" \
-    "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
-    $ROOTCATALOG
-  %{_bindir}/xmlcatalog --noout --add "delegateURI" \
-    "http://docbook.org/xml/${v}/dtd/" \
     "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
     $ROOTCATALOG
   %{_bindir}/xmlcatalog --noout --add "delegateURI" \
@@ -255,11 +280,19 @@ then
     "http://docbook.org/xml/${v}/sch/"  \
     "file://%{_datadir}/xml/docbook5/schema/sch/${v}/catalog.xml" \
     $ROOTCATALOG
+   done
   %{_bindir}/xmlcatalog --noout --add "delegateURI" \
-    "http://docbook.org/xml/${v}/xsd/"  \
+    "http://docbook.org/xml/5.0/xsd/"  \
     "file://%{_datadir}/xml/docbook5/schema/xsd/${v}/catalog.xml" \
     $ROOTCATALOG
-   done
+  %{_bindir}/xmlcatalog --noout --add "delegateSystem" \
+    "http://docbook.org/xml/5.0/dtd/" \
+    "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
+    $ROOTCATALOG
+  %{_bindir}/xmlcatalog --noout --add "delegateURI" \
+    "http://docbook.org/xml/5.0/dtd/" \
+    "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
+    $ROOTCATALOG
 fi
 
 %postun
@@ -267,21 +300,22 @@ if [ "$1" = 0 ]; then
   ROOTCATALOG=%{_sysconfdir}/xml/catalog
   if [ -w $ROOTCATALOG ]
   then
-    for v in 5.0
+    for v in 5.0 5.1
     do
-       %{_bindir}/xmlcatalog --noout --del \
-       "file://%{_datadir}/xml/docbook5/schema/dtd/${v}/catalog.xml" \
-       $ROOTCATALOG
        %{_bindir}/xmlcatalog --noout --del \
        "file://%{_datadir}/xml/docbook5/schema/rng/${v}/catalog.xml" \
        $ROOTCATALOG
        %{_bindir}/xmlcatalog --noout --del \
        "file://%{_datadir}/xml/docbook5/schema/sch/${v}/catalog.xml" \
        $ROOTCATALOG
-       %{_bindir}/xmlcatalog --noout --del \
-       "file://%{_datadir}/xml/docbook5/schema/xsd/${v}/catalog.xml" \
-       $ROOTCATALOG
      done
+      %{_bindir}/xmlcatalog --noout --del \
+       "file://%{_datadir}/xml/docbook5/schema/dtd/5.0/catalog.xml" \
+       $ROOTCATALOG
+      %{_bindir}/xmlcatalog --noout --del \
+       "file://%{_datadir}/xml/docbook5/schema/xsd/5.0/catalog.xml" \
+       $ROOTCATALOG
+
   fi
 fi
 
@@ -297,14 +331,20 @@ fi
 %dir %{_datadir}/xml/docbook5/stylesheet
 %dir %{_datadir}/xml/docbook5/stylesheet/upgrade
 # Docbook5.0
-%{_datadir}/xml/docbook5/schema/dtd/%{version}
+%{_datadir}/xml/docbook5/schema/dtd/5.0
+%{_datadir}/xml/docbook5/schema/rng/5.0
+%{_datadir}/xml/docbook5/schema/sch/5.0
+%{_datadir}/xml/docbook5/schema/xsd/5.0
+# Docbook 5.1
 %{_datadir}/xml/docbook5/schema/rng/%{version}
 %{_datadir}/xml/docbook5/schema/sch/%{version}
-%{_datadir}/xml/docbook5/schema/xsd/%{version}
 %{_datadir}/xml/docbook5/stylesheet/upgrade/db4-upgrade.xsl
 %{_bindir}/db4-entities.pl
 
 %ChangeLog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 5.1-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_16
 - update to new release by fcimport
 
