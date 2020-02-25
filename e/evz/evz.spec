@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -34,12 +34,19 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 
 %files
 #doc README LICENSE TODO
-%_sbindir/evz
+%_bindir/evz
 %_datadir/%name/
 %_man8dir/*
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Tue Feb 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- move the script to /usr/bin
+- add qm (qemu) support
+- allow all/ALL for stop
+- fix destroy listing
+- add pct support
+
 * Mon Feb 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - refactoring with initial docker support
 - evz-openvz: don't use vz commands directly
