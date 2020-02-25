@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install imake libSDL-devel libX11-devel libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
@@ -5,15 +6,15 @@ BuildRequires: /usr/bin/desktop-file-install imake libSDL-devel libX11-devel lib
 %define _localstatedir %{_var}
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_14
+Release:        alt2_20
 Summary:        A tactical board game
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://biloba.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:        biloba.desktop
 
+BuildRequires:  gcc autoconf automake
 BuildRequires:  desktop-file-utils ImageMagick-tools libSDL_image-devel libSDL_mixer-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -29,7 +30,10 @@ your opponents.
 
 
 %build
-%configure
+autoreconf -if
+CFLAGS="-fcommon -g"
+export CFLAGS
+./configure --prefix=%{_prefix}
 %make_build
 
 iconv -f iso-8859-1 -t utf-8 ChangeLog -o ChangeLog.char
@@ -94,6 +98,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_20
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_14
 - update to new release by fcimport
 
