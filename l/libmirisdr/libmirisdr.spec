@@ -12,7 +12,7 @@ BuildRequires: pkgconfig(libusb-1.0)
 
 Name:           libmirisdr
 Version:        0.0.20130608
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Support programs for MRi2500
 License:        GPLv2
 Group:          Communications
@@ -28,6 +28,7 @@ BuildRequires:  texlive-texmf
 BuildRequires:  graphviz
 %endif
 Source44: import.info
+ExcludeArch: ppc64le
 
 %description
 Programs to control the Mirics MRi2500 based DVB dongle in raw mode, so
@@ -72,11 +73,10 @@ sed -i -e 's,\(^set(libdir \\${exec_prefix}/lib\),\1${LIB_SUFFIX},' CMakeLists.t
 
 %build
 %{mageia_cmake}
-%make_build
+%mageia_cmake_build
 
 #create documentation
 %if %{build_docs}
-cd ..
 cp Doxyfile.in Doxyfile
 sed -i "s\@VERSION@\%{version}\1" Doxyfile
 doxygen
@@ -84,7 +84,7 @@ make pdf -C doc/latex
 %endif
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 rm %{buildroot}%{_libdir}/libmirisdr.a
 
@@ -128,6 +128,9 @@ cp -r doc/latex/*.pdf %{buildroot}%{_docdir}/%{name}/pdf
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.20130608-alt1_7
+- fixed build
+
 * Sat Jul 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.20130608-alt1_5
 - update by mgaimport
 
