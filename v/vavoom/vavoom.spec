@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install libSDL-devel libglvnd-devel libmad-
 %define _localstatedir %{_var}
 Name:           vavoom
 Version:        1.33
-Release:        alt2_28
+Release:        alt2_31
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port - meta package
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -180,6 +180,7 @@ sed -i "s|#define CONFIG_FILE.*|#define CONFIG_FILE \"%{_sysconfdir}/timidity.cf
 
 # source/CMakeLists.txt lacks dependencies to generate svnrev.h, force it
 make -C source revision_check
+make linespec
 # no -j# because there are more dependency issues in source/CMakeLists.txt
 make VERBOSE=1
 
@@ -265,6 +266,9 @@ install -p -m 644 %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_31
+- update to new release by fcimport
+
 * Sun Feb 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_28
 - build with wxwidgets 3.0
 
