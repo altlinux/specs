@@ -1,6 +1,8 @@
+%define py_fname python3-module-ranger
+
 Name: ranger
 Version: 1.9.1
-Release: alt1.qa1
+Release: alt2
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
 Summary: Console file manager
@@ -8,13 +10,13 @@ License: GPLv3
 Group: File tools
 Url: https://ranger.github.io/
 
+BuildArch: noarch
+
 Source0: %name-%version.tar.gz
 
-%setup_python_module %name
+BuildRequires(pre): rpm-build-python3
+Requires: %py_fname = %version-%release
 
-BuildRequires: python-devel
-BuildArch: noarch
-Requires: %packagename = %version-%release
 
 %description
 ranger is a free console file manager that gives you greater
@@ -29,16 +31,17 @@ preview to the right so you know where you'll be going.
 визуализирует дерево каталогов в двух измерениях: иерархия директорий
 в одном и список файлов на другом, с возможностью предпросмотра.
 
-%package -n %packagename
+%package -n %py_fname
 Summary: Supplemental module for %name, %summary
-Group: Development/Python
+Group: Development/Python3
 
-%description -n %packagename
+%description -n %py_fname
 %summary
 
 %prep
 %setup
-sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
+
+sed -i 's|#!.*python|&3|' | $(find ./ -name '*.python')
 
 %build
 %install
@@ -50,10 +53,14 @@ sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 %_man1dir/*
 %_desktopdir/%name.desktop
 
-%files -n %packagename
-%python_sitelibdir/*
+%files -n %py_fname
+%python3_sitelibdir/*
+
 
 %changelog
+* Tue Feb 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.1-alt2
+- Porting to python3.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1.qa1
 - NMU: applied repocop patch
 
