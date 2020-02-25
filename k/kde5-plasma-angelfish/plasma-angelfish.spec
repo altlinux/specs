@@ -5,13 +5,16 @@
 
 Name: kde5-plasma-angelfish
 Version: 1.4.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
 Group: Networking/WWW
 Url: https://anongit.kde.org/plasma-angelfish.git
+
+Requires(post,preun): alternatives >= 0.2
+Provides: webclient
 
 Source: %rname-%version.tar
 
@@ -30,24 +33,6 @@ It is a lightweight browser with some advanced functions
 like integrated AdBlock, Search Engines Manager, Theming
 support, Speed Dial and SSL Certificate manager.
 
-%package core
-Group: Graphical desktop/KDE
-Summary: Falkon KDE integration
-Requires(post,preun): alternatives >= 0.2
-Provides: webclient
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
-Provides:  qupzilla = %version-%release
-Obsoletes: qupzilla < %version-%release
-%description core
-Falkon KDE integration.
-
-%package -n %libfalkonprivate
-Group: System/Libraries
-Summary: %name library
-#Requires: %name-common
-%description -n %libfalkonprivate
-%name library
 
 %prep
 %setup -n %rname-%version
@@ -80,6 +65,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5icon/*/*/apps/*angelfish*.*
 
 %changelog
+* Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt3
+- fix provides and requires
+
 * Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
 - add x-scheme-handler/http to desktop-file
 
