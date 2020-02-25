@@ -1,11 +1,11 @@
+Group: Communications
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           amora
 Version:        1.1
-Release:        alt2_21
+Release:        alt2_26
 Summary:        A mobile remote assistant
 
-Group:          Communications
 License:        GPLv2+
 URL:            http://code.google.com/p/amora
 Source0:        http://amora.googlecode.com/files/amora-server-%{version}.tar.gz
@@ -40,6 +40,7 @@ http://code.google.com/p/amora/
 
 
 %build
+export CPPFLAGS="$CPPFLAGS -fcommon"
 %configure
 %make_build
 
@@ -56,6 +57,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_26
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_21
 - update to new release by fcimport
 
