@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 # This package is part of the KDE Stack.
 #
 
-%define rel 6
+%define rel 7
 
 Summary:        asynchronous REST C++11 library
 Name:           restbed
@@ -73,17 +73,21 @@ based on %name.
 %patch0 -p1
 %patch1 -p1
 
+
 sed -e 's,MGALIB,%{_libdir},g' -i CMakeLists.txt
 
 %build
 %{mageia_cmake} -DBUILD_SHARED=ON
-%make_build
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_7
+- fixed build
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_6
 - update by mgaimport
 
