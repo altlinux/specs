@@ -10,7 +10,7 @@ BuildRequires: gcc-c++ python3-devel
 
 Name:           libmsym
 Version:        0.2.3
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Molecular point group symmetry lib
 License:        MIT
 Group:          System/Libraries
@@ -69,10 +69,10 @@ Python 3 bindings for %{name}.
         -DMSYM_BUILD_PYTHON=ON \
         -DPYTHON=%{__python3} \
         -DMSYM_PYTHON_INSTALL_OPTS=--root="%{buildroot}"
-%make_build
+%mageia_cmake_build
 
 %install
-%makeinstall_std -C build
+%mageia_cmake_install
 
 %files -n %{libname}
 %doc README.md
@@ -92,6 +92,9 @@ Python 3 bindings for %{name}.
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_4
+- fixed build
+
 * Mon Jan 13 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_3
 - fixed build
 
