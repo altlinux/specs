@@ -9,8 +9,8 @@ BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.8.1
-Release:	alt2_1
+Version:	1.8.2
+Release:	alt1_1
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
@@ -31,11 +31,13 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
+Patch4:		%{name}-gcc10.patch
 
 Summary:	Delivery framework for general Input Method configuration
 Requires:	xinit >= 1.0.2
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-desktop-module = %{version}-%{release}
+Requires:	/bin/bash
 Requires:	%{name}-gsettings
 Source44: import.info
 
@@ -203,6 +205,8 @@ This package contains a module to get this working on Cinnamon.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+
 
 %build
 autoreconf -f
@@ -227,7 +231,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{gconf,mateconf}.so
 %if 0%{?rhel}
-rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{lxde,xfce,mate-gsettings}.so
+rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{lxde,xfce,mate-gsettings,cinnamon-gsettings}.so
 %endif
 
 desktop-file-validate $RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart/imsettings-start.desktop
@@ -330,14 +334,20 @@ fi
 %{_libdir}/imsettings/libimsettings-mate-gsettings.so
 
 # note: done by robot; when cinnamon is supported, not just unifdef me, notify viy@ too
+# because cinnamon isn't supported on e2k yet
+%ifnarch e2k
 %files cinnamon
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-cinnamon-gsettings.so
+%endif
 
 
 %endif
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_1
+- update to new release by fcimport
+
 * Thu Aug 29 2019 Michael Shigorin <mike@altlinux.org> 1.8.1-alt2_1
 - reenable cinnamon subpackage for %%e2k
 
