@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
@@ -5,10 +6,9 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		biniax
 Version:	1.2
-Release:	alt3_22
+Release:	alt3_28
 Summary:	A unique arcade logic game
 
-Group:		Games/Other
 License:	zlib
 URL:		http://www.biniax.com/
 Source0:	http://mordred.dir.bg/%{name}/%{name}-src.zip
@@ -24,6 +24,7 @@ Patch3:		%{name}-%{version}-optflags.patch
 Patch4:		%{name}-%{version}-close.patch
 
 Requires:	icon-theme-hicolor
+BuildRequires:  gcc
 BuildRequires:	libSDL-devel libSDL_mixer-devel desktop-file-utils
 Source44: import.info
 
@@ -82,6 +83,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_28
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_22
 - update to new release by fcimport
 
