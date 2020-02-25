@@ -5,7 +5,7 @@
 
 Name: kde5-plasma-angelfish
 Version: 1.4.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -21,6 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires: extra-cmake-modules kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-purpose-devel
+BuildRequires: desktop-file-utils
 
 %description
 Falkon is a new and very fast World Wide Web Browser
@@ -64,6 +65,12 @@ cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
 %_bindir/x-www-browser       %_K5bin/angelfish      5
 __EOF__
 
+# add mime types categories
+desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+    --add-mime-type=x-scheme-handler/http \
+    --add-mime-type=x-scheme-handler/https \
+    %buildroot/%_K5xdgapp/org.kde.mobile.angelfish.desktop
+
 %find_lang --all-name --with-qt %name
 
 %files -f %name.lang
@@ -73,5 +80,8 @@ __EOF__
 %_K5icon/*/*/apps/*angelfish*.*
 
 %changelog
+* Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
+- add x-scheme-handler/http to desktop-file
+
 * Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - initial build
