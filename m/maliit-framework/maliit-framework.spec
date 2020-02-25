@@ -4,7 +4,7 @@
 %define libsover 0
 Name: maliit-framework
 Version: 0.94.2
-Release: alt4.2.qa1
+Release: alt5
 %define libmaliit libmaliit%libver-%libsover
 %define libmaliit_glib libmaliit-glib%libver-%libsover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
@@ -29,7 +29,6 @@ BuildRequires: pkgconfig(QtCore)
 BuildRequires: pkgconfig(QtDeclarative)
 BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: rpm-build-python python-devel
 BuildRequires: rpm-build-python3 python3-devel
 
 %description
@@ -145,6 +144,9 @@ Requires: %name = %version-%release
 %setup -n %name-%version
 %patch1 -p1
 
+# avoid depending on python 2
+sed -i '1s=^#!/usr/bin/env python=#!/usr/bin/python3=' examples/apps/gtk3-python/maliit-exampleapp-gtk3-python.py
+
 %build
 %qmake_qt4 -r \
     MALIIT_VERSION=%version \
@@ -155,7 +157,9 @@ Requires: %name = %version-%release
     INCLUDEDIR=%_includedir \
     CONFIG+=notests \
     CONFIG+=enable-dbus-activation \
-    CONFIG+=disable-gtk-cache-update
+    CONFIG+=disable-gtk-cache-update \
+    QMAKE_CXXFLAGS+="-std=c++03" \
+    #
 #    MALIIT_ENABLE_MULTITOUCH=false \
 #    CONFIG+=enable-qdbus \
 #    CONFIG+=disable-background-translucency \
@@ -276,6 +280,10 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt5
+- fix to build with new compilers
+- build without python2
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.94.2-alt4.2.qa1
 - NMU: applied repocop patch
 
