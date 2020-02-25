@@ -1,22 +1,23 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
-%define fedora 25
+%define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_15.2
+Release:        alt3_22
 Summary:        Software Carry-Save Multiple-Precision Library
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/
 Source0:        http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/scslib-%{version}.tar.gz
 Patch0:         scslib-1.4.1-shared.patch
+Patch1:         scslib-1.4.1-gcc10.patch
 
-BuildRequires:  autoconf-common, automake-common, libtool-common
+BuildRequires:  autoconf, automake, libtool
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 BuildRequires:  libmpfr-devel libgmp-devel libgmpxx-devel
 %endif
@@ -54,8 +55,8 @@ operations on most architectures.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 %endif
@@ -68,6 +69,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n scslib-%{version}
 %patch0 -p1 -b .shared
+%patch1 -p1 -b .gcc10
 
 
 %build
@@ -86,6 +88,10 @@ make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
+
+
+
+
 %files
 %doc COPYING AUTHORS
 %{_libdir}/*.so.*
@@ -98,6 +104,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_15.2
 - update to new release by fcimport
 
