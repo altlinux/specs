@@ -6,8 +6,8 @@ Group: System/Fonts/True type
 %global fontconf 67-%{fontname}.conf
 
 Name:		fonts-ttf-smc-suruma
-Version:	3.2.2
-Release:	alt1_3
+Version:	3.2.3
+Release:	alt1_1
 Epoch:		1
 Summary:	Open Type Fonts for Malayalam script 
 License:	GPLv3+ with exceptions
@@ -103,6 +103,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Wed Feb 26 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.2.3-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.2.2-alt1_3
 - update to new release by fcimport
 
