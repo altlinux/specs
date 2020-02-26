@@ -10,7 +10,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.14.1
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2 LGPLv2 BSD
 URL: http://www.xenproject.org/
@@ -46,6 +46,7 @@ Patch1: %name-%version-alt.patch
 
 # Fedora
 Patch6: %name.ocaml.4.10.patch
+Patch7: %name.ocaml.4.12.fixes.patch
 
 Patch10: pygrubfix.patch
 Patch15: %name.use.fedora.ipxe.patch
@@ -341,7 +342,7 @@ ln -s ../../qemu-ui-keycodemapdb qemu-xen-%version/ui/keycodemapdb
 
 %patch0 -p1
 %patch1 -p1
-#patch6 -p1
+%patch7 -p1
 %patch10 -p1
 %patch15 -p1
 %patch17 -p1
@@ -823,6 +824,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Apr 06 2021 Anton Farygin <rider@altlinux.org> 4.14.1-alt2
+- fixed build with ocaml-4.12.0
+
 * Fri Jan 29 2021 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.14.1-alt1
 - 4.14.1 release
 

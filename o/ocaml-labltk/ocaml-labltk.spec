@@ -1,7 +1,7 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.9
+Version: 8.06.10
 Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Conflicts: labltk
 Obsoletes: %name-runtime < %EVR
 Provides: %name-runtime = %EVR
-BuildRequires: ocaml
+BuildRequires: ocaml >= 4.12
 BuildRequires: tcl-devel, tk-devel
 
 %description
@@ -55,8 +55,10 @@ browser, written using LablTk.
 %setup -q
 
 %build
+
+find -type f | xargs sed -i -e 's/-warn-error/-w/g'
 export MAKE='make --no-print-directory' 
-./configure
+./configure --verbose 
 make all SHAREDCCCOMPOPTS='%optflags -fPIC'
 make opt
 
@@ -89,6 +91,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 8.06.10-alt1
+- 8.06.10
+
 * Tue Oct 13 2020 Anton Farygin <rider@altlinux.ru> 8.06.9-alt1
 - 8.06.9
 

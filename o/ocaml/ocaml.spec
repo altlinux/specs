@@ -1,15 +1,13 @@
-# TEXTREL on i386
-#/usr/lib/ocaml/unix.cmxs
-#/usr/lib/ocaml/str.cmxs
-#/usr/lib/ocaml/nums.cmxs
-#/usr/lib/ocaml/bigarray.cmxs
-%set_verify_elf_method textrel=relaxed
-
 # fix for build on armv7
 %remove_optflags -fomit-frame-pointer
+%ifnarch %ix86 %arm
+%def_with check
+%else
+%def_without check
+%endif
 
 Name: ocaml
-Version: 4.11.1
+Version: 4.12.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -22,7 +20,6 @@ Source1: ocaml-reqprov.ml
 
 Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
 Patch2: ocaml-4.08-alt-mk-reqprov.patch
-Patch3: ocaml-4.10.0-debian-do_not_die_in_output_complete_exe.patch
 Patch4: ocaml-4.11.1-RH-configure-Allow-user-defined-C-compiler-flags.patch
 
 Requires: rpm-build-ocaml >= 1.4
@@ -42,7 +39,6 @@ Requires: %name-runtime = %EVR
 %package runtime
 Summary: Runtime part of the OCaml system
 Group: Development/ML
-Provides: %name-runtime = %(v=%version; IFS=.; set $v; echo "$1.$2")
 Obsoletes: ocaml4-runtime
 
 %package ocamldoc
@@ -79,7 +75,6 @@ from special comments embedded in source files.
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 %build
@@ -90,6 +85,9 @@ from special comments embedded in source files.
 	-bindir %_bindir \
 	-libdir %_libdir/ocaml \
 	-mandir %_mandir \
+%if_with check
+        --enable-ocamltest \
+%endif
 	%nil
 
 %make_build world.opt
@@ -105,6 +103,11 @@ perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
 install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 
+%check
+pushd testsuite
+make -j1 all
+popd
+
 %files
 %doc Changes LICENSE README.adoc
 %_bindir/ocaml*
@@ -117,9 +120,7 @@ install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 %_libdir/ocaml/camlheader_ur
 %_libdir/ocaml/expunge
 %_libdir/ocaml/extract_crc
-%_libdir/ocaml/VERSION
 %_libdir/ocaml/*.*
-%_libdir/ocaml/objinfo_helper
 %exclude %_libdir/ocaml/ld.conf
 %_libdir/ocaml/caml/
 %exclude %_libdir/ocaml/ocamldoc/
@@ -144,11 +145,6 @@ install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 %_libdir/ocaml/stublibs/dllcamlstr.so
 %_libdir/ocaml/stublibs/dllthreads.so
 %_libdir/ocaml/stublibs/dllunix.so
-# ocaml builds raw_spacetime_lib on
-# architectures with 64bit pointers.
-%if "%_lib" == lib64
-%_libdir/ocaml/stublibs/dllraw_spacetime_lib.so
-%endif
 %_libdir/ocaml/camlheaderd
 %_libdir/ocaml/camlheaderi
 
@@ -161,6 +157,9 @@ install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Sun Mar 28 2021 Anton Farygin <rider@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 4.11.1-alt1
 - 4.11.1
 
