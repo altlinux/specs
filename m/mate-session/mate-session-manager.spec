@@ -1,8 +1,9 @@
+%define _libexecdir %_prefix/libexec
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.22.2
-Release: alt2
+Version: 1.24.0
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -15,7 +16,8 @@ Requires: mate-control-center mate-polkit mate-desktop polkit
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel xmlto xorg-xtrans-devel
+BuildRequires: mate-common libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel
+BuildRequires: libXcomposite-devel libepoxy-devel xmlto xorg-xtrans-devel
 
 %description
 This package contains a session that can be started from a display
@@ -57,6 +59,7 @@ __EOF__
 %_docdir/%rname
 %_sysconfdir/X11/wmsession.d/*Mate*
 %_bindir/mate-*
+%_libexecdir/mate-session-check-accelerated*
 %_desktopdir/mate-session-properties.desktop
 %_datadir/%rname
 %_iconsdir/hicolor/*/apps/*.*
@@ -65,6 +68,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Fri Feb 21 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt2
 - upstream: fix timeout with gnome-keyring 3.34
 - update russian translation (closes: #37402, #37730)

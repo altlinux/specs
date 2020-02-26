@@ -2,8 +2,8 @@
 %define rname pluma
 
 Name: mate-text-editor
-Version: 1.22.2
-Release: alt2
+Version: 1.24.0
+Release: alt1
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -79,6 +79,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Dec 03 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt2
 - switch to python 3
 

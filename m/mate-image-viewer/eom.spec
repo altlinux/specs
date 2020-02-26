@@ -1,8 +1,8 @@
 %define rname eom
 
 Name: mate-image-viewer
-Version: 1.22.2
-Release: alt2
+Version: 1.24.0
+Release: alt1
 Epoch: 1
 Summary: Eye of MATE image viewer
 License: GPLv2+ and LGPLv2+
@@ -67,6 +67,9 @@ Development files for eom
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Oct 22 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt2
 - fixed path to eom-multiple-save-as-dialog.ui (closes: #37019)
 

@@ -1,5 +1,5 @@
 Name: mate-themes
-Version: 3.22.19
+Version: 3.22.21
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop themes
@@ -37,6 +37,12 @@ MATE Desktop themes
 %_iconsdir/*
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.21-alt1
+- 3.22.21
+
+* Tue Dec 17 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.20-alt1
+- 3.22.20
+
 * Mon Mar 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.19-alt1
 - 3.22.19
 

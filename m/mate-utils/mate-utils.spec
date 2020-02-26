@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE utility programs
@@ -20,7 +20,8 @@ Obsoletes: mate-utils-libs
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel mate-panel-devel librsvg-utils yelp-tools
+BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel
+BuildRequires: mate-panel-devel librsvg-utils libudisks2-devel yelp-tools
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -85,6 +86,14 @@ Requires: %name-common = %epoch:%version-%release
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage
 
+%package -n mate-disk-image-mounter
+Group: Graphical desktop/MATE
+Summary: MATE Disk Image Mounter
+Requires: %name-common = %epoch:%version-%release
+
+%description -n mate-disk-image-mounter
+Attach and mount one or more disk image files
+
 %prep
 %setup -q
 %patch -p1
@@ -125,7 +134,6 @@ rm -fr gsearchtool/help/pt
 
 %files -n mate-system-log -f mate-system-log.lang
 %_bindir/mate-system-log
-%_datadir/%name
 %_datadir/glib-2.0/schemas/org.mate.system-log.gschema.xml
 %_desktopdir/mate-system-log.desktop
 %_iconsdir/hicolor/*/apps/mate-system-log*
@@ -136,7 +144,6 @@ rm -fr gsearchtool/help/pt
 %_bindir/mate-panel-screenshot
 %_datadir/metainfo/mate-screenshot.appdata.xml
 %_desktopdir/mate-screenshot.desktop
-%_datadir/mate-screenshot
 %_datadir/glib-2.0/schemas/org.mate.screenshot.gschema.xml
 %_man1dir/mate-screenshot.1*
 %_man1dir/mate-panel-screenshot.1*
@@ -168,12 +175,18 @@ rm -fr gsearchtool/help/pt
 %_bindir/mate-disk-usage-analyzer
 %_datadir/metainfo/mate-disk-usage-analyzer.appdata.xml
 %_desktopdir/mate-disk-usage-analyzer.desktop
-%_datadir/mate-disk-usage-analyzer
 %_datadir/glib-2.0/schemas/org.mate.disk-usage-analyzer.gschema.xml
 %_iconsdir/hicolor/*/apps/mate-disk-usage-analyzer.*
 %_man1dir/mate-disk-usage-analyzer.1*
 
+%files -n mate-disk-image-mounter
+%_bindir/mate-disk-image-mounter
+%_desktopdir/mate-disk-image-mounter.desktop
+
 %changelog
+* Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 

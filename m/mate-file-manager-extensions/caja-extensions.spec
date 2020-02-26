@@ -1,7 +1,7 @@
 %define rname caja-extensions
 
 Name: mate-file-manager-extensions
-Version: 1.22.1
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Set of extensions for caja file manager
@@ -29,7 +29,7 @@ BuildArch: noarch
 %package -n mate-file-manager-image-converter
 Group: Graphical desktop/MATE
 Summary: MATE file manager image converter extension
-Requires: %name-common = %epoch:%version-%release
+Requires: %name-common = %epoch:%version-%release ImageMagick-tools
 
 %description -n mate-file-manager-image-converter
 The caja-image-converter extension allows you to
@@ -141,7 +141,6 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/caja-sendto
 %_libdir/caja/extensions-2.0/libcaja-sendto.so
 %_datadir/glib-2.0/schemas/org.mate.Caja.Sendto.gschema.xml
-%_datadir/caja-extensions/caja-sendto.ui
 %_datadir/caja/extensions/libcaja-sendto.caja-extension
 %_datadir/gtk-doc/html/caja-sendto
 %_man1dir/*.1*
@@ -168,6 +167,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 

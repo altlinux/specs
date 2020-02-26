@@ -1,5 +1,5 @@
 Name: mate-common
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE common build files
@@ -8,7 +8,7 @@ Group: Development/Tools
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: intltool itstool
+Requires: autoconf-archive intltool itstool
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -38,6 +38,9 @@ Common scripts and macros to develop with MATE
 %_man1dir/*
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Oct 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 

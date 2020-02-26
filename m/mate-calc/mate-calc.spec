@@ -1,5 +1,5 @@
 Name: mate-calc
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop calculator
@@ -39,10 +39,12 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 %_datadir/metainfo/%name.appdata.xml
 %_desktopdir/%name.desktop
 %_datadir/glib-2.0/schemas/org.mate.calc.gschema.xml
-%_datadir/%name
 %_man1dir/*.1*
 
 %changelog
+* Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 

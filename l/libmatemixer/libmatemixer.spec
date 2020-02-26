@@ -1,5 +1,5 @@
 Name: libmatemixer
-Version: 1.22.0
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Mixer library for MATE desktop
@@ -56,6 +56,9 @@ Development libraries for libmatemixer
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 

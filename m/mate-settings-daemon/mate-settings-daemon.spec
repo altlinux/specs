@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-settings-daemon
-Version: 1.22.1
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop settings daemon
@@ -59,7 +59,6 @@ find %buildroot%_libdir -name \*.la -delete
 %doc AUTHORS COPYING README
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/xrandr
-%config %_sysconfdir/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %_sysconfdir/xdg/autostart/mate-settings-daemon.desktop
 %_udevrulesdir/*.rules
 %_sysconfdir/xrdb
@@ -68,6 +67,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libexecdir/msd-datetime-mechanism
 %_libexecdir/msd-locate-pointer
 %_datadir/mate-control-center/keybindings/50-accessibility.xml
+%_datadir/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %_datadir/dbus-1/services/org.mate.SettingsDaemon.service
 %_datadir/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
 %_iconsdir/hicolor/*/*/*
@@ -81,6 +81,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Oct 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 
