@@ -58,7 +58,7 @@
 %add_findprov_lib_path %vboxdir
 
 Name: virtualbox
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -827,6 +827,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Feb 20 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt1
+- Update to newest version 6.1.4
+
 * Mon Jan 20 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.2-alt1
 - Update to latest maintenance of 6.1 release
 - Build without droped PCI passthrough host driver, due current code is too

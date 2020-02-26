@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	6.1.2
+%define module_version	6.1.4
 
-%define module_release	alt1
+%define module_release	alt2
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -86,19 +86,16 @@ popd
 %make -C kernel-source-%drv_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
 %if_with vboxpci
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%pci_module_name-%module_version
 %make -C kernel-source-%pci_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion \
+    KBUILD_EXTRA_SYMBOLS=%_builddir/kernel-source-%module_name-%module_version/kernel-source-%drv_module_name-%module_version/Module.symvers
 %endif
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%net_module_name-%module_version
 %make -C kernel-source-%net_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%net_module_adaptor_name-%module_version
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion \
+    KBUILD_EXTRA_SYMBOLS=%_builddir/kernel-source-%module_name-%module_version/kernel-source-%drv_module_name-%module_version/Module.symvers
 %make -C kernel-source-%net_module_adaptor_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion
+    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/ KERN_VER=%kversion \
+    KBUILD_EXTRA_SYMBOLS=%_builddir/kernel-source-%module_name-%module_version/kernel-source-%drv_module_name-%module_version/Module.symvers
 
 %install
 mkdir -p %buildroot/%module_dir
@@ -120,6 +117,13 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Feb 25 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt2
+- Fixed build with kernel-5.5 using KBUILD_EXTRA_SYMBOLS environment variable
+  instead of copy Module.symvers into dependend modules source directory.
+
+* Thu Feb 20 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt1
+- Updated template for virtualbox 6.1.4
 
 * Wed Jan 22 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.2-alt1
 - Updated template for virtualbox 6.1.2
