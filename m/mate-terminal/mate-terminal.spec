@@ -1,5 +1,5 @@
 Name: mate-terminal
-Version: 1.22.1
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Terminal emulator for MATE
@@ -52,6 +52,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Apr 23 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 

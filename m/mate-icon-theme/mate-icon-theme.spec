@@ -1,5 +1,5 @@
 Name: mate-icon-theme
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Icon theme for MATE Desktop
@@ -39,6 +39,9 @@ rm -f mate/scalable/animations/*.svg
 %_iconsdir/menta
 
 %changelog
+* Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 

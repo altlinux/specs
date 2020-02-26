@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-applets
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop panel applets
@@ -45,7 +45,7 @@ rm -fr mateweather/docs/ru
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 
@@ -63,6 +63,9 @@ rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Oct 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 

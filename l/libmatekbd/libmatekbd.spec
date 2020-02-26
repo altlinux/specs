@@ -1,5 +1,5 @@
 Name: libmatekbd
-Version: 1.22.0
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Libraries for mate kbd
@@ -47,8 +47,7 @@ Development libraries for libmatekbd
 %doc AUTHORS COPYING README
 %_libdir/libmatekbd*.so.*
 %_libdir/girepository-1.0/Matekbd-1.0.typelib
-%_datadir/%name
-%_datadir/glib-2.0/schemas/org.mate.peripherals-keyboard-xkb.gschema.xml
+%_datadir/glib-2.0/schemas/org.mate.peripherals*.xml
 
 %files devel
 %_includedir/%name
@@ -57,6 +56,9 @@ Development libraries for libmatekbd
 %_datadir/gir-1.0/Matekbd-1.0.gir
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Mon Mar 04 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.0-alt1
 - 1.22.0
 

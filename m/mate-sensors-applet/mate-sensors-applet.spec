@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-sensors-applet
-Version: 1.22.1
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: MATE panel applet for hardware sensors
@@ -75,6 +75,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libmate-sensors-applet-plugin.so
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Apr 24 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 

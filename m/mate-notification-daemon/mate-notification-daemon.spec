@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-notification-daemon
-Version: 1.22.1
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Notification daemon for MATE Desktop
@@ -41,12 +41,14 @@ Notification daemon for MATE Desktop
 %_libexecdir/mate-notification-daemon
 %_desktopdir/mate-notification-properties.desktop
 %_datadir/dbus-1/services/org.freedesktop.mate.Notifications.service
-%_datadir/mate-notification-daemon/mate-notification-properties.ui
 %_iconsdir/hicolor/*/apps/mate-notification-properties.*
 %_datadir/glib-2.0/schemas/org.mate.NotificationDaemon.gschema.xml
 %_man1dir/mate-notification-properties.1*
 
 %changelog
+* Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Tue Oct 15 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.1-alt1
 - 1.22.1
 
