@@ -1,7 +1,7 @@
 %define plugname syntastic
 Name:		vim-plugin-%plugname
 Version:	3.10.0
-Release:	alt1
+Release:	alt2
 Summary:	Syntax checking hacks for vim
 Group:		Editors
 License:	WTFPL
@@ -10,7 +10,7 @@ Source:		%name-%version.tar
 BuildArch:	noarch
 
 PreReq:		vim-common >= 4:7.0
-BuildRequires(pre): rpm-build-vim
+BuildRequires(pre): rpm-build-vim rpm-build-python3
 Packager:	VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
 
 %description
@@ -41,6 +41,8 @@ didn't have to compile their code or execute their script to find them.
 %prep
 %setup -q
 
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+
 %install
 mkdir -p %buildroot/%vim_doc_dir
 mkdir -p %buildroot/%vim_plugin_dir/syntastic
@@ -62,6 +64,9 @@ done
 %vim_runtime_dir/syntax_checkers/*
 
 %changelog
+* Wed Feb 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.10.0-alt2
+- Porting to python3
+
 * Wed Oct 02 2019 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt1
 - Update to 3.10.0.
 
