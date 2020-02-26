@@ -1,6 +1,6 @@
 Name:          foreman
-Version:       1.22.0
-Release:       alt3
+Version:       1.22.2
+Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -20,6 +20,7 @@ Source8:       %name.service
 Source9:       %name-production-%version.tar
 Patch:         patch.patch
 Patch1:        sass.patch
+Patch2:        1.22.2.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-webserver-common
@@ -56,6 +57,7 @@ BuildRequires:      node-sass
 %gem_replace_version fog-google ~> 1.8
 %gem_replace_version deep_cloneable ~> 3.0
 %gem_replace_version turbolinks ~> 5.2
+%gem_replace_version audited ~> 4.8
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
 %add_findreq_skiplist *.erb
@@ -95,6 +97,7 @@ Foreman code documentation.
 %patch -p1
 # TODO remove when patternfly-sass gem will be upgraded to new font-awesome-sass v5
 %patch1 -p1
+%patch2
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
 sed '$agem "coffee-script-source", "~> 1.12"' -i Gemfile
 
@@ -138,7 +141,7 @@ exit 0
 
 %post
 %post_service postgresql
-systemctl start postgresql
+systemctl start postgresql || exit 1
 
 mkdir -m 750 -p %_var/tmp/%name
 mkdir -m 750 -p %_cachedir/%name
@@ -167,7 +170,7 @@ fi
 
 # env
 rm -f Gemfile.lock
-bundle >/dev/null 2>&1 || :
+bundle >$datadir/$appname/log/bundle.log 2>&1 || exit 2
 # bundle binstubs bundler --force
 # npm install
 
@@ -177,7 +180,7 @@ if [ ! -f $datadir/$appname/config/initializers/local_secret_token.rb ]; then
    touch $datadir/$appname/config/initializers/local_secret_token.rb
    chmod 0660 $datadir/$appname/config/initializers/local_secret_token.rb
    chgrp foreman $datadir/$appname/config/initializers/local_secret_token.rb
-   bundle exec rake security:generate_token >/dev/null 2>&1 || :
+   bundle exec rake security:generate_token >/dev/null 2>&1 || exit 3
    chmod 0640 $datadir/$appname/config/initializers/local_secret_token.rb
 fi
 
@@ -189,7 +192,7 @@ if [ ! -e $datadir/$appname/config/initializers/encryption_key.rb -a \
    touch $datadir/$appname/config/initializers/encryption_key.rb
    chmod 0660 $datadir/$appname/config/initializers/encryption_key.rb
    chgrp foreman $datadir/$appname/config/initializers/encryption_key.rb
-   bundle exec rake security:generate_encryption_key >/dev/null 2>&1 || :
+   bundle exec rake security:generate_encryption_key >/dev/null 2>&1 || exit 3
    chmod 0640 $datadir/$appname/config/initializers/encryption_key.rb
    mv $datadir/$appname/config/initializers/encryption_key.rb $confdir/
 fi
@@ -204,21 +207,23 @@ if ! psql -U postgres -lqt | cut -d \| -f 1 | grep -qw ${appname}_${RAILS_ENV}; 
    # echo "Initializing database..."
    # We need to run the db:migrate after the install transaction
    # always attempt to reencrypt after update in case new fields can be encrypted
-   bundle exec rake db:create db:migrate db:encrypt_all >> $datadir/$appname/log/db_migrate.log 2>&1 || :
-   bundle exec rake db:seed >> $datadir/$appname/log/db_seed.log 2>&1 || :
-   bundle exec rake apipie:cache:index >> $datadir/$appname/log/apipie_cache.log 2>&1 || :
-   bundle exec rake tmp:clear >> $datadir/$appname/log/tmp_clear.log 2>&1 || :
+   bundle exec rake db:create db:migrate db:encrypt_all >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
+   bundle exec rake db:seed >> $datadir/$appname/log/db_seed.log 2>&1 || exit 5
+   bundle exec rake apipie:cache:index >> $datadir/$appname/log/apipie_cache.log 2>&1 || exit 6
+   bundle exec rake tmp:clear >> $datadir/$appname/log/tmp_clear.log 2>&1 || exit 7
 fi
 
 if [ -z "$(ls ./public/webpack/*js 2>/dev/null)" ]; then
    # echo "Initializing webpack frontend..."
-   bundle exec rake webpack:compile >> $datadir/$appname/log/webpack_compile.log 2>&1 || :
+   bundle exec rake webpack:compile >> $datadir/$appname/log/webpack_compile.log 2>&1 || exit 8
 fi
 
 if [ -z "$(ls ./public/assets/*js 2>/dev/null)" ]; then
    # echo "Initializing assets frontend..."
-   bundle exec rake assets:precompile >> $datadir/$appname/log/assets_precompile.log 2>&1 || :
+   bundle exec rake assets:precompile >> $datadir/$appname/log/assets_precompile.log 2>&1 || exit 9
 fi
+
+chown _foreman $datadir/$appname/log/*.log -R 2>/dev/null
 
 %post_service foreman
 # %post_service dynflowd
@@ -254,6 +259,13 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 %ruby_ridir/*
 
 %changelog
+* Wed Feb 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.22.2-alt1
+- updated (^) 1.22.0 -> 1.22.2
+- added (+) post script condition to initialize the foreman after the db is
+  initialized and started
+- fixed (!) rails db/migration
+- fixed (!) post-install code
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.22.0-alt3
 - drop libnss-devel buildreq
 - update node_modules with node.js >= 13
