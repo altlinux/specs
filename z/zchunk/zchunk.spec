@@ -2,8 +2,8 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           zchunk
-Version:        1.1.4
-Release:        alt1_1
+Version:        1.1.5
+Release:        alt1_2
 Summary:        Compressed file format that allows easy deltas
 License:        BSD and MIT
 URL:            https://github.com/zchunk/zchunk
@@ -16,7 +16,7 @@ BuildRequires:  meson
 Requires:       %{name}-libs = %{version}-%{release}
 Provides:       bundled(buzhash-urlblock) = 0.1
 Source44: import.info
- 
+
 %description
 zchunk is a compressed file format that splits the file into independent
 chunks.  This allows you to only download the differences when downloading a
@@ -90,6 +90,9 @@ install contrib/gen_xml_dictionary %{buildroot}%{_libexecdir}/zck_gen_xml_dictio
 %{_includedir}/zck.h
 
 %changelog
+* Wed Feb 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt1_2
+- new version
+
 * Fri Dec 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt1_1
 - new version
 
