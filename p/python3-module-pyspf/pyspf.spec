@@ -1,33 +1,32 @@
 %define oname pyspf
 
 Name:       python3-module-%oname
-Version:    2.0.13
+Version:    2.0.14
 Release:    alt1
 
 Summary:    Python module and programs for SPF (Sender Policy Framework)
-License:    Python Software Foundation License
+License:    Python-2.0
 Group:      Development/Python3
 Url:        https://github.com/sdgathman/pyspf/
 Packager:   L.A. Kostis <lakostis@altlinux.ru>
 
 BuildArch:  noarch
+Requires:   python3-module-dns
+BuildPreReq: rpm-build-python3
 
-Source0:    pyspf-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-Requires: python3-module-ipaddress python3-module-dns
+Source:     pyspf-%version.tar
 
 
 %description
 SPF does email sender validation.  For more information about SPF,
-please see http://openspf.org
+please see http://www.open-spf.org
 
 This SPF client is intended to be installed on the border MTA, checking
 if incoming SMTP clients are permitted to send mail.  The SPF check
 should be done during the MAIL FROM:<...> command.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
 %python3_build
@@ -35,13 +34,19 @@ should be done during the MAIL FROM:<...> command.
 %install
 %python3_install --record=INSTALLED_FILES3
 
+%define _unpackaged_files_terminate_build 1
+
+
 %files
-%doc CHANGELOG PKG-INFO README test
+%doc CHANGELOG PKG-INFO README.md test
 %_bindir/*
 %python3_sitelibdir/*
 
 
 %changelog
+* Wed Feb 26 2020 Dmitry V. Levin <ldv@altlinux.org> 2.0.14-alt1
+- 2.0.13 -> 2.0.14.
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.13-alt1
 - Build for python2 disabled.
 
