@@ -5,7 +5,7 @@
 
 Name:     simpletest
 Version:  8
-Release:  alt2
+Release:  alt3
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -55,12 +55,8 @@ Also provides useful information about system:
 
 %build
 %configure \
-%if_enabled m32
-    --enable-m32 \
-%endif
-%if_enabled profile
-    --enable-profile \
-%endif
+    %{subst_enable m32} \
+    %{subst_enable profile}
 
 %make_build
 
@@ -75,6 +71,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Fri Jan 17 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt3
+- Use subst_enable macro.
+
 * Sat Jan 11 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt2
 - Update summary
 - Fix macro type, thanks ldv@ for noticing.
