@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20190924
+Version: 20200123
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -13,7 +13,7 @@ BuildRequires(pre): ocaml
 Provides: ocaml4-menhir = %EVR
 Obsoletes: ocaml4-menhir
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild python-module-google python3-base
+BuildRequires: dune opam python-module-google python3-base
 
 %description
 Menhir is a LR(1) parser generator for the OCaml programming language.
@@ -31,32 +31,27 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %setup -q -n menhir-%version
 
 %build
-make PREFIX=/usr all
+dune build
 
 %install
-mkdir -p %buildroot%_libdir/ocaml
-make OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml PREFIX=%buildroot/usr install
-
-mkdir -p %buildroot%_datadir/doc/%name-%version
-mv %buildroot%_datadir/doc/menhir/* %buildroot%_datadir/doc/%name-%version/
-rm -rf %buildroot%_datadir/doc/menhir
-rm -rf %buildroot%_datadir/doc/%name-%version/src/
+dune install --destdir=%buildroot
 
 %files
 %doc CHANGES.md
-%doc demos
 %doc INSTALLATION.md
 %doc README.md
 %doc LICENSE
 %_bindir/*
 %_man1dir/*
-%dir %_datadir/menhir
 %dir %_libdir/ocaml/menhirLib
 %dir %_libdir/ocaml/menhirSdk
 %_libdir/ocaml/menhirLib/*
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 20200123-alt1
+- 20200123
+
 * Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 20190924-alt1
 - 20190924 with builtin standart menhir library
 
