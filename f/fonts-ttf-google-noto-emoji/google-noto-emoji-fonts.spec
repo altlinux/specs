@@ -3,7 +3,7 @@ Group: System/Fonts/True type
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 833a43d03246a9325e748a2d783006454d76ff66
+%global commit0 16151a2312a1f8a7d79e91789d3cfe24559d61f7
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-emoji
@@ -16,8 +16,8 @@ Group: System/Fonts/True type
 
 
 Name:           fonts-ttf-google-noto-emoji
-Version:        20190829
-Release:        alt1_1
+Version:        20191019
+Release:        alt1_2
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
 # In noto-emoji-fonts source
@@ -158,6 +158,9 @@ fi
 
 
 %changelog
+* Wed Feb 26 2020 Igor Vlasenko <viy@altlinux.ru> 20191019-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 20190829-alt1_1
 - update to new release by fcimport
 
