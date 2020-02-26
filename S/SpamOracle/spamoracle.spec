@@ -1,6 +1,6 @@
 Name: SpamOracle
-Version: 1.4
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Group: Networking/Mail
 Summary: Spam filter
@@ -8,8 +8,6 @@ License: GPL2
 Url: https://github.com/xavierleroy/spamoracle
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 Source: spamoracle-%version.tar
-Patch1: lowercase_ascii.patch
-Patch2: bytes.patch
 
 BuildRequires: ocaml
 
@@ -27,12 +25,8 @@ Recommends: procmail
 
 %prep
 %setup -nspamoracle-%version
-# %%patch1 -p1
-# %%patch2 -p1
 
 %build
-# workaround for unsafe strings handing (changed in ocaml-4.06.0):
-export OCAMLPARAM="safe-string=0,_"
 make
 
 %install
@@ -47,6 +41,10 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir LANGUAGES="-DFR
 %doc README* Changes
 
 %changelog
+* Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 1.6-alt1
+- 1.6
+- cleanup spec
+
 * Mon Jul  2 2018 Terechkov Evgenii <evg@altlinux.org> 1.4-alt2
 - 0fc9993
 - Update URL tag
