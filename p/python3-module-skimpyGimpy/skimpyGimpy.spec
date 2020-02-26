@@ -1,27 +1,22 @@
 %define oname skimpyGimpy
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4
-Release: alt2.1
+Release: alt3
+
 Summary: Skimpy Gimpy Audio/visual Tools
 License: BSD
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/skimpyGimpy/
+BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python-tools-2to3
-%endif
 
-%py_provides %oname
 
 %description
 Skimpy is a tool for generating HTML visual, PNG visual, and WAVE audio
@@ -30,65 +25,29 @@ robots and other computer programs will have difficulty understanding.
 Skimpy is an example of a Captcha: an acronym for "Completely Automated
 Public Turing test to tell Computers and Humans Apart".
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Skimpy Gimpy Audio/visual Tools
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Skimpy is a tool for generating HTML visual, PNG visual, and WAVE audio
-representations for strings which people can understand but which web
-robots and other computer programs will have difficulty understanding.
-Skimpy is an example of a Captcha: an acronym for "Completely Automated
-Public Turing test to tell Computers and Humans Apart".
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc README.txt
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.txt
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Wed Feb 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4-alt3
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
