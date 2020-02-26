@@ -1,5 +1,5 @@
 %define name speedtest-cli
-%define version 2.1.0
+%define version 2.1.2
 %define release alt1
 
 Name: %name
@@ -50,6 +50,9 @@ EOF
 
 
 %changelog
+* Wed Feb 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.2-alt1
+- Version updated to 2.1.2
+
 * Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt1
 - python2 -> python3
 
