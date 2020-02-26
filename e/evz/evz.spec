@@ -1,6 +1,6 @@
 Name: evz
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ control tool
 
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/Etersoft/evz.git
 Source: ftp://updates.etersoft.ru/pub/Korinf/sources/tarball/%name-%version.tar
 
-ExclusiveArch: x86_64
+BuildArch: noarch
 
 %description
 EVZ is implemented as wrapper around vzctl with accent to group operations on containers.
@@ -40,6 +40,9 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Wed Feb 26 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt2
+- drop exclusive arch (no more arch depended deps), set noarch
+
 * Tue Feb 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - move the script to /usr/bin
 - add qm (qemu) support
