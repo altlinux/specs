@@ -5,10 +5,10 @@
 
 Name: kde5-plasma-angelfish
 Version: 1.4.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
-Summary: A very fast open source browser based on WebKit core
+Summary: Webbrowser designed for mobile devices
 License: GPLv3+
 Group: Networking/WWW
 Url: https://anongit.kde.org/plasma-angelfish.git
@@ -27,11 +27,9 @@ BuildRequires: extra-cmake-modules kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kir
 BuildRequires: desktop-file-utils
 
 %description
-Falkon is a new and very fast World Wide Web Browser
-which uses Qt Framework and its QtWebKit rendering core.
-It is a lightweight browser with some advanced functions
-like integrated AdBlock, Search Engines Manager, Theming
-support, Speed Dial and SSL Certificate manager.
+This is the webbrowser designed to
+- be used on small mobile devices,
+- integrate well in Plasma workspaces
 
 
 %prep
@@ -65,6 +63,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5icon/*/*/apps/*angelfish*.*
 
 %changelog
+* Thu Feb 27 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt4
+- fix package description
+
 * Tue Feb 25 2020 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt3
 - fix provides and requires
 
