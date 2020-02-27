@@ -1,68 +1,47 @@
 %define oname pyftpdlib
-%define fname python3-module-%oname
 %define descr \
 Python FTP server library provides a high-level portable interface to easily \
 write asynchronous FTP servers with Python. pyftpdlib is currently the most \
 complete RFC-959 FTP server implementation available for Python programming \
 language.
 
-Name: %fname
-Version: 1.5.5
+%def_with docs
+
+Name: python3-module-%oname
+Version: 1.5.6
 Release: alt1
 
-%if ""==""
 Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
+
 Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
-
-License: MIT
-BuildArch: noarch
+License: MIT and BSD
 Url: https://github.com/giampaolo/pyftpdlib
+
 Source: %name-%version.tar
-Patch1: %oname-alt-tests.patch
 
-BuildRequires(pre): rpm-macros-branch rpm-build-licenses
-BuildRequires: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-%else
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
+%endif
+
+Conflicts: %name < %EVR
+Obsoletes: %name < %EVR
+
+BuildArch: noarch
+
 %py3_provides %oname
-%if "3"==""
-%py_requires sendfile
-%endif
-%endif
+%py3_requires sendfile
 
-%if ""==""
 %description -l ru_RU.UTF-8
 Модуль Python FTP-сервера беспечивает портативный высокоуровневый интерфейс
 для лёгкого написания асинхронного FTP сервера на Python. pyftpdlib сейчас --
 наиболее полная реализация RFC-959 FTP-сервера для Python.
-%endif
 
 %description
 %descr
-
-%if ""!=""
-This package contains documentation for %oname.
-
-%package -n %fname-pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description -n %fname-pickles
-%descr
-
-This package contains pickles for %oname.
-
-%else
 
 %package tests
 Summary: Documentation for %oname
@@ -73,45 +52,57 @@ Group: Development/Python3
 %descr
 
 This package contains tests for %oname.
+
+%if_with docs
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+%descr
+
+This package contains documentation for %oname.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python3
+
+%description pickles
+%descr
+
+This package contains pickles for %oname.
 %endif
 
 %prep
 %setup
-%if ""==""
-%patch1 -p1
-%endif
 
 sed -i -e "s|^__ver__ = '[^']*'|__ver__ = '%version'|" pyftpdlib/__init__.py
 
-%if ""!=""
-%prepare_sphinx .
+%if_with docs
+sed -i "s/= python/= python3/" docs/Makefile
+
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%if ""==""
 %python3_build
-%else
+
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
+%make -C docs man
 %endif
 
 %install
-%if ""==""
 %python3_install
-%else
-mkdir -p %buildroot%python3_sitelibdir/%oname/
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
-%if ""==""
-%if "3"=="3"
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py3
-done
-popd
+%if_with docs
+mkdir -p %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname
+mkdir -p %buildroot%_man1dir
+cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %files
@@ -120,21 +111,31 @@ popd
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info*
 %exclude %python3_sitelibdir/%oname/test
+%if_with docs
+%_man1dir/*
+%exclude %python3_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/%oname/test/README
 
-%else
-
-%files
+%if_with docs
+%files docs
 %doc docs/_build/html/*
 
-%files -n %fname-pickles
+%files pickles
 %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Thu Feb 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt1
+- Build new version.
+- Remove python2 support.
+- Add docs knob.
+- Build with man page.
+- Fix license.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.5.5-alt1
 - Build new version.
 
