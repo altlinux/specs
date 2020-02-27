@@ -5,7 +5,7 @@
 %define oname cmd2
 
 Name: python3-module-%oname
-Version: 0.9.22
+Version: 0.10.1
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -16,6 +16,7 @@ Url: https://pypi.org/project/cmd2/
 
 # https://github.com/python-cmd2/cmd2
 Source0: %oname-%version.tar.gz
+Source1: cmd2.watch
 
 BuildArch: noarch
 
@@ -118,6 +119,9 @@ pytest3 -v
 %endif
 
 %changelog
+* Thu Feb 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
+- Automatically updated to 0.10.1.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.22-alt1
 - Build new version.
 
