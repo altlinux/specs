@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.18.1
-Release: alt5
+Release: alt6
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -174,6 +174,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Feb 27 2020 Oleg Solovyov <mcpain@altlinux.org> 0.18.1-alt6
+- fix patch
+
 * Thu Feb 20 2020 Oleg Solovyov <mcpain@altlinux.org> 0.18.1-alt5
 - renewal dialog: translate strings
 
