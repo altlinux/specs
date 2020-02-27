@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm)
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt9
+Release: alt10
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -254,10 +254,7 @@ rm -f t/00-tidy.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
-./t/test_postgresql %buildroot/DB
-export TEST_PG="DBI:Pg:dbname=openqa_test;host=%buildroot/DB"
-OBS_RUN=1 prove -l -r
-pg_ctl -D %buildroot/DB stop
+make test-with-database OBS_RUN=1 PROVE_ARGS='-l -r' TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
 %post
@@ -311,6 +308,8 @@ fi
 %_unitdir/openqa-enqueue-asset-cleanup.timer
 %_unitdir/openqa-enqueue-result-cleanup.service
 %_unitdir/openqa-enqueue-result-cleanup.timer
+%_unitdir/openqa-enqueue-bug-cleanup.service
+%_unitdir/openqa-enqueue-bug-cleanup.timer
 %_tmpfilesdir/openqa-webui.conf
 # web libs
 %_datadir/openqa/templates
@@ -400,6 +399,9 @@ fi
 %_unitdir/openqa-setup-db.service
 
 %changelog
+* Wed Feb 26 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt10
+- update to current version
+
 * Wed Feb 05 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt9
 - update to current version
 
