@@ -10,7 +10,7 @@
 
 Name:          ruby
 Version:       2.5.5
-Release:       alt4.1
+Release:       alt4.2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD 2-clause Simplified License/Ruby
 Group:         Development/Ruby
@@ -21,6 +21,7 @@ Source0:       %name-%version.tar
 Source3:       fakeruby.sh
 Source4:       miniruby.sh
 BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: doxygen
 BuildRequires: groff-base
 BuildRequires: libdb4-devel
@@ -31,7 +32,9 @@ BuildRequires: libreadline-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libyaml-devel
+%ifarch %valgrind_arches
 BuildRequires: valgrind-devel
+%endif
 BuildRequires: gcc-c++
 %{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
@@ -247,7 +250,9 @@ cp -a /usr/share/gnu-config/config.* tool
 my_configure() {
     %configure \
         %{subst_enable shared} \
+%ifarch %valgrind_arches
         %{subst_enable valgrind} \
+%endif
         %{subst_enable rubygems} \
         --with-rubylibprefix=%libdir \
         --with-rubyhdrdir=%includedir \
@@ -389,6 +394,9 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Tue Feb 25 2020 Nikita Ermakov <arei@altlinux.org> 2.5.5-alt4.2
+- Disable valgrind for architectures which does not support it.
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt4.1
 - ! spec according to changelog rules
 
