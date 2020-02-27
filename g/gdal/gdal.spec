@@ -5,12 +5,11 @@
 %def_with mysql
 %def_with pg
 %def_with sqlite
-%def_with python3
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 2.2.3
-Release: alt3.1
+Version: 3.0.4
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -31,14 +30,11 @@ Patch7: %name-2.2.3-alt-mysql8-transition.patch
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-genshi python-module-xlwt python-modules-ctypes swig
 
 BuildRequires: chrpath libnetcdf-devel
+BuildRequires: libproj-devel
 BuildRequires: perl-Encode
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
 BuildRequires: python3-module-xlwt
-%endif
-
-Requires: libproj
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -90,7 +86,6 @@ Provides: python-module-osgeo = %version
 %description -n python-module-%name
 Python module for %name.
 
-%if_with python3
 %package -n python3-module-%name
 Summary: The Python bindings for the GDAL library
 Group: Development/Python3
@@ -100,7 +95,6 @@ Provides: python3-module-osgeo = %version
 
 %description -n python3-module-%name
 Python module for %name.
-%endif
 
 %if_with perl
 %package -n perl-Geo-GDAL
@@ -118,13 +112,10 @@ Perl modules for GDAL/OGR.
 #patch0 -p1
 %patch2 -p2
 %patch3 -p2
-%patch5 -p2
+#%patch5 -p2
 %patch6 -p2
 %patch7 -p0
 
-%if_with python3
-cp -fR swig/python swig/python3
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
@@ -182,12 +173,9 @@ popd
 make docs
 make -B man
 
-%if_with python3
-pushd swig/python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+pushd swig/python
 %python3_build_debug
 popd
-%endif
 
 %install
 mkdir -p %buildroot%python_sitelibdir
@@ -206,13 +194,11 @@ do
 	chrpath -d $i ||:
 done
 
-%if_with python3
-pushd swig/python3
+pushd swig/python
 %python3_install
 popd
 sed -i 's|__bool__ = __nonzero__||' \
 	%buildroot%python3_sitelibdir/osgeo/ogr.py
-%endif
 
 %files
 %_datadir/%name
@@ -243,12 +229,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 
 %files -n python-module-%name
 %python_sitelibdir/*
-#exclude %python_sitelibdir/[^o]*
 
-%if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/*
-%endif
 
 %if_with perl
 %files -n perl-Geo-GDAL
@@ -259,6 +242,11 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Thu Feb 27 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.0.4-alt1
+- update to 3.0.4
+- unconditional python3
+- stop 2to3 usage
+
 * Thu Apr 25 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt3.1
 - drop unneeded python3-module-BeautifulSoup req
 
