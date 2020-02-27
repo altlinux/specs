@@ -1,6 +1,6 @@
 Name: evz
-Version: 0.3.0
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: OpenVZ control tool
 
@@ -33,13 +33,20 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 #chmod a+x %buildroot%_datadir/%name/{erc-}*
 
 %files
-#doc README LICENSE TODO
+%doc README.md LICENSE
 %_bindir/evz
 %_datadir/%name/
 %_man8dir/*
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Wed Feb 26 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
+- evz: rewrite engines detection
+- evz: add EVZCTL env. to force engine
+- add vboxmanage (VirtualBox) support
+- add show alias for resources
+- add README.md
+
 * Wed Feb 26 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt2
 - drop exclusive arch (no more arch depended deps), set noarch
 
