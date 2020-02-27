@@ -5,8 +5,8 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.24
-%define nss_version   3.49.1
+%define nspr_version  4.25
+%define nss_version   3.49.2
 %define rust_version  1.40.0
 %define cargo_version 1.40.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        72.0.2
+Version:        73.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -46,8 +46,8 @@ Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch009: 0009-ALT-Fix-aarch64-build.patch
-Patch010: 0010-MOZILLA-1568569-Linux-video-is-semi-transparent-on-W.patch
-Patch011: 0011-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch011: 0011-ALT-Remove-deprecated-register-keyword.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -100,14 +100,13 @@ BuildRequires: libdrm-devel
 
 # Python requires
 BuildRequires: /dev/shm
-BuildRequires: python3-base
-BuildRequires: python-module-distribute
+BuildRequires: python2-base
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
-
 
 # Rust requires
 BuildRequires: /proc
@@ -274,17 +273,12 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-#ifnarch %{ix86}
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
-#else
-#export CC="gcc"
-#export CXX="g++"
-#endif
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
@@ -293,10 +287,16 @@ export RUSTFLAGS="-Cdebuginfo=0"
 export MOZ_MAKE_FLAGS="-j10"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
-autoconf old-configure.in > old-configure
-pushd js/src
-autoconf old-configure.in > old-configure
-popd
+./mach configure
+
+# Fix virtualenv
+python_ver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
+python_sitedir="objdir/_virtualenvs/init_py3/lib/$python_ver/site-packages"
+
+if [ -z "$(find "$python_sitedir" -type f -name '*.pth' -print -quit)" ]; then
+	rm -rf -- "$python_sitedir"
+	cp -ar objdir/_virtualenvs/init_py3/lib/python3/site-packages "$python_sitedir/"
+fi
 
 ./mach build
 
@@ -448,6 +448,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Feb 19 2020 Alexey Gladkov <legion@altlinux.ru> 73.0.1-alt1
+- New release (73.0.1).
+
+* Mon Feb 17 2020 Alexey Gladkov <legion@altlinux.ru> 73.0-alt1
+- New release (73.0).
+- Security fixes:
+  + CVE-2020-6796: Missing bounds check on shared memory read in the parent process
+  + CVE-2020-6797: Extensions granted downloads.open permission could open arbitrary applications on Mac OSX
+  + CVE-2020-6798: Incorrect parsing of template tag could result in JavaScript injection
+  + CVE-2020-6799: Arbitrary code execution when opening pdf links from other applications, when Firefox is configured as default pdf reader
+  + CVE-2020-6800: Memory safety bugs fixed in Firefox 73 and Firefox ESR 68.5
+  + CVE-2020-6801: Memory safety bugs fixed in Firefox 73
+
 * Thu Jan 23 2020 Alexey Gladkov <legion@altlinux.ru> 72.0.2-alt1
 - New release (72.0.2).
 - Security fixes:
