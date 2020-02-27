@@ -7,7 +7,7 @@
 
 Name: %oname%itkver
 Version: 4.12.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -41,7 +41,8 @@ Registration is the task of aligning or developing correspondences between \
 data. For example, in the medical environment, a CT scan may be aligned with  \
 a MRI scan in order to combine the information contained in both.
 
-%description %_description
+%description 
+%_description
 
 %package -n lib%oname%itkver
 Summary: Shared libraries for ITK
@@ -199,6 +200,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.%soname
 
 %changelog
+* Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.12.2-alt2
+- rebuild with new gbcm
+
 * Tue Jul 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.2-alt1
 - Built upstream version 4.12.2.
 
