@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200217
+Version: 20200224
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Feb 28 2020 Cronbuild Service <cronbuild@altlinux.org> 20200224-alt1
+- upstream changes (GIT efcfa03):
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + qca: Add firmware files for BT chip wcn3991. (thx Balakrishna Godavarthi)
+
 * Sat Feb 22 2020 Cronbuild Service <cronbuild@altlinux.org> 20200217-alt1
 - upstream changes (GIT 2277987):
   + nvidia: add TU116/117 signed firmware (thx Gourav Samaiya)
