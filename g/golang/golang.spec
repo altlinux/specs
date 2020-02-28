@@ -9,7 +9,7 @@
 # contains binary-like things (ELF data for tests, etc)
 %global _unpackaged_files_terminate_build 1
 
-%global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le
+%global go_arches %ix86 x86_64 aarch64 %arm mipsel ppc64le riscv64
 %global go_root %_libdir/golang
 
 %ifarch x86_64
@@ -30,11 +30,15 @@
 %ifarch ppc64le
 %global go_hostarch  ppc64le
 %endif
+%ifarch riscv64
+%global go_hostarch  riscv64
+%endif
+
 
 %def_disable check
 
 Name:    golang
-Version: 1.13.8
+Version: 1.14
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -287,6 +291,10 @@ mkdir -p -- \
 
 
 %changelog
+* Thu Feb 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.14-alt1
+- 1.14
+- Build on riscv64
+
 * Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.8-alt1
 - 1.13.8
 
