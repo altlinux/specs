@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2
-Release: alt4
+Release: alt5
 
 Summary: A thread debugger
 License: ZPL
@@ -10,11 +10,12 @@ Group: Development/Python3
 Url: http://pypi.python.org/pypi/z3c.deadlockdebugger/
 
 Source: %name-%version.tar
+Patch0: replace-deprecated-module.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-tools-2to3
 
-%py3_requires zope.publisher threadframe
+%py3_requires zope.publisher
 
 
 %description
@@ -22,6 +23,7 @@ The z3c.deadlockdebugger package provides a thread debugger.
 
 %prep
 %setup
+%patch0 -p2
 
 find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
@@ -44,6 +46,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Fri Feb 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt5
+- Deprecated module (threadframe) replaced.
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt4
 - build for python2 disabled
 
