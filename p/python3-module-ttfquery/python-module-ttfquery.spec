@@ -1,15 +1,13 @@
 %define oname TTFQuery
 %define sname ttfquery
 
-%def_with python3
-
-Name: python-module-%sname
+Name: python3-module-%sname
 Version: 1.0.5
-Release: alt2
+Release: alt3
 
 Summary: FontTools-based package for querying system fonts
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD-like
 Url: http://ttfquery.sourceforge.net/
 
@@ -20,41 +18,14 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-%setup_python_module %oname
-
-BuildRequires: python-devel python-module-setuptools python-module-fonttools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools python3-module-fonttools
 BuildPreReq: python-tools-2to3
-%endif
+
+Conflicts: %name < %EVR
+Obsoletes: %name < %EVR
 
 %description
-TTFQuery builds on the FontTools package to allow the Python programmer
-to accomplish a number of tasks:
-
-  * query the system to find installed fonts
-  * retrieve metadata about any TTF font file (even those not yet
-    installed)
-      o abstract family type
-      o proper font name
-      o glyph outlines
-  * build simple metadata registries for run-time font matching
-
-With these functionalities, it is possible to readily
-create OpenGL solid-text rendering libraries which
-can accept abstract font-family names as font specifiers
-and deliver platform-specific TTF files to match those libraries.
-
-TTFQuery doesn't provide rendering services, but a sample
-implementation can be found in the OpenGLContext project, from
-which TTFQuery was refactored.
-
-%package -n python3-module-%sname
-Summary: FontTools-based package for querying system fonts
-Group: Development/Python3
-
-%description -n python3-module-%sname
 TTFQuery builds on the FontTools package to allow the Python programmer
 to accomplish a number of tasks:
 
@@ -78,52 +49,24 @@ which TTFQuery was refactored.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %files
 %doc license.txt doc/index.html
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/%sname/
-%python_sitelibdir/*egg-info/
-
-%if_with python3
-%files -n python3-module-%sname
-%doc license.txt doc/index.html
-%_bindir/*.py3
 %python3_sitelibdir/%sname/
 %python3_sitelibdir/*egg-info/
-%endif
 
 %changelog
+* Fri Feb 28 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt3
+- Drop python2 support.
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt2
 - build from latest https://github.com/mindw/ttfquery
 
