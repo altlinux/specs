@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.1
-Release: alt3
+Release: alt4
 
 Summary: WSGI middleware: debugging utilities
 License: BSD
@@ -18,7 +18,7 @@ Patch0: fix-py3-import.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-tools-2to3 python3-module-sphinx
 
-%py3_requires repoze threadframe paste webob
+%py3_requires repoze paste
 
 
 %description
@@ -101,6 +101,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Fri Feb 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt4
+- Requires fixed.
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt3
 - build for python2 disabled
 
