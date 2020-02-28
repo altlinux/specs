@@ -46,7 +46,7 @@
 
 Name: node
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -270,10 +270,6 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
 mkdir -p %buildroot%nodejs_sitelib/
 
 %makeinstall_std
-install -d %buildroot%_sysconfdir/profile.d
-echo 'export NODE_PATH="%{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules"' >%buildroot%_sysconfdir/profile.d/node.sh
-echo 'setenv NODE_PATH %{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules' >%buildroot%_sysconfdir/profile.d/node.csh
-chmod 0755 %buildroot%_sysconfdir/profile.d/*
 
 %if_without systemuv
 #install development headers
@@ -317,14 +313,15 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 #mkdir -p %buildroot%_datadir/node/
 #tar -zcf %buildroot%_datadir/%name/%name-v%version-headers.tar.gz %name-v%version
 
+ln -s node_modules %buildroot%_prefix/lib/node
 
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
 %dir %nodejs_sitelib
+%_prefix/lib/node
 #%_datadir/systemtap/tapset/node.stp
 %_man1dir/*
-%_sysconfdir/profile.d/*
 
 %files doc
 %doc README.md
@@ -363,6 +360,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Feb 28 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt2
+- drop profile with broken obsoleted NODE_PATH
+- add /usr/lib/node symlink to /usr/lib/node_modules
+
 * Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt1
 - new version 13.9.0 (security fixes)
 - set libicu >= 5.6
