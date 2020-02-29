@@ -1,5 +1,5 @@
 Name: consolelocker
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Daemon to lock console terminal and virtual consoles.
@@ -36,6 +36,11 @@ This package contains a daemon to lock console terminal and virtual consoles.
 %config(noreplace) %_sysconfdir/cron.d/%name
 
 %changelog
+* Sat Feb 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.1.0-alt1
+- Use the vt 63 number instead of the first available
+- Disable oom killing
+- Try to use "who" as fallback
+
 * Wed Jan 03 2018 Alexey Gladkov <legion@altlinux.ru> 1.0.0-alt1
 - New version.
 
