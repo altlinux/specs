@@ -2,7 +2,7 @@
 %define mono_version 4.9.4
 
 Name: wine-vanilla
-Version: 5.2
+Version: 5.3
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -433,6 +433,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
+- new version 5.3
+
 * Mon Feb 17 2020 Vitaly Lipatov <lav@altlinux.ru> 5.2-alt1
 - new version 5.2
 
