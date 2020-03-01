@@ -5,7 +5,7 @@ BuildRequires: %_bindir/flock %_bindir/gunzip %_bindir/less %_bindir/renice %_bi
 %def_with fireqos
 
 Name: firehol
-Version: 3.1.5
+Version: 3.1.6
 Release: alt1
 
 Summary: An easy to use but powerfull iptables stateful firewall
@@ -14,7 +14,7 @@ License: GPL
 Group: System/Configuration/Networking
 Url: http://firehol.org/
 
-# Source0-url: https://github.com/firehol/firehol/releases/download/v%version/firehol-%version.tar.xz
+# Source-url: https://github.com/firehol/firehol/releases/download/v%version/firehol-%version.tar.xz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
@@ -143,6 +143,9 @@ fi
 %doc doc/*
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
+- new version 3.1.6 (with rpmrb script)
+
 * Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 - enable fireqos packing
