@@ -3,7 +3,7 @@
 
 Name: wine-vanilla
 Version: 5.3
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -79,11 +79,6 @@ BuildRequires: perl-XML-Simple
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-# Runtime linking
-Requires: libcups libncurses
-Requires: libXrender libXi libXext libX11 libICE
-Requires: libssl libgnutls30 libpng16 libjpeg
-
 Requires: webclient
 
 Requires: wine-gecko = %gecko_version
@@ -136,6 +131,8 @@ Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
 Requires: winetricks
 
+Conflicts: wine-full
+
 %description full
 Wine meta package. Use it for install all wine subpackages.
 
@@ -163,9 +160,15 @@ Requires: glibc-pthread glibc-nss
 # Runtime linked
 Requires: libcups libncurses
 Requires: libXrender libXi libXext libX11 libICE
-Requires: libssl
+Requires: libXcomposite libXcursor libXinerama libXrandr
+Requires: libssl libgnutls30
+Requires: libpng16 libjpeg libtiff5
+
+# Recommended
+#Requires: libnetapi libunixODBC2 libpcap0.8
+
 Requires: fontconfig libfreetype
-Requires: libpng16 libjpeg
+
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -410,6 +413,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_bindir/winecpp
 %_bindir/winedump
 %_bindir/winemaker
+%_bindir/msidb
 
 %_includedir/wine/
 %_libdir/lib*.so
@@ -433,6 +437,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt2
+- update requires
+
 * Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
 - new version 5.3
 
