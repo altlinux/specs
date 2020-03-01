@@ -1,8 +1,8 @@
 # http://bugzilla.gnome.org/show_bug.cgi?id=347922
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
-Version: 3b5
-Release: alt1.1
+Version: 3b6
+Release: alt1
 
 Summary: platform independent library for scheme
 License: distributable, see individual files for copyright
@@ -122,6 +122,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 3b6-alt1
+- new version 3b6 (with rpmrb script)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3b5-alt1.1
 - NMU: added BR: texinfo
 
