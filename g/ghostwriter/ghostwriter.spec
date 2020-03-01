@@ -1,5 +1,5 @@
 Name: ghostwriter
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Cross-platform, aesthetic, distraction-free Markdown editor
@@ -72,5 +72,8 @@ sed -i 's@appdata/@metainfo/@g' %name.pro
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- new version 1.8.1 (with rpmrb script)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - initial build for ALT Sisyphus
