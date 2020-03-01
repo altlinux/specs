@@ -1,12 +1,14 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 4.9.4
-%define major 5.2
+%define major 5.3
 %define rel %nil
+
+%def_with gtk3
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -69,15 +71,18 @@ BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
-BuildRequires: libusb-devel libieee1284-devel libpcap-devel libkrb5-devel
+BuildRequires: libusb-devel libieee1284-devel libkrb5-devel
 BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
+BuildRequires: libnetapi-devel libpcap-devel 
 #BuildRequires: gstreamer-devel gst-plugins-devel
 # TODO: opencl-headers (autoimports now), osmesa
 
 # Staging part
+%if_with gtk3
 # GTK3 theme support: staging only
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-devel libcairo-devel
+%endif
 BuildRequires: libva-devel
 
 # udev needed for udev version detect
@@ -196,7 +201,17 @@ Requires: glibc-pthread glibc-nss
 # Runtime linked
 Requires: libcups libncurses
 Requires: libXrender libXi libXext libX11 libICE
-Requires: libssl libgnutls30 libpng16 libjpeg
+Requires: libXcomposite libXcursor libXinerama libXrandr
+Requires: libssl libgnutls30
+Requires: libpng16 libjpeg libtiff5
+Requires: libxslt
+%if_with gtk3
+Requires: libcairo libgtk+3
+%endif
+
+# Recommended
+#Requires: libnetapi libunixODBC2 libpcap0.8
+
 # Linked:
 #Requires: fontconfig libfreetype
 
@@ -216,6 +231,7 @@ Conflicts: libwine-vanilla-gl
 
 Requires: libGL
 # wine-staging only
+Requires: libva
 Requires: libtxc_dxtn
 
 %description -n lib%name-gl
@@ -284,6 +300,7 @@ export CC=clang
 	--enable-win64 \
 %endif
 	--disable-tests \
+	%{subst_with gtk3} \
 	--without-gstreamer \
 	--without-oss \
 	--without-capi \
@@ -485,6 +502,13 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.1-alt2
+- add BR: libnetapi-devel
+- add requires for detected libraries
+
+* Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.1-alt1
+- new version 5.3.1 (with rpmrb script)
+
 * Mon Feb 17 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.1-alt1
 - new version 5.2.1 (with rpmrb script)
 
