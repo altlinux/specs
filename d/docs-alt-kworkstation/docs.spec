@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.90
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,12 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Mon Mar 02 2020 Elena Mishina <lepata@altlinux.org> 8.90-alt6
+- desktop-software add ark
+- desktop-software add dolhin hash, encrypt GOST
+- system-management add kde5-kcm-grub2
+- system-management add sessions (sddm, krdc, alt-app-starter)
+
 * Wed Feb 05 2020 Elena Mishina <lepata@altlinux.org> 8.90-alt5
 - update to 8.95
 - update desktop-software section
