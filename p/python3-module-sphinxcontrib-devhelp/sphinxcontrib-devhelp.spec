@@ -1,18 +1,19 @@
-%define  oname sphinxcontrib-qthelp
+%define oname sphinxcontrib-devhelp
 
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.3
+Version: 1.0.2
 Release: alt1
 
-Summary: A sphinx extension which outputs QtHelp document
+Summary: A sphinx extension which outputs Devhelp document
+
 License: BSD-2-Clause
 Group:   Development/Python3
-URL:     https://pypi.org/project/sphinxcontrib-qthelp
+URL:     https://pypi.org/project/sphinxcontrib-devhelp
 
-# https://github.com/sphinx-doc/sphinxcontrib-qthelp
-Source:  %oname-%version.tar
+# https://github.com/sphinx-doc/sphinxcontrib-devhelp
+Source0: %oname-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -47,10 +48,11 @@ py.test3 -vv
 %python3_sitelibdir/*.egg-info
 
 %changelog
-* Mon Mar 02 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
+* Mon Mar 02 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Build new version.
-- Correct license.
+- Change build scheme.
 - Build with check.
+- Fix license.
 
-* Fri Apr 26 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+* Thu Apr 25 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
