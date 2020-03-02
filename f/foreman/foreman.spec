@@ -1,5 +1,5 @@
 Name:          foreman
-Version:       1.22.2
+Version:       1.24.2
 Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
@@ -50,14 +50,10 @@ BuildRequires:      node-sass
 %gem_replace_version rails ~> 5.2.2
 %gem_replace_version graphql ~> 1.9
 %gem_replace_version jquery-ui-rails ~> 6.0
-%gem_replace_version sqlite3 ~> 1.3
 %gem_replace_version patternfly-sass ~> 3.38
 %gem_replace_version fog-core ~> 2.1
-%gem_replace_version fog-ovirt ~> 1.1
-%gem_replace_version fog-google ~> 1.8
-%gem_replace_version deep_cloneable ~> 3.0
 %gem_replace_version turbolinks ~> 5.2
-%gem_replace_version audited ~> 4.8
+%gem_replace_version prometheus-client ~> 2.0
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
 %add_findreq_skiplist *.erb
@@ -143,12 +139,12 @@ exit 0
 %post_service postgresql
 systemctl start postgresql || exit 1
 
-mkdir -m 750 -p %_var/tmp/%name
+mkdir -m 750 -p %_var/tmp/%name/pids %_var/tmp/%name/sockets %_var/tmp/%name/cache
 mkdir -m 750 -p %_cachedir/%name
 ln -sf %_var/tmp/%name %_libdir/%name/tmp
 ln -sf %_cachedir/%name %_var/tmp/%name/cache
-chown _foreman:foreman %_var/tmp/%name
-chown _foreman:foreman %_cachedir/%name
+chown _foreman:foreman %_var/tmp/%name -R
+chown _foreman:foreman %_cachedir/%name -R
 
 export RAILS_ENV=production
 
@@ -207,12 +203,14 @@ if ! psql -U postgres -lqt | cut -d \| -f 1 | grep -qw ${appname}_${RAILS_ENV}; 
    # echo "Initializing database..."
    # We need to run the db:migrate after the install transaction
    # always attempt to reencrypt after update in case new fields can be encrypted
-   bundle exec rake db:create db:migrate db:encrypt_all >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
-   bundle exec rake db:seed >> $datadir/$appname/log/db_seed.log 2>&1 || exit 5
-   bundle exec rake apipie:cache:index >> $datadir/$appname/log/apipie_cache.log 2>&1 || exit 6
-   bundle exec rake tmp:clear >> $datadir/$appname/log/tmp_clear.log 2>&1 || exit 7
+   bundle exec rake db:create >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
 fi
 
+bundle exec rake db:migrate db:encrypt_all >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
+bundle exec rake db:seed >> $datadir/$appname/log/db_seed.log 2>&1 || exit 5
+bundle exec rake apipie:cache:index >> $datadir/$appname/log/apipie_cache.log 2>&1 || exit 6
+bundle exec rake tmp:clear >> $datadir/$appname/log/tmp_clear.log 2>&1 || exit 7
+ 
 if [ -z "$(ls ./public/webpack/*js 2>/dev/null)" ]; then
    # echo "Initializing webpack frontend..."
    bundle exec rake webpack:compile >> $datadir/$appname/log/webpack_compile.log 2>&1 || exit 8
@@ -259,6 +257,11 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 %ruby_ridir/*
 
 %changelog
+* Mon Mar 02 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt1
+- updated (^) 1.22.2 -> 1.24.2
+- updated (^) node modules
+- fixed (!) systemd service file, and spec deps
+
 * Wed Feb 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.22.2-alt1
 - updated (^) 1.22.0 -> 1.22.2
 - added (+) post script condition to initialize the foreman after the db is
