@@ -2,22 +2,25 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.18
+Version: %api_ver.22
 Release: alt1
 Summary: A graph based image processing framework
-License: LGPLv3+/GPLv3+
+License: %gpllgpl3plus
 Group: System/Libraries
 Url: http://www.gimp.org
 
 Source: %rname-%version.tar
 Patch: %rname-%version-alt.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-build-licenses meson
 BuildRequires: asciidoc enscript gcc-c++ graphviz gtk-doc libSDL-devel libavformat-devel libbabl-devel libexiv2-devel
 BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libjpeg-devel libjson-glib-devel
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
 BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
-BuildRequires: python-modules-distutils libpoppler-glib-devel
+BuildRequires: python-module-pygobject3-common-devel libpoppler-glib-devel libspiro-devel liblua-devel libSDL2-devel
+%ifarch %arm aarch64 %ix86 x86_64
+BuildRequires: libluajit-devel
+%endif
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -50,7 +53,6 @@ GObject introspection data for the GEGL library.
 
 %build
 %meson \
-	-Dlua=disabled \
 	-Ddocs=false
 %meson_build -v
 
@@ -58,7 +60,6 @@ GObject introspection data for the GEGL library.
 %meson_install
 
 rm -f %buildroot%_libdir/%rname-%api_ver/*.la
-rm -fr %buildroot%_datadir/%rname-%api_ver
 
 %find_lang %rname-%api_ver
 
@@ -71,6 +72,9 @@ rm -fr %buildroot%_datadir/%rname-%api_ver
 %dir %_libdir/%rname-%api_ver
 %_libdir/%rname-%api_ver/*.so
 %_libdir/%rname-%api_ver/grey2.json
+%ifarch %arm aarch64 %ix86 x86_64
+%_datadir/%rname-%api_ver
+%endif
 
 %files devel
 %_includedir/%rname-%api_ver
@@ -85,6 +89,12 @@ rm -fr %buildroot%_datadir/%rname-%api_ver
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Mon Mar 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.4.22-alt1
+- 0.4.22
+
+* Mon Mar 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.4.20-alt1
+- 0.4.20
+
 * Fri Nov 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.4.18-alt1
 - 0.4.18
 

@@ -1,8 +1,8 @@
 Name: libbabl
-Version: 0.1.72
+Version: 0.1.74
 Release: alt1
 Summary: babl is a dynamic, any to any, pixel format translation library
-License: GPL,LGPL
+License: %lgpl3only
 Group: System/Libraries
 Url: http://www.gegl.org/babl/
 Packager: Valery Inozemtsev <crux@altlinux.ru>
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <crux@altlinux.ru>
 Source: babl-%version.tar
 Patch: babl-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-build-licenses meson
 BuildRequires: git gobject-introspection-devel liblcms2-devel librsvg-utils w3m inkscape ruby ruby-module-date-time
 
 %description
@@ -77,6 +77,9 @@ mkdir .git
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Mar 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.1.74-alt1
+- 0.1.74
+
 * Fri Nov 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 0.1.72-alt1
 - 0.1.72
 
