@@ -1,18 +1,17 @@
 Name: xfce4-clipman-plugin
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/%name
+Vcs: git://git.xfce.org/panel-plugins/xfce4-clipman-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libexo-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
@@ -50,7 +49,7 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %configure \
 	--enable-maintainer-mode \
 	--disable-static \
-	--enable-qrencode \
+	--enable-libqrencode \
 	--enable-debug=minimum
 %make_build
 
@@ -75,6 +74,13 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Mar 02 2020 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
+- Fixed configure option.
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated Url.
+- Updated to 1.4.4.
+
 * Mon Oct 29 2018 Mikhail Efremov <sem@altlinux.org> 1.4.3-alt1
 - Updated to 1.4.3.
 
