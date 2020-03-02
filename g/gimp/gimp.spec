@@ -3,11 +3,11 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gimp
-Version: %ver_major.14
+Version: %ver_major.18
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
-License: GPLv3, LGPL
+License: %gpl3only
 Group: Graphics
 Url: http://www.gimp.org/
 
@@ -22,11 +22,12 @@ Requires: icc-profiles mypaint-brushes
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: bzlib-devel gcc-c++ gtk-doc gvfs intltool libXcursor-devel libXmu-devel libXpm-devel libalsa-devel libexpat-devel
 BuildRequires: libgegl-devel libgexiv2-devel libgs-devel libgudev-devel liblcms2-devel liblzma-devel libmng-devel libmypaint-devel
 BuildRequires: libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkitgtk2-devel libwebp-devel libwmf-devel
-BuildRequires: openexr-devel python-module-pycairo-devel python-module-pygtk-devel xdg-utils pkgconfig(mypaint-brushes-1.0)
-BuildRequires: libpng-devel iso-codes-devel libheif-devel libXfixes-devel
+BuildRequires: openexr-devel xdg-utils pkgconfig(mypaint-brushes-1.0) libpng-devel iso-codes-devel libheif-devel libXfixes-devel
+BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -41,7 +42,7 @@ all with multi-level undo.
 %package -n lib%name
 Summary: GIMP libraries
 Group: System/Libraries
-License: LGPL
+License: %lgpl3only
 Obsoletes: libgimp2 < %version-%release
 Provides: libgimp2 = %version-%release
 
@@ -112,6 +113,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon Mar 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.18-alt1
+- 2.10.18
+
 * Fri Nov 01 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.10.14-alt1
 - 2.10.14
 
