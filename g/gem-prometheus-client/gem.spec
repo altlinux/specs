@@ -1,8 +1,8 @@
 %define        pkgname prometheus-client
 
 Name:          gem-%pkgname
-Version:       0.9.0
-Release:       alt2
+Version:       2.0.0
+Release:       alt1
 Summary:       A suite of instrumentation metric primitivesthat can be exposed through a web services interface
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -55,9 +55,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Mar 02 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- updated (^) 0.9.0 -> 2.0.0
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt2
-- + findreq filter in spec
-- ! spec
+- added (+) findreq filter in spec
+- fixed (!) spec
 
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
