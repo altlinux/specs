@@ -1,7 +1,7 @@
 %define        pkgname dynflow
 
 Name:          ruby-%pkgname
-Version:       1.3.0
+Version:       1.4.2
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
@@ -58,6 +58,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Mar 02 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt1
+- updated (^) 1.3.0 -> 1.4.2
+
 * Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
 - v1.2.3-> v1.3.0
 - fix spec
