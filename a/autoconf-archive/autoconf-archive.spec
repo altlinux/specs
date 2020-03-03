@@ -1,18 +1,19 @@
 Name: autoconf-archive
 Version: 2019.01.06
-Release: alt1
+Release: alt2
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
 License: GPLv3+ with exceptions
 URL: http://www.gnu.org/software/autoconf-archive/
-# git://git.sv.gnu.org/autoconf-archive.git 
+# git://git.sv.gnu.org/autoconf-archive.git
 Source: %name-%version.tar
 Source2: AUTHORS
 Patch: %name-%version-%release.patch
 BuildArch: noarch
 
-BuildRequires: gnulib python-modules
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gnulib
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -24,6 +25,11 @@ supporters of the cause from all over the Internet.
 %prep
 %setup -q
 %patch -p1
+
+sed -i 's|python|python3|' cfg.mk
+
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+    $(find ./ -name '*.py')
 
 # Use fresh bootstrap from gnulib
 mkdir build-aux
@@ -55,6 +61,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 2019.01.06-alt2
+- use python3 for build
+
 * Thu Feb 07 2019 Alexey Shabalin <shaba@altlinux.org> 2019.01.06-alt1
 - 2019.01.06
 
