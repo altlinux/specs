@@ -1,7 +1,8 @@
+%def_disable check
 
 Name: realmd
 Version: 0.16.3
-Release: alt3
+Release: alt4
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -17,8 +18,7 @@ BuildRequires: pkgconfig(libsystemd)
 BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel
 BuildRequires: xsltproc xmlto
-BuildRequires: python-module-argparse
-BuildRequires: python3-devel
+%{?_enable_check:BuildRequires: python3-devel}
 
 %description
 realmd is a DBus system service which manages discovery and enrollment in realms
@@ -52,7 +52,7 @@ applications that use %name.
 %find_lang realmd
 
 %check
-%make_build check
+%make check
 
 %files -f realmd.lang
 %doc AUTHORS COPYING NEWS README
@@ -71,6 +71,10 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 0.16.3-alt4
+- upstream snapshot 517fa766782421302da827278ca17e6b2ad57da3
+- disable check
+
 * Wed Mar 20 2019 Alexey Shabalin <shaba@altlinux.org> 0.16.3-alt3
 - upstream snapshot b6753bd048b4012b11d60c094d1ab6ca181ee50d
 
