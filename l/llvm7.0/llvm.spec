@@ -1,10 +1,10 @@
 %global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt4
+%global rel alt5
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
-%global lld_name lld
+%global lld_name lld%v_major
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
@@ -41,6 +41,7 @@ Patch13: 0001-llvm-nm-Add-portability-as-alias-for-format-posix.patch
 Patch14: lld-7-alt-mipsel-permit-textrels-by-default.patch
 Patch15: lld-rL342604-PPC64-Handle-ppc64le-triple-in-getBitcodeMa.patch
 Patch16: lld-rLLD344747-PPC64-Fix-offset-checks-on-rel24-call-rel.patch
+Patch17: llvm-7-alt-python2.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -185,7 +186,8 @@ Documentation for the Clang compiler front-end.
 Summary: LLD - The LLVM Linker
 License: NCSA
 Group: Development/C
-Provides: lld%v_major = %EVR
+Provides: lld = %EVR
+Obsoletes: lld < %version
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -195,8 +197,9 @@ useful for toolchain developers.
 %package -n %lld_name-devel
 Summary: Header files for LLD
 Group: Development/C
-Provides: lld%v_major-devel = %EVR
+Provides: lld-devel = %EVR
 Requires: %lld_name = %EVR
+Obsoletes: lld-devel < %version
 
 %description -n %lld_name-devel
 This package contains header files for the LLD linker.
@@ -205,7 +208,8 @@ This package contains header files for the LLD linker.
 Summary: Documentation for LLD
 Group: Documentation
 BuildArch: noarch
-Provides: lld%v_major-doc = %EVR
+Provides: lld-doc = %EVR
+Obsoletes: lld-doc < %version
 
 %description -n %lld_name-doc
 Documentation for the LLD linker.
@@ -233,6 +237,7 @@ mv compiler-rt-%version projects/compiler-rt
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 %cmake -G Ninja \
@@ -405,6 +410,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Mar 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 7.0.1-alt5.rel
+- renamed lld to lld7.0 (closes: #38159)
+
 * Wed May 22 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.1-alt4.rel
 - Added mipsel-alt-linux and ppc64le-alt-linux triples support.
 - lld:
