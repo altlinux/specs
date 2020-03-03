@@ -1,5 +1,5 @@
 Name: liri-session
-Version: 0.0.20191017
+Version: 0.0.20191109
 Release: alt1
 
 Summary: The Liri Session
@@ -62,6 +62,9 @@ this package contains development part of %name
 %_pkgconfigdir/Liri1*.pc
 
 %changelog
+* Tue Mar 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191109-alt1
+- updated form upstream git.6a84698
+
 * Fri Nov 01 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191017-alt1
 - updated form upstream git.2840b1b
 
