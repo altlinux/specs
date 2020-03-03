@@ -1,8 +1,14 @@
 %define oname	projectM
 
+%ifarch %arm riscv64
+%def_disable qt
+%else
+%def_enable qt
+%endif
+
 Name: lib%oname
 Version: 2.1.0
-Release: alt13
+Release: alt14
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
@@ -26,8 +32,12 @@ BuildPreReq: doxygen
 
 BuildRequires: cmake gcc-c++ libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXft-devel libXinerama-devel
 BuildRequires: libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libftgl-devel libglew-devel
-BuildRequires: libgomp-devel libxkbfile-devel xorg-xf86vidmodeproto-devel libvisual0.4-devel libqt4-devel libpulseaudio-devel >= 0.9.8
+BuildRequires: libgomp-devel libxkbfile-devel xorg-xf86vidmodeproto-devel libvisual0.4-devel libpulseaudio-devel >= 0.9.8
 BuildRequires: libSDL-devel
+
+%if_enabled qt
+BuildRequires: libqt4-devel
+%endif
 
 %description
 projectM is a reimplementation of Milkdrop under OpenGL. It is an
@@ -76,7 +86,7 @@ libvisual compatible applications.
 Summary: Header files for projectM library
 Group: Development/C
 Requires: %name = %version-%release
-%ifnarch %arm
+%if_enabled qt
 Requires: %name-qt = %version-%release
 %endif
 
@@ -101,11 +111,13 @@ Static projectM library.
 %patch6 -p2
 
 %build
-%cmake -DUSE_FBO:STRING=FALSE \
-%ifarch %arm
--DINCLUDE-PROJECTM-QT:STRING=FALSE \
--DINCLUDE-PROJECTM-PULSEAUDIO:STRING=FALSE
+%cmake \
+	-DUSE_FBO:STRING=FALSE \
+%if_disabled qt
+	-DINCLUDE-PROJECTM-QT:BOOL=FALSE \
+	-DINCLUDE-PROJECTM-PULSEAUDIO:BOOL=FALSE \
 %endif
+	#
 %cmake_build
 
 cd docs && doxygen %oname.dox
@@ -130,7 +142,7 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %dir %_datadir/%oname/shaders/
 %_datadir/%oname/shaders/*
 
-%ifnarch %arm
+%if_enabled qt
 %files qt
 %_libdir/libprojectM-qt.so.*
 
@@ -151,7 +163,7 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 %_includedir/%name/
 %_libdir/libprojectM.so
 %_pkgconfigdir/libprojectM.pc
-%ifnarch %arm
+%if_enabled qt
 %_includedir/%name-qt/
 %_libdir/libprojectM-qt.so
 %_pkgconfigdir/libprojectM-qt.pc
@@ -161,6 +173,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Mon Mar 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.0-alt14
+- Disabled qt frontend on riscv64.
+
 * Thu Feb 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt13
 - no return statement in the non-void function fixed (according g++8)
 
