@@ -1,5 +1,5 @@
 Name: liri-eglfs
-Version: 0.0.20191126
+Version: 0.0.20200222
 Release: alt1
 
 Summary: Qt platform plugin with DRM/KMS support.
@@ -57,6 +57,9 @@ this package contains development part of %name
 %_pkgconfigdir/Liri1PlatformHeaders.pc
 
 %changelog
+* Tue Mar 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200222-alt1
+- updated from git.56a0210
+
 * Tue Nov 26 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191126-alt1
 - updated from git.127e9b5c
 
