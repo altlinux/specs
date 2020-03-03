@@ -4,8 +4,8 @@
 %def_without check
 
 Name:     earlyoom
-Version:  1.3
-Release:  alt2.1
+Version:  1.4
+Release:  alt1
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -38,7 +38,10 @@ sed -e '/systemctl/d' -i Makefile
 sed -e 's/VERSION ?= \$(shell git describe --tags --dirty 2> \/dev\/null)/VERSION = %version/' -i Makefile
 
 %build
-%make_build
+%make_build \
+    PREFIX=%_prefix \
+    SYSCONFDIR=%_sysconfdir \
+    SYSTEMDUNITDIR=%_unitdir
 
 %install
 %makeinstall_std \
@@ -67,6 +70,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/default/%name
 
 %changelog
+* Tue Mar 03 2020 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
+- new version 1.4
+
 * Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 1.3-alt2.1
 - Disable check
 
