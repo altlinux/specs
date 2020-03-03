@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-atk
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -84,6 +84,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
+- 2.34.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
 - 2.34.1
 

@@ -9,12 +9,12 @@
 %def_disable quvi
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
-License: GPL
+License: LGPL-2.0
 Url: http://www.hadess.net/%_name.php3
 
 #Source: %_name-%version.tar
@@ -117,6 +117,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt1
+- 3.26.5
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
 - 3.26.4
 
