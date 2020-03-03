@@ -1,8 +1,7 @@
 %define soversion 0
-%define inih_commit 745ada6724038cde32ff6390b32426cbdd5e532b
 
 Name: gamemode
-Version: 1.5
+Version: 1.5.1
 Release: alt1
 
 Summary: Optimise Linux system performance on demand 
@@ -12,13 +11,13 @@ Group: Games/Other
 Url: https://github.com/FeralInteractive/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: https://github.com/FeralInteractive/%name/archive/%version/%name-%version.tar.gz
-Source1: https://github.com/FeralInteractive/inih/archive/%inih_commit/inih-%inih_commit.tar.gz
+Source: %url/archive/%version/%name-%version.tar.gz
 
 Requires: lib%name%soversion = %EVR
 
 BuildRequires: cmake
 BuildRequires: libdbus-devel
+BuildRequires: libinih-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libsystemd-devel
 BuildRequires: meson
@@ -52,8 +51,7 @@ Group: Development/C
 Development files for GameMode
 
 %prep
-%setup -b 1
-%__mv -Tf ../inih-%inih_commit subprojects/inih
+%setup
 
 %build
 %meson
@@ -61,11 +59,14 @@ Development files for GameMode
 
 %install
 %meson_install
+%__install -Dp -m0644 example/%name.ini %buildroot%_datadir/%name/%name.ini
 
 %files
 %doc LICENSE.txt README.md
-%_bindir/gamemoded
-%_bindir/gamemoderun
+%_bindir/%{name}d
+%_bindir/%{name}run
+%dir %_datadir/%name
+%_datadir/%name/%name.ini
 %_datadir/dbus-1/services/com.feralinteractive.GameMode.service
 %_datadir/polkit-1/actions/com.feralinteractive.GameMode.policy
 %_libexecdir/cpugovctl
@@ -85,6 +86,10 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Wed Mar 04 2020 Nazarov Denis <nenderus@altlinux.org> 1.5.1-alt1
+- Version 1.5.1
+- Use shared inih library
+
 * Tue Feb 18 2020 Nazarov Denis <nenderus@altlinux.org> 1.5-alt1
 - Initial build for ALT Linux
 
