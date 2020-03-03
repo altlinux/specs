@@ -2,7 +2,7 @@
 
 Name: partitionmanager
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: KDE Partition Manager
 License: GPLv3
@@ -14,7 +14,7 @@ Source: https://download.kde.org/stable/partitionmanager/%version/src/%name-%ver
 
 %K5init no_altplace appdata
 
-Requires: lvm2 cryptsetup
+Requires: qca-qt5-ossl lvm2 cryptsetup
 
 %define qt_ver 5.7.0
 %define kpmcore_ver 4.1.0
@@ -57,6 +57,9 @@ file systems.
 %doc README* TODO
 
 %changelog
+* Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt2
+- qca-qt5-ossl required (ALT #38105)
+
 * Mon Feb 10 2020 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
