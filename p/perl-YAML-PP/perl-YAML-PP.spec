@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name YAML-PP
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Carp.pm) perl(Cpanel/JSON/XS.pm) perl(Data/Dump.pm) perl(Data/Dumper.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/All.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(JSON.pm) perl(JSON/PP.pm) perl(JSON/XS.pm) perl(MIME/Base64.pm) perl(Module/Load.pm) perl(Mojo/JSON.pm) perl(Mojolicious.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(Text/Table.pm) perl(URI/Escape.pm) perl(YAML.pm) perl(YAML/Syck.pm) perl(YAML/Tiny.pm) perl(YAML/XS.pm) perl(base.pm) perl(blib.pm) perl(boolean.pm) perl(constant.pm) perl(lib.pm) perl(overload.pm)
 BuildRequires: perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.020
+Version: 0.021
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
@@ -48,6 +48,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
+- automated CPAN update
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1
 - automated CPAN update
 
