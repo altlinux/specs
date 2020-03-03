@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name gst-python
 %define ver_major 1.16
 %define gst_api_ver 1.0
@@ -12,17 +14,21 @@
 
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: http://gstreamer.freedesktop.org/
 
 Provides: %_name = %version-%release
 Provides: python-module-gst = %version-%release
 
+%if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 Patch: %name-1.5.2-python-libs.patch
 
 BuildRequires(pre): rpm-build-gir rpm-build-python3 rpm-macros-valgrind
@@ -104,6 +110,9 @@ popd
 %doc AUTHORS NEWS
 
 %changelog
+* Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt2
+- updated to 1.16.2-1-g22f2815 (fixed build with python-3.8)
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
