@@ -3,14 +3,15 @@
 %def_enable gtk_doc
 %def_enable docbook_docs
 %def_enable check
+%def_enable man
 
 Name: libnotify
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Desktop notification library
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: http://www.gnome.org
 
 # https://gitlab.gnome.org/GNOME/libnotify.git
@@ -26,6 +27,7 @@ BuildRequires: libgio-devel
 %{?_enable_docbook_docs:BuildRequires: xmlto}
 %{?_enable_check:BuildRequires: libgtk+3-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
+%{?_enable_man:BuildRequires: xsltproc docbook5-style-xsl}
 
 %description
 The library that allows applications post notifications on the desktop
@@ -93,7 +95,8 @@ the command line.
 	%{?_disable_gtk_doc:-Dgtk_doc=false} \
 	%{?_disable_docbook_docs:-Ddocbook_docs=false} \
 	%{?_disable_introspection:-Dintrospection=disabled} \
-	%{?_disable_check:-Dtests=false}
+	%{?_disable_check:-Dtests=false} \
+	%{?_disable_man:-Dman=false}
 %meson_build
 
 %install
@@ -104,10 +107,11 @@ the command line.
 
 %files
 %_libdir/*.so.*
-%doc NEWS README
+%doc NEWS
 
 %files -n notify-send
 %_bindir/notify-send
+%{?_enable_man:%_man1dir/notify-send.1.*}
 
 %files devel
 %_libdir/*.so
@@ -131,6 +135,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
+- 0.7.9
+
 * Fri Apr 05 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
 - 0.7.8 (ported to Meson build system)
 
