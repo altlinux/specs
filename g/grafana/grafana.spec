@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit 67bad726f12efb21893c75c141f2330a4a3cbe2a
+%global commit 3fa63cfc34668781c7f9b3caafe6d9d400b06b7f
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,8 +12,8 @@
 
 
 Name:		grafana
-Version:	6.3.5
-Release:	alt2
+Version:	6.6.2
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -31,9 +31,9 @@ Source104: %name.tmpfiles
 
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: npm yarn
-BuildRequires: node node-devel
+BuildRequires: node node-devel node-gyp node-sass libsass
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
 
@@ -61,11 +61,16 @@ mkdir -p node_modules/.node-gyp/$node_ver/include
 ln -s %_includedir/node node_modules/.node-gyp/$node_ver/include/node
 echo "9" > node_modules/.node-gyp/$node_ver/installVersion
 
+ln -sf %nodejs_sitelib/node-gyp node_modules/node-gyp
+ln -sf %nodejs_sitelib/node-sass node_modules/node-sass
+ln -sf %nodejs_sitelib/npm node_modules/npm
+
 %build
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GOFLAGS="-mod=vendor"
 export npm_config_devdir="$PWD/node_modules/.node-gyp"
 
 %golang_prepare
@@ -76,22 +81,29 @@ export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
 
-npm rebuild
-npm run build
+#npm rebuild
+#npm run build
+go run build.go build-frontend
 
+#GO111MODULE=off CGO_ENABLED=1 go run build.go build
 #%%golang_build pkg/cmd/*
-GO111MODULE=off CGO_ENABLED=1 go install -ldflags " -s -w  \
+CGO_ENABLED=1 go install -ldflags " -s -w  \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
-    -X main.branch=$BRANCH \
-    " -a ./...
+    -X main.buildBranch=$BRANCH \
+    " -a ./pkg/cmd/grafana-server
+
+CGO_ENABLED=1 go install -ldflags " -s -w  \
+    -X main.version=$VERSION \
+    -X main.commit=$COMMIT \
+    -X main.buildBranch=$BRANCH \
+    " -a ./pkg/cmd/grafana-cli
 
 %install
 export BUILDDIR="$PWD/.gopath"
-#export GOPATH="%go_path"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path:$PWD"
-
+export GOFLAGS="-mod=vendor"
 
 pushd .gopath/src/%import_path
 # Install Front-end Assets
@@ -164,6 +176,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Mar 02 2020 Alexey Shabalin <shaba@altlinux.org> 6.6.2-alt1
+- 6.6.2
+
 * Sat Sep 07 2019 Alexey Shabalin <shaba@altlinux.org> 6.3.5-alt2
 - fixed perm of /run/grafana in tmpfiles config
 - not package /run/grafana
