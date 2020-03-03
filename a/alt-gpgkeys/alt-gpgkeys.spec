@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.168
+Version: 0.7.169
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,12 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Tue Mar 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.169-alt1
+- Updated expired key: ildar@ (799AEF89; closes: #22294).
+- Added keys:
+  + pav@ (0C72E18D; see #38059);
+  + rav263@ (119B912B; see #37984).
+
 * Fri Jan 31 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.168-alt1
 - Replaced key: snowmix@ (4DE2462A -> E2F5E034; closes: #37955).
 - Updated key: bircoph@ (5372756C; closes: #37932).
