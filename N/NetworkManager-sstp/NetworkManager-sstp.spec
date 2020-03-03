@@ -9,7 +9,7 @@
 
 Name: NetworkManager-sstp
 Version: 1.2.6
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -17,6 +17,7 @@ Summary:  NetworkManager VPN plugin for SSTP
 Url: https://github.com/enaess/network-manager-sstp/
 
 Source: %name-%version.tar
+Patch100: 0001-Fixing-up-a-compiler-warning-that-broke-the-build-for-Eoan.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -57,7 +58,7 @@ NetworkManager panel applet.
 
 %prep
 %setup
-#%patch -p1
+%patch100 -p1
 
 %build
 rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
@@ -102,6 +103,9 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Mar 03 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.6-alt2
+- fixed build
+
 * Tue Oct 16 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.6-alt1
 - 1.2.6
 
