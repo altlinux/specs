@@ -6,7 +6,7 @@
 
 Name: vlc
 Version: 3.0.8
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -15,6 +15,7 @@ Group: Video
 Url: http://www.videolan.org
 Source: vlc-%version.tar
 Patch: vlc-3.0.6-alt-e2k-lcc123.patch
+Patch1: 0001-configure-fix-linking-on-RISC-V-ISA.patch
 
 BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
@@ -649,6 +650,7 @@ sed -i 's,const ATTR_USED,const,' modules/video_filter/deinterlace/yadif.h
 # modules/demux/adaptive/PlaylistManager.cpp:638: undefined reference to `__pthread_register_cancel' ...
 %add_optflags -pthread
 %endif
+%patch1 -p1
 
 %build
 %add_optflags -I%_includedir/samba-4.0
@@ -1407,6 +1409,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Mar 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.8-alt2
+- Fixed build on riscv64.
+
 * Thu Aug 15 2019 Anton Farygin <rider@altlinux.ru> 3.0.8-alt1
 - 3.0.8
 
