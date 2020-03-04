@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.4
-%define module_release	alt2
+%define module_release	alt3
 
 %define flavour		un-def
 %define karch %ix86 x86_64
@@ -51,7 +51,12 @@ Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %versio
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
 Obsoletes: kernel-modules-%vfs_module_name-%flavour
 
+Provides: kernel-modules-%module_name-video-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-video-%flavour = %version-%release
 Obsoletes: kernel-modules-%module_name-video-%flavour
+
+Provides: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-guest-%flavour = %version-%release
 Obsoletes: kernel-modules-%module_name-guest-%flavour
 
 %requires_kimage
@@ -132,6 +137,11 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt3
+- Added provides for obsoletes separated packages:
+ + kernel-modules-virtualbox-addtition-video-FLAVOUR
+ + kernel-modules-virtualbox-addtition-guest-FLAVOUR
 
 * Tue Feb 25 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt2
 - Fixed build with kernel-5.5 using KBUILD_EXTRA_SYMBOLS environment variable
