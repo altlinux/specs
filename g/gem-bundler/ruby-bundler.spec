@@ -1,13 +1,13 @@
 %define        pkgname bundler
 
-Name:          ruby-%pkgname
-Version:       2.0.2
-Release:       alt2
+Name:          gem-%pkgname
+Version:       2.1.4
+Release:       alt1
 Summary:       Manage your Ruby application's gem dependencies
 License:       MIT
 Group:         Development/Ruby
 Url:           https://bundler.io/
-%vcs           https://github.com/bundler/bundler.git
+Vcs:           https://github.com/bundler/bundler.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -15,7 +15,10 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(ronn)
 BuildRequires: groff-base
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 Bundler makes sure Ruby applications run the same code on every machine.
@@ -83,14 +86,18 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.4-alt1
+- updated (^) 2.0.2 -> 2.1.4
+- fixed (!) spec
+
 * Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt2
-- ! spec according changelog policy
-- + ignore templates gemfile
+- added (+) ignore templates gemfile
+- fixed (!) spec according changelog policy
 
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt1
-- ^ v2.0.2
-- ! spec
-- - findreq build error
+- updated (^) 2.0.1 -> 2.0.2
+- fixed (!) spec
+- removed (-) findreq build error
 
 * Mon Mar 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt2
 - Use Ruby Policy 2.0.

@@ -1,23 +1,26 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname yard-sitemap
+%define        pkgname websocket
 
 Name:          gem-%pkgname
-Version:       1.0.1
-Release:       alt1.2
-Summary:       A YARD plugin to build a sitemap.xml for generated HTML documentation
+Version:       1.2.8
+Release:       alt1
+Summary:       Universal Ruby library to handle WebSocket protocol
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/lsegal/yard-sitemap
-Vcs:           https://github.com/lsegal/yard-sitemap.git
+Url:           https://github.com/imanel/websocket-ruby
+Vcs:           https://github.com/imanel/websocket-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary.
+Universal Ruby library to handle WebSocket protocol. It focuses on providing
+abstraction layer over WebSocket API instead of providing server or client
+functionality.
 
 
 %package       doc
@@ -55,11 +58,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.2
-- fixed (!) spec
-
-* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
-- fixed (!) spec according to changelog rules
-
-* Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
-- added (+) packaged gem with the Ruby Policy 2.0 usage
+* Tue Mar 03 2020 Pavel Skrylev <majioa@altlinux.org> 1.2.8-alt1
+- added (+) packaged gem with usage Ruby Policy 2.0

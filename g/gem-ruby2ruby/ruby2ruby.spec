@@ -1,13 +1,13 @@
 %define        pkgname ruby2ruby
 
-Name:          %pkgname
-Version:       2.4.3
-Release:       alt1.1
+Name:          gem-%pkgname
+Version:       2.4.4
+Release:       alt1
 Summary:       ruby2ruby provides a means of generating pure ruby code easily from RubyParser compatible Sexps
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/seattlerb/ruby2ruby
-%vcs           https://github.com/seattlerb/ruby2ruby.git
+Vcs:           https://github.com/seattlerb/ruby2ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,7 +16,10 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(sexp_processor)
 BuildRequires: gem(parser)
 BuildRequires: gem(hoe)
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     %pkgname
+Provides:      %pkgname
 
 %description
 ruby2ruby provides a means of generating pure ruby code easily from
@@ -54,7 +57,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use ruby2ruby --prefixes=
+%ruby_build
 
 %install
 %ruby_install
@@ -74,13 +77,17 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.4-alt1
+- updated (^) 2.4.3 -> 2.4.4
+- fixed (-) spec
+
 * Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt1.1
-- ! spec according to changelog rules
+- fixed (!) spec according to changelog rules
 
 * Tue Aug 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt1
-- ^ v2.4.3
-- ! spec
-- + rpm "r2r_show" build
+- updated (^) 2.4.2 -> 2.4.3
+- added (+) rpm "r2r_show" build
+- fixed (!) spec
 
 * Sat Mar 23 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.2-alt2
 - Use Ruby Policy 2.0

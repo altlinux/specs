@@ -1,20 +1,22 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname yard-sitemap
+%define        pkgname formatador
 
 Name:          gem-%pkgname
-Version:       1.0.1
-Release:       alt1.2
-Summary:       A YARD plugin to build a sitemap.xml for generated HTML documentation
+Version:       0.2.5
+Release:       alt2.1
+Summary:       Stdout text formatting
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/lsegal/yard-sitemap
-Vcs:           https://github.com/lsegal/yard-sitemap.git
+Url:           https://github.com/geemus/formatador
+Vcs:           https://github.com/geemus/formatador.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 %summary.
@@ -37,7 +39,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -55,11 +57,14 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.2
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.5-alt2.1
 - fixed (!) spec
 
-* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
-- fixed (!) spec according to changelog rules
+* Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.2.5-alt2
+- used (>) Ruby Policy 2.0
 
-* Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
-- added (+) packaged gem with the Ruby Policy 2.0 usage
+* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1.1
+- Rebuild for new Ruby autorequirements.
+
+* Fri May 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1
+- Initial build for Sisyphus
