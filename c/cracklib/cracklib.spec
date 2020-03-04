@@ -3,7 +3,7 @@
 
 Name: cracklib
 Version: 2.9.7
-Release: alt2.1
+Release: alt3
 
 Summary: A password-checking library.
 License: LGPL-2.1-or-later
@@ -15,7 +15,8 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 Requires: %name-utils = %version-%release
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libX11-devel libICE-devel
+BuildRequires: python3-devel
+BuildRequires: libX11-devel libICE-devel
 BuildRequires: zlib-devel
 %{?_enable_python2:BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel}
@@ -78,12 +79,15 @@ This package includes Python3 module for Cracklib.
 
 %prep
 %setup -n %name-%version
+%autopatch -p1
 %{?_enable_python2:%setup -D -c -n %name-%version
-mv %name-%version py2build}
+mv %name-%version py2build
+%autopatch -p1}
 
 %build
 export PYTHON=python3
 export am_cv_python_version=%__python3_version%_python3_abiflags
+%add_optflags `pkg-config --cflags python3`
 %autoreconf
 %configure \
 	--disable-static
@@ -159,6 +163,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 
 %changelog
+* Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt3
+- small spec tweaks for build with Python-3.8
+
 * Sat Feb 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt2.1
 - fixed build of python2 module
 
