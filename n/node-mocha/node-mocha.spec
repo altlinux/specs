@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-mocha
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
@@ -74,5 +74,8 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Wed Mar 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt1
+- new version 7.1.0 (with rpmrb script)
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
 - initial build for ALT Sisyphus
