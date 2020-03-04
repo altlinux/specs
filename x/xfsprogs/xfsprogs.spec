@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -22,9 +22,9 @@ BuildPreReq: rpm-build >= 4.0.4-alt96.11
 # makefiles are buggy
 BuildConflicts: libxfs-devel
 
-# Automatically added by buildreq on Wed May 27 2009 (-bi)
 BuildRequires: libuuid-devel libblkid-devel 
 BuildRequires: libsystemd-devel rpm-build-python3
+BuildRequires: libinih-devel
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -146,6 +146,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Mon Dec 14 2020 Anton Farygin <rider@altlinux.ru> 5.10.0-alt1
+- 5.10.0
+
 * Thu Nov 05 2020 Anton Farygin <rider@altlinux.ru> 5.9.0-alt1
 - 5.9.0
 
