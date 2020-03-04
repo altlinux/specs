@@ -1,19 +1,22 @@
 %define        pkgname rbvmomi
 
-Name:          ruby-%pkgname
-Version:       2.2.0
+Name:          gem-%pkgname
+Version:       2.3.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API.
 Summary(ru_RU.UTF8): Ruby интерфейс к API VMware vSphere.
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/vmware/rbvmomi
-%vcs           https://github.com/vmware/rbvmomi.git
+Vcs:           https://github.com/vmware/rbvmomi.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 RbVmomi is a Ruby interface to the vSphere API. Like the Perl and Java SDKs,
@@ -79,16 +82,20 @@ Executable file for %gemname gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.3.0-alt1
+- updated (^) 2.2.0 -> 2.3.0
+- fixed (!) spec
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt1
-- ^ v2.2.0
-- ! spec
+- updated (^) 2.1.2 -> 2.2.0
+- fixed (!) spec
 
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
-- ^ v2.1.2
+- updated (^) 1.13.0 -> 2.1.2
 
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt2
-- ^ Ruby Policy 2.0
-- - bug closes(#36334)
+- moved to (>) Ruby Policy 2.0
+- removed (-) bug (closes #36334)
 
 * Thu Aug 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt1
 - Initial build for Sisyphus

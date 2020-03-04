@@ -1,13 +1,13 @@
 %define        pkgname posix-spawn
 
-Name:          ruby-%pkgname
+Name:          gem-%pkgname
 Version:       0.3.13
-Release:       alt2.2
+Release:       alt2.3
 Summary:       Ruby process spawning library
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/rtomayko/posix-spawn
-%vcs           https://github.com/rtomayko/posix-spawn.git
+Vcs:           https://github.com/rtomayko/posix-spawn.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -15,6 +15,8 @@ Patch:         upstream-fix-build-on-i586.patch
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 %summary.
@@ -45,8 +47,6 @@ Executables files for %gemname gem.
 Summary:       Documentation files for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
-Provides:      ruby-%pkgname-doc
-Obsoletes:     ruby-%pkgname-doc
 
 %description   -n gem-%pkgname-doc
 Documentation files for %gemname gem.
@@ -79,14 +79,17 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.3
+- fixed (!) spec
+
 * Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.2
-- ! spec according to changelog rules
+- fixed (!) spec according to changelog rules
 
 * Thu Aug 01 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2.1
-- ! spec
+- fixed (!) spec
 
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt2
-- Use Ruby Policy 2.0
+- used (>) Ruby Policy 2.0
 
 * Fri Jun 15 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.13-alt1
 - Initial build for Sisyphus

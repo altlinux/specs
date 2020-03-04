@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       3.59.4
-Release:       alt2
+Release:       alt2.1
 Summary:       Red Hat's Patternfly, converted to Sass and ready to drop into Rails
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://www.patternfly.org/
-%vcs           https://github.com/patternfly/patternfly.git
+Vcs:           https://github.com/patternfly/patternfly.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -61,12 +61,15 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.59.4-alt2.1
+- fixed (!) changelog syntax
+
 * Thu Sep 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.59.4-alt2
-- + lost package.json to gem file list in gemspec
+- added (+) lost package.json to gem file list in gemspec
 
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.59.4-alt1
-- ^ v3.59.4
-- ! spec
+- updated (^) 3.59.1 -> 3.59.4
+- fixed (!) spec
 
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 3.59.1-alt1
-- + initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+- added (+) package as a gem with usage Ruby Policy 2.0.

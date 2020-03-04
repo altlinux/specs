@@ -3,13 +3,13 @@
 %define        gemname selenium-webdriver
 
 Name:          selenium
-Version:       3.141.59
+Version:       3.142.7
 Release:       alt1
 Summary:       A browser automation framework and ecosystem
 License:       Apache-2.0
 Group:         Development/Tools
 Url:           https://www.seleniumhq.org
-%vcs           https://github.com/SeleniumHQ/selenium.git
+Vcs:           https://github.com/SeleniumHQ/selenium.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -17,7 +17,6 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-%gem_replace_version childprocess ~> 2.0
 Requires:      gem-%pkgname = %version
 
 %description
@@ -69,6 +68,7 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 
 %files         -n gem-%pkgname
 %doc README*
@@ -80,5 +80,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.142.7-alt1
+- updated (^) 3.141.59 -> 3.142.7
+- changed (*) spec
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 3.141.59-alt1
-- + initial build with a packaged gem with usage Ruby Policy 2.0
+- added (+) initial build with a packaged gem with usage Ruby Policy 2.0

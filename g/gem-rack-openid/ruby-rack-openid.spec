@@ -1,20 +1,22 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname yard-sitemap
+%define        pkgname rack-openid
 
 Name:          gem-%pkgname
-Version:       1.0.1
-Release:       alt1.2
-Summary:       A YARD plugin to build a sitemap.xml for generated HTML documentation
+Version:       1.4.2
+Release:       alt2.1
+Summary:       Provides a more HTTPish API around the ruby-openid library
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/lsegal/yard-sitemap
-Vcs:           https://github.com/lsegal/yard-sitemap.git
+Url:           https://github.com/grosser/rack-openid
+Vcs:           https://github.com/grosser/rack-openid.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 %summary.
@@ -46,7 +48,7 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc Readme*
 %ruby_gemspec
 %ruby_gemlibdir
 
@@ -55,11 +57,14 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.2
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt2.1
 - fixed (!) spec
 
-* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
-- fixed (!) spec according to changelog rules
+* Wed Sep 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt2
+- used (>) Ruby Policy 2.0
 
-* Fri Aug 02 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
-- added (+) packaged gem with the Ruby Policy 2.0 usage
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1.1
+- Rebuild with new Ruby autorequirements.
+
+* Fri Jun 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- Initial build for Sisyphus (without tests).
