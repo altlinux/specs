@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.4
-%define module_release	alt3
+%define module_release	alt4
 
 %define flavour		un-def
 %define karch %ix86 x86_64
@@ -49,15 +49,15 @@ Provides: kernel-modules-%video_module_name-%flavour = %version-%release
 
 Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %version-%release
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
-Obsoletes: kernel-modules-%vfs_module_name-%flavour
+Obsoletes: kernel-modules-%vfs_module_name-%flavour < %version-%release
 
 Provides: kernel-modules-%module_name-video-%kversion-%flavour-%krelease = %version-%release
 Provides: kernel-modules-%module_name-video-%flavour = %version-%release
-Obsoletes: kernel-modules-%module_name-video-%flavour
+Obsoletes: kernel-modules-%module_name-video-%flavour < %version-%release
 
 Provides: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease = %version-%release
 Provides: kernel-modules-%module_name-guest-%flavour = %version-%release
-Obsoletes: kernel-modules-%module_name-guest-%flavour
+Obsoletes: kernel-modules-%module_name-guest-%flavour < %version-%release
 
 %requires_kimage
 ExclusiveArch: %karch
@@ -137,6 +137,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt4
+- Fix obsoletes own provides without version
 
 * Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt3
 - Added provides for obsoletes separated packages:
