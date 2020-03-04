@@ -1,5 +1,5 @@
 Name: hass
-Version: 0.104.3
+Version: 0.106.5
 Release: alt1
 
 Summary: Home automation platform
@@ -15,7 +15,12 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %package core
 Summary: Home automation platform
 Group: System/Servers
-Requires: python3-module-hass-frontend >= 20200108.2
+Requires: python3-module-yaml >= 5.3
+Requires: python3-module-pip >= 8.0.3
+Requires: python3-module-astral >= 1.10.1
+Requires: python3-module-text-unidecode >= 1.3
+Requires: python3-module-aiohttp-cors >= 0.7.0
+Requires: python3-module-hass-frontend >= 20200220.5
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -78,6 +83,12 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Mar 04 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.106.5-alt1
+- 0.106.5 released
+
+* Wed Feb 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.105.3-alt1
+- 0.105.3 released
+
 * Wed Jan 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.104.3-alt1
 - 0.104.3 released
 
