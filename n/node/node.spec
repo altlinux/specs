@@ -46,7 +46,7 @@
 
 Name: node
 Version: %major.0
-Release: alt2
+Release: alt3
 
 Summary: Evented I/O for V8 Javascript
 
@@ -226,6 +226,9 @@ ln -s %_libexecdir/node_modules/npm deps/npm
 %__subst "s|'libraries': \[\],|'libraries': ['-latomic'],|" ./configure.py
 %endif
 
+# override detected dir (detection via process.execPath does not work without /proc) with corect path
+%__subst "s|path.resolve(prefixDir, 'lib', 'node')|'%nodejs_sitelib'|" lib/internal/modules/cjs/loader.js
+
 %build
 # hack against
 # gyp: Error importing pymod_do_mainmodule (GN-scraper): No module named GN-scraper while loading dependencies of /tmp/.private/lav/RPM/BUILD/node-12.14.1/node.gyp
@@ -313,13 +316,13 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 #mkdir -p %buildroot%_datadir/node/
 #tar -zcf %buildroot%_datadir/%name/%name-v%version-headers.tar.gz %name-v%version
 
-ln -s node_modules %buildroot%_prefix/lib/node
+#ln -s node_modules %buildroot%_prefix/lib/node
 
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
 %dir %nodejs_sitelib
-%_prefix/lib/node
+#_prefix/lib/node
 #%_datadir/systemtap/tapset/node.stp
 %_man1dir/*
 
@@ -360,6 +363,9 @@ ln -s node_modules %buildroot%_prefix/lib/node
 %endif
 
 %changelog
+* Tue Mar 03 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt3
+- use direct /usr/lib/node_modules instead of detected prefix/lib/node
+
 * Fri Feb 28 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt2
 - drop profile with broken obsoleted NODE_PATH
 - add /usr/lib/node symlink to /usr/lib/node_modules
