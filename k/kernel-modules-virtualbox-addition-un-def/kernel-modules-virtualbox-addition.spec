@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.4
-%define module_release	alt4
+%define module_release	alt5
 
 %define flavour		un-def
 %define karch %ix86 x86_64
@@ -51,18 +51,13 @@ Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %versio
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
 Obsoletes: kernel-modules-%vfs_module_name-%flavour < %version-%release
 
-Provides: kernel-modules-%module_name-video-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%module_name-video-%flavour = %version-%release
-Obsoletes: kernel-modules-%module_name-video-%flavour < %version-%release
-
-Provides: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%module_name-guest-%flavour = %version-%release
-Obsoletes: kernel-modules-%module_name-guest-%flavour < %version-%release
-
-%requires_kimage
+# Don't use requires_kimage macros due it clean from requires
+Requires: %kimage
 ExclusiveArch: %karch
 
 Requires: virtualbox-guest-common = %module_version
+Requires: kernel-modules-%module_name-video-%flavour = %version-%release
+Requires: kernel-modules-%module_name-guest-%flavour = %version-%release
 
 %description
 This package contains VirtualBox addition modules (vboxguest, vboxsf)
@@ -74,8 +69,10 @@ Summary: VirtualBox video modules
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 %requires_kimage
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
+
+Requires: virtualbox-guest-common = %module_version
 
 %description -n kernel-modules-%module_name-video-%flavour
 This package contains VirtualBox addition vboxvideo module
@@ -89,8 +86,10 @@ Summary: VirtualBox guest modules
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 %requires_kimage
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
+
+Requires: virtualbox-guest-common = %module_version
 
 %description -n kernel-modules-%module_name-guest-%flavour
 This package contains VirtualBox addition vboxvideo module
@@ -133,10 +132,23 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %files
 %defattr(644,root,root,755)
 %module_dir
+%exclude %module_dir/vboxvideovbox.ko
+%exclude %module_dir/vboxguestvbox.ko
+
+%files -n kernel-modules-%module_name-guest-%flavour
+%module_dir/vboxguestvbox.ko
+
+%files -n kernel-modules-%module_name-video-%flavour
+%module_dir/vboxvideovbox.ko
 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt5
+- Revert separated modules for compatibility with update-kernel:
+ + kernel-modules-virtualbox-addtition-video-FLAVOUR
+ + kernel-modules-virtualbox-addtition-guest-FLAVOUR
 
 * Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt4
 - Fix obsoletes own provides without version
