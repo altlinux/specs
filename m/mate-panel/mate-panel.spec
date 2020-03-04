@@ -1,6 +1,6 @@
 Name: mate-panel
 Version: 1.24.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop panel and applets
 License: GPLv2+
@@ -13,6 +13,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common gtk-doc libSM-devel libXi-devel libXrandr-devel libdbus-glib-devel libdconf-devel
 BuildRequires: libmateweather-devel librsvg-devel libwnck3-devel mate-desktop-devel mate-menus-devel yelp-tools
+BuildRequires: libgtk-layer-shell-devel
 
 %description
 MATE Desktop panel applets
@@ -44,6 +45,7 @@ Development files for mate-panel
 	--disable-static \
 	--disable-gtk-doc \
 	--disable-schemas-compile \
+	--enable-wayland \
 	--enable-introspection \
 	--with-in-process-applets=clock,notification-area,wncklet
 
@@ -83,6 +85,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Wed Mar 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.24.0-alt2
+- enable Wayland support
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.24.0-alt1
 - 1.24.0
 
