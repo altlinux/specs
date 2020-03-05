@@ -1,5 +1,5 @@
 Name: libxcb
-Version: 1.13.1
+Version: 1.14
 Release: alt1
 Summary: The X C Binding (XCB) library
 License: MIT/X11
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen fonts-ttf-freefont graphviz libXau-devel libXdmcp-devel pkgconfig(xcb-proto) >= 1.13
+BuildRequires: doxygen fonts-ttf-freefont graphviz libXau-devel libXdmcp-devel pkgconfig(xcb-proto) >= 1.14
 BuildRequires: xsltproc libselinux-devel xorg-util-macros
 BuildRequires: python2.7(distutils)
 
@@ -57,7 +57,7 @@ develop programs which make use of %name
 %make DESTDIR=%buildroot htmldir=%_docdir/%name-devel install
 
 %files
-%doc NEWS README
+%doc NEWS README.md
 %_libdir/*.so.*
 
 %files devel
@@ -68,6 +68,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Thu Mar 05 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.14-alt1
+- 1.14
+
 * Wed Oct 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.13.1-alt1
 - 1.13.1
 
