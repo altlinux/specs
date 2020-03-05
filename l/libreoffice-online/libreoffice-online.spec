@@ -11,7 +11,7 @@
 
 Name: libreoffice-online
 Version: 6.2.3.2
-Release: alt1
+Release: alt2
 Summary: LibreOffice Online WebSocket Daemon
 License: MPL-2.0
 Group: Office
@@ -88,6 +88,10 @@ Apache 2.x web-server default configuration for %name.
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%ifarch ppc64le
+# ppc64le misses following definition
+%add_optflags -D__linux=1
+%endif
 
 %autoreconf
 %configure \
@@ -189,6 +193,9 @@ a2enmod headers
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
+* Wed Mar 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt2
+- Fixed build on p9 for ppc64le.
+
 * Wed Mar 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.3.2-alt1
 - Updated to upstream version 6.2.3.2.
 
