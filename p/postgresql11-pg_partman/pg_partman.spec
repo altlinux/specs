@@ -2,7 +2,7 @@
 
 Name: postgresql%pg_ver-pg_partman
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
 License: PostgreSQL
@@ -12,13 +12,11 @@ Url: https://badge.fury.io/pg/pg_partman
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Sat May 18 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 python-base sh4
-BuildRequires: postgresql-devel
-
+BuildRequires(pre): rpm-build-python3
 BuildRequires: postgresql-devel
 
 Requires: postgresql%pg_ver-server
+
 
 %description
 pg_partman is an extension to create and manage both time-based and serial-based
@@ -32,6 +30,8 @@ significantly better.
 %setup
 %patch0 -p1
 
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+
 %build
 %make
 
@@ -44,7 +44,11 @@ significantly better.
 %_datadir/pgsql/extension/*
 %doc %_datadir/doc/postgresql/extension/*
 
+
 %changelog
+* Thu Mar 05 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt2
+- Porting to python3.
+
 * Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
