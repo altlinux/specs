@@ -1,9 +1,9 @@
 Name:    blink-qt
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Blink SIP Client
-License: GPLv3+
+License: GPL-3.0+
 Group:   Other
 URL:     http://icanblink.com/
 
@@ -63,6 +63,10 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Thu Mar 05 2020 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
+- New version.
+- Fix license tag according to SPDX.
+
 * Wed Feb 27 2019 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
 - New version.
 

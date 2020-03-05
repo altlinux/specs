@@ -1,11 +1,11 @@
 %define modulename application
 
 Name:    python-module-%modulename
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Basic building blocks for Python applications
-License: LGPLv2+
+License: LGPL-2.0+
 Group:   Development/Python
 URL:     https://github.com/AGProjects/python-application
 
@@ -41,6 +41,10 @@ logic itself.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 05 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
+- New version.
+- Fix license tag according to SPDX.
+
 * Sat Jun 01 2019 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
 - New version.
 
