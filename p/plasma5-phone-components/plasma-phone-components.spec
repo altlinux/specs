@@ -3,7 +3,7 @@
 
 Name: plasma5-phone-components
 Version: 5.18.1
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_datadir/wayland-sessions/plasma-mobile.desktop
 
 %changelog
+* Thu Mar 05 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.1-alt3
+- update defaults
+
 * Thu Mar 05 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.1-alt2
 - update defaults
 
