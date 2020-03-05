@@ -1,8 +1,8 @@
 Name: poco
-Version: 1.9.4
+Version: 1.10.1
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
-License: Boost Software License v1.0
+License: BSL-1.0
 Group: Development/C++
 Url: http://pocoproject.org/
 
@@ -132,6 +132,15 @@ Requires: lib%name-util = %EVR
 %description -n lib%name-ssl
 POrtable COmponents C++ Libraries: Poco ssl network library
 
+%package -n lib%name-jwt
+Summary: POrtable COmponents C++ Libraries (jwt)
+Group: Development/C++
+Requires: lib%name = %EVR
+Requires: lib%name-crypto = %EVR
+
+%description -n lib%name-jwt
+POrtable COmponents C++ Libraries: Poco jwt library
+
 %package -n lib%name-devel
 Summary: Development files of POrtable COmponents C++ Libraries
 Group: Development/C++
@@ -186,7 +195,7 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
-	-DPCRE_INCLUDE_DIR:STRING="%optflags" \
+	-DPCRE_INCLUDE_DIR:STRING="%_includedir/pcre" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DPOCO_UNBUNDLED:BOOL=ON \
 	.
@@ -253,6 +262,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %files -n lib%name-redis
 %_libdir/libPocoRedis*.so.*
 
+%files -n lib%name-jwt
+%_libdir/libPocoJWT*.so.*
+
 %files -n lib%name-devel
 %_bindir/*
 %_includedir/*
@@ -262,6 +274,14 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Wed Feb 26 2020 Alexei Takaseev <taf@altlinux.org> 1.10.1-alt1
+- 1.10.1
+- Add subpackage jwt
+- Fix License
+
+* Sun Feb 02 2020 Alexei Takaseev <taf@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Wed Sep 18 2019 Alexei Takaseev <taf@altlinux.org> 1.9.4-alt1
 - 1.9.4 (Fixes CVE-2019-15903)
 
