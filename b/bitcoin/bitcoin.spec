@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.19.1
-Release: alt0.rc1
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -57,6 +57,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Thu Mar 05 2020 Alexei Takaseev <taf@altlinux.org> 0.19.1-alt1
+- 0.19.1
+
 * Tue Feb 04 2020 Alexei Takaseev <taf@altlinux.org> 0.19.1-alt0.rc1
 - 0.19.1rc1
 - Fix build with boost-1.72
