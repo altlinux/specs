@@ -1,40 +1,42 @@
+Name: kraft
+Version: 0.58
+Release: alt3
 
-Name:           kraft
-Version:        0.58
-Release:        alt2
-
-Summary:        Kraft - Software for small business
+Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
-License:        GPL, LGPL
-Group:          Office
-URL:            http://www.volle-kraft-voraus.de/
+License: GPL, LGPL
+Group: Office
+Url: http://www.volle-kraft-voraus.de/
 
-Source0:        kraft-%{version}.tar.bz2
-Patch:		kraft-fix-l10n-build-with-cmake.patch
+Source0: kraft-%version.tar.bz2
+Patch: kraft-fix-l10n-build-with-cmake.patch
+Patch1: port-to-python3.patch
 
-BuildRequires(pre): kde4libs-devel
-BuildRequires: 	gcc-c++
-BuildRequires:  cmake
-BuildRequires:  kde4pimlibs-devel
-BuildRequires:  libctemplate-devel
+BuildRequires(pre): kde4libs-devel rpm-build-python3
+BuildRequires: cmake gcc-c++ python3-tools
+BuildRequires: kde4pimlibs-devel libctemplate-devel
 
-Requires: 	libctemplate python-module-Reportlab trmltools
-Requires:	akonadi
+Requires: akonadi libctemplate trmltools
+%py3_requires reportlab
+
 
 %description
 Kraft is software for helping people drinving small businesses
 in their daily communication with customers.
 
-Authors:
---------
-    Klaas Freitag <freitag@kde.org>
-
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch -p2
+%patch1 -p2
+
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+$(find /usr/lib*/python%_python3_version/Tools/scripts/reindent.py) \
+                               $(find ./ -name '*.py')
 
 %build
-sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
+sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION \
+    ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
+
 %K4build -DCMAKE_SKIP_RPATH=1
 
 %install
@@ -49,7 +51,11 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 %_K4cfg/*
 %_iconsdir/*/*/*/*.png
 
-%changelog 
+
+%changelog
+* Thu Mar 05 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.58-alt3
+- Porting to python3.
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.58-alt2
 - Build without Nepomuk support
 
@@ -85,11 +91,11 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 - Fix build
 
 * Thu Dec 25 2008 Andrey Cherepanov <cas@altlinux.org> 0.30-alt3
-- Fix dependence on renamed google-ctemplate 
+- Fix dependence on renamed google-ctemplate
 
 * Thu Dec 04 2008 Andrey Cherepanov <cas@altlinux.org> 0.30-alt2
-- Fix python-module-Reportlab dependence 
+- Fix python-module-Reportlab dependence
 
 * Fri Nov 21 2008 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1
-- Initial release 
+- Initial release
 
