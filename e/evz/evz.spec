@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,6 +40,11 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Thu Mar 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1
+- evz-vboxmanage: add set support
+- fix info for docker, vboxmanage
+- rename evz-openvz to evz-vzctl
+
 * Wed Feb 26 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - evz: rewrite engines detection
 - evz: add EVZCTL env. to force engine
