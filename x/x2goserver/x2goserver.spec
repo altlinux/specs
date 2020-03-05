@@ -3,7 +3,7 @@
 
 Name:    x2goserver
 Version: 4.1.0.3
-Release: alt1
+Release: alt2
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -212,6 +212,30 @@ enable desktop-profiles, ssh-agent startups, gpgagent
 startups and many more Xsession related features on
 X2Go session login automagically.
 
+%package desktopsharing
+Summary: X2Go Server (Desktop Sharing support)
+Requires: %name = %version-%release
+Requires: x2godesktopsharing >= 3.2.0.0
+Group: Communications
+
+%description desktopsharing
+X2Go is a server based computing environment with
+    - session resuming
+    - low bandwidth support
+    - session brokerage support
+    - client side mass storage mounting support
+    - audio support
+    - authentication by smartcard and USB stick
+
+X2Go Desktop Sharing is an X2Go add-on feature that allows a user to
+grant other X2Go users access to the current session (shadow session
+support). The user's current session may be an X2Go session itself or
+simply a local X11 session.
+
+This package contains all the integration and configuration logics
+of a system-wide manageable desktop sharing setup.
+
+
 %prep
 %setup -q
 %patch1 -p1
@@ -408,7 +432,20 @@ exit 0
 %_datadir/x2go/x2gofeature.d/x2goserver-xsession.features
 %_datadir/x2go/versions/VERSION.x2goserver-xsession
 
+%files desktopsharing
+%doc debian/copyright
+%doc debian/changelog
+%_bindir/x2go*-desktopsharing
+%_datadir/x2go/versions/VERSION.x2goserver-desktopsharing
+%_datadir/x2go/x2gofeature.d/x2goserver-desktopsharing.features
+%_mandir/man8/x2go*-desktopsharing.8*
+%dir %_sysconfdir/x2go/desktopsharing
+%config(noreplace) %_sysconfdir/x2go/desktopsharing/settings
+
 %changelog
+* Wed Mar 04 2020 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt2
+- Add x2goserver-desktopsharing package
+
 * Thu Jul 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0.3-alt1
 - version updated to 4.1.0.3
 
