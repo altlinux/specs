@@ -2,12 +2,12 @@
 
 Name:          ruby-%pkgname
 Version:       2.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A pure Ruby implementation of the SCP client protocol
 Group:         Development/Ruby
 License:       MIT
 Url:           https://github.com/net-ssh/net-scp
-%vcs           https://github.com/net-ssh/net-scp.git
+Vcs:           https://github.com/net-ssh/net-scp.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,7 +16,10 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(net-ssh)
 BuildRequires: gem(test-unit)
 BuildRequires: gem(mocha)
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 Net::SCP is a pure-Ruby implementation of the SCP protocol. This operates over
@@ -59,11 +62,14 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1.1
+- fixed (!) spec
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
-- ^ v2.0.0
+- updated (^) 1.2.1 -> 2.0.0
 
 * Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt2
-- ^ Ruby Policy 2.0
+- used (>) Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1.1
 - Rebuild with new Ruby autorequirements.

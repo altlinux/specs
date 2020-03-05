@@ -1,14 +1,13 @@
 %define        pkgname aws-sdk
-%define        gemname aws-sdk
 
 Name: 	       ruby-%pkgname
-Version:       2.11.354
+Version:       2.11.460
 Release:       alt1
 Summary:       The official AWS SDK for Ruby
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://aws.amazon.com/ru/sdk-for-ruby/
-%vcs           https://github.com/aws/aws-sdk-ruby.git
+Vcs:           https://github.com/aws/aws-sdk-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -29,6 +28,9 @@ BuildRequires: /usr/bin/ruby-ll
 
 %gem_replace_version nokogiri >= 1.10
 %gem_replace_version yard >= 0.9
+%gem_replace_version aws-sdk = %version
+%gem_replace_version aws-sdk-core = %version
+%gem_replace_version aws-sdk-resources = %version
 
 %description
 The official AWS SDK for Ruby. Provides both resource oriented
@@ -114,7 +116,10 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=ruby-aws-sdk --prefixes= --use=aws-sdk --prefixes=gem
+%ruby_build --use=ruby-aws-sdk --prefixes= \
+            --use=aws-sdk --prefixes=gem --version-replace=%version \
+            --use=aws-sdk-resources --version-replace=%version \
+            --use=aws-sdk-core --version-replace=%version
 
 %install
 %ruby_install
@@ -153,22 +158,26 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.11.460-alt1
+- updated (^) 2.11.354 -> 2.11.460
+- fixed (!) spec
+
 * Tue Sep 17 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.354-alt1
-- ^ v2.11.354
-- + obsoletes/provides on ruby-aws-sdk-code for gem-aws-sdk-code
+- updated (^) 2.11.351 -> 2.11.354
+- added (+) obsoletes/provides on ruby-aws-sdk-code for gem-aws-sdk-code
 
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.351-alt1
-- ^ v2.11.351
-- ! spec according to changelog rules
+- updated (^) 2.11.345 -> 2.11.351
+- fixed (!) spec according to changelog rules
 
 * Tue Sep 03 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.345-alt1
-- ^ v2.11.345
-- ! spec
-- + obsoletes/provides for aws-sdk-core
+- updated (^) 2.11.317 -> 2.11.345
+- fixed (!) spec
+- added (+) obsoletes/provides for aws-sdk-core
 
 * Wed Aug 07 2019 Pavel Skrylev <majioa@altlinux.org> 2.11.317-alt1
-- ^ v2.11.317
-- ^ Ruby Policy 2.0
+- used (^) Ruby Policy 2.0
+- updated (^) 2.11.262 -> 2.11.317
 
 * Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 2.11.262-alt1
 - New version.
