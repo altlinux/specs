@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.0.21
-Release: alt1
+Release: alt2
 %define githash 449d6bf22b01af7d14a297a4ed3e281aa84c94a5
 
 Summary: The Linux kernel code for DRBD9.
@@ -38,13 +38,11 @@ tar -xf %SOURCE1 -C drbd/drbd-headers
 echo "GIT-hash: %githash" >drbd/.drbd_git_revision
 
 %build
-make -C drbd KDIR=/lib/modules/*/build
 
 %install
 mkdir -p %kernel_srcdir
 cd ..
 tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
-# install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%name-%version.tar
 
 %check
 # sed -i s/SUBDIRS=/M=/g Makefile
@@ -57,6 +55,9 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Thu Mar 05 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.21-alt2
+- Fix build for un-def.
+
 * Mon Feb 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.21-alt1
 - Initial import for ALT.
 
