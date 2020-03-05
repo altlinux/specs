@@ -3,7 +3,7 @@
 %define _prefix /
 %define soname 13
 Name: ipset
-Version: 7.5
+Version: 7.6
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -65,10 +65,10 @@ Kernel source modules ipset.
 autoreconf -fisv
 
 %build
-%configure --without-kbuild --without-ksource
+%configure --with-kmod=no 
 %make_build LIBDIR=/%_lib/ BINDIR=/sbin/
 %install
-%makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib pkgconfigdir=%buildroot/%_pkgconfigdir
+%makeinstall_std exec_prefix=/ sbindir=/sbin libdir=/%_lib pkgconfigdir=/%_pkgconfigdir
 mkdir -p $RPM_BUILD_ROOT/%_libdir
 
 pushd $RPM_BUILD_ROOT/%_libdir
@@ -101,6 +101,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Thu Mar 05 2020 Anton Farygin <rider@altlinux.ru> 7.6-alt1
+- 7.6
+
 * Wed Jan 15 2020 Anton Farygin <rider@altlinux.ru> 7.5-alt1
 - 7.5
 
