@@ -1,21 +1,28 @@
-Name:		DeroGUIWallet
-Version:	0.0.1
-Release:	alt1.qa1
-Summary:	GUI Wallet for Dero
-Url:		https://github.com/drigler/DeroGUIWallet/
-Group:		Office
-License:	MIT
-Source0:	%name.tar.xz
-Source1:	%name.desktop
-Source2:	%name
+Name: DeroGUIWallet
+Version: 0.0.1
+Release: alt2
 
-BuildArch:	noarch
+Summary: GUI Wallet for Dero
+License: MIT
+Group: Office
+Url: https://github.com/drigler/DeroGUIWallet/
 
-BuildRequires:	python-devel rpm-build-gir /usr/bin/convert
+BuildArch: noarch
 
-Requires:	dero python-module-psutil python-module-requests python-module-PySide
+Source0: %name.tar.xz
+Source1: %name.desktop
+Source2: %name
 
-Provides:	deroguiwallet
+Patch0: port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-gir /usr/bin/convert
+
+Requires: dero python3-module-psutil
+Requires: python3-module-requests python3-module-PySide
+
+Provides: deroguiwallet
+
 
 %description
 DERO GUI Wallet
@@ -25,6 +32,7 @@ https://github.com/sumoprojects/SumoGUIWallet adopted to work with Dero binaries
 
 %prep
 %setup -n %name
+%patch0 -p2
 
 %install
 mkdir -p %buildroot/usr/libexec/%name
@@ -49,7 +57,11 @@ convert -resize 16x16 Resources/icons/dero_icon.png %buildroot%_miconsdir/%name.
 %_niconsdir/*.png
 %_liconsdir/*.png
 
+
 %changelog
+* Thu Mar 05 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.1-alt2
+- Porting to python3.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1.qa1
 - NMU: applied repocop patch
 
