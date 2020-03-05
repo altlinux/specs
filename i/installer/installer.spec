@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Mar 05 2020 Michael Shigorin <mike@altlinux.org> 1.10.2-alt1
+- initinstall: Seek calmer, poor ol' optical drive.
+
 * Mon Sep 16 2019 Mikhail Efremov <sem@altlinux.org> 1.10.1-alt1
 - postinstall: Remove branding-*-slideshow.
 
