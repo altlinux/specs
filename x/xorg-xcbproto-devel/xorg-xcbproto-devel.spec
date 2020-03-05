@@ -1,5 +1,5 @@
 Name: xorg-xcbproto-devel
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: XML-XCB protocol descriptions
@@ -32,12 +32,15 @@ XML-XCB protocol descriptions.
 %make DESTDIR=%buildroot install
 
 %files
-%doc NEWS README TODO
+%doc NEWS README.md TODO
 %python_sitelibdir/xcbgen
 %_datadir/xcb
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 05 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.14-alt1
+- 1.14
+
 * Tue May 29 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.13-alt1
 - 1.13
 
