@@ -1,7 +1,7 @@
 # coccinelle.spec
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt1
+Release:	alt2
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/Kernel
@@ -15,11 +15,11 @@ BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
 BuildRequires:	ocaml-ocamldoc
 BuildRequires:	ocaml-menhir
+BuildRequires:	ocaml-stdcompat-devel
 BuildRequires:	ocaml-pcre-devel
 BuildRequires:	ocaml-num-devel
 BuildRequires:	ocaml-parmap-devel
 BuildRequires:	rpm-build-python python-devel python-modules-multiprocessing
-BuildRequires:	chrpath
 
 # only if vim coccigui is used
 %filter_from_requires /^python.*(pida)$/d
@@ -38,8 +38,6 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' tools/py
 %build
 ./autogen
 %configure
-# -unsafe-string
-export OCAMLPARAM="safe-string=0,_"
 make EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
@@ -76,6 +74,11 @@ export LD_LIBRARY_PATH=.
 /usr/share/bash-completion/completions/spatch
 
 %changelog
+* Thu Mar 05 2020 Anton Farygin <rider@altlinux.ru> 1.0.8-alt2
+- removed unsafe-string build flag to avoid problems with ocaml-4.10
+- built with external stdcompat
+- removed chrpath from build dependencies (it is no longer required)
+
 * Mon Feb 17 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt1
 - Update to 1.0.8.
 
