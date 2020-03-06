@@ -1,5 +1,5 @@
 Name: pidgin-gpg
-Version: 0.5.0.47.git026bc8a
+Version: 0.9+git026bc8a
 Release: alt1
 
 Summary: GPG/OpenGPG plugin for Pidgin
@@ -36,6 +36,10 @@ enabling this plugin.
 %_libdir/pidgin/pidgin_gpg.so
 
 %changelog
+* Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9+git026bc8a-alt1
+- Fixed version.
+- Removed win dlls and aux script from sources.
+
 * Thu Mar 05 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.0.47.git026bc8a-alt1
 - Really build for Sisyphus.
 
