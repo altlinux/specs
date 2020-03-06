@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.4
-%define kernel_sublevel .23
+%define kernel_sublevel .24
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -685,17 +685,35 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Mar 06 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.24-alt1
+- v5.4.24
+
+* Fri Mar 06 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.108-alt1
+- v4.19.108
+
 * Sat Feb 29 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.23-alt1
 - v5.4.23
+
+* Sat Feb 29 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.107-alt1
+- v4.19.107
 
 * Tue Feb 25 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.22-alt1
 - v5.4.22  (Fixes: CVE-2019-19076)
 
+* Tue Feb 25 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.106-alt1
+- v4.19.106
+
 * Thu Feb 20 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.21-alt1
 - v5.4.21
 
+* Thu Feb 20 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.105-alt1
+- v4.19.105
+
 * Thu Feb 13 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.19-alt1
 - v5.4.19  (Fixes: CVE-2013-1798, CVE-2019-3016)
+
+* Thu Feb 13 2020 Kernel Bot <kernelbot@altlinux.org> 1:4.19.103-alt1
+- v4.19.103  (Fixes: CVE-2013-1798, CVE-2019-3016)
 
 * Fri Feb 07 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.17-alt1
 - v5.4.17 (Fixes: CVE-2019-14896, CVE-2019-14897)
