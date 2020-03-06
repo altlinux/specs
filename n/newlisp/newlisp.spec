@@ -6,7 +6,7 @@
 %define Name newLISP
 Name: newlisp
 Version: 10.6.2
-Release: alt2
+Release: alt3
 Summary: Lisp-like, general purpose scripting language
 License: GPLv3
 Group: Development/Lisp
@@ -27,7 +27,7 @@ Patch4:         %{name}-0003-Don-t-strip-the-resulting-binary.patch
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_ext_pcre:BuildRequires: libpcre-devel}
 BuildRequires: rpm-build-vim vim-devel libffi-devel openssl-devel
-BuildRequires: libgmp-devel libgsl-devel libmysqlclient-devel libsqlite-devel postgresql-devel zlib-devel
+BuildRequires: libgmp-devel libgsl-devel libmysqlclient-devel libsqlite3-devel postgresql-devel zlib-devel
 
 
 %description
@@ -214,6 +214,9 @@ ln -s %name-%version %name
 
 
 %changelog
+* Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 10.6.2-alt3
+- NMU: Fixed BuildRequires: libsqlite-devel -> libsqlite3-devel.
+
 * Tue Feb 12 2019 Grigory Ustinov <grenka@altlinux.org> 10.6.2-alt2
 - Rebuild with libreadline7.
 
