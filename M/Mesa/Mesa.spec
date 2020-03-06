@@ -13,8 +13,8 @@
 %define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define armsoc_arches %arm aarch64
 
-%define opencl_arches x86_64 aarch64
-%define gallium_pipe_arches x86_64
+%define opencl_arches %ix86 x86_64 aarch64
+%define gallium_pipe_arches x86_64 aarch64
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches
@@ -37,6 +37,7 @@
 %ifarch %intel_arches
 %dri_drivers_add i915
 %dri_drivers_add i965
+%gallium_drivers_add iris
 %endif
 %ifarch %nouveau_arches
 %dri_drivers_add nouveau
@@ -52,6 +53,8 @@
 %gallium_drivers_add kmsro
 %gallium_drivers_add panfrost
 %gallium_drivers_add lima
+%gallium_drivers_add tegra
+%gallium_drivers_add v3d
 %endif
 %ifarch %vulkan_intel_arches
 %vulkan_drivers_add intel
@@ -61,7 +64,7 @@
 %endif
 
 Name: Mesa
-Version: 20.0.0
+Version: 20.0.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -80,7 +83,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols
+BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
 %ifarch %radeon_arches
 BuildRequires: llvm-devel >= 8.0.0 clang-devel >= 8.0.0
@@ -255,7 +258,6 @@ DRI drivers for various SoCs
 %meson_build -v
 
 %install
-export PATH=$(pwd)/bin:$PATH
 %meson_install
 
 rm -f %buildroot%_libdir/gallium-pipe/*.la
@@ -299,6 +301,10 @@ d=%buildroot%_libdir
 
 %ifarch %armsoc_arches
 find %buildroot%_libdir/X11/modules/dri/ -type l | sed -ne "s|^%buildroot||p" > xorg-dri-armsoc.list
+%ifarch %gallium_pipe_arches
+find %buildroot%_libdir/gallium-pipe/ -type f | sed -ne "s|^%buildroot||p" >> xorg-dri-armsoc.list
+sed -i '/.*pipe_r[a236].*/d' xorg-dri-armsoc.list
+%endif
 sed -i '/.*swrast.*/d' xorg-dri-armsoc.list
 sed -i '/.*virtio.*/d' xorg-dri-armsoc.list
 sed -i '/.*nouveau.*/d' xorg-dri-armsoc.list
@@ -380,6 +386,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %ifarch %intel_arches
 %files -n xorg-dri-intel
 %_libdir/X11/modules/dri/i9?5_dri.so
+%_libdir/X11/modules/dri/iris_dri.so
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
 %dir %_datadir/vulkan
@@ -422,6 +429,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Fri Mar 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.1-alt1
+- 20.0.1
+
 * Thu Feb 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.0-alt1
 - 20.0.0
 
