@@ -1,6 +1,6 @@
 Name: qlandkartegt
 Version: 1.8.1
-Release: alt3
+Release: alt4
 Summary: GPS mapping (GeoTiff and vector) and GPSr management
 
 Group: Sciences/Geosciences
@@ -15,7 +15,7 @@ BuildRequires: cmake gcc-c++ gdal gpsbabel libXScrnSaver-devel libXcomposite-dev
 BuildRequires: libXdamage-devel libXdmcp-devel libXft-devel libXmu-devel libXpm-devel
 BuildRequires: libXres-devel libXxf86misc-devel libXxf86vm-devel libgdal-devel
 BuildRequires: libjpeg-devel libproj-devel libqt4-sql-interbase libqt4-sql-mysql
-BuildRequires: libqt4-sql-odbc libqt4-sql-sqlite2 libxkbfile-devel phonon-devel
+BuildRequires: libqt4-sql-odbc libxkbfile-devel phonon-devel
 BuildRequires: qt4-designer ruby ruby-stdlibs rpm-macros-cmake
 
 %description
@@ -49,6 +49,9 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %_datadir/%name/*
 
 %changelog
+* Wed Mar 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt4
+- Fixed FTBFS.
+
 * Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.8.1-alt3
 - Rebuild with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 

@@ -2,7 +2,7 @@
 
 Name: merkaartor
 Version: 0.18.3
-Release: alt4
+Release: alt5
 
 Summary: an OpenStreetMap editor
 License: LGPL
@@ -12,6 +12,8 @@ Url: https://github.com/openstreetmap/merkaartor
 Source: %name-%version.tar
 Patch1: %name-%version-fedora-no-git-version.patch
 Patch2: %name-%version-alt-qtwebkit-support.patch
+# Remove in next version
+Patch3: eca7495890b2b671167ededf538b8d8d5cbcaf5d.patch
 
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
@@ -27,6 +29,7 @@ editing environment for free geographical data.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # remove bundled libraries
 rm -rf 3rdparty
@@ -59,6 +62,9 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Nov 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt5
+- NMU: Rebuild with gdal 3.0.1.
+
 * Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.18.3-alt4
 - Fix build with libproj 6.2.0 (use DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 
