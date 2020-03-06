@@ -23,7 +23,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt2
+Release: alt3
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -291,6 +291,9 @@ fi
 
 
 %changelog
+* Fri Mar 06 2020 Alexey Shabalin <shaba@altlinux.org> 11.0.5-alt3
+- readd detect ALT Distro
+
 * Thu Mar 05 2020 Alexey Shabalin <shaba@altlinux.org> 11.0.5-alt2
 - enable deploypkg support
 - add test package
