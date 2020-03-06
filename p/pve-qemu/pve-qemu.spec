@@ -6,7 +6,7 @@
 
 Name: pve-%rname
 Version: 4.1.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -27,52 +27,57 @@ Patch100: qemu-3.0.1-uuid.patch
 
 Patch10: 0001-monitor-qmp-resume-monitor-when-clearing-its-queue.patch
 Patch11: 0002-virtio-blk-schedule-virtio_notify_config-to-run-on-m.patch
-Patch12: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
-Patch13: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
-Patch14: 0003-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
-Patch15: 0004-PVE-Config-ui-spice-default-to-pve-certificates.patch
-Patch16: 0005-PVE-Config-smm_available-false.patch
-Patch17: 0006-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
-Patch18: 0007-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
-Patch19: 0008-PVE-Up-qmp-add-get_link_status.patch
-Patch20: 0009-PVE-Up-glusterfs-allow-partial-reads.patch
-Patch21: 0010-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
-Patch22: 0011-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
-Patch23: 0012-PVE-Up-qemu-img-dd-add-isize-parameter.patch
-Patch24: 0013-PVE-Up-qemu-img-dd-add-n-skip_create.patch
-Patch25: 0014-PVE-virtio-balloon-improve-query-balloon.patch
-Patch26: 0015-PVE-qapi-modify-query-machines.patch
-Patch27: 0016-PVE-qapi-modify-spice-query.patch
-Patch28: 0017-PVE-internal-snapshot-async.patch
-Patch29: 0018-PVE-block-add-the-zeroinit-block-driver-filter.patch
-Patch30: 0019-PVE-backup-modify-job-api.patch
-Patch31: 0020-PVE-backup-introduce-vma-archive-format.patch
-Patch32: 0021-PVE-Deprecated-adding-old-vma-files.patch
-Patch33: 0022-PVE-vma-add-throttling-options-to-drive-mapping-fifo.patch
-Patch34: 0023-PVE-vma-add-cache-option-to-device-map.patch
-Patch35: 0024-PVE-vma-remove-forced-NO_FLUSH-option.patch
-Patch36: 0025-PVE-Add-dummy-id-command-line-parameter.patch
-Patch37: 0026-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
-Patch38: 0027-PVE-Up-Config-file-posix-make-locking-optiono-on-cre.patch
-Patch39: 0028-PVE-savevm-async-kick-AIO-wait-on-block-state-write.patch
-Patch40: 0029-PVE-move-snapshot-cleanup-into-bottom-half.patch
-Patch41: 0030-PVE-monitor-disable-oob-capability.patch
-Patch42: 0031-PVE-bug-fix-1071-vma-writer.c-use-correct-AioContext.patch
-Patch43: 0032-qmp_backup-run-backup-related-code-inside-coroutines.patch
-Patch44: 0033-qmp_backup-use-a-CoMutex-to-protect-access-to-backup.patch
-Patch45: 0034-vma_writer_close-avoid-call-to-aio_poll-acquire-flus.patch
-Patch46: 0035-backup_job_create-pass-cluster-size-for-dump.patch
-Patch47: 0036-avoid-calling-dump_cb-with-NULL-data-pointer-for-sma.patch
-Patch48: 0037-rename-config_to_vma-into-pvebackup_co_add_config.patch
-Patch49: 0038-pvebackup_co_dump_cb-do-not-call-job-cancel.patch
-Patch50: 0039-fix-backup-job-completion.patch
-Patch51: 0040-pvebackup_complete_cb-avoid-poll-loop-if-already-ins.patch
-Patch52: 0041-PVE-backup-consider-source-cluster-size-as-well.patch
-Patch53: 0042-PVE-fixup-vma-tool.patch
-Patch54: 0043-PVE-fixup-blockdev-pvebackup-integration-fix-blockjo.patch
-Patch55: 0044-Acquire-aio_context-before-calling-block_job_add_bdr.patch
-Patch56: 0045-PVE-Compat-4.0-used-balloon-qemu-4-0-config-size-fal.patch
-Patch57: 0046-PVE-Allow-version-code-in-machine-type.patch
+Patch12: 0003-vnc-fix-memory-leak-when-vnc-disconnect.patch
+Patch13: 0001-PVE-Config-block-file-change-locking-default-to-off.patch
+Patch14: 0002-PVE-Config-Adjust-network-script-path-to-etc-kvm.patch
+Patch15: 0003-PVE-Config-set-the-CPU-model-to-kvm64-32-instead-of-.patch
+Patch16: 0004-PVE-Config-ui-spice-default-to-pve-certificates.patch
+Patch17: 0005-PVE-Config-smm_available-false.patch
+Patch18: 0006-PVE-Config-glusterfs-no-default-logfile-if-daemonize.patch
+Patch19: 0007-PVE-Config-rbd-block-rbd-disable-rbd_cache_writethro.patch
+Patch20: 0008-PVE-Up-qmp-add-get_link_status.patch
+Patch21: 0009-PVE-Up-glusterfs-allow-partial-reads.patch
+Patch22: 0010-PVE-Up-qemu-img-return-success-on-info-without-snaps.patch
+Patch23: 0011-PVE-Up-qemu-img-dd-add-osize-and-read-from-to-stdin-.patch
+Patch24: 0012-PVE-Up-qemu-img-dd-add-isize-parameter.patch
+Patch25: 0013-PVE-Up-qemu-img-dd-add-n-skip_create.patch
+Patch26: 0014-PVE-virtio-balloon-improve-query-balloon.patch
+Patch27: 0015-PVE-qapi-modify-query-machines.patch
+Patch28: 0016-PVE-qapi-modify-spice-query.patch
+Patch29: 0017-PVE-internal-snapshot-async.patch
+Patch30: 0018-PVE-block-add-the-zeroinit-block-driver-filter.patch
+Patch31: 0019-PVE-backup-modify-job-api.patch
+Patch32: 0020-PVE-backup-introduce-vma-archive-format.patch
+Patch33: 0021-PVE-Deprecated-adding-old-vma-files.patch
+Patch34: 0022-PVE-vma-add-throttling-options-to-drive-mapping-fifo.patch
+Patch35: 0023-PVE-vma-add-cache-option-to-device-map.patch
+Patch36: 0024-PVE-vma-remove-forced-NO_FLUSH-option.patch
+Patch37: 0025-PVE-Add-dummy-id-command-line-parameter.patch
+Patch38: 0026-PVE-Config-Revert-target-i386-disable-LINT0-after-re.patch
+Patch39: 0027-PVE-Up-Config-file-posix-make-locking-optiono-on-cre.patch
+Patch40: 0028-PVE-savevm-async-kick-AIO-wait-on-block-state-write.patch
+Patch41: 0029-PVE-move-snapshot-cleanup-into-bottom-half.patch
+Patch42: 0030-PVE-monitor-disable-oob-capability.patch
+Patch43: 0031-PVE-bug-fix-1071-vma-writer.c-use-correct-AioContext.patch
+Patch44: 0032-qmp_backup-run-backup-related-code-inside-coroutines.patch
+Patch45: 0033-qmp_backup-use-a-CoMutex-to-protect-access-to-backup.patch
+Patch46: 0034-vma_writer_close-avoid-call-to-aio_poll-acquire-flus.patch
+Patch47: 0035-backup_job_create-pass-cluster-size-for-dump.patch
+Patch48: 0036-avoid-calling-dump_cb-with-NULL-data-pointer-for-sma.patch
+Patch49: 0037-rename-config_to_vma-into-pvebackup_co_add_config.patch
+Patch50: 0038-pvebackup_co_dump_cb-do-not-call-job-cancel.patch
+Patch51: 0039-fix-backup-job-completion.patch
+Patch52: 0040-pvebackup_complete_cb-avoid-poll-loop-if-already-ins.patch
+Patch53: 0041-PVE-backup-consider-source-cluster-size-as-well.patch
+Patch54: 0042-PVE-fixup-vma-tool.patch
+Patch55: 0043-PVE-fixup-blockdev-pvebackup-integration-fix-blockjo.patch
+Patch56: 0044-Acquire-aio_context-before-calling-block_job_add_bdr.patch
+Patch57: 0045-PVE-Compat-4.0-used-balloon-qemu-4-0-config-size-fal.patch
+Patch58: 0046-PVE-Allow-version-code-in-machine-type.patch
+Patch59: 0047-PVE-fix-hmp-info-backup-cmd-for-not-initialized-back.patch
+Patch60: 0048-PVE-backup-use-separate-CoRwlock-for-data-accessed-b.patch
+Patch61: 0049-PVE-backup-block_on_coroutine_wrapper-call-aio_wait.patch
+Patch62: 0050-PVE-backup-move-backup_state.cancel-to-backup_state.patch
 
 ExclusiveArch: x86_64 aarch64
 BuildRequires: acpica bzlib-devel glib2-devel flex libaio-devel libalsa-devel libcap-devel
@@ -210,6 +215,11 @@ This is an auxiliary package.
 %patch55 -p1
 %patch56 -p1
 %patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
 
 %patch100 -p1
 
@@ -363,6 +373,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Fri Mar 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:4.1.1-alt3
+- 4.1.1-3 (fix CVE-2019-20382)
+
 * Wed Jan 22 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:4.1.1-alt2
 - 4.1.1-2
 
