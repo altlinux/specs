@@ -1,6 +1,6 @@
 Name: spatialite-tools
 Version: 4.3.0
-Release: alt2
+Release: alt3
 Summary: A set of useful CLI tools for SpatiaLite
 
 Group: Development/Other
@@ -16,7 +16,7 @@ BuildRequires: libspatialite-devel
 BuildRequires: libproj-devel
 BuildRequires: libreadline-devel
 BuildRequires: readosm-devel
-BuildRequires: libsqlite-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
 
@@ -41,6 +41,9 @@ rm -f Makefile-static*
 %_bindir/*
 
 %changelog
+* Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.3.0-alt3
+- NMU: Fixed BuildRequires (libsqlite-devel -> libsqlite3-devel).
+
 * Tue Feb 05 2019 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt2
 - Rebuild with libreadline7.
 
