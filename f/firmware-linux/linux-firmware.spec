@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200224
+Version: 20200302
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,14 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Mar 06 2020 Cronbuild Service <cronbuild@altlinux.org> 20200302-alt1
+- upstream changes (GIT 0148cfe):
+  + check_whence: python3/utf-8 support (thx Brian Norris)
+  + Makefile: improve `make check` usefulness (thx Brian Norris)
+  + mediatek: Remove in-tree symlinks (thx Josh Boyer)
+  + qca: Fix blueooth firmware name for QCA6174 (thx Rocky Liao)
+  + mediatek: move MT8173 VPU FW to subfolder (thx gtk_ruiwang)
+
 * Fri Feb 28 2020 Cronbuild Service <cronbuild@altlinux.org> 20200224-alt1
 - upstream changes (GIT efcfa03):
   + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
