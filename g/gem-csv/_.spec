@@ -1,22 +1,29 @@
-%define        pkgname rack-mount
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname csv
 
 Name:          gem-%pkgname
-Version:       0.8.3
-Release:       alt2
-Summary:       Stackable dynamic tree based Rack router
+Version:       3.1.2
+Release:       alt1
+Summary:       CSV Reading and Writing
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/sporkmonger/rack-mount
-Vcs:           https://github.com/sporkmonger/rack-mount.git
+Url:           https://github.com/ruby/csv
+Vcs:           https://github.com/ruby/csv.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+
 %description
-%summary
+%summary.
+
+This library provides a complete interface to CSV files and data. It offers
+tools to enable you to read and write to and from Strings or IO objects, as
+needed.
+
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -44,16 +51,14 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
-%changelog
-* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt2
-- used (>) Ruby Policy 2.0
-- fixed (!) spec minorly
 
-* Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
-- Initial build for Sisyphus, packaged as gem
+%changelog
+* Mon Mar 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt1
+- + packaged gem with usage Ruby Policy 2.0

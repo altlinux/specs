@@ -2,19 +2,23 @@
 %define        pkgname redcloth
 %define        gemname RedCloth
 
-Name:          ruby-%pkgname
+Name:          gem-%pkgname
 Version:       4.3.2
-Release:       alt2.1
+Release:       alt3
 Summary:       Textile parser for Ruby
 Group:         Development/Ruby
 License:       MIT
 Url:           https://redcloth.org/
-%vcs           https://github.com/jgarber/redcloth.git
+Vcs:           https://github.com/jgarber/redcloth.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildArch:     noarch
 
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 RedCloth is a module for using Textile in Ruby. Textile is a text format.
@@ -34,6 +38,18 @@ Executable file for %gemname gem.
 %description   -n %pkgname -l ru_RU.UTF8
 Исполнямка для %gemname самоцвета.
 
+
+%package       devel
+Summary:       Development files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы разработки для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   devel
+Development files for %gemname gem.
+
+%description   devel -l ru_RU.UTF8
+Файлы разработки для самоцвета %gemname.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -67,11 +83,18 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+%files         devel
+%ruby_includedir/*
+
 %files         -n %pkgname
 %_bindir/%pkgname
 
 
 %changelog
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 4.3.2-alt3
+- + devel package
+- ! spec
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.2-alt2.1
 - Fix spec
 

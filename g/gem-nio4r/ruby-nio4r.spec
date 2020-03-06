@@ -1,17 +1,20 @@
 %define        pkgname nio4r
 
-Name:          ruby-%pkgname
-Version:       2.5.1
+Name:          gem-%pkgname
+Version:       2.5.2
 Release:       alt1
 Summary:       New I/O for Ruby: Cross-platform asynchronous I/O primitives for scalable network clients and servers
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/socketry/nio4r
-# VCS:         https://github.com/socketry/nio4r.git
+Vcs:           https://github.com/socketry/nio4r.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname
 
 %description
 New I/O for Ruby (nio4r): cross-platform asynchronous I/O primitives for
@@ -42,6 +45,8 @@ Summary:       Development files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
+Conflicts:     libev-devel
 
 %description   -n gem-%pkgname-devel
 Development files for %gemname gem.
@@ -76,11 +81,15 @@ Development files for %gemname gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.2-alt1
+- updated (^) 2.5.1 -> 2.5.2
+- fixed (!) spec
+
 * Mon Sep 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
-- ^ v2.5.1
+- updated (^) 2.3.1 -> 2.5.1
 
 * Tue Apr 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt2
-- ^ Ruby Policy 2.0
+- moved to (>) Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1.1
 - Rebuild with new Ruby autorequirements.

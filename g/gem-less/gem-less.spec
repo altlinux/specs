@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       2.6.0
-Release:       alt1
+Release:       alt2
 Summary:       Leaner CSS, in your browser or Ruby (via less.js)
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://lesscss.org
-%vcs           https://github.com/cowboyd/less.rb.git
+Vcs:           https://github.com/cowboyd/less.rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -40,6 +40,8 @@ Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Conflicts:     lessjs
+
 %description   -n lessc
 Executable file for %gemname gem.
 
@@ -70,5 +72,10 @@ Executable file for %gemname gem.
 %_bindir/%{pkgname}*
 
 %changelog
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt2
+- ! spec
+ + + explicit conflict for bump to lessjs
+ + * minor
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.

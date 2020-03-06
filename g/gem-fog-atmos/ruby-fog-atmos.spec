@@ -1,24 +1,25 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname unicode-emoji
+%define        pkgname fog-atmos
 
-Name:          ruby-%pkgname
-Version:       2.1.0
-Release:       alt1
-Summary:       Emoji Regex in Ruby
+Name:          gem-%pkgname
+Version:       0.1.0
+Release:       alt2
+Summary:       Module for the 'fog' gem to support Atmos Cloud Storage
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/janlelis/unicode-emoji
-%vcs           https://github.com/janlelis/unicode-emoji.git
+Url:           https://github.com/fog/fog-atmos
+Vcs:           https://github.com/fog/fog-atmos.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%description
-A small Ruby library which provides Unicode Emoji data and regexes.
-Also includes a categorized list of recommended Emoji.
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
+%description
+%summary.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -46,21 +47,19 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
-
 %changelog
-* Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
-- Bump to 2.1.0
-- Use Ruby Policy 2.0
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt2
+- > Ruby Policy 2.0
+- ! spec
 
-* Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1.1
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt1.1
 - Rebuild with new Ruby autorequirements.
 
-* Wed Jun 13 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+* Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus

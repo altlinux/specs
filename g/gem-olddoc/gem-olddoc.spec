@@ -1,13 +1,13 @@
 %define        pkgname olddoc
 
 Name:          gem-%pkgname
-Version:       1.6.0
+Version:       1.8.0
 Release:       alt1
 Summary:       old-fashioned Ruby documentation generator
 Group:         Development/Ruby
 License:       MIT
 URL:           https://80x24.org/olddoc/
-# VCS:         https://80x24.org/olddoc.git
+Vcs:           https://80x24.org/olddoc.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -27,45 +27,55 @@ the lowest common denominator for accessibility and compatibility
 with people and hardware.
 
 
+%package       doc
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
+BuildArch:     noarch
+
+%description   doc
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
+
 %package       -n %pkgname
 Summary:       old-fashioned Ruby documentation generator CLI
-Group:         Development/Documentation
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
 BuildArch:     noarch
 
 %description   -n %pkgname
 Executable CLI for old-fashioned Ruby documentation generator
 
-%package       doc
-Summary:       Documentation for %pkgname
-Group:         Development/Documentation
-BuildArch:     noarch
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для самоцвета %gemname.
 
-%description doc
-%summary.
 
 %prep
 %setup
-%update_setup_rb
-cp %SOURCE1 %pkgname.gemspec
 
 %build
-%ruby_config
 %ruby_build
 
 %install
 %ruby_install
-%rdoc lib/
 
 %files
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files doc
-%ruby_ri_sitedir/
+%files         doc
+%ruby_gemdocdir
 
-%files -n %pkgname
+%files         -n %pkgname
 %_bindir/*
 
 %changelog
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.8.0-alt1
+- > Ruby Policy 2.0
+- ^ 1.6.0 -> 1.8.0
+
 * Mon Feb 04 2019 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - Initial build for ALT.

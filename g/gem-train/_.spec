@@ -2,13 +2,13 @@
 %define        pkgname train
 
 Name:          gem-%pkgname
-Version:       3.1.1
+Version:       3.2.24
 Release:       alt1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/inspec/train/
-%vcs           https://github.com/inspec/train.git
+Vcs:           https://github.com/inspec/train.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,8 +16,6 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-%gem_replace_version google-api-client ~> 0.23
-%gem_replace_version googleauth ~> 0.6
 
 %description
 %summary.
@@ -81,6 +79,8 @@ Documentation files for %gemname-core gem.
 
 %prep
 %setup
+# TODO fix to upstream
+find -name bootstrap.sh |while read f; do sed 's,/tmp,$TMPDIR,' -i "$f"; done
 
 %build
 %ruby_build --ignore=train-local-rot13,train-test-fixture
@@ -109,8 +109,12 @@ Documentation files for %gemname-core gem.
 
 
 %changelog
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.24-alt1
+- ^ 3.1.1 -> 3.2.24
+- ! spec minorly
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt1
-- ^ v3.1.1
+- ^ 3.0.1 -> 3.1.1
 - ! spec according to changelog rules
 
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
