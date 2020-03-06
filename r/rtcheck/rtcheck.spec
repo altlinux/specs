@@ -1,6 +1,6 @@
 Name: rtcheck
 Version: 0.7.7
-Release: alt1
+Release: alt2
 
 License: GPL-2.0-only
 Summary: Test the running system for real-time capabilities
@@ -47,5 +47,9 @@ install -p -m 644 -D %name.service %buildroot%_unitdir/%name.service
 
 
 %changelog
+* Fri Mar 06 2020 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt2
+- rtcheck.service: Update limits.
+- Try to `ulimit -l unlimited` on each run.
+
 * Fri Sep 20 2019 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt1
 - Initial import of rtcheck-0.7.7 tarball.
