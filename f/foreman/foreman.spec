@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt4
+Release:       alt5
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -47,14 +47,23 @@ Requires:      libfreetype
 
 Requires:      node-sass
 # explicit TODO then remove
+Requires:      gem-sshkey
+Requires:      gem-ldap-fluff
+Requires:      gem-little-plugger
+Requires:      gem-http-cookie
+Requires:      gem-apipie-params
+Requires:      gem-arel
 Requires:      gem-secure-headers >= 6.3.0
+Requires:      gem-ovirt-engine-sdk
+Requires:      gem-rails-dom-testing
+Requires:      gem-spice-html5-rails >= 0.1.5-alt1
+Requires:      gem-gridster-rails >= 0.5.6.1-alt1
 
 %gem_replace_version rails ~> 5.2
 %gem_replace_version graphql ~> 1.9
 %gem_replace_version jquery-ui-rails ~> 6.0
 %gem_replace_version patternfly-sass ~> 3.38
 %gem_replace_version fog-core ~> 2.1
-%gem_replace_version turbolinks ~> 5.2
 %gem_replace_version prometheus-client ~> 2.0
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
@@ -97,7 +106,8 @@ Foreman code documentation.
 %patch1 -p1
 %patch2
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
-sed '$agem "coffee-script-source", "~> 1.12"' -i Gemfile
+sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
+rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
 
 %build
 %ruby_build --ignore=font-awesome-sass --use=foreman --join=lib:bin --srcexedirs= --srcconfdirs= --srclibdirs=
@@ -172,6 +182,9 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Fri May 15 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt5
+- ! patches and requires
+
 * Fri May 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt4
 - + explicit require deps to gem-secure-headers
 - - post call to railsctl on install
