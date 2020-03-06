@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.0.21
-Release: alt2
+Release: alt3
 %define githash 449d6bf22b01af7d14a297a4ed3e281aa84c94a5
 
 Summary: The Linux kernel code for DRBD9.
@@ -11,6 +11,7 @@ BuildArch: noarch
 Url: https://github.com/LINBIT/drbd.git
 Source0: %name-%version.tar
 Source1: %name-headers-%version.tar
+Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-kernel kernel-headers-modules-std-def
 BuildRequires: coccinelle >= 1.0.8
@@ -36,6 +37,7 @@ The Linux kernel code for DRBD9.
 %setup -q
 tar -xf %SOURCE1 -C drbd/drbd-headers
 echo "GIT-hash: %githash" >drbd/.drbd_git_revision
+%patch -p1
 
 %build
 
@@ -55,6 +57,9 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Fri Mar 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.21-alt3
+- Fix pr_warning().
+
 * Thu Mar 05 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.21-alt2
 - Fix build for un-def.
 
