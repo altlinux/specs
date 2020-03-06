@@ -6,11 +6,11 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
-License: GPLv2+
+License: GPL-2.0
 Group: Office
 Url: http://wiki.gnome.org/Projects/Tracker
 
@@ -171,6 +171,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define plugins_ver 13
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
@@ -19,11 +19,12 @@
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
-%def_enable shell_extensions
+%def_disable shell_extensions
 # dropped since 3.27.90
 %def_disable rpm
 %def_disable rpm_ostree
 %def_disable external_appstream
+%def_disable malcontent
 %ifarch %valgrind_arches
 %def_enable valgrind
 %else
@@ -33,7 +34,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -84,6 +85,7 @@ BuildRequires: libxmlb-devel >= %xmlb_ver
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
+%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0)}
 %{?_enable_check:BuildRequires: gcab}
 
 %description
@@ -127,7 +129,8 @@ GNOME Software.
 	%{?_disable_shell_extensions:-Dshell_extensions=false} \
 	%{?_disable_valgrind:-Dvalgrind=false} \
 	%{?_disable_tests:-Dtests=false} \
-	%{?_disable_external_appstream:-Dexternal_appstream=false}
+	%{?_disable_external_appstream:-Dexternal_appstream=false} \
+	%{?_disable_malcontent:-Dmalcontent=false}
 %meson_build
 
 %install
@@ -141,14 +144,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files -f %name.lang
 %_xdgconfigdir/autostart/%name-service.desktop
 %_bindir/%name
-%_bindir/%name-editor
 %_libexecdir/%name-cmd
 %_libexecdir/%name-restarter
 %{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
 %_libdir/gs-plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
-%_desktopdir/%xdg_name.Editor.desktop
 %_datadir/app-info/xmls/%xdg_name.Featured.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
@@ -158,12 +159,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-%_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
+#%_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
 %{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 %_man1dir/%name.1.*
-%_man1dir/%name-editor.1.*
 %doc AUTHORS README* NEWS
 
 %files devel
@@ -174,6 +174,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+- disabled shell extensions plugin
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

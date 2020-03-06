@@ -1,4 +1,4 @@
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3.0
 %def_enable introspection
 %def_enable vala
@@ -162,6 +162,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Oct 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

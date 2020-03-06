@@ -6,11 +6,11 @@
 
 Name: gnome-font-viewer
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Font Viewer
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://www.gnome.org
 
 %if_disabled snapshot
@@ -51,6 +51,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Sat Sep 21 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

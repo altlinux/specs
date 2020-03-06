@@ -5,10 +5,10 @@
 
 Name: gnome-books
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: An e-book manager application for GNOME
-License: GPLv2+
+License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Books
 
@@ -93,6 +93,9 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Fri Sep 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

@@ -2,14 +2,14 @@
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 3.2
+%define ver_major 3.3
 
 Name: scratch-text-editor
 Version: %ver_major.0
 Release: alt1
 
 Summary: The text editor that works
-License: GPLv3
+License: GPL-3.0
 Group: Editors
 
 Url: https://launchpad.net/%_name
@@ -118,6 +118,10 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- updated to 3.3.0-14-g74a3e874
+- built with vala-0.48
+
 * Wed Jan 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - updated to 3.2.0-29-gd166050c
 

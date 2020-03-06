@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.68
+%define ver_major 2.70
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: libsoup
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -33,12 +33,12 @@ Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.66.1-alt-compat-map.patch
 
-Requires: glib-networking >= 2.59.90
+Requires: glib-networking >= 2.63.90
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
 
-%define glib_ver 2.42.0
+%define glib_ver 2.58.0
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
@@ -233,6 +233,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.70.0-alt1
+- 2.70.0
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.68.4-alt1
 - 2.68.4
 

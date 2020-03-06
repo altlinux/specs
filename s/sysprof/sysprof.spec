@@ -1,21 +1,22 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3
 %define xdg_name org.gnome.Sysprof%api_ver
 %define _libexecdir %_prefix/libexec
 
 %def_with sysprofd
 %def_enable gtk
+%def_enable libunwind
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
-License: GPLv2+
+License: GPL-3.0
 Url: http://sysprof.com
 
 %if_disabled snapshot
@@ -35,6 +36,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel >= %dazzle_ver}
 %{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel}
+%{?_enable_libunwind:BuildRequires: libunwind-devel}
 
 %description
 The Sysprof profiler is a statistical profiler based on hardware
@@ -73,6 +75,7 @@ developing applications that use GtkGHex library.
 %_iconsdir/hicolor/*/*/*
 %_libdir/lib%name-%api_ver.so
 %_libdir/lib%name-ui-%api_ver.so
+%_libdir/lib%name-memory-%api_ver.so
 
 %if_with sysprofd
 %_libexecdir/sysprofd
@@ -91,7 +94,7 @@ developing applications that use GtkGHex library.
 
 %_datadir/mime/packages/%name-mime.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README* TODO
+%doc AUTHORS NEWS README*
 
 %files devel
 %_libdir/lib%name-capture-%api_ver.a
@@ -101,6 +104,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0-2-g6f167d7
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

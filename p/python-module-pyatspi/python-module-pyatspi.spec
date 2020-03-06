@@ -1,5 +1,5 @@
 %define _name pyatspi
-%define ver_major 2.34
+%define ver_major 2.36
 
 %def_with python2
 
@@ -9,7 +9,7 @@ Release: alt1
 
 Summary: Python bindings for at-spi library
 Group: Development/Python
-License: LGPLv2+
+License: LGPL-2.0
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -91,6 +91,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
 - 2.34.0
 

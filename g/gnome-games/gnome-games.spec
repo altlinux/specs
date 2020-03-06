@@ -1,9 +1,9 @@
 %def_disable snapshot
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Games
 
 Name: gnome-games
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -17,8 +17,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
+%define vala_ver 0.48.0
+
 BuildRequires(pre): meson rpm-build-licenses
-BuildRequires: vala-tools
+BuildRequires: vala-tools >= %vala_ver
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(grilo-0.3)
@@ -71,6 +73,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 - updated License tag

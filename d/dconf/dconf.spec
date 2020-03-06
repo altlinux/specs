@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.34
+%define ver_major 0.36
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
@@ -13,7 +13,7 @@ Release: alt1
 
 Summary: A simple configuration system
 Group: System/Servers
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/dconf
 
 %if_enabled snapshot
@@ -174,6 +174,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
 - 0.34.0
 

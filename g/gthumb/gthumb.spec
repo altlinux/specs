@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_base 3.8
-%define ver_major 3.8
+%define ver_base 3.10
+%define ver_major 3.9
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.gThumb
 
@@ -15,7 +15,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -133,6 +133,7 @@ This package contains headers needed to build extensions for gThumb.
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.change-date.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.catalogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.comments.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.contact-sheet.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.convert-format.gschema.xml
@@ -154,10 +155,11 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.resize-images.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.rotate.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.terminal.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/gthumb.1.*
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/%name/
@@ -165,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
+- 3.9.1
+
 * Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 4.2
+%define ver_major 4.4
 %define api_ver 4
 
 %def_disable static
@@ -12,7 +12,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -151,6 +151,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 

@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.34
+%define ver_major 3.36
 %define gst_api_ver 1.0
 %def_enable gtk_doc
 %def_disable check
@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -222,7 +222,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_datadir/bash-completion/completions/gnome-extensions
 %_xdgconfigdir/autostart/%name-overrides-migration.desktop
 %_desktopdir/%xdg_name.desktop
-%_desktopdir/%name-extension-prefs.desktop
+%_desktopdir/org.gnome.Extensions.desktop
 %_desktopdir/evolution-calendar.desktop
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
@@ -246,8 +246,8 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_userunitdir/%name-x11.service
 %_userunitdir/%name-wayland.service
 %_userunitdir/%name-disable-extensions.service
-
 %_man1dir/*
+%_iconsdir/hicolor/*/*/*.svg
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -257,6 +257,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Feb 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

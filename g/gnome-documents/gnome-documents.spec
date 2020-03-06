@@ -7,11 +7,11 @@
 
 Name: gnome-documents
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A document manager application for GNOME
 Group: Office
-License: GPLv2+
+License: GPL-2.0 and LGPL-2.0
 Url: https://wiki.gnome.org/Apps/Documents
 
 %if_disabled snapshot
@@ -158,6 +158,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Thu Oct 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

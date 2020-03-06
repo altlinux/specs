@@ -3,11 +3,11 @@
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -58,6 +58,9 @@ systems.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

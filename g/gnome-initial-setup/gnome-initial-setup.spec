@@ -1,6 +1,6 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -9,12 +9,12 @@
 %def_enable cheese
 
 Name: gnome-initial-setup
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0
 Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
@@ -89,6 +89,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sun Jan 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 

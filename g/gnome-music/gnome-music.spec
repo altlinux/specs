@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -31,6 +31,7 @@ AutoReqProv: nopython
 %define mediaart_ver 1.9
 %define pygobject_ver 3.29.1
 %define pycairo_ver 1.14.0
+%define goa_ver 3.35.90
 
 Requires: tracker >= %tracker_ver
 Requires: grilo-plugins
@@ -55,7 +56,7 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: python3-devel >= %python_ver
 BuildRequires: pkgconfig(tracker-sparql-2.0)
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
-BuildRequires: libgnome-online-accounts-devel
+BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 
 %description
 Music playing application for GNOME3.
@@ -84,6 +85,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Feb 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

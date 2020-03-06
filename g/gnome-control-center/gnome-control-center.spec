@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -91,6 +91,7 @@ BuildRequires: libudisks2-devel
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 BuildRequires: libgudev-devel libgsound-devel
 BuildRequires: libhandy-devel
+BuildRequires: libepoxy-devel
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -143,7 +144,8 @@ NOCONFIGURE=1 ./autogen.sh
 %files
 %_bindir/%name
 %_libexecdir/cc-remote-login-helper
-%_libexecdir/gnome-control-center-search-provider
+%_libexecdir/%name-search-provider
+%_libexecdir/%name-print-renderer
 
 %files data -f %name.lang
 %dir %_datadir/%name
@@ -175,6 +177,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

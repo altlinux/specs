@@ -1,19 +1,19 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.2
-%define api_ver 0.2
-%define spa_api_ver 0.1
+%define ver_major 0.3
+%define api_ver 0.3
+%define spa_api_ver 0.2
 %define gst_api_ver 1.0
 
 %def_enable gstreamer
 %def_enable systemd
 %def_enable docs
 %def_enable man
-%def_disable jack
+%def_enable check
 
 Name: pipewire
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: Media Sharing Server
@@ -35,9 +35,10 @@ Requires: rtkit
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel libudev-devel libdbus-devel
-BuildRequires: libalsa-devel libv4l-devel
+BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
+BuildRequires: libvulkan-devel libv4l-devel libbluez-devel
+BuildRequires: libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
-%{?_enable_jack:BuildRequires: libjack-devel}
 BuildRequires: libsbc-devel
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
@@ -49,6 +50,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
 %{?_enable_man:BuildRequires: xmltoman}
+%{?_enable_check:BuildRequires: /proc}
 
 %description
 PipeWire is a multimedia server for Linux and other Unix like operating
@@ -98,7 +100,7 @@ This package contains command line utilities for the PipeWire media server.
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_enable_man:-Dman=true} \
-	%{?_enable_gstreamer:-Dgstreamer=enabled}
+	%{?_enable_gstreamer:-Dgstreamer=true}
 	%{?_disable_systemd:-Dsystemd=false}
 %meson_build
 
@@ -115,6 +117,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %files
 %_bindir/%name
+%_bindir/%name-media-session
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
@@ -126,17 +129,26 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name.1*
 %_man5dir/%name.conf.5*
 %endif
-%doc README NEWS
+%doc README* NEWS
 
 %files libs
 %_libdir/lib%name-%api_ver.so.*
+%_libdir/libjack-pw.so.*
+%_libdir/libpulse-pw.so.*
+%_libdir/libpulse-simple-pw.so.*
+%_libdir/libpulse-mainloop-glib-pw.so.*
 %_libdir/%name-%api_ver/
-%_libdir/spa/
+%_libdir/spa-%spa_api_ver/
+%_libdir/alsa-lib/
 
 %files libs-devel
 %_libdir/lib%name-%api_ver.so
-%_includedir/%name/
-%_includedir/spa/
+%_libdir/libjack-pw.so
+%_libdir/libpulse-pw.so
+%_libdir/libpulse-simple-pw.so
+%_libdir/libpulse-mainloop-glib-pw.so
+%_includedir/%name-%api_ver/
+%_includedir/spa-%spa_api_ver/
 %_pkgconfigdir/lib%name-%api_ver.pc
 %_pkgconfigdir/libspa-%spa_api_ver.pc
 
@@ -146,16 +158,24 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %files utils
-%_bindir/%name-monitor
-%_bindir/%name-cli
+%_bindir/pw-mon
+%_bindir/pw-cli
 %_bindir/spa-monitor
 %_bindir/spa-inspect
+%_bindir/pw-cat
+%_bindir/pw-dot
+%_bindir/pw-play
+%_bindir/pw-profiler
+%_bindir/pw-record
 %if_enabled man
-%_man1dir/%name-monitor.1*
-%_man1dir/%name-cli.1*
+%_man1dir/pw-mon.1*
+%_man1dir/pw-cli.1*
 %endif
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Fri Sep 27 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
 - 0.2.7
 

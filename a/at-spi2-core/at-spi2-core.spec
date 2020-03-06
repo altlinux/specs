@@ -1,4 +1,4 @@
-%define ver_major 2.34
+%define ver_major 2.36
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -13,7 +13,7 @@ Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -134,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
 - 2.34.0
 

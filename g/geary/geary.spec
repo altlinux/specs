@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Geary
 # Elementary OS-specific
 %def_disable contractor
@@ -8,11 +8,11 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Email client
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
 
@@ -26,7 +26,9 @@ Source: %name-%version.tar
 %define gtk_ver 3.24.7
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
-%define webkit_ver 2.20
+%define webkit_ver 2.26
+%define gmime_ver 3.2.4
+%define peas_ver 1.24
 
 Requires: dconf gnome-keyring gcr
 
@@ -35,7 +37,8 @@ BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
-BuildRequires: iso-codes-devel libgmime-devel
+BuildRequires: libpeas-devel >= %peas_ver
+BuildRequires: iso-codes-devel libgmime3.0-devel >= %gmime_ver
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libsoup-devel libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libjson-glib-devel
@@ -84,6 +87,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Fri Mar 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

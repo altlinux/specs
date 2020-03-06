@@ -8,10 +8,10 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt10
+Release: alt11
 
 Summary: GNOME Screensaver
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeScreensaver
 
@@ -26,6 +26,8 @@ Patch: gnome-screensaver-2.28.0-alt-pam.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=579430
 Patch2: gnome-screensaver-2.28.0-user_activity.patch
 Patch3: gnome-screensaver-3.6.1-alt-setuid.patch
+# since gnome-desktop-3.36
+Patch4: gnome-screensaver-3.6.1-alt-gnome_bg_create_surface.patch
 
 # From configure.ac
 %define dbus_ver 0.30
@@ -60,6 +62,7 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %patch -p1 -b .pam
 %patch2 -p1 -b .user_activity
 %patch3 -p1 -b .setuid
+%patch4
 subst 's/\(libsystemd\)-login/\1/' configure.ac
 
 %build
@@ -91,6 +94,9 @@ subst 's/\(libsystemd\)-login/\1/' configure.ac
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt11
+- rebuilt against libgnome-desktop-so.19
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt10
 - rebuilt against libgnome-desktop-3.so.18
 

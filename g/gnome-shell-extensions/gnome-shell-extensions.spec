@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -162,6 +162,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

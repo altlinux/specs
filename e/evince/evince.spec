@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3
 %define so_ver 4
 
@@ -14,12 +14,12 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
 Group: Office
-License: GPL
+License: GPL-2.0-or-later
 Url: http://www.gnome.org/projects/evince/
 
 %if_disabled snapshot
@@ -214,6 +214,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

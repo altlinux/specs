@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.62
+%define ver_major 2.64
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
@@ -14,12 +14,12 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: http://www.gnome.org
 
 %if_disabled snapshot
@@ -111,6 +111,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.0-alt1
+- 2.64.0
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 2.62.3-alt1
 - 2.62.3
 

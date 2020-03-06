@@ -2,7 +2,7 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 3.32
+%define ver_major 3.36
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -10,7 +10,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -21,8 +21,6 @@ Url: http://fileroller.sourceforge.net
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
-# find ./ -type f -print0| xargs -r0 subst "s/x-lzop-compressed-tar/x-tzo/" --
-Patch2: %name-3.31.92-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -91,7 +89,6 @@ File Roller является графической оболочкой к раз
 %prep
 %setup
 %patch1
-%patch2 -p1 -b .tzo
 
 rm -f data/%xdg_name.desktop{,.in}
 
@@ -128,10 +125,14 @@ rm -f data/%xdg_name.desktop{,.in}
 %_libdir/nautilus/extensions-%nau_api_ver/*.so
 %endif
 
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+- removed useless now tar.lzo patch
+
 * Sat Feb 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.4-alt1
 - 3.32.4
 

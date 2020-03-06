@@ -1,15 +1,17 @@
 %def_disable snapshot
-%define ver_major 3.34
-%define api_ver 1
+%define ver_major 3.36
+%define api_ver 2
+# GTK interface library
+%define gci_api_ver 1
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
-License: %gpl2plus
+License: GPL-3.0-or-later
 Group: Sciences/Mathematics
 Url: https://wiki.gnome.org/Apps/Calculator
 
@@ -22,9 +24,10 @@ Source: %name-%version.tar
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
 Requires: libgcalc = %EVR
+Requires: libgci = %EVR
 
 BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
-BuildRequires: vala-tools >= 0.24
+BuildRequires: vala-tools >= 0.24 valadoc
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.50.0 libgee0.8-devel libxml2-devel
@@ -74,6 +77,60 @@ Requires: libgcalc-gir = %EVR
 %description -n libgcalc-gir-devel
 GObject introspection devel data for the GNOME Calculator library.
 
+%package -n libgcalc-devel-doc
+Summary: Development documentation for the GNOME Calculator library
+Group: Development/Documentation
+Conflicts: libgcalc < %EVR
+BuildArch: noarch
+
+%description -n libgcalc-devel-doc
+This package provides Development documentation for the GNOME Calculator library.
+
+%package -n libgci
+Summary: GNOME Calculator GTK Interface Library
+Group: System/Libraries
+Requires: libgcalc = %EVR
+
+%description -n libgci
+This package contains shared GNOME Calculator GTK interface library.
+
+%package -n libgci-devel
+Summary: Development files for libgci
+Group: Development/C
+Requires: libgci = %EVR
+
+%description -n libgci-devel
+This package development files for GNOME Calculator GTK interface library.
+
+%package -n libgci-gir
+Summary: GObject introspection data for the GNOME Calculator GTK interface library
+Group: System/Libraries
+Requires: libgci = %EVR
+
+%description -n libgci-gir
+GObject introspection data for the GNOME Calculator GTK interface library.
+
+%package -n libgci-gir-devel
+Summary: GObject introspection devel data for the GNOME Calculator GTK interface library.
+Group: Development/Other
+Requires: libgci-devel = %EVR
+Requires: libgci-gir = %EVR
+
+%description -n libgci-gir-devel
+GObject introspection devel data for the GNOME Calculator GTK interface library.
+
+%package -n libgci-devel-doc
+Summary: Development documentation for the GNOME Calculator GTK interface library
+Group: Development/Documentation
+Conflicts: libgci < %EVR
+BuildArch: noarch
+
+%description -n libgci-devel-doc
+This package provides Development documentation for the GNOME Calculator
+GTK interface library.
+
+
+
 %prep
 %setup
 
@@ -97,7 +154,7 @@ GObject introspection devel data for the GNOME Calculator library.
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
 %_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc NEWS
+%doc NEWS README*
 
 %files -n libgcalc
 %_libdir/libgcalc-%api_ver.so.*
@@ -115,8 +172,33 @@ GObject introspection devel data for the GNOME Calculator library.
 %files -n libgcalc-gir-devel
 %_girdir/GCalc-%api_ver.gir
 
+%files -n libgcalc-devel-doc
+%_datadir/devhelp/books/GCalc-%api_ver/
+
+%files -n libgci
+%_libdir/libgci-%gci_api_ver.so.*
+
+%files -n libgci-devel
+%_includedir/gci-%api_ver
+%_libdir/libgci-%gci_api_ver.so
+%_pkgconfigdir/gci-%gci_api_ver.pc
+%_vapidir/gci-%gci_api_ver.deps
+%_vapidir/gci-%gci_api_ver.vapi
+
+%files -n libgci-gir
+%_typelibdir/GCi-%gci_api_ver.typelib
+
+%files -n libgci-gir-devel
+%_girdir/GCi-%gci_api_ver.gir
+
+%files -n libgci-devel-doc
+%_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+- new libgci subpackages
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

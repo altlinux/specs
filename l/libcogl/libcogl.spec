@@ -25,10 +25,12 @@
 %def_enable wayland_server
 %def_enable kms_egl
 %def_enable xlib_egl
+%def_enable deprecated
 %def_enable apidocs
+%def_enable unit_tests
 
 Name: libcogl
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
@@ -42,6 +44,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.
 Source: %oname-%version.tar
 %endif
 Patch: cogl-1.16.1-alt-gles2.patch
+Patch1: cogl-1.22.6-fc-egl_includes.patch
 
 # fc patches
 # Vaguely related to https://bugzilla.gnome.org/show_bug.cgi?id=772419
@@ -151,6 +154,7 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch1 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -172,13 +176,14 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
 	%{?_enable_wayland_server:--enable-wayland-egl-server} \
 	%{?_enable_xlib_egl:--enable-xlib-egl-platform} \
-	%{?_enable_gst:--enable-cogl-gst}
+	%{?_enable_gst:--enable-cogl-gst} \
+	%{subst_enable deprecated} \
+	%{?_disable_unit_tests:--enable-unit-tests=no}
 
 %make_build
 
 %install
 %makeinstall_std
-
 %find_lang %oname
 
 %files -f %oname.lang
@@ -210,6 +215,9 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt1
+- 1.22.6
+
 * Tue Apr 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.22.4-alt1
 - 1.22.4
 

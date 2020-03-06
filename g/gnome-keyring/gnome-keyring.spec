@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -15,7 +15,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
-License: LGPL
+License: GPL-2.0 and LGPL-2.1
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -127,6 +127,8 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %{?_enable_ssh:%exclude %_libdir/gnome-keyring/*/gkm-ssh-store-standalone.so}
 %_libdir/pkcs11
 %_man1dir/*
+%_datadir/dbus-1/services/org.freedesktop.impl.portal.Secret.service
+%_datadir/xdg-desktop-portal/portals/gnome-keyring.portal
 %doc README AUTHORS NEWS
 
 %exclude %_libdir/pkcs11/*.la
@@ -148,6 +150,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Sep 30 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

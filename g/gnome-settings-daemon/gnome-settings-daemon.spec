@@ -4,7 +4,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -18,11 +18,11 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
-License: GPLv2+
+License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -37,7 +37,7 @@ Source: %name-%version.tar
 %define gnome_desktop_ver 3.34.2
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.33.0
+%define gsds_ver 3.36.0
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
@@ -144,6 +144,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-sharing
 %_libexecdir/gsd-smartcard
 %_libexecdir/gsd-sound
+%_libexecdir/gsd-usb-protection
 %_libexecdir/gsd-wacom
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
@@ -152,6 +153,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %_userunitdir/*
 %_datadir/%name/
 %_sysconfdir/xdg/autostart/*.desktop
+%dir %_sysconfdir/xdg/Xwayland-session.d
+%_sysconfdir/xdg/Xwayland-session.d/00-xrdb
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
@@ -186,6 +189,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Wed Dec 18 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

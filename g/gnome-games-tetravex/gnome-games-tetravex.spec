@@ -3,11 +3,11 @@
 %define _name tetravex
 %define __name gnome-%_name
 %define xdg_name org.gnome.Tetravex
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A game based on Tetravex
@@ -44,18 +44,22 @@ times are stored in a system-wide scoreboard.
 
 %install
 %meson_install
-%find_lang --with-gnome %__name
+%find_lang --with-gnome --output=%__name.lang %__name %__name-gui
 
 %files -f %__name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/*.*
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

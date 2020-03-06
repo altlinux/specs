@@ -2,11 +2,11 @@
 
 %define _name four-in-a-row
 %define xdg_name org.gnome.Four-in-a-row
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Four in a row game
@@ -52,9 +52,13 @@ line can be horizontal, vertical or diagonal.
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

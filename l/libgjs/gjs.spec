@@ -1,25 +1,21 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.58
+%define ver_major 1.64
 %define _name gjs
 %define api_ver 1.0
-%define mozjs_ver_major 60
-%define mozjs_ver 60.8.0
+%define mozjs_ver_major 68
+%define mozjs_ver 68.4.2
 
 %def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
-# The following files contain code from Mozilla which
-# is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
-# The console module (modules/console.c)
-# Stack printer (gjs/stack.c)
 License: GPL-2.0-or-later and LGPL-2.0-or-later and MIT
 Url: https://wiki.gnome.org/action/show/Projects/Gjs
 
@@ -30,20 +26,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %endif
 
 %define glib_ver 2.58.0
-%define gi_ver 1.53.4
+%define gi_ver 1.61.2
 
 Requires: gobject-introspection
 Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
 
-BuildRequires(pre): rpm-build-gir
-BuildRequires: gnome-common gcc-c++ libffi-devel libcairo-devel
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: valgrind
-# for check
-BuildRequires: /proc dbus-tools dbus-tools-gui
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui}
 
 %description
 Gjs allows using GNOME libraries from Javascript. It's based on the
@@ -73,18 +68,16 @@ the functionality of the installed Gjs library package.
 %setup -n %_name-%version
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-    --disable-static \
-    %{?_enable_installed_tests:--enable-installed-tests}
-%make_build
+%meson \
+    %{?_disable_installed_tests:-Dinstalled-tests=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files
 %_bindir/%_name
@@ -92,9 +85,9 @@ the functionality of the installed Gjs library package.
 %_libdir/%name.so.*
 %dir %_libdir/%_name/
 %dir %_typelibdir
-%_typelibdir/GjsPrivate-1.0.typelib
+%_typelibdir/GjsPrivate-%api_ver.typelib
 %dir %_datadir/%_name-%api_ver
-%doc COPYING NEWS README
+%doc COPYING NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -114,12 +107,13 @@ the functionality of the installed Gjs library package.
 %_libexecdir/%_name/installed-tests/
 %_datadir/installed-tests/%_name/
 %_datadir/glib-2.0/schemas/org.gnome.GjsTest.gschema.xml
-
-%exclude %_libdir/%_name/*.la
 %endif
 
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.0-alt1
+- 1.64.0
+
 * Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.58.4-alt1
 - 1.58.4
 

@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
@@ -6,14 +7,18 @@
 
 Name: xdg-desktop-portal
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
-License: LGPLv2+
+License: LGPL-2.0
 Url: https://github.com/flatpak/%name
 
+%if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2
@@ -27,7 +32,7 @@ Requires: geoclue2 >= %geoclue_ver
 BuildRequires: pkgconfig(flatpak)
 BuildRequires: pkgconfig(fuse)
 BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(libpipewire-0.2)
+BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(systemd)
@@ -89,6 +94,10 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt2
+- updated to 1.6.0-18-g552a4f3
+- built against pipewire-0.3
+
 * Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

@@ -3,10 +3,10 @@
 
 Name: gnome-directory-thumbnailer
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: GNOME thumbnailer to generate thumbnails for directories
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeDirectoryThumbnailer
 
@@ -38,6 +38,9 @@ can be called manually as well.
 %doc README AUTHORS NEWS
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.11-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Tue Sep 03 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.11-alt1
 - 0.1.11
 
