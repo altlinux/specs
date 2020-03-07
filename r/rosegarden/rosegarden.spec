@@ -1,7 +1,7 @@
 #define status beta
 Name: rosegarden
-Version: 17.12
-Release: alt2
+Version: 19.12
+Release: alt1
 
 Summary: MIDI and audio sequencer and musical notation editor
 License: GPL
@@ -56,6 +56,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.h' |
 %_datadir/mime/packages/*
 
 %changelog
+* Sun Mar 08 2020 Vitaly Lipatov <lav@altlinux.ru> 19.12-alt1
+- NMU: new version 19.12 (ALT bug 38088)
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 17.12-alt2
 - E2K: explicit -std=c++11; strip UTF-8 BOM for lcc < 1.24
 
