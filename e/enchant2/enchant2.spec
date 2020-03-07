@@ -8,12 +8,12 @@
 
 
 Name: %_name%api_ver
-Version: 2.2.7
+Version: 2.2.8
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
-License: LGPL
+License: LGPL-2.1
 Url: https://abiword.github.io/%_name/
 
 %if_disabled snapshot
@@ -86,6 +86,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.8-alt1
+- 2.2.8
+
 * Mon Sep 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.7-alt1
 - 2.2.7
 

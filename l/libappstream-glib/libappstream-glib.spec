@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -162,6 +162,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.17-alt1
+- 0.7.17
+
 * Tue Oct 01 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.16-alt1
 - 0.7.16
 
