@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,6 +40,12 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Sun Mar 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- evz-qm list: list only running by default
+- evz: use first engine by default
+- detect containters's id in set / exec group operations
+- allow containers' names in list
+
 * Thu Mar 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1
 - evz-vboxmanage: add set support
 - fix info for docker, vboxmanage
