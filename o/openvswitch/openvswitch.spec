@@ -9,7 +9,7 @@
 
 Name: openvswitch
 Version: 2.12.0
-Release: alt2
+Release: alt3
 
 Summary: An open source, production quality, multilayer virtual switch
 License: ASL 2.0 and LGPLv2+ and SISSL
@@ -31,6 +31,7 @@ Source12: %name.tmpfiles
 Patch1: openvswitch-2.0_alt_fix_function.patch
 Patch2: openvswitch-2.5.0-fix-link.patch
 Patch3: openvswitch-2.12.0-alt-systemd-unit.patch
+Patch4: python3-dict-change.patch
 
 Patch101: python3.patch
 Patch102: 0001-ovs-check-dead-ifs-unshadow-pid-variable.patch
@@ -194,6 +195,7 @@ Python3 bindings for the Open vSwitch database
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %patch101 -p1
 %patch102 -p1
@@ -489,6 +491,9 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Sun Mar 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt3
+- Fixed build with python3.8.
+
 * Sun Mar 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt2
 - fixed reload services with systemd
 
