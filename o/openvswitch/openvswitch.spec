@@ -9,7 +9,7 @@
 
 Name: openvswitch
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
 License: ASL 2.0 and LGPLv2+ and SISSL
@@ -265,6 +265,10 @@ for service in openvswitch ovsdb-server ovs-vswitchd ovs-delete-transient-ports 
             %buildroot%_unitdir/${service}.service
 done
 
+install -p -D -m 0755 \
+        rhel/usr_share_openvswitch_scripts_ovs-systemd-reload \
+        %buildroot%_datadir/%name/scripts/ovs-systemd-reload
+
 #etcnet
 install -pDm644 %SOURCE3 %buildroot%_sysconfdir/net/options.d/01-openvswitch
 install -pDm755 %SOURCE4 %buildroot%_sysconfdir/net/scripts/create-ovsbr
@@ -376,6 +380,7 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %_datadir/%name/scripts/ovs-save
 %_datadir/%name/scripts/ovs-ctl
 %_datadir/%name/scripts/ovs-kmod-ctl
+%_datadir/%name/scripts/ovs-systemd-reload
 %dir %_sysconfdir/openvswitch
 %config(noreplace) %ghost %_sysconfdir/openvswitch/conf.db
 %config(noreplace) %ghost %_sysconfdir/openvswitch/system-id.conf
@@ -484,6 +489,9 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Sun Mar 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt2
+- fixed reload services with systemd
+
 * Fri Nov 01 2019 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt1
 - 2.12.0
 - switch use from /var/run to /run
