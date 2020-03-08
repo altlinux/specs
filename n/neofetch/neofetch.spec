@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: neofetch
-Version: 6.1.0
+Version: 7.0.0
 Release: alt1
 Summary: A command-line system information tool
 License: MIT
 Group: Monitoring
 Url: https://github.com/dylanaraps/neofetch
 Source: %name-%version.tar
+Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 
@@ -15,7 +16,6 @@ BuildArch: noarch
 Neofetch is a command-line system information tool written in bash 3.2+.
 Neofetch displays information about your operating system, software and
 hardware in an aesthetic and visually pleasing way.
-
 
 %prep
 %setup
@@ -30,6 +30,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Sun Mar 08 2020 Alexander Makeenkov <amakeenk@altlinux.org> 7.0.0-alt1
+- New version
+
 * Sat Aug 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 6.1.0-alt1
 - New version
 
