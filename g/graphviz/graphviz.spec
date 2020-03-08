@@ -3,12 +3,13 @@
 %if_without bootstrap
 # help is welcome to re-enable, fix packaging and test
 %def_enable  guile
-%def_disable lua
+%def_enable lua
 %def_disable ocaml
 %def_disable php
-%def_enable python
+%def_disable python2
+%def_enable python3
 %def_disable ruby
-%def_disable tcl
+%def_enable tcl
 %endif
 
 %define gvdatadir %_datadir/%name
@@ -16,15 +17,15 @@
 %define gvtcldir %_libexecdir/%name/tcl
 
 Name: graphviz
-Version: 2.40.1
-Release: alt8
+Version: 2.41.2
+Release: alt2
 
 Summary: Graphs visualization tools
-License: Common Public License 1.0
+License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
 Group: Publishing
-
-# Git: http://www.graphviz.org/pub/scm/graphviz2/.git
-Url: http://www.graphviz.org
+Packager: Fr. Br. George <george@altlinux.org>
+Url: https://www.graphviz.org
+Vcs: https://gitlab.com/graphviz/graphviz
 Source0: %name-%version.tar
 Source2: graphviz-dot-x11-preview.desktop
 
@@ -41,8 +42,6 @@ Patch42:                 graphviz-2.40.1-CVE-2018-10196.patch
 Patch43:                 graphviz-2.40.1-dotty-menu-fix.patch
 Patch44:                 graphviz-2.40.1-coverity-scan-fixes.patch
 
-Packager: Michael Shigorin <mike@altlinux.org>
-
 Requires: lib%name = %version-%release
 Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
@@ -54,9 +53,9 @@ BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-de
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
 %{?_enable_lua:BuildRequires: liblua5-devel}
 %{?_enable_guile:BuildRequires: guile-devel}
-%if_enabled python
+%if_enabled python3
 BuildRequires(pre): rpm-build-python3 python3-devel
-%add_python3_path %gvlibdir/python/
+%add_python3_path %gvlibdir/python3/
 %endif
 
 %set_verify_elf_method unresolved=relaxed
@@ -170,13 +169,20 @@ This package makes %name functionality accessible from Tcl
 #patch1
 %patch2 -p1
 
-%patch40 -p1 -b .visio
-%patch41 -p1 -b .python3
-%patch42 -p1 -b .CVE-2018-10196
+#patch40 -p1 -b .visio
+#patch41 -p1 -b .python3
+#patch42 -p1 -b .CVE-2018-10196
 %patch43 -p1 -b .dotty-menu-fix
 %patch44 -p1 -b .coverity-scan-fixes
 
+# XXX Hack out #!/usr/bin/lua
+for N in tclpkg/gv/demo/*lua; do
+	sed -i 's@#!/usr/bin/lua@#!/usr/bin/env lua@' $N
+done
+
+
 %build
+./autogen.sh NOCONFIG
 %add_optflags -DNDEBUG
 # altbug #34101
 sed -i 's,-Wall -ffast-math,-Wall,' configure*
@@ -203,9 +209,11 @@ export LIBLTDL=-lltdl
 	%{subst_enable lua } \
 	%{subst_enable ocaml } \
 	%{subst_enable php } \
-	%{subst_enable python } \
+	%{subst_enable python2 } \
+	%{subst_enable python3 } \
 	%{subst_enable ruby } \
 	%{subst_enable tcl } \
+	--disable-python \
 	--disable-java \
 	--disable-sharp
 
@@ -219,20 +227,20 @@ mkdir -p %buildroot%_defaultdocdir
 mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
 cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-%version
 
-%if_with tcl
-mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
-cat <<EOF > %buildroot%_tcldatadir/gd/pkgIndex.tcl
-package ifneeded Gdtclft %version "load [file join \$dir .. .. .. lib tcl libgdtclft.so.0] Gdtclft"
-EOF
-cat <<EOF > %buildroot%_tcldatadir/%name/pkgIndex.tcl
-package ifneeded Tcldot %version "load [file join \$dir .. .. .. lib tcl libtcldot.so.0] Tcldot"
-package ifneeded Tclpathplan %version "load [file join \$dir .. .. .. lib tcl libtclplan.so.0] Tclpathplan"
-EOF
-cat <<EOF > %buildroot%_tcldatadir/tkspline/pkgIndex.tcl
-package ifneeded Tkspline %version "
-	package require Tk 8.3
-        load [file join \$dir .. .. .. lib tcl libtkspline.so.0] Tkspline"
-EOF
+%if_enabled tcl
+##mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
+##cat <<EOF > %buildroot%_tcldatadir/gd/pkgIndex.tcl
+##package ifneeded Gdtclft %version "load [file join \$dir .. .. .. lib tcl libgdtclft.so.0] Gdtclft"
+##EOF
+##cat <<EOF > %buildroot%_tcldatadir/%name/pkgIndex.tcl
+##package ifneeded Tcldot %version "load [file join \$dir .. .. .. lib tcl libtcldot.so.0] Tcldot"
+##package ifneeded Tclpathplan %version "load [file join \$dir .. .. .. lib tcl libtclplan.so.0] Tclpathplan"
+##EOF
+##cat <<EOF > %buildroot%_tcldatadir/tkspline/pkgIndex.tcl
+##package ifneeded Tkspline %version "
+##	package require Tk 8.3
+##        load [file join \$dir .. .. .. lib tcl libtkspline.so.0] Tkspline"
+##EOF
 
 # argh, #21967
 if [ ! -d %buildroot%gvtcldir ]; then
@@ -247,8 +255,14 @@ install -m0644 -D %SOURCE2 %buildroot%_desktopdir/graphviz-dot-x11-preview.deskt
 touch %buildroot%gvlibdir/config
 
 rm -f %buildroot%gvlibdir/*/lib*.la
+rm -f %buildroot%gvtcldir/lib*.la
 rm -f %buildroot%gvlibdir/libgvplugin_*.la
 rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
+
+# Dereference manual symlinks
+mv %buildroot%_man1dir/* %buildroot%_man3dir/
+cp -aL %buildroot%_man3dir/*.1 %buildroot%_man1dir/
+rm -f %buildroot%_man3dir/*.1
 
 %post
 [ ! -x %_bindir/dot ] || %_bindir/dot -c >&/dev/null
@@ -284,6 +298,7 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 %_libdir/lib*.so
 %_libdir/pkgconfig/*.pc
 %_man3dir/*
+%exclude %_man3dir/*tcl*
 
 %files doc
 %_defaultdocdir/%name-%version/
@@ -306,7 +321,9 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 %if_enabled lua
 %files lua
 %dir %gvlibdir/lua/
-%gvlibdir/lua/gv.so
+%gvlibdir/lua/*.so
+%_libdir/lua/*/*.so
+%gvdatadir/demo/modgraph.lua
 %endif
 
 %files perl
@@ -318,9 +335,9 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 %perl_vendor_archlib/gv.so
 %gvdatadir/demo/modgraph.pl
 
-%if_enabled python
+%if_enabled python3
 %files python3
-%gvlibdir/python/
+%gvlibdir/python3/
 %python3_sitelibdir/*
 #gvdatadir/demo/modgraph.py
 %endif
@@ -331,35 +348,30 @@ rm -fv %buildroot%_datadir/graphviz/demo/modgraph.py
 %gvlibdir/ruby/gv.so
 %endif
 
-%if_with tcl
+%if_enabled tcl
 %files tcl
 %dir %gvtcldir/
-%gvtcldir/libgdtclft.so*
-%gvtcldir/libgv_tcl.so
-%gvtcldir/libtcldot.so*
-%gvtcldir/libtcldot_builtin.so*
-%gvtcldir/libtclplan.so*
-#gvtcldir/libtkspline.so*
-%gvtcldir/pkgIndex.tcl
+%gvtcldir/lib*tcl*.so*
+%gvtcldir/*.tcl
 %_libdir/tcl*/*
-%_tcldatadir/%name
-%_tcldatadir/gd/pkgIndex.tcl
-%_tcldatadir/tkspline/pkgIndex.tcl
-%gvdatadir/demo/doted.tcl
-%gvdatadir/demo/entities.tcl
-%gvdatadir/demo/gcat.tcl
-%gvdatadir/demo/modgraph.tcl
-%gvdatadir/demo/pathplan.tcl
-#gvdatadir/demo/spline.tcl
-%gvdatadir/demo/pathplan_data
+%gvdatadir/demo/*.tcl
+%gvdatadir/demo/pathplan*
 %gvdatadir/demo/*.README
 %gvdatadir/demo/*.html
+%_man3dir/*tcl*
 %endif
 
 # TODO:
 # - enable/fix/test language bindings
 
 %changelog
+* Sun Mar 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2.41.2-alt2
+- Reintroduced python3 subpackage lost in the previous package release.
+
+* Thu Feb 27 2020 Fr. Br. George <george@altlinux.ru> 2.41.2-alt1
+- update version from git release tag
+- build lua and tcl modules
+
 * Wed Jul 31 2019 Andrey Savchenko <bircoph@altlinux.org> 2.40.1-alt8
 - remove e2k hack as it is needed no longer
 
