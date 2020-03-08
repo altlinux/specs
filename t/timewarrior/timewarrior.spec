@@ -1,5 +1,5 @@
 Name: timewarrior
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Timewarrior is a command line time tracking application
@@ -32,12 +32,16 @@ is a portable, well supported and very active Open Source project.
 mv %buildroot/%_docdir/timew %buildroot/%_docdir/%name-%version
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README.md CONTRIBUTING.md
+%doc AUTHORS ChangeLog NEWS README.md CONTRIBUTING.md ext/
 %_bindir/*
 %_man1dir/*
+%_man7dir/*
 
 
 %changelog
+* Sun Mar 08 2020 Kirill Maslinsky <kirill@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Feb 28 2019 Kirill Maslinsky <kirill@altlinux.org> 1.1.1-alt1
 - initial build
 
