@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.24
-Release: alt2
+Version: %ver_major.25
+Release: alt1
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -28,10 +28,10 @@ BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
 BuildRequires: libgtksourceview-devel >= %gtksourceview_ver
 BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= %mpfr_ver
 BuildRequires: autoconf-archive intltool xsltproc bison flex
+BuildRequires: pkgconfig(amtk-5)
+BuildRequires: libvte3-devel >= %vte_ver
 # for non-UTF korean trnslation
 BuildRequires: perl-Encode-KR
-# since 1.0.24 internal vte used
-# BuildRequires: libvte-devel >= %vte_ver
 
 %description
 Genius calculator is a general purpose calculator and mathematics tool
@@ -97,6 +97,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.25-alt1
+- 1.0.25
+
 * Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.24-alt2
 - rebuilt against libreadline.so.7
 
