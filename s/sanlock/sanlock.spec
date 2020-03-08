@@ -2,7 +2,7 @@
 
 Name: sanlock
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Summary: A shared storage lock manager
 
 Group: System/Configuration/Other
@@ -98,11 +98,11 @@ make -C fence_sanlock \
 make -C reset \
         install LIBDIR=%_libdir \
         DESTDIR=%buildroot
-        
-install -D -m 0644 init.d/sanlock.service %buildroot%_unitdir/sanlock.service
+
+install -D -m 0644 init.d/sanlock.service.native %buildroot%_unitdir/sanlock.service
 install -D -m 0644 init.d/sanlock.tmpfile %buildroot%_tmpfilesdir/sanlock.conf
 install -D -m 0755 init.d/sanlock %buildroot%_initddir/sanlock
-install -D -m 0644 init.d/wdmd.service %buildroot%_unitdir/wdmd.service
+install -D -m 0644 init.d/wdmd.service.native %buildroot%_unitdir/wdmd.service
 install -D -m 0644 init.d/wdmd.tmpfile %buildroot%_tmpfilesdir/wdmd.conf
 install -D -m 0644 init.d/wdmd.module %buildroot%_modulesloaddir/wdmd.conf
 install -D -m 0755 init.d/wdmd %buildroot%_initddir/wdmd
@@ -201,6 +201,9 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Sun Mar 08 2020 Alexey Shabalin <shaba@altlinux.org> 3.8.0-alt2
+- package native systemd units
+
 * Thu Jul 11 2019 Alexey Shabalin <shaba@altlinux.org> 3.8.0-alt1
 - 3.8.0
 - switch to python3
