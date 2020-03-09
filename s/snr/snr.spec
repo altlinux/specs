@@ -3,8 +3,8 @@ Name: snr
 License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
-Version: 1.5
-Release: alt2
+Version: 1.6
+Release: alt1
 Source0: %name-%version.tar
 BuildArch: noarch
 BuildRequires: md2man
@@ -36,6 +36,12 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+
+* Mon Mar 09 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.6-alt1
+- Version 1.6:
+  - Fixed parsing pactl output
+  - Some rafactoring
+  - Extended documentation
 
 * Thu Nov 20 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.5-alt2
 - Explicitly require binutils and gawk, AutoReq failed to detect them
