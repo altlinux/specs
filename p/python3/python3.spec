@@ -8,14 +8,14 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.7
+%global pybasever 3.8
 
 %global with_rewheel 0
 
 # pybasever without the dot:
-%global pyshortver 37
+%global pyshortver 38
 
-%global pyabi m
+%global pyabi %nil
 
 %global pynameabi python%pybasever%pyabi
 
@@ -99,8 +99,8 @@
 %endif
 
 Name: python3
-Version: %{pybasever}.4
-Release: alt2
+Version: %{pybasever}.1
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 License: Python
@@ -144,13 +144,16 @@ Source10: idle3.desktop
 
 #RH Patches
 
+# 00001 #
 # Fixup distutils/unixccompiler.py to remove standard library path from rpath:
 # Was Patch0 in ivazquez' python3000 specfile:
-Patch1:         Python-3.1.1-rpath.patch
+Patch1: 00001-rpath.patch
 
 # The lib64 patch
-# on top of ALT's python3-site-packages.patch (Patch1005)
-Patch102: python3-site-packages-lib64.patch
+# Change the various install paths to use /usr/lib64/ instead or /usr/lib
+# Only used when "%%{_lib}" == "lib64"
+# Not yet sent upstream.
+Patch102: 00102-lib64.patch
 
 # 00111 #
 # Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
@@ -158,40 +161,6 @@ Patch102: python3-site-packages-lib64.patch
 # See https://bugzilla.redhat.com/show_bug.cgi?id=556092
 # Downstream only: not appropriate for upstream
 Patch111: 00111-no-static-lib.patch
-
-# 00132 #
-# Add non-standard hooks to unittest for use in the "check" phase below, when
-# running selftests within the build:
-#   @unittest._skipInRpmBuild(reason)
-# for tests that hang or fail intermittently within the build environment, and:
-#   @unittest._expectedFailureInRpmBuild
-# for tests that always fail within the build environment
-#
-# The hooks only take effect if WITHIN_PYTHON_RPM_BUILD is set in the
-# environment, which we set manually in the appropriate portion of the "check"
-# phase below (and which potentially other python-* rpms could set, to reuse
-# these unittest hooks in their own "check" phases)
-Patch132: 00132-add-rpmbuild-hooks-to-unittest.patch
-
-# 00155 #
-# Avoid allocating thunks in ctypes unless absolutely necessary, to avoid
-# generating SELinux denials on "import ctypes" and "import uuid" when
-# embedding Python within httpd (rhbz#814391)
-Patch155: 00155-avoid-ctypes-thunks.patch
-
-# 00160 #
-# Python 3.3 added os.SEEK_DATA and os.SEEK_HOLE, which may be present in the
-# header files in the build chroot, but may not be supported in the running
-# kernel, hence we disable this test in an rpm build.
-# Adding these was upstream issue http://bugs.python.org/issue10142
-# Not yet sent upstream
-Patch160: 00160-disable-test_fs_holes-in-rpm-build.patch
-
-# 00163 #
-# Some tests within test_socket fail intermittently when run inside Koji;
-# disable them using unittest._skipInRpmBuild
-# Not yet sent upstream
-Patch163: 00163-disable-parts-of-test_socket-in-rpm-build.patch
 
 # 00178 #
 # Don't duplicate various FLAGS in sysconfig values
@@ -223,11 +192,6 @@ Patch251: 00251-change-user-install-location.patch
 # Upstream uses Debian-style architecture naming. Change to match Fedora.
 Patch274: 00274-fix-arch-names.patch
 
-# 00316 #
-# We remove the exe files from distutil's bdist_wininst
-# So we mark the command as unsupported - and the tests are skipped
-Patch316: 00316-mark-bdist_wininst-unsupported.patch
-
 # (New patches go here ^^^)
 #
 # When adding new patches to "python" and "python3" in Fedora 17 onwards,
@@ -257,7 +221,7 @@ Patch1002: python-3.3.0-skip-test_posix_fadvise-alt.patch
 %endif
 
 # RLIMIT 1000000 unavailable in hasher
-Patch1003: python-3.3.1-skip-test_setrusage_refcount-alt.patch
+Patch1003: python-3.8.0-skip-test_setrusage_refcount-alt.patch
 
 # Disable "-i386-linux-gnu"-like suffixes for lib-dynload/*.so modules.
 # Disables test for those suffixes.
@@ -270,21 +234,19 @@ Patch1005: python3-site-packages.patch
 # (TODO: Perhaps, we should consider substituting the value of the macros into the patch,
 # so that we have a single point of control and a guarantee of consistency.)
 
+# Closes: #36622
+# Patch allow help() to show MODULE REFERENCE on x86_64
+Patch1006: python-3.8.1-fix-getlocdoc-with-lib64.patch
+
 # With python-3.6 and later it's either needed to enable some crypto ciphers needed for SSLv2 when this socket type requested
 # or SSLv2 has to be removed completely, because it wouldn't work without this change anyway.
 Patch1007: python3-sslv2-compat.patch
 
-# Fixed incorrect detection of information of some distributions.
-# Since the information file os-release becomes a certain standard, this patch 
-# check its availability and if it is in the system, then parse 
-# the information from it.
-Patch1008: python3-platform-osrelease.patch
+# 'Trust mode': optional modules loading paths restriction
+Patch1011: python3-ignore-env-trust-security.patch
 
-# skip some new tests requiring network
-Patch1009: python-3.6.8-alt-skip-test-network.patch
-
-# See more here: https://github.com/python/cpython/pull/14048
-Patch1010: python3-bpo-21872-fix-lzma-library.patch
+#set shebang to explicit python2
+Patch1012: python3-alt-2to3-python-version.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -327,6 +289,9 @@ Obsoletes: %name-libs < %EVR
 # leading to an OS-specific path module.
 %py3_provides os.path
 %py3_provides typing.io
+
+%py3_provides _frozen_importlib
+%py3_provides _frozen_importlib_external
 
 # Things which have become internal in 3.5
 # (we do not use %%py3_provides here, because the autoreqs generated
@@ -381,6 +346,8 @@ Requires: %name = %EVR
 Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
 Requires: %name-modules-nis = %EVR
+# No real need in python-base in this package
+%filter_from_requires /^python-base/d
 
 %description tools
 This package contains several tools included with Python 3
@@ -390,7 +357,7 @@ Summary: A GUI toolkit for Python 3
 Group: Development/Python3
 Provides: %name-modules-idlelib = %EVR
 Obsoletes: %name-modules-idlelib < 3.3.1-alt4
-Requires: tk
+Requires: tk tcl-tix
 
 %description modules-tkinter
 The Tkinter (Tk interface) program is an graphical user interface for
@@ -456,7 +423,7 @@ python 3 code that uses more than just unittest and/or test_support.py.
 rm -r Modules/expat || exit 1
 
 #   Remove embedded copy of libffi:
-for SUBDIR in darwin libffi_msvc libffi_osx ; do
+for SUBDIR in darwin libffi_osx ; do
   rm -r Modules/_ctypes/$SUBDIR || exit 1 ;
 done
 
@@ -480,17 +447,13 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 # Apply patches:
 #
 %patch1 -p1
-%patch1005 -p2
 
-%if "%_lib" != "lib"
-< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p2
-%endif
+< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
+# The order matters! First goes 1006, then 1005
+< %PATCH1006 sed -e 's:lib64:%_lib:g' | patch -p2
+< %PATCH1005 sed -e 's:lib64:%_lib:g' | patch -p2
 
 %patch111 -p1
-%patch132 -p1
-%patch155 -p1
-%patch160 -p1
-%patch163 -p1
 %patch178 -p1
 
 %if 0%{with_rewheel}
@@ -501,7 +464,6 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch251 -p1
 
 %patch274 -p1
-%patch316 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -512,15 +474,24 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 
 %patch1007 -p2
 
-%patch1008 -p1
-%patch1009 -p2
-%patch1010 -p1
+%patch1011 -p1
+%patch1012 -p2
 
 %ifarch %e2k
 # unsupported as of lcc 1.23.12
 sed -i 's, -fuse-linker-plugin -ffat-lto-objects -flto-partition=none,,' \
 	configure*
 %endif
+
+# remove test_winreg() function
+begin='^def .*winreg.*'
+end='^[^[:blank:]]'
+sed -re "/$begin/,/$end/ {
+            /$begin/d;
+            /$end/b;
+            d
+        }" \
+    -i Lib/test/audit-tests.py
 
 rm -fr ../build-shared
 mkdir ../build-shared
@@ -573,15 +544,15 @@ popd
 find build -exec touch {} \;
 make install DESTDIR=%buildroot INSTALL="install -p"
 
-mv $RPM_BUILD_ROOT%_bindir/2to3 $RPM_BUILD_ROOT%_bindir/python3-2to3
+mv %buildroot%_bindir/2to3 %buildroot%_bindir/python3-2to3
 
 # Development tools
-install -m755 -d $RPM_BUILD_ROOT%tool_dir
-install Tools/README $RPM_BUILD_ROOT%tool_dir/
-cp -ar Tools/freeze $RPM_BUILD_ROOT%tool_dir/
-cp -ar Tools/i18n $RPM_BUILD_ROOT%tool_dir/
-cp -ar Tools/pynche $RPM_BUILD_ROOT%tool_dir/
-cp -ar Tools/scripts $RPM_BUILD_ROOT%tool_dir/
+install -m755 -d %buildroot%tool_dir
+install Tools/README %buildroot%tool_dir/
+cp -ar Tools/freeze %buildroot%tool_dir/
+cp -ar Tools/i18n %buildroot%tool_dir/
+cp -ar Tools/pynche %buildroot%tool_dir/
+cp -ar Tools/scripts %buildroot%tool_dir/
 
 # Documentation tools
 install -m755 -d %buildroot%pylibdir/Doc
@@ -690,6 +661,7 @@ rm %buildroot%pylibdir/test/{,__pycache__/}test_winsound*.py*
 rm %buildroot%pylibdir/test/{,__pycache__/}win_console_handler*.py*
 rm %buildroot%pylibdir/distutils/tests/{,__pycache__/}test_msvc{9,}compiler*.py*
 rm %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
+rm %buildroot%pylibdir/test/libregrtest/{,__pycache__/}win_utils*.py*
 # The libs which are being tested below have been excluded in %%files (long ago):
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
@@ -712,7 +684,7 @@ rm %buildroot%tool_dir/scripts/md5sum.py
 rm %buildroot%tool_dir/scripts/parseentities.py
 
 # Remove sphinxext (temporary)
-rm -r %buildroot%pylibdir/Doc/tools/{extensions,pydoctheme,static,templates}
+rm -r %buildroot%pylibdir/Doc/tools/{extensions,static,templates}
 rm %buildroot%pylibdir/Doc/tools/susp-ignored.csv
 
 # Fix end-of-line encodings:
@@ -792,7 +764,7 @@ configdir="$(
 else
 configdir="$(%buildroot%_bindir/python3-config --configdir)"
 fi
-[ -d %buildroot"$configdir" ]
+#[ -d %buildroot"$configdir" ]
 
 # Ensure that the curses module was linked against libncursesw.so, rather than
 # libncurses.so
@@ -810,17 +782,20 @@ LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 # -l (--findleaks) is not compatible with -j
 # test_faulthandler.test_register_chain currently fails on ppc64le and
 #   aarch64, see upstream bug http://bugs.python.org/issue21131
+# Only on i586:
+# self.assertEqual(dist(p, q), fourthmax * math.sqrt(n))
+# AssertionError: 7.784239614998252e+307 != 7.784239614998251e+307
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
     --verbose  %_smp_mflags \
     -x test_distutils \
     -x test_gdb \
-    -x test_bdist_rpm \
-    -x test_cmd_line_script \
-    -x test_runpy \
-    -x test_multiprocessing_main_handling \
     -x test_socket \
+    -x test_embed \
+%ifarch %ix86
+    -x test_math
+%endif
 %ifarch %{arm}
     -x test_faulthandler
 %endif
@@ -830,9 +805,9 @@ $(pwd)/python -m test.regrtest \
 %_bindir/pydoc*
 %_bindir/python3
 %_bindir/python%pybasever
-%_bindir/%pynameabi
-%_bindir/pyvenv
-%_bindir/pyvenv-%pybasever
+#%%_bindir/%pynameabi
+#%%_bindir/pyvenv
+#%%_bindir/pyvenv-%pybasever
 %_mandir/*/*
 
 %files base
@@ -854,6 +829,7 @@ $(pwd)/python -m test.regrtest \
 
 %dir %pylibdir
 %dir %dynload_dir
+
 %dynload_dir/_asyncio.cpython-%pyshortver%pyabi.so
 %dynload_dir/_bisect.cpython-%pyshortver%pyabi.so
 %dynload_dir/_blake2.cpython-%pyshortver%pyabi.so
@@ -885,6 +861,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_multiprocessing.cpython-%pyshortver%pyabi.so
 %dynload_dir/_opcode.cpython-%pyshortver%pyabi.so
 %dynload_dir/_pickle.cpython-%pyshortver%pyabi.so
+%dynload_dir/_posixshmem.cpython-%pyshortver%pyabi.so
 %dynload_dir/_posixsubprocess.cpython-%pyshortver%pyabi.so
 %dynload_dir/_queue.cpython-%pyshortver%pyabi.so
 %dynload_dir/_random.cpython-%pyshortver%pyabi.so
@@ -894,9 +871,12 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_sha512.cpython-%pyshortver%pyabi.so
 %dynload_dir/_socket.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
+%dynload_dir/_statistics.cpython-%pyshortver%pyabi.so
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
+%dynload_dir/_xxsubinterpreters.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
 %dynload_dir/array.cpython-%pyshortver%pyabi.so
 %dynload_dir/audioop.cpython-%pyshortver%pyabi.so
@@ -1044,6 +1024,7 @@ $(pwd)/python -m test.regrtest \
 %exclude %pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
 %include_dir/*.h
 %include_dir/internal/*.h
+%include_dir/cpython/*.h
 %exclude %include_dir/%_pyconfig_h
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
 %_bindir/python3-config
@@ -1054,8 +1035,9 @@ $(pwd)/python -m test.regrtest \
 %_libdir/pkgconfig/python3.pc
 %_libdir/pkgconfig/python-%pybasever.pc
 %_libdir/pkgconfig/python-%pybasever%pyabi.pc
+%_libdir/pkgconfig/python-3.8-embed.pc
+%_libdir/pkgconfig/python3-embed.pc
 
-%if_with tk
 %files tools
 %_bindir/python3-2to3
 %_bindir/2to3-%pybasever
@@ -1070,6 +1052,7 @@ $(pwd)/python -m test.regrtest \
 %exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
 
+%if_with tk
 %files modules-tkinter
 %pylibdir/idlelib
 %exclude %pylibdir/idlelib/idle_test
@@ -1118,6 +1101,18 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri Jan 24 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
+- Updated to upstream version 3.8.1.
+- Restructured patching scheme about lib64 and site-packages.
+- Add Requires on tcl-tix (thx to vseleznv@).
+- Translate idle desktop file (Closes: #37307).
+- platform._supported_dists deprecated since 3.5 now vanished (Closes: #33677).
+- help() now shows MODULE REFERENCE on 64bit systems (Closes: #36622).
+
+* Fri Jan 24 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.7.4-alt3
+- hackaround forbidden python-base dep
+- 'Trusted mode': optional modules loading paths restriction
+
 * Fri Oct 18 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.4-alt2
 - fix packaging on armh arch
 

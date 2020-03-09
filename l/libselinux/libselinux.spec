@@ -3,7 +3,7 @@
 Name: libselinux
 Epoch: 1
 Version: 2.9
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -110,6 +110,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt2
+- Fixed build with python-3.8.
+
 * Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.9-alt1
 - Updated to upstream version 2.9.
 - Disabled support for python-2.

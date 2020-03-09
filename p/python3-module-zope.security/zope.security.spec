@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.security
 
-%def_with check
+%def_disable check
+%def_disable docs
 
 Name: python3-module-%oname
-Version: 5.0
-Release: alt1
+Version: 5.1.0
+Release: alt2
 Summary: Zope Security Framework
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.security/
 #Git: https://github.com/zopefoundation/zope.security.git
@@ -19,13 +20,15 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-zope.proxy
+%if_enabled docs
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-repoze.sphinx.autointerface
+%endif
 BuildRequires: python3-module-zope.schema
 BuildRequires: python3-module-zope.location
 BuildRequires: time
 
-%if_with check
+%if_enabled check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-BTrees
@@ -89,8 +92,10 @@ This package contains documentation for Zope Security Framework.
 %prep
 %setup
 
+%if_enabled docs
 %prepare_sphinx3 .
 ln -s ../objects.inv3 docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -101,6 +106,7 @@ ln -s ../objects.inv3 docs/
 install -p -m644 src/zope/security/*.zcml \
 	%buildroot%python3_sitelibdir/zope/security/
 
+%if_enabled docs
 export PYTHONPATH=$PWD/src
 sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
 %make -C docs pickle
@@ -108,6 +114,7 @@ sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/M
 
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 sed -i '/\[testenv\]$/a whitelist_externals =\
@@ -132,7 +139,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/examples
+%if_enabled docs
 %exclude %python3_sitelibdir/*/pickle
+%endif
 
 %files examples
 %python3_sitelibdir/*/*/examples
@@ -141,13 +150,23 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
 
+%if_enabled docs
 %files pickles
 %python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
+* Fri Mar 06 2020 Anton Farygin <rider@altlinux.ru> 5.1.0-alt2
+- temporary  disabled check and docs sections to avoid cyclic dependencies
+  on zope.component when building python-3.8
+
+* Wed Mar 04 2020 Nikolai Kostrigin <nickel@altlinux.org> 5.1.0-alt1
+- 5.0 -> 5.1.0
+- Fix license
+
 * Mon Dec 23 2019 Nikolai Kostrigin <nickel@altlinux.org> 5.0-alt1
 - NMU: 4.0.4 -> 5.0
 - Remove python2 module build

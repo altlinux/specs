@@ -2,12 +2,12 @@
 
 %define oname coverage
 
-%def_with check
+%def_without check
 %def_with doc
 
 Name: python-module-%oname
 Version: 4.5.4
-Release: alt2
+Release: alt3
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -165,6 +165,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Jan 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.4-alt3
+- Bootstrap for python3.8.
+
 * Wed Aug 21 2019 Stanislav Levin <slev@altlinux.org> 4.5.4-alt2
 - Fixed testing against Pytest 5.1.
 

@@ -6,8 +6,8 @@
 
 %define oname Enable
 Name: python-module-%oname
-Version: 4.8.0
-Release: alt3
+Version: 4.8.1
+Release: alt1
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -18,6 +18,7 @@ URL: https://github.com/enthought/enable/
 Source: enable-%version.tar
 
 Patch: use_system_freetype.patch
+Patch1: 2c9b2090edd03e14857f99778350daed3ccf8e5a.patch
 
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
@@ -141,6 +142,7 @@ This package contains development documentation for Enable project.
 %prep
 %setup -n enable-%version
 %patch -p1
+%patch1 -p1
 
 %if_with python3
 rm -rf ../python3
@@ -254,6 +256,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %endif
 
 %changelog
+* Wed Feb 26 2020 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
+- Build new version for python3.8.
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt3
 - NMU: build without python2 modules
 

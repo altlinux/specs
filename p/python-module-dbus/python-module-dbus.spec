@@ -10,7 +10,7 @@
 
 Name: python-module-dbus
 Version: 1.2.14
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -113,8 +113,7 @@ export am_cv_python_pythondir=%python3_sitelibdir
 export am_cv_python_pyexecdir=%python3_sitelibdir
 %autoreconf
 %configure %options \
-	PYTHON=/usr/bin/python3 \
-	PYTHON_LIBS="$(python3-config --libs)"
+	PYTHON=%__python3
 %make_build
 
 %if_enabled python2
@@ -188,6 +187,9 @@ done
 
 
 %changelog
+* Wed Jan 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.14-alt3
+- Fix build with python3.8.
+
 * Thu Nov 28 2019 Anton Midyukov <antohami@altlinux.org> 1.2.14-alt2
 - Allocated a separate subpackages with pygobject bindings (Closes: 34351)
 

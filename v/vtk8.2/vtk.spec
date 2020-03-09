@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt3
+Release: alt4
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: vtkm-%version.tar
 
 Patch1: %oname-%version-alt-build.patch
+Patch2: %oname-%version-alt-python3.8.patch
 
 Requires: lib%name = %EVR
 
@@ -256,6 +257,7 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -458,6 +460,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Tue Feb 25 2020 Slava Aseev <ptrnine@altlinux.org> 8.2.0-alt4
+- Fixed build with Python 3.8
+
 * Mon Oct 07 2019 Vladislav Zavjalov <slazav@altlinux.org> 8.2.0-alt3
 - Use internal libproj 4.4 instead of libproj 6.2.0
 

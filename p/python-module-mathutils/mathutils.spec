@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.74
-Release: alt1.git20150315.1.1.1.1
+Version: 2.81.2
+Release: alt1
 Summary: Library providing Matrix, Vector, Quaternion, Euler and Color classes
 License: GPLv2+
 Group: Development/Python
@@ -91,6 +91,10 @@ popd
 %if_with python3
 pushd ../python3
 %makeinstall_std
+%if %_lib == lib64
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/mathutils.so %buildroot%python3_sitelibdir/
+%endif
 popd
 %endif
 
@@ -106,17 +110,18 @@ popd
 
 %if_with python2
 %files
-%doc *.rst
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Feb 26 2020 Grigory Ustinov <grenka@altlinux.org> 2.81.2-alt1
+- Build new version for python3.8.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.74-alt1.git20150315.1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

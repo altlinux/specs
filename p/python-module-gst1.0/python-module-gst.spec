@@ -14,7 +14,7 @@
 
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
@@ -31,7 +31,7 @@ Source: %_name-%version.tar
 %endif
 Patch: %name-1.5.2-python-libs.patch
 
-BuildRequires(pre): rpm-build-gir rpm-build-python3 rpm-macros-valgrind
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
 BuildRequires: orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
 %if_enabled valgrind
@@ -58,47 +58,43 @@ This package provides GStreamer overrides for PyGobject.
 %prep
 %setup -n %_name-%version -a0
 mv %_name-%version py2build
-for d in . %{?_with_python2:py2build}; do
-pushd $d
-%patch
-popd
-done
 
 %build
-%autoreconf
-%configure PYTHON=%__python3
-%make_build
+%meson \
+    -Dlibpython-dir=%_libdir \
+    -Dpygi-overrides-dir=%python3_sitelibdir/gi/overrides
+%meson_build
 
 %if_with python2
 pushd py2build
-%autoreconf
-%configure PYTHON=%__python
-%make_build
+%meson -Dpython=python2 \
+    -Dlibpython-dir=%_libdir \
+    -Dpygi-overrides-dir=%python_sitelibdir/gi/overrides
+%meson_build
 popd
 %endif
 
 %install
-%makeinstall_std
+%meson_install
 
 %if_with python2
 pushd py2build
-%makeinstall_std
+%meson_install
 popd
 %endif
 
 %check
-%make check
+%meson_test
 
 %if_with python2
 pushd py2build
-%make check
+%meson_test
 popd
 %endif
 
 %if_with python2
 %files
 %python_sitelibdir/gi/overrides/*
-%exclude %python_sitelibdir/gi/overrides/*.la
 # gstreamer plugin
 %exclude %_gst_libdir/libgstpython.*
 %doc AUTHORS NEWS
@@ -106,10 +102,12 @@ popd
 
 %files -n python3-module-gst%gst_api_ver
 %python3_sitelibdir/gi/overrides/*
-%exclude %python3_sitelibdir/gi/overrides/*.la
 %doc AUTHORS NEWS
 
 %changelog
+* Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt3
+- fixed build against python-3.8 with Meson build system (ALT#38178)
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt2
 - updated to 1.16.2-1-g22f2815 (fixed build with python-3.8)
 
