@@ -1,15 +1,21 @@
 %define oname pygsl
-Name: python-module-%oname
-Version: 2.2.0
+
+Name: python3-module-%oname
+Version: 2.3.0
 Release: alt1
+
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPLv2
-Group: Development/Python
+Group: Development/Python3
 Url: http://pygsl.sourceforge.net/
 
 Source: %oname-%version.tar.gz
+Patch0: port-to-python3.patch
 
-BuildRequires: libgsl-devel libnumpy-devel swig
+BuildRequires(pre): rpm-build-python3
+BuildRequires: libgsl-devel libnumpy-py3-devel
+BuildRequires: python3-module-numpy swig
+
 
 %description
 This project provides a python interface for the GNU scientific library
@@ -17,7 +23,7 @@ This project provides a python interface for the GNU scientific library
 
 %package devel
 Summary: Development files of Python interface for GSL
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Requires: %name = %version-%release
 
@@ -29,7 +35,7 @@ This package contains development files of Python interface for GSL.
 
 %package testing
 Summary: Tests for Python interface for GSL
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description testing
@@ -63,26 +69,33 @@ This package contains examples for Python interface for GSL.
 
 %prep
 %setup
+%patch0 -p2
 
 rm -f swig_src/*
 
+sed -i 's|include <numpy|&-py3|' \
+    $(find ./ -type f -name '*.[a-z]' | xargs grep -l 'include <numpy')
+
 %build
-python setup.py config
-%python_build_debug
+%__python3 setup.py config
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
+
+%check
+%__python3 setup.py test
 
 %files
 %doc CREDITS ChangeLog README TODO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/testing
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/testing
 
 %files devel
 %_includedir/*/*
 
 %files testing
-%python_sitelibdir/%oname/testing
+%python3_sitelibdir/%oname/testing
 
 %files docs
 %doc doc/*.html
@@ -90,7 +103,12 @@ python setup.py config
 %files examples
 %doc examples/*
 
+
 %changelog
+* Tue Mar 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
+- Version updated to 2.3.0
+- porting to python3.
+
 * Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
 - Updated to upstream version 2.2.0.
 
