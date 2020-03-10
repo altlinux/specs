@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rpi-un
-Release: alt0.2
+Release: alt0.3
 epoch:1 
 %define kernel_base_version	5.5
 %define kernel_sublevel .5
@@ -485,6 +485,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Mar 09 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.5.5-alt0.3
+- replaced bcm2711-rpi-4-b.dts file with other modified by firmware
+
 * Wed Mar 04 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.5.5-alt0.2
 - replaced bcm2711-rpi-4-b.dts file with modified by firmware
 - CONFIG_GPIO_SYSFS=y /sys/class/gpio/ is on
