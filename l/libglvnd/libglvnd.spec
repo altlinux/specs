@@ -1,10 +1,10 @@
 Name: libglvnd
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Epoch: 7
 Group: System/Libraries
 Summary: The GL Vendor-Neutral Dispatch library
-Url: https://github.com/NVIDIA/libglvnd
+Url: https://gitlab.freedesktop.org/glvnd/libglvnd
 License: MIT
 
 Provides: libGLdispatch = %epoch:%version-%release
@@ -121,6 +121,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:1.3.1-alt1
+- 1.3.1
+
 * Wed Feb 19 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:1.3.0-alt1
 - 1.3.0
 
