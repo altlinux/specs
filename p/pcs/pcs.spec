@@ -2,20 +2,22 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.3
-Release:       alt1.1
+Version:       0.10.4
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPLv2
 Group:         Other
 Url: 	       https://github.com/ClusterLabs/pcs
-%vcs           https://github.com/ClusterLabs/pcs.git
+Vcs:           https://github.com/ClusterLabs/pcs.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Source1:       pyagentx-v%pyagentx_version.tar.gz
-Patch:         %name-%version-%release.patch
 
 %add_python3_req_skip pyagentx
+Requires:      ruby-pcsd = %version
+Requires:      python3-module-pcs = %version
+Requires:      python3-module-snmp = %version
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
@@ -30,8 +32,8 @@ Pacemaker/Corosync configuration system with remote access
 Summary:       Python module for pacemaker/corosync gui/cli configuration system and daemon
 Group:         Other
 BuildArch:     noarch
-Requires:      pcs
-Requires:      ruby-pcsd
+Requires:      %name = %version
+Requires:      ruby-pcsd = %version
 Requires:      pacemaker
 
 %description   -n python3-module-pcs
@@ -41,11 +43,11 @@ Python module for pacemaker/corosync gui/cli configuration system and daemon
 %package       -n ruby-pcsd
 Summary:       Pacemaker/Corosync cli and gui for configuration system
 Group:         Other
-Requires:      pcs
+Requires:      %name = %version
 Requires:      corosync
 Requires:      openssl
-Obsoletes:     pcsd
-Provides:      pcsd
+Obsoletes:     pcs-pcsd
+Provides:      pcs-pcsd
 
 %description   -n ruby-pcsd
 Pacemaker/Corosync gui/cli configuration system and daemon
@@ -54,12 +56,12 @@ Pacemaker/Corosync gui/cli configuration system and daemon
 %package       -n python3-module-snmp
 Group:         Other
 Summary:       Pacemaker cluster SNMP agent
-License:       GPLv2/BSD 2-clause
+License:       GPLv2 or BSD-2-Clause
 Requires:      %name = %EVR
 Requires:      pacemaker
 Requires:      net-snmp
-Obsoletes:     snmp
-Provides:      snmp
+Obsoletes:     pcs-snmp
+Provides:      pcs-snmp
 
 %description   -n python3-module-snmp
 SNMP agent that provides information about pacemaker cluster to the master
@@ -68,7 +70,7 @@ agent (snmpd).
 
 %prep
 %setup
-%patch -p1
+sed -e "s,/usr/libexec/,/usr/lib/," -e "s,/usr/lib/pcsd,/usr/lib64/pcsd," -i pcs/settings_default.py
 mkdir -p pcs/bundled/tmp
 tar xf %SOURCE1 -C pcs/bundled/tmp
 
@@ -148,13 +150,18 @@ rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
 
 
 %changelog
+* Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.4-alt1
+- updated (^) 0.10.3 -> 0.10.4
+- fixed (!) spec
+- fixed (!) lost provides, and requires
+
 * Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.3-alt1.1
-- ! spec according to changelog rules
+- fixed (!) spec according to changelog rules
 
 * Sun Aug 25 2019 Pavel Skrylev <majioa@altlinux.org> 1:0.10.3-alt1
-- ^ Ruby Policy 2.0
-- ^ v0.10.3
-- ! names of subpackages according to the language they were written in
+- used (>) Ruby Policy 2.0
+- updated (^) 0.10.2 -> 0.10.3
+- fixed (!) names of subpackages according to the language they were written in
 
 * Mon Aug 12 2019 Andrey Cherepanov <cas@altlinux.org> 1:0.10.2-alt1
 - New version.
