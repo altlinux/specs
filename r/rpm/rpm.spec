@@ -19,7 +19,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt17
+Release: alt18
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -570,6 +570,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue Mar 10 2020 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt18
+- Fix CANONCOLOR and library suffix on E2K architectures.
+
 * Wed Dec 18 2019 Dmitry V. Levin <ldv@altlinux.org> 4.13.0.1-alt17
 - runScript: introduced %%_rpmscript_werror macro.
 
