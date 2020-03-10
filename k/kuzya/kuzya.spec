@@ -5,7 +5,7 @@
 
 Name: kuzya
 Version: 2.1.12_rc20170720
-Release: alt1.qa1
+Release: alt2.qa1
 
 Summary: Integrated Development Environment for students
 License: GPL
@@ -20,7 +20,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: qt5-base-devel rpm-macros-qt5 libqscintilla2-qt5-devel gcc-c++
 BuildRequires: desktop-file-utils
 # for generate.py (version.h generator)
-BuildRequires: python-base python-modules
+BuildRequires: rpm-build-python3
 
 %description
 Kuzya is simple crossplatform IDE for people who study
@@ -51,7 +51,7 @@ Developers:
 
 %build
 pushd src
-python generate.py -v 2.1.12
+%__python3 generate.py -v 2.1.12
 popd
 
 %qmake_qt5
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Tue Mar 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.12_rc20170720-alt2.qa1
+- py2 -> py3
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.12_rc20170720-alt1.qa1
 - NMU: applied repocop patch
 
