@@ -1,37 +1,25 @@
 %define mname sksparse
 %define oname scikits.sparse
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.4.2
-Release: alt2.1.1
+Release: alt3
+
 Summary: Scikits sparse matrix package
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/scikits.sparse/
 
 # https://github.com/njsmith/scikits-sparse.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: libsuitesparse-devel gcc-c++
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython libnumpy-devel
-BuildRequires: python-module-scipy python-module-nose
-BuildRequires: python-module-alabaster python-module-html5lib python-module-notebook python-module-numpy-testing python-module-objects.inv python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-Cython libnumpy-py3-devel
-BuildRequires: python3-module-scipy python3-module-nose
-BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
-BuildPreReq: python-tools-2to3
-%endif
+BuildRequires: libsuitesparse-devel gcc-c++
+BuildRequires: libnumpy-py3-devel python-tools-2to3
+BuildRequires: python3-module-Cython python3-module-sphinx
 
-%py_provides %oname
-%py_requires %mname numpy scipy
 
 %description
 This is a home for sparse matrix code in Python that plays well with
@@ -43,7 +31,7 @@ decomposition.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -56,40 +44,9 @@ decomposition.
 
 This package contains tests for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Scikits sparse matrix package
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires %mname numpy scipy
-
-%description -n python3-module-%oname
-This is a home for sparse matrix code in Python that plays well with
-scipy.sparse, but that is somehow unsuitable for inclusion in scipy
-proper. Usually this will be because it is released under the GPL.
-
-So far we have a wrapper for the CHOLMOD library for sparse cholesky
-decomposition.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This is a home for sparse matrix code in Python that plays well with
-scipy.sparse, but that is somehow unsuitable for inclusion in scipy
-proper. Usually this will be because it is released under the GPL.
-
-So far we have a wrapper for the CHOLMOD library for sparse cholesky
-decomposition.
-
-This package contains tests for %oname.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 This is a home for sparse matrix code in Python that plays well with
@@ -104,82 +61,54 @@ This package contains pickles for %oname.
 %prep
 %setup
 
+sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
+
 # fix version info
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
 	%mname/_version.py
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|np.get_include()|"./"|' setup.py
 
 %build
-%add_optflags -fno-strict-aliasing
-%python_build_debug
+ln -s $(%__python3 -c 'import numpy; print(numpy.get_include()+"/numpy-py3")') numpy
 
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc pickle
 %make -C doc html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-touch %buildroot%python_sitelibdir/%mname/__init__.py
-python setup.py test
-%if_with python3
-pushd ../python3
 touch %buildroot%python3_sitelibdir/%mname/__init__.py
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc README.md doc/_build/html
-%python_sitelibdir/%mname/*
-%python_sitelibdir/scikit_sparse-%version-py*.egg-info
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/test*
-
-%files tests
-%python_sitelibdir/*/test*
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc README.md doc/_build/html
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/scikit_sparse-%version-py*.egg-info
+%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%endif
+
+%files pickles
+%python3_sitelibdir/*/pickle
+
 
 %changelog
+* Fri Feb 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.2-alt3
+- Build for python2 disabled.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
