@@ -3,8 +3,7 @@
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110314
-%define ppp_version 2.4.7
-
+%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
@@ -17,7 +16,7 @@
 
 Name: NetworkManager-pptp
 Version: 1.2.8
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -107,6 +106,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.8-alt2
+- Rebuild with ppp-2.4.8.
+
 * Fri Oct 05 2018 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
 - Updated to 1.2.8.
 

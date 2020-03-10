@@ -15,7 +15,7 @@
 %define libnm_util libnm-util%nm_util_sover
 %endif
 
-%define ppp_version 2.4.7
+%define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define wpa_supplicant_version 0.7.3-alt3
 %define dhcpcd_version 4.0.0
 %define openresolv_version 3.5.4-alt3
@@ -66,7 +66,7 @@
 
 Name: NetworkManager
 Version: 1.18.4
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -779,6 +779,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Mar 09 2020 Alexey Shabalin <shaba@altlinux.org> 1.18.4-alt2
+- Rebuild with ppp-2.4.8.
+
 * Thu Oct 10 2019 Mikhail Efremov <sem@altlinux.org> 1.18.4-alt1
 - Updated to 1.18.4.
 

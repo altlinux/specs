@@ -1,20 +1,20 @@
-%define ppp_ver 2.4.7
+%define ppp_ver %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 Name: accel-pptp
 Version: 0.8.5
-Release: alt2
+Release: alt3
 Summary: PPTP VPN plugin for pppd
 License: GPLv2
 Group: System/Servers
 Url: http://accel-pptp.sourceforge.net/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-PreReq: ppp = %ppp_ver
+Requires: ppp = %ppp_ver
 
 Source0: %name-%version.tar.bz2
 Patch0: %name-%version-alt-make.patch
 
-BuildRequires: ppp = %ppp_ver
+BuildRequires: ppp-devel
 
 %description
 The  PPTP  plugin for pppd performs interaction with pptp kernel module
@@ -46,6 +46,9 @@ cd pppd_plugin
 %_man8dir/*.8*
 
 %changelog
+* Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.5-alt3
+- rebuild with ppp 2.4.8
+
 * Mon Jan 19 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.8.5-alt2
 - rebuild with ppp 2.4.7
 
