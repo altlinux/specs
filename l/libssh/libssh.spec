@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_disable gcrypt
+%define sover 4
+#%define libssh libssh%sover
+# uncomment previous line and remove next line when  sover != 4
+%define libssh libssh
 
 Name: libssh
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -51,6 +55,13 @@ remote files easily, without third-party programs others than libcrypto
     * A developer listening to you
     * It's free (LGPL)!
 
+%if "%sover" != "4"
+%package -n %libssh
+Summary: Development files for %name
+Group: System/Libraries
+%description -n %libssh
+%{description}
+%endif
 
 %package devel
 Summary: Development files for %name
@@ -83,7 +94,12 @@ mkdir -p %buildroot%_sysconfdir/libssh
 install -m644 %SOURCE3 %buildroot%_sysconfdir/libssh/libssh_client.config
 install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 
-%files
+%if "%sover" == "4"
+%files -n libssh
+%else
+%files -n %libssh
+%endif
+%_libdir/libssh.so.%sover
 %_libdir/libssh.so.*
 %dir %_sysconfdir/libssh
 %config(noreplace) %_sysconfdir/libssh/libssh_client.config
@@ -96,6 +112,9 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Wed Mar 04 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt2
+- track library soname version
+
 * Wed Dec 11 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
 - new version
 - security (Fixes: CVE-2019-14889)
