@@ -10,7 +10,9 @@
 %def_enable cpp
 %def_enable glib
 %def_enable qt5
+%ifnarch riscv64
 %def_enable qt4
+%endif
 %def_enable devel
 %def_enable utils
 %def_enable xpdfheaders
@@ -38,7 +40,7 @@
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -406,6 +408,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Tue Mar 10 2020 Nikita Ermakov <arei@altlinux.org> 0.84.0-alt2
+- Disable Qt4 for riscv64.
+
 * Fri Jan 10 2020 Sergey V Turchin <zerg@altlinux.org> 0.84.0-alt1
 - new version
 
