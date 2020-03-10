@@ -2,13 +2,15 @@
 
 Name: withlock
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Locking wrapper script
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 Url: https://github.com/poeml/withlock.git
 Source: %name-%version.tar
 BuildArch: noarch
+
+Patch0: withlockpython3.patch
 
 %description
 withlock is a locking wrapper script to make sure that some program
@@ -21,6 +23,7 @@ implementing half-hearted locking within scripts.
 
 %prep
 %setup
+%patch0 -p1
 
 %install
 rm -rf %buildroot
@@ -35,5 +38,8 @@ install -m 0644 withlock.1 %buildroot%_man1dir
 %_man1dir/withlock.1*
 
 %changelog
+* Tue Mar 10 2020 Alexandr Antonov <aas@altlinux.org> 0.5-alt2
+- switch to python3
+
 * Wed Apr 6 2018 Alexandr Antonov <aas@altlinux.org> 0.5-alt1
 - initial build for ALT
