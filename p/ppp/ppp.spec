@@ -13,7 +13,7 @@
 
 Name: ppp
 Version: 2.4.8
-Release: alt1
+Release: alt2
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -114,7 +114,7 @@ find -type f -name \*.orig -print -delete
 rm -f include/linux/if_pppol2tp.h
 
 %build
-%add_optflags -fPIC -Wall -D_GNU_SOURCE -fno-strict-aliasing -fstack-protector
+%add_optflags -fPIC -Wall -D_GNU_SOURCE -fno-strict-aliasing
 %configure
 %make_build %{?_with_pam:USE_PAM=y} \
 	    %{?_with_cbcp:CBCP=y} \
@@ -237,6 +237,9 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.8-alt2
+- delete -fstack-protector
+
 * Sat Mar 07 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.8-alt1
 - 2.4.8
 - build with -fstack-protector from now on (mike@)
