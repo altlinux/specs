@@ -4,11 +4,11 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 13.9
+%define major 13.10
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi %major
+%global nodejs_abi 13
 
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
@@ -45,8 +45,8 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
-Release: alt3
+Version: %major.1
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -363,6 +363,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Mar 10 2020 Vitaly Lipatov <lav@altlinux.ru> 13.10.1-alt1
+- new version 13.10.1
+- set node ABI to 13
+
 * Tue Mar 03 2020 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt3
 - use direct /usr/lib/node_modules instead of detected prefix/lib/node
 
