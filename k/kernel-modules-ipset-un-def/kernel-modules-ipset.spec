@@ -4,9 +4,9 @@
 %define module_version	7.6
 %define module_release	alt1
 
-%define flavour		std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
-BuildRequires(pre): kernel-headers-modules-std-def
+%define flavour		un-def
+%define karch %ix86 x86_64
+BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -17,7 +17,7 @@ Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
+ExclusiveArch: %ix86 x86_64
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
