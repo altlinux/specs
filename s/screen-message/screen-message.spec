@@ -1,26 +1,24 @@
 Name: screen-message
 Version: 0.6
-Release: alt1.qa1
+Release: alt2
 
 Summary: Screen message show given text in fullscreen
-License: %gpl2plus
+License: GPLv2+
 Group: System/X11
-Packager: Evgenii Terechkov <evg@altlinux.ru>
+
 Source: %name-%version.tar.gz
+Patch0: port-to-python3.patch
 
-BuildPreReq: rpm-build-licenses
-AutoReq: yes, nopython
-
-# Automatically added by buildreq on Thu Nov 08 2007
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libgtk+2-devel
+
 
 %description
 Screen message show given text in fullscreen
 
-Recommends: python-module-pygtk (needed by sm.py)
-
 %prep
 %setup
+%patch0 -p2
 
 %build
 %configure
@@ -34,7 +32,11 @@ install -m 755 sm.py %buildroot%_bindir
 %_bindir/*
 %_man1dir/*
 
+
 %changelog
+* Tue Mar 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
+- Porting to python3.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
