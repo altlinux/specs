@@ -5,7 +5,7 @@
 
 %define module_name	rtl8723de
 %define module_version	5.1.1.8
-%define module_release alt14
+%define module_release alt15
 
 %define flavour		un-def
 %define karch %ix86 x86_64 aarch64 ppc64le
@@ -65,9 +65,9 @@ make \
     CROSS_COMPILE= \
     KSRC=%_usrsrc/linux-%kversion-%flavour \
     M=${PWD} \
-    -C %_usrsrc/linux-%kversion-%flavour \
     modules \
     #
+#    -C %_usrsrc/linux-%kversion-%flavour \
 
 %install
 KMOD_FILE=8723de.ko
@@ -80,6 +80,9 @@ install -D -m 644 $KMOD_FILE %buildroot/%module_dir/rtl8723de.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt15
+- return rtl8723de sources for new kernels
 
 * Wed Dec 18 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt14
 - using rtlwifi_new for new kernels

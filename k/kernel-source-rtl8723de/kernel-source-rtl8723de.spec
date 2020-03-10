@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt10
+Release: alt11
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
@@ -16,8 +16,9 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: alt-cleanup.patch
-Patch2: alt-ant_sel.patch
+Patch1: alt-build-time.diff
+Patch2: alt-ampdu-buf-define.diff
+Patch3: switch.diff
 
 BuildRequires: kernel-build-tools
 
@@ -28,7 +29,8 @@ BuildRequires: kernel-build-tools
 %setup -c -q
 pushd %name-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
+%patch3 -p1
 popd
 
 %install
@@ -39,6 +41,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Fri Mar 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt11
+- return rtl8723de sources
+
 * Tue Dec 17 2019 Sergey V Turchin <zerg@altlinux.org> 5.1.1.8-alt10
 - using rtlwifi_new sources
 
