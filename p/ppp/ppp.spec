@@ -1,3 +1,4 @@
+
 %def_disable static
 
 %def_with pam
@@ -11,8 +12,8 @@
 %def_without crypt
 
 Name: ppp
-Version: 2.4.7
-Release: alt5
+Version: 2.4.8
+Release: alt1
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -31,7 +32,6 @@ Source7: 95-ppp.rules
 # TODO: %%def_with'ize those?
 Patch1: %name-%version-%release.patch
 
-PreReq: %_lockdir/serial
 Obsoletes: ppp-cbcp, ppp-mppe
 Obsoletes: ppp-extra
 
@@ -42,9 +42,7 @@ Requires: ppp-common libssl
 Requires: kmod >= 14
 Requires: udev >= 204-alt2
 
-
 %add_findprov_lib_path %_libdir/pppd/%version
-
 
 %package devel
 Summary: Header files needed for building extra pppd plugins
@@ -116,7 +114,7 @@ find -type f -name \*.orig -print -delete
 rm -f include/linux/if_pppol2tp.h
 
 %build
-%add_optflags -fPIC -Wall -D_GNU_SOURCE -fno-strict-aliasing 
+%add_optflags -fPIC -Wall -D_GNU_SOURCE -fno-strict-aliasing -fstack-protector
 %configure
 %make_build %{?_with_pam:USE_PAM=y} \
 	    %{?_with_cbcp:CBCP=y} \
@@ -239,6 +237,12 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Sat Mar 07 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.8-alt1
+- 2.4.8
+- build with -fstack-protector from now on (mike@)
+- Fixes:
+  + CVE-2020-8597 rhostname buffer overflow in the eap_request and eap_response functions
+
 * Tue Oct 02 2018 Alexey Shabalin <shaba@altlinux.org> 2.4.7-alt5
 - update to ppp-2.4.7-eaptls-mppe-1.101.patch
 - backport patches from upstream master
@@ -488,7 +492,7 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 - Changed version string
 - Added devel package - it contains headers from pppd
 
-* Tue May 22 2002 Konstantin Volckov <goldhead@altlinux.ru> 2.4.1-alt7
+* Wed May 22 2002 Konstantin Volckov <goldhead@altlinux.ru> 2.4.1-alt7
 - Removed requires to glibc & pam & kernel - now it's bad requires...
 
 * Mon Jan 21 2002 Konstantin Volckov <goldhead@altlinux.ru> 2.4.1-alt6
@@ -530,7 +534,7 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 * Fri Oct 13 2000 Dmitry V. Levin <ldv@fandra.org> 2.4.0-ipl2mdk
 - Updated pam configuration.
 
-* Wed Aug  8 2000 Dmitry V. Levin <ldv@fandra.org> 2.4.0-ipl1mdk
+* Wed Aug 9 2000 Dmitry V. Levin <ldv@fandra.org> 2.4.0-ipl1mdk
 - Updated to 2.4.0.
 
 * Thu Jul 13 2000 Dmitry V. Levin <ldv@fandra.org> 2.4.0b2-ipl1mdk
@@ -579,7 +583,7 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 - Upgrade patch.
 - 2.3.8.
 
-* Fri Jul 10 1999 Axalon Bloodstone <axalon@linux-mandrake.com>
+* Sat Jul 10 1999 Axalon Bloodstone <axalon@linux-mandrake.com>
 - Define the .pid to /var/run/
 - Glare @Chmouel
 
@@ -594,7 +598,7 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 * Fri Apr 09 1999 Cristian Gafton <gafton@redhat.com>
 - force pppd use the glibc's logwtmp instead of implementing its own
 
-* Wed Apr 01 1999 Preston Brown <pbrown@redhat.com>
+* Thu Apr 01 1999 Preston Brown <pbrown@redhat.com>
 - version 2.3.7 bugfix release
 
 * Tue Mar 23 1999 Cristian Gafton <gafton@redhat.com>
