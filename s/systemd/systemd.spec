@@ -5,6 +5,8 @@
 %add_findreq_skiplist %_unitdir/local.service
 %add_findreq_skiplist %_unitdir/rc-local.service
 %add_findreq_skiplist %_unitdir/quotaon.service
+%add_findreq_skiplist %_unitdir/initrd-switch-root.service
+%add_findreq_skiplist %_unitdir/systemd-volatile-root.service
 
 %def_enable static_libsystemd
 %def_enable static_libudev
@@ -20,18 +22,22 @@
 %def_disable qrencode
 %def_enable microhttpd
 %def_enable gnutls
+%def_enable openssl
 %def_enable libcurl
 %def_disable libidn
 %def_enable libidn2
 %def_enable libiptc
 %def_enable polkit
 %def_enable efi
+%def_enable homed
+%def_enable pwquality
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolve
 %ifarch %{ix86} x86_64 aarch64
 %def_enable gnuefi
 %endif
+%def_enable p11kit
 %def_enable utmp
 %def_enable xz
 %def_enable zlib
@@ -61,12 +67,12 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 244
+%define ver_major 245
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -150,9 +156,12 @@ BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
+BuildRequires: pkgconfig(fdisk)
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
+%{?_enable_openssl:BuildRequires: pkgconfig(openssl) >= 1.1.0}
+%{?_enable_p11kit:BuildRequires: pkgconfig(p11-kit-1) >= 0.23.3}
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
@@ -163,7 +172,7 @@ BuildRequires: libkeyutils-devel
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
-
+%{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
@@ -335,6 +344,16 @@ Conflicts: %name < 1:216-alt1
 pam_systemd registers user sessions with the systemd login manager
 systemd-logind.service, and hence the systemd control group hierarchy.
 
+%package -n pam_%{name}_home
+Group: System/Base
+Summary: Automatically mount home directories managed by systemd-homed.service on login 
+Requires: dbus >= %dbus_ver
+
+%description -n pam_%{name}_home
+pam_systemd_home ensures that home directories managed by systemd-homed.service
+are automatically activated (mounted) on user login,
+and are deactivated (unmounted) when the last session of the user ends.
+
 %package sysvinit
 Group: System/Configuration/Boot and Init
 Summary: systemd System V init tools
@@ -441,6 +460,16 @@ Requires: %name = %EVR
 %description portable
 A portable service is ultimately just an OS tree, either inside of a directory
 tree, or inside a raw disk image containing a Linux file system.
+
+%package homed
+Summary: Home Directory/User Account Manager
+Group: System/Configuration/Other
+Requires: %name = %EVR
+Requires: pam_%{name}_home = %EVR
+
+%description homed
+systemd-homed is a system service that may be used
+to create, remove, change or inspect home directories.
 
 %package analyze
 Group: System/Configuration/Boot and Init
@@ -575,6 +604,8 @@ Static library for libudev.
 %meson \
 	-Dlink-udev-shared=false \
 	-Dlink-systemctl-shared=false \
+	-Dlink-networkd-shared=false \
+	-Dlink-timesyncd-shared=false \
 	%{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
 	%{?_enable_static_libudev:-Dstatic-libudev=pic} \
 	-Drpmmacrosdir=no \
@@ -606,6 +637,7 @@ Static library for libudev.
 	-Dbump-proc-sys-fs-file-max=false \
 	-Dbump-proc-sys-fs-nr-open=false \
 	%{?_enable_elfutils:-Delfutils=true} \
+    %{?_enable_pwquality:-Dpwquality=true} \
 	%{?_enable_xz:-Dxz=true} \
 	%{?_enable_zlib:-Dzlib=true} \
 	%{?_enable_bzip2:-Dbzip2=true} \
@@ -622,12 +654,15 @@ Static library for libudev.
 	%{?_enable_qrencode:-Dqrencode=true} \
 	%{?_enable_microhttpd:-Dmicrohttpd=true} \
 	%{?_enable_gnutls:-Dgnutls=true} \
+    %{?_enable_openssl:-Dopenssl=true } \
+    %{?_enable_p11kit:-Dp11kit=true } \
 	%{?_enable_libcurl:-Dlibcurl=true} \
 	%{?_enable_libidn:-Dlibidn=true} \
 	%{?_enable_libidn2:-Dlibidn2=true} \
 	%{?_enable_libiptc:-Dlibiptc=true} \
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_enable_efi:-Defi=true} \
+    %{?_enable_homed:-Dhomed=true} \
 	%{?_enable_networkd:-Dnetworkd=true} \
 	%{?_enable_resolve:-Dresolve=true} \
 	-Ddns-servers="" \
@@ -1199,6 +1234,7 @@ fi
 %_bindir/systemd-mount
 %_bindir/systemd-umount
 %_bindir/systemd-path
+/bin/systemd-repart
 /bin/systemd-run
 %_bindir/systemd-stdio-bridge
 /lib/systemd/systemd
@@ -1248,7 +1284,8 @@ fi
 %_unitdir/*
 
 %if_enabled networkd
-%exclude %_unitdir/*network*
+%exclude %_unitdir/*networkd*
+%exclude %_unitdir/systemd-network-generator.service
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
 %endif
@@ -1266,6 +1303,11 @@ fi
 %if_enabled coredump
 %exclude %_unitdir/systemd-coredump*
 %exclude %_unitdir/*/systemd-coredump*
+%endif
+%if_enabled homed
+%exclude %_unitdir/systemd-homed*
+%exclude %_unitdir/*/systemd-homed*
+%exclude %_unitdir/*.home1.*
 %endif
 
 %exclude %_unitdir/*udev*
@@ -1311,6 +1353,7 @@ fi
 %_man5dir/*sleep.conf*
 %_man5dir/*system.conf*
 %_man5dir/*user*
+%_man5dir/repart.d.*
 %_man5dir/systemd.automount*
 %_man5dir/systemd.exec*
 %_man5dir/systemd.kill*
@@ -1346,6 +1389,7 @@ fi
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
 %_man8dir/systemd-rc-local-generator*
+%_man8dir/systemd-repart*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-run-generator*
@@ -1444,7 +1488,28 @@ fi
 %files -n pam_%name
 %config %_sysconfdir/pam.d/systemd-user
 /%_lib/security/pam_systemd.so
-%_man8dir/pam_systemd*
+%_man8dir/pam_systemd.*
+
+%if_enabled homed
+%files -n pam_%{name}_home
+/%_lib/security/pam_systemd_home.so
+%_man8dir/pam_systemd_home.*
+
+%files homed
+/bin/homectl
+/lib/systemd/systemd-homed
+/lib/systemd/systemd-homework
+%_unitdir/systemd-homed*
+%_unitdir/*/systemd-homed*
+%_unitdir/*.home1.*
+%_datadir/dbus-1/system.d/org.freedesktop.home1.conf
+%_datadir/dbus-1/system-services/org.freedesktop.home1.service
+%if_enabled polkit
+%_datadir/polkit-1/actions/org.freedesktop.home1.policy
+%endif
+%_man1dir/homectl.*
+%_man8dir/systemd-homed.*
+%endif
 
 %files sysvinit
 /sbin/init
@@ -1538,6 +1603,10 @@ fi
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
+%if_enabled homed
+%exclude %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
+%endif
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -1545,16 +1614,28 @@ fi
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.import1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
+%if_enabled homed
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.home1.service
+%endif
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
-%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.import1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.portable1.policy
+%if_enabled homed
+%exclude %_datadir/polkit-1/actions/org.freedesktop.home1.policy
+%endif
 %endif
 
 /bin/loginctl
 /lib/systemd/systemd-logind
+/bin/userdbctl
+/lib/systemd/systemd-userdbd
+/lib/systemd/systemd-userwork
 %_bindir/hostnamectl
 /lib/systemd/systemd-hostnamed
 %_bindir/localectl
@@ -1570,6 +1651,7 @@ fi
 %exclude %_datadir/zsh/site-functions/_udevadm
 
 %_mandir/*/*login*
+%_mandir/*/*userdb*
 %exclude %_man3dir/*
 %_mandir/*/*hostname*
 %exclude %_man8dir/*myhostname*
@@ -1589,6 +1671,8 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.network1.service
 %if_enabled polkit
 %_datadir/polkit-1/rules.d/systemd-networkd.rules
+%_datadir/polkit-1/actions/org.freedesktop.network1.policy
+%_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
 %endif
 /lib/systemd/systemd-network-generator
 /lib/systemd/system-preset/85-networkd.preset
@@ -1602,25 +1686,26 @@ fi
 # TODO: Provides: /sbin/resolvconf ?
 %exclude /sbin/resolvconf
 %_tmpfilesdir/systemd-network.conf
-%_unitdir/systemd-network*
-%_unitdir/systemd-resolved.*
-%_unitdir/altlinux-libresolv*
-%_unitdir/altlinux-openresolv*
-%_unitdir/altlinux-simpleresolv*
+%_unitdir/*networkd*
+%_unitdir/systemd-network-generator.service
+%_unitdir/*resolv*
 %_unitdir/*/*resolv*
 /lib/systemd/network/80-container-host0.network
 /lib/systemd/network/80-wifi-adhoc.network
 /lib/systemd/network/80-wifi-ap.network.example
 /lib/systemd/network/80-wifi-station.network.example
-%_mandir/*/*network*
+%_mandir/*/*networkd*
+%_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
 %_mandir/*/*dnssd*
+%_man1dir/networkctl.*
 %_man1dir/resolvectl.*
 %_man1dir/resolvconf.*
 %_man5dir/dnssec-trust-anchors.d.*
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
+%_man5dir/systemd.network.*
 %endif
 
 %files container
@@ -1683,6 +1768,8 @@ fi
 /lib/systemd/systemd-timesyncd
 /lib/systemd/systemd-time-wait-sync
 /lib/systemd/ntp-units.d/80-systemd-timesync.list
+%_datadir/dbus-1/system.d/org.freedesktop.timesync1.conf
+%_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
 %_unitdir/systemd-timesyncd.service
 %_unitdir/systemd-time-wait-sync.service
 %_mandir/*/*timesyncd*
@@ -1797,7 +1884,7 @@ fi
 %_rpmlibdir/udev-hwdb.filetrigger
 %_mandir/*/*udev*
 %_mandir/*/*hwdb*
-%_mandir/*/*link*
+%_mandir/*/*.link*
 %_man5dir/systemd.device*
 %exclude %_man3dir/*
 %_datadir/bash-completion/completions/udevadm
@@ -1821,6 +1908,15 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Mar 06 2020 Alexey Shabalin <shaba@altlinux.org> 1:245-alt1
+- 245
+- move org.freedesktop.timesync1.service from systemd-service to systemd-timesyncd
+- move resolve1 and network1 polkit policy from systemd-services to systemd-networkd
+- build with -Dlink-networkd-shared=false and -Dlink-timesyncd-shared=false
+- fixed package network.target and network-online.target
+- package userdb to systemd-services
+- build systemd-homed
+
 * Mon Feb 17 2020 Alexey Shabalin <shaba@altlinux.org> 1:244.3-alt2
 - move systemd-network-generator.service to systemd-networkd package
 - avoid requires quota package
