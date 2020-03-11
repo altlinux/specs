@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba
-Version: 4.11.6
+Version: 4.11.7
 Release: alt1
 
 Group:   System/Servers
@@ -154,7 +154,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.0.8
+%define ldb_version 2.0.9
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1814,6 +1814,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Mar 10 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.7-alt1
+- Update to latest spring release of Samba 4.11
+- Fix search with scope ONE and small result sets with ldb-2.0.9
+
 * Thu Feb 06 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.6-alt1
 - Update to newest release of Samba 4.11
 
