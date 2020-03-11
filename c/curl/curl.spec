@@ -1,7 +1,7 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.68.0
+Version: 7.69.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -150,6 +150,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 7.69.0-alt1
+- 7.69.0
+
 * Fri Jan 10 2020 Anton Farygin <rider@altlinux.ru> 7.68.0-alt1
 - 7.68.0
 
