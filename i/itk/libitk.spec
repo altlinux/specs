@@ -6,7 +6,7 @@
 
 Name: itk
 Version: 5.0.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -20,7 +20,7 @@ Patch: %name-%version-alt.patch
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
-BuildRequires: libvxl-devel libvtk%vtkver-devel qt5-webkit-devel zlib-devel
+BuildRequires: libvxl-devel libvtk%vtkver-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk
 
@@ -224,6 +224,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/cmake/%name/Modules/ITKVtkGlue.cmake
 
 %changelog
+* Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt3
+- Updated build dependencies.
+
 * Wed Feb 26 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt2
 - rebuild with new gbcm
 

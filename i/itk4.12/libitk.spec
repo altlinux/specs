@@ -7,7 +7,7 @@
 
 Name: %oname%itkver
 Version: 4.12.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
@@ -21,7 +21,7 @@ Patch: %oname-%version-alt-build.patch
 BuildRequires: gcc-c++ cmake
 BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
-BuildRequires: libvxl-devel libvtk%vtkver-devel qt5-webkit-devel zlib-devel
+BuildRequires: libvxl-devel libvtk%vtkver-devel zlib-devel
 BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
 BuildRequires: libexpat-devel dcmtk
 
@@ -200,6 +200,9 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ BUILD/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.%soname
 
 %changelog
+* Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.2-alt3
+- Updated build dependencies.
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.12.2-alt2
 - rebuild with new gbcm
 
