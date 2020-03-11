@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -257,6 +257,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Mon Feb 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+
 * Sun Jan 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 

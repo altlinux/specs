@@ -14,7 +14,7 @@
 %def_disable egl_device
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -213,6 +213,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Mon Feb 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.4-alt1
+- 3.34.4
+
 * Sun Jan 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.3-alt1
 - 3.34.3
 
