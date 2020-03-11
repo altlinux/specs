@@ -6,7 +6,7 @@
 
 Name: hivex
 Version: 1.3.18
-Release: alt1
+Release: alt2
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -23,7 +23,8 @@ BuildRequires: perl-libintl
 %{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild}
 %{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
 %{?_enable_perl:BuildRequires: perl(Test/More.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Stringy.pm)}
-%{?_enable_python:BuildRequires: python-devel}
+%{?_enable_python:BuildRequires: python3-devel}
+%{?_enable_python:BuildPreReq:rpm-build-python3}
 BuildRequires: libreadline-devel
 BuildRequires: libxml2-devel
 
@@ -53,7 +54,7 @@ For OCaml bindings, see 'ocaml-hivex-devel'.
 
 For Perl bindings, see 'perl-hivex'.
 
-For Python bindings, see 'python-module-hivex'.
+For Python bindings, see 'python3-module-hivex'.
 
 For Ruby bindings, see 'ruby-hivex'.
 
@@ -103,13 +104,13 @@ Requires: %name = %version-%release
 %description -n perl-%name
 perl-%name contains Perl bindings for %name.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for %name
 Group: Development/Python
 Requires: %name = %version-%release
 
-%description -n python-module-%name
-python-%name contains Python bindings for %name.
+%description -n python3-module-%name
+python3-%name contains Python bindings for %name.
 
 %package -n ruby-%name
 Summary: Ruby bindings for %name
@@ -130,7 +131,7 @@ ln -s gnulib-%name-%version .gnulib
 %build
 ./bootstrap
 ./generator/generator.ml
-%configure \
+%configure PYTHON=%__python3 \
 	%{subst_enable static} \
 	%{subst_enable ruby} \
 	%{subst_enable ocaml} \
@@ -165,7 +166,7 @@ find %buildroot -name .packlist -delete
 find %buildroot -name '*.bs' -delete
 
 # Remove unwanted Python files:
-rm -f %buildroot%python_sitelibdir/libhivexmod.la
+rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 
 %find_lang %name
 
@@ -218,8 +219,8 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %if_enabled python
-%files -n python-module-%name
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
 %endif
 
 %if_enabled ruby
@@ -230,6 +231,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 1.3.18-alt2
+- removed python2 support
+
 * Mon Jul 01 2019 Anton Farygin <rider@altlinux.ru> 1.3.18-alt1
 - 1.3.18
 
