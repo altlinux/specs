@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blender
-Version: 2.81
-Release: alt1.a
+Version: 2.82
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
-License: GPLv2
+License: GPL-3.0-or-later
 Group: Graphics
 URL: https://www.blender.org
 
@@ -22,21 +22,20 @@ Source4: tools-%version.tar
 
 Patch11: 0001-blender_thumbnailer.patch
 Patch12: 0002-install_in_usr_share.patch
-Patch13: 0003-locales_directory_install.patch
-Patch15: 0005-do_not_use_version_number_in_system_path.patch
-Patch16: 0006-look_for_dejavu_ttf_with_fontconfig.patch
+Patch13: 0004-do_not_use_version_number_in_system_path.patch
+Patch14: blender-2.82-fedora-fix_appdata_validation.patch
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
 Patch23: blender-2.77-alt-usertempdir.patch
 Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
-Patch25: blender-2.80-alt-ppc64le-numaapi-compat.patch
-Patch26: blender-2.80-alt-use-system-glog.patch
+Patch25: blender-2.80-alt-use-system-glog.patch
+Patch26: blender-2.82-alt-link-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
 BuildRequires: cmake gcc-c++
-BuildRequires: fontconfig-devel libGLEW-devel libXi-devel
+BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel
 BuildRequires: libfftw3-devel libjack-devel libopenal-devel libsndfile-devel
 BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
@@ -44,14 +43,18 @@ BuildRequires: liblzo2-devel
 BuildRequires: libopenCOLLADA-devel >= 0-alt3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
-# TODO: when libnumpy-py3-devel is fixed, remove dependency to libnumpy-devel
-BuildRequires: libnumpy-devel
 BuildRequires: libopenimageio-devel
 BuildRequires: libopencolorio-devel
 BuildRequires: openexr-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libglog-devel libgflags-devel eigen3-devel
 BuildRequires: libXxf86vm-devel libXrender-devel
+BuildRequires: tbb-devel
+BuildRequires: libfreetype-devel
+# TODO: when libnumpy-py3-devel is fixed, remove dependency to libnumpy-devel
+BuildRequires: libnumpy-devel
+# Remove following dependency when libopenjpeg2.0-devel is fixed
+BuildRequires: openjpeg-tools2.0
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -110,8 +113,9 @@ scripting, rendering, compositing, post-production and game creation
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch15 -p1
-%patch16 -p1
+
+# fedora
+%patch14 -p1
 
 %patch21 -p1
 %patch22 -p1
@@ -123,6 +127,14 @@ scripting, rendering, compositing, post-production and game creation
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
 %endif
+
+# Delete the bundled FindOpenJPEG to make find_package use the system version
+# instead (the local version hardcodes the openjpeg version so it is not update
+# proof)
+rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
+
+# Remove bundled libraries which must not be used instead of system ones
+rm -rf extern/{Eigen3,glew,lzo,gflags,glog}
 
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
@@ -151,18 +163,17 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 	-DWITH_PYTHON_SAFETY=ON \
 	-DWITH_OPENMP=OFF \
 	-DWITH_OPENCOLLADA=ON \
-	-DWITH_FONTCONFIG=ON \
 	-DWITH_CYCLES=ON \
 	-DWITH_OPENCOLORIO=ON \
 	-DWITH_OPENIMAGEIO=ON \
 	-DWITH_SYSTEM_GLEW=ON \
 	-DWITH_SYSTEM_LZO=ON \
-	-DWITH_SYSTEM_OPENJPEG=ON \
 	-DWITH_SYSTEM_EIGEN3:BOOL=ON \
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
-	-DWITH_TBB:BOOL=OFF \
+	-DWITH_TBB:BOOL=ON \
+	-DWITH_USD:BOOL=ON \
 	-DPYTHON_VERSION="%_python3_version" \
 	-DBUILDINFO_OVERRIDE_DATE="$BUILD_DATE" \
 	-DBUILDINFO_OVERRIDE_TIME="$BUILD_TIME" \
@@ -177,9 +188,7 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 mkdir -p %buildroot%_datadir/metainfo
 install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 
-%find_lang blender
-
-%files -f %name.lang
+%files
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -190,6 +199,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Tue Mar 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.82-alt1
+- Updated to upstream version 2.82.
+
 * Tue Jan 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.81-alt1.a
 - Updated to upstream version 2.81a.
 
