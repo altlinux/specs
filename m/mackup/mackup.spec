@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.27
-Release: alt4
+Version: 0.8.28
+Release: alt1
 Summary: Keep your application settings in sync
-License: GNU GPL v3.0
+License: GPL-3.0
 Group: Other
 Url: https://github.com/lra/mackup
 Source: %name-%version.tar
+Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
@@ -45,9 +46,13 @@ This package contains python module for %name
 %doc LICENSE README.md
 
 %files -n python3-module-%name
-%python3_sitelibdir/%{name}*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Feb 29 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.28-alt1
+- New version
+
 * Wed Aug 28 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.27-alt4
 - use local cfg file instead global
 - pack license and readme files
