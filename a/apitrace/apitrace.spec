@@ -14,7 +14,7 @@
 
 Name: apitrace
 Version: 9.0
-Release: alt3
+Release: alt4
 
 Summary: Tools for tracing OpenGL
 
@@ -51,7 +51,6 @@ BuildRequires: libdwarf-devel libprocps-devel
 # for gui tools
 BuildRequires: libX11-devel
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-webkit-devel
 
 BuildRequires(pre): rpm-build-python3
 
@@ -148,6 +147,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0-alt4
+- Updated build dependencies.
+
 * Wed Feb 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 9.0-alt3
 - py2 -> py3 in highlight module.
 
