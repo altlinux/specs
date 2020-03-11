@@ -3,7 +3,7 @@
 
 Name: grub
 Version: 2.02
-Release: alt24
+Release: alt25
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -523,6 +523,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Mar 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt25
+- improve grub-2.02-alt-os-prober-compat patch
+
 * Thu Feb 20 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.02-alt24
 - introduce compatibility with os-prober 1.77 (closes: #36624)
   + remove grub-2.00-debian-uefi-os-prober patch
