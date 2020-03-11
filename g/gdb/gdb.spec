@@ -11,7 +11,7 @@
 
 Name: gdb
 Version: 8.3
-Release: alt1
+Release: alt2
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -810,8 +810,8 @@ fi
 
 %files -n gdbserver
 %_bindir/gdbserver
-# no ipa_obj for mips*
-%ifnarch %mips
+# no ipa_obj for arm* and mips*
+%ifnarch armh %mips
 %_libdir/libinproctrace.so
 %endif
 %endif
@@ -831,6 +831,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Wed Mar 11 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.3-alt2
+- fix packaging on armh arch
+
 * Wed Jul 31 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.3-alt1
 - Updated to 8.3.
 
