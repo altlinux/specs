@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.48
+Version: 5.49
 Release: alt1
 
 Source: %name-%version.tar
@@ -153,6 +153,9 @@ fi ||:
 
 
 %changelog
+* Wed Mar 11 2020 Paul Wolneykien <manowar@altlinux.org> 5.49-alt1
+- Fixed file upload (closes: 38207).
+
 * Thu Dec 26 2019 Paul Wolneykien <manowar@altlinux.org> 5.48-alt1
 - Fix: Make the continue URL work again.
 
