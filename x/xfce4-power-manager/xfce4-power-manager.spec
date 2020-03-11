@@ -1,12 +1,12 @@
 Name: xfce4-power-manager
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
 Group: Graphical desktop/XFce
 License: GPLv2+
-Url: https://goodies.xfce.org/projects/applications/%name
+Url: https://docs.xfce.org/xfce/xfce4-power-manager/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: git://git.xfce.org/xfce/xfce4-power-manager
@@ -72,6 +72,10 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Mar 11 2020 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt2
+- Workaround for xfce4-screensaver.
+- Updated Url.
+
 * Fri Mar 06 2020 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1
 - Added Vcs tag.
 - Updated to 1.7.0.
