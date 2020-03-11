@@ -72,7 +72,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1908,6 +1908,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Mar 11 2020 Alexey Shabalin <shaba@altlinux.org> 1:245-alt2
+- v245-stable branch (084df9c616fdfbcbf3d7fbe7dc6b975f1fa359d2)
+
 * Fri Mar 06 2020 Alexey Shabalin <shaba@altlinux.org> 1:245-alt1
 - 245
 - move org.freedesktop.timesync1.service from systemd-service to systemd-timesyncd
