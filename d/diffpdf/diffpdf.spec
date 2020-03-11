@@ -1,15 +1,16 @@
 Name: diffpdf
 Version: 2.1.3
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: Visually compare two PDF files
 Group: Publishing
 Url: http://www.qtrac.eu/diffpdf.html
 Source: %name-%version.tar.gz
+Patch1: alt-qt5.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
 # optimized out: fontconfig libpoppler3-qt4 libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel
-BuildRequires: gcc-c++ libpoppler-qt4-devel phonon-devel libpoppler-cpp-devel
+BuildRequires: qt5-base-devel libpoppler-qt5-devel qt5-tools
 
 %description
 By default the comparison is of the text on each pair of pages, but
@@ -24,6 +25,7 @@ for the second. This will make DiffPDF compare pages in the pairs (1,
 
 %prep
 %setup
+%patch1 -p1
 cat >> README <<@@@
 
 Although %name is commandline utility, it uses Qt4 much,
@@ -36,8 +38,8 @@ $ xvfb-run %name <parameters>
 # sed -i '/_cz/d' resources.qrc
 
 %build
-lrelease-qt4 diffpdf.pro
-qmake-qt4
+lrelease-qt5 diffpdf.pro
+%qmake_qt5
 %make
 
 %install
@@ -50,6 +52,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Wed Mar 11 2020 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt2
+- Port to Qt5
+
 * Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 2.1.3-alt1
 - Autobuild version bump to 2.1.3
 
