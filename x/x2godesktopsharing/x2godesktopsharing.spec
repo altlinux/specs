@@ -1,6 +1,6 @@
 Name: x2godesktopsharing
 Version: 3.2.0.0
-Release: alt1
+Release: alt2
 Summary: Desktop Sharing for X2Go
 
 Group: Communications
@@ -62,6 +62,9 @@ cp -rp man %buildroot%_datadir/
 %_datadir/x2go/versions/VERSION.x2godesktopsharing
 
 %changelog
+* Wed Mar 11 2020 Oleg Solovyov <mcpain@altlinux.org> 3.2.0.0-alt2
+- release bump (autoimports had bigger version)
+
 * Tue Feb 25 2020 Oleg Solovyov <mcpain@altlinux.org> 3.2.0.0-alt1
 - initial build
 
