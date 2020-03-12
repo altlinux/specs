@@ -1,5 +1,5 @@
 Name: fail2ban
-Version: 0.10.3.1
+Version: 0.11.1
 Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
@@ -8,18 +8,29 @@ License: GPL v2
 Group: Development/Python
 Url: http://www.fail2ban.org
 
-# Source-url: https://github.com/fail2ban/fail2ban/archive/%version.tar.gz
+# Source-git: https://github.com/fail2ban/fail2ban.git
 Source: %name-%version.tar
 Source1: alt-initd
 Source2: fail2ban.service
 Source3: fail2ban-logrotate
 Source4: paths-altlinux.conf
+Source5: paths-altlinux-systemd.conf
 
 BuildArch: noarch
-BuildPreReq: help2man python-module-json
-%setup_python_module %name
-%py_requires json
+BuildRequires: help2man
+BuildRequires(pre): rpm-build-python3
 
+BuildRequires: python3-module-urllib3
+BuildRequires: python-tools-2to3
+
+# due to /etc/fail2ban/action.d/badips.py
+%add_python3_lib_path /etc/fail2ban
+
+# obsoleted
+%add_python3_req_skip gamin
+
+# https://bugzilla.altlinux.org/show_bug.cgi?id=31041
+%add_python3_req_skip systemd
 
 %description
 Fail2Ban is an intrusion prevention framework written in the Python
@@ -27,12 +38,16 @@ programming language. It is able to run on POSIX systems that have an
 interface to a packet-control system or firewall installed locally
 (for example, iptables or TCP Wrapper).
 
+Requirements: python3-module-systemd
+
 %prep
 %setup
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
 
 %build
-%python_build
+./fail2ban-2to3
+%__subst "s|/usr/bin/env python|%__python3|" bin/*
+%python3_build
 export PYTHONPATH=$PWD
 cd man
 ./generate-man
@@ -48,14 +63,15 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -pD -m 644 %SOURCE3 %buildroot%_logrotatedir/fail2ban
 install -pD -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/paths-altlinux.conf
+install -pD -m 644 %SOURCE5 %buildroot%_sysconfdir/%name/paths-altlinux-systemd.conf
 
 mkdir -p %buildroot%_tmpfilesdir/
 echo "d /var/run/fail2ban 0755 root root -" >%buildroot%_tmpfilesdir/%name.conf
 
-%python_install --optimize=2
+%python3_install --optimize=2
 
 rm -rf %buildroot/%_docdir/%name/
-rm -f %buildroot%_sysconfdir/%name/paths-{debian,fedora,freebsd,osx,opensuse}.conf
+rm -f %buildroot%_sysconfdir/%name/paths-{arch,debian,fedora,freebsd,osx,opensuse}.conf
 
 mkdir -p %buildroot%_var/lib/fail2ban/
 
@@ -67,14 +83,14 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 
 %files
 %doc ChangeLog README.md THANKS TODO
-%python_sitelibdir/%name/
-%python_sitelibdir/%{name}*.egg-info/
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{name}*.egg-info/
 #%_datadir/%name/
 %_bindir/%name-python
 %_bindir/%name-client
 %_bindir/%name-server
 %_bindir/%name-regex
-%_bindir/%name-testcases
+#_bindir/%name-testcases
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/*.d
 %dir %_sysconfdir/%name/filter.d/ignorecommands
@@ -82,6 +98,7 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %config(noreplace) %_sysconfdir/%name/*.d/*.conf
 %config(noreplace) %_sysconfdir/%name/*.d/*.py
 %config(noreplace) %_sysconfdir/%name/filter.d/ignorecommands/*
+%exclude %_sysconfdir/fail2ban/action.d/__pycache__/
 %_var/run/fail2ban/
 %_var/lib/fail2ban/
 %_initdir/fail2ban
@@ -92,6 +109,12 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Thu Mar 12 2020 Vitaly Lipatov <lav@altlinux.ru> 0.11.1-alt1
+- new major version 0.11.1 (with rpmrb script)
+- switch to python3
+- add paths-altlinux-systemd.conf
+- see ChangeLog for upgrade instructions
+
 * Wed Oct 03 2018 Anton Farygin <rider@altlinux.ru> 0.10.3.1-alt1
 - 0.10.3.1
 
