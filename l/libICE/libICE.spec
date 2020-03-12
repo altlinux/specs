@@ -1,5 +1,5 @@
 Name: libICE
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: X Inter Client Exchange Library
 License: MIT/X11
@@ -24,8 +24,6 @@ Requires: %name = %version-%release
 %name-devel contains the libraries and header files needed to
 develop programs which make use of %name.
 
-%def_enable ipv6
-
 %prep
 %setup -q
 %patch -p1
@@ -33,8 +31,8 @@ develop programs which make use of %name.
 %build
 %autoreconf
 %configure \
-	%{subst_enable ipv6} \
 	--disable-static
+
 %make_build
 
 %install
@@ -51,6 +49,9 @@ develop programs which make use of %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.0.10-alt1
+- 1.0.10
+
 * Fri Sep 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt1
 - 1.0.9
 

@@ -1,6 +1,6 @@
 Name: libXfont2
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -13,7 +13,7 @@ Patch: %name-%version.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-proto-devel
 BuildRequires: xorg-xtrans-devel xorg-util-macros zlib-devel
-#BuildRequires: fop xorg-sgml-doctools xmlto
+BuildRequires: fop xorg-sgml-doctools xmlto
 
 %description
 libXfont provides the core of the legacy X11 font system, handling the
@@ -26,12 +26,9 @@ via either the new API's in libXft, or the legacy API's in libX11.
 %package devel
 Summary: X.Org libXfont development package
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
 This package contains the libXfont development library and header files
-
-%def_enable ipv6
 
 %prep
 %setup -q
@@ -41,9 +38,9 @@ This package contains the libXfont development library and header files
 %autoreconf
 %configure \
 	--with-bzip2 \
-	%{subst_enable ipv6} \
 	--disable-devel-docs \
 	--disable-static
+
 %make_build
 
 %install
@@ -58,6 +55,9 @@ This package contains the libXfont development library and header files
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.0.4-alt1
+- 2.0.4
+
 * Tue Apr 02 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.0.3-alt2
 - removed ubt
 

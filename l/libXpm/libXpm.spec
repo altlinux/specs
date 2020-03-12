@@ -1,5 +1,5 @@
 Name: libXpm
-Version: 3.5.12
+Version: 3.5.13
 Release: alt1
 Summary: X Pixmap Library
 License: MIT/X11
@@ -23,7 +23,6 @@ and is used by many popular X programs.
 %package devel
 Summary: Xpm Libraries and Header Files
 Group: Development/C
-Requires: %name = %version-%release
 Provides: xpm-devel = %version-%release
 Obsoletes: xpm-devel < %version-%release
 
@@ -39,6 +38,7 @@ develop programs which make use of %name
 %autoreconf
 %configure \
 	--disable-static
+
 %make_build
 
 %install
@@ -56,6 +56,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 3.5.13-alt1
+- 3.5.13
+
 * Wed Feb 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.5.12-alt1
 - 3.5.12
 
