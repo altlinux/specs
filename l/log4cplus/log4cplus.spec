@@ -1,8 +1,7 @@
-%def_with python3
-
 Name: log4cplus
 Version: 2.0.0
-Release: alt2.rc2.1
+Release: alt3.rc2.1
+
 Summary: Logging library to C++
 License: Apache License
 Group: Development/C++
@@ -15,12 +14,10 @@ Source1: threadpool.tar
 # https://github.com/catchorg/Catch2.git
 Source2: catch.tar
 
-BuildRequires: gcc-c++ doxygen graphviz swig
-BuildRequires: python-devel
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ doxygen graphviz swig
 BuildRequires: python3-devel
-%endif
+
 
 %description
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -63,20 +60,6 @@ configuration.  It is modeled after the Java log4j API.
 This package contains development documentation and manpages for
 log4cplus.
 
-%package -n python-module-%name
-Summary: Python bindings of logging library to C++
-Group: Development/Python
-Requires: lib%name = %version-%release
-%py_provides %name
-
-%description -n python-module-%name
-log4cplus is a simple to use C++ logging API providing thread-safe,
-flexible, and arbitrarily granular control over log management and
-configuration.  It is modeled after the Java log4j API.
-
-This package contains Python bindings of log4cplus.
-
-%if_with python3
 %package -n python3-module-%name
 Summary: Python bindings of logging library to C++
 Group: Development/Python3
@@ -89,7 +72,6 @@ flexible, and arbitrarily granular control over log management and
 configuration.  It is modeled after the Java log4j API.
 
 This package contains Python bindings of log4cplus.
-%endif
 
 %prep
 %setup
@@ -97,21 +79,7 @@ This package contains Python bindings of log4cplus.
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%autoreconf
-%configure \
-	--enable-static=no \
-	--enable-threads=yes \
-	--with-working-c-locale \
-	--with-python
-%make_build
-
-%if_with python3
-pushd ../python3
 export PYTHON=python3
 %autoreconf
 %configure \
@@ -121,8 +89,6 @@ export PYTHON=python3
 	--with-python
 sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
 %make_build
-popd
-%endif
 
 pushd docs
 doxygen doxygen.config
@@ -131,20 +97,8 @@ popd
 %install
 %makeinstall_std
 %if "%_libexecdir" != "%_libdir"
-mv %buildroot%python_sitelibdir_noarch/%name/* \
-	%buildroot%python_sitelibdir/%name/
-%endif
-
-%if_with python3
-pushd ../python3
-%make_install DESTDIR=$PWD/buildroot install
-install -d %buildroot%python3_sitelibdir
-mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
-%if "%_libexecdir" != "%_libdir"
-mv buildroot%python3_sitelibdir_noarch/%name/* \
+mv %buildroot%python3_sitelibdir_noarch/%name/* \
 	%buildroot%python3_sitelibdir/%name/
-%endif
-popd
 %endif
 
 install -d %buildroot%_man3dir
@@ -166,15 +120,14 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %doc docs/html/*
 %_man3dir/*
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
-%if_with python3
 %files -n python3-module-%name
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Mar 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.0-alt3.rc2.1
+- Build fot python2 disabled.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.rc2.1
 - (NMU) Rebuilt with python-3.6.4.
 
