@@ -1,11 +1,11 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
-Version: 2.25
+Version: 2.29
 Release: alt1
 Epoch: 1
 License: X11/MIT
 Group: System/X11
-Url: http://gswitchit.sourceforge.net/
+Url: https://www.freedesktop.org/wiki/Software/XKeyboardConfig/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: libX11 >= 1.4.3
@@ -65,6 +65,12 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:2.29-alt1
+- 2.29
+
+* Wed Sep 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:2.27-alt1
+- 2.27
+
 * Sun Oct 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.25-alt1
 - 2.25
 
