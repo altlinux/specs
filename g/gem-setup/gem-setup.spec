@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt9
+Release:       alt10
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
-License:       BSD 2-clause Simplified License
+License:       BSD-2-Clause
 Url:           https://github.com/rubyworks/setup
-# VCS:         https://github.com/rubyworks/setup.git
+Vcs:           https://github.com/rubyworks/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -19,6 +19,7 @@ BuildRequires: gem(olddoc)
 
 Requires:      ruby-pry
 Requires:      chrpath
+Requires:      setup-rb
 
 %description
 Every well practiced Rubyist is aware of Minero Aoki's ever setup.rb script.
@@ -33,13 +34,30 @@ there. As long as a project is setup.rb compliant, as most are, then there is
 little to nothing it's developer must do.
 
 
+%package       -n setup-rb
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n setup-rb
+Executable file for %gemname gem.
+
+%description   -n setup-rb -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %package       doc
-Summary:       Documentation files for %name
-Group:         Documentation
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %name.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
@@ -47,25 +65,33 @@ Documentation files for %name.
 %patch -p1
 
 %build
-%ruby_build --join=lib:bin
+%__setup_rb build --use=setup --alias=setup-rb
 
 %install
 %ruby_install
+%__setup_rb install --install_prefix=%buildroot
 
 %check
 %ruby_test
+%__setup_rb test
 
 %files
 %doc README* HISTORY* MANIFEST
-%_bindir/setup.rb
 %ruby_gemspec
 %ruby_gemlibdir
+
+%files         -n setup-rb
+%doc README*
+%_bindir/setup.rb
 
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
+* Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt10
+- ! call to setup.rb with default pure %%__setup_rb
+
 * Mon Sep 09 2019 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt9
 - ! spec according changlelog policy
 - + making lost executables again workable (closes #37180)

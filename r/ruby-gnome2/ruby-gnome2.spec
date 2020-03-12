@@ -1,11 +1,11 @@
 Name: 	       ruby-gnome2
-Version:       3.3.8
+Version:       3.4.1
 Release:       alt1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ruby-gnome2.osdn.jp/
-%vcs           https://github.com/ruby-gnome2/ruby-gnome2.git
+Vcs:           https://github.com/ruby-gnome2/ruby-gnome2.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -50,6 +50,11 @@ BuildRequires: libthai-devel
 BuildRequires: libdatrie-devel
 BuildRequires: bzlib-devel
 BuildRequires: ruby-rcairo-devel
+BuildRequires: glib2-devel
+BuildRequires: libgio-devel
+BuildRequires: libpango-devel
+BuildRequires: gst-plugins-devel
+BuildRequires: gcc-c++
 
 BuildRequires: ruby-pkg-config
 BuildRequires: ruby-native-package-installer
@@ -1129,14 +1134,17 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1
+- updated (^) 3.3.8 -> 3.4.1
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt1
-- ^ v3.3.8
-- ! spec according to changelog rules
+- updated (^) 3.3.7 -> 3.3.8
+- fixed (!) spec according to changelog rules
 
 * Tue Aug 20 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
-- ^ v3.3.7
-- + libthai-devel, and libdatrie-devel build reqs
-- + wnck3, and libsecret gems
+- updated (^) 3.3.6 -> 3.3.7
+- added (+) libthai-devel, and libdatrie-devel build reqs
+- added (+) wnck3, and libsecret gems
 
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 3.3.6-alt2
 - ignore ruby-gnome2 gemfile
