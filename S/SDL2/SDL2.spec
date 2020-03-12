@@ -4,8 +4,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.10
-Release: alt3
+Version: 2.0.12
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -16,11 +16,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://www.libsdl.org/release/%name-%version.tar.gz
 Source: %name-%version.tar
-
-# RH: ptrdiff_t is not the same as khronos defines on 32bit arches
-Patch1: SDL2-2.0.9-rh-khrplatform.patch
-Patch2: SDL2-2.0.10-alt-X11_InitKeyboard.patch
-Patch3: SDL2-2.0.10-alt-have_mitshm.patch
 
 BuildPreReq: libXext-devel
 BuildPreReq: libdbus-devel
@@ -68,9 +63,6 @@ to develop SDL applications.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -100,6 +92,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Thu Mar 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.12-alt1
+- Version 2.0.12
+
 * Sat Dec 28 2019 Dmitry V. Levin <ldv@altlinux.org> 2.0.10-alt3
 - X11_InitKeyboard: do not call XAutoRepeatOn unnecessarily,
   this fixes SDL2 when the X11 client is untrusted.
