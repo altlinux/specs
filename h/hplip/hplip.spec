@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.20.2
+Version: 3.20.3
 Release: alt1
 Epoch:   1
 
@@ -158,6 +158,8 @@ Patch13: hplip-alt-fix-PPD-file-choose-in-qt5.patch
 Patch14: hplip-alt-use-l10n.patch
 # Use python3 in service file
 Patch15: hplip-alt-use-python3-in-service.patch
+# Fix systray icon menu (see https://bugs.launchpad.net/ubuntu/+source/mate-panel/+bug/1810745)
+Patch16: hplip-alt-systray-menu.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -1160,6 +1162,10 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt1
+- New version (ALT #38043).
+- Fix systray icon menu (ALT #38147).
+
 * Fri Feb 28 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.2-alt1
 - New version.
 - Added support for the following new Printers:
