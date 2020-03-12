@@ -1,25 +1,27 @@
 Name: gstatus
 Version: 0.64
-Release: alt1
+Release: alt2
 
 Summary: Show the current health of the component in a glusterfs Trusted Storage Pool
-
-Group: System/Base
 License: GPLv3
+Group: System/Base
 Url: https://github.com/pcuzner/gstatus
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/pcuzner/gstatus/archive/v%version.tar.gz
-Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+# Source-url: https://github.com/pcuzner/gstatus/archive/v%version.tar.gz
+Source: %name-%version.tar
+Patch0: port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
 
 Requires: %_sbindir/gluster
-#Requires: glusterfs >= 3.4
+
+%add_python3_req_skip gstatus.classes.gstatus_cli
+%add_python3_req_skip gstatus.functions.config
+%add_python3_req_skip gstatus.functions.network
+%add_python3_req_skip gstatus.functions.utils
 
 %description
 CLI command to provide a status check on the cluster's health, providing
@@ -37,23 +39,25 @@ that affects the trusted pool.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
-%python_build
+%python3_build_debug
 
 %install
-%python_install --install-scripts %_bindir
-#mkdir -p %buildroot%_man8dir
-#install -m 0644 gstatus.8 %buildroot%_man8dir/
+%python3_install --install-scripts %_bindir
 
 %files
 %doc README
 %_bindir/gstatus
-%python_sitelibdir_noarch/gstatus/
-%python_sitelibdir_noarch/gstatus-%version-*.egg-info/
+%python3_sitelibdir_noarch/gstatus/
+%python3_sitelibdir_noarch/gstatus-%version-*.egg-info/
 #%_man8dir/gstatus.*
 
 %changelog
+* Thu Mar 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.64-alt2
+- Porting to python3.
+
 * Sat May 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.64-alt1
 - initial build for ALT Linux Sisyphus
 
