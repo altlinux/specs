@@ -1,5 +1,5 @@
 Name: libXt
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
 Summary: X Toolkit Library
 License: MIT/X11
@@ -18,7 +18,6 @@ X Toolkit Library
 %package devel
 Summary: X Toolkit Library and Header Files
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -33,6 +32,7 @@ develop programs which make use of %name
 %configure \
 	--with-appdefaultdir=%_sysconfdir/X11/app-defaults \
 	--disable-static
+
 %make_build
 
 %install
@@ -47,9 +47,12 @@ develop programs which make use of %name
 %_includedir/X11/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_man3dir/*
+%_man3dir/*.3*
 
 %changelog
+* Thu Mar 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 
