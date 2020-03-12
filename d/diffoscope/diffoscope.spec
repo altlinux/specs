@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: diffoscope
-Version: 107
+Version: 137
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
@@ -46,5 +46,8 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Thu Mar 12 2020 Slava Aseev <ptrnine@altlinux.org> 137-alt1
+- Update to upstream version 137
+
 * Mon Dec 24 2018 Slava Aseev <ptrnine@altlinux.org> 107-alt1
 - Initial build for ALT
