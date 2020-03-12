@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.8.4
-Release: alt2
+Version: 2.8.10
+Release: alt1
 
 Group: System/Libraries
 License: GPLv3
@@ -67,6 +67,15 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Thu Mar 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.8.10-alt1
+- 2.8.10
+- Fixes:
+  + CVE-2019-14846
+  + CVE-2019-14856
+  + CVE-2019-14864
+  + CVE-2019-14904
+  + CVE-2019-14905
+
 * Thu Sep 12 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.4-alt2
 - Transfer ansible on python3.
 
