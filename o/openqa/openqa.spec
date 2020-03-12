@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt10
+Release: alt11
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -225,6 +225,7 @@ ln -s %_datadir/openqa/script/load_templates %buildroot%_bindir/openqa-load-temp
 ln -s %_datadir/openqa/script/openqa-clone-custom-git-refspec %buildroot%_bindir/openqa-clone-custom-git-refspec
 ln -s %_datadir/openqa/script/openqa-validate-yaml %buildroot%_bindir/openqa-validate-yaml
 ln -s %_datadir/openqa/script/openqa-label-all %buildroot%_bindir/openqa-label-all
+ln -s %_datadir/openqa/script/setup-db %buildroot%_bindir/openqa-setup-db
 
 #These files are not needed
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
@@ -248,7 +249,10 @@ mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
+rm -f t/40-openqa-clone-job.t
 rm -f t/42-screenshots.t
+rm -f t/api/08-jobtemplates.t 
+
 # we don't really need the tidy test
 rm -f t/00-tidy.t
 
@@ -397,8 +401,13 @@ fi
 
 %files local-db
 %_unitdir/openqa-setup-db.service
+%_datadir/openqa/script/setup-db
+%_bindir/openqa-setup-db
 
 %changelog
+* Thu Mar 05 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt11
+- update to current version
+
 * Wed Feb 26 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt10
 - update to current version
 
