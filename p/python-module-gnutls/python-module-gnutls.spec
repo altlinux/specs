@@ -1,7 +1,7 @@
 %define  modulename gnutls
 
 Name:    python-module-%modulename
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: GnuTLS bindings for Python
@@ -50,6 +50,9 @@ extend without any need to write C code or recompile anything.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
+- New version.
+
 * Thu Oct 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
 - New version.
 
