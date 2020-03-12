@@ -8,7 +8,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.15
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -139,6 +139,7 @@ Spanish documementation for %name
 %setup
 %patch1 -p1
 
+sed -i 's|lib/tcltk/linuxcnc|%_lib/tcl/linuxcnc|' lib/python/rs274/options.py
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
 sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
 %ifarch aarch64
@@ -284,6 +285,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 12 2020 Anton Midyukov <antohami@altlinux.org> 2.7.15-alt2
+- Fixed tcl dir again
+
 * Fri Mar 06 2020 Anton Midyukov <antohami@altlinux.org> 2.7.15-alt1
 - New version 2.7.15
 
