@@ -1,9 +1,9 @@
 %define oname xlsxwriter
-%def_with python2
+%def_without python2
 %def_with python3
 
 Name:    python-module-%oname
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
@@ -149,6 +149,12 @@ popd
 %endif
 
 %changelog
+* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.8-alt1
+- New version.
+
+* Tue Jan 21 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt2
+- Build only with Python3.
+
 * Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1
 - New version.
 
