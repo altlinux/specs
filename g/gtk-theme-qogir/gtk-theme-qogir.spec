@@ -1,10 +1,10 @@
 Name: gtk-theme-qogir
-Version: 20191025
+Version: 20200226
 Release: alt1
 Summary: Qogir GTK theme
 
 Group: Graphical desktop/GNOME
-License: GPL3
+License: GPL-3.0-only
 Url: https://github.com/vinceliuice/Qogir-theme
 
 Source: %name-%version.tar.gz
@@ -29,9 +29,13 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 
 %files
 %doc AUTHORS COPYING HACKING README.md
+%dir %_datadir/themes
 %_datadir/themes/Qogir*
 
 %changelog
+* Thu Mar 12 2020 Leontiy Volodin <lvol@altlinux.org> 20200226-alt1
+- New version.
+
 * Tue Nov 05 2019 Leontiy Volodin <lvol@altlinux.org> 20191025-alt1
 - New version.
 
