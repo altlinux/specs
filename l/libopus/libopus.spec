@@ -1,6 +1,6 @@
 Name: libopus
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -75,6 +75,9 @@ statically linked libopus-based software.
 %endif
 
 %changelog
+* Thu Mar 12 2020 Oleg Solovyov <mcpain@altlinux.org> 1.3.1-alt2
+- fix unknown version in opus.pc (Closes: 38210)
+
 * Sun Mar 08 2020 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
 - 1.3.1.
 
