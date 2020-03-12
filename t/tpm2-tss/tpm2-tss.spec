@@ -1,7 +1,7 @@
 %define udevrules_prefix 60-
 %define soname 0
 Name: tpm2-tss
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -113,6 +113,9 @@ use tpm2-tss.
 %_mandir/man7/tss2*.7.*
 
 %changelog
+* Thu Mar 12 2020 Anton Farygin <rider@altlinux.ru> 2.3.3-alt1
+- 2.3.3
+
 * Fri Jan 10 2020 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1
 - 2.3.2
 
