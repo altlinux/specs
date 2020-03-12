@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: geos
-Version: 3.8.0
-Release: alt2
+Version: 3.8.1
+Release: alt1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -204,6 +204,9 @@ make check || exit 0
 %endif
 
 %changelog
+* Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+
 * Thu Oct 31 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
 - Fix geos-config --libs.
 - Make libgeos.so for devel subpackage.
