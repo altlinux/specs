@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt4
+Release: alt5
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -20,6 +20,7 @@ Source1: vtkm-%version.tar
 
 Patch1: %oname-%version-alt-build.patch
 Patch2: %oname-%version-alt-python3.8.patch
+Patch3: %oname-%version-alt-armh.patch
 
 Requires: lib%name = %EVR
 
@@ -258,6 +259,9 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 %setup
 %patch1 -p1
 %patch2 -p1
+%ifarch armh
+%patch3 -p1
+%endif
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -332,9 +336,11 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DVTK_PYTHON_INCLUDE_DIR=%__python3_includedir \
 	-DVTK_USE_SYSTEM_SIX=ON \
 	-DSIP_INCLUDE_DIR:PATH=%__python3_includedir \
-	-DVTK_USE_QVTK=ON \
-	-DVTK_USE_QVTK_OPENGL=ON \
-	-DVTK_USE_QVTK_QTOPENGL=ON \
+%ifarch armh
+	-DVTK_OPENGL_USE_GLES=ON \
+	-DVTK_OPENGL_HAS_EGL=ON \
+	-DVTK_OPENGL_HAS_ES=ON \
+%endif
 	-DQT_WRAP_CPP=ON \
 	-DQT_WRAP_UI=ON \
 	-DVTK_INSTALL_QT_DIR:PATH=%_qt5_plugindir/designer \
@@ -350,7 +356,11 @@ export VTK_DATA_ROOT=%_datadir/%oname-%ver
 	-DVTK_INSTALL_LIBRARY_DIR=%_lib \
 	-DVTK_INSTALL_ARCHIVE_DIR=%_lib \
 	-DVTK_INSTALL_PACKAGE_DIR=%_lib/cmake/vtk-%ver \
+%ifarch armh
+	-DModule_vtkGUISupportQtOpenGL=OFF
+%else
 	-DModule_vtkGUISupportQtOpenGL=ON
+%endif
 
 export LD_LIBRARY_PATH=$PWD/lib
 %make_build
@@ -460,6 +470,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Thu Mar 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2.0-alt5
+- fix packaging on armh arch
+
 * Tue Feb 25 2020 Slava Aseev <ptrnine@altlinux.org> 8.2.0-alt4
 - Fixed build with Python 3.8
 
