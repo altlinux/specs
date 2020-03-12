@@ -1,11 +1,11 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 
 Summary: Linux PCI utilities
-License: GPL
+License: GPLv2
 Group: System/Kernel and hardware
 
 Url: http://mj.ucw.cz/sw/pciutils/
@@ -94,6 +94,9 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Thu Mar 12 2020 Anton Farygin <rider@altlinux.ru> 3.6.4-alt1
+- 3.6.4
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 3.6.3-alt1
 - 3.6.3
 
