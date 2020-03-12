@@ -1,16 +1,23 @@
-Summary: Simple debugging utility
 Name: scanmem
-Version: 0.15.8
-Release: alt1.1
-Url: http://taviso.decsystem.org/
-Source: %name-%version.tar
-Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
+Version: 0.17
+Release: alt1
+
+Summary: Simple debugging utility
 License: GPLv2
 Group: Development/Debuggers
+Url: http://taviso.decsystem.org/
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
+
+Source: %name-%version.tar
 Patch0: scanmem-0.15.4-alt2-fix-desktop-files.patch
 Patch1: scanmem-0.15.4-alt-gameconqueror-libscanmem-soname.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libreadline-devel intltool /proc
+
+%filter_from_requires /^python2.*/d
+
+%add_python3_req_skip backend consts hexview misc
 
 %description
 scanmem is a simple interactive debugging utility for linux, used to
@@ -46,8 +53,10 @@ The devel package contains the symlincs for sharedlib
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch0 -p2
+%patch1 -p2
+
+sed -i 's|^#!.*python|&3|' gui/GameConqueror.py
 
 %build
 ./autogen.sh
@@ -84,6 +93,10 @@ The devel package contains the symlincs for sharedlib
 %_datadir/appdata/GameConqueror.appdata.xml
 
 %changelog
+* Thu Mar 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.17-alt1
+- Version updated to 0.17
+- porting to python3.
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.15.8-alt1.1
 - Rebuild with libreadline7.
 
