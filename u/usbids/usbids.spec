@@ -1,5 +1,5 @@
 Name: usbids
-Version: 20200228
+Version: 20200313
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -28,6 +28,9 @@ install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 %_datadir/misc/usb.ids
 
 %changelog
+* Fri Mar 13 2020 Cronbuild Service <cronbuild@altlinux.org> 20200313-alt1
+- repocop cronbuild 20200313. At your service.
+
 * Fri Feb 28 2020 Cronbuild Service <cronbuild@altlinux.org> 20200228-alt1
 - repocop cronbuild 20200228. At your service.
 
