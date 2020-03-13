@@ -1,6 +1,8 @@
+%def_disable xvmc
+
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt11
+Release: alt12
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -40,6 +42,9 @@ and 24 for the 830M and later
 %configure \
 	--libexecdir=%_prefix/libexec \
 	--with-xorg-module-dir=%_x11modulesdir \
+	--enable-kms-only \
+	--with-default-dri=3 \
+	%{subst_enable xvmc} \
 	--disable-static
 
 %make_build
@@ -50,13 +55,18 @@ and 24 for the 830M and later
 %files
 %doc AUTHORS README NEWS
 %_bindir/intel-virtual-output
-%_libdir/*.so.*
 %_x11modulesdir/drivers/*.so
 %_prefix/libexec/xf86-video-intel-backlight-helper
 %_datadir/polkit-1/actions/org.x.xf86-video-intel.backlight-helper.policy
 %_man4dir/i*.4*
+%if_enabled xvmc
+%_libdir/*.so.*
+%endif
 
 %changelog
+* Fri Mar 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt12
+- disabled XvMC support
+
 * Thu Feb 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt11
 - git snapshot master.f66d395
 
