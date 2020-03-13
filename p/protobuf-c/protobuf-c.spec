@@ -1,12 +1,12 @@
 %define soversion 1
 
 Name: protobuf-c
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 Summary: Google's Protocol Buffers implementation in C
 
 Group: System/Libraries
-License: ASL 2.0
+License: BSD-3-Clause
 Url: https://github.com/protobuf-c/protobuf-c
 
 Source: %name-%version.tar
@@ -76,6 +76,9 @@ This package contains development files required for packaging
 %doc TODO ChangeLog README.md LICENSE
 
 %changelog
+* Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Sun Mar 24 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1
 - 1.3.1
 
