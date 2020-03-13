@@ -7,7 +7,7 @@
 
 Name: avahi
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Local network service discovery
 License: LGPL
@@ -252,6 +252,7 @@ touch config.rpath
 
 %build
 %autoreconf
+PYTHON=%__python; export PYTHON
 %configure \
     --localstatedir=%_var \
     --with-distro=altlinux \
@@ -504,6 +505,9 @@ fi
 %endif		    
 
 %changelog
+* Fri Mar 13 2020 Nikita Ermakov <arei@altlinux.org> 0.7-alt2
+- Fix python2 shebang.
+
 * Thu Sep 12 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt1
 - 0.7 released (fixes: CVE-2017-6519, CVE-2018-100084)
 - qt bindings droppped
