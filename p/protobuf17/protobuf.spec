@@ -1,8 +1,8 @@
 %define oname protobuf
-%define soversion 22
+%define soversion 17
 
 # set 'enable' to build legacy package
-%def_disable legacy
+%def_enable legacy
 
 %if_disabled legacy
 %define _unpackaged_files_terminate_build 1
@@ -26,10 +26,10 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.11.4
-Release: alt1
+Version: 3.6.1.3
+Release: alt3
 Summary: Protocol Buffers - Google's data interchange format
-License: BSD-3-Clause
+License: Apache-2.0
 %if_disabled legacy
 Group: System/Libraries
 %else
@@ -39,7 +39,7 @@ Url: https://github.com/protocolbuffers/protobuf
 
 # https://github.com/protocolbuffers/protobuf.git
 Source: %oname-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %oname-%version.patch
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
@@ -162,8 +162,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires(pre):  rpm-build-java
-BuildRequires:  java-devel-default
+BuildRequires:  rpm-build-java java-devel-default
 BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
@@ -173,14 +172,6 @@ Obsoletes: %name-javanano < 3.6.0
 
 %description java
 This package contains Java Protocol Buffers runtime library.
-
-%package javalite
-Summary: Java Protocol Buffers lite runtime library
-Group: Development/Java
-BuildArch: noarch
-
-%description javalite
-This package contains Java Protocol Buffers lite runtime library.
 
 %package javadoc
 Summary: Javadocs for %oname-java
@@ -192,29 +183,21 @@ Requires: %name-java = %EVR
 This package contains the API documentation for %oname-java.
 
 %package java-util
-Summary: Utilities for Protocol Buffers
-Group: Development/Java
-BuildArch: noarch
+Group: System/Libraries
+Summary:        Utilities for Protocol Buffers
+BuildArch:      noarch
 
 %description java-util
 Utilities to work with protos. It contains JSON support
 as well as utilities to work with proto3 well-known types.
 
 %package parent
-Summary: Protocol Buffer Parent POM
-Group: Development/Java
-BuildArch: noarch
+Group: System/Libraries
+Summary:        Protocol Buffer Parent POM
+BuildArch:      noarch
 
 %description parent
 Protocol Buffer Parent POM.
-
-%package bom
-Summary: Protocol Buffer BOM POM
-Group: Development/Java
-BuildArch: noarch
-
-%description bom
-Protocol Buffer BOM POM.
 %endif
 
 %prep
@@ -232,34 +215,23 @@ rm -f python/google/protobuf/internal/json_format_test.py
 cp -fR python python3
 %endif
 
-%if_with java
-%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
-%pom_remove_dep com.google.truth:truth java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
-%pom_remove_dep com.google.errorprone:error_prone_annotations java/util/pom.xml
-%pom_remove_dep com.google.guava:guava-testlib java/pom.xml java/util/pom.xml
+%if %{with java}
+%pom_remove_parent java/pom.xml
+%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/*/pom.xml
 # These use easymockclassextension
 rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
-# These use truth or error_prone_annotations or guava-testlib
-rm java/core/src/test/java/com/google/protobuf/LiteralByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
-rm -r java/util/src/test/java/com/google/protobuf/util
-rm -r java/util/src/main/java/com/google/protobuf/util
- 
+
 # Make OSGi dependency on sun.misc package optional
 %pom_xpath_inject "pom:configuration/pom:instructions" "<Import-Package>sun.misc;resolution:=optional,*</Import-Package>" java/core
- 
+
 # Backward compatibility symlink
-%mvn_file :protobuf-java:jar: %{name}/%{name}-java %{name}
+%mvn_file :protobuf-java:jar: %oname/%oname-java %oname
 
 # This test is incredibly slow on arm/e2k, probably even worse on mipsel
 # https://github.com/google/protobuf/issues/2389
 %ifnarch %ix86 x86_64
 mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java.slow
-mv java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java \
-   java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java.slow
 %endif
 %endif
 
@@ -359,18 +331,12 @@ popd
 
 %files parent -f .mfiles-protobuf-parent
 %doc LICENSE
-
-%files bom -f .mfiles-protobuf-bom
-%doc LICENSE
-
-%files javalite -f .mfiles-protobuf-javalite
-%doc LICENSE
 %endif
 %endif
 
 %changelog
-* Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 3.11.4-alt1
-- 3.11.4
+* Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 3.6.1.3-alt3
+- build as compat legacy library
 
 * Wed Apr 17 2019 Michael Shigorin <mike@altlinux.org> 3.6.1.3-alt2
 - Fix ftbfs on e2k with lcc 1.23.
