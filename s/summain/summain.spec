@@ -1,25 +1,24 @@
+%define py_vers_nodot %{python_version_nodots python3}
+
 Name: summain
 Version: 0.20
-Release: alt1
+Release: alt2
 
 Summary: File manifest generator
-
 License: GPLv3+
 Group: File tools
 Url: http://liw.fi/%name/
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://code.liw.fi/debian/pool/main/s/%name/%{name}_%version.orig.tar.gz
+Patch0: port-to-python3.patch
 
-# build-time
-#BuildRequires: python-coverage-test-runner
-BuildRequires: libattr-devel
-BuildRequires: python-devel
-# build- and run-time
-BuildRequires: python-module-cliapp
-BuildRequires: python-module-json
-#Requires: python-cliapp
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel libattr-devel
+BuildRequires: python3-module-cliapp >= 1.20160724-alt3
+
+Requires: python3-module-cliapp >= 1.20160724-alt3
+
 
 %description
 Summain generates file manifests, which contain metadata about the
@@ -29,29 +28,36 @@ compared (with diff) to see if something has changed.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
-%python_build
+%python3_build_debug
+
 # Generate manpages
 make summain.1
 
 %install
-%python_install
+%python3_install
+
 # fix permission
-chmod 755 %buildroot%python_sitelibdir/_summain.so
+chmod 755 %buildroot%python3_sitelibdir/_summain.cpython-%{py_vers_nodot}.so
 
 %check
-exit 0
+# exit 0
 # TODO: add and use python_check
-%__python setup.py check
+%__python3 setup.py check
 
 %files
 %doc COPYING NEWS README
 %_man1dir/summain.1*
 %_bindir/summain
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
 
 %changelog
+* Fri Mar 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.20-alt2
+- Porting to python3.
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20-alt1
 - new version 0.20 (with rpmrb script)
 
