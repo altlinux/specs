@@ -5,7 +5,7 @@
 
 Name: python3-module-%pkgname
 Version: 1.20160724
-Release: alt2
+Release: alt3
 
 Summary: Python framework for Unix command line programs
 License: GPLv2+
@@ -46,6 +46,8 @@ sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
+sed -i "s|'w', 0|'w'|" cliapp/app.py
+
 %build
 %python3_build
 
@@ -75,6 +77,9 @@ rm -rf build
 
 
 %changelog
+* Fri Mar 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.20160724-alt3
+- Value error of unbuffered text fixed.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.20160724-alt2
 - Porting on python3.
 
