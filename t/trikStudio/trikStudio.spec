@@ -5,7 +5,7 @@
 %def_without debug
 Name: trikStudio
 Version: 2019.8
-Release: alt3
+Release: alt4
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -166,6 +166,11 @@ popd
 %endif
 
 %changelog
+* Fri Mar 13 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt4
+- Disable sanitize_undefined due it produces false positives with derived
+  objects causing the runtime error member with call on address which does
+  not point to an object of type.
+
 * Tue Feb 18 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt3
 - Build with workaround force requirement to libubsan-devel-static
 - Add missed requirement to libquazip-qt5
