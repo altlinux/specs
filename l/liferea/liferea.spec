@@ -1,6 +1,6 @@
 Name: liferea
-Version: 1.12.7
-Release: alt2
+Version: 1.13.0
+Release: alt1
 
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -114,6 +114,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Mon Dec 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.7-alt2
 - run make via xvfb-run as a workaround to build Liferea-3.0.gir
 
