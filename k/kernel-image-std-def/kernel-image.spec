@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.4
-%define kernel_sublevel .24
+%define kernel_sublevel .25
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -433,8 +433,6 @@ install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot
-# to not apply into blacklist ixgbe
-mv %buildroot%modules_dir/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe{,-int}.ko ||:
 
 %ifarch aarch64
 mkdir -p %buildroot/lib/devicetree/$KernelVer
@@ -564,6 +562,9 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 # eu-findtextrel will fail if it is not a DSO or PIE.
 %add_verify_elf_skiplist /boot/vmlinuz-*
 
+%post
+blacklist=/etc/modprobe.d/blacklist-ixgbe.conf
+[ -f $blacklist ] && mv $blacklist $blacklist.rpmsave
 
 %check
 KernelVer=%kversion-%flavour-%krelease
@@ -685,6 +686,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Mar 13 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.25-alt1
+- v5.4.25  (Fixes: CVE-2020-8647, CVE-2020-8648, CVE-2020-8649)
+
 * Fri Mar 06 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.24-alt1
 - v5.4.24
 
