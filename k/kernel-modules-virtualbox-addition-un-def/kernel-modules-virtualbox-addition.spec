@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.4
-%define module_release	alt5
+%define module_release	alt6
 
 %define flavour		un-def
 %define karch %ix86 x86_64
@@ -72,7 +72,7 @@ Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
 
-Requires: virtualbox-guest-common = %module_version
+Requires: virtualbox-guest-common-vboxvideo = %module_version
 
 %description -n kernel-modules-%module_name-video-%flavour
 This package contains VirtualBox addition vboxvideo module
@@ -89,7 +89,7 @@ Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
 
-Requires: virtualbox-guest-common = %module_version
+Requires: virtualbox-guest-common-vboxguest = %module_version
 
 %description -n kernel-modules-%module_name-guest-%flavour
 This package contains VirtualBox addition vboxvideo module
@@ -144,6 +144,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt6
+- Add separated modprobe and load module rules for vboxvideo and vboxguest
 
 * Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt5
 - Revert separated modules for compatibility with update-kernel:
