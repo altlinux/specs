@@ -6,7 +6,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.995
+Version: 1.996
 Release: alt1
 Summary: Perl binding for Redis database
 Group: Development/Perl
@@ -41,6 +41,9 @@ little help of `AUTOLOAD'.
 %perl_vendor_privlib/R*
 
 %changelog
+* Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.996-alt1
+- automated CPAN update
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.995-alt1
 - automated CPAN update
 
