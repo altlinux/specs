@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.23
+Version: 2.5.24
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,8 @@ License: LGPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 # Automatically added by buildreq on Mon Oct 11 2010
-BuildRequires: doxygen flex gcc-c++ libexif-devel libgd2-devel libjpeg-devel liblockdev-devel libltdl7-devel libusb-compat-devel libusb-devel libxml2-devel
+BuildRequires: doxygen flex gcc-c++ libcurl-devel libexif-devel libgd2-devel libjpeg-devel
+BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
 %if_enabled libhal
 BuildRequires: libhal-devel
 %endif
@@ -27,7 +28,6 @@ BuildRequires: libhal-devel
 
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
-Patch0:  %name-2.5.21-alt-fix-underlinked_libraries.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -127,7 +127,6 @@ against %name library.
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
@@ -248,6 +247,11 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Fri Mar 13 2020 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.24-alt1
+- 2.5.24
+- added libcurl-devel into BR for support new Lumix WiFi cameras
+- removed unneeded patch and libusb0 support
+
 * Thu Jul 25 2019 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.23-alt1
 - 2.5.23
 - drivers for cameras older than 15 years disabled for installation,
