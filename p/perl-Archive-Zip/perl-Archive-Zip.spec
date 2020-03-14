@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators perl(Test/MockModule.pm)
 %define dist Archive-Zip
 Name: perl-%dist
-Version: 1.67
+Version: 1.68
 Release: alt1
 
 Summary: Perl module for manipulating Zip archives
@@ -53,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.68-alt1
+- automated CPAN update
+
 * Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.67-alt1
 - automated CPAN update
 
