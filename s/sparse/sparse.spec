@@ -1,6 +1,6 @@
 Name:		sparse
 Version:	0.6.1
-Release:	alt1_rc1
+Release:	alt2
 Summary: 	A semantic parser for C
 License:	MIT
 Group:		Development/Kernel
@@ -42,6 +42,9 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %{_mandir}/man1/*
 
 %changelog
+* Sat Mar 14 2020 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt2
+- Update to v0.6.1 release.
+
 * Wed Mar 13 2019 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1_rc1
 - First import of v0.6.1-rc1-2-g7fd3778.
 - Newer version than in autoimports (0.6.0) and uses gtk3.
