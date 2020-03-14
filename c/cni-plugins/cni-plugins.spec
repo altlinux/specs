@@ -1,6 +1,6 @@
 
 %global import_path github.com/containernetworking/plugins
-%global commit d5efdfe1f6d6e8e9e9494e3f43be54f76c0f8fd6
+%global commit 1f33fb729ae2b8900785f896df2dc1f6fe5e8239
 #%%global shortcommit %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,11 +15,11 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 0.8.3
+Version: 0.8.5
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
-License: ASL 2.0
+License: Apache-2.0
 Url: https://%import_path
 Source: %name-%version.tar
 ExclusiveArch: %go_arches
@@ -59,6 +59,9 @@ install -m0755 bin/* %buildroot%cni_dir/
 %cni_dir/*
 
 %changelog
+* Sat Mar 14 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.5-alt1
+- 0.8.5
+
 * Fri Dec 13 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
