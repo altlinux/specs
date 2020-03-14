@@ -12,7 +12,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	68.5.0
+Version:	68.6.0
 Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
@@ -534,6 +534,17 @@ chmod a+r *.xpi
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Mar 14 2020 Andrey Cherepanov <cas@altlinux.org> 68.6.0-alt1
+- New version (68.6.0).
+- Fixed:
+  + CVE-2020-6805 Use-after-free when removing data about origins
+  + CVE-2020-6806 BodyStream::OnInputStreamReady was missing protections against state confusion
+  + CVE-2020-6807 Use-after-free in cubeb during stream destruction
+  + CVE-2020-6811 Devtools' 'Copy as cURL' feature did not fully escape website-controlled data, potentially leading to command injection
+  + CVE-2019-20503 Out of bounds reads in sctp_load_addresses_from_init
+  + CVE-2020-6812 The names of AirPods with personally identifiable information were exposed to websites with camera or microphone permission
+  + CVE-2020-6814 Memory safety bugs fixed in Thunderbird 68.6
+
 * Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 68.5.0-alt1
 - New version (68.5.0).
 - Fixed:
