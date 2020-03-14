@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,13 +8,13 @@ BuildRequires: perl(Moose.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Config-GitLike
-Version:        1.17
-Release:        alt1_8
+Version:        1.18
+Release:        alt1
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
 URL:            https://metacpan.org/release/Config-GitLike
-Source0:        https://cpan.metacpan.org/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AL/ALEXMV/Config-GitLike-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl-devel
@@ -70,6 +71,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_8
 - update to new release by fcimport
 
