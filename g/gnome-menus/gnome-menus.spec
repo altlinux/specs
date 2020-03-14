@@ -1,4 +1,4 @@
-%define ver_major 3.32
+%define ver_major 3.36
 %define api_ver 3.0
 %def_enable introspection
 
@@ -7,7 +7,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME desktop menu
-License: GPLv2+
+License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -59,7 +59,7 @@ Desktop Menu Library.
 %package -n lib%name-devel-examples
 Summary: Development utilities and examples for GNOME Desktop Menu Library
 License: LGPLv2+
-Group: Development/Python
+Group: Development/C
 BuildArch: noarch
 Requires: lib%name = %version-%release
 
@@ -125,6 +125,9 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

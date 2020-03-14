@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.34
+%define ver_major 3.36
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
@@ -125,6 +125,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

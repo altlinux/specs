@@ -8,11 +8,11 @@
 %def_disable check
 
 Name: lib%{_name}
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: http://www.gnome.org/
 
@@ -124,6 +124,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Thu Mar 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

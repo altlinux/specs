@@ -1,12 +1,12 @@
 %define _name adwaita-icon-theme
-%define ver_major 3.34
+%define ver_major 3.36
 
 Name: icon-theme-adwaita
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Adwaita icon theme
-License: Creative Commons Attribution-Share Alike 3.0
+License: CC-BY-SA-3.0 and LGPL-3.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -42,6 +42,9 @@ Adwaita icon theme for GTK+.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Nov 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 

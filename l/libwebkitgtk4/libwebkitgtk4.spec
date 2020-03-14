@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.26
+%define ver_major 2.28
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -31,7 +31,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -77,7 +77,7 @@ BuildRequires: libpixman-devel libexpat-devel
 BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
-%{?_enable_wayland:BuildRequires: libwayland-server-devel libwayland-cursor-devel libwayland-egl-devel}
+%{?_enable_wayland:BuildRequires: libwayland-server-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
 BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
 BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
@@ -339,6 +339,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.0-alt1
+- 2.28.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 2.26.4-alt1
 - 2.26.4
 

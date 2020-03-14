@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -10,13 +10,9 @@
 %def_enable flickr
 %def_enable imap_smtp
 %def_enable windows_live
-# removed telepathy support in 3.29.1
-%def_disable telepathy
-%def_enable pocket
 %def_enable media_server
 %def_enable foursquare
 %def_enable lastfm
-%def_enable todoist
 %def_enable webkit
 
 %def_enable gtk_doc
@@ -24,12 +20,12 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GnomeOnlineAccounts
 
 %if_enabled snapshot
@@ -55,7 +51,6 @@ BuildPreReq: librest-devel >= %rest_ver
 BuildPreReq: libsoup-devel >= %soup_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 %{?_enable_webkit:BuildRequires: libwebkit2gtk-devel >= %webkit_ver}
-BuildRequires: libtelepathy-glib-devel
 BuildRequires: gnome-common gtk-doc
 BuildRequires: libjson-glib-devel libgnome-keyring-devel libnotify-devel libsecret-devel
 BuildRequires: libkrb5-devel gcr-libs-devel gobject-introspection-devel
@@ -126,13 +121,10 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable facebook} \
 	%{subst_enable google} \
 	%{subst_enable flickr} \
-	%{subst_enable telepathy} \
-	%{subst_enable pocket} \
 	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_media_server:--enable-media-server} \
 	%{subst_enable foursquare} \
 	%{subst_enable lastfm} \
-	%{subst_enable todoist} \
 %if_enabled webkit
 	--enable-backend \
 %else
@@ -199,6 +191,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Wed Oct 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

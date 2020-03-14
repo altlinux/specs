@@ -3,19 +3,19 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
-License: LGPLv3+
+License: LGPL-2.0
 Url: https://wiki.gnome.org/Apps/Boxes
 
 %if_disabled snapshot
@@ -110,7 +110,7 @@ the functionality of the Boxes.
 %find_lang %name --with-gnome
 
 %files -f %name.lang
-%doc AUTHORS README* NEWS TODO
+%doc AUTHORS README* NEWS
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name
@@ -119,7 +119,7 @@ the functionality of the Boxes.
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
-%_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
+%_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_datadir/metainfo/*.xml
 
 %if_enabled installed_tests
@@ -131,6 +131,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 

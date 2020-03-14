@@ -42,7 +42,7 @@
 
 Name: totem
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -402,6 +402,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt3
+- rebuilt against libgnome-desktop-so.19
+
 * Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt2
 - updated to V_3_34_1-3-g167008cb2 (fixed GLI #212)
 

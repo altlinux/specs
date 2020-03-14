@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.seahorse
 
 %def_disable debug
@@ -18,11 +18,11 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: A password and encryption key manager
-License: %gpllgpl2plus
+License: GPL-2.0 and LGPL-2.1
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Seahorse
 
@@ -42,6 +42,7 @@ BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: gtk-doc desktop-file-utils
 BuildRequires: gcc-c++ libgtk+3-devel >= 3.22.0
+BuildRequires: libhandy-devel >= 0.0.12
 BuildRequires: gnupg2
 BuildRequires: libgpgme-devel >= 1.0.0
 BuildRequires: libgpg-error-devel
@@ -95,6 +96,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36-alt1
+- 3.36
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

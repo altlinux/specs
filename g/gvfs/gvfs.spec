@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.42
+%define ver_major 1.44
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -32,11 +32,11 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
-License: %lgpl2plus
+License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/gvfs
 
@@ -79,7 +79,8 @@ Requires: gsettings-desktop-schemas >= %gsds_ver
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
+%add_python3_path %_libexecdir/installed-tests/%name
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
@@ -115,10 +116,11 @@ BuildRequires: libgcrypt-devel
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
 
-# for check
-#BuildRequires: /proc dbus-tools-gui python3 python3-module-pygobject3 python-module-twisted-core
-#BuildRequires:  openssh-server apache2 samba genisoimage
-# and more
+%if_enabled check
+BuildRequires: /proc dbus-tools-gui python3 python3-module-pygobject3 python-module-twisted-core
+BuildRequires:  openssh-server apache2 samba genisoimage
+# and more ...
+%endif
 
 %package devel
 Summary: Libraries and include files for developing gvfs applications
@@ -525,12 +527,15 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 %if_enabled installed_tests
 %files tests
-%_libexecdir/installed-tests/
+%_libexecdir/installed-tests/%name/
 %_datadir/installed-tests/%name/
 %endif
 
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.44.0-alt1
+- 1.44.0
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.42.2-alt1
 - 1.42.2
 

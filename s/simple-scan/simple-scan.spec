@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.SimpleScan
 
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -59,6 +59,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

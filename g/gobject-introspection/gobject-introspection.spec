@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.62
+%define ver_major 1.64
 %def_enable doctool
 %def_enable check
 %def_enable gtk_doc
@@ -11,8 +11,8 @@ Release: alt1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
-License: GPLv2+, LGPLv2+, MIT
-URL: https://live.gnome.org/GObjectIntrospection
+License: GPL-2.0-or-later and LGPL-2.0-or-later and MIT
+Url: https://live.gnome.org/GObjectIntrospection
 
 Provides: gir-repository = %version-%release
 Obsoletes: gir-repository
@@ -29,7 +29,7 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/giscanner
 %add_python3_req_skip distutils.msvccompiler
 
-%define glib_ver 2.62.0
+%define glib_ver 2.64.0
 
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc libgio-devel >= %glib_ver
@@ -85,8 +85,7 @@ gobject-introspection.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %meson \
-	-Dgtk-doc=true \
-	%{?_enable_doctool:-Ddoctool=true} \
+	%{?_enable_doctool:-Ddoctool=enabled} \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	-Dpython=%__python3
 %meson_build
@@ -140,6 +139,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.0-alt1
+- 1.64.0
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 1.62.0-alt1
 - 1.62.0 (ported to Meson build system)
 

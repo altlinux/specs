@@ -1,16 +1,16 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
-License: GPLv3
+License: GPL-3.0
 Url: https://wiki.gnome.org/Projects/dconf
 
 %if_disabled snapshot
@@ -64,9 +64,12 @@ This package provides graphical dconf configuration editor.
 %_datadir/metainfo/%xdg_name.appdata.xml
 # "nosort" bad option?
 %_datadir/bash-completion/completions/%name
-%doc README
+%doc README*
 
 %changelog
+* Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
 - 3.34.4
 

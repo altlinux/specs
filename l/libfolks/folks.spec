@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name folks
-%define ver_major 0.13
+%define ver_major 0.14
 %define api_ver 0.6
 
 %def_disable libsocialweb
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -170,6 +170,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Tue Feb 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.13.2-alt1
 - 0.13.2
 

@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 4.4
+%define ver_major 4.6
 %define api_ver 4
 
 %def_disable static
@@ -24,7 +24,6 @@ Url: https://wiki.gnome.org/Projects/GtkSourceView
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-# From configure.ac
 %define gtk_ver 3.22.0
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.8.0
@@ -124,7 +123,7 @@ xvfb-run %meson_test
 %files -f %_name-%api_ver.lang
 %_libdir/lib%_name-%api_ver.so.*
 %_datadir/%_name-%api_ver/
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -157,6 +156,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

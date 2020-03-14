@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.34
-%define panel_api_ver 5.0
+%define ver_major 3.36
+%define panel_api_ver 6.0
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -15,7 +15,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: Small applications for the GNOME panel
-License: GPLv2+
+License: GPL-2.0 and GFDL-1.1
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeApplets
 
@@ -31,7 +31,7 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.34.0
+%define gnome_panel_ver 3.36.0
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -78,9 +78,9 @@ BuildRequires: libX11-devel libXt-devel
 BuildRequires: libgucharmap-devel >= 2.33.2
 BuildRequires: libgweather-devel >= %libgweather_ver
 BuildRequires: rpm-build-gnome icon-theme-adwaita
-BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel libxml2-devel
-BuildRequires: libdbus-devel libdbus-glib-devel
-BuildRequires: libpolkit1-devel xorg-cf-files yelp-tools
+BuildRequires: gnome-settings-daemon-devel
+BuildRequires: libxml2-devel libdbus-devel
+BuildRequires: libpolkit-devel xorg-cf-files yelp-tools
 BuildRequires: tracker-devel libupower-devel
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
 
@@ -515,18 +515,21 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/gnome-panel/applets/org.gnome.panel.WindowButtonsApplet.panel-applet
 %_datadir/%name/builder/windowbuttons.ui
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-buttons.gschema.xml
-%_pixmapsdir/windowbuttons-applet.png
+%_iconsdir/hicolor/*/apps/windowbuttons-applet.png
 
 %files window-title
 %gnome_appletsdir/libwindow-title-applet.so
 %_datadir/gnome-panel/applets/org.gnome.panel.WindowTitleApplet.panel-applet
 %_datadir/%name/builder/windowtitle.ui
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
-%_pixmapsdir/windowtitle-applet.png
+%_iconsdir/hicolor/*/apps/windowtitle-applet.png
 
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Sat Mar 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0-4-g42040d292
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

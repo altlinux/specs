@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -9,12 +9,12 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0
 Url: https://wiki.gnome.org/Projects/SessionManagement
 
 %if_disabled snapshot
@@ -170,6 +170,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Thu Nov 28 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

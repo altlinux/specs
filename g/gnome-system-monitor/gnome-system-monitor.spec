@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.32
+%define ver_major 3.36
 %def_enable systemd
 %def_disable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
-License: GPLv2+
+License: GPL-2.0
 Group: Monitoring
 Url: https://wiki.gnome.org/Apps/SystemMonitor
 
@@ -25,6 +25,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
+
+Requires: polkit
 
 BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: gcc-c++ libappstream-glib-devel
@@ -72,6 +74,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Apr 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

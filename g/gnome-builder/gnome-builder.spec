@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
@@ -11,10 +11,12 @@
 %def_with help
 %def_with autotools
 %def_with jedi
+# disabled by default
+%def_without vala
 
 Name: gnome-builder
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -26,7 +28,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: gnome-builder-3.34.1-up-meson.patch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -83,7 +84,7 @@ BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-g
 BuildRequires: libgtkmm3-devel >= %gtkmm_ver
 BuildRequires: libgladeui2.0-devel
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
-%{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel}
+%{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel libportal-devel}
 %{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
 
 %description
@@ -102,7 +103,6 @@ This package provides noarch data needed for Gnome Builder to work.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson \
@@ -120,7 +120,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_bindir/%name
 %_libexecdir/%name-clang
 %_libexecdir/%name-git
-%_libexecdir/%name-vala
+%{?_with_vala:%_libexecdir/%name-vala}
 %dir %_libdir/%name
 
 %dir %_libdir/%name/girepository-1.0
@@ -130,6 +130,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/__pycache__
 %_libdir/%name/plugins/cargo.plugin
 %_libdir/%name/plugins/cargo_plugin.py
+%_libdir/%name/plugins/copyright.plugin
+%_libdir/%name/plugins/copyright_plugin.py
 %_libdir/%name/plugins/eslint.plugin
 %_libdir/%name/plugins/eslint_plugin.py
 %_libdir/%name/plugins/find-other-file.plugin
@@ -140,6 +142,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/go_langserver_plugin.py
 %_libdir/%name/plugins/gradle.plugin
 %_libdir/%name/plugins/gradle_plugin.py
+%_libdir/%name/plugins/gvls.plugin
+%_libdir/%name/plugins/gvls_plugin.py
 %_libdir/%name/plugins/html-preview.plugin
 %_libdir/%name/plugins/html_preview.gresource
 %_libdir/%name/plugins/html_preview.py
@@ -147,7 +151,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild.plugin
 %_libdir/%name/plugins/jhbuild_plugin.py
-%_libdir/%name/plugins/libplugin-vala-pack.so
+%{?_with_vala:%_libdir/%name/plugins/libplugin-vala-pack.so}
 %_libdir/%name/plugins/make.plugin
 %_libdir/%name/plugins/make_plugin.gresource
 %_libdir/%name/plugins/make_plugin.py
@@ -169,7 +173,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/rustup.plugin
 %_libdir/%name/plugins/rustup_plugin.gresource
 %_libdir/%name/plugins/rustup_plugin.py
-%_libdir/%name/plugins/vala-pack.plugin
+%_libdir/%name/plugins/stylelint.plugin
+%_libdir/%name/plugins/stylelint_plugin.py
+%{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin}
 %_libdir/%name/plugins/valgrind.plugin
 %_libdir/%name/plugins/valgrind_plugin.gresource
 %_libdir/%name/plugins/valgrind_plugin.py
@@ -192,14 +198,16 @@ This package provides noarch data needed for Gnome Builder to work.
 %_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.clang.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.code-insight.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.color_picker_plugin.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.eslint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gnome-code-assistance.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugin.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.color_picker_plugin.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.copyright.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.eslint.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.stylelint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project-tree.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
@@ -216,6 +224,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt2
 - updated to 3.34.1-6-gf64dc9d30
 - backported fixes to build with meson-0.52

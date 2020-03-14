@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.62
+%define ver_major 2.64
 %define api_ver 2.0
 %define pcre_ver 8.31
 %define gio_module_dir %_libdir/gio/modules
@@ -21,7 +21,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -94,6 +94,7 @@ BuildRequires: libffi-devel zlib-devel libelf-devel
 
 # for check  & tests
 BuildRequires: /proc dbus-tools-gui desktop-file-utils chrpath
+BuildRequires: xdg-desktop-portal python3-module-dbusmock
 
 %description
 GLib is the low-level core library that forms the basis for projects
@@ -366,13 +367,13 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %files doc
-%doc %_datadir/gtk-doc/html/glib
-%doc %_datadir/gtk-doc/html/gobject
+%_datadir/gtk-doc/html/glib
+%_datadir/gtk-doc/html/gobject
 
 %files -n libgio
 %_bindir/gapplication
 %_bindir/gio
-%_bindir/gio-launch-desktop
+#%_bindir/gio-launch-desktop
 %_bindir/gio-querymodules
 %_bindir/gsettings
 %_bindir/glib-compile-schemas
@@ -419,7 +420,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %{?_enable_man:%_man1dir/gdbus-codegen.*}
 
 %files -n libgio-doc
-%doc %_datadir/gtk-doc/html/gio
+%_datadir/gtk-doc/html/gio
+#%_datadir/gtk-doc/html/gdbus-object-manager-example
 
 %exclude %_datadir/gdb/auto-load/%_libdir/libglib-%api_ver.so.0.*-gdb.py
 %exclude %_datadir/gdb/auto-load/%_libdir/libgobject-%api_ver.so.0.*-gdb.py
@@ -435,6 +437,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.1-alt1
+- 2.64.1
+
+* Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.0-alt1
+- 2.64.0
+
 * Thu Dec 19 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.4-alt1
 - 2.62.4
 

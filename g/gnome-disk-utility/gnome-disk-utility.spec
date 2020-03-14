@@ -1,4 +1,4 @@
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
@@ -80,6 +80,12 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
+* Mon Feb 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.4-alt1
+- 3.34.4
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

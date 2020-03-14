@@ -2,16 +2,16 @@
 
 %define _name tali
 %define xdg_name org.gnome.Tali
-%define ver_major 3.32
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
 Group: Games/Boards
-License: GPLv3+
+License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Tali
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -54,6 +54,9 @@ include any or all of your dice.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Thu Aug 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

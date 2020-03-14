@@ -14,10 +14,10 @@
 
 Name: cheese
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
-License: GPL
+License: GPL-2.0
 Group: Video
 Url: https://wiki.gnome.org/Apps/Cheese
 
@@ -170,6 +170,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Fri Feb 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0 (ported to Meson build system)
 

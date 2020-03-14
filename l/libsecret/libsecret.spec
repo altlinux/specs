@@ -10,12 +10,12 @@
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
-License: LGPLv2
+License: LGPL-2.1
 Url: https://wiki.gnome.org/Projects/Libsecret
 
 %if_disabled snapshot
@@ -142,6 +142,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
+- 0.20.2
+
 * Tue Jan 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
 - 0.20.1
 

@@ -1,4 +1,4 @@
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
@@ -8,21 +8,20 @@ Release: alt1
 
 Summary: Developer's help program
 Group: Development/Other
-License: %gpl3plus
+License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Devhelp
 
-# VCS: git://git.gnome.org/devhelp
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gtk_ver 3.22.0
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
-BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.19.2
-BuildRequires: pkgconfig(gio-2.0) >= 2.40
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
+BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.24
+BuildRequires: pkgconfig(gio-2.0) >= 2.60
 BuildRequires: pkgconfig(amtk-5)
 BuildRequires: zlib-devel
 # since 3.23.x
@@ -138,6 +137,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

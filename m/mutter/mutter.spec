@@ -3,24 +3,25 @@
 
 %def_disable snapshot
 
-%define ver_major 3.34
-%define api_ver 5
+%define ver_major 3.36
+%define api_ver 6
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
 %def_enable installed_tests
 # https://github.com/NVIDIA/egl-wayland required
-%def_disable egl_device
+%def_enable egl_device
+%def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
 
 %if_disabled snapshot
@@ -28,7 +29,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: mutter-3.34.1-alt-build_egl.patch
 
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
@@ -50,13 +50,13 @@ Patch: mutter-3.34.1-alt-build_egl.patch
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
 %define wayland_ver 1.13.0
-%define wayland_protocols_ver 1.7
+%define wayland_protocols_ver 1.19
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
 %define gsds_ver 3.33.0
 %define gudev_ver 232
-%define pipewire_ver 0.2.2
-%define sysprof_ver 3.33.92
+%define pipewire_ver 0.3
+%define sysprof_ver 3.35.3
 
 Requires: lib%name = %EVR
 Requires: zenity
@@ -84,10 +84,13 @@ BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel
 BuildRequires: libwacom-devel
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: sysprof-devel >= %sysprof_ver
+BuildRequires: libgraphene-gir-devel
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
 BuildRequires: libGL-devel libGLES-devel xorg-xwayland
+BuildRequires: libdbus-devel
+%{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -151,13 +154,13 @@ the functionality of the installed Mutter.
 
 %prep
 %setup
-%patch
 
 %build
 %meson \
 	-Dintrospection=true \
 	%{?_enable_remote_desktop:-Dremote_desktop=true} \
 	%{?_enable_egl_device:-Degl_device=true} \
+	%{?_enable_wayland_eglstream:-Dwayland_eglstream=true} \
 	%{?_disable_installed_tests:-Dinstalled_tests=false}
 %meson_build
 
@@ -213,6 +216,11 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.0-alt1
+- 3.36.0
+- enabled NVIDIA EGLDevice and EGLStream renderer support, Wayland
+  EGLStream client support
+
 * Mon Feb 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.34.4-alt1
 - 3.34.4
 

@@ -3,11 +3,11 @@
 
 Name: xdg-desktop-portal-gtk
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
 Group: Graphical desktop/GNOME
-License: LGPLv2+
+License: LGPL-2.0
 Url: https://github.com/flatpak/%name
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
@@ -49,6 +49,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt2
+- rebuilt against libgnome-desktop-so.19
+
 * Sat Dec 21 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

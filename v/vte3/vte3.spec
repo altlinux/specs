@@ -1,11 +1,14 @@
 %def_disable snapshot
 
+%define _libexecdir %_prefix/libexec
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
+
 %define _name vte
-%define ver_major 0.58
+%define ver_major 0.60
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -14,7 +17,7 @@ Release: alt1
 %def_enable check
 
 Summary: Terminal emulator widget for use with GTK+
-License: LGPL
+License: LGPL-2.0
 Group: Terminals
 Url: http://www.gnome.org/
 
@@ -43,6 +46,7 @@ BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
 BuildRequires: libpcre2-devel
 BuildRequires: vala-tools libvala-devel
+BuildRequires:  pkgconfig(systemd)
 
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -155,7 +159,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %pkgdocdir/NEWS
 %pkgdocdir/README.md
 %_libdir/*.so.*
-%_sysconfdir/profile.d/vte.sh
+%_sysconfdir/profile.d/vte.*sh
+%_libexecdir/vte-urlencode-cwd
+%_userunitdir/vte-spawn-.scope.d/defaults.conf
 
 %files -n lib%name-devel
 %pkgdocdir/*.txt
@@ -185,6 +191,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 0.60.0-alt1
+- 0.60.0
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 0.58.3-alt1
 - 0.58.3
 

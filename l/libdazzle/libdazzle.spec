@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
@@ -9,12 +9,12 @@
 %def_disable check
 
 Name: libdazzle
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to delight your users with fancy features
 Group: System/Libraries
-License: LGPLv3
+License: LGPL-3.0
 Url: https://wiki.gnome.org/Apps/Builder
 
 %if_disabled snapshot
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.50
-%define gtk_ver 3.22
+%define gtk_ver 3.24
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -115,6 +115,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Oct 05 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

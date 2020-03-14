@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.36
 %def_enable introspection
 %def_enable gtk_doc
 %def_disable check
@@ -25,8 +25,8 @@ Requires: %name-libs = %version-%release
 Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
-%define glib_ver 2.38.0
-%define gtk_ver 3.12
+%define glib_ver 2.44.0
+%define gtk_ver 3.20
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
@@ -188,6 +188,9 @@ xvfb-run %make check
 
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Oct 14 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

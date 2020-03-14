@@ -1,17 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Contacts
 
@@ -72,6 +72,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36-alt1
+- 3.36
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

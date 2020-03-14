@@ -1,14 +1,14 @@
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
-License: GPLv2+
+License: GPL-2.0 and LGPL-2.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Maps
 
@@ -79,7 +79,7 @@ Maps is a map application for GNOME.
 %_libdir/%name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
-%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -90,6 +90,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
 - 3.34.3
 

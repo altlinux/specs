@@ -1,4 +1,4 @@
-%define ver_major 3.34
+%define ver_major 3.36
 
 Name: gnome-backgrounds
 Version: %ver_major.0
@@ -37,6 +37,9 @@ with the GNOME desktop.
 %doc NEWS README
 
 %changelog
+* Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

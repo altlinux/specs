@@ -2,11 +2,11 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.00
 Release: alt1
 
 Summary: A tetris clone
@@ -56,6 +56,9 @@ GNOME version of the popular russian game Tetris.
 
 
 %changelog
+* Thu Mar 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.00-alt1
+- 3.36.00
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

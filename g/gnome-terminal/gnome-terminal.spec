@@ -1,15 +1,15 @@
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: GNOME Terminal
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Terminals
 Url: http://www.gnome.org
 
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.58.2
+%define vte_ver 0.60.0
 
 Provides: xvt
 
@@ -104,6 +104,9 @@ EOF
 %endif
 
 %changelog
+* Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0.1-alt1
+- 3.36.0.1
+
 * Fri Oct 11 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

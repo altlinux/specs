@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -35,6 +35,7 @@ BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libwebkit2gtk-devel
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
+BuildRequires: libhandy-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
@@ -73,6 +74,9 @@ desktop integration.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

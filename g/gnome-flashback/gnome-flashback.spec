@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.34
+%define ver_major 3.35
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -10,7 +10,7 @@ Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Flashback session
-License: GPLv3
+License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
@@ -23,8 +23,8 @@ Source: %name-%version.tar
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
 %define desktop_ver 3.12.0
-%define dbus_glib_ver 0.76
 %define gsds_ver 3.32.0
+%define compiz_ver 0.9.14.0
 
 Requires(pre): xinitrc
 Requires: gnome-session >= 3.33.90 gnome-settings-daemon
@@ -35,7 +35,6 @@ Requires: gnome-filesystem
 Requires: xdg-user-dirs
 Requires: gnome-icon-theme gnome-icon-theme-symbolic
 Requires: fonts-otf-abattis-cantarell gnome-backgrounds
-Requires: gnome-screensaver
 Requires: gnome-keyring
 Requires: gnome-control-center
 Requires: nautilus
@@ -51,9 +50,9 @@ Conflicts: notification-daemon < 3.20
 
 BuildRequires(pre): rpm-build-gnome rpm-build-xdg pkgconfig(systemd)
 BuildRequires: gnome-common
+BuildRequires: libgnome-panel-devel >= %version
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libdbus-glib-devel >= %dbus_glib_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libcanberra-gtk3-devel libpulseaudio-devel
@@ -63,6 +62,10 @@ BuildRequires: libupower-devel
 BuildRequires: libpolkit-devel libgnome-bluetooth-devel libxcb-devel
 BuildRequires: libibus-devel libxkbcommon-x11-devel libXi-devel
 BuildRequires: libxkbfile-devel xkeyboard-config-devel
+# since 3.36 (for screensaver)
+BuildRequires: libpam-devel
+BuildRequires: gdm-libs-devel libXxf86vm-devel
+%{?_with_compiz:BuildRequires: libcompiz-devel >= %compiz_ver}
 
 %description
 GNOME Flashback provides unofficial session and helper application.
@@ -93,7 +96,9 @@ This package permits to log into GNOME Flashback with Compiz.
 %build
 %autoreconf
 %configure \
-    --disable-schemas-compile
+    --disable-static \
+    --disable-schemas-compile \
+    %{?_with_compiz:--with-compiz-session}
 %make_build
 
 %install
@@ -109,21 +114,25 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/%name-compiz
+%_libdir/gnome-panel/modules/system_indicators.so
+%exclude %_libdir/gnome-panel/modules/system_indicators.la
 %_libexecdir/%name-metacity
 %_desktopdir/%name.desktop
+%_datadir/gnome-panel/layouts/%name.layout
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings.directory
-%_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/gnome-session/sessions/%name-metacity.session
-%config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%name.desktop-background.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%name.input-sources.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.desktop.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.desktop.background.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.desktop.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.desktop.icons.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.system-indicators.input-sources.gschema.xml
 %_datadir/glib-2.0/schemas/00_gnome-flashback.gschema.override
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
-%_xdgconfigdir/autostart/%name-screensaver.desktop
+#%_xdgconfigdir/autostart/%name-screensaver.desktop
 %_userunitdir/%name.service
 %_userunitdir/%name.target
 %_userunitdir/gnome-session-x11@%name-compiz.target
@@ -133,11 +142,18 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 %if_with compiz
 %files session-compiz
+%_libexecdir/%name-compiz
+%_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/xsessions/%name-compiz.desktop
+%_sysconfdir/compizconfig/%name.conf
+%_sysconfdir/compizconfig/%name.ini
 %endif
 
 
 %changelog
+* Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.35.2-alt1
+- 3.35.2
+
 * Fri Nov 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 

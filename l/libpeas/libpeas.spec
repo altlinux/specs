@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.24
+%define ver_major 1.26
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -17,12 +17,12 @@
 %def_disable check
 
 Name: libpeas
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Libpeas
 
 %if_disabled snapshot
@@ -207,6 +207,7 @@ xvfb-run %meson_test
 
 %files demo
 %_bindir/peas-demo
+%add_python3_path %_libdir/peas-demo
 %_libdir/peas-demo/
 
 %if_enabled introspection
@@ -219,6 +220,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt2
 - disabled python2 support
 
