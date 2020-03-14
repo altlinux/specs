@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -20,7 +21,7 @@ BuildRequires: perl-podlators
 %endif
 
 Name:		perl-Test-Warnings
-Version:	0.028
+Version:	0.029
 Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
@@ -104,6 +105,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.029-alt1
+- automated CPAN update
+
 * Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
 - automated CPAN update
 
