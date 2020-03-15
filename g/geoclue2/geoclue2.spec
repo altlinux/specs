@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name geoclue
 %define __name org.freedesktop.GeoClue2
@@ -10,9 +10,10 @@
 %def_enable nmea
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable check
 
 Name: %{_name}2
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -21,7 +22,7 @@ License: LGPLv2
 Url: http://geoclue.freedesktop.org/
 
 %if_disabled snapshot
-Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
+Source: https://gitlab.freedesktop.org/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
 #VCS: https://gitlab.freedesktop.org/geoclue/geoclue.git
 Source: %_name-%version.tar
@@ -39,8 +40,7 @@ BuildRequires: vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_nmea:BuildRequires: libavahi-glib-devel}
 %{?_enable_3g:BuildRequires: libmm-glib-devel >= %mm_ver}
-# for check
-BuildRequires: /proc dbus-tools-gui
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 GeoClue is a D-Bus geoinformation service. The goal of the Geoclue
@@ -198,6 +198,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.6-alt1
+- 2.5.6
+
 * Wed Oct 02 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.5-alt1
 - updated to 2.5.5-4-g1a00809
 
