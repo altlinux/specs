@@ -1,11 +1,11 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.9.0.0.169.ga4bf870
+Version:	0.9.4
 Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
-License:	ASL 2.0
+License:	Apache-2.0
 URL:		https://github.com/iovisor/bpftrace
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
@@ -25,6 +25,8 @@ BuildRequires:	/proc
 BuildRequires:	libbcc-devel
 BuildRequires:	libelf-devel
 BuildRequires:	git-core
+# Assuming 'kernel' dependency will bring un-def kernel
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-modules-un-def}}
 
 %description
 BPFtrace is a high-level tracing language for Linux enhanced Berkeley Packet
@@ -46,6 +48,7 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export Clang_DIR=/usr/share/cmake/Modules/clang
+# -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_TESTING:BOOL=OFF \
@@ -61,6 +64,35 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 mkdir -p %buildroot%_man8dir
 mv %buildroot/usr/man/man8/* %buildroot%_man8dir
 
+%check
+BUILD/src/bpftrace --version	 # not requires root
+vm-run BUILD/src/bpftrace --info # should be fast enough even w/o kvm
+[ -w /dev/kvm ] && vm-run BUILD/src/bpftrace -l '*_sleep_*'
+if [ -w /dev/kvm ]; then
+	# Great run-time tests
+
+	# Some fail due to no BUILD_TESTING
+	.gear/delete-blocks syscalls: ./tests/runtime/*
+	.gear/delete-blocks uprobe	tests/runtime/*
+	.gear/delete-blocks usdt	tests/runtime/usdt
+	.gear/delete-blocks vfs_read	tests/runtime/*     # TIMEOUT
+	.gear/delete-blocks hardware	tests/runtime/probe # TIMEOUT
+	.gear/delete-blocks watchpoint:	tests/runtime/watchpoint
+	.gear/delete-blocks string_args	tests/runtime/other
+	.gear/delete-blocks interval_order tests/runtime/probe
+	.gear/delete-blocks tracepoint_order tests/runtime/probe
+	.gear/delete-blocks uint64_t	tests/runtime/signed_ints
+	.gear/delete-blocks tracepoint:random:random_read tests/runtime/variable
+%ifarch x86_64
+	sed -i s/python/python3/	tests/runtime/json-output
+%else
+	# TIMEOUT on aarch64
+	.gear/delete-blocks python	tests/runtime/json-output
+%endif
+	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/BUILD/src/
+	vm-run --sbin tests/runtime-tests.sh
+fi
+
 %files
 %doc LICENSE README.md CONTRIBUTING-TOOLS.md
 %doc docs/reference_guide.md docs/tutorial_one_liners.md
@@ -69,5 +101,10 @@ mv %buildroot/usr/man/man8/* %buildroot%_man8dir
 %_man8dir/*
 
 %changelog
+* Sat Mar 14 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt1
+- Update to v0.9.4.
+- Update license tag from ASL 2.0 to Apache-2.0.
+- Add %%check with some tests.
+
 * Fri May 17 2019 Vitaly Chikunov <vt@altlinux.org> 0.9.0.0.169.ga4bf870-alt1
 - First import v0.9-169-ga4bf870.
