@@ -3,16 +3,16 @@
 %define gst_api_ver 1.0
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 URL: http://www.freedesktop.org/wiki/Software/Farstream
 
 Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.tar.gz
@@ -28,10 +28,10 @@ Requires: lib%name = %version-%release
 Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
 BuildRequires: libgio-devel >= %glib_ver libnice-devel >= %nice_ver
-BuildRequires: gst-plugins%gst_api_ver-devel  >= %gst_ver
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgupnp-igd-devel gtk-doc
-BuildRequires: rpm-build-python python-module-gst%gst_api_ver python-module-pygobject-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgstreamer%gst_api_ver-gir-devel}
+BuildRequires: rpm-build-python3 python3-module-gst%gst_api_ver python3-module-pygobject3-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgstreamer%gst_api_ver-gir-devel}
 
 %description
 The Farstream (formerly Farsight) is a collection of GStreamer modules
@@ -95,10 +95,12 @@ This package provides development documentation for the Farstream library.
 %setup -n %_name-%version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	PYTHON=%__python3
 
 %make_build
 
@@ -106,7 +108,6 @@ This package provides development documentation for the Farstream library.
 %makeinstall_std
 
 %files
-%_libdir/gstreamer-%gst_api_ver/libfsmsnconference.so
 %_libdir/gstreamer-%gst_api_ver/libfsrawconference.so
 %_libdir/gstreamer-%gst_api_ver/libfsrtpxdata.so
 %_libdir/gstreamer-%gst_api_ver/libfsrtpconference.so
@@ -125,7 +126,7 @@ This package provides development documentation for the Farstream library.
 %files -n lib%name-devel
 %_includedir/%_name-%api_ver/
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files -n lib%name-gir
 %_typelibdir/Farstream-%api_ver.typelib
@@ -133,14 +134,19 @@ This package provides development documentation for the Farstream library.
 %files -n lib%name-gir-devel
 %_girdir/Farstream-%api_ver.gir
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %exclude %_libdir/%_name-%api_ver/*.la
 %exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 
 %changelog
+* Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
+- 0.2.9
+
 * Sat Jun 04 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
 - 0.2.8
 
