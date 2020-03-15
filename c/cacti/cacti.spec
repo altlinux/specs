@@ -1,6 +1,6 @@
 
 Name: cacti
-Version: 1.2.3
+Version: 1.2.10
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -164,6 +164,16 @@ fi
 %cactidir/install
 
 %changelog
+* Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt1
+- 1.2.10
+- Fixes:
+  + CVE-2019-17357 When viewing graphs, some input variables are not properly checked (SQL injection possible)
+  + CVE-2019-17358 When deserializating data, ensure basic sanitization has been performed
+  + CVE-2019-16723 Security issue allows to view all graphs
+  + CVE-2020-7106 Lack of escaping on some pages can lead to XSS exposure
+  + CVE-2020-7237 Remote Code Execution due to input validation failure in Performance Boost Debug Log
+  + CVE-2020-8813 When guest users have access to realtime graphs, remote code could be executed
+
 * Fri Apr 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
