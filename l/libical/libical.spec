@@ -12,7 +12,7 @@
 %def_with system_tzdata
 
 Name: libical
-Version: 3.0.7
+Version: 3.0.8
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -28,12 +28,13 @@ Source: %name-%version.tar
 Patch: %name-1.0.1-alt-libdir.patch
 
 %define tzdata_ver 2019c
+%define glib_ver 2.38
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
 
 BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils
 %{?_with_system_tzdata:BuildRequires: tzdata >= %tzdata_ver}
 %{?_with_bdb:BuildRequires: libdb4-devel}
-%{?_enable_ical_glib:BuildRequires: libgio-devel libxml2-devel}
+%{?_enable_ical_glib:BuildRequires: libgio-devel >= %glib_ver libxml2-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_check:BuildRequires: python3-module-pygobject3}
@@ -195,6 +196,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
+- 3.0.8
+
 * Mon Dec 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
 - 3.0.7
 
