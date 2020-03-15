@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.29.1
-Release: alt6
+Release: alt7
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -115,6 +115,9 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Sun Mar  1 2020 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt7
+- Fix FTBFS (replace bin/python -> bin/python2 in waf.py)
+
 * Fri Oct 11 2019 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt6
 - Build with JACK support (ALT#37324)
 
