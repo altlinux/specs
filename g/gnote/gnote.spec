@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -15,7 +15,7 @@ License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Gnote
 
 %if_disabled snapshot
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -82,6 +82,9 @@ and consumes fewer resources.
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
