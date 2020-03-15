@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
@@ -32,7 +32,7 @@ BuildRequires: yelp-tools gtk-doc libgtk+3-devel >= %gtk_ver
 BuildRequires: libgda5-devel libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgspell-devel >= %gspell_ver libxml2-devel >= %xml_ver
-BuildRequires: libjson-glib-devel
+BuildRequires: libjson-glib-devel libdazzle-devel
 
 %description
 gtranslator is a quite comfortable gettext po/po.gz/(g)mo files editor
@@ -87,6 +87,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Mar 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
