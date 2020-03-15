@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 3.0.109
+Version: 3.0.111
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -16,7 +16,7 @@ Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: zlib-devel
 BuildRequires: libpcap-devel
 BuildRequires: pkgconfig(systemd)
@@ -306,6 +306,10 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.111-alt1
+- 3.0.111
+- build with libfuse3
+
 * Mon Feb 03 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.109-alt1
 - 3.0.109
 
