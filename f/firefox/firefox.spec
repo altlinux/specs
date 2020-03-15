@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.25
-%define nss_version   3.49.2
+%define nss_version   3.51.0
 %define rust_version  1.40.0
 %define cargo_version 1.40.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        73.0.1
+Version:        74.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -37,17 +37,18 @@ Source11:       l10n.tar
 Source12:       firefox-privacy-prefs.js
 
 ### Start Patches
-Patch001: 0001-ALT-fix-werror-return-type.patch
-Patch002: 0002-SUSE-NonGnome-KDE-integration.patch
-Patch003: 0003-ALT-Use-system-nspr-headers.patch
-Patch004: 0004-FEDORA-build-arm-libopus.patch
-Patch005: 0005-FEDORA-build-arm.patch
-Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch009: 0009-ALT-Fix-aarch64-build.patch
+Patch001: 0001-SUSE-NonGnome-KDE-integration.patch
+Patch002: 0002-ALT-Use-system-nspr-headers.patch
+Patch003: 0003-FEDORA-build-arm-libopus.patch
+Patch004: 0004-FEDORA-build-arm.patch
+Patch005: 0005-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch006: 0006-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch007: 0007-ALT-Fix-aarch64-build.patch
+Patch008: 0008-ALT-Remove-deprecated-register-keyword.patch
+Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch011: 0011-ALT-Remove-deprecated-register-keyword.patch
+Patch011: 0011-MOZILLA-1620973-Wayland-Make-opaque-regions-configur.patch
+Patch012: 0012-MOZILLA-1609538-Wayland-Fullscreen-does-not-work-wit.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -201,6 +202,7 @@ Most likely you don't need to use this package.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
+%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -284,7 +286,7 @@ export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 export RUSTFLAGS="-Cdebuginfo=0"
-export MOZ_MAKE_FLAGS="-j10"
+export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
 ./mach configure
@@ -448,6 +450,22 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Mar 12 2020 Alexey Gladkov <legion@altlinux.ru> 74.0-alt1
+- New release (74.0).
+- Security fixes:
+  + CVE-2020-6805: Use-after-free when removing data about origins
+  + CVE-2020-6806: BodyStream::OnInputStreamReady was missing protections against state confusion
+  + CVE-2020-6807: Use-after-free in cubeb during stream destruction
+  + CVE-2020-6808: URL Spoofing via javascript: URL
+  + CVE-2020-6809: Web Extensions with the all-urls permission could access local files
+  + CVE-2020-6810: Focusing a popup while in fullscreen could have obscured the fullscreen notification
+  + CVE-2020-6811: Devtools' 'Copy as cURL' feature did not fully escape website-controlled data, potentially leading to command injection
+  + CVE-2019-20503: Out of bounds reads in sctp_load_addresses_from_init
+  + CVE-2020-6812: The names of AirPods with personally identifiable information were exposed to websites with camera or microphone permission
+  + CVE-2020-6813: @import statements in CSS could bypass the Content Security Policy nonce feature
+  + CVE-2020-6814: Memory safety bugs fixed in Firefox 74 and Firefox ESR 68.6
+  + CVE-2020-6815: Memory and script safety bugs fixed in Firefox 74
+
 * Wed Feb 19 2020 Alexey Gladkov <legion@altlinux.ru> 73.0.1-alt1
 - New release (73.0.1).
 
