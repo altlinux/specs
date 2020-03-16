@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 4.3
+%define ver_major 4.4
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -84,7 +84,6 @@ This package provides Vala language bindings for the pantheon-files.
 %_datadir/dbus-1/services/%rdn_name.Filemanager1.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/polkit-1/actions/%rdn_name.policy
-%_datadir/%rdn_name/
 %dir %_pixmapsdir/%rdn_name
 %_pixmapsdir/%rdn_name/*.png
 %_datadir/metainfo/%rdn_name.appdata.xml
@@ -103,6 +102,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
+- updated to 4.4.1-29-g25cfc857
+
 * Sat Jan 11 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
 - updated to 4.3.0-3-gac90956e
 
