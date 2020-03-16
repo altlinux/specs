@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.20.3
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -624,6 +624,7 @@ tar -xf %SOURCE6
 %patch14 -p2
 %endif
 %patch15 -p2
+%patch16 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1162,6 +1163,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Mar 16 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt2
+- Apply patch (ALT #38043).
+
 * Thu Mar 12 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt1
 - New version (ALT #38043).
 - Fix systray icon menu (ALT #38147).
