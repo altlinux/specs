@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.22
 %define api_ver 2.0
 %def_enable python
 %def_enable gladeui
 %def_enable webkit2gtk
+%def_enable check
 
 Name: glade
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
-License: %gpl2plus, %lgpl2plus
+License: GPL-2.0 and LGPL-2.0
 Url: http://glade.gnome.org/
 
 %if_disabled snapshot
@@ -26,8 +27,8 @@ Requires: libgladeui%api_ver = %version-%release
 
 %define gtk_ver 3.20
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: gnome-common gtk-doc yelp-tools intltool libappstream-glib-devel
+BuildRequires: rpm-build-gnome gnome-common
+BuildRequires: gtk-doc yelp-tools intltool libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %if_enabled python
@@ -35,6 +36,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel
 %endif
 %{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel}
+%{?_enable_check:BuildRequires: xvfb-run icon-theme-hicolor gnome-icon-theme xmllint}
 
 %description
 Glade is a Widget builder for Gtk/gnome. It allows to create a GTK+/GNOME
@@ -93,7 +95,7 @@ GObject introspection devel data for the GladeUI library.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 export PYTHON=%__python3
 %autoreconf
 %configure \
@@ -110,8 +112,10 @@ export PYTHON=%__python3
 
 %install
 %makeinstall_std
-
 %find_lang --with-gnome %name
+
+%check
+xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/%name
@@ -156,6 +160,10 @@ export PYTHON=%__python3
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+- enabled %%check
+
 * Fri Apr 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt3
 - updated to GLADE_3_22_1-25-gc2cd95a1
 - switched python module build to python3
