@@ -1,14 +1,15 @@
 %define modname dateparser
 
 %def_enable python2
+# /etc/localtime required
 %def_disable check
 
 Name: python-module-%modname
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: Python parser for human readable dates 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.python.org/pypi/dateparser
 
@@ -25,12 +26,14 @@ BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-nose-parameterized python3-module-wheel
 BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
 BuildRequires: python3-module-sphinx-devel
+%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-coverage python3-module-parameterized}
 
 %if_enabled python2
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-mock
 BuildRequires: python-module-nose-parameterized python-module-wheel
 BuildRequires: python-module-dateutil python-module-tzlocal python-module-regex
+%{?_enable_check:BuildRequires: python-module-flake8 python-module-coverage}
 %py_provides %modname
 %endif
 
@@ -122,6 +125,10 @@ popd
 
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1
+- 0.7.4
+- enabled %%check
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 - made python2 build optional
