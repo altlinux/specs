@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 0.4.17
-Release: alt2
+Release: alt3
 
 Summary: This is a Python wrapper for TA-LIB
 License: BSD2
@@ -10,7 +10,6 @@ Group: Development/Python3
 Url: https://github.com/mrjbq7/ta-lib
 
 Source: %modulename-%version.tar
-Patch0: port-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libta-lib-devel
@@ -23,7 +22,6 @@ This is a Python wrapper for TA-LIB based on Cython instead of SWIG
 
 %prep
 %setup -n %modulename-%version
-%patch -p2
 
 %build
 %python3_build
@@ -37,6 +35,9 @@ This is a Python wrapper for TA-LIB based on Cython instead of SWIG
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.17-alt3
+- Fixed build with numpy.
+
 * Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.17-alt2
 - build for python2 disabled
 

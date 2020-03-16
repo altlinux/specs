@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPLv2
@@ -73,9 +73,6 @@ This package contains examples for Python interface for GSL.
 
 rm -f swig_src/*
 
-sed -i 's|include <numpy|&-py3|' \
-    $(find ./ -type f -name '*.[a-z]' | xargs grep -l 'include <numpy')
-
 %build
 %__python3 setup.py config
 %python3_build_debug
@@ -105,6 +102,9 @@ sed -i 's|include <numpy|&-py3|' \
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2
+- Fixed build with numpy.
+
 * Tue Mar 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
 - Version updated to 2.3.0
 - porting to python3.

@@ -12,7 +12,7 @@
 
 Name: python-module-%oname
 Version: %major.3
-Release: alt5
+Release: alt6
 
 Summary: Matlab(TM) style python plotting package
 
@@ -43,6 +43,7 @@ Requires: %name-gtk3
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-devel 
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
 %{?_with_qt4:BuildRequires: python3-module-PyQt4}
@@ -494,6 +495,9 @@ done
 %endif
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.3-alt6
+- Fixed build with numpy.
+
 * Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.3-alt5
 - Updated interpackage dependencies (Closes: #38030).
 

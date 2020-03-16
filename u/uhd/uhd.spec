@@ -17,7 +17,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -34,7 +34,7 @@ Patch: uhd-0.14.1.1-python3-fix.patch
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
-BuildRequires: libnumpy-devel
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cheetah
 BuildRequires: python3-module-docutils doxygen libpcap-devel
@@ -195,6 +195,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt2
+- Fixed build with numpy.
+
 * Sat Jan 11 2020 Anton Midyukov <antohami@altlinux.org> 3.15.0.0-alt1
 - New version 3.15.0.0
 
