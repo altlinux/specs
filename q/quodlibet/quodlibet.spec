@@ -1,9 +1,10 @@
 %def_disable snapshot
 %define gst_api_ver 1.0
 %define rdn_name io.github.quodlibet.QuodLibet
+%define rdn_name_ef io.github.quodlibet.ExFalso
 
 Name: quodlibet
-Version: 4.2.1
+Version: 4.3.0
 Release: alt1
 
 Summary: audio library tagger, manager, and player for GTK+
@@ -19,7 +20,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-PreReq: exfalso = %version-%release
+Requires(pre): exfalso = %version-%release
 # explicitly required gtk+3
 Requires: typelib(Gtk) = 3.0
 Requires: dbus dconf
@@ -79,20 +80,25 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %_iconsdir/hicolor/*/*/%{rdn_name}*.*
 %_desktopdir/%rdn_name.desktop
 %_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/bash-completion/completions/%name
+%_datadir/bash-completion/completions/operon
 %_man1dir/%name.*
 %_man1dir/operon.*
 %doc NEWS README
 
 %files -n exfalso -f %name.lang
 %_bindir/exfalso
-%_iconsdir/hicolor/*/*/exfalso*.*
-%_desktopdir/exfalso.desktop
-%_datadir/metainfo/exfalso.appdata.xml
+%_iconsdir/hicolor/*/*/%{rdn_name_ef}*.*
+%_desktopdir/%rdn_name_ef.desktop
+%_datadir/metainfo/%rdn_name_ef.appdata.xml
 %_man1dir/exfalso.*
 %python3_sitelibdir_noarch/%name
 %python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
+- 4.3.0
+
 * Tue Jan 01 2019 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
