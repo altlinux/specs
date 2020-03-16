@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.8
-Release: alt2
+Release: alt3
 
 Summary: Stats for Python processes
 License: ASLv2.0
@@ -52,6 +52,8 @@ Core files of %mname.
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
+sed -i 's|cgi|html|' $(find ./ -name 'formats.py')
+
 %build
 %python3_build_debug
 
@@ -88,6 +90,9 @@ python3 setup.py test
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.8-alt3
+- compatibility with python 3.8
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.8-alt2
 - python2 disabled
 
