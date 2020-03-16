@@ -1,14 +1,14 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 4.9.4
-%define major 5.3
+%define major 5.4
 %define rel %nil
 
 %def_with gtk3
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -502,6 +502,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Mar 16 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.4.1-alt1
+- new version 5.4.1 (with rpmrb script)
+
 * Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.1-alt2
 - add BR: libnetapi-devel
 - add requires for detected libraries
