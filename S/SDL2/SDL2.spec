@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.12
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -16,6 +16,9 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://www.libsdl.org/release/%name-%version.tar.gz
 Source: %name-%version.tar
+
+# RH: ptrdiff_t is not the same as khronos defines on 32bit arches
+Patch0: %name-2.0.9-rh-khrplatform.patch
 
 BuildPreReq: libXext-devel
 BuildPreReq: libdbus-devel
@@ -63,6 +66,7 @@ to develop SDL applications.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -92,6 +96,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Mon Mar 16 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.12-alt2
+- Restore khrplatform patch
+
 * Thu Mar 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.12-alt1
 - Version 2.0.12
 
