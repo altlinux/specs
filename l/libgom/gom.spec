@@ -1,16 +1,17 @@
 %define _name gom
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver 1.0
 %def_enable introspection
 %def_enable gtk_doc
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major
 Release: alt1
 
 Summary: A GObject to SQLite object mapper
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Gom
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -19,7 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define glib_ver 2.36
 %define sqlite_ver 3.7
 
-BuildRequires(pre): meson /proc
+BuildRequires(pre): meson
 BuildPreReq: libgio-devel >= %glib_ver libsqlite3-devel >= %sqlite_ver
 BuildRequires: gnome-common intltool gtk-doc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel python3-module-pygobject3-devel}
@@ -72,14 +73,15 @@ This package contains development documentation for the Gom library.
 
 %build
 %meson %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_introspection:-Denable_introspection=true}
+	%{?_enable_introspection:-Denable-introspection=true}
 %meson_build
 
 %install
 %meson_install
 
 %check
-#%%meson_test
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -104,6 +106,10 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
+- 0.4
+- enabled %%check
+
 * Wed Jun 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
