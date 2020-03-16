@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.515
-Release: alt1
+Release: alt2
 
 Summary: Smart data producer for graphite graphing package
 License: MIT
@@ -52,6 +52,8 @@ This package contains documentation for %oname.
 %setup
 %patch0 -p1
 
+sed -i 's|platform.dist|platform.libc_ver|' setup.py
+
 tar -xf %SOURCE1
 
 %build
@@ -81,6 +83,9 @@ touch %buildroot/var/log/%oname/.dont_delete
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0.515-alt2
+- Detect dist fixed according with python3.8
+
 * Wed Feb 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0.515-alt1
 - Version updated to 4.0.515
 - Porting on python3.
