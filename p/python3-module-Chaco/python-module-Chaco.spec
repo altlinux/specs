@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.8.0
-Release: alt1
+Release: alt2
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
@@ -11,7 +11,6 @@ URL: http://code.enthought.com/projects/chaco/
 
 # https://github.com/enthought/chaco.git
 Source: %oname-%version.tar.gz
-Patch0: fix-include-libnumpy-for-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python-tools-2to3
@@ -59,7 +58,6 @@ This package contains documentation for Chaco.
 
 %prep
 %setup
-%patch0 -p1
 
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
@@ -93,6 +91,9 @@ sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt2
+- Fixed build with numpy.
+
 * Wed Dec 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.8.0-alt1
 - porting on python3
 

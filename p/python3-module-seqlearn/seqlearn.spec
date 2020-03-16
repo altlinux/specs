@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.2
-Release: alt3
+Release: alt4
 
 Summary: Sequence learning toolkit for Python
 License: MIT
@@ -15,7 +15,7 @@ Url: http://larsmans.github.io/seqlearn/
 Source0: https://pypi.python.org/packages/25/2c/95da36839f647a6b15da1fd10f68d755c7fca549c92aabb3ff734f5c682c/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-devel
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-pytest
@@ -110,6 +110,9 @@ py.test-%_python3_version
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt4
+- Fixed build with numpy.
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2-alt3
 - build for python2 disabled
 

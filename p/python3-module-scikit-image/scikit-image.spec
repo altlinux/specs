@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 0.15.0
-Release: alt2
+Release: alt3
 
 Summary: Image processing routines for SciPy
 License: BSD
@@ -33,9 +33,6 @@ BuildRequires: xvfb-run
 BuildRequires: python3-module-wavelets python3-module-imageio
 # for docs
 BuildRequires: python3-module-sphinx
-
-# circumvent build failures due to relying on headers from libnumpy-devel
-BuildRequires: libnumpy-devel
 
 %py3_provides skimage
 %py3_requires numpy scipy networkx matplotlib
@@ -135,6 +132,9 @@ rm -f requirements.txt
 %endif
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0-alt3
+- Fixed build with numpy.
+
 * Sat Mar 14 2020 Michael Shigorin <mike@altlinux.org> 0.15.0-alt2
 - Explicit BR: python3-module-sphinx
 

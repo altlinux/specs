@@ -15,7 +15,7 @@
 
 Name: python-module-%oname
 Version: %majver.4
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -315,7 +315,7 @@ sed -i 's|@PYSUFF@||' site.cfg
 
 sed -i 's|^prefix.*|prefix=%python_sitelibdir/%oname/core|' \
 	%oname/core/npymath.ini.in
-sed -i 's|^includedir.*|includedir=%_includedir/%oname|' \
+sed -i 's|^includedir.*|includedir=%_includedir/python%_python_version/%oname|' \
 	%oname/core/npymath.ini.in
 
 %if_with python3
@@ -335,7 +335,7 @@ sed -i 's|pyrexc|pyrexc3|' numpy/distutils/command/build_src.py
 
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
 	%oname/core/npymath.ini.in
-sed -i 's|^includedir.*|includedir=%_includedir/%oname-py3|' \
+sed -i 's|^includedir.*|includedir=%_includedir/python%_python3_version/%oname|' \
 	%oname/core/npymath.ini.in
 
 popd
@@ -355,7 +355,7 @@ ln -s ../objects.inv doc/source/objects.inv
 %if_with python3
 pushd ../python3
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
-INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/numpy-py3"
+INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/python%_python3_version/%oname"
 INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
@@ -369,17 +369,17 @@ DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 
 # private headers
 
-install -d %buildroot%_includedir
+install -d %buildroot%_includedir/python%_python3_version
 mv %buildroot%python3_sitelibdir/%oname/core/include/%oname \
-	%buildroot%_includedir/%oname-py3
+	%buildroot%_includedir/python%_python3_version/%oname
 
 install -d %buildroot%python3_sitelibdir/%oname/core/include
-ln -s %_includedir/%oname-py3 \
+ln -s %_includedir/python%_python3_version/%oname \
 	%buildroot%python3_sitelibdir/%oname/core/include/
 #cp -a %oname/numarray/include/%oname/*.h \
-#	%buildroot%_includedir/%oname-py3/
+#	%buildroot%_includedir/python%_python3_version/%oname/
 cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
-	%buildroot%_includedir/%oname-py3/
+	%buildroot%_includedir/python%_python3_version/%oname/
 install -d %buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config
 cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 	%buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config/
@@ -387,7 +387,6 @@ cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 # pkg-config
 
 sed -i 's|@VERSION@|%version|' %oname.pc
-sed -i 's|include/numpy|include/numpy-py3|' %oname.pc
 install -d %buildroot%_pkgconfigdir
 install -m644 %oname.pc %buildroot%_pkgconfigdir/%oname-py3.pc
 
@@ -412,7 +411,7 @@ unset CXXFLAGS
 unset FFLAGS
 echo optflags = "%optflags"
 INCS="-I%_includedir/suitesparse -I$PWD/numpy/core/include/numpy"
-INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/numpy"
+INCS="$INCS -I$PWD/numpy/core/include -I%buildroot%_includedir/python%_python_version/%oname"
 INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
@@ -426,16 +425,17 @@ DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 
 # private headers
 
+install -d %buildroot%_includedir/python%_python_version
 mv %buildroot%python_sitelibdir/%oname/core/include/%oname \
-	%buildroot%_includedir/
+	%buildroot%_includedir/python%_python_version/%oname
 
 install -d %buildroot%python_sitelibdir/%oname/core/include
-ln -s %_includedir/%oname \
+ln -s %_includedir/python%_python_version/%oname \
 	%buildroot%python_sitelibdir/%oname/core/include/
 #cp -a %oname/numarray/include/%oname/*.h \
-#	%buildroot%_includedir/%oname/
+#	%_includedir/python%_python_version/%oname/
 cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
-	%buildroot%_includedir/%oname/
+	%buildroot%_includedir/python%_python_version/%oname/
 install -d %buildroot%python_sitelibdir/%oname/core/lib/npy-pkg-config
 cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 	%buildroot%python_sitelibdir/%oname/core/lib/npy-pkg-config/
@@ -615,7 +615,7 @@ install -p -m644 %oname/core/code_generators/numpy_api.py \
 install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
-	%buildroot%_includedir/%oname
+	%buildroot%_includedir/python%_python_version/%oname/
 
 # delete unnecessary files
 
@@ -637,20 +637,13 @@ install -p -m644 %oname/core/code_generators/numpy_api.py \
 install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
-	%buildroot%_includedir/%oname-py3
+	%buildroot%_includedir/python%_python3_version/%oname
 
 # delete unnecessary files
 
 rm -f \
 	$(find %buildroot%python3_sitelibdir/%oname/ -name setup.py) \
 	%buildroot%python3_sitelibdir/%oname/f2py/docs/usersguide/setup_example.py
-
-#fixes
-
-for i in %buildroot%_includedir/%oname-py3/*
-do
-	sed -i 's|numpy/|numpy-py3/|' $i
-done
 %endif
 
 %find_lang %name
@@ -860,7 +853,7 @@ fi
 %exclude %_pkgconfigdir/%oname-py3.pc
 %endif
 %python_sitelibdir/%oname/core/lib/libnpymath.so
-%_includedir/%oname
+%_includedir/python%_python_version/%oname
 %if_with tests
 %python_sitelibdir/%oname/random/mtrand/*.h
 %python_sitelibdir/%oname/random/mtrand/*.c
@@ -893,7 +886,7 @@ fi
 %_libdir/libnpymath3.so
 %python3_sitelibdir/%oname/core/lib/libnpymath3.so
 %_pkgconfigdir/%oname-py3.pc
-%_includedir/%oname-py3
+%_includedir/python%_python3_version/%oname
 %if_with tests
 %python3_sitelibdir/%oname/random/mtrand/*.h
 %python3_sitelibdir/%oname/random/mtrand/*.c
@@ -944,6 +937,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.15.4-alt5
+- Moved include directories (Closes: #38013).
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1:1.15.4-alt4
 - Fixed build requires.
 

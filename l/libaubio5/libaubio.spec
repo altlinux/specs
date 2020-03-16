@@ -4,7 +4,7 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt2
+Release: alt3
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPLv3
@@ -19,7 +19,9 @@ BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel li
 
 BuildPreReq: python3-base waf >= 1.9.12 libavcodec-devel libavformat-devel
 BuildPreReq: libavresample-devel txt2man doxygen python3-dev libswresample-devel
-BuildPreReq: libnumpy-devel python3-module-numpy
+BuildPreReq: libnumpy-py3-devel python3-module-numpy
+# TODO: it's a hack to pull in python-base. fix it later
+BuildRequires: libnumpy-devel
 
 %description
 Aubio is a library for real time audio labelling. Its features include
@@ -142,6 +144,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.9-alt3
+- Fixed build with numpy.
+
 * Wed Nov 27 2019 Anton Farygin <rider@altlinux.ru> 0.4.9-alt2
 - built with python3
 

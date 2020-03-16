@@ -6,7 +6,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt5
+Release: alt6
 
 Summary: A python module for high quality audio resampling
 License: GPLv2
@@ -19,7 +19,7 @@ Source1: site.cfg
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-devel libsamplerate-devel
+BuildRequires: libnumpy-py3-devel libsamplerate-devel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-nose python3-module-numpy-testing
 BuildRequires: python3-module-html5lib python3-module-notebook
@@ -128,6 +128,9 @@ popd
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.4.0-alt6
+- Fixed build with numpy.
+
 * Tue Dec 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:0.4.0-alt5
 - build for python2 disabled
 

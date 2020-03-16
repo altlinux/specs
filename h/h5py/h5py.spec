@@ -24,7 +24,7 @@ presented using a dictionary metaphor, indexed by name.
 
 Name:       h5py
 Version:    2.10.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Python interface to the Hierarchical Data Format library, version 5
 License:    MIT
@@ -33,7 +33,6 @@ Url:        http://www.h5py.org/
 
 #           https://github.com/h5py/h5py.git
 Source:     %name-%version.tar
-Patch0:     fix-import-lib-numpy-for-py3.patch
 Patch1:     remove-failing-tests.patch
 
 BuildRequires: libhdf5-devel
@@ -96,7 +95,6 @@ This package contains tests for H5PY.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 
 %if_with docs
@@ -160,6 +158,9 @@ touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.0-alt2
+- Fixed build with numpy.
+
 * Fri Feb 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.10.0-alt1
 - Version updated to 2.10.0
 - build for python2 disabled.

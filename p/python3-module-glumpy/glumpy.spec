@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Fast, scalable & beautiful scientific visualisation
 License: BSD
@@ -106,6 +106,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
+- Fixed build with numpy.
+
 * Mon Jan 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt1
 - Version updated to 1.1.0
 - porting on python3.
