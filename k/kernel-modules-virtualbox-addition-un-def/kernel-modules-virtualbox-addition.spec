@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  6.1.4
-%define module_release	alt6
+%define module_release	alt7
 
 %define flavour		un-def
 %define karch %ix86 x86_64
@@ -41,12 +41,6 @@ Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-Provides: kernel-modules-%guest_module_name-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%guest_module_name-%flavour = %version-%release
-
-Provides: kernel-modules-%video_module_name-%kversion-%flavour-%krelease = %version-%release
-Provides: kernel-modules-%video_module_name-%flavour = %version-%release
-
 Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %version-%release
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
 Obsoletes: kernel-modules-%vfs_module_name-%flavour < %version-%release
@@ -72,6 +66,13 @@ Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
 
+Provides: kernel-modules-%module_name-video-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-%module_name-video-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-%module_name-video-%kversion-%flavour-%krelease > %version-%release
+
+Provides: kernel-modules-%video_module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%video_module_name-%flavour = %version-%release
+
 Requires: virtualbox-guest-common-vboxvideo = %module_version
 
 %description -n kernel-modules-%module_name-video-%flavour
@@ -88,6 +89,13 @@ Release: %module_release.%kcode.%kbuildrelease
 %requires_kimage
 License: GPLv2
 Group: System/Kernel and hardware
+
+Provides: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-%module_name-guest-%kversion-%flavour-%krelease > %version-%release
+
+Provides: kernel-modules-%guest_module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%guest_module_name-%flavour = %version-%release
 
 Requires: virtualbox-guest-common-vboxguest = %module_version
 
@@ -144,6 +152,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Mar 14 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt7
+- Fix provides and conflicts for vboxvideo and vboxguest
 
 * Tue Mar 04 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt6
 - Add separated modprobe and load module rules for vboxvideo and vboxguest
