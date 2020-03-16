@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt2
+Release: alt3
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -66,6 +66,8 @@ This package contains tests for ZConfig.
 %setup
 %patch1 -p1
 
+sed -i 's|cgi|html|' ZConfig/schema2html.py
+
 %build
 %python3_build
 
@@ -87,6 +89,9 @@ This package contains tests for ZConfig.
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt3
+- compatibility with python3.8
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.2.0-alt2
 - Build for python2 disabled.
 
