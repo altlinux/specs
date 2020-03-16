@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.0.17
-Release: alt0.1
+Version: 3.0.20
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -16,7 +16,38 @@ Source105: freeradius-service
 
 Patch1: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel perl-DBM libtalloc-devel openssl libkrb5-devel libpcre-devel libmemcached-devel libsasl2-devel libcurl-devel libjson-c-devel libsqlite3-devel libfreetds-devel libyubikey-devel libhiredis-devel
+BuildRequires: gcc-c++
+BuildRequires: libgdbm-devel
+BuildRequires: libltdl-devel
+BuildRequires: libcom_err-devel
+BuildRequires: libstdc++-devel-static
+BuildRequires: libmysqlclient-devel
+BuildRequires: libldap-devel
+BuildRequires: libpam-devel
+BuildRequires: libreadline-devel
+BuildRequires: libunixODBC-devel
+BuildRequires: mailx
+BuildRequires: net-snmp-utils
+BuildRequires: perl-DBI perl-devel perl-DBM
+BuildRequires: postgresql-devel
+BuildRequires: python3-devel
+BuildRequires: slocate
+BuildRequires: libssl-devel openssl
+BuildRequires: libtalloc-devel
+BuildRequires: libkrb5-devel
+BuildRequires: libpcre-devel
+BuildRequires: libmemcached-devel
+BuildRequires: libsasl2-devel
+BuildRequires: libcurl-devel
+BuildRequires: libjson-c-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libfreetds-devel
+BuildRequires: libyubikey-devel
+BuildRequires: libhiredis-devel
+BuildRequires: libpcap-devel
+BuildRequires: libcrypt-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libwbclient-devel samba-devel
 
 # in Sisyphus/autoimports
 # BuildRequires: ykclient-devel
@@ -108,12 +139,12 @@ Requires: %name-libs = %version-%release
 %description perl
 This plugin provides the Perl support for the FreeRADIUS server project.
 
-%package python
-Summary: Python support for freeradius
+%package python3
+Summary: Python3 support for freeradius
 Group: System/Servers
 Requires: %name-libs = %version-%release
 
-%description python
+%description python3
 This plugin provides the Python support for the FreeRADIUS server project.
 
 %package mysql
@@ -153,6 +184,21 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
 %patch1 -p1
 
 %build
+
+# Hack: rlm_python3 as stable; prevents building other unstable modules.
+sed 's/rlm_python/rlm_python3/g' src/modules/stable -i
+
+export PY3_INC_DIR=%__python3_includedir
+# Hack: rlm_python3 configure.ac script is broken because it doesn't
+# respect --with-rlm-python3-include-dir.
+sed -i 's#smart_try_dir="$PY_PREFIX/include/python$PY_SYS_VERSION[m]*"#smart_try_dir=$PY_INC_DIR#g' src/modules/rlm_python3/configure.ac
+
+%autoreconf
+# In order for the above hack to stick, do a fake configure so
+# we can run reconfig before cleaning up after ourselves and running
+# configure for real.
+./configure && make reconfig && (make clean distclean || true)
+
 %configure \
         --with-system-libtool \
         --with-system-libltdl \
@@ -163,6 +209,7 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
         --with-gnu-ld \
         --with-threads \
         --with-thread-pool \
+        --with-systemd \
         --with-docdir=%_docdir/freeradius-%version \
         --with-rlm-sql_postgresql-include-dir=/usr/include/pgsql \
         --with-rlm-sql-postgresql-lib-dir=%_libdir \
@@ -171,7 +218,10 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
         --with-unixodbc-lib-dir=%_libdir \
         --with-rlm-dbm-lib-dir=%_libdir \
         --with-rlm-krb5-include-dir=/usr/include/krb5 \
+        --with-rlm_python3 \
+        --with-rlm-python3-include-dir=$PY3_INC_DIR \
         --without-rlm_eap_ikev2 \
+        --without-rlm_eap_tnc \
         --without-rlm_sql_iodbc \
         --without-rlm_sql_firebird \
         --without-rlm_sql_db2 \
@@ -202,23 +252,46 @@ install -m 644 %SOURCE104 %buildroot%_tmpfilesdir/radiusd.conf
 install -m 644 %SOURCE105 %buildroot%_unitdir/radiusd.service
 
 # remove unneeded stuff
-rm %buildroot%_sbindir/rc.radiusd
-rm %buildroot%_libdir/freeradius/*.a
-rm %buildroot%_libdir/freeradius/*.la
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/queries.conf
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/schema.sql
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/queries.conf
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/schema.sql
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/queries.conf
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/schema.sql
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/procedures.sql
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/queries.conf
-rm -r %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/schema.sql
+rm -f %buildroot%_sbindir/rc.radiusd
+rm -f %buildroot%_bindir/rbmonkey
+rm -f %buildroot%_libdir/freeradius/*.a
+rm -f %buildroot%_libdir/freeradius/*.la
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/queries.conf
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/schema.sql
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/queries.conf
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/schema.sql
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/queries.conf
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/schema.sql
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/procedures.sql
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/queries.conf
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/schema.sql
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/mongo/queries.conf
+rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mongo/queries.conf
 
+rm -f %buildroot%_sysconfdir/raddb/certs/*.crt
+rm -f %buildroot%_sysconfdir/raddb/certs/*.csr
+rm -f %buildroot%_sysconfdir/raddb/certs/*.der
+rm -f %buildroot%_sysconfdir/raddb/certs/*.key
+rm -f %buildroot%_sysconfdir/raddb/certs/*.pem
+rm -f %buildroot%_sysconfdir/raddb/certs/*.p12
+rm -f %buildroot%_sysconfdir/raddb/certs/index.*
+rm -f %buildroot%_sysconfdir/raddb/certs/serial*
+rm -f %buildroot%_sysconfdir/raddb/certs/dh
+rm -f %buildroot%_sysconfdir/raddb/certs/random
 
+rm -f %buildroot%_sysconfdir/raddb/mods-available/unbound
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/unbound
+rm -f %buildroot%_sysconfdir/raddb/mods-available/couchbase
+rm -f %buildroot%_sysconfdir/raddb/mods-available/abfab*
+rm -f %buildroot%_sysconfdir/raddb/mods-available/moonshot-targeted-ids
+rm -f %buildroot%_sysconfdir/raddb/policy.d/abfab*
+rm -f %buildroot%_sysconfdir/raddb/policy.d/moonshot-targeted-ids
+rm -f %buildroot%_sysconfdir/raddb/sites-available/abfab*
+
+rm -f %buildroot%_libdir/freeradius/rlm_test.so
 
 # remove unsupported config files
-rm %buildroot/%_sysconfdir/raddb/experimental.conf
+rm -f %buildroot%_sysconfdir/raddb/experimental.conf
 
 # rpath hack: RPATH contains standard library path "/usr/lib64": /usr/lib64
 chrpath -d %buildroot%_libdir/freeradius/rlm_sql_postgresql.so
@@ -284,32 +357,8 @@ fi
 
 ## ---- TODO -- new ---------------------------------------------
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/README.rst
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/01.pem
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/02.pem
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/ca.der
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/ca.key
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/ca.pem
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/client.crt
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/client.csr
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/client.key
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/client.p12
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/client.pem
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/dh
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/index.txt
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/index.txt.attr
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/index.txt.attr.old
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/index.txt.old
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/passwords.mk
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/serial
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/serial.old
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/server.crt
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/server.csr
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/server.key
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/server.p12
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/server.pem
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/user@example.org.pem
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/panic.gdb
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/abfab-tr
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/accounting
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/canonicalization
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/control
@@ -318,8 +367,8 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/dhcp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/eap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/filter
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/moonshot-targeted-ids
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/operator-name
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/policy.d/rfc7542
 ## ---- END -- new ---------------------------------------------
 
 
@@ -327,13 +376,11 @@ fi
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-enabled
 %_sysconfdir/raddb/mods-available/README.rst
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/abfab_psk_sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/always
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/attr_filter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cache
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cache_eap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/chap
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/couchbase
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/counter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cui
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/date
@@ -359,7 +406,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/logintime
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/mac2ip
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/mac2vlan
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/moonshot-targeted-ids
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/mschap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/ntlm_auth
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/opendirectory
@@ -382,7 +428,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sqlcounter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/sradutmp
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/unbound
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/unix
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/unpack
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/utf8
@@ -402,8 +447,6 @@ fi
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/preprocess
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/preprocess/hints
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/preprocess/huntgroups
-%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/unbound
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/unbound/default.conf
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/counter
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/cui
@@ -511,7 +554,6 @@ fi
 %_libdir/freeradius/rlm_sql_null.so
 %_libdir/freeradius/rlm_sqlcounter.so
 %_libdir/freeradius/rlm_sqlippool.so
-%_libdir/freeradius/rlm_test.so
 %_libdir/freeradius/rlm_unix.so
 %_libdir/freeradius/rlm_unpack.so
 %_libdir/freeradius/rlm_utf8.so
@@ -554,13 +596,13 @@ fi
 %_libdir/freeradius/rlm_perl.so
 #%_libdir/freeradius/rlm_perl-%version.so
 
-%files python
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/python
-%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/python
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/python/example.py
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/python/radiusd.py
-%_libdir/freeradius/rlm_python.so
-#%_libdir/freeradius/rlm_python-%version.so
+%files python3
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/python3
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/python3
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/python3/example.py
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/python3/radiusd.py
+%_libdir/freeradius/rlm_python3.so
+#%_libdir/freeradius/rlm_python3-%version.so
 
 %files mysql
 %_libdir/freeradius/rlm_sql_mysql.so
@@ -575,6 +617,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp/mysql/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/schema.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/mysql/procedure.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/queries.conf
@@ -585,8 +628,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/setup.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/schema.sql
-
-
 
 %files postgresql
 %_libdir/freeradius/rlm_sql_postgresql.so
@@ -605,6 +646,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/cui/postgresql/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/schema.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/postgresql/procedure.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras/cisco_h323_db_schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/extras/voip-postpaid.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/queries.conf
@@ -636,7 +678,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/schema.sql
 
-
 %files ldap
 #%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/ldap.attrmap
 %_libdir/freeradius/rlm_ldap.so
@@ -648,6 +689,11 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Mon Mar 16 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.20-alt1
+- 3.0.20 (Fixes: CVE-2019-17185)
+- migrate to python3 module
+- build with winbind support (ALT #37119)
+
 * Mon Dec 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.17-alt0.1
 - NMU: fixed build (update to 3.0.17)
 - TODO: refresh and update files in .gear/altlinux/*
