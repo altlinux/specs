@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.3
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Summary: Library to implement a well-behaved Unix daemon process
 License: Apache-2.0 / GPLv3
@@ -15,15 +15,16 @@ Url: https://pypi.org/project/python-daemon/
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(docutils)
+BuildRequires: python3(twine)
 %if_with check
 BuildRequires: python3(lockfile)
 BuildRequires: python3(mock)
 BuildRequires: python3(testscenarios)
 BuildRequires: python3(tox)
+BuildRequires: python3(coverage)
 %endif
 
 
@@ -35,7 +36,6 @@ instance as a context manager to enter a daemon state.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %__python3 setup.py egg_info
@@ -62,6 +62,9 @@ export TOXENV=py%{python_version_nodots python3}
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.4-alt1
+- Version updated to 2.2.4
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.3-alt2
 - Build for python2 disabled.
 
