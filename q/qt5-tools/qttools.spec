@@ -7,7 +7,7 @@
 
 Name: qt5-tools
 Version: 5.12.7
-Release: alt2
+Release: alt3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -162,6 +162,11 @@ Requires: libqt5-core = %_qt5_version
 %endif
 
 %build
+# needed for documentation generation
+# when some Qt header include paths
+# are specified using '-isystem $path' arguments
+%add_optflags -DQDOC_PASS_ISYSTEM
+
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
@@ -338,6 +343,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.12.7-alt3
+- Fixed docs generation
+
 * Wed Mar 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt2
 - build docs
 
