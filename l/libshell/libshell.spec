@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: A library of shell functions
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires: help2man
 %if_enabled man
-BuildRequires: md2man
+BuildRequires: scdoc
 %endif
 
 %description
@@ -80,6 +80,24 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Mon Mar 16 2020 Alexey Gladkov <legion@altlinux.ru> 0.4.8-alt1
+- shell-unittest changes:
+  + Add option to hide successful tests
+- shell-run changes:
+  + Improve compatibility with mksh
+- shell-cmdline changes:
+  + Add another argument to cmdline_foreach()
+    to indicate the difference between a flag and a parameter with an argument
+- shell-git-config changes:
+  + Add git_config_foreach to list values for env parser
+- Other changes:
+  + Add Travis CI
+  + Add compatibility with ksh
+  + Run tests with few shells
+  + Enforce documentation of all public functions
+  + Add verification by shellcheck
+  + Use scdoc instead of md2man
+
 * Tue May 14 2019 Alexey Gladkov <legion@altlinux.org> 0.4.7-alt1
 - Other changes:
   + shell-temp: Add docs
