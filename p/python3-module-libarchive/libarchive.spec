@@ -1,17 +1,20 @@
 %define oname libarchive
 
-Name: python-module-%oname
-Version: 3.1.2.1
-Release: alt5
+%def_with check
+
+Name: python3-module-%oname
+Version: 4.0.1
+Release: alt1
 
 Summary: A libarchive wrapper for Python
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-libarchive/
 
 Source: %name-%version.tar
+Patch0: compatibility-with-python38.patch
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libarchive-devel swig zip
 
 %py_provides %oname
@@ -25,28 +28,35 @@ and tarfile modules.
 
 %prep
 %setup
+%patch0 -p2
 
 rm -f %oname/*.c
 
 %build
 %make -C %oname _libarchive_wrap.c
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-%__python setup.py test
+%if 0
+%__python3 setup.py test
 rm -fR %oname
-export PYTHONPATH=%buildroot%python_sitelibdir
-%__python tests.py
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 tests.py
+%endif
 
 %files
 %doc *.rst docs/*.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0.1-alt1
+- Version updated to 4.0.1
+- porting to python3.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.1.2.1-alt5
 - Rebuild with new setuptools.
 
