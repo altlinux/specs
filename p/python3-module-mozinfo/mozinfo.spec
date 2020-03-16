@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Library to get system information for use in Mozilla testing
 License: MPL
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/mozinfo/
 BuildArch: noarch
 
 Source: %oname-%version.tar
+Patch0: fix-detect-dist.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-mozfile python-tools-2to3
@@ -24,6 +25,7 @@ Library to get system information for use in Mozilla testing.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch0 -p2
 
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
@@ -43,6 +45,9 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt2
+- Detect dist fixed.
+
 * Tue Jan 21 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt1
 - Version updated to 1.2.1
 - Porting on python3.
