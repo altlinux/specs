@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -71,7 +71,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
-%_pixmapsdir/*
+%_iconsdir/hicolor/64x64/apps/TeXworks.png
+%_iconsdir/hicolor/128x128/apps/TeXworks.png
+%_iconsdir/hicolor/512x512/apps/TeXworks.png
 %_datadir/metainfo/*
 %_man1dir/*
 %_docdir/%name
@@ -81,6 +83,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-*.pdf
 
 %changelog
+* Mon Mar 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.6.4-alt1
+- Build new version.
+
 * Wed Apr 17 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
 - Build new version.
 
