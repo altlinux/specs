@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.4
 %define kernel_sublevel .25
@@ -564,7 +564,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 
 %post
 blacklist=/etc/modprobe.d/blacklist-ixgbe.conf
-[ -f $blacklist ] && mv $blacklist $blacklist.rpmsave
+[ -f $blacklist ] && mv $blacklist $blacklist.rpmsave ||:
 
 %check
 KernelVer=%kversion-%flavour-%krelease
@@ -686,6 +686,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Mar 16 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.25-alt2
+- post exit status fixed
+
 * Fri Mar 13 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.25-alt1
 - v5.4.25  (Fixes: CVE-2020-8647, CVE-2020-8648, CVE-2020-8649)
 
