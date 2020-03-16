@@ -10,9 +10,9 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.12.1
-Release: alt2
+Release: alt3
 Group: Emulators
-License: GPLv2+, LGPLv2+, BSD
+License: GPLv2 LGPLv2 BSD
 URL: http://www.xenproject.org/
 
 %define pre %nil
@@ -54,6 +54,7 @@ Patch19: %name.pygrubtitlefix.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
+Patch51: %name-python2.patch
 Patch55: qemu-traditional-lost-parenthesis.patch
 Patch56: qemu-xen-non-static-memfd_create.patch
 
@@ -61,7 +62,6 @@ Patch56: qemu-xen-non-static-memfd_create.patch
 ExclusiveArch: %ix86 x86_64 aarch64
 
 Requires: bridge-utils
-Requires: python-module-lxml
 Requires: udev >= 059
 Requires: chkconfig
 
@@ -90,7 +90,7 @@ Requires: chkconfig
 BuildRequires(pre): rpm-macros-uefi
 
 BuildRequires: glibc-devel zlib-devel libncurses-devel libaio-devel
-BuildRequires: python-devel ghostscript %_bindir/texi2html transfig
+BuildRequires: python-dev ghostscript texi2html transfig
 BuildRequires: pkgconfig(glib-2.0) >= 2.12
 # for the docs
 BuildRequires: perl(Pod/Man.pm) perl(Pod/Text.pm) texinfo graphviz
@@ -208,6 +208,22 @@ single machine (or host).
 
 This package contains the runtime programs which form the core Xen
 userspace environment.
+
+
+%ifarch %ix86 x86_64
+%package runtime-extras
+Summary: Extra files for Xen runtime environment
+Group: Emulators
+
+%description runtime-extras
+The Xen Project hypervisor is an open-source type-1 or baremetal
+hypervisor, which makes it possible to run many instances of an
+operating system or indeed different operating systems in parallel on a
+single machine (or host).
+
+This package contains extra keymap and other files for runtime
+package, Xen userspace environment.
+%endif
 
 
 %if_with hypervisor
@@ -332,6 +348,7 @@ ln -s ../../qemu-ui-keycodemapdb qemu-xen-%version/ui/keycodemapdb
 %patch17 -p1
 %patch19 -p1
 %patch50 -p2
+%patch51 -p1
 
 pushd tools/qemu-xen-traditional
 %patch55 -p1
@@ -377,6 +394,7 @@ export EXTRA_CFLAGS_QEMU_XEN="%optflags"
 %{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
+export PYTHON=/usr/bin/python2
 ./configure \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -423,6 +441,7 @@ export EXTRA_CFLAGS_QEMU_XEN="%optflags"
 %{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
+export PYTHON=/usr/bin/python2
 %{?_enable_ocamltools:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
 %{?_with_efi:install -d -m 0755 %buildroot/boot/efi/efi/altlinux}
 %make_install DESTDIR=%buildroot %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
@@ -469,6 +488,9 @@ while read f; do
 	install -pD -m 0644 {,%buildroot%_docdir/%name-%version/licenses/}$f
 done
 
+# obsolete: based on xm utility
+rm -fr %buildroot%_libexecdir/%name/bin/stubdom-dm
+
 %ifarch x86_64
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32
 rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32
@@ -483,6 +505,10 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_64 %buildroot%_doc
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/lwip-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/lwip
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl
 mv %buildroot%_docdir/%name-%version/licenses/stubdom/gmp-x86_32 %buildroot%_docdir/%name-%version/licenses/stubdom/gmp
+%endif
+
+%ifarch aarch64
+rm -fr %buildroot%_docdir/%name-%version/licenses/stubdom
 %endif
 
 install -pD -m 0755 %SOURCE6 %buildroot%_initddir/%name-qemu-dom0
@@ -718,12 +744,13 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 %_datadir/qemu-%name
 
-%ifarch %ix86 x86_64
-%_datadir/%name
-%endif
-
 %exclude %_datadir/qemu-%name/qemu/s390-ccw.img
 %exclude %_datadir/qemu-%name/qemu/s390-netboot.img
+
+%ifarch %ix86 x86_64
+%files runtime-extras
+%_datadir/%name
+%endif
 
 
 %if_with hypervisor
@@ -747,6 +774,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %doc %_docdir/%name-%version/licenses
 %doc %_docdir/%name-%version/COPYING
 
+%ifarch %ix86 x86_64
+%exclude %_docdir/%name-%version/licenses/stubdom
+%endif
 
 %if_enabled ocamltools
 %files ocaml
@@ -773,7 +803,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %dir %_libexecdir/%name/bin
 %dir %_libexecdir/%name/boot
 
-%_libexecdir/%name/bin/stubdom-dm
 %_libexecdir/%name/bin/stubdompath.sh
 
 %_libexecdir/%name/boot/ioemu-stubdom.gz
@@ -781,10 +810,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_libexecdir/%name/boot/xenstore-stubdom.gz
 
 %{?_enable_vtpm:%_libexecdir/%name/boot/vtpm*.gz}
+
+%dir %_docdir/%name-%version/licenses
+%doc %_docdir/%name-%version/licenses/stubdom
 %endif
 
 
 %changelog
+* Mon Mar 16 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt3
+- set explicit python interpreter: /usr/bin/python2
+
 * Wed Sep 18 2019 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt2
 - enable build for aarch64 architecture
 
