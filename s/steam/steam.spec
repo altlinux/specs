@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.61
-Release: alt5
+Release: alt6
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -25,8 +25,6 @@ Requires: libGL
 Requires: libnsl1
 Requires: libnss
 Requires: xz
-
-BuildRequires: ca-certificates
 
 %description
 Steam is a software distribution service with an online store, automated
@@ -65,6 +63,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Mon Mar 16 2020 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt6
+- Remove build requires
+
 * Thu Aug 29 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt5
 - Remove symlink on CA certificates
 
