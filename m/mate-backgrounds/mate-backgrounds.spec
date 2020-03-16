@@ -1,5 +1,5 @@
 Name: mate-backgrounds
-Version: 1.24.0
+Version: 1.24.1
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop backgrounds
@@ -38,6 +38,9 @@ Backgrounds for MATE Desktop
 %_datadir/backgrounds/mate
 
 %changelog
+* Mon Mar 16 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
+- 1.24.1
+
 * Wed Feb 26 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
