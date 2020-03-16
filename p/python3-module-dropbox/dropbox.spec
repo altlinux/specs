@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 9.4.0
-Release: alt1
+Release: alt2
 
 Summary: A Python SDK for integrating with the Dropbox API v2.
 License: MIT
@@ -38,10 +38,13 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%oname/*.py
 %python3_sitelibdir/%oname/*.crt
 %python3_sitelibdir/%oname/__pycache__/*.pyc
-%python3_sitelibdir/%oname-%version-py3.7.egg-info/*
+%python3_sitelibdir/%oname-%version-py%{_python3_version}.egg-info/*
 
 
 %changelog
+* Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 9.4.0-alt2
+- Build fixed.
+
 * Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 9.4.0-alt1
 - Initial build.
 
