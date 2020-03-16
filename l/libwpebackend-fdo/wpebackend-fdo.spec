@@ -2,12 +2,12 @@
 %define _name wpebackend-fdo
 
 Name: lib%_name
-Version: 1.4.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
 Group: System/Libraries
-License: BSD
+License: BSD-2-Clause
 Url: https://github.com/Igalia/WPEBackend-fdo
 
 Source: %url/releases/download/%version/%_name-%version.tar.xz
@@ -35,7 +35,7 @@ This package provides files for developing applications that use %name.
 %patch -p1
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE="Release"
 %cmake_build
 
@@ -52,6 +52,9 @@ This package provides files for developing applications that use %name.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Dec 22 2019 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt2
 - fixed build
 
