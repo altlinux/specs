@@ -1,13 +1,13 @@
 %define _name libopenshot
-%define ver_major 0.1
-%define api_ver 6
-%define libopenshot_ver 0.2.4
+%define ver_major 0.2
+%define api_ver 7
+%define libopenshot_ver 0.2.5
 
 # no tests
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -62,6 +62,9 @@ make -C BUILD test
 %_libdir/%name.so
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Mon Feb 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 
