@@ -1,11 +1,11 @@
 Name: cldr-emoji-annotation
-Version: 35.12.14971_0
+Version: 36.12.120191002_0
 Release: alt1
 
 # Annotation files are in Unicode license
 Summary: Emoji annotation files in CLDR
 Group: Development/Other
-License: LGPLv2+ and Unicode
+License: LGPL-2.0-or-later and Unicode
 Url: https://github.com/fujiwarat/cldr-emoji-annotation
 
 Source: %url/releases/download/%version/%name-%version.tar.gz
@@ -45,6 +45,9 @@ when building programs that use cldr-annotations.
 
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 36.12.120191002_0-alt1
+- 36.12.120191002_0
+
 * Thu Aug 22 2019 Yuri N. Sedunov <aris@altlinux.org> 35.12.14971_0-alt1
 - first build for Sisyphus
 

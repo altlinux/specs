@@ -1,17 +1,19 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_enable introspection
+%def_enable vala
+%def_enable docs
 
-%define ver_major 12.0
+%define ver_major 13.0
 %define api_ver 2.90
-%define unicode_ver 12.0.0
+%define unicode_ver 13.0.0
 
 Name: gucharmap
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
 Group: Text tools
-License: %gpl3plus
+License: GPL-3.0 and GFDL-1.3 and Unicode
 Url: https://wiki.gnome.org/Gucharmap
 
 %if_disabled snapshot
@@ -24,18 +26,17 @@ Source: %name-%version.tar
 %define glib_ver 2.32.0
 %define gtk_ver 3.4.0
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: dconf gnome-icon-theme
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome
 # From configure.ac
-BuildPreReq: intltool >= 0.40.0
-BuildPreReq: unicode-ucd >= %unicode_ver unzip
+BuildRequires: unicode-ucd >= %unicode_ver unzip
 BuildRequires: gnome-common desktop-file-utils appdata-tools
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: yelp-tools itstool
-BuildPreReq: gtk-doc >= 1.0
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: yelp-tools gtk-doc
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -52,7 +53,7 @@ This package provides shared library for programs that show character maps
 %package -n lib%name-devel
 Summary: Development files for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains headers and libraries needed to compile
@@ -61,7 +62,7 @@ applications against lib%name
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GNOME Unicode character map library
@@ -70,36 +71,43 @@ GObject introspection data for the GNOME Unicode character map library
 Summary: GObject introspection devel data for the %name library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the GNOME Unicode character map library
+GObject introspection devel data for the 
+
+%package -n lib%name-devel-doc
+Summary: Development documentation for %name library
+Group: Development/Documentation
+Conflicts: lib%name < %EVR
+BuildArch: noarch
+
+%description -n lib%name-devel-doc
+This package contains development documentation for GNOME Unicode
+character map library.
+
 
 %prep
 %setup
 
 %build
-%autoreconf
-export LDFLAGS="$LDFLAGS -ldl"
-%configure \
-    --disable-static \
-    --disable-schemas-compile \
-    %{subst_enable introspection} \
-    --with-unicode-data=%_datadir/unicode/ucd
-%make_build
+%meson \
+    %{?_disable_introspection:-Dgir=false} \
+    %{?_disable_vala:-Dvapi=false} \
+    %{?_disable_docs:-Ddocs=false} \
+    -Ducd_path=%_datadir/unicode/ucd
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%_desktopdir/*
-%config %_datadir/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.Charmap.enums.xml
-%_datadir/metainfo/%name.appdata.xml
-%doc AUTHORS NEWS TODO COPYING.UNICODE
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_datadir/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
+%_datadir/metainfo/%name.metainfo.xml
+%doc README* TODO COPYING.UNICODE
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -108,6 +116,7 @@ export LDFLAGS="$LDFLAGS -ldl"
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%{?_enable_vala:%_vapidir/%name-%api_ver.*}
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -117,7 +126,15 @@ export LDFLAGS="$LDFLAGS -ldl"
 %_girdir/Gucharmap-%api_ver.gir
 %endif
 
+%if_enabled docs
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/%name-%api_ver/
+%endif
+
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0.0-alt1
+- updated to 13.0.0-6-gbd6bbdbb (ported to Meson build system)
+
 * Tue Mar 12 2019 Yuri N. Sedunov <aris@altlinux.org> 12.0.1-alt1
 - 12.0.1
 
