@@ -2,7 +2,7 @@
 %def_disable python2
 
 Name: python-module-%modname
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -74,6 +74,9 @@ popd}
 
 
 %changelog
+* Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Thu Feb 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 - disabled python2 build
