@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 31
+%define ver_major 34
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
 %define _libexecdir %_prefix/libexec
 
-%def_disable webextension
+%def_enable webextension
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
@@ -14,10 +14,10 @@ Release: alt1
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0
 Url: https://github.com/andyholmes/%name
 
-BuildArch: noarch
+%{?_disable_webextension:BuildArch: noarch}
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
@@ -75,6 +75,9 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %doc README.md
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 34-alt1
+- updated to v34-4-ge21a0ef5
+
 * Sun Jan 26 2020 Yuri N. Sedunov <aris@altlinux.org> 31-alt1
 - 31
 
