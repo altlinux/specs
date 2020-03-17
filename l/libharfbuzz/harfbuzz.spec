@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
@@ -22,6 +22,7 @@ Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.x
 Source: %_name-%version.tar
 %endif
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_with_graphite2:BuildRequires: libgraphite2-devel}
@@ -88,7 +89,18 @@ GObject introspection devel data for the HarfBuzz library
 %prep
 %setup -n %_name-%version
 
+sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/*.py test/*/*.py test/*/*/*/*.py \
+test/shaping/hb-diff-stat \
+test/shaping/hb-unicode-prettyname \
+test/shaping/hb-diff-filter-failures \
+test/shaping/hb-unicode-decode \
+test/shaping/hb-diff \
+test/shaping/hb-diff-colorize \
+test/shaping/hb-unicode-encode \
+
 %build
+export PYTHON=%__python3
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
 	--with-glib \
@@ -148,6 +160,9 @@ GObject introspection devel data for the HarfBuzz library
 
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
+- build tools, tests switched to python3
+
 * Thu Oct 31 2019 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
 - 2.6.4
 
