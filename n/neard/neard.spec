@@ -13,9 +13,11 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%def_without tests
+
 Name: neard
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: NFC for Linux
 License: GPLv2
@@ -47,6 +49,7 @@ Group: Development/C
 %description devel
 Files needed to develop applications for the NFC stack.
 
+%if_with tests
 %package test
 Summary: Files needed for NFC development
 Group: Development/Other
@@ -54,6 +57,7 @@ Requires: neard
 
 %description test
 Files needed to test applications for the NFC stack.
+%endif
 
 %prep
 %setup
@@ -61,7 +65,11 @@ Files needed to test applications for the NFC stack.
 
 %build
 %autoreconf
+%if_with tests
 %configure --enable-tools --enable-test
+%else
+%configure --enable-tools
+%endif
 %make_build
 
 %install
@@ -87,11 +95,16 @@ install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 %_includedir/near/
 %_pkgconfigdir/*.pc
 
+%if_with tests
 %files test
 %dir %_libdir/%name/
 %_libdir/%name/test/
+%endif
 
 %changelog
+* Tue Mar 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.16-alt2
+- remove python2 dependency by disabling build of tests.
+
 * Thu Jan 18 2018 Michael Shigorin <mike@altlinux.org> 0.16-alt1
 - 0.16
 
