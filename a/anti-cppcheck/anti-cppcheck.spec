@@ -1,10 +1,11 @@
-%define thislibdir %{python3_sitelibdir_noarch}/%{name}
+%define pyname anticppcheck
+%define thislibdir %{python3_sitelibdir_noarch}/%{pyname}
 %define thisdocdir %{_defaultdocdir}/%{name}
 %define ax_ver 0.6
 
 Name: anti-cppcheck
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Utility that helps to handle reports produced by cppcheck
 License: GPLv3
@@ -40,12 +41,13 @@ warning messages in those reports.
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{thislibdir}
 mkdir -p %{buildroot}%{thisdocdir}
-# Executable
+# Executables
 cp %{name} %{buildroot}%{_bindir}
 cp %{name}-analyze %{buildroot}%{_bindir}
 cp %{name}-comment %{buildroot}%{_bindir}
+cp %{name}-find %{buildroot}%{_bindir}
 # Modules
-cp *.py %{buildroot}%{thislibdir}
+cp %{pyname}/*.py %{buildroot}%{thislibdir}
 # Documentation
 cp COPYING %{buildroot}%{thisdocdir}
 
@@ -57,6 +59,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Mar 17 2020 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt2
+- A missing executable has been added;
+- Correct and fully working approach to import of submodules.
+
 * Fri Mar 13 2020 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt1
 - Enhanced filter/classifier of messages;
 - Analysis features delegated to 'anti-cppcheck-analyze';
