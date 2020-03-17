@@ -19,7 +19,7 @@
 %def_disable installed_tests
 
 Name: ibus
-Version: 1.5.21
+Version: 1.5.22
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -326,6 +326,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.22-alt1
+- 1.5.22
+
 * Fri Aug 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.21-alt1
 - 1.5.21
 - new -tests subpackage
