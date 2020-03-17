@@ -99,7 +99,7 @@
 %endif
 
 Name: python3
-Version: %{pybasever}.1
+Version: %{pybasever}.2
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -162,12 +162,6 @@ Patch102: 00102-lib64.patch
 # Downstream only: not appropriate for upstream
 Patch111: 00111-no-static-lib.patch
 
-# 00178 #
-# Don't duplicate various FLAGS in sysconfig values
-# http://bugs.python.org/issue17679
-# Does not affect python2 AFAICS (different sysconfig values initialization)
-Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
-
 # 00189 #
 #
 # Add the rewheel module, allowing to recreate wheels from already installed
@@ -176,10 +170,6 @@ Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
 %if 0%{with_rewheel}
 Patch189: 00189-add-rewheel-module.patch
 %endif
-
-# LIBPL variable in makefile takes LIBPL from configure.ac
-# but the LIBPL variable defined there doesn't respect libdir macro
-Patch205: 00205-make-libpl-respect-lib64.patch
 
 # 00251
 # Set values of prefix and exec_prefix in distutils install command
@@ -233,10 +223,6 @@ Patch1005: python3-site-packages.patch
 # are consistent with this.
 # (TODO: Perhaps, we should consider substituting the value of the macros into the patch,
 # so that we have a single point of control and a guarantee of consistency.)
-
-# Closes: #36622
-# Patch allow help() to show MODULE REFERENCE on x86_64
-Patch1006: python-3.8.1-fix-getlocdoc-with-lib64.patch
 
 # With python-3.6 and later it's either needed to enable some crypto ciphers needed for SSLv2 when this socket type requested
 # or SSLv2 has to be removed completely, because it wouldn't work without this change anyway.
@@ -449,18 +435,14 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1 -p1
 
 < %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
-# The order matters! First goes 1006, then 1005
-< %PATCH1006 sed -e 's:lib64:%_lib:g' | patch -p2
 < %PATCH1005 sed -e 's:lib64:%_lib:g' | patch -p2
 
 %patch111 -p1
-%patch178 -p1
 
 %if 0%{with_rewheel}
 %patch189 -p1
 %endif
 
-%patch205 -p1
 %patch251 -p1
 
 %patch274 -p1
@@ -764,7 +746,7 @@ configdir="$(
 else
 configdir="$(%buildroot%_bindir/python3-config --configdir)"
 fi
-#[ -d %buildroot"$configdir" ]
+[ -d %buildroot"$configdir" ]
 
 # Ensure that the curses module was linked against libncursesw.so, rather than
 # libncurses.so
@@ -780,8 +762,6 @@ export LANG=C
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
 # -l (--findleaks) is not compatible with -j
-# test_faulthandler.test_register_chain currently fails on ppc64le and
-#   aarch64, see upstream bug http://bugs.python.org/issue21131
 # Only on i586:
 # self.assertEqual(dist(p, q), fourthmax * math.sqrt(n))
 # AssertionError: 7.784239614998252e+307 != 7.784239614998251e+307
@@ -796,18 +776,12 @@ $(pwd)/python -m test.regrtest \
 %ifarch %ix86
     -x test_math
 %endif
-%ifarch %{arm}
-    -x test_faulthandler
-%endif
 
 %files
 %doc LICENSE README.rst
 %_bindir/pydoc*
 %_bindir/python3
 %_bindir/python%pybasever
-#%%_bindir/%pynameabi
-#%%_bindir/pyvenv
-#%%_bindir/pyvenv-%pybasever
 %_mandir/*/*
 
 %files base
@@ -1101,6 +1075,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri Mar 13 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.2-alt1
+- Updated to upstream version 3.8.2.
+- Fixed python3-config --configdir output.
+
 * Fri Jan 24 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
 - Updated to upstream version 3.8.1.
 - Restructured patching scheme about lib64 and site-packages.

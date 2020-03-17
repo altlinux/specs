@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.interface
 
-%def_without check
+%def_with check
 
 Name: python-module-%oname
-Version: 4.7.1
-Release: alt2
+Version: 4.7.2
+Release: alt1
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -151,6 +151,10 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Tue Mar 17 2020 Grigory Ustinov <grenka@altlinux.org> 4.7.2-alt1
+- Automatically updated to 4.7.2.
+- Build with check.
+
 * Thu Jan 16 2020 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt2
 - Bootstrap for python3.8.
 
