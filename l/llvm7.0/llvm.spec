@@ -1,7 +1,7 @@
 %global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt5
+%global rel alt6
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld%v_major
@@ -199,7 +199,7 @@ Summary: Header files for LLD
 Group: Development/C
 Provides: lld-devel = %EVR
 Requires: %lld_name = %EVR
-Obsoletes: lld-devel < %version
+Obsoletes: lld-devel < %EVR
 
 %description -n %lld_name-devel
 This package contains header files for the LLD linker.
@@ -209,7 +209,7 @@ Summary: Documentation for LLD
 Group: Documentation
 BuildArch: noarch
 Provides: lld-doc = %EVR
-Obsoletes: lld-doc < %version
+Obsoletes: lld-doc < %EVR
 
 %description -n %lld_name-doc
 Documentation for the LLD linker.
@@ -410,6 +410,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Mar 17 2020 Valery Inozemtsev <shrek@altlinux.ru> 7.0.1-alt6.rel
+- fixed obsoletes lld/lld-doc
+
 * Tue Mar 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 7.0.1-alt5.rel
 - renamed lld to lld7.0 (closes: #38159)
 
