@@ -1,28 +1,28 @@
-%define vala_api 0.46
+%define vala_api 0.48
 
 Name: xfce4-vala
 Version: 4.10.0
-Release: alt12
+Release: alt13
 
 Summary: Vala bindings for the Xfce framework
-License: %lgpl2only
+License: LGPL-2.0-only
 Group: Development/Other
 URL: https://xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# git://git.xfce.org/bindings/xfce4-vala
+Vcs: git://git.xfce.org/bindings/xfce4-vala
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libgarcon-devel libxfconf-devel libxfce4ui-devel
-BuildRequires: libxfce4panel-devel libexo-devel
+BuildRequires: libxfce4panel-devel >= 4.14.3-alt3.g95d18aa4
+BuildRequires: libexo-devel
 BuildRequires: libvala-devel
 
 Requires: libxfce4util-devel libgarcon-devel libxfconf-devel libxfce4ui-devel
-Requires: libxfce4panel-devel libexo-devel
+Requires: libxfce4panel-devel >= 4.14.3-alt3.g95d18aa4
+Requires: libexo-devel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -48,6 +48,12 @@ Requires: libxfce4panel-devel libexo-devel
 /usr/share/vala-%vala_api/vapi/*
 
 %changelog
+* Mon Mar 16 2020 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt13
+- Fix remote_event signal.
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Rebuild with vala-0.48.
+
 * Thu Sep 26 2019 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt12
 - Rebuild with vala-0.46.
 
