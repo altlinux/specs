@@ -1,10 +1,10 @@
 %define xfce_ver 4.13
 %def_enable introspection
-%def_disable vala
+%def_enable vala
 
 Name: xfce4-panel
 Version: 4.14.3
-Release: alt2.g95d18aa4
+Release: alt3.g95d18aa4
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -192,6 +192,10 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Tue Mar 17 2020 Mikhail Efremov <sem@altlinux.org> 4.14.3-alt3.g95d18aa4
+- Enable Vala bindings again.
+- Fix remote_event signal.
+
 * Mon Mar 16 2020 Mikhail Efremov <sem@altlinux.org> 4.14.3-alt2.g95d18aa4
 - Disable Vala bindings for now.
 - Upstream git snapshot (xfce-4.14 branch).
