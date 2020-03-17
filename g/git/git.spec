@@ -1,5 +1,5 @@
 Name: git
-Version: 2.25.1
+Version: 2.25.2
 Release: alt1
 
 Summary: Git core and tools
@@ -522,6 +522,9 @@ popd
 %endif #doc
 
 %changelog
+* Tue Mar 17 2020 Dmitry V. Levin <ldv@altlinux.org> 2.25.2-alt1
+- 2.25.1 -> 2.25.2.
+
 * Mon Feb 17 2020 Dmitry V. Levin <ldv@altlinux.org> 2.25.1-alt1
 - 2.24.1 -> 2.25.1.
 
