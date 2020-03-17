@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -94,6 +94,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt2
 - updated to 1.6.0-18-g552a4f3
 - built against pipewire-0.3
