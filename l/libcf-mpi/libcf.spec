@@ -5,19 +5,22 @@
 
 %define oname libcf
 %define priority 40
+
 Name: %oname-mpi
 Version: 1.0
-Release: alt1.beta1.2011092223.1
+Release: alt2.beta1.2011092223.1
+
 Summary: Manipulating of scientific data files which conform to the CF conventions
 License: Open source
 Group: File tools
 Url: http://www.unidata.ucar.edu/software/libcf/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Patch0: port-to-python3.patch
 
-BuildPreReq: python-devel liblapack-devel gcc-fortran libuuid-devel
-BuildPreReq: libcurl-devel libnetcdf-mpi-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: liblapack-devel gcc-fortran libuuid-devel
+BuildRequires: libcurl-devel libnetcdf-mpi-devel
 
 %description
 The netCDF CF Library, or libCF, uses the netCDF API to aid in the
@@ -36,13 +39,13 @@ to the Climate and Forecast (CF) conventions.
 
 This package contains development files of libCF.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for libCF, the netCDF CF Library
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-Conflicts: python-module-%oname
+Conflicts: python3-module-%oname
 
-%description -n python-module-%name
+%description -n python3-module-%name
 The netCDF CF Library, or libCF, uses the netCDF API to aid in the
 creation, processing and sharing of scientific data files which conform
 to the Climate and Forecast (CF) conventions.
@@ -63,6 +66,7 @@ This package contains examples for libCF.
 
 %prep
 %setup
+%patch0 -p2
 
 sed -i 's|@HDFDIR@|%hdfdir|' setup.py.in
 
@@ -86,7 +90,7 @@ export CPPFLAGS="%optflags"
 	--enable-parallel
 %make_build
 
-%python_build_debug
+%python3_build_debug
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -94,7 +98,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
-%python_install
+%python3_install
 
 install -d %buildroot%hdfdir/bin
 install -m755 examples/.libs/* %buildroot%hdfdir/bin
@@ -112,10 +116,13 @@ install -m755 examples/.libs/* %buildroot%hdfdir/bin
 %doc examples
 %hdfdir/bin
 
-%files -n python-module-%name
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %changelog
+* Tue Mar 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2.beta1.2011092223.1
+- Porting to python3.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt1.beta1.2011092223.1
 - Rebuilt with libnetcdf11-mpi.
 
