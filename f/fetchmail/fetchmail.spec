@@ -1,11 +1,12 @@
+%define rtdir %_runtimedir/%name
+
 Name: fetchmail
 Version: 6.4.1
-Release: alt1
+Release: alt2
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
+License: GPLv2
 Group: Networking/Mail
-License: GPL
-
 Url: http://www.fetchmail.info
 
 Source0: %name-%version.tar
@@ -22,42 +23,15 @@ Patch1: %name-5.6.2-contrib.patch
 Patch2: %name-6.4.1-fetchmailconf.patch
 Patch3: %name-6.4.1-nopermcheck.patch
 Patch4: %name-6.4.1-no-libssl-version-sanity-check.patch
+Patch5: %name-6.4.1-port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: flex openssl-devel libkrb5-devel python3-devel
 
 Requires: %_sbindir/sendmail
 Requires: setup >= 2.1.9-ipl15mdk
 Requires: service >= 0.5.28-alt1
 
-BuildPreReq: rpm-build-python
-%_python_set_noarch
-
-BuildPreReq: flex openssl-devel libkrb5-devel python-devel
-
-%define rtdir %_runtimedir/%name
-
-%package -n %{name}conf
-Summary: A utility for graphically configuring your %name preferences
-Group: System/Configuration/Networking
-BuildArch: noarch
-Requires: %name = %version-%release, tkinter
-
-%package daemon
-Summary: SySV init script for demonize %name for sucking emails
-Group: System/Servers
-PreReq: %name = %version-%release
-PreReq: shadow-utils, chkconfig
-BuildArch: noarch
-
-%package contrib
-Summary: Various contributed software designed to work with %name
-Group: System/Base
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%package locales
-Summary: %name localization
-Group: System/Internationalization
-Requires: %name = %version-%release
-BuildArch: noarch
 
 %description
 Fetchmail is a free, full-featured, robust, and well-documented
@@ -78,6 +52,30 @@ you can read it through your normal mail client.
 You may also want to install and configure a local SMTP server,
 such as postfix-smtpd, as that's what fetchmail uses for delivery
 by default.
+
+%package -n %{name}conf
+Summary: A utility for graphically configuring your %name preferences
+Group: System/Configuration/Networking
+Requires: %name = %version-%release, tkinter
+
+%package daemon
+Summary: SySV init script for demonize %name for sucking emails
+Group: System/Servers
+PreReq: %name = %version-%release
+PreReq: shadow-utils, chkconfig
+BuildArch: noarch
+
+%package contrib
+Summary: Various contributed software designed to work with %name
+Group: System/Base
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%package locales
+Summary: %name localization
+Group: System/Internationalization
+Requires: %name = %version-%release
+BuildArch: noarch
 
 %description -n %{name}conf
 Fetchmailconf is a TCL/TK application for graphically configuring
@@ -105,10 +103,15 @@ neccessary.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 cp -a %SOURCE3 fetchmailrc.example
 
+sed -i 's|@pythondir@/fetchmailconf.py|%python3_sitelibdir/fetchmailconf.py|'\
+    Makefile.in
+
 %build
+export PYTHON=%__python3
 export ac_cv_path_procmail=%_bindir/procmail
 export ac_cv_path_sendmail=%_sbindir/sendmail
 export ac_cv_lib_intl_gettext=no
@@ -153,6 +156,11 @@ EOF
 
 %find_lang %name
 
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+    mkdir -p %buildroot%python3_sitelibdir
+    mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
+%endif
+
 %pre -n %name-daemon
 %_sbindir/groupadd -f %name ||:
 %_sbindir/useradd -r -n -M -g %name -d %rtdir -s /dev/null %name &>/dev/null ||:
@@ -165,6 +173,7 @@ usermod -d %rtdir %name ||:
 
 %preun -n %name-daemon
 %preun_service %name
+
 %files
 %_bindir/%name
 %_man1dir/%name.*
@@ -173,7 +182,7 @@ usermod -d %rtdir %name ||:
 
 %files -n %{name}conf
 %_bindir/%{name}conf
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_desktopdir/*.desktop
 %_niconsdir/*.png
 %_liconsdir/*.png
@@ -190,7 +199,12 @@ usermod -d %rtdir %name ||:
 %doc contrib/*
 
 %files -f %name.lang locales
+
+
 %changelog
+* Tue Mar 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.4.1-alt2
+- Porting to python3.
+
 * Mon Sep 30 2019 Alexey Gladkov <legion@altlinux.ru> 6.4.1-alt1
 - New version (6.4.1)
 
