@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 20.09
+Version: 20.11
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -55,7 +55,7 @@ This package provides noarch data needed for Fotox to work.
 chmod -x doc/*
 
 %build
-%make_build PREFIX=/usr CXXFLAGS="%optflags -D_FILE_OFFSET_BITS=64"
+%make_build PREFIX=/usr CXXFLAGS="%optflags %(getconf LFS_CFLAGS)"
 
 %install
 install -d %buildroot%_man1dir
@@ -83,6 +83,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 20.11-alt1
+- 20.11
+
 * Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 20.09-alt1
 - 20.09
 
