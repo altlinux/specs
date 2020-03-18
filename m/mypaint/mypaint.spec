@@ -1,12 +1,12 @@
 %def_enable snapshot
 
 Name: mypaint
-Version: 1.2.1
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: A simple paint program
 Group: Graphics
-License: GPLv2+
+License: GPL-2.0-or-later and ISC and Public-domain
 Url: http://mypaint.org/
 
 %if_disabled snapshot
@@ -16,15 +16,22 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 Source: %name-%version.tar
 %endif
 
+%define mypaintlib_ver 1.5
+
 Requires: %name-data = %version-%release
-Requires: python-module-pygobject3-pygtkcompat
+Requires: mypaint-brushes >= 2.0
+Requires: typelib(MyPaint) = 1.5
 
-%add_python_compile_include %_datadir/%name %_datadir/lib%name
+%add_python3_path %_datadir/%name %_libdir/%name
 
-BuildRequires: gcc-c++ libgomp-devel scons swig libgtk+3-devel
-BuildRequires: libXi-devel python-devel libnumpy-devel
-BuildRequires: libpng-devel libjson-c-devel python-modules-json liblcms2-devel
-BuildRequires: gobject-introspection-devel python-module-pygobject3-devel
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: lib%name-devel >= %mypaintlib_ver
+BuildRequires: gcc-c++ libgomp-devel swig libgtk+3-devel
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-numpy libnumpy-py3-devel
+BuildRequires: libpng-devel libjson-c-devel liblcms2-devel
+BuildRequires: gobject-introspection-devel python3-module-pygobject3-devel
+BuildRequires: pkgconfig(mypaint-brushes-2.0)
 
 %description
 MyPaint is a simple drawing and painting program that works well with
@@ -63,17 +70,13 @@ with mypaint brush library.
 %prep
 %setup
 # fix libdir
-subst 's|lib\/mypaint|%_lib\/mypaint|' SConstruct SConscript mypaint.py
 subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
-subst 's|prefix\/lib|prefix\/%_lib|' brushlib/SConscript
-# fix pkgconfig-file by preventing substitution
-subst 's|@LIBDIR@|%_libdir|' brushlib/pkgconfig.pc.in
 
 %build
-scons
+%python3_build
 
 %install
-scons prefix=%buildroot%_prefix install
+%python3_install --install-lib=%_libdir/%name
 %find_lang --output=%name.lang %name
 
 %files -f %name.lang
@@ -82,21 +85,16 @@ scons prefix=%buildroot%_prefix install
 
 %files data
 %_datadir/%name/
-%_datadir/lib%name/
 %_datadir/thumbnailers/%name-ora.thumbnailer
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/appdata/mypaint.appdata.xml
-%doc README.md README_LINUX.md Changelog.md
-
-%if 0
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%_includedir/lib%name/
-%_pkgconfigdir/lib%name.pc
-%endif
+%_datadir/metainfo/mypaint.appdata.xml
+%doc README.md Changelog.md Licenses.md
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Tue May 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt2
 - updated to v1.2.1-4-g498cb3f
 - removed libmypaint.mo to avoid conflict with standalone libmypaint used by gimp-2.10 now
