@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.41
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -71,6 +71,9 @@ Patch1: apache2-2.4.28-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
 Patch4: apache2-2.4.35-tlv1.2-default.patch
+
+# Upstream patches:
+Patch5: apache2-2.4.41-r1874456.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
@@ -676,6 +679,7 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %patch2 -p1
 %patch3 -p1 -b .orig
 %patch4 -p2
+%patch5 -p1
 
 # generate ALTLinux Apache layout
 echo "
@@ -1514,6 +1518,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Mar 18 2020 Stanislav Levin <slev@altlinux.org> 1:2.4.41-alt2
+- mod_proxy_ajp: added "secret" parameter to proxy workers
+
 * Wed Aug 14 2019 Anton Farygin <rider@altlinux.ru> 1:2.4.41-alt1
 - 2.4.41 
 
