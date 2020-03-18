@@ -1,7 +1,7 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.6
+Version: 8.06.8
 Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
@@ -89,6 +89,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 8.06.8-alt1
+- 8.06.8
+
 * Wed Jul 24 2019 Anton Farygin <rider@altlinux.ru> 8.06.6-alt1
 - 8.06.6
 

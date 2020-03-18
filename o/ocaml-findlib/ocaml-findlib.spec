@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -14,7 +14,7 @@ Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
 BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel ocaml-graphics
+BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
 
 %package -n ocaml-ocamlfind-mini
 Summary: Minimal findlib script to be distributed with user libraries
@@ -142,6 +142,10 @@ EOF
 
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 1.8.1-alt2
+- removed BR: starting with ocaml 4.10 ocaml-graphics is built from
+  a separate package
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - added dummy META file for seq library

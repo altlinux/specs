@@ -1,10 +1,10 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-extlib
 Version: 1.7.6
-Release: alt2
+Release: alt3
 
 Summary: extended standard library for OCaml
-License: LGPL v2, with exceptions
+License: LGPLv2 with exceptions
 Group: Development/ML
 Url: http://code.google.com/p/ocaml-extlib/
 # https://github.com/ygrek/ocaml-extlib
@@ -69,6 +69,9 @@ mkdir -p mkdir -p %buildroot%_libdir/ocaml
 %_libdir/ocaml/extlib/*.mli
 
 %changelog
+* Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 1.7.6-alt3
+- fixed License tag
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.7.6-alt2
 - rebuilt with ocaml-4.08
 

@@ -10,7 +10,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.12.1
-Release: alt3
+Release: alt4
 Group: Emulators
 License: GPLv2 LGPLv2 BSD
 URL: http://www.xenproject.org/
@@ -43,9 +43,11 @@ Source49: tmpfiles.d.xen.conf
 
 Patch0: %name-%version-upstream.patch
 Patch1: %name-%version-alt.patch
+Patch2: gcc-4.9-ocaml-4.10-compilation-fix-upstream.patch
 
 # Fedora
 Patch5: %name-net-disable-iptables-on-bridge.patch
+Patch6: %name.ocaml.4.10.patch
 
 Patch10: pygrubfix.patch
 Patch15: %name.use.fedora.ipxe.patch
@@ -342,7 +344,9 @@ ln -s ../../qemu-ui-keycodemapdb qemu-xen-%version/ui/keycodemapdb
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch5 -p1
+%patch6 -p1
 %patch10 -p1
 %patch15 -p1
 %patch17 -p1
@@ -817,6 +821,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Mar 17 2020 Anton Farygin <rider@altlinux.ru> 4.12.1-alt4
+- fixed build with ocaml-4.10.0
+
 * Mon Mar 16 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.12.1-alt3
 - set explicit python interpreter: /usr/bin/python2
 

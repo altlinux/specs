@@ -1,7 +1,11 @@
 %set_verify_elf_method textrel=relaxed
+%ifarch i586
+# floatscale.exe fails on i586: Fatal error: exception Invalid_argument("Array.make")
+%def_disable check
+%endif
 Name: ocaml-parmap
-Version: 1.0
-Release: alt3.rc10
+Version: 1.1.1
+Release: alt1
 Summary: small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
 License: LGPLv2+ with exceptions
@@ -13,6 +17,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-ocamldoc
+BuildRequires: dune
 BuildRequires(pre): rpm-build-ocaml
 
 %description
@@ -32,18 +37,17 @@ developing applications that use %name.
 %setup
 
 %build
-%configure --libdir=%_libdir --with-findlib
-%__subst 's:lib/ocaml:%_libdir/ocaml:' Makefile
-%__subst 's:/man/man3:%_man3dir:' Makefile
 make
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+dune install --destdir=%buildroot
+
+%check
+dune runtest
 
 %files
-%doc Changelog README.md
+%doc CHANGES README.md
 %doc LICENSE
-%_libdir/ocaml/parmap/META
 %_libdir/ocaml/parmap/*.cmi
 %_libdir/ocaml/parmap/*.cma
 %_libdir/ocaml/parmap/*.cmxs
@@ -51,13 +55,21 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 %files devel
 %doc LICENSE
+%_libdir/ocaml/parmap/META
+%_libdir/ocaml/parmap/opam
+%_libdir/ocaml/parmap/dune-package
 %_libdir/ocaml/parmap/*.a
 %_libdir/ocaml/parmap/*.cmxa
+%_libdir/ocaml/parmap/*.cmti
+%_libdir/ocaml/parmap/*.cmt
 %_libdir/ocaml/parmap/*.cmx
 %_libdir/ocaml/parmap/*.mli
-%_man3dir/*.3o*
+%_libdir/ocaml/parmap/*.ml
 
 %changelog
+* Fri Feb 07 2020 Anton Farygin <rider@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
 * Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 1.0-alt3.rc10
 - rebuilt with ocaml-4.08
 

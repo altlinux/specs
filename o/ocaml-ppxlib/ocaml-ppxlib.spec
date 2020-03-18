@@ -2,22 +2,27 @@
 %define libname ppxlib
 Name: ocaml-%libname
 Version: 0.12.0
-Release: alt1
+Release: alt2
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
 Url: https://github.com/ocaml-ppx/ppxlib
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam  ocaml-compiler-libs-devel cinaps ocaml-result-devel ocaml-re-devel
-BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel ocaml-ppx_derivers-devel
+Patch0: %name-%version-%release.patch
+BuildRequires: ocaml-findlib-devel dune opam  cinaps ocaml-result-devel
+BuildRequires: ocaml-re-devel ocaml-compiler-libs-devel ocaml-ppx_derivers-devel
+BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel
 
 %description
 A comprehensive toolbox for ppx development. It features:
 
- * a OCaml AST / parser / pretty-printer snapshot,to create a full frontend independent of the version of OCaml;
- * a library for library for ppx rewriters in general, and type-driven code generators in particular;
+ * a OCaml AST / parser / pretty-printer snapshot,to create a full frontend
+   independent of the version of OCaml;
+ * a library for library for ppx rewriters in general, and type-driven code
+   generators in particular;
  * a feature-full driver for OCaml AST transformers;
- * a quotation mechanism allowing to write values representing the OCaml AST in the OCaml syntax;
+ * a quotation mechanism allowing to write values representing the OCaml AST
+   in the OCaml syntax;
  * a generator of open recursion classes from type definitions.
 
 %package devel
@@ -31,12 +36,13 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+dune install --destdir=%buildroot
 
 %check
 dune runtest
@@ -74,6 +80,10 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Fri Feb 28 2020 Anton Farygin <rider@altlinux.ru> 0.12.0-alt2
+- build for ocaml-4.10
+- cleanup spec
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
