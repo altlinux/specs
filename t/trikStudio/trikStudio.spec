@@ -5,7 +5,7 @@
 %def_without debug
 Name: trikStudio
 Version: 2019.8
-Release: alt4
+Release: alt6
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -25,7 +25,7 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: libquazip-qt5
+Requires: libquazip-qt5 libhidapi
 Requires: %name-data = %version-%release
 Conflicts: lib%name
 
@@ -127,7 +127,7 @@ rm -rf %buildroot%_includedir/qslog*
 rm -rf %buildroot%_includedir/QsLog*
 %endif
 rm -f %buildroot/lib/*PythonQt_QtAll* %buildroot/include/PythonQt_QtAll.h
-rm -f %buildroot%_libdir/plugins/tools/kitPlugins/librobots-null-interpreter.so
+rm -f %buildroot%_libdir/%name/plugins/tools/kitPlugins/librobots-null-interpreter.so
 
 pushd bin/release
 for d in examples help translations images; do
@@ -166,6 +166,13 @@ popd
 %endif
 
 %changelog
+* Wed Mar 18 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt6
+- Replace /etc/trikStudio.config settings to global settingsDefaultValues
+
+* Wed Mar 18 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt5
+- Add requirement to libhidapi for ev3 robots plugin
+- Fix null model removing
+
 * Fri Mar 13 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt4
 - Disable sanitize_undefined due it produces false positives with derived
   objects causing the runtime error member with call on address which does
