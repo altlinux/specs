@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.8
-Release: alt1.1.1.1
+Version: 1.0.1
+Release: alt1
 Summary: System V IPC for Python - Semaphores, Shared Memory and Message Queues
 Group: Development/Python
 License: GPLv3+
@@ -80,10 +80,10 @@ popd
 %python3_sitelibdir/*
 %endif
 
-%files examples
-%doc demo demo2 demo4
-
 %changelog
+* Mon Feb 24 2020 Nikita Nikiforov <rav263@altlinux.org> 1.0.1-alt1
+- (NMU) Update version 1.0.1
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.8-alt1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
