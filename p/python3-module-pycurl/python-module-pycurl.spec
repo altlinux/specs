@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 7.43.0.2
-Release: alt2
+Release: alt3
 
 Summary: Python bindings to libcurl
 License: LGPL
@@ -16,7 +16,7 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libcurl-devel libssl-devel
-
+Requires: libcurl >= 7.69.1
 
 %description
 This module provides the Python bindings to libcurl.
@@ -39,6 +39,9 @@ This module provides the Python bindings to libcurl.
 
 
 %changelog
+* Wed Mar 18 2020 Pavel Skrylev <majioa@altlinux.org> 7.43.0.2-alt3
+- fixed (!) inconsistency error to in libcurl versions 7.65.0 and 7.68.0 (fixes #38235)
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 7.43.0.2-alt2
 - Build for python2 disabled.
 
