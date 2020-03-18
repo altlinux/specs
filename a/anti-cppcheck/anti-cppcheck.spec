@@ -4,8 +4,8 @@
 %define ax_ver 0.6
 
 Name: anti-cppcheck
-Version: 0.3.0
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Utility that helps to handle reports produced by cppcheck
 License: GPLv3
@@ -42,7 +42,6 @@ mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{thislibdir}
 mkdir -p %{buildroot}%{thisdocdir}
 # Executables
-cp %{name} %{buildroot}%{_bindir}
 cp %{name}-analyze %{buildroot}%{_bindir}
 cp %{name}-comment %{buildroot}%{_bindir}
 cp %{name}-find %{buildroot}%{_bindir}
@@ -59,6 +58,12 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Mar 18 2020 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
+- All three executive modules (*comment, *analyze and *find) can be used
+  on multiple reports at once by utilizing new features of 'machinery' lib,
+  'anti-cppcheck' module is no longer needed and has been removed,
+  the operation become much more efficient.
+
 * Tue Mar 17 2020 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt2
 - A missing executable has been added;
 - Correct and fully working approach to import of submodules.
