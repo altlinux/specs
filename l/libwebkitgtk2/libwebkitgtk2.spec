@@ -20,10 +20,10 @@
 
 Name: libwebkitgtk2
 Version: 2.4.11
-Release: alt8
+Release: alt9
 
 Summary: Web browser engine
-License: %bsd %lgpl2plus
+License: LGPL-2.0 and LGPL-2.1 and BSD-2-Clause
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
 
@@ -296,6 +296,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed Mar 18 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt9
+- rebuilt against icu-66 libraries
+- fixed license tag
+
 * Tue Oct 22 2019 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt8
 - rebuilt against icu-65.1 libraries
 
