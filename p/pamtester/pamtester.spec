@@ -1,6 +1,6 @@
 Name: pamtester
 Version: 0.1.2
-Release: alt1
+Release: alt2
 Epoch: 1
 License: GPL
 Group: Accessibility
@@ -11,6 +11,8 @@ BuildRequires: pam-devel
 
 Source: %name-%version.tar
 
+Patch: %name-%version-nulluser.patch
+
 %description
 pamtester is a tiny utility program to test the pluggable authentication
 modules (PAM) facility, which is a de facto standard of unified authentication
@@ -19,6 +21,7 @@ management mechanism in many unices and similar OSes including Solaris, HP-UX,
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -33,6 +36,9 @@ management mechanism in many unices and similar OSes including Solaris, HP-UX,
 %_man1dir/pamtester.*
 
 %changelog
+* Wed Mar 18 2020 Paul Wolneykien <manowar@altlinux.org> 1:0.1.2-alt2
+- Allow to pass "NULL" or "" as a username to skip PAM_USER setting (patch).
+
 * Wed Feb 05 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 1:0.1.2-alt1
 - NMU: fixed typo in version (0.1.12 -> 0.1.2), bumped epoch (Closes: 38036)
 
