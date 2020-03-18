@@ -1,7 +1,7 @@
 
 Name: cacti
 Version: 1.2.10
-Release: alt1
+Release: alt2
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -78,9 +78,6 @@ insecure to keep the setup files in place.
 %setup -q
 %patch -p1
 
-mkdir -p sql
-# you should run this sql if your database contains path to %{_datadir}...
-cp %SOURCE5 sql
 
 %build
 chmod a+rx scripts/*
@@ -96,6 +93,8 @@ chmod 755 %buildroot%_sbindir/cacti-poller
 install -m 0640 include/config.php.dist %buildroot%cacticonfdir/config.php
 touch %buildroot%_logdir/%name/%name.log
 
+# you should run this sql if your database contains path to %{_datadir}...
+cp %SOURCE5 docs/
 cp %SOURCE2 docs/README_ALT.txt
 cp %SOURCE7 docs/
 cp %SOURCE8 docs/
@@ -135,7 +134,7 @@ chmod -v 660 %_logdir/%name/* %_localstatedir/%name/*
 fi
 
 %files
-%doc docs/README_ALT.txt CHANGELOG LICENSE README.md
+%doc docs/README_ALT.txt docs/%name-rrdpath.sql CHANGELOG LICENSE README.md cacti.sql
 %config(noreplace) %_sysconfdir/cron.d/cacti
 %_sbindir/cacti-poller
 %dir %attr(750,root,%webserver_group) %cacticonfdir
@@ -164,6 +163,9 @@ fi
 %cactidir/install
 
 %changelog
+* Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt2
+- package cacti.sql to doc dir
+
 * Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt1
 - 1.2.10
 - Fixes:
