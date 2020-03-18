@@ -1,13 +1,13 @@
 %define	       pkgname ronn
 
-Name:          %pkgname
+Name:          gem-%pkgname
 Version:       0.7.3
-Release:       alt4
+Release:       alt4.1
 Summary:       Ronn builds manuals from Markdown to roff format
 License:       MIT
 Group:         Development/Documentation
 Url:           https://github.com/rtomayko/ronn/
-%vcs           https://github.com/rtomayko/ronn.git
+Vcs:           https://github.com/rtomayko/ronn.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -18,6 +18,10 @@ BuildRequires: gem(hpricot)
 BuildRequires: gem(rdiscount)
 BuildRequires: gem(mustache)
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
+
 %description
 Ronn builds manuals. It converts simple, human readable textfiles to
 roff for terminal display, and also to HTML for the web. The source
@@ -27,13 +31,13 @@ lists, link notation, etc.). The ronn-format(7) manual page defines the
 format in detail.
 
 
-%package       -n gem-%pkgname
-Summary:       Ruby library files for %gemname gem
+%package       -n %pkgname
+Summary:       Ronn builds manuals from Markdown to roff format
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname
-Documentation files for %gemname gem.
+%description   -n %pkgname
+%summary.
 
 
 %package       -n gem-%pkgname-doc
@@ -59,25 +63,29 @@ Documentation files for %gemname gem.
 
 %files
 %doc README*
-%_bindir/%name
-%_mandir/*.1*
-%_mandir/*.7*
-
-%files         -n gem-%pkgname
 %ruby_gemspec
 %ruby_gemlibdir
+
+%files         -n %pkgname
+%doc README*
+%_bindir/%pkgname
+%_mandir/*.1*
+%_mandir/*.7*
 
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4.1
+- fixed (!) spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt4
-- ! spec according to changelog rules
+- fixed (!) spec according to changelog rules
 
 * Thu Jul 25 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt3
-- ! spec
-- + ronn gem build dependency
+- fixed (!) spec
+- added (+) ronn gem build dependency
 
 * Tue Apr 09 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt2
 - Use Ruby Policy 2.0

@@ -1,22 +1,28 @@
-%define        pkgname rack-mount
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname docopt
 
 Name:          gem-%pkgname
-Version:       0.8.3
-Release:       alt2
-Summary:       Stackable dynamic tree based Rack router
+Version:       0.6.1
+Release:       alt1
+Summary:       Parse command line arguments from nothing more than a usage message
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/sporkmonger/rack-mount
-Vcs:           https://github.com/sporkmonger/rack-mount.git
+Url:           https://github.com/docopt/docopt.rb
+Vcs:           https://github.com/docopt/docopt.rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+
 %description
-%summary
+Isn't it awesome how `optparse` and other option parsers generate help and
+usage-messages based on your code?! Hell no! You know what's awesome? It's when
+the option parser *is* generated based on the help and usage-message that you
+write in a docstring! That's what docopt does!
+
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -44,16 +50,14 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
-%changelog
-* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt2
-- used (>) Ruby Policy 2.0
-- fixed (!) spec minorly
 
-* Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
-- Initial build for Sisyphus, packaged as gem
+%changelog
+* Tue Mar 03 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt1
+- + packaged gem with usage Ruby Policy 2.0

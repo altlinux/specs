@@ -1,22 +1,26 @@
-%define        pkgname rack-mount
+%define        pkgname activemodel-serializers-xml
 
 Name:          gem-%pkgname
-Version:       0.8.3
+Version:       1.0.2
 Release:       alt2
-Summary:       Stackable dynamic tree based Rack router
+Summary:       This gem provides XML serialization for your Active Model objects and Active Record models
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/sporkmonger/rack-mount
-Vcs:           https://github.com/sporkmonger/rack-mount.git
+Url:           https://github.com/rails/activemodel-serializers-xml/
+Vcs:           https://github.com/rails/activemodel-serializers-xml.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
+
 %description
-%summary
+%summary.
+
 
 %package       doc
 Summary:       Documentation files for %gemname gem
@@ -51,9 +55,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
-* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt2
-- used (>) Ruby Policy 2.0
-- fixed (!) spec minorly
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt2
+- > Ruby Policy 2.0
+- ! spec tags
 
-* Mon Dec 24 2018 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
-- Initial build for Sisyphus, packaged as gem
+* Tue Oct 02 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.2-alt1
+- Initial build for Sisyphus

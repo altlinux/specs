@@ -2,13 +2,13 @@
 
 Name:          gem-%pkgname
 Version:       0.8.23
-Release:       alt1
+Release:       alt2
 Summary:       Coveralls for Ruby
 Summary(ru_RU.UTF-8): Покрытия для рубина
 License:       MIT
 Group:         Development/Ruby
 Url:           https://coveralls.io
-%vcs           https://github.com/lemurheavy/coveralls-ruby.git
+Vcs:           https://github.com/lemurheavy/coveralls-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -22,6 +22,7 @@ BuildRequires: gem(rake) >= 10.3
 BuildRequires: gem(rspec) >= 3.2
 BuildRequires: gem(simplecov) >= 0.17.0
 BuildRequires: gem(truthy) >= 1.0
+
 %gem_replace_version simplecov ~> 0.17
 
 %description
@@ -51,6 +52,8 @@ Summary:       Executable file for %gemname gem
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Conflicts:     python-module-z4r-coveralls
 
 %description   -n %pkgname
 Executable file for %gemname gem.
@@ -82,6 +85,11 @@ Executable file for %gemname gem.
 %_bindir/*
 
 %changelog
+* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt2
+- ! spec
+ + + explicit conflict for bump to python-module-z4r-coveralls
+ + * minor
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.23-alt1
 - Bump to 0.8.23
 - Fixed spec

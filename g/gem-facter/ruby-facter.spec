@@ -1,18 +1,19 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname facter
 
-Name: 	       ruby-%pkgname
-Version:       2.5.5
+Name:          gem-%pkgname
+Version:       2.5.7
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
 Group:         Development/Ruby
 License:       Apache-2.0
 Url:           https://tickets.puppetlabs.com/browse/FACT
-%vcs           https://github.com/puppetlabs/facter
+Vcs:           https://github.com/puppetlabs/facter.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         %name-%version-timeout.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libcpp-hocon-devel
 BuildRequires: libyaml-cpp-devel
@@ -26,6 +27,8 @@ Requires:      pciutils
 Requires:      bind-utils
 %add_findreq_skiplist *.erb
 %add_findreq_skiplist %ruby_gemslibdir/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 A cross-platform Ruby library for retrieving facts from
@@ -49,12 +52,12 @@ BuildArch:     noarch
 Documentation files for %gemname gem.
 
 
-%package       -n facter
+%package       -n %pkgname
 Summary:       Console executable called 'facter'
 Group:         System/Base
 BuildArch:     noarch
 
-%description -n facter
+%description -n %pkgname
 %summary, for retrieving facts from
 operating systems. Supports multiple resolution mechanisms, any
 of which can be restricted to working only on certain operating
@@ -65,6 +68,7 @@ addresses, and SSH keys.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %ruby_build --ignore=acceptance
@@ -78,16 +82,21 @@ addresses, and SSH keys.
 %files
 %ruby_gemspec
 %ruby_gemlibdir
-%doc %_man8dir/%{pkgname}.*
 
 %files         doc
 %ruby_gemdocdir
 
-%files         -n facter
+%files         -n %pkgname
 %_bindir/*
+%doc %_man8dir/%{pkgname}.*
 
 
 %changelog
+* Tue Mar 10 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.7-alt1
+- ^ 2.5.5 -> 2.5.7
+- + timeout patch
+- ! spec tags
+
 * Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 2.5.5-alt1
 - update (^) 2.5.2 -> 2.5.5
 - fix (!) spec
