@@ -4,11 +4,13 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 13.10
+%define major 13.11
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
 %global nodejs_abi 13
+
+%global napi 6
 
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
@@ -45,7 +47,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -106,6 +108,7 @@ Obsoletes: node.js < %version-%release
 
 Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
+Provides: nodejs(napi) = %{napi}
 
 Provides: bundled(llhttp) = 2.0.4
 
@@ -169,9 +172,10 @@ License:	MIT License
 Requires:	node
 BuildArch:	noarch
 AutoReq:	yes,nopython
-%if_with nodejs_abi
+# https://bugzilla.altlinux.org/show_bug.cgi?id=38130
+#%if_with nodejs_abi
 Requires:	nodejs(abi) = %{nodejs_abi}
-%endif
+#%endif
 
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
@@ -363,6 +367,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Mar 19 2020 Vitaly Lipatov <lav@altlinux.ru> 13.11.0-alt1
+- new version 13.11.0
+
 * Tue Mar 10 2020 Vitaly Lipatov <lav@altlinux.ru> 13.10.1-alt1
 - new version 13.10.1
 - set node ABI to 13
