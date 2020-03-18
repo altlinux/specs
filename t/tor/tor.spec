@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.2.6
-Release: alt2
+Version: 0.4.2.7
+Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -145,6 +145,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Mar 18 2020 Vladimir Didenko <cow@altlinux.ru> 0.4.2.7-alt1
+- new version (fixes CVE-2020-10592)
+
 * Sat Feb 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4.2.6-alt2
 - build against libcap, libsystemd, liblzma and libzstd
 - build against libseccomp on ix86, x86_64 and aarch64
