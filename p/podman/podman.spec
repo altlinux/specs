@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.6.4
+Version:  1.8.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -16,7 +16,6 @@ Source:   %name-%version.tar
 Patch1: fix-source-name-in-man.patch
 Patch2: makefile_not_create_link_docs.patch
 Patch3: makefile_remove_prefix_tmpfile_and_systemd.patch
-Patch4: makefile_fix_docker_documentation_install_and_generation.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -44,7 +43,6 @@ Conflicts: docker-ce
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
@@ -67,12 +65,16 @@ export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
 /lib/systemd/user/io.%name.*
 %_sysconfdir/cni/net.d/87-podman-bridge.conflist
 %_tmpfilesdir/%name.conf
+%_tmpfilesdir/%name-docker.conf
 %_man1dir/*
 %exclude %_man1dir/docker*
 %_man5dir/*
 %doc *.md
 
 %changelog
+* Thu Mar 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.1-alt1
+- new version 1.8.1
+
 * Thu Dec 12 2019 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.4-alt1
 - new version 1.6.4
 
