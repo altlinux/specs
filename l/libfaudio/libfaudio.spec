@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: libfaudio
-Version: 19.09
-Release: alt0.1.g%{git}
+Version: 20.03
+Release: alt0.1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
 License: BSD-like
@@ -79,6 +79,9 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Sun Mar 15 2020 L.A. Kostis <lakostis@altlinux.ru> 20.03-alt0.1
+- 20.03.
+
 * Mon Sep 30 2019 L.A. Kostis <lakostis@altlinux.ru> 19.09-alt0.1.g65b787f
 - Initial build for ALTLinux.
 
