@@ -18,7 +18,7 @@
 
 Name: graphviz
 Version: 2.41.2
-Release: alt2
+Release: alt3
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -32,6 +32,7 @@ Source2: graphviz-dot-x11-preview.desktop
 Patch0:  graphviz-2.24.0-alt-perl-5.12.patch
 Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
 Patch2:  graphviz-2.38.0-gs-9.18-fix.patch
+Patch3:  graphviz-2.41.2-alt-add-riscv64.patch
 
 # From Fedora:
 Patch40:                 graphviz-2.40.1-visio.patch
@@ -168,6 +169,7 @@ This package makes %name functionality accessible from Tcl
 %patch0 -p1
 #patch1
 %patch2 -p1
+%patch3 -p1
 
 #patch40 -p1 -b .visio
 #patch41 -p1 -b .python3
@@ -365,6 +367,9 @@ rm -f %buildroot%_man3dir/*.1
 # - enable/fix/test language bindings
 
 %changelog
+* Thu Mar 19 2020 Nikita Ermakov <arei@altlinux.org> 2.41.2-alt3
+- Add riscv64 support.
+
 * Sun Mar 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2.41.2-alt2
 - Reintroduced python3 subpackage lost in the previous package release.
 
