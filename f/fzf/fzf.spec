@@ -1,5 +1,5 @@
 %global import_path github.com/junegunn/fzf
-%global commit 9a41fd5327ffb112ca68d023e165fe0fcee01320
+%global commit 14f90502a49b868b6c9fed4a86d413427052fb81
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		fzf
-Version:	0.20.0
+Version:	0.21.0
 Release:	alt1
 Summary:	A general-purpose command-line fuzzy finder.
 
@@ -134,6 +134,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Thu Mar 19 2020 Vladimir Didenko <cow@altlinux.org> 0.21.0-alt1
+- New version
+
 * Wed Jan 8 2020 Vladimir Didenko <cow@altlinux.org> 0.20.0-alt1
 - New version
 
