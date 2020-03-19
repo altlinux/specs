@@ -1,43 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname veusz
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.1
-Release: alt1
+Release: alt2
+
 Summary: A Scientific Plotting Package
 License: GPLv2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://home.gna.org/veusz/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: %name-%version.tar
 
-BuildPreReq: python-devel libnumpy-devel python-module-PyQt5-devel
-BuildPreReq: qt5-base-devel python-module-sip-devel python-module-pyemf
-BuildPreReq: gcc-c++
-Buildrequires: /usr/bin/pod2man /usr/bin/man texlive-dist
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-module-PyQt5-devel
-BuildPreReq: python3-module-sip-devel
-%endif
+BuildRequires: gcc-c++
+BuildRequires: /usr/bin/pod2man /usr/bin/man texlive-dist
+BuildRequires: python3-devel libnumpy-py3-devel
+BuildRequires: qt5-base-devel python3-module-PyQt5-devel
+BuildRequires: python3-module-sip-devel
 
-%description
-Veusz is a GUI scientific plotting and graphing package. It is designed
-to produce publication-ready Postscript or PDF output. SVG, EMF and
-bitmap export formats are also supported. The program runs under
-Unix/Linux, Windows or Mac OS X, and binaries are provided. Data can be
-read from text, CSV or FITS files, and data can be manipulated or
-examined from within the application.
-
-%package -n python3-module-%oname
-Summary: A Scientific Plotting Package
-Group: Development/Python3
 %add_python3_req_skip pyemf
 
-%description -n python3-module-%oname
+%description
 Veusz is a GUI scientific plotting and graphing package. It is designed
 to produce publication-ready Postscript or PDF output. SVG, EMF and
 bitmap export formats are also supported. The program runs under
@@ -60,21 +44,6 @@ examined from within the application.
 
 This packagec contains documentation for Veusz.
 
-%package -n python3-module-%oname-examples
-Summary: Examples for Veusz
-Group: Development/Documentation
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-examples
-Veusz is a GUI scientific plotting and graphing package. It is designed
-to produce publication-ready Postscript or PDF output. SVG, EMF and
-bitmap export formats are also supported. The program runs under
-Unix/Linux, Windows or Mac OS X, and binaries are provided. Data can be
-read from text, CSV or FITS files, and data can be manipulated or
-examined from within the application.
-
-This package contains examples for Veusz.
-
 %package examples
 Summary: Examples for Veusz
 Group: Development/Documentation
@@ -95,23 +64,9 @@ Summary: A Scientific Plotting Package
 Group: Graphics
 Conflicts: %name < %version-%release
 Requires: %name = %version-%release
+Requires: %name-examples = %version-%release
 
 %description -n %oname
-Veusz is a GUI scientific plotting and graphing package. It is designed
-to produce publication-ready Postscript or PDF output. SVG, EMF and
-bitmap export formats are also supported. The program runs under
-Unix/Linux, Windows or Mac OS X, and binaries are provided. Data can be
-read from text, CSV or FITS files, and data can be manipulated or
-examined from within the application.
-
-This package contains main scripts for Veusz.
-
-%package -n %oname-py3
-Summary: A Scientific Plotting Package
-Group: Graphics
-Requires: python3-module-%oname = %version-%release
-
-%description -n %oname-py3
 Veusz is a GUI scientific plotting and graphing package. It is designed
 to produce publication-ready Postscript or PDF output. SVG, EMF and
 bitmap export formats are also supported. The program runs under
@@ -124,74 +79,32 @@ This package contains main scripts for Veusz.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec \
+find ./ -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-#!/usr/bin/env python
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
-
-make -C Documents
-
-#install -d %buildroot%_man1dir
-#install -m644 Documents/*.1 %buildroot%_man1dir
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/examples
-
-%files docs
-#doc Documents/*.txt Documents/*.html Documents/*.pdf
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/examples
 
 %files examples
-%python_sitelibdir/*/examples
+%python3_sitelibdir/*/examples
 
 %files -n %oname
 %doc AUTHORS ChangeLog COPYING README
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-#_man1dir/*
 
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/examples
-
-%files -n python3-module-%oname-examples
-%python3_sitelibdir/*/examples
-
-%files -n %oname-py3
-%doc AUTHORS ChangeLog COPYING README
-%_bindir/*.py3
-%endif
 
 %changelog
+* Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.1-alt2
+- Build for python2 disabled.
+
 * Thu Jan 23 2020 Grigory Ustinov <grenka@altlinux.org> 3.1-alt1
 - Build new version for python3.8.
 
