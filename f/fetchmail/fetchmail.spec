@@ -1,8 +1,8 @@
 %define rtdir %_runtimedir/%name
 
 Name: fetchmail
-Version: 6.4.1
-Release: alt2
+Version: 6.4.2
+Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 License: GPLv2
@@ -23,7 +23,6 @@ Patch1: %name-5.6.2-contrib.patch
 Patch2: %name-6.4.1-fetchmailconf.patch
 Patch3: %name-6.4.1-nopermcheck.patch
 Patch4: %name-6.4.1-no-libssl-version-sanity-check.patch
-Patch5: %name-6.4.1-port-to-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex openssl-devel libkrb5-devel python3-devel
@@ -103,7 +102,6 @@ neccessary.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p2
 
 cp -a %SOURCE3 fetchmailrc.example
 
@@ -202,6 +200,9 @@ usermod -d %rtdir %name ||:
 
 
 %changelog
+* Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.4.2-alt1
+- Version updated to 6.4.2
+
 * Tue Mar 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.4.1-alt2
 - Porting to python3.
 
