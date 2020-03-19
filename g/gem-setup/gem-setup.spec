@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt10
+Release:       alt11
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
 Url:           https://github.com/rubyworks/setup
-Vcs:           https://github.com/rubyworks/setup.git
+Vcs:           https://github.com/majioa/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -89,6 +89,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Mar 19 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt11
+- * libdir replaced to libexecdir for ruby site target
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt10
 - ! call to setup.rb with default pure %%__setup_rb
 

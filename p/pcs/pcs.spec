@@ -2,14 +2,15 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.4
+Version:       0.10.5
 Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
-License:       GPLv2
+License:       GPLv2+ and MIT
 Group:         Other
-Url: 	       https://github.com/ClusterLabs/pcs
+Url:           https://github.com/ClusterLabs/pcs
 Vcs:           https://github.com/ClusterLabs/pcs.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       pyagentx-v%pyagentx_version.tar.gz
@@ -70,7 +71,8 @@ agent (snmpd).
 
 %prep
 %setup
-sed -e "s,/usr/libexec/,/usr/lib/," -e "s,/usr/lib/pcsd,/usr/lib64/pcsd," -i pcs/settings_default.py
+sed -e "s,vendor/bundle/ruby,/usr/lib/ruby," -i pcs/settings_default.py
+sed -e "s,/usr/lib/pcsd/vendor/bundle/ruby,/usr/lib/ruby," -i pcsd/pcsd-ruby.service
 mkdir -p pcs/bundled/tmp
 tar xf %SOURCE1 -C pcs/bundled/tmp
 
@@ -83,22 +85,17 @@ make BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
 mkdir -p %buildroot%_libexecdir/pcs
 mkdir -p %buildroot%_localstatedir/pcsd
 mkdir -p %buildroot%_logdir/pcsd
+mkdir -p %buildroot%_sysconfdir/sysconfig/
 %ruby_install
 %makeinstall_std \
      BUNDLE_PYAGENTX_SRC_DIR=pcs/bundled/tmp/pyagentx-%pyagentx_version \
      PYAGENTX_LIB_DIR=%buildroot%_libexecdir/pcs/bundled \
      BUILD_GEMS=false \
-     DEST_LIB=%buildroot%_libdir \
+     DEST_LIB=%buildroot%_libexecdir \
      SYSTEMCTL_OVERRIDE=true \
      DEST_SYSTEMD_SYSTEM=%buildroot%systemd_unitdir \
 
 install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
-# [[ "%buildroot/usr/lib64/pcsd" = "%buildroot%_libdir/pcsd" ]] || mv %buildroot/usr/lib64/pcsd %buildroot%_libdir/pcsd
-
-# Remove unnecessary stuff
-cd %buildroot/%_libdir/pcsd
-rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
-[[ "%_libdir" = "%_libexecdir" ]] || mv %buildroot%_libdir/pcs/* %buildroot%_libexecdir/pcs/
 
 %check
 %ruby_test
@@ -130,8 +127,7 @@ rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
 
 %files         -n ruby-pcsd
 %_sbindir/pcsd
-#_initdir/pcsd
-%_libdir/pcsd
+%_libexecdir/pcsd
 %_sysconfdir/logrotate.d/pcsd
 %_sysconfdir/pam.d/pcsd
 %_sysconfdir/sysconfig/pcsd
@@ -139,6 +135,7 @@ rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
 %dir %_localstatedir/pcsd
 %_logrotatedir/pcsd.logrotate
 %systemd_unitdir/pcsd.service
+%systemd_unitdir/pcsd-ruby.service
 
 %files         -n python3-module-snmp
 %config(noreplace) %_sysconfdir/sysconfig/pcs_snmp_agent
@@ -150,6 +147,11 @@ rm -rf *.service pcsd *.logrotate debian *~ *.orig Makefile
 
 
 %changelog
+* Wed Mar 18 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.5-alt1
+- ^ 0.10.4 -> 0.10.5 (closes #36898)
+- fixed ! pcsd start (closes #37837)
+- fixed ! license according to SPDX and licenses in some files
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.4-alt1
 - updated (^) 0.10.3 -> 0.10.4
 - fixed (!) spec
