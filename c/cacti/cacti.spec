@@ -1,7 +1,7 @@
 
 Name: cacti
 Version: 1.2.10
-Release: alt2
+Release: alt3
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -163,6 +163,9 @@ fi
 %cactidir/install
 
 %changelog
+* Thu Mar 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt3
+- fix syntax error in include/global.php (thx to vercha@)
+
 * Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.10-alt2
 - package cacti.sql to doc dir
 
