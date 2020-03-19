@@ -1,16 +1,16 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.62
-%define ver_base 2.62
+%define major 2.64
+%define ver_base 2.64
 %define api_ver 2.4
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
-License: LGPL
+License: LGPL-2.1 and GPL-2.0
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.60.0
+%define glib_ver 2.64.0
 %define sigc_ver 2.9.1
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
@@ -97,6 +97,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.1-alt1
+- 2.64.1
+
 * Sun Sep 22 2019 Yuri N. Sedunov <aris@altlinux.org> 2.62.0-alt1
 - 2.62.0
 
