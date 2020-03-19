@@ -4,6 +4,7 @@
 %def_enable plugins
 %def_disable rpmbuild
 %def_with xz
+%def_with zstd
 %def_with beecrypt
 %def_with memcached
 %def_enable default_priority_distbranch
@@ -19,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt18
+Release: alt19
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -69,6 +70,9 @@ BuildRequires: libcap-devel
 BuildRequires: libacl-devel
 %if_with xz
 BuildRequires: liblzma-devel >= 4.999.8
+%endif
+%if_with zstd
+BuildRequires: libzstd-devel
 %endif
 %if_with libarchive
 BuildRequires: libarchive-devel
@@ -570,6 +574,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Thu Mar 19 2020 Alexey Tourbin <at@altlinux.ru> 4.13.0.1-alt19
+- Backported support for zstd compressed payload (by Jeff Johnson and others),
+  so that rpm2cpio can handle Fedora 31 packages.
+
 * Tue Mar 10 2020 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt18
 - Fix CANONCOLOR and library suffix on E2K architectures.
 
