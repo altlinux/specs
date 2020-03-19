@@ -59,7 +59,7 @@
 
 Name: virtualbox
 Version: 6.1.4
-Release: alt3
+Release: alt4
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -850,6 +850,10 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Mar 19 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt4
+- Fix shared clipboard regression:
+  https://www.virtualbox.org/ticket/19336 (Closes: 38239)
+
 * Fri Mar 13 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.4-alt3
 - Removed loading the vboxpci kernel module (Closes: 38157)
 
