@@ -1,8 +1,8 @@
 Name: rapid-photo-downloader
-Version: 0.9.18
+Version: 0.9.19
 Release: alt1
 
-%define xdg_name net.damonlynch.%name
+%define xdg_name net.damonlynch.rapid_photo_downloader
 
 Summary: Download photos and videos from cameras, memory cards and Portable Storage Devices
 License: GPLv3+
@@ -42,6 +42,8 @@ and backs up to multiple devices simultaneously.
 
 %prep
 %setup
+# fix install_requires[]
+sed -i "s|\('PyGObject'\)|\1,|" setup.py
 subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 %build
@@ -59,7 +61,7 @@ cp -r build/mo/* %buildroot%_datadir/locale
 %_bindir/analyze-pv-structure
 %python3_sitelibdir/*
 %_desktopdir/%xdg_name.desktop
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/analyze-pv-structure.1.*
 %_man1dir/%name.1.*
 %_datadir/apps/solid/actions/%xdg_name.desktop
@@ -67,6 +69,9 @@ cp -r build/mo/* %buildroot%_datadir/locale
 
 
 %changelog
+* Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.19-alt1
+- 0.9.19
+
 * Thu Jan 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.18-alt1
 - 0.9.18
 
