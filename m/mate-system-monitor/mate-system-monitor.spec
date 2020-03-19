@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: mate-system-monitor
-Version: 1.22.2
+Version: 1.24.0
 Release: alt1
 Epoch: 1
 Summary: Process and resource monitor
@@ -14,7 +14,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: mate-common gcc-c++ libgtkmm3-devel libgtop-devel librsvg-devel libsystemd-devel libwnck3-devel libxml2-devel yelp-tools
+BuildRequires: mate-common gcc-c++ libgtkmm3-devel libgtop-devel libpolkit-devel librsvg-devel libsystemd-devel libwnck3-devel libxml2-devel yelp-tools
 
 %description
 mate-system-monitor allows to graphically view and manipulate the running
@@ -51,6 +51,9 @@ such as CPU and memory.
 %_man1dir/*.1*
 
 %changelog
+* Thu Mar 19 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
+- 1.24.0
+
 * Wed Oct 16 2019 Valery Inozemtsev <shrek@altlinux.ru> 1:1.22.2-alt1
 - 1.22.2
 
