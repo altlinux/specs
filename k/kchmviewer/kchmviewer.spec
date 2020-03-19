@@ -2,7 +2,7 @@
 
 Name: kchmviewer
 Version: 7.7
-Release: alt2
+Release: alt3
 
 Summary: A CHM (Winhelp) and EPUB viewer
 License: %gpl3plus
@@ -54,6 +54,9 @@ install -pD -m644 packages/kchmviewer.desktop %buildroot%_desktopdir/%name.deskt
 %doc COPYING
 
 %changelog
+* Thu Mar 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.7-alt3
+- Fixed epub support.
+
 * Wed Mar 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.7-alt2
 - Rebuilt with qtwebengine instead of qtwebkit.
 
