@@ -1,5 +1,5 @@
 Name: libproj
-Version: 6.2.0
+Version: 6.3.1
 Release: alt1
 
 Summary: PROJ.4 - cartographic projections library
@@ -71,7 +71,6 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files devel
 %_mandir/man3/*.3*
 %_includedir/*.h
-%_includedir/*.hpp
 %_includedir/proj/*.hpp
 %dir %_includedir/proj
 %_libdir/*.so
@@ -85,6 +84,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Thu Mar 19 2020 Vladislav Zavjalov <slazav@altlinux.org> 6.3.1-alt1
+- 6.3.1
+
 * Thu Oct 03 2019 Vladislav Zavjalov <slazav@altlinux.org> 6.2.0-alt1
 - move all datafiles from libproj-nad subpackage to libproj
 - 6.2.0
