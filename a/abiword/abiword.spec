@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define abi_ver 3.0
 %define ver_major 3.0
@@ -13,7 +13,7 @@
 
 Name: abiword
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -197,6 +197,11 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt2
+- updated to 3.0.4-2-g1e9e0f99e (
+  "gtk+TableWidget: fix display of the TableWidget";
+  "Issue 13918 - Fix an incorrect check for null")
+
 * Thu Dec 19 2019 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 

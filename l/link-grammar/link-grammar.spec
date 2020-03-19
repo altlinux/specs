@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %def_disable java
 # don't use aspell as Abiword uses hanspell via libenchant
 %def_disable aspell
@@ -8,21 +10,25 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.5.0
+Version: 5.8.0
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
-License: GPL-compatible
+License: BSD-3-Clause and LGPL-2.1
 Group: Text tools
 Url: https://github.com/opencog/link-grammar
 
+%if_disabled snapshot
+#Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
+Source: %url/archive/%name-%version.tar.gz
+%else
 # VCS: https://github.com/opencog/link-grammar.git
-Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
-Patch: %name-5.4.2-alt-man_build.patch
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++ autoconf-archive swig
+BuildRequires: gcc-c++ autoconf-archive swig flex
 BuildRequires: libedit-devel libsqlite3-devel zlib-devel
 %{?_enable_aspell:BuildRequires:libaspell-devel}
 %{?_enable_hunspell:BuildRequires:libhunspell-devel}
@@ -57,7 +63,6 @@ Perl bindings for %name library.
 
 %prep
 %setup
-%patch
 
 %build
 %autoreconf
@@ -95,6 +100,13 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
+- 5.8.0
+- fixed License tag
+
+* Sat Jul 28 2018 Yuri N. Sedunov <aris@altlinux.org> 5.5.1-alt1
+- updated to 5.5.1-4-g58c3121
+
 * Sun May 13 2018 Yuri N. Sedunov <aris@altlinux.org> 5.5.0-alt1
 - 5.5.0
 
