@@ -2,30 +2,23 @@
 
 %define oname pysndfile
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2.qa1
+Release: alt3
+
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pysndfile/
 
 Source: %oname-%version.tar
 
-BuildRequires: gcc-c++ libsndfile-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython libnumpy-devel python-module-numpy-testing
-BuildRequires: python-module-html5lib python-module-notebook
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ libsndfile-devel
 BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-Cython libnumpy-py3-devel python3-module-numpy-testing
+BuildRequires: python3-module-Cython libnumpy-py3-devel
+BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-html5lib python3-module-notebook
-%endif
-
-%py_provides %oname
 
 %description
 pysndfile is a python package providing PySndfile, a Cython wrapper
@@ -37,76 +30,34 @@ manipulation options that are available in libsndfile.
 Due to the use of libsndfile nearly all sound file formats, (besides mp3
 and derived formats) can be read and written with PySndfile.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-pysndfile is a python package providing PySndfile, a Cython wrapper
-class around libsndfile. PySndfile provides methods for reading and
-writing a large variety of soundfile formats on a variety of plattforms.
-PySndfile provides a rather complete access to the different sound file
-manipulation options that are available in libsndfile.
-
-Due to the use of libsndfile nearly all sound file formats, (besides mp3
-and derived formats) can be read and written with PySndfile.
-%endif
-
 %prep
 %setup -n %oname-%version
 
 rm -f *.cpp
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 export FFLAGS="%optflags"
 
-python setup.py test
-PYTHONPATH=%buildroot%python_sitelibdir python tests/pysndfile_test.py
-
-%if_with python3
-pushd ../python3
-python3 setup.py test
+%__python3 setup.py test
 PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/pysndfile_test.py
-popd
-%endif
 
 %files
 %doc ChangeLog README.*
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc ChangeLog README.*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
+- Build for python2 disabled.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2.qa1
 - NMU: applied repocop patch
 
