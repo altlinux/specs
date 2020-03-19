@@ -1,16 +1,23 @@
+%def_enable snapshot
 %define ver_major 2.0
+%define _name recipes
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: GNOME likes to cook
-License: GPLv3+
+License: GPL-3.0
 Group: Office
 Url: https://wiki.gnome.org/Apps/Recipes
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://gitlab.gnome.org/GNOME/%_name/-/archive/%version/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 
 Obsoletes: recipes < 0.14
 Provides: recipes = %EVR
@@ -19,7 +26,8 @@ Requires: %name-data = %EVR
 
 %define gtk_ver 3.20
 
-BuildRequires: meson git-core libappstream-glib-devel rpm-build-xdg yelp-tools
+BuildRequires(pre): meson
+BuildRequires: git-core libappstream-glib-devel rpm-build-xdg yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libgspell-devel libgnome-autoar-devel libsoup-devel
 BuildRequires: libcanberra-gtk3-devel
@@ -45,7 +53,7 @@ This package contains common noarch files needed for Recipes.
 
 
 %prep
-%setup
+%setup -n %_name-%version
 
 %build
 %meson
@@ -72,10 +80,13 @@ This package contains common noarch files needed for Recipes.
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/symbolic/apps/*.svg
 %_xdgmimedir/packages/org.gnome.Recipes-mime.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 
 %changelog
+* Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt2
 - rebuilt against libgspell-1.so.2
 
