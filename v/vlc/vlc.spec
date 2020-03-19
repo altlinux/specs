@@ -6,7 +6,7 @@
 
 Name: vlc
 Version: 3.0.8
-Release: alt2
+Release: alt3
 
 Summary: VLC media player
 License: GPLv2
@@ -51,11 +51,11 @@ BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
 %{?_enable_goom:BuildRequires: libgoom-devel}
 %{?_enable_firewire:BuildRequires: libdc1394-devel libraw1394-devel libavc1394-devel}
-%{?_enable_visualization:BuildRequires: libcaca-devel libprojectM-devel}
+%{?_enable_visualization:BuildRequires: libprojectM-devel}
 %{?_enable_wayland:BuildRequires: libwayland-egl-devel wayland-protocols}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
-%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:caca projectm}
+%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:projectm}
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -123,13 +123,13 @@ Obsoletes: vlc-interface-wxwidgets
 %package -n lib%name
 Summary: VLC media player library
 Group: System/Libraries
-License: LGPL
+License: LGPLv2
 Conflicts: %name-mini < %EVR
 
 %package -n lib%name-devel
 Summary: Development files for VLC media player
 Group: Development/C
-License: LGPL
+License: LGPLv2
 Requires: lib%name = %EVR
 
 %package plugin-aa
@@ -152,11 +152,6 @@ Summary: Bluray access plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 Requires: libaacs
-
-%package plugin-caca
-Summary: Colored ASCII art video output plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
 
 %package plugin-chromaprint
 Summary: Audio fingerprinting plugin for VLC media player
@@ -473,11 +468,6 @@ This package contains AudioCD access plugin for VLC media player.
 %description plugin-bluray
 This package contains Bluray disc access plugin for VLC media player.
 
-%description plugin-caca
-This is an colored ASCII art video output plugin for VLC media player.
-To activate it, use the `--vout caca' flag or select the `caca'
-vout plugin from the preferences menu.
-
 %description plugin-chromaprint
 This package contains client-side audio fingerprinting plugin,
 based on AcoustID project chromaprint library.
@@ -725,7 +715,6 @@ export BUILDCC=gcc
 	--enable-dv1394 \
 %endif
 %if_enabled visualization
-	--enable-caca \
 	--enable-projectm \
 %endif
 	--disable-oss \
@@ -1372,9 +1361,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/liblibass_plugin.so
 
 %if_enabled visualization
-%files plugin-caca
-%vlc_plugindir/video_output/libcaca_plugin.so
-
 %files plugin-projectm
 %vlc_plugindir/visualization/libprojectm_plugin.so
 %endif
@@ -1409,6 +1395,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Mar 19 2020 Anton Farygin <rider@altlinux.ru> 3.0.8-alt3
+- disabled libcaca support
+
 * Tue Mar 03 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.8-alt2
 - Fixed build on riscv64.
 
