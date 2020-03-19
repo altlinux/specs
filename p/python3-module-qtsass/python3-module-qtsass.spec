@@ -1,6 +1,6 @@
 Name: python3-module-qtsass
-Version: 0.0.1
-Release: alt1.git132651a
+Version: 0.3.0
+Release: alt1
 
 License: MIT
 Group: Development/Python
@@ -8,7 +8,7 @@ Url: https://github.com/spyder-ide/qtsass
 
 Summary: QtSASS: Compile SCSS files to Qt stylesheets
 
-# Source-url: https://github.com/spyder-ide/qtsass/archive/master.zip
+# Source-url: https://github.com/spyder-ide/qtsass/archive/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
@@ -45,5 +45,8 @@ The purpose of this tool is to fill the gap between SASS and Qt-CSS by handling 
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt1.git132651a
 - initial build for ALT Sisyphus
