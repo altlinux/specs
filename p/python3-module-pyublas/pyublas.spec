@@ -1,52 +1,32 @@
 %define oname pyublas
 
-%def_with python3
+%def_without docs
 
-Name: python-module-%oname
-Version: 2013.1
-Release: alt1.git20140620.1.1.2
+Name: python3-module-%oname
+Version: 2017.1
+Release: alt1
+
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://mathema.tician.de/software/pyublas
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://git.tiker.net/trees/pyublas.git
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
-BuildPreReq: boost-python-devel libnumpy-devel python-module-sphinx-devel
-BuildPreReq: gcc-c++
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-module-setuptools
+BuildRequires: gcc-c++ boost-python3-devel libnumpy-py3-devel
+%if_with docs
+BuildRequires: python3-module-sphinx
 %endif
 
 %description
 PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
 use with Boost.Python.
 
-%package -n python3-module-%oname
-Summary: Seamless Numpy-UBlas interoperability
-Group: Development/Python3
-
-%description -n python3-module-%oname
-PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
-use with Boost.Python.
-
-%package -n python3-module-%oname-devel
-Summary: Development files of PyUblas
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-devel
-PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
-use with Boost.Python.
-
-This package contains development files of PyUblas.
-
 %package devel
 Summary: Development files of PyUblas
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description devel
@@ -55,6 +35,7 @@ use with Boost.Python.
 
 This package contains development files of PyUblas.
 
+%if_with docs
 %package docs
 Summary: Documentation for PyUblas
 Group: Development/Documentation
@@ -65,10 +46,11 @@ PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
 use with Boost.Python.
 
 This package contains documentation for PyUblas.
+%endif
 
 %package pickles
 Summary: Pickles for PyUblas
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
@@ -79,74 +61,54 @@ This package contains pickles for PyUblas.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|#!.*python|&3|' configure.py
+sed -i 's|sphinx-build|&-3|' doc/Makefile
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
+./configure.py \
+    --boost-python-libname=boost_python%{python_version_nodots python3}
 %python3_build_debug
-popd
-%endif
 
+%if_with docs
 %make -C doc html
+%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
+
 install -d %buildroot%_includedir
-ln -s %python3_sitelibdir/pyublas/include/pyublas \
-	%buildroot%_includedir/%oname-py3
-popd
+ln -s %python3_sitelibdir/pyublas/include/pyublas %buildroot%_includedir/
+
+%if_with docs
+cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
-
-install -d %buildroot%_includedir
-ln -s %python_sitelibdir/pyublas/include/pyublas %buildroot%_includedir/
-
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %pre devel
 rm -fR %_includedir/pyublas
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/pyublas/include
-%exclude %python_sitelibdir/pyublas/testhelp_ext.so
-
-%files devel
-%doc test/*
-%_includedir/%oname
-%python_sitelibdir/pyublas/include
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/pyublas/include
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/.build/html
 
 %files pickles
-%python_sitelibdir/%oname/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/pyublas/include
-%exclude %python3_sitelibdir/pyublas/testhelp_ext.*.so
-
-%files -n python3-module-%oname-devel
-%doc test/*
-%_includedir/%oname-py3
-%python3_sitelibdir/pyublas/include
+%python3_sitelibdir/%oname/pickle
 %endif
 
+%files devel
+%doc test/*
+%_includedir/%oname
+%python3_sitelibdir/pyublas/include
+
 %changelog
+* Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 2017.1-alt1
+- Version updated to 2017.1
+- build for python2 disabled.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2013.1-alt1.git20140620.1.1.2
 - NMU: rebuilt with boost-1.67.0
 
