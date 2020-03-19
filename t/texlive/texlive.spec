@@ -72,7 +72,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_6
+Release:	alt1_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -177,6 +177,8 @@ Patch5: includePatch.patch
 # Poppler patches
 Patch101: 0001-try-to-adapt-to-poppler-0.58.patch
 Patch102: pdftex-poppler0.76.patch
+Patch103: pdftex-poppler0.83.patch
+Patch104: xetex-poppler0.83.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -453,11 +455,13 @@ This package includes the static ptexenc library.
 %patch5 -p1
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
+%patch104 -p1
 
 
 # poppler
-cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.76.0,}.cc
-cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.76.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftoepdf{-poppler0.83.0,}.cc
+cp -pv texk/web2c/pdftexdir/pdftosrc{-poppler0.83.0,}.cc
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -477,7 +481,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 #-----------------------------------------------------------------------
 %build
 %add_optflags -fpermissive
-export CXXFLAGS="%{optflags} -std=c++11"
+export CXXFLAGS="%{optflags} -std=c++14"
 
 [ -d Work ] || mkdir Work
 pushd Work
@@ -715,6 +719,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Wed Mar 11 2020 Nikita Ermakov <arei@altlinux.org> 2019-alt1_7
+- Make texlive build with poppler >= 0.83.
+
 * Mon Nov 04 2019 Igor Vlasenko <viy@altlinux.ru> 2019-alt1_6
 - filetrigger fixes
 
