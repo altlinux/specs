@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 3.0.6
+Version: 3.0.7
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -146,7 +146,7 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 #_datadir/wimpiggy/
 %_datadir/xpra/
 %_tmpfilesdir/xpra.conf
-#_datadir/appdata/xpra.appdata.xml
+%_datadir/metainfo/xpra.appdata.xml
 %_K4xdg_mime/application-x-xpraconfig.xml
 %_cupslibdir/backend/xpraforwarder
 %_sysconfigdir/%name
@@ -159,6 +159,9 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Thu Mar 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt1
+- new version 3.0.7 (with rpmrb script)
+
 * Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.6-alt1
 - new version 3.0.6 (with rpmrb script)
 
