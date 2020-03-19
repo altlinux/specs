@@ -64,7 +64,7 @@
 %endif
 
 Name: Mesa
-Version: 20.0.1
+Version: 20.0.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -83,7 +83,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel
+BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
 %ifarch %radeon_arches
 BuildRequires: llvm-devel >= 8.0.0 clang-devel >= 8.0.0
@@ -175,6 +175,7 @@ Mesa software rendering libraries
 %package -n xorg-dri-intel
 Summary: Intel DRI driver
 Group: System/X11
+Requires: libva-driver-intel
 
 %description -n xorg-dri-intel
 DRI driver for Intel i8xx, i9xx
@@ -260,6 +261,8 @@ DRI drivers for various SoCs
 %install
 %meson_install
 
+mkdir -p %buildroot%_sysconfdir
+touch %buildroot%_sysconfdir/drirc
 rm -f %buildroot%_libdir/gallium-pipe/*.la
 
 shopt -s nullglob
@@ -362,6 +365,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %files -n xorg-dri-swrast
+%ghost %_sysconfdir/drirc
 %_datadir/drirc.d
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
@@ -429,6 +433,10 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 
 %changelog
+* Thu Mar 19 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.2-alt1
+- 20.0.0
+- used i965 driver for Intel Gen8-11 by default (closes: #38214)
+
 * Fri Mar 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.1-alt1
 - 20.0.1
 
