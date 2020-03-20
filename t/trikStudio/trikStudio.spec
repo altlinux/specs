@@ -3,9 +3,11 @@
 %def_without separate_trikruntime
 %def_without sanitize
 %def_without debug
+%define appname trik-studio
+
 Name: trikStudio
 Version: 2019.8
-Release: alt6
+Release: alt7
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -140,7 +142,7 @@ popd
 %files
 %_bindir/*
 %_libdir/%name
-%_sysconfdir/%name.config
+%_sysconfdir/%appname.config
 
 %files data
 %_datadir/%name
@@ -166,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 20 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt7
+- Fix to load default platform config
+
 * Wed Mar 18 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt6
 - Replace /etc/trikStudio.config settings to global settingsDefaultValues
 
