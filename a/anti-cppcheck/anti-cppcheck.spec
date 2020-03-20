@@ -4,7 +4,7 @@
 %define ax_ver 0.6
 
 Name: anti-cppcheck
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Utility that helps to handle reports produced by cppcheck
@@ -58,6 +58,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Mar 20 2020 Alexey Appolonov <alexey@altlinux.org> 0.4.1-alt1
+- Fixed parser of error/warning messages.
+
 * Wed Mar 18 2020 Alexey Appolonov <alexey@altlinux.org> 0.4.0-alt1
 - All three executive modules (*comment, *analyze and *find) can be used
   on multiple reports at once by utilizing new features of 'machinery' lib,
