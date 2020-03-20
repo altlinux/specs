@@ -4,8 +4,9 @@
 %global lld_name lld%v_major
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
-%ifarch %ix86
+%ifarch %ix86 %arm
 %define optflags_debug -g0
+#define __nprocs 1
 %else
 %define optflags_debug -g1
 %endif
@@ -15,7 +16,7 @@
 
 Name: %llvm_name
 Version: 9.0.1
-Release: alt2
+Release: alt3
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -100,7 +101,6 @@ Documentation for the LLVM compiler infrastructure.
 
 %package -n %clang_name
 Summary: A C language family frontend for LLVM
-License: NCSA
 Group: Development/C
 Requires: gcc
 Provides: clang = %EVR
@@ -145,7 +145,6 @@ This package contains static libraries for the Clang compiler.
 
 %package -n %clang_name-analyzer
 Summary: A source code analysis framework
-License: NCSA
 Group: Development/C
 BuildArch: noarch
 Provides: clang-analyzer = %EVR
@@ -170,7 +169,6 @@ Documentation for the Clang compiler front-end.
 
 %package -n %lld_name
 Summary: LLD - The LLVM Linker
-License: NCSA
 Group: Development/C
 Provides: lld = %EVR
 Obsoletes: lld < %version
@@ -221,11 +219,7 @@ mv compiler-rt-%version.src projects/compiler-rt
 %build
 %cmake -G Ninja \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%ifarch %ix86
-        -DCMAKE_C_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
-        -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-DNDEBUG" \
-%endif
+	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;NVPTX;" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
@@ -309,6 +303,11 @@ mkdir -p %buildroot%_docdir/lld
 
 file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
+
+%ifarch %ix86
+cd %buildroot%_libdir/clang/%version/lib/linux
+ls *-i[3-9]86* | while read f; do ln -s $f $(echo $f | sed 's|i[3-9]86|i386|') ; done
+%endif
 
 %check
 %if_enabled tests
@@ -402,6 +401,10 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Fri Mar 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 9.0.1-alt3
+- use 'Release' build
+- clang: fixed link with option -fsanitize=address (closes: #38250)
+
 * Thu Feb 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 9.0.1-alt2
 - build with clang
 
