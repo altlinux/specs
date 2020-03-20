@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.20.3
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -74,10 +74,18 @@ Requires: wget
 Requires: %{_bindir}/gpg
 
 %if_enabled python_code
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+%add_python3_compile_include %_datadir/%name
+AutoReqProv: nopython
+AutoProv: nopython3
+%py3_requires distro
 %else
 BuildRequires(pre): rpm-build-python
+%add_python_compile_include %_datadir/%name
+AutoProv: nopython
+%py_requires distro
 %endif
 # Andy Kuleshov report
 Requires: python%{pysuffix}-module-dbus
@@ -1163,6 +1171,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Mar 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt3
+- Returned Python autorequires, required distro python module.
+
 * Mon Mar 16 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt2
 - Apply patch (ALT #38043).
 
