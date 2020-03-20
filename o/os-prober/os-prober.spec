@@ -2,7 +2,7 @@
 
 Name: os-prober
 Version: 1.77
-Release: alt2
+Release: alt3
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -64,6 +64,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Fri Mar 20 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.77-alt3
+- fix grub2-skip-30_os-prober-parsing patch
+
 * Wed Mar 11 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.77-alt2
 - add grub2-detect-auto-reference patch
 - add grub2-skip-30_os-prober-parsing patch
