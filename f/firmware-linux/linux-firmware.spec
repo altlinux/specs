@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20200302
-Release: alt1.1
+Version: 20200320
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -58,6 +58,21 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Mar 20 2020 Cronbuild Service <cronbuild@altlinux.org> 20200320-alt1
+- upstream changes (GIT edf390c):
+  + mediatek: Add mt8183 SCP firmware (thx Erin Lo)
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + amdgpu: update vega20 firmware from 19.50 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware from 19.50 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware from 19.50 (thx Alex Deucher)
+  + rtl_bt: Add firmware and configuration files for RTL8822C BT
+    UART chip (thx Hilda Wu)
+  + i915: Add DMC firmware v2.06 for TGL (thx Jos? Roberto de Souza)
+  + i915: add HuC firmware v7.0.12 for TGL (thx Daniele Ceraolo Spurio)
+
 * Fri Mar 20 2020 L.A. Kostis <lakostis@altlinux.ru> 20200302-alt1.1
 - cronbuild: fix changelog encoding
 
