@@ -10,18 +10,20 @@
 %def_enable jack
 %def_enable pulseaudio
 %def_disable portaudio
+%def_enable sdl2
+%def_enable libinstpatch
 %def_enable dbus
 %def_enable check
 
 Name: fluidsynth
-Version: 2.0.9
+Version: 2.1.1
 Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
 Group: Sound
 URL: http://www.fluidsynth.org
-License: %lgpl21plus
+License: LGPL-2.1-or-later
 
 %if_disabled snapshot
 Source: https://github.com/FluidSynth/%name/archive/v%version/%name-%version.tar.gz
@@ -33,14 +35,17 @@ Source: %name-%version.tar
 Requires: lib%name = %version-%release
 
 %define cmake_ver 3.0.2
+%define glib_ver 2.30
 %define jack_ver 0.75.0
 %define ladcca_ver 0.4.0
 %define alsa_ver 0.9.8-alt2
+%define instpatch_ver 1.1.0
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-licenses
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= %cmake_ver gcc-c++
 BuildRequires: doxygen graphviz xsltproc docbook-dtds docbook-style-xsl
-BuildRequires: glib2-devel libsndfile-devel libalsa-devel >= %alsa_ver libe2fs-devel
+BuildRequires: glib2-devel >= %glib_ver libsndfile-devel libalsa-devel >= %alsa_ver
+BuildRequires: libalsa-devel >= %alsa_ver libe2fs-devel
 BuildRequires: libncurses-devel libreadline-devel
 %{?_enable_ladcca:BuildRequires: libladcca-devel >= %ladcca_ver}
 %{?_enable_lash:BuildRequires: liblash-devel}
@@ -49,6 +54,8 @@ BuildRequires: libncurses-devel libreadline-devel
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
 %{?_enable_portaudio:BuildRequires: libportaudio-devel}
+%{?_enable_sdl2:BuildRequires: libSDL2-devel}
+%{?_enable_libinstpatch:BuildRequires: libinstpatch-devel >= %instpatch_ver}
 %{?_enable_check:BuildRequires: ctest}
 
 %description
@@ -166,7 +173,8 @@ MIDI-синтезатора. FluidSynth также может воспроизв
     %{?_enable_pulseaudio:-Denable-pulseaudio:bool=true} \
     %{?_enable_dbus:-Denable-dbus:bool=true} \
     %{?_enable_portaudio:-Denable-portaudio:bool=true} \
-
+    %{?_enable_sdl2:-Denable-sdl2:bool=true}
+%nil
 %cmake_build
 %cmake_build doxygen
 
@@ -183,7 +191,7 @@ cp -r BUILD/doc/api/html ./
 
 %files -n lib%name
 %_libdir/lib%name.so.*
-%doc AUTHORS README.md THANKS NEWS
+%doc AUTHORS README.md THANKS
 
 %files -n lib%name-devel
 %_includedir/*
@@ -198,6 +206,10 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+- enabled libinstpatch support, SDL2 audio support
+
 * Tue Nov 26 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
 - 2.0.9
 - updated License tag
