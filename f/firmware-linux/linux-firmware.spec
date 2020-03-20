@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20200302
-Release: alt1
+Release: alt1.1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -58,6 +58,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Mar 20 2020 L.A. Kostis <lakostis@altlinux.ru> 20200302-alt1.1
+- cronbuild: fix changelog encoding
+
 * Fri Mar 06 2020 Cronbuild Service <cronbuild@altlinux.org> 20200302-alt1
 - upstream changes (GIT 0148cfe):
   + check_whence: python3/utf-8 support (thx Brian Norris)
