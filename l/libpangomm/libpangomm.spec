@@ -3,11 +3,11 @@
 %define api_ver 1.4
 
 Name: lib%rname
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
-License: LGPL
+License: LGPL-2.1 and GPL-2.0
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.
 
 %define glib_ver 2.48.0
 %define cairo_ver 1.12
-%define pango_ver 1.39.0
+%define pango_ver 1.41.0
 
 BuildRequires: mm-common gcc-c++
 BuildRequires: libcairomm-devel >= %cairo_ver
@@ -73,6 +73,10 @@ BuildArch: noarch
 %_docdir/%rname-%api_ver
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
+- 2.42.1
+- fixed License tag
+
 * Mon Nov 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
 - 2.42.0
 
