@@ -2,12 +2,12 @@
 
 %def_disable check
 
-%def_with python2
+%def_without python2
 %def_with docs
 
 Name: python-module-%oname
 Version: 18.5.2
-Release: alt3
+Release: alt4
 
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
@@ -18,7 +18,7 @@ Url: https://github.com/tavendo/AutobahnPython
 Source: %name-%version.tar
 
 # https://github.com/crossbario/autobahn-python/commit/9b6fb57e5c87a5e29cd880f752a30b9409d480c6
-Patch0: ensure-python37-compat.patch
+Patch: ensure-python37-compat.patch
 
 %if_with python2
 
@@ -179,6 +179,9 @@ popd
 %python3_sitelibdir/*/*/test
 
 %changelog
+* Sat Mar 21 2020 Vitaly Lipatov <lav@altlinux.ru> 18.5.2-alt4
+- disable python2 module build
+
 * Sat Sep 21 2019 Anton Midyukov <antohami@altlinux.org> 18.5.2-alt3
 - Update BuldRequires
 - Drop build pickles
