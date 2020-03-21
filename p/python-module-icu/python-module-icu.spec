@@ -6,7 +6,7 @@
 
 Name: python-module-%modulename
 # python3 setup.py -V|tail -1
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 %{?_with_python2:%setup_python_module %modulename}
@@ -79,6 +79,9 @@ popd
 
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Fri Dec 27 2019 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 - made python2 build optional
