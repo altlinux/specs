@@ -1,15 +1,15 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.4.4
+%define grass_version 7.8.2
 %def_disable extra
 %define rname qgis
 
 Name:    qgis3
-Version: 3.8.2
+Version: 3.12.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
-License: GPLv3+ with exceptions
+License: GPL-3.0+ with exceptions
 Group:   Sciences/Geosciences
 Url:     http://qgis.org/
 
@@ -295,7 +295,6 @@ cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/process
 %find_lang %rname --with-qt
 # Add missing localization
 echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %rname.lang
-echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %rname.lang
 
 %if_disabled extra
 rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
@@ -369,6 +368,19 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sat Mar 21 2020 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
+- New version.
+
+* Thu Mar 19 2020 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt1
+- New version.
+- Fixed license tag according to SPDX.
+
+* Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 3.10.1-alt1
+- New version.
+
+* Sun Oct 27 2019 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
+- New version.
+
 * Mon Aug 19 2019 Andrey Cherepanov <cas@altlinux.org> 3.8.2-alt1
 - New version.
 
