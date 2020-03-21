@@ -6,14 +6,14 @@
 
 %def_enable crypto
 %def_disable static
-%def_disable check
+%def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Glorious MIME Utility Library
-License: LGPLv2+
+License: LGPL-2.1
 Group: System/Libraries
 Url: https://github.com/jstedfast/gmime
 
@@ -110,7 +110,7 @@ statically linked GMime-based software.
 
 %files
 %_libdir/lib%_name-%api_ver.so.*
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README*
 
 %files devel
 %_includedir/*
@@ -134,6 +134,10 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.7-alt1
+- 3.2.7
+- enabled %%check
+
 * Sat Feb 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt1
 - 3.2.6
 
