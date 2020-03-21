@@ -2,7 +2,7 @@
 
 Name: dvd+rw-tools
 Version: 7.1
-Release: alt2
+Release: alt3
 
 Summary: Toolchain for mastering recordable DVD media
 License: %gpl2plus
@@ -26,6 +26,7 @@ Patch18: dvd+rw-tools-7.1-lastshort.patch
 Patch19: dvd+rw-tools-7.1-format.patch
 Patch20: dvd+rw-tools-7.1-bluray_srm+pow.patch
 Patch21: dvd+rw-tools-7.1-bluray_pow_freespace.patch
+Patch22: dvd+rw-tools-7.1-sysmacro-inc.patch
 
 Requires(pre): dvdrwtools-control >= 1.2-alt2
 Requires: mkisofs >= 1.10
@@ -59,6 +60,7 @@ Collection of tools to master DVD+RW/+R/-R/-RW media.
 %patch19 -p1 -b .format
 %patch20 -p1 -b .pow
 %patch21 -p1 -b .freespace
+%patch22 -p1 -b .sysmacro
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -82,6 +84,9 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 7.1-alt3
+- fixed FTBFS (fc sysmacro-inc.patch)
+
 * Sun Feb 04 2018 Yuri N. Sedunov <aris@altlinux.org> 7.1-alt2
 - synced fc patchset with 7.1-24
 
