@@ -5,10 +5,10 @@
 
 Name: foliate
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A simple and modern GTK eBook reader
-License: GPLv3+
+License: GPL-3.0
 Group: Office
 Url: https://github.com/johnfactotum/foliate
 
@@ -54,7 +54,9 @@ Foliate is a simple and modern GTK eBook reader with following features:
 
 %prep
 %setup
-%patch -b .py3
+%patch
+# switch python shebangs to python3
+sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 
 %build
 %meson
@@ -77,6 +79,9 @@ Foliate is a simple and modern GTK eBook reader with following features:
 
 
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt2
+- swithed KindleUnpack to use Python3
+
 * Thu Jul 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
