@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define ver_major 3.2
 %def_disable static
 %def_enable gtk_doc
@@ -12,7 +13,7 @@
 
 Name: GConf
 Version: %ver_major.6
-Release: alt3
+Release: alt4
 
 Provides: %oldname = %version
 Obsoletes: %oldname < %version
@@ -21,12 +22,16 @@ Obsoletes: %name-sanity-check
 
 Summary: Gnome Config System
 Summary(ru_RU.UTF-8): Система конфигурации Gnome
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Servers
 Url: http://projects.gnome.org/gconf/
 
+%if_disabled snapshot
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
 Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%endif
+
 Source1: gconf.rpmmacros
 Source2: gconf2_set
 Source3: gconf2_add
@@ -54,6 +59,8 @@ Patch3: GConf-3.2.6-alt-lfs.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=755992
 # ALT #28916
 Patch4: GConf-3.2.6-fc-workaround_crash.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=759334
+Patch5: GConf-3.2.6-gsettings-schema-convert-2to3.patch
 
 %define ORBit_ver 2.12.1
 %define glib_ver 2.25.12
@@ -62,29 +69,29 @@ Patch4: GConf-3.2.6-fc-workaround_crash.patch
 %define gir_ver 0.6.7
 %define gio_ver 2.31.0
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: dbus-tools-gui
 
 # for patch2 /usr/bin/killall required
 # Requires: psmisc
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-BuildPreReq: gnome-common >= %gnome_common_ver
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: intltool >= 0.35
-BuildPreReq: gettext-tools
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %gio_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libldap-devel
-BuildPreReq: libdbus-devel libdbus-glib-devel libpolkit1-devel polkit
+BuildRequires(pre): rpm-build-gnome rpm-build-python3
+BuildRequires: gnome-common >= %gnome_common_ver
+BuildRequires: gtk-doc >= 1.0
+BuildRequires: intltool >= 0.35
+BuildRequires: gettext-tools
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgio-devel >= %gio_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libldap-devel
+BuildRequires: libdbus-devel libdbus-glib-devel libpolkit1-devel polkit
 
-%{?_enable_orbit:BuildPreReq: ORBit2-devel >= %ORBit_ver}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
-%{?_enable_gsettings:BuildPreReq: libgio-devel >= %gio_ver}
+%{?_enable_orbit:BuildRequires: ORBit2-devel >= %ORBit_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver}
+%{?_enable_gsettings:BuildRequires: libgio-devel >= %gio_ver}
 
 # to build manpages.
-BuildPreReq: help2man
+BuildRequires: help2man
 
 %description
 GConf is the Configuration database system for GNOME. However it can be
@@ -104,7 +111,7 @@ Summary: Gnome Config System development package
 Group: Development/C
 Provides: lib%oldname-devel = %version
 Obsoletes: lib%oldname-devel < %version
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 GConf development package. Contains files needed for doing
@@ -126,7 +133,7 @@ This package contains development documentation for GConf.
 %package -n lib%name-devel-static
 Summary: Gnome Config System development package
 Group: Development/GNOME and GTK+
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 GConf static libraries package. Contains libraries needed for doing
@@ -135,7 +142,7 @@ development using GConf.
 %package -n lib%name-gir
 Summary: GObject introspection data for the GConf library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GConf library
@@ -144,24 +151,26 @@ GObject introspection data for the GConf library
 Summary: GObject introspection devel data for the GConf library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GConf library
 
 %prep
-%setup -q
+%setup
 install -p -m644 %_sourcedir/libgconf.{map,lds} gconf/
 %patch1 -p1
 %patch2 -p1 -b .reload
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # disable localization for gconfd
 %__subst 's,\(setlocale (.* \"\),\1C,' gconf/gconfd.c
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -174,7 +183,7 @@ install -p -m644 %_sourcedir/libgconf.{map,lds} gconf/
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 cat <<__EOF__ >%buildroot%_sysconfdir/gconf/schema-install-source
 xml:readwrite:%_cachedir/gconf/gconf.xml.defaults
@@ -304,6 +313,10 @@ install -pD -m644 gconftool-2.man %buildroot%_man1dir/gconftool-2.1
 %endif
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt4
+- updated to 3.2.6-11-g07808097
+- converted gsettings-schema-convert to Python3
+
 * Fri Feb 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt3
 - updated to 3.2.5-43-g0780809
 
