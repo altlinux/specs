@@ -2,7 +2,7 @@
 
 %define oname hypothesis
 
-%def_with python3
+%def_without python3
 
 %ifnarch %ix86 x86_64
 %def_disable check
@@ -10,7 +10,7 @@
 
 Name: python-module-%oname
 Version: 3.66.30
-Release: alt1
+Release: alt2
 Summary: A library for property based testing
 License: MPLv2
 Group: Development/Python
@@ -25,7 +25,9 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-enum34 python-module-numpy python-module-flaky python-module-pytz python-module-django
 BuildRequires: python-module-django-tests python-module-fake-factory python-modules-sqlite3
-BuildRequires: python2.7(mock) python2.7(coverage) python2.7(pandas) python2.7(dateutil)
+BuildRequires: python2.7(mock) python2.7(coverage) python2.7(dateutil)
+#BuildRequires: python2.7(pandas)
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -42,6 +44,7 @@ which are parametrized by a source of examples, and then generates simple and
 comprehensible examples that make your tests fail. This lets you find more bugs
 in your code with less work.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A library for property based testing for Python 3
 Group: Development/Python3
@@ -52,6 +55,8 @@ Hypothesis is an advanced testing library for Python. It lets you write tests
 which are parametrized by a source of examples, and then generates simple and
 comprehensible examples that make your tests fail. This lets you find more bugs
 in your code with less work.
+
+%endif
 
 %prep
 %setup
@@ -106,6 +111,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.66.30-alt2
+- build python2 module only
+- build without pandas using
+
 * Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.66.30-alt1
 - Updated to upstream version 3.66.30.
 

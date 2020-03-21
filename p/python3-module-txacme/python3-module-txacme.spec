@@ -2,7 +2,7 @@
 
 Name: python3-module-txacme
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: ACME protocol implementation for Twisted
 
@@ -33,6 +33,7 @@ the event-driven networking engine for Python.
 %install
 %python3_install
 rm -rf %buildroot%python3_sitelibdir/integration/
+rm -rfv %buildroot%python3_sitelibdir/txacme/test/
 
 %files
 %python3_sitelibdir/%modulename/
@@ -40,5 +41,8 @@ rm -rf %buildroot%python3_sitelibdir/integration/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt2
+- drop tests from the package
+
 * Sun Aug 04 2019 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - initial build for ALT Sisyphus
