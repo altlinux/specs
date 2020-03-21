@@ -1,9 +1,9 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 5000257f0171271cb3ee2cf0fe02e8a2154ddf2e
+%define release_commit 8791814f90df83c3340aa0cdd75cf908fca58084
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.19.0
+Version: 1.20.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -19,10 +19,8 @@ Source: %name-%version.tar
 
 Source1: netdata.logrotate
 
-# manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs
-# Automatically added by buildreq on Fri Aug 05 2016
-# optimized out: perl pkg-config python-base python-modules python3 python3-base
-BuildRequires: libuuid-devel zlib-devel bash4 libcups-devel
+BuildRequires: bash4
+BuildRequires: libuuid-devel zlib-devel libcups-devel libuv-devel libprotobuf-devel liblz4-devel
 
 Requires: bash4
 
@@ -116,7 +114,17 @@ install -m 644 -p %SOURCE1 %buildroot%_logrotatedir/%name
 install -m 644 -p system/netdata.logrotate %buildroot%_logrotatedir/%name
 %endif
 
-find %buildroot -name .keep | xargs rm
+#find %buildroot -name .keep | xargs rm
+
+# ###########################################################
+# Install cache and log directories
+install -m 755 -d %buildroot/var/cache/%name/
+install -m 755 -d %buildroot/var/log/%name/
+
+# ###########################################################
+# Install registry directory
+install -m 755 -d %buildroot/var/lib/%name/registry/
+
 
 install -d %buildroot%_unitdir/
 install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
@@ -145,6 +153,7 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %attr(0700,%netdatauser,%netdatauser) %dir %_cachedir/%name/
 %attr(0770,root,%netdatauser) %dir %_logdir/%name/
 %attr(0700,%netdatauser,%netdatauser) %dir %_sharedstatedir/%name/
+%attr(0700,%netdatauser,%netdatauser) %dir %_sharedstatedir/%name/registry/
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/.opt-out-from-anonymous-statistics
 %_sysconfdir/%name/edit-config
@@ -162,6 +171,8 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 #config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/charts.d/*.conf
 %config(noreplace) %_logrotatedir/%name
 %_sbindir/%name
+%_sbindir/netdatacli
+%_sbindir/netdata-claim.sh
 %_unitdir/netdata.service
 %dir %_libexecdir/%name/
 %_libexecdir/%name/charts.d/
@@ -181,6 +192,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Sat Mar 21 2020 Vitaly Lipatov <lav@altlinux.ru> 1.20.0-alt1
+- new version 1.20.0 (with rpmrb script)
+
 * Sun Dec 08 2019 Vitaly Lipatov <lav@altlinux.ru> 1.19.0-alt1
 - new version (1.19.0) with rpmgs script
 
