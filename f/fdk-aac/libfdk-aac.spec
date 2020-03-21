@@ -1,9 +1,9 @@
-%define git 5ab5496
+%define git %nil
 %define soname 2
 
 Name: fdk-aac
-Version: 2.0.0
-Release: alt0.1.g%{git}
+Version: 2.0.1
+Release: alt0.1
 Summary: Fraunhofer FDK AAC Codec Library for Android
 License: Permissive
 Group: System/Libraries
@@ -61,6 +61,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 2.0.1-alt0.1
+- 2.0.1.
+
 * Mon Sep 16 2019 L.A. Kostis <lakostis@altlinux.ru> 2.0.0-alt0.1.g5ab5496
 - GIT 5ab5496.
 - Initial build for ALTLinux.
