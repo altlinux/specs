@@ -5,13 +5,13 @@
 %def_enable docs
 
 Name: flatpak-builder
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Epoch:1
 
 Summary: Tool to build flatpaks from source
 Group: Development/Other
-License: LGPLv2+
+License: LGPL-2.1
 Url: http://flatpak.org/
 
 # VCS: https://github.com/flatpak/flatpak-builder.git
@@ -33,6 +33,7 @@ Requires: /usr/bin/strip
 Requires: /usr/bin/svn
 Requires: /bin/tar
 Requires: /usr/bin/unzip
+Requires: /usr/bin/7z
 
 BuildRequires: flatpak >= %flatpak_ver
 BuildRequires: libcap-devel
@@ -74,6 +75,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docs:%doc %_docdir/%name}
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.10-alt1
+- 1.0.10
+
 * Sun Nov 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.9-alt1
 - 1.0.9
 
