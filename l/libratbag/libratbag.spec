@@ -1,9 +1,10 @@
-%define git 7fe4d6f
+%define git 1dff6f2
 %def_enable tests
+%def_enable systemd
 
 Name: libratbag
-Version: 0.9.901
-Release: alt0.2
+Version: 0.13
+Release: alt0.16.g%{git}
 Summary: Programmable input device library
 Group: System/Libraries
 License: MIT
@@ -12,8 +13,13 @@ Source0: https://github.com/libratbag/%name/archive/v%version/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: pkgconfig gcc-c++ libevdev-devel libudev-devel 
-BuildRequires: libsystemd-devel glib2-devel swig python3-dev
+BuildRequires: pkgconfig gcc-c++ libevdev-devel libudev-devel libunistring-devel
+BuildRequires: glib2-devel python3-dev swig libjson-glib-devel
+%if_enabled systemd
+BuildRequires: libsystemd-devel
+%else
+BuildRequires: libelogind-devel
+%endif
 %{?_enable_tests:BuildRequires: check python3-module-pygobject3 python3-module-lxml python3-module-evdev}
 
 %description
@@ -33,7 +39,7 @@ attached to a receiver.
 %package -n liblur-devel
 Summary: Development files for liblur
 Group: Development/C
-Requires: liblur = %version-%release
+Requires: liblur = %EVR
 
 %description -n liblur-devel
 The liblur-devel package contains libraries and header files for
@@ -42,7 +48,7 @@ developing applications that use liblur.
 %package -n ratbagd
 Summary: System daemon to introspect and modify configurable mice
 Group: System/Configuration/Hardware
-Requires: %name-data
+Requires: %name-data = %EVR
 
 %description -n ratbagd
 System daemon to introspect and modify configurable mice using libratbag.
@@ -50,6 +56,7 @@ System daemon to introspect and modify configurable mice using libratbag.
 %package tools
 Summary: Mice configuration tools using libratbag
 Group: System/Configuration/Hardware
+Requires: ratbagd = %EVR
 
 %description tools
 Mice configuration tools using libratbag.
@@ -58,6 +65,7 @@ Mice configuration tools using libratbag.
 Summary: Libratbag mice configuration data
 Group: System/Configuration/Hardware
 BuildArch: noarch
+Requires: ratbagd = %EVR
 
 %description data
 Libratbag mice configuration data.
@@ -65,15 +73,19 @@ Libratbag mice configuration data.
 %prep
 %setup
 %patch -p1
-subst 's,@UPSTREAM_GIT_SHA1@,%git,' meson.build
 
 %build
 %meson \
-    -Denable-documentation=false \
+    -Ddocumentation=false \
 %if_enabled tests
-    -Denable-tests=false \
+    -Dtests=false \
 %endif
+%if_enabled systemd
     -Dsystemd-unit-dir=%_unitdir
+%else
+    -Dlogind-provider=elogind \
+    -Dsystemd=false
+%endif
 %meson_build
 
 %if_enabled tests
@@ -97,7 +109,9 @@ subst 's,@UPSTREAM_GIT_SHA1@,%git,' meson.build
 %_bindir/ratbagd
 %_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
+%if_enabled systemd
 %_unitdir/*.service
+%endif
 %_man8dir/*.8*
 
 %files tools
@@ -111,6 +125,12 @@ subst 's,@UPSTREAM_GIT_SHA1@,%git,' meson.build
 %_datadir/libratbag
 
 %changelog
+* Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 0.13-alt0.16.g1dff6f2
+- v0.13-16-g1dff6f2.
+
+* Fri Sep 13 2019 L.A. Kostis <lakostis@altlinux.ru> 0.10-alt0.1
+- v0.10-30-g07567ac.
+
 * Mon Apr 30 2018 L.A. Kostis <lakostis@altlinux.ru> 0.9.901-alt0.2
 - GIT 7fe4d6f.
 - build -data as noarch.
