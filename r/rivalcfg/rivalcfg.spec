@@ -1,9 +1,9 @@
 Name:       rivalcfg
-Version:    3.6.0
-Release:    alt2
+Version:    3.7.0
+Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
-License:    DWTFYWTPL
+License:    WTFPL
 Group:      System/Configuration/Hardware
 Url:        https://github.com/flozz/rivalcfg
 
@@ -53,6 +53,10 @@ EOF
 
 
 %changelog
+* Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt1
+- 3.7.0.
+- Fix License tag.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.6.0-alt2
 - Porting on python3.
 
