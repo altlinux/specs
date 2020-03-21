@@ -1,25 +1,18 @@
 Name: libflif
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Free Lossless Image Format
-
 License: LGPLv3+ and Apache-2.0
 Group: Development/C
+
 Url: http://flif.info/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # Source-url: https://github.com/FLIF-hub/FLIF/archive/v%version.tar.gz
 Source: %name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: gcc-c++
-
 BuildRequires: libpng-devel
-
-#BuildRequires: rpm-macros-cmake cmake ctest
-# ninja
-#BuildRequires: python3-module-docopt python3-module-ninja_syntax
 
 %description
 FLIF is a lossless image format based on MANIAC compression.
@@ -72,15 +65,16 @@ Development files for the %name library.
 
 %prep
 %setup
-%__subst "s|/usr/local|%_prefix|g" src/Makefile
-%__subst "s|/lib\([/ ]\)|/%_lib\1|g" src/Makefile
-%__subst "s|/lib$|/%_lib|g" src/Makefile
+sed -i "s|/usr/local|%_prefix|g" src/Makefile
+sed -i "s|/lib\([/ ]\)|/%_lib\1|g" src/Makefile
+sed -i "s|/lib$|/%_lib|g" src/Makefile
+%ifarch %e2k
+# lcc 1.23 does that differently
+sed -i "s|-fwhole-program||" src/Makefile
+%endif
 
 %build
-#./configure.py
-#ninja-build
 cd src
-#cmake_insource
 %make_build
 %make_build decoder
 
@@ -115,6 +109,10 @@ cd src
 %_libdir/libflif_dec.so.0
 
 %changelog
+* Sat Mar 21 2020 Michael Shigorin <mike@altlinux.org> 0.3-alt3
+- E2K: avoid lcc-unsuported option
+- minor spec cleanup
+
 * Tue Jul 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt2
 - fix package description
 
