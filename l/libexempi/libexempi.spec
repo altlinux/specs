@@ -1,3 +1,4 @@
+%def_enable snapshot
 %def_enable static
 %def_enable check
 
@@ -5,17 +6,20 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.5.1
-Release: alt1
+Version: 2.5.2
+Release: alt0.1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
-License: %bsd
+License: BSD-3-Clause
 Url: http://libopenraw.freedesktop.org/wiki/%Name
 
+%if_disabled snapshot
 Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
+%else
+Source: %_name-%version.tar
+%endif
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-test-devel gcc-c++ libexpat-devel zlib-devel
 
 %description
@@ -79,6 +83,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt0.1
+- updated to 2.5.1-5-g408c71e (fixed build with gcc-9.2/c++17)
+
 * Tue Aug 06 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
