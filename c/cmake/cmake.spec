@@ -5,7 +5,7 @@
 %def_without check
 
 Name: cmake
-Version: 3.16.3
+Version: 3.17.0
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -142,6 +142,8 @@ Set of RPM macros for packaging applications that use cmake.
 %setup
 %patch -p1
 %patch1 -p1
+# force _libdir due strange libdir detection
+#__subst 's|LIBDIR_DEFAULT "lib"|LIBDIR_DEFAULT "%_lib"|' Modules/GNUInstallDirs.cmake
 
 %build
 mkdir build
@@ -292,6 +294,15 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Mar 21 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17.0-alt1
+- new version 3.17.0 (with rpmrb script)
+
+* Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 3.16.4-alt1
+- new version 3.16.4 (with rpmrb script)
+
+* Wed Jan 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.16.3-alt2
+- fix LIBDIR set in GNUInstallDirs
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.16.3-alt1
 - new version 3.16.3 (with rpmrb script)
 
