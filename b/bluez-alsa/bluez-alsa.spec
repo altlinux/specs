@@ -7,8 +7,8 @@
 %def_disable test
 
 Name: bluez-alsa
-Version: 1.4.0
-Release: alt0.5
+Version: 2.1.0
+Release: alt1
 Serial: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -53,6 +53,7 @@ bluealsa. The device is based on the ALSA software PCM plugin.
 	%{subst_enable debug} \
 	%{subst_enable test} \
 	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
+	--enable-upower \
 	--enable-ofono \
 	--enable-msbc
 
@@ -74,6 +75,10 @@ bluealsa. The device is based on the ALSA software PCM plugin.
 %_unitdir/*.service
 
 %changelog
+* Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.0-alt1
+- 2.1.0.
+- Enable upower (to expose battery change percentage).
+
 * Wed Sep 18 2019 L.A. Kostis <lakostis@altlinux.ru> 5:1.4.0-alt0.5
 - Added DBUS/systemd support.
 
