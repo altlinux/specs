@@ -1,18 +1,20 @@
 %def_disable check
+%define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.13
+Version: 1.1.14
 Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
-License: GPLv3
+License: LGPL-3.0
 Url: https://lsp-plug.in/
 
 #Source: https://sourceforge.net/projects/%name/files/%name/%version/%name-src-%version.tar.gz
 #VCS: https://github.com/sadko4u/lsp-plugins
 Source: https://github.com/sadko4u/%name/archive/%name-%version.tar.gz
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
@@ -65,7 +67,7 @@ Documentation for LSP (Linux Studio Plugins) plugins.
 %setup -n %name-%name-%version
 
 %build
-%add_optflags %optflags_warnings -D_FILE_OFFSET_BITS=64
+%add_optflags %optflags_warnings %(getconf LFS_CFLAGS)
 export PLATFORM=Linux SYSTEM=Linux
 %make PREFIX=%_prefix \
     BUILD_PROFILE=%_arch \
@@ -84,6 +86,10 @@ export PLATFORM=Linux SYSTEM=Linux
 %dir %_libdir/%name
 %_libdir/%name/%name-jack-core-%version.so
 %_libdir/%name/%name-r3d-glx.so
+%_desktopdir/%{xdg_name}_*.desktop
+%_datadir/desktop-directories/%name.directory
+%_xdgmenusdir/applications-merged/%name.menu
+%_iconsdir/hicolor/*/apps/%name.*
 
 %doc CHANGELOG.txt README.txt
 
@@ -104,6 +110,9 @@ export PLATFORM=Linux SYSTEM=Linux
 
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.14-alt1
+- 1.1.14
+
 * Tue Dec 24 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.13-alt1
 - 1.1.13
 - removed rpath.patch
