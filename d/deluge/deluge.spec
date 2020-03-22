@@ -1,24 +1,29 @@
+%define major 2.0
+
 Name: deluge
-Version: 1.3.15
+Version: %major.3
 Release: alt1
 
 Summary: full-featured BitTorrent client
-License: GPL
+License: GPL-3.0-or-later with OpenSSL exception
 Group: Networking/File transfer
 
 Url: http://deluge-torrent.org
-# http://git.deluge-torrent.org/deluge/
 
+# repacked https://ftp.osuosl.org/pub/deluge/source/%major/deluge-%version.tar.xz
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source1: deluged.service
+Source2: deluge-web.service
+Patch1: deluge-2.0.3-alt-setup-no-requires.patch
 BuildArch: noarch
 
-BuildRequires: python-module-dbus-devel python-module-pygtk-devel
-BuildRequires: python-module-notify librsvg-devel python-module-pyxdg
-BuildRequires: python-module-setuptools python-module-libtorrent-rasterbar
-BuildRequires: python-module-simplejson intltool
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): libappindicator-gtk3-gir-devel librsvg-devel
+# Automatically added by buildreq on Sun Mar 22 2020
+# optimized out: libboost_python3-1.72.0 libtorrent-rasterbar10 perl perl-Encode perl-XML-Parser perl-parent python2-base python3 python3-base python3-dev python3-module-pkg_resources sh4
+BuildRequires: intltool python3-module-chardet python3-module-libtorrent-rasterbar python3-module-setuptools
 
-Requires: deluge-gtk = %version-%release
+Requires: deluge-gtk
 
 %description
 Deluge is a full-featured  BitTorrent client for Linux, OS X, Unix and
@@ -44,19 +49,20 @@ the  freedesktop standards.
 Deluge is  Free Software and is licensed under the  GNU General Public
 License.
 
-%package -n python-module-deluge
+%package -n python3-module-deluge
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (common files)
-Requires: python-module-simplejson python-module-pyxdg python-module-libtorrent-rasterbar python-module-twisted-web
+Requires: python3-module-simplejson python3-module-pyxdg python3-module-libtorrent-rasterbar python3-module-twisted-web
+Requires: python3-module-service-identity python3-module-Pillow python3-module-chardet python3-module-setproctitle
 
-%description -n python-module-deluge
+%description -n python3-module-deluge
 This package contains data files commons to both the deluge daemon and
 the user-interfaces.
 
 %package console
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (console UI)
-Requires: python-module-deluge = %version-%release
+Requires: python3-module-deluge
 
 %description console
 This package contains the console user-interface.
@@ -64,7 +70,7 @@ This package contains the console user-interface.
 %package -n deluged
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (deluge daemon)
-Requires: python-module-deluge = %version-%release
+Requires: python3-module-deluge
 
 %description -n deluged
 Deluge daemon process handles all the bittorrent activity.
@@ -72,9 +78,10 @@ The Deluge daemon is able to run on headless machines with the
 user-interfaces being able to connect remotely from any platform.
 
 %package gtk
+%filter_from_requires '/^python3\(gi\.repository/d'
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (GTK UI)
-Requires: python-module-deluge = %version-%release python-module-twisted-core-gui python-module-pygtk-libglade
+Requires: python3-module-deluge python3-module-twisted-core-gui python3-module-pygobject3-pygtkcompat
 
 %description gtk
 This package contains the GTK user-interface.
@@ -82,25 +89,27 @@ This package contains the GTK user-interface.
 %package web
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (web UI)
-Requires: python-module-deluge = %version-%release
+Requires: python3-module-deluge
 
 %description web
 This package contains the web user-interface.
 
 %prep
 %setup -q
-%patch0 -p1
+cp -a %SOURCE1 .
+cp -a %SOURCE2 .
+%patch1 -p2
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 rm -f %buildroot%_datadir/pixmaps/*
 rm -f %buildroot%python_sitelibdir/%name/ui/webui/scripts/build_webui_tarball.sh
 mkdir -p %buildroot{%_unitdir,%_spooldir/%{name}d}
-cp altlinux/%{name}d.service %buildroot%_unitdir
-cp altlinux/%name-web.service %buildroot%_unitdir
+cp -a %{name}d.service %buildroot%_unitdir
+cp -a %name-web.service %buildroot%_unitdir
 
 %pre -n deluged
 %_sbindir/groupadd -r -f _deluge
@@ -115,23 +124,23 @@ cp altlinux/%name-web.service %buildroot%_unitdir
 %files
 %_bindir/%name
 %_man1dir/%name.1*
-%doc LICENSE ChangeLog README
+%doc LICENSE CHANGELOG.md README.md
 
-%files -n python-module-deluge
-%dir %python_sitelibdir/%name
-%python_sitelibdir/%name/*.py*
-%python_sitelibdir/%name/core
-%python_sitelibdir/%name/data
-%python_sitelibdir/%name/i18n
-%python_sitelibdir/%name/plugins
-%dir %python_sitelibdir/%name/ui
-%python_sitelibdir/%name/ui/*.py*
-%python_sitelibdir/*.egg-info
+%files -n python3-module-deluge
+%dir %python3_sitelibdir/%name
+%python3_sitelibdir/%name/*.py*
+%python3_sitelibdir/%name/core
+%python3_sitelibdir/%name/ui/data
+%python3_sitelibdir/%name/i18n
+%python3_sitelibdir/%name/plugins
+%dir %python3_sitelibdir/%name/ui
+%python3_sitelibdir/%name/ui/*.py*
+%python3_sitelibdir/*.egg-info
 
 %files console
 %_bindir/%name-console
 %_man1dir/%name-console.1*
-%python_sitelibdir/%name/ui/console
+%python3_sitelibdir/%name/ui/console
 
 %files -n deluged
 %_unitdir/%{name}d.service
@@ -142,17 +151,24 @@ cp altlinux/%name-web.service %buildroot%_unitdir
 %files gtk
 %_bindir/%name-gtk
 %_man1dir/%name-gtk.1*
-%python_sitelibdir/%name/ui/gtkui
+%python3_sitelibdir/%name/ui/gtk3
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/%name.desktop
+%_datadir/appdata/%name.appdata.xml
 
 %files web
 %_unitdir/%name-web.service
 %_bindir/%name-web
 %_man1dir/%name-web.1*
-%python_sitelibdir/%name/ui/web
+%python3_sitelibdir/%name/ui/web
 
 %changelog
+* Sat Mar 07 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0.3-alt1
+- Updated to 2.0.3.
+- Switched to Python 3 by upstream.
+- Fixed license field.
+- Cleaned up spec.
+
 * Fri Sep 29 2017 Vladimir Lettiev <crux@altlinux.org> 1.3.15-alt1
 - New version 1.3.13
 - deluged/deluge-web managed by systemd
