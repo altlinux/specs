@@ -1,20 +1,26 @@
+%def_enable snapshot
 %define api_version 3.0
 %define rname gtkmm
 %define ver_major 3.24
 %def_enable atkmm
 %def_disable demos
 %def_enable check
+%{?_enable_snapshot:%def_enable docs}
 
 Name: libgtkmm3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
-License: LGPL
+License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.tar.xz
+%else
+Source: %rname-%version.tar
+%endif
 
 Provides: %rname = %version
 
@@ -24,10 +30,11 @@ Provides: %rname = %version
 %define atkmm_ver 2.24.2
 %define cairo_ver 1.12.0
 
-BuildRequires: gcc-c++ mm-common doxygen xsltproc libgtk+3-devel >= %gtk_ver
+BuildRequires: gcc-c++ mm-common libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
 BuildRequires: libcairomm-devel >= %cairo_ver libepoxy-devel
 %{?_enable_atkmm:BuildRequires: libatkmm-devel >= %atkmm_ver}
+%{?_enable_docs:BuildRequires: doxygen xsltproc graphviz}
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -68,10 +75,17 @@ The %name-demos package contains source code of demo programs for %name.
 %setup -n %rname-%version
 
 %build
+%if_enabled snapshot
+NOCONFIGURE=1 ./autogen.sh
+%else
 %autoreconf
+%endif
 %configure \
 	--disable-static \
-	%{?_disable_atkmm:--disable-api-atkmm}
+	%{?_disable_atkmm:--disable-api-atkmm} \
+	%{?_enable_snapshot:--enable-maintainer-mode \
+	--enable-documentation}
+%nil
 %make_build
 
 %install
@@ -102,6 +116,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
+- updated to 3.24.2-12-gc96e1e1a
+- fixed License tag
+
 * Thu Oct 24 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
