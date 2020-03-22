@@ -26,7 +26,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -271,6 +271,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 #%_datadir/aclocal/gtk-%api_ver.m4
 %_datadir/gettext/its/gtk%{api_ver_major}builder.its
 %_datadir/gettext/its/gtk%{api_ver_major}builder.loc
+%_datadir/gtk-%api_ver/valgrind/
 %{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*}
 
 %if_enabled wayland
@@ -337,6 +338,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.98.1-alt1
+- 3.98.1
+
 * Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.98.0-alt1
 - 3.98.0
 
