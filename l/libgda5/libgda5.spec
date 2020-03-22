@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name libgda
@@ -28,17 +28,19 @@
 %def_enable vala
 %def_with ui
 %def_with gtksourceview
+%def_enable glade
 
+%add_python3_path %_datadir/%_name-%abi_ver
 # openerp provides this
-%add_python_req_skip rml2html
+%add_python3_req_skip rml2html
 
 Name: %{_name}5
-Version: %ver_major.9
-Release: alt1
+Version: %ver_major.10
+Release: alt0.1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
-License: LGPL
+License: GPL-2.0 and LGPL-2.0
 Url: http://www.gnome-db.org/
 
 %if_disabled snapshot
@@ -57,9 +59,10 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.44
+%define vala_ver 0.48
+%define sqlite_ver 3.10.2
 
-BuildRequires(pre): rpm-build-gir rpm-build-vala
+BuildRequires(pre): rpm-build-gir rpm-build-vala rpm-build-python3
 BuildRequires: gcc-c++
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
@@ -73,6 +76,7 @@ BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
 BuildRequires: libgnome-keyring-devel libsecret-devel iso-codes-devel
 BuildRequires: libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
+%{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 BuildRequires: yelp-tools
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.6.7}
@@ -101,7 +105,7 @@ BuildPreReq: FirebirdCS
 %endif
 
 %if_with sqlite
-BuildPreReq: libsqlite3-devel
+BuildPreReq: libsqlite3-devel >= %sqlite_ver
 %endif
 
 %if_with ldap
@@ -424,7 +428,7 @@ sed -i 's/ cs / /' tools/browser/help/Makefile.am
 
 %build
 #NOCONFIGURE=1 ./autogen.sh
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 export ac_cv_path_VAPIGEN=%_bindir/vapigen
 export VALA_API_VERSION=%vala_ver
@@ -607,6 +611,8 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %files -n libgdaui5-devel
 %_includedir/libgda-%abi_ver/libgda-ui
 %_libdir/libgda-ui-%abi_ver.so
+%{?_enable_glade:%_datadir/glade/catalogs/gdaui-catalog.xml
+%_datadir/glade/pixmaps/widget-gdaui-*.png}
 %_pkgconfigdir/libgda-ui-%abi_ver.pc
 
 %if_enabled introspection
@@ -648,6 +654,11 @@ mkdir -p %buildroot%_datadir/gtk-doc/html/gda-browser
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.10-alt0.1
+- updated to LIBGDA_5_2_9-17-g08342b7f8
+- built glade catalog for gdaui
+- fixed License tag
+
 * Wed May 08 2019 Yuri N. Sedunov <aris@altlinux.org> 5.2.9-alt1
 - 5.2.9
 
