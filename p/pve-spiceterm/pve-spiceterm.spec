@@ -4,7 +4,7 @@
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
 Version: 3.1.1
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -23,6 +23,8 @@ output to any SPICE client (simulating a xterm Terminal).
 %prep
 %setup -q -n %sname
 
+sed -i 's|\ -Werror||' src/Makefile
+
 %build
 %make -C src
 
@@ -34,6 +36,9 @@ output to any SPICE client (simulating a xterm Terminal).
 %_man1dir/%sname.1*
 
 %changelog
+* Sun Mar 22 2020 Valery Inozemtsev <shrek@altlinux.ru> 3.1.1-alt3
+- fixed build
+
 * Wed Aug 28 2019 Valery Inozemtsev <shrek@altlinux.ru> 3.1.1-alt2
 - rebuild with system library
 
