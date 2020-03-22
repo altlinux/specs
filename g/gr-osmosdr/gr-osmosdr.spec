@@ -1,14 +1,14 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
-Version: 0.1.4
-Release: alt5.20190514
-License: GPLv3+
+Version: 0.2.0
+Release: alt1
+License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: gr-osmosdr-0.1.1-pkgconfig-fix.patch
+Patch: gr-osmosdr-0.1.1-pkgconfig-fix.patch
 Patch1: gr-osmosdr-0.1.4-gnuradio38-blocks-fix.patch
 Patch2: gr-osmosdr-0.1.4-python3-fix.patch
 
@@ -29,6 +29,7 @@ BuildRequires: python3-module-mako
 BuildRequires: liblog4cpp-devel
 BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
+BuildRequires: libfftw3-devel
 
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
@@ -57,19 +58,18 @@ Documentation files for gr-osmosdr.
 %prep
 %setup
 
-%patch0 -p1 -b .pkgconfig-fix
-%patch1 -p1 -b .gnuradio38-blocks-fix
-%patch2 -p1 -b .python3-fix
+#patch0 -p1 -b .pkgconfig-fix
+#patch1 -p1 -b .gnuradio38-blocks-fix
+#patch2 -p1 -b .python3-fix
 
 # TODO fix the lib location nicer way
-sed -i 's|/lib/|/%_lib/|g' CMakeLists.txt
+%__subst 's|/lib/|/%_lib/|g' CMakeLists.txt
 
 %build
 mkdir build
 pushd build
 %cmake_insource -DENABLE_DOXYGEN=on -DGR_PKG_DOC_DIR=%_docdir/%name ..
-# parallel build is broken
-make
+%make_build
 popd
 
 %install
@@ -77,10 +77,25 @@ pushd build
 %makeinstall_std
 popd
 
-# fix docs
-mkdir -p %buildroot%_docdir/%name
-mv %buildroot%_docdir/gnuradio*/* %buildroot%_docdir/%name
-rmdir %buildroot%_docdir/gnuradio*
+# Create pkgconfig .pc file
+mkdir -p %buildroot%_pkgconfigdir
+cat <<EOF > %buildroot%_pkgconfigdir/gnuradio-osmosdr.pc
+prefix=%_prefix
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/%_lib
+includedir=\${prefix}/include
+
+Name: gnuradio-osmosdr
+Description: GNU Radio block for various radio hardware
+Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
+Version: %version
+Requires: gnuradio-runtime gnuradio-blocks
+Requires.private:
+Conflicts:
+Cflags: -I\${includedir} -I%_includedir
+Libs: -L\${libdir} -lgnuradio-osmosdr
+Libs.private: -L\${libdir}
+EOF
 
 %files
 %doc AUTHORS COPYING
@@ -94,6 +109,7 @@ rmdir %buildroot%_docdir/gnuradio*
 %files devel
 %_includedir/osmosdr
 %_libdir/*.so
+%_libdir/cmake/osmosdr/*
 %_pkgconfigdir/*.pc
 
 %files doc
@@ -101,6 +117,10 @@ rmdir %buildroot%_docdir/gnuradio*
 %doc %_docdir/%name/xml
 
 %changelog
+* Mon Mar 23 2020 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
+- new version 0.2.0
+- generate .pc in spec as dropped upstream
+
 * Sun Nov 24 2019 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt5.20190514
 - New snapshot
 - Fix build with gnuradio 3.8
