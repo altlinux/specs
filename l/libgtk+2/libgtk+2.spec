@@ -19,10 +19,10 @@
 
 Name: libgtk+2
 Version: %ver_major.32
-Release: alt3
+Release: alt4
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Libraries
 Url: http://www.gtk.org
 Icon: gtk+-logo.xpm
@@ -52,6 +52,7 @@ Patch10: gtk+-2.24.30-icon-padding.patch
 Patch12: gtk+-2.24.30-tooltip-positioning.patch
 
 Patch20: gtk+-2.24.10-fixdso.patch
+Patch21: gtk+-2.24.32-up-gtk-builder-convert-python3.patch
 
 %define glib_ver 2.28.0
 %define cairo_ver 1.6
@@ -65,15 +66,16 @@ Requires: %name-locales = %version
 Requires: gtk-update-icon-cache
 Requires: icon-theme-hicolor
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libatk-devel >= %atk_ver
-BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
+BuildRequires(pre): rpm-build-gnome rpm-build-python3
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libatk-devel >= %atk_ver
+BuildRequires: fontconfig-devel >= %fontconfig_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: libgio-devel libgdk-pixbuf-devel libcairo-gobject-devel libcups-devel gcc-c++ indent zlib-devel
 %if_enabled introspection
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel
 %endif
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
@@ -92,7 +94,7 @@ for debugging, set GTK_DEBUG environment variable to an appropriate value.
 %package locales
 Summary: Internationalization for GTK+
 Group: System/Internationalization
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 BuildArch: noarch
 
 %description locales
@@ -112,7 +114,7 @@ loaded with GtkBuilder.
 Summary: Development files and tools for GTK+ applications
 Group: Development/GNOME and GTK+
 Icon: gtk+-devel-logo.xpm
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gtk-builder-convert = %version
 Provides: libgtk2-devel = %version gtk2-devel = %version gtk+2-devel = %version
 Obsoletes: libgtk2-devel < %version gtk2-devel < %version gtk+2-devel < %version
@@ -126,7 +128,7 @@ build programs that use GTK+.
 %package -n gtk-demo
 Summary: GTK+ widgets demonstration program
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gtk-demo
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -146,7 +148,7 @@ This package contains documentation needed for developing GTK+ applications.
 %package devel-doc-examples
 Summary: Examples for developing applications which will use GTK+
 Group: Development/GNOME and GTK+
-Conflicts: %name < %version-%release
+Conflicts: %name < %EVR
 BuildArch: noarch
 
 %description devel-doc-examples
@@ -156,7 +158,7 @@ This package contains sources for example programs.
 %package gir
 Summary: GObject introspection data for the GTK+ library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GTK+ library
@@ -165,8 +167,8 @@ GObject introspection data for the GTK+ library
 Summary: GObject introspection devel data for the GTK+ library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GTK+ library
@@ -174,7 +176,7 @@ GObject introspection devel data for the GTK+ library
 %package -n libgail
 Summary: Accessibility implementation for GTK+ and GNOME libraries
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n libgail
 GAIL implements the abstract interfaces found in ATK for GTK+ and GNOME libraries,
@@ -183,8 +185,8 @@ enabling accessibility technologies such as at-spi to access those GUIs.
 %package -n libgail-devel
 Summary: Files to compile applications that use GAIL
 Group: Development/GNOME and GTK+
-Requires: libgail = %version-%release
-Requires: %name-devel = %version-%release
+Requires: libgail = %EVR
+Requires: %name-devel = %EVR
 
 %description -n libgail-devel
 This package contains the files required to develop applications against
@@ -193,7 +195,7 @@ the GAIL libraries.
 %package -n libgail-devel-doc
 Summary: Development documentation for GAIL
 Group: Development/GNOME and GTK+
-Conflicts: libgail < %version-%release
+Conflicts: libgail < %EVR
 BuildArch: noarch
 
 %description -n libgail-devel-doc
@@ -218,10 +220,13 @@ install -p -m644 %_sourcedir/%name-gtk.lds gtk/compat.lds
 %patch10 -p1 -b .icon-padding
 %patch12 -p1 -b .tooltip-positioning
 %patch20 -p1 -b .fixdso
+%patch21 -p1 -b .python3
 
 bzip2 -9k NEWS
 
 [ ! -d m4 ] && mkdir m4
+# switch gtk-builder-convert to Python3
+sed -i 's|\(#\!/usr/bin/env python\)|\13|' gtk/gtk-builder-convert
 
 %build
 %if_enabled snapshot
@@ -359,13 +364,17 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/*
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/*
 %endif
 
 %changelog
+* Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt4
+- switched gtk-builder-convert to Python3 (upstream patch)
+- fixed License tag
+
 * Wed Apr 17 2019 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt3
 - enabled SMP build
 - introduced "debug" knob (ALT #34561)
