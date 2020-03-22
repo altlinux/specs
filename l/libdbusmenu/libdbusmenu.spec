@@ -3,16 +3,18 @@
 
 Name: libdbusmenu
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A library that passes a menu structure across DBus
 Group: System/Libraries
-License: LGPLv3
+License: LGPL-2.1 and LGPL-3.0 and GPL-3.0
 Url: https://launchpad.net/%name
 
 # rev 477
 #Source: %name-%version.tar
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
+Patch: %name-16.04.0-alt-no-Werror.patch
+Patch1: %name-16.04.0-alt-docs-build.patch
 
 BuildRequires: intltool gtk-doc vala-tools
 BuildRequires: libgtk+2-devel libgtk+3-devel libjson-glib-devel
@@ -26,7 +28,7 @@ for both QT and GTK+ and makes building menus simple.
 %package devel
 Summary: %summary
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for %name
@@ -34,7 +36,7 @@ Development files for %name
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 This package provides GObject introspection data for the %name.
@@ -43,7 +45,7 @@ This package provides GObject introspection data for the %name.
 Summary: GObject introspection devel data for the %name
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 This package provides GObject introspection devel data for the %name
@@ -51,16 +53,16 @@ This package provides GObject introspection devel data for the %name
 %package gtk2
 Summary: %summary
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gtk2
 This package provides shared %name-gtk2 library.
 
 %package gtk3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Summary: %summary
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gtk3
 This package provides shared %name-gtk3 library.
@@ -68,7 +70,7 @@ This package provides shared %name-gtk3 library.
 %package gtk2-devel
 Summary: Development files for %name-gtk2
 Group: Development/C
-Requires: %name-gtk2 = %version-%release
+Requires: %name-gtk2 = %EVR
 
 %description gtk2-devel
 This package provides libraries and header files for developing
@@ -77,7 +79,7 @@ applications that use %name-gtk2.
 %package gtk2-gir
 Summary: GObject introspection data for the %name-gtk2
 Group: System/Libraries
-Requires: %name-gtk3 = %version-%release
+Requires: %name-gtk3 = %EVR
 
 %description gtk2-gir
 This package provides GObject introspection data for the %name-gtk2.
@@ -86,8 +88,8 @@ This package provides GObject introspection data for the %name-gtk2.
 Summary: GObject introspection devel data for the %name-gtk2
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir-devel = %version-%release
-Requires: %name-gtk2-gir = %version-%release
+Requires: %name-gir-devel = %EVR
+Requires: %name-gtk2-gir = %EVR
 
 %description gtk2-gir-devel
 This package provides GObject introspection devel data for the %name-gtk2
@@ -95,7 +97,7 @@ This package provides GObject introspection devel data for the %name-gtk2
 %package gtk3-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name-gtk3 = %version-%release
+Requires: %name-gtk3 = %EVR
 
 %description gtk3-devel
 The %name-gtk3-devel package contains libraries and header files for
@@ -104,7 +106,7 @@ developing applications that use %name.
 %package gtk3-gir
 Summary: GObject introspection data for the %name-gtk3
 Group: System/Libraries
-Requires: %name-gtk3 = %version-%release
+Requires: %name-gtk3 = %EVR
 
 %description gtk3-gir
 This package provides GObject introspection data for the %name-gtk3.
@@ -113,8 +115,8 @@ This package provides GObject introspection data for the %name-gtk3.
 Summary: GObject introspection devel data for the %name-gtk3
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir-devel = %version-%release
-Requires: %name-gtk3-gir = %version-%release
+Requires: %name-gir-devel = %EVR
+Requires: %name-gtk3-gir = %EVR
 
 %description gtk3-gir-devel
 This package provides GObject introspection devel data for the %name-gtk3
@@ -122,7 +124,7 @@ This package provides GObject introspection devel data for the %name-gtk3
 %package jsonloader
 Summary: Test library for %name
 Group: Development/Tools
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description jsonloader
 %name is a small library designed to make sharing and displaying
@@ -134,8 +136,8 @@ required for the %name test suites.
 %package jsonloader-devel
 Summary: Test lib development files for %name
 Group: Development/C
-Requires: %name-jsonloader = %version-%release
-Requires: %name = %version-%release
+Requires: %name-jsonloader = %EVR
+Requires: %name = %EVR
 
 %description jsonloader-devel
 %name is a small library designed to make sharing and displaying
@@ -156,7 +158,7 @@ that use %name.
 %package tools
 Summary: Development tools for the dbusmenu libraries
 Group: Development/Tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 The %name-tools package contains helper tools for developing applications
@@ -164,7 +166,11 @@ that use %name.
 
 %prep
 %setup -a0
+%patch -p1
+%patch1
 mv %name-%version %name-gtk3
+%patch -p1 -d %name-gtk3
+%patch1 -d %name-gtk3
 
 %build
 %define opts --disable-static --enable-gtk-doc --disable-dumper
@@ -246,7 +252,7 @@ popd
 %_datadir/gtk-doc/html/*
 
 %files tools
-%_libexecdir/dbusmenu-bench
+%exclude %_libexecdir/dbusmenu-bench
 %_libexecdir/dbusmenu-testapp
 %dir %_datadir/%name/
 %dir %_datadir/%name/json/
@@ -254,6 +260,12 @@ popd
 %doc tools/README.dbusmenu-bench
 
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 16.04.0-alt2
+- disabled -Werror
+- fised docs build
+- fixed License tag
+- excluded python2 based %%_libexecdir/dbusmenu-bench from -tools
+
 * Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 16.04.0-alt1
 - 16.04.0
 
