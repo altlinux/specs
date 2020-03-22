@@ -6,9 +6,11 @@
 %define oname dateutil
 
 Name: python-module-%oname
-Version: 2.7.3
+Version: 2.8.1
 Release: alt1
+
 Summary: Extensions to the standard datetime module
+
 License: PSF
 Group: Development/Python
 Url: https://pypi.python.org/pypi/python-dateutil/
@@ -19,10 +21,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %add_python_req_skip _winreg winreg
 
-# https://github.com/dateutil/dateutil.git
+# Source-url: %__pypi_url python-dateutil
 Source: %name-%version.tar
 
-Patch1: %oname-%version-alt-tests.patch
+Patch1: %oname-2.7.3-alt-tests.patch
 
 BuildRequires: python-devel python-modules-encodings
 BuildRequires: python-module-setuptools python-module-six
@@ -30,6 +32,7 @@ BuildRequires: pytz-zoneinfo
 BuildRequires: python2.7(setuptools_scm)
 %if_with check
 BuildRequires: python2.7(pytest) python2.7(hypothesis) python2.7(freezegun)
+BuildRequires: python-module-pytest-cov
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -37,8 +40,11 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest) python3(hypothesis) python3(freezegun)
+BuildRequires: python3-module-pytest-cov
 %endif
 %endif
+
+BuildRequires(pre): rpm-build-intro
 
 Requires: pytz-zoneinfo
 
@@ -73,6 +79,8 @@ datetime module, available in Python 2.3+. Allows:
 %prep
 %setup
 %patch1 -p1
+# FIXME: Make sure a unicode string can be passed to TZ (GH #802)
+%__subst "s|test_gettz_badzone_unicode|disabled_test_gettz_badzone_unicode|" dateutil/test/test_tz.py
 
 %if_with python3
 cp -fR . ../python3
@@ -122,6 +130,10 @@ popd
 %python3_sitelibdir/dateutil
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
+- new version (2.8.1) with rpmgs script (ALT bug 37303)
+- move files against in to subdirectory
+
 * Wed Aug 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.3-alt1
 - Updated to upstream version 2.7.3.
 - Rebuilt module for python-3.
