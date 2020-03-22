@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.34
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
+%def_disable python
 %define srcname %name-%version
 
 # git://git.gnome.org/libxslt.git
@@ -164,6 +165,7 @@ make check
 %_libdir/*.a
 %endif # enabled static
 
+%if_enabled python
 %files -n python-module-%name
 %python_sitelibdir/*
 %dir %pkgdocdir
@@ -172,8 +174,12 @@ make check
 %pkgdocdir/python/examples/*.py
 %pkgdocdir/python/examples/*.xml
 %pkgdocdir/python/examples/*.xsl
+%endif # enabled python
 
 %changelog
+* Sun Mar 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.34-alt2
+- Fixed FTBFS: built without Python module.
+
 * Fri Nov 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.34-alt1
 - Updated to 1.1.34.
 
