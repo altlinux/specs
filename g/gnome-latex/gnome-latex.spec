@@ -1,18 +1,25 @@
-%define ver_major 3.32
+%def_enable snapshot
+%define ver_major 3.35
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
+# appdata.xml incomplete
+%def_disable check
 
 Name: gnome-latex
 Version: %ver_major.0
-Release: alt1
+Release: alt0.1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
 Group: Publishing
-License: GPLv3+
+License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/GNOME-LaTeX
 
+%if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: %_bindir/latexmk dconf
 
@@ -20,8 +27,10 @@ Requires: %_bindir/latexmk dconf
 %define gtksource_ver 3.99.7
 %define tepl_ver 4.2.0
 %define amtk_ver 5.0.0
+%define vala_ver 0.46.5
 
-BuildRequires: libappstream-glib-devel yelp-tools intltool
+BuildRequires: vala-tools >= %vala_ver
+BuildRequires: autoconf-archive libappstream-glib-devel yelp-tools intltool
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksource_ver
@@ -29,7 +38,10 @@ BuildRequires: libtepl-devel >= %tepl_ver
 BuildRequires: libamtk-devel >= %amtk_ver
 BuildRequires: libgspell-devel libgee0.8-devel
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libdconf-devel vala-tools
+BuildRequires: libdconf-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libgtksourceview4-gir-devel libtepl-gir-devel
+BuildRequires: libgee0.8-gir-devel libgspell-gir-devel
 
 %description
 GNOME-LaTeX is an Integrated LaTeX Environment for GNOME. The main features are:
@@ -55,8 +67,10 @@ This package contains documentation for %name.
 %setup
 
 %build
+%autoreconf
 %configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	--disable-code-coverage
 %make_build
 
 %install
@@ -83,8 +97,10 @@ This package contains documentation for %name.
 %_datadir/gtk-doc/*
 %endif
 
-
 %changelog
+* Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.35.0-alt0.1
+- updated to 3.32.0-23-g327309e
+
 * Sun Mar 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
