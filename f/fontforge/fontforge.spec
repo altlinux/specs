@@ -1,8 +1,7 @@
 %def_enable docs
-%def_enable python
 
 Name: fontforge
-Version: 20190801
+Version: 20200314
 Release: alt1
 
 Summary: FontForge -- font editor
@@ -14,20 +13,21 @@ Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
 
-# Thanks, Fedora
-Patch1: Add-python3-support.patch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: cmake rpm-macros-cmake gcc-c++
+BuildRequires: libgtk+3-devel libgio-devel 
+BuildRequires: python3-dev
 
-# manually removed: glibc-devel-static packages-info-i18n-common
-# Automatically added by buildreq on Wed Nov 30 2016
-# optimized out: ca-certificates fontconfig fontconfig-devel glib2-devel gnu-config ipython libICE-devel libX11-devel libXft-devel libXrender-devel libcairo-devel libfreetype-devel libpng-devel libwayland-client libwayland-server pkg-config python-base python-devel python-module-decorator python-module-future python-module-google python-module-ipython_genutils python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-simplegeneric python-module-traitlets python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-json python-modules-logging python-modules-sqlite3 python3 python3-base shared-mime-info tzdata xorg-inputproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: desktop-file-utils git-core imake indent libSM-devel libXi-devel libgif-devel libgio-devel libjpeg-devel libltdl7-devel libpango-devel libreadline-devel libspiro-devel libtiff-devel libuninameslist-devel libxml2-devel unzip wget xorg-cf-files
+BuildRequires: libreadline-devel libspiro-devel libuninameslist-devel
+BuildRequires: libxml2-devel libfreetype-devel zlib-devel
+BuildRequires: libgif-devel libjpeg-devel libtiff-devel libpng-devel libwoff2-devel
+#BuildRequires: libuthash-devel gnulib
 
-BuildRequires: libuthash-devel gnulib
-
-%if_enabled python
-# BuildRequires: python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope
-BuildRequires: python-dev
+%if_enabled docs
+BuildRequires: python3-module-sphinx
 %endif
+
+%add_python3_lib_path %_datadir/%name/python
 
 Requires: lib%name = %EVR
 
@@ -53,16 +53,13 @@ Summary: FontForge development files
 Group: Development/C
 Requires: lib%name = %EVR
 
-%if_enabled python
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: FontForge python module
-Group: Development/Python
-Requires: python
+Group: Development/Python3
 Requires: lib%name = %EVR
 
-%description -n python-module-%name
+%description -n python3-module-%name
 FontForge python module
-%endif
 
 %if_enabled docs
 %package docs
@@ -81,28 +78,14 @@ FontForge development files
 
 %prep
 %setup
-
-# hack to make an illision about local uthash and prevent download it
-mkdir -p uthash/src
+%__subst "s|sphinx-build|sphinx-build-3|" cmake/packages/FindSphinx.cmake
 
 %build
-./bootstrap --skip-git --skip-po --gnulib-srcdir=/usr/share/gnulib
-#autoreconf
-%configure --disable-rpath --disable-static
-#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-
-
-# disable rpath
-sed -ri 's/^(hardcode_libdir_flag_spec).*$/\1=/' libtool
-sed -ri 's/^(runpath_var).*$/\1=/' libtool
-%make_build || :
-# try again
-# looks like gnulib bug? (see https://bugzilla.altlinux.org/show_bug.cgi?id=36059)
-#__subst '24i#include "config.h"' lib/math.h
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %find_lang FontForge
 
@@ -116,36 +99,30 @@ sed -ri 's/^(runpath_var).*$/\1=/' libtool
 %_datadir/mime/packages/*
 %_datadir/pixmaps/*
 %_datadir/metainfo/*
-%_datadir/appdata/*
 
 %files -n lib%name
-%_libdir/libgunicode.so.*
-%_libdir/libgdraw.so.*
 %_libdir/libfontforge.so.*
-%_libdir/libgutils.so.*
-%_libdir/libfontforgeexe.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_includedir/%name/
-%_pkgconfigdir/*.pc
+#%_includedir/%name/
+#%_pkgconfigdir/*.pc
 
-%if_enabled python
-%files -n python-module-%name
-%python_sitelibdir/*.so
-%python_sitelibdir/*.la
-%endif
+%files -n python3-module-%name
+%python3_sitelibdir/*.so
 
 %if_enabled docs
 %files docs
-%_docdir/%name/*.*
-%_docdir/%name/flags/*.*
-%_docdir/%name/.htaccess
-%_docdir/%name/nonBMP/*
+%_docdir/%name/
 %endif
 
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 20200314-alt1
+- FontForge 2020 March Release
+- new version 20200314 (with rpmrb script)
+- switch to cmake based build, full spec rewrite
+
 * Sat Sep 07 2019 Vitaly Lipatov <lav@altlinux.ru> 20190801-alt1
 - new version 20190801 (with rpmrb script)
 
