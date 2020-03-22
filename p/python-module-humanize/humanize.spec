@@ -1,10 +1,10 @@
 %define oname humanize
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20141113.1.1
+Release: alt1.git20141113.1.2
 Summary: Python humanize utilities
 License: MIT
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1.git20141113.1.2
+- rebuild without python3 module
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1.git20141113.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
