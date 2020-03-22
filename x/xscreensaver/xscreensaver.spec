@@ -9,8 +9,8 @@
 #
 
 Name: xscreensaver
-Version: 5.43
-Release: alt3
+Version: 5.44
+Release: alt1
 
 Summary: A screen saver and locker for the X window system
 
@@ -329,6 +329,9 @@ find %buildroot -name "*handsy*" -delete
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Sun Mar 22 2020 Grigory Ustinov <grenka@altlinux.org> 5.44-alt1
+- Build new version (new hacks gibson, etruscanvenus and scooter).
+
 * Thu Oct 17 2019 Grigory Ustinov <grenka@altlinux.org> 5.43-alt3
 - Build without handsy.
 
