@@ -179,7 +179,7 @@
 
 Name: libvirt
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -226,7 +226,7 @@ Requires: %name-libs = %EVR
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_iscsi_direct:BuildRequires: libiscsi-devel >= 1.18.0}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
-%{?_with_storage_gluster:BuildRequires: libglusterfs6-devel}
+%{?_with_storage_gluster:BuildRequires: libglusterfs-devel}
 %{?_with_storage_zfs:BuildRequires: zfs-utils}
 %{?_with_storage_vstorage:BuildRequires: /usr/sbin/vstorage}
 %{?_with_numactl:BuildRequires: libnuma-devel}
@@ -496,7 +496,7 @@ multipath storage using device mapper.
 Summary: Storage driver plugin for gluster
 Group: System/Libraries
 Requires: libvirt-daemon-driver-storage-core = %EVR
-Requires: glusterfs6
+Requires: glusterfs
 
 %description daemon-driver-storage-gluster
 The storage driver backend adding implementation of the storage APIs for gluster
@@ -1379,6 +1379,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt2
+- use glusterfs without version
+
 * Fri Jan 24 2020 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
 - 6.0.0
 
