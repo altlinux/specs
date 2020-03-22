@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.13
+Version: 2.2.0
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -47,6 +47,15 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- worker.sh: drop copying to copytsks
+- update list of systems
+- revert "replace wine-gecko and wine-mono with wine-common"
+- hasher: add hack to add pub repo converted from pvt path
+- robot/products: add WINE@Etersoft 5.x support
+- korinf/log: add log check
+- mainbuild: fix build for linked system
+
 * Thu Oct 24 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.13-alt1
 - add debugsource packages support (skip it) (eterbug #12325)
 - replace wine-gecko and wine-mono with wine-common
