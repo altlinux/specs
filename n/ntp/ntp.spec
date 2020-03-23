@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ntp
-Version: 4.2.8p13
+Version: 4.2.8p14
 Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
@@ -147,7 +147,7 @@ This package contains Network Time Protocol daemon.
 sed -i 's,-Wnormalized=id,,' sntp/libevent/configure*
 %endif
 
-%patch1 -p1
+#patch1 -p1
 
 # Fix progname initialization when argc==0.
 fgrep -rl --include='*.c' 'progname = argv[0];' . |
@@ -180,7 +180,10 @@ echo '#define HAVE_LIBREADLINE 1' >>config.h
 %make_build
 
 %check
+# https://lists.altlinux.org/pipermail/devel/2020-March/210366.html
+%ifnarch ppc64le
 make check
+%endif
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT perllibdir=%perl_vendor_privlib install
@@ -342,6 +345,11 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Mon Mar 23 2020 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p14-alt1
+- 4.2.8p14 (medium security update, look to "NEWS" file)
+- disabled alt-compile-dirty-hack-NANO.patch
+- disabled "make check" for ppc64le due to --gc-sections problem
+
 * Tue Mar 12 2019 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p13-alt1
 - 4.2.8p13
 
