@@ -1,8 +1,6 @@
-%def_enable pulse
-
 Name: libao
 Version: 1.2.2
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Cross Platform Audio Output Library
@@ -14,23 +12,14 @@ Url: http://www.xiph.org/ao/
 Source0: %name-%version.tar
 Patch0: libao-1.0.0-alt-oss.patch
 
-BuildRequires: libalsa-devel
-%{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+BuildRequires: libalsa-devel libpulseaudio-devel
 
-Provides: %name-alsa = %version-%release
-Obsoletes: %name-alsa < %version-%release
+Provides: %name-alsa = %version-%release %name-pulse = %version-%release
+Obsoletes: %name-alsa < %version-%release %name-pulse < %version-%release
 
 %description
 Libao is a cross platform audio output library.
 It currently supports ALSA and PULSE.
-
-%package pulse
-Summary: PulseAudio output plugin for libao
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description pulse
-This is package contains PulseAudio output plugin for libao
 
 %package devel
 Summary: Development files for %name
@@ -65,7 +54,7 @@ sed -i 's,-O20,%optflags_optimization,g' configure*
 mkdir -p %buildroot%_sysconfdir
 cat <<__EOF__ >%buildroot%_sysconfdir/%name.conf
 # possible values for "default_driver" are: alsa, pulse
-default_driver=alsa
+default_driver=pulse
 __EOF__
 
 %files
@@ -74,12 +63,8 @@ __EOF__
 %dir %_libdir/ao
 %dir %_libdir/ao/plugins-4
 %_libdir/ao/plugins-4/libalsa.so
-%_man5dir/*
-
-%if_enabled pulse
-%files pulse
 %_libdir/ao/plugins-4/libpulse.so
-%endif
+%_man5dir/*
 
 %files devel
 %doc AUTHORS CHANGES TODO doc/*.{html,css,c}
@@ -89,6 +74,9 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Mon Mar 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.2.2-alt4
+- pulse driver defined by default (closes: #32128)
+
 * Fri Dec 01 2017 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt3
 - generalized optflags fixup (ldv@)
 
