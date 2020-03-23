@@ -1,5 +1,5 @@
 Name:     spi-tools
-Version:  0.8.3
+Version:  0.8.4
 Release:  alt1
 
 Summary:  Simple command line tools to help using Linux spidev devices
@@ -33,5 +33,8 @@ Buildrequires: help2man
 %doc *.md
 
 %changelog
+* Sun Mar 22 2020 Anton Midyukov <antohami@altlinux.org> 0.8.4-alt1
+- new version 0.8.4
+
 * Thu Apr 25 2019 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
 - Initial build for Sisyphus
