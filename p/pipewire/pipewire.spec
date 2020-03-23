@@ -8,17 +8,18 @@
 
 %def_enable gstreamer
 %def_enable systemd
+%def_enable vulkan
 %def_enable docs
 %def_enable man
 %def_enable check
 
 Name: pipewire
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
-License: LGPLv2.1
+License: MIT
 Url: https://pipewire.org/
 
 %if_disabled snapshot
@@ -36,8 +37,7 @@ Requires: rtkit
 BuildRequires(pre): meson
 BuildRequires: libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
-BuildRequires: libvulkan-devel libv4l-devel libbluez-devel
-BuildRequires: libsndfile-devel
+BuildRequires: libv4l-devel libbluez-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libsbc-devel
 %if_enabled gstreamer
@@ -48,6 +48,7 @@ BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
+%{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
 %{?_enable_man:BuildRequires: xmltoman}
 %{?_enable_check:BuildRequires: /proc}
@@ -100,7 +101,8 @@ This package contains command line utilities for the PipeWire media server.
 %meson \
 	%{?_enable_docs:-Ddocs=true} \
 	%{?_enable_man:-Dman=true} \
-	%{?_enable_gstreamer:-Dgstreamer=true}
+	%{?_enable_gstreamer:-Dgstreamer=true} \
+	%{?_disable_vulkan:-Dvulkan=false} \
 	%{?_disable_systemd:-Dsystemd=false}
 %meson_build
 
@@ -173,6 +175,10 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %changelog
+* Mon Mar 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt2
+- made vulkan support optional
+- fixed License tag
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
