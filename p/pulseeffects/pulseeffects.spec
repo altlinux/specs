@@ -2,11 +2,11 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.7.1
+Version: 4.7.2
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
-License: GPLv3
+License: GPL-3.0
 Group: Sound
 Url: https://github.com/wwmm/pulseeffects
 
@@ -16,7 +16,7 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 %define glibmm_ver 2.56
 %define gtk_ver 3.20
 %define calf_ver 0.90.1
-%define lsp_ver 1.1.7
+%define lsp_ver 1.1.14
 
 Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
@@ -72,6 +72,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Mon Mar 23 2020 Yuri N. Sedunov <aris@altlinux.org> 4.7.2-alt1
+- 4.7.2 (required lsp-plugins-1.1.14)
+
 * Wed Jan 15 2020 Yuri N. Sedunov <aris@altlinux.org> 4.7.1-alt1
 - 4.7.1
 
