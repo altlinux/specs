@@ -1,7 +1,7 @@
 %global import_path github.com/containers/skopeo
 Name: skopeo
 Version: 0.1.41
-Release: alt1
+Release: alt2
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
 License: Apache-2.0
@@ -27,6 +27,8 @@ Source13: containers-mounts.conf.5.md
 Source14: containers-certs.d.5.md
 Source15: containers.conf
 Source16: containers.conf.5.md
+
+Patch1: alt-change-registries-order.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -57,6 +59,8 @@ Summary: Configuration files for working with image signatures
 
 %prep
 %setup
+cp %SOURCE5 .
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -76,7 +80,7 @@ export IGNORE_SOURCES=1
 
 mkdir -p %buildroot%_man1dir
 for doc in $(find docs -name '*.1.md'); do
-    go-md2man -in "$doc" -out "%buildroot%_man1dir/$(basename "${doc%.md}")"
+    go-md2man -in "$doc" -out "%buildroot%_man1dir/$(basename "${doc%%.md}")"
 done
 install -Dm 644 completions/bash/%name %buildroot/%_sysconfdir/bash_completion.d/%name
 
@@ -87,7 +91,7 @@ install -Dm 644 default.yaml %buildroot%_sysconfdir/containers/registries.d/defa
 install -Dm 644 %SOURCE1 %buildroot%_sysconfdir/containers/storage.conf
 mkdir -p %buildroot%_man5dir
 go-md2man -in %SOURCE2 -out %buildroot%_man5dir/containers-storage.conf.5
-install -p -m 644 %SOURCE5 %buildroot%_sysconfdir/containers/
+install -p -m 644 registries.conf %buildroot%_sysconfdir/containers/
 go-md2man -in %SOURCE8 -out %buildroot%_man5dir/containers-transports.5
 go-md2man -in %SOURCE9 -out %buildroot%_man5dir/containers-signature.5
 go-md2man -in %SOURCE10 -out %buildroot%_man5dir/containers-registries.d.5
@@ -103,7 +107,7 @@ install -m0644 %SOURCE7 %buildroot%_datadir/containers/seccomp.json
 install -m0644 %SOURCE15 %buildroot%_datadir/containers/containers.conf
 
 %files -n containers-common
-%_sysconfdir/containers
+%config(noreplace) %_sysconfdir/containers
 %_datadir/containers
 %_man5dir/*
 
@@ -114,6 +118,9 @@ install -m0644 %SOURCE15 %buildroot%_datadir/containers/containers.conf
 %doc *.md
 
 %changelog
+* Mon Mar 23 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.41-alt2
+- Change registries search order
+
 * Thu Mar 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.41-alt1
 - new version 0.1.41
 
