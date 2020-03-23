@@ -4,7 +4,7 @@
 
 Name: tbb
 Version: 2019
-Release: alt1.u8
+Release: alt1.u8.1
 Summary: Threading Building Blocks
 License: Apache 2.0
 Group: Development/Tools
@@ -139,6 +139,10 @@ cp -a python python2
 %build
 export CFLAGS="${CFLAGS:-%optflags}"
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
+%ifarch riscv64
+export LDFLAGS="${LDFLAGS:-} -latomic"
+export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -latomic"
+%endif
 
 %make_build stdver=c++14
 
@@ -257,6 +261,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 22 2020 Nikita Ermakov <arei@altlinux.org> 2019-alt1.u8.1
+- Add -latomic for riscv64.
+
 * Wed Jul 24 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2019-alt1.u8
 - Updated to upstream version 2019.U8.
 
