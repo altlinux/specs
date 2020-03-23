@@ -1,5 +1,5 @@
 Name: opus-tools
-Version: 0.1.10
+Version: 0.2
 Release: alt1
 
 Summary: Opus Audio Codec utilities
@@ -9,7 +9,7 @@ Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Buildrequires: libogg-devel libflac-devel libopus-devel
+Buildrequires: libogg-devel libflac-devel libopusenc-devel opusfile-devel opusurl-devel
 
 %description
 The Opus codec is designed for interactive speech and audio transmission
@@ -24,6 +24,8 @@ decode .opus files.
 %setup
 
 %build
+echo PACKAGE_VERSION="%version" > package_version
+%autoreconf
 %configure
 %make_build
 
@@ -33,9 +35,13 @@ decode .opus files.
 %files
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS COPYING
+%doc AUTHORS COPYING README.md
 
 %changelog
+* Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt1
+- 0.2.
+- Update BR (added libopusenc and opusfile/opusurl).
+
 * Tue Sep 05 2017 L.A. Kostis <lakostis@altlinux.ru> 0.1.10-alt1
 - 0.1.10.
 
@@ -53,4 +59,3 @@ decode .opus files.
 
 * Wed Jul 25 2012 L.A. Kostis <lakostis@altlinux.ru> 0.1.3-alt1
 - initial build for ALTLinux.
-
