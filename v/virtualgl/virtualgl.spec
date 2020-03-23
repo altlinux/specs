@@ -1,6 +1,6 @@
 Name: virtualgl
 Version: 2.6.3
-Release: alt1
+Release: alt2
 
 %define vgl_name vgl
 
@@ -21,6 +21,8 @@ Patch3: %name-2.5.2-alt-nettest.patch
 Patch4: %name-2.6.3-alt-fix-linkage.patch
 # patch 5: modified RedHat libexec path patch
 Patch5: %name-2.5.2-alt-libexec-path-fix.patch
+# patch6 is only relevant until 2.6.4 is released
+Patch6: virtualgl-2.6.3-upstream-FTBFS-against-Mesa19.3.0-headers.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++ 
@@ -69,6 +71,7 @@ This package contains VirtualGL development libraries.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # fix compute endian on aarch64
 cat <<__EOF__ >include/boost/endian.hpp
@@ -148,6 +151,10 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Wed Feb 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.3-alt2
+- FTBFS against Mesa 19.3.0+ headers
+  + add upstream-FTBFS-against-Mesa19.3.0-headers patch
+
 * Fri Oct 25 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.6.3-alt1
 - new version
   + update fix-linkage patch
