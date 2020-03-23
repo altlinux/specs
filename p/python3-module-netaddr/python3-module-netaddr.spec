@@ -1,12 +1,12 @@
 %global pypi_name netaddr
 %def_enable check
 
-Name:		python-module-%{pypi_name}
+Name:		python3-module-%{pypi_name}
 Version:	0.7.19
 Release:	alt2
 Summary:	A pure Python network address representation and manipulation library
 
-Group:		Development/Python
+Group:		Development/Python3
 License:	BSD
 URL:		http://github.com/drkjam/netaddr
 # Source0-url: https://github.com/drkjam/netaddr/archive/netaddr-%version.tar.gz
@@ -19,9 +19,9 @@ Patch0003: 0003-Use-raw-strings-for-escape-characters-used-in-regex.patch
 Patch0004: 0004-fix-Python-38-SyntaxWarning-on-using-is-not-with-a-string-literal.patch
 Patch0005: 0005-Do-not-override-executable-path.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-sphinx
-%{?_enable_check:BuildRequires: python-module-pytest}
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-sphinx
+%{?_enable_check:BuildRequires: python3-module-pytest}
 
 %description
 A pure Python network address representation and manipulation library.
@@ -70,35 +70,35 @@ API documentation for the latest release is available here :-
 find netaddr -name "*.py" | \
   xargs sed -i -e '1 {/^#!\//d}'
 # Fix python executable
-sed -i -e '1s,/usr/bin/env python,/usr/bin/python2,' netaddr/tools/netaddr
+sed -i -e '1s,/usr/bin/env python,%__python3,' netaddr/tools/netaddr
 
 # Make rpmlint happy, fix permissions on documentation files
 chmod 0644 AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
 
 %build
-%python_build
+%python3_build
 
 
 #docs
 pushd docs
-PYTHONPATH='../' sphinx-build -b html -d build/doctrees source html
+PYTHONPATH='../' sphinx-build-3 -b html -d build/doctrees source html
 popd
 
 %install
-%python_install
-mv %buildroot%_bindir/netaddr{,.py2}
+%python3_install
 
 %check
-py.test
+py.test3
 
 %files
 %doc AUTHORS CHANGELOG COPYRIGHT LICENSE REFERENCES THANKS
 %doc README.md docs/html
-%python_sitelibdir/*
-%_bindir/netaddr.py2
+%python3_sitelibdir/*
+%_bindir/netaddr
 
 %changelog
 * Mon Mar 23 2020 Alexey Shabalin <shaba@altlinux.org> 0.7.19-alt2
+- build as new python3 package
 - backported patch from upstream
 - enable check
 - build as noarch
