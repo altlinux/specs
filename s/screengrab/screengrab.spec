@@ -1,11 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method relaxed
+#set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 1.101
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
 License: GPLv2
@@ -44,8 +44,8 @@ Main features:
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 
 find -type f -print0 | xargs -r0 chmod 644 --
 
@@ -58,15 +58,15 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 
 %build
 %cmake -DSG_GLOBALSHORTCUTS=OFF \
+       -DSG_DBUS_NOTIFY=ON \
+       -DSG_EXT_EDIT=OFF \
+       -DSG_EXT_UPLOADS=OFF \
        -DUPDATE_TRANSLATIONS=ON
 
 %cmake_build
 
 %install
 %cmakeinstall_std
-
-# remove unneeded devel files
-find %buildroot -name '*.so' -delete
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_liconsdir}
@@ -75,7 +75,6 @@ convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 
 %files
 %_bindir/%name
-%_libdir/*.so.*
 %_desktopdir/%name.desktop
 %_docdir/%name-%version/
 %_datadir/%name/
@@ -84,6 +83,9 @@ convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Mar 23 2020 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Thu Jun 06 2019 Michael Shigorin <mike@altlinux.org> 1.101-alt1.1
 - E2K: explicit -std=c++11
 - minor spec cleanup/fixup
