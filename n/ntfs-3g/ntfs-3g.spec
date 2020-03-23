@@ -1,11 +1,11 @@
 Name: ntfs-3g
 Version: 2017.3.23
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: third generation Linux NTFS driver
 URL: http://www.ntfs-3g.org/
 Group: System/Kernel and hardware
-License: GPL2
+License: GPLv2
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: lib%name = %epoch:%version-%release
@@ -66,6 +66,7 @@ This package contains header files for %name
 	--with-fuse=external \
 	--enable-posix-acls \
 	--enable-crypto \
+	--enable-extras \
 	--disable-ldconfig \
 	--disable-static
 %make_build
@@ -97,6 +98,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:2017.3.23-alt2
+- enable extras (closes: #33889)
+
 * Sun Apr 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:2017.3.23-alt1
 - 2017.3.23
 
