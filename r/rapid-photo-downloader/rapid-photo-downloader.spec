@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
@@ -21,7 +21,7 @@ BuildRequires: python3-devel python3-module-setuptools
 Requires: python3-module-typing >= 3.6.4
 %endif
 
-Requires: python3-module-PyQt5 >= 5.9.2
+Requires: python3-module-PyQt5 >= 5.9.2 libqt5-svg
 Requires: python3-module-zmq >= 16.0.2
 Requires: python3-module-easygui
 Requires: python3-module-pymediainfo >= 2.2.0
@@ -42,8 +42,6 @@ and backs up to multiple devices simultaneously.
 
 %prep
 %setup
-# fix install_requires[]
-sed -i "s|\('PyGObject'\)|\1,|" setup.py
 subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 %build
@@ -69,6 +67,9 @@ cp -r build/mo/* %buildroot%_datadir/locale
 
 
 %changelog
+* Mon Mar 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.20-alt1
+- 0.9.20
+
 * Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.9.19-alt1
 - 0.9.19
 
