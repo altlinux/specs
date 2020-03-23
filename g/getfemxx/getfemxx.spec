@@ -6,7 +6,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.3
-Release: alt1
+Release: alt2
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libnumpy-devel
 BuildRequires: python3-module-scipy-devel python3-module-mpi4py-devel
 %ifnarch %{arm} aarch64 ppc64le
-BuildRequires: scilab
+#BuildRequires: scilab
 %endif
 
 BuildPreReq: libqhull-devel libmuparser-devel libmumps-devel
@@ -107,6 +107,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Mon Mar 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.3-alt2
+- build without scilab
+
 * Tue Jul 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.3-alt1
 - new version
 
