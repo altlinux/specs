@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-menhir
-Version: 20200123
+Version: 20200211
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
@@ -49,6 +49,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/menhirSdk/*
 
 %changelog
+* Mon Mar 23 2020 Anton Farygin <rider@altlinux.ru> 20200211-alt1
+- 20200211
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 20200123-alt1
 - 20200123
 
