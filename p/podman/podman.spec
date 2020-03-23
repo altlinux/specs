@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.8.1
+Version:  1.8.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -72,6 +72,9 @@ export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
 %doc *.md
 
 %changelog
+* Sat Mar 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.2-alt1
+- new version 1.8.2
+
 * Thu Mar 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.1-alt1
 - new version 1.8.1
 
