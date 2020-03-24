@@ -13,10 +13,10 @@
 
 Name: nautilus
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Nautilus is a network user environment
-License: GPLv2+
+License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Nautilus
 
@@ -66,7 +66,9 @@ BuildRequires: pkgconfig(gstreamer-tag-1.0)
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-%{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui /proc}
+%{?_enable_check:
+BuildRequires(pre): rpm-build-python3
+BuildRequires: xvfb-run dbus-tools-gui /proc}
 
 %description
 Nautilus integrates access to files, applications, media, Internet-based
@@ -122,6 +124,7 @@ GObject introspection devel data for the nautilus-extension library
 
 %prep
 %setup
+sed -i 's|\(#\!/usr/bin/env python\)|\13|' test/interactive/*.py
 
 %build
 %meson \
@@ -159,7 +162,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
-%_man1dir/*
+%{?_enable_docs:%_man1dir/*}
 
 %files -n lib%name
 %_libdir/libnautilus-extension.so.*
@@ -173,8 +176,10 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_enabled docs
 %files -n lib%name-devel-doc
 %_gtk_docdir/*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -186,6 +191,10 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- improved "docs" knob
+- fixed License tag
+
 * Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
