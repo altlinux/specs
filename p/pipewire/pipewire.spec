@@ -9,13 +9,18 @@
 %def_enable gstreamer
 %def_enable systemd
 %def_enable vulkan
+%ifarch %e2k
+%def_disable examples
+%else
+%def_enable examples
+%endif
 %def_enable docs
 %def_enable man
 %def_enable check
 
 Name: pipewire
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -94,8 +99,6 @@ This package contains command line utilities for the PipeWire media server.
 
 %prep
 %setup
-#find ./ -type f -name "*.[c,h]" -print0 | \
-#xargs -r0 sed -i "s|<asoundlib.h>|<alsa/asoundlib.h>|" --
 
 %build
 %meson \
@@ -103,7 +106,9 @@ This package contains command line utilities for the PipeWire media server.
 	%{?_enable_man:-Dman=true} \
 	%{?_enable_gstreamer:-Dgstreamer=true} \
 	%{?_disable_vulkan:-Dvulkan=false} \
-	%{?_disable_systemd:-Dsystemd=false}
+	%{?_disable_systemd:-Dsystemd=false} \
+	%{?_disable_examples:-Dexamples=false}
+%nil
 %meson_build
 
 %install
@@ -119,7 +124,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %files
 %_bindir/%name
-%_bindir/%name-media-session
+%{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
@@ -175,6 +180,10 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt3
+- made examples build optional and disabled on %%e2k (
+  Checking for function "memfd_create" : NO)
+
 * Mon Mar 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt2
 - made vulkan support optional
 - fixed License tag
