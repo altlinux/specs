@@ -25,6 +25,7 @@ BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl 
 #add_findreq_skiplist /usr/libexec/perl5-tests/*
 # end hacks =======================
 BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
+%define fedora 30
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -36,7 +37,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rt
 #
-# Copyright (c) 2005-2019, Ralf Corsepius, Ulm, Germany.
+# Copyright (c) 2005-2020, Ralf Corsepius, Ulm, Germany.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -76,7 +77,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 
 Name:		rt
 Version:	4.4.4
-Release:	alt1_2
+Release:	alt1_5
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -245,12 +246,21 @@ BuildRequires: perl(XML/RSS.pm)
 BuildRequires:	/usr/bin/pod2man
 BuildRequires:	/usr/sbin/apachectl
 
+%if 0%{fedora} > 31
+# the original sources carry bundled versions of these ...
+Requires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf
+Requires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf
+# ... we use symlinks to the system-wide versions ...
+BuildRequires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf
+BuildRequires:  /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf
+%else
 # the original sources carry bundled versions of these ...
 Requires:  /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
 Requires:  /usr/share/fonts/ttf/google-droid/DroidSans.ttf
 # ... we use symlinks to the system-wide versions ...
 BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf
 BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSans.ttf
+%endif
 
 
 
@@ -521,9 +531,13 @@ install -m 644 rt.logrotate ${RPM_BUILD_ROOT}%{_sysconfdir}/logrotate.d/%{name}
 ln -s %{_datadir}/%{name}/upgrade ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/upgrade
 
 install -d -m755 ${RPM_BUILD_ROOT}%{RT_FONTSDIR}
-ln -s /usr/share/fonts/ttf/google-droid/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}
-ln -s /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}
-
+%if 0%{fedora} > 31
+ln -s /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSans.ttf
+ln -s /usr/share/fonts/ttf/google-droid-sans-fonts/DroidSansFallbackFull.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
+%else
+ln -s /usr/share/fonts/ttf/google-droid/DroidSans.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSans.ttf
+ln -s /usr/share/fonts/ttf/google-droid/DroidSansFallback.ttf ${RPM_BUILD_ROOT}%{RT_FONTSDIR}/DroidSansFallback.ttf
+%endif
 install -d -m755 ${RPM_BUILD_ROOT}%{perl_testdir}/%{name}
 cp -R t ${RPM_BUILD_ROOT}%{perl_testdir}/%{name}
 
@@ -644,6 +658,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_5
+- update to new release by fcimport
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_2
 - update to new release by fcimport
 
