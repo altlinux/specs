@@ -1,24 +1,25 @@
-%define _localstatedir %_var
 %def_without xen
 %define githash ed83664dde66b9973bd5f776c1a30dfc5a6d9f5e
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
+%define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.12.0
+Version: 9.12.1
 Release: alt1
+
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
 Group: System/Kernel and hardware
-URL: http://www.drbd.org/
 
-Conflicts: drbd-tools drbd83-tools
-
+Url: http://www.drbd.org/
 Source0: %name-%version.tar
 Source1: %name-headers-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: docbook-style-xsl flex xsltproc
 BuildRequires: gcc-c++ po4a udev libsystemd-devel
+
+Conflicts: drbd-tools drbd83-tools
 
 %description
 DRBD refers to block devices designed as a building block to form high
@@ -71,7 +72,7 @@ This package contains programmable bash completion support for the drbdadm
 management utility.
 
 %prep
-%setup -q -a1
+%setup -a1
 tar -xf %SOURCE1 -C drbd-headers
 %patch0 -p1
 (echo -e "#define GITHASH \"%githash\""; \
@@ -86,15 +87,16 @@ tar -xf %SOURCE1 -C drbd-headers
     --with-rgmanager \
     --with-distro=generic
 sed -i "s|WITH_DRBDMON[[:space:]]*=[[:space:]]*no|WITH_DRBDMON = yes|" Makefile user/drbdmon/Makefile
+sed -i "s|--pedantic-errors|-pedantic-errors|" user/drbdmon/Makefile
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-install -Dp -m644 drbd.service %buildroot%_unitdir/drbd.service
-install -Dp -m644 scripts/drbd %buildroot%_initdir/drbd
 rm -rf %buildroot%_mandir/ja
-rm -f %buildroot/etc/init.d/drbd
+rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
+install -pDm644 drbd.service %buildroot%_unitdir/drbd.service
+install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 
 %post
 %post_service drbd
@@ -148,6 +150,13 @@ rm -f %buildroot/etc/init.d/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Tue Mar 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.1-alt1
+- 9.12.1
+
+* Sat Mar 07 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.0-alt1.1
+- Avoid undocumented option form (for lcc on e2k actually) (mike@)
+- Minor spec cleanup (mike@)
+
 * Wed Feb 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.0-alt1
 - 9.12.0
 
