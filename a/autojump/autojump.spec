@@ -9,8 +9,8 @@ Requires: bash-completion
 %global owner wting
 
 Name:           autojump
-Version:        22.5.1
-Release:        alt1_8
+Version:        22.5.3
+Release:        alt1_1
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -104,6 +104,9 @@ mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 22.5.3-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 22.5.1-alt1_8
 - update to new release by fcimport
 
