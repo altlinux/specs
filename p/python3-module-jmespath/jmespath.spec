@@ -1,11 +1,12 @@
 %define oname jmespath
+%def_disable doc
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.9.5
 Release: alt1
 Summary: JSON Matching Expressions
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/jmespath/
 
 # https://github.com/boto/jmespath.git
@@ -13,10 +14,10 @@ Source: %name-%version.tar
 Patch1: %oname-0.9.3-alt-docs.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-sphinx python-module-guzzle_sphinx_theme
-BuildRequires: python-module-nose python-module-setuptools python-module-tox
-BuildRequires: python-module-hypothesis
+BuildRequires(pre): rpm-build-python3
+%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-guzzle_sphinx_theme}
+BuildRequires: python3-module-nose python3-module-setuptools python3-module-tox
+BuildRequires: python3-module-hypothesis
 
 %description
 JMESPath allows you to declaratively specify how to extract elements
@@ -38,35 +39,34 @@ This package contains documentation for %oname.
 %patch1 -p1
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py2
-done
-popd
-
-%make -C docs html
+%python3_install
+%if_enabled doc
+sphinx-build-3 -b html -d build/doctrees doc/source build/html
+%endif
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
-PYTHONPATH=$(pwd) py.test ||:
+python3 setup.py test
+PYTHONPATH=$(pwd) py.test3 ||:
 
 %files
 %doc *.rst
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
+%if_enabled doc
 %files docs
-%doc docs/_build/html/*
+%doc build/html/*
+%endif
 
 %changelog
 * Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.5-alt1
 - new version 0.9.5
-- build python2 only
+- build python3 only
+- disable build doc
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
