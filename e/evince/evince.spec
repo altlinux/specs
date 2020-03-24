@@ -11,11 +11,12 @@
 %def_enable introspection
 %def_enable browser_plugin
 %def_enable multimedia
+%def_enable nautilus
 %def_disable debug
 
 Name: evince
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -41,7 +42,7 @@ Requires: dconf
 BuildRequires: libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc libappstream-glib-devel yelp-tools
-BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel
+BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel
 BuildRequires: libspectre-devel >= %spectre_ver libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel
 BuildRequires: zlib-devel libsecret-devel libarchive-devel libgspell-devel
@@ -49,6 +50,7 @@ BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
+%{?_enable_nautilus:BuildRequires: libnautilus-devel}
 BuildRequires: libXi-devel
 BuildRequires: pkgconfig(systemd)
 
@@ -127,13 +129,13 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 	--enable-dvi \
 	--enable-comics \
 	--enable-gtk-doc \
-	--enable-nautilus \
 	--enable-dbus \
 	%{subst_enable xps} \
 	%{subst_enable ps} \
 	%{subst_enable introspection} \
 	%{?_enable_browser_plugin:--enable-browser-plugin} \
 	%{subst_enable multimedia} \
+	%{subst_enable nautilus} \
 	--disable-static \
 	%{subst_enable debug}
 %make_build
@@ -146,7 +148,7 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %doc AUTHORS NEWS
 %_bindir/evince*
 %_prefix/lib/systemd/user/%xdg_name.service
-%_libdir/nautilus/extensions-3.0/libevince-properties-page.so
+%{?_enable_nautilus:%_libdir/nautilus/extensions-3.0/libevince-properties-page.so}
 %dir %_libdir/evince
 %dir %_libdir/evince/%so_ver
 %dir %_libdir/evince/%so_ver/backends
@@ -211,9 +213,12 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 
 %exclude %browser_plugins_path/libevbrowserplugin.la
 %exclude %_libdir/%name/%so_ver/backends/*.la
-%exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
+%{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la}
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- made nautilus extension optional
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
