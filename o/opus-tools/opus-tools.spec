@@ -1,6 +1,6 @@
 Name: opus-tools
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Opus Audio Codec utilities
 License: BSD-style
@@ -8,8 +8,9 @@ Group: System/Libraries
 Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-0.2-elbrus.patch
 
-Buildrequires: libogg-devel libflac-devel libopusenc-devel opusfile-devel opusurl-devel
+Buildrequires: libogg-devel libflac-devel libopusenc-devel opusfile-devel opusurl-devel libflac-devel libpcap-devel
 
 %description
 The Opus codec is designed for interactive speech and audio transmission
@@ -22,11 +23,16 @@ decode .opus files.
 
 %prep
 %setup
+%patch -p2
 
 %build
 echo PACKAGE_VERSION="%version" > package_version
 %autoreconf
-%configure
+%configure \
+    %ifarch %ix86 x86_64
+	--enable-sse
+    %endif
+
 %make_build
 
 %install
@@ -38,6 +44,12 @@ echo PACKAGE_VERSION="%version" > package_version
 %doc AUTHORS COPYING README.md
 
 %changelog
+* Tue Mar 24 2020 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt2
+- Added Elbrus support (by @mike).
+- Enable SSE on x86
+- Enable flac support
+- Enable pcap support
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt1
 - 0.2.
 - Update BR (added libopusenc and opusfile/opusurl).
