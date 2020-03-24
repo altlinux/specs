@@ -1,36 +1,36 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(uuid) pkgconfig(xkbcommon)
+BuildRequires: /usr/bin/desktop-file-install pkgconfig(blkid) pkgconfig(bzip2) pkgconfig(cairo-xlib) pkgconfig(datrie-0.2) pkgconfig(expat) pkgconfig(fontconfig) pkgconfig(fribidi) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(libpcre) pkgconfig(libselinux) pkgconfig(libthai) pkgconfig(libtiff-4) pkgconfig(mount) pkgconfig(pixman-1) pkgconfig(wayland-cursor) pkgconfig(wayland-protocols) pkgconfig(xcomposite) pkgconfig(xdamage) pkgconfig(xdmcp) pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _xinputconf %{_sysconfdir}/X11/xinit/xinput.d/fcitx.conf
 %{!?gtk2_binary_version: %global gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)}
 %{!?gtk3_binary_version: %global gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)}
-%add_findreq_skiplist %_datadir/cmake/*/fcitx-extract-kde.sh
-
 
 Name:			fcitx
 Summary:		An input method framework
-Version:		4.2.9.6
-Release:		alt2_4.1
+Version:		4.2.9.7
+Release:		alt1_2
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
-Source0:		%{name}-%{version}_dict.tar
+Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
 Source1:		xinput-%{name}
 BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu
-BuildRequires:		xorg-pmproto-devel xorg-proto-devel xorg-xf86miscproto-devel, xorg-xtrans-devel
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu65
+BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
 BuildRequires:		libX11-devel, libdbus-glib-devel, dbus-tools-gui
 BuildRequires:		desktop-file-utils, libxml2-devel
 BuildRequires:		lua-devel, extra-cmake-modules
 BuildRequires:		xkeyboard-config-devel
+BuildRequires:		libuuid-devel
+BuildRequires:		libjson-c-devel
 Requires:		%{name}-data = %{version}-%{release}
 Requires:		imsettings
 Requires:		%{name}-libs = %{version}-%{release}
@@ -305,6 +305,9 @@ EOF
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.2.9.7-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 08 2019 Sergey V Turchin <zerg@altlinux.org> 4.2.9.6-alt2_4.1
 - drop requires to kde4
 
