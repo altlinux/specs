@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1062.12.1.vz7.131.3
-%define orelease 1062.12.1.vz7.131.3
+#     rh7-3.10.0-1062.12.1.vz7.131.6
+%define orelease 1062.12.1.vz7.131.6
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -154,7 +154,6 @@ kernel package %name-%version-%release, install this package
 and specify %kbuild_dir as the kernel source directory.
 
 
-%if_with firmware
 %package -n firmware-kernel-%flavour
 Summary: Firmware for drivers from %name
 Group: System/Kernel and hardware
@@ -163,10 +162,8 @@ AutoReq: no
 
 %description -n firmware-kernel-%flavour
 Firmware for drivers from %name.
-%endif
 
 
-%if_with perf
 %package -n perf
 Summary: Performance analysis tools for Linux
 Group: Development/Tools
@@ -179,7 +176,6 @@ a framework for all things performance analysis. It covers hardware level
 (CPU/PMU, Performance Monitoring Unit) features and software features
 (software counters, tracepoints) as well.
 This package contains performance analysis tools for Linux
-%endif
 
 
 %package -n kernel-headers-%flavour
@@ -200,7 +196,6 @@ userspace programs (if this version of headers is selected by
 adjust_kernel_headers).
 
 
-%if_enabled docs
 %define kernel_doc_package_std_body() \
 Group: Documentation \
 %{?base_flavour:Provides: kernel-%{1}-%base_flavour = %version-%release} \
@@ -221,7 +216,6 @@ patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
 
 
-%if_enabled htmldocs
 %package -n kernel-docbook-%flavour
 Summary: Linux kernel %kversion-%flavour HTML API documentation
 %kernel_doc_package_std_body docbook
@@ -233,10 +227,8 @@ The documentation files contained in this package may be different
 from the similar files in upstream kernel distributions, because some
 patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
-%endif
 
 
-%if_enabled man
 %package -n kernel-man-%flavour
 Summary: Linux kernel %kversion-%flavour man pages
 %kernel_doc_package_std_body man
@@ -248,11 +240,8 @@ The man pages contained in this package may be different from the similar
 files in upstream kernel distributions, because some patches applied to
 the corresponding kernel packages may change things in the kernel and
 update the documentation to reflect these changes.
-%endif
-%endif
 
 
-%if_with src
 %package -n kernel-src-%flavour
 Summary: Linux kernel %kversion-%flavour sources
 Group: Development/Kernel
@@ -264,7 +253,6 @@ AutoReq: no
 %description -n kernel-src-%flavour
 This package contains sources for Linux kernel package
 kernel-image-%flavour-%kversion-%krelease
-%endif
 
 
 %prep
@@ -598,6 +586,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Mar 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.12.1.vz7.131.6
+- Build 3.10.0-alt2.1062.12.1.vz7.131.6
+- enable kernel config: CONFIG_IKCONFIG*=yes
+
 * Wed Mar 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.12.1.vz7.131.3
 - Build 3.10.0-alt2.1062.12.1.vz7.131.3
 
