@@ -2,8 +2,8 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       light
-Version:    1.2.1
-Release:    alt1_3
+Version:    1.2.2
+Release:    alt1_1
 Summary:    Control backlight controllers
 
 License:    GPLv3
@@ -47,6 +47,10 @@ Features
 %makeinstall_std
 
 
+%post
+chown -R :root %{_sysconfdir}/%{name}
+
+
 %files
 %doc COPYING
 %doc ChangeLog.md
@@ -56,6 +60,9 @@ Features
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_3
 - update to new release by fcimport
 
