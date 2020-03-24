@@ -1,15 +1,17 @@
 %set_verify_elf_method unresolved=relaxed
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
+%define xdg_name org.gnome.Shotwell
 
 %def_enable face_detection
+%def_enable check
 
-%define ver_major 0.30
+%define ver_major 0.31
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.8
+Version: %ver_major.1
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -32,18 +34,21 @@ Requires: dconf
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
 BuildRequires(pre): meson
+BuildRequires: vala-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
-BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
+BuildRequires: libwebp-devel libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libexif-devel libgomp-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libwebkit2gtk-devel
 BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
-BuildRequires: vala gcr-libs-vala
-BuildRequires: libgdata-devel
+BuildRequires: gcr-libs-vala
+BuildRequires: libgdata-devel libchamplain-gtk3-devel
+# opencv4 also supported
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
+%{?_enable_check:BuildRequires: python3}
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -65,14 +70,16 @@ mode, and export them to share with others.
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %name %name-extras
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-video-thumbnailer
-%_libexecdir/%name/%name-settings-migrator
 %if_enabled face_detection
 %_libexecdir/%name/%name-facedetect
 %dir %_datadir/%name
@@ -85,16 +92,21 @@ mode, and export them to share with others.
 %exclude %_libdir/lib%name-*.so
 
 %_libdir/%name/
-%_desktopdir/%{name}*
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_desktopdir/%{xdg_name}*.desktop
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_datadir/dbus-1/services/%xdg_name.Faces1.service
 %_datadir/glib-2.0/schemas/*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS COPYING NEWS README* THANKS
 
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.31.1-alt1
+- updated to 0.31.1-35-g15004a41
+- enabled check
+
 * Fri Jan 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.30.8-alt1
 - 0.30.8
 - fixed License tag
