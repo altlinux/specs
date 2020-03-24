@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.6.0
-Release: alt3
+Release: alt4
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -26,7 +26,7 @@ BuildRequires: python3-module-six
 BuildRequires: zlib-devel
 %if_with java
 BuildRequires(pre): rpm-build-java
-BuildRequires: java-devel
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: jpackage-utils
 BuildRequires: /proc
 %endif
@@ -38,7 +38,7 @@ BuildRequires: perl-Error
 BuildRequires: rpm-build-php5
 BuildRequires: php5-devel
 BuildRequires: libexpat-devel
-BuildRequires: python
+BuildRequires: python3
 %endif
 %if_with python
 BuildRequires(pre): rpm-build-python3
@@ -214,8 +214,8 @@ make check
 
 %if_with java
 %files java
-#_javadir/lasso.jar
-#_libdir/java/libjnilasso.so
+%_javadir/lasso.jar
+%_libdir/java/libjnilasso.so
 %endif
 
 %if_with php
@@ -234,6 +234,9 @@ make check
 %endif
 
 %changelog
+* Tue Mar 24 2020 Leontiy Volodin <lvol@altlinux.org> 2.6.0-alt4
+- Built with java support again.
+
 * Tue Mar 24 2020 Leontiy Volodin <lvol@altlinux.org> 2.6.0-alt3
 - Built without python2 support (thanks debian for this patch).
 
