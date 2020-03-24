@@ -9,7 +9,7 @@
 
 Name: libgtkmm3
 Version: %ver_major.2
-Release: alt2
+Release: alt2.1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: GPL-2.0 and LGPL-2.1
@@ -84,7 +84,7 @@ NOCONFIGURE=1 ./autogen.sh
 	--disable-static \
 	%{?_disable_atkmm:--disable-api-atkmm} \
 	%{?_enable_snapshot:--enable-maintainer-mode \
-	--enable-documentation}
+	%{?_enable docs:--enable-documentation}}
 %nil
 %make_build
 
@@ -106,9 +106,11 @@ xvfb-run %make check
 %_libdir/%rname-%api_version
 %_pkgconfigdir/*.pc
 
+%if_enabled docs
 %files doc
 %_datadir/devhelp/books/%rname-%api_version
 %_docdir/%rname-%api_version
+%endif
 
 %if_enabled demos
 %files demos
@@ -116,6 +118,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2.1
+- fixed "docs" knob logic
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
 - updated to 3.24.2-12-gc96e1e1a
 - fixed License tag
