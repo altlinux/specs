@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 1.1.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -13,16 +13,16 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-apache2
 BuildRequires: python3-dev python3-module-setuptools
 # Requirement see at requirements.txt
-BuildRequires: python3-module-flask >= 0.12
+BuildRequires: python3-module-flask >= 1.1.1
 BuildRequires: python3-module-flask-wtf >= 0.14.2
-BuildRequires: python3-module-jinja2 >= 2.9.5
-BuildRequires: python3-module-markupsafe >= 0.19
-BuildRequires: python3-module-wtforms >= 2.1
-BuildRequires: python3-module-werkzeug >= 0.12.1
-BuildRequires: python3-module-itsdangerous >= 0.23
-BuildRequires: python3-module-pypuppetdb >= 0.3.3
-BuildRequires: python3-module-requests >= 2.13.0
-BuildRequires: python3-module-commonmark0.7
+BuildRequires: python3-module-jinja2 >= 2.10.3
+BuildRequires: python3-module-markupsafe >= 1.1.1
+BuildRequires: python3-module-wtforms >= 2.2.1
+BuildRequires: python3-module-werkzeug >= 0.16.0
+BuildRequires: python3-module-itsdangerous >= 1.1.0
+BuildRequires: python3-module-pypuppetdb >= 2.1.0
+BuildRequires: python3-module-requests >= 2.22.0
+BuildRequires: python3-module-commonmark = 0.9.1
 
 BuildArch: noarch
 
@@ -70,7 +70,10 @@ sed -i -e 's|@PYTHON_SITELIB@|%python3_sitelibdir|' -e 's|@WSGI_DIR@|%wsgi_dir|'
 
 sed -i -e 's|@WSGI_DIR@|%wsgi_dir|' %buildroot/%wsgi_dir/wsgi.py
 
-subst '1i #!/usr/bin/python3' %buildroot/%wsgi_dir/*.py
+subst '1i #!%__python3' %buildroot/%wsgi_dir/*.py
+
+# Remove unnecessary files
+rm -rf %buildroot%_prefix/requirements*
 
 %pre
 getent group puppetboard > /dev/null || /usr/sbin/groupadd -r puppetboard
@@ -93,6 +96,12 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+
+* Mon Jan 20 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Tue Oct 08 2019 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 

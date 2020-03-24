@@ -3,16 +3,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1
-Release: alt1.1
+Version: 2.2.1
+Release: alt1
 Summary: A flexible forms validation and rendering library for python web development
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.python.org/pypi/WTForms/
 
 # https://github.com/wtforms/wtforms.git
-Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Source: %oname-%version.tar
+Patch1: %oname-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires: python-devel python-module-setuptools
@@ -64,7 +64,7 @@ To get started using WTForms, we recommend reading the crash course on
 the website: http://wtforms.simplecodes.com/.
 
 %prep
-%setup
+%setup -n %oname-%version
 %patch1 -p1
 
 %if_with python3
@@ -98,7 +98,7 @@ popd
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc *.txt *.rst *.md
+%doc AUTHORS.rst README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -110,11 +110,15 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst *.md
+%doc AUTHORS.rst README.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
