@@ -2,7 +2,7 @@
 %define        pkgname puma
 
 Name:          %pkgname
-Version:       4.3.1
+Version:       4.3.3
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD 3-Clause
@@ -107,6 +107,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt1
+- New version.
+
 * Mon Dec 09 2019 Pavel Skrylev <majioa@altlinux.org> 4.3.1-alt1
 - updated (^) 4.2.1 -> 4.3.1
 - added (+) SSL build dependency
