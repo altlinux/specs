@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libpcre-devel
@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:       libsord
 Version:    0.16.4
-Release:    alt1_1
+Release:    alt1_3
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
@@ -60,6 +60,12 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
 
 %build
 
+# Work around a possible GCC 10 bug
+# GCC 10 crashes on these arches in for loop with ZixBTreeIter
+%ifarch %{power64} %{arm} aarch64
+CFLAGS+=" -O1"
+CXXFLAGS+=" -O1"
+%endif
 export LINKFLAGS="%{__global_ldflags}"
 python3 waf configure \
     --prefix=%{_prefix} \
@@ -94,6 +100,9 @@ install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_3
+- update to new release by fcimport
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_1
 - update to new release by fcimport
 
