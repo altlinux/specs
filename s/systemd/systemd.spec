@@ -71,8 +71,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1908,6 +1908,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.2-alt1
+- 245.2 (v245-stable branch)
+
 * Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 1:245-alt3
 - disable p11kit support (before enable, need move libp11-kit and libffi to /lib)
 
