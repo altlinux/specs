@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-validate libattr-devel pkgconfig(gtkmm-2.4)
 %define _localstatedir %{_var}
 Name: eiciel
 Version: 0.9.12.1
-Release: alt2_5
+Release: alt2_8
 Summary: Graphical editor for ACLs and xattr
 License: GPLv2+
 URL: http://rofi.roger-ferrer.org/eiciel
@@ -15,6 +15,8 @@ Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{version}.tar.bz2
 # libxattr < 2.4.48-3.fc29 was missing xattr.h
 # and <attr/xattr.h> is deprecated, use <sys/xattr.h> instead
 Patch0: eiciel-0.9.12.1-sys-xattr.patch
+# avoid C++ name mangling for Nautilus extension symbols 
+Patch1: eiciel-0.9.12.1-nautilus-exports.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgnomeui-devel
@@ -42,6 +44,8 @@ utility.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
 sed -i -e 's!attr/xattr\.h!sys/xattr\.h!g' configure
 [ "$(cksum ChangeLog|cut -d ' ' -f 1,2)" != "960335718 502" ] && exit -1
 
@@ -81,6 +85,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.12.1-alt2_8
+- update to new release by fcimport
+
 * Wed Apr 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.12.1-alt2_5
 - to Sisyphus (closes: #35839)
 
