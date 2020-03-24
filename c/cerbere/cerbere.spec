@@ -3,7 +3,7 @@
 %define rdn_name io.elementary.cerbere
 
 Name: cerbere
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: service to relaunch Pantheon apps
@@ -42,6 +42,9 @@ they crash or are killed by another process.
 %doc README*
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Thu Jul 18 2019 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
