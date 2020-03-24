@@ -1,6 +1,6 @@
 Name: glm
-Version: 0.9.8.5
-Release: alt2
+Version: 0.9.9.6
+Release: alt1
 License: MIT
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
 Group: Development/C++
@@ -8,13 +8,7 @@ Url: http://glm.g-truc.net/
 BuildRequires: gcc-c++ cmake ctest
 
 Source: %version.tar.gz
-
-## FC patches
-Patch1: FC-0.9.6.1-ulp.patch
-Patch2: FC-0.9.8.5-compiler-list.patch
-
-## ALT patches
-Patch500: glm-ALT-GCC7.patch
+Patch1: glm-0.9.9.6-install.patch
 
 %package -n lib%name-devel
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
@@ -64,40 +58,43 @@ This package contains the GLM in HTML and PDF formats.
 
 %prep
 %setup
-
-## FC apply patches
-%patch1 -p1 -b .ulp
-%patch2 -p1 -b .compiler-list
-
-## ALT apply patches
-%patch500 -p1
+%patch1 -p1
 
 %build
 %cmake -DGLM_TEST_ENABLE=True -DGLM_TEST_ENABLE_CXX_11=True -DCMAKE_CXX_FLAGS="-std=c++11" -DCMAKE_VERBOSE_MAKEFILE=True
 %cmake_build
 
 %install
-mkdir -p %buildroot%_includedir
-cp -a glm %buildroot%_includedir
-rm %buildroot%_includedir/glm/CMakeLists.txt
-mkdir -p %buildroot%_docdir/lib%name-devel/
-cp -a copying.txt readme.md doc/*.pdf doc/api/ %buildroot%_docdir/lib%name-devel/
+%cmakeinstall_std
+
+find %buildroot -name '*.la' -exec rm -f {} ';'
+find %buildroot -name CMakeLists.txt -exec rm -f {} ';'
+
+# The cmake config files seem architecture independent and since
+# also glm-devel is otherwise noarch, it is desired to ship the
+# cmake configuration files under /usr/share.
+mkdir -pv %buildroot%_datadir
+mv %buildroot%_libdir/cmake %buildroot%_datadir/cmake
+mv %buildroot%_pkgconfigdir %buildroot%_datadir/pkgconfig
+rmdir %buildroot%_libdir
 
 %check
 %make_build -C BUILD test
 
 %files -n lib%name-devel
 %_includedir/%name/
-%dir %_docdir/lib%name-devel/
-%_docdir/lib%name-devel/copying.txt
-%_docdir/lib%name-devel/readme.md
+%_datadir/cmake/*
+%_datadir/pkgconfig/*
+%doc copying.txt readme.md
 
 %files -n lib%name-devel-doc
-%dir %_docdir/lib%name-devel/
-%_docdir/lib%name-devel/*.pdf
-%_docdir/lib%name-devel/api/
+%doc doc/manual.pdf
+%doc doc/api/
 
 %changelog
+* Tue Mar 24 2020 Anton Midyukov <antohami@altlinux.org> 0.9.9.6-alt1
+- new version 0.9.9.6
+
 * Thu Feb 22 2018 Fr. Br. George <george@altlinux.ru> 0.9.8.5-alt2
 - Fix build with GCC7
 
