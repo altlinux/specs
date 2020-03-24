@@ -1,8 +1,8 @@
-%define _unpackaged_files_terminate_build 1
+# %%define _unpackaged_files_terminate_build 1
 
 Name: aircrack-ng
-Version: 1.5.2
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -12,8 +12,8 @@ Url: http://aircrack-ng.org
 
 # https://github.com/aircrack-ng/aircrack-ng.git
 Source: %name-%version.tar
-Patch0: %name-%version-alt-build.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel libsqlite3-devel
 BuildRequires: libnl-devel
@@ -21,7 +21,6 @@ BuildRequires: libpcre-devel
 BuildRequires: libpcap-devel
 BuildRequires: zlib-devel
 BuildRequires: ethtool
-BuildRequires: python2.7(distutils)
 
 Requires: iw rfkill ethtool
 
@@ -35,20 +34,21 @@ auditing wireless networks.
 
 %prep
 %setup
-%patch0 -p1
 
-# change python shebangs to python2
+# change python shebangs to python3
 find . -name '*.py' | xargs sed -i \
-	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python2|' \
-	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' \
+	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python3|' \
 	%nil
 
 find scripts -type f | xargs sed -i \
-	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python2|' \
-	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' \
+	-e '1s|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python3|' \
 	%nil
 
 %build
+export PYTHON=%__python3
+
 %autoreconf
 %configure --with-sqlite3 --with-experimental --with-ext-scripts
 %make_build
@@ -56,9 +56,9 @@ find scripts -type f | xargs sed -i \
 %install
 %makeinstall_std
 
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-mkdir -pv %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+mkdir -pv %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %files
@@ -67,10 +67,14 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/*.so*
 %_man1dir/*
 %_man8dir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %_defaultdocdir/%name
 
 %changelog
+* Tue Mar 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6-alt1
+- Version updated to 1.6
+- porting to python3.
+
 * Tue Dec 17 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt2
 - Fixed build with python.
 
