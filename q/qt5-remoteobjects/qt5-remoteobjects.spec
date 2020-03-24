@@ -1,21 +1,21 @@
-%define qt_module qtremoteobjects
-%define kf5_bindir %prefix/lib/kf5/bin
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%global qt_module qtremoteobjects
 
 Name:    qt5-remoteobjects
 Summary: Qt5 - Qt Remote Objects
 Group: System/Libraries
-Version: 5.12.4
+Version: 5.12.7
 Release: alt1
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url:     http://www.qt.io
-Source: %name-%version.tar
 
+Source: %qt_module-everywhere-src-%version.tar
+
+BuildRequires(pre): rpm-macros-qt5 qt5-tools
 BuildRequires: qt5-base-devel >= %version
 BuildRequires: qt5-declarative-devel
-
-Requires: %name-common = %EVR
 
 %description
 Qt Remote Objects (QtRO) is an inter-process communication (IPC)
@@ -45,49 +45,69 @@ Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
 
+%package -n libqt5-remoteobjects
+Group: System/Libraries
+Summary: Qt5 - library
+Requires: %name-common = %EVR
+Requires: libqt5-core = %_qt5_version
+%description -n libqt5-remoteobjects
+%summary
+
 %prep
-%setup
+%setup -n %qt_module-everywhere-src-%version
 
 %build
 %qmake_qt5
 %make_build
+%if %qdoc_found
+%make docs
+%endif
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%install_qt5
+%if %qdoc_found
+%make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
-# fix verify-elf: ERROR
-mkdir -p %buildroot%kf5_bindir
-mv %buildroot%_qt5_bindir/repc %buildroot%kf5_bindir
-ln -s %kf5_bindir/repc %buildroot%_qt5_bindir/repc
-
-# removes static library
+# remove libtool files
 rm -fr %buildroot%_qt5_libdir/*.la
+
+
+%files common
 
 %files
 %doc LICENSE.*
-%_qt5_libdir/libQt5RemoteObjects.so.5*
 %_qt5_bindir/repc
-%kf5_bindir/repc
+%_bindir/repc-qt5
 ## split out? -- rex
 %_qt5_qmldir/QtQml/RemoteObjects/
 %_qt5_qmldir/QtRemoteObjects/
 
-%files common
+%files -n libqt5-remoteobjects
+%_qt5_libdir/libQt5RemoteObjects.so.*
 
 %files devel
 %_qt5_headerdir/QtRemoteObjects/
 %_qt5_headerdir/QtRepParser/
-%_qt5_libdir/libQt5RemoteObjects.so
-%_qt5_libdir/libQt5RemoteObjects.prl
+%_qt5_libdir/libQt?R*.prl
+%_qt5_libdatadir/libQt?R*.prl
 %_qt5_libdir/cmake/Qt5RemoteObjects/
-%_qt5_libdir/cmake/Qt5RepParser
-%_qt5_libdir/pkgconfig/Qt5RemoteObjects.pc
-%_qt5_archdatadir/mkspecs/features/*
-%_qt5_archdatadir/mkspecs/modules/*
+%_qt5_libdir/cmake/Qt5RepParser/
+%_qt5_libdir/pkgconfig/Qt?R*.pc
+%_qt5_archdatadir/mkspecs/features/*.pr*
+%_qt5_archdatadir/mkspecs/modules/qt_lib_r*.pr*
+%_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 
 %files doc
+%if %qdoc_found
+%_qt5_docdir/*
+%endif
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Mar 24 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
+- new version
+
 * Sun Aug 25 2019 Anton Midyukov <antohami@altlinux.org> 5.12.4-alt1
 - Initial build for ALT
