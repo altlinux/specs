@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.3.10
+Version: 1.4.1
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -12,6 +12,7 @@ License: GPLv2+ and MIT
 Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
 #Source1: ru.po
+Patch0: %name-%version.patch
 Patch1: fix_plugins_search_v1.2.32.1.patch
 
 Requires: icon-theme-hicolor
@@ -200,9 +201,10 @@ that shows up under the display manager session menu.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 
-#cp -f %SOURCE1 po/
+#cp -f %%SOURCE1 po/
 
 %build
 %cmake \
@@ -300,6 +302,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- new version 1.4.1
+
 * Mon Jan 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.3.10-alt1
 - 1.3.10
 
