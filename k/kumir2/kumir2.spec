@@ -2,7 +2,7 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt7.gita3631abb
+Release: alt8.gita3631abb
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -13,7 +13,7 @@ URL:  https://www.niisi.ru/kumir/
 #VCS: https://github.com/a-a-maly/kumir2/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): cmake
+BuildRequires(pre): cmake rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel >= 5.3
 BuildRequires: qt5-svg-devel
@@ -26,6 +26,7 @@ BuildRequires: boost-devel
 
 Source: %name-%version.tar
 Patch1: kumir2-alt-fix-LIB_BASENAME.patch
+Patch2: port-to-python3.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -62,6 +63,7 @@ Development files for Kumir.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
 # Remove bundled boost
 rm -rf src/3rdparty/boost*
@@ -93,6 +95,9 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Tue Mar 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt8.gita3631abb
+- Porting to python3.
+
 * Tue Oct 01 2019 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt7.gita3631abb
 - New snapshot.
 - Build with Qt5.
