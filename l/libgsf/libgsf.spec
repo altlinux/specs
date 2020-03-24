@@ -2,19 +2,20 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable check
 
 Name: libgsf
-Version: %ver_major.46
+Version: %ver_major.47
 Release: alt1
 
 Summary: GNOME Structured file library
-License: %lgpl2plus
+License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
 Url: http://www.gnumeric.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildRequires(pre): rpm-build-gnome rpm-build-gir
 
 # From configure.ac
 BuildPreReq: intltool gtk-doc >= 1.0
@@ -23,8 +24,7 @@ BuildPreReq: libxml2-devel >= 2.4.16
 BuildRequires: libgdk-pixbuf-devel bzlib-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_static:BuildRequires: glibc-devel-static}
-# for check
-BuildRequires: unzip
+%{?_enable_check:BuildRequires: unzip}
 
 %description
 GNOME Structured file library
@@ -139,11 +139,16 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %_libdir/%name-1.a
 %endif
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
-
+%endif
 
 %changelog
+* Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 1.14.47-alt1
+- 1.14.47
+- fixed License tag
+
 * Sun May 05 2019 Yuri N. Sedunov <aris@altlinux.org> 1.14.46-alt1
 - 1.14.46
 
