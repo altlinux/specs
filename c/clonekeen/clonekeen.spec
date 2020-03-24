@@ -1,13 +1,13 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           clonekeen
 Version:        0.8.4
-Release:        alt1_13
+Release:        alt1_19
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
-Group:          Games/Other
 License:        GPLv3+
 URL:            http://clonekeen.sourceforge.net/
 # We make a clean tarball by removing bin/data/sound*
@@ -25,6 +25,9 @@ Source5:        %{name}.autodlrc
 Source6:        %{name}.desktop
 Source7:        %{name}.png
 Patch0:         %{name}-0.8.4-noSDLmain.patch
+Patch1:         %{name}-0.8.4-fcommon-fix.patch
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL_mixer-devel libdynamite-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
 Source44: import.info
@@ -44,10 +47,12 @@ the shareware datafiles for you.
 
 %prep
 %setup -q -a 1 -n keen
-%patch0 -p1 -b .noSDLmain
+%patch0 -p1
+%patch1 -p1
+
+find -name "*.o" -delete
 sed -i 's|gcc -O2|gcc %{optflags}|g' src/Makefile
 cp -a %{SOURCE2} %{SOURCE3} .
-# rm src/scale2x/*.o
 sed -i 's/\r//g' README src/changelog.txt
 
 
@@ -92,6 +97,9 @@ sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildr
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_19
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_13
 - update to new release by fcimport
 
