@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -25,6 +25,11 @@ if find license license-ambiguous -mindepth 1 -maxdepth 1 -printf '%%f\n' | sort
 	exit 1
 fi
 
+if find license -mindepth 1 -maxdepth 1 -name '*-with-*-exception' |grep ^; then
+	echo >&2 'License exceptions should be in the license-exception directory.'
+	exit 1
+fi
+
 %install
 mkdir -p \
 	%buildroot%_licensedir \
@@ -42,6 +47,10 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Tue Mar 24 2020 Alexey Gladkov <legion@altlinux.ru> 1.10-alt1
+- Rename ALT-CyrusIMAP -> ALT-Cyrus (ALT#38223)
+- Remove licenses with exceptions from the license directory
+
 * Mon Feb 24 2020 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
 - Add licenses:
   + Add RADVD license (ALT-RADVD) (ALT#38133)
