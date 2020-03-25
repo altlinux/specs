@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define oname yandex_music
+%define mname yandex_music
 
-Name: python3-module-%oname
-Version: 0.0.16
+Name: python3-module-%mname
+Version: 0.1.1
 Release: alt1
 Summary: Unofficial library for Yandex.Music API
 License: LGPLv3
@@ -30,12 +30,12 @@ Requires: %name
 This package contains tests for %name.
 
 %package -n %name-docs
-Summary: Docs for %name
+Summary: Documentation for %name
 Group: Development/Python3
 BuildArch: noarch
 
 %description -n %name-docs
-This package contains docs for %name.
+This package contains documentation for %name.
 
 %prep
 %setup
@@ -47,24 +47,27 @@ SPHINXBUILD=sphinx-build-3 make html
 
 %install
 %python3_install
-mkdir -p %buildroot%python3_sitelibdir/%oname/{docs,tests}
-install -m 0644 tests/* %buildroot%python3_sitelibdir/%oname/tests
-cp -pr docs/build/html %buildroot%python3_sitelibdir/%oname/docs
+cp -pr tests %buildroot%python3_sitelibdir/%mname
+cp -pr docs/build/html %buildroot%python3_sitelibdir/%mname/docs
+rm -rf %buildroot%python3_sitelibdir/tests
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
-%exclude %python3_sitelibdir/%oname/docs
-%exclude %python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%mname/docs
+%exclude %python3_sitelibdir/%mname/tests
 %doc LICENSE README.rst
 
 %files -n %name-tests
-%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%mname/tests
 
 %files -n %name-docs
-%python3_sitelibdir/%oname/docs
+%python3_sitelibdir/%mname/docs
 
 %changelog
+* Wed Mar 25 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.1-alt1
+- New version
+
 * Sun Dec 29 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.16-alt1
 - New version
 
