@@ -1,5 +1,5 @@
 Name: kiosk
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Source: %name-%version.tar
@@ -26,6 +26,10 @@ Utility for managing kiosk mode
 %_bindir/kiosk
 
 %changelog
+* Wed Mar 25 2020 Oleg Solovyov <mcpain@altlinux.org> 0.2-alt1
+- change netlink family
+- fix error messages
+
 * Wed Feb 05 2020 Oleg Solovyov <mcpain@altlinux.org> 0.1-alt1
 - initial build for ALT
 
