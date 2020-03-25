@@ -1,10 +1,10 @@
 %define pyname anticppcheck
 %define thislibdir %{python3_sitelibdir_noarch}/%{pyname}
 %define thisdocdir %{_defaultdocdir}/%{name}
-%define ax_ver 0.6
+%define ax_ver 0.7
 
 Name: anti-cppcheck
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 
 Summary: Utility that helps to handle reports produced by cppcheck
@@ -58,6 +58,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Mar 25 2020 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
+- Support of svace reports.
+
 * Fri Mar 20 2020 Alexey Appolonov <alexey@altlinux.org> 0.4.1-alt1
 - Fixed parser of error/warning messages.
 
