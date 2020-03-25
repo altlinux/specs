@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sway
-Version: 1.2
-Release: alt2
+Version: 1.4
+Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -62,7 +62,7 @@ This package contains data files.
 
 %prep
 %setup
-%patch00 -p1
+%patch00 -p2
 
 %build
 %meson \
@@ -110,6 +110,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Wed Mar 25 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.4-alt1
+- New version (1.4)
+
 * Sat Dec 07 2019 Alexey Gladkov <legion@altlinux.ru> 1:1.2-alt2
 - Fix BuildRequires.
 
