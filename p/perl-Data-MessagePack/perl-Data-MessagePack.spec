@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Data-MessagePack
-Version: 1.00
-Release: alt2.2
+Version: 1.01
+Release: alt1
 
 Summary: MessagePack serialising/deserialising
 License: Perl
@@ -8,9 +9,8 @@ Group: Development/Perl
 
 URL: %CPAN Data-MessagePack
 Source: %name-%version.tar
-Patch0: Data-MessagePack-1.00-Fix-building-on-Perl-without-dot-in-INC.patch
 
-BuildRequires: perl-devel perl-Encode perl-Test-Requires
+BuildRequires: perl-devel perl-Encode perl-Test-Requires perl(Module/Build/XSUtil.pm)
 
 %description
 This module converts Perl data structures to MessagePack and vice versa.
@@ -21,7 +21,6 @@ But unlike JSON, it is very fast and small.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -30,11 +29,14 @@ But unlike JSON, it is very fast and small.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README.md
 %perl_vendor_archlib/Data/MessagePack*
 %perl_vendor_autolib/Data/MessagePack
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2.2
 - rebuild with new perl 5.28.1
 
