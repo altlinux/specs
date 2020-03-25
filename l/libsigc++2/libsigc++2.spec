@@ -3,13 +3,14 @@
 
 %define _name libsigc++
 %define ver_major 2.10
+%def_enable docs
 
 Name: %{_name}2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
-License: LGPLv2+
+License: LGPL-2.1
 Group: System/Libraries
 Url: https://libsigcplusplus.github.io/libsigcplusplus/
 
@@ -23,7 +24,8 @@ Source: %_name-%version.tar
 Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
 # Automatically added by buildreq on Fri Nov 19 2010
-BuildRequires: docbook-style-xsl doxygen gcc-c++ graphviz mm-common xsltproc
+BuildRequires: gcc-c++ mm-common
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
 libsigc++ implements a typesafe callback system for standard C++.
@@ -60,12 +62,15 @@ This package provides API documentation of libsigc++ library.
 mm-common-prepare -f
 %autoreconf
 %endif
-%configure --disable-static
+%configure --disable-static \
+    %{?_disable_docs:--disable-documentation}
+%nil
 %make_build DOCBOOK_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/html/chunk.xsl
 
 %install
 %makeinstall_std
 %define docdir %_docdir/libsigc++-2.0
+%{?_disable_docs:mkdir -p %buildroot%docdir}
 install -pm644 AUTHORS NEWS README %buildroot%docdir/
 
 %check
@@ -85,9 +90,15 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %files doc
 %docdir
 %exclude %docdir/[ANR]*
-%doc %_datadir/devhelp/books/*
+%{?_enable_docs:%_datadir/devhelp/books/*}
+
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
+- 2.10.3
+- made documentation build optional
+- fixed License tag
+
 * Wed Jun 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
 - 2.10.2
 
