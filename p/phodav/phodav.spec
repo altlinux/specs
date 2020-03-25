@@ -1,7 +1,7 @@
 %def_with avahi
 
 Name: phodav
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: A WebDAV server using libsoup
 
@@ -13,10 +13,10 @@ Source: %name-%version.tar
 Source2: spice-webdavd.init
 Source3: spice-webdavd.sysconfig
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.50
 BuildRequires: gtk-doc
 BuildRequires: libattr-devel
-BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.44
 BuildRequires: pkgconfig(libsoup-2.4) >= 2.48.0 pkgconfig(libxml-2.0)
 %{?_with_avahi:BuildRequires: pkgconfig(avahi-gobject) pkgconfig(avahi-client)}
 BuildRequires: pkgconfig(systemd) pkgconfig(udev)
@@ -102,6 +102,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.4-alt1
+- new version 2.4
+
 * Sat Mar 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.3-alt1
 - 2.3
 
