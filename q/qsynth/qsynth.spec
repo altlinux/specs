@@ -1,7 +1,7 @@
 %def_enable qt5
 
 Name: qsynth
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -47,6 +47,7 @@ QSynth -- это графическая надстройка над FluidSynth. 
 export QTDIR=%qtdir
 export PATH=%qtdir/bin:$PATH
 %endif
+%add_optflags %(getconf LFS_CFLAGS)
 %configure --localedir=%_datadir/%name/locale
 
 # SMP-incompatible build
@@ -59,8 +60,8 @@ export PATH=%qtdir/bin:$PATH
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/applications/*
-%_iconsdir/hicolor/*/*/*.png
+%_desktopdir/*
+%_iconsdir/hicolor/*/*/*.*
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
 %_datadir/metainfo/%name.appdata.xml
@@ -68,6 +69,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
