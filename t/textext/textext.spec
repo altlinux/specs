@@ -1,22 +1,27 @@
-%filter_from_requires /^python....inkex./d
-%define name textext
-%define version 0.4.4
-%define release 2
+Name: textext
+Version: 0.4.4
+Release: alt2
 
 Summary: Editable LaTeX objects for Inkscape
-Name: 	 %{name}
-Version: %{version}
-Release: alt1_3
-Source0: %{name}-%{version}.tar.lzma
 License: BSD
-Group: 	 Graphics
-Url: 	 http://www.elisanet.fi/ptvirtan/software/textext/
+Group: Graphics
+Url: http://www.elisanet.fi/ptvirtan/software/textext/
+
 BuildArch: noarch
-Requires: inkscape >= 0.46 /usr/bin/latex texlive-latex-recommended python-module-lxml
-# Earlier revisions of pstoedit were not compiled with plot-svg support:
-Requires: pstoedit >= 3.45-5mdv2008.0
+
+Source0: %name-%version.tar.lzma
 Source44: import.info
 Patch33: textext-0.4.4-python2.6.patch
+Patch34: textext-0.4.4-port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-tools
+
+%add_python3_req_skip inkex
+
+Requires: inkscape >= 0.46 /usr/bin/latex texlive-latex-recommended python3-module-lxml
+# Earlier revisions of pstoedit were not compiled with plot-svg support:
+Requires: pstoedit >= 3.45-5mdv2008.0
 
 %description
 Textext is an extension for Inkscape that allows one to insert text
@@ -25,22 +30,27 @@ as Inklatex, Textext provides the ability to edit LaTeX objects after
 creation.
 
 %prep
-%setup -q -c %{name}-%{version}
+%setup -c %name-%version
 %patch33 -p0
-sed -i 1s,python,python2, textext.py
+%patch34 -p1
+sed -i 1s,python,python3, textext.py
+
+$(find /usr/lib*/python%_python3_version/Tools/scripts/reindent.py) textext.py
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}%{_datadir}/inkscape/extensions
+rm -rf %buildroot
+mkdir -p %buildroot%_datadir/inkscape/extensions
 
-install -m 644 textext.inx %{buildroot}%{_datadir}/inkscape/extensions/
-install -m 755 textext.py %{buildroot}%{_datadir}/inkscape/extensions/
+install -m 644 textext.inx %buildroot%_datadir/inkscape/extensions/
+install -m 755 textext.py %buildroot%_datadir/inkscape/extensions/
 
 %files
-%{_datadir}/inkscape/extensions/textext.*
-
+%_datadir/inkscape/extensions/textext.*
 
 %changelog
+* Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.4-alt2
+- Porting to python3.
+
 * Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1_3
 - fixed build
 
