@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(English.pm) perl(Fatal.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-IPC-System-Simple 
-Version:	1.26
+Version:	1.30
 Release:	alt1
 License:	GPL+ or Artistic 
 Group:		Development/Perl
@@ -67,6 +67,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/IPC/
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
