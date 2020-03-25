@@ -6,8 +6,8 @@ BuildRequires: libsowing-devel libssl-devel perl(AutoLoader.pm) perl(Config.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.31
-Release: alt2.2
+Version: 1.32
+Release: alt1
 Summary: Perl extension for OpenSSL EC (Elliptic Curves) library
 Group: Development/Perl
 License: perl
@@ -657,6 +657,9 @@ Verifies that a private and/or public key is valid.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.31-alt2.2
 - rebuild with new perl 5.28.1
 
