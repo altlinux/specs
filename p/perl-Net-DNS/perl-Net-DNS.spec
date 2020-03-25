@@ -5,7 +5,7 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MNet::DNS'
 
 Name: perl-%module
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -50,6 +50,9 @@ perform nearly any type of DNS query from a Perl script.
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Sun Feb 16 2020 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
