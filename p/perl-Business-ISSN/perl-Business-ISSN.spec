@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISSN
-Version: 1.003
+Version: 1.004
 Release: alt1
 
 Summary: Work with International Standard Serial Numbers
@@ -98,10 +98,13 @@ the error might have been in any of the other nine positions.
 %perl_vendor_install
 
 %files
-%doc README.pod LICENSE Changes examples
+%doc README.pod Changes examples
 %perl_vendor_privlib/Business/*
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
+- automated CPAN update
+
 * Thu May 17 2018 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
 - automated CPAN update
 
