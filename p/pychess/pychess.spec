@@ -1,31 +1,34 @@
+%filter_from_requires /python2.*/d
+
 %define prever %nil
 
 Name: pychess
 Version: 0.12.4
-Release: alt2
+Release: alt3
 
 Summary: Chess game for GNOME
-
-Group: Games/Boards
 License: GPLv2
+Group: Games/Boards
 Url: https://github.com/pychess/pychess/
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+BuildArch: noarch
 
 # Source-url: https://github.com/pychess/pychess/releases/download/%version/pychess-%version.tar.gz
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: rpm-build-compat >= 1.2
 
 # needed:
 Requires: gnome-icon-theme
 Requires: typelib(GtkSource) = 3.0
 
-BuildArch: noarch
+%add_python3_req_skip gi.repository.GdkPixbuf
+%add_python3_req_skip pychess.Database
+%add_python3_req_skip pychess.Database.dbwalk
+%add_python3_req_skip pychess.Database.model
 
-BuildRequires(pre): rpm-build-python rpm-build-gir
-# Automatically added by buildreq on Tue Dec 25 2007
-BuildRequires: python-devel python-modules-compiler
-
-BuildPreReq: rpm-build-compat >= 1.2
 
 %description
 PyChess is a GTK+ chess game for Linux. It is designed to at the same time
@@ -36,16 +39,16 @@ advanced players.
 %setup -n %name-%version%{?prever}
 
 %build
-%python_build
+%python3_build
 
 %install
 # Fix line terminators
 %__subst 's/.$//g' AUTHORS
-%python_install
+%python3_install
 
 #change permissions
-chmod +x %buildroot%python_sitelibdir/%name/Utils/Move.py
-chmod +x %buildroot%python_sitelibdir/%name/Players/PyChess.py
+chmod +x %buildroot%python3_sitelibdir/%name/Utils/Move.py
+chmod +x %buildroot%python3_sitelibdir/%name/Players/PyChess.py
 rm -rf %buildroot%_datadir/menu/
 
 %find_lang %name
@@ -54,8 +57,8 @@ rm -rf %buildroot%_datadir/menu/
 %doc README.md LICENSE AUTHORS
 %_bindir/%name
 %_datadir/%name/
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/*.egg-info
 %_datadir/gtksourceview-3.0/language-specs/pgn.lang
 %_datadir/appdata/pychess.appdata.xml
 %_desktopdir/%name.desktop
@@ -64,6 +67,9 @@ rm -rf %buildroot%_datadir/menu/
 %_man1dir/*
 
 %changelog
+* Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.12.4-alt3
+- Porting to python3.
+
 * Mon Jul 30 2018 Anton Midyukov <antohami@altlinux.org> 0.12.4-alt2
 - fix buildrequires and requires (Closes: 33434)
 
