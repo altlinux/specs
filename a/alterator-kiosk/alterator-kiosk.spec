@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Source: %name-%version.tar
@@ -28,6 +28,9 @@ alterator module for managing kiosk mode
 %_datadir/alterator/ui/*
 
 %changelog
+* Wed Mar 25 2020 Oleg Solovyov <mcpain@altlinux.org> 1.1-alt1
+- remove altha from error message
+
 * Mon Jan 27 2020 Ivan Razzhivin <underwit@altlinux.org> 1.0-alt1
 - init
 
