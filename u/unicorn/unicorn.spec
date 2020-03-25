@@ -1,7 +1,7 @@
 %define        pkgname unicorn
 
 Name:          %pkgname
-Version:       5.5.3
+Version:       5.5.4
 Release:       alt1
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix
 License:       GPLv2/Ruby
@@ -80,6 +80,9 @@ Documentation files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Wed Mar 25 2020 Andrey Cherepanov <cas@altlinux.org> 5.5.4-alt1
+- New version.
+
 * Mon Feb 03 2020 Andrey Cherepanov <cas@altlinux.org> 5.5.3-alt1
 - New version.
 
