@@ -1,22 +1,22 @@
 %define ver_major 1
-%def_disable static
+%def_disable docs
 
 Name: libwacom
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
-License: BSD-like
+License: MIT
 Url: https://github.com/linuxwacom/libwacom
 
 Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
 
 Requires: %name-data = %version-%release
 
-BuildRequires: glib2-devel libgudev-devel libxml2-devel doxygen
-# for check
-BuildRequires: /proc
+BuildRequires(pre): meson
+BuildRequires: /proc glib2-devel libgudev-devel libxml2-devel
+%{?_enable_docs:BuildRequires: doxygen graphviz}
 
 %description
 %name is a library to identify Wacom tablets and their model-specific
@@ -57,18 +57,18 @@ developing applications that use %name.
 %setup
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    --with-udev-dir=/lib/udev
-
-%make_build
+%meson \
+    -Dudev-dir='/lib/udev' \
+    %{?_disable_docs:-Ddocumentation=disabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_bindir/%name-list-local-devices
@@ -92,6 +92,12 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+- built with Meson instead of Autotools
+- introduced "docs" knob
+- fixed License tag
+
 * Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
