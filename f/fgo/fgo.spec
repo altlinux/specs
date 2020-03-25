@@ -1,23 +1,28 @@
+%define fgodir %_gamesdatadir/%name
+
+%filter_from_requires '/python2.*/d'
+
 Name: fgo
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: A simple launcher for FlightGear flight simulator
 License: distributable
 Group: Games/Other
-
 Url: http://sites.google.com/site/erobosprojects/flightgear/add-ons/fgo
+Packager: Michael Shigorin <mike@altlinux.org>
+
+BuildArch: noarch
+
 Source0: %url/download/%name-%version.tar.gz
 Source1: %name.desktop
 Source2: %name.6
 Source3: %name.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildArch: noarch
+Patch0: port-to-python3.patch
+
+BuildRequires(pre): rpm-build-python3
 Requires: FlightGear >= 2.0.0
-Requires: python-module-imaging
-
-%define fgodir %_gamesdatadir/%name
 
 %description
 FGo! is a fast and simple way to start FlightGear session in
@@ -36,6 +41,8 @@ editor with some useful gadgets :)
 
 %prep
 %setup -n %name
+%patch0 -p2
+
 cat >> data/config/presets << __EOF__
 
 --airport=KSFO
@@ -75,6 +82,9 @@ install -pDm644 share/icons/48x48/fgo.png %buildroot%_liconsdir/%name.png
 %doc docs/*
 
 %changelog
+* Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.5-alt2
+- Porting to python3.
+
 * Fri Dec 26 2014 Michael Shigorin <mike@altlinux.org> 1.5.5-alt1
 - new version (watch file uupdate)
 
