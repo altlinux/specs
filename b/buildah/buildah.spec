@@ -5,7 +5,7 @@
 # https://github.com/containers/buildah
 %global provider_prefix %provider.%provider_tld/%project/%repo
 %global import_path     %provider_prefix
-%global commit         5965d9acffad0b70e8760de643b5f488ecadec24
+%global commit         153ee2f0e973724f935ccb7275ce941fda4f121b
 %global shortcommit    %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -17,7 +17,7 @@
 
 Name: buildah
 # Bump version in buildah.go too
-Version: 1.14.0
+Version: 1.14.3
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -85,6 +85,9 @@ rm -rf -- %buildroot%_datadir
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.3-alt1
+- new version 1.14.3
+
 * Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
