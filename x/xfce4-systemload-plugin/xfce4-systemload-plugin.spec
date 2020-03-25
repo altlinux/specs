@@ -1,19 +1,17 @@
 Name: xfce4-systemload-plugin
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: System load plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Отображение использования ресурсов системы на панели Xfce
-License: %bsd
+License: BSD-2-Clause
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-systemload-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# git://git.xfce.org/panel-plugins/xfce4-systemload-plugin
+Vcs: git://git.xfce.org/panel-plugins/xfce4-systemload-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
@@ -55,6 +53,11 @@ Requires: xfce4-panel >= 4.9
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Mar 25 2020 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt2
+- Update Url.
+- Add Vcs tag.
+- Fix license.
+
 * Tue Aug 13 2019 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1
 - Updated to 1.2.3.
 
