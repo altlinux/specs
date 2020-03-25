@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: python3(fontforge)
+# END SourceDeps(oneline)
 Group: System/Fonts/True type
 %define oldname smc-rachana-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -6,8 +9,8 @@ Group: System/Fonts/True type
 %global fontconf 65-0-%{fontname}.conf
 
 Name:		fonts-ttf-smc-rachana
-Version:	7.0.1
-Release:	alt1_2
+Version:	7.0.3
+Release:	alt1_1
 Summary:	Open Type Fonts for Malayalam script
 License:	OFL
 URL:		https://gitlab.com/smc/fonts/rachana
@@ -17,6 +20,10 @@ Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires:	libappstream-glib
+BuildRequires:	libbrotli-devel
+BuildRequires:	libfontforge-devel
+BuildRequires:	python3
+BuildRequires:	python3-module-fonttools
 Obsoletes:	fonts-ttf-smc-common < 6.1-alt1_9
 Source44: import.info
 
@@ -29,13 +36,15 @@ of Malayalam in the digital computing.
 %setup -q -n rachana-Version%{version}
 
 chmod 644 *.txt
+rm -rf ttf
 
 %build
+make PY=python3
 
 %install
 
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p ttf/*.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p build/*.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 	%{buildroot}%{_fontconfig_confdir}
@@ -97,6 +106,9 @@ appstream-util validate-relax --nonet \
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 7.0.3-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_2
 - new version
 
