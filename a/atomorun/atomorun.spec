@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install libGLU-devel libSDL-devel libglvnd-
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.31.%{prever}
+Release:        alt5_0.32.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 License:        GPL+
 URL:            http://atomorun.whosme.de/index.php
@@ -52,6 +52,9 @@ rm -rf $RPM_BUILD_ROOT%{_prefix}/doc/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+install -p -m 644 pixmaps/%{name}_icon.png \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
@@ -67,10 +70,13 @@ appstream-util validate-relax --nonet \
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.32.pre2
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.31.pre2
 - update to new release by fcimport
 
