@@ -2,7 +2,7 @@
 %define dist Template-Toolkit
 Name: perl-Template
 Version: 3.007
-Release: alt1
+Release: alt2
 
 Summary: Perl Template Toolkit
 License: GPL or Artistic
@@ -11,6 +11,9 @@ Group: Development/Perl
 URL: http://www.template-toolkit.org
 Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{dist}-%{version}.tar.gz
 Patch: Template-Toolkit-2.22-alt-no-apache.patch
+Patch2: Template-Toolkit-3.007-alt-initialize-variable.patch
+Patch3: Template-Toolkit-3.007-alt-remove-rel2abs.patch
+Patch4: Template-Toolkit-3.007-alt-encode-utf8.patch
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-AppConfig perl-CGI perl-Date-Calc perl-HTML-Parser perl-Image-Info perl-Math-Complex perl-Pod-POM perl-devel perl-podlators perl-unicore
@@ -26,6 +29,9 @@ LaTeX, and so on.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %perl_vendor_build TT_XS_ENABLE=y TT_XS_DEFAULT=y TT_ACCEPT=y \
@@ -63,6 +69,12 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Tue Mar 24 2020 Oleg Solovyov <mcpain@altlinux.org> 3.007-alt2
+- Fixes for ALT Linux Bugzilla:
+  + do not use an uninitialized variable
+  + do not use rel2abs, it taints variables
+  + encode to utf8 before matching
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.007-alt1
 - automated CPAN update
 
