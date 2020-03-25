@@ -8,7 +8,7 @@
 %def_enable jack_version
 
 Name: qjackctl
-Version: 0.6.1
+Version: 0.6.2
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -64,6 +64,7 @@ JACK-клиентов.
 export QTDIR=%_qt4dir
 export PATH=%_qt4dir/bin:$PATH
 %endif
+%add_optflags %(getconf LFS_CFLAGS)
 %configure \
 	--localedir=%_datadir/%name/locale \
 	%{?_enable_jack_version:--enable-jack-version}
@@ -85,6 +86,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Mon Dec 23 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
