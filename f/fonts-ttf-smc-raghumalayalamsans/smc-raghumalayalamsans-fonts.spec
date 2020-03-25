@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: python3(fontforge)
+# END SourceDeps(oneline)
 Group: System/Fonts/True type
 %define oldname smc-raghumalayalamsans-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -6,8 +9,8 @@ Group: System/Fonts/True type
 %global fontconf 67-%{fontname}.conf
 
 Name:		fonts-ttf-smc-raghumalayalamsans
-Version:	2.1.2
-Release:	alt1_5
+Version:	2.2.1
+Release:	alt1_2
 Epoch:		1
 Summary:	Open Type Fonts for Malayalam script 
 License:	GPLv2+
@@ -15,12 +18,12 @@ URL:		https://gitlab.com/smc/fonts/raghumalayalamsans
 Source0:	%{url}/-/archive/Version%{version}/raghumalayalamsans-Version%{version}.tar.gz
 Source1:	%{fontname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
-Source3:	%{oldname}-generate.pe
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires:	libappstream-glib
-BuildRequires:	fontforge libfontforge
+BuildRequires:	libfontforge-devel
 BuildRequires:	python3
+BuildRequires:	python3-module-fonttools
 Obsoletes:	fonts-ttf-smc-raghumalayalam < 6.1-alt1_9
 Obsoletes:	fonts-ttf-smc-common < 6.1-alt1_9
 Source44: import.info
@@ -38,12 +41,10 @@ syllable standard of IndiX Compugraphy.
 chmod 644 *.txt
 cp -p %{SOURCE1} .
 cp -p %{SOURCE2} .
-cp -p %{SOURCE3} .
-chmod 755 %{oldname}-generate.pe
-
 
 %build
-./%{oldname}-generate.pe *.sfd
+make PY=python3
+mv build/*.ttf .
 
 %install
 
@@ -105,11 +106,14 @@ appstream-util validate-relax --nonet \
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc README
+%doc README.md
 %doc --no-dereference LICENSE.txt
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.1.2-alt1_5
 - update to new release by fcimport
 
