@@ -1,7 +1,7 @@
 %global v_major 7.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt6
+%global rel alt7
 %global llvm_name llvm%v_major
 %global clang_name clang%v_major
 %global lld_name lld%v_major
@@ -187,7 +187,7 @@ Summary: LLD - The LLVM Linker
 License: NCSA
 Group: Development/C
 Provides: lld = %EVR
-Obsoletes: lld < %version
+Obsoletes: lld < %EVR
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -410,6 +410,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 7.0.1-alt7.rel
+- real fixed obsoletes lld
+
 * Tue Mar 17 2020 Valery Inozemtsev <shrek@altlinux.ru> 7.0.1-alt6.rel
 - fixed obsoletes lld/lld-doc
 
