@@ -1,22 +1,21 @@
 Name: xfce4-notes-plugin
 Version: 1.8.1
-Release: alt3
+Release: alt4
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: https://goodies.xfce.org/projects/panel-plugins/%name
-# git://git.xfce.org/panel-plugins/xfce4-notes-plugin
+Vcs: git://git.xfce.org/panel-plugins/xfce4-notes-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfconf-devel xfce4-vala
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libcairo-gobject-devel
+BuildRequires: libxfce4panel-devel libxfce4ui-devel libxfconf-devel xfce4-vala
 BuildRequires: libunique-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -59,6 +58,12 @@ BuildRequires: libunique-devel
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Wed Mar 25 2020 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt4
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Use BuildRequires instead of BuildPreReq.
+- Fix build: add libcairo-gobject-devel to BR.
+
 * Tue Mar 19 2019 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt3
 - Don't use git tag in version.
 - Fix build with vala-0.44.
