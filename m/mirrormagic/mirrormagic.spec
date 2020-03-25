@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        3.0.0
-Release:        alt1_1
+Release:        alt1_6
 Summary:        Puzzle game where you steer a beam of light using mirrors
-Group:          Games/Other
 License:        GPL+
 URL:            http://www.artsoft.org/mirrormagic/
 Source0:        http://www.artsoft.org/RELEASES/unix/%{name}/%{name}-%{version}.tar.gz
@@ -15,6 +15,8 @@ Source1:        %{name}.desktop
 Source2:        %{name}.png
 Source3:        %{name}.appdata.xml
 Patch0:         %{name}-%{version}-yesno.patch
+Patch1:         %{name}-%{version}-fcommon-fix.patch
+BuildRequires:  gcc
 BuildRequires:  libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel
 BuildRequires:  libappstream-glib desktop-file-utils
 Requires:       icon-theme-hicolor
@@ -31,6 +33,12 @@ familiar from the games "Deflektor" and "Mindbender".
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
+rm levels/Classic_Games/classic_mindbender/*.level.orig
+iconv -f ISO_8859-1 -t UTF8 CREDITS > CREDITS.tmp
+touch -r CREDITS CREDITS.tmp
+mv CREDITS.tmp CREDITS
 
 
 %build
@@ -56,6 +64,7 @@ appstream-util validate-relax --nonet \
 
 
 %files
+%doc CREDITS
 %doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
@@ -65,6 +74,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_6
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1
 - update to new release by fcimport
 
