@@ -1,7 +1,7 @@
 %add_python3_path %_datadir/waf3
 Name: waf
 Version: 2.0.19
-Release: alt1
+Release: alt2
 
 Summary: A Python-based build system
 License: BSD
@@ -84,10 +84,13 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 %files
 %_bindir/waf
-%_bindir/waf-3.7
+%_bindir/waf-3.*
 %_datadir/waf3
 
 %changelog
+* Wed Mar 25 2020 Anton Farygin <rider@altlinux.ru> 2.0.19-alt2
+- rebuilt with python-3.8
+
 * Sun Dec 01 2019 Anton Farygin <rider@altlinux.ru> 2.0.19-alt1
 - 2.0.19
 
