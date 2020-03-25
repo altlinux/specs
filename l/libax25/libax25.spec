@@ -3,15 +3,21 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libax25
-Version:        1.0.5
-Release:        alt1_5
+Version:        1.1.1
+Release:        alt1_1
 Summary:	AX.25 library for hamradio applications
 
 License:	LGPLv2+
-URL:		http://www.linux-ax25.org/wiki/Libax25
-Source0:	http://www.linux-ax25.org/pub/libax25/%{name}-%{version}.tar.gz
 
-BuildRequires:  autoconf-common automake-common libtool-common
+URL:		https://github.com/ve7fet/linuxax25
+
+# git clone https://github.com/ve7fet/linuxax25.git
+# cd linuxax25/libax25
+# git archive --prefix=libax25-1.1.1/ -o ../libax25-1.1.1.tar.gz HEAD
+Source0:	%{name}-%{version}.tar.gz
+
+BuildRequires:  autoconf automake gcc libtool
+BuildRequires:  gettext-tools libasprintf-devel
 BuildRequires:  zlib-devel
 Source44: import.info
 
@@ -23,8 +29,8 @@ config file parsing, etc.
 
 
 %package	devel
+Group: Development/Other
 Summary:	Development files for %{name}
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description	devel
@@ -37,6 +43,7 @@ developing applications that use %{name}.
 # hack; added -lz; report upstream
 sed -i -e "s,libax25_la_SOURCES,libax25_la_LIBADD = -lz\nlibax25_la_SOURCES," Makefile.am
 sed -i -e "s,libax25io_la_SOURCES,libax25io_la_LIBADD = -lz\nlibax25io_la_SOURCES," Makefile.am
+
 
 
 
@@ -58,9 +65,12 @@ mkdir -p %{buildroot}%{_sysconfdir}/ax25
 rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
+
+
+
 %files
 %doc AUTHORS ChangeLog README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_libdir}/*.so.*
 %{_mandir}/man?/*
 %dir %{_sysconfdir}/ax25
@@ -71,6 +81,9 @@ rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5
 - update to new release by fcimport
 
