@@ -1,18 +1,17 @@
 Name: xfce4-xkb-plugin
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
-License: %bsd
+License: BSD-2-Clause
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/xfce4-xkb-plugin
+Url: https://docs.xfce.org/panel-plugins/xfce4-xkb-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: git://git.xfce.org/panel-plugins/xfce4-xkb-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libgarcon-devel
@@ -52,7 +51,7 @@ XFce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README AUTHORS COPYING
 %_libdir/xfce4/panel/plugins/*.so
 %dir %_datadir/xfce4/xkb
 %dir %_datadir/xfce4/xkb/flags
@@ -64,6 +63,12 @@ XFce panel.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Wed Mar 25 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt2
+- Add Vcs tag.
+- Update Url.
+- Package COPYING file.
+- Fix license.
+
 * Thu Aug 23 2018 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - Don't package uz@Latn translation.
 - Fix license.
