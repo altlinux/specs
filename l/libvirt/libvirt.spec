@@ -178,14 +178,13 @@
 %endif
 
 Name: libvirt
-Version: 6.0.0
-Release: alt2
+Version: 6.1.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
 Url: https://libvirt.org/
 Source0: %name-%version.tar
-Source1: gnulib-%name-%version.tar
 Source2: keycodemapdb-%name-%version.tar
 
 Source11: libvirtd.init
@@ -209,7 +208,7 @@ Requires: %name-libs = %EVR
 %{?_with_udev:BuildRequires: udev libudev-devel >= 219 libpciaccess-devel}
 %{?_with_yajl:BuildRequires: libyajl-devel >= 2.0.1}
 %{?_with_sanlock:BuildRequires: sanlock-devel >= 1.8}
-%{?_with_libpcap:BuildRequires: libpcap-devel}
+%{?_with_libpcap:BuildRequires: libpcap-devel >= 1.5.0}
 %{?_with_libnl:BuildRequires: libnl-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_network:BuildRequires: dnsmasq iptables iptables-ipv6 radvd openvswitch}
@@ -777,21 +776,18 @@ Libvirt plugin for NSS for translating domain names into IP addresses.
 %endif
 
 %prep
-%setup -a1
+%setup
 mkdir -p src/keycodemapdb
 tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 
 %patch1 -p1
-# git and rsync aren't needed for build.
-sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
 # disable virnetsockettest test
 sed -i 's/virnetsockettest //' tests/Makefile.am
 # disable vircgrouptest test
 sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
-
-./bootstrap --no-git --gnulib-srcdir=gnulib-%name-%version
+%autoreconf
 %define _configure_script ../configure
 mkdir %_vpath_builddir
 pushd %_vpath_builddir
@@ -1252,6 +1248,8 @@ fi
 %dir %attr(0700, root, root) %_logdir/swtpm/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_qemu.aug
+%_bindir/virt-qemu-run
+%_man1dir/virt-qemu-run.1*
 %endif
 
 %if_with lxc
@@ -1379,6 +1377,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt1
+- 6.1.0
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt2
 - use glusterfs without version
 
