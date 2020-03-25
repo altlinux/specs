@@ -1,5 +1,5 @@
 Name: spice-protocol
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 Epoch: 1
 Summary: Spice protocol header files
@@ -12,8 +12,7 @@ Source: %name-%version.tar
 #Patch: %name-%version.patch
 
 BuildArch: noarch
-BuildRequires: meson
-BuildRequires: python-module-pyparsing python-module-six
+BuildRequires(pre): meson
 
 %description
 Header files describing the spice protocol and the para-virtual graphics card QXL.
@@ -35,6 +34,9 @@ Header files describing the spice protocol and the para-virtual graphics card QX
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.14.1-alt1
+- new version 0.14.1
+
 * Fri May 31 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.14.0-alt1
 - 0.14.0
 

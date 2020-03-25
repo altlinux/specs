@@ -1,4 +1,4 @@
-
+%define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define _name spice-gtk
 %def_enable introspection
@@ -13,7 +13,7 @@
 %def_enable epoxy
 
 Name: libspice-gtk
-Version: 0.37
+Version: 0.38
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -25,10 +25,8 @@ Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: keycodemapdb.tar
 Source4: spice-common-recorder.tar
-Source5: ru.po
 # Patch: %name-%version-%release.patch
 # Patch2: %name-alt-fix.patch
-Patch: libspice-gtk-add-ru-string-to-linguas.patch
 
 %define vala_ver 0.14
 
@@ -37,7 +35,7 @@ Requires: libspice-glib = %version-%release
 BuildRequires(pre): meson >= 0.49
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.15
+BuildRequires: spice-protocol >= 0.14.1
 BuildRequires: glib2-devel >= 2.46 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libjson-glib-devel
 BuildRequires: libopus-devel >= 0.9.14
@@ -45,7 +43,7 @@ BuildRequires: libopus-devel >= 0.9.14
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
-%{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.16 libusbredir-devel >= 0.7.1}
+%{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.21 libusbredir-devel >= 0.7.1}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libpolkit-devel >= 0.96 libacl-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgstreamer1.0-gir-devel}
@@ -159,11 +157,9 @@ tar -xf %SOURCE2 -C subprojects/spice-common
 tar -xf %SOURCE3 -C subprojects/keycodemapdb
 tar -xf %SOURCE4 -C subprojects/spice-common/common/recorder
 
-%patch -p1
 # %patch -p1
 # %patch2 -p1
 echo "%version" > .tarball-version
-cp -f %SOURCE5 po/
 
 %build
 %meson \
@@ -237,6 +233,9 @@ cp -f %SOURCE5 po/
 %endif
 
 %changelog
+* Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 0.38-alt1
+- 0.38
+
 * Fri May 31 2019 Alexey Shabalin <shaba@altlinux.org> 0.37-alt1
 - 0.37
 
@@ -246,13 +245,13 @@ cp -f %SOURCE5 po/
 * Tue Feb 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.36-alt1
 - 0.36
 
-* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt3%ubt
+* Thu Sep 13 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt3
 - backport patches from upstream master
 
-* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt2%ubt
+* Tue Sep 04 2018 Alexey Shabalin <shaba@altlinux.org> 0.35-alt2
 - rebuild with openssl-1.1
 
-* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.35-alt1%ubt
+* Mon Jul 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.35-alt1
 - 0.35
 
 * Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 0.34-alt1
