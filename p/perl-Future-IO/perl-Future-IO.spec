@@ -6,7 +6,7 @@ BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(T
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Future-returning IO methods
 Group: Development/Perl
@@ -40,6 +40,9 @@ these operations.
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Fri Jun 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
