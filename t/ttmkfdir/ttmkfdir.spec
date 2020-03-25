@@ -4,7 +4,7 @@ Group: System/Base
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt3_58
+Release: alt3_59
 # Only licensing attribution is in README, no version.
 License: LGPLv2+
 # This is a Red Hat maintained package which is specific to
@@ -57,10 +57,10 @@ by the font server.
 
 
 %build
-%make_build OPTFLAGS="$RPM_OPT_FLAGS"
+%{make_build} OPTFLAGS="$RPM_OPT_FLAGS"
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT PREFIX="%{_prefix}" install INSTALL="install -p"
+%{makeinstall_std} PREFIX="%{_prefix}"
 mkdir -p %{buildroot}%{_mandir}/man1/
 cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 
@@ -70,6 +70,9 @@ cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/ttmkfdir.1*
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt3_59
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt3_58
 - update to new release by fcimport
 
