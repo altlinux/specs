@@ -17,7 +17,7 @@
 
 Name: %{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: GPL-2.0 and LGPL-2.0
@@ -30,14 +30,13 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 # add e2k to list of libseccomp incompatible cpus
-Patch: gnome-desktop-3.32.1.2-alt-e2k.patch
+Patch: gnome-desktop-3.36.0-alt-e2k.patch
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
-
-BuildRequires: yelp-tools gtk-doc
+BuildRequires: yelp-tools
 BuildRequires: libgdk-pixbuf-devel >= 2.36.5
 BuildRequires: libgtk+3-devel >= 3.3.6
 BuildRequires: libgio-devel >= 2.54.0
@@ -46,6 +45,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_libseccomp:BuildRequires: libseccomp-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
@@ -161,8 +161,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gnome/gnome-version.xml
 %_pkgconfigdir/*
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -185,6 +187,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- mike@: updated e2k patch
+- improved "gtk_doc" knob
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
