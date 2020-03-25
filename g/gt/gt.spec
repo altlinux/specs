@@ -3,7 +3,7 @@ Group: Sound
 %define _localstatedir %{_var}
 Name:           gt
 Version:        0.4
-Release:        alt1_26
+Release:        alt1_32
 Summary:        Modified Timidity which supportes enhanced gus format patches
 License:        GPLv2+
 URL:            http://alsa.opensrc.org/GusSoundfont
@@ -19,6 +19,8 @@ Patch3:         gt-0.4-config-default-velocity-layer.patch
 Patch4:         gt-0.4-ppc-compile-fix.patch
 Patch5:         gt-0.4-unsf-bigendian-fix.patch
 Patch6:         gt-0.4-unsf-tremolo.patch
+Patch7:         gt-0.4-gcc10.patch
+BuildRequires:  gcc
 BuildRequires:  libalsa-devel libvorbis-devel flex
 Requires:       timidity-instruments
 Source44: import.info
@@ -46,6 +48,8 @@ disassembler.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+
 cp -p src/README README.timidity
 
 
@@ -79,6 +83,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_32
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_26
 - update to new release by fcimport
 
