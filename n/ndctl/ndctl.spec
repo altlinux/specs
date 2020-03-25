@@ -4,11 +4,11 @@
 %def_disable check
 
 Name: ndctl
-Version: 67
+Version: 68
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
-License: GPLv2
+License: LGPL-2.1
 Group: System/Base
 Url: https://github.com/pmem/ndctl
 
@@ -139,6 +139,10 @@ echo %version > version
 %_pkgconfigdir/libdaxctl.pc
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 68-alt1
+- 68
+- fixed License tag
+
 * Wed Oct 30 2019 Yuri N. Sedunov <aris@altlinux.org> 67-alt1
 - 67
 
