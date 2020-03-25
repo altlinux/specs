@@ -1,4 +1,4 @@
-%define ver_major 2.8
+%define ver_major 3.0
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -15,13 +15,15 @@ Group: System/Kernel and hardware
 License: GPLv2+
 Url: https://github.com/hadess/%name
 
+#VCS:https://gitlab.freedesktop.org/hadess/iio-sensor-proxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%define glib_ver 2.56
 %define gudev_ver 232
 
 BuildRequires: gnome-common gtk-doc
-BuildRequires: libgio-devel systemd-devel
+BuildRequires: libgio-devel >= %glib_ver pkgconfig(systemd)
 BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
 %{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
@@ -57,7 +59,7 @@ Developer documentation for %name.
 [ ! -d m4 ] && mkdir m4
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -78,11 +80,16 @@ Developer documentation for %name.
 %_sysconfdir/dbus-1/system.d/net.hadess.SensorProxy.conf
 %doc README.md NEWS
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%name/
+%endif
 
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Sun Sep 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.8-alt1
 - 2.8
 
