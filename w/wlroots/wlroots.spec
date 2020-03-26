@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.8
+%define ver_major 0.10
 
 %def_enable libcap
 %def_enable x11
@@ -27,8 +27,6 @@ Source: %url/archive/%name-%version.tar.gz
 # VCS: https://github.com/swaywm/wlroots.git
 Source: %name-%version.tar
 %endif
-
-Patch0: wlroots-fix-build.patch
 
 BuildRequires(pre): meson
 BuildRequires: ctags
@@ -66,7 +64,6 @@ This package provides development files for %name library.
 
 %prep
 %setup -n %name-%version
-%patch0 -p2
 
 %build
 %meson
@@ -89,6 +86,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 25 2020 Alexey Gladkov <legion@altlinux.ru> 0.10.1-alt1
+- New version (0.10.1)
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 0.8.1-alt1
 - New version (0.8.1)
 
