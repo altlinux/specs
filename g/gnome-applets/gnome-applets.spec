@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.36
 %define panel_api_ver 6.0
@@ -11,7 +11,7 @@
 %def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -242,7 +242,7 @@ Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
 Summary: Stickynotes applet for the GNOME panel
 Group: Office
 Requires(pre): %name-common = %version-%release
-Requires: libwnck >= %libwnck_ver
+Requires: libwnck3 >= %libwnck_ver
 
 %description stickynotes
 stickynotes_applet enables to create, view, and manage sticky-notes on
@@ -527,6 +527,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Sat Mar 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0-4-g42040d292
 
