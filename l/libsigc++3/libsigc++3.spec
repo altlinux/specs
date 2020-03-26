@@ -7,11 +7,11 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
-License: LGPLv2+
+License: LGPL-3.0
 Group: System/Libraries
 Url: https://libsigcplusplus.github.io/libsigcplusplus/
 
@@ -24,7 +24,7 @@ Source: %_name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ mm-common >= 0.9.12
-BuildRequires: docbook-style-xsl doxygen graphviz xsltproc
+%{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
 libsigc++ implements a typesafe callback system for standard C++.
@@ -82,14 +82,17 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/*
 %_pkgconfigdir/*
 
-%if_enabled docs
 %files doc
 %docdir
 %exclude %docdir/[ANR]*
-%doc %_datadir/devhelp/books/*
-%endif
+%{?_enable_docs:%_datadir/devhelp/books/*}
+
 
 %changelog
+* Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
+- 3.0.3
+- fixed License tag
+
 * Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2 (ported to Meson build system)
 
