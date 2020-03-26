@@ -4,7 +4,7 @@
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.7
+Release: alt0.8
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
@@ -21,12 +21,13 @@ Patch: %name-0.8.0-alt-purple_2.0.12.patch
 Patch1: %name-0.8.0-alt-unused_const_variable.patch
 
 BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
-BuildRequires: libpurple-devel >= 2.7.0 libtelepathy-glib-devel >= 0.13.9
-BuildRequires: xsltproc
-# for check:
+BuildRequires: libpurple-devel >= 2.0.12 libtelepathy-glib-devel >= 0.13.9
+BuildRequires: xsltproc python-modules-xml
+%if_enabled check
 BuildRequires: python-module-twisted-words python-module-twisted-core-gui
 BuildRequires: python-module-cffi python-module-service-identity
 BuildRequires: /proc dbus-tools-gui python-module-dbus
+%endif
 
 %description
 telepathy-haze is a connection manager built around libpurple, the
@@ -44,7 +45,7 @@ work acceptably, and others will probably work too.
 # for gcc7 & gcc8
 %add_optflags -Wno-error=implicit-fallthrough -Wno-error=cast-function-type
 %autoreconf
-%configure
+%configure --disable-Werror PYTHON=python2
 %make_build
 
 %install
@@ -60,6 +61,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.8
+- built without -Werror
+
 * Fri Jan 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.7
 - disabled %%check
 
