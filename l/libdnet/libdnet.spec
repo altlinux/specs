@@ -1,18 +1,18 @@
 Name: libdnet
 Version: 1.12
-Release: alt3.1
+Release: alt4
 
 Summary: A dumb networking library
 Group: System/Libraries
-License: BSD-style
-Url: http://code.google.com/p/libdnet/
+License: BSD-3-Clause
+Url: https://github.com/boundary/libdnet
 
 # Don't build static library by default,
 # can be overridden by 'rpmbuild --enable static ...'
 %def_disable static
 
 # Python bindings, may be enabled using 'rpmbuild --with python ...'
-%def_with python
+%def_without python
 
 # http://libdnet.googlecode.com/files/libdnet-%version.tgz
 Source: libdnet-%version.tar
@@ -119,22 +119,20 @@ dnet является простой утилитой для тестирова�
 
 %if_with python
 
-%setup_python_subpackage dnet
-%package -n %packagename
+%package -n python3-module-dnet
 Summary: Python bindings for libdnet, a dumb networking library
 Summary(ru_RU.UTF-8): Модуль для доступа к функциям библиотеки libdnet из языка Python
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
-BuildRequires(pre): python
-%setup_std_python_package_deps
+BuildPreReq: rpm-build-python3 python3-dev
 
-%description -n %packagename
+%description -n python3-module-dnet
 Python interface for accessing libdnet-provided functions.
 
-%description -n %packagename -l ru_RU.UTF-8
+%description -n python3-module-dnet -l ru_RU.UTF-8
 Интерфейс для доступа к функциям библиотеки libdnet из программ на языке Python.
 
-%define with_python_opt --with-python=%_bindir
+%define with_python_opt --with-python
 
 %else # without python
 
@@ -146,6 +144,7 @@ Python interface for accessing libdnet-provided functions.
 %setup -q
 %patch1 -p1
 %patch2 -p1
+sed -i 's/PYTHON="python"/PYTHON="python3"/' configure.in
 find config -type f -not -name acinclude.m4 -delete
 
 %build
@@ -184,12 +183,15 @@ EOF
 %_man8dir/*
 
 %if_with python
-%files -n %packagename
-%_libdir/python*/site-packages/*
+%files -n python3-module-dnet
+%python3_sitelibdir/*
 %doc python/test.py python/dnet.pyx
 %endif
 
 %changelog
+* Thu Mar 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1.12-alt4
+- Do not build python module.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.12-alt3.1
 - Rebuild with Python-2.7
 
