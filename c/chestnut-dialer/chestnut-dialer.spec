@@ -10,10 +10,10 @@
 
 Name: chestnut-dialer
 Version: 0.3.3
-Release: alt8.2
+Release: alt8.3
 
-Summary: A PPP dialing program, written in Python
-License: GPL
+Summary: A PPP dialing program written in Python
+License: GPLv2+
 Group: Networking/Remote access
 
 Url: http://chestnut-dialer.sourceforge.net
@@ -47,8 +47,7 @@ BuildRequires: texinfo
 %{?_enable_qt:BuildRequires: python-module-qt}
 %{?_with_consolehelper:BuildRequires: %consolehelper}
 
-Summary(ru_RU.KOI8-R): Программа дозвона по протоколу PPP, написанная на Python.
-Summary(uk_UA.KOI8-U): Програма дозвону за протоколом PPP, написана на Python.
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╬п╥п╡п╬п╫п╟ п©п╬ п©я─п╬я┌п╬п╨п╬п╩я┐ PPP, п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п╫п╟ Python
 
 # Added by buildreq2 on Fri Nov 10 2006 (-bi)
 BuildRequires: net-tools python-modules-libxml2
@@ -61,29 +60,19 @@ permissions, but requires read and/or write access to some system
 files (modem device etc.). Chestnut Dialer uses standard pppd
 daemon to set up network interface.
 
-%description -l ru_RU.KOI8-R
-Chestnut Dialer - это программа дозвона по протоколу PPP,
-написанная на Python. Текущая версия (%version) может работать
-с GTK2, QT, и без графического интерфейса (интерфейс командной строки).
-Chestnut Dialer выполняется с привилегиями пользователя, но требует
-доступ на чтение и/или на запись к некоторым системным файлам (включая
-устройство модема). Chestnut Dialer использует стандартный демон pppd
-для установки сетевого интерфейса.
-
-%description -l uk_UA.KOI8-U
-Chestnut Dialer - це програма дозвону за протоколом PPP,
-написана на Python. Тепер╕шня верс╕я (%version) може працювати
-з GTK2, QT, та без граф╕чного ╕нтерфейсу (╕нтерфейс командного рядка).
-Chestnut Dialer викону╓ться з прив╕леями користувача, але потребу╓
-доступ на читання чи/та на запис до деяких системних файл╕в (включаючи
-модем). Chestnut Dialer використову╓ стандартний демон pppd
-для з'╓днання з провайдером.
+%description -l ru_RU.UTF-8
+Chestnut Dialer - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╬п╥п╡п╬п╫п╟ п©п╬ п©я─п╬я┌п╬п╨п╬п╩я┐ PPP,
+п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п╫п╟ Python. п╒п╣п╨я┐я┴п╟я▐ п╡п╣я─я│п╦я▐ (%version) п╪п╬п╤п╣я┌ я─п╟п╠п╬я┌п╟я┌я▄
+я│ GTK2, QT, п╦ п╠п╣п╥ пЁя─п╟я└п╦я┤п╣я│п╨п╬пЁп╬ п╦п╫я┌п╣я─я└п╣п╧я│п╟ (п╦п╫я┌п╣я─я└п╣п╧я│ п╨п╬п╪п╟п╫п╢п╫п╬п╧ я│я┌я─п╬п╨п╦).
+Chestnut Dialer п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐ я│ п©я─п╦п╡п╦п╩п╣пЁп╦я▐п╪п╦ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐, п╫п╬ я┌я─п╣п╠я┐п╣я┌
+п╢п╬я│я┌я┐п© п╫п╟ я┤я┌п╣п╫п╦п╣ п╦/п╦п╩п╦ п╫п╟ п╥п╟п©п╦я│я▄ п╨ п╫п╣п╨п╬я┌п╬я─я▀п╪ я│п╦я│я┌п╣п╪п╫я▀п╪ я└п╟п╧п╩п╟п╪ (п╡п╨п╩я▌я┤п╟я▐
+я┐я│я┌я─п╬п╧я│я┌п╡п╬ п╪п╬п╢п╣п╪п╟). Chestnut Dialer п╦я│п©п╬п╩я▄п╥я┐п╣я┌ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╢п╣п╪п╬п╫ pppd
+п╢п╩я▐ я┐я│я┌п╟п╫п╬п╡п╨п╦ я│п╣я┌п╣п╡п╬пЁп╬ п╦п╫я┌п╣я─я└п╣п╧я│п╟.
 
 %if_enabled gtk2
 %package gtk2
 Summary: GTK2 user interface for Chestnut Dialer
-Summary(ru_RU.KOI8-R): Интерфейс пользователя GTK2 для Chestnut Dialer.
-Summary(uk_UA.KOI8-U): Интерфейс користувача GTK2 для Chestnut Dialer.
+Summary(ru_RU.UTF-8): п≤п╫я┌п╣я─я└п╣п╧я│ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ GTK2 п╢п╩я▐ Chestnut Dialer
 Group: Networking/Remote access
 Requires: %name = %version
 Requires: python-module-pygtk
@@ -92,18 +81,14 @@ Requires: python-module-pygtk-libglade
 %description gtk2
 This is the GTK2 user interface for Chestnut Dialer.
 
-%description -l ru_RU.KOI8-R gtk2
-Интерфейс пользователя GTK2 для Chestnut Dialer.
-
-%description -l uk_UA.KOI8-U gtk2
-Интерфейс користувача GTK2 для Chestnut Dialer.
+%description -l ru_RU.UTF-8 gtk2
+п≤п╫я┌п╣я─я└п╣п╧я│ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ GTK2 п╢п╩я▐ Chestnut Dialer.
 %endif
 
 %if_enabled qt
 %package qt
 Summary: QT user interface for Chestnut Dialer
-Summary(ru_RU.KOI8-R): Интерфейс пользователя QT для Chestnut Dialer.
-Summary(uk_UA.KOI8-U ): Интерфейс користувача QT для Chestnut Dialer.
+Summary(ru_RU.UTF-8): п≤п╫я┌п╣я─я└п╣п╧я│ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ QT п╢п╩я▐ Chestnut Dialer
 Group: Networking/Remote access
 Requires: %name = %version
 Requires: python-module-qt
@@ -111,11 +96,8 @@ Requires: python-module-qt
 %description qt
 This is the QT user interface for Chestnut Dialer.
 
-%description -l ru_RU.KOI8-R qt
-Интерфейс пользователя QT для Chestnut Dialer.
-
-%description -l uk_UA.KOI8-U qt
-Интерфейс користувача QT для Chestnut Dialer.
+%description -l ru_RU.UTF-8 qt
+п≤п╫я┌п╣я─я└п╣п╧я│ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐ QT п╢п╩я▐ Chestnut Dialer.
 %endif
 
 %prep
@@ -138,13 +120,14 @@ This is the QT user interface for Chestnut Dialer.
 	%{?_with_consolehelper} \
 	--with-pamdir=%pamdir \
 	--with-consoleappsdir=%consoleappsdir
-make
+%make
+sed -i 's,/python,&2,' %name
 
 %install
-make DESTDIR=%buildroot install
-install -m 0755 -d %buildroot%_datadir/applications
-install -m 0644 chestnut-dialer-gtk2.desktop %buildroot%_datadir/applications/
-install -m 0644 chestnut-dialer-qt.desktop %buildroot%_datadir/applications/
+%makeinstall_std
+install -dm755 %buildroot%_desktopdir
+install -pm644 chestnut-dialer-gtk2.desktop %buildroot%_desktopdir/
+install -pm644 chestnut-dialer-qt.desktop %buildroot%_desktopdir/
 
 %files
 %doc AUTHORS COPYING ChangeLog NEWS* README* FAQ*
@@ -170,13 +153,13 @@ install -m 0644 chestnut-dialer-qt.desktop %buildroot%_datadir/applications/
 %if_enabled gtk2
 %files gtk2
 %_datadir/chestnut-dialer/chestnut_dialer/gtk2_ui
-%_datadir/applications/chestnut-dialer-gtk2.desktop
+%_desktopdir/chestnut-dialer-gtk2.desktop
 %endif
 
 %if_enabled qt
 %files qt
 %_datadir/chestnut-dialer/chestnut_dialer/qt_ui
-%_datadir/applications/chestnut-dialer-qt.desktop
+%_desktopdir/chestnut-dialer-qt.desktop
 %endif
 
 # TODO
@@ -186,6 +169,11 @@ install -m 0644 chestnut-dialer-qt.desktop %buildroot%_datadir/applications/
 # - check ru.po
 
 %changelog
+* Thu Mar 26 2020 Michael Shigorin <mike@altlinux.org> 0.3.3-alt8.3
+- clarify License:
+- explicit python2
+- spec cleanup (and conversion to UTF-8)
+
 * Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.3-alt8.2
 - Rebuilt without Qt-3.
 
