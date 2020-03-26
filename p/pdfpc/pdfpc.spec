@@ -1,5 +1,5 @@
 Name: pdfpc
-Version: 4.3.4
+Version: 4.4.0
 Release: alt1
 Summary: A GTK based presentation viewer application for GNU/Linux
 
@@ -9,8 +9,6 @@ Url: https://github.com/pdfpc/pdfpc
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Fri Jun 22 2018
-# optimized out: at-spi2-atk cmake-modules fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins1.0 libpango-devel libpoppler8-glib libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-base python-modules wayland-devel xorg-proto-devel
 BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel libpoppler-glib-devel vala
 
 Provides: pdf-presenter-console
@@ -46,6 +44,9 @@ which can be created using nearly any of today's presentation software.
 %_datadir/pixmaps/%name
 
 %changelog
+* Thu Mar 26 2020 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Wed Jul 10 2019 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt1
 - New version 4.3.4.
 
