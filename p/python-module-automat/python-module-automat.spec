@@ -2,7 +2,7 @@
 
 %define modulename Automat
 Name: python-module-automat
-Version: 0.7.0
+Version: 20.2.0
 Release: alt1
 
 Summary: Self-service finite-state machines for the programmer on the go
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Thu Mar 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 20.2.0-alt1
+- new version (20.2.0) with rpmgs script
+
 * Sun Jun 30 2019 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
