@@ -1,29 +1,30 @@
+# nagios uses /usr/lib for plugins in any arch
+%define plugindir %_prefix/lib/nagios/plugins
+
 Name: nagios-plugins-nginx
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: Nagios(R) plug-in for checking nginx status
 License: GPL
 Group: Monitoring
-
 Url: http://www.nginxs.com/linux/441.html
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+BuildArch: noarch
+
 Source: %name-%version.tar
+Patch0: port-to-python3.patch
 
-BuildArchitectures: noarch
-
+BuildRequires(pre): rpm-build-python3
 Requires: nagios-nrpe
-
-# nagios uses /usr/lib for plugins in any arch
-%define plugindir %_prefix/lib/nagios/plugins
 
 %description
 Nagios plugin for checking nginx status written in python.
 
 %prep
 %setup
+%patch0 -p1
 
 %install
 mkdir -p %buildroot%plugindir/
@@ -33,6 +34,9 @@ install -m755 check_nginx %buildroot%plugindir/
 %plugindir/check_nginx
 
 %changelog
+* Thu Mar 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt3
+- Porting to python3.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
 - use python2 for the script
 
