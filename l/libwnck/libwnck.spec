@@ -5,23 +5,23 @@
 
 Name: libwnck
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: libwnck is a Window Navigator Construction Kit
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Libraries
-URL: ftp://ftp.gnome.org
+Url: http://www.gnome.org
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Provides: %{name}2.22 = %version-%release
-Provides: %{name}2.20 = %version-%release
+Provides: %{name}2.22 = %EVR
+Provides: %{name}2.20 = %EVR
 Obsoletes: %{name}2.22
 Obsoletes: %{name}2.20
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildPreReq: rpm-build-gnome
 # From configure.in
 BuildPreReq: intltool >= 0.40.0
 BuildPreReq: gnome-common
@@ -41,9 +41,9 @@ This library is a part of the GNOME 2 platform.
 %package devel
 Summary: Header and development libraries for %name
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-Provides: %{name}2.22-devel = %version-%release
-Provides: %{name}2.20-devel = %version-%release
+Requires: %name = %EVR
+Provides: %{name}2.22-devel = %EVR
+Provides: %{name}2.20-devel = %EVR
 Obsoletes: %{name}2.22-devel
 Obsoletes: %{name}2.20-devel
 
@@ -54,7 +54,7 @@ This package contains header and development libraries for %name
 Summary: Development documentation for %name
 Group: Development/GNOME and GTK+
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: %name < %version
 
 %description devel-doc
 This package contains development documentation for %name.
@@ -62,7 +62,7 @@ This package contains development documentation for %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Window Navigator Construction Kit library
@@ -71,7 +71,7 @@ GObject introspection data for the Window Navigator Construction Kit library
 Summary: GObject introspection devel data for the %name library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Window Navigator Construction Kit library
@@ -80,7 +80,7 @@ GObject introspection devel data for the Window Navigator Construction Kit libra
 %package devel-static
 Summary: Static libraries and objects for %name
 Group: Development/GNOME and GTK+
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains the General Window Manager interfacing static
@@ -88,27 +88,30 @@ libraries and objects.
 %endif
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
 %configure \
     %{subst_enable static} \
     %{subst_enable introspection}
-
+%nil
 %make_build
+
+%install
+%makeinstall_std
+# rename tools to avoid conflict with libwnck3
+for f in wnckprop wnck-urgency-monitor; do \
+mv %buildroot%_bindir/"$f" %buildroot%_bindir/"$f"-2; done
+
+%find_lang %name
 
 %check
 %make check
 
-%install
-%make DESTDIR=%buildroot install
-
-%find_lang %name
-
 %files -f %name.lang
-%_bindir/wnck-urgency-monitor
-%_bindir/wnckprop
+%_bindir/wnck-urgency-monitor-2
+%_bindir/wnckprop-2
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -134,6 +137,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.31.0-alt2
+- renamed tools to avoid conflict with newer libwnck3
+
 * Mon Mar 05 2012 Yuri N. Sedunov <aris@altlinux.org> 2.31.0-alt1
 - 2.31.0
 

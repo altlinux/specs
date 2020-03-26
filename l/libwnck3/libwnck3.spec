@@ -1,46 +1,42 @@
 %define _name libwnck
-%define ver_major 3.32
+%define ver_major 3.36
 %define api_ver 3.0
 
 %def_enable introspection
 %def_enable startup_notification
-%def_disable static
-%def_disable debug
 %def_enable gtk_doc
+%def_enable install_tools
+%def_enable check
 
 Name: %{_name}3
 Version: %ver_major.0
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Libraries
-URL: ftp://ftp.gnome.org
+Url: http://www.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses
-# From configure.ac
-BuildRequires: autoconf-archive
-BuildRequires: libX11-devel libXres-devel libXext-devel libXt-devel libXi-devel
+BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: libX11-devel libXres-devel libXi-devel pkgconfig(cairo-xlib-xrender)
 BuildRequires: libgtk+3-devel >= 3.22.0
 BuildRequires: glib2-devel >= 2.32.0
 BuildRequires: gtk-doc >= 1.9
 %{?_enable_startup_notification:BuildRequires: libstartup-notification-devel >= 0.4}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
 libwnck is Window Navigator Construction Kit, i.e. a library to use for
 writing pagers and taskslists and stuff.
 
-This library is a part of the GNOME 3 platform.
-
 %package devel
 Summary: Header and development libraries for %name
-Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-Provides: %{name}2.22-devel = %version-%release
-Provides: %{name}2.20-devel = %version-%release
+Group: Development/C
+Requires: %name = %EVR
+Provides: %{name}2.22-devel = %EVR
+Provides: %{name}2.20-devel = %EVR
 Obsoletes: %{name}2.22-devel
 Obsoletes: %{name}2.20-devel
 
@@ -51,7 +47,7 @@ This package contains header and development libraries for %name
 Summary: Development documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: %name < %version
 
 %description devel-doc
 This package contains development documentation for %name.
@@ -59,53 +55,45 @@ This package contains development documentation for %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Window Navigator Construction Kit library
 
 %package gir-devel
 Summary: GObject introspection devel data for the %name library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Window Navigator Construction Kit library
-
-%if_enabled static
-%package devel-static
-Summary: Static libraries and objects for %name
-Group: Development/GNOME and GTK+
-Requires: %name-devel = %version-%release
-
-%description devel-static
-This package contains the General Window Manager interfacing static
-libraries and objects.
-%endif
 
 %prep
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{?_disable_startup_notification:--disable-startup-notification} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    --program-suffix=-3
-%make_build
-
-%check
-%make check
+%meson \
+    %{?_disable_startup_notification:-Dstartup-notification=disabled} \
+    %{?_disable_introspection:--Dintrospection=disabled} \
+    %{?_disable_install_tools:-Dinstall_tools=false} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --output=%_name.lang %_name-%api_ver
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
+
+
 %files -f %_name.lang
-%_bindir/wnck-urgency-monitor-3
-%_bindir/wnckprop-3
+%{?_enable_install_tools:
+%_bindir/wnck-urgency-monitor
+%_bindir/wnckprop}
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -127,12 +115,11 @@ libraries and objects.
 %_girdir/*
 %endif
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
 
 %changelog
+* Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0 (ported to Meson build system)
+
 * Wed May 01 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
