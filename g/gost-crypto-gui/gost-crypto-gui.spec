@@ -2,7 +2,7 @@
 
 Name: gost-crypto-gui
 Version: 0.3
-Release: alt0.7.a.git%gitrev
+Release: alt0.8.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -10,11 +10,11 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Group: Security/Networking
 Url: http://github.com/bmakarenko/gost-crypto-gui
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 
-%filter_from_requires /^python2.7(nautilus)/d
+%filter_from_requires /^python3(nautilus)/d
 Requires: nautilus-python
 
 BuildArch: noarch
@@ -23,6 +23,8 @@ Source0: %name.tar
 
 # fix error of returt zero-code and ru linux locale
 Patch0: patch_for_4b7a47a.patch
+
+Patch1: port-to-python3.patch
 
 Provides:  gostcryptogui = %EVR
 Obsoletes: gostcryptogui < %EVR
@@ -34,19 +36,20 @@ algorithms. Requires CryproPro (http://www.cryptopro.ru).
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 
 %build
-%python_build
+%python3_build_debug
 for dir in nautilus caja; do
   pushd "$dir"
   chmod +x gost-crypto-gui-emblem.py
-  python -m py_compile gost-crypto-gui-menu.py
-  python -m py_compile gost-crypto-gui-emblem.py
+  %__python3 -m py_compile gost-crypto-gui-menu.py
+  %__python3 -m py_compile gost-crypto-gui-emblem.py
   popd
 done
 
 %install
-%python_install
+%python3_install
 install -Dm 0755 gost-crypto-gui.py %buildroot%_bindir/gost-crypto-gui.py
 
 for dir in nautilus caja; do
@@ -66,7 +69,7 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 
 %files
 %doc README.md
-%python_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/*
 %_bindir/gost-crypto-gui.py
 %_datadir/nautilus-python/extensions/*.py*
 %_datadir/caja-python/extensions/*.py*
@@ -76,6 +79,9 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Thu Mar 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt0.8.a.git4b7a47a
+- Porting to python3.
+
 * Thu May 31 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.3-alt0.7.a.git4b7a47a
 -fix return zero in patch0
 
