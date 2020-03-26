@@ -2,14 +2,15 @@
 
 Name: pcmanfm
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: PCMan File Manager
-License: GPL
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 
 Url: http://pcmanfm.sourceforge.net
 Source: %name-%version.tar
+Patch: 0001-Avoid-undefined-isdigit-behaviour.patch
 
 Provides: pcmanfm2 = %version-%release
 Obsoletes: pcmanfm2 < 1.2.0
@@ -50,6 +51,7 @@ This package contains header files.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -74,6 +76,10 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Thu Mar 26 2020 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt2
+- Added upstream patch for fix undefined 'isdigit()' behaviour
+- Fixed license tag
+
 * Fri Jan 04 2019 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 
