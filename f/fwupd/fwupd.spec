@@ -14,7 +14,7 @@
 Summary: Firmware update daemon
 Name: fwupd
 Version: 1.3.8
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -82,6 +82,7 @@ Obsoletes: fwupdate
 
 Requires: fwupd-labels = %EVR
 Requires: bubblewrap
+Requires: libgusb >= 0.3.4
 
 %description
 fwupd is a daemon to allow session software to update device firmware.
@@ -303,6 +304,11 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Thu Mar 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.8-alt2
+- Rebuilt with libgusb 0.3.4 due to broken symbol versioning
+  of g_usb_version_string function.
+- Added explicit libgusb >= 0.3.4 dependency.
+
 * Wed Feb 19 2020 Anton Farygin <rider@altlinux.ru> 1.3.8-alt1
 - 1.3.8
 
