@@ -1,26 +1,26 @@
+# nagios uses /usr/lib for plugins in any arch
+%define plugindir %_prefix/lib/nagios/plugins
+
 Name: nagios-plugins-smartmon
 Version: 1.1
-Release: alt4
+Release: alt5
 
 Summary: Nagios(R) plug-in for checking SMART parameters
 License: GPL
 Group: Monitoring
-
 Url: http://altlinux.org/%name
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+BuildArch: noarch
+
 Source: %name-%version.tar
+Patch0: port-to-python3.patch
 
-BuildArchitectures: noarch
-
-Requires: nagios-nrpe, smartmontools
+BuildRequires(pre): rpm-build-python3
+Requires: nagios-nrpe smartmontools
 
 Provides: nagios-nrpe-checksmartmon
 Obsoletes: nagios-nrpe-checksmartmon
-
-# nagios uses /usr/lib for plugins in any arch
-%define plugindir %_prefix/lib/nagios/plugins
 
 %description
 Nagios plugin for checking SMART parameters at hard drives written in python.
@@ -29,6 +29,7 @@ See docs at %url.
 
 %prep
 %setup
+%patch0 -p2
 
 %install
 mkdir -p %buildroot%plugindir
@@ -38,6 +39,9 @@ install -m755 bin/* %buildroot%plugindir/
 %plugindir/check_smartmon
 
 %changelog
+* Thu Mar 26 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1-alt5
+- Porting to python3.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt4
 - use python2 for the script
 
