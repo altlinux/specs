@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: A series of tubes.
 License: MIT
@@ -18,11 +18,14 @@ BuildArch: noarch
 
 Source:  %modulename-%version.tar
 
+Patch1: 0001-remove-unnecessary-dependency.patch
+
 %description
 %summary
 
 %prep
 %setup -n %modulename-%version
+%patch1 -p1
 
 %build
 %python3_build
@@ -36,5 +39,8 @@ Source:  %modulename-%version.tar
 %doc README.rst LICENSE
 
 %changelog
+* Thu Mar 26 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.0-alt2
+- Remove unnecessary dependency from setup.py
+
 * Tue Mar 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
