@@ -26,7 +26,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:   hadoop
 Version: 2.7.6
-Release: alt3_5jpp8
+Release: alt4_5jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -463,7 +463,8 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch24 -p1
 %patch25 -p1
 
-%pom_xpath_set "pom:properties/pom:protobuf.version" 3.6.1 hadoop-project
+# OMG it was 3.6.1 now it is WITH SPACES!!!
+%pom_xpath_set "pom:properties/pom:protobuf.version" 'libprotoc 3.11.4' hadoop-project
 
 # These native libs won't build on s390x and armv7hl (possibly due to some cmake issue with provided compat functions)
 %pom_remove_plugin :maven-antrun-plugin hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager
@@ -668,7 +669,7 @@ export MAVEN_OPTS="-Xms2048M -Xmx4096M"
 # $2 the dest directory
 copy_dep_jars()
 {
-  find $1 ! -name "hadoop-*.jar" -name "*.jar" | xargs install -m 0644 -t $2
+  find $1 ! -name "hadoop-*.jar" -name "*.jar" -print0 | xargs -0 install -m 0644 -t $2
   rm -f $2/tools-*.jar
 }
 
@@ -687,7 +688,7 @@ link_hadoop_jars()
       rm -f $1/$f $1/$n
     fi
     p=`find %{buildroot}/%{_jnidir} %{buildroot}/%{_javadir}/%{name} -name $n | sed "s#%{buildroot}##"`
-    ln -s $p $1/$n
+    ln -s "$p" "$1/$n"
   done
 }
 
@@ -1145,6 +1146,9 @@ fi
 # %%attr(6010,root,yarn) %%{_bindir}/container-executor
 
 %changelog
+* Thu Mar 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt4_5jpp8
+- fixed build
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt3_5jpp8
 - build with mockito1
 
