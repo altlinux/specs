@@ -1,9 +1,9 @@
 %define  modulename trustme
-%def_without python2
+%def_with python2
 
 Name:    python-module-%modulename
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
 License: Apache2 or MIT
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Thu Mar 26 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt2
+- Build both Python2 and Python3 modules.
+
 * Mon Dec 23 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - New version.
 
