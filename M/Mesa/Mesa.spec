@@ -65,7 +65,7 @@
 
 Name: Mesa
 Version: 20.0.2
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -206,6 +206,26 @@ Group: System/X11
 
 %description -n xorg-dri-armsoc
 DRI drivers for various SoCs
+
+%package -n mesa-dri-drivers
+Summary: Mesa-based DRI drivers
+Group: System/X11
+Requires: xorg-dri-swrast = %epoch:%version-%release
+%ifarch %radeon_arches
+Requires: xorg-dri-radeon = %epoch:%version-%release
+%endif
+%ifarch %nouveau_arches
+Requires: xorg-dri-nouveau = %epoch:%version-%release
+%endif
+%ifarch %intel_arches
+Requires: xorg-dri-intel = %epoch:%version-%release
+%endif
+%ifarch %armsoc_arches
+Requires: xorg-dri-armsoc = %epoch:%version-%release
+%endif
+
+%description -n mesa-dri-drivers
+Mesa-based DRI drivers
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -432,9 +452,15 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
 %endif
 
+%files -n mesa-dri-drivers
+
 %changelog
+* Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.2-alt2
+- rebuild with llvm 10.0.0
+- added meta package mesa-dri-drivers (closes: #38262)
+
 * Thu Mar 19 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.2-alt1
-- 20.0.0
+- 20.0.2
 - used i965 driver for Intel Gen8-11 by default (closes: #38214)
 
 * Fri Mar 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.1-alt1
