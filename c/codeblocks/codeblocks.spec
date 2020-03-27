@@ -3,7 +3,7 @@ Name: codeblocks
 # will update codeblocks for a new version. In sisyphus branch windows blobs
 # should be cleared.
 Version: 17.12
-Release: alt8
+Release: alt9
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -26,10 +26,10 @@ Patch1: codeblocks-ebuild.conf.patch
 Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-FortranProject_fix_build_gcc7_failed.patch
 
-Requires: automake >= 1.7 wxGTK gcc gcc-c++ gdb xterm gamin mythes-en
+Requires: automake >= 1.7 libwxGTK3.1 gcc gcc-c++ gdb xterm gamin mythes-en
 
-BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+2-devel
-BuildRequires: libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK-devel
+BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+3-devel
+BuildRequires: libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK3.1-devel
 BuildRequires: tinyxml-devel zip zlib-devel bzlib-devel
 
 %description
@@ -276,6 +276,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Fri Mar 27 2020 Grigory Ustinov <grenka@altlinux.org> 17.12-alt9
+- Rebuild with libwxGTK3.1 (Closes: #37714).
+
 * Mon Jun 03 2019 Grigory Ustinov <grenka@altlinux.org> 17.12-alt8
 - Update russian localization of desktop file (thx to cas@).
 
