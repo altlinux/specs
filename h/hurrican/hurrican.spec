@@ -1,6 +1,6 @@
 Name: hurrican
 Version: 1.0.9.2
-Release: alt3
+Release: alt4
 
 Summary: Turrican freeware clone
 Summary(ru_RU.UTF-8): Бесплатный клон Turrican
@@ -67,12 +67,18 @@ cp -R Hurrican/lang/*.lng %buildroot%_datadir/%name/lang/
 %files
 %doc *.md
 %_bindir/%name
+%dir %_datadir/%name
+%dir %_datadir/%name/data
+%dir %_datadir/%name/lang
 %_datadir/%name/data/*
 %_datadir/%name/lang/*
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 
 %changelog
+* Fri Mar 27 2020 Artyom Bystrov <arbars@altlinux.org> 1.0.9.2-alt4
+- Fix post-install unowned files
+
 * Fri Mar 27 2020 Artyom Bystrov <arbars@altlinux.org> 1.0.9.2-alt3
 - Fixup build for other architectures (ix86, aarch64)
 
