@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayidle
-Version: 1.3
-Release: alt2
+Version: 1.6
+Release: alt1
 Summary: Idle management daemon for Wayland 
 License: MIT
 Url: https://github.com/swaywm/swayidle
@@ -46,6 +46,9 @@ rm -rf -- \
 %_man1dir/*
 
 %changelog
+* Fri Mar 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.6-alt1
+- New version (1.6)
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 1.3-alt2
 - Remove libelogind-devel.
 
