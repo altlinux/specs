@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+%filter_from_requires /^\/usr\/bin\/mysql$/d
+%filter_from_requires /^\/usr\/bin\/psql$/d
 
 %def_without radius
 %def_with mysql
@@ -8,7 +10,7 @@
 
 Name: kea
 Version: 1.6.2
-Release: alt1
+Release: alt2
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPLv2.0 and Boost
@@ -62,6 +64,18 @@ Hooking mechanism allow Kea to load one or more dynamically-linked libraries
 (known as "hooks libraries") and, at various points in its processing
 ("hook points"), call functions in them.  Those functions perform whatever
 custom processing is required.
+
+%package shell
+Summary: Text client for Control Agent process
+Group: System/Servers
+BuildArch: noarch
+
+%description shell
+The kea-shell provides a REST client for the Kea Control Agent (CA).
+It takes command as a command-line parameter that is being sent to CA
+with proper JSON encapsulation. Optional arguments may be specified on
+the standard input. The request it sent of HTTP and a response is
+retrieved. That response is displayed out on the standard output.
 
 %package -n lib%name
 Summary: Shared libraries used by Kea DHCP server
@@ -176,6 +190,7 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %doc %_datadir/doc/%name
 %_bindir/*
 %_sbindir/*
+%exclude %_sbindir/kea-admin
 %_unitdir/*.service
 %dir %attr(0750, root, _kea) %_sysconfdir/%name
 %config(noreplace) %attr(0640, root, _kea) %_sysconfdir/%name/*.conf
@@ -193,6 +208,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %dir %_libdir/%name
 %_libdir/%name/hooks
 
+%files shell
+%_sbindir/kea-admin
+
 %files -n lib%name
 %_libdir/lib%name-*.so.*
 
@@ -200,6 +218,11 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt2
+- split kea-shell to separate package
+- filter mysql and psql from requires
+- update systemd units
+
 * Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
