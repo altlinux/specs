@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-set
 
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.6
+Version:	2.6.1
 Release:	alt1_4
 URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
@@ -38,14 +38,14 @@ BuildRequires:	python3-module-distribute
 # unpackaged https://pypi.python.org/pypi/Cheroot
 #BuildRequires: python3-cheroot
 BuildRequires:	python3-module-cherrypy
-BuildRequires:	python3-module-nose
-BuildRequires:	python-module-PyQt5 python3-module-PyQt5
+BuildRequires:	python-module-nose python3-module-nose
+BuildRequires:	python3-module-PyQt5
 BuildRequires:	texlive-collection-latexrecommended
 BuildRequires:	texlive
 %endif
 Requires:	icon-theme-hicolor
 Requires:	python3-module-PyQt5
-Requires:	python3-module-PyQt5
+Requires:	python3-module-PyQtWebEngine
 Requires:	python3-module-matplotlib-qt5
 Requires:	python3-module-cherrypy
 Requires:	python3-module-webob
@@ -95,7 +95,7 @@ popd
 %endif
 
 %files -f %{name}.lang
-%doc ChangeLog README.md
+%doc ChangeLog README
 %doc --no-dereference LICENSE LICENSE.mnemosyne LICENSE.openSM2sync
 %{_bindir}/%{name}
 %{python3_sitelibdir_noarch}/%{name}
@@ -105,6 +105,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_4
+- update to new release by fcimport
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_4
 - update to new release by fcimport
 
