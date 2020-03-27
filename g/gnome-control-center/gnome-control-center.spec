@@ -11,7 +11,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -177,6 +177,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

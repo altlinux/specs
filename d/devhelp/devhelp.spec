@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
@@ -13,11 +13,13 @@ Url: https://wiki.gnome.org/Apps/Devhelp
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%add_python3_path %_libdir/gedit/plugins
+
 %define gtk_ver 3.22.0
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): meson rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
 BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.24
@@ -92,7 +94,6 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 
 %build
 %meson -Dgtk_doc=true
-
 %meson_build
 
 %install
@@ -137,6 +138,10 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+- fixed requires for Gedit plugin
+
 * Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
