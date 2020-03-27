@@ -1,19 +1,18 @@
+%define _sbindir /sbin
+
 Name: fuse-exfat
 Summary: Free exFAT file system implementation
-Version: 1.0.1
-Release: alt3
-License: GPLv3+
+Version: 1.3.0
+Release: alt1
+License: GPL-3.0-or-later
 Group: System/Kernel and hardware
-Url: http://code.google.com/p/exfat/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://github.com/relan/exfat
 
-Source: http://exfat.googlecode.com/files/%name-%version.tar.gz
-Patch: fuse-exfat-1.0.0-alt-getopt.patch
-Patch1: fuse-exfat-1.0.1-SConstruct.patch
+Source: https://github.com/relan/exfat/releases/download/v%version/%name-%version.tar.gz
 
 Requires: exfat-utils = %version
 
-BuildRequires: libfuse-devel python-modules-email scons
+BuildRequires: libfuse-devel
 
 %description
 This driver is the first free exFAT file system implementation with write
@@ -23,23 +22,25 @@ for SDXC memory cards.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
-%build
-scons
+%autoreconf
+%configure
+%make_build
 
 %install
-install -pD -m755 fuse/mount.exfat-fuse %buildroot/sbin/mount.exfat-fuse
-ln -s mount.exfat-fuse %buildroot/sbin/mount.exfat
-install -pD -m644 fuse/mount.exfat-fuse.8 %buildroot%_man8dir/mount.exfat-fuse.8
+%makeinstall_std
 ln -s mount.exfat-fuse.8 %buildroot%_man8dir/mount.exfat.8
 
 %files
-%attr(755,root,root) /sbin/*
+%attr(755,root,root) %_sbindir/*
 %_man8dir/*.8*
 
 %changelog
+* Sat Mar 28 2020 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- 1.3.0
+- Fixed License tag
+- Update URL tag
+
 * Sat Mar 28 2020 Artyom Bystrov <arbars@altlinux.org> 1.0.1-alt3
 - Rising from kingdom of Sisyphus archive >:-)
 - Fixed SConstruct "print ()" bug

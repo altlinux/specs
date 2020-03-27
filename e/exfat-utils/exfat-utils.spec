@@ -1,17 +1,17 @@
+%define _sbindir /sbin
+
 Name: exfat-utils
 Summary: Utilities for exFAT file system
-Version: 1.0.1
+Version: 1.3.0
 Release: alt1
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: System/Kernel and hardware
-URL: http://code.google.com/p/exfat/
+URL: https://github.com/relan/exfat
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: http://exfat.googlecode.com/files/%name-%version.tar.gz
+Source0: https://github.com/relan/exfat/releases/download/v%version/%name-%version.tar.gz
 
 Conflicts: fuse-exfat <= 1.0.1-alt1
-
-BuildRequires: scons
 
 %description
 Utilities to manage extended file allocation table filesystem. This package
@@ -24,20 +24,26 @@ mkexfatfs to create a exFAT filesystem.
 %setup -q
 
 %build
-scons
+%autoreconf
+%configure
+%make_build
 
 %install
-scons DESTDIR=%buildroot/sbin/ install
-mkdir -p %buildroot%_man8dir
+%makeinstall_std
 find -name \*.8 -exec install -m644 {} %buildroot%_man8dir/ \;
 ln -s mkexfatfs.8 %buildroot%_man8dir/mkfs.exfat.8
 ln -s exfatfsck.8 %buildroot%_man8dir/fsck.exfat.8
 
 %files
-%attr(755,root,root) /sbin/*
+%attr(755,root,root) %_sbindir/*
 %_man8dir/*.8*
 
 %changelog
+* Sat Mar 28 2020 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- 1.3.0
+- Fixed License tag
+- Update URL tag
+
 * Sun Sep 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
