@@ -19,7 +19,7 @@ Pelican is a static site generator, written in Python_.\
 
 Name: python3-module-%{pypi_name}
 Version: 4.1.0
-Release: alt4
+Release: alt5
 Summary: %{short_desc}
 Group: Development/Python3
 
@@ -91,8 +91,8 @@ sed -i "s|'feedgenerator >= 1.9', ||" setup.py
 %if_without bootstrap
 sphinx-build-3 docs html
 # remove leftovers from sphinxbuild
-rm html/_downloads/theme-basic.zip html/_static/theme-basic.zip
-rm -rf html/.doctrees html/.buildinfo
+rm html/_static/theme-basic.zip
+rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %endif
 
 %install
@@ -120,6 +120,9 @@ nosetests-3 -sv --with-coverage --cover-package=pelican pelican
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Mar 27 2020 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt5
+- Fixed build.
+
 * Thu Sep 12 2019 Alexey Appolonov <alexey@altlinux.org> 4.1.0-alt4
 - Proper build with python3 (with docs);
 - Use of standalone feedgenerator.
