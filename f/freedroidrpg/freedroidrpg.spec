@@ -1,6 +1,6 @@
 Name: freedroidrpg
 Version: 0.16.1
-Release: alt1
+Release: alt2
 
 Summary: Isometric action game with RPG elements
 License: GPL
@@ -8,6 +8,7 @@ Group: Games/Arcade
 Url: http://freedroid.sf.net
 Packager: Roman Savochenko <rom_as at altlinux.ru>
 
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: libSDL-devel libGLU-devel libjpeg-devel zlib-devel libpng-devel libSDL_image-devel libSDL_net-devel libvorbis-devel libSDL_mixer-devel libSDL_gfx-devel
 
 Requires: %name-data = %version
@@ -39,6 +40,8 @@ This package contains media files for Freedroid RPG game
 
 %prep
 %setup -q
+
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
 %build
 %configure --datadir=%_gamesdatadir --bindir=%_gamesbindir --enable-dev-tools
@@ -85,6 +88,9 @@ mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
 %_gamesbindir/make_atlas
 
 %changelog
+* Fri Mar 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.16.1-alt2
+- Porting to python3.
+
 * Sun Sep 25 2016 Anton Midyukov <antohami@altlinux.org> 0.16.1-alt1
 - Version 0.16.1 build for Sisyphus.
 
