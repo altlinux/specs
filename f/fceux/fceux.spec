@@ -1,6 +1,6 @@
 Name: fceux
 Version: 2.2.3
-Release: alt2
+Release: alt3
 
 Summary: FCEUX is a Nintendo Entertainment System (NES), Famicom, and Famicom Disk System (FDS) emulator
 Summary(ru_RU.UTF-8): FCEUX - это эмулятор Nintendo Entertainment System ("Денди"), Famicom и Famicom Disk System (FDS)
@@ -27,6 +27,8 @@ Patch2: %name-2.1.4a-alt-DSO.patch
 Patch3: %name-2.1.4a-alt-glibc-2.16.patch
 Patch4: %name-2.1.4a-alt-zlib-1.2.7.patch
 Patch5: %name-2.2.3-alt-gcc8-fix.patch
+# patch for SConstruct files (https://stackoverflow.com/questions/8427352/how-to-solve-attributeerror-environ-object-has-no-attribute-has-key#8427495)
+Patch6: %name-2.2.3-SConstruct.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libSDL-devel python-modules-email scons zlib-devel liblua5-devel
 
@@ -65,6 +67,7 @@ FCEUX - это развитие эмулятора FCE Ultra. В какое-то
 #patch3 -p2
 #patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 %build
 %add_optflags -fpermissive
@@ -94,6 +97,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name-big.png
 %_pixmapsdir/*
 
 %changelog
+* Sat Mar 28 2020 Artyom Bystrov <arbars@altlinux.org> 2.2.3-alt3
+- Fixed build
+
 * Mon Feb 11 2019 Ivan Razzhivin <underwit@altlinux.org> 2.2.3-alt2
 - GCC8 fix
 
