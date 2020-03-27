@@ -1,6 +1,6 @@
 # rt-tests is taken by perl tests for RT
 Name:     linux-rt-tests
-Version:  1.7.0.11.gf240656
+Version:  1.8
 Release:  alt1
 
 Summary:  Programs that test various rt-linux features
@@ -51,6 +51,9 @@ install -D src/hwlatdetect/hwlatdetect.py %buildroot/usr/sbin/hwlatdetect
 %doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 
 %changelog
+* Fri Mar 27 2020 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
+- Update version to v1.8.
+
 * Fri Mar 06 2020 Vitaly Chikunov <vt@altlinux.org> 1.7.0.11.gf240656-alt1
 - Update to v1.7-11-gf240656.
 
