@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: buildbot
-Version: 2.1.0
+Version: 2.7.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -16,8 +16,10 @@ Source1: buildbot_www-%version-py3-none-any.whl
 Source2: buildbot_console_view-%version-py3-none-any.whl
 Source3: buildbot_grid_view-%version-py3-none-any.whl
 Source4: buildbot_waterfall_view-%version-py3-none-any.whl
+Source5: buildbot_badges-%version-py3-none-any.whl
+Source6: buildbot_wsgi_dashboards-%version-py3-none-any.whl
 
-Patch0: %name-%version-%release.patch
+Patch1: alt-disable-sending-usage-by-default.patch
 
 BuildArch: noarch
 
@@ -31,6 +33,11 @@ BuildRequires: python3-module-autobahn
 BuildRequires: python3-module-jwt
 BuildRequires: python3-module-migrate
 BuildRequires: python3(future) python3(dateutil) python3(yaml) python3(treq)
+BuildRequires: python3-module-cairosvg
+BuildRequires: python3-module-klein
+BuildRequires: python3-module-cairocffi
+BuildRequires: python3-module-characteristic
+BuildRequires: python3-module-parameterized
 BuildRequires: /dev/pts openssh-clients
 %endif
 
@@ -105,12 +112,38 @@ Requires: python3-module-buildbot-www = %EVR
 
 
 ###############################################################################
+# Package python3-module-buildbot-www-extra-plugins
+###############################################################################
+
+%package -n python3-module-buildbot-www-extra-plugins
+Group: Development/Python
+Summary: Extra www plugins for buildboot as python3 module
+
+%description -n python3-module-buildbot-www-extra-plugins
+%summary.
+
+
+###############################################################################
+# Package buildbot-www-extra-plugins
+###############################################################################
+
+# Need to create dummy package due to sisyphus_check limitations
+%package www-extra-plugins
+Group: Development/Python
+Summary: Extra www plugins for buildboot
+Requires: python3-module-buildbot-www-extra-plugins = %EVR
+
+%description www-extra-plugins
+%summary.
+
+
+###############################################################################
 # Build and Install
 ###############################################################################
 
 %prep
 %setup
-%patch0 -p1
+%patch1 -p1
 
 %build
 for name in master worker; do
@@ -134,6 +167,8 @@ python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE3 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE4 %buildroot/%python3_sitelibdir
+python3 -mzipfile -e %SOURCE5 %buildroot/%python3_sitelibdir
+python3 -mzipfile -e %SOURCE6 %buildroot/%python3_sitelibdir
 
 rm %buildroot%_bindir/buildbot_windows_service
 rm %buildroot%_bindir/buildbot_worker_windows_service
@@ -164,6 +199,14 @@ trial.py3 -e buildbot_worker.test
 
 %files www
 
+%files -n python3-module-buildbot-www-extra-plugins
+%python3_sitelibdir/buildbot_badges
+%python3_sitelibdir/buildbot_badges-*.dist-info
+%python3_sitelibdir/buildbot_wsgi_dashboards
+%python3_sitelibdir/buildbot_wsgi_dashboards-*.dist-info
+
+%files www-extra-plugins
+
 %files worker
 %doc worker/docs
 %_man1dir/buildbot-worker.1.*
@@ -179,6 +222,9 @@ trial.py3 -e buildbot_worker.test
 %python3_sitelibdir/buildbot-*.egg-info
 
 %changelog
+* Fri Mar 27 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.0-alt1
+- new version 2.7.0
+
 * Tue Jan 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt1
 - update to 2.1.0
 
