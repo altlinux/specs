@@ -3,18 +3,19 @@
 
 Name: scrot
 Version: 0.8
-Release: alt2.qa1
+Release: alt3
 
 Summary: Screen-shot capture using Imlib 2
-License: BSD
+License: MIT-feh
 Group: Graphical desktop/Other
-Url: http://linuxbrit.co.uk/scrot/
-Packager: Slava Semushin <php-coder@altlinux.ru>
+Url: https://github.com/resurrecting-open-source-projects/scrot
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: scrot-alt-warnings-fix.patch
 Patch1: scrot-alt-makefile-fix.patch
 Patch2: scrot-alt-deb-man-typos_fix.patch
+Patch3: scrot-upstream-fix-gcc8-Wstringop-truncation.patch
 
 BuildRequires: libgiblib-devel libX11-devel imlib2-devel libfreetype-devel
 BuildRequires: libXext-devel
@@ -34,6 +35,8 @@ rm -fv -- src/getopt*
 %patch2 -p2
 rm -f configure.in
 
+%patch3 -p1
+
 %build
 %autoreconf
 %configure
@@ -48,6 +51,13 @@ rm -f configure.in
 %_defaultdocdir/%name-%version/
 
 %changelog
+* Fri Mar 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 0.8-alt3
+- built by new scheme
+- fixed FTBFS (backported from upstream)
+- updated License tag (identified by nomossa)
+- changed Url
+- changed packager
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
