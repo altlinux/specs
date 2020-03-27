@@ -1,5 +1,5 @@
 Name: rpm-build-tcl
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: RPM helpers to use with Tcl scripts
@@ -34,6 +34,10 @@ install -p -m0755 tcl.prov.files %buildroot%_rpmlibdir/tcl.prov.files
 %_rpmlibdir/tcl.*
 
 %changelog
+* Mon Mar 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.2-alt1
+- Added %%tea_patch macro.
+- Added warning that %%teapatch is deprecated.
+
 * Mon Feb 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.1-alt1
 - fix possible file truncation while generating dependencies
 
