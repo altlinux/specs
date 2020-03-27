@@ -2,7 +2,7 @@
 
 Name: kernel-source-wireguard
 
-Version: 0.0.20200215
+Version: 0.0.20200318
 Release: alt1
 
 Summary: Source for WireGuard: fast, modern, secure VPN tunnel
@@ -39,6 +39,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Mar 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20200318-alt1
+- New version
+
 * Thu Mar 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.0.20200215-alt1
 - New version
   + provides only source files package for kernel-module-wireguard from
