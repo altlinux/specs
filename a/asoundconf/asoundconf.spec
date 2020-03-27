@@ -1,17 +1,23 @@
-Summary: Command-line Python utility to select the default ALSA sound card
+Summary: utility to read and change the user's ALSA library configuration
+Epoch: 1
 Name: asoundconf
-Version: 0.1
-Release: alt2
+Version: 1.2
+Release: alt1
 Packager: Igor Vlasenko <viy@altlinux.ru>
-License: GPL
+License: GPLv2+
 Group: Sound
-URL: https://code.launchpad.net/~motu/asoundconf-ui
-# rev 8 of http://bazaar.launchpad.net/~crimsun/asoundconf-ui/asoundconf-trunk
-
+# OLDURL: https://code.launchpad.net/~motu/asoundconf-ui
+# OLDURL: https://code.launchpad.net/asoundconf-ui
+# (patches) https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/asoundconf
+# https://git.archlinux.org/svntogit/community.git/tree/trunk?h=packages/asoundconf
 Requires: alsa-utils
-BuildRequires: rpm-build-python
+BuildRequires: rpm-build-python3
 Source0: %name-%version.tar
 BuildArch: noarch
+
+Patch1: 0001-python3-syntax.patch
+Patch2: 0002-python3-spaces.patch
+Patch3: 0003-python3-gobject.patch
 
 %description
 Command-line Python utility to configure a user's alsa-lib asoundrc
@@ -20,27 +26,67 @@ Command-line Python utility to configure a user's alsa-lib asoundrc
  indeed useful if you do not use that desktop environment,
  and asoundconf also supports PulseAudio toggling.
 
-It is part of Ubnutu's alsa-utils package.
+%package gtk
+Summary: gtk utility to read and change the user's ALSA library configuration
+Group: Sound
+Requires: asoundconf = %EVR
+
+%description gtk
+Based on asoundconf code, but as a GTK+ front-end.
+ Useful if you have two cards, and switch between the two.
+ There is already this functionality in GNOME, but this is
+ indeed useful if you do not use that desktop environment,
+ and asoundconf-gtk also supports PulseAudio toggling.
+
 
 %prep
 %setup -q
-sed -i 1s,python,python2, asoundconf
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+#sed -i 1s,python,python3, asoundconf
 
 %build
+%python3_build
+
 
 %install
-install -d ${RPM_BUILD_ROOT}%_bindir
-install -m755 asoundconf ${RPM_BUILD_ROOT}%_bindir/
+%python3_install
+
+#install -d %buildroot%_bindir
+#install -m755 asoundconf %buildroot%_bindir/
 
 # installing debian man pages
-install -d ${RPM_BUILD_ROOT}%_man1dir
-install -m644 asoundconf.1 ${RPM_BUILD_ROOT}%_man1dir/
+#install -d %buildroot%_man1dir
+#install -m644 asoundconf.1 %buildroot%_man1dir/
 
-%files 
+#install -d %buildroot%_bindir
+#install -m755 asoundconf-gtk/asoundconf-gtk %buildroot%_bindir/
+
+# installing debian man pages
+#install -d %buildroot%_man8dir
+#install -m644 debian/asoundconf-gtk.8 %buildroot%_man8dir/
+
+#install -d %buildroot%_desktopdir
+#install -m644 asoundconf-gtk.desktop %buildroot%_desktopdir/
+
+%files gtk
+%_bindir/asoundconf-gtk
+#%_man8dir/asoundconf-gtk.8*
+%_desktopdir/asoundconf-gtk.desktop
+
+%files
 %_bindir/asoundconf
 %_man1dir/asoundconf.1*
+%python3_sitelibdir/*
 
 %changelog
+* Fri Mar 27 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1
+- new version
+- merged asoundconf-gtk
+- python3 build
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2
 - fixed build
 
