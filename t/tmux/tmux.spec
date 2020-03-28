@@ -1,7 +1,7 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 2.9a
-Release: alt2
+Version: 3.0a
+Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
 Group: Terminals
@@ -20,6 +20,7 @@ such as GNU screen.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -27,11 +28,14 @@ such as GNU screen.
 %makeinstall_std
 
 %files
-%doc TODO CHANGES README
+%doc CHANGES README
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Mar 28 2020 Fr. Br. George <george@altlinux.ru> 3.0a-alt1
+- Update to 3.0a (thanks arei@)
+
 * Thu Nov 07 2019 Fr. Br. George <george@altlinux.ru> 2.9a-alt2
 - Fix build
 
