@@ -2,10 +2,10 @@
 
 Name: texmf-bibtex8-%truename
 Version: 0.20050820
-Release: alt3
+Release: alt4
 
 Summary: GOST cyrillic bibtex styles and extended cyrillic support for BibTeX8
-Summary(ru_RU.CP1251): кириллические BibTeX стили ГОСТ
+Summary(ru_RU.UTF-8): РєРёСЂРёР»Р»РёС‡РµСЃРєРёРµ BibTeX СЃС‚РёР»Рё Р“РћРЎРў
 License: GPL
 Group: Publishing
 Url: http://tug.ctan.org/tex-archive/biblio/bibtex/contrib/gost/
@@ -17,7 +17,7 @@ Source: ftp://tug.ctan.org/pub/tex-archive/biblio/bibtex/contrib/gost/gost.zip
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Dec 31 2005
-BuildRequires: /usr/bin/latex unzip
+BuildRequires: /usr/bin/latex unzip tex(dehypht.tex)
 
 BuildRequires(pre): rpm-build-tex
 
@@ -29,14 +29,14 @@ with russian, ukrainian and (partially) belarussian languages support.
 ruscii, cp1251 and koi8-u code pages for BibTeX8 --- 
 an 8-bit Implementation of BibTeX 0.99 with multilanguage support.
 
-%description -l ru_RU.CP1251
-стили BiBTeX для оформления библиографии 
-на английском, русском, украинском, беларусском языках 
-согласно ГОСТ СССР 7.1-84 и ГОСТ России 7.80-00
-а также расширенная поддержка кириллицы для BibTeX8.
-Содержит ruscii, cp1251 and koi8-u code pages.
+%description -l ru_RU.UTF-8
+СЃС‚РёР»Рё BiBTeX РґР»СЏ РѕС„РѕСЂРјР»РµРЅРёСЏ Р±РёР±Р»РёРѕРіСЂР°С„РёРё 
+РЅР° Р°РЅРіР»РёР№СЃРєРѕРј, СЂСѓСЃСЃРєРѕРј, СѓРєСЂР°РёРЅСЃРєРѕРј, Р±РµР»Р°СЂСѓСЃСЃРєРѕРј СЏР·С‹РєР°С… 
+СЃРѕРіР»Р°СЃРЅРѕ Р“РћРЎРў РЎРЎРЎР  7.1-84 Рё Р“РћРЎРў Р РѕСЃСЃРёРё 7.80-00
+Р° С‚Р°РєР¶Рµ СЂР°СЃС€РёСЂРµРЅРЅР°СЏ РїРѕРґРґРµСЂР¶РєР° РєРёСЂРёР»Р»РёС†С‹ РґР»СЏ BibTeX8.
+РЎРѕРґРµСЂР¶РёС‚ ruscii, cp1251 and koi8-u code pages.
 
-Для правильной сортировки рекомендуется использовать BiBTeX8.
+Р”Р»СЏ РїСЂР°РІРёР»СЊРЅРѕР№ СЃРѕСЂС‚РёСЂРѕРІРєРё СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ BiBTeX8.
 
 %prep
 %setup -q -n %truename
@@ -60,6 +60,9 @@ install -m644 *.bst %buildroot/usr/share/texmf/bibtex/bst/
 /usr/share/texmf/bibtex/bst/*.bst
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.20050820-alt4
+- fixed build
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050820-alt3
 - build with rpm-build-tex
 
