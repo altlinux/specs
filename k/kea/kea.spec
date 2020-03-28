@@ -10,7 +10,7 @@
 
 Name: kea
 Version: 1.6.2
-Release: alt2
+Release: alt3
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPLv2.0 and Boost
@@ -76,6 +76,14 @@ It takes command as a command-line parameter that is being sent to CA
 with proper JSON encapsulation. Optional arguments may be specified on
 the standard input. The request it sent of HTTP and a response is
 retrieved. That response is displayed out on the standard output.
+
+%package doc
+Summary: Documents for Kea dhcp
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+Documents for Kea dhcp.
 
 %package -n lib%name
 Summary: Shared libraries used by Kea DHCP server
@@ -187,10 +195,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %preun_service kea-ctrl-agent.service
 
 %files
-%doc %_datadir/doc/%name
 %_bindir/*
 %_sbindir/*
-%exclude %_sbindir/kea-admin
+%exclude %_sbindir/kea-shell
 %_unitdir/*.service
 %dir %attr(0750, root, _kea) %_sysconfdir/%name
 %config(noreplace) %attr(0640, root, _kea) %_sysconfdir/%name/*.conf
@@ -209,7 +216,10 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %_libdir/%name/hooks
 
 %files shell
-%_sbindir/kea-admin
+%_sbindir/kea-shell
+
+%files doc
+%doc %_datadir/doc/%name
 
 %files -n lib%name
 %_libdir/lib%name-*.so.*
@@ -218,6 +228,10 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt3
+- fix kea-shell package
+- move docs to doc package
+
 * Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt2
 - split kea-shell to separate package
 - filter mysql and psql from requires
