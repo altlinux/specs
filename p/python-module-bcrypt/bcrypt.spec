@@ -1,8 +1,6 @@
-%def_with python3
-
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
 Version: 3.1.7
-Release: alt1
+Release: alt2
 %setup_python_module bcrypt
 Name: python-module-bcrypt
 Source0: %version.tar.gz
@@ -15,12 +13,10 @@ Url: http://pypi.python.org/pypi/bcrypt
 BuildPreReq: python-devel python-module-setuptools
 BuildRequires: python-module-pytest
 BuildPreReq: python-module-six python-module-cffi
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-six python3-module-cffi
-%endif
 
 %description
 py-bcrypt is an implementation the OpenBSD Blowfish password hashing
@@ -32,7 +28,6 @@ Blowfish block cipher with modifications designed to raise the cost of
 off-line password cracking. The computation cost of the algorithm is
 parametised, so it can be increased as computers get faster.
 
-%if_with python3
 %package -n python3-module-bcrypt
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
 Group: Development/Python3
@@ -46,54 +41,38 @@ This system hashes passwords using a version of Bruce Schneier's
 Blowfish block cipher with modifications designed to raise the cost of
 off-line password cracking. The computation cost of the algorithm is
 parametised, so it can be increased as computers get faster.
-%endif
 
 %prep
 %setup -n %modulename-%version
 
 %build
 %python_build_debug
-
-%if_with python3
 %python3_build_debug
-%endif
 
 %install
 %python_install
-install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
-install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
-
-%if_with python3
 %python3_install
-install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash.py3
-sed -i 's|python2|python3|' %buildroot%_bindir/bfhash.py3
-%endif
+install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
+install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
 
 %files
 %doc *.rst
 %python_sitelibdir/*
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%_man1dir/*
 
-%if_with python3
 %files -n python3-module-bcrypt
 %doc *.rst
 %python3_sitelibdir/*
-%_bindir/*.py3
-%exclude %_man1dir/bfhash*
+%_bindir/*
 %_man1dir/*
-%endif
 
 %check
 PYTHONPATH=%buildroot%python_sitelibdir py.test
-%if_with python3
 PYTHONPATH=%buildroot%python3_sitelibdir py.test3
-%endif
 
 %changelog
+* Sat Mar 28 2020 Fr. Br. George <george@altlinux.ru> 3.1.7-alt2
+- Switch bfhash script to python3
+
 * Fri Nov 29 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.7-alt1
 - 3.1.7 released
 
