@@ -5,7 +5,7 @@
 
 Name: gimp-plugin-%_name
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Gimp plug-in for manipulating textures
 License: GPLv3+
@@ -17,7 +17,8 @@ Source: %_name-%version.tar.gz
 
 Requires: gimp
 
-BuildRequires: intltool libgimp-devel
+BuildRequires(pre): rpm-build-python python2-base
+BuildRequires: intltool libgimp-devel python2-base
 
 %description
 Resynthesizer is a Gimp plug-in that when given a sample of a texture can
@@ -29,11 +30,12 @@ painted).
 
 %prep
 %setup -n %_name-%version
+sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\22|' PluginScripts/*
 #subst '/g_thread_init/d' src/*.{c,h}
 
 %build
 %autoreconf
-%configure
+%configure PYTHON=python2
 %make_build
 
 %install
@@ -46,6 +48,9 @@ painted).
 %_datadir/%_name
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt2
+- replaced python by python2
+
 * Fri Jan 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
