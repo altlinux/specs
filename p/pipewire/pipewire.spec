@@ -19,8 +19,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -180,6 +180,9 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %changelog
+* Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt3
 - made examples build optional and disabled on %%e2k (
   Checking for function "memfd_create" : NO)

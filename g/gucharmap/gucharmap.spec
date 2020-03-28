@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable introspection
 %def_enable vala
 %def_enable docs
@@ -8,7 +8,7 @@
 %define unicode_ver 13.0.0
 
 Name: gucharmap
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -17,12 +17,12 @@ License: GPL-3.0 and GFDL-1.3 and Unicode
 Url: https://wiki.gnome.org/Gucharmap
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: https://gitlab.gnome.org/GNOME/%name/-/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 
-# From configure.ac
 %define glib_ver 2.32.0
 %define gtk_ver 3.4.0
 
@@ -30,7 +30,6 @@ Requires: lib%name = %EVR
 Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): meson rpm-build-gnome
-# From configure.ac
 BuildRequires: unicode-ucd >= %unicode_ver unzip
 BuildRequires: gnome-common desktop-file-utils appdata-tools
 BuildRequires: glib2-devel >= %glib_ver
@@ -132,6 +131,9 @@ character map library.
 %endif
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0.1-alt1
+- 13.0.1
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 13.0.0-alt1
 - updated to 13.0.0-6-gbd6bbdbb (ported to Meson build system)
 

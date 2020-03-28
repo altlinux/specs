@@ -21,11 +21,11 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
-License: GPLv2+
+License: GPL-2.0-or-later and LGPL-3.0
 Group: Office
 Url: https://wiki.gnome.org/Apps/Evolution
 
@@ -46,7 +46,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.36.0
+%define eds_ver 3.36.1
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -271,6 +271,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

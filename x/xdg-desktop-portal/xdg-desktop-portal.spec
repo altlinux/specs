@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -94,6 +94,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
