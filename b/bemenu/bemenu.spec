@@ -5,23 +5,23 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit          442d2833f48590122e5ce54a2bca3a327ffa0311
-%global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global checkout_date   20190819
-%global snapshot        %{checkout_date}git%{shortcommit}
-
 Name:       bemenu
-Version:    0.1.0
-Release:    alt1_3.%{snapshot}
+Version:    0.3.0
+Release:    alt1_3
 Summary:    Dynamic menu library and client program inspired by dmenu
 
 # Library and bindings are LGPLv3+, other files are GPLv3+
 License:    GPLv3+ and LGPLv3+
 URL:        https://github.com/Cloudef/bemenu
-Source0:    %{url}/archive/%{shortcommit}/%{name}-%{shortcommit}.tar.gz
+Source0:    %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source1:    %{url}/releases/download/%{version}/%{name}-%{version}.tar.gz.asc
+# Created with: gpg --export-options export-minimal --armor --export 0CBD2CD395613887
+Source2:    pgpkey-0CBD2CD395613887.asc
 
-BuildRequires:  ctest cmake
-BuildRequires:  gcc
+Patch:      0001-Mark-global-wayland-constant-extern.patch
+
+BuildRequires:  gnupg gnupg2
+BuildRequires:  ctest cmake gcc
 BuildRequires:  pkgconfig(cairo)
 BuildRequires:  pkgconfig(ncursesw)
 BuildRequires:  pkgconfig(pango)
@@ -46,7 +46,8 @@ Requires: %{name} = %{version}-%{release}
 Development files for extending %{name}.
 
 %prep
-%setup -q -n %{name}-%{commit}
+%setup -q
+%patch0 -p1
 
 
 %build
@@ -65,8 +66,9 @@ Development files for extending %{name}.
 %{_bindir}/%{name}
 %{_bindir}/%{name}-run
 %{_mandir}/man1/%{name}*.1*
+# Long live escaping! %%%% resolves to %%; $v%%.* strips everything after first dot
 %{_libdir}/lib%{name}.so.0
-%{_libdir}/lib%{name}.so.0.1.0
+%{_libdir}/lib%{name}.so.%{version}
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/%{name}-renderer-curses.so
 %{_libdir}/%{name}/%{name}-renderer-wayland.so
@@ -79,6 +81,9 @@ Development files for extending %{name}.
 
 
 %changelog
+* Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3
+- new version
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_3.20190819git442d283
 - new version
 
