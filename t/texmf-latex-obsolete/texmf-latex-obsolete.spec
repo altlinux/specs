@@ -1,6 +1,6 @@
 Name: texmf-latex-obsolete
 Version: 0.1
-Release: alt3
+Release: alt4
 Summary: Collection of obsolete LaTeX packages, kept for compatibility with old documents
 License: %lppl
 Group: Publishing
@@ -10,7 +10,7 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-tex rpm-build-licenses
-BuildRequires: texlive-collection-latex
+BuildRequires: texlive-collection-latex tex(dehypht.tex)
 
 Source0: %name-%version.tar
 
@@ -41,6 +41,9 @@ install -pD -m644 mathtime/mathtime.sty %buildroot/%_texmfmain/tex/latex/mathtim
 %_texmfmain/*
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4
+- fixed build
+
 * Sun Jul 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3
 - NMU: removed ctanify from BR: (closes: #35168)
 
