@@ -1,38 +1,109 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: libssl-devel
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Build manual pages
+%bcond_without libisds_enables_man
+# Support network operations
+%bcond_without libisds_enables_net
+# Use OpenSSL instead of libgcrypt and gpgme
+%bcond_with libisds_enables_openssl
+# Perform tests
+%bcond_without libisds_enables_test
+
 Name:           libisds
-Version:        0.10.8
-Release:        alt1_4
+Version:        0.11
+Release:        alt1_3
 Summary:        Library for accessing the Czech Data Boxes
-License:        LGPLv3
+# COPYING:      LGPLv3 text
+# README:       LGPLv3+
+# src/gettext.h:            GPLv3+
+## Not delivered in any binary package
+# aclocal.m4:   GPLv2+ with exceptions and FSFULLR
+# client/Makefile.in:       FSFULLR
+# config.guess: GPLv3+ with exceptions
+# config.rpath: FSFULLR
+# config.sub:   GPLv3+ with exceptions
+# configure:    GPLv2+ with exceptions and FSFUL
+# depcomp:      GPLv2+ with exceptions  
+# doc/Makefile.in:  FSFULLR
+# install-sh:       MIT and Public Domain
+# ltmain.sh:        GPLv2+ with exceptions and GPLv3+ and GPLv3+ with exceptions
+# m4/gettext.m4:    FSFULLR
+# m4/gpgme.m4:      FSFULLR
+# m4/iconv.m4:      FSFULLR
+# m4/intlmacosx.m4: FSFULLR
+# m4/libgcrypt.m4:  FSFULLR
+# m4/lib-ld.m4:     FSFULLR
+# m4/lib-link.m4:   FSFULLR
+# m4/lib-prefix.m4: FSFULLR
+# m4/libtool.m4:    GPLv2+ with exceptions and FSFUL
+# m4/ltoptions.m4:  FSFULLR
+# m4/ltsugar.m4:    FSFULLR
+# m4/lt~obsolete.m4:    FSFULLR
+# m4/ltversion.m4:  FSFULLR
+# m4/nls.m4:        FSFULLR
+# m4/po.m4:         FSFULLR
+# m4/progtest.m4:   FSFULLR
+# Makefile.in:      FSFULLR
+# missing:          GPLv2+ with exceptions
+# po/Makefile.in.in:    (Something similar to FSFUL)
+# src/Makefile.in:          FSFULLR
+# test/Makefile.in:         FSFULLR
+# test/offline/Makefile.in: FSFULLR
+# test/online/Makefile.in:  FSFULLR
+# test/simline/Makefile.in: FSFULLR
+# test-driver:      GPLv2+ with exceptions
+License:        LGPLv3+ and GPLv3+
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
-# 1/3 Adapt tests missing en_US.UTF-8 locale, in upstream after 0.10
-Patch0:         libisds-0.10.8-test-Allow-skipping-tests.patch
-# 2/3 Adapt tests missing en_US.UTF-8 locale, in upstream after 0.10
-Patch1:         libisds-0.10-test-Skip-tests-in-offline-utf82locale-if-a-locale-i.patch
-# 3/3 Adapt tests missing en_US.UTF-8 locale, in upstream after 0.10
-Patch2:         libisds-0.10-test-Try-C.UTF-8-in-offline-utf82locale-test.patch
-# Adapt tests to GnuTLS 3.6.4, bug #1651213, in upstream after 0.10
-Patch3:         libisds-0.10-Test-Accept-IE_NETWORK-error-when-client-does-not-pr.patch
+Source1:        %{url}dist/%{name}-%{version}.tar.xz.asc
+# Key exported from Petr Pisar's keyring
+Source2:        gpgkey-4B528393E6A3B0DFB2EF3A6412C9C5C767C6FAA2.gpg
+# Fix building with GCC 10, in upstream after 0.11
+Patch0:         libisds-0.11-tests-Fix-building-with-GCC-10.patch
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:  coreutils
+%if %{with libisds_enables_man}
+BuildRequires:  docbook-style-xsl
+BuildRequires:  libxslt xsltproc
+%endif
 BuildRequires:  findutils
 BuildRequires:  gcc
+BuildRequires:  gettext-tools libasprintf-devel
+BuildRequires:  gnupg gnupg2
+BuildRequires:  libtool
 BuildRequires:  libxml2-devel
+%if %{with libisds_enables_net}
 BuildRequires:  libcurl-devel
-BuildRequires:  gcrypt-utils libgcrypt-devel
+%endif
+%if %{with libisds_enables_openssl}
+BuildRequires:  openssl
+%else
 BuildRequires:  gpgme libgpgme-devel
+BuildRequires:  gcrypt-utils libgcrypt-devel
+%endif
 BuildRequires:  libexpat-devel >= 2.0.0
 # Run-time:
+%if !%{with libisds_enables_openssl}
 BuildRequires:  gnupg2
+%endif
 # Tests:
+%if %{with libisds_enables_test}
 BuildRequires:  libgnutls-devel libgnutlsxx-devel
+%endif
+%if !%{with libisds_enables_openssl}
 Requires:       gnupg2
+%endif
 Source44: import.info
 
 %description
@@ -43,6 +114,7 @@ Data Box Information System) SOAPa..services as defined in Czech ISDS Act
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
+License:        LGPLv3+
 Requires:       %{name} = %{version}-%{release}
 Requires:       pkgconfig
 
@@ -53,16 +125,32 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+autoreconf -fi
 
 %build
 %configure \
+%if %{with libisds_enables_man}
+    --enable-doc \
+%else
+    --disable-doc \
+%endif
+    --disable-online-test \
+%if %{with libisds_enables_openssl}
+    --enable-openssl-backend \
+%else
     --disable-openssl-backend \
+%endif
     --disable-static \
+%if %{with libisds_enables_test}
     --enable-test \
+%else
+    --disable-test \
+%endif
+%if %{with libisds_enables_net}
     --with-libcurl \
+%else
+    --without-libcurl \
+%endif
     --enable-curlreauthorizationbug
 %{make_build}
 
@@ -73,7 +161,6 @@ make check %{?_smp_mflags}
 %{makeinstall_std}
 find $RPM_BUILD_ROOT -name '*.la' -delete
 %find_lang %{name}
-mv doc specification
 # Remove multilib unsafe files
 rm -rf client/.deps client/Makefile{,.in}
 
@@ -87,9 +174,13 @@ rm -rf client/.deps client/Makefile{,.in}
 %{_includedir}/isds.h
 %{_libdir}/libisds.so
 %{_libdir}/pkgconfig/%{name}.pc
-%doc client specification
+%{_mandir}/man3/*
+%doc client
 
 %changelog
+* Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
+- new version
+
 * Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.10.8-alt1_4
 - update to new release by fcimport
 
