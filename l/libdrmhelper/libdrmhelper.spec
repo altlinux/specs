@@ -1,5 +1,5 @@
 Name: libdrmhelper
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: A privileged helper for drm initialization
@@ -7,6 +7,8 @@ License: LGPL-3.0-or-later
 Group: System/Libraries
 
 Source: %name-%version.tar
+
+BuildRequires: libseccomp-devel
 
 %description
 %summary.
@@ -60,5 +62,10 @@ statically linked drmhelper-based software.
 %_libdir/*.a
 
 %changelog
+* Sat Mar 28 2020 Alexey Gladkov <legion@altlinux.ru> 1.1.0-alt1
+- Improve error handling.
+- Open character devices in the /dev directory.
+- Use seccomp by default.
+
 * Wed Jan 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.0.0-alt1
 - First build for ALT Linux.
