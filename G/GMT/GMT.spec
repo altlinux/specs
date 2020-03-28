@@ -1,7 +1,7 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
+BuildRequires: /usr/bin/ffmpeg /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: chrpath
@@ -25,27 +25,34 @@ BuildRequires: gcc-c++
 %global octave_octdir %(octave-config -p LOCALAPIOCTFILEDIR || echo)
 %endif
 
-%global completion_dir /etc/bash_completion.d
+%global completion_dir %(pkg-config --variable=completionsdir bash-completion)
+%if "%{completion_dir}" == ""
+%global completion_dir "/etc/bash_completion.d"
+%endif
 
 Name:           GMT
-Version:        5.4.5
-Release:        alt1_1
+Version:        6.0.0 
+Release:        alt1_3
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
-URL:            http://gmt.soest.hawaii.edu/
-Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.xz
-# Clarify some GSHH error messages
-Patch0:         https://patch-diff.githubusercontent.com/raw/GenericMappingTools/gmt/pull/252.patch
+URL:            https://www.generic-mapping-tools.org/
+Source0:        https://github.com/GenericMappingTools/gmt/releases/download/%{version}/gmt-%{version}-src.tar.xz
+
+# Fix GCC10 FTBS
+Patch0:         gmt_gcc10.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
 BuildRequires:  bash-completion
 BuildRequires:  libfftw3-devel
+BuildRequires:  gdal gdal-scripts
 BuildRequires:  libgdal-devel
 BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  GraphicsMagick
 BuildRequires:  libXt-devel libXaw-devel libXmu-devel libXext-devel
 BuildRequires:  libnetcdf-devel
+BuildRequires:  libopenblas-devel
 BuildRequires:  libpcre-devel libpcrecpp-devel
 BuildRequires:  dcw-gmt
 BuildRequires:  gshhg-gmt-nc4
@@ -54,11 +61,20 @@ BuildRequires:  octave-devel
 %endif
 # less is detected by configure, and substituted in GMT.in
 BuildRequires:  less
+BuildRequires:  xdg-utils
+# For docs
+#BuildRequires:  /usr/bin/sphinx-build
+BuildRequires:  python-module-sphinx
+#BuildRequires:  python3-module-sphinx-sphinx-build-symlink
+BuildRequires:  ghostscript-utils ghostscript
+Requires:       gdal gdal-scripts
+Requires:       GraphicsMagick
 Requires:       less
 Requires:       %{name}-common = %{version}-%{release}
 Requires:       dcw-gmt
 Requires:       gshhg-gmt-nc4
 Provides:       gmt = %{version}-%{release}
+Requires:       xdg-utils
 %if %without octave
 Obsoletes:      GMT-octave <= 4.5.11
 %endif
@@ -67,6 +83,7 @@ Obsoletes:      GMT-octave <= 4.5.11
 %global __provides_exclude_from ^%{_libdir}/gmt/.*\\.so$
 Source44: import.info
 Patch33: GMT-gstat.patch
+Patch34: GMT-6.0.0-fix-fno-common.patch
 
 %description
 GMT is an open source collection of ~60 tools for manipulating geographic and
@@ -138,9 +155,9 @@ applications that use %{name}.
 
 %prep
 %setup -q -n gmt-%{version}
-%patch0 -p1
+#patch0 -p1
 %patch33 -p2
-
+%patch34 -p1
 
 %build
 mkdir build
@@ -149,7 +166,6 @@ pushd build
   -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
-  -DGMT_MANDIR=share/man \
   -DLICENSE_RESTRICTED=LGPL \
 %if %with octave
   -DGMT_OCTAVE=BOOL:ON \
@@ -167,8 +183,7 @@ pushd build
 mkdir -p $RPM_BUILD_ROOT%{gmtconf}/{mgg,dbase,mgd77}
 pushd $RPM_BUILD_ROOT%{gmthome}/
 # put conf files in %{gmtconf} and do links in %{gmthome}
-for file in mgg/gmtfile_paths dbase/grdraster.info \
-    mgd77/mgd77_paths.txt; do
+for file in mgg/gmtfile_paths mgd77/mgd77_paths.txt; do
   mv $file $RPM_BUILD_ROOT%{gmtconf}/$file
   ln -s ../../../..%{gmtconf}/$file $RPM_BUILD_ROOT%{gmthome}/$file
 done
@@ -181,7 +196,7 @@ echo %{_datadir}/gshhg-gmt-nc4 > $RPM_BUILD_ROOT%{gmthome}/coast/coastline.conf
 # Don't ship .bat files
 find $RPM_BUILD_ROOT -name \*.bat -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -190,19 +205,20 @@ done
 
 
 %files
-%doc COPYING.LESSERv3 COPYINGv3 LICENSE.TXT README
+%doc --no-dereference COPYING.LESSERv3 COPYINGv3 LICENSE.TXT
+%doc AUTHORS.md CITATION.md CONTRIBUTING.md README.md
 %{_bindir}/*
-%{_libdir}/*.so.5*
+%{_libdir}/*.so.6*
 %{_libdir}/gmt/
 
 %files common
-%doc COPYING.LESSERv3 COPYINGv3 LICENSE.TXT
+%doc --no-dereference COPYING.LESSERv3 COPYINGv3 LICENSE.TXT
+%doc AUTHORS.md CITATION.md CONTRIBUTING.md README.md
 %dir %{gmtconf}
 %dir %{gmtconf}/mgg
 %dir %{gmtconf}/dbase
 %dir %{gmtconf}/mgd77
 %config(noreplace) %{gmtconf}/mgg/gmtfile_paths
-%config(noreplace) %{gmtconf}/dbase/grdraster.info 
 %config(noreplace) %{gmtconf}/mgd77/mgd77_paths.txt
 %{gmthome}/
 %{completion_dir}/*
@@ -222,6 +238,9 @@ done
 
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_3
+- update
+
 * Wed Mar 06 2019 Igor Vlasenko <viy@altlinux.ru> 5.4.5-alt1_1
 - new version
 
