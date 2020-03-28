@@ -1,15 +1,16 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %define oldname oxygen-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oxygen
 %global fontconf 61-%{fontname}
 
 Name:           fonts-ttf-oxygen
 Version: 5.4.3
-Release: alt1_1
+Release: alt1_12
 Summary:        Oxygen fonts created by the KDE Community
 
 # See LICENSE-GPL+FE for details about the exception
@@ -22,10 +23,10 @@ Source2:        %{fontconf}-mono.conf
 # essentially a noarch pkg here, no real -debuginfo needed (#1192729)
 %define debug_package   %{nil}
 
-BuildRequires: ctest cmake
 BuildRequires:  extra-cmake-modules
+BuildRequires:  rpm-build-kf5
 BuildRequires:  qt5-base-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge python3-module-fontforge
 BuildRequires:  fontpackages-devel
 
 # main (meta)package, largely for upgrade path
@@ -62,7 +63,7 @@ BuildArch:      noarch
 %package devel
 Group: System/Fonts/True type
 Summary:        Development files for %{oldname}
-Requires:       fonts-ttf-oxygen = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 %description    devel
 The %{oldname}-devel package contains libraries and header files for
 developing applications that use %{oldname}.
@@ -77,7 +78,7 @@ pushd %{_target_platform}
 %{fedora_cmake} .. %{?fontforge} -DOXYGEN_FONT_INSTALL_DIR=%{_fontdir}
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
+%make_build -C %{_target_platform}
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
@@ -132,10 +133,12 @@ fi
 %files -n fonts-ttf-oxygen-sans
 %{_fontconfig_templatedir}/%{fontconf}-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Oxygen-Sans*.ttf
 %files -n fonts-ttf-oxygen-mono
 %{_fontconfig_templatedir}/%{fontconf}-mono.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mono.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/OxygenMono*.ttf
 
 %files
@@ -148,6 +151,9 @@ fi
 %{_libdir}/cmake/OxygenFont/
 
 %changelog
+* Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.3-alt1_12
+- update
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 5.4.3-alt1_1
 - new version
 
