@@ -1,19 +1,19 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_25
+Release:        alt4_30
 Summary:        2-player falling bubbles game
 
 License:        GPLv2+
 URL:            http://www.fovea.cc/flobopuyo-en
 Source0:        http://www.fovea.cc/files/flobopuyo/%{name}-%{version}.tgz
 Source1:        %{name}.desktop
+Source2:        %{name}.appdata.xml
 # Fix building on 64bit
 # Patch by Michael Thomas aka Wart <wart at kobold dot org>
 # https://lists.fedoraproject.org/archives/list/games@lists.fedoraproject.org/thread/ECMVJBXDAITOV35723OMGQSF3CLXKLZK/
@@ -38,6 +38,7 @@ BuildRequires:  bison
 BuildRequires:  libSDL_mixer-devel 
 BuildRequires:  libSDL_image-devel 
 BuildRequires:  libicns-utils
+BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -67,16 +68,15 @@ rm data/sfx/._bi
 
 %build
 export CFLAGS="%{optflags}"
-export LDFLAGS="%{__global_ldflags}"
-%make_build PREFIX=%{_prefix}
-
+# It does not support parallel building
+make PREFIX=%{_prefix}
 
 %install
 %makeinstall_std PREFIX=%{_prefix}
 
 # Install man page
 install -d -m 755 %{buildroot}%{_mandir}/man6
-install -m 644 man/%{name}.6 %{buildroot}%{_mandir}/man6
+install -p -m 644 man/%{name}.6 %{buildroot}%{_mandir}/man6
 
 # Install desktop file
 desktop-file-install \
@@ -91,6 +91,14 @@ install -d -m 755 %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 install -p -m 644 icon_128x128x32.png \
   %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
+# Install appdata
+install -d -m 755 %{buildroot}%{_datadir}/metainfo
+install -p -m 644 %{SOURCE2} \
+  %{buildroot}%{_datadir}/metainfo
+appstream-util validate-relax --nonet \
+  %{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml
+
+
 %files
 %doc TODO Changelog
 %doc --no-dereference COPYING
@@ -98,10 +106,14 @@ install -p -m 644 icon_128x128x32.png \
 %{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/metainfo/%{name}.appdata.xml
 %{_mandir}/man6/%{name}.6*
 
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_30
+- update
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_25
 - update to new release by fcimport
 
