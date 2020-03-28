@@ -1,6 +1,6 @@
-# based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
+# Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
-#lua jit not available for some architectures
+# Lua jit is not available for some architectures
 %ifarch i586 x86_64 aarch64
 %def_with luajit
 %else
@@ -9,11 +9,12 @@
 
 Name:		bcc
 Version:	0.13.0
-Release:	alt2
+Release:	alt3
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
 URL:		https://github.com/iovisor/bcc
+Vcs:		https://github.com/iovisor/bcc.git
 # Also libbpf https://github.com/libbpf/libbpf
 # Which is a mirror of bpf-next linux tree's tools/lib/bpf
 # directory plus its supporting header files.
@@ -24,27 +25,35 @@ Source1:	libbpf.tar
 
 ExclusiveArch:	x86_64 aarch64 ppc64le
 
-BuildRequires(pre): rpm-macros-cmake
+%define clang_version 9.0
+
 BuildRequires(pre): python3-module-setuptools
-BuildRequires:	bison
-BuildRequires:	cmake >= 2.8.7
-BuildRequires:	flex
-BuildRequires:	make
-BuildRequires:	gcc-c++
-BuildRequires:	clang-devel >= 9.0.0
-BuildRequires:	llvm-devel >= 9.0.0
-BuildRequires:	lld >= 9.0.0
-BuildRequires:	llvm-devel-static
-BuildRequires:	clang-devel-static
-BuildRequires:	python3-devel
-BuildRequires:	libelf-devel-static
-BuildRequires:	zlib-devel
-BuildRequires:	libncurses-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: flex
+BuildRequires: libstdc++-devel
+BuildRequires: clang%clang_version-devel
+BuildRequires: clang%clang_version-devel-static
+BuildRequires:  llvm%clang_version-devel
+BuildRequires:  llvm%clang_version-devel-static
+BuildRequires:   lld%clang_version
+BuildRequires: python3-devel
+BuildRequires: python3-tools
+BuildRequires: libelf-devel-static
+BuildRequires: zlib-devel
+BuildRequires: libncurses-devel
 %if_with luajit
-BuildRequires:	luajit
-BuildRequires:	libluajit-devel
+BuildRequires: luajit
+BuildRequires: libluajit-devel
 %endif
-BuildRequires:	/proc
+
+# Adding `BuildRequires: /proc' improves lld speed:
+#    USER     %%CPU  %%MEM  COMMAND
+#    builder   1601  4,436  ld.lld
+# vs:
+#    builder  100,1  0,942  ld.lld
+BuildRequires: /proc
+
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-un-def kernel-headers-modules-un-def}}
 
@@ -56,7 +65,7 @@ that was first added to Linux 3.15. Much of what BCC uses requires Linux 4.1
 and above.
 
 BCC makes BPF programs easier to write, with kernel instrumentation in C (and
-includes a C wrapper around LLVM), and front-ends in Python and lua. It is
+includes a C wrapper around LLVM), and front-ends in Python and Lua. It is
 suited for many tasks, including performance analysis and network traffic
 control.
 
@@ -86,7 +95,7 @@ subst '/add_subdirectory(examples)/d' CMakeLists.txt
 %remove_optflags -frecord-gcc-switches
 export CC=clang
 export CXX=clang++
-# ld can not link libLLVM and libclang in ALT
+# ld cannot link libLLVM and libclang in ALT: https://bugzilla.altlinux.org/34801
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -100,14 +109,16 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %install
 %set_verify_elf_method relaxed
+pathfix.py -pni %__python3 tools
+
 %cmake_install install/strip DESTDIR=%buildroot
+
+# Cannot make noarch package because bcc exists not on all arches
 install -d %buildroot/%python3_sitelibdir
 rmdir %buildroot/%python3_sitelibdir
 mv %buildroot/%python3_sitelibdir_noarch %buildroot/%python3_sitelibdir
-# mangle shebangs
-find %{buildroot}/usr/share/bcc/tools -type f | xargs \
-    sed -i -e '1 s|^#!/usr/bin/python$|#!'%__python3'|' \
-           -e '1 s|^#!/usr/bin/env python$|#!'%__python3'|'
+
+# Fix man pages
 install -d %buildroot%_man8dir
 rmdir %buildroot%_man8dir
 mv %buildroot/usr/share/bcc/man/man8 %buildroot%_man8dir
@@ -183,6 +194,9 @@ Command line tools for BPF Compiler Collection (BCC)
 %_man8dir/*
 
 %changelog
+* Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt3
+- spec: Rework BuildRequires.
+
 * Tue Feb 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt2
 - Add ppc64le build.
 
