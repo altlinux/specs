@@ -1,58 +1,26 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: imake libXt-devel xorg-cf-files
 BuildRequires(pre): rpm-macros-alternatives
 # END SourceDeps(oneline)
-%define fedora 25
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        3.2.10
-Release:        alt3_23
+Version:        4.4.1
+Release:        alt1_2
 Summary:        Provides dynamic modification of a user's environment
 
-Group:          System/Base
 License:        GPLv2+
 URL:            http://modules.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.bz2
-Source1:        modules.sh
-Source2:        createmodule.sh
-Source3:        createmodule.py
-Source4:        macros.%{name}
-Patch0:         environment-modules-3.2.7-bindir.patch
-# Comment out stray module use in modules file when not using versioning
-# https://bugzilla.redhat.com/show_bug.cgi?id=895555
-Patch1:         environment-modules-versioning.patch
-# Fix module clear command
-# https://bugzilla.redhat.com/show_bug.cgi?id=895551
-Patch2:         environment-modules-clear.patch
-# Patch from modules list to add completion to avail command
-Patch3:         environment-modules-avail.patch
-# Fix -Werror=format-security
-# https://bugzilla.redhat.com/show_bug.cgi?id=1037053
-# https://sourceforge.net/p/modules/patches/13/
-Patch4:         environment-modules-format.patch
-# Support Tcl 8.6
-# https://sourceforge.net/p/modules/feature-requests/14/
-Patch5:         environment-modules-tcl86.patch
-# python 3 support
-# https://sourceforge.net/p/modules/patches/15/
-# https://bugzilla.redhat.com/show_bug.cgi?id=1184979
-Patch6:         environment-modules-py3-and-doc-fix.patch
-# Fix unload from loaded modulefile
-# https://bugzilla.redhat.com/show_bug.cgi?id=1117334
-Patch7:         environment-modules-3.2.10-unload-from-module.patch
-# Fix build with -Werror=implicit-function-declaration
-Patch8:         environment-modules-implicit.patch
 
+BuildRequires:  gcc
 BuildRequires:  tcl-devel, tclx, libX11-devel
-BuildRequires:  dejagnu
-BuildRequires:  man-db
-#For ps in startup script
-Requires:       procps sysvinit-utils
+BuildRequires:  dejagnu, sed, procps, coreutils, man, less
+Requires:       libtcl tcl, sed, procps, man, less
 Provides:	environment(modules)
 Source44: import.info
-Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description
 The Environment Modules package provides for the dynamic modification of
@@ -78,99 +46,147 @@ suite of different applications.
 NOTE: You will need to get a new shell after installing this package to
 have access to the module alias.
 
+%package compat
+Group: System/Base
+Summary:        Environment Modules compatibility version
+Requires:       environment-modules = %{version}-%{release}
+Requires:       coreutils
 
+%description compat
+The Environment Modules package provides for the dynamic modification of
+a user's environment via modulefiles.
 
-%package -n rpm-macros-%{name}
-Summary: Set of RPM macros for packaging %name-based applications
-Group: Development/Other
-# uncomment if macroses are platform-neutral
-#BuildArch: noarch
-# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
-Conflicts: environment-modules <= 3.2.10-alt1_23
+This package provides Environment Modules compatibility version (3.2).
 
-%description -n rpm-macros-%{name}
-Set of RPM macros for packaging %name-based applications for ALT Linux.
-Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -q -n modules-%{version}
-%patch0 -p1 -b .bindir
-%patch1 -p1 -b .versioning
-%patch2 -p1 -b .clear
-%patch3 -p1 -b .avail
-%patch4 -p1 -b .format
-%patch5 -p1 -b .tcl86
-%patch6 -p1 -b .py3
-%patch7 -p1 -b .unload-from-module
-%patch8 -p1 -b .implicit
 
 
 %build
-%configure --disable-versioning \
+%configure --prefix=%{_datadir}/Modules \
 	--with-tcl-inc=/usr/include \
-           --prefix=%{_datadir} \
-           --exec-prefix=%{_datadir}/Modules \
-           --with-man-path=$(manpath) \
-           --with-module-path=%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles
-#           --with-debug=42 --with-log-facility-debug=stderr
+           --libdir=%{_libdir} \
+           --etcdir=%{_sysconfdir}/%{name} \
+           --bindir=%{_datadir}/Modules/bin \
+           --libexecdir=%{_libdir}/Modules/libexec \
+           --docdir=%{_docdir}/%{name} \
+           --vimdatadir=%{vimdatadir} \
+           --enable-dotmodulespath \
+           --disable-set-shell-startup \
+           --with-initconf-in=etcdir \
+           --with-modulepath=%{_datadir}/Modules/modulefiles:%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles \
+           --with-quarantine-vars=LD_LIBRARY_PATH
 %make_build
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
+make install DESTDIR=%{buildroot}
+
+mkdir -p %{buildroot}%{_sysconfdir}/modulefiles
+mkdir -p %{buildroot}%{_datadir}/modulefiles
+mkdir -p %{buildroot}%{_sysconfdir}/profile.d
+mkdir -p %{buildroot}%{_bindir}
+
+# Set up for alternatives.
 touch %{buildroot}%{_sysconfdir}/profile.d/modules.{csh,sh}
-cp -p %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/Modules/init/modules.sh
-cp -p %SOURCE2 %SOURCE3 $RPM_BUILD_ROOT%{_datadir}/Modules/bin
-%if 0%{?fedora} >= 22
+touch %{buildroot}%{_bindir}/modulecmd
+# remove modulecmd wrapper as it will be handled by alternatives
+rm -f %{buildroot}%{_datadir}/Modules/bin/modulecmd
+mv %{buildroot}%{_mandir}/man1/module{,-c}.1
+mv %{buildroot}%{_mandir}/man4/modulefile{,-c}.4
+
+# Major utilities go to regular bin dir.
+mv %{buildroot}%{_datadir}/Modules/bin/envml %{buildroot}%{_bindir}/
+
+# Rename compat docs to find them in files section.
+mv compat/ChangeLog ChangeLog-compat
+mv compat/NEWS NEWS-compat
+
+mv {doc/build/,}NEWS.txt
+mv {doc/build/,}MIGRATING.txt
+mv {doc/build/,}CONTRIBUTING.txt
+mv {doc/build/,}diff_v3_v4.txt
+mv {doc/,}example.txt
+rm -f %{buildroot}%{_docdir}/%{name}/{COPYING.GPLv2,ChangeLog-compat,INSTALL.txt,NEWS-compat}
+
+cp -p contrib/scripts/createmodule.sh %{buildroot}%{_datadir}/Modules/bin
+cp -p contrib/scripts/createmodule.py %{buildroot}%{_datadir}/Modules/bin
 sed -i -e 1s,/usr/bin/python,/usr/bin/python3, \
-    $RPM_BUILD_ROOT%{_datadir}/Modules/bin/createmodule.py
-%endif
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles \
-         $RPM_BUILD_ROOT%{_datadir}/modulefiles
-# Install the rpm config file
-install -Dpm 644 %{SOURCE4} %{buildroot}/%{_rpmmacrosdir}/%{name}
-# Prep for man alternatives
-mv $RPM_BUILD_ROOT%{_mandir}/man1/module{,-c}.1
-mv $RPM_BUILD_ROOT%{_mandir}/man4/modulefile{,-c}.4
+    %{buildroot}%{_datadir}/Modules/bin/createmodule.py
+
+install -Dpm 644 contrib/rpm/macros.%{name} %{buildroot}/%{_rpmmacrosdir}/%{name}
+for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_bindir}/modulecmd %{_mandir}/man1/module.1.gz %{_mandir}/man4/modulefile.4.gz
+do
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
+done
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules<<EOF
-%{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/modules.sh	40
-%{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/csh	%{_datadir}/Modules/init/modules.sh
-%{_mandir}/man1/module.1.gz	%{_mandir}/man1/module-c.1.gz	%{_datadir}/Modules/init/modules.sh
-%{_mandir}/man4/modulefile.4.gz	%{_mandir}/man4/modulefile-c.4.gz	%{_datadir}/Modules/init/modules.sh
+%{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile.sh	40
+%{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile.csh	%{_datadir}/Modules/init/profile.sh
+%{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd.tcl	%{_datadir}/Modules/init/profile.sh
+%{_mandir}/man1/module.1.gz	%{_mandir}/man1/module-c.1.gz	%{_datadir}/Modules/init/profile.sh
+%{_mandir}/man4/modulefile.4.gz	%{_mandir}/man4/modulefile-c.4.gz	%{_datadir}/Modules/init/profile.sh
+EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules-compat<<EOF
+%{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/profile-compat.sh	10
+%{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/profile-compat.csh	%{_datadir}/Modules/init/profile-compat.sh
+%{_bindir}/modulecmd	%{_libdir}/Modules/libexec/modulecmd-compat	%{_datadir}/Modules/init/profile-compat.sh
 EOF
 
 
 %post
-[ ! -L %{_bindir}/modules.sh ] && rm -f %{_sysconfdir}/profile.d/modules.sh
 [ ! -L %{_mandir}/man1/module.1.gz ] && rm -f %{_mandir}/man1/module.1.gz
 [ ! -L %{_mandir}/man4/modulefile.4.gz ] && rm -f %{_mandir}/man4/modulefile.4.gz
+[ ! -L %{_sysconfdir}/profile.d/modules.sh ] &&  rm -f %{_sysconfdir}/profile.d/modules.sh
+[ ! -L %{_sysconfdir}/profile.d/modules.csh ] &&  rm -f %{_sysconfdir}/profile.d/modules.csh
+[ ! -L %{buildroot}%{_bindir}/modulecmd ] &&  rm -f %{_bindir}/modulecmd
+
+# Migration from version 3.x to 4
+if [ "$(readlink /etc/alternatives/modules.sh)" = '%{_datadir}/Modules/init/modules.sh' ]; then
+  :
+fi
+
 :
 
 %files
 %_altdir/modules.sh_environment-modules
-%doc LICENSE.GPL
-%doc README TODO
+%doc --no-dereference COPYING.GPLv2
+%doc ChangeLog README NEWS.txt MIGRATING.txt CONTRIBUTING.txt diff_v3_v4.txt example.txt
 %{_sysconfdir}/modulefiles
-%{_bindir}/modulecmd
+%{_bindir}/envml
+%{_libdir}/libtclenvmodules.so
 %dir %{_datadir}/Modules
-%{_datadir}/Modules/bin/
+%{_datadir}/Modules/bin
+%dir %{_libdir}/Modules/libexec
+%{_libdir}/Modules/libexec/modulecmd.tcl
 %dir %{_datadir}/Modules/init
-%config(noreplace) %{_datadir}/Modules/init/*
-%config(noreplace) %{_datadir}/Modules/init/.modulespath
+%{_datadir}/Modules/init/*
+%dir %{_sysconfdir}/%{name}
+%config(noreplace) %{_sysconfdir}/%{name}/initrc
+%config(noreplace) %{_sysconfdir}/%{name}/modulespath
+%config(noreplace) %{_sysconfdir}/%{name}/siteconfig.tcl
 %{_datadir}/Modules/modulefiles
 %{_datadir}/modulefiles
 %{_mandir}/man1/module-c.1*
 %{_mandir}/man4/modulefile-c.4*
-%exclude %_rpmmacrosdir/*
-#%_rpmmacrosdir/%{name}
+#%{_rpmmacrosdir}/%{name}
+%{vimdatadir}/ftdetect/modulefile.vim
+%{vimdatadir}/ftplugin/modulefile.vim
+%{vimdatadir}/syntax/modulefile.vim
 
-%files -n rpm-macros-%{name}
-%_rpmmacrosdir/*
-
+%files compat
+%_altdir/modules.sh_environment-modules-compat
+%doc ChangeLog-compat NEWS-compat
+%{_libdir}/Modules/libexec/modulecmd-compat
+%{_mandir}/man1/module-compat.1*
+%{_mandir}/man4/modulefile-compat.4*
 
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_2
+- new version
+
 * Sun Jul 21 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt3_23
 - fixed build
 
