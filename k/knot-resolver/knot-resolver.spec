@@ -6,7 +6,7 @@
 
 Name: knot-resolver
 Version: 5.0.1
-Release: alt1
+Release: alt2
 Summary: Caching full DNS Resolver
 Group: System/Servers
 
@@ -35,10 +35,10 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: liblmdb-devel
 %{?_enable_dnstap:BuildRequires: /usr/bin/protoc-c pkgconfig(libfstrm) pkgconfig(libprotobuf-c) >= 1.0.0}
 %{?_enable_doc:BuildRequires: /usr/bin/sphinx-build-3}
-#Requires: lua5.1-basexx
-#Requires: lua5.1-cqueues
-#Requires: lua5.1-http
-#Recommends: lua5.1-psl
+Requires: lua5.1-module-basexx
+Requires: lua5.1-module-cqueues
+Requires: lua5.1-module-http
+Requires: lua5.1-module-psl
 
 %description
 The Knot Resolver is a DNSSEC-enabled caching full resolver implementation
@@ -78,8 +78,8 @@ Documentation for Knot Resolver
 Summary: HTTP/2 module for Knot Resolver
 Group: System/Servers
 Requires: %name = %EVR
-#Requires: lua5.1-http
-#Requires: lua5.1-mmdb
+Requires: lua5.1-module-http
+Requires: lua5.1-module-mmdblua
 
 %description module-http
 HTTP/2 module for Knot Resolver has multiple uses. It enables use of
@@ -213,6 +213,9 @@ fi
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Sun Mar 29 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.1-alt2
+- add requires on lua5.1 modules
+
 * Thu Mar 19 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.1-alt1
 - Initial build.
 
