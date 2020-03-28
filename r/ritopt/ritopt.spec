@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ java-devel-default
+BuildRequires: gcc-c++ java-devel-default tex(dehypht.tex)
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_20jpp8
+Release:        alt1_21jpp8
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Url:            http://ritopt.sourceforge.net/
@@ -20,7 +20,6 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-all.
 Patch0:         %{name}-0.2.1-javadoc.patch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  tex(latex)
 
@@ -78,6 +77,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_21jpp8
+- fixed build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_20jpp8
 - new version
 
