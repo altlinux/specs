@@ -1,10 +1,13 @@
+Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires: libglvnd-devel
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		radius-engine
 Version:	1.1
-Release:	alt1_8
+Release:	alt1_16
 Summary:	A Lua based real-time 2D graphics game engine
-Group:		System/Libraries
 License:	MIT
 URL:		http://radius-engine.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}.tar.gz
@@ -22,7 +25,8 @@ BuildRequires:	libphysfs-devel, libpng-devel, zlib-devel, libSDL_sound-devel
 # that worked right. All my attempts resulted in an environment where make, 
 # when invoked, would re-run aclocal and automake. :P
 # So, I'm just running autoreconf in the spec file. :P :P
-BuildRequires:	autoconf-common, libtool-common
+BuildRequires:	autoconf, libtool
+Source44: import.info
 
 %description
 Radius Engine is a Lua script-based real-time 2D graphics engine designed for 
@@ -30,8 +34,8 @@ rapidly prototyping games. Built on top of SDL and OpenGL, games made with
 Radius Engine are portable to both Windows and Linux.
 
 %package devel
+Group: Development/Other
 Summary:	Development libraries and headers for Radius Engine
-Group:		Development/Other
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
@@ -56,6 +60,8 @@ chmod -x *.c *.h ChangeLog
 make install DESTDIR=%{buildroot}
 rm -rf %{buildroot}%{_libdir}/*.la
 
+
+
 %files
 %doc ChangeLog
 %{_libdir}/libradius-engine.so.*
@@ -66,6 +72,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/radius-engine.pc
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_16
+- update
+
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8
 - converted for ALT Linux by srpmconvert tools
 
