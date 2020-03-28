@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: libsignal-protocol-c
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Signal Protocol C library
@@ -55,6 +55,9 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Fri Jan 31 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - first build for Sisyphus
 
