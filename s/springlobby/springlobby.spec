@@ -1,7 +1,7 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/xsltproc libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
+BuildRequires: /usr/bin/clang-format /usr/bin/cppcheck /usr/bin/desktop-file-install /usr/bin/doxygen /usr/bin/wx-config-3.0 libX11-devel libminizip-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libnotify) zlib-devel
 # END SourceDeps(oneline)
 # undefined symbol: L_*, LOG_*, parse32 in libFileSystem
 # those are from static libUtil, in main binary
@@ -10,30 +10,38 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:			springlobby
-Version:		0.195
-Release:		alt2_17
+Version:		0.267
+Release:		alt1_5
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
 License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
+Patch0:			gcc10.patch
 
-BuildRequires:  gcc-c++
-BuildRequires:	ctest cmake
-BuildRequires:	libwxGTK3.0-devel, libtorrent-rasterbar-devel
-BuildRequires:	libSDL-devel, libSDL_sound-devel, libSDL_mixer-devel
-BuildRequires:	desktop-file-utils gettext gettext-tools
-BuildRequires:	libopenal-devel, libcurl-devel
-BuildRequires:	libalure-devel
-BuildRequires:	dumb-devel
+BuildRequires:  libSDL-devel
+BuildRequires:  libSDL_mixer-devel
+BuildRequires:  libSDL_sound-devel
+BuildRequires:  libalure-devel
 BuildRequires:  boost-complete
+BuildRequires:  ctest cmake
+BuildRequires:  desktop-file-utils
+BuildRequires:  dumb-devel
+BuildRequires:  gcc-c++
+BuildRequires:  gettext gettext-tools
+BuildRequires:  libcurl-devel
+BuildRequires:  libopenal-devel
+BuildRequires:  libtorrent-rasterbar-devel
+BuildRequires:  libwxGTK3.0-devel
 
 # There are other "lobbies" for spring, make a virtual-provides
 Provides:		spring-lobby = %{version}-%{release}
 
 Requires:		icon-theme-hicolor
+
 Requires:		springrts
+
 ExclusiveArch:	%{ix86} x86_64
 Source44: import.info
 Patch33: springlobby-0.195-alt-linkage.patch
@@ -43,10 +51,12 @@ SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 
 %prep
 %setup -q
-%patch33 -p1
+%patch0 -p1
+#patch33 -p1
+
 
 %build
-%{fedora_cmake} .
+%{fedora_cmake}
 %make_build
 
 %install
@@ -64,50 +74,19 @@ desktop-file-install	\
 	--delete-original \
 	$RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
-# Register as an application to be visible in the software center
-#
-# NOTE: It would be *awesome* if this file was maintained by the upstream
-# project, translated and installed into the right place during `make install`.
-#
-# See http://www.freedesktop.org/software/appstream/docs/ for more details.
-#
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Eduardo Mayorga <e@mayorgalinux.com> -->
-<!--
-BugReportURL: https://github.com/springlobby/springlobby/issues/241
-SentUpstream: 2014-09-25
--->
-<application>
-  <id type="desktop">springlobby.desktop</id>
-  <metadata_license>CC0-1.0</metadata_license>
-  <summary>Find games using Spring-RTS engine</summary>
-  <description>
-    <p>
-      SpringLobby configures the Spring-RTS engine so that you can connect to
-      the server using the right maps and mods.
-      This helps you to discover the game you want.
-      It also allows you to communicate to other players before the game's start.
-    </p>
-  </description>
-  <url type="homepage">http://springlobby.info</url>
-  <screenshots>
-    <screenshot type="default">http://springlobby.info/landing/screenshots/10_sp.png</screenshot>
-  </screenshots>
-</application>
-EOF
-
 %find_lang %{name}
 
 %files -f %{name}.lang
 %{_docdir}/%{name}
 %{_bindir}/*
-%{_datadir}/appdata/*.appdata.xml
+%{_metainfodir}/*.appdata.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.267-alt1_5
+- new version
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.195-alt2_17
 - update to new release by fcimport
 
