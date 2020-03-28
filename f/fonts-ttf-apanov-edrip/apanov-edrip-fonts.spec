@@ -11,7 +11,7 @@ Group: System/Fonts/True type
 
 Name:    fonts-ttf-apanov-edrip
 Version: 20100430
-Release: alt2_11
+Release: alt2_17
 Summary: A decorative contrast sans-serif font
 
 License:   OFL
@@ -23,7 +23,7 @@ Source1:   %{oldname}-fontconfig.conf
 Source2:   %{fontname}.metainfo.xml
 
 BuildArch:     noarch
-BuildRequires: fontforge libfontforge, xgridfit >= 2.2
+BuildRequires: fontforge libfontforge python3-module-fontforge, xgridfit >= 2.2
 BuildRequires: fontpackages-devel
 Source44: import.info
 
@@ -92,11 +92,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc *.txt README
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_17
+- update
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_11
 - update to new release by fcimport
 
