@@ -2,7 +2,7 @@
 
 Name:		bpftrace
 Version:	0.9.4
-Release:	alt1
+Release:	alt2
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -10,21 +10,20 @@ URL:		https://github.com/iovisor/bpftrace
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
+%define clang_version 9.0
+
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires:	bison
-BuildRequires:	cmake >= 3.0.0
-BuildRequires:	flex
-BuildRequires:	make
-BuildRequires:	gcc-c++
-BuildRequires:	clang-devel >= 5.0.0
-BuildRequires:	llvm-devel >= 5.0.0
-BuildRequires:	lld
-BuildRequires:	llvm-devel-static
-BuildRequires:	clang-devel-static
-BuildRequires:	/proc
-BuildRequires:	libbcc-devel
-BuildRequires:	libelf-devel
-BuildRequires:	git-core
+BuildRequires: cmake
+BuildRequires: flex
+BuildRequires: libstdc++-devel
+BuildRequires: clang%clang_version-devel
+BuildRequires:  llvm%clang_version-devel
+BuildRequires:  llvm%clang_version-devel-static
+BuildRequires: clang%clang_version-devel-static
+BuildRequires:   lld%clang_version
+BuildRequires: libbcc-devel
+BuildRequires: libelf-devel
+BuildRequires: /proc
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-modules-un-def}}
 
@@ -37,10 +36,12 @@ kernel dynamic tracing (kprobes), user-level dynamic tracing (uprobes), and
 tracepoints. The BPFtrace language is inspired by awk and C, and predecessor
 tracers such as DTrace and SystemTap.
 
-See http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+See http://www.brendangregg.com/ebpf.html#bpftrace
+    http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
+
 
 %prep
-%setup -q
+%setup
 
 %build
 %remove_optflags -frecord-gcc-switches
@@ -101,6 +102,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt2
+- spec: Rework BuildRequires.
+
 * Sat Mar 14 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt1
 - Update to v0.9.4.
 - Update license tag from ASL 2.0 to Apache-2.0.
