@@ -3,12 +3,12 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libpari23
 Version:	2.3.5
-Release:	alt1_15
+Release:	alt1_18
 Summary:	Number Theory-oriented Computer Algebra Library
 # No version is specified
 License:	GPL+
 URL:		http://pari.math.u-bordeaux.fr/
-Source0:	http://pari.math.u-bordeaux.fr/pub/pari/unix/OLD/2.3/pari-%{version}.tar.gz
+Source0:	http://pari.math.u-bordeaux.fr/pub/pari/OLD/2.3/pari-%{version}.tar.gz
 Patch1:		libpari23-optflags.patch
 Patch2:		libpari23-fsf-address.patch
 Patch3:		Math-Pari-2.01080604-extra-stack-for-test.patch
@@ -176,6 +176,9 @@ make dotest-round4
 %{_datadir}/%{name}/
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_18
+- update
+
 * Wed Feb 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_15
 - to Sisyphus as perl-Math-Pari dep
 
