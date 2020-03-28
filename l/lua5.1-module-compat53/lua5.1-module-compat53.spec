@@ -3,10 +3,10 @@
 # Original package name compat53
 %define oname compat53
 %define oversion 0.7-1
-%define rockspec /home/shaba/RPM/SOURCES/compat53-0.7-1.rockspec
+%define rockspec compat53-0.7-1.rockspec
 Name: lua%target_lua_version-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: Compatibility module providing Lua-5.3-style APIs for Lua 5.2 and 5.1
 License: MIT
 Group: Development/Other
@@ -22,7 +22,7 @@ Provides: lua5-%oname = %version
 %endif
 
 Source: https://github.com/keplerproject/lua-compat-5.3/archive/v0.7.zip
-Source1: https://luarocks.org/manifests/luarocks//home/shaba/RPM/SOURCES/compat53-0.7-1.rockspec
+Source1: https://luarocks.org/manifests/luarocks/compat53-0.7-1.rockspec
 
 
 BuildRequires(pre): rpm-macros-lua >= 1.4
@@ -51,5 +51,8 @@ with Lua 5.3, but it brings the API closer to that of Lua 5.3.
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 0.7-alt2
+- fix path to rockspec
+
 * Sat Mar 28 2020 Alexey Shabalin <shaba@altlinux.org> 0.7-alt1
 - Initial build
