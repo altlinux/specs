@@ -1,11 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name dleyna
 %define api_ver 1.0
+%define gupnp_api_ver 1.2
 
 Name: %_name-core
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities for higher level %_name libraries
 Group: System/Libraries
@@ -19,7 +20,7 @@ Source: https://01.org/%_name/sites/default/files/downloads/%name-%version.tar.g
 Source: %name-%version.tar
 %endif
 
-BuildRequires: libgio-devel libgupnp-devel
+BuildRequires: libgio-devel libgupnp%gupnp_api_ver-devel >= 1.2.1
 
 %description
 dleyna-core is a library of utility functions that are used by the higher
@@ -70,6 +71,9 @@ developing applications that use %name library.
 
 
 %changelog
+* Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
+- updated to v0.6.0-2-g1c6853f (ported to gupnp-1.2)
+
 * Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

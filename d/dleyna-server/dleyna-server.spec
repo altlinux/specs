@@ -1,12 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name dleyna
 %define api_ver 1.0
+%define gupnp_api_ver 1.2
 
 Name: %_name-server
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Service for interacting with Digital Media Servers
 Group: System/Servers
@@ -22,7 +23,7 @@ Source: %name-%version.tar
 
 Requires: %_name-connector-dbus
 
-BuildRequires: libgio-devel libgssdp-devel libgupnp-devel
+BuildRequires: libgio-devel libgssdp%gupnp_api_ver-devel libgupnp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel libgupnp-dlna-devel libsoup-devel
 BuildRequires: libdleyna-core-devel
 
@@ -67,6 +68,9 @@ developing applications that use %name-service.
 
 
 %changelog
+* Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
+- updated to 0.6.0-2-geb895ae (ported to (gssdp/gupnp)-1.2)
+
 * Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
