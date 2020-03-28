@@ -1,6 +1,7 @@
+%def_without gtk3
 Name: wm-select
-Version: 0.8.1
-Release: alt1.1
+Version: 0.9.0
+Release: alt2
 
 Summary: Application for selecting window manager at startup
 License: GPLv2+
@@ -9,7 +10,11 @@ Group: Graphical desktop/Other
 Url: http://altlinux.org
 Source: %name-%version.tar
 
+%if_with gtk3
+BuildRequires: libgtk+3-devel
+%else
 BuildRequires: libgtk+2-devel
+%endif
 
 %description
 wm-select is a small Gtk application for selecting a window manager
@@ -20,7 +25,12 @@ at X startup.
 sed -i 's, -Werror,,' Makefile
 
 %build
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags" \
+%if_with gtk3
+	    WITH_GTK2=
+%else
+	    WITH_GTK2=yes
+%endif
 
 %install
 install -pD -m755 %name %buildroot%_bindir/%name
@@ -34,9 +44,17 @@ done
 %_bindir/*
 
 %changelog
+* Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2
+- to Sisyphus
+
 * Sat Mar 28 2020 Michael Shigorin <mike@altlinux.org> 0.8.1-alt1.1
 - Fixed FTBFS in face of GTypeDebugFlags/GTimeVal deprecation
   and missing upstream attention through dropping -Werror.
+
+* Wed Sep 04 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1
+- ported for gtk3 and modern gtk2;
+- removed gtk1 support;
+- support for .png, .svg pixmaps; re-scaling pixmaps to 64x64.
 
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.1-alt1
 - Fixed build with new gcc.
