@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
 Name: ispc
 Version: 1.12.0
-Release: alt1
+Release: alt2
 Summary: Intel SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
@@ -11,20 +13,20 @@ Source: %name-%version.tar
 Vcs: https://github.com/ispc/ispc.git
 Url: https://ispc.github.io/
 
+# Tested on 10.0 to be good too.
+%define clang_version 9.0
+
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): python3-module-setuptools
-BuildRequires: bison >= 2.4
-BuildRequires: cmake >= 3.12
-BuildRequires: clang-devel >= 9.0.0
-BuildRequires: llvm-devel >= 9.0.0
-BuildRequires: llvm-devel-static
-BuildRequires: gcc-c++
-BuildRequires: flex >= 2.5
+BuildRequires: cmake
+BuildRequires: clang%clang_version-devel
+BuildRequires: llvm%clang_version-devel
+BuildRequires: llvm%clang_version-devel-static
+BuildRequires: libstdc++-devel
+BuildRequires: flex
 BuildRequires: python3-devel
 BuildRequires: python3-tools
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel
-BuildRequires: doxygen
 
 ExclusiveArch: x86_64
 
@@ -68,5 +70,8 @@ program instances execute in parallel on the hardware.
 %_bindir/check_isa
 
 %changelog
+* Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.12.0-alt2
+- Clean up spec to fix compiling.
+
 * Sat Mar 07 2020 Vitaly Chikunov <vt@altlinux.org> 1.12.0-alt1
 - Initial import of v1.12.0.
