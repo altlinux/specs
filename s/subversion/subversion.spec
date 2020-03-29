@@ -62,12 +62,12 @@
 %define modname dav_svn_module
 
 Name:     subversion
-Version:  1.9.2
-Release:  alt3.3
+Version:  1.13.0
+Release:  alt1
 
 Summary:  A version control system
 Group:    Development/Other
-License:  Apache
+License:  Apache-2.0
 Url:      http://subversion.apache.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -95,12 +95,10 @@ Patch16: %name-1.6.0-gentoo-java-headers.patch
 Patch17: %name-1.6.6-deb-ssh-no-controlmaster.patch
 
 # Patches from Fedora
-Patch20: subversion-1.9.2-rpath.patch
-Patch21: subversion-1.8.0-pie.patch
+Patch20: subversion-1.13.0-rpath.patch
+Patch21: subversion-1.13.0-pie.patch
 Patch22: subversion-1.8.0-rubybind.patch
 Patch23: subversion-1.8.5-swigplWall.patch
-Patch25: subversion-1.8.13-swigpython.patch
-Patch26: subversion-1.8.11-ruby22-fixes.rb
 
 Requires: lib%name = %version-%release
 
@@ -116,6 +114,10 @@ BuildRequires: libneon-devel libkeyutils-devel
 
 BuildRequires: libserf-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libsecret-devel
+BuildRequires: liblz4-devel
+BuildRequires: libutf8proc-devel
+BuildRequires: patchelf
 
 # since 1.6.0 subversion requires sqlite
 # if sqlite_external is enabled subversion will be linked with system's sqlite
@@ -125,7 +127,7 @@ BuildRequires: libsasl2-devel
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 %{?_with_gnome_keyring:BuildRequires: libdbus-devel libgnome-keyring-devel}
-%{?_with_kwallet:BuildRequires: gcc-c++ libdbus-devel kde4libs-devel}
+%{?_with_kwallet:BuildRequires: gcc-c++ libdbus-devel kf5-kdelibs4support qt5-base-devel kf5-kwallet-devel kf5-ki18n-devel kf5-kcoreaddons-devel}
 %{?_with_swig_py:BuildPreReq: swig python-devel}
 %{?_with_swig_pl:BuildPreReq: swig perl-devel perl(PerlIO.pm)}
 %{?_with_swig_rb:BuildPreReq: swig libruby-devel}
@@ -188,7 +190,7 @@ released under an Apache/BSD-style source license.  See the status page
 for current progress.
 
 %package -n lib%name-auth-kwallet
-Summary: KDE4 KWallet auth module
+Summary: KDE5 KWallet auth module
 Group: Development/Other
 Requires: lib%name = %version-%release
 
@@ -198,7 +200,7 @@ a compelling replacement for CVS in the open community.  The software is
 released under an Apache/BSD-style source license.  See the status page
 for current progress.
 
-This package contains the KDE4 KWallet auth module.
+This package contains the KDE5 KWallet auth module.
 
 %package -n lib%name-auth-gnome-keyring
 Summary: Gnome Keyring auth module
@@ -350,19 +352,20 @@ install -pD -m644 %SOURCE11 sqlite-amalgamation/sqlite3.c
 
 %patch4 -p1
 %patch5 -p2
-%patch6 -p2
+#patch6 -p2
 %patch16 -p1
-%patch17 -p1
+%patch17 -p2
 %patch20 -p1
-%patch21 -p1
+%patch21 -p2
 %patch22 -p1
 %patch23 -p1
-%patch25 -p1
-%patch26 -p0
 
 %build
 %add_optflags %optflags_shared
-
+%if_with kwallet
+export KDE_CONFIG=%_libexecdir/kf5/bin/kf5-config
+%add_optflags -L%_libdir/kf5/devel
+%endif
 LIBTOOL_M4=%{_datadir}/libtool/aclocal ./autogen.sh
 %autoreconf
 %configure \
@@ -515,7 +518,7 @@ cp -r %_builddir/%buildsubdir/subversion/bindings/swig/python/svn %buildroot%pyt
 %endif
 
 %if_with swig_pl
-%make_install DESTDIR=%buildroot PREFIX=%_prefix libdir=%_libdir/libsvn_swig swig_pl_libdir=%_libdir/libsvn_swig install-swig-pl
+%make_install DESTDIR=%buildroot PREFIX=%_prefix INSTALLSITEARCH=%perl_vendor_archlib libdir=%_libdir/libsvn_swig swig_pl_libdir=%_libdir/libsvn_swig install-swig-pl
 rm -f %buildroot%_libdir/libsvn_swig/libsvn_swig_pl*.la
 %endif
 
@@ -584,6 +587,14 @@ install -pm644 -- %SOURCE10 %buildroot%apache2_mods_start/100-%module_name.conf
 # Installing bash-completion file
 mkdir -p %buildroot/etc/bash_completion.d
 install -pm644 tools/client-side/bash_completion %buildroot/etc/bash_completion.d/svn
+
+# Remove alsolute pathes from RPATH in _Core.so
+%if_with swig_pl
+patchelf --set-rpath %_libdir/libsvn_swig %buildroot%perl_vendor_archlib/auto/SVN/_Core/_Core.so
+%endif
+
+# Remove wrong pkgconfig files
+rm -fr %buildroot%_datadir/pkgconfig
 
 %find_lang %name
 
@@ -762,6 +773,11 @@ fi
 %endif
 
 %changelog
+* Sun Mar 29 2020 Andrey Cherepanov <cas@altlinux.org> 1.13.0-alt1
+- New version (ALT #36518).
+- Build with KWallet from KDE5.
+- Fix License tag according to SPDX.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.3
 - rebuild with new perl 5.28.1
 
