@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.1.10
-Release: alt2
+Version: 1.1.11
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -55,6 +55,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 27 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.11-alt1
+- update version to 1.1.11
+
 * Sun Oct 20 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.10-alt2
 - remove source code of the bundled libraries
 - build with external blake2
