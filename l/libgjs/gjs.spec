@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -101,9 +101,6 @@ xvfb-run %meson_test
 %add_typelib_req_skiplist typelib(GIMarshallingTests) typelib(Regress) typelib(WarnLib)
 
 %files tests
-%_libdir/%_name/libgimarshallingtests.so
-%_libdir/%_name/libregress.so
-%_libdir/%_name/libwarnlib.so
 %_libexecdir/%_name/installed-tests/
 %_datadir/installed-tests/%_name/
 %_datadir/glib-2.0/schemas/org.gnome.GjsTest.gschema.xml
@@ -111,6 +108,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.1-alt1
+- 1.64.1
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.0-alt1
 - 1.64.0
 

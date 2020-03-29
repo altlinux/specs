@@ -12,8 +12,8 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Nautilus is a network user environment
 License: GPL-3.0
@@ -48,7 +48,7 @@ Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
 %{?_enable_tracker:Requires: tracker}
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver
@@ -191,6 +191,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - improved "docs" knob
 - fixed License tag
