@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 3.10.1
+Version: 4.0
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -23,13 +23,11 @@ Patch3: %name-2.5.0-alt-DSO.patch
 Requires(post,postun): desktop-file-utils
 BuildPreReq: desktop-file-utils
 
-%{?_with_gconf:BuildRequires: GConf2-devel}
-%{?_with_vfs:BuildRequires: gnome-vfs2-devel}
+BuildRequires: gcc-c++
 
-# manually removed: libgnustep-corebase-devel  python3 ruby ruby-stdlibs python-module-PyXML python-module-cmd2 python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization
-# Automatically added by buildreq on Wed May 06 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config gnustep-base-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-xml python3-base termutils
-BuildRequires: gcc-c++ libdb4-devel libgtk+2-devel
+BuildRequires: glib2-devel libgio-devel
+
+BuildRequires: qt5-base-devel
 
 BuildRequires: libguess-devel >= 1.2
 
@@ -71,8 +69,6 @@ Development files required to develop plugins for audacious.
 %configure \
     --with-buildstamp="ALT Linux package"  \
     --disable-rpath \
-    %{?_with_gconf:--enable-gconf} \
-    %{?_with_vfs:--enable-gnome-vfs} \
     --disable-dependency-tracking \
 %ifnarch x86_64
     --disable-sse2 \
@@ -101,18 +97,22 @@ Development files required to develop plugins for audacious.
 %_libdir/libaudtag.so.*
 #%_libdir/libSAD.so.*
 %_libdir/libaudcore.so.*
-%_libdir/libaudgui.so.*
+%_libdir/libaudqt.so.*
 
 %files -n lib%name-devel
 %_includedir/%name/
 #%_includedir/libSAD/
 %_includedir/libaudcore/
-%_includedir/libaudgui/
+%_includedir/libaudqt/
 #%_includedir/libaudtag/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %changelog
+* Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
+- new version 4.0 (with rpmrb script)
+- upstream switched to Qt5
+
 * Wed Dec 26 2018 Vitaly Lipatov <lav@altlinux.ru> 3.10.1-alt1
 - new version 3.10.1 (with rpmrb script)
 

@@ -6,8 +6,8 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 3.10.1
-Release: alt2
+Version: 4.0
+Release: alt1
 
 Summary: Plugins for Audacious
 License: GPL
@@ -19,9 +19,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: %oname = %version
 
-BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
+BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
 
 BuildRequires: lib%oname-devel = %version
+
+BuildRequires: qt5-base-devel
 
 BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel
 
@@ -72,6 +74,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt1
+- new version 4.0 (with rpmrb script)
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 3.10.1-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - formalized jack, pulse knobs (cf. gst-plugins-good1.0, libao)
