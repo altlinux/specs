@@ -3,12 +3,12 @@ Name: sendmail
 %define tarbolversion 8.16.0.41
 
 Version: %tarbolversion
-Release: alt2
+Release: alt3
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: A widely used Mail Transport Agent (MTA)
-License: %sendmail_license
+License: Sendmail-8.23
 Group: System/Servers
 URL: http://www.sendmail.org
 
@@ -63,7 +63,7 @@ Patch10: %name-mrs-8.12.11.patch
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-#Patch100:
+Patch100: sendmail-8.15.2-glibc-2.30.patch
 
 %add_findreq_skiplist */include/*
 
@@ -71,11 +71,10 @@ Provides: MTA, MailTransportAgent, smtpdaemon
 
 Conflicts: postfix, meta1, exim-common
 
-PreReq: sendmail-common
 Requires: %name-submit = %{version}-%{release}, makemap = %{version}-%{release}
 
 BuildConflicts: bind-devel
-BuildPreReq: libpam0-devel rpm-build-licenses
+BuildRequires(pre): libpam0-devel sendmail-common
 
 # Not detected by buildreq
 BuildRequires: openssl
@@ -100,7 +99,7 @@ specific recomendations README.alt and README.cyrus-imap).
 
 %package submit
 Summary: sendmail's submit service
-License: %sendmail_license
+License: Sendmail-8.23
 Group: System/Servers
 Conflicts: postfix
 AutoReq: yes, noshell
@@ -110,7 +109,7 @@ This package need for sending mail from command line
 
 %package -n makemap
 Summary: makemap utility of sendmail
-License: %sendmail_license
+License: Sendmail-8.23
 Group: Databases
 
 %description -n makemap
@@ -119,7 +118,7 @@ sendmail(8) and in some other software. It's working with Berkeley DB.
 
 %package doc
 Summary: Documentation about the Sendmail Mail Transport Agent program
-License: %sendmail_license
+License: Sendmail-8.23
 Group: System/Servers
 AutoReq: yes, noshell
 Conflicts: %name < %version-%release, %name > %version-%release
@@ -136,7 +135,7 @@ Sendmail.
 
 %package cf
 Summary: The files needed to reconfigure Sendmail
-License: %sendmail_license
+License: Sendmail-8.23
 Group: System/Servers
 Requires: make, m4
 Conflicts: %name < %version-%release, %name > %version-%release
@@ -197,7 +196,7 @@ them that you are currently not reading your mail.
 %patch50 -p1
 
 #errata
-#patch100 -p0
+%patch100 -p0
 
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE6 > cf/cf/altlinux.mc
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE11> cf/cf/submit.mc
@@ -500,6 +499,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sun Mar 29 2020 Sergey Y. Afonin <asy@altlinux.org> 8.16.0.41-alt3
+- fixed FTBFS: added sendmail-8.15.2-glibc-2.30.patch (from OpenSUSE)
+- Updated License tag to SPDX syntax
+
 * Wed Mar 06 2019 Sergey Y. Afonin <asy@altlinux.ru> 8.16.0.41-alt2
 - sendmail-access.main: added IPv6 example for cidrexpand
 
@@ -956,7 +959,7 @@ EOF
 * Mon Sep  4 2000 Guillaume Cottenceau <gc@mandrakesoft.com> 8.11.0-3mdk
 - config-noreplace initscript
 
-* Thu Aug 26 2000 David BAUDENS <baudens@mandrakesoft.com> 8.11.0-2mdk
+* Sat Aug 26 2000 David BAUDENS <baudens@mandrakesoft.com> 8.11.0-2mdk
 - Fix bad dependencies on Perl
 - %%config(noreplace) /etc/sendmail.cf
 
