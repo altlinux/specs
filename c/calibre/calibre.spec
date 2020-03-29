@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -82,18 +82,12 @@ BuildRequires: libmtp-devel >= 1.1.16
 %py3_use html5-parser >= 0.4.6
 %py3_use mechanize >= 0.4.3
 %py3_use lxml >= 4.3.3
-# https://bugzilla.altlinux.org/show_bug.cgi?id=37303
-%py3_use dateutil
-# >= 2.8.0
+%py3_use dateutil >= 2.8.0
 %py3_use css-parser >= 1.0.4
-%py3_use dns 
-# https://bugzilla.altlinux.org/show_bug.cgi?id=37338
-# >= 1.16.0
+%py3_use dns >= 1.16.0
 %py3_use feedparser >= 5.2.1
 %py3_use markdown >= 3.1
-%py3_use html2text
-# TODO
-#py3_use html2text >= 2018.1.9
+%py3_use html2text >= 2018.1.9
 
 %py3_use netifaces >= 0.10.9
 #py3_use ifaddr >= 0.1.6
@@ -216,6 +210,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.13.0-alt1
+- new version 4.13.0 (with rpmrb script)
+
 * Thu Mar 19 2020 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
 - new version 4.12.0 (with rpmrb script)
 
