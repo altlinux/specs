@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ccache
-Version: 3.7.7
-Release: alt2
+Version: 3.7.8
+Release: alt1
 
 Summary: Compiler cache
 License: GPLv3+
@@ -65,6 +65,9 @@ EOF
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.8-alt1
+- new version 3.7.8 (with rpmrb script)
+
 * Wed Feb 12 2020 Michael Shigorin <mike@altlinux.org> 3.7.7-alt2
 - fix doc knob (manpage depends on it now too)
 - minor spec cleanup
