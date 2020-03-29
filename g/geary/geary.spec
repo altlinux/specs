@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -74,6 +74,7 @@ Geary's development.
 %files -f %name.lang
 %_bindir/%name
 %{?_enable_contractor:%_bindir/%name-attach}
+%_libdir/lib%name-client.so
 %_libdir/%name/
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -87,6 +88,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Fri Mar 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
