@@ -11,26 +11,28 @@ Requires: fonts-ttf-lklug
 Requires: fonts-ttf-wqy-microhei
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global buildno 19
+%global buildno 20
 %global buildid build%{buildno}
+# The game contains a copy of these fonts, we replaces these with symlinks to the system versions of these fonts
+%global fonts font(amiri) font(dejavusans) font(dejavusansmono) font(dejavuserif) font(widelands) font(lklug) font(wenquanyimicrohei)
 
 Name:           widelands
 Version:        0
-Release:        alt7_0.69.%{buildid}
+Release:        alt7_0.77.%{buildid}
 Summary:        Open source realtime-strategy game
 
 License:        GPLv2+
 URL:            http://www.widelands.org
-Source0:        https://launchpad.net/widelands/%{buildid}/%{buildid}/+download/widelands-%{buildid}-src-gcc7.tar.bz2
+Source0:        https://launchpad.net/widelands/%{buildid}/%{buildid}/+download/widelands-%{buildid}.tar.bz2
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
 Patch0:         widelands-build19-ppc64le.patch
-Patch1:         widelands-build19-gcc82.patch
+Patch1:         widelands-build20-gcc91.patch
+Patch2:         widelands-build20-gcc10.patch
 
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_image-devel
 BuildRequires: libSDL2_mixer-devel
-BuildRequires: libSDL2_net-devel
 BuildRequires: libSDL2_ttf-devel
 BuildRequires: boost-complete >= 1.48.0
 BuildRequires: ctest cmake
@@ -41,15 +43,9 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libGLEW-devel
 BuildRequires: libpng-devel
-Requires:      icon-theme-hicolor
-# The game contains a copy of these fonts, we replaces these with system fonts
-Requires:      fonts-ttf-amiri
-Requires:      fonts-ttf-dejavu
-Requires:      fonts-ttf-dejavu
-Requires:      fonts-ttf-dejavu
-Requires:      fonts-otf-drehatlas-widelands
-Requires:      fonts-ttf-lklug
-Requires:      fonts-ttf-wqy-microhei
+# For the %%build part generating the symlinks
+BuildRequires: fontconfig %{fonts}
+Requires:      icon-theme-hicolor %{fonts}
 Source44: import.info
 
 %description
@@ -60,15 +56,18 @@ perhaps will have a thought, what Widelands is all about.
 
 
 %prep
-%setup -q -n widelands-%{buildid}-src-gcc7
+%setup -q -n widelands-%{buildid}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
+echo 'target_link_libraries(widelands GL)' >> src/CMakeLists.txt
+echo 'target_link_libraries(graphic_gl_utils GL)' >> src/graphic/CMakeLists.txt
 
 %build
 mkdir build
 pushd build
-# We need to set CMAKE_INCLUDE_PATH to /usr for FindLua51.cmake
+LDFLAGS=-lGL
 %{fedora_cmake} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=%{_bindir} \
@@ -85,8 +84,10 @@ pushd build
 %makeinstall_std
 popd
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
-ln -s /usr/share/%{name}/images/logos/wl-logo-64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+for i in 16 32 48 64 128; do
+  mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps
+  ln -s /usr/share/%{name}/images/logos/wl-ico-${i}.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x${i}/apps/%{name}.png
+done
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
@@ -96,25 +97,80 @@ appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 pushd $RPM_BUILD_ROOT
-# We don't want this development tool / utility
-rm usr/bin/wl_render_richtext
-
-# Replace fonts with system fonts
+# Replace fonts with system fonts. We used to have symlinks directly from
+# i18n/fonts/<widelands-name> to the /usr/share/fonts/<system-font-name> dir
+# but with recent font packaging changes this no longer works because e.g.
+# Widelands expects all DejaVu fonts in a single dir, where as now there are
+# separate /usr/share/fonts dirs for the sans, sans-mono and serif versions.
+#
+# Replacing the symlinks at the dir level with keeping the
+# i18n/fonts/<widelands-name> directory and then putting symlinks to the
+# invidual font-files inside that directory does not work, because on upgrade
+# that would mean replacing a symlink with a dir which breaks horribly.
+# So for those cases where we used to have a symlink, we create a new dir
+# under i18n/fonts with a different name, with symlinks to the individual
+# files in that dir; and then point the symlink to this new dir, to avoid
+# the replace a symlink with a dir problem.
 rm -r usr/share/%{name}/i18n/fonts/amiri
+mkdir usr/share/%{name}/i18n/fonts/amiri-fonts
+ln -s amiri-fonts usr/share/%{name}/i18n/fonts/amiri
+ln -s $(fc-match -f "%{file}" "amiri") \
+  usr/share/%{name}/i18n/fonts/amiri-fonts/amiri-regular.ttf
+ln -s $(fc-match -f "%{file}" "amiri:bold") \
+  usr/share/%{name}/i18n/fonts/amiri-fonts/amiri-bold.ttf
+ln -s $(fc-match -f "%{file}" "amiri:italic") \
+  usr/share/%{name}/i18n/fonts/amiri-fonts/amiri-slanted.ttf
+ln -s $(fc-match -f "%{file}" "amiri:bold:italic") \
+  usr/share/%{name}/i18n/fonts/amiri-fonts/amiri-boldslanted.ttf
+
 rm -r usr/share/%{name}/i18n/fonts/DejaVu
+mkdir usr/share/%{name}/i18n/fonts/dejavu-fonts
+ln -s dejavu-fonts usr/share/%{name}/i18n/fonts/DejaVu
+ln -s $(fc-match -f "%{file}" "sans") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSans.ttf
+ln -s $(fc-match -f "%{file}" "sans:bold") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSans-Bold.ttf
+ln -s $(fc-match -f "%{file}" "sans:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSans-Oblique.ttf
+ln -s $(fc-match -f "%{file}" "sans:bold:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSans-BoldOblique.ttf
+ln -s $(fc-match -f "%{file}" "serif") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSerif.ttf
+ln -s $(fc-match -f "%{file}" "serif:bold") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSerif-Bold.ttf
+ln -s $(fc-match -f "%{file}" "serif:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSerif-Italic.ttf
+ln -s $(fc-match -f "%{file}" "serif:bold:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSerif-BoldItalic.ttf
+ln -s $(fc-match -f "%{file}" "monospace") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSansMono.ttf
+ln -s $(fc-match -f "%{file}" "monospace:bold") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSansMono-Bold.ttf
+ln -s $(fc-match -f "%{file}" "monospace:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSansMono-Oblique.ttf
+ln -s $(fc-match -f "%{file}" "monospace:bold:italic") \
+  usr/share/%{name}/i18n/fonts/dejavu-fonts/DejaVuSansMono-BoldOblique.ttf
+
 rm -r usr/share/%{name}/i18n/fonts/MicroHei
+mkdir usr/share/%{name}/i18n/fonts/wqy-microhei-fonts
+ln -s wqy-microhei-fonts usr/share/%{name}/i18n/fonts/MicroHei
+ln -s $(fc-match -f "%{file}" "wenquanyimicrohei") \
+   usr/share/%{name}/i18n/fonts/wqy-microhei-fonts/wqy-microhei.ttc
+
 rm -r usr/share/%{name}/i18n/fonts/Sinhala
+mkdir usr/share/%{name}/i18n/fonts/lklug-fonts
+ln -s lklug-fonts usr/share/%{name}/i18n/fonts/Sinhala
+ln -s $(fc-match -f "%{file}" "lklug") \
+   usr/share/%{name}/i18n/fonts/lklug-fonts/lklug.ttf
+
 rm -r usr/share/%{name}/i18n/fonts/Widelands/*
-ln -s /usr/share/fonts/ttf/amiri usr/share/%{name}/i18n/fonts/amiri
-ln -s /usr/share/fonts/ttf/dejavu usr/share/%{name}/i18n/fonts/DejaVu
-ln -s /usr/share/fonts/ttf/wqy-microhei usr/share/%{name}/i18n/fonts/MicroHei
-ln -s /usr/share/fonts/ttf/lklug usr/share/%{name}/i18n/fonts/Sinhala
-ln -s /usr/share/fonts/otf/drehatlas-widelands/Widelands.otf usr/share/%{name}/i18n/fonts/Widelands/Widelands.ttf
+ln -s $(fc-match -f "%{file}" "widelands") \
+   usr/share/%{name}/i18n/fonts/Widelands/Widelands.ttf
 
 # Scripting magic to add proper %%lang() markings to the locale files
-find usr/share/widelands/locale/ -maxdepth 1 -type d -name \*_\* | sed -n 's#\(usr/share/widelands/locale/\(.*\)_.*\)#%lang(\2) /\1#p' > %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
-find usr/share/widelands/locale/ -maxdepth 1 -type d ! -name "*_*" | sed -n -e 's#\(usr/share/widelands/locale/\(.\+\)\)#%lang(\2) /\1#p' >> %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
-find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name locale | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/widelands-%{buildid}-src-gcc7/%{name}.files
+find usr/share/widelands/locale/ -maxdepth 1 -type d -name \*_\* | sed -n 's#\(usr/share/widelands/locale/\(.*\)_.*\)#%lang(\2) /\1#p' > %{_builddir}/widelands-%{buildid}/%{name}.files
+find usr/share/widelands/locale/ -maxdepth 1 -type d ! -name "*_*" | sed -n -e 's#\(usr/share/widelands/locale/\(.\+\)\)#%lang(\2) /\1#p' >> %{_builddir}/widelands-%{buildid}/%{name}.files
+find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name locale | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/widelands-%{buildid}/%{name}.files
 popd
 
 
@@ -122,7 +178,11 @@ popd
 %doc ChangeLog CREDITS
 %doc --no-dereference COPYING
 %{_bindir}/%{name}
+%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
+%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/%{name}
@@ -130,6 +190,9 @@ popd
 
 
 %changelog
+* Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.77.build20
+- update
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.69.build19
 - update to new release by fcimport
 
