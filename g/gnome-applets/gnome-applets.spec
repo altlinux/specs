@@ -11,7 +11,7 @@
 %def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -31,7 +31,7 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 # From configure.ac
 %define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.36.0
+%define gnome_panel_ver 3.36.1
 %define libgtop_ver 2.12.0
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -42,24 +42,24 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 %define libgweather_ver 3.17.1
 %define nm_ver 0.7
 
-Requires: %name-charpick = %version-%release
-Requires: %name-drivemount = %version-%release
-Requires: %name-stickynotes = %version-%release
-Requires: %name-geyes = %version-%release
-Requires: %name-gweather = %version-%release
-Requires: %name-multiload = %version-%release
-Requires: %name-accessx-status = %version-%release
-Requires: %name-netspeed = %version-%release
-Requires: %name-brightness = %version-%release
-Requires: %name-inhibit = %version-%release
-Requires: %name-tracker-search-bar = %version-%release
-Requires: %name-window-buttons = %version-%release
-Requires: %name-window-title = %version-%release
-%{?_enable_frequency_selector:Requires: %name-cpufreq = %version-%release}
-%{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
-%{?_enable_battstat:Requires: %name-battstat = %version-%release}
-%{?_enable_command:Requires: %name-command = %version-%release}
-%{?_enable_timer:Requires: %name-timer = %version-%release}
+Requires: %name-charpick = %EVR
+Requires: %name-drivemount = %EVR
+Requires: %name-stickynotes = %EVR
+Requires: %name-geyes = %EVR
+Requires: %name-gweather = %EVR
+Requires: %name-multiload = %EVR
+Requires: %name-accessx-status = %EVR
+Requires: %name-netspeed = %EVR
+Requires: %name-brightness = %EVR
+Requires: %name-inhibit = %EVR
+Requires: %name-tracker-search-bar = %EVR
+Requires: %name-window-buttons = %EVR
+Requires: %name-window-title = %EVR
+%{?_enable_frequency_selector:Requires: %name-cpufreq = %EVR}
+%{?_enable_mini_commander:Requires: %name-mini-commander = %EVR}
+%{?_enable_battstat:Requires: %name-battstat = %EVR}
+%{?_enable_command:Requires: %name-command = %EVR}
+%{?_enable_timer:Requires: %name-timer = %EVR}
 
 # From configure.ac
 BuildRequires: autoconf-archive
@@ -139,7 +139,7 @@ This package contains common files needed to run GNOME panel applets.
 %package accessx-status
 Summary: Accessibility Keyboard Status Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description accessx-status
 This applet shows the status of the keyboard accessibility features,
@@ -150,7 +150,7 @@ use.
 %package battstat
 Summary: Laptop Power Subsystem Applet for the GNOME panel
 Group: Monitoring
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description battstat
 battstat-applet is a utility that displays the status of the power
@@ -161,7 +161,7 @@ remaining battery charge percentage in a graphical window.
 %package cpufreq
 Summary: GNOME CPUFreq Applet
 Group: Monitoring
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 Requires: polkit-gnome
 
 %description cpufreq
@@ -171,7 +171,7 @@ GNOME CPUFreq Applet is a CPU Frequency Scaling Monitor for GNOME Panel.
 Summary: Local authority configuration for GNOME CPUFreq Applet
 Group: Monitoring
 BuildArch: noarch
-Requires: %name-cpufreq = %version-%release
+Requires: %name-cpufreq = %EVR
 Requires: polkit-pkla-compat
 
 %description cpufreq-usermode
@@ -183,7 +183,7 @@ frequency via applet.
 %package charpick
 Summary: Character Picker Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description charpick
 charpick_applet allows you to easily write many characters which are not
@@ -193,7 +193,7 @@ mathematical  symbols and punctuation, and some other special symbols.
 %package drivemount
 Summary: Drive Mount Applet for the GNOME panel.
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description drivemount
 drivemount_applet allows to quickly and easily mount and unmount various
@@ -202,7 +202,7 @@ types of drives and file systems on computer.
 %package geyes
 Summary: gEyes Applet for the GNOME panel
 Group: Toys
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description geyes
 geyes_applet is a pair of eyes which follow mouse pointer around the screen.
@@ -210,7 +210,7 @@ geyes_applet is a pair of eyes which follow mouse pointer around the screen.
 %package gweather
 Summary: Weather Applet for the GNOME panel
 Group: Toys
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description gweather
 gweather displays the current temperature and weather conditions in
@@ -219,7 +219,7 @@ numeric and iconified form inside the applet.
 %package mini-commander
 Summary: Mini-Commander Applet for the GNOME panel
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description mini-commander
 mini_commander_applet adds a command line to your Panel. It features
@@ -231,7 +231,7 @@ view a web page or search for a man/info page etc.
 %package multiload
 Summary: Multiload (cpu, load average, memory, net, swap) applet for the GNOME panel
 Group: Monitoring
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 Requires: gnome-system-monitor
 
 %description multiload
@@ -241,7 +241,7 @@ Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
 %package stickynotes
 Summary: Stickynotes applet for the GNOME panel
 Group: Office
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 Requires: libwnck3 >= %libwnck_ver
 
 %description stickynotes
@@ -251,7 +251,7 @@ Gnome Desktop.
 %package trash
 Summary: GNOME Trash Applet
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 Requires: gvfs
 
 %description trash
@@ -261,7 +261,7 @@ Nautilus onto this applet to move them to your trash folder.
 %package windowpicker
 Summary: Window Picker for the GNOME panel
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description windowpicker
 This package provides a GNOME Window Picker Applet to switch between open
@@ -270,7 +270,7 @@ windows.
 %package netspeed
 Summary: Applet that shows traffic on a network device
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description netspeed
 netspeed_applet is a little GNOME applet that shows the traffic on a
@@ -279,7 +279,7 @@ specified network device.
 %package brightness
 Summary: Applet that allows to adjust laptop panel brightness
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description brightness
 This package provides brightness_applet for gnome-panel that allows user
@@ -288,7 +288,7 @@ to adjust laptop panel brightness.
 %package inhibit
 Summary: Applet that allows to inhibit automatic power saving
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description inhibit
 This package provides inhibit_applet for gnome-panel that allows user
@@ -297,7 +297,7 @@ to inhibit automatic power saving.
 %package tracker-search-bar
 Summary: Applet that allows to search with tracker
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 Requires: tracker
 
 %description tracker-search-bar
@@ -307,7 +307,7 @@ to search data quickly using Tracker.
 %package command
 Summary: Applet that shows the output of a command
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description command
 This package provides command-applet for gnome-panel that allows user
@@ -316,7 +316,7 @@ to show the output of a command.
 %package timer
 Summary: Applet that starts a timer
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description timer
 This package provides timer-applet for gnome-panel that allows user
@@ -325,7 +325,7 @@ to start a timer and receive a notification when it is finished.
 %package window-buttons
 Summary: Window Buttons applet
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description window-buttons
 This package provides window-buttons-applet for gnome-panel.
@@ -333,7 +333,7 @@ This package provides window-buttons-applet for gnome-panel.
 %package window-title
 Summary: Window Title applet
 Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %version-%release
+Requires(pre): %name-common = %EVR
 
 %description window-title
 This package provides window-title-applet for gnome-panel that display
@@ -348,13 +348,13 @@ window title.
 %patch1
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{?_enable_mini_commander:--enable-mini-commander} \
     %{?_disable_battstat:--disable-battstat} \
     %{?_disable_frequency_selector:--disable-frequency-selector}
-
+%nil
 %make_build
 
 %install
@@ -527,6 +527,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Thu Mar 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
