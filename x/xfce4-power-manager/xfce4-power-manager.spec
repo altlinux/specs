@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -25,6 +25,8 @@ BuildPreReq: exo-csource
 
 Requires: polkit
 Requires: upower
+
+Conflicts: xfce4-screensaver < 0.1.10-alt1
 
 %define _unpackaged_files_terminate_build 1
 
@@ -72,6 +74,10 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt3
+- Added conflict for broken xfce4-screensaver.
+- Dropped workaround for xfce4-screensaver.
+
 * Wed Mar 11 2020 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt2
 - Workaround for xfce4-screensaver.
 - Updated Url.
