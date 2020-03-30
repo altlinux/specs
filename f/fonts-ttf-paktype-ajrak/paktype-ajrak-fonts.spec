@@ -1,20 +1,20 @@
+Group: System/Fonts/True type
 %define oldname paktype-ajrak-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global priority 67
 %global fontname paktype-ajrak
-%global fontconf 67-paktype
-%global fontdir %{_datadir}/fonts/%{fontname}
+%global fontconf %{priority}-%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
-Version:     4.1
-Release:     alt1_7
+Version:     5.0
+Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 
-Group:	System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:	http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Ajrak-%{version}.tar.gz
-Source1:	%{fontconf}-ajrak.conf
+Source0:	https://sourceforge.net/projects/paktype/files/PakType-Release-2019-03-11.tar.gz#/%{oldname}-%{version}.tar.gz
+Source1:	%{fontconf}.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
@@ -27,28 +27,28 @@ Arabic from the PakType by Lateef Sagar.
 %setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
-mv PakType\ Ajrak.ttf PakType_Ajrak.ttf
-mv PakType\ Ajrak\ License.txt PakType_Ajrak_License.txt
-mv PakType\ Ajrak\ Features.pdf PakType_Ajrak_Features.pdf
-chmod a-x PakType_Ajrak.ttf PakType_Ajrak_License.txt PakType_Ajrak_Features.pdf
+mv License\ files/PakType\ Ajrak\ License.txt  PakType_Ajrak_License.txt
+mv Features/PakType\ Ajrak\ Features.pdf PakTypeAjrakFeatures.pdf
 
 sed -i 's/\r//' PakType_Ajrak_License.txt
+chmod a-x PakType_Ajrak_License.txt PakTypeAjrakFeatures.pdf
+
 
 %build
 echo "Nothing to do in Build."
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
-install -m 0644 -p PakType_Ajrak.ttf $RPM_BUILD_ROOT%{_fontdir}
+install -m 0644 -p PakTypeAjrak.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} \
-	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-ajrak.conf
+	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
 
-ln -s %{_fontconfig_templatedir}/%{fontconf}-ajrak.conf \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}-ajrak.conf
+ln -s %{_fontconfig_templatedir}/%{fontconf}.conf \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -84,15 +84,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
-%{_fontconfig_templatedir}/%{fontconf}-ajrak.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ajrak.conf
-%{_fontbasedir}/*/%{_fontstem}/PakType_Ajrak.ttf
+%{_fontconfig_templatedir}/%{fontconf}.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
+%{_fontbasedir}/*/%{_fontstem}/PakTypeAjrak.ttf
 
-%doc PakType_Ajrak_License.txt PakType_Ajrak_Features.pdf
-
+%doc PakType_Ajrak_License.txt PakTypeAjrakFeatures.pdf 
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_1
+- update
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
 - update to new release by fcimport
 
