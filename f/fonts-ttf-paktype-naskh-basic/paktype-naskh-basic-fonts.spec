@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname paktype-naskh-basic-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -5,34 +6,32 @@
 %global fontname paktype-naskh-basic
 %global fontconf %{priority}-%{fontname}
 
-Name:	fonts-ttf-paktype-naskh-basic
-Version:     4.1
-Release:     alt1_8
-Summary:     Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
-Group:		System/Fonts/True type
-License:     GPLv2 with exceptions
+Name:		fonts-ttf-paktype-naskh-basic
+Version:	5.0
+Release:	alt1_2
+Summary:	Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
+License:	GPLv2 with exceptions
 URL:		https://sourceforge.net/projects/paktype/
-Source0:     http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Naskh-Basic-%{version}.tar.gz
+Source0:	https://sourceforge.net/projects/paktype/files/PakType-Release-2019-03-11.tar.gz#/%{oldname}-%{version}.tar.gz
 Source1:	%{oldname}.conf
-BuildArch:   noarch
+BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
 
-%description 
+%description
 The paktype-naskh-basic-fonts package contains fonts for the display of \
 Arabic, Farsi, Urdu and Sindhi from PakType by Lateef Sagar.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
 rm -rf Code
+
 # get rid of the white space (' ')
-mv PakType\ Naskh\ Basic.ttf PakTypeNaskhBasic.ttf
-mv PakType\ Naskh\ Basic\ Features.pdf PakTypeNaskhBasicFeatures.pdf
-mv PakType\ Naskh\ Basic\ License.txt  PakType_Naskh_Basic_License.txt
+mv License\ files/PakType\ Naskh\ Basic\ License.txt  PakType_Naskh_Basic_License.txt
+mv Features/PakType\ Naskh\ Basic\ Features.pdf PakTypeNaskhBasicFeatures.pdf
 
 sed -i 's/\r//' PakType_Naskh_Basic_License.txt
 chmod a-x PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
-
 
 
 %build
@@ -85,14 +84,19 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasic.ttf
 
 %doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_2
+- update
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_8
 - update to new release by fcimport
 
