@@ -2,7 +2,7 @@
 %define        pkgname train
 
 Name:          gem-%pkgname
-Version:       3.2.24
+Version:       3.2.26
 Release:       alt1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 License:       MIT
@@ -79,8 +79,6 @@ Documentation files for %gemname-core gem.
 
 %prep
 %setup
-# TODO fix to upstream
-find -name bootstrap.sh |while read f; do sed 's,/tmp,$TMPDIR,' -i "$f"; done
 
 %build
 %ruby_build --ignore=train-local-rot13,train-test-fixture
@@ -109,6 +107,9 @@ find -name bootstrap.sh |while read f; do sed 's,/tmp,$TMPDIR,' -i "$f"; done
 
 
 %changelog
+* Thu Mar 26 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.26-alt1
+- ^ 3.2.24 -> 3.2.26
+
 * Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.24-alt1
 - ^ 3.1.1 -> 3.2.24
 - ! spec minorly
