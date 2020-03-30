@@ -1,7 +1,7 @@
 %define        pkgname aws-sdk
 
 Name: 	       ruby-%pkgname
-Version:       2.11.460
+Version:       2.11.478
 Release:       alt1
 Summary:       The official AWS SDK for Ruby
 License:       Apache-2.0
@@ -23,14 +23,12 @@ BuildRequires: gem(ruby-ll) >= 2.1
 BuildRequires: gem(ast)
 BuildRequires: gem(ox)
 BuildRequires: gem(nokogiri)
+BuildRequires: gem(jmespath)
 BuildRequires: ragel
 BuildRequires: /usr/bin/ruby-ll
 
 %gem_replace_version nokogiri >= 1.10
 %gem_replace_version yard >= 0.9
-%gem_replace_version aws-sdk = %version
-%gem_replace_version aws-sdk-core = %version
-%gem_replace_version aws-sdk-resources = %version
 
 %description
 The official AWS SDK for Ruby. Provides both resource oriented
@@ -129,7 +127,7 @@ Documentation files for %gemname gem.
 
 %files
 %doc README*
-%_libdir/%name
+%_libexecdir/%name
 %_bindir/aws.rb
 
 %files         -n gem-%pkgname
@@ -158,6 +156,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Mar 30 2020 Pavel Skrylev <majioa@altlinux.org> 2.11.478-alt1
+- ^ 2.11.478 -> 2.11.478
+- * moving code from %%_libdir -> %%_libexecdir
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.11.460-alt1
 - updated (^) 2.11.354 -> 2.11.460
 - fixed (!) spec

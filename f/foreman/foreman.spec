@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt1
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -57,10 +57,10 @@ BuildRequires:      node-sass
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
 %add_findreq_skiplist *.erb
-%add_findreq_skiplist %_libdir/%name/**/*
+%add_findreq_skiplist %_libexecdir/%name/**/*
 
 # npmjs
-%add_verify_elf_skiplist %_libdir/%name/**/*
+%add_verify_elf_skiplist %_libexecdir/%name/**/*
 # used binaries in node_modules
 ExclusiveArch: x86_64
 
@@ -106,13 +106,13 @@ make -C locale all-mo
 
 %install
 %ruby_install
-rm -rf %buildroot%_libdir/%name/extras/{jumpstart,spec}
+rm -rf %buildroot%_libexecdir/%name/extras/{jumpstart,spec}
 
 # Create VERSION file
-install -pm0644 VERSION %buildroot%_libdir/%name/VERSION
-cp -r node_modules/.bin %buildroot%_libdir/%name/node_modules/
+install -pm0644 VERSION %buildroot%_libexecdir/%name/VERSION
+cp -r node_modules/.bin %buildroot%_libexecdir/%name/node_modules/
 
-install -Dm0755 %SOURCE1 %buildroot%_libdir/%name/config/database.yml
+install -Dm0755 %SOURCE1 %buildroot%_libexecdir/%name/config/database.yml
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
@@ -123,8 +123,8 @@ install -Dm0755 %SOURCE8 %buildroot%_unitdir/%name.service
 
 # public www TODO
 mkdir -p %buildroot%webserver_datadir
-mv %buildroot%_libdir/%name/public %buildroot%webserver_datadir/%name
-ln -svr %webserver_datadir/%name %buildroot%_libdir/%name/public
+mv %buildroot%_libexecdir/%name/public %buildroot%webserver_datadir/%name
+ln -svr %webserver_datadir/%name %buildroot%_libexecdir/%name/public
 
 install -d %buildroot%_logdir/%name
 
@@ -132,7 +132,7 @@ install -d %buildroot%_logdir/%name
 # Add the "foreman" user and group
 getent group foreman >/dev/null || groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-useradd -r -g foreman -d %_libdir/%name -s /bin/bash -c "Foreman" _foreman
+useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
@@ -141,7 +141,7 @@ systemctl start postgresql || exit 1
 
 mkdir -m 750 -p %_var/tmp/%name/pids %_var/tmp/%name/sockets %_var/tmp/%name/cache
 mkdir -m 750 -p %_cachedir/%name
-ln -sf %_var/tmp/%name %_libdir/%name/tmp
+ln -sf %_var/tmp/%name %_libexecdir/%name/tmp
 ln -sf %_cachedir/%name %_var/tmp/%name/cache
 chown _foreman:foreman %_var/tmp/%name -R
 chown _foreman:foreman %_cachedir/%name -R
@@ -149,7 +149,7 @@ chown _foreman:foreman %_cachedir/%name -R
 export RAILS_ENV=production
 
 appname=%name
-datadir=%_libdir
+datadir=%_libexecdir
 # CONFDIR=/etc
 rootdir=$datadir/$appname
 confdir=$rootdir/config
@@ -230,7 +230,7 @@ chown _foreman $datadir/$appname/log/*.log -R 2>/dev/null
 %preun_service foreman
 # %preun_service dynflowd
 
-rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name %_libdir/%name/Gemfile.lock
+rm -rf %_libexecdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name %_libexecdir/%name/Gemfile.lock
 
 
 %files
@@ -239,7 +239,7 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 # %config(noreplace) %_sysconfdir/%name/logging.yaml
 # %config(noreplace) %_sysconfdir/%name/settings.yaml
 # %dir %_sysconfdir/%name/plugins
-%_libdir/%name
+%_libexecdir/%name
 # %exclude %_datadir/%name/bundler.d/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_logrotatedir/%name
@@ -257,6 +257,9 @@ rm -rf %_libdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name
 %ruby_ridir/*
 
 %changelog
+* Mon Mar 30 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt2
+- * moving code from %%_libdir -> %%_libexecdir
+
 * Mon Mar 02 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt1
 - updated (^) 1.22.2 -> 1.24.2
 - updated (^) node modules
