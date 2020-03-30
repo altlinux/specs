@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname xmlschema
 
-%def_with bootstrap
+%def_without bootstrap
 %def_without check
 
 Name: python3-module-%oname
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: XML Schema validator and data conversion library
 License: MIT
@@ -61,6 +61,9 @@ tox.py3 --sitepackages -vr -- -v
 
 
 %changelog
+* Mon Mar 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.2-alt2
+- Requires fixed.
+
 * Mon Mar 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.2-alt1
 - Version updated to 1.1.2.
 
