@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.20.7
-Release: alt2
+Version: 1.20.8
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -308,6 +308,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Mar 30 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.8-alt1
+- 1.20.8
+
 * Thu Feb 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.7-alt2
 - fixed provides XORG_ABI_VIDEODRV
 
