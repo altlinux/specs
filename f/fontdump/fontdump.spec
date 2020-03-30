@@ -1,37 +1,38 @@
+Group: Publishing
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%{?python_enable_dependency_generator}
 %global srcname fontdump
 %global sum Dump the CSS and different formats of fonts for Google Fonts
 
-Name:       %{srcname}
-Version:    1.3.0
-Release:    alt2
+Name:           %{srcname}
+Version:        1.3.0
+Release:        alt2_19
+Summary:        %{sum}
 
-Summary:    %{sum}
-License:    MIT
-Group:      Publishing
-URL:        https://github.com/glasslion/fontdump
-BuildArch:  noarch
+License:        MIT
+URL:            https://github.com/glasslion/fontdump
+Source0:        %{srcname}-%version.tar.gz
 
-Source0:    http://pypi.python.org/packages/source/f/%{srcname}/%{srcname}-%{version}.tar.gz
-Source44:   import.info
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-cssutils
-BuildRequires: python3-module-docopt
-BuildRequires: python3-module-requests
-
-%py3_requires cssutils docopt fontdump requests
-
+BuildArch:      noarch
+BuildRequires:  python3-devel
+Requires:       python3-module-fontdump
+Source44: import.info
 
 %description
 A command line tool to dump the CSS and different formats of fonts for Google
 Fonts, so you can serve them on your local servers.
 
 %package -n python3-module-fontdump
-Summary: %{sum}
 Group: Publishing
-%{?python_provide:%python_provide python3-%{srcname}}
+Summary:        %{sum}
+BuildRequires:   python3-module-docopt
+BuildRequires:   python3-module-cssutils
+BuildRequires:   python3-module-requests
 
 %description -n python3-module-fontdump
 A command line tool to dump the CSS and different formats of fonts for Google
@@ -49,19 +50,21 @@ sed -i -e '/^#!\//, 1d' fontdump/*.py
 %python3_install
 
 %check
-%__python3 setup.py test
+%{__python3} setup.py test
 
 %files
-%_bindir/%srcname
+%{_bindir}/%{srcname}
 
 %files -n python3-module-fontdump
 %doc PKG-INFO
 %doc --no-dereference LICENSE
-%python3_sitelibdir_noarch/%srcname
-%python3_sitelibdir_noarch/*.egg-info
-
+%{python3_sitelibdir_noarch}/%{srcname}
+%{python3_sitelibdir_noarch}/%{srcname}-%{version}-py3.*.egg-info
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_19
+- update
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
 - python2 disabled
 
