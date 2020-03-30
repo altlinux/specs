@@ -1,7 +1,7 @@
 %define   pkgname fluentd
 Name:    ruby-fluentd
 Version: 1.9.3
-Release: alt1
+Release: alt2
 
 Summary: Fluentd: Unified Logging Layer (project under CNCF)
 License: Apache-2.0
@@ -58,9 +58,12 @@ install -pDm 0644 fluent.conf %buildroot%_sysconfdir/fluent/fluent.conf
 %config(noreplace) %_sysconfdir/fluent/fluent.conf
 
 %files doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
 
 %changelog
+* Mon Mar 30 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.9.3-alt2
+- Change used ruby documentation macro
+
 * Thu Mar 19 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.9.3-alt1
 - new version 1.9.3
 
