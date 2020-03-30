@@ -3,7 +3,7 @@
 Name: wireguard-tools
 
 Version: 1.0.20200319
-Release: alt1
+Release: alt2
 
 Summary: Tools for WireGuard: fast, modern, secure VPN tunnel
 Summary(ru_RU.UTF-8): Утилиты для WireGuard, быстрого, современного, защищенного VPN-туннеля
@@ -24,6 +24,7 @@ Summary(ru_RU.UTF-8): Дополнительные утилиты для WireGua
 License: GPLv2
 Group: Networking/Remote access
 Requires: %name = %EVR
+Provides: wg-quick = %EVR
 Obsoletes: wg-quick < %EVR
 Conflicts: bash-completion-wireguard < %EVR
 BuildArch: noarch
@@ -95,6 +96,9 @@ popd
 %doc contrib/*
 
 %changelog
+* Mon Mar 30 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200319-alt2
+- Spec: add Provides: for wg-quick
+
 * Fri Mar 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200319-alt1
 - New version
 
