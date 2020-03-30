@@ -2,8 +2,8 @@
 %define        pkgname sdoc
 
 Name:          %pkgname
-Version:       1.0.0
-Release:       alt2
+Version:       1.1.0
+Release:       alt1
 Summary:       rdoc generator html with javascript search index
 License:       MIT
 Group:         Development/Ruby
@@ -75,6 +75,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Mar 30 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt2
 - Use Ruby Policy 2.0
 
