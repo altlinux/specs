@@ -1,7 +1,7 @@
 %def_without gtk3
 Name: wm-select
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Application for selecting window manager at startup
 License: GPLv2+
@@ -22,7 +22,6 @@ at X startup.
 
 %prep
 %setup
-sed -i 's, -Werror,,' Makefile
 
 %build
 %make_build CFLAGS="%optflags" \
@@ -44,6 +43,9 @@ done
 %_bindir/*
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1
+- new version (-Werror compatible)
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2
 - to Sisyphus
 
