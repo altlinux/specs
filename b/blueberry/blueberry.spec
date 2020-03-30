@@ -1,6 +1,6 @@
 Name: blueberry
-Version: 1.3.5
-Release: alt1
+Version: 1.3.6
+Release: alt2
 Summary: A Bluetooth configuration tool
 License: GPLv3
 Group: System/Configuration/Hardware
@@ -57,6 +57,12 @@ Blueberry applet for Cinnamon
 %_datadir/cinnamon/applets/blueberry@cinnamon.org
 
 %changelog
+* Mon Mar 30 2020 Vladimir Didenko <cow@altlinux.org> 1.3.6-alt2
+- Don't use symbolic tray icon by default (looks bad in xfce tray)
+
+* Thu Mar 26 2020 Vladimir Didenko <cow@altlinux.org> 1.3.6-alt1
+- 1.3.6
+
 * Mon Feb 17 2020 Vladimir Didenko <cow@altlinux.org> 1.3.5-alt1
 - 1.3.5
 
