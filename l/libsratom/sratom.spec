@@ -1,5 +1,4 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
 BuildRequires: waf
 # END SourceDeps(oneline)
 Group: System/Libraries
@@ -9,20 +8,19 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
-%define version 0.6.2
+%define version 0.6.4
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
-Version:    0.6.2
-Release:    alt1_3
+Version:    0.6.4
+Release:    alt1_2
 Summary:    A C library for serializing LV2 plugins
 
 License:    MIT
 URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
-BuildRequires:  python
-BuildRequires:  python-devel
+BuildRequires:  python3
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.14.0
@@ -63,7 +61,7 @@ sed -i -e "s| '-ftest-coverage'\]|\
 
 %build
 
-%{__python} waf configure -v \
+python3 waf configure -v \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
@@ -71,12 +69,12 @@ sed -i -e "s| '-ftest-coverage'\]|\
     --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
-%{__python} waf build -v %{?_smp_mflags}
+python3 waf build -v %{?_smp_mflags}
 
 %install
-DESTDIR=%{buildroot} %{__python} waf install
+DESTDIR=%{buildroot} python3 waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
-install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
+install -pm 644 COPYING NEWS README.md %{buildroot}%{_docdir}/%{oldname}
 
 %check
 ./build/sratom_test
@@ -96,6 +94,9 @@ install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_2
+- update
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_3
 - update to new release by fcimport
 
