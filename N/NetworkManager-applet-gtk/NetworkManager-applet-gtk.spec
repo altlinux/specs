@@ -16,7 +16,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.16.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -29,6 +29,8 @@ Patch: nm-applet-%version-%release.patch
 # change for now. This patch reverts commit
 # 31c0d3c6b8db22ba464024be7e7cbe31da983a29
 Patch1: remove-disable-method.patch
+
+BuildRequires(pre): meson
 
 BuildRequires: libgtk+3-devel libtool
 BuildRequires: libnotify-devel
@@ -59,31 +61,37 @@ NetworkManager, including a panel applet for wireless networks.
 %patch -p1
 %patch1 -p1
 %build
+%meson \
+    --libexecdir==%_libexecdir/NetworkManager \
+    --localstatedir=%_var \
+%if_with selinux
+    -Dselinux=true \
+%else
+    -Dselinux=false \
+%endif
+%if_with appindicator
+    -Dappindicator=yes \
+%else
+    -Dappindicator=no \
+%endif
+%if_with team
+    -Dteam=true \
+%else
+    -Dteam=false \
+%endif
+	-Dwwan=true
 
-%autoreconf
-# Use GETTEXT_PACKAGE as PACKAGE:
-# these variables are not the same and gettext doesn't use GETTEXT_PACKAGE at all.
-sed -i 's/^PACKAGE = @PACKAGE@/PACKAGE = @GETTEXT_PACKAGE@/' po/Makefile.in.in
-%configure \
-	--libexecdir=%_libexecdir/NetworkManager \
-	--localstatedir=%_var \
-	%{subst_with selinux} \
-	--with-wwan \
-	%{subst_with appindicator} \
-	%{subst_with team} \
-	--enable-more-warnings=%more_warnings
-
-%make_build
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang nm-applet
 
 # For VPN plugins
 mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 
 %check
-make check
+%meson_test
 
 %files -f nm-applet.lang
 %_bindir/*
@@ -97,6 +105,9 @@ make check
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt2
+- Fixed wireless page.
+
 * Fri Mar 27 2020 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
 - Drop libnma.
 - Remove libnm-gtk from spec.
