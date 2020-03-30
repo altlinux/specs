@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.3.2
-Release: alt1
+Release: alt2
 
 Summary: Python test framework
 License: MIT
@@ -97,6 +97,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
 mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
+ln -s py.test3 %buildroot%_bindir/py.test-3
+ln -s pytest3 %buildroot%_bindir/pytest-3
 
 %check
 # add workaround for https://github.com/pytest-dev/pytest/issues/6297
@@ -109,14 +111,19 @@ tox.py3 --sitepackages -v
 %files
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test3
+%_bindir/py.test-3
 %python3_sitelibdir/pytest/
 %python3_sitelibdir/_pytest/
 %python3_sitelibdir/pytest-*.egg-info/
 
 %files -n pytest3
 %_bindir/pytest3
+%_bindir/pytest-3
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.3.2-alt2
+- NMU: added py.test-3 & pytest-3 compat symlinks
+
 * Mon Dec 16 2019 Stanislav Levin <slev@altlinux.org> 5.3.2-alt1
 - 5.3.1 -> 5.3.2.
 
