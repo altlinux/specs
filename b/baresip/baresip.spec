@@ -1,6 +1,6 @@
 Name: baresip
-Version: 0.6.1
-Release: alt2
+Version: 0.6.5
+Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
 License: BSD
@@ -45,6 +45,9 @@ and srtp media encoding.
 %_datadir/%name
 
 %changelog
+* Mon Mar 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.5-alt1
+- new version 0.6.5 (with rpmrb script)
+
 * Fri Jul 12 2019 Michael Shigorin <mike@altlinux.org> 0.6.1-alt2
 - fix modpath properly
 
