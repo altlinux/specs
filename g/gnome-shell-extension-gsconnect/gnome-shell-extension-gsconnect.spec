@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 35
+%define ver_major 36
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -75,6 +75,9 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %doc README.md
 
 %changelog
+* Mon Mar 30 2020 Yuri N. Sedunov <aris@altlinux.org> 36-alt1
+- 36
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 35-alt1
 - updated to v35-3-g006e3a02
 
