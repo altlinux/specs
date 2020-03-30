@@ -1,22 +1,23 @@
+Group: System/Fonts/True type
 %define oldname paktype-naqsh-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global priority 67
 %global fontname paktype-naqsh
-%global fontconf 67-paktype
+%global fontconf %{priority}-%{fontname}
 
-Name:	fonts-ttf-paktype-naqsh
-Version:     4.1
-Release:     alt1_7
-Summary:     Fonts for Arabic from PakType
+Name:		fonts-ttf-paktype-naqsh
+Version:	5.0
+Release:	alt1_1
+Summary:	Fonts for Arabic from PakType
 
-Group:	System/Fonts/True type
-License:     GPLv2 with exceptions
-URL:	https://sourceforge.net/projects/paktype/
-Source0:    http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Naqsh-%{version}.tar.gz
-Source1:	%{fontconf}-naqsh.conf
-BuildArch:   noarch
+License:	GPLv2 with exceptions
+URL:		https://sourceforge.net/projects/paktype/
+Source0:	https://sourceforge.net/projects/paktype/files/PakType-Release-2019-03-11.tar.gz#/%{oldname}-%{version}.tar.gz
+Source1:	%{fontconf}.conf
+BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-Obsoletes: paktype-fonts-common < %{version}i-%{release}
+Obsoletes:	paktype-fonts-common < %{version}i-%{release}
 Source44: import.info
 
 
@@ -28,28 +29,28 @@ Arabic from the PakType by Lateef Sagar.
 %setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
-mv PakType\ Naqsh.ttf PakType_Naqsh.ttf
-mv PakType\ Naqsh\ License.txt PakType_Naqsh_License.txt
-mv PakType\ Naqsh\ Features.pdf PakType_Naqsh_Features.pdf
+mv License\ files/PakType\ Naqsh\ License.txt  PakType_Naqsh_License.txt
+mv Features/PakType\ Naqsh\ Features.pdf PakTypeNaqshFeatures.pdf
 
 sed -i 's/\r//' PakType_Naqsh_License.txt
-chmod a-x PakType_Naqsh.ttf PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf
+chmod a-x PakType_Naqsh_License.txt PakTypeNaqshFeatures.pdf
+
 
 %build
 echo "Nothing to do in Build."
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
-install -m 0644 -p PakType_Naqsh.ttf $RPM_BUILD_ROOT%{_fontdir}
+install -m 0644 -p PakTypeNaqsh.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} \
-	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-naqsh.conf
+	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
 
-ln -s %{_fontconfig_templatedir}/%{fontconf}-naqsh.conf \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}-naqsh.conf
+ln -s %{_fontconfig_templatedir}/%{fontconf}.conf \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -87,13 +88,17 @@ fi
 
 
 %files
-%{_fontconfig_templatedir}/%{fontconf}-naqsh.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-naqsh.conf
-%{_fontbasedir}/*/%{_fontstem}/PakType_Naqsh.ttf
+%{_fontconfig_templatedir}/%{fontconf}.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
+%{_fontbasedir}/*/%{_fontstem}/PakTypeNaqsh.ttf
 
-%doc PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf 
+%doc PakType_Naqsh_License.txt PakTypeNaqshFeatures.pdf 
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1_1
+- update
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
 - update to new release by fcimport
 
