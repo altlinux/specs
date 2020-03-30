@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       1.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Easily find out the truthiness of any Ruby object
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/ymendel/truthy
-%vcs           https://github.com/ymendel/truthy.git
+Vcs:           https://github.com/ymendel/truthy.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -58,5 +58,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon Mar 30 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt2
+- ! spec tags
+- ! build with new hoe 3.22.1
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
