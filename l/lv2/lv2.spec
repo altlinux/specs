@@ -1,18 +1,18 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python3
 BuildRequires: waf
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lv2
-%define version 1.14.0
+%define version 1.16.0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.14.0
-Release:        alt1_9
+Version:        1.16.0
+Release:        alt1_3
 Summary:        Audio Plugin Standard
 
 # lv2specgen template.html is CC-AT-SA
@@ -20,11 +20,14 @@ License:        ISC
 URL:            http://lv2plug.in
 Source:         http://lv2plug.in/spec/lv2-%{version}.tar.bz2
 
-BuildRequires:  doxygen graphviz libgraphviz python-module-rdflib
+BuildRequires:  doxygen
+BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsndfile-devel
 BuildRequires:  gcc
-BuildRequires:  python-module-Pygments
-BuildRequires:  python-devel
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-Pygments
+Buildrequires:  python3-module-rdflib
+Buildrequires:  asciidoc asciidoc-a2x
 
 # this package replaces lv2core 
 Provides:       lv2core = 6.0-4
@@ -52,7 +55,7 @@ Group: Development/C
 Summary:        API for the LV2 Audio Plugin Standard
 
 Requires:       %{name} = %{version}-%{release}
-Requires:       python-module-rdflib
+Requires:       python3-module-rdflib
 Provides:       lv2core-devel = 6.0-4
 Obsoletes:      lv2core-devel < 6.0-4
 Provides:       lv2-ui-devel = 2.4-5
@@ -86,29 +89,27 @@ Example LV2 audio plugins
 %prep
 %setup -q
 # Fix wrong interpreter in lv2specgen.py
-sed -i '1s|^#!.*|#!%{__python}|' lv2specgen/lv2specgen.py
+sed -i '1s|^#!.*|#!%{__python3}|' lv2specgen/lv2specgen.py
 
+#rm -rf waflib
 %build
-export CFLAGS="%{optflags}"
-export LDFLAGS="%{__global_ldflags}"
-%{__python} waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} --debug \
-  --docs --docdir=%{_docdir}/%{name} --lv2dir=%{_libdir}/lv2
-%{__python} waf -vv %{?_smp_mflags}
+
+python3 ./waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} \
+  --lv2dir=%{_libdir}/lv2
+python3 ./waf -vv %{?_smp_mflags}
 
 %install
-DESTDIR=%buildroot %{__python} waf -vv install
-mv %{buildroot}%{_docdir}/%{name}/%{name}/lv2plug.in/* %{buildroot}%{_docdir}/%{name}
-find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
-for f in COPYING NEWS README.md ; do
-    install -p -m0644 $f %{buildroot}%{_docdir}/%{name}
-done
+DESTDIR=%buildroot %{__python3} waf -vv install
+#mv %{buildroot}%{_docdir}/%{name}/%{name}/lv2plug.in/* %{buildroot}%{_docdir}/%{name}
+#find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
+#for f in COPYING NEWS README.md build/plugins/book.{txt,html} ; do
+#    install -p -m0644 $f %{buildroot}%{_docdir}/%{name}-%version
+#done
 
 %files
-# don't include doc files via %%doc here (bz 913540)
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/COPYING
-%{_docdir}/%{name}/NEWS
-%{_docdir}/%{name}/README.md
+%doc COPYING
+%doc NEWS
+%doc README.md
 %{_libdir}/%{name}/
 
 %exclude %{_libdir}/%{name}/*/*.[ch]
@@ -116,11 +117,11 @@ done
 
 %files devel
 %{_bindir}/lv2specgen.py
+%{_bindir}/lv2_validate
 %{_datadir}/lv2specgen
 %{_includedir}/%{name}.h
 %{_includedir}/%{name}/
 %{_libdir}/%{name}/*/*.[hc]
-%{_libdir}/pkgconfig/lv2core.pc
 %{_libdir}/pkgconfig/%{name}.pc
 
 %exclude %{_libdir}/%{name}/eg-*
@@ -128,10 +129,13 @@ done
 %files example-plugins
 %{_libdir}/%{name}/eg-*
 
-%files doc
-%{_docdir}/%{name}/
+#%files doc
+#%doc build/plugins/book.{txt,html}
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_3
+- new version
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_9
 - update to new release by fcimport
 
