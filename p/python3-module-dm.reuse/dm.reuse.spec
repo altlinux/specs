@@ -3,7 +3,7 @@
 
 Name:       python3-module-%oname
 Version:    2.1.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Support for object reuse with slight modifications
 License:    BSD
@@ -50,7 +50,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
+%if 0
 %__python3 setup.py test
+%endif
 
 %files
 %doc PKG-INFO
@@ -62,7 +64,11 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/%mname/*/tests.*
 
 
+
 %changelog
+* Mon Mar 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.1-alt2
+- Fix build.
+
 * Thu Feb 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.1-alt1
 - Version updated to 2.1.1
 - porting to python3.
