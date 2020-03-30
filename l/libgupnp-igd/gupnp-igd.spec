@@ -3,19 +3,19 @@
 %define _name gupnp-igd
 %define ver_major 0.2
 %define api_ver 1.0
+%define gupnp_api_ver 1.2
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_disable python
 %def_enable check
 
-Name: libgupnp-igd
+Name: lib%_name
 Version: %ver_major.5
-Release: alt3
+Release: alt4
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1
 Url: http://www.gupnp.org/
 
 %if_disabled snapshot
@@ -23,16 +23,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-# 63531558a16ac2334a from new-gupnp branch
-Patch: libgupnp-igd-0.2.5-up-gupnp-1.2.patch
 
 %define gupnp_ver 1.2.1
+%define glib_ver 2.38
 
-BuildRequires(pre): rpm-build-gir
-BuildRequires: libgupnp1.2-devel >= %gupnp_ver
-BuildRequires: glib2-devel >= 2.26 gtk-doc
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgupnp-gir-devel}
-%{?_enable_python:BuildRequires: python-module-pygobject-devel python-module-pygtk-devel}
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver
+BuildRequires: glib2-devel >= %glib_ver
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgupnp%gupnp_api_ver-gir-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -44,7 +43,7 @@ The gUPnP API is intended to be easy to use, efficient and flexible.
 %package devel
 Summary: Development files and libraries for gUPnP-IGD
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -71,7 +70,7 @@ This package provides development documentations for gUPnP-IGD.
 %package gir
 Summary: GObject introspection data for the gUPnP-IGD library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the gUPnP-IGD library
@@ -80,46 +79,32 @@ GObject introspection data for the gUPnP-IGD library
 Summary: GObject introspection devel data for the gUPnP-IGD library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the gUPnP-IGD library
 
-%package -n python-module-%name
-Summary: Python bindings for gUPnP-IGD
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description -n python-module-%name
-gUPnP is an object-oriented open source framework for creating UPnP
-devices and control points, written in C using GObject and libsoup.
-The gUPnP API is intended to be easy to use, efficient and flexible.
-
-%name is a library to handle UPnP IGD port mapping.
-This package provides Python bindings for gUPnP-IGD
-
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable python}
-
-%make_build
+%meson \
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS README ChangeLog
+%doc AUTHORS README NEWS
 
 %files devel
 %_includedir/*
@@ -137,11 +122,14 @@ This package provides Python bindings for gUPnP-IGD
 %_girdir/GUPnPIgd-%api_ver.gir
 %endif
 
-%{?_enable_python:%files -n python-module-%name
-%python_sitelibdir/gupnp/*
-%exclude %python_sitelibdir/gupnp/*.la}
 
 %changelog
+* Mon Mar 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt4
+- updated to 0.2.5-21-g230402e (ported to Meson build system,
+  removed python bindings)
+- fixed buildreqs
+- fixed license tag
+
 * Mon Dec 30 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt3
 - rebuilt aganst gupnp-1.2
 - disabled python2 support
