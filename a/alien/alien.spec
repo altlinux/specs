@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95
-Release: alt7
+Release: alt8
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -52,6 +52,9 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Mon Jun 24 2019 Andrey Cherepanov <cas@altlinux.org> 8.95-alt8
+- Replace %% for %%%% in RPM scripts.
+
 * Thu Jun 13 2019 Andrey Cherepanov <cas@altlinux.org> 8.95-alt7
 - Store RPM scripts in plaintext format.
 
