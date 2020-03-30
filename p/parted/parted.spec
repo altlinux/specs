@@ -26,7 +26,7 @@ Name: parted
 Version: 3.2
 %define prerel %nil
 %define git_version %{version}.46-e4ae
-Release: alt5
+Release: alt6
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.UTF-8): Универсальний інструмент для роботи з разділами диску
@@ -42,6 +42,8 @@ Source: %name-%git_version.tar.xz
 %endif
 Source1: %name-pam
 Source2: %name-security
+
+Patch1: linux-Include-sys-sysmacros.h-for-major-macro.patch
 
 Requires: %lname = %version-%release
 
@@ -140,6 +142,7 @@ with %lname.
 %else
 %setup -n %name-%git_version
 %endif
+%patch1 -p1
 
 %build
 %autoreconf
@@ -235,6 +238,9 @@ __MENU__
 
 
 %changelog
+* Mon Mar 30 2020 Nikita Ermakov <arei@altlinux.org> 3.2-alt6
+- Fix building with glibc >= 2.27.
+
 * Mon Nov 19 2018 Anton Farygin <rider@altlinux.ru> 3.2-alt5
 - fixed charset in package summary and description (closes: #33045)
 
