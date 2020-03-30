@@ -13,7 +13,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.8
+Version: 1.3.9
 Release: alt2
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -171,17 +171,19 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %doc README.md AUTHORS COPYING
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
+%config(noreplace)%_sysconfdir/fwupd/upower.conf
 %dir %_libexecdir/fwupd
 %dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
-%_libexecdir/fwupd/fwupdtool
-%_libexecdir/fwupd/fwupdagent
+%_bindir/fwupdtool
+%_bindir/fwupdagent
 %_libexecdir/fwupd/fwupdoffline
-%_libexecdir/fwupd/fwupdtpmevlog
+%_bindir/fwupdtpmevlog
 %_datadir/bash-completion/completions/*
+%_datadir/fish/vendor_completions.d/fwupdmgr.fish
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 %if_enabled uefi
-%_libexecdir/fwupd/fwupdate
+%_bindir/fwupdate
 %_libdir/efi/fwupd*.efi
 %endif
 %_bindir/dfu-tool
@@ -249,6 +251,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_solokey.so
 %_libdir/fwupd-plugins-3/libfu_plugin_steelseries.so
 %_libdir/fwupd-plugins-3/libfu_plugin_jabra.so
+%_libdir/fwupd-plugins-3/libfu_plugin_logind.so
 %_libdir/fwupd-plugins-3/libfu_plugin_optionrom.so
 %_libdir/fwupd-plugins-3/libfu_plugin_synaptics_rmi.so
 %_libdir/fwupd-plugins-3/libfu_plugin_vli.so
@@ -304,6 +307,9 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Mon Mar 30 2020 Anton Farygin <rider@altlinux.ru> 1.3.9-alt2
+- 1.3.9
+
 * Thu Mar 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.8-alt2
 - Rebuilt with libgusb 0.3.4 due to broken symbol versioning
   of g_usb_version_string function.
