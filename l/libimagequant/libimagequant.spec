@@ -1,9 +1,10 @@
+BuildRequires: libgomp-devel /proc
 Group: Development/C
-BuildRequires: /proc
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libimagequant
-Version:        2.12.2
+Version:        2.12.6
 Release:        alt1_2
 Summary:        Palette quantization library
 
@@ -13,8 +14,6 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 # Fix shared library permissions
 Patch0:         libimagequant_solibperm.patch
-# Fix some "error: '<var>' not specified in enclosing 'parallel'" errors
-Patch1:         libimagequant_omp.patch
 
 BuildRequires:  gcc
 Source44: import.info
@@ -37,11 +36,11 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+
 
 
 %build
-%configure --without-openmp
+%configure --with-openmp
 %make_build
 
 
@@ -67,6 +66,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.a
 
 
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 2.12.6-alt1_2
+- update
+
 * Tue Feb 19 2019 Igor Vlasenko <viy@altlinux.ru> 2.12.2-alt1_2
 - new version
 
