@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libnumpy-devel
@@ -11,13 +11,13 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.24.4
+%define version 0.24.6
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.24.4
-Release:    alt1_7
+Version:    0.24.6
+Release:    alt1_2
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
@@ -27,20 +27,21 @@ BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.14.0
 BuildRequires:  libsratom-devel >= 0.4.4
-BuildRequires:  lv2-devel >= 1.14.0
+BuildRequires:  lv2-devel >= 1.16.0
 BuildRequires:  python3
+BuildRequires:  python3-devel
 BuildRequires:  swig
-BuildRequires:  python3-module-numpy python3-module-numpy-testing
-BuildRequires:  libserd-devel >= 0.18.0
+BuildRequires:  libserd-devel >= 0.30.0
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+BuildRequires:  libsndfile-devel >= 1.0.0
 Source44: import.info
 Provides: lilv = %{version}-%{release}
 
 %description
-%{oldname} is a library to make the use of LV2 plugins as simple as possible 
-for applications. Lilv is the successor to SLV2, rewritten to be significantly 
-faster and have minimal dependencies. 
+%{oldname} is a library to make the use of LV2 plugins as simple as possible
+for applications. Lilv is the successor to SLV2, rewritten to be significantly
+faster and have minimal dependencies.
 
 %package devel
 Group: Development/Other
@@ -49,10 +50,22 @@ Requires:   %{name} = %{version}-%{release}
 Provides: lilv-devel = %{version}-%{release}
 
 %description devel
-%{oldname} is a lightweight C library for Resource Description Syntax which 
+%{oldname} is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
 
 This package contains the headers and development libraries for %{oldname}.
+
+%package -n python3-module-lilv
+Group: System/Libraries
+%{?python_provide:%python_provide python3-%{oldname}}
+Summary:    Python bindings for %{oldname}
+Requires:   %{name} = %{version}-%{release}
+
+%description -n python3-module-lilv
+%{oldname} is a lightweight C library for Resource Description Syntax which
+supports reading and writing Turtle and NTriples.
+
+This package contains the python libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q 
@@ -65,10 +78,11 @@ sed -i -e "s|'-ftest-coverage'\]|\
 %build
 
 export LINKFLAGS="%{__global_ldflags}"
-python3 waf configure -v --prefix=%{_prefix}\
- --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
- --docdir=%{_docdir}/%{oldname}\
- --docs --test --dyn-manifest
+python3 waf configure -v --prefix=%{_prefix} \
+ --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir} \
+ --docdir=%{_docdir}/%{oldname} \
+ --docs --test --dyn-manifest \
+ --default-lv2-path=%{_libdir}/lv2
 python3 waf -v build %{?_smp_mflags}
 
 %install
@@ -79,7 +93,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 ./build/test/lilv_test
 
 %files
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %doc --no-dereference COPYING
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
@@ -87,6 +101,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_bindir}/lv2info
 %{_bindir}/lv2ls
 %{_bindir}/lv2bench
+%{_bindir}/lv2apply
 %{_sysconfdir}/bash_completion.d/lilv
 %{_mandir}/man1/*
 
@@ -97,7 +112,14 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_mandir}/man3/*
 
+%files -n python3-module-lilv
+%{python3_sitelibdir_noarch}/%{oldname}.*
+%{python3_sitelibdir_noarch}/__pycache__/*
+
 %changelog
+* Mon Mar 30 2020 Igor Vlasenko <viy@altlinux.ru> 0.24.6-alt1_2
+- update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.24.4-alt1_7
 - update to new release by fcimport
 
