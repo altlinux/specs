@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.4.3
 Release: alt2
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -15,8 +15,7 @@ Url: https://pypi.org/project/elementpath/
 BuildArch: noarch
 
 # Source-git: https://github.com/sissaschool/elementpath
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -32,8 +31,7 @@ structures, both for the standard ElementTree library and for the lxml.etree
 library.
 
 %prep
-%setup
-%patch -p1
+%setup -q -n %oname-%version
 
 # break circle dependencies during testing
 # note: xmlschema requires elementpath for testing too
@@ -58,6 +56,9 @@ LANG=en_US.utf8 tox.py3 --sitepackages -vr -p auto -o
 
 
 %changelog
+* Mon Mar 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
+- Version updated to 1.4.3.
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt2
 - Build for python2 disabled.
 
