@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.29.1
-Release: alt7
+Release: alt8
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -22,7 +22,9 @@ BuildRequires(pre): rpm-macros-luajit
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
+BuildRequires: libpulseaudio-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel libjack-devel
+
+BuildRequires: libenca-devel libuchardet-devel
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -92,6 +94,9 @@ chmod ugo+rx waf
 %install
 ./waf install --destdir=%buildroot
 
+rm -rfv %buildroot/share/
+rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
+
 %files
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/encoding-profiles.conf
@@ -100,6 +105,7 @@ chmod ugo+rx waf
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
 %doc Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
 
@@ -115,6 +121,10 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 0.29.1-alt8
+- NMU: add BR: libuchardet to fix auto guess of subtitle encoding
+- NMU: fix unpacked files
+
 * Sun Mar  1 2020 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt7
 - Fix FTBFS (replace bin/python -> bin/python2 in waf.py)
 
