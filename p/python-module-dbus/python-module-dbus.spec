@@ -9,11 +9,11 @@
 %def_enable documentation
 
 Name: python-module-dbus
-Version: 1.2.14
-Release: alt3
+Version: 1.2.16
+Release: alt1
 
 Summary: Python bindings for D-BUS library
-License: AFL/GPL
+License: MIT
 Group: Development/Python
 Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
@@ -55,7 +55,7 @@ D-Bus bindings for use with python programs
 
 %package -n python3-module-dbus
 Summary: Python3 bindings for D-BUS library
-License: AFL/GPL
+License: MIT
 Group: Development/Python3
 Requires: dbus >= %dbus_ver
 
@@ -187,6 +187,10 @@ done
 
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.16-alt1
+- 1.2.16
+- fixed License tag
+
 * Wed Jan 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.14-alt3
 - Fix build with python3.8.
 
