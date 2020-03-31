@@ -2,7 +2,7 @@
 %define oname trytond
 
 Name: python3-module-%oname
-Version: 5.2.7
+Version: 5.4.6
 Release: alt1
 
 Summary: Tryton server
@@ -29,6 +29,7 @@ Source ERP. It provides modularity, scalability and security.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+Requires: python3-module-trytond_country
 
 %description tests
 The server of the Tryton application platform. A three-tiers high-level
@@ -80,6 +81,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.6-alt1
+- Version updated to 5.4.6.
+
 * Thu Oct 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.7-alt1
 - version updated to 5.2.7
 - disable python2, enable python3
