@@ -1,6 +1,6 @@
 Name: nsd
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: Name Server Daemon
 License: BSD
@@ -14,13 +14,15 @@ Source3: example.com.zone
 Source4: 0.0.10.zone
 Source5: %name.init
 Source6: %name.tmpfiles
+Source7: %name.service.forking
 
 Patch0: 0001-Enable-control-by-default.patch
 
 BuildRequires: flex bison libevent-devel libssl-devel
 
 %description
-NSD is an authoritative only, high performance, simple and open source name server
+NSD is an authoritative only, high performance, simple
+and open source name server.
 
 %prep
 %setup
@@ -56,6 +58,7 @@ cp %SOURCE3 %buildroot/%_sysconfdir/%name
 cp %SOURCE4 %buildroot/%_sysconfdir/%name
 cp %SOURCE5 %buildroot/%_initdir/%name
 install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
+install -Dpm 644 %SOURCE7 %buildroot%_datadir/%name/examples/%name.service.forking
 
 %pre
 /usr/sbin/groupadd -r -f _nsd
@@ -65,6 +68,7 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %preun_service nsd
 
 %post
+%_sbindir/nsd-control-setup # set up TLS certificates for %_sbindir/nsd-control to work
 %post_service nsd
 
 %files
@@ -74,6 +78,7 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/%name/*.zone
 %_tmpfilesdir/%name.conf
 %systemd_unitdir/%name.service
+%_datadir/%name/examples/*
 %attr(0755,root,root) %_initdir/%name
 %attr(0755,_nsd,_nsd) %dir %_localstatedir/%name
 %_man5dir/*
@@ -81,6 +86,10 @@ install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Tue Mar 31 2020 Arseny Maslennikov <arseny@altlinux.org> 4.3.0-alt2
+- Replaced systemd service unit with a Type=simple one.
+- nsd-control-setup is run automatically on package installation.
+
 * Wed Mar 18 2020 Alexei Takaseev <taf@altlinux.org> 4.3.0-alt1
 - 4.3.0
 
