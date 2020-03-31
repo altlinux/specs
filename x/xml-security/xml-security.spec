@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xml-security
 Version:        2.0.6
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
@@ -146,6 +146,9 @@ cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt1_8jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt1_7jpp8
 - new version
 
