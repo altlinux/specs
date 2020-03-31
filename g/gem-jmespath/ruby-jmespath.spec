@@ -1,18 +1,22 @@
 %define        pkgname jmespath
 
-Name: 	       ruby-%pkgname
+Name:          gem-%pkgname
 Version:       1.4.0
-Release:       alt2
+Release:       alt2.1
 Summary:       Ruby implementation of JMESPath
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/jmespath/jmespath.rb
-%vcs           https://github.com/jmespath/jmespath.rb.git
+Vcs:           https://github.com/jmespath/jmespath.rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname
+Provides:      ruby-%pkgname
 
 %description
 %summary.
@@ -52,6 +56,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt2.1
+- ! spec tags
+
 * Sat Jul 20 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt2
 - Use Ruby Policy 2.0
 
