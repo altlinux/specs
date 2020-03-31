@@ -4,20 +4,23 @@
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
 
+%define _libexecdir %_prefix/libexec
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
+%def_enable installed_tests
 %def_disable check
 
 Name: %bname
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
 Summary: SVG rendering library
-License: LGPLv2.1+
+License: LGPL-2.1
 Group: System/Libraries
 Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 
@@ -33,11 +36,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define rust_ver 1.39
 
 # From configure.ac
-BuildPreReq: libgtk+3-devel >= %gtk3_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: libfreetype-devel >= %freetype_ver
+BuildRequires: libgtk+3-devel >= %gtk3_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libfreetype-devel >= %freetype_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
@@ -112,6 +115,15 @@ Requires: %name-devel = %EVR
 %description gir-devel
 GObject introspection devel data for the %name library
 
+%package tests
+Summary: Tests for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name.
+
 
 %define _gtk_docdir %_datadir/gtk-doc/html/
 
@@ -119,14 +131,15 @@ GObject introspection devel data for the %name library
 %setup -n %bname-%version
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
 	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_enable_vala:--enable-vala=yes}
+	%{?_enable_vala:--enable-vala=yes} \
+	%{?_enable_installed_tests:--enable-installed-tests}
 %nil
 %make_build
 
@@ -170,9 +183,19 @@ GObject introspection devel data for the %name library
 %_girdir/Rsvg-%api_ver.gir
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/RSVG/
+%_datadir/installed-tests/RSVG/
+%endif
+
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.2-alt1
+- 2.48.2
+- enabled %%check
+
 * Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.1-alt1
 - 2.48.1
 
