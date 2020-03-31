@@ -22,7 +22,7 @@ environment.
 
 Name:           python-module-webob
 Summary:        WSGI request and response object
-Version:        1.8.5
+Version:        1.8.6
 Release:        alt1
 License:        MIT
 Group:          System/Libraries
@@ -64,12 +64,6 @@ Summary:        %{summary}
 Group:          System/Libraries
 
 Requires:       python3
-
-Provides: python3-webob1.2 = %{version}-%{release}
-Obsoletes: python3-webob1.2 < 1.2.3-7
-
-%{?python_provide:%python_provide python3-webob}
-
 
 %description -n python3-module-webob
 %{desc}
@@ -135,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.6-alt1
+- new version
+
 * Wed Jan 09 2019 Alexey Shabalin <shaba@altlinux.org> 1.8.5-alt1
 - new version
 
