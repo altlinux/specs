@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_22jpp8
+Release:        alt7_23jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -119,6 +116,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_23jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_22jpp8
 - new version
 
