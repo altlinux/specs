@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname natsort
 
-%def_with docs
+%def_without docs
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.0
-Release: alt3
+Version: 7.0.1
+Release: alt1
 
 Summary: Sort lists naturally
 License: MIT
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/natsort/
 BuildArch: noarch
 
 # https://github.com/SethMMorton/natsort.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -24,13 +24,14 @@ BuildRequires: python3(hypothesis)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(pytest-mock)
 BuildRequires: python3(tox)
+BuildRequires: python3(coverage)
+BuildRequires: python3(semver)
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(sphinx_rtd_theme)
 %endif
-
 
 %description
 Natural sorting for python.
@@ -57,23 +58,9 @@ This package contains documentation for %oname.
 %endif # docs
 
 %prep
-%setup
+%setup -q -n %oname-%version
 
-# skip unpackaged deps
-grep -qsF 'pytest-faulthandler' dev-requirements.txt || exit 1
-grep -qsF 'semver' dev-requirements.txt || exit 1
-sed -i \
--e '/pytest-faulthandler/d' \
--e '/semver/d' \
-dev-requirements.txt
-
-# skip doc tests
-grep -qsF 'pytest README.rst' tox.ini || exit 1
-grep -qsF 'pytest --doctest-modules' tox.ini || exit 1
-sed -i \
--e '/pytest README\.rst/d' \
--e '/pytest --doctest-modules/d' \
-tox.ini
+echo '' > dev/requirements.txt
 
 %build
 %python3_build_debug
@@ -122,6 +109,9 @@ tox.py3 --sitepackages -p auto -o -rv
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 7.0.1-alt1
+- Version updated to 7.0.1.
+
 * Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt3
 - Build for python2 disabled.
 
