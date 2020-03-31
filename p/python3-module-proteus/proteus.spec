@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.2.1
-Release: alt2
+Version: 5.4.1
+Release: alt1
 
 Summary: Library to access Tryton server as a client
 License: LGPL
@@ -70,6 +70,9 @@ py.test3 -vv
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.1-alt1
+- Version updated to 5.4.1.
+
 * Tue Oct 22 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.1-alt2
 - enable bootstrap requires, enable tests
 
