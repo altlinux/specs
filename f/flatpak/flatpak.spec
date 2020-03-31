@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 %define flatpak_user %name
 
 %define ostree_ver 2018.9
-%define bwrap_ver 0.4.0
+%define bwrap_ver 0.4.1
 %define libarchive_ver 2.8.0
 
 Requires: lib%name = %version-%release
@@ -178,6 +178,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Thu Feb 13 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
