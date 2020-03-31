@@ -8,12 +8,12 @@ Name: noise
 %define _name music
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The official elementary music player
 Group: Sound
-License: GPLv3
+License: GPL-3.0
 Url: https://launchpad.net/noise
 
 %if_disabled snapshot
@@ -122,6 +122,9 @@ This package contains the development files.
 %_vapidir/%rdn_name-core.vapi
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt1
+- updated to 5.0.5-7-gc2e1c535
+
 * Thu Apr 25 2019 Yuri N. Sedunov <aris@altlinux.org> 5.0.4-alt1
 - updated to 5.0.4-4-gb759f4ba
 
