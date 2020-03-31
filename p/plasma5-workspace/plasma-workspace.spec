@@ -27,7 +27,7 @@
 
 Name: plasma5-workspace
 Version: 5.18.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -403,6 +403,9 @@ done
 
 
 %changelog
+* Tue Mar 31 2020 Oleg Solovyov <mcpain@altlinux.org> 1:5.18.3-alt2
+- fix crash when no firefox profiles exist
+
 * Wed Mar 11 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.18.3-alt1
 - new version
 
