@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libolm
-Version: 3.0.0
+Version: 3.1.4
 Release: alt1
 
 Summary: An implementation of the Double Ratchet cryptographic ratchet
@@ -45,15 +47,19 @@ applications that use %name.
 %make_build test
 
 %files
-%doc README.rst docs
+%doc README.md
 %doc LICENSE
 %_libdir/*.so.*
 
 %files devel
+%doc docs
 %_libdir/*.so
 %_includedir/olm
 %_libdir/cmake/Olm
 
 %changelog
+* Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 3.1.4-alt1
+- New upstream version 3.1.4.
+
 * Fri Nov 30 2018 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt1
 - Initial release.
