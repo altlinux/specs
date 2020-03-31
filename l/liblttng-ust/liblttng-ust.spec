@@ -1,5 +1,5 @@
 Name: liblttng-ust
-Version: 2.11.0
+Version: 2.11.1
 Release: alt1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
@@ -72,7 +72,8 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %dir %_docdir/%name/
 %_docdir/%name/ChangeLog
 %_docdir/%name/README.md
-#_docdir/%name/COPYING
+%_docdir/%name/COPYING
+%_docdir/%name/LICENSE
 %dir %_docdir/%name/examples
 %_docdir/%name/examples/*
 %_docdir/%name/java-agent.txt
@@ -87,6 +88,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
+- new version 2.11.1 (with rpmrb script)
+
 * Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
 - new version 2.11.0 (with rpmrb script)
 
