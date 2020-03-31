@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 3.35
+%def_disable snapshot
+%define ver_major 3.36
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
@@ -8,7 +8,7 @@
 
 Name: gnome-latex
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
 Group: Publishing
@@ -98,6 +98,9 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 3.35.0-alt0.1
 - updated to 3.32.0-23-g327309e
 
