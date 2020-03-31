@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libmtxclient
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
 Group: Development/Other
 License: MIT
-Url: https://github.com/mujx/mtxclient
+Url: https://github.com/Nheko-Reborn/mtxclient
 
 Source: %name-%version.tar
 
-Patch1: mtxclient-alt-boost-compat.patch
-
 BuildRequires: cmake gcc-c++
-BuildRequires: boost-asio-devel json-cpp boost-signals-devel
+BuildRequires: boost-asio-devel nlohmann-json-devel boost-signals-devel
 BuildRequires: libgtest-devel libssl-devel zlib-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
 
@@ -33,13 +33,14 @@ library.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %cmake -DUSE_BUNDLED_BOOST=OFF  \
        -DUSE_BUNDLED_SPDLOG=OFF \
        -DUSE_BUNDLED_OLM=OFF    \
-       -DUSE_BUNDLED_GTEST=OFF
+       -DUSE_BUNDLED_GTEST=OFF  \
+       -DCMAKE_BUILD_TYPE=Release
+
 %cmake_build
 
 %install
@@ -49,18 +50,24 @@ library.
 #%check
 #%make_build test
 
-#%files
+%files
+%doc README.md
+%doc LICENSE
+%_libdir/*.so.*
 
 %files devel
-%doc README.md examples
-%doc LICENSE
-%_libdir/*.a
+%doc examples
 %_includedir/*.hpp
 %_includedir/mtx
 %_includedir/mtxclient
 %_libdir/cmake/MatrixClient
+%_libdir/*.so
 
 %changelog
+* Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
+- New upstream: https://github.com/Nheko-Reborn/mtxclient.
+- New upstream version 0.2.1.
+
 * Fri Dec 06 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2
 - Rebuilt with boost-1.71.0.
 
