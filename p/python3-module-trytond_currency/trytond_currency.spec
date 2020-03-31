@@ -2,7 +2,7 @@
 %define oname trytond_currency
 
 Name: python3-module-%oname
-Version: 5.2.1
+Version: 5.4.0
 Release: alt1
 
 Summary: Tryton module with currencies
@@ -40,6 +40,7 @@ This package contains tests for %oname.
 
 %files
 %doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
+%_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/*/tests
 
@@ -48,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.0-alt1
+- Version updated to 5.4.0.
+
 * Fri Oct 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.1-alt1
 - Version updated to 5.2.1
 

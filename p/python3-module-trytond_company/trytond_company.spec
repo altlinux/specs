@@ -2,7 +2,7 @@
 %define oname trytond_company
 
 Name: python3-module-%oname
-Version: 5.2.0
+Version: 5.4.0
 Release: alt1
 
 Summary: The company module of the Tryton application platform
@@ -48,6 +48,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.0-alt1
+- Version updated to 5.4.0.
+
 * Thu Oct 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.0-alt1
 - version updated to 5.2.0
 - disable python2, enable python3
