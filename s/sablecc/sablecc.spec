@@ -2,15 +2,15 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sablecc
 Version:        3.7
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        A parser generator written in Java
 License:        LGPLv2+
 URL:            http://sablecc.org
@@ -70,6 +70,9 @@ install -pm 0755 bin/%{name} %{buildroot}%{_bindir}/%{name}
 %doc doc/*
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt1_9jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt1_8jpp8
 - new version
 
