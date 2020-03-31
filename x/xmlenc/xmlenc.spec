@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xmlenc
 Version:       0.53
-Release:       alt1_18jpp8
+Release:       alt1_19jpp8
 Summary:       Light-weight XML output library for Java
 License:       BSD
 #  http://xmlenc.sourceforge.net/
@@ -64,6 +61,9 @@ find . -name "*.jar" -type f -delete
 %doc --no-dereference COPYRIGHT.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_19jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_18jpp8
 - new version
 
