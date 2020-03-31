@@ -1,8 +1,8 @@
 Name: libuldaq
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
-Summary: A C++ Crypto Library
+Summary: MCC Universal Library for Linux
 License: MIT
 Group: System/Libraries
 
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++ libusb-devel
 
 %description
-Contains a library to access and control supported Measurement Computing DAQ devices
-over the Linux and macOS platforms.
+Contains a library to access and control supported Measurement Computing DAQ devices.
+
 
 %package devel
 Summary: Headers for %name
@@ -23,7 +23,7 @@ Group: Development/C
 Requires: %name = %EVR
 
 %description devel
-Headers for building software that uses %name
+Headers for building software that uses %name.
 
 %package doc
 Summary: Documentation for %name
@@ -66,6 +66,9 @@ sed -i -e "s@ldconfig@true@" Makefile.am
 #%doc %_defaultdocdir/botan-%version
 
 %changelog
+* Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt2
+- fix summary
+
 * Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - initial build for Sisyphus
 
