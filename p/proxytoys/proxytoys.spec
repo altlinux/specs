@@ -1,16 +1,13 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash 6f4d22725ef28f09bfd5422939b83e1865b5daef
 Name:          proxytoys
 Version:       1.0
-Release:       alt1_13jpp8
+Release:       alt1_14jpp8
 Summary:       An implementation neutral API for creation of dynamic proxies
 License:       BSD
 Url:           http://proxytoys.github.io/
@@ -145,6 +142,9 @@ find -name '*.jar' -print -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_14jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_13jpp8
 - new version
 
