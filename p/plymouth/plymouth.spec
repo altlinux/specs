@@ -8,7 +8,7 @@
 
 Name: plymouth
 Version: 0.9.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -458,6 +458,9 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Mar 31 2020 Anton Midyukov <antohami@altlinux.org> 1:0.9.4-alt3
+- plymouth-start.service: ExecStart=/bin/true (Closes: 38229)
+
 * Sun Nov 03 2019 Alexey Shabalin <shaba@altlinux.org> 1:0.9.4-alt2
 - snapshot d18086efcc6aff16d510cfdbddad81421175a917
 - remove the throbgress plugin
