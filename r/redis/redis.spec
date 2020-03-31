@@ -1,5 +1,5 @@
 Name: redis
-Version: 5.0.5
+Version: 5.0.8
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -160,6 +160,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Tue Mar 31 2020 Nikolay A. Fetisov <naf@altlinux.org> 5.0.8-alt1
+- New version
+
 * Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 5.0.5-alt1
 - New version
   * Fix AOF bug (possible data loss when fsync police is set to 'everysec')
