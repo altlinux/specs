@@ -1,16 +1,13 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_8jpp8
+Release:          alt1_9jpp8
 Summary:          Library for accessing non-private method parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
@@ -147,6 +144,9 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_9jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_8jpp8
 - new version
 
