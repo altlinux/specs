@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt2_7jpp8
+Release:       alt2_8jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -180,6 +180,9 @@ rm LICENSE.orig
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_8jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt2_7jpp8
 - explicit build with java8
 
