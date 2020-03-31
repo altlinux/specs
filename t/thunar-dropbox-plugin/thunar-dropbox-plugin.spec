@@ -1,26 +1,20 @@
 Name: thunar-dropbox-plugin
-Version: 0.2.1
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Dropbox context-menu items for Thunar
-License: %gpl3plus
+License: GPL-3.0-only
 Group: Graphical desktop/XFce
 
 URL: http://www.softwarebakery.com/maato/thunar-dropbox.html
+# Old upstream
 # https://github.com/Maato/thunar-dropbox.git
+Vcs: https://github.com/Jeinzi/thunar-dropbox
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-# https://github.com/Maato/thunar-dropbox/pull/10
-Patch1: libthunar-3.patch
 
-BuildRequires(pre): rpm-build-licenses
-
+BuildRequires: rpm-macros-cmake cmake
 BuildRequires: libthunar-devel libgio-devel
-# Build with waf > 1.5 is broken
-#BuildRequires: waf
-
-# for waf (ALT bug #25802)
-BuildRequires: python-modules-logging
 
 Requires: dropbox
 
@@ -33,14 +27,13 @@ dropbox.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
-./waf configure --prefix=%_prefix --libdir=%_prefix/%_lib
-./waf build
+%cmake
+%cmake_build
 
 %install
-./waf install --destdir=%buildroot
+%cmakeinstall_std
 
 %files
 %doc AUTHORS ChangeLog
@@ -48,6 +41,14 @@ dropbox.
 %_miconsdir/*.png
 
 %changelog
+* Tue Mar 31 2020 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
+- Fixed plugin install path.
+- Added Vcs tag.
+- Fixed license.
+- Switched to cmake.
+- Dropped libthunar-3.patch.
+- Updated to 0.3.1.
+
 * Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt2
 - Use _unpackaged_files_terminate_build.
 - Port to libthunar-3 patch.
