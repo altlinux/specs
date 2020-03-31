@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Release type, either "milestone" or "release"
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:           sisu
 Epoch:          2
 Version:        0.3.3
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0
 # bundled asm is BSD
@@ -115,6 +112,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_8jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.3.3-alt1_7jpp8
 - new version
 
