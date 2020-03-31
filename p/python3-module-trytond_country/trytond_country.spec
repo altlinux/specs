@@ -2,7 +2,7 @@
 %define oname trytond_country
 
 Name: python3-module-%oname
-Version: 5.2.0
+Version: 5.4.0
 Release: alt1
 Summary: Tryton module with countries
 
@@ -51,6 +51,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.4.0-alt1
+- Version updated to 5.4.0.
+
 * Fri Oct 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.2.0-alt1
 - Version updated ti 5.2.0
 
