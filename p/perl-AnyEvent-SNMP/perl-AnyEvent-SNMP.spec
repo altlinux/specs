@@ -3,7 +3,7 @@
 %define real_name AnyEvent-SNMP
 
 Name: perl-AnyEvent-SNMP
-Version: 6.0
+Version: 6.02
 Release: alt1
 
 Summary: Perl adaptor to integrate Net::SNMP into AnyEvent
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Wed Mar 30 2016
-# optimized out: perl-AnyEvent perl-Encode perl-Math-BigInt perl-common-sense python3 python3-base
-BuildRequires: perl-Net-SNMP perl-devel
+# Automatically added by buildreq on Tue Mar 31 2020
+# optimized out: perl perl-AnyEvent perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Math-BigInt perl-Parse-CPAN-Meta perl-common-sense perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Net-SNMP perl-devel
 
 BuildRequires: perl-Math-BigInt perl-AnyEvent perl-common-sense
 
@@ -49,5 +49,8 @@ supported by AnyEvent), they will run in parallel.
 %perl_vendor_privlib/AnyEvent/SNMP*
 
 %changelog
+* Tue Mar 31 2020 Nikolay A. Fetisov <naf@altlinux.org> 6.02-alt1
+- New version
+
 * Wed Mar 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 6.0-alt1
 - Initial build for ALT Linux Sisyphus
