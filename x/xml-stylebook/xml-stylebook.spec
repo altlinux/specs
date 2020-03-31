@@ -3,13 +3,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.27.b3_xalan2.svn313293jpp8
+Release:       alt2_0.28.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
 License:       ASL 1.1
 URL:           http://xml.apache.org/
@@ -27,7 +27,6 @@ Patch1:        %{name}-build-javadoc.patch
 
 BuildArch:     noarch
 
-BuildRequires: java-devel >= 1.6.0
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: xml-commons-apis
@@ -118,6 +117,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.28.b3_xalan2.svn313293jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.27.b3_xalan2.svn313293jpp8
 - new version
 
