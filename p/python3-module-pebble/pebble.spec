@@ -1,8 +1,8 @@
 %define oname pebble
 
 Name: python3-module-%oname
-Version: 4.3.7
-Release: alt2
+Version: 4.5.1
+Release: alt1
 
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
@@ -46,6 +46,9 @@ sed -i 's/python -m pytest/python3 -m pytest/' ./test/run-tests.sh
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.5.1-alt1
+- Version updated to 4.5.1.
+
 * Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.3.7-alt2
 - python2 disabled
 
