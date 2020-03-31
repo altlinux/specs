@@ -1,7 +1,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.567
+Version: 7.0.568
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -27,8 +27,6 @@ BuildRequires: libxml2-devel >= 2.6.16
 BuildRequires: libuuid-devel
 BuildRequires: libdbus-devel
 
-%def_with ub
-
 %add_findreq_skiplist %_datadir/%name/dists/scripts/*
 %filter_from_requires /^\/etc\/vz\/vz.conf/d
 %define _pkglibdir %_libdir/%name
@@ -51,7 +49,7 @@ OpenVZ Containers API development library
 
 %build
 %autoreconf
-%configure %{subst_with ub}
+%configure
 %make_build
 
 %install
@@ -67,6 +65,10 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Tue Mar 31 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.568-alt1
+- 7.0.568
+- remove with_ub due to autodetect of UB
+
 * Tue Mar 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.567-alt1
 - 7.0.567
 
