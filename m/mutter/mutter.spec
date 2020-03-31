@@ -15,7 +15,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -216,6 +216,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.1-alt1
+- 3.36.1
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.0-alt1
 - 3.36.0
 - enabled NVIDIA EGLDevice and EGLStream renderer support, Wayland

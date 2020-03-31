@@ -11,12 +11,12 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
 %if_disabled snapshot
@@ -73,6 +73,8 @@ Requires: gnome-control-center
 Requires: polari
 # for OSK
 Requires: ibus ibus-gtk3
+# for zipped extensions
+Requires: unzip
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
@@ -91,6 +93,7 @@ Requires: typelib(GLib)
 Requires: typelib(GnomeBluetooth)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
+Requires: typelib(Graphene)
 Requires: typelib(Gtk)
 Requires: typelib(Gvc)
 Requires: typelib(GWeather)
@@ -182,11 +185,11 @@ GNOME Shell.
 %prep
 %setup
 %patch3 -b .shells
-# st fuul path to gsettings
+# set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.service
 
 # fix rpath
-subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
+#subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 # browser plugin dir
 %{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
@@ -194,6 +197,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 	%{?_enable_gtk_doc:-Dgtk_doc=true}
 %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
 #%meson_build %name-pot %name-update-po
+%nil
 %meson_build
 
 %install
@@ -215,7 +219,10 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_libdir/%name/lib%name-menu.so
 %_libdir/%name/libgvc.so
 %_libdir/%name/libst-1.0.so
+%_libdir/%name/libshew-0.so
 %_libdir/%name/*.typelib
+%dir %_libdir/%name/girepository-1.0
+%_libdir/%name/girepository-1.0/Shew-0.typelib
 %{?_enable_browser_plugin:%browser_plugins_path/libgnome-shell-browser-plugin.so}
 
 %files data -f %name.lang
@@ -235,6 +242,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider2.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Extensions.xml
+%_datadir/dbus-1/services/org.gnome.Extensions.service
+%_datadir/dbus-1/services/%xdg_name.Extensions.service
+%_datadir/dbus-1/services/%xdg_name.Notifications.service
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
@@ -248,6 +258,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %_userunitdir/%name-disable-extensions.service
 %_man1dir/*
 %_iconsdir/hicolor/*/*/*.svg
+%_datadir/metainfo/org.gnome.Extensions.metainfo.xml
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -257,6 +268,9 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 %endif
 
 %changelog
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
