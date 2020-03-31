@@ -1,5 +1,5 @@
 Name:     jsonnet
-Version:  0.13.0
+Version:  0.15.0
 Release:  alt1
 
 Summary:  Jsonnet - The data templating language
@@ -31,5 +31,8 @@ install -Dpm 755 %{name}fmt %buildroot/%_bindir/%{name}fmt
 %doc *.md examples
 
 %changelog
+* Tue Mar 31 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.0-alt1
+- new version 0.15.0
+
 * Wed Jul 24 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.0-alt1
 - Initial build for Sisyphus
