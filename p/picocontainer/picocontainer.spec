@@ -2,15 +2,14 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          picocontainer
 Version:       2.15
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       Java library implementing the Dependency Injection pattern
 License:       BSD
 Url:           http://picocontainer.codehaus.org/
@@ -167,6 +166,9 @@ sed -i 's/\r//' %{buildroot}%{_javadocdir}/%{name}/stylesheet.css
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.15-alt1_11jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.15-alt1_10jpp8
 - new version
 
