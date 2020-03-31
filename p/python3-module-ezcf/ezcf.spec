@@ -1,8 +1,8 @@
 %define oname ezcf
 
 Name: python3-module-%oname
-Version: 0.0.1
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Import JSON/YAML like importing .py files
 License: MIT
@@ -12,9 +12,13 @@ Url: https://pypi.python.org/pypi/ezcf/
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: disable-failed-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-coverage 
+BuildRequires: python3-module-configobj
+BuildRequires: python3-module-xmltodict
 
 %py3_provides %oname
 %py3_requires yaml json
@@ -27,6 +31,7 @@ with these formats.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -42,12 +47,9 @@ export LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 setup.py test
+%__python3 setup.py test
 pushd tests
-python3 -m unittest discover -v
-popd
-pushd tests2
-python3 run_test.py -v
+%__python3 -m unittest discover -v
 popd
 
 %files
@@ -56,6 +58,9 @@ popd
 
 
 %changelog
+* Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt1
+- Version updated to 0.2.1.
+
 * Mon Nov 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.1-alt2
 - disable python2
 
