@@ -1,5 +1,5 @@
 Name: 	  clac
-Version:  0.3.1
+Version:  0.3.3
 Release:  alt1
 
 Summary:  A command line, stack-based calculator with postfix notation
@@ -34,6 +34,9 @@ make test
 %doc README*
 
 %changelog
+* Tue Mar 31 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.3.3-alt1
+- new version 0.3.3
+
 * Tue Feb 27 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.3.1-alt1
 - new version 0.3.1
 
