@@ -4,8 +4,8 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: ruby-stdlibs zlib-devel
 BuildRequires: bsh
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_43jpp8
+Release:        alt2_44jpp8
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -232,6 +232,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_44jpp8
+- fc update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_43jpp8
 - new version
 
