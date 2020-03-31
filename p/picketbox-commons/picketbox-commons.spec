@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           picketbox-commons
 Version:        1.0.0
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Summary:        Common classes for security projects
 License:        LGPLv2+
 URL:            http://www.jboss.org/picketbox
@@ -51,6 +48,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_19jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_18jpp8
 - new version
 
