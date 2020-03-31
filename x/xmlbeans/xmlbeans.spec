@@ -2,11 +2,10 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: subversion
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -53,7 +52,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -75,7 +74,6 @@ License:        ASL 2.0
 %if %without bootstrap
 BuildRequires:  xmlbeans
 %endif
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils >= 0:1.5
 # add_maven_depmap macro is now located in javapackages-local
 BuildRequires:  javapackages-local
@@ -223,6 +221,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_19jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_18jpp8
 - new version
 
