@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.14.1
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://pypi.python.org/pypi/joblib
 
 BuildArch: noarch
@@ -17,19 +17,17 @@ BuildArch: noarch
 # https://github.com/joblib/joblib.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python2.7(numpy)
-BuildRequires: python2.7(numpy.testing)
-BuildRequires: python2.7(pytest)
+BuildRequires: python3(numpy)
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(tox)
 %endif
 
-%add_python_req_skip _pickle
-
 # `distributed` is not packaged yet
-%filter_from_requires /python[2]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
+%filter_from_requires /python[3]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
 
 %description
 Joblib is a set of tools to provide lightweight pipelining in Python. In
@@ -45,7 +43,7 @@ and has specific optimizations for numpy arrays.
 
 %package tests
 Summary: Tests for joblib
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -66,10 +64,10 @@ This package contains tests for joblib.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_build_install
 
 %check
 %if 0
@@ -79,22 +77,24 @@ commands =
     {envpython} -m pytest {posargs:-vra}
 EOF
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-tox --sitepackages -p auto -o -vr
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vr
 %endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/test*
+%exclude %python3_sitelibdir/%oname/__pycache__/test*
 
 %files tests
-%python_sitelibdir/%oname/test*
+%python3_sitelibdir/%oname/test*
+%python3_sitelibdir/%oname/__pycache__/test*
 
 %changelog
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.14.1-alt1
 - Version updated to 0.14.1
-- module for python3 build separately.
+- build for python2 disabled.
 
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 0.13.2-alt2
 - Added missing dep on `numpy.testing`.
