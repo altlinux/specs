@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Name:          picketbox-xacml
 # Newer release are available here https://github.com/picketbox/security-xacml/tags
 Version:       2.0.8
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       JBoss XACML
 # BSD: most of the code in ./jboss-sunxacml
 # see ./jboss-sunxacml/src/main/java/org/jboss/security/xacml/sunxacml/AbstractPolicy.java as example
@@ -76,6 +73,9 @@ rm .classpath
 %doc --no-dereference JBossORG-EULA.txt sunxacml-license.txt
 
 %changelog
+* Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_7jpp8
+- fc update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_6jpp8
 - new version
 
