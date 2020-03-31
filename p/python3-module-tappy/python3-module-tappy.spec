@@ -1,11 +1,11 @@
 %define modname tap.py
 
-Name: python-module-tappy
-Version: 2.6.2
-Release: alt2
+Name: python3-module-tappy
+Version: 3.0
+Release: alt1
 
 Summary: Test Anything Protocol (TAP) tools
-Group: Development/Python
+Group: Development/Python3
 License: BSD-2-Clause
 Url: http://pypi.python.org/pypi/%modname
 
@@ -14,8 +14,8 @@ Source: http://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools python-module-babel
+BuildRequires: python3-devel rpm-build-python3 python3-module-babel
+BuildRequires: python3-module-distribute
 
 %description
 tappy python module provides a set of tools for working with the Test
@@ -26,23 +26,21 @@ data in a standard way.
 %setup -n %modname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-for f in %buildroot%_bindir/*; do mv "$f" "$f"-2; done
+%python3_install
 
 %files
-%_bindir/tap-2
-%_bindir/tappy-2
-%python_sitelibdir_noarch/tap/
-%python_sitelibdir_noarch/*.egg-info
-%doc README.md
-
+%_bindir/tap
+%_bindir/tappy
+%python3_sitelibdir_noarch/tap
+%python3_sitelibdir_noarch/*.egg-info
+%doc README.md LICENSE
 
 %changelog
-* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt2
-- removed python3 support (the last version supporting Python 2.7 is 2.6.x)
+* Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0 (Python3 only)
 - fixed License tag
 
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
