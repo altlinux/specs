@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 # https://github.com/sass/sass-spec.git requires for tests
-%define sass_spec_ver 3.4
+%define sass_spec_ver 3.6.0
 %def_disable check
 
 Name: libsass
-Version: 3.5.4
+Version: 3.6.3
 Release: alt1
 
 Summary: A C/C++ implementation of a Sass compiler
@@ -14,7 +14,7 @@ Group: System/Libraries
 Url: http://libsass.org/
 
 %if_disabled snapshot
-Source: https://github.com/sass/%name/releases/download/%version/%name-%version.tar.gz
+Source: https://github.com/sass/%name/archive/%version/%name-%version.tar.gz
 %else
 # VCS: https://github.com/sass/libsass.git
 Source: %name-%version.tar
@@ -47,7 +47,7 @@ This package contains development files of Sass compiler.
 
 %build
 export LIBSASS_VERSION=%version
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --enable-static=no
 %make_build
@@ -68,6 +68,12 @@ export LIBSASS_VERSION=%version
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
+* Fri Aug 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Mon May 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.5.4-alt1
 - 3.5.4
 
