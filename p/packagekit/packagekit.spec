@@ -2,8 +2,8 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.1.12
-Release:   alt12
+Version:   1.1.13
+Release:   alt1
 License:   GPLv2+ and LGPLv2+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -211,7 +211,6 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_libexecdir/pk-*offline-update
 %config %_sysconfdir/apt/apt.conf.d/20packagekit
 %_libdir/packagekit-backend/libpk_backend_aptcc.so
-%_datadir/PackageKit/helpers/aptcc
 
 %files -n lib%name-glib
 %_libdir/*packagekit-glib2.so.*
@@ -249,6 +248,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Apr 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.13-alt1
+- Updated to upstream version 1.1.13.
+
 * Mon Oct 14 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.12-alt12
 - Imported changes from upstream.
 
