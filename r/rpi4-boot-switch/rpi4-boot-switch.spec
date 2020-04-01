@@ -1,9 +1,11 @@
 %define noub rpi4-boot-nouboot
 %define ubfw rpi4-boot-uboot-fw
 %define uboot rpi4-boot-uboot
+%define ftrigger rpi4-boot-nouboot.filetrigger
+%define ftrgrname rpi4-boot-nouboot-filetrigger
 
 Name: rpi4-boot-switch
-Version: 0.1
+Version: 0.3
 Release: alt1
 Summary: Switch of boot mode for Raspberry Pi 4
 License: GPLv2+
@@ -16,6 +18,7 @@ Source1: %ubfw
 Source2: %uboot
 Source3: README.ru
 Source4: README.en
+Source5: %ftrigger
 
 %description
 Switch of boot mode for Raspberry Pi 4
@@ -41,12 +44,22 @@ Firmware загружает ядро, dtb и initrd. U-boot не использ�
 Firmware загружает dtb. U-boot загружает ядро и initrd.
 U-boot загружает ядро, dtb и initrd.
 
+%package -n %ftrgrname
+Summary: Do a kernel update on /mnt/FIRMPART
+Group: System/Configuration/Other
+Requires: %name
+
+%description -n %ftrgrname
+This filetrigger executes "rpi4-boot-nouboot --default"
+to do a kernel update on /mnt/FIRMPART
+
 %install
 install -Dpm 0755 %SOURCE0 %buildroot%_sbindir/%noub
 install -Dpm 0755 %SOURCE1 %buildroot%_sbindir/%ubfw
 install -Dpm 0755 %SOURCE2 %buildroot%_sbindir/%uboot
 install -m 644 %SOURCE3 ./
 install -m 644 %SOURCE4 ./
+install -Dpm 0755 %SOURCE5 %buildroot%_rpmlibdir/%ftrigger
 
 %files
 %doc README.ru README.en
@@ -54,6 +67,16 @@ install -m 644 %SOURCE4 ./
 %_sbindir/%ubfw
 %_sbindir/%uboot
 
+%files -n %ftrgrname
+%_rpmlibdir/%ftrigger
+
 %changelog
+* Wed Apr 01 2020 Dmitry Terekhin <jqt4@altlinux.org> 0.3-alt1
+- Gently remount /mnt/FIRMPART
+
+* Wed Apr 01 2020 Dmitry Terekhin <jqt4@altlinux.org> 0.2-alt1
+- rpi4-boot-nouboot: added --default option
+- Added rpi4-boot-nouboot.filetrigger
+
 * Fri Nov 22 2019 Dmitry Terekhin <jqt4@altlinux.org> 0.1-alt1
 - Initial build
