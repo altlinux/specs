@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.20.3
-Release: alt3
+Release: alt4
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -308,6 +308,8 @@ Requires: python%{pysuffix}-module-Pillow
 # Enable D-Bus threading (and require pygobject2) (bug #600932).
 # patch33 -p1 -b .dbus-threads
 Requires: python%{pysuffix}-module-pygobject
+# hplip-gui uses lsusb
+Requires: %_bindir/lsusb
 
 Requires: %name = %{?epoch:%epoch:}%version-%release
 
@@ -1171,6 +1173,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Apr 01 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt4
+- Add requirement of %_bindir/lsusb for hplip-gui (ALT #38312).
+
 * Thu Mar 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt3
 - Returned Python autorequires, required distro python module.
 
