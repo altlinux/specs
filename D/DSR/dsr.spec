@@ -1,7 +1,7 @@
 Summary: DSR - A program for modelling of disordered solvents with SHELXL
 Name: DSR
-Version: 226
-Release: alt2
+Version: 232
+Release: alt1
 BuildArch: noarch
 URL: https://www.xs3.uni-freiburg.de/research/dsr
 License: Beerware
@@ -30,7 +30,7 @@ cp -a %SOURCE1 .
 cat > %name.sh << EOF
 #!/bin/sh
 export DSR_DIR=%_datadir/DSR
-PYTHON_EXE=\$(which python)
+PYTHON_EXE=%__python
 if [ \$# -eq 0 ]; then
     \$PYTHON_EXE \$DSR_DIR/dsr.py --help
 else
@@ -43,18 +43,14 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/manuals
 mkdir -p %buildroot%_datadir/%name/example
-#mkdir -p %buildroot%_datadir/%name/mpmath
-#mkdir -p %buildroot%_datadir/%name/networkx
-mkdir -p %buildroot%_datadir/%name/rmsd
+mkdir -p %buildroot%_datadir/%name/fit
 
 install -m 755 %name.sh %buildroot%_bindir/dsr
 install -m 644 *.py %buildroot%_datadir/%name
 install -m 644 dsr_db.txt %buildroot%_datadir/%name
 install -m 644 manuals/DSR-manual.pdf %buildroot%_datadir/%name/manuals
 install -m 644 example/* %buildroot%_datadir/%name/example
-#cp -R mpmath %buildroot%_datadir/%name
-#cp -R networkx %buildroot%_datadir/%name
-cp -R rmsd %buildroot%_datadir/%name
+cp -R fit %buildroot%_datadir/%name
 
 %files
 %doc README changelog.txt
@@ -62,6 +58,9 @@ cp -R rmsd %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Thu Apr 02 2020 Denis G. Samsonenko <ogion@altlinux.org> 232-alt1
+- new version
+
 * Sun Jul 14 2019 Denis G. Samsonenko <ogion@altlinux.org> 226-alt2
 - exclude networkx and mpmath from package
 
