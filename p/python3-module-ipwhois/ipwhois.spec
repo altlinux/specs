@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 License: BSD
@@ -18,6 +18,7 @@ BuildArch: noarch
 # https://github.com/secynic/ipwhois.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: fix-unique-addresses-test.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -76,6 +77,7 @@ This package contains pickles for %oname.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' %oname/docs/Makefile
 
@@ -111,6 +113,9 @@ nosetests3 -v -w ipwhois --exclude="(online|stress)"
 
 
 %changelog
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
+- Unique addresses test fixed.
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt2
 - Build for python2 disabled.
 
