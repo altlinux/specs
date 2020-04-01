@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.security
 
-%def_disable check
-%def_disable docs
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.0
-Release: alt2
+Version: 5.1.1
+Release: alt1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-zope.proxy
-%if_enabled docs
+%if_with docs
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-repoze.sphinx.autointerface
 %endif
@@ -28,7 +28,7 @@ BuildRequires: python3-module-zope.schema
 BuildRequires: python3-module-zope.location
 BuildRequires: time
 
-%if_enabled check
+%if_with check
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-BTrees
@@ -92,7 +92,7 @@ This package contains documentation for Zope Security Framework.
 %prep
 %setup
 
-%if_enabled docs
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv3 docs/
 %endif
@@ -106,7 +106,7 @@ ln -s ../objects.inv3 docs/
 install -p -m644 src/zope/security/*.zcml \
 	%buildroot%python3_sitelibdir/zope/security/
 
-%if_enabled docs
+%if_with docs
 export PYTHONPATH=$PWD/src
 sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
 %make -C docs pickle
@@ -120,11 +120,11 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+sed -i '/setenv =$/a\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
 
 sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
 # cancel docbuild tests
@@ -139,7 +139,7 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/examples
-%if_enabled docs
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
 %endif
 
@@ -150,7 +150,7 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
 
-%if_enabled docs
+%if_with docs
 %files pickles
 %python3_sitelibdir/*/pickle
 
@@ -159,6 +159,11 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %endif
 
 %changelog
+* Wed Apr 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 5.1.1-alt1
+- 5.1.0 -> 5.1.1
+- Reenable check and docs sections; switch back to uniform def_with macro
+- Rearrange check section according to upstream changes
+
 * Fri Mar 06 2020 Anton Farygin <rider@altlinux.ru> 5.1.0-alt2
 - temporary  disabled check and docs sections to avoid cyclic dependencies
   on zope.component when building python-3.8
