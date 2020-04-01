@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
+%define ver_major 3.36
 %def_enable packagekit
 # tests require colord running and g-c-m installed
 %def_disable check
@@ -11,7 +11,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
-License: %gpl2plus
+License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org/projects/gnome-color-manager/
 
@@ -28,7 +28,7 @@ Requires: common-licenses gnome-filesystem
 %define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
 BuildRequires: docbook-utils xsltproc
 BuildPreReq: libgio-devel >= %gio_ver
@@ -88,12 +88,10 @@ ln -sf %_licensedir/GPL-2 COPYING
 %meson_test
 
 %files -f %name.lang
-%_bindir/gcm-calibrate
 %_bindir/gcm-import
 %_bindir/gcm-inspect
 %_bindir/gcm-picker
 %_bindir/gcm-viewer
-%_libexecdir/gcm-helper-exiv
 %_datadir/%name/
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
@@ -104,6 +102,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Wed Apr 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 
