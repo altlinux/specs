@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=strict
 
 Name: libdispatch-objc2
 Version: 1.2
-Release: alt5.git20140226
+Release: alt6.git20140226
 Summary: Linux port of Apple's open-source concurrency library
-License: Apache License v2
+License: Apache-2.0
 Group: System/Libraries
 Url: http://etoileos.com/
 
@@ -45,28 +47,28 @@ This package contains development files for libdispatch-objc2.
 # Clang doesn't support these options
 %remove_optflags -frecord-gcc-switches
 
+export CC=clang
+export CXX=clang++
+
 %add_optflags -I%_includedir/kqueue
 cd libdispatch
-cmake \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DCMAKE_C_COMPILER:FILEPATH=%_bindir/clang \
-	-DCMAKE_CXX_COMPILER:FILEPATH=%_bindir/clang++ \
-	.
+%cmake
 
-%make_build VERBOSE=1
+%cmake_build VERBOSE=1
  
 %install
-%makeinstall_std -C libdispatch
+cd libdispatch
+%cmakeinstall_std
 
 %if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
 
+rm -f %buildroot%_libexecdir/*.a
+
 %files
+%doc libdispatch/LICENSE
 %doc libdispatch/Readme.md
 %_libdir/*.so.*
 
@@ -76,6 +78,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_man3dir/*
 
 %changelog
+* Wed Apr 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt6.git20140226
+- Fixed build with new toolchain.
+
 * Fri May 31 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2-alt5.git20140226
 - Fixed build on 64-bit ppc architectures.
 
