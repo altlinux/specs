@@ -16,8 +16,8 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: GPL-2.0 and LGPL-2.0
@@ -187,6 +187,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Apr 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - mike@: updated e2k patch
 - improved "gtk_doc" knob
