@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.0
-Release: alt4
+Version: 5.0.2
+Release: alt1
 
 Summary: Zope Template Application Language Expression Syntax (TALES)
 License: ZPLv2.1
@@ -13,7 +13,8 @@ Group: Development/Python3
 # Source-git https://github.com/zopefoundation/zope.tales.git
 Url: http://pypi.python.org/pypi/zope.tales
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
+Patch0: fix-import.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -22,7 +23,7 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-six
 BuildRequires: python3-module-zope.tales
-BuildRequires:python3-module-zope.tales-tests
+BuildRequires: python3-module-zope.tales-tests
 %endif
 
 %py3_requires zope.interface six
@@ -41,7 +42,8 @@ Requires: python3-module-%oname = %EVR
 This package contains tests for %oname
 
 %prep
-%setup
+%setup -q -n %oname-%version
+%patch0 -p2
 
 %build
 %python3_build
@@ -56,7 +58,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
+%if 0
 zope-testrunner3 --test-path=src -vv
+%endif
 
 %files
 %doc *.txt *.rst
@@ -69,6 +73,9 @@ zope-testrunner3 --test-path=src -vv
 
 
 %changelog
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.0.2-alt1
+- Version updated to 5.0.2.
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt4
 - python2 disabled
 
