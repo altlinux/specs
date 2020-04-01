@@ -2,10 +2,10 @@
 
 Name: chrony
 Version: 3.5
-Release: alt2
+Release: alt3
 
 Summary: Chrony clock synchronization program
-License: GPLv2 only
+License: GPLv2
 Group: System/Configuration/Other
 
 Url: http://chrony.tuxfamily.org
@@ -65,6 +65,7 @@ sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
 	--with-hwclockfile=%_sysconfdir/adjtime \
 	--enable-ntp-signd \
 	--enable-scfilter \
+	--with-ntp-era=$(date -d '1970-01-01 00:00:00+00:00' +'%s') \
 	--with-sendmail=%_sbindir/sendmail
 
 %make_build all docs 
@@ -131,6 +132,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Apr 01 2020 Anton Farygin <rider@altlinux.ru> 3.5-alt3
+- set ntp era (fixed FTBFS, thanks to glebfm for the investigation)
+
 * Wed Oct 16 2019 Anton Farygin <rider@altlinux.ru> 3.5-alt2
 - fixed help in chrony control script (closes: #37340)
 
