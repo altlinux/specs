@@ -1,5 +1,5 @@
 Name: c-ares
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -67,6 +67,9 @@ install -pm755 .libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
+* Tue Mar 31 2020 Anton Farygin <rider@altlinux.ru> 1.16.0-alt1
+- 1.16.0
+
 * Thu Nov 15 2018 Anton Farygin <rider@altlinux.ru> 1.15.0-alt1
 - 1.15.0
 
