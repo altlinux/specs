@@ -1,24 +1,21 @@
 %define oname logilab-database
 
-%def_with python3
+Name: python3-module-%oname
+Version: 1.17.1
+Release: alt1
 
-Name: python-module-%oname
-Version: 1.15.0
-Release: alt2
 Summary: Provides some classes to make unified access to different RDBMS possible
-
-Group: Development/Python
 License: LGPLv2.1+
+Group: Development/Python3
 URL: http://www.logilab.org/project/logilab-database
-# hg clone http://hg.logilab.org/logilab/database
-Source: database-%version.tar
+
 BuildArch: noarch
 
-BuildRequires: python-module-logilab-common
-%if_with python3
+# hg clone http://hg.logilab.org/logilab/database
+Source: database-%version.tar
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-logilab-common
-%endif
 
 %description
 logilab-database provides some classes to make unified access to
@@ -31,64 +28,26 @@ different RDBMS possible:
   index, users, dump and restore, etc...
 * sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Provides some classes to make unified access to different RDBMS possible (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname
-logilab-database provides some classes to make unified access to different
-RDBMS possible:
-
-* actually compatible db-api from different drivers to postgres, mysql,
-  sqlite and sqlserver
-* additional api for full text search
-* extensions functions for common tasks such as creating database, index,
-  users, dump and restore, etc...
-* sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
-%endif
-
 %prep
 %setup
-touch test/__init__.py
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-touch ../python3/test/__init__.py
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
-cp setup.py setup.py.bak
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-mv -f setup.py.bak setup.py
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-rm -f %buildroot%python_sitelibdir/logilab/__init__.py*
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
-%endif
 
 %files
 %doc ChangeLog README
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc ChangeLog README
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.17.1-alt1
+- Version updated to 1.17.1
+- build for python2 disabled.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.0-alt2
 - Rebuilt with updated setuptools.
 
