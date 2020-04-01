@@ -3,8 +3,8 @@
 %define oname zope.contenttype
 
 Name: python3-module-%oname
-Version: 4.2.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: Zope contenttype
 License: ZPL
@@ -16,6 +16,7 @@ Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-tools-2to3
+BuildRequires: python3-module-zope.testrunner
 
 %py3_requires zope
 
@@ -64,6 +65,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.5.0-alt1
+- Version updated to 4.5.0.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt2
 - Build for python2 disabled.
 
