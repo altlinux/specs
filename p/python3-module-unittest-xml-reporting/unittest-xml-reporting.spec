@@ -1,8 +1,8 @@
 %define oname unittest-xml-reporting
 
 Name: python3-module-%oname
-Version: 1.9.4
-Release: alt2
+Version: 3.0.2
+Release: alt1
 
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
+BuildRequires: python3-module-six python3-module-lxml
 
 Requires: python3-module-django-tests
 
@@ -41,25 +41,33 @@ This package contains tests for %oname.
 %prep
 %setup
 
+sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
+
 %build
 %python3_build_debug
 
 %install
 %python3_install
 
+cp -fR tests/ %buildroot%python3_sitelibdir/xmlrunner
+
 %check
 %__python3 setup.py test
 
 %files
 %doc *.md
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/xmlrunner/
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/xmlrunner/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/xmlrunner/tests
 
 
 %changelog
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.2-alt1
+- Version updated to 3.0.2.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.4-alt2
 - Build for python2 disabled.
 
