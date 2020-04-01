@@ -2,11 +2,12 @@
 # lxc: linux Container library
 #
 # (C) Copyright IBM Corp. 2007, 2008
-# (C) ALT Linux Team 2009-2018
+# (C) ALT Linux Team 2009-2020
 #
 # Authors:
 # Daniel Lezcano <dlezcano at fr.ibm.com>
 # Denis Pynkin <dans at altlinux.org>
+# Vladimir D. Seleznev <vseleznv at altlinux.org>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -27,25 +28,22 @@
 %def_with systemd
 
 Name: lxc
-Version: 3.0.4
-Release: alt3
+Version: 4.0.0
+Release: alt1
 
 Url: https://linuxcontainers.org/
 
 # https://github.com/lxc/lxc.git
 Source0: %name-%version.tar
 Source1: lxc-net.sysconfig
+Source2: lxc-user-nic.control
 
-Patch1 : 0001-DEBIAN-Starts-after-remote-fs.target.patch
-Patch2 : 0002-DEBIAN-cgroups-hande-cpuset-initialization-race.patch
-Patch3 : 0003-DEBIAN-cgroups-initialize-cpuset-properly.patch
-Patch4 : 0004-DEBIAN-lxc-attach-make-sure-exit-status-of-command-i.patch
-Patch5 : 0005-FEDORA-lxc-net.service-wants-network-online.target.patch
-Patch6 : 0006-ALT-Fixed-_have-macro-in-bash-completion.patch
-Patch7 : 0007-ALT-tune-SysVinit-scripts.patch
-Patch8 : 0008-ALT-make-lxc-and-lxc-net-init-scripts-disabled-by-de.patch
-Patch9 : 0009-ALT-sysvinit-don-t-start-services-at-boot-by-default.patch
-Patch10 : 0010-pidf_send_signal-fix-return-value.patch
+Patch1: 0001-DEBIAN-Starts-after-remote-fs.target.patch
+Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
+Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
+Patch4: 0004-ALT-tune-SysVinit-scripts.patch
+Patch5: 0005-ALT-make-lxc-and-lxc-net-init-scripts-disabled-by-de.patch
+Patch6: 0006-ALT-sysvinit-don-t-start-services-at-boot-by-default.patch
 
 Summary: Linux Containers
 Group: System/Configuration/Other
@@ -119,42 +117,33 @@ management using cgroup process tracking.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+%autopatch -p1
 
 %build
 %autoreconf
 %configure \
-	--disable-static \
-	%ifarch %e2k
 	--disable-werror \
-	%endif
-	--disable-rpath \
 	--disable-cgmanager \
-	--localstatedir=%_var \
-	--with-config-path=%_var/lib/lxc \
-	--with-distro=altlinux \
+	--disable-rpath \
+	--disable-static \
 	--enable-capabilities \
 	--enable-pam \
 	--enable-seccomp \
 	--enable-selinux \
+	--localstatedir=%_var \
+	--with-config-path=%_var/lib/lxc \
+	--with-distro=altlinux \
 	--with-init-script=%{?_with_systemd:systemd,}sysvinit
 
 %make_build
 
 %install
 %makeinstall_std
+
 mkdir -p %buildroot%_localstatedir/lxc
 mkdir -p %buildroot%_cachedir/lxc
-install -pm644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
+install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
+install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
 
 %post
 if [ $1 -eq 1 ]; then
@@ -167,6 +156,12 @@ if [ $1 -eq 0 ]; then
 	/sbin/chkconfig --del lxc
 	/sbin/chkconfig --del lxc-net
 fi
+
+%pre libs
+%pre_control lxc-user-nic
+
+%post libs
+%post_control -s vmusers lxc-user-nic
 
 %files
 %doc COPYING doc/FAQ.txt
@@ -197,6 +192,7 @@ fi
 
 %files libs
 %doc COPYING
+%_controldir/lxc-user-nic
 %_sbindir/init.lxc
 %_libdir/*.so.1*
 %_libdir/lxc
@@ -215,8 +211,14 @@ fi
 
 %files -n %pam_name
 %_pam_modules_dir/*
+%_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Mar 31 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.0-alt1
+- Updated to 4.0.0.
+- Added control facility for lxc-user-nic (allowed for vmusers group members
+  by default).
+
 * Fri Sep 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.4-alt3
 - Applied patches:
   + Start lxc service after remote-fs.target (Debian);
