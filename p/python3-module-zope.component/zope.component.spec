@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6
+Version: 4.6.1
 Release: alt1
 
 Summary: Zope Component Architecture (Python3)
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.component
 #Git: https://github.com/zopefoundation/zope.component.git
@@ -71,15 +71,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
 # cancel docbuild tests
 sed -i 's|\.\[docs\]||g' tox.ini
-sed -i 's|sphinx-build|#py3_sphinx-build|g' tox.ini
+sed -i 's|\(.*\)sphinx-build|#\1 py3_sphinx-build|g' tox.ini
 sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
+sed -i '/setenv =$/a\
+    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3' tox.ini
 
 tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 
@@ -95,6 +95,11 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Wed Apr 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.1-alt1
+- 4.6 -> 4.6.1
+- Rearrange check section according to upstream changes
+- Fix license
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.6-alt1
 - NMU: 4.5 -> 4.6
 - Remove python2 module build
