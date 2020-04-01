@@ -1,6 +1,6 @@
 Name: make
-Version: 4.2.1
-Release: alt5
+Version: 4.3.0
+Release: alt1
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -10,13 +10,15 @@ Url: http://www.gnu.org/software/make/
 
 # ftp://ftp.gnu.org/gnu/make/make-%version.tar.bz2
 Source: make-%version.tar
-Patch01: make-4.2.1-alt-getcwd.patch
-Patch02: make-4.2.1-alt-job_slots.patch
-Patch03: make-4.0-rh-newlines.patch
-Patch04: make-4.0-rh-weird-shell.patch
-Patch05: make-4.2.1-upstream-compat.patch
-Patch06: make-4.2.1-upstream-glob-compat.patch
-Patch07: make-4.2.1-alt-disable-test-output-sync.patch
+Patch01: 0001-ALT-getcwd.patch
+Patch02: 0002-ALT-job_slots.patch
+Patch03: 0003-REDHAT-newlines.patch
+Patch04: 0004-REDHAT-weird-shell.patch
+Patch05: 0005-ALT-disable-test.patch
+Patch06: 0006-Obey-order-of-multiple-print-no-print-directory-opti.patch
+Patch07: 0007-Only-set-APPEND-mode-for-regular-files.patch
+Patch08: 0008-Change-directories-before-checking-jobserver-auth.patch
+Patch09: 0009-Use-the-system-default-PATH-if-PATH-is-not-set.patch
 
 BuildRequires: /proc
 BuildRequires: makeinfo
@@ -31,17 +33,15 @@ makefile.
 
 %prep
 %setup
-%patch01 -p1
-%patch02 -p1
-%patch03 -p1
-%patch04 -p1
-%patch05 -p1
-%patch06 -p1
+%patch01 -p2
+%patch02 -p2
+%patch03 -p2
+%patch04 -p2
+%patch05 -p2
+%patch06 -p2
 %patch07 -p2
-
-sed -i \
-	-e 's,^AM_INIT_AUTOMAKE(\[1\.15 ,AM_INIT_AUTOMAKE([1.14.1 ,' \
-	configure.ac
+%patch08 -p2
+%patch09 -p2
 
 find -type f -name \*.orig -delete -print
 rm doc/*.info*
@@ -70,6 +70,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Apr 01 2020 Alexey Gladkov <legion@altlinux.ru> 2:4.3.0-alt1
+- New version (4.3).
+
 * Sat Mar 02 2019 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt5
 - Disable the flaking text.
 
