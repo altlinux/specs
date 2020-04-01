@@ -3,33 +3,25 @@
 
 %def_enable check
 
-Name: python-module-%oname
-Version: 1.4.1
-Release: alt4
+Name: python3-module-%oname
+Version: 1.5.2
+Release: alt1
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.logilab.org/project/logilab-common
 
 BuildArch: noarch
 
 # hg clone http://hg.logilab.org/review/logilab/common/
-Source: %name-%version.tar
+Source: %oname-%version.tar
+Patch0: port-to-new-python.patch
 
-# Do not install /usr/bin/pytest from there
-# and use it instead of ours quietly;
-# an explicit "Requires: pytest" is needed.
-Conflicts: python-module-pytest = 3.0.5-alt1
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pytz
 
-%py_requires mx.DateTime
-%add_python_req_skip mercurial sphinx
-
-BuildRequires: python-module-egenix-mx-base
-BuildRequires: python-module-pytz
-BuildRequires: python-module-unittest2
-
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc %py_dependencies mx.DateTime unittest2}}
+%py3_provides logilab
 
 %description
 logilab-common is a collection of low-level Python packages and modules,
@@ -46,34 +38,43 @@ designed to ease:
   * logging
 
 %prep
-%setup
+%setup -q -n %oname-%version
+%patch0 -p2
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-install -p -m644 logilab/__init__.py \
-	-t %buildroot%python_sitelibdir/logilab/
-install -pD -m644 doc/logilab-pytest.1 -T %buildroot%_man1dir/logilab-pytest.1
+%python3_install
+
+# man file
+install -pD -m644 docs/logilab-pytest.1 -T \
+    %buildroot%_man1dir/logilab-pytest-3.1
+# rename binary
+mv %buildroot%_bindir/logilab-pytest -T \
+    %buildroot%_bindir/logilab-pytest-3
 
 %check
-PYTHONPATH=%buildroot%python_sitelibdir \
-    %buildroot%_bindir/logilab-pytest \
+PYTHONPATH=%buildroot%python3_sitelibdir \
+    %buildroot%_bindir/logilab-pytest-3 \
     -t test \
     -s test_4
 
 %files
-%doc ChangeLog README
-%_bindir/logilab-pytest
-%python_sitelibdir/logilab/
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/*.pth
-%_man1dir/logilab-pytest.1*
+%doc ChangeLog README COPYING
+%_man1dir/logilab-pytest-3.1*
+%_bindir/logilab-pytest-3
+%python3_sitelibdir/logilab/common/*.py
+%python3_sitelibdir/logilab/common/__pycache__/
+%python3_sitelibdir/logilab/common/ureports/*.py
+%python3_sitelibdir/logilab/common/ureports/__pycache__/
+%python3_sitelibdir/*.egg-info/
+%exclude %python3_sitelibdir/*-nspkg.pth
 
 %changelog
-* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.1-alt4
-- Build python3 separetly.
+* Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.2-alt1
+- Version updated to 1.5.2
+- build for python2 disabled.
 
 * Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt3
 - Rebuilt with python-3.6.
