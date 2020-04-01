@@ -3,8 +3,8 @@
 Summary: OpenPGP Public Key Server
 Name: pks
 Version: 0.9.6
-Release: alt3
-License: BSD-like (with advertising clause)
+Release: alt4
+License: BSD-4-Clause
 Url: http://pks.sourceforge.net/
 Group: System/Servers
 
@@ -129,6 +129,9 @@ mkdir -p  %buildroot%_runtimedir/%name %buildroot%_localstatedir/%name/incoming 
 %_includedir/db2/db_cxx.h
 
 %changelog
+* Wed Apr 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt4
+- Fixed package license.
+
 * Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt3
 - Rebuilt without tcp wrappers support.
 - Spec cleanup.
