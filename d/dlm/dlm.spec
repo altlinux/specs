@@ -1,18 +1,21 @@
-
 Name: dlm
 Version: 4.0.9
-Release: alt1
+Release: alt2
+
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: System/Servers
-URL: https://pagure.io/dlm
+
+Url: https://pagure.io/dlm
+Source: %name-%version.tar
+Patch: %name-%version.patch
+
+BuildRequires: libsystemd-devel libcorosync-devel libuuid-devel
+%ifnarch %e2k
+BuildRequires: libpacemaker-devel
+%endif
 
 Requires: corosync >= 1.99.9
-
-Source0: %name-%version.tar
-Patch0: %name-%version.patch
-
-BuildRequires: libpacemaker-devel libsystemd-devel libcorosync-devel libuuid-devel
 
 %description
 The kernel dlm requires a user daemon to control membership.
@@ -35,16 +38,26 @@ The lib%name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
+%ifarch %e2k
+# unsupported as of lcc 1.32.21
+sed -i 's,-fstack-clash-protection,,' */Makefile
+# needs libpacemaker-devel (ftbfs atm)
+sed -i 's,fence,,' Makefile
+%endif
 
 %build
 %make
+%ifnarch %e2k
 %make -C fence
+%endif
 
 %install
-%make LIBNUM=/%_lib UDEVDIR=%_udevrulesdir DESTDIR=%buildroot install
-%make -C fence DESTDIR=%buildroot install
+%makeinstall_std LIBNUM=/%_lib UDEVDIR=%_udevrulesdir
+%ifnarch %e2k
+%makeinstall_std -C fence
+%endif
 
 install -Dm 0644 init/dlm.service %buildroot%_unitdir/dlm.service
 install -Dm 0644 init/dlm.sysconfig %buildroot%_sysconfdir/sysconfig/dlm
@@ -60,7 +73,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_unitdir/dlm.service
 %_sbindir/dlm_controld
 %_sbindir/dlm_tool
+%ifnarch %e2k
 %_sbindir/dlm_stonith
+%endif
 %_man8dir/dlm*
 %_man5dir/dlm*
 %_man3dir/*dlm*
@@ -75,6 +90,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 03 2020 Michael Shigorin <mike@altlinux.org> 4.0.9-alt2
+- E2K: build without fence (BR: libpacemaker-devel, unavailable now)
+
 * Sun Aug 11 2019 Alexey Shabalin <shaba@altlinux.org> 4.0.9-alt1
 - 4.0.9
 
