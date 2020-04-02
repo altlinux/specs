@@ -29,7 +29,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           gradle
 Version:        4.4.1
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Summary:        Build automation tool
 # Some examples and integration tests are under GNU LGPL and Boost
 # Software License, but are not used to create binary package.
@@ -397,6 +397,8 @@ rm -r subprojects/resources-gcs
 rm -r subprojects/ide-native
 # alt linux
 sed -i -e 's,/usr/share/fonts/lato,/usr/share/fonts/ttf/lato,;s,/usr/share/fonts/liberation,/usr/share/fonts/ttf/liberation,' ../../SOURCES/gradle-font-metadata.xml
+# versions.findbugs = "2.0.1"
+sed -i '/versions.findbugs/s,2.0.1,3.0.1,' gradle/dependencies.gradle
 
 %build
 export LANG=en_US.UTF8
@@ -482,6 +484,9 @@ sed -i -e s,/usr/bin/bash,/bin/sh, %buildroot%_bindir/*
 %config(noreplace,missingok) /etc/java/%name.conf
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt2_3jpp8
+- fixed build
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_3jpp8
 - new version
 
