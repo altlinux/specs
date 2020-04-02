@@ -64,8 +64,8 @@
 %endif
 
 Name: Mesa
-Version: 20.0.2
-Release: alt2
+Version: 20.0.3
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -455,6 +455,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Apr 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.3-alt1
+- 20.0.3
+
 * Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.2-alt2
 - rebuild with llvm 10.0.0
 - added meta package mesa-dri-drivers (closes: #38262)
