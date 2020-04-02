@@ -1,8 +1,8 @@
 Name: fonts-ttf-inter
-Version: 3.6
+Version: 3.12
 Release: alt1
-Summary: The Inter typeface family carefully crafted & designed for computer screens
-License: OFL
+Summary: TTF font family carefully crafted & designed for computer screens
+License: OFL-1.1
 Group: System/Fonts/True type
 Url: https://rsms.me/inter/
 Source: Inter-%version.zip
@@ -20,18 +20,43 @@ contextual alternates that adjusts punctuation depending on the shape of
 surrounding glyphs, slashed zero for when you need to disambiguate "0"
 from "o", tabular numbers, etc.
 
+This is TTF version of the familly, although OTF version is preferred for Linux.
+
+%package -n fonts-otf-inter
+Group: System/Fonts/True type
+Summary: OTF font family carefully crafted & designed for computer screens
+
+%description -n fonts-otf-inter
+Inter features a tall x-height to aid in readability of mixed-case and
+lower-case text. Several OpenType features are provided as well, like
+contextual alternates that adjusts punctuation depending on the shape of
+surrounding glyphs, slashed zero for when you need to disambiguate "0"
+from "o", tabular numbers, etc.
+
+This is OTF version of the familly (preferred).
+
 %prep
 %setup -c
 
 %build
 %install
-cd 'Inter (TTF)' && %ttf_fonts_install inter
-ln -s 'Inter (TTF)'/inter.files ../inter.files
+cd 'Inter (Hinted, for Windows)' && %ttf_fonts_install inter
+ln -s 'Inter (Hinted, for Windows)'/inter.files ../inter.files
+cd ..
+cd 'Inter' && %otf_fonts_install inter
+ln -s 'Inter'/inter.files ../inter-otf.files
 
 %files -f inter.files
 %doc *.txt
 
+%files -n fonts-otf-inter -f inter-otf.files
+%doc *.txt
+
 %changelog
+* Thu Apr 02 2020 Fr. Br. George <george@altlinux.ru> 3.12-alt1
+- Autobuild version bump to 3.12
+- Introduce OTF version
+
 * Tue May 28 2019 Fr. Br. George <george@altlinux.ru> 3.6-alt1
 - Autobuild version bump to 3.6
 
