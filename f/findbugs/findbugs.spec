@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_17jpp8
+Release:        alt1_20jpp8
 Summary:        Find bugs in Java code
 
 License:        LGPLv2+
@@ -234,24 +234,29 @@ fi ||:
 
 
 %files -f .mfiles
-%doc licenses/LICENSE.txt design/DecouplingFromBCEL.txt design/VisitingAndCaching.txt
+%doc design/DecouplingFromBCEL.txt design/VisitingAndCaching.txt
 %doc README.txt design/eclipse\ findbugs\ plugin\ features.sxw
 %doc design/architecture/architecture.pdf build/doc
+%doc --no-dereference licenses/LICENSE.txt
 %{_bindir}/*
 %{_datadir}/%{name}
 
 %files -n ant-findbugs -f .mfiles-ant
-%doc licenses/LICENSE.txt
+%doc --no-dereference licenses/LICENSE.txt
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
 
 %files javadoc
 %{_javadocdir}/*
 
 %files tools
-%doc licenses/LICENSE.txt README.fedora
+%doc README.fedora
+%doc --no-dereference licenses/LICENSE.txt
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_20jpp8
+- fixed pom for gradle
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_17jpp8
 - fc update
 
