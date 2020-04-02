@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.3.1
-Release: alt1
+Release: alt2
 Summary: Password encoding and checking utilities
 License: ZPL
 Group: Development/Python3
@@ -30,6 +30,7 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.security
 %endif
 
 %py3_requires zope zope.component zope.configuration zope.interface
@@ -92,6 +93,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt2
+- Fix tests by adding zope.security to BR:
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt1
 - NMU: 4.2.0 -> 4.3.1
 - Remove python2 module build

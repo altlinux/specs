@@ -5,10 +5,10 @@
 
 Name: python3-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: Definition of authentication basics for the Zope Framework
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.authentication/
 #Git: https://github.com/zopefoundation/zope.authentication.git
@@ -29,6 +29,7 @@ BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.security
 %endif
 
 %py3_requires zope zope.browser zope.component zope.i18nmessageid
@@ -85,6 +86,10 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt2
+- Fix tests by adding zope.security to BR:
+- Fix license
+
 * Thu Dec 19 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.4.0-alt1
 - NMU: 4.2.1 -> 4.4.0
 - Remove python2 module build
