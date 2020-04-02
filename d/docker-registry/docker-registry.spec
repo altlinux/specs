@@ -1,6 +1,6 @@
 %global import_path github.com/docker/distribution
 Name:     docker-registry
-Version:  2.6.2
+Version:  2.7.1
 Release:  alt1
 
 Summary:  The Docker toolset to pack, ship, store, and deliver content
@@ -49,12 +49,15 @@ mkdir -p %buildroot/%_localstatedir/%name
 
 %files
 %_bindir/docker-registry
-%doc CHANGELOG.md README.md
+%doc README.md
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config.yml
 %_unitdir/%name.service
 %dir %_localstatedir/%name
 
 %changelog
+* Thu Apr 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 2.7.1-alt1
+- new version 2.7.1
+
 * Thu Sep 27 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.6.2-alt1
 - Initial build for Sisyphus
