@@ -1,16 +1,16 @@
 %define _name atk
-%define ver_major 2.34
+%define ver_major 2.36
 %def_disable static
-%def_disable docs
+%def_enable docs
 %def_enable introspection
-%def_disable check
+%def_enable check
 
 Name: libatk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Accessibility features for Gtk+
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Libraries
 Url: https://wiki.gnome.org/Accessibility
 
@@ -24,10 +24,10 @@ Requires: %name-locales = %version
 Provides: atk = %version
 Obsoletes: atk < %version
 
-%define glib_ver 2.32
+%define glib_ver 2.38
 %define gtk_doc_ver 1.0
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
@@ -154,6 +154,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+- enabled "docs" and "check"
+
 * Mon Sep 09 2019 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
 - 2.34.1
 
