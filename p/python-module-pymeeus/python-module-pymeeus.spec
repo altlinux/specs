@@ -3,12 +3,12 @@
 %def_enable python2
 
 Name: python-module-%modname
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Library of astronomical algorithms in Python
 Group: Development/Python
-License: LGPL-3.0
+License: GPL-3.0 and LGPL-3.0
 Url: https://pypi.python.org/pypi/%_name
 
 Source: https://pypi.io/packages/source/P/%_name/%_name-%version.tar.gz
@@ -72,6 +72,10 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
+- 0.3.7
+- fixed License tag
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - first build for Sisyphus
 
