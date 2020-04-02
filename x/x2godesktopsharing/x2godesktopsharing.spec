@@ -1,6 +1,6 @@
 Name: x2godesktopsharing
 Version: 3.2.0.0
-Release: alt2
+Release: alt3
 Summary: Desktop Sharing for X2Go
 
 Group: Communications
@@ -10,6 +10,7 @@ Packager: Oleg Solovyov <mcpain@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: alt-fix-trayicon-hide.patch
+Patch2: alt-fix-quit.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
@@ -25,6 +26,7 @@ but you can also see a normal desktop.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 lrelease-qt5 x2godesktopsharing.pro
@@ -62,6 +64,9 @@ cp -rp man %buildroot%_datadir/
 %_datadir/x2go/versions/VERSION.x2godesktopsharing
 
 %changelog
+* Thu Apr 02 2020 Oleg Solovyov <mcpain@altlinux.org> 3.2.0.0-alt3
+- don't quit on MATE when confirmation dialog is closed
+
 * Wed Mar 11 2020 Oleg Solovyov <mcpain@altlinux.org> 3.2.0.0-alt2
 - release bump (autoimports had bigger version)
 
