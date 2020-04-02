@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.2.2
-Release:          alt1_11
+Release:          alt1_14
 Summary:          ZFS ported to Linux FUSE
 License:          CDDL
 URL:              https://github.com/gordan-bobic/zfs-fuse
@@ -20,6 +20,7 @@ Source04:         zfs-fuse-helper
 Patch0:           zfs-fuse-0.7.2.2-stack.patch
 Patch1:           zfs-fuse-0.7.2.2-python3.patch
 Patch2:           tirpc.patch
+Patch3:           common.patch
 BuildRequires:  gcc
 BuildRequires:    libfuse-devel libaio-devel rpm-build-perl scons gcc-c++
 BuildRequires:    zlib-devel libssl-devel libattr-devel liblzo2-devel bzlib-devel liblzma-devel
@@ -27,7 +28,7 @@ BuildRequires:    libtirpc-devel
 %ifnarch aarch64 ppc64le
 BuildRequires:    /usr/bin/execstack
 %endif
-BuildRequires:    libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:    libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Requires:         fuse >= 2.7.4
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
 ExcludeArch:      s390 s390x aarch64
@@ -54,6 +55,7 @@ operating system.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 
 f=LICENSE
 mv $f $f.iso88591
@@ -67,6 +69,7 @@ chmod -x contrib/zfsstress.py
 # cp -f /usr/lib/rpm/config.{guess,sub} src/lib/libumem/
 
 %build
+cp -f /usr/share/gnu-config/config.guess src/lib/libumem/
 export CCFLAGS="%{optflags}"
 pushd src
 
@@ -138,6 +141,9 @@ rm -rf /var/lock/zfs
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.2.2-alt1_14
+- update to new release by fcimport
+
 * Sat Mar 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.2.2-alt1_11
 - update to new release by fcimport
 
