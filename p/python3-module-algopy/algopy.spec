@@ -1,13 +1,12 @@
 %define oname algopy
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.5.3
-Release: alt1.git20150630.3
+Release: alt2
+
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/algopy
 
 # https://github.com/b45ch1/algopy.git
@@ -16,17 +15,14 @@ Patch1: fix_test_import_of_deprecated_decorators_module.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: time python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib
-BuildRequires: python-module-nose python-module-numpy-testing python-module-objects.inv python-module-scipy
-BuildRequires: python-module-setuptools
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-numpy-testing python3-module-scipy python3-module-setuptools
-%endif
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-scipy
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
-%py_requires numpy scipy
+%py3_provides %oname
+%py3_requires numpy scipy
 
 %description
 ALGOPY is a tool for Algorithmic Differentiation (AD) and Taylor
@@ -39,7 +35,7 @@ by a simple code evaluation tracer.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -52,39 +48,6 @@ dot,trace,qr,solve, inv,eigh. The reverse mode of AD is also supported
 by a simple code evaluation tracer.
 
 This package contains tests for %oname.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires numpy scipy
-
-%description -n python3-module-%oname
-ALGOPY is a tool for Algorithmic Differentiation (AD) and Taylor
-polynomial approximations. ALGOPY makes it possible to perform
-computations on scalar and polynomial matrices. It is designed to be as
-compatible to numpy as possible. I.e. views, broadcasting and most
-functions of numpy can be performed on polynomial matrices. Exampels are
-dot,trace,qr,solve, inv,eigh. The reverse mode of AD is also supported
-by a simple code evaluation tracer.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-ALGOPY is a tool for Algorithmic Differentiation (AD) and Taylor
-polynomial approximations. ALGOPY makes it possible to perform
-computations on scalar and polynomial matrices. It is designed to be as
-compatible to numpy as possible. I.e. views, broadcasting and most
-functions of numpy can be performed on polynomial matrices. Exampels are
-dot,trace,qr,solve, inv,eigh. The reverse mode of AD is also supported
-by a simple code evaluation tracer.
-
-This package contains tests for %oname.
-%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -121,81 +84,47 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx documentation
-ln -s ../objects.inv documentation/sphinx/
+sed -i 's|sphinx-build|&-3|' documentation/sphinx/Makefile
 
 %build
-%python_build_debug
-
 export PYTHONPATH=$PWD
-python setup.py build_sphinx
 %make -C documentation/sphinx pickle
 
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 cp -fR documentation/sphinx/_build/pickle \
-	%buildroot%python_sitelibdir/%oname/
+	%buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test -v
-python run_tests.py -v
-%if_with python3
-pushd ../python3
-python3 setup.py test -v ||:
-python3 run_tests.py -v ||:
-popd
-%endif
+%__python3 setup.py test -v ||:
+%__python3 run_tests.py -v ||:
 
 %files
 %doc *.rst documentation/examples documentation/getting_started.py
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc documentation/AD_tutorial_TU_Berlin
 %doc documentation/ICCS2010
 %doc documentation/*.pdf
-%doc documentation/sphinx/_build/html
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst documentation/examples documentation/getting_started.py
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.3-alt2
+- Build for python2 disabled.
+
 * Wed Jan 09 2019 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.3-alt1.git20150630.3
 - Fix tests passing. Tests use deprecated module numpy.testing.decorators, very
   likely tests will not pass with next numpy upgrade and tests must be disabled.
