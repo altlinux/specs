@@ -1,11 +1,11 @@
 Group: Editors
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# workaround for https://github.com/hboetes/mg/issues/12
-%define _legacy_common_support 1
-
 Name:		mg
-Version:	20180927
+Version:	20200215
 Release:	alt1_1
 Summary:	Tiny Emacs-like editor
 
@@ -38,6 +38,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1*
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 20200215-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 20180927-alt1_1
 - update to new release by fcimport
 
