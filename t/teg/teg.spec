@@ -1,14 +1,14 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm)
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           teg
 Version:        0.11.2
-Release:        alt2_42
+Release:        alt2_46
 Summary:        Turn based strategy game
-Group:          Games/Other
 License:        GPLv2
 URL:            http://teg.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
@@ -16,8 +16,10 @@ Source1:        teg.desktop
 Patch0:         teg_libxml.patch
 #Patch1:         teg_themes.patch
 #Patch2:         teg-disable-help.patch
-Patch3:		teg_fixwording.patch
-Source2:         teg-fix-help.patch
+Patch3:         teg_fixwording.patch
+Source2:        teg-fix-help.patch
+
+Patch20:        multiple_definitions.patch
 
 BuildRequires:  gcc
 BuildRequires:  tidy glib2-devel libgio libgio-devel libxml2-devel libgnomeui-devel
@@ -43,6 +45,8 @@ for file in AUTHORS COPYING README TODO PEOPLE ChangeLog; do
     mv -f $file.$$  $file
 done
 
+%patch20 -p1
+
 %build
 %configure
 %make_build
@@ -56,7 +60,7 @@ mv -f $RPM_BUILD_ROOT/%{_datadir}/pixmaps/teg_icono.png $RPM_BUILD_ROOT/%{_datad
 rm -rf $RPM_BUILD_ROOT/%{_datadir}/gnome/apps/Games/teg.desktop
 desktop-file-install \
 %if 0%{?fedora} && 0%{?fedora} < 19
-  --vendor="fedora"               \
+                 \
 %endif
   --dir=$RPM_BUILD_ROOT/%{_datadir}/applications %{SOURCE1}
 patch -p1 < %{SOURCE2}
@@ -73,7 +77,7 @@ mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/
 %{_datadir}/pixmaps/teg.png
 %{_datadir}/gnome/help/teg/
 %if 0%{?fedora} && 0%{?fedora} < 19
-%{_datadir}/applications/fedora-teg.desktop
+%{_datadir}/applications/teg.desktop
 %else
 %{_datadir}/applications/teg.desktop
 %endif
@@ -99,6 +103,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_46
+- update to new release by fcimport
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_42
 - rebuild with readline7
 
