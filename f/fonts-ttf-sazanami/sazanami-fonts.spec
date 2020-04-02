@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 BuildRequires: python-module-numpy-addons
 %define oldname sazanami-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -12,7 +13,7 @@ They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt9_29
+Release:	alt9_35
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
 BuildRequires:	mkfontdir fonts-bitmap-misc
@@ -31,15 +32,14 @@ Patch3:		uni8449-mincho.patch
 
 Summary:	Sazanami Japanese TrueType fonts
 License:	BSD
-Group:		System/Fonts/True type
 Source44: import.info
 
 %description
 %common_desc
 
 %package	-n fonts-ttf-sazanami-common
+Group: System/Fonts/True type
 Summary:	Common files for Sazanami Japanese TrueType fonts
-Group:		System/Fonts/True type
 
 %description	-n fonts-ttf-sazanami-common
 %common_desc
@@ -47,9 +47,9 @@ Group:		System/Fonts/True type
 This package consists of files used by other %{oldname} packages.
 
 %package -n fonts-ttf-sazanami-gothic
+Group: System/Fonts/True type
 Summary:	Sazanami Gothic Japanese TrueType font
 License:	BSD
-Group:		System/Fonts/True type
 Conflicts:	fonts-japanese <= 0.20061016-9.fc8
 Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-gothic = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-gothic < 0.20040629-6.20061016
@@ -61,9 +61,9 @@ Requires:	%{name}-common = %{version}-%{release}
 This package contains Japanese TrueType font for Gothic type face.
 
 %package -n fonts-ttf-sazanami-mincho
+Group: System/Fonts/True type
 Summary:	Sazanami Mincho Japanese TrueType font
 License:	BSD
-Group:		System/Fonts/True type
 Conflicts:	fonts-japanese <= 0.20061016-9.fc8
 Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-mincho = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-mincho < 0.20040629-6.20061016
@@ -114,10 +114,10 @@ install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_fontdir}/gothic/fonts.alias
 install -pm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_fontdir}/mincho/fonts.alias
 
 # Create fonts.scale and fonts.dir
-%{_bindir}/ttmkfdir -d $RPM_BUILD_ROOT%{_fontdir}/gothic -o $RPM_BUILD_ROOT%{_fontdir}/gothic/fonts.scale
-%{_bindir}/mkfontdir $RPM_BUILD_ROOT%{_fontdir}/gothic
-%{_bindir}/ttmkfdir -d $RPM_BUILD_ROOT%{_fontdir}/mincho -o $RPM_BUILD_ROOT%{_fontdir}/mincho/fonts.scale
-%{_bindir}/mkfontdir $RPM_BUILD_ROOT%{_fontdir}/mincho
+ttmkfdir -d $RPM_BUILD_ROOT%{_fontdir}/gothic -o $RPM_BUILD_ROOT%{_fontdir}/gothic/fonts.scale
+mkfontdir $RPM_BUILD_ROOT%{_fontdir}/gothic
+ttmkfdir -d $RPM_BUILD_ROOT%{_fontdir}/mincho -o $RPM_BUILD_ROOT%{_fontdir}/mincho/fonts.scale
+mkfontdir $RPM_BUILD_ROOT%{_fontdir}/mincho
 
 # Install catalogue symlink
 ln -sf %{_fontdir}/gothic $RPM_BUILD_ROOT%{catalogue}/%{oldname}-gothic
@@ -190,6 +190,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt9_35
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt9_29
 - update to new release by fcimport
 
