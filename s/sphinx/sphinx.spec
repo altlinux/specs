@@ -1,16 +1,19 @@
+%define rel -beta
 %global _localstatedir %_var
 Name: sphinx
-Version: 2.2.11
-Release: alt7
+Version: 2.3.2
+Release: alt1
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
 License: GPLv2+
 Url: http://sphinxsearch.com
 
-Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
+# Source0-url: http://sphinxsearch.com/files/%name-%version%rel.tar.gz
+Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.unit
+
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
 
 %description
@@ -62,7 +65,7 @@ Pure C searchd client API library
 Sphinx search engine, http://sphinxsearch.com
 
 %prep
-%setup -q
+%setup
 
 # Fix wrong-file-end-of-line-encoding
 sed -i 's/\r//' api/ruby/spec/sphinx/sphinx_test.sql
@@ -175,6 +178,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Thu Apr 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- NMU: build 2.3.2-beta
+
 * Sat Mar 16 2019 Anton Farygin <rider@altlinux.ru> 2.2.11-alt7
 - removed ubt macros
 - rebuilt with libmysqlclient21
