@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: warzone2100
-Version: 3.2.3
-Release: alt2
-
+Version: 3.3.0
+Release: alt1
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
-License: GPLv2+ and CC-BY-SA
+License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
-
 Url: http://wz2100.net/
+
 # https://github.com/Warzone2100/warzone2100.git
 Source: %name-%version.tar
 #Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
@@ -15,10 +16,22 @@ Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
 # ./build_tools/autorevision -t sh -o autorevision.cache > autorevision-$version.cache
 Source2: autorevision-%version.cache
 
+# submodules
+Source3: %name-%version-3rdparty-sha.tar
+
+Patch1: %name-alt-unbundle-libs.patch
+Patch2: %name-alt-sdl2-workaround.patch
+
 BuildRequires: /proc
 BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
-BuildRequires: elfutils fontconfig fontconfig-devel gnu-config libGL-devel libGLU-devel libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libogg-devel libpng-devel libstdc++-devel pkg-config python-base texlive-latex-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: asciidoc-a2x flex gcc-c++ imake libSDL2-devel libfribidi-devel libglew-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel unzip xorg-cf-files zip
+BuildRequires: elfutils fontconfig-devel libGL-devel libGLU-devel libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libogg-devel libpng-devel libstdc++-devel pkg-config texlive-latex-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: asciidoc-a2x flex gcc-c++ libSDL2-devel libfribidi-devel libglew-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel unzip xorg-cf-files zip
+BuildRequires: libglm-devel
+BuildRequires: python2-base
+BuildRequires: cmake
+BuildRequires: libminiupnpc-devel
+BuildRequires: libutfcpp-devel
+BuildRequires: libutf8proc-devel
 
 # 'zip -T' called in build process needs unzip to work...
 
@@ -41,7 +54,9 @@ BuildArch: noarch
 Game data for warzone2100.
 
 %prep
-%setup -a 1
+%setup -a1 -a3
+%patch1 -p1
+%patch2 -p1
 cp %SOURCE2 ./src/autorevision.cache
 %ifarch %e2k
 # strip UTF-8 BOM
@@ -49,36 +64,43 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
-./autogen.sh
-%configure --with-distributor="ALT Linux"
-%make_build
+%cmake \
+	-DWZ_DISTRIBUTOR="ALT Linux" \
+	%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 install -d %buildroot%_pixmapsdir
 install -m644 icons/warzone2100.png %buildroot%_pixmapsdir
 install -pD -m644 warzone2100_48x48.png %buildroot%_liconsdir/warzone2100.png
 install -pD -m644 warzone2100_32x32.png %buildroot%_niconsdir/warzone2100.png
 install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 
+rm -rf %buildroot%_datadir/fonts
+rm -rf %buildroot%_datadir/doc
+rm -rf %buildroot%_iconsdir/warzone2100.png
+
 %find_lang warzone2100
 
 %files -f warzone2100.lang
 %doc COPYING* README.md
-%exclude /usr/share/doc
 %_bindir/*
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
-%exclude %_iconsdir/warzone2100.png
 %_pixmapsdir/*
 %_desktopdir/*
 %_man6dir/*
+%_datadir/metainfo/*
 
 %files gamedata
 %_datadir/warzone2100
 
 %changelog
+* Thu Apr 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
+- Updated to upstream version 3.3.0.
+
 * Fri May 10 2019 Michael Shigorin <mike@altlinux.org> 3.2.3-alt2
 - E2K: avoid UTF-8 BOM
 
