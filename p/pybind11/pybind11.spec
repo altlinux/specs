@@ -1,7 +1,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-style
@@ -19,16 +19,11 @@ BuildRequires: catch-devel
 BuildRequires: ccmake
 BuildRequires: eigen3
 BuildRequires: gcc-c++
-BuildRequires: python-module-scipy
 BuildRequires: python3-dev
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-setuptools
-BuildRequires: python-module-setuptools
 
 # These are only needed for the checks
-BuildRequires: python-module-pytest
-BuildRequires: python-module-numpy
-BuildRequires: python-module-numpy-testing
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-scipy
@@ -101,6 +96,9 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.3-alt2
+- Build requires fixed.
+
 * Mon Oct 28 2019 Nikolai Kostrigin <nickel@altlinux.org> 2.4.3-alt1
 - New version
 - Spec: quit building Python2 module package
