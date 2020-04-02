@@ -3,7 +3,7 @@ Group: Other
 %define _localstatedir %{_var}
 Name:       light
 Version:    1.2.2
-Release:    alt1_1
+Release:    alt1_2
 Summary:    Control backlight controllers
 
 License:    GPLv3
@@ -48,7 +48,9 @@ Features
 
 
 %post
-chown -R :root %{_sysconfdir}/%{name}
+if [ -e "%{_sysconfdir}/%{name}" ]; then
+    chown -R :root %{_sysconfdir}/%{name}
+fi
 
 
 %files
@@ -60,6 +62,9 @@ chown -R :root %{_sysconfdir}/%{name}
 
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_1
 - update to new release by fcimport
 
