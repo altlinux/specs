@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python
+BuildRequires: python2.7(json)
 
 %if_with check
 BuildRequires: /proc
@@ -92,6 +93,9 @@ tox --sitepackages -p auto -o -vr
 %python_sitelibdir/%oname/test*
 
 %changelog
+* Thu Apr 02 2020 Michael Shigorin <mike@altlinux.org> 0.14.1-alt2
+- Fix check knob (json module is needed regardless of pytest).
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.14.1-alt1
 - Version updated to 0.14.1
 - module for python3 build separately.
