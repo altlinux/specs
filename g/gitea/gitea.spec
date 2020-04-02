@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:    gitea
-Version: 1.11.1
+Version: 1.11.4
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -98,6 +98,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt1
+- Build new version.
+
 * Wed Feb 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.1-alt1
 - Build new version.
 
