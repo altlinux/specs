@@ -1,25 +1,24 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+Group: Communications
 %add_optflags %optflags_shared
 %define oldname unshield
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# github: https://fedoraproject.org/wiki/Packaging:SourceURL
-%global commit fe6338bd8ec0d9ff2148a134fabab5a0423a0b90
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:           libunshield
-Version:        1.0
-Release:        alt1_8
+Version:        1.4.3
+Release:        alt1_1
 Summary:        Install InstallShield applications on a Pocket PC
 
-Group:          Communications
 License:        MIT
 URL:            https://github.com/twogood/unshield
-Source0:        https://github.com/twogood/unshield/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
+Source0:        https://github.com/twogood/unshield/archive/%{version}/%{oldname}-%{version}.tar.gz
 
 BuildRequires:  zlib-devel
-BuildRequires:  libtool-common
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
+BuildRequires:  ctest cmake
+BuildRequires:  gcc
 Source44: import.info
 Provides: unshield = %{version}-%{release}
 
@@ -31,10 +30,10 @@ devices, which were often contained in InstallShield installers, but these days
 that is rather less likely to be the primary use case.
 
 %package devel
-Group:          Development/Other
+Group: Development/Other
 Summary:        Files needed for software development with %{oldname}
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 Provides: unshield-devel = %{version}-%{release}
 
 %description devel
@@ -42,22 +41,26 @@ The %{oldname}-devel package contains the files needed for development with
 %{oldname}.
 
 %prep
-%setup -q -n %{oldname}-%{commit}
+%setup -q -n %{oldname}-%{version}
+
 
 %build
-./bootstrap
-%configure --disable-static --disable-rpath
-make LIBTOOL=%{_bindir}/libtool %{?_smp_mflags}
+%{fedora_cmake}
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 
+
+
 %files
-%doc README LICENSE
+%doc --no-dereference LICENSE
+%doc README.md
 %{_bindir}/unshield
 %{_mandir}/man1/unshield.1*
-%{_libdir}/libunshield.so.*
+%{_libdir}/libunshield.so.0
+%{_libdir}/libunshield.so.0.0.0
 
 %files devel
 %{_libdir}/libunshield.so
@@ -65,6 +68,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Thu Apr 02 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_8
 - update to new release by fcimport
 
