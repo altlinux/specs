@@ -1,13 +1,14 @@
 
 %global _unpackaged_files_terminate_build 1
 %define _localstatedir /var
+%def_with maxmind
 
 Name: ocserv
-Version: 0.12.4
+Version: 1.0.0
 Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
-License: GPLv2+ and BSD and MIT and CC0
+License: GPLv2+
 Url: http://www.infradead.org/ocserv/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -19,7 +20,11 @@ BuildRequires: libprotobuf-c-devel protobuf-c-compiler
 BuildRequires: libev-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libnl-devel >= 3.1
+%if_with maxmind
+BuildRequires: libmaxminddb-devel >= 1.0.0
+%else
 BuildRequires: libGeoIP-devel >= 1.6.0
+%endif
 BuildRequires: libreadline-devel
 BuildRequires: liboath-devel
 BuildRequires: libpam-devel
@@ -67,6 +72,7 @@ sed -i 's/either version 3 of the License/either version 2 of the License/g' bui
 	--enable-systemd \
 	--without-libwrap \
 	--without-root-tests \
+	%{subst_with maxmind} \
 	--without-docker-tests
 
 %make_build
@@ -101,18 +107,12 @@ install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 %preun_service %name
 
 %files
+%doc NEWS LICENSE README.md TODO
 %dir %_localstatedir/lib/ocserv
 %dir %_sysconfdir/ocserv
-
 %config(noreplace) %_sysconfdir/ocserv/ocserv.conf
 %config(noreplace) %_sysconfdir/pam.d/ocserv
-
-%doc AUTHORS NEWS LICENSE README.md TODO
-
-%_man8dir/ocserv.8*
-%_man8dir/occtl.8*
-%_man8dir/ocpasswd.8*
-
+%_man8dir/*
 %_bindir/ocpasswd
 %_bindir/occtl
 %_bindir/%name-fw
@@ -124,6 +124,13 @@ install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 %_initdir/%name
 
 %changelog
+* Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
+* Thu Dec 19 2019 Alexey Shabalin <shaba@altlinux.org> 0.12.5-alt1
+- 0.12.5
+- build with libmaxminddb
+
 * Tue Sep 24 2019 Alexey Shabalin <shaba@altlinux.org> 0.12.4-alt1
 - initial build for ALT
 
