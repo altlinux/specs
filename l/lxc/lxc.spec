@@ -29,7 +29,7 @@
 
 Name: lxc
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Url: https://linuxcontainers.org/
 
@@ -91,6 +91,9 @@ manage and debug your containers.
 %package libs
 Summary: Shared library files for %name
 Group: System/Configuration/Other
+Requires(pre): /usr/sbin/groupadd
+Requires(pre): control
+
 %description libs
 The %name-libs package contains libraries for running %name applications.
 
@@ -158,6 +161,7 @@ if [ $1 -eq 0 ]; then
 fi
 
 %pre libs
+groupadd -r -f vmusers ||:
 %pre_control lxc-user-nic
 
 %post libs
@@ -193,16 +197,23 @@ fi
 %files libs
 %doc COPYING
 %_controldir/lxc-user-nic
-%_sbindir/init.lxc
-%_libdir/*.so.1*
-%_libdir/lxc
-%_localstatedir/lxc
-%_libexecdir/lxc/lxc-apparmor-load
-%_libexecdir/lxc/lxc-monitord
+%attr(4710,root,vmusers) %_libexecdir/lxc/lxc-user-nic
 %attr(555,root,root) %_libexecdir/lxc/lxc-containers
 %attr(555,root,root) %_libexecdir/lxc/lxc-net
-%attr(4111,root,root) %_libexecdir/lxc/lxc-user-nic
+%_libexecdir/lxc/lxc-apparmor-load
+%_libexecdir/lxc/lxc-containers
+%_libexecdir/lxc/lxc-monitord
+%_libexecdir/lxc/lxc-net
 %_libexecdir/lxc/hooks
+
+%_sbindir/init.lxc
+# ALT#37718
+#_sbindir/init.lxc.static
+%_libdir/*.so.1*
+%_localstatedir/lxc
+
+%dir %_libdir/lxc/rootfs
+%_libdir/lxc/rootfs/README
 
 %files devel
 %_includedir/lxc
@@ -214,6 +225,13 @@ fi
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Apr 02 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.0-alt2
+- lxc-libs:
+  + Made preinstall create required vmusers group.
+  + Added runtime dependency for control.
+  + Fixed %%attr for lxc-user-nic.
+  + Packaged directory %%_libdir/lxc/rootfs and README file placed in it.
+
 * Tue Mar 31 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.0-alt1
 - Updated to 4.0.0.
 - Added control facility for lxc-user-nic (allowed for vmusers group members
