@@ -8,7 +8,7 @@
 %define sover 5
 
 Name: libgranite
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Extension of GTK+3 libraries
@@ -127,6 +127,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt1
+- 5.3.1
+
 * Wed Jan 08 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
