@@ -2,7 +2,7 @@
 
 Name: pam_alreadyloggedin
 Version: 0.3.2
-Release: alt3
+Release: alt4
 
 %def_without libpam
 %def_with    libpam0
@@ -16,7 +16,7 @@ Release: alt3
 %endif
 
 Summary: Skip password authorization if user is already logged in
-License: relaxed BSD and (L)GPL-compatible
+License: BSD-3-Clause
 Group: System/Base
 Url: http://ilya-evseev.narod.ru/posix/%name
 
@@ -71,6 +71,9 @@ rm -f %buildroot%pamconfdir/login.sso
 %_man8dir/%name.8*
 
 %changelog
+* Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt4
+- Fixed license.
+
 * Tue Jan 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt3
 - Fixed pam module location (Closes: #35894)
 - Changed package summary and description translation to UTF-8
