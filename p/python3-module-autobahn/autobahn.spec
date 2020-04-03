@@ -1,17 +1,12 @@
 %define oname autobahn
 
-%def_disable check
-
-%def_without python2
-%def_with docs
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 18.5.2
-Release: alt4
+Release: alt5
 
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/tavendo/AutobahnPython
 
 # https://github.com/tavendo/AutobahnPython.git
@@ -20,77 +15,17 @@ Source: %name-%version.tar
 # https://github.com/crossbario/autobahn-python/commit/9b6fb57e5c87a5e29cd880f752a30b9409d480c6
 Patch: ensure-python37-compat.patch
 
-%if_with python2
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-
-%{?_enable_check:
-BuildRequires: python-module-six python-module-flake8
-BuildRequires: python-module-unittest2 python-module-txaio-tests python-module-trollius-tests
-}
-
-%py_requires twisted.internet twisted.web twisted.words
-
-%endif
+%py3_requires twisted.internet twisted.web twisted.words
 
 %description
 Autobahn WebSockets for Python provides an implementation of the
 WebSockets protocol which can be used to build WebSockets clients and
 servers.
 
-%if_with python2
 %package tests
-Summary: Tests for Autobahn
-Group: Development/Python
-Requires: %name = %EVR
-Requires: python-module-twisted-core-test
-
-%description tests
-Autobahn WebSockets for Python provides an implementation of the
-WebSockets protocol which can be used to build WebSockets clients and
-servers.
-
-This package contains tests for Autobahn.
-%endif
-
-%if_with docs
-%package docs
-Summary: Documentation and examples for Autobahn
-Group: Development/Documentation
-BuildArch: noarch
-
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-sphinxcontrib-spelling python-module-txaio python-module-service-identity
-
-%description docs
-Autobahn WebSockets for Python provides an implementation of the
-WebSockets protocol which can be used to build WebSockets clients and
-servers.
-
-This package contains documentation and examples for Autobahn.
-%endif
-
-%package -n python3-module-%oname
-Summary: WebSocket & WAMP for Python3/Twisted
-Group: Development/Python3
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-
-%{?_enable_check:
-BuildRequires: python-module-six python-module-flake8
-BuildRequires: python3-module-txaio-tests python3-module-unittest2 python3-module-mock
-}
-
-%py3_requires twisted.internet twisted.web twisted.words
-
-%description -n python3-module-%oname
-Autobahn WebSockets for Python provides an implementation of the
-WebSockets protocol which can be used to build WebSockets clients and
-servers.
-
-%package -n python3-module-%oname-tests
 Summary: Tests for Autobahn
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
@@ -107,78 +42,28 @@ This package contains tests for Autobahn.
 %setup
 %patch -p1
 
-%if_with python2
-rm -rf ../python2
-cp -a . ../python2
-%endif
-
-%if_with docs
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-%endif
-
 %build
 %python3_build_debug
 
-%if_with python2
-pushd ../python2
-%python_build_debug
-popd
-%endif
-
-%if_with docs
-export PYTHONPATH=$PWD
-pushd docs
-make html
-popd
-%endif
-
 %install
 %python3_install
-
-%if_with python2
-pushd ../python2
-%python_install
-popd
-%endif
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-%check
-PYTHONPATH=$(pwd) py.test3 --pyargs autobahn
-
-%if_with python2
-pushd ../python2
-PYTHONPATH=$(pwd) py.test --pyargs autobahn
-popd
-%endif
-
-%if_with python2
 %files
-%doc *.md *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/test
-
-%files tests
-%python_sitelibdir/*/*/test
-%endif
-
-%if_with docs
-%files docs
-%doc docs/build/html examples
-%endif
-
-%files -n python3-module-%oname
 %doc *.md *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/test
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/*/test
 
 %changelog
+* Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 18.5.2-alt5
+- Build for python3 only.
+
 * Sat Mar 21 2020 Vitaly Lipatov <lav@altlinux.ru> 18.5.2-alt4
 - disable python2 module build
 
