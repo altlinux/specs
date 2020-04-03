@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /proc
+# END SourceDeps(oneline)
 # Liquid War sports i386 assembler extensions, that don't work on
 # anything but i386.
 #ifarch i586
@@ -11,7 +14,7 @@
 
 Name: liquidwar
 Version: 5.6.4
-Release: alt6
+Release: alt6.1
 
 Group: Games/Arcade
 Summary: Liquid War is a unique multiplayer wargame
@@ -111,13 +114,16 @@ install -m 644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %doc README*
 %_gamesdatadir/%name
 %_desktopdir/*.desktop
-%_mandir/man6/*
+#%_mandir/man6/*
 %_datadir/pixmaps/%name.xpm
 %_iconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 5.6.4-alt6.1
+- NMU: applied logoved fixes
+
 * Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 5.6.4-alt6
 - Fix build
 
