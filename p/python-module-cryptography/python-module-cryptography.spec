@@ -1,11 +1,11 @@
 %define oname cryptography
 
 %def_with python3
-%def_disable test
+%def_enable test
 
 Name: python-module-%oname
-Version: 2.8
-Release: alt2
+Version: 2.9
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -119,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Fri Apr 3 2020 Vladimir Didenko <cow@altlinux.ru> 2.9-alt1
+- new version (2.9)
+- re-enable tests
+
 * Thu Jan 16 2020 Grigory Ustinov <grenka@altlinux.org> 2.8-alt2
 - Bootstrap for python3.8.
 
