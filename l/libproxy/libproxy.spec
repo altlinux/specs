@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(libpcre)
+# END SourceDeps(oneline)
 %def_without gnome
 %def_with gnome3
 %def_with kde
@@ -6,13 +9,13 @@
 %def_without webkit
 %def_with webkit3
 %def_without dotnet
-%def_with python2
+%def_without python2
 %def_with python3
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
 Version: 0.4.15
-Release: alt3
+Release: alt3.1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -257,6 +260,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.15-alt3.1
+- NMU: applied logoved fixes
+
 * Sat Apr 20 2019 Alexey Shabalin <shaba@altlinux.org> 0.4.15-alt3
 - fixed build with python-3.7
 - build with mozjs-60
