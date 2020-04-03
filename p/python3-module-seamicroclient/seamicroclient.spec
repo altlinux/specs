@@ -1,35 +1,26 @@
+%define oname seamicroclient
 
-Name:           python-module-seamicroclient
-Version:        0.1.0
-Release:        alt2
-Summary:        Python client for consuming SeaMicro REST API v2.0
-Group:          Development/Python
+Name: python3-module-%oname
+Version: 0.1.0
+Release: alt3
 
-License:        ASL 2.0
-URL:            https://pypi.python.org/pypi/python-seamicroclient/
-Source0:        %name-%version.tar
-BuildArch:      noarch
+Summary: Python client for consuming SeaMicro REST API v2.0
+License: ASL 2.0
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/python-seamicroclient/
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-pbr
+BuildArch: noarch
 
+Source0: %oname-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pbr
 
 %description
 Python client for consuming SeaMicro REST API v2.0
 
-%package -n python3-module-seamicroclient
-Summary: Python client for consuming SeaMicro REST API v2.0
-Group: Development/Python3
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-pbr
-
-%description -n python3-module-seamicroclient
-Python client for consuming SeaMicro REST API v2.0
-
 %prep
-%setup
+%setup -q -n %oname-%version
 
 # Remove bundled egg-info
 rm -rf python_seamicroclient.egg-info
@@ -38,31 +29,19 @@ rm -rf python_seamicroclient.egg-info
 # to distutils requires_dist config
 rm -rf {test-,}requirements.txt
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%python_sitelibdir/*
-
-%files -n python3-module-seamicroclient
 %python3_sitelibdir/*
 
-
 %changelog
+* Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt3
+- Build for python2 disabled.
+
 * Mon May 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt2
 - rebuild with python3.6
 
