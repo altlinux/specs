@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex)
+# END SourceDeps(oneline)
 %define sonamever 0
 %define sover %sonamever.0.0
 
 Name: libitpack
 Version: 1998
-Release: alt4
+Release: alt4.1
 Summary: Solving large sparse linear systems by accelerated iterative algorithms
 License: Free
 Group: Sciences/Mathematics
@@ -125,6 +128,9 @@ popd
 %_bindir/*
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1998-alt4.1
+- NMU: applied logoved fixes
+
 * Fri Mar 18 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1998-alt4
 - Added -g into compiler flags
 
