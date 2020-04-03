@@ -1,13 +1,14 @@
 # test new macroses
-%define python_build CFLAGS="%optflags" python setup.py build
-%define python_install python setup.py install --root %buildroot --optimize=2
+%define python2_build CFLAGS="%optflags" python2 setup.py build
+%define python2_install python2 setup.py install --root %buildroot --optimize=2
 
+%def_with python2
 %def_without python3
 
 %define oname pyspatialite
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Python interface to Spatialite
 
@@ -86,7 +87,9 @@ cp -a . ../python3
 %endif
 
 %build
-%python_build
+%if_with python2
+%python2_build
+%endif
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
@@ -95,7 +98,9 @@ popd
 %endif
 
 %install
-%python_install
+%if_with python2
+%python2_install
+%endif
 %if_with python3
 pushd ../python3
 %python3_install
@@ -104,6 +109,7 @@ popd
 
 rm -rf %buildroot%_usr/pyspatialite-doc/
 
+%if_with python2
 %files
 %doc doc/install-source.txt
 %python_sitelibdir/%{oname}*
@@ -111,6 +117,7 @@ rm -rf %buildroot%_usr/pyspatialite-doc/
 
 %files tests
 %python_sitelibdir/%oname/test
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -123,6 +130,9 @@ rm -rf %buildroot%_usr/pyspatialite-doc/
 %endif
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1.2
+- NMU: applied logoved fixes
+
 * Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1.1
 - Rebuild with new libspatialite
 
