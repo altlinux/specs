@@ -2,7 +2,7 @@
 
 Name: libtolua++-lua5.1
 Version: 1.0.93
-Release: alt4
+Release: alt5
 Summary: A tool to integrate C/C++ code with Lua
 Group: System/Libraries
 License: MIT
@@ -11,6 +11,7 @@ Url: http://www.codenix.com/~tolua/
 Source: http://www.codenix.com/~tolua/tolua++-%version.tar.bz2
 Patch0: tolua++-1.0.93-lua51.patch
 Patch1: tolua++-1.0.93-lua-include-path.patch
+Patch2: tolua++-1.0.93-scons304.patch
 
 BuildRequires: scons
 BuildRequires: liblua5.1-devel
@@ -36,10 +37,11 @@ Development files for tolua++ (for lua 5.1)
 %setup -q -n tolua++-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i 's/\r//' doc/tolua++.html
 
 %build
-scons %{?_smp_mflags} -Q CCFLAGS="%optflags  -I%_includedir" tolua_lib=%solib LINKFLAGS="-Wl,-soname,lib%solib.so" shared=1
+scons-3 %{?_smp_mflags} -Q CCFLAGS="%optflags  -I%_includedir" tolua_lib=%solib LINKFLAGS="-Wl,-soname,lib%solib.so" shared=1
 # from fedora's compat-tolua-5.1
 # Relink the tolua++ binary, there are 2 reasons for this:
 # -Link it without the soname which we add to LINKFLAGS to build a shared lib
@@ -74,6 +76,9 @@ ln -s lib%solib.so libtolua++.so
 %_includedir/tolua++.h
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt5
+- fixed build
+
 * Fri Feb 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt4
 - Obsoletes and conflict on old tolua++
 
