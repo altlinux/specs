@@ -1,7 +1,7 @@
 Name: spe
 Summary: Integrated Python Development Environment
 Version: 0.8.4.h
-Release: alt3.1
+Release: alt3.2
 License: GPL
 Group: Development/Python
 Url: http://pythonide.stani.be/
@@ -32,7 +32,7 @@ This package is %name %__python_version module.
 %setup
 
 %build
-python setup.py build
+python2 setup.py build
 
 for size in 16x16 32x32 48x48 ; do
     convert _spe/images/spe.png -resize $size %name-$size.png
@@ -41,7 +41,7 @@ done
 docbook-to-man %name.sgml > %name.1
 
 %install
-python setup.py install -O1 --skip-build --root="%buildroot" --prefix="%prefix"
+python2 setup.py install -O1 --skip-build --root="%buildroot" --prefix="%prefix"
 install -D spe.desktop %buildroot%_desktopdir/spe.desktop
 install -D _spe/images/spe.png %buildroot%_pixmapsdir/spe.png
 for size in 16x16 32x32 48x48 ; do
@@ -60,6 +60,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %python_sitelibdir/_%name
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.4.h-alt3.2
+- NMU: applied logoved fixes
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.4.h-alt3.1
 - Rebuild with Python-2.7
 
