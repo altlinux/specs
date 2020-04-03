@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex)
+# END SourceDeps(oneline)
 Name:    jthread
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: JThread provides classes to make use of threads easy on different platforms
 License: MIT
@@ -54,6 +57,9 @@ rm -f %buildroot%_libdir/libjthread.a
 %_pkgconfigdir/jthread.pc
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1.1
+- NMU: applied logoved fixes
+
 * Mon Mar 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
 - New version
 
