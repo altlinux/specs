@@ -1,10 +1,10 @@
 Name: libmediainfo
-Version: 19.09
+Version: 20.03
 Release: alt1
 
 Group: System/Libraries
 Summary: %name - Shared library for mediainfo
-License: LGPL
+License: BSD-2-Clause
 Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
@@ -58,6 +58,7 @@ pushd Source/Doc
 doxygen Doxyfile
 popd
 pushd Project/GNU/Library
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --enable-shared=yes \
     --enable-static=no \
@@ -84,6 +85,10 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 20.03-alt1
+- 20.03
+- fixed License tag
+
 * Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 19.09-alt1
 - 19.09
 

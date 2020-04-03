@@ -1,10 +1,10 @@
 Name: libzen
-Version: 0.4.37
+Version: 0.4.38
 Release: alt1
 
 Group: System/Libraries
 Summary: %name - Shared library for libmediainfo and medianfo-related programs
-License: LGPL
+License: Zlib
 Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
@@ -28,6 +28,7 @@ This package contains files for development with libzen.
 
 %build
 pushd Project/GNU/Library
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --enable-shared --enable-static=no
 %make
@@ -48,6 +49,10 @@ popd
 %_libdir/*.so
 
 %changelog
+* Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.38-alt1
+- 0.4.38
+- fixed License tag
+
 * Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.37-alt1
 - 0.4.37
 
