@@ -13,8 +13,8 @@
 %endif
 
 Name: bacula9
-Version: 9.4.4
-Release: alt3
+Version: 9.6.3
+Release: alt1
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -48,7 +48,7 @@ BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
 BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel
-BuildRequires: dvd+rw-tools groff-base iputils bc 
+BuildRequires: dvd+rw-tools groff-base iputils bc
 
 %if_enabled bat
 BuildRequires: qt5-base-devel
@@ -414,11 +414,11 @@ functions such as:
 %setup -T -D -b 15
 %endif
 
-%patch1 -p1
+%patch1 -p2
 
 %if_enabled webgui
 pushd ../%name-gui-%version/baculum
-%patch2 -p2
+%patch2 -p3
 popd
 %endif
 
@@ -885,6 +885,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.6.3-alt1
+- Updated to upstream version 9.6.3.
+
 * Thu Feb 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.4.4-alt3
 - Restored make_catalog_backup script (Closes: #38083).
 
