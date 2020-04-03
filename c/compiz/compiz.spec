@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(bzip2) pkgconfig(libthai) pkgconfig(libtiff-4) pkgconfig(mount)
-# END SourceDeps(oneline)
 %define ver_major 0.9.14
 
 Name: compiz
 Version: %ver_major.1
-Release: alt1.1
+Release: alt2
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -13,7 +10,6 @@ Group: System/X11
 Url: https://git.launchpad.net/compiz
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-#ExclusiveArch: i586 x86_64
 Provides: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
 Provides: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
@@ -61,6 +57,7 @@ Development files for %name
 mkdir -p %_target_platform
 pushd %_target_platform
 cmake .. \
+	-DCMAKE_VERBOSE_MAKEFILE=TRUE \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_CXX_FLAGS_RELEASE='%optflags' \
@@ -130,6 +127,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/*.egg-info
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Fri Apr 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.1-alt2
+- drop previous logoved fixes
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.14.1-alt1.1
 - NMU: applied logoved fixes
 
