@@ -1,12 +1,12 @@
 %def_disable kde4
 
 Name: mediainfo
-Version: 19.09
+Version: 20.03
 Release: alt1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
-License: LGPL
+License: BSD-2-Clause
 Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
-BuildRequires: libzen-devel >= 0.4.37
+BuildRequires: libzen-devel >= 0.4.38
 BuildRequires: libmediainfo-devel >= %version
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
@@ -94,11 +94,13 @@ This package contains KDE5 related MediaInfo files
 
 %build
 pushd Project/GNU/CLI
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-staticlibs --with-dll
 %make_build
 popd
 pushd Project/GNU/GUI
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-staticlibs --with-dll
 %make_build
@@ -150,6 +152,10 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 20.03-alt1
+- 20.03
+- fixed License tag
+
 * Thu Sep 12 2019 Yuri N. Sedunov <aris@altlinux.org> 19.09-alt1
 - 19.09
 
