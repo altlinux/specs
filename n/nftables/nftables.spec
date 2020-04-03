@@ -1,7 +1,7 @@
 Name:           nftables
 Epoch:          1
-Version:        0.9.3
-Release:        alt2
+Version:        0.9.4
+Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
 License:        GPL-2.0-only
@@ -108,6 +108,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Apr 03 2020 Alexei Takaseev <taf@altlinux.org> 1:0.9.4-alt1
+- Version 0.9.4
+
 * Thu Mar 12 2020 Alexei Takaseev <taf@altlinux.org> 1:0.9.3-alt2
 - Split to lib -devel and python subpackages
 - Enable python and json features (ALT #38162)
