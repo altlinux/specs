@@ -2,13 +2,13 @@
 
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.19.1
 Release: alt3
 
 Summary: A set of python modules for machine learning and data mining
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/scikit-learn/
 
 # https://github.com/scikit-learn/scikit-learn.git
@@ -16,12 +16,12 @@ Source: %name-%version.tar
 Patch1: %oname-%version-upstream-cython.patch
 Patch2: %oname-%version-alt-build.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: gcc-c++ liblapack-devel python-module-numpy-testing python-module-objects.inv python-module-scipy
-BuildRequires: libnumpy-devel python-module-six python-module-joblib python-module-Cython python2.7(nose)
-BuildRequires: python2.7(matplotlib) python-module-Pillow xvfb-run
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ liblapack-devel xvfb-run
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
+BuildRequires: python3-module-six python3-module-joblib python3-module-Cython python3(nose)
 
-%py_provides sklearn
+%py3_provides sklearn
 
 %description
 scikit-learn is a Python module for machine learning built on top of
@@ -29,7 +29,7 @@ SciPy and distributed under the 3-Clause BSD license.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -71,35 +71,37 @@ sed -i -e "/config\.add_subpackage('externals')/d" sklearn/setup.py
 
 %build
 export BLAS=openblas
-%python_build_debug
+%python3_build_debug
 
 %install
-%python_install
+%python3_install
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 rm -fR build
-%__python setup.py build_ext -i
-xvfb-run py.test -vv
+%__python3 setup.py build_ext -i
+xvfb-run py.test3 -vv
 
 %files
 %doc *.md *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/test*
-%exclude %python_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/test*
-%python_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
 
 %files docs
 %doc examples doc
 
 %changelog
 * Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.19.1-alt3
-- Build module for python3 separately.
+- Build for python2 disabled.
 
 * Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
