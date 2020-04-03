@@ -1,8 +1,8 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
 Version: 1.9.10
-Release: alt1
-License: GPL
+Release: alt1.1
+License: GPLv2+
 Group: Networking/Other
 Url: http://moinmo.in/
 Source0: http://static.moinmo.in/files/%name-%version.tar.gz
@@ -65,17 +65,21 @@ sed -i 's@^STATIC_FILES_PATH = .*@STATIC_FILES_PATH = "%htdocs"@' MoinMoin/web/s
 
 %build
 sed 's|@HTDOCS@|%htdocs|' < %SOURCE1 > moin-instance-setup
-python setup.py build
+python2 setup.py build
 
 %install
 mkdir -p %buildroot%_datadir/%name
-python setup.py install --root=%buildroot
+python2 setup.py install --root=%buildroot
 mkdir -p %buildroot/%_sbindir/
 install -m755  moin-instance-setup %buildroot/%_sbindir/
 rm -rf %buildroot%htdocs
 cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
 ln -s config/wikiconfig.py %buildroot%_datadir/%name/wikiconfig.py
 install wikiserver.py %buildroot%_datadir/%name/
+
+sed -i 1s,python,python2, \
+ %buildroot/usr/share/moin/server/moin* \
+ %buildroot/usr/share/moin/wikiserver.py
 
 %files
 %doc README* docs/CHANGES* docs/INSTALL.html docs/README.migration
@@ -97,6 +101,9 @@ install wikiserver.py %buildroot%_datadir/%name/
 %_sbindir/*
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.10-alt1.1
+- NMU: applied logoved fixes
+
 * Wed May 22 2019 Fr. Br. George <george@altlinux.ru> 1.9.10-alt1
 - Autobuild version bump to 1.9.10
 - Separate Apache2 dependency
