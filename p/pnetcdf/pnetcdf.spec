@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex)
+# END SourceDeps(oneline)
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,7 +8,7 @@
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt2
+Release: alt2.1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -134,6 +137,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2.1
+- NMU: applied logoved fixes
+
 * Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2
 - NMU: fixed LIB_SUFFIX= on non-x86_64
 
