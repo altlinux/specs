@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.23b
-Release: alt3
+Release: alt4
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -44,6 +44,12 @@ cp -p %{P:0} libraries/source/spidermonkey/FixJitNone.diff
 echo "patch -p0 <../FixJitNone.diff" >>libraries/source/spidermonkey/patch.sh
 %patch1 -p1
 
+# update shebangs from python to python2
+find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
+	-e '1 s:#!/usr/bin/env python$:#!/usr/bin/env python2:' \
+	-e '1 s:#! /usr/bin/env python$:#! /usr/bin/env python2:' \
+	%nil
+
 %build
 mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
@@ -84,6 +90,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt4
+- Fixed build with python2 and rebuilt with new boost libraries.
+
 * Thu Aug 29 2019 Alexey Tourbin <at@altlinux.ru> 1:0.0.23b-alt3
 - ppc64le.patch from wiki.raptorcs.com/wiki/Porting/0ad
 
