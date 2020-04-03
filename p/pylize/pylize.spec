@@ -1,6 +1,6 @@
 Name: pylize
 Version: 1.3b
-Release: alt3.1
+Release: alt3.2
 License: GPL
 BuildArch: noarch
 
@@ -36,11 +36,13 @@ Pylize может сгенерировать загатовку для исхо�
 %setup -q
 %patch0
 %patch1
+sed -i 1s,python,python2, pylize.in install.py configure.py setup.py
+sed -i 's,python ,python2 ,' install.py
 
 %build
 
 %install
-python install.py --root=$RPM_BUILD_ROOT --optimize=2 --record=INSTALLED_FILES
+python2 install.py --root=$RPM_BUILD_ROOT --optimize=2 --record=INSTALLED_FILES
 
 %files -f INSTALLED_FILES
 %defattr(-,root,root)
@@ -48,6 +50,9 @@ python install.py --root=$RPM_BUILD_ROOT --optimize=2 --record=INSTALLED_FILES
 %doc PKG-INFO TODO README README.empy
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.3b-alt3.2
+- NMU: applied logoved fixes
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3b-alt3.1
 - Rebuild with Python-2.7
 
