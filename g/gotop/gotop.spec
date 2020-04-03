@@ -1,12 +1,12 @@
 %global import_path github.com/cjbassi/gotop
 Name:     gotop
-Version:  3.0.0
+Version:  3.5.0
 Release:  alt1
 
 Summary:  A terminal based graphical activity monitor inspired by gtop and vtop
 License:  AGPL-3.0
 Group:    Other
-Url:      https://github.com/cjbassi/gotop
+Url:      https://github.com/xxxserxxx/gotop
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -29,7 +29,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 cd .build/src/%import_path
-%golang_build .
+%golang_build cmd/gotop
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -42,6 +42,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Apr 03 2020 Mikhail Gordeev <obirvalger@altlinux.org> 3.5.0-alt1
+- new version 3.5.0
+
 * Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 
