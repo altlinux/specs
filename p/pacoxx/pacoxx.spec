@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex)
+# END SourceDeps(oneline)
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,10 +8,10 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt6
+Release: alt6.1
 
 Summary: PaCO++: Portable Parallel CORBA Object
-License: GPLv2+ / LGPLv2+
+License: GPLv2+ or LGPLv2+
 Group: Networking/Remote access
 
 Url: http://www.irisa.fr/myriads/Paco++/
@@ -120,7 +123,7 @@ omniORB_4_0=$(rpm -q --queryformat '%{VERSION}' libomniORB)
 	--with-mpi-dir=%mpidir \
 	--with-lib-mpi="-lmpi"
 # --with-extra-libs=""
-%make MPIDIR=%mpidir
+make MPIDIR=%mpidir
 
 doxygen PaCO.doxygen
 pushd Doc
@@ -157,6 +160,7 @@ fi
 
 EOF
 chmod +x %buildroot%_bindir/pacoenv.sh
+sed -i 1s,python,python2, %buildroot%_bindir/PaCOIdlTool
 
 %files
 %doc COPYRIGHT CREDITS
@@ -182,6 +186,9 @@ chmod +x %buildroot%_bindir/pacoenv.sh
 %ldir/Examples
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.beta-alt6.1
+- NMU: applied logoved fixes
+
 * Mon Jun 10 2019 Michael Shigorin <mike@altlinux.org> 0.2.beta-alt6
 - Fixed build on 64-bit arches
 - Minor spec cleanup
