@@ -1,6 +1,6 @@
 Name: tre
 Version: 0.8.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: TRE is "approximate regexp" library
 License: BSD
@@ -82,13 +82,13 @@ This package contains Python bindings for TRE.
 %configure %{subst_enable static}
 %make_build
 cd python
-python setup.py build
+python2 setup.py build
 
 %install
 %makeinstall
 %find_lang %name
 cd python
-python setup.py install --root=%buildroot
+python2 setup.py install --root=%buildroot
 
 %files -n %agrep -f %name.lang
 %_bindir/*
@@ -112,6 +112,9 @@ python setup.py install --root=%buildroot
 %python_sitelibdir/%name.so
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2.2
+- NMU: applied logoved fixes
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt2.1
 - Rebuild to remove redundant libpython2.7 dependency
 
