@@ -1,6 +1,6 @@
 Name: nsd
 Version: 4.3.0
-Release: alt2
+Release: alt3
 
 Summary: Name Server Daemon
 License: BSD
@@ -68,7 +68,10 @@ install -Dpm 644 %SOURCE7 %buildroot%_datadir/%name/examples/%name.service.forki
 %preun_service nsd
 
 %post
-%_sbindir/nsd-control-setup # set up TLS certificates for %_sbindir/nsd-control to work
+if [ ! -r %_sysconfdir/%name/nsd_server.pem ]
+then # set up TLS certificates for %_sbindir/nsd-control to work
+	%_sbindir/nsd-control-setup
+fi
 %post_service nsd
 
 %files
@@ -86,9 +89,12 @@ install -Dpm 644 %SOURCE7 %buildroot%_datadir/%name/examples/%name.service.forki
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Fri Apr 03 2020 Arseny Maslennikov <arseny@altlinux.org> 4.3.0-alt3
+- nsd-control-setup is run automatically on package installation, if the key
+  pairs for nsd-control(8) do not exist.
+
 * Tue Mar 31 2020 Arseny Maslennikov <arseny@altlinux.org> 4.3.0-alt2
 - Replaced systemd service unit with a Type=simple one.
-- nsd-control-setup is run automatically on package installation.
 
 * Wed Mar 18 2020 Alexei Takaseev <taf@altlinux.org> 4.3.0-alt1
 - 4.3.0
