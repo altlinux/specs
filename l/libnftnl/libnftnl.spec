@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libnftnl
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: Netfilter nf_tables infrastructure library
@@ -83,6 +83,9 @@ cp -a examples/.libs/* %buildroot%_sbindir/
 %endif
 
 %changelog
+* Fri Apr 03 2020 Alexei Takaseev <taf@altlinux.org> 1.1.6-alt1
+- Version 1.1.6
+
 * Tue Dec 03 2019 Alexei Takaseev <taf@altlinux.org> 1.1.5-alt1
 - Version 1.1.5
 
