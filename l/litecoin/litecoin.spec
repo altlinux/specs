@@ -2,7 +2,7 @@
 
 Name:		litecoin
 Version:	0.15.0.1
-Release:	alt2.1
+Release:	alt3
 Summary:	Litecoin Core
 Url:		https://litecoin.org/
 Group:		Office
@@ -12,6 +12,7 @@ Source1:	%name.desktop
 Source2:	%name.png
 
 Patch1: litecoin-0.15.0.1-upstream-boost-compat.patch
+Patch2: litecoin-0.15.0.1-alt-boost-compat-2.patch
 
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel
 BuildRequires: gcc-c++ libdb4.8_cxx-devel libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
@@ -32,6 +33,7 @@ Core software, see https://litecoin.org.
 %prep
 %setup -n litecoin
 %patch1 -p1
+%patch2 -p2
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -61,6 +63,9 @@ convert -resize 128x128 %SOURCE2 %buildroot%_giconsdir/%name-core.png
 %_man1dir/*
 
 %changelog
+* Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0.1-alt3
+- Rebuilt with boost-1.72.0.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.15.0.1-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
