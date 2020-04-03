@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex) tex(latex)
+# END SourceDeps(oneline)
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt8.svn20130529
+Release: alt9.svn20130529
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -109,6 +112,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt9.svn20130529
+- NMU: applied logoved fixes
+
 * Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt8.svn20130529
 - Removed menu file
 
