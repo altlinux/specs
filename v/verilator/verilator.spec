@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/git tex(dehypht.tex)
+# END SourceDeps(oneline)
 Name: verilator
 Version: 3.924
-Release: alt1
+Release: alt1.1
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
@@ -60,5 +63,8 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 3.924-alt1.1
+- NMU: applied logoved fixes
+
 * Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 3.924-alt1
 - Initial build
