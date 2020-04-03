@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: tex(dehypht.tex)
+# END SourceDeps(oneline)
 # -*- coding: utf-8 -*-
 Name: python-module-sybase
 Version: 0.40
-Release: alt1.svn20120611
+Release: alt2.svn20120611
 Epoch: 1
 License: BSD
 Group: Databases
@@ -57,6 +60,9 @@ export SYBASE=/usr
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.40-alt2.svn20120611
+- NMU: applied logoved fixes
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.40-alt1.svn20120611
 - Shapshot from svn
 
