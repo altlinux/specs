@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.6.1
-Release: alt1
+Release: alt2
 
 Summary: Zope Component Architecture (Python3)
 License: ZPL-2.1
@@ -31,6 +31,7 @@ BuildRequires: python3-module-zope.location
 BuildRequires: python3-module-zope.deferredimport
 BuildRequires: python3-module-zope.hookable
 BuildRequires: python3-module-zope.deprecation
+BuildRequires: python3-module-zope.security
 %endif
 
 %py3_requires zope
@@ -95,6 +96,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.1-alt2
+- Fix tests by adding zope.security to BR:
+
 * Wed Apr 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.6.1-alt1
 - 4.6 -> 4.6.1
 - Rearrange check section according to upstream changes
