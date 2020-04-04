@@ -2,7 +2,7 @@
 
 Name: tolua++
 Version: 1.0.93
-Release: alt2.1
+Release: alt3
 Summary: A tool to integrate C/C++ code with Lua
 Group: System/Libraries
 License: MIT
@@ -12,6 +12,7 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: http://www.codenix.com/~tolua/%name-%version.tar.bz2
 Patch0: tolua++-1.0.93-no-buildin-bytecode.patch
 Patch1: tolua++-1.0.93-lua53.patch
+Patch2: tolua++-1.0.93-scons304.patch
 
 BuildRequires: scons
 BuildRequires: lua-devel >= 5.3
@@ -33,10 +34,11 @@ Development files for tolua++
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i 's/\r//' doc/%name.html
 
 %build
-scons %{?_smp_mflags} -Q CCFLAGS="%optflags  -I%_includedir" tolua_lib=%solib LINKFLAGS="-Wl,-soname,lib%solib.so" shared=1
+scons-3 %{?_smp_mflags} -Q CCFLAGS="%optflags  -I%_includedir" tolua_lib=%solib LINKFLAGS="-Wl,-soname,lib%solib.so" shared=1
 #Recompile the exe without the soname. An ugly hack.
 gcc -o bin/%name src/bin/tolua.o -Llib -l%solib -llua -ldl -lm
 
@@ -65,6 +67,9 @@ install -p -m 644 src/bin/lua/*.lua $RPM_BUILD_ROOT%{_datadir}/%{name}
 %_includedir/%name.h
 
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt3
+- fixed build
+
 * Fri Feb 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.93-alt2.1
 - NMU: update url.
 
