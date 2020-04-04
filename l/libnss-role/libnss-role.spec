@@ -1,6 +1,6 @@
 Name: libnss-role
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # https://github.com/Etersoft/libnss-role.git
 Source: %name-%version.tar
+Patch: libnss-role-0.4.1-alt-scons304.patch
 
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
@@ -33,12 +34,13 @@ NSS API library for roles and privilegies.
 
 %prep
 %setup
+%patch -p1
 
 %build
-scons
+scons-3
 
 %install
-scons install DESTDIR=%buildroot LIBDIR=%_libdir LIBSYSDIR=/%_lib
+scons-3 install DESTDIR=%buildroot LIBDIR=%_libdir LIBSYSDIR=/%_lib
 mkdir -p %buildroot%_sysconfdir
 install -m644 role.default %buildroot%_sysconfdir/role
 
@@ -73,6 +75,9 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1.1
+- NMU: fixed SConstruct
+
 * Tue Aug 06 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
 - Fix double memory free with crash before writing (Closes: 37077)
 
