@@ -1,5 +1,5 @@
 Name: mate-common
-Version: 1.24.0
+Version: 1.24.1
 Release: alt1
 Epoch: 1
 Summary: MATE common build files
@@ -35,9 +35,12 @@ Common scripts and macros to develop with MATE
 %_bindir/*
 %_datadir/aclocal/*
 %_datadir/%name
-%_man1dir/*
+%_man1dir/*.1*
 
 %changelog
+* Sat Apr 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
+- 1.24.1
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
