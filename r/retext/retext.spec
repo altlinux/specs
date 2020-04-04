@@ -1,7 +1,7 @@
 %def_without tests
 
 Name:           retext
-Version:        7.0.4
+Version:        7.1.0
 Release:        alt1
 License:        GPLv3+
 Summary:        Text editor for Markdown and reStructuredText
@@ -87,6 +87,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 7.1.0-alt1
+- New version.
+
 * Mon Sep 24 2018 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
 - New version.
 
