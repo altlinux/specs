@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 20.03.80
+Version: 20.03.90
 Release: alt1
 
 Group:   Video
@@ -10,7 +10,7 @@ URL:     https://userbase.kde.org/Kamoso
 
 License: GPLv2+
 
-# Download from http://download.kde.org/stable/release-service/19.12.0/src/kamoso-19.12.0.tar.xz
+# Download from http://download.kde.org/unstable/release-service/$version/src/kamoso-$version.tar.xz
 Source0: %name-%version.tar
 Source1: %name.watch
 Source2: po.tar
@@ -97,6 +97,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 20.03.90-alt1
+- New version.
+
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 20.03.80-alt1
 - New version.
 
