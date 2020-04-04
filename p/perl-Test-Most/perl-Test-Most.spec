@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Test-Most
-Version: 0.35
+Version: 0.37
 Release: alt1
 
 Summary: Test::Most - Most commonly needed test functions and features
@@ -30,6 +31,9 @@ Requires: perl-Test-Warn perl-Test-Exception perl-Test-Differences perl-Test-Dee
 %doc Changes README
 
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- new version
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
