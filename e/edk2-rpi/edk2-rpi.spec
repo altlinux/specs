@@ -3,8 +3,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-rpi
-Version: 20191122
-Release: alt2
+Version: 20200318
+Release: alt1
 Summary: UEFI Firmware for Raspberry PI 3 and 4
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -22,10 +22,6 @@ Source8: bcm2710-rpi-3-b-plus.dtb
 Source9: bcm2711-rpi-4-b.dtb
 
 Patch1: %name-%version.patch
-
-# Upstream patchs for Raspberry Pi 4
-Patch2: 0020-EmbeddedPkg-NonCoherentDmaLib-implement-support-for-.patch
-Patch3: 0021-EmbeddedPkg-implement-EDK2-IoMmu-protocol-wrapping-D.patch
 
 License: BSD-2-Clause and OpenSSL
 Group: Emulators
@@ -50,8 +46,6 @@ UEFI Firmware for Raspberry PI 3 and 4
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -146,24 +140,21 @@ unset MAKEFLAGS
 mkdir -p out
 
 # build Raspberry Pi 3 firmware
+sed -i 's/RPI_EFI/RPI3_EFI/g' \
+	edk2-platforms/Platform/RaspberryPi/Drivers/VarBlockServiceDxe/VarBlockService.c \
+	edk2-platforms/Platform/RaspberryPi/RPi3/RPi3.fdf
 export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
 build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi3/RPi3.dsc
-mv Build/RPi3/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi3_EFI.fd
-rm -r Build/RPi3
+cp Build/RPi3/RELEASE_GCC49/FV/RPI3_EFI.fd out/
 
-# build Raspberry Pi 4 firmware without ACPI
+# build Raspberry Pi 4 firmware
+sed -i 's/RPI3_EFI/RPI4_EFI/g' \
+	edk2-platforms/Platform/RaspberryPi/Drivers/VarBlockServiceDxe/VarBlockService.c
+sed -i 's/RPI_EFI/RPI4_EFI/g' \
+	edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.fdf
 export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
-build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc \
-  -D ACPI_BASIC_MODE_ENABLE=0 -D PL011_ENABLE=1
-mv Build/RPi4/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi4_EFI.fd
-rm -fr Build/RPi4
-
-# build Raspberry Pi 4 firmware with ACPI
-export PACKAGES_PATH=$PWD:$PWD/edk2-platforms:$PWD/edk2-non-osi
-build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc \
-  -D ACPI_BASIC_MODE_ENABLE=1 -D PL011_ENABLE=1
-mv Build/RPi4/RELEASE_GCC49/FV/RPI_EFI.fd out/RPi4_EFI_ACPI.fd
-rm -fr Build/RPi4
+build ${ARM_FLAGS} -a AARCH64 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc
+cp Build/RPi4/RELEASE_GCC49/FV/RPI4_EFI.fd out/
 
 %install
 mkdir -p %buildroot%_datadir/edk2-rpi
@@ -188,6 +179,11 @@ cp edk2-non-osi/Platform/RaspberryPi/RPi4/TrustedFirmware/License.txt out/docs/R
 %_datadir/edk2-rpi
 
 %changelog
+* Sat Apr 04 2020 Anton Midyukov <antohami@altlinux.org> 20200318-alt1
+- Update edk2 (2020-03-18)
+- Update edk2-platforms (2020-03-31)
+- Update edk2-platforms (2020-03-06)
+
 * Wed Feb 19 2020 Anton Midyukov <antohami@altlinux.org> 20191122-alt2
 - Build two variants for rpi4: with ACPI and without ACPI.
 - Update edk2-platforms (2020-02-19)
