@@ -1,14 +1,15 @@
 Name:           libserf
 Version:        1.3.9
-Release:        alt1.1
+Release:        alt2
 
 Summary:        High-Performance Asynchronous HTTP Client Library
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            http://serf.apache.org/
 Group:		System/Libraries
 
 Source0:        https://archive.apache.org/dist/serf/serf-%{version}.tar.bz2
 Patch1:         libserf-norpath.patch
+Patch2:		libserf-python3.patch
 
 BuildRequires:  libapr1-devel
 BuildRequires:  libaprutil1-devel
@@ -38,6 +39,7 @@ developing applications that use %{name}.
 %prep
 %setup -qn serf-%version
 %patch1 -p1
+%patch2 -p1
 
 # Shared library versioning support in scons is worse than awful...
 # minimally, here fix the soname to match serf-1.2.x.  Minor version
@@ -46,7 +48,7 @@ developing applications that use %{name}.
 sed -i '/SHLIBVERSION/s/MAJOR/0/' SConstruct
 
 %build
-scons \
+scons-3 \
       CFLAGS="%{optflags}" \
       PREFIX=%_prefix \
       LIBDIR=%_libdir \
@@ -54,7 +56,7 @@ scons \
       %{?_smp_mflags}
 
 %install
-scons install --install-sandbox=%{buildroot}
+scons-3 install --install-sandbox=%{buildroot}
 rm -f %buildroot%_libdir/*{.la,.a}
 
 %check
@@ -72,6 +74,10 @@ rm -f %buildroot%_libdir/*{.la,.a}
 %_libdir/pkgconfig/serf*.pc
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt2
+- Fix build.
+- Fix License tag according to SPDX.
+
 * Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1.1
 - Rebuild with openssl 1.1.
 - Disable tests.
