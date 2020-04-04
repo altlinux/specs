@@ -3,7 +3,7 @@
 
 Name:           hamlib
 Version:        3.3
-Release:        alt1.1
+Release:        alt1.2
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -109,6 +109,7 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 %build
 %undefine _configure_gettext
 %configure \
+	PYTHON=%__python \
 %if_with usrp
 	--enable-usrp \
 %endif
@@ -200,6 +201,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1.2
+- NMU: fixed build in preparation to perl upgrade
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1.1
 - rebuild with new perl 5.28.1
 
