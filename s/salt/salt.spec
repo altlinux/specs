@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3000
+Version: 3000.1
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -24,8 +24,7 @@ BuildRequires: python3-module-setuptools perl-podlators
 BuildRequires: python3-module-nose libzeromq-devel
 BuildRequires: python3-module-zmq-devel python3-module-pycrypto
 BuildRequires: python3-module-msgpack python3-module-yaml
-
-Requires: python3-module-pycrypto
+BuildRequires: python3-module-distro
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security
 
@@ -51,6 +50,7 @@ Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
 Obsoletes: python-module-salt 
 Requires: python3-module-yaml python3-module-msgpack 
+Requires: python3-module-m2crypto
 
 %description  -n python3-module-salt
 Salt is a distributed remote execution system used to execute commands
@@ -251,6 +251,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 3000.1-alt1
+- New version.
+
 * Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 3000-alt1
 - New version.
 
