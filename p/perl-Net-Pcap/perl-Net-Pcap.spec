@@ -1,7 +1,7 @@
 %define dist Net-Pcap
 Name: perl-%dist
 Version: 0.18
-Release: alt2
+Release: alt2.1
 
 Summary: Interface to pcap(3) LBL packet capture library
 License: GPL or Artistic
@@ -45,6 +45,9 @@ security monitoring, network debugging, etc."
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2.1
+- rebuild: hack around alt bug 38332
+
 * Sat Mar 02 2019 Sergey Y. Afonin <asy@altlinux.ru> 0.18-alt2
 - added patches from Fedora Core:
   Net-Pcap-0.18-Adapt-a-test-to-libpcap-1.8.0.patch
