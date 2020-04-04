@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 # clang 4.0.1 is not supported, only missing clang 3.9
-%def_without ClangCodeModel
+%def_with ClangCodeModel
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.11.1
-Release: alt2
+Version: 4.11.2
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -23,7 +23,6 @@ Source1: qbs.tar
 Source2: perfparser.tar
 
 Patch0:  %name-%version-%release.patch
-Patch1:  qt-creator_ninja-build.patch
 
 Requires: %name-data = %EVR
 Provides: qtcreator = %EVR
@@ -97,7 +96,6 @@ tar xf %SOURCE2
 sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
-%patch1 -p1
 %ifarch %e2k
 # strip UTF-8 BOM, lcc 1.23 won't ignore it yet
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
@@ -155,6 +153,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 4.11.2-alt1
+- New version.
+- Build with ClangCodeModel plugin.
+
 * Wed Feb 12 2020 Andrey Cherepanov <cas@altlinux.org> 4.11.1-alt2
 - Add Russian localization to desktop file (ALT #36851).
 
