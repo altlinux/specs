@@ -1,5 +1,5 @@
 Name:     materia-gtk-theme
-Version:  20190315
+Version:  20200320
 Release:  alt1
 
 Summary:  A Material Design theme for GNOME/GTK based desktop environments
@@ -30,5 +30,8 @@ install -d %buildroot%_datadir/themes
 %_datadir/themes/Materia*
 
 %changelog
+* Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 20200320-alt1
+- New version.
+
 * Wed Jun 05 2019 Andrey Cherepanov <cas@altlinux.org> 20190315-alt1
 - Initial build for Sisyphus.
