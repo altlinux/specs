@@ -1,6 +1,6 @@
 Name: irssi
-Version: 0.8.21
-Release: alt1.2
+Version: 1.2.0
+Release: alt1
 
 Summary: Modular text mode IRC client with Perl scripting
 License: GPLv2+
@@ -8,12 +8,16 @@ Group: Networking/IRC
 Url: https://irssi.org/
 # https://github.com/irssi/irssi.git
 # git://git.altlinux.org/gears/i/irssi.git
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 Source1: %name.desktop
-Patch1: %name-0.8.21-alt-tls-sites.patch
-Patch2: %name-0.8.21-alt-strict-subs-syntax.patch
+Patch1: irssi-1.2.0-alt-link-libs.patch
+Patch2: %name-1.2.0-alt-strict-subs-syntax.patch
 
 BuildRequires: elinks glib2-devel libssl-devel libtinfo-devel perl-devel
+# OTR
+BuildRequires:	pkgconfig(libotr)
+# utf8proc
+BuildRequires:	libutf8proc-devel
 
 %description
 Irssi is a modular textUI IRC client with Perl scripting.
@@ -34,8 +38,16 @@ Requires: %name = %EVR
 %description perl
 This package contains perl scripts for irssi.
 
+%package otr
+Group: Networking/IRC
+Summary: LibOTR support for irssi
+Requires: %name-perl = %EVR
+
+%description	otr
+Off-the-Record (OTR) Messaging support for irssi.
+
 %prep
-%setup -n %name-%version-%release
+%setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
 
@@ -45,8 +57,8 @@ sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
 # workaround the absence of irssi.git
 sed -i 's/^git log /: &/' autogen.sh
 # git log -1 --pretty=format:%%ai %version > date-%version
-echo '2017-01-03 14:24:55 +0100' > date-0.8.21
-sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' irssi-version.sh
+echo '2019-02-11 18:05:57 +0100' > date-1.2.0
+sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' utils/irssi-version.sh
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -54,19 +66,21 @@ NOCONFIGURE=1 ./autogen.sh
 %add_optflags -fpie
 export LDFLAGS=-pie
 %configure \
-	--disable-silent-rules \
 	--disable-static \
 	--enable-ipv6 \
 	--without-ncurses \
 	--without-socks \
 	--with-bot \
-	--with-modules \
+	--with-otr \
 	--with-perl=module \
 	--with-perl-lib=vendor \
 	--with-proxy \
 	--with-terminfo \
 	--with-textui \
+	--enable-true-color \
 	#
+#	--disable-silent-rules \
+#	--with-modules \
 
 %make_build
 
@@ -82,19 +96,21 @@ install -pDm644 irssi-icon.png %buildroot%_iconsdir/irssi.png
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/irssi.desktop
 
 %add_findreq_skiplist %_datadir/irssi/scripts/*
-export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
-export RPM_FILES_TO_LD_PRELOAD_irssi='%irssi_modules_dir/lib*.so %perl_vendor_autolib/Irssi/*.so'
-export RPM_LD_PRELOAD_libperl_core='%buildroot%irssi_modules_dir/libperl_core.so'
-export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %perl_vendor_autolib/Irssi/*.so'
-%set_verify_elf_method strict
+# broke when upgraded to 1.2.0; TODO: someone, fix it
+#export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
+#export RPM_FILES_TO_LD_PRELOAD_irssi='%irssi_modules_dir/lib*.so %perl_vendor_autolib/Irssi/*.so'
+#export RPM_LD_PRELOAD_libperl_core='%buildroot%irssi_modules_dir/libperl_core.so'
+#export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %perl_vendor_autolib/Irssi/*.so'
+#set_verify_elf_method strict
 
 %files
 %config(noreplace) %_sysconfdir/irssi.conf
 %_bindir/*
 %_datadir/irssi/
 %exclude %_datadir/irssi/scripts/
-%_libdir/irssi/
-%exclude %irssi_modules_dir/*perl*.so
+%dir %_libdir/irssi
+%dir %irssi_modules_dir
+%irssi_modules_dir/libirc_proxy.so
 %_iconsdir/*.png
 %_desktopdir/*.desktop
 %_mandir/man?/*
@@ -112,7 +128,14 @@ export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %p
 %files devel
 %_includedir/irssi/
 
+%files otr
+%_libdir/%name/modules/libotr_core.so
+
+
 %changelog
+* Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- NMU: updated to 1.2.0 to fix build (required for perl rebuild)
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.21-alt1.2
 - rebuild with new perl 5.28.1
 
