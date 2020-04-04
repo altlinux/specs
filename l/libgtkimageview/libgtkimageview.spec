@@ -3,12 +3,10 @@
 
 Name: lib%origname
 Version: 1.6.4
-Release: alt2.qa2
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt3
 
 Summary: GtkImageView is a simple image viewer widget for GTK
-License: LGPLv2+
+License: LGPL-2.1
 Group: System/Libraries
 
 Url: http://trac.bjourne.webfactional.com/
@@ -46,6 +44,8 @@ GtkImageView Reference Manual.
 %setup -n %origname-%version
 %patch1
 %patch2
+# remove -Werror
+sed -i "s|\-Werror||" configure*
 
 %build
 %configure --disable-static
@@ -66,6 +66,9 @@ GtkImageView Reference Manual.
 %_gtk_docdir/*
 
 %changelog
+* Sat Apr 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt3
+- rebuilt without -Werror
+
 * Mon Jan 16 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.4-alt2.qa2
 - Fixed build with:
  + gcc6;
