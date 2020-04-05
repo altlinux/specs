@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/pdftotext
+# END SourceDeps(oneline)
 %define svn_rev r409
 
 Name: csync2
 Version: 2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Csync2 is a cluster synchronization tool
 
@@ -75,6 +78,9 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1.1
+- NMU: applied logoved fixes
+
 * Thu Sep 20 2018 Anton Farygin <rider@altlinux.ru> 2.0-alt1
 - up to 2.0
 
