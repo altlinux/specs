@@ -3,25 +3,22 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.6.4
+Version: 0.7.0
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
-License: %lgpl2plus
+License: LGPLv2+
 Group: System/Libraries
 URL: https://xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/garcon
+Vcs: git://git.xfce.org/xfce/garcon
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4ui-gtk3-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel >= 2.14
-BuildRequires: libgtk+2-devel >= 2.12.0
 BuildRequires: libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: intltool
@@ -49,32 +46,13 @@ developing applications that use %name.
 
 %package devel-doc
 Summary: Development files for %name
-License: GFDLv1.1
+License: GFDLv1.1+
 Group: Development/C
 Conflicts: %name-devel < %version
 BuildArch: noarch
 
 %description devel-doc
 This package contains development documentation for %name.
-
-%package gtk2
-Summary: Common GTK+2 part of %name
-Group: Graphical desktop/XFce
-Requires: %name = %version-%release
-
-%description gtk2
-%summary
-
-%package gtk2-devel
-Summary: Development files for %name-gtk2
-Group: Development/C
-Requires: %name-gtk2 = %version-%release
-Requires: %name-devel = %version-%release
-Requires: libgtk+2-devel >= 2.12.0
-Requires: libxfce4ui-devel
-
-%description gtk2-devel
-%summary
 
 %package gtk3
 Summary: Common GTK+3 part of %name
@@ -125,7 +103,7 @@ BuildArch: noarch
 %xfce4reconf
 %configure \
     --disable-static \
-	--enable-gtk2 \
+	--disable-gtk2 \
     --enable-gtk-doc \
 	--enable-debug=minimum
 %make_build
@@ -167,14 +145,6 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %doc HACKING STATUS TODO
 %doc %_datadir/gtk-doc/html/%_name
 
-%files gtk2
-%_libdir/%name-gtk2-1.so.*
-
-%files gtk2-devel
-%_includedir/%_name-gtk2-1/
-%_libdir/%name-gtk2-1.so
-%_libdir/pkgconfig/%_name-gtk2-1.pc
-
 %files gtk3
 %_libdir/%name-gtk3-1.so.*
 
@@ -184,6 +154,13 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/pkgconfig/%_name-gtk3-1.pc
 
 %changelog
+* Sun Apr 05 2020 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Dropped gtk2 packages.
+- Added Vcs tag.
+- Fixed docs license.
+- Don't use rpm-build-licenses.
+- Updated to 0.7.0.
+
 * Mon Jul 29 2019 Mikhail Efremov <sem@altlinux.org> 0.6.4-alt1
 - Updated to 0.6.4.
 
