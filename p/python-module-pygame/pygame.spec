@@ -1,20 +1,26 @@
 %define oname pygame
+%def_with python2
 %def_with python3
+%def_without SDL2
 
 Name: python-module-%oname
-Version: 1.9.4
-Release: alt2
+Version: 1.9.6
+Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
 
 Group: Development/Python
-License: LGPLv2.1
+License: LGPL-2.1
 Url: http://www.pygame.org
 
 Source: %version.tar.gz
-Patch: pygame-1.9.4-2to3.patch
+Patch: RPM/SOURCES/pygame-1.9.6-docs.patch
+
+%if_with python2
 %setup_python_module pygame
+%endif
+
 %define python_includedir %_includedir/python%_python_version
 %define python3_includedir %_includedir/python%{_python3_version}
 
@@ -22,19 +28,24 @@ Provides: python-pygame, %oname
 Obsoletes: %oname
 
 Requires: libSDL >= 1.2.7
-
-# Automatically added by buildreq on Sun Jul 22 2007
-BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libsmpeg-devel libX11-devel python-devel python-modules-compiler libpng-devel libjpeg-devel libfreetype-devel libportmidi-devel
-
-BuildPreReq: libnumpy-devel libv4l-devel rpm-build-intro
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel python3-module-sphinx
-BuildPreReq: python3-module-distribute python-tools-2to3
-%endif
+#if_with python2
+#BuildRequires: python-devel python-modules-compiler
+#endif
 
 %add_python_req_skip AppKit Foundation py2app Numeric
+%if_without SDL2
+%add_python_req_skip pygame._sdl2
+%add_python3_req_skip pygame._sdl2
+%endif
+
+# Automatically added by buildreq on Tue Mar 31 2020
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libcrypt-devel libnsl2-devel pkg-config python-devel python-module-OpenSSL python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-enum34 python-module-idna python-module-imagesize python-module-ipaddress python-module-jinja2 python-module-lxml python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pkg_resources python-module-pycparser python-module-pytz python-module-requests python-module-simplejson python-module-six python-module-sphinx python-module-sphinxcontrib python-module-typing python-module-urllib3 python-module-webencodings python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-distutils python-modules-email python-modules-encodings python2-base python3 python3-base python3-dev python3-module-OpenSSL python3-module-Pygments python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xorg-proto-devel xz
+BuildRequires: ctags libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libfreetype-devel libjpeg-devel libpng-devel libportmidi-devel python3-module-setuptools python3-module-sphinx
+
+%if_with python2
+BuildRequires: python-module-html5lib python-module-numpy python-module-numpydoc python-module-setuptools
+%endif
 
 %description
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -54,7 +65,6 @@ DirectMedia Layer), предоставляющей низкоуровневый 
 устройствам, клавиатуре, манипулятору мышь и к буферу экрана на
 множестве различных платформ.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: A Python 3 module for interfacing with the SDL multimedia library
 Group: Development/Python3
@@ -85,18 +95,16 @@ mouse and joystick input. pygame also includes support for Numerical Python
 extension. pygame is the successor to the pySDL wrapper project, written by
 Mark Baker.
 
-Install python3-module-%oname-devel if you need the API documentation
-and example programs.
+Install python3-module-%oname-devel if you need the c/c++ include files.
 
 %package -n python3-module-%oname-doc
 Summary: Pygame documentation and example programs (Python3 version)
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: python3-module-%oname = %version-%release
 BuildArch: noarch
 
 %description -n python3-module-%oname-doc
 Pygame documentation and example programs (Python3 version)
-%endif
 
 %package devel
 Summary: Pygame development headers
@@ -113,11 +121,10 @@ mouse and joystick input. pygame also includes support for Numerical Python
 extension. pygame is the successor to the pySDL wrapper project, written by
 Mark Baker.
 
-Install %name-devel if you need the API documentation and example programs.
+Install python3-module-%oname-devel if you need the c/c++ include files.
 
 %description devel -l ru_RU.UTF-8
-Пакет содержит заголовочные файлы, документацию и примеры программ,
-использующих расширение pygame.
+Пакет содержит заголовочные файлы для разработки pygame.
 
 %package doc
 Summary: Pygame documentation and example programs
@@ -139,47 +146,41 @@ programs.
 %prep
 %setup -n %oname-%version
 %patch -p1
-rm -f docs/LGPL
-# fix find SDL libs on x86_64
-subst "s|/lib|/%_lib|g" config_unix.py
-# XXX
-touch version.py.in
-
-# remove due unliked dependences on MacOS modules
-rm -f lib/macosx.py lib/mac_scrap.py
 
 %build
-export LOCALBASE=%prefix
-python config.py
-#sed -i 's|\(lpthread\)|\1 -lm|g' Setup
-%add_optflags -fno-strict-aliasing
-
-%python_build_debug
-%if_with python3
-	%python3_build_debug
-	2to3 -w -n -j %__nprocs build/lib*%_python3_version
-#	python3 -m sphinx -j %__nprocs -b html -d build/.doctrees3 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python3_version
-#else
-#	python -m sphinx -j %__nprocs -b html -d build/.doctrees2 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python_version
+# XXX check:
+#export LOCALBASE=%prefix
+#add_optflags -fno-strict-aliasing
+%if_with python2
+%python_build_debug -b build2 
 %endif
+%python3_build_debug -j${NPROCS:-%__nprocs} -b build3
+rm -f build && ln -s build3 build
+python3 setup.py docs
 
 %install
+%if_with python2
+rm -f build && ln -s build2 build
 %python_install
-%if_with python3
-%python3_install
+sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python-module-pygame-doc-%version"@' %buildroot%python_sitelibdir/%oname/docs/__main__.py
 %endif
 
+rm -f build && ln -s build3 build
+%python3_install
+sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pygame-doc-%version"@' %buildroot%python3_sitelibdir/%oname/docs/__main__.py
+
+%if_with python2
 %files
 %python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 
+%files doc
+%doc _html/.
+%endif
+
 %files devel
 %python_includedir/%oname/
 
-%files doc
-%doc WHATSNEW install.html readme*
-
-%if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 
@@ -187,10 +188,13 @@ python config.py
 %python3_includedir/%oname
 
 %files -n python3-module-%oname-doc
-%doc WHATSNEW install.html readme*
-%endif
+%doc _html/.
 
 %changelog
+* Tue Mar 31 2020 Fr. Br. George <george@altlinux.ru> 1.9.6-alt1
+- Autobuild version bump to 1.9.6
+- Fix documentation build
+
 * Thu Feb 06 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt2
 - Fix build with python3.8.
 - Fix license.
