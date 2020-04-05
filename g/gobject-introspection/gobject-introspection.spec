@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -83,7 +83,7 @@ gobject-introspection.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %meson \
 	%{?_enable_doctool:-Ddoctool=enabled} \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
@@ -139,6 +139,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.1-alt1
+- 1.64.1
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.0-alt1
 - 1.64.0
 
