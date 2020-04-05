@@ -7,7 +7,7 @@
 
 Name:		coturn
 Version:	4.5.1.1
-Release:	alt1
+Release:	alt2
 Summary:	Coturn TURN Server
 
 License:	BSD
@@ -301,5 +301,9 @@ mkdir -p %{buildroot}/run/%name
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Sun Apr 05 2020 Arseny Maslennikov <arseny@altlinux.org> 4.5.1.1-alt2
+- Applied upstream fixes for CVE-2020-6062/TALOS-2020-0985.
+- Applied upstream fixes for CVE-2020-6061/TALOS-2020-0984.
+
 * Fri Mar 20 2020 Arseny Maslennikov <arseny@altlinux.org> 4.5.1.1-alt1
 - First build for ALT Sisyphus.
