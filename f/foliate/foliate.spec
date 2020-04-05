@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 1.5
+%define ver_major 2.0
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A simple and modern GTK eBook reader
 License: GPL-3.0
@@ -35,7 +35,7 @@ Requires: typelib(Gtk)
 Requires: typelib(Pango)
 Requires: typelib(WebKit2)
 
-%add_python3_path %_datadir/%rdn_name
+%add_python3_path %_datadir/%name
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: desktop-file-utils libappstream-glib-devel
@@ -64,13 +64,12 @@ sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %name %rdn_name
 
 %files -f %name.lang
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
-%_datadir/%rdn_name/
+%_datadir/%name/
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -79,6 +78,9 @@ sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 
 
 %changelog
+* Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- updated to 2.0.0-2-g351bbd8
+
 * Sun Mar 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt2
 - swithed KindleUnpack to use Python3
 
