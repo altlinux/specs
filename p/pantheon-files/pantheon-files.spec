@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 4.4
 %define _name files
@@ -6,7 +6,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -102,6 +102,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
+- 4.4.2
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
 - updated to 4.4.1-29-g25cfc857
 
