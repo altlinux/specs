@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: libsvm
-Version: 3.18
-Release: alt2.1
+Version: 3.24
+Release: alt1
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
 License: BSD
@@ -128,6 +128,9 @@ install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
 %endif
 
 %changelog
+* Mon Apr 05 2020 Pavel Vasenkov <pav@altlinux.org> 3.24-alt1
+- Version 3.24
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.18-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
