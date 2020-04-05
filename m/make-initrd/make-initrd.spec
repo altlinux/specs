@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -171,6 +171,7 @@ fi
 %_datadir/%myname
 %_man1dir/*
 /lib/initrd
+/usr/libexec/%myname
 %exclude %_datadir/%myname/features/devmapper
 %exclude %_datadir/%myname/features/lvm
 %exclude %_datadir/%myname/features/luks
@@ -208,6 +209,16 @@ fi
 %endif
 
 %changelog
+* Sun Apr 05 2020 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt1
+- Utilities:
+  + make-initrd: Allow to guess modules for any directory
+- Misc:
+  + Do not use /boot directly
+  + Add timestamps to messages
+  + Add modules.builtin.modinfo into the initramfs
+  + Simplify MOUNTPOINTS processing
+  + Allow to use MOUNTPOINTS not only for mount points
+
 * Fri Mar 06 2020 Alexey Gladkov <legion@altlinux.ru> 2.5.0-alt1
 - Feature changes:
   + kbd: Reimplement feature
