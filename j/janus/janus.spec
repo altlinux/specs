@@ -1,0 +1,165 @@
+# SPEC-file for Janus WebRTC server
+
+
+Name: janus
+Version: 0.9.2
+Release: alt1
+
+Summary: Janus WebRTC Server
+
+License: %gpl3only
+Group: Networking/Other
+URL: https://github.com/meetecho/janus-gateway
+#URL: https://janus.conf.meetecho.com/
+
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
+
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
+Source1: %name.service
+
+Patch1: janus-0.9.2-debian-2004_avoid_stun_privacy_breach.patch
+Patch2: janus-0.9.2-debian-2005_avoid_npm.patch
+Patch3: janus-0.9.2-debian-2006_avoid_doc_privacy_breach.patch
+Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
+
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Sat Apr 04 2020
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libgio-devel libgupnp-igd libp11-kit libsasl2-3 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libssl-devel zlib-devel
+
+%description
+Janus is a general purpose WebRTC Gateway with a minimal footprint.
+
+As such, it provides no functionality per se other than implementing
+the means to set up a WebRTC media communication with a browser,
+exchanging JSON messages with it, and relaying RTP/RTCP and messages
+between browsers and the server-side application logic they are
+attached to. Any specific feature/application are implemented in
+server side plugins, that browsers contact via the gateway to take
+advantage of the functionality they provide.
+
+Example uses for Janus are applications involving echo tests,
+conference bridges, media recorders, and SIP gateways.
+
+
+%package docs
+Summary: Janus WebRTC server documentation
+Group: Networking/Other
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description docs
+Janus is a general purpose WebRTC Gateway with a minimal footprint.
+
+This package contains Janus documentation in HTML format.
+
+
+
+%package devel
+Summary: Janus WebRTC server header files
+Group: Development/C
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description devel
+Janus is a general purpose WebRTC Gateway with a minimal footprint.
+
+This package contains Janus  header files for third-party plugin
+development.
+
+
+
+%define janus_user      _janus
+%define janus_group     _janus
+
+%prep
+%setup
+%patch0 -p1
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+mv -f COPYING COPYING.GPL.orig
+ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
+
+%build
+%autoreconf
+%configure \
+  --enable-docs \
+  --enable-rest \
+  %nil
+
+%make_build
+
+%install
+%makeinstall
+
+cp -a -- %buildroot%_sysconfdir/%name/janus.jcfg.sample  %buildroot%_sysconfdir/%name/janus.jcfg
+
+mkdir -p  %buildroot%_unitdir
+install -m 0644 %SOURCE1 %buildroot%_unitdir/%name.service
+
+mv -f -- html html.src
+mv -f -- %buildroot%_docdir/janus-gateway/janus-gateway-%version/html .
+rm -f -- %buildroot%_docdir/janus-gateway/README.md
+ 
+mkdir -p -- %buildroot/%_logdir/%name
+mkdir -p -- %buildroot%_localstatedir/%name/recordings
+
+
+
+%pre
+# Add the "_janus" user
+%_sbindir/groupadd -r -f %janus_group 2>/dev/null ||:
+%_sbindir/useradd  -r -g %janus_group -c 'Janus RTC daemon' \
+        -s /dev/null -d /var/lib/janus %janus_user 2>/dev/null ||:
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
+%files
+%doc CHANGELOG.md README.md
+%doc --no-dereference COPYING.GPL
+
+%attr(0750,root,%janus_group) %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/*.jcfg
+%config %_sysconfdir/%name/*.jcfg.sample
+
+%_unitdir/%name.service
+
+%_bindir/%{name}*
+
+%_libdir/%name/*/*.so
+%_libdir/%name/*/*.so.*
+
+%exclude %_libdir/%name/*/*.la
+%exclude %_includedir/%name/*
+
+%_datadir/%name
+
+%_man1dir/%{name}*
+
+%attr(0770,root,%janus_group) %dir %_localstatedir/%name
+%attr(1770,root,%janus_group) %dir %_logdir/%name
+
+
+%files docs
+%doc html/
+
+%files devel
+%_includedir/%name
+
+
+
+%changelog
+* Sun Apr 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.2-alt1
+- Initial build for ALT Linux Sisyphus
+
