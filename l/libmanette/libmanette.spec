@@ -5,15 +5,15 @@
 
 %def_enable introspection
 %def_enable vala
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A simple GObject game controller library
 Group: System/Libraries
-License: LGPLv2.1
+License: LGPL-2.1
 Url: https://gitlab.gnome.org/aplazas/libmanette
 
 # VCS: https://gitlab.gnome.org/aplazas/libmanette
@@ -22,7 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.50
 %define evdev_ver 1.4.5
 
-BuildRequires: meson
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver libevdev-devel >= %evdev_ver
 BuildRequires: libgudev-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
@@ -71,13 +71,17 @@ This package contains commandline tools from %name package.
 %setup
 
 %build
-%meson
+%meson \
+%{?_disable_introspection:-Dintrospection=flase} \
+%{?_disable_vala:-Dvapi=flase}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -102,6 +106,10 @@ This package contains commandline tools from %name package.
 %_bindir/%_name-test
 
 %changelog
+* Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+- enabled %%check
+
 * Wed Sep 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
