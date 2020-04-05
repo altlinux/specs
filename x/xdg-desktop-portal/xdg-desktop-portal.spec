@@ -2,11 +2,11 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
-# ERROR: test-portals - Bail out! xdg-desktop-portal:ERROR:tests/camera.c:72:camera_cb: 'ret' should be FALSE
-%def_disable check
+# 
+%def_enable check
 
 Name: xdg-desktop-portal
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -40,6 +40,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
+%{?_enable_check:BuildRequires: /proc python3-module-pygobject3 fuse}
 
 %description
 xdg-desktop-portal works by exposing a series of D-Bus interfaces known as
@@ -94,6 +95,10 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+- enabled %%check
+
 * Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
