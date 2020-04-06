@@ -1,5 +1,5 @@
 Name:    mate-menu
-Version: 20.04.2
+Version: 20.04.3
 Release: alt1
 
 Summary: An Advanced Menu for the MATE Desktop
@@ -61,6 +61,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 06 2020 Pavel Vasenkov <pav@altlinux.org> 20.04.3-alt1
+- new version 20.04.3
+
 * Tue Mar 24 2020 Pavel Vasenkov <pav@altlinux.org> 20.04.2-alt1
 - new version 20.04.2
 
