@@ -1,16 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.32
-%define _name org.gnome.MultiWriter
+%define ver_major 3.35
+%define xdg_name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: Write an ISO file to multiple USB devices at once
 Group: Archiving/Backup
-License: GPLv2+
+License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/MultiWriter
 
 %if_disabled snapshot
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: gnome-icon-theme-extras
+Requires: gnome-icon-theme-extras dconf polkit
 
 %define gtk_ver 3.12.0
 %define gusb_ver 0.2.7
@@ -40,28 +40,30 @@ USB devices simultaneously.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %meson
 %meson_build
 
 %install
 %meson_install
-
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-probe
-%_desktopdir/%_name.desktop
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/polkit-1/actions/%_name.policy
+%_desktopdir/%xdg_name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/polkit-1/actions/%xdg_name.policy
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README.md AUTHORS RELEASE
 
 
 %changelog
+* Mon Apr 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.35.90-alt1
+- updated to GNOME_MULTI_WRITER_3_35_90-2-g5d034af
+
 * Sat May 25 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 
