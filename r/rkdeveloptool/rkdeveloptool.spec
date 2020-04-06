@@ -1,6 +1,6 @@
 Name: rkdeveloptool
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: rkdeveloptool gives you a simple way to read/write rockusb device
 
@@ -11,7 +11,8 @@ Url: https://github.com/rockchip-linux/rkdeveloptool
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/rockchip-linux/rkdeveloptool/archive/master.zip
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: 99-rkdeveloptool.rules
 
 BuildRequires: gcc-c++ libusb-devel
 
@@ -28,12 +29,19 @@ rkdeveloptool gives you a simple way to read/write rockusb device.
 
 %install
 %makeinstall_std PREFIX=%_prefix
+install -D -m 644 %{SOURCE1} %buildroot%_udevrulesdir/99-rkdeveloptool.rules
 
 %files
 %doc Readme.txt
 #99-rk-rockusb.rules
+%_udevrulesdir/99-rkdeveloptool.rules
 %_bindir/%name
 
 %changelog
+* Mon Apr 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2
+- NMU:
+- bumped relase to override autoimports
+- added 99-rkdeveloptool.rules from autoimports
+
 * Wed Mar 25 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - initial build for ALT Sisyphus
