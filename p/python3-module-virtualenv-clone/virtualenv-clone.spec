@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 Summary: script for cloning a non-relocatable virtualenv
 License: MIT
@@ -53,6 +53,10 @@ tox.py3 --sitepackages -v
 %_bindir/virtualenv-clone
 
 %changelog
+* Mon Apr 06 2020 Nikita Obukhov <nickf@altlinux.org> 0.5.4-alt1
+- Update to 0.5.4
+- Mark virtualenv-clone as supporting python3.8
+
 * Fri Dec 13 2019 Nikita Obukhov <nickf@altlinux.org> 0.5.3-alt1
 - Initial Build
 
