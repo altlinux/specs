@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: openorienteering-mapper
-Version: 0.8.4
-Release: alt2
+Version: 0.9.2
+Release: alt1
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -24,10 +26,12 @@ BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-sql-sqlite3
 BuildRequires: qt5-tools-devel
 BuildRequires: sqlite3
+%if_with check
 # NAD grids are needed for tests (github #1062).
 # File BETA2007.gsb from proj-datumgrid is also used for tests
 BuildRequires: proj-datumgrid
 BuildRequires: ctest
+%endif
 
 #brings gdal libs and licensing information for help menu
 Requires: gdal
@@ -59,7 +63,6 @@ sed -i 's|doc/gdal-libs|gdal|g' doc/licensing/altlinux-licensing.cmake
 sed -i 's|"assistant"|"assistant-qt5"|g' src/gui/util_gui.cpp
 
 %build
-%add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %cmake
 %cmake_build
 
@@ -84,6 +87,13 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Apr 06 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.2-alt1
+- New version
+  + quit using ACCEPT_USE_OF_DEPRECATED_PROJ_API_H against libproj 6.3.1
+- Spec: add control for conditional unittests execution
+  + rename mapper.spec -> openorienteering-mapper.spec to match package name
+  + move spec to .gear/; adjust .gear/rules accordingly
+
 * Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.8.4-alt2
 - Rebuild with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 - Remove dependency on libproj-nad (all these data are moved to libproj)
