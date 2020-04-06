@@ -1,14 +1,15 @@
 Name: manatee-open
-Version: 2.158.8
-Release: alt1
+Version: 2.167.10
+Release: alt3
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
 Group: System/Libraries
 Url: http://nlp.fi.muni.cz/trac/noske/wiki/Downloads
 Packager: Kirill Maslinsky <kirill@altlinux.org>
-BuildRequires: antlr3-tool gcc-c++ java-devel antlr3-C-devel libpcre-devel perl-devel python-module-distribute ruby libicu-devel libltdl7-devel
-ExclusiveArch: x86_64
+BuildRequires: gcc-c++ libpcre-devel perl-devel python3-module-setuptools libicu-devel libltdl7-devel swig
+Conflicts: finlib
+Obsoletes: finlib finlib-devel
 
 
 Source: %name-%version.tar
@@ -25,7 +26,7 @@ indexing library called Finlib.
 
 %build
 #export MANATEE_REGISTRY=%_localstatedir/manatee
-%configure --with-icu
+%configure PYTHON=python3 --with-icu
 %make_build
 
 %install
@@ -34,11 +35,22 @@ indexing library called Finlib.
 %files 
 %_libdir/*.so.*
 %_bindir/*
-%python_sitelibdir/*.py*
-%python_sitelibdir/_manatee.so
+%python3_sitelibdir/*.py*
+%python3_sitelibdir/_manatee.so
 %doc doc/*
 
 %changelog
+* Mon Apr 06 2020 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt3
+- remove ExclusiveArch: x86_64 (build on i586 fixed)
+
+* Mon Apr 06 2020 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt2
+- fix typo in python shebangs
+
+* Thu Mar 12 2020 Kirill Maslinsky <kirill@altlinux.org> 2.167.10-alt1
+- 2.167.10
+- built with python3
+- drop java and ruby API, as apparently dropped upstream
+
 * Wed Jan 02 2019 Kirill Maslinsky <kirill@altlinux.org> 2.158.8-alt1
 - 2.158.8
 - fix build with libicu >= 6.1
