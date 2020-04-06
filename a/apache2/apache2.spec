@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.41
-Release: alt3
+Version: 2.4.43
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -73,7 +73,6 @@ Patch3: apache2-2.4.27-alt-httpd.conf.patch
 Patch4: apache2-2.4.35-tlv1.2-default.patch
 
 # Upstream patches:
-Patch5: apache2-2.4.41-r1874456.patch
 Patch6: apache2-2.4.41-r1870095.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
@@ -680,7 +679,6 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %patch2 -p1
 %patch3 -p1 -b .orig
 %patch4 -p2
-%patch5 -p1
 %patch6 -p1
 
 # generate ALTLinux Apache layout
@@ -1520,6 +1518,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Mon Apr 06 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.43-alt1
+- 2.4.43 (Fixes:  CVE-2020-1927, CVE-2020-1934)
+
 * Thu Mar 19 2020 Stanislav Levin <slev@altlinux.org> 1:2.4.41-alt3
 - fixed TLS 1.3 client cert authentication for POST requests
 
