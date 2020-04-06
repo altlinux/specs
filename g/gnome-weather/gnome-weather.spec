@@ -1,9 +1,9 @@
 %define xdg_name org.gnome.Weather
-%define ver_major 3.34
+%define ver_major 3.36
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -74,6 +74,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS
 
 %changelog
+* Mon Apr 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Apr 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
