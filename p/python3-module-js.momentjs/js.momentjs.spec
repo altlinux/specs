@@ -1,68 +1,34 @@
 %define oname js.momentjs
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.13.1
-Release: alt1.1
+Release: alt2
+
 Summary: Fanstatic packaging of Moment.js
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/js.momentjs/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-fanstatic
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-fanstatic
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
-%py_requires js
+%py3_requires js
 
 %description
 This library packages Moment.js for fanstatic.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Fanstatic packaging of Moment.js
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires js
-
-%description -n python3-module-%oname
-This library packages Moment.js for fanstatic.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -70,31 +36,19 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 export PYTHONPATH=$PWD
-python setup.py test
-py.test
-%if_with python3
-pushd ../python3
-export PYTHONPATH=$PWD
-python3 setup.py test
+%__python3 setup.py test
 py.test3
-popd
-%endif
 
 %files
-%doc *.txt
-%python_sitelibdir/js/*
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/*-nspkg.pth
-
-%if_with python3
-%files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/js/*
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/*-nspkg.pth
-%endif
 
 %changelog
+* Mon Apr 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.13.1-alt2
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.13.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
