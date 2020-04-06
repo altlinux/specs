@@ -1,12 +1,14 @@
 Name: xfsdump
-Version: 3.1.6
-Release: alt2
+Version: 3.1.9
+Release: alt1
 
 Summary: Administrative utilities for the XFS filesystem
 License: GPL
 Group: System/Kernel and hardware
 
 Url: http://xfs.org/
+
+# https://git.kernel.org/pub/scm/fs/xfs/xfsdump-dev.git/
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Apr 01 2009
@@ -54,6 +56,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_mandir/*/*
 
 %changelog
+* Sun Apr 05 2020 Pavel Vasenkov <pav@altlinux.org> 3.1.9-alt1
+- 3.1.9
+
 * Fri Apr 21 2017 Michael Shigorin <mike@altlinux.org> 3.1.6-alt2
 - fixed i586 FTBFS, see also debbug#837581
 
@@ -123,5 +128,3 @@ rm -rf %buildroot%_datadir/doc/%name
 - Fist attempt based on the SGI spec.
 
 # end of file
-
-
