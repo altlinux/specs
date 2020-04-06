@@ -1,6 +1,6 @@
 Name: doom64ex
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Doom64EX is a project aimed to recreate Doom64 as close as possible
 Summary(ru_RU.UTF-8): Doom64EX - проект, суть которого - воссоздание игры Doom64 настолько точно, насколько это возможно
@@ -58,14 +58,19 @@ desktop-file-install --dir %buildroot%_desktopdir %SOURCE1
 mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps/
 install -pDm644 %SOURCE2 %buildroot%_iconsdir/hicolor/48x48/apps/
 install -pDm644 %SOURCE3 %buildroot%_man6dir/%name.6
+install -pDm644 ./BUILD/%name.pk3 %buildroot%_gamesdatadir/%name.pk3
 
 %files
 %doc README.md AUTHORS COPYING LICENSE
 %_bindir/%name
 %_desktopdir/%name.desktop
+%_gamesdatadir/%name.pk3
 %_iconsdir/hicolor/48x48/apps/%name.png
 %_man6dir/*
 
 %changelog
+* Mon Apr 06 2020 Artyom Bystrov <arbars@altlinux.org> 2.5.1-alt2
+- fix missing doom64ex.pk3
+
 * Wed Jan 29 2020 Artyom Bystrov <arbars@altlinux.org> 2.5.1-alt1
 - initial build for ALT Sisyphus
