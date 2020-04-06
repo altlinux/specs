@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -206,6 +206,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Mon Apr 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 - enabled libinstpatch support, SDL2 audio support
