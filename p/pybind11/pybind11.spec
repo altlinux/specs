@@ -1,10 +1,10 @@
 #based on fedora spec
 Name: pybind11
-Version: 2.4.3
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
-License: BSD-style
+License: BSD-3-Clause
 Group: Development/Other
 Url: https://github.com/pybind/pybind11
 
@@ -96,6 +96,10 @@ make -C python3/BUILD/tests check -j$NPROCS
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Apr 06 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.5.0-alt1
+- New version
+- Fix license
+
 * Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.3-alt2
 - Build requires fixed.
 
