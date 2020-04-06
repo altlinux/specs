@@ -6,8 +6,8 @@
 %define ver_lteq() "%(rpmvercmp '%2' '%1')" >= "0"
 
 Name: gd3
-Version: 2.2.5
-Release: alt3
+Version: 2.3.0
+Release: alt1
 
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
@@ -16,7 +16,6 @@ Group: Graphics
 Url: https://libgd.github.io/
 # https://github.com/libgd/libgd.git
 Source: %name-%version.tar
-Patch: gd-2.2.5-upstream.patch
 
 BuildRequires(pre): rpm-build-ubt
 
@@ -137,7 +136,6 @@ resampling (smooth resizing of truecolor images) and so forth.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -148,7 +146,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 %makeinstall_std
 
 %check
-%ifarch %ix86 aarch64
+%ifarch %ix86 aarch64 ppc64le
 # Tests are known to be buggy on x86 32bit due to rounding issues. See:
 # https://github.com/libgd/libgd/issues/359
 # https://github.com/libgd/libgd/issues/242
@@ -166,7 +164,6 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_bindir/gdlib-config
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -175,18 +172,20 @@ resampling (smooth resizing of truecolor images) and so forth.
 
 %files utils
 %_bindir/*
-%exclude %_bindir/gdlib-config
 
 %changelog
+* Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Sun Apr 07 2019 Michael Shigorin <mike@altlinux.org> 2.2.5-alt3
 - Fix build on aarch64 (gdimagegrayscale/basic test fails alike to i586).
 - Drop %%ubt macro.
 - Minor spec cleanup.
 
-* Fri May 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt2%ubt
+* Fri May 04 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt2
 - Updated provides/conflicts/obsoletes.
 
-* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt1%ubt
+* Tue Apr 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.5-alt1
 - Updated to upstream version 2.2.5.
 
 * Thu Apr 18 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.35-alt6
