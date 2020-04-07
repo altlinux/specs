@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt4.git20160316
+Release: alt5.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 07 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.3.7-alt5.git20160316
+- NMU: rebuilt with python 3.8 to update nosetests-%%pyver -> nosetests-3.8
+
 * Tue Sep 18 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.3.7-alt4.git20160316
 - added nosetests-2/nosetests-3 for fedora compatibility
 
