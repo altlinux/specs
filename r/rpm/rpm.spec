@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt19
+Release: alt20
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -574,6 +574,11 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue Apr 07 2020 Alexey Tourbin <at@altlinux.ru> 4.13.0.1-alt20
+- find-package, shebang.req: introduced RPM_FINDPACKAGE_MANDATORY=1.
+  When an interpreter is invoked by name, as in "#!/usr/bin/env python32",
+  and is missing, this will now force the dependency on /usr/bin/python32.
+
 * Thu Mar 19 2020 Alexey Tourbin <at@altlinux.ru> 4.13.0.1-alt19
 - Backported support for zstd compressed payload (by Jeff Johnson and others),
   so that rpm2cpio can handle Fedora 31 packages.
