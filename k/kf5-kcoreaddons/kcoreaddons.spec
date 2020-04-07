@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.68.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -165,6 +165,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Mon Apr 06 2020 Ivan Razzhivin <underwit@altlinux.org> 5.68.0-alt3
+- fix kprocess patch
+
 * Tue Mar 24 2020 Ivan Razzhivin <underwit@altlinux.org> 5.68.0-alt2
 - integrate with kde5-kreslimit
 
