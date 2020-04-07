@@ -24,6 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 %global ruby_configure --with-ruby
 %global want_ruby 1
+%global want_python 0
 
 # Thrift's Erlang support depends on the JSX library, which is not
 # currently available in Fedora.
@@ -53,7 +54,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    thrift
 Version: 0.10.0
-Release: alt6_15jpp8
+Release: alt7_15jpp8
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -63,9 +64,9 @@ Summary: Software framework for cross-language services development
 # Here's the breakdown:
 # ./lib/py/compat/win32/stdint.h is 2-clause BSD
 # ./compiler/cpp/src/md5.[ch] are zlib
-License: ASL 2.0 and BSD and zlib
+License: Apache-2.0 and BSD and zlib-acknowledgement
 URL:     https://thrift.apache.org/
-
+Vcs:     https://github.com/apache/thrift.git
 Source0: https://archive.apache.org/dist/%{name}/%{version}/%{name}-%{version}.tar.gz
 
 Source1: https://repo1.maven.org/maven2/org/apache/thrift/lib%{name}/%{version}/lib%{name}-%{version}.pom
@@ -153,7 +154,8 @@ Requires:       %{name} = %{version}-%{release}
 %description    glib
 The %{name}-qt package contains GLib bindings for %{name}.
 
-%package -n python3-module-thrift
+%if %{?want_python} > 0
+%package -n python3-module-thrift-original
 Group: Development/Other
 Summary: Python 3 support for %{name}
 BuildRequires: python3-devel
@@ -161,9 +163,11 @@ Requires: %{name} = %{version}-%{release}
 Requires: python3
 Obsoletes: python-%{name} < 0.10.0-1%{?dist}
 Obsoletes: python2-%{name} < 0.10.0-14%{?dist}
+Conflicts: python3-module-thrift
 
-%description -n python3-module-thrift
+%description -n python3-module-thrift-original
 The python3-%{name} package contains Python bindings for %{name}.
+%endif
 
 %package -n perl-%{name}
 Group: Development/Java
@@ -258,7 +262,6 @@ The lib%{name}-java package contains Java bindings for %{name}.
 Group:         Development/Ruby
 Summary:       Ruby support for %{name}
 Requires:      %{name} = %{version}-%{release}
-BuildArch:     noarch
 
 %description -n gem-%{name}
 The gem-%{name} package contains Ruby bindings for %{name}.
@@ -305,6 +308,7 @@ Requires: fb303 = %{version}-%{release}
 %description -n fb303-devel
 The fb303-devel package contains header files for fb303
 
+%if %{?want_python} > 0
 %package -n python3-module-fb303
 Group: Development/Other
 Summary: Python 3 bindings for fb303
@@ -316,6 +320,7 @@ BuildArch: noarch
 
 %description -n python3-module-fb303
 The python3-fb303 package contains Python bindings for fb303.
+%endif
 
 %package -n fb303-java
 Group: Development/Java
@@ -367,7 +372,7 @@ sed -i 's|ANT_VALID=.*|ANT_VALID=1|' aclocal/ax_javac_and_java.m4
 sed -i 's|ANT_VALID=.*|ANT_VALID=1|' contrib/fb303/aclocal/ax_javac_and_java.m4
 
 %build
-%gem_build
+%ruby_build --ignore=rb
 
 export PY_PREFIX=%{_prefix}
 export PERL_PREFIX=%{_prefix}
@@ -436,7 +441,7 @@ sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
 )
 
 %install
-%gem_install
+%ruby_install
 %makeinstall_std
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name fastbinary.so | xargs -r chmod 755
@@ -498,7 +503,7 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 
 
 %check
-%gem_test
+%ruby_test
 
 
 %files
@@ -511,24 +516,27 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files glib
 %{_libdir}/libthrift_c_glib.so
 %{_libdir}/libthrift_c_glib.so.*
+%{_libdir}/libthrift.so
+%{_libdir}/libthriftc.so
+%{_libdir}/libthriftc.so.0
+%{_libdir}/libthriftc.so.0.0.0
+%{_libdir}/libthriftnb.so
+%{_libdir}/libthriftz.so
 
 %files qt
-%{_libdir}/libthriftqt.so
+%{_libdir}/libthriftqt5-%{version}.so
 %{_libdir}/libthriftqt-%{version}.so
+%{_libdir}/libthriftqt.so
 
 %files devel
 %{_includedir}/thrift
 %exclude %{_includedir}/thrift/fb303
-%{_libdir}/*.so
-%{_libdir}/*.so.0
-%{_libdir}/*.so.0.0.0
-%exclude %{_libdir}/lib*-%{version}.so
-%exclude %{_libdir}/libfb303.so
 %{_libdir}/pkgconfig/thrift-z.pc
 %{_libdir}/pkgconfig/thrift-qt.pc
 %{_libdir}/pkgconfig/thrift-nb.pc
 %{_libdir}/pkgconfig/thrift.pc
 %{_libdir}/pkgconfig/thrift_c_glib.pc
+%{_libdir}/pkgconfig/thrift-qt5.pc
 %doc LICENSE NOTICE
 
 %files -n perl-%{name}
@@ -550,8 +558,8 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %doc LICENSE NOTICE
 %endif
 
-%if 0
-%files -n python3-module-thrift
+%if %{?want_python} > 0
+%files -n python3-module-thrift-original
 %{python3_sitelibdir}/%{name}
 %{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
 %doc LICENSE NOTICE
@@ -573,7 +581,7 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %{_includedir}/thrift/fb303
 %doc LICENSE NOTICE
 
-%if 0
+%if %{?want_python} > 0
 %files -n python3-module-fb303
 %{python3_sitelibdir_noarch}/fb303
 %{python3_sitelibdir_noarch}/fb303_scripts
@@ -587,11 +595,17 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files -n gem-%{name}
 %ruby_gemspecdir/*
 %ruby_gemslibdir/*
+%ruby_gemsextdir/*
 
 %files -n gem-%{name}-doc
 %ruby_gemsdocdir/*
 
 %changelog
+* Sat Apr 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt7_15jpp8
+- + lost binaries for ruby gem
+- * rpm tags and syntax
+- ! duplication file adding
+
 * Mon Jul 08 2019 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt6_15jpp8
 - build to Sisyphus
 

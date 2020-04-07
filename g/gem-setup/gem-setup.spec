@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt11
+Release:       alt12
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt12
+- - erroneous glob lib ext method
+
 * Thu Mar 19 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt11
 - * libdir replaced to libexecdir for ruby site target
 

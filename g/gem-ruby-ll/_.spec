@@ -3,12 +3,12 @@
 
 Name:          gem-%pkgname
 Version:       2.1.2
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An LL(1) parser generator for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://gitlab.com/yorickpeterse/ruby-ll
-%vcs           https://gitlab.com/yorickpeterse/ruby-ll.git
+Vcs:           https://gitlab.com/yorickpeterse/ruby-ll.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -111,6 +111,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1.2
+- ! spec tag
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1.1
 - ! spec according to changelog rules
 

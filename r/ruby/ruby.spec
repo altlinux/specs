@@ -1,21 +1,22 @@
 %def_without   bootstrap
 %def_enable    shared
 %def_enable    rubygems
-%define        ruby_version 2.5.0
+%define        ruby_version 2.7.0
 %define        libdir %_prefix/lib/%name
 %define        includedir %_includedir
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
+%define        _version 2.7.0
 
 Name:          ruby
-Version:       2.5.5
-Release:       alt4.2
+Version:       %_version
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
-License:       BSD 2-clause Simplified License/Ruby
+License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
 Url:           http://www.%name-lang.org/
-%vcs           https://github.com/ruby/ruby.git
+Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%version.tar
 Source3:       fakeruby.sh
@@ -32,6 +33,7 @@ BuildRequires: libreadline-devel
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libyaml-devel
+BuildRequires: libgit-devel
 %ifarch %valgrind_arches
 BuildRequires: valgrind-devel
 %endif
@@ -39,7 +41,7 @@ BuildRequires: gcc-c++
 %{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:1.0.0}
 %{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %EVR}
 
-%gem_replace_version rake ~> 12.3
+%gem_replace_version rake ~> 13.0
 %gem_replace_version rspec ~> 3.8
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %libdir/*
@@ -69,6 +71,7 @@ This package contains interpreter of object-oriented scripting language Ruby.
 Summary:       Ruby shared libraries
 Group:         System/Libraries
 Provides:      ruby(enumerator)
+Requires:      ruby = %version-%release
 
 %description   -n %lname
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -81,8 +84,9 @@ This package contains Ruby shared libraries.
 %package       -n %lname-devel
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
-Requires:      rpm-build-%name >= 1.0.0
 %{?_enable_shared:Requires: %lname = %version-%release}
+Requires:      libssl-devel
+Requires:      libreadline-devel
 
 %description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -109,19 +113,17 @@ This package contains static Ruby library needed for embedding Ruby.
 Summary:       Standard Ruby libraries
 Group:         Development/Ruby
 Requires:      %lname = %version-%release
+Requires:      ruby = %version-%release
 Requires:      libyaml2
 Requires:      libgdbm
 Requires:      libssl1.1
 Requires:      libcrypto1.1
-Requires:      gem(rubygems-update) >= 3.0.1
-Requires:      gem(did_you_mean) >= 1.3.0
-Requires:      gem(minitest) >= 5.11.3
+Requires:      gem(minitest) >= 5.13.0
 Requires:      gem(net-telnet) >= 0.2
-Requires:      gem(power_assert) >= 1.1.4
-Requires:      gem(rake) >= 12.3.2
-Requires:      gem(test-unit) >= 3.2.9
+Requires:      gem(power_assert) >= 1.1.7
+Requires:      gem(rake) >= 13.0.1
+Requires:      gem(test-unit) >= 3.3.4
 Requires:      gem(xmlrpc) >= 0.3.0
-Requires:      gem(rdoc) >= 6.1.1
 Provides:      %name-libs = %version-%release
 Provides:      %name-racc-runtime = %version
 Provides:      ruby(%ruby_version)
@@ -141,12 +143,14 @@ This package contains standard Ruby runtime libraries.
 
 
 %package       -n gem
+Epoch:         1
+Version:       3.1.2
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %version
+Requires:      %name-stdlibs = %_version
 Provides:      %_bindir/gem
-Provides:      %{name}gems = 3.0.1
+Provides:      %{name}gems = 3.1.2
 Provides:      %name-tools
 Obsoletes:     %name-tools
 
@@ -155,6 +159,8 @@ Ruby gem executable and framework.
 
 
 %package       -n erb
+Epoch:         0
+Version:       %_version
 Summary:       ERB template library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -193,8 +199,8 @@ Ruby ri executable man page
 Summary:       Ruby ri documentation
 Group:         Development/Documentation
 BuildArch:     noarch
-AutoReq:       no
-AutoProv:      no
+#AutoReq:       no
+#AutoProv:      no
 Provides:      %name-doc-ri
 Obsoletes:     %name-doc-ri
 Requires:      ri
@@ -232,7 +238,7 @@ on different arches.
 
 %prep
 %setup -q
-# More strict shebang
+#́# More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
 sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
@@ -243,6 +249,15 @@ sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
 sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' tool/rbinstall.rb
 # put config.guess and config.sub from /usr/share/gnu-config
 cp -a /usr/share/gnu-config/config.* tool
+# FIX: automatize
+echo "
+#define RUBY_REVISION \"647ee6f091\"
+#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
+#define RUBY_BRANCH_NAME \"%version\"
+#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
+" > revision.h
+# NOTE: fix default path to support older ruby versions of gems
+sed "s/path << default_dir/path |= [ default_dir ] | Dir.glob(File.join(RbConfig::CONFIG['rubylibprefix'], 'gems', '*'))/" -i lib/rubygems/defaults.rb
 
 %build
 %define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
@@ -272,7 +287,7 @@ my_configure() {
 cd %_builddir
 cp -a %name-%version %name-%version-miniruby
 cd %name-%version-miniruby
-cp %SOURCE3 %SOURCE4 .
+dducp %SOURCE3 %SOURCE4 .
 
 my_configure --with-baseruby=$PWD/fakeruby.sh
 patch -p1 -l < %_datadir/%name-%version-miniruby/miniruby-src.patch
@@ -286,7 +301,7 @@ my_configure --with-baseruby=%_builddir/%name-%version-miniruby/miniruby.sh
 %else #_with_bootstrap
 my_configure
 
-# Copy sources after configure, so that generated files for
+#́ Copy sources after configure, so that generated files for
 # miniruby can be extracted later to facilitate bootstrapping.
 cp -a %_builddir/%name-%version %_builddir/%name-%version-configured
 
@@ -302,7 +317,7 @@ popd
 %endif #_with_bootstrap
 
 %make_build
-%ruby_setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib
+%ruby_setup_rb config --prefixes=gem,ruby,rails-engine --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal
 %ruby_setup_rb document
 
 %install
@@ -320,7 +335,8 @@ install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version
 install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby/config.h
 
 %define ruby_libdir %libdir
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch %buildroot%_bindir/%name
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%version:%buildroot%libdir/gems/%version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | sed "s/ /:/") %buildroot%_bindir/%name
+
 export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch
 export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%ruby_arch
 
@@ -333,7 +349,7 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 
 # Make empty dir for ri documentation
 mkdir -p %buildroot%_datadir/ri/site/%version
-rm -rf %buildroot%_bindir/{ri,rdoc}
+rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
 
 %check
 %make_build test
@@ -347,8 +363,11 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %doc %_docdir/%name-%version/README.*
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
+%_bindir/*racc*
 %_man1dir/%name.*
+%_man1dir/bundle*
 %dir %_datadir/ri
+
 
 %files         -n %lname
 %{?_enable_shared:%_libdir/*.so.*}
@@ -366,6 +385,8 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 
 %files         -n gem
 %_bindir/gem
+%_libexecdir/templates
+%_mandir/man5/gemfile.5.xz
 
 %files         -n erb
 %_bindir/erb
@@ -386,7 +407,7 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %files         -n ruby-mspec
 %_bindir/mspec*
 %_bindir/mkspec*
-%_libdir/mspec
+%_libexecdir/mspec
 
 %if_without bootstrap
 %files miniruby-src
@@ -394,6 +415,11 @@ rm -rf %buildroot%_bindir/{ri,rdoc}
 %endif
 
 %changelog
+* Wed Mar 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
+- ^ ruby 2.5.5 -> 2.7.0
+- ^ rubygems 3.0.1 -> 3.1.2
+- + packaged gems gem-bundle-embedded, gem-racc-embedded
+
 * Tue Feb 25 2020 Nikita Ermakov <arei@altlinux.org> 2.5.5-alt4.2
 - Disable valgrind for architectures which does not support it.
 

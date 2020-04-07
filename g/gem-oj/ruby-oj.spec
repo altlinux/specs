@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       3.10.5
-Release:       alt1
+Release:       alt1.1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
 Group:         Development/Ruby
@@ -14,8 +14,8 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 %summary.
@@ -74,6 +74,9 @@ Development headers for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 3.10.5-alt1.1
+- ! spec obsolete/provide pair
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.10.5-alt1
 - updated (^) 3.9.1 -> 3.10.5
 - fixed (!) spec

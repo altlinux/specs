@@ -2,14 +2,14 @@
 %define        gemname jaro_winkler
 
 Name:          gem-%pkgname
-Version:       1.5.3
-Release:       alt1.1
+Version:       1.5.4
+Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string
 Summary(ru_RU.UTF-8): Воплощение алгоритма расстояний Яро-Винклера на Си и Рубине, который поддерживает строки UTF-8
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/tonytonyjan/jaro_winkler
-%vcs           https://github.com/tonytonyjan/jaro_winkler.git
+Vcs:           https://github.com/tonytonyjan/jaro_winkler.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bundler)
 BuildRequires: gem(rake)
 BuildRequires: gem(rake-compiler)
-BuildRequires: gem(minitest)
+BuildRequires: gem-minitest
 
 %description
 jaro_winkler is an implementation of Jaro-Winkler distance algorithm which is
@@ -77,6 +77,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.5.4-alt1
+- ^ 1.5.3 -> 1.5.4
+- ! spec tags
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.3-alt1.1
 - ! spec according to changelog rules
 

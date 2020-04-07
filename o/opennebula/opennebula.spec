@@ -9,7 +9,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.10.3
-Release: alt1
+Release: alt1.1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.org
@@ -29,7 +29,7 @@ BuildRequires: libnsl2-devel
 BuildRequires: openssh
 BuildRequires: ruby-aws-sdk
 BuildRequires: ruby-builder
-BuildRequires: gem(nokogiri)
+BuildRequires: gem-nokogiri
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
@@ -363,11 +363,11 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-lxd.modules %buildroot%_sysconfdi
 # cleanup
 rm -f %buildroot%_datadir/one/Gemfile
 rm -f %buildroot%_datadir/one/install_gems
-rm -rf %buildroot%_libdir/install_gems
+rm -rf %buildroot%_libexecdir/install_gems
 rm -rf %buildroot%_libexecdir/one/ruby/vendors
 
 # fix placement
-mv %buildroot%_libdir/flow %buildroot%_datadir/flow
+mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
 
 # Python
 #pushd src/oca/python
@@ -691,6 +691,9 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 5.10.3-alt1.1
+- ! spec according to move the lib64/ to lib/
+
 * Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.3-alt1
 - 5.10.3
 

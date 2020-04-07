@@ -1,6 +1,7 @@
 %define _rundir /run
 %define gname haclient
 %define uname hacluster
+%define _libexecdir /usr/libexec
 
 %add_findreq_skiplist */ocf/resource.d/.isolation/*
 %add_findreq_skiplist */ocf/resource.d/pacemaker/*
@@ -10,7 +11,7 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 2.0.3
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -22,7 +23,7 @@ Provides: pcmk-cluster-manager
 Requires: corosync
 Requires: resource-agents
 Requires: lib%name = %version-%release
-Requires: %name-cli = %version-%release
+Requires(pre): %name-cli = %version-%release
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /proc
@@ -173,6 +174,7 @@ manager.
 	--with-systemdsystemunitdir=%_unitdir	\
 	--with-runstatedir=%_rundir	\
 	--localstatedir=%_var	\
+    --with-nagios-plugin-dir=%_prefix/lib/nagios/plugins \
 	--with-daemon-user=%uname	\
 	--with-daemon-group=%gname	\
 	--with-version=%version-%release
@@ -218,6 +220,12 @@ done
 groupadd -f -r %gname ||:
 getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "cluster user" %uname ||:
 
+%post cli
+%post_service crm_mon
+
+%preun cli
+%preun_service crm_mon
+
 %post
 %post_service %name
 
@@ -243,16 +251,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_unitdir/pacemaker.service
 %_logrotatedir/%name
 %_libexecdir/pacemaker/*
-%_sbindir/crm_attribute
-%_sbindir/crm_master
-%_sbindir/attrd_updater
 %_sbindir/fence_legacy
 %_sbindir/notifyServicelogEvent
 %_sbindir/ipmiservicelogd
 %_man7dir/*.7*
-%_man8dir/attrd_updater.*
-%_man8dir/crm_attribute.*
-%_man8dir/crm_master.*
 %_man8dir/pacemakerd.*
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/pengine
@@ -260,10 +262,13 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 /usr/lib/ocf/resource.d/pacemaker/remote
 
 %files cli
+%_sbindir/attrd_updater
 %_sbindir/cibadmin
+%_sbindir/crm_attribute
 %_sbindir/crm_diff
 %_sbindir/crm_error
 %_sbindir/crm_failcount
+%_sbindir/crm_master
 %_sbindir/crm_mon
 %_unitdir/crm_mon.service
 %_sbindir/crm_node
@@ -279,9 +284,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_verify
 %_sbindir/stonith_admin
 %_man8dir/*.8*
-%exclude %_man8dir/attrd_updater.*
-%exclude %_man8dir/crm_attribute.*
-%exclude %_man8dir/crm_master.*
 %exclude %_man8dir/pacemakerd.*
 %exclude %_man8dir/pacemaker-remoted.*
 
@@ -334,6 +336,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/api
 
 %changelog
+* Sat Apr 04 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.3-alt2
+- define %%_libexecdir as /usr/libexec
+- move attrd_updater, crm_attribute, crm_master to pacemaker-cli
+
 * Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 2.0.3-alt1
 - New version.
 - disable build doc (error build publican on i586)
