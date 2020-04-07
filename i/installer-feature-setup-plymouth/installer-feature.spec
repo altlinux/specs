@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Set up plymouth
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 07 2020 Oleg Solovyov <mcpain@altlinux.org> 0.5.5-alt1
+- check if root volume is under LUKS (closes: #38328)
+
 * Wed Sep 04 2019 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Handle empty uuid (closes: #37191).
 
