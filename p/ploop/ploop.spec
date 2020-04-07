@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.190
+Version: 7.0.193
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -107,6 +107,9 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 07 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.193-alt1
+- 7.0.193
+
 * Mon Mar 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.190-alt1
 - 7.0.190
 
