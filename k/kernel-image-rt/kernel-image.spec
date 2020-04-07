@@ -2,7 +2,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
 %define kernel_sublevel		.106
-%define kernel_rt_release	rt45
+%define kernel_rt_release	rt46
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -498,6 +498,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Apr 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt46
+- Update to 4.19.106-rt46.
+
 * Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt45
 - Update to 4.19.106-rt45.
 
