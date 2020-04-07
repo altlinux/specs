@@ -1,23 +1,23 @@
 %def_with check
 
 Name:		coccigrep
-Version:	1.17
-Release:	alt2
+Version:	1.19
+Release:	alt1
 Summary:	Semantic grep for the C language based on coccinelle
 
 Group:		Development/Tools
-License:	GPLv3
+License:	GPL-3.0
 Url:		http://home.regit.org/software/coccigrep/
+Vcs:		https://github.com/regit/coccigrep.git
 Requires:	spatch
 BuildArch:	noarch
 
 Source:		%name-%version.tar
 
 BuildRequires(pre):	rpm-build-python3
-BuildRequires:	python3-devel
-BuildRequires:	python3-module-setuptools
+BuildRequires:		python3-devel
+BuildRequires:		python3-module-setuptools
 %{?!_without_check:%{?!_disable_check:BuildRequires: spatch}}
-
 
 %description
 Coccigrep is a semantic grep for the C language based on coccinelle. It can be
@@ -60,8 +60,10 @@ export PYTHONPATH=./src
 %_man1dir/*.1*
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue Apr 07 2020 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
+- Update to v1.19.
+
 * Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.17-alt2
 - python2 -> python3
 
