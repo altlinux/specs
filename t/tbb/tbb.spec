@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without python2
-
 Name: tbb
-Version: 2019
-Release: alt1.u8.1
+Version: 2020.2
+Release: alt1
 Summary: Threading Building Blocks
-License: Apache 2.0
+License: Apache-2.0
 Group: Development/Tools
 Url: https://www.threadingbuildingblocks.org/
 
@@ -14,15 +12,28 @@ Url: https://www.threadingbuildingblocks.org/
 Source: %name-%version.tar
 
 # These are downstream sources. (from mageia spec file)
-Source6:	tbb.pc
-Source7:	tbbmalloc.pc
-Source8:	tbbmalloc_proxy.pc
+Source6: tbb.pc
+Source7: tbbmalloc.pc
+Source8: tbbmalloc_proxy.pc
 
-# (Fedora) Don't snip -Wall from C++ flags.  Add -fno-strict-aliasing, as that
+# Fedora patches
+
+# Don't snip -Wall from C++ flags.  Add -fno-strict-aliasing, as that
 # uncovers some static-aliasing warnings.
 # Related: https://bugzilla.redhat.com/show_bug.cgi?id=1037347
-Patch0: tbb-2019-dont-snip-Wall.patch
-Patch1: %name-2019.u2-alt-build.patch
+Patch1: tbb-2019-dont-snip-Wall.patch
+
+# Fix test-thread-monitor, which had multiple bugs that could (and did, on
+# ppc64le) result in a hang.
+Patch2: tbb-2019-test-thread-monitor.patch
+
+# Fix a test that builds a 4-thread barrier, but cannot guarantee that more
+# than 2 threads will be available to use it.
+Patch3: tbb-2019-test-task-scheduler-init.patch
+
+# Fix compilation on aarch64 and s390x.  See
+# https://github.com/intel/tbb/issues/186
+Patch4: tbb-2019-fetchadd4.patch
 
 Requires: lib%name = %EVR
 
@@ -30,10 +41,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 BuildRequires: swig
-
-%if_with python2
-BuildRequires: python-devel
-%endif
 
 %description
 Threading Building Blocks offers a rich and complete approach to
@@ -91,7 +98,7 @@ Blocks.
 %package examples
 Summary: Examples for Threading Building Blocks
 Group: Development/Documentation
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 BuildArch: noarch
 
 %description examples
@@ -101,20 +108,6 @@ leverage multi-core processors for performance and scalability without
 having to be a threading expert.
 
 This package contains examples for Threading Building Blocks.
-
-%if_with python2
-%package -n python-module-%name
-Summary: Python 2 Threading Building Blocks module
-Group: Development/Python
-
-%description -n python-module-%name
-Threading Building Blocks offers a rich and complete approach to
-expressing parallelism in a C++ program. It is a library that helps you
-leverage multi-core processors for performance and scalability without
-having to be a threading expert.
-
-This package contains python module for Threading Building Blocks.
-%endif
 
 %package -n python3-module-%name
 Summary: Python 3 Threading Building Blocks module
@@ -131,14 +124,16 @@ This package contains python3 module for Threading Building Blocks.
 %prep
 %setup
 %patch1 -p1
-
-%if_with python2
-cp -a python python2
-%endif
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-export CFLAGS="${CFLAGS:-%optflags}"
-export CXXFLAGS="${CXXFLAGS:-%optflags}"
+export CFLAGS="${CFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
+export CXXFLAGS="${CXXFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
+export CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
+export LDFLAGS="${LDFLAGS:-} -lpthread"
+export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -lpthread"
 %ifarch riscv64
 export LDFLAGS="${LDFLAGS:-} -latomic"
 export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -latomic"
@@ -161,18 +156,6 @@ pushd python
 cp -p rml/libirml.so* .
 %python3_build_debug
 popd
-
-# Build for python 2
-%if_with python2
-pushd python2
-%make_build -C rml stdver=c++14 \
-  CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD" \
-  PIC_KEY="-fPIC -Wl,--as-needed" \
-  LDFLAGS="$RPM_LD_FLAGS"
-cp -p rml/libirml.so* .
-%python_build_debug
-popd
-%endif
 
 %install
 install -d %buildroot%_libdir
@@ -200,9 +183,6 @@ done
 pushd %buildroot%_docdir/%name
 	rm -fr examples
 	rm -fr python
-%if_with python2
-	rm -fr python2
-%endif
 popd
 
 install -p -m644 CHANGES LICENSE README* %buildroot%_docdir/%name
@@ -223,12 +203,6 @@ cp -p libirml.so.1 $RPM_BUILD_ROOT%{_libdir}
 ln -s libirml.so.1 $RPM_BUILD_ROOT%{_libdir}/libirml.so
 popd
 
-%if_with python2
-pushd python2
-%python_install
-popd
-%endif
-
 # Install the cmake files
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/cmake
 cp -a cmake $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}
@@ -242,7 +216,7 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %_includedir/tbb
 %_libdir/cmake/tbb
 %_libdir/lib*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %files docs
 %_docdir/%name
@@ -250,17 +224,16 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %files examples
 %_datadir/%name/
 
-%if_with python2
-%files -n python-module-%name
-%doc python2/index.html
-%python_sitelibdir/*
-%endif
-
 %files -n python3-module-%name
 %doc python/index.html
-%python3_sitelibdir/*
+%python3_sitelibdir/TBB*
+%python3_sitelibdir/tbb
+%python3_sitelibdir/__pycache__/*
 
 %changelog
+* Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.2-alt1
+- Updated to upstream version 2020.2.
+
 * Sun Mar 22 2020 Nikita Ermakov <arei@altlinux.org> 2019-alt1.u8.1
 - Add -latomic for riscv64.
 
