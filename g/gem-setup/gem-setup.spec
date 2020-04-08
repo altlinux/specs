@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt14
+Release:       alt15
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -65,7 +65,7 @@ Documentation files for %gemname gem.
 %patch -p1
 
 %build
-%__setup_rb build --prefixes=gem --use=setup --alias=setup-rb
+%__setup_rb build --use=setup --alias=setup-rb
 
 %install
 %ruby_install
@@ -89,6 +89,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Apr 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt15
+- - explicit use of prefixes key in build section
+
 * Wed Apr 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt14
 - + default prefixes to 'gem' value
 
