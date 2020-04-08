@@ -1,7 +1,7 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt2.git.fdd26ecb
+Release: alt3.git.a0eab49a
 Summary: Linux Native KVM Tool
 License: GPLv2+
 Group: Emulators
@@ -35,7 +35,7 @@ running 32-bit guests on those 64-bit architectures that allow this.
 %setup
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
+#%patch13 -p1
 %patch21 -p1
 %patch22 -p1
 #patch23 -p1
@@ -52,6 +52,9 @@ running 32-bit guests on those 64-bit architectures that allow this.
 %doc README COPYING
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt3.git.a0eab49a
+- update to upstream master (a0eab49a8876ad29a200ce688d1055b566c69b38)
+
 * Tue Jan 15 2019 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt2.git.fdd26ecb
 - update to upstream master (fdd26ecb4bc52ac7e06455d5ea2cf5ebf7d500bc)
 - add patch from suse for fix build with gcc8
