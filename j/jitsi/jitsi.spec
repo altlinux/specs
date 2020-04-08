@@ -1,9 +1,9 @@
 %set_verify_elf_method textrel=relaxed
-%define rev	5553
+%define rev	5630
 
 Name:           jitsi
 Version:        2.11.%rev
-Release:        alt3
+Release:        alt1
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
 Group:          Networking/Instant messaging
@@ -87,6 +87,12 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Wed Apr 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.11.5630-alt1
+- New version
+
+* Wed Apr 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.11.5614-alt1
+- New version
+
 * Tue Apr 07 2020 Igor Vlasenko <viy@altlinux.ru> 2.11.5553-alt3
 - fixed build
 
