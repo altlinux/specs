@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.3
-Release:       alt13
+Release:       alt14
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Apr 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt14
+- + default prefixes to 'gem' value
+
 * Wed Apr 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt13
 - + separation prefixes and suffixes when detection the context (lib/bin/...)
 - ! lost prefixes key into build macro (fixes #38337)
