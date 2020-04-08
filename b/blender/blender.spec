@@ -2,7 +2,7 @@
 
 Name: blender
 Version: 2.82
-Release: alt1
+Release: alt1.a
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -199,6 +199,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.82-alt1.a
+- Updated to upstream version 2.82a.
+
 * Tue Mar 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.82-alt1
 - Updated to upstream version 2.82.
 
