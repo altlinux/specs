@@ -3,7 +3,7 @@
 
 Name: janus
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Janus WebRTC Server
 
@@ -26,9 +26,9 @@ Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sat Apr 04 2020
-# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libgio-devel libgupnp-igd libp11-kit libsasl2-3 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libssl-devel zlib-devel
+# Automatically added by buildreq on Wed Apr 08 2020
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libssl-devel zlib-devel
 
 %description
 Janus is a general purpose WebRTC Gateway with a minimal footprint.
@@ -43,6 +43,17 @@ advantage of the functionality they provide.
 
 Example uses for Janus are applications involving echo tests,
 conference bridges, media recorders, and SIP gateways.
+
+
+%package utilities
+Summary: Janus WebRTC server post-processing utilities
+Group: Networking/Other
+Requires: %name = %version-%release
+
+%description utilities
+Janus is a general purpose WebRTC Gateway with a minimal footprint.
+
+This package contains Janus post-processing utilities.
 
 
 %package docs
@@ -92,6 +103,7 @@ ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
 %configure \
   --enable-docs \
   --enable-rest \
+  --enable-post-processing \
   %nil
 
 %make_build
@@ -135,7 +147,8 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 %_unitdir/%name.service
 
-%_bindir/%{name}*
+%_bindir/%name
+%_bindir/%name-cfgconv
 
 %_libdir/%name/*/*.so
 %_libdir/%name/*/*.so.*
@@ -145,7 +158,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 %_datadir/%name
 
-%_man1dir/%{name}*
+%_man1dir/%name.*
+%_man1dir/%name-cfgconv.*
+
 
 %attr(0770,root,%janus_group) %dir %_localstatedir/%name
 %attr(1770,root,%janus_group) %dir %_logdir/%name
@@ -154,12 +169,24 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 %files docs
 %doc html/
 
+
+%files utilities
+%_bindir/mjr2pcap
+%_bindir/janus-pp-rec
+
+%_man1dir/mjr2pcap*
+%_man1dir/janus-pp-rec*
+
+
 %files devel
 %_includedir/%name
 
 
 
 %changelog
+* Wed Apr 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.2-alt2
+- Build post-processing utilities
+
 * Sun Apr 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.2-alt1
 - Initial build for ALT Linux Sisyphus
 
