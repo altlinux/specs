@@ -37,15 +37,15 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 3.4
-Name: lib%bname%sover
+%define sover 4.3
+Name: lib%bname
 Epoch: 1
-Version: 3.4.6
-Release: alt2
+Version: 4.3.0
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
-URL: http://opencv.org
+URL: https://opencv.org
 
 # https://github.com/opencv/opencv.git
 Source: %bname-%version.tar
@@ -58,7 +58,8 @@ Source1: %bname-contrib-%version.tar
 Source2: %bname-xfeatures2d-boostdesc-%version.tar
 Source3: %bname-xfeatures2d-vgg-%version.tar
 
-Patch1: %bname-alt-unimplemented-functions.patch
+Patch1: %name-%version-alt-python-paths.patch
+Patch2: %name-%version-alt-linking.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -106,24 +107,33 @@ popular Image Processing and Computer Vision algorithms.
 about 300 C functions and a few C++ classes. Also there are constantly
 improving Python bindings to %Name.
 
+%package -n lib%bname%sover
+Group: System/Libraries
+Summary: Open Source Computer Vision Library
 
-%package -n lib%bname-devel
+%description -n lib%bname%sover
+%Name means Intel(R) Open Source Computer Vision Library. It is a
+collection of C functions and a few C++ classes that implement many
+popular Image Processing and Computer Vision algorithms.
+%Name provides cross-platform middle-to-high level API that includes
+about 300 C functions and a few C++ classes. Also there are constantly
+improving Python bindings to %Name.
+
+%package devel
 Group: Development/C++
 Summary: Development files for %name
-Requires: %name = %EVR
+Requires: lib%bname%sover = %EVR
 # generated cmake targets mention tbb, require it here explicitly
 Requires: tbb-devel
 Provides: lib%{bname}2.2-devel = %EVR
 Provides: lib%{bname}2-devel = %EVR
 Conflicts: lib%{bname}2.2-devel < %EVR
 Obsoletes: lib%{bname}2.2-devel < %EVR
-Conflicts: lib%bname-devel < %EVR
-Obsoletes: lib%bname-devel < %EVR
 Conflicts: lib%{bname}2-devel < %EVR
 Obsoletes: lib%{bname}2-devel < %EVR
 Provides: lib%bname-devel-static = %EVR
 
-%description -n lib%bname-devel
+%description devel
 %Name means Intel(R) Open Source Computer Vision Library. It is a
 collection of C functions and a few C++ classes that implement many
 popular Image Processing and Computer Vision algorithms.
@@ -149,11 +159,10 @@ improving Python bindings to %Name.
 
 This package contains API Reference for develop with %name.
 
-
 %package tests
 Group: Video
 Summary: %Name tests
-Requires: %name = %EVR
+Requires: lib%bname%sover = %EVR
 
 %description tests
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -168,12 +177,12 @@ This package contains %Name tests applications.
 %package utils
 Group: Video
 Summary: %Name utils
-Provides: lib%bname-utils = %EVR
-Conflicts: lib%bname-utils < %EVR
-Obsoletes: lib%bname-utils < %EVR
 Provides: lib%{bname}2-utils = %EVR
 Conflicts: lib%{bname}2-utils < %EVR
 Obsoletes: lib%{bname}2-utils < %EVR
+Provides: lib%{bname}3.4-utils = %EVR
+Conflicts: lib%{bname}3.4-utils < %EVR
+Obsoletes: lib%{bname}3.4-utils < %EVR
 
 %description utils
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -186,20 +195,20 @@ improving Python bindings to %Name.
 This package contains %Name demo applications.
 
 %if_with python
-%package -n python-module-%bname%sover
+%package -n python-module-%bname
 Group: Development/Python
 Summary: Python modules for %Name
-Provides: python-module-%bname = %EVR
-Conflicts: python-module-%bname < %EVR
-Obsoletes: python-module-%bname < %EVR
 Provides: python-module-%{bname}2 = %EVR
+Provides: python-module-%{bname}3.4 = %EVR
 Conflicts: python-module-%{bname}2 < %EVR
 Obsoletes: python-module-%{bname}2 < %EVR
 Conflicts: python-module-%{bname}2.3
 Obsoletes: python-module-%{bname}2.3
+Conflicts: python-module-%{bname}3.4 < %EVR
+Obsoletes: python-module-%{bname}3.4 < %EVR
 Provides: python%{__python_version}(%bname)
 
-%description -n python-module-%bname%sover
+%description -n python-module-%bname
 %Name means Intel(R) Open Source Computer Vision Library. It is a
 collection of C functions and a few C++ classes that implement many
 popular Image Processing and Computer Vision algorithms.
@@ -212,11 +221,14 @@ Python language mapping for the %Name.
 %endif
 
 %if_with python3
-%package -n python3-module-%bname%sover
+%package -n python3-module-%bname
 Group: Development/Python3
 Summary: Python3 modules for %Name
+Provides: python3-module-%{bname}3.4 = %EVR
+Conflicts: python3-module-%{bname}3.4 < %EVR
+Obsoletes: python3-module-%{bname}3.4 < %EVR
 
-%description -n python3-module-%bname%sover
+%description -n python3-module-%bname
 %Name means Intel(R) Open Source Computer Vision Library. It is a
 collection of C functions and a few C++ classes that implement many
 popular Image Processing and Computer Vision algorithms.
@@ -233,6 +245,10 @@ Group: Video
 Summary: %Name samples
 Conflicts: lib%bname-examples
 Conflicts: lib%{bname}2-examples
+Provides: lib%{bname}3.4-examples = %EVR
+Conflicts: lib%{bname}3.4-examples < %EVR
+Obsoletes: lib%{bname}3.4-examples < %EVR
+
 
 %description examples
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -247,6 +263,9 @@ This package contains %Name examples.
 %prep
 %setup -b 1 -b 2 -b 3
 %patch1 -p1
+pushd ../%bname-contrib-%version >/dev/null
+%patch2 -p1
+popd >/dev/null
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
@@ -267,7 +286,6 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DCMAKE_VERBOSE:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DPYTHON_PLUGIN_INSTALL_PATH:PATH=%python_sitelibdir/%bname \
 	-DWITH_UNICAP:BOOL=ON \
 	-DWITH_QUICKTIME:BOOL=ON \
 	-DWITH_XINE:BOOL=%{?_with_xine:ON}%{!?_with_xine:OFF} \
@@ -286,7 +304,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DBUILD_DOCS:BOOL=ON \
 	-DOPENCV_DOC_INSTALL_PATH=%_docdir/%name/ \
 	-DOPENCV_3P_LIB_INSTALL_PATH=%_libdir/%Name/3rdparty/%_lib \
-	-DOPENCV_LICENSES_INSTALL_PATH=%_datadir/%Name/licenses \
+	-DOPENCV_LICENSES_INSTALL_PATH=%_datadir/%Name-%version/licenses \
+	-DOPENCV_OTHER_INSTALL_PATH=%_datadir/%Name \
+	-DOPENCV_GENERATE_PKGCONFIG:BOOL=ON \
 	%nil
 
 %cmake_build VERBOSE=1
@@ -295,18 +315,19 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %install
 %cmakeinstall_std install_docs
 
-%files
+%files -n lib%bname%sover
 %doc README.md
 %_libdir/*.so.*
 %dir %_datadir/%Name
-%_datadir/%Name/licenses
+%dir %_datadir/%Name-%version
+%_datadir/%Name-%version/licenses
 
-%files -n lib%bname-devel
+%files devel
 %_libdir/*.so
+%_libdir/cmake/*
 %_includedir/*
 %_pkgconfigdir/*
 %_datadir/%Name/*.supp
-%_datadir/%Name/*.cmake
 %ifarch %{ix86} x86_64 armh
 %dir %_libdir/%Name
 %dir %_libdir/%Name/3rdparty
@@ -321,12 +342,12 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_bindir/*
 
 %if_with python
-%files -n python-module-%bname%sover
+%files -n python-module-%bname
 %python_sitelibdir/*
 %endif
 
 %if_with python3
-%files -n python3-module-%bname%sover
+%files -n python3-module-%bname
 %python3_sitelibdir/*
 %endif
 
@@ -334,8 +355,12 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/samples
 %_datadir/%Name/haarcascades
 %_datadir/%Name/lbpcascades
+%_datadir/%Name/quality
 
 %changelog
+* Mon Apr 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.0-alt1
+- Updated to upstream version 4.3.0.
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.4.6-alt2
 - rebuild with new gbcm
 

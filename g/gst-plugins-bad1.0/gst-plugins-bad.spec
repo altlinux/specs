@@ -36,7 +36,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -48,6 +48,8 @@ Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.
 %else
 Source: %_name-bad-%version.tar
 %endif
+
+Patch1: %_name-bad-alt-opencv4-compat.patch
 
 Provides: %_name-bad = %version-%release
 
@@ -120,6 +122,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %prep
 %setup -n %_name-bad-%version
+%patch1 -p2
 
 %build
 %meson \
@@ -166,6 +169,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.16.2-alt2
+- Rebuilt with opencv-4.3.0.
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
