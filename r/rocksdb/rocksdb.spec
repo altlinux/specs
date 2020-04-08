@@ -12,7 +12,7 @@
 
 Name: rocksdb
 Version: 6.1.2
-Release: alt1
+Release: alt2
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 License: BSD
@@ -111,6 +111,9 @@ rm build_tools/gnu_parallel
 %_libdir/*.a
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.1.2-alt2
+- fixed build with gcc-9
+
 * Mon Oct 07 2019 Alexey Shabalin <shaba@altlinux.org> 6.1.2-alt1
 - 6.1.2
 
