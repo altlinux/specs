@@ -4,12 +4,12 @@
 # be updated even if it should be.
 %global srcname tqsl
 %global libtqslver 2.5
-%define tqslver 2.5.1
+%define tqslver 2.5.2
 
 Name:           trustedqsl
 Version:        %tqslver
 # Warning: because libtqslver has different version, always increase release number
-Release:        alt14
+Release:        alt15
 Summary:        TrustedQSL ham-radio applications
 
 
@@ -19,10 +19,10 @@ URL:            http://www.rickmurphy.net/trustedqsl.org/
 
 Source0:        %srcname-%version.tar
 
-Patch0:         tqsl-2.0-rpath.patch
 Patch1:         tqsl-tqsllib.patch
 Patch2:         tqsl-fix-undefined-macro.patch
 Patch3:         tqsl-ssl-md5.patch
+Patch4:         tqsl-alt-standard-lib-path.patch
 
 BuildRequires(pre): cmake
 BuildRequires:  gcc-c++
@@ -65,10 +65,10 @@ contains the to develop with tqsllib.
 
 %prep
 %setup -q -n %srcname-%tqslver
-%patch0 -p1
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -110,6 +110,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Wed Apr 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt15
+- New version.
+
 * Wed Dec 11 2019 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt14
 - New version.
 
