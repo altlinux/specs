@@ -71,7 +71,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1899,6 +1899,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.4-alt1
+- 245.4
+
 * Mon Mar 30 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.3-alt1
 - 245.3 (v245-stable branch)
 - drop altlinux-kmsg-loglevel.service and altlinux-save-dmesg.service
