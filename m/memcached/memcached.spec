@@ -4,7 +4,7 @@
 %def_enable tls
 
 Name: memcached
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -109,6 +109,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
+- new version 1.6.3
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt1
 - new version 1.6.2 (ALT #38273)
 
