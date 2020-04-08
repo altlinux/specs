@@ -3,8 +3,8 @@
 %def_disable libxml2
 
 Name: xmlrpc-c
-Version: 1.51.03
-Release: alt1.svn3018
+Version: 1.51.06
+Release: alt1
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
@@ -22,11 +22,6 @@ Patch2: 0001-cleanup-and-fix-libxml2-backend.patch
 Patch101: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
 Patch102: 0002-Use-proper-datatypes-for-long-long.patch
 Patch103: 0003-allow-30x-redirections.patch
-
-# Backported patches
-# https://sourceforge.net/p/xmlrpc-c/code/2981/
-# Fixes RHBZ #1541868
-Patch201:       0001-Remove-trace-statements-accidentally-committed-with-.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
@@ -116,7 +111,6 @@ The header file for developing applications that use
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch201 -p1
 
 %build
 autoconf
@@ -166,6 +160,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.51.06-alt1
+- 1.51.06
+
 * Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.51.03-alt1.svn3018
 - 1.51.03
 
