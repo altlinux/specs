@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -96,6 +96,9 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Wed Apr 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
+- New version.
+
 * Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 2.1.1-alt1
 - New version.
 
