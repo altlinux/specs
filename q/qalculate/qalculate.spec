@@ -3,12 +3,12 @@
 %def_without static
 
 Name: qalculate
-Version: 3.3.0
+Version: 3.8.0
 Release: alt1
 
 Summary: A very versatile desktop calculator
 Group: Office
-License: GPL
+License: GPL-2.0+
 Url: https://qalculate.github.io/
 
 # https://github.com/Qalculate/libqalculate.git
@@ -98,6 +98,7 @@ rm -f %buildroot%_libdir/*.a
 
 %files
 %_bindir/*
+%_man1dir/*.1*
 
 %files common -f %name.lang
 %doc COPYING
@@ -110,6 +111,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt1
+- Updated to upstream version 3.8.0.
+
 * Fri Aug 02 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 
