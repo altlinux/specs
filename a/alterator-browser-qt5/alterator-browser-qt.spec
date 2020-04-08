@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.1.5
+Version: 3.1.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Wed Apr 08 2020 Sergey V Turchin <zerg at altlinux dot org> 3.1.6-alt1
+- build with debuginfo
+
 * Tue Apr 07 2020 Sergey V Turchin <zerg at altlinux dot org> 3.1.5-alt1
 - fix reload translator on language change
 
