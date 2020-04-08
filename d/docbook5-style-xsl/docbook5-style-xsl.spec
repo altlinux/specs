@@ -1,29 +1,21 @@
-%add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name: docbook5-style-xsl
 Version: 1.79.2
-Release: alt1_4
+Release: alt2
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
 
 # Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
 # some .js files under ./slides/browser/ are licensed MPLv1.1
-License: MIT and MPLv1.1
-URL: https://github.com/docbook/xslt10-stylesheets
+License: MIT and MPL-1.1
+Url: https://github.com/docbook/xslt10-stylesheets
 
-Provides: docbook-xsl-ns = %{version}
-# xml-common was using /usr/share/xml until 0.6.3-8.
-Requires: xml-common >= 0.6.3
-# libxml2 required because of usage of /usr/bin/xmlcatalog
-Requires(post): libxml2 xml-utils
-Requires(postun): libxml2 xml-utils
-Conflicts: passivetex < 1.21
+Provides: docbook-xsl-ns = %version
+# something that works
+Requires: xml-common >= 0.6.3-alt15
 
 BuildArch: noarch
-Source0: https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F{%version}/docbook-xsl-%{version}.tar.bz2
-Source44: import.info
+Source0: https://github.com/docbook/xslt10-stylesheets/releases/download/release/%version/docbook-xsl-%version.tar
 
 %description
 These XSL namespace aware stylesheets allow you to transform any
@@ -31,90 +23,51 @@ DocBook 5 document to other formats, such as HTML, manpages, FO,
 XHMTL and other formats. They are highly customizable. For more
 information see W3C page about XSL.
 
-#Don't ship Java extensions in Fedora as they are not compiled from the source
-#Shiping sources instead of binary jars was requested by
-#https://lists.oasis-open.org/archives/docbook-apps/201408/msg00008.html
-#Sources available in the docbook stylesheets svn repository, but not packaged.
-%if 0%{?rhel} >= 7
-%package extensions
-Group: Text tools
-Summary: Norman Walsh's XSL stylesheets extensions for DocBook 5.X
-# Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
-# some .js files under ./slides/browser/ are licensed MPLv1.1
-License: MIT and ASL 2.0
-Requires: docbook-xsl-ns = %{version}
-
-%description extensions
-This package contains Java extensions for XSL namespace aware stylesheets.
-%endif
-
 %prep
-%setup -q -n docbook-xsl-%{version}
-#remove .gitignore files
-rm -rf $(find -name '.gitignore' -type f)
-#make ruby scripts executable
-chmod +x epub/bin/dbtoepub
-
-%build
+%setup -n docbook-xsl-%version
 
 %install
-DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version
-cp -a [[:lower:]]* $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
-cp -a VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION.xsl
-ln -s VERSION.xsl \
-$DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION
-ln -s xsl-ns-stylesheets-%{version} \
- $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
+%global targetdir %_datadir/sgml/docbook/xsl-ns-stylesheets
+mkdir -p %buildroot%targetdir-%version
+cp -a [[:lower:]]* VERSION.xsl %buildroot%targetdir-%version/
+ln -s VERSION.xsl %buildroot%targetdir-%version/VERSION
+ln -s xsl-ns-stylesheets-%version %buildroot%targetdir
 
 # Don't ship install shell script.
-rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
+rm %buildroot%targetdir/install.sh
+# Don't ship Java extensions in Fedora as they are not compiled from the source.
+rm -r %buildroot%targetdir-%version/extensions
 
-%files
-%doc BUGS
-%doc README COPYING
-%doc TODO NEWS
-%doc RELEASE-NOTES.*
-%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}
-%{_datadir}/sgml/docbook/xsl-ns-stylesheets
-%exclude %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
-
-%if 0%{?rhel} >= 7
-%files extensions
-%doc extensions/README.txt extensions/LICENSE.txt
-%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
-%endif
+%add_findreq_skiplist %targetdir-%version/slides/slidy/help/help.html.* %targetdir-%version/epub/bin/dbtoepub
 
 %post
-CATALOG=%{_sysconfdir}/xml/catalog
-%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
- "http://cdn.docbook.org/release/xsl/%{version}" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
- "http://cdn.docbook.org/release/xsl/%{version}" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
- "http://cdn.docbook.org/release/xsl/current/" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
- "http://cdn.docbook.org/release/xsl/current/" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-
-%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
- "http://docbook.sourceforge.net/release/xsl-ns/current" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
-%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
- "http://docbook.sourceforge.net/release/xsl-ns/current" \
- "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
+for orig in 'http://cdn.docbook.org/release/xsl/%version' \
+	   'http://cdn.docbook.org/release/xsl/current' \
+	   'http://docbook.sourceforge.net/release/xsl-ns/current'; do
+	for type in rewriteSystem rewriteURI; do
+		xmlcatalog --noout --add "$type" \
+		"$orig" 'file://%targetdir-%version' \
+		%_sysconfdir/xml/catalog
+	done
+done
 
 %postun
 if [ "$1" = 0 ]; then
-  CATALOG=%{_sysconfdir}/xml/catalog
-  %{_bindir}/xmlcatalog --noout --del \
-   "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
+	xmlcatalog --noout --del \
+		'file://%targetdir-%version' \
+		%_sysconfdir/xml/catalog
 fi
 
+%files
+%targetdir/
+%targetdir-%version/
+%doc README COPYING RELEASE-NOTES.txt NEWS BUGS
+
 %changelog
+* Thu Apr 09 2020 Dmitry V. Levin <ldv@altlinux.org> 1.79.2-alt2
+- Cleaned up.
+- Forcibly removed ruby dependencies.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.79.2-alt1_4
 - update to new release by fcimport
 
