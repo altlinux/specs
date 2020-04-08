@@ -1,3 +1,5 @@
+# This package is an abomination.  It should not exist.
+
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Slurp.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Log/Dispatch/File.pm) perl(Log/Log4perl.pm) perl(Log/Log4perl/Appender/Screen.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm)
@@ -46,6 +48,11 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 %filter_from_requires /^.usr.bin.xelatex$/d
 %filter_from_requires /^.usr.bin.xetex$/d
 
+# no ruby deps, please
+%filter_from_requires /^\(\/usr\/bin\/\)\?ruby$/d
+
+Packager: Igor Vlasenko <viy@altlinux.org>
+
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Compress with gzip instead of xz (faster):
@@ -89,7 +96,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_7
+Release:	alt2_7
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -621,7 +628,6 @@ TeX-related libraries) that are missing from the texlive-basic package.
 Summary:	Tex Live ConTeXt Package
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
-Requires:	erb ruby
 Conflicts: tetex-context < 2.01
 AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
@@ -1032,11 +1038,21 @@ cat > %buildroot%_rpmlibdir/texlive-collection-basic-files.req.list <<EOF
 EOF
 
 
+# Fix python2 shebangs.
+find . %buildroot -type f -print0 |
+	xargs -r0 grep -lZ '^#![[:space:]]*%_bindir/.*python\>' -- |
+	xargs -r0 sed -E -i '1 s@^(#![[:space:]]*)%_bindir/(env[[:space:]]+)?python\>@\1%__python@' --
+
 
 #-----------------------------------------------------------------------
 
 
 %changelog
+* Wed Apr 08 2020 Dmitry V. Levin <ldv@altlinux.org> 2019-alt2_7
+- NMU.
+- Fixed python shebangs.
+- Forcibly removed ruby dependencies.
+
 * Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 2019-alt1_7
 - new version
 
