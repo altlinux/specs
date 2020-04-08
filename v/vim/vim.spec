@@ -5,7 +5,7 @@
 %def_enable perlinterp
 %def_disable pythoninterp
 %def_enable python3interp
-%def_enable rubyinterp
+%def_disable rubyinterp
 %def_enable tclinterp
 %def_disable mzschemeinterp
 %def_enable luainterp
@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.2
 Version: %branch.0011
-Release: alt1
+Release: alt2
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1067,6 +1067,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Apr 08 2020 Dmitry V. Levin <ldv@altlinux.org> 4:8.2.0011-alt2
+- Disabled ruby support:
+  vim is too important to have its build environment contaminated with ruby.
+
 * Mon Dec 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.0011-alt1
 - Updated to 8.2.0011.
 - Enabled python3 support (ALT#37460).
@@ -2214,7 +2218,7 @@ fi
 * Tue Aug 05 2003 Alexander Bokovoy <ab@altlinux.ru> 4:6.2.021-alt2
 - Rebuild against Ruby 1.8.0
 
-* Mon Jul 09 2003 Sir Raorn <raorn@altlinux.ru> 4:6.2.021-alt1
+* Wed Jul 09 2003 Sir Raorn <raorn@altlinux.ru> 4:6.2.021-alt1
 - Official patches (021)
 - Removed patches (merged upstream):
   + alt-WANT_X11
@@ -2412,7 +2416,7 @@ fi
 - 6.0am
 - removed unnecessary patches
 
-* Tue Jun 16 2001 SA <sa@altlinux.ru> 6.0-alt0.4.ah
+* Sat Jun 16 2001 SA <sa@altlinux.ru> 6.0-alt0.4.ah
 - Fixed slow startup of /usr/bin/vim from X11 package when
   run from remote xterm or if $DISPLAY is broken:
   1. FEAT_XCLIPBOARD (used in terminal vim) is switched off
