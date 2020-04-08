@@ -1,21 +1,27 @@
+%define pyname pybluez
 %define modulename PyBluez
 
+%def_without python2
 %def_with python3
 
 Name: python-module-pybluez
-Version: 0.20
-Release: alt1.1.1
+Version: 0.22
+Release: alt1
 Summary: A Python module for the Bluez library
 Group: Development/Python
-License: GPL
+License: GPLv2+
 Url: http://code.google.com/p/pybluez/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: libbluez >= 4.0
 
-Source: %url/files/%modulename-%version.tar.gz
+Source: %url/files/%pyname-%version.tar.gz
 
-BuildRequires: libbluez-devel python-devel
+BuildRequires: libbluez-devel
+%if_with python2
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -36,7 +42,7 @@ PyBluez is an effort to create python wrappers around bluez to allow python
 developers to use system bluetooth resources.
 
 %prep
-%setup -n %modulename-%version
+%setup -n %pyname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -44,7 +50,9 @@ cp -fR . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
+%if_with python2
 %python_build
+%endif
 
 %if_with python3
 pushd ../python3
@@ -53,7 +61,9 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
@@ -61,16 +71,18 @@ pushd ../python3
 popd
 %endif
 
-%files
-%doc README CHANGELOG COPYING PKG-INFO
+%if_with python2
+%files -n python-module-pybluez
+%doc README CHANGELOG COPYING
 %python_sitelibdir/bluetooth
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/bluetooth/msbt*
 %exclude %python_sitelibdir/bluetooth/widcomm*
+%endif
 
 %if_with python3
 %files -n python3-module-pybluez
-%doc README CHANGELOG COPYING PKG-INFO
+%doc README CHANGELOG COPYING
 %python3_sitelibdir/bluetooth
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/bluetooth/msbt*
@@ -78,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Wed Apr 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- (NMU) new version
+- dropped python2
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
