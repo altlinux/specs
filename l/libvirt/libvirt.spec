@@ -178,7 +178,7 @@
 %endif
 
 Name: libvirt
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -215,7 +215,7 @@ Requires: %name-libs = %EVR
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
-%{?_with_dbus:BuildRequires: libdbus-devel >= 1.0.0}
+%{?_with_dbus:BuildRequires: libdbus-devel >= 1.0.0 dbus}
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
 %{?_with_qemu:BuildRequires: qemu-img}
@@ -1377,6 +1377,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 6.1.0-alt1
 - 6.1.0
 
