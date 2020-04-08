@@ -1,7 +1,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.568
+Version: 7.0.571
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -65,6 +65,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Wed Apr 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.571-alt1
+- 7.0.571
+
 * Tue Mar 31 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.568-alt1
 - 7.0.568
 - remove with_ub due to autodetect of UB
