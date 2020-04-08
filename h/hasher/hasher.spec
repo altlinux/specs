@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Apr 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.2-alt1
+- Enhanced --query-repackage mode:
+  + Fixed detection of SOURCE_DATE_EPOCH variable;
+  + Removed redundant repackaging of just built src.rpm.
+
 * Thu Nov 07 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.1-alt1
 - hsh-initroot:
   + disabled copying of resolver configuration files from host system
