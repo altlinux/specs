@@ -6,8 +6,8 @@ BuildRequires: gcc-c++ perl(Pod/Usage.pm)
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 10.0.0
-%global rc_ver 2
-%global baserelease 0.1
+#global rc_ver 5
+%global baserelease 1
 %global libomp_srcdir openmp-%{version}%{?rc_ver:rc%{rc_ver}}.src
 
 
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ perl(Pod/Usage.pm)
 
 Name: libomp
 Version: 10.0.0
-Release: alt1_0.1.rc2
+Release: alt1_%{baserelease}%{?rc_ver:.rc%{rc_ver}}
 Summary: OpenMP runtime for clang
 Group: Development/Other
 
@@ -33,6 +33,7 @@ Source3: https://%{?rc_ver:pre}releases.llvm.org/%{version}/%{?rc_ver:rc%{rc_ver
 Source4: https://prereleases.llvm.org/%{version}/hans-gpg-key.asc
 
 Patch0: 0001-CMake-Make-LIBOMP_HEADERS_INSTALL_PATH-a-cache-varia.patch
+Patch1: 99b03c1c18.patch
 
 BuildRequires: ccmake cmake ctest
 BuildRequires: libasm-devel libdw-devel libelf-devel
@@ -61,8 +62,8 @@ Group: Development/Other
 Summary: OpenMP regression tests
 Requires: %{name}%{?isa} = %{version}
 Requires: %{name}-devel%{?isa} = %{version}
-#Requires: clang9.0 llvm9.0
-#Requires: llvm9.0
+#Requires: clang10.0
+#Requires: llvm10.0
 Requires: gcc
 Requires: gcc-c++
 #Requires: python3-module-lit
@@ -73,6 +74,7 @@ OpenMP regression tests
 %prep
 %setup -q -n openmp-%{version}%{?rc_ver:rc%{rc_ver}}.src
 %patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -147,7 +149,11 @@ rm -rf %{buildroot}%{_libdir}/libarcher_static.a
 %{_datadir}/libomp
 %{_libexecdir}/tests/libomp/
 
+
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 10.0.0-alt1_1
+- final version
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 10.0.0-alt1_0.1.rc2
 - update by mgaimport
 
