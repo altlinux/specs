@@ -3,26 +3,23 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.10.4
-Release: alt1
+Release: alt2
+
 Summary: Mock/Stub/Spy library for Python
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/flexmock/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+BuildArch: noarch
 
 # https://github.com/has207/flexmock.git
 Source: %name-%version.tar.gz
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(nose)
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(twisted)
-BuildRequires: python-module-twisted-core-test
 BuildRequires: python3(nose)
 BuildRequires: python3(pytest)
 BuildRequires: python3(twisted)
@@ -32,57 +29,29 @@ BuildRequires: python3(twisted)
 flexmock is a testing library for Python that makes it easy to create
 mocks, stubs and fakes.
 
-%package -n python3-module-%oname
-Summary: Mock/Stub/Spy library for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-flexmock is a testing library for Python that makes it easy to create
-mocks, stubs and fakes.
-
 %prep
 %setup
 
-cp -fR . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-export PYTHON_IMPLEMENTATIONS=python
-
-export PYTHON_VERSIONS='%_python_version'
-tests/run_tests.sh
-
-pushd ../python3
 export PYTHON_VERSIONS='%_python3_version'
 tests/run_tests.sh
-popd
 
 %files
-%doc CHANGELOG README.rst docs
-%python_sitelibdir/flexmock.py
-%python_sitelibdir/flexmock.py[co]
-%python_sitelibdir/flexmock-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
 %doc CHANGELOG README.rst docs
 %python3_sitelibdir/flexmock.py
 %python3_sitelibdir/__pycache__/flexmock.cpython-*
 %python3_sitelibdir/flexmock-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.10.4-alt2
+- Build for python2 disabled.
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 0.10.4-alt1
 - 0.10.2 -> 0.10.4.
 
