@@ -1,17 +1,16 @@
 Name: neomutt
-Version: 20180716
-Release: alt2
+Version: 20200320
+Release: alt1
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
 
 Summary: A version of Mutt with added features
 
-License: GPLv2+ and Public Domain
+License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
 Url: https://www.neomutt.org/
-
-# https://github.com/neomutt/neomutt.git
+Vcs: https://github.com/neomutt/neomutt.git
 Source: %name-%version.tar
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
@@ -55,6 +54,9 @@ mode.
 %docdir
 
 %changelog
+* Thu Apr 09 2020 Vitaly Chikunov <vt@altlinux.org> 20200320-alt1
+- Update to 20200320.
+
 * Mon Nov 26 2018 Vitaly Chikunov <vt@altlinux.ru> 20180716-alt2
 - Switch from libidn to libidn2
 
