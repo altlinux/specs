@@ -7,7 +7,7 @@
 
 Name: trikStudio
 Version: 2019.8
-Release: alt7
+Release: alt8
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -17,6 +17,7 @@ Url: https://github.com/qreal/qreal/
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: gamepad.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
 BuildRequires: libqscintilla2-qt5-devel zlib-devel libquazip-qt5-devel python3-dev libhidapi-devel libusb-devel
@@ -91,6 +92,7 @@ popd
 pushd thirdparty/gamepad
 rm -rf qscintilla quazip
 tar -xf gamepad.tar.bz2
+%patch1
 popd
 pushd qrgui/thirdparty
 tar -xf qt-solutions.tar.bz2
@@ -168,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 09 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt8
+- Fix gamepad segfault during close application
+
 * Fri Mar 20 2020 Valery Sinelnikov <greh@altlinux.org> 2019.8-alt7
 - Fix to load default platform config
 
