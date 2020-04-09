@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt1
+Release: alt2
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -75,6 +75,8 @@ cp %SOURCE4 .
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+# https://sourceforge.net/p/codeblocks/tickets/936/
+sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
 
 %build
 msgfmt %name.po -o %name.mo
@@ -304,6 +306,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Thu Apr 09 2020 Grigory Ustinov <grenka@altlinux.org> 20.03-alt2
+- Fix for arm (thx to sbloshakov@).
+
 * Mon Mar 30 2020 Grigory Ustinov <grenka@altlinux.org> 20.03-alt1
 - Build new version.
 - Reworked FortranProject patch, so it still works.
