@@ -15,7 +15,7 @@
 
 Name: pcp
 Version: 5.0.2
-Release: alt1
+Release: alt1.1
 Summary: System-level performance monitoring and performance management
 License: GPLv2+ and LGPLv2+ and CC-BY-SA-3.0
 Group: Monitoring
@@ -821,5 +821,8 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/demos/tutorials/*.tar.gz
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1.1
+- NMU: re-sign pkg - hack around alt bug 38332
+
 * Wed Sep 18 2019 Mikhail Chernonog <snowmix@altlinux.org> 5.0.2-alt1
 - Initial build for Sisyphus
