@@ -5,7 +5,7 @@
 
 Name: node-mocha
 Version: 7.1.0
-Release: alt1
+Release: alt2
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
 
@@ -37,6 +37,8 @@ Obsoletes: %node_module < %version
 
 AutoReq: no
 AutoProv: no
+# due to AutoProv: no
+Provides: npm(mocha) = %version
 Requires: node
 
 %description
@@ -74,6 +76,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt2
+- NMU: added provides: npm(mocha) for autoimports
+
 * Wed Mar 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt1
 - new version 7.1.0 (with rpmrb script)
 
