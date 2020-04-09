@@ -1,8 +1,8 @@
-%define  pkgname minitest
+%define        pkgname minitest
 
 Name:          gem-%pkgname
-Version:       5.14.0
-Release:       alt1
+Version:       5.14.1
+Release:       alt0.1
 Summary:       Minitest provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking
 License:       MIT
 Group:         Development/Ruby
@@ -83,6 +83,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Apr 09 2020 Pavel Skrylev <majioa@altlinux.org> 5.14.1-alt0.1
+- ^ 5.14.0 -> 5.14.1pre
+- ! spec syntax
+- * cleaned up repo
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 5.14.0-alt1
 - > Ruby Policy 2.0
 - ^ 5.11.3 -> 5.14.0
