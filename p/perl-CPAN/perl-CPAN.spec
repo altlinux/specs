@@ -2,14 +2,15 @@
 %define dist CPAN
 Name: perl-%dist
 Version: 2.27
-Release: alt1
+Release: alt2
 
 Summary: Download and build Perl modules from CPAN sites
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/A/AN/ANDK/%{dist}-%{version}.tar.gz
+Patch: CPAN-2.27-yaml-fix.patch
 
 BuildArch: noarch
 
@@ -32,6 +33,7 @@ the raw data from the net.
 
 %prep
 %setup -q -n %{dist}-%{version}
+%patch -p1
 rm -rv inc/
 
 # XXX tests fail
@@ -54,6 +56,9 @@ rm t/30shell.t t/31sessions.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.27-alt2
+- fixed build
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1
 - automated CPAN update
 
