@@ -2,7 +2,7 @@
 %define dist XML-Atom
 Name: perl-%dist
 Version: 0.42
-Release: alt1
+Release: alt2
 
 Summary: Atom API and Feed Support
 License: GPL or Artistic
@@ -27,6 +27,9 @@ API.
 %prep
 %setup -q -n %{dist}-%{version}
 
+# https://github.com/miyagawa/xml-atom/issues/19
+[ %version = "0.42" ] && rm t/31-external-entities-libxml.t
+
 %build
 %perl_vendor_build
 
@@ -38,6 +41,9 @@ API.
 %perl_vendor_privlib/XML
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2
+- fixed build
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
