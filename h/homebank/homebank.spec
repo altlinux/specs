@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.3.2
+Version: 5.4
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -9,7 +9,7 @@ Release: alt1
 #_unstable
 
 Summary: Free easy personal accounting for all!
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://%name.free.fr/index.php
 
@@ -18,13 +18,13 @@ Source: http://%name.free.fr/public/%name-%_version.tar.gz
 BuildRequires(pre): rpm-build-licenses
 
 # From configure.ac
-BuildPreReq: intltool
-BuildPreReq: glib2-devel >= 2.40
-BuildPreReq: libgtk+3-devel >= 3.12
-BuildPreReq: libsoup-devel >= 2.26
-BuildPreReq: libofx-devel
+BuildRequires: intltool
+BuildRequires: glib2-devel >= 2.40
+BuildRequires: libgtk+3-devel >= 3.16
+BuildRequires: libsoup-devel >= 2.26
+BuildRequires: libofx-devel
 
-BuildPreReq: perl-XML-Parser shared-mime-info desktop-file-utils libappstream-glib-devel
+BuildRequires: perl-XML-Parser shared-mime-info desktop-file-utils libappstream-glib-devel
 
 %description
 HomeBank is the free software you have always wanted to manage your
@@ -44,8 +44,8 @@ on it.
 %package help
 Summary: Help files for HomeBank
 Group: Graphical desktop/GNOME
-Requires: homebank = %version-%release
 BuildArch: noarch
+Requires: homebank = %EVR
 
 %description help
 HomeBank is the free software you have always wanted to manage your
@@ -85,6 +85,7 @@ read and rather useful for a first time user.
 %_datadir/mime-info/%name.mime
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/apps/%name.*
+%_datadir/application-registry/%name.applications
 %_datadir/appdata/%name.appdata.xml
 %doc README ChangeLog
 
@@ -92,9 +93,11 @@ read and rather useful for a first time user.
 %dir %_datadir/%name/help
 %_datadir/%name/help/*
 
-%exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Tue Feb 11 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.2-alt1
 - 5.3.2
 
