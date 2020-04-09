@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 0.3.12
+Version: 0.3.15
 Release: alt1
 Summary: Let your Python tests travel through time
 License: ASLv2.0
@@ -22,12 +22,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(dateutil)
 BuildRequires: python2.7(mock)
 BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(tox)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(mock)
 BuildRequires: python3(pytest)
 BuildRequires: python3(sqlite3)
-BuildRequires: python3(tox)
 %endif
 
 %description
@@ -64,20 +62,19 @@ popd
 %python_install
 # asyncio is Python3.4+ only module
 rm %buildroot%python_sitelibdir/%oname/_async.py
+rm %buildroot%python_sitelibdir/%oname/_async_coroutine.py
 
 pushd ../python3
 %python3_install
+# not used in Python3.6+, causes problems
+rm %buildroot%python3_sitelibdir/%oname/_async_coroutine.py
 popd
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+py.test -vra
+pushd ../python3
+py.test3 -vra
+popd
 
 %files
 %doc *.rst
@@ -90,6 +87,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/freezegun-*.egg-info/
 
 %changelog
+* Thu Apr 09 2020 Ivan A. Melnikov <iv@altlinux.org> 0.3.15-alt1
+- 0.3.12 -> 0.3.15.
+
 * Wed Oct 02 2019 Stanislav Levin <slev@altlinux.org> 0.3.12-alt1
 - 0.3.11 -> 0.3.12.
 
