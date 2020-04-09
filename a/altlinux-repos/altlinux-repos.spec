@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 0.9
-Release: alt3
+Release: alt4
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Thu Apr 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.9-alt4
+- Add c8 branch (ALT #38334).
+
 * Mon Jun 03 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt3
 - Add noarch for p9_mipsel.
 
