@@ -36,8 +36,8 @@ BuildRequires: libvorbis-devel
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.14.5
-Release: alt3
+Version: 1.14.11
+Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -45,9 +45,6 @@ License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
-Patch2:	wesnoth-1.15.5-alt-gcc8.patch
-Patch3: wesnoth-1.14.5-upstream-boost-tribool.patch
-Patch4: wesnoth-1.14.5-upstream-boost-asio.patch
 
 Requires: %name-data = %version-%release
 
@@ -223,9 +220,6 @@ This package contains python interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch1 -p1
-%patch2 -p2
-%patch3 -p1
-%patch4 -p1
 
 %build
 %define _optlevel 3
@@ -625,10 +619,11 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%{name}.appdata.xml
 %_iconsdir/hicolor/*/apps/%{name}-icon.png
+%_iconsdir/HighContrast/*/apps/%{name}-icon.*
 %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/README.md
 %doc %_docdir/%name-%version/copyright
-%doc %_docdir/%name-%version/changelog.* 
+%doc %_docdir/%name-%version/changelog.*
 %dir %_datadir/%name
 %_datadir/%name/fonts
 %_datadir/%name/images
@@ -714,6 +709,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.14.11-alt1
+- new version
+
 * Wed Dec 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.5-alt3
 - Rebuilt with boost-1.71.0.
 
