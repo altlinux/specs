@@ -1,5 +1,5 @@
 Name: weechat
-Version: 2.6
+Version: 2.8
 Release: alt1
 
 Summary: fast, light & extensible IRC client
@@ -21,12 +21,13 @@ BuildRequires: lua-devel
 BuildRequires: libcurl-devel
 BuildRequires: zlib-devel
 BuildRequires: libncursesw-devel
-BuildRequires: ruby
 BuildRequires: libruby-devel
 BuildRequires: perl-devel
 BuildRequires: python3-devel
 BuildRequires: source-highlight
 BuildRequires: tcl-devel
+
+Obsoletes: weechat-plugin-ruby <= 2.6-alt1
 
 %description
 WeeChat is a fast, light and extensible chat client. It runs on many
@@ -71,14 +72,6 @@ Requires: %name = %version-%release
 %description plugin-python
 This package contains python plugin for weechat.
 
-%package plugin-ruby
-Summary: Ruby plugin for weechat
-Group: Networking/IRC
-Requires: %name = %version-%release
-
-%description plugin-ruby
-This package contains ruby plugin for weechat.
-
 %package plugin-tcl
 Summary: Tcl plugin for weechat
 Group: Networking/IRC
@@ -102,7 +95,7 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 	--enable-exec \
 	--enable-buflist \
 	--enable-perl \
-	--enable-ruby \
+	--disable-ruby \
 	--enable-lua \
 	--enable-python \
 	--disable-python2 \
@@ -158,13 +151,14 @@ find %buildroot -name '*.a' -delete
 %files plugin-python
 %_libdir/%name/plugins/python.so
 
-%files plugin-ruby
-%_libdir/%name/plugins/ruby.so
-
 %files plugin-tcl
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Thu Apr 09 2020 Alexey Gladkov <legion@altlinux.ru> 2.8-alt1
+- New version (2.8)
+- Drop weechat-plugin-ruby.
+
 * Mon Nov 18 2019 Alexey Gladkov <legion@altlinux.ru> 2.6-alt1
 - New version (2.6)
 
