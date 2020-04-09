@@ -1,8 +1,8 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 2.6.1
-Release: alt2
+Version: 2.6.3
+Release: alt1
 
 Summary: IT Operations Portal
 License: AGPLv3
@@ -16,10 +16,8 @@ Source0: %name-%version.tar.gz
 Source1: apache2.conf
 Source2: README.ALT
 
-Patch0: port-to-python3.patch
-
 Requires: webserver-common php-engine graphviz
-BuildRequires(pre): rpm-macros-webserver-common rpm-build-python3
+BuildRequires(pre): rpm-macros-webserver-common
 
 %description
 IT Operations Portal: a complete open source, ITIL, web based service
@@ -48,7 +46,6 @@ PHP5 dependencies for %name
 %prep
 %setup
 # %setup -T -D -a 1
-%patch0 -p2
 
 %build
 
@@ -71,6 +68,7 @@ install -pD -m0644 %_sourcedir/README.ALT README.ALT
 
 
 # remove files
+rm -f %buildroot%installdir/lib/silex/vendor/silex/silex/doc/conf.py
 find %buildroot%installdir -name remove.txt -delete
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
@@ -133,6 +131,12 @@ fi
 
 
 %changelog
+* Thu Apr 09 2020 Pavel Zilke <zidex at altlinux dot org> 2.6.3-alt1
+- New version 2.6.3
+- Security fixes:
++ CVE-2019-19821 : Improper Privilege Management
+- Removed Python requirements
+
 * Tue Feb 18 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.6.1-alt2
 - py2 -> py3
 
