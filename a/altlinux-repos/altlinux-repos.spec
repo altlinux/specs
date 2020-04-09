@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 0.9
-Release: alt4
+Release: alt5
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Thu Apr 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.9-alt5
+- Use altlinux-repos/repositories/cert8.desktop from c8 for c8.
+
 * Thu Apr 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.9-alt4
 - Add c8 branch (ALT #38334).
 
