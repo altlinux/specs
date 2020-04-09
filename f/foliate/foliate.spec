@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -69,7 +69,7 @@ sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 %files -f %name.lang
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
-%_datadir/%name/
+%_datadir/%rdn_name/
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -78,6 +78,9 @@ sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 
 
 %changelog
+* Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - updated to 2.0.0-2-g351bbd8
 
