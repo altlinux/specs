@@ -8,13 +8,15 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.813
-Release: alt2
+Release: alt3
 Summary: Tied Filehandles for Nonblocking IO with Object Callbacks
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
 Source0: http://cpan.org.ua/authors/id/M/MU/MUIR/modules/%module_name-%module_version.tar.gz
+# Fix a race in t/foked2.t test, bug #1105023, CPAN RT#92200
+Patch0: IO-Event-0.813-Fix-undeterministic-test-failures-in-t-forked2.t.patch
 BuildArch: noarch
 
 %description
@@ -22,6 +24,7 @@ BuildArch: noarch
 
 %prep
 %setup -n %module_name-%module_version
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -34,6 +37,9 @@ BuildArch: noarch
 %perl_vendor_privlib/I*
 
 %changelog
+* Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.813-alt3
+- fixed build
+
 * Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.813-alt2
 - build for Sisyphus
 
