@@ -5,8 +5,8 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.3.3
-Release: alt2
+Version: 4.5.2
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 Url: http://sourceware.org/cluster/wiki/
@@ -447,6 +447,15 @@ Requires: fence-agents-common = %version-%release
 %description rcd-serial
 The fence-agents-apc package contains a fence agent for RCD serial.
 
+%package redfish
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for Redfish
+Requires: fence-agents-common = %version-%release
+
+%description redfish
+The fence-agents-redfish package contains a fence agent for Redfish.
+
 %package rhevm
 BuildArch: noarch
 Group: System/Base
@@ -489,9 +498,8 @@ The fence-agents-sanbox2 package contains a fence agent for QLogic SANBox2 switc
 %package sbd
 License: GPLv2+ and LGPLv2+
 Summary: Fence agent for SBD (storage-based death)
-#Requires: sbd
-Requires: fence-agents-common = %version-%release
 Requires: sbd
+Requires: fence-agents-common = %version-%release
 BuildArch: noarch
 Group: System/Base
 
@@ -822,6 +830,10 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_sbindir/fence_rcd_serial
 %_man8dir/fence_rcd_serial.8*
 
+%files redfish
+%_sbindir/fence_redfish
+%_man8dir/fence_redfish.8*
+
 %files rhevm
 %_sbindir/fence_rhevm
 %_man8dir/fence_rhevm.8*
@@ -884,6 +896,9 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Thu Apr 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.5.2-alt1
+- 4.5.2
+
 * Thu Apr 09 2020 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt2
 - Fix path to sbd executable in fence-agents-sbd (ALT #38343).
 - Add sbd to requirements of fence-agents-sbd.
