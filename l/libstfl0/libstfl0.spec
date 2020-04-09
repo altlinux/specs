@@ -1,8 +1,9 @@
 %def_without python
+%def_without ruby
 
 Name: libstfl0
 Version: 0.24
-Release: alt6.1
+Release: alt7
 
 %define oname stfl
 
@@ -18,13 +19,12 @@ Source: %oname-%version.tar
 Source1: %name.watch
 
 Patch1: stfl-0.24-alt-as-needed.patch
-Patch2: stfl-0.24-alt-ruby-linkage-fix.patch
+#Patch2: stfl-0.24-alt-ruby-linkage-fix.patch
 Patch3: stfl-0.24-alt-warnings.patch
 
 # Automatically added by buildreq on Fri Mar 03 2017
 # optimized out: libncurses-devel libtinfo-devel perl perl-devel python-base python-modules ruby ruby-stdlibs swig-data
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: libncursesw-devel libruby-devel perl-Encode swig
+BuildRequires: libncursesw-devel perl-Encode swig
 %{?_with_python: BuildRequires: python-devel}
 
 %description
@@ -69,9 +69,7 @@ Ruby binding to stfl
 
 %prep
 %setup -n %oname-%version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%autopatch -p2
 
 %build
 sed -i 's|$(prefix)/$(libdir)/ruby|%_ruby_lib_path/site_ruby|g' ruby/Makefile.snippet
@@ -101,12 +99,17 @@ rm %buildroot%_libdir/*.a
 %python_sitelibdir/stfl.py
 %python_sitelibdir/stfl.pyc
 %python_sitelibdir/stfl.pyo
-%endif
+%endif #python
 
+%if_with ruby
 %files -n ruby-%oname
 %ruby_sitearchdir/stfl.so
+%endif # ruby
 
 %changelog
+* Thu Apr 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt7
+- Disabled Ruby module.
+
 * Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 0.24-alt6.1
 - ! build by adding proper build requires
 
