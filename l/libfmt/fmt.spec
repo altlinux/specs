@@ -1,5 +1,5 @@
 Name: libfmt
-Version: 6.1.2
+Version: 6.2.0
 Release: alt1
 
 Summary: An open-source formatting library for C++
@@ -55,6 +55,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Fri Apr 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
+- Updated to upstream version 6.2.0.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2-alt1
 - Updated to upstream version 6.1.2.
 
