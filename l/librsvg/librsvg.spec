@@ -5,17 +5,18 @@
 %define gtk3_api_ver 3.0
 
 %define _libexecdir %_prefix/libexec
+%define _gtk_docdir %_datadir/gtk-doc/html/
 
 %def_disable static
 %def_disable gtk_doc
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
-%def_enable installed_tests
+%def_disable installed_tests
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -124,9 +125,6 @@ Requires: %name = %EVR
 This package provides tests programs that can be used to verify
 the functionality of the installed %name.
 
-
-%define _gtk_docdir %_datadir/gtk-doc/html/
-
 %prep
 %setup -n %bname-%version
 
@@ -148,7 +146,7 @@ the functionality of the installed %name.
 %find_lang %name
 
 %check
-%make check
+%make check V=1
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -192,9 +190,12 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Apr 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.3-alt1
+- 2.48.3
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.2-alt1
 - 2.48.2
-- enabled %%check
+- enabled %check
 
 * Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.1-alt1
 - 2.48.1
