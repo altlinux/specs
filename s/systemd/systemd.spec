@@ -72,7 +72,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1899,6 +1899,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Fri Apr 10 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1:245.4-alt2
+- add resolve files, located at /run, to the list of tracked by altlinux-libresolv files
+
 * Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.4-alt1
 - 245.4
 
