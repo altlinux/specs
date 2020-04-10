@@ -1,13 +1,15 @@
 %define pyname rdbtools
 
 Name: redis-rdb-tools
-Version: 0.1.13
-Release: alt2
+Version: 0.1.14
+Release: alt1
 
 Summary: Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
+
 License: MIT License
 Group: Databases
 Url: https://rdbtools.com
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
@@ -79,6 +81,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%pyname/
 
 
 %changelog
+* Fri Apr 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1.14-alt1
+- new version 0.1.14 (with rpmrb script)
+
 * Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.13-alt2
 - Porting on Python3.
 
