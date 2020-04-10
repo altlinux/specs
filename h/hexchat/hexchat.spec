@@ -2,8 +2,8 @@
 
 Summary: A popular and easy to use graphical IRC (chat) client
 Name: hexchat
-Version: 2.14.2
-Release: alt1.1
+Version: 2.14.3
+Release: alt1
 License: GPLv2+
 Group: Networking/IRC
 Url: https://hexchat.github.io
@@ -80,6 +80,9 @@ This package contains the development files for %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.14.3-alt1
+- Updated to version 2.14.3.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.14.2-alt1.1
 - rebuild with new perl 5.28.1
 
