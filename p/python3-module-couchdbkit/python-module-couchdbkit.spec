@@ -1,77 +1,50 @@
 %define _unpackaged_files_terminate_build 1
-%define modname couchdbkit
 
-Name: python-module-%modname
+%define oname couchdbkit
+
+Name: python3-module-%oname
 Version: 0.9.15
-Release: alt2
+Release: alt3
 
 Summary: Couchdbkit provides you a full featured and easy client to access and manage CouchDB.
 License: Apache License v. 2.0
-Group: Development/Python
-
+Group: Development/Python3
 URL: http://couchdbkit.org/
-# https://github.com/benoitc/couchdbkit
-Packager: Andrey Bychkov <mrdrew@altlinux.org>
+
 BuildArch: noarch
 
+# https://github.com/benoitc/couchdbkit
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Jul 10 2008
-BuildRequires: python-module-setuptools
-BuildRequires: python-devel
-
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-setuptools
 BuildPreReq: python-tools-2to3
 
-
-%description
-Couchdbkit provides you a full featured and easy client to access and manage CouchDB. It allows you to manage a CouchDBserver, databases, doc managements and view access. All objects mostly reflect python objects for convenience. Server and Databases objects could be used for example as easy as using a dict.
-
-%package -n python3-module-%modname
-Summary: Couchdbkit provides you a full featured and easy client to access and manage CouchDB.
-Group: Development/Python3
 %add_python3_req_skip django.forms.util
 %add_python3_req_skip django.test.simple
-%add_python3_req_skip jsonobject jsonobject.base
-%add_python3_req_skip jsonobject.exceptions jsonobject.properties
 
-%description -n python3-module-%modname
+%description
 Couchdbkit provides you a full featured and easy client to access and manage CouchDB. It allows you to manage a CouchDBserver, databases, doc managements and view access. All objects mostly reflect python objects for convenience. Server and Databases objects could be used for example as easy as using a dict.
 
 %prep
 %setup
 
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
 %doc README.rst LICENSE NOTICE
-%python_sitelibdir/%modname
-%python_sitelibdir/jsonobject_%modname-%version-py*.egg-info
-
-%files -n python3-module-%modname
-%doc README.rst LICENSE NOTICE
-%python3_sitelibdir/%modname
-%python3_sitelibdir/jsonobject_%modname-%version-py*.egg-info
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/jsonobject_%oname-%version-py*.egg-info
 
 %changelog
+* Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.15-alt3
+- Build for python2 disabled.
+
 * Mon Jan 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.15-alt2
 - Rebuild with added req skip on django.forms.util.
 
