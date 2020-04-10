@@ -1,32 +1,28 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname crochet
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.9.0
-Release: alt2
+Release: alt3
+
 Summary: Use Twisted anywhere!
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/crochet
+
+BuildArch: noarch
 
 # https://github.com/itamarst/crochet.git
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
-BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-setuptools python-module-twisted-core-test python-module-twisted-logger python-module-wrapt
-BuildRequires: python-module-service-identity
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-twisted-core-test python3-module-wrapt
+BuildRequires: python3-module-twisted-core-test python3-module-wrapt
 BuildRequires: python3-module-service-identity
-%endif
+BuildRequires: python3-module-sphinx
 
-%py_requires twisted.internet
+%py3_requires twisted.internet
 
 %description
 Crochet is an MIT-licensed library that makes it easier to use Twisted
@@ -43,9 +39,9 @@ from regular blocking code. Some use cases include:
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
-Requires: python-module-twisted-core-test
+Requires: python3-module-twisted-core-test
 
 %description tests
 Crochet is an MIT-licensed library that makes it easier to use Twisted
@@ -61,47 +57,6 @@ from regular blocking code. Some use cases include:
   be useful when using Twisted as a WSGI container.
 
 This package contains tests for %oname.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Use Twisted anywhere!
-Group: Development/Python3
-%py3_requires twisted.internet
-Requires: python3-module-twisted-core-test
-
-%description -n python3-module-%oname
-Crochet is an MIT-licensed library that makes it easier to use Twisted
-from regular blocking code. Some use cases include:
-
-* Easily use Twisted from a blocking framework like Django or Flask.
-* Write a library that provides a blocking API, but uses Twisted for its
-  implementation.
-* Port blocking code to Twisted more easily, by keeping a backwards
-  compatibility layer.
-* Allow normal Twisted programs that use threads to interact with
-  Twisted more cleanly from their threaded parts. For example this can
-  be useful when using Twisted as a WSGI container.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Crochet is an MIT-licensed library that makes it easier to use Twisted
-from regular blocking code. Some use cases include:
-
-* Easily use Twisted from a blocking framework like Django or Flask.
-* Write a library that provides a blocking API, but uses Twisted for its
-  implementation.
-* Port blocking code to Twisted more easily, by keeping a backwards
-  compatibility layer.
-* Allow normal Twisted programs that use threads to interact with
-  Twisted more cleanly from their threaded parts. For example this can
-  be useful when using Twisted as a WSGI container.
-
-This package contains tests for %oname.
-%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -126,73 +81,43 @@ This package contains pickles for %oname.
 %setup
 %patch1 -p1
 
+sed -i 's|sphinx-build|&-3|' docs/Makefile
+
 # fix version info
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
 	%oname/_version.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %make -C docs pickle
 %make -C docs html
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python -m unittest discover -v
-%if_with python3
-pushd ../python3
-python3 -m unittest discover -v ||:
-popd
-%endif
+%__python3 -m unittest discover -v ||:
 
 %files
 %doc *.rst examples docs/_build/html
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst examples docs/_build/html
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
-%endif
+
+%files pickles
+%python3_sitelibdir/*/pickle
 
 %changelog
+* Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.0-alt3
+- Build for python2 disabled.
+
 * Fri Mar 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt2
 - Updated build dependencies.
 
