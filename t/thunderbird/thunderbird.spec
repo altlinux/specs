@@ -7,12 +7,12 @@
 %define build_parallel_jobs 32
 %endif
 
-%define enigmail_version  2.1.5
+%define enigmail_version  2.1.6
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	68.6.0
+Version:	68.7.0
 Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
@@ -534,6 +534,10 @@ chmod a+r *.xpi
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Apr 08 2020 Andrey Cherepanov <cas@altlinux.org> 68.7.0-alt1
+- New version (68.7.0).
+- Enigmail 2.1.6.
+
 * Sat Mar 14 2020 Andrey Cherepanov <cas@altlinux.org> 68.6.0-alt1
 - New version (68.6.0).
 - Fixed:
