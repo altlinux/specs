@@ -3,13 +3,14 @@
 
 Name: iperf3
 Version: 3.7
-Release: alt3
+Release: alt4
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
-License: BSD-3-Clause
+License: BSD-3-Clause and MIT
 Group: Monitoring
 
 Url: http://software.es.net/iperf
+Vcs: https://github.com/esnet/iperf.git
 Source0: http://downloads.es.net/pub/iperf/%native-%version.tar.gz
 Source1: iperf3.sysconfig
 Source2: iperf3.init
@@ -102,6 +103,9 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 %_libdir/lib%native.so
 
 %changelog
+* Fri Apr 10 2020 Vitaly Chikunov <vt@altlinux.org> 3.7-alt4
+- Further systemd iperf3.service hardening
+
 * Mon Dec 09 2019 Vitaly Chikunov <vt@altlinux.org> 3.7-alt3
 - Fix systemd iperf3.service type making it forking
 - Systemd iperf3.service hardening
