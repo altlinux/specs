@@ -1,7 +1,7 @@
 Name: x11vnc-service
 %define unitname x11vnc.service
 Version: 0.2
-Release: alt1
+Release: alt3
 
 Summary: Service for x11vnc
 License: GPL
@@ -29,7 +29,7 @@ cat > %buildroot%_sbindir/x11vnc-start-daemon << EOF
 AUTH=\`ps aux | grep "\-auth " | head -n 1\`
 AUTH=\${AUTH/*\-auth /}
 AUTH=\${AUTH/ */}
-/usr/bin/x11vnc -auth \$AUTH -dontdisconnect -usepw -shared -forever -rfbport 5900 -rfbauth /root/.vnc/passwd -display :0
+/usr/bin/x11vnc -auth \$AUTH -dontdisconnect -usepw -shared -forever -rfbport 5900 -rfbauth /root/.vnc/passwd -display :0 -repeat
 EOF
 
 %post
@@ -44,6 +44,12 @@ EOF
 %_mandir/man1/%name.1.xz
 
 %changelog
+* Wed Oct 09 2019 Ilfat Aminov <aminov@altlinux.org> 0.2-alt3
+- Fix: x11vnc fail after system start/reboot
+
+* Wed Oct 09 2019 Ilfat Aminov <aminov@altlinux.org> 0.2-alt2
+- Set -repeat option
+
 * Thu Nov 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2-alt1
 - Fixed start the service on any DM (MIT-MAGIC-COOKIE file)
 
