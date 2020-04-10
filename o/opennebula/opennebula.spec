@@ -9,7 +9,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.10.4
-Release: alt2
+Release: alt3
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.org
@@ -220,15 +220,10 @@ Group: System/Servers
 
 #Requires: ruby ruby-stdlibs
 Requires: %name-common = %EVR
-Requires: openssh-server
-Requires: openssh-clients
+Requires: %name-node-kvm = %EVR
+Requires: libvirt-lxc
 Requires: kpartx
 Requires: lxd >= 3.0
-Requires: qemu-img
-Requires: nfs-utils
-Requires: bridge-utils
-Requires: ipset
-Requires: rsync
 %ifarch aarch64 ppc64 ppc64le x86_64
 Requires: rbd-nbd
 %endif
@@ -691,6 +686,10 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Fri Apr 10 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.4-alt3
+- update sudoers config for allow use LXD
+- update Requires for node-lxd package
+
 * Wed Apr 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 5.10.4-alt2
 - add ALT to linuxcontainers market
 
