@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -253,7 +253,7 @@ the functionality of the installed GTK+3 packages.
 %build
 %{?_disable_static:export lt_cv_prog_cc_static_works=no}
 %{?_enable_static:export lt_cv_prog_cc_static_works=yes}
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -461,6 +461,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Apr 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.18-alt1
+- 3.24.18
+
 * Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.17-alt1
 - 3.24.17
 
