@@ -1,6 +1,6 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.0.20
+Version: 3.0.21
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -16,6 +16,7 @@ Source105: freeradius-service
 
 Patch1: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libgdbm-devel
 BuildRequires: libltdl-devel
@@ -189,15 +190,14 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
 sed 's/rlm_python/rlm_python3/g' src/modules/stable -i
 
 export PY3_INC_DIR=%__python3_includedir
-# Hack: rlm_python3 configure.ac script is broken because it doesn't
-# respect --with-rlm-python3-include-dir.
-sed -i 's#smart_try_dir="$PY_PREFIX/include/python$PY_SYS_VERSION[m]*"#smart_try_dir=$PY_INC_DIR#g' src/modules/rlm_python3/configure.ac
 
 %autoreconf
 # In order for the above hack to stick, do a fake configure so
 # we can run reconfig before cleaning up after ourselves and running
 # configure for real.
-./configure && make reconfig && (make clean distclean || true)
+automake -a --force-missing --copy || true
+./configure
+make reconfig
 
 %configure \
         --with-system-libtool \
@@ -256,19 +256,16 @@ rm -f %buildroot%_sbindir/rc.radiusd
 rm -f %buildroot%_bindir/rbmonkey
 rm -f %buildroot%_libdir/freeradius/*.a
 rm -f %buildroot%_libdir/freeradius/*.la
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/queries.conf
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql/schema.sql
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/queries.conf
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle/schema.sql
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/queries.conf
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle/schema.sql
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/procedures.sql
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/queries.conf
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle/schema.sql
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/mongo/queries.conf
-rm -f %buildroot%_sysconfdir/raddb/mods-config/sql/main/mongo/queries.conf
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/main/mssql
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/mssql
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/main/oracle
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool-dhcp/oracle
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/oracle
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/ippool/mongo
+rm -rf %buildroot%_sysconfdir/raddb/mods-config/sql/main/mongo
 
 rm -f %buildroot%_sysconfdir/raddb/certs/*.crt
+rm -f %buildroot%_sysconfdir/raddb/certs/*.crl
 rm -f %buildroot%_sysconfdir/raddb/certs/*.csr
 rm -f %buildroot%_sysconfdir/raddb/certs/*.der
 rm -f %buildroot%_sysconfdir/raddb/certs/*.key
@@ -287,6 +284,7 @@ rm -f %buildroot%_sysconfdir/raddb/mods-available/moonshot-targeted-ids
 rm -f %buildroot%_sysconfdir/raddb/policy.d/abfab*
 rm -f %buildroot%_sysconfdir/raddb/policy.d/moonshot-targeted-ids
 rm -f %buildroot%_sysconfdir/raddb/sites-available/abfab*
+rm -f %buildroot%_sysconfdir/raddb/mods-available/python
 
 rm -f %buildroot%_libdir/freeradius/rlm_test.so
 
@@ -623,6 +621,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/setup.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/process-radacct.sql
 %_sysconfdir/raddb/mods-config/sql/main/ndb/README
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/setup.sql
@@ -652,6 +651,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/setup.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/postgresql/process-radacct.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/postgresql/schema.sql
 
@@ -675,6 +675,8 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/ippool/sqlite/schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/schema.sql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/process-radacct-refresh.sh
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/sqlite/process-radacct-schema.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/queries.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/sqlite/schema.sql
 
@@ -689,6 +691,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Apr 10 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.21-alt1
+- 3.0.21
+
 * Mon Mar 16 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.20-alt1
 - 3.0.20 (Fixes: CVE-2019-17185)
 - migrate to python3 module
