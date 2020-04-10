@@ -14,7 +14,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 43.0.0
+Version: 45.0.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -171,6 +171,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Fri Apr 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 45.0.0-alt1
+- Updated to upstream version 45.0.0.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 43.0.0-alt1
 - Updated to upstream version 43.0.0.
 
