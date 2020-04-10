@@ -1,43 +1,22 @@
 %define oname zope.schema
+
 %def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.9.3
-Release: alt1
+Release: alt2
 
 Summary: zope.interface extension for defining data schemas
 License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.schema/
-# https://github.com/zopefoundation/zope.schema.git
+Url: http://pypi.python.org/pypi/%oname/
+# https://github.com/zopefoundation/%oname.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-alabaster
-BuildRequires: python-module-coverage
-BuildRequires: python-module-docutils
-BuildRequires: python-module-html5lib
-BuildRequires: python-module-nosexcover
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-repoze.sphinx.autointerface
-BuildRequires: python-module-zope.event
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-zope.i18nmessageid
-BuildRequires: time
-
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-module-nosexcover
-BuildPreReq: python3-module-zope.event
-BuildPreReq: python3-module-zope.testing
-BuildPreReq: python3-module-zope.i18nmessageid
-
-%py_requires zope.interface zope.event
-
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-repoze.sphinx.autointerface
 
 %description
 This package is intended to be independently reusable in any Python
@@ -51,46 +30,9 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-%package -n python3-module-%oname
-Summary: zope.interface extension for defining data schemas (Python 3)
-Group: Development/Python3
-%py3_requires zope.interface zope.event
-
-%description -n python3-module-%oname
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-Schemas extend the notion of interfaces to detailed descriptions of
-Attributes (but not methods). Every schema is an interface and specifies
-the public fields of an object. A field roughly corresponds to an
-attribute of a python object. But a Field provides space for at least a
-title and a description. It can also constrain its value and provide a
-validation method. Besides you can optionally specify characteristics
-such as its value being read-only or not required.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for zope.schema (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
-
-%description -n python3-module-%oname-tests
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-Schemas extend the notion of interfaces to detailed descriptions of
-Attributes (but not methods). Every schema is an interface and specifies
-the public fields of an object. A field roughly corresponds to an
-attribute of a python object. But a Field provides space for at least a
-title and a description. It can also constrain its value and provide a
-validation method. Besides you can optionally specify characteristics
-such as its value being read-only or not required.
-
-This package contains tests for zope.schema
-
 %package pickles
-Summary: Pickles for zope.schema
-Group: Development/Python
+Summary: Pickles for %oname
+Group: Development/Python3
 
 %description pickles
 This package is intended to be independently reusable in any Python
@@ -104,13 +46,13 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-This package contains pickles for zope.schema
+This package contains pickles for %oname
 
 %package tests
-Summary: Tests for zope.schema
-Group: Development/Python
+Summary: Tests for %oname
+Group: Development/Python3
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py3_requires zope.testing
 
 %description tests
 This package is intended to be independently reusable in any Python
@@ -124,35 +66,19 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-This package contains tests for zope.schema
+This package contains tests for %oname
 
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
-install -d %buildroot%python_sitelibdir
-mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
-%endif
-
-pushd ../python3
 %python3_install
-popd
+
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -161,44 +87,29 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %make -C docs pickle
 %make -C docs html
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
-%if_with check
 %check
-python setup.py test -v
-nosetests -vv --with-xunit --with-xcoverage
-
-pushd ../python3
-python3 setup.py test -v
-#nosetests3 -vv --with-xunit --with-xcoverage
-popd
-%endif
+%__python3 setup.py test -v
 
 %files
-%doc *.txt *.rst docs/_build/html
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files tests
-%python_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname
 %doc *.txt *.rst docs/_build/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/pickle
 
-%files -n python3-module-%oname-tests
+%files pickles
+%python3_sitelibdir/*/pickle
+
+%files tests
 %python3_sitelibdir/*/*/tests
 
-
 %changelog
+* Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.9.3-alt2
+- Build for python2 disabled.
+
 * Wed Feb 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.9.3-alt1
 - Version updated to 4.4.3
 
