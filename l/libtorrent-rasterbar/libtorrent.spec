@@ -2,14 +2,14 @@
 
 %def_disable debug
 %def_disable static
-%def_with python2
+%def_without python2
 
 %define upname libtorrent-rasterbar
 %define soname 10
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.2.3
+Version: 1.2.5
 Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
@@ -218,6 +218,10 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Apr 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.5-alt1
+- Updated to upstream version 1.2.5.
+- Disabled bindings for python-2.
+
 * Thu Jan 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.3-alt1
 - Updated to upstream version 1.2.3.
 
