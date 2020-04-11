@@ -1,6 +1,6 @@
 Name:		torrent-file-editor
 Version:	0.3.17
-Release:	alt1.1
+Release:	alt1.2
 License:	GPLv3+
 Summary:	Torrent File Editor
 Group:		File tools
@@ -42,7 +42,8 @@ cmake ../. \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DQT5_BUILD=ON \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags"
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DENABLE_PCH:BOOL=OFF
 %make_build
 mv ./%name ../%name-qt5
 rm -rf ./*
@@ -51,7 +52,8 @@ cmake ../. \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DQT5_BUILD=OFF \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags"
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DENABLE_PCH:BOOL=OFF
 %make_build
 
 %install
@@ -74,6 +76,9 @@ install -m 0644 %SOURCE1 %buildroot%_desktopdir/%name-qt5.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Sat Apr 11 2020 Motsyo Gennadi <drool@altlinux.ru> 0.3.17-alt1.2
+- fix build with cmake 3.17
+
 * Sun Feb 02 2020 Motsyo Gennadi <drool@altlinux.ru> 0.3.17-alt1.1
 - cleanup git
 
