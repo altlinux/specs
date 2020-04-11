@@ -5,7 +5,7 @@
 
 Name: spirv-tools
 Version: 2019.4
-Release: alt1
+Release: alt2
 
 Summary: API and commands for processing SPIR-V modules
 Group: Development/C++
@@ -54,6 +54,9 @@ integration into other code bases directly.
 %_cmake \
   -DSPIRV_BUILD_COMPRESSION:BOOL=OFF \
   -DSPIRV-Headers_SOURCE_DIR=%_prefix \
+%ifarch %e2k
+  -DSPIRV_WERROR=OFF \
+%endif
   -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
   -DBUILD_SHARED_LIBS:BOOL=TRUE
 
@@ -84,6 +87,9 @@ ninja -C BUILD install
 %_includedir/%name
 
 %changelog
+* Sat Apr 11 2020 Michael Shigorin <mike@altlinux.org> 2019.4-alt2
+- E2K: disable -Werror (hex_float.h:766 triggers ftbfs with -Werror=conversion)
+
 * Thu Aug 29 2019 L.A. Kostis <lakostis@altlinux.ru> 2019.4-alt1
 - Updated to 2019.4.
 - Update all -alt patches.
