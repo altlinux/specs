@@ -1,10 +1,8 @@
 %define oname wheel
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 0.29.0
-Release: alt1.1
+Version: 0.34.2
+Release: alt1
 Summary: A built-package format for Python
 License: MIT
 Group: Development/Python
@@ -14,24 +12,8 @@ Packager: Python Development Team <python@packages.altlinux.org>
 # Source-url: https://bitbucket.org/pypa/wheel/get/%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-module-jsonschema python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-keyring python-module-pyxdg
-#BuildPreReq: python-module-jsonschema
-#python-module-ed25519ll
-#BuildPreReq: python-module-pytest python-module-coverage
-#BuildPreReq: python-module-pytest-cov python-module-py
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-jsonschema python3-module-keyring python3-module-pytest-cov python3-module-pyxdg python3-module-setuptools
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-keyring python3-module-pyxdg
-#BuildPreReq: python3-module-ed25519ll python3-module-jsonschema
-#BuildPreReq: python3-module-jsonschema
-#BuildPreReq: python3-module-pytest python3-module-coverage
-#BuildPreReq: python3-module-pytest-cov python3-module-py
-%endif
-
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools
 %py_provides %oname
 
 %description
@@ -43,114 +25,33 @@ step (simply extracting the file onto sys.path), and the unpacked
 archive preserves enough information to "Spread" (copy data and scripts
 to their final locations) at any later time.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-A wheel is a ZIP-format archive with a specially formatted filename and
-the .whl extension. It is designed to contain all the files for a PEP
-376 compatible install in a way that is very close to the on-disk
-format. Many packages will be properly installed with only the "Unpack"
-step (simply extracting the file onto sys.path), and the unpacked
-archive preserves enough information to "Spread" (copy data and scripts
-to their final locations) at any later time.
-
-This package contains tests for %oname.
-
-%package -n python3-module-%oname
-Summary: A built-package format for Python
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-A wheel is a ZIP-format archive with a specially formatted filename and
-the .whl extension. It is designed to contain all the files for a PEP
-376 compatible install in a way that is very close to the on-disk
-format. Many packages will be properly installed with only the "Unpack"
-step (simply extracting the file onto sys.path), and the unpacked
-archive preserves enough information to "Spread" (copy data and scripts
-to their final locations) at any later time.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-A wheel is a ZIP-format archive with a specially formatted filename and
-the .whl extension. It is designed to contain all the files for a PEP
-376 compatible install in a way that is very close to the on-disk
-format. Many packages will be properly installed with only the "Unpack"
-step (simply extracting the file onto sys.path), and the unpacked
-archive preserves enough information to "Spread" (copy data and scripts
-to their final locations) at any later time.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
-%python3_build_debug
-popd
-%endif
+%python_build
 
 %install
-%if_with python3
-pushd ../python3
-%python3_install
-popd
+%python_install
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i $i.py3
+	mv $i $i.py2
 done
 popd
-%endif
-
-%python_install
 
 %check
 python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.txt
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test
-
-%files tests
-%python_sitelibdir/*/test
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
-%_bindir/*.py3
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test
-%endif
 
 %changelog
+* Sat Apr 11 2020 Alexey Shabalin <shaba@altlinux.org> 0.34.2-alt1
+- 0.34.2
+- build python2 module only
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.29.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
