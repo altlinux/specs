@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 23bc63d43a8dc05f53afa46e3526ebb5578f3d88
+%global commit f46f63d4e2d9684a2dd716594ab609ccd32f0a5b
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.7.9
+Version:	1.7.10
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -61,7 +61,6 @@ events, and performing analytics.
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GO111MODULE=off
 
 %golang_prepare
 
@@ -70,6 +69,7 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
+export GO111MODULE=off
 
 CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
     -X main.version=$VERSION \
@@ -130,6 +130,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Sat Apr 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.10-alt1
+- 1.7.10
+
 * Sun Dec 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.7.9-alt1
 - 1.7.9
 
