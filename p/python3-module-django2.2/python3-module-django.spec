@@ -1,11 +1,11 @@
 %define branch 2.2
 %define version %branch.12
-%define release alt1
+%define release alt2
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
 
-%def_disable check
+%def_enable check
 
 %add_python3_req_skip cx_Oracle
 %add_python3_req_skip hotshot StringIO
@@ -22,53 +22,34 @@ BuildArch: noarch
 URL: http://www.djangoproject.com/
 Provides: Django = %EVR
 Provides: %pkg_name = %EVR
+Provides: %pkg_name-tests = %EVR
+Provides: %name-tests = %EVR
+Obsoletes: %name-tests < %EVR
+
 %py3_provides django.utils.six.moves
 %py3_provides django.utils.six.moves.urllib.parse
 %py3_provides django.utils.six.moves.urllib.request
 Conflicts: python3-module-django1.11
-Conflicts: python-module-django1.11
+Conflicts: python3-module-django1.11-tests
 
 %add_python3_req_skip django.test.signals
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
-#BuildPreReq: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-memcached python3-module-mock
-#BuildPreReq: python-tools-2to3
-
+BuildRequires: python3-module-six bash-completion
 
 %if_enabled check
-#BuildPreReq: python-modules-json
-#BuildPreReq: python-modules-wsgiref
-#BuildPreReq: python3-modules-sqlite3
+BuildRequires: python3(sqlparse)
+BuildRequires: python3(pytz)
+BuildRequires: python3(sqlite3)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(numpy)
+BuildRequires: python3(pylibmc)
+BuildRequires: python3(memcache)
+BuildRequires: python3(yaml)
+BuildRequires: python3(selenium)
 %endif
 
 %description
-%summary
-
-%package tests
-Summary: Tests for Django (Python 3)
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name = %EVR
-Provides: %pkg_name-tests = %EVR
-Conflicts: python3-module-django1.11-tests
-%add_python3_req_skip new
-
-%description tests
-%summary
-
-This package contains tests for Django.
-
-%package mod_python
-Summary: mod_python support for Django (Python 3)
-Group: Development/Python3
-Requires: %name = %EVR
-Requires: apache2-mod_python
-Provides: %pkg_name-mod_python = %EVR
-Conflicts: python3-module-django1.11-mod_python
-
-%description mod_python
 %summary
 
 %package dbbackend-mysql
@@ -138,28 +119,37 @@ find -type f -name '*.py' -exec sed -i 's|.*from future_builtins import zip.*||'
 
 %install
 export LC_ALL=en_US.UTF-8
-
-mkdir -p %buildroot/%_sysconfdir/bash_completion.d
-
 %python3_install
-for i in $(find %buildroot%python3_sitelibdir -name '*test*'); do
-	echo $i |sed 's|%buildroot\(.*\)|%%exclude \1\*|' >>%oname.notests
-	echo $i |sed 's|%buildroot\(.*\)|\1\*|' >>%oname.tests
-done
 
+# install man pages (for the main executable only)
+mkdir -p %buildroot%_man1dir
+cp -p docs/man/* %buildroot%_man1dir
 
-install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_completion.d/django.sh
+# install bash completion script
+bashcompdir=$(pkg-config --variable=completionsdir bash-completion)
+mkdir -p %{buildroot}$bashcompdir
+install -m 0644 -p extras/django_bash_completion \
+  %{buildroot}$bashcompdir/django-admin
+
+ln -s django-admin %{buildroot}$bashcompdir/django-admin-3
+ln -s django-admin %{buildroot}$bashcompdir/python3-django-admin
+
+# Add backward compatible links to %%{_bindir}
+ln -s ./django-admin %buildroot%_bindir/django-admin-3
+ln -s ./django-admin %buildroot%_bindir/python3-django-admin
+
+# remove .po files
+find %buildroot -name "*.po" | xargs rm -f
 
 %check
-pushd tests
-LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --settings=test_sqlite
-# End tests
+export PYTHONPATH=$(pwd)
+cd tests
+LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --parallel 1
 
-
-%files -f %oname.notests
-%config %_sysconfdir/bash_completion.d/django.sh
-%_bindir/django-admin
-%_bindir/django-admin.py
+%files
+%_bindir/*
+%_man1dir/*
+%_datadir/bash-completion/completions/*
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/%oname/core/handlers/modpython.py*
 #exclude %python3_sitelibdir/%oname/contrib/auth/handlers/modpython.py*
@@ -168,13 +158,6 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 #exclude %python3_sitelibdir/%oname/db/backends/postgresql/
 %exclude %python3_sitelibdir/%oname/db/backends/postgresql_psycopg2/
 %exclude %python3_sitelibdir/%oname/db/backends/sqlite3/
-
-%exclude %python3_sitelibdir/%oname/*/*/*/test*
-%exclude %python3_sitelibdir/%oname/*/*/*/*/test*
-
-%files tests -f %oname.tests
-%python3_sitelibdir/%oname/*/*/*/test*
-%python3_sitelibdir/%oname/*/*/*/*/test*
 
 %files doc
 %doc docs
@@ -192,6 +175,12 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt2
+- merge tests package to main
+- move bash-completions to %%_datadir
+- add man pages to package
+- enable tests
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt1
 - 2.2.12
 - Fixes for the following security vulnerabilities:
