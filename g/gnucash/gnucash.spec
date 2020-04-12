@@ -5,13 +5,13 @@
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 3.9
+Version: 3.10
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
 
-License: GPLv2+
+License: GPL-2.0+
 Group:   Office
 Url: 	 http://www.gnucash.org
 
@@ -211,6 +211,10 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Sun Apr 12 2020 Andrey Cherepanov <cas@altlinux.org> 3.10-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Mon Apr 06 2020 Andrey Cherepanov <cas@altlinux.org> 3.9-alt1
 - New version.
 
