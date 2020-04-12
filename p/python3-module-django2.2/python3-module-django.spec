@@ -1,6 +1,6 @@
 %define branch 2.2
-%define version %branch.4
-%define release alt2
+%define version %branch.12
+%define release alt1
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -192,6 +192,14 @@ LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python3_sitelibdir ./runtests.py --set
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt1
+- 2.2.12
+- Fixes for the following security vulnerabilities:
+  + CVE-2019-19118: Privilege escalation in the Django admin.
+  + CVE-2019-19844: Potential account hijack via password reset form
+  + CVE-2020-7471: Potential SQL injection via StringAgg(delimiter)
+  + CVE-2020-9402 Potential SQL injection via tolerance parameter in GIS functions and aggregates on Oracle
+
 * Fri Aug 23 2019 Alexey Appolonov <alexey@altlinux.org> 2.2.4-alt2
 - Build with flagged conflict with python-module-django1.11
   (due to file '/etc/bash_completion.d/django.sh').
