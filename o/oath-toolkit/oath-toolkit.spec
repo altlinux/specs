@@ -3,16 +3,15 @@
 
 Name: oath-toolkit
 Version: 2.6.2
-Release: alt4
+Release: alt5
 Summary: Toolkit for one-time password authentication systems
-License: %gpl3plus
+License: GPLv3+
 Group: Security/Networking
 Url: http://www.nongnu.org/oath-toolkit/
 # git-vcs: https://gitlab.com/oath-toolkit/oath-toolkit.git
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libgcrypt-devel
 BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -32,7 +31,7 @@ RFC6030 is supported.
 
 %package -n oathtool
 Summary: OATH one-time password tool 
-License: %gpl3plus
+License: GPLv3+
 Group: Security/Networking
 
 %description -n oathtool
@@ -45,7 +44,7 @@ This subpackage contains OATH one-time password tool.
 
 %package -n pskctool
 Summary: Manipulate Portable Symmetric Key Container (PSKC) data.
-License: %gpl3plus
+License: GPLv3+
 Group: Security/Networking
 
 %description -n pskctool
@@ -59,7 +58,7 @@ sign and verify PSKC data.
 
 %package -n pam_oath
 Summary: PAM module for pluggable login authentication for OATH
-License: %gpl3plus
+License: GPLv3+
 Group: System/Base
 
 %description -n pam_oath
@@ -70,7 +69,7 @@ This subpackage contains a module to integrate OATH into PAM.
 
 %package -n liboath
 Summary: Library for Open AuTHentication (OATH) HOTP support
-License: %lgpl21plus
+License: LGPLv2.1+
 Group: System/Libraries
 
 %description -n liboath
@@ -81,7 +80,7 @@ event-based HOTP algorithm (RFC4226) and the time-based TOTP algorithm
 
 %package -n liboath-devel
 Summary: Development files for the Open AuTHentication (OATH) HOTP support library
-License: %lgpl21plus
+License: LGPLv2.1+
 Group: Development/C
 Requires: liboath = %EVR
 
@@ -93,7 +92,7 @@ This subpackage contains the header files for the HOTP/TOTP library.
 
 %package -n libpskc
 Summary: Library for Portable Symmetric Key Container
-License: %lgpl21plus
+License: LGPLv2.1+
 Group: System/Libraries
 
 %description -n libpskc
@@ -105,7 +104,7 @@ For managing secret key files, the Portable Symmetric Key Container
 
 %package -n libpskc-devel
 Summary: Development files for the Portable Symmetric Key Container library
-License: %lgpl21plus
+License: LGPLv2.1+
 Group: Development/C
 Requires: libpskc = %EVR
 
@@ -180,15 +179,18 @@ touch ChangeLog
 %endif
 
 %changelog
+* Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt5
+- gnulib: fix fseeko with glibc 2.28
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt4
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt3
 - NMU: remove %ubt from release
 
-* Fri Sep 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt2%ubt
+* Fri Sep 07 2018 Alexey Shabalin <shaba@altlinux.org> 2.6.2-alt2
 - rebuild for aarch64
 
-* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 2.6.2-alt1%ubt
+* Wed Jun 06 2018 Alexey Shabalin <shaba@altlinux.ru> 2.6.2-alt1
 - initial build
 
