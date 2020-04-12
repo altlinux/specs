@@ -6,7 +6,7 @@
 Summary: Plugin Pack for libpurple and derived IM clients
 Name: purple-plugin_pack
 Version: 2.7.0
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Networking/Instant messaging
 Url: http://plugins.guifications.org/
@@ -19,11 +19,11 @@ Patch6: purple-plugin_pack-2.7.0-fix-libs.patch
 Requires: libpurple >= %pidgin_ver
 
 BuildRequires: intltool libtalkfilters-devel
-BuildRequires: libgtk+2-devel perl-XML-Parser libaspell-devel 
+BuildRequires: libgtk+2-devel perl-XML-Parser libaspell-devel
 BuildRequires: libgtkspell-devel  >= 2.0.2
 BuildRequires: libpixman-devel libcairo-devel
 # TODO: select enchant or aspell
-BuildRequires: libenchant-devel 
+BuildRequires: libenchant-devel
 BuildRequires: pidgin-devel >= %pidgin_ver
 BuildRequires: python-modules
 BuildRequires: libjson-glib-devel
@@ -53,7 +53,7 @@ All the other plugins for Pidgin
 
 %build
 %autoreconf
-%configure --disable-debug --enable-nls
+%configure --disable-debug --enable-nls PYTHON=/usr/bin/python2
 %make_build
 
 %install
@@ -72,6 +72,9 @@ All the other plugins for Pidgin
 %_datadir/pixmaps/pidgin/protocols/??/*
 
 %changelog
+* Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.7.0-alt3
+- fix build with python2
+
 * Wed Mar 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.0-alt2
 - Removed xmms plugin subpackage.
 
