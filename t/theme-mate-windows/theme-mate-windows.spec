@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  1.7
+Version:  1.8
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -48,6 +48,9 @@ install -Dm0644 applications.list \
 %_datadir/mate-menu/applications.list-themed
 
 %changelog
+* Sun Apr 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.8-alt1
+- Remove zz-mate-menu.gschema.override obsoleted by mate-menu-20.04.
+
 * Fri Oct 18 2019 Ivan A. Melnikov <iv@altlinux.org> 1.7-alt1
 - Avoid overriding XKB configuration (altbug #37346).
 
