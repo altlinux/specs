@@ -1,17 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+
 %global with_java 0
 %global with_php 0
 %global with_python 0
 
 Name: libkolabxml
-Version: 1.0.3
-Release: alt1.qa1.1
+Version: 1.2.0
+Release: alt1
 
 Summary: Kolab XML format collection parser library
 License: LGPLv3+
 Group: System/Libraries
 
-Url: http://www.kolab.org
-Source: http://git.kolab.org/libkolabxml/snapshot/%name-%version.tar.gz
+Url: https://www.kolab.org
+# https://cgit.kolab.org/libkolabxml/snapshot/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: libkolabxml-0.8.4-link.patch
 
 BuildRequires: gcc-c++
@@ -66,7 +69,7 @@ are available through sub-packages.
 %package devel
 Summary: Kolab XML library development headers
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development headers for the Kolab XML libraries.
@@ -182,6 +185,9 @@ python src/python/test.py ||:
 %endif
 
 %changelog
+* Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
+- Updated to upstream version 1.2.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.3-alt1.qa1.1
 - NMU: rebuilt with boost-1.67.0
 
