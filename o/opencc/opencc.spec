@@ -1,6 +1,6 @@
 Name:       opencc
-Version:    1.0.5
-Release:    alt1.qa3
+Version:    1.0.6
+Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    ASL 2.0
@@ -89,6 +89,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
+- New version.
+
 * Tue Apr 23 2019 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1.qa3
 - Build in one thread to prevent race condition.
 
