@@ -1,14 +1,14 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.80
+Version: 2.81
 
-Release: alt3
+Release: alt1
 Summary: A lightweight caching nameserver
-License: %gpl2plus
+License: GPLv2+
 Group: System/Servers
 Url: http://www.thekelleys.org.uk/dnsmasq
-# git://thekelleys.org.uk/dnsmasq.git
+Vcs: git://thekelleys.org.uk/dnsmasq.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
@@ -17,7 +17,6 @@ Source4: %name.service
 Patch: %name-%version-%release.patch
 
 BuildPreReq: glibc-kernheaders
-BuildRequires(pre): rpm-build-licenses
 
 # IDN
 %if_with libidn2
@@ -139,6 +138,11 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -n _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Apr 13 2020 Mikhail Efremov <sem@altlinux.org> 2.81-alt1
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 2.81.
+
 * Thu Aug 15 2019 Mikhail Efremov <sem@altlinux.org> 2.80-alt3
 - Patches from upstream:
   + Fix breakage of dhcp_lease_time utility.
