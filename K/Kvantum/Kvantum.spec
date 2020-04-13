@@ -1,5 +1,5 @@
 Name: Kvantum
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
@@ -82,13 +82,11 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_datadir/themes
 %dir %_datadir/themes/Kv*
 %_datadir/themes/Kv*/*
-%dir %_datadir/kvantumpreview
-%dir %_datadir/kvantumpreview/translations
-%dir %_datadir/kvantummanager
-%dir %_datadir/kvantummanager/translations
-%_datadir/kvantummanager/translations/*.qm
 
 %changelog
+* Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Wed Mar 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.15.1-alt1
 - 0.15.1
 
