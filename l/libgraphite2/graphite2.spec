@@ -4,12 +4,12 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.13
-Release: alt2
+Version: 1.3.14
+Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
-License: LGPLv2.1+ or MPL
+License: LGPL-2.1-or-later or MPL-1.0
 Url: http://sourceforge.net/projects/silgraphite/
 
 %if_disabled snapshot
@@ -54,7 +54,7 @@ Includes and definitions for developing with Graphite2.
 %patch2 -p1 -b .e2k-lcc123
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 
 %ifarch %e2k
 sed -i 's,LINKER_LANGUAGE C,&XX,' `find -name CMakeLists.txt\*`
@@ -98,6 +98,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Mon Apr 13 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt1
+- 1.3.14
+
 * Sat Apr 06 2019 Michael Shigorin <mike@altlinux.org> 1.3.13-alt2
 - E2K: fix build with lcc 1.23 (builtins, c/c++ linking); drop 1.21 hacks
 
