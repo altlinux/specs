@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -302,6 +302,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.2-alt1
+- new version 1.4.2
+
 * Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 
