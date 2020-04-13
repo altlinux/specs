@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 349
+Version: 352
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -50,6 +50,7 @@ Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0011: 0011-xterm-alt-appdef.patch
 Patch0012: 0012-xterm-alt-man_suffix.patch
 Patch0013: 0013-xterm-alt-translate-update-desktop.patch
+Patch0014: 0014-Eliminate-comma-in-floats-when-dumping-to-XHTML-and-.patch
 
 Provides: xvt, %_bindir/xvt
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -94,6 +95,7 @@ install -pm755 %_sourcedir/uxterm .
 %patch0011 -p2
 %patch0012 -p2
 %patch0013 -p2
+%patch0014 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -155,6 +157,13 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 352-alt1
+- Autobuild version bump to 352
+- Patch to dump XHTML and SVG without "floats with comma" bug
+
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 350-alt1
+- Autobuild version bump to 350
+
 * Thu Oct 17 2019 Fr. Br. George <george@altlinux.ru> 349-alt1
 - Autobuild version bump to 349
 - Update patches
