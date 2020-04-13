@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Function and Data Plotter
-License: GPL
+License: GPL-2.0+
 Group: Sciences/Other
 
 Url: https://labplot.kde.org/
@@ -69,6 +69,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.0-alt1
+- Updated to upstream version 2.7.0.
+
 * Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.0-alt1
 - Updated to upstream version 2.6.0.
 
