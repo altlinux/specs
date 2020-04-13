@@ -1,6 +1,6 @@
 Name: gtk-theme-qogir
 Version: 20200226
-Release: alt1
+Release: alt2
 Summary: Qogir GTK theme
 
 Group: Graphical desktop/GNOME
@@ -8,6 +8,8 @@ License: GPL-3.0-only
 Url: https://github.com/vinceliuice/Qogir-theme
 
 Source: %name-%version.tar.gz
+
+Patch: gtk-theme-qogir-20200226-alt-fix_build_with_new_sassc.patch
 
 BuildArch: noarch
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -20,12 +22,13 @@ Based on Arc gtk theme
 
 %prep
 %setup
+%patch -p2
 
 %build
 
 %install
 mkdir -p %buildroot%_datadir/themes/Qogir
-./install.sh -i -d %buildroot%_datadir/themes
+./install.sh -d %buildroot%_datadir/themes
 
 %files
 %doc AUTHORS COPYING HACKING README.md
@@ -33,6 +36,10 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 20200226-alt2
+- Fixed build with new sassc.
+- Disabled background image for nautilus.
+
 * Thu Mar 12 2020 Leontiy Volodin <lvol@altlinux.org> 20200226-alt1
 - New version.
 
