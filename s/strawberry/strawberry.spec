@@ -1,5 +1,5 @@
 Name: strawberry
-Version: 0.6.8
+Version: 0.6.9
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -15,8 +15,6 @@ Url: https://www.strawberrymusicplayer.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
-
-Patch: strawberry-udisks-headers.patch
 
 BuildRequires: boost-program_options-devel ccache gcc-c++ gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler
@@ -56,7 +54,6 @@ Features:
 
 %prep
 %setup
-#patch -p1
 
 # Remove most 3rdparty libraries
 # Unbundle taglib next release:
@@ -91,6 +88,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.9-alt1
+- New version (0.6.9) with rpmgs script.
+
 * Thu Jan 09 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.8-alt1
 - New version (0.6.8) with rpmgs script.
 
