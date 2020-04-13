@@ -1,6 +1,6 @@
 Name: alt-gpgkeys
 Version: 0.7.171
-Release: alt1
+Release: alt2
 
 Summary: ALT GnuPG keys
 License: GPL-2.0-or-later
@@ -61,8 +61,11 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Mon Apr 13 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.171-alt2
+- Fixed previous changelog entry.
+
 * Mon Apr 13 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.171-alt1
-- Replaced expired key: manowar@ (A321B068 -> 7818D811; closes: #38344).
+- Updated expired key: manowar@ (A321B068; closes: #38344).
 
 * Mon Mar 30 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.170-alt1
 - Updated key: arseny@ (62E619E5; closes: #38291).
