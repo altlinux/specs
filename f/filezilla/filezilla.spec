@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.44.2
+Version: 3.47.2.1
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
 Group: Networking/File transfer
 License: GPL
-Url: http://filezilla.sourceforge.net/
-# Repacked http://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
+Url: https://filezilla.sourceforge.net/
+# Repacked https://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
 Source: %oname-%version.tar
 
 BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgtk+3-devel libnettle-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
@@ -31,6 +32,8 @@ of useful features and an intuitive interface
 %find_lang %name
 
 %files -f %name.lang
+%doc COPYING
+%doc AUTHORS ChangeLog NEWS README
 %_bindir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
@@ -42,6 +45,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.47.2.1-alt1
+- Updated to upstream version 3.47.2.1.
+
 * Mon Sep 02 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.44.2-alt1
 - Updated to upstream version 3.44.2.
 
