@@ -1,6 +1,6 @@
 Name: xdg-user-dirs-gtk
 Version: 0.10
-Release: alt2
+Release: alt3
 Summary: Gnome integration of special directories
 Group: Graphical desktop/GNOME
 License: GPL-2.0-or-later
@@ -10,6 +10,7 @@ Requires: xdg-user-dirs
 
 Source: %name-%version.tar
 Patch0: user-dirs-update-gtk.desktop.in-run-in-lxqt-xfce.patch
+Patch1: fix-build-with-w-cast-align.patch
 
 BuildRequires: intltool pkgconfig(gtk+-3.0) xdg-user-dirs
 
@@ -21,6 +22,7 @@ locale changes.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -39,6 +41,9 @@ export CFLAGS='-Wno-error=deprecated-declarations'
 %_bindir/*
 
 %changelog
+* Mon Apr 13 2020 Ivan A. Melnikov <iv@altlinux.org> 0.10-alt3
+- fix build with -Werror=cast-align on %%mips32
+
 * Thu Apr 09 2020 Anton Midyukov <antohami@altlinux.org> 0.10-alt2
 - Added autostart to lxqt and xfce
 
