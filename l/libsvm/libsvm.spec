@@ -4,7 +4,7 @@
 
 Name: libsvm
 Version: 3.24
-Release: alt1
+Release: alt2
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
 License: BSD
@@ -128,6 +128,9 @@ install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
 %endif
 
 %changelog
+* Mon Apr 13 2020 Pavel Vasenkov <pav@altlinux.org> 3.24-alt2
+- Set correct tag.
+
 * Mon Apr 05 2020 Pavel Vasenkov <pav@altlinux.org> 3.24-alt1
 - Version 3.24
 
