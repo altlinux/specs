@@ -5,11 +5,11 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.0
+%define soname 2.1
 
 Name:           lib%oname
-Version:        2.0.9
-Release:        alt2
+Version:        2.1.13.0
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -21,9 +21,6 @@ Source0:        %name-%version.tar
 
 # Images for test suite
 #Source1:        oiio-images.tar.gz
-
-Patch10: %oname-alt-link.patch
-Patch11: %oname-alt-mipsel-link-atiomic.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -45,6 +42,10 @@ BuildRequires:  libopencv-devel
 BuildRequires:  libraw-devel
 BuildRequires:  librobin-map-devel
 BuildRequires:  pybind11-devel
+BuildRequires:  libsquish-devel
+BuildRequires:  bzip2-devel
+BuildRequires:  freetype2-devel
+BuildRequires:  libfmt-devel
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -117,20 +118,18 @@ Development files for package %name
 
 %prep
 %setup
-%patch10 -p1
-%patch11 -p1
 
 # Remove bundled pugixml
 rm -f src/include/OpenImageIO/pugixml.hpp \
       src/include/OpenImageIO/pugiconfig.hpp \
-      src/libutil/OpenImageIO/pugixml.cpp 
+      src/libutil/OpenImageIO/pugixml.cpp
 
 # Remove bundled tbb
 rm -rf src/include/tbb
 
 # Install test images
 #rm -rf ../oiio-images && mkdir ../oiio-images && pushd ../oiio-images
-#tar --strip-components=1 -xzf %{SOURCE1}
+#tar --strip-components=1 -xzf #{SOURCE1}
 
 # Try disabling old CMP
 sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
@@ -180,14 +179,17 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_man1dir/iv.1*
 
 %files devel
-%doc src/doc/*.pdf
 %_libdir/libOpenImageIO.so
 %_libdir/libOpenImageIO_Util.so
 %_includedir/*
 %_libdir/pkgconfig/OpenImageIO.pc
+%_libdir/cmake/*
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.13.0-alt1
+- Updated to upstream version 2.1.13.0.
+
 * Thu Jul 25 2019 Ivan A. Melnikov <iv@altlinux.org> 2.0.9-alt2
 - Link with libatomic on mipsel.
 
