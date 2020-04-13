@@ -2,7 +2,7 @@
 
 Name: gtk-themes-mint
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Mint themes
 License: GPLv3+
 Group: Graphical desktop/MATE
@@ -15,7 +15,8 @@ Source: %rname-%version.tar
 Patch: %rname-%version.patch
 
 BuildArch: noarch
-BuildRequires: sassc python3
+BuildRequires: python3
+# sassc
 
 %description
 A collection of mint themes
@@ -26,7 +27,6 @@ A collection of mint themes
 
 %build
 ./generate-themes.py
-rm -fr usr/share/themes/Mint-Y*
 
 %install
 mkdir -p %buildroot
@@ -36,6 +36,9 @@ cp -a usr %buildroot/
 %_datadir/themes/*
 
 %changelog
+* Mon Apr 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.8.0-alt2
+- do not generate Mint-Y* themes
+
 * Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.8.0-alt1
 - initial release
 
