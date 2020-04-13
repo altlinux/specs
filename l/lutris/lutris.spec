@@ -1,6 +1,6 @@
 %global appid net.lutris.Lutris
 Name: lutris
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-3.0
@@ -40,18 +40,19 @@ or emulated console games and browser games.
 %doc README.rst CONTRIBUTING.md AUTHORS
 %doc LICENSE
 %_bindir/%name
-%_bindir/lutris-wrapper
 %_datadir/%name/
 %_desktopdir/%appid.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/??x??/apps/%name.png
-%_datadir/polkit-1/actions/*
 %python3_sitelibdir/%name-*.egg-info
 %python3_sitelibdir/%name/
 %dir %_datadir/metainfo/
 %_datadir/metainfo/%appid.metainfo.xml
 
 %changelog
+* Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt1
+- New version (0.5.5) with rpmgs script.
+
 * Mon Dec 09 2019 Leontiy Volodin <lvol@altlinux.org> 0.5.4-alt1
 - New version (0.5.4).
 
