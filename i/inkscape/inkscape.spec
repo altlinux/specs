@@ -8,7 +8,7 @@
 
 Name: inkscape
 Version: %major.0
-Release: alt0.beta2
+Release: alt0.beta2.1
 
 Summary: A Vector Drawing Application
 
@@ -28,6 +28,7 @@ Patch: %name-dia.patch
 Patch2: inkscape-0.92.3-alt-dependencies.patch
 Patch3: inkscape-poppler-0.82.0.patch
 Patch4: inkscape-poppler-0.83.0.patch
+Patch5: inkscape-python2-compat.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -37,6 +38,7 @@ BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel-headers cmake gcc-c++ intltool
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel
+BuildRequires: python2.7(xml.dom)
 
 # Checking for modules 'gtkmm-3.0>=3.22;gdkmm-3.0>=3.22;gtk+-3.0>=3.22;gdk-3.0>=3.22;gdl-3.0>=3.4'
 BuildRequires: libgtkmm3-devel >= 3.22 libgdl3-devel >= 3.4
@@ -85,6 +87,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 %setup
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %cmake_insource -DBUILD_SHARED_LIBS=off
@@ -128,6 +131,9 @@ true
 %_man1dir/inkview*
 
 %changelog
+* Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt0.beta2.1
+- FIxed build with python2.
+
 * Wed Jan 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt0.beta2
 - drop python using (ALT bug 37290)
 - add patch against poppler >= 0.83.0 build
