@@ -1,6 +1,6 @@
 Name: libcrypt
 Version: 4.4.16
-Release: alt1
+Release: alt2
 
 Summary: Modern password hashing library
 License: LGPLv2.1+
@@ -8,11 +8,19 @@ Group: System/Libraries
 Url: https://github.com/besser82/libxcrypt
 Source: %name-%version-%release.tar
 
+%ifnarch %e2k
+%global ver_glibc_final 6:2.27-alt6
+%global ver_glibc_pre   6:2.27-alt5
+%else
+%global ver_glibc_final 6:2.23-alt3.E2K.18
+%global ver_glibc_pre   6:2.23-alt3.E2K.17
+%endif
+
 Provides: crypt-yescrypt = 1.0.3
 Provides: glibc-crypt_blowfish = 1.3
-Provides: libcrypt1 = 6:2.27-alt6
-Obsoletes: libcrypt1 < 6:2.27-alt6
-Conflicts: glibc-core < 6:2.27-alt5
+Provides: libcrypt1 = %ver_glibc_final
+Obsoletes: libcrypt1 < %ver_glibc_final
+Conflicts: glibc-core < %ver_glibc_pre
 
 %description
 libcrypt is a modern library for one-way hashing of passwords.
@@ -27,7 +35,7 @@ Summary: Development files for libcrypt password hashing library
 License: LGPLv2.1+
 Group: Development/C
 Requires: %name = %EVR
-Conflicts: glibc-devel < 6:2.27-alt6
+Conflicts: glibc-devel < %ver_glibc_final
 Conflicts: man-pages < 4.16
 
 %description -n libcrypt-devel
@@ -77,6 +85,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*.3*
 
 %changelog
+* Thu Apr 09 2020 Andrew Savchenko <bircoph@altlinux.org> 4.4.16-alt2
+- Fix glibc-related dependencies on e2k.
+
 * Sat Apr 04 2020 Dmitry V. Levin <ldv@altlinux.org> 4.4.16-alt1
 - v4.4.4 -> v4.4.16.
 
