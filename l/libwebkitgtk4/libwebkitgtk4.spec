@@ -31,7 +31,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -44,10 +44,12 @@ Source1: webkit2gtk.env
 # Source/cmake/BubblewrapSandboxChecks.cmake
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
+# python->python3
+Patch1: webkitgtk-2.28.1-alt-python3.patch
 
 %define bwrap_ver 0.3.1
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
@@ -66,8 +68,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwoff2-devel
 BuildRequires: libgio-devel >= 2.25.0
-BuildRequires: python-modules-json
-BuildRequires: ruby ruby-stdlibs libruby-devel
+BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libGLES-devel libXcomposite-devel libXdamage-devel
 BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel
 BuildRequires: geoclue2-devel libgeoclue2-devel
@@ -212,6 +213,7 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch -b .bwrap
+%patch1 -p1 -b .python3
 
 # fix libWPEBackend-fdo soname
 sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
@@ -229,7 +231,7 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %add_optflags -Wl,--no-keep-memory
 %{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
 %ifarch %ix86
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 # since 2.24.1 sse2 required for %%ix86
 %add_optflags -msse2 -mfpmath=sse
 %endif
@@ -241,9 +243,10 @@ n=%smp
 export GIGACAGE_ENABLED=0
 %endif
 %endif
-
+export PYTHON=%__python3
 %cmake \
 -DPORT=GTK \
+-DPYTHON_EXECUTABLE=%__python3 \
 -DCMAKE_BUILD_TYPE=Release \
 -DENABLE_MINIBROWSER=ON \
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
@@ -339,6 +342,10 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Apr 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.1-alt1
+- 2.28.1
+- used python3 for build
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.0-alt1
 - 2.28.0
 
