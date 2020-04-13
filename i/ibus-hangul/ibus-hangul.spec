@@ -2,8 +2,8 @@
 %global require_libhangul_version 0.1.0
 
 Name:       ibus-hangul
-Version:    1.5.1
-Release:    alt2
+Version:    1.5.3
+Release:    alt1
 Summary:    The Hangul engine for IBus input platform
 License:    GPLv2+
 Group:      System/Libraries
@@ -67,6 +67,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/ibus-setup-hangu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- New version.
+
 * Wed Aug 21 2019 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt2
 - rebuild with python3
 
