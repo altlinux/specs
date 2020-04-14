@@ -1,29 +1,24 @@
 %define oname wtforms
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.2.1
-Release: alt1
+Release: alt2
+
 Summary: A flexible forms validation and rendering library for python web development
 License: BSD-3-Clause
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/WTForms/
+
+BuildArch: noarch
 
 # https://github.com/wtforms/wtforms.git
 Source: %oname-%version.tar
 Patch1: %oname-alt-docs.patch
-BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-ordereddict python-module-babel
-BuildRequires: python-module-sphinx-devel python-module-dateutil
-BuildRequires: python-module-pysqlite2
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-babel python3-module-dateutil
-%endif
+BuildRequires: python3-module-sphinx
+# BuildRequires: python3-module-babel
+# BuildRequires: python3-module-dateutil
 
 %description
 WTForms is a flexible forms validation and rendering library for python
@@ -34,7 +29,7 @@ the website: http://wtforms.simplecodes.com/.
 
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 WTForms is a flexible forms validation and rendering library for python
@@ -52,69 +47,38 @@ web development.
 
 This package contains documentation for %oname.
 
-%package -n python3-module-%oname
-Summary: A flexible forms validation and rendering library for python web developmen
-Group: Development/Python3
-
-%description -n python3-module-%oname
-WTForms is a flexible forms validation and rendering library for python
-web development.
-
-To get started using WTForms, we recommend reading the crash course on
-the website: http://wtforms.simplecodes.com/.
-
 %prep
 %setup -n %oname-%version
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
 %doc AUTHORS.rst README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS.rst README.rst
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.2.1-alt2
+- Build for python2 disabled.
+
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt1
 - New version.
 - Fix License tag according to SPDX.
