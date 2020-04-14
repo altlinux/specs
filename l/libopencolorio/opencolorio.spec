@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without openimageio
+%def_with openimageio
 
 # TODO: build docs, build and run tests
 
@@ -8,7 +8,7 @@
 
 Name:           lib%oname
 Version:        1.1.1
-Release:        alt3
+Release:        alt4
 Summary:        Enables color transforms and image display across graphics apps
 Group:          System/Libraries
 
@@ -162,6 +162,9 @@ find %buildroot -name "*.cmake" -exec mv {} %buildroot%_datadir/cmake/Modules/ \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
+- Rebuilt with openimageio support.
+
 * Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt3
 - Bootstrapped rebuild.
 
