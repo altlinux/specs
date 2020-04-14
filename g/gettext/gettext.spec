@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 %define libintl libintl3
@@ -15,24 +15,13 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch1: 0001-msgmerge-Fix-behaviour-of-for-msgfmt-on-PO-files-wit.patch
-Patch2: 0002-intl-Make-autoconf-macro-more-robust.patch
-Patch3: 0003-build-Avoid-warnings-from-bison-versions-3.3.patch
-Patch4: 0004-xgettext-Fix-endless-loop-in-shell-parser.patch
-Patch5: 0005-xgettext-Fix-parsing-of-escaped-single-quote-charact.patch
-Patch6: 0006-gettext-ngettext-Fix-the-expansion-of-and-octal-esca.patch
-Patch7: 0007-xgettext-Handle-newlines-in-Lua-long-bracket-literal.patch
-Patch8: 0008-build-Avoid-failing-a-configure-test-due-to-CFLAGS-W.patch
-Patch9: 0009-libxml-Fix-buffer-overrun.patch
-
-Patch20: gettext-alt-autogen.patch
-Patch21: gettext-alt-gettextize-quiet.patch
-Patch22: gettext-alt-autopoint-archive.patch
-Patch23: gettext-alt-tmp-autopoint.patch
-Patch24: gettext-alt-gcc.patch
-Patch25: gettext-alt-doc.patch
-Patch26: gettext-alt-urlview.patch
-Patch27: gettext-alt-libtextstyle.patch
+Patch10: gettext-alt-autogen.patch
+Patch11: gettext-alt-gettextize-quiet.patch
+Patch12: gettext-alt-autopoint-archive.patch
+Patch13: gettext-alt-tmp-autopoint.patch
+Patch14: gettext-alt-gcc.patch
+Patch15: gettext-alt-urlview.patch
+Patch16: gettext-alt-libtextstyle.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -198,23 +187,13 @@ a text styling library.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -387,6 +366,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Tue Apr 14 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt1
+- 0.20.1 -> 0.20.2.
+
 * Fri Jan 03 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.1-alt1
 - 0.19.8.1 -> 0.20.1 (closes: #37078).
 
