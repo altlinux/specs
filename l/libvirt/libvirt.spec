@@ -179,7 +179,7 @@
 
 Name: libvirt
 Version: 6.2.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -240,7 +240,7 @@ Requires: %name-libs = %EVR
 %{?_with_bash_completion:BuildRequires: pkgconfig(bash-completion) >= 2.0}
 
 BuildRequires: /proc
-BuildRequires: bridge-utils libblkid-devel
+BuildRequires: libblkid-devel
 BuildRequires: libgcrypt-devel libgnutls-devel >= 3.2.0 libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
@@ -293,7 +293,6 @@ for specific drivers.
 Summary: Default configuration files for the libvirtd daemon
 Group: System/Servers
 BuildArch: noarch
-Requires: bridge-utils
 Requires: dnsmasq
 %if_with driver_modules
 Requires: %name-daemon-driver-network = %EVR
@@ -1377,6 +1376,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt2
+- drop requires on bridge-utils
+
 * Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt1
 - 6.2.0
 
