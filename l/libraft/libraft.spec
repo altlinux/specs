@@ -1,8 +1,8 @@
 Name: libraft
-Version: 0.9.9
+Version: 0.9.17
 Release: alt1
 Summary: Fully asynchronous C implementation of the Raft consensus protocol.
-License: Apache v2
+License: Apache-2.0
 Group: Development/C
 URL: https://github.com/canonical/raft
 
@@ -56,6 +56,9 @@ RPC messages) and disk persistence (store log entries and snapshots).
 %_pkgconfigdir/raft.pc
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.17-alt1
+- Update to 0.9.17
+
 * Wed Nov 13 2019 Denis Pynkin <dans@altlinux.org> 0.9.9-alt1
 - Update
 
