@@ -1,46 +1,27 @@
 %define oname click-plugins
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.0.2
-Release: alt2
+Release: alt3
+
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/click-plugins
+
+BuildArch: noarch
 
 # https://github.com/click-contrib/click-plugins.git
 Source: %name-%version.tar
 Patch0: click-plugins-1.0.2-Click-7-changes-how-command-names-are-generated.patch
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-click-tests python-module-pytest-cov
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-click-tests python3-module-pytest-cov
-%endif
-
-%py_provides click_plugins
-%py_requires click
+BuildRequires: python3-module-click-tests
+BuildRequires: python3-module-pytest-cov
 
 %description
 An extension module for click to enable registering CLI commands via
 setuptools entry-points.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Register CLI commands via setuptools entry-points
-Group: Development/Python3
-%py3_provides click_plugins
-%py3_requires click
-
-%description -n python3-module-%oname
-An extension module for click to enable registering CLI commands via
-setuptools entry-points.
-%endif
 
 %package examples
 Summary: Examples for %oname
@@ -57,53 +38,27 @@ This package contains examples for %oname.
 %setup
 %patch -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-export LC_ALL=en_US.UTF-8
-python setup.py test -v
-py.test -vv tests --cov click_plugins --cov-report term-missing
-%if_with python3
-pushd ../python3
-python3 setup.py test -v
+%__python3 setup.py test -v
 py.test3 -vv tests --cov click_plugins --cov-report term-missing
-popd
-%endif
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files examples
 %doc example/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt3
+- Build for python2 disabled.
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
 - Fixed testing against Click 7.
 
