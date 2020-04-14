@@ -4,13 +4,14 @@
 %define api_ver 1
 
 %def_disable static
-%def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_enable gtk_doc
+%def_enable man
 %def_disable check
 
 Name: libsecret
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -34,9 +35,10 @@ BuildRequires(pre): meson >= 0.50
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver
-BuildRequires: gtk-doc xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: xsltproc}
 %{?_enable_check:
 BuildRequires: /proc fuse-gvfs dbus-tools-gui python3-module-dbus-gobject
 BuildRequires: python3-module-pygobject3 python3-module-mock libgjs}
@@ -99,8 +101,10 @@ GObject introspection devel data for %name.
 
 %build
 %meson \
+%{?_disable_vala:-Dvapi=false} \
 %{?_disable_gtk_doc:-Dgtk_doc=false} \
-%{?_disable_vala:-Dvapi=false}
+%{?_disable_man:-Dmanpage=false}
+%nil
 %meson_build
 
 %install
@@ -114,7 +118,7 @@ dbus-run-session %meson_test
 %files -f %name.lang
 %_bindir/secret-tool
 %_libdir/%name-%api_ver.so.*
-%_man1dir/secret-tool.1.*
+%{?_enable_man:%_man1dir/secret-tool.1.*}
 %doc AUTHORS README* NEWS
 
 %files devel
@@ -142,6 +146,9 @@ dbus-run-session %meson_test
 
 
 %changelog
+* Wed Apr 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
+- 0.20.3
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
 - 0.20.2
 
