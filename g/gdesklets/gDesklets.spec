@@ -3,10 +3,10 @@
 
 Name:    gdesklets
 Version: 0.36.3
-Release: alt4.qa1
+Release: alt5
 
 Summary: gDesklets - an advanced architecture for desktop applets
-License: GPL
+License: GPL-2.0
 Group:   Graphical desktop/GNOME
 Url:     http://%name.de
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -44,12 +44,10 @@ BuildPreReq: GConf2
 # to avoid rpm-build-python/hasher/apt bug (#4795)
 BuildPreReq: python-module-pygnome
 
-# manually removed: eric gcc-g77 gdesklets 
-# Automatically added by buildreq on Mon Sep 19 2005 (-bi)
 BuildRequires: GConf2 ORBit2-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel gnome-vfs2-devel libGConf2-devel 
 BuildRequires: libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libcairo-devel libglitz-devel libgnome-devel 
 BuildRequires: libgnome-keyring-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libgtop2-devel libpango-devel libpng-devel libpopt-devel 
-BuildRequires: librsvg-devel libxml2-devel  perl-XML-Parser pkg-config python-base python-devel python-module-pygnome-devel 
+BuildRequires: librsvg-devel libxml2-devel  perl-XML-Parser pkg-config python-devel python-module-pygnome-devel 
 BuildRequires: python-module-pygtk-devel python-module-pyorbit-devel python-modules-compiler python-modules-encodings 
 BuildRequires: zlib-devel 
 BuildRequires: intltool >= 0.35.0 
@@ -74,10 +72,8 @@ candy and usefulness.
 %patch2 -p1
 %patch3 -p0
 
-# install *.mo files in proper location
-#%%__subst 's,\(installdir = \)${coredir},\1$(datadir),' locale/Makefile*
-# fix path to locale directory
-#%%__subst 's@\(Translator(NAME.lower(), \).*$@\1"/usr/share/locale")@' main/__init__.py
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %configure \
@@ -123,6 +119,9 @@ fi
 #%_pkgconfigdir/*
 
 %changelog
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt5
+- Set correct python2 executable in shebang.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.36.3-alt4.qa1
 - NMU: applied repocop patch
 

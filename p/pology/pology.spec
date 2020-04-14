@@ -1,9 +1,9 @@
 Name:           pology
 Version:        0.12
-Release:        alt1
+Release:        alt2
 Summary:        Pology is a Python library and collection of command-line tools for in-depth processing of PO files
 
-License:        GPLv3+
+License:        GPL-3.0+
 Group:          Development/Tools
 URL:            http://pology.nedohodnik.net/
 
@@ -30,6 +30,8 @@ operations on large collections of PO files.
 
 %prep
 %setup -q
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %cmake -DPYTHON2_PACKAGES_DIR:PATH=%{python_sitelibdir}
@@ -49,6 +51,9 @@ popd
 %python_sitelibdir/%name
 
 %changelog
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.12-alt2
+- Set correct python2 executable in shebang.
+
 * Tue Nov 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.12-alt1
 - New version
 
