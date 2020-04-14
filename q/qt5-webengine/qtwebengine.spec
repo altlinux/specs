@@ -29,8 +29,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.12.7
-Release: alt2
+Version: 5.12.8
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -364,6 +364,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Apr 09 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt1
+- new version
+
 * Thu Apr 02 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.12.7-alt2
 - fix build on armh arch
 
