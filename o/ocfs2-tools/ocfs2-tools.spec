@@ -1,8 +1,8 @@
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
 Version: 1.8.6
-Release: alt1
-License: GPL
+Release: alt2
+License: GPLv2
 Group: System/Kernel and hardware
 # https://github.com/markfasheh/ocfs2-tools
 Source: %name-%version.tar
@@ -10,9 +10,11 @@ Source1: cluster.conf
 
 Patch0: ocfs2-tools-initscript.patch
 Patch1: ocfs2-tools-service.patch
+Patch2: ocfs2-tools-add_sysmacros.h.patch
 
 Url: http://oss.oracle.com/projects/ocfs2-tools/
-BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
+BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-dev, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
+BuildRequires: libcorosync-devel, libpacemaker-devel, libdlm-devel
 
 %description
 Tools to manage Oracle Cluster Filesystem 2 volumes.
@@ -40,10 +42,18 @@ develop ocfs2 filesystem-specific programs.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
-%configure --enable-dynamic-ctl=yes --enable-ocfs2console=yes --enable-dynamic-fsck=yes --disable-debug --prefix=/usr --mandir=%_datadir/man --libdir=%_libdir
+%configure --enable-dynamic-ctl=yes \
+	   --enable-ocfs2console=yes \
+	   --enable-dynamic-fsck=yes \
+	   --disable-debug \
+	   --prefix=/usr \
+	   --mandir=%_datadir/man \
+	   --libdir=%_libdir \
+#
 make
 
 %install
@@ -59,8 +69,7 @@ mkdir -p %buildroot/%_sysconfdir/ocfs2/
 install -m600 %SOURCE1 %buildroot/%_sysconfdir/ocfs2/
 
 make DESTDIR="%buildroot" install
-
-%__python -c "import compileall; compileall.compile_dir('%buildroot/%python_sitelibdir/ocfs2interface', ddir='%_libdir/%python_sitelibdir/ocfs2interface')"
+sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocfs2console
 
 %post
 %post_service o2cb
@@ -119,6 +128,9 @@ make DESTDIR="%buildroot" install
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 1.8.6-alt2
+- built with python2, pacemaker and corosync
+
 * Sun Jun 09 2019 Anton Farygin <rider@altlinux.ru> 1.8.6-alt1
 - 1.8.6
 
