@@ -2,7 +2,7 @@
 %define module common-sense
 
 Name: perl-%module
-Version: 3.74
+Version: 3.75
 Release: alt1
 
 Summary: "Common sense" Perl defaults
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/common-sense-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
 
 #BuildArch: noarch
 
@@ -26,7 +26,7 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
  no warnings;
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,9 +35,13 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
 %perl_vendor_install
 
 %files
+%doc Changes README LICENSE
 %perl_vendor_archlib/common
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 3.75-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 3.74-alt1
 - automated CPAN update
 
