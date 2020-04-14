@@ -1,50 +1,37 @@
 %define oname watchdog
 
-%def_with python3
 %def_enable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.8.3
-Release: alt3.git20150727.1
+Release: alt4.git20150727.1
+
 Summary: Filesystem events monitoring
 License: ASLv2.0
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/watchdog/
+
+BuildArch: noarch
 
 # https://github.com/gorakhargosh/watchdog.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools python-module-yaml
-BuildRequires: python2.7(argh)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools python3-module-yaml
-BuildRequires: python3(argh)
-%endif
+BuildRequires: python3-module-pathtools
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-sphinx
 
-%py_provides %oname
-#%py_requires pathtools argh yaml
-%add_python_req_skip AppKit FSEvents _watchdog_fsevents
+%add_python3_req_skip AppKit FSEvents _watchdog_fsevents
+
+Conflicts: python-module-%oname
 
 %description
 Python API and shell utilities to monitor file system events.
 
-%package -n python3-module-%oname
-Summary: Filesystem events monitoring
-Group: Development/Python3
-%py3_provides %oname
-#%py3_requires pathtools argh yaml
-%add_python3_req_skip AppKit FSEvents _watchdog_fsevents
-
-%description -n python3-module-%oname
-Python API and shell utilities to monitor file system events.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Python API and shell utilities to monitor file system events.
@@ -64,77 +51,40 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
+sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
 
-%python_install
-
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-# skip failing test
 rm -f tests/test_delayed_queue.py
-python setup.py test -v
-%if_with python3
-pushd ../python3
-# skip failing test
-rm -f tests/test_delayed_queue.py
-python3 setup.py test -v
-popd
-%endif
+%__python3 setup.py test -v
 
 %files
 %doc AUTHORS *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.3-alt4.git20150727.1
+- Build for python2 disabled.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.3-alt3.git20150727.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
