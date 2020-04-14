@@ -6,14 +6,14 @@ BuildRequires: perl(Authen/SASL.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Socket/S
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 Summary: SSL/STARTTLS support for Net::SMTP
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TO/TOMO/src/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOMO/src/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/N*
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Sat Jun 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2
 - to Sisyphus as devscripts dep
 
