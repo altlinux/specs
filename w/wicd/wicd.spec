@@ -1,16 +1,6 @@
-%define fedora 21
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%endif
-
-%{!?_systemd_unitdir: %global _systemd_unitdir %(pkg-config systemd --variable=systemdsystemunitdir)}
-
-%define debug_package %{nil}
-
 Name:                wicd
 Version:             1.7.4
-Release:             alt2
+Release:             alt3
 Summary:             Wireless and wired network connection manager
 
 Group:               System/Base
@@ -27,8 +17,6 @@ Patch4:              wicd-1.7.3-unicode.patch
 Patch5:              wicd-1.7.3-sanitize.patch
 
 BuildRequires(pre):  rpm-build-python
-BuildRequires: 	     python-module-babel
-BuildRequires:       babel
 BuildRequires:       python-devel
 BuildRequires:       desktop-file-utils
 BuildRequires:       gettext
@@ -113,11 +101,16 @@ Client program for wicd that uses a GTK+ interface.
 # https://bugs.launchpad.net/wicd/+bug/993912
 %patch5 -p1
 
+# Set correct python2 executable in shebang and scripts
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+subst 's|/usr/bin/python|%__python|' wicd/wpath.py
+
 %build
 rm -f po/ast.po
 export LANG=POSIX
 %{__python} setup.py configure \
     --distro redhat \
+    --python %__python \
     --lib %{_libdir} \
     --share %{_datadir}/wicd \
     --etc %{_sysconfdir}/wicd \
@@ -262,6 +255,9 @@ desktop-file-install \
 %{_datadir}/wicd/icons/*
 
 %changelog
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.7.4-alt3
+- Set correct python2 executable in shebang and scripts.
+
 * Thu Mar 07 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt2
 - Fixed FTBFS, added /usr/bin/pybabel to BR (Closes: #36223).
 
