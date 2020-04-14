@@ -6,14 +6,14 @@ BuildRequires: perl(B/Deparse.pm) perl(Data/Dump.pm) perl(Exporter.pm) perl(ExtU
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.23
-Release: alt2
+Version: 0.240
+Release: alt1
 Summary: Dump Perl data structures
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Data-Dmp
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PERLANCAR/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PERLANCAR/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,10 +29,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.240-alt1
+- automated CPAN update
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt2
 - to Sisyphus
 
