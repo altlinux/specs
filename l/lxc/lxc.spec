@@ -28,8 +28,8 @@
 %def_with systemd
 
 Name: lxc
-Version: 4.0.0
-Release: alt2
+Version: 4.0.1
+Release: alt1
 
 Url: https://linuxcontainers.org/
 
@@ -38,7 +38,6 @@ Source0: %name-%version.tar
 Source1: lxc-net.sysconfig
 Source2: lxc-user-nic.control
 
-Patch1: 0001-DEBIAN-Starts-after-remote-fs.target.patch
 Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
 Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
 Patch4: 0004-ALT-tune-SysVinit-scripts.patch
@@ -52,7 +51,7 @@ Requires: libcap gzip-utils
 %ifarch x86_64 %arm
 Requires: criu
 %endif
-Requires: iproute2 bridge-utils dnsmasq wget
+Requires: iproute2 dnsmasq wget
 Obsoletes: lxc-sysvinit
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
@@ -225,6 +224,10 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
+- Updated to 4.0.0.
+- drop requires bridge-utils
+
 * Thu Apr 02 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.0-alt2
 - lxc-libs:
   + Made preinstall create required vmusers group.
