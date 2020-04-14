@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(PPI/Document.pm) perl(PPI/Dumper.pm) perl(PPIx/Regexp.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(constant.pm) perl(strict.pm) perl(warnings.pm) perl(charnames.pm)
+BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(PPI/Document.pm) perl(PPI/Dumper.pm) perl(PPIx/Regexp.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(constant.pm) perl(strict.pm) perl(warnings.pm) perl(charnames.pm) perl(Readonly.pm)
 # END SourceDeps(oneline)
 %define module_name PPIx-QuoteLike
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.010
+Version: 0.011
 Release: alt1
 Summary: Parse Perl string literals and string-literal-like things.
 Group: Development/Perl
@@ -35,6 +35,9 @@ similar code.
 %perl_vendor_privlib/P*
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- automated CPAN update
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
