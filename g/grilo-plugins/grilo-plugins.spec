@@ -2,12 +2,13 @@
 
 %define ver_major 0.3
 %define api_ver %ver_major
+%define gupnp_api_ver 1.2
 
 %def_enable lua_factory
 
 Name: grilo-plugins
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -31,9 +32,9 @@ BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.44
 BuildRequires: libgrilo-devel >= %ver_major.12
 BuildRequires: libxml2-devel
-BuildRequires: libgupnp-devel >= 0.13
+BuildRequires: libgupnp%gupnp_api_ver-devel >= 0.13
+BuildRequires: libgssdp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel >= 0.5
-BuildRequires: libgssdp-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.9.1
 BuildRequires: libgom-devel >= 0.3.2
@@ -131,6 +132,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Tue Apr 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt2
+- fixed buildreqs
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
 - 0.3.11
 
