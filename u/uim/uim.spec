@@ -36,8 +36,8 @@
 %def_disable sqlite3
 
 Name: uim
-Version: 1.8.8
-Release: alt2
+Version: 1.8.8.0.33.git3be53b4
+Release: alt1
 
 Summary: useful input method
 
@@ -45,12 +45,21 @@ License: BSD
 Group: Text tools
 Url: https://github.com/uim/uim
 
+# git://github.com/uim/uim.git
+Source0: uim.tar
+# git://github.com/uim/sigscheme.git
+Source1: sigscheme.tar
 # git://git.altlinux.org/gears/u/uim.git
-Source: %name-%version-%release.tar
+Source2: uim-alt.tar
 
-BuildPreReq: alternatives
+Patch1: 0001-uim.desktop.in.in-use-generic-uim-pref.patch
+Patch2: 0002-pixmaps-uim-m17nlib-relink-icons.in-fix-m17n-db-icon.patch
+Patch3: 0003-uim-uim-module-manager.c-fix-installed-modules-locat.patch
+Patch4: 0004-ALT-fix-build-qt5.patch
+
+BuildRequires(pre): alternatives
 BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-utils
-%{?_with_libnotify:BuildRequires: libnotify-devel}
+%{?_with_libnotify:BuildRequires: libnotify-devel cmake extra-cmake-modules rpm-macros-cmake}
 %{?_with_anthy:BuildRequires: libanthy-devel}
 %{?_with_libedit:BuildRequires: libedit-devel}
 %{?_enable_fep:BuildRequires: libncursesw-devel}
@@ -58,19 +67,19 @@ BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-util
 %{?_with_gtk3:BuildRequires: libgtk+3-devel}
 %{?_with_m17nlib:BuildRequires: libm17n-devel libm17n-db}
 %{?_with_qt:BuildRequires: libqt3-devel gcc-c++}
-%{?_with_qt4:BuildRequires: libqt4-devel gcc-c++}
-%{?_with_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel gcc-c++}
+%{?_with_qt4:BuildRequires: libqt4-devel gcc-c++ cmake extra-cmake-modules rpm-macros-cmake}
+%{?_with_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel gcc-c++ cmake extra-cmake-modules rpm-macros-cmake qt5-declarative-devel}
 %{?_with_x:BuildRequires: gcc-c++ libXext-devel libXft-devel}
 %{?_with_xft:BuildRequires: libXft-devel}
 %{?_enable_emacs:BuildRequires: emacs-common emacs-devel}
 
-%{?_with_gtk:Requires: uim-gtk = %EVR}
-%{?_with_gtk3:Requires: uim-gtk3 = %EVR}
-%{?_with_qt4:Requires: uim-qt4 = %EVR}
-%{?_with_qt5:Requires: uim-qt5 = %EVR}
-%{?_with_x:Requires: uim-xim = %EVR}
-Requires: uim-plugins = %EVR
-%{?_with_gtk:Requires: uim-pref = %EVR}
+%{?_with_gtk:Requires: uim-gtk}
+%{?_with_gtk3:Requires: uim-gtk3}
+%{?_with_qt4:Requires: uim-qt4}
+%{?_with_qt5:Requires: uim-qt5}
+%{?_with_x:Requires: uim-xim}
+Requires: uim-plugins
+%{?_with_gtk:Requires: uim-pref}
 
 %define common_descr uim is a multilingual input method library and environment.\
 \
@@ -113,9 +122,9 @@ Development and header files for universal input method.
 %package -n libuim8
 Summary: universal input method library
 Group: Text tools
-Requires: uim-data = %EVR
-Requires: uim-plugins = %EVR
-Requires: uim-utils = %EVR
+Requires: uim-data
+Requires: uim-plugins
+Requires: uim-utils
 
 %description -n libuim8
 %common_descr
@@ -138,8 +147,8 @@ Obsoletes: libuim-plugin
 Provides: uim-m17nlib
 Obsoletes: uim-m17nlib
 Group: Text tools
-Requires(post): uim-utils = %EVR
-Requires(preun): uim-utils = %EVR
+Requires(post): uim-utils
+Requires(preun): uim-utils
 # needed for m17nlib engine
 %{?_with_m17nlib:Requires: libm17n, libm17n-db}
 
@@ -151,7 +160,7 @@ This package contains the plugin files for uim.
 %package pref
 Summary: universal input method pref
 Group: Text tools
-Requires: uim-pref-gtk = %EVR
+Requires: uim-pref-gtk
 
 %description pref
 %common_descr
@@ -194,7 +203,7 @@ sources.
 %package pref-gtk
 Summary: universal input method preferences (GTK+ 2.0 UI)
 Group: Text tools
-Provides: /usr/bin/uim-pref = %EVR
+Provides: /usr/bin/uim-pref
 
 %description pref-gtk
 %common_descr
@@ -204,7 +213,7 @@ Preferences used GTK+ 2.0 interface.
 %package pref-gtk3
 Summary: universal input method preferences (GTK+ 3.0 UI)
 Group: Text tools
-Provides: /usr/bin/uim-pref = %EVR
+Provides: /usr/bin/uim-pref
 
 %description pref-gtk3
 %common_descr
@@ -214,7 +223,7 @@ Preferences used GTK+ 3.0 interface.
 %package pref-qt
 Summary: universal input method preferences (Qt 3 UI)
 Group: Text tools
-Provides: /usr/bin/uim-pref = %EVR
+Provides: /usr/bin/uim-pref
 
 %description pref-qt
 %common_descr
@@ -224,7 +233,7 @@ Preferences used Qt 3 interface.
 %package pref-qt4
 Summary: universal input method preferences (Qt 4 UI)
 Group: Text tools
-Provides: /usr/bin/uim-pref = %EVR
+Provides: /usr/bin/uim-pref
 
 %description pref-qt4
 %common_descr
@@ -234,7 +243,7 @@ Preferences used Qt 4 interface.
 %package pref-qt5
 Summary: universal input method preferences (Qt 5 UI)
 Group: Text tools
-Provides: /usr/bin/uim-pref = %EVR
+Provides: /usr/bin/uim-pref
 
 %description pref-qt5
 %common_descr
@@ -256,7 +265,7 @@ fep module for universal input method.
 %package gtk
 Summary: GTK+ 2.0 universal input method universal input method
 Group: Text tools
-Requires: uim-xim = %EVR
+Requires: uim-xim
 
 %description gtk
 %common_descr
@@ -269,7 +278,7 @@ applications.
 %package gtk3
 Summary: GTK+3 module for universal input method
 Group: Text tools
-Requires: uim-xim = %EVR
+Requires: uim-xim
 
 %description gtk3
 %common_descr
@@ -282,7 +291,7 @@ applications.
 %package qt
 Summary: Qt3 module for universal input method
 Group: Text tools
-Requires: uim-xim = %EVR
+Requires: uim-xim
 
 %description qt
 %common_descr
@@ -294,7 +303,7 @@ Qt3 module for universal input method.
 %package qt4
 Summary: Qt4 module for universal input method
 Group: Text tools
-Requires: uim-xim = %EVR
+Requires: uim-xim
 
 %description qt4
 %common_descr
@@ -306,7 +315,7 @@ Qt4 module for universal input method.
 %package qt5
 Summary: Qt5 module for universal input method
 Group: Text tools
-Requires: uim-xim = %EVR
+Requires: uim-xim
 
 %description qt5
 %common_descr
@@ -316,7 +325,7 @@ Qt5 module for universal input method.
 
 %package utils
 Summary: utils for universal input method
-Requires: uim-data = %EVR
+Requires: uim-data
 Group: Text tools
 
 %description utils
@@ -328,7 +337,7 @@ This package contains additional utils for uim.
 %package xim
 Summary: XIM module for universal input method
 Group: Text tools
-Requires: uim-gtk = %EVR
+Requires: uim-gtk
 
 %description xim
 %common_descr
@@ -337,7 +346,8 @@ XIM module for universal input method.
 %endif # x
 
 %prep
-%setup -n %name-%version-%release
+%setup -n uim -a1 -a2
+%autopatch -p1
 
 %build
 %autoreconf
@@ -416,11 +426,11 @@ install -pm644 alt/xinput %buildroot%_sysconfdir/X11/xinit/xinput.d/uim.conf
 
 # alternatives
 mkdir -p %buildroot%_altdir
-%{?_with_gtk:install -p -m644 alternatives/uim-pref-gtk %buildroot%_altdir/uim-pref-gtk}
-%{?_with_gtk3:install -p -m644 alternatives/uim-pref-gtk3 %buildroot%_altdir/uim-pref-gtk3}
-%{?_with_qt:install -p -m644 alternatives/uim-pref-qt %buildroot%_altdir/uim-pref-qt}
-%{?_with_qt4:install -p -m644 alternatives/uim-pref-qt4 %buildroot%_altdir/uim-pref-qt4}
-%{?_with_qt5:install -p -m644 alternatives/uim-pref-qt5 %buildroot%_altdir/uim-pref-qt5}
+%{?_with_gtk:install -p -m644 alt/uim-pref-gtk %buildroot%_altdir/uim-pref-gtk}
+%{?_with_gtk3:install -p -m644 alt/uim-pref-gtk3 %buildroot%_altdir/uim-pref-gtk3}
+%{?_with_qt:install -p -m644 alt/uim-pref-qt %buildroot%_altdir/uim-pref-qt}
+%{?_with_qt4:install -p -m644 alt/uim-pref-qt4 %buildroot%_altdir/uim-pref-qt4}
+%{?_with_qt5:install -p -m644 alt/uim-pref-qt5 %buildroot%_altdir/uim-pref-qt5}
 
 # ghost files
 mkdir -p %buildroot%_localstatedir/uim
@@ -616,6 +626,10 @@ fi
 %endif
 
 %changelog
+* Tue Apr 14 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.33.git3be53b4-alt1
+- Updated UIM to 1.8.8-33-g3be53b423.
+- Updated SigScheme to 0.9.0-4-gfbd7fc82b.
+
 * Sat May 04 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8-alt2
 - emacs-uim: packaged compiled EMACS lisp
 - separated emacs-uim-el subpackage with EMACS lisp sources
