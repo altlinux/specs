@@ -1,9 +1,9 @@
 
 Name:       pyzy
 Version:    0.1.0
-Release:    alt4
+Release:    alt5
 Summary:    The Chinese PinYin and Bopomofo conversion library
-License:    LGPLv2+
+License:    LGPL-2.1+
 Group:      System/Libraries
 URL:        http://code.google.com/p/pyzy
 Source0:    http://pyzy.googlecode.com/files/%{name}-%{version}.tar.gz
@@ -56,6 +56,8 @@ The phrase database for pyzy from android project.
 %prep
 %setup -q
 cp -p %SOURCE1 data/db/open-phrase
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %add_optflags -Wno-error=narrowing
@@ -87,6 +89,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/pyzy/db/android.db
 
 %changelog
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt5
+- Set correct python2 executable in shebang.
+- Fix License tag according to SPDX.
+
 * Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.0-alt4
 - NMU: add BR: python-modules-encodings, add -Wno-error=narrowing for aarch64
 
