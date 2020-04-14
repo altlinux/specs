@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Mojo-IOLoop-ReadWriteProcess
-Version: 0.24
+Version: 0.25
 Release: alt1
 Summary: Execute external programs or internal code blocks as separate process
 License: Artistic-1.0 or GPL-1.0+
@@ -41,6 +41,9 @@ rm -f t/12_mocked_container.t
 %doc Changes README.md
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
