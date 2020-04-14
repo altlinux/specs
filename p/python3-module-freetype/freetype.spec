@@ -1,62 +1,35 @@
 %define oname freetype
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.1.0.post1
-Release: alt1
+Release: alt2
+
 Summary: Freetype python bindings
 License: BSD
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/freetype-py/
+
+BuildArch: noarch
 
 # https://github.com/rougier/freetype-py.git
 Source: %name-%version.tar
 Patch1: %oname-1.1-alt-build.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-numpy python-module-numpy-testing python-module-matplotlib
-BuildRequires: python-module-OpenGL python-module-pygobject3
-BuildRequires: python-module-Pillow python-module-pycairo
-BuildRequires: python2.7(sphinx_rtd_theme)
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-setuptools_scm
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-matplotlib
-BuildRequires: python3-module-OpenGL python3-module-pygobject3
-BuildRequires: python3-module-Pillow python3-module-pycairo
-BuildRequires: python3-module-cffi
 BuildRequires: python3-module-setuptools_scm
-%endif
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: libfreetype
 
-%py_provides %oname
 Requires: lib%oname
-%py_requires ctypes
 
 %description
 Freetype python provides bindings for the FreeType library. Only the
 high-level API is bound.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Freetype python bindings
-Group: Development/Python3
-%py3_provides %oname
-Requires: lib%oname
-%py3_requires ctypes
-
-%description -n python3-module-%oname
-Freetype python provides bindings for the FreeType library. Only the
-high-level API is bound.
-%endif
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Freetype python provides bindings for the FreeType library. Only the
@@ -79,63 +52,37 @@ This package contains documentation for %oname.
 %setup
 %patch1 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+sed -i 's|sphinx-build|&-3|' doc/Makefile
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %make -C doc pickle
 %make -C doc html
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%__python3 setup.py test
 
 %files
 %doc *.rst *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc examples doc/_build/html
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst *.txt
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0.post1-alt2
+- Build for python2 disabled.
+
 * Wed May 15 2019 Grigory Ustinov <grenka@altlinux.org> 2.1.0.post1-alt1
 - Build new version (Closes: #36320).
 
