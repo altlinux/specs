@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-C3-XS
 Name: perl-%dist
-Version: 0.14
-Release: alt1.2
+Version: 0.15
+Release: alt1
 
 Summary: XS speedups for Class::C3
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Class-C3-XS-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Module-Install perl-NEXT perl-Sub-Name perl-Test-Pod
@@ -21,7 +21,7 @@ if it can find it. Do not use this package directly, use Class::C3
 instead.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +30,14 @@ instead.
 %perl_vendor_install
 
 %files
-%doc Change* README*
+%doc Change* README* CONTRIBUTING
 %perl_vendor_archlib/Class
 %perl_vendor_autolib/Class
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.2
 - rebuild with new perl 5.28.1
 
