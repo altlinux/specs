@@ -2,7 +2,7 @@
 
 Name: alterator-sysconfig
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
 
@@ -26,7 +26,6 @@ Requires: alterator-l10n >= 2.2-alt3
 
 Conflicts: alterator-lookout < 0.9-alt5
 Conflicts: alterator-wizardface < 0.5-alt7
-Conflicts: alterator-browser-qt5 < 3.1.5-alt1
 
 BuildPreReq: alterator >= 3.2-alt6
 
@@ -51,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Tue Apr 14 2020 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt2
+- remove unnecessary conflict with alterator-browser-qt5
+
 * Thu Apr 09 2020 Paul Wolneykien <manowar@altlinux.org> 1.3.3-alt1
 - Fix: Added "language" notification on language change (closes: 38031).
 
