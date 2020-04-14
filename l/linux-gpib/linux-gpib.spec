@@ -1,18 +1,20 @@
-Name:          linux-gpib
-Version:       4.3.0
-Release:       alt3
+Name: linux-gpib
+Version: 4.3.0
+Release: alt5
 
-Summary:       Support package for GPIB (IEEE 488) hardware.
-Group:         System/Kernel and hardware
-URL:           http://linux-gpib.sourceforge.net/
-License:       GPL
+Summary: Support package for GPIB (IEEE 488) hardware
+Group: System/Kernel and hardware
+Url: http://linux-gpib.sourceforge.net/
+License: GPL
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-kernel docbook-utils
-BuildRequires: python-devel tcl-devel perl-devel
-Requires:      fxload firmware-gpib
+BuildRequires: python3-devel tcl-devel perl-devel
+Requires: fxload firmware-gpib
 
-Source0:       %name-%version.tar
-Source1:       %name-kernel-%version.tar.bz2
+Source0: %name-%version.tar
+Source1: %name-kernel-%version.tar.bz2
+Patch0: port-to-python3.patch
 
 %description
 The Linux GPIB Package is a support package for GPIB (IEEE 488) hardware.
@@ -26,10 +28,10 @@ Group: Development/Other
 %description devel
 This package contains development files for %name
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for %name
 Group: Development/Other
-%description -n python-module-%name
+%description -n python3-module-%name
 This package contains python bindings for %name
 
 %package -n tcl-%name
@@ -47,9 +49,11 @@ Provides: kernel-src-%name = %version-%release
 This package contains GPIB modules sources for Linux kernel.
 
 %prep
-%setup -q
+%setup
+%patch0 -p2
 
 %build
+export PYTHON=%__python3
 %autoreconf
 %configure
 %make_build
@@ -91,8 +95,8 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %_libdir/libgpib.so
 %_pkgconfigdir/*
 
-%files -n python-module-%name
-%_libdir/python2.7/site-packages/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %files -n tcl-%name
 %doc %_docdir/%name-%version/tcl-examples/*
@@ -103,6 +107,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.3.0-alt5
+- Porting to python3.
+
 * Thu Feb 06 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.3.0-alt3
 - fix callback type for driver_find_device for 5.4 kernel
 
