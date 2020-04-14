@@ -1,8 +1,8 @@
 Name: libdqlite
-Version: 1.1.0
+Version: 1.4.0
 Release: alt1
 Summary: Library for distributed SQLite database
-License: Apache v2
+License: Apache-2.0
 Group: Development/Databases
 URL: https://github.com/CanonicalLtd/dqlite
 
@@ -53,6 +53,9 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- Updated
+
 * Tue Nov 12 2019 Denis Pynkin <dans@altlinux.org> 1.1.0-alt1
 - Updated
 - Added new build/runtime requirements to libraft and libco

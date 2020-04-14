@@ -1,5 +1,5 @@
 Name: lxd_sqlite3
-Version: 3.30.1
+Version: 3.31.1
 Release: alt1
 Summary: An Embeddable SQL Database Engine with WAL replication
 License: Public Domain
@@ -80,6 +80,9 @@ rm -rf %buildroot/%_libdir/lxd/pkgconfig
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 3.31.1-alt1
+- Merged with version-3.31.1+replication4
+
 * Tue Nov 12 2019 Denis Pynkin <dans@altlinux.org> 3.30.1-alt1
 - Rebased on version-3.30.1+replication4 with unrelated history
 
