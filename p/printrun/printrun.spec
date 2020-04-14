@@ -1,24 +1,23 @@
-# prontserve is not yet ready for production
-%def_without prontserve
-
 Name:           printrun
-Version:        1.6.0
-Release:        alt2
-Epoch:          1
+Version:        2.0.0
+Release:        alt0.1.rc5
+Epoch:		1
 Summary:        RepRap printer interface and tools
 
-License:        GPLv3+
+License:        GPL-3.0+ and FSFAP
 Group:          Engineering
 URL:            https://github.com/kliment/Printrun
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
 Source0:        %name-%version.tar
+Patch0:	        975.patch
 
-BuildRequires:  rpm-build-python
-BuildRequires:  python-devel
-BuildRequires:  python-module-Cython
-BuildRequires:  python-module-Polygon
-BuildRequires:  python-module-serial
+#BuildRequires:  Cython
+BuildRequires(pre): rpm-build-python3
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-Cython
+BuildRequires:  python3-module-Polygon
+BuildRequires:  python3-module-serial
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 Requires:       pronterface = %EVR
@@ -29,8 +28,8 @@ Requires:       plater = %EVR
 Printrun is a set of G-code sending applications for RepRap.
 It consists of printcore (dumb G-code sender), pronsole (featured command line
 G-code sender), pronterface (featured G-code sender with graphical user
-interface), and a small collection of helpful scripts. Together with skeinforge
-they form a pretty powerful softwarecombo. This package installs whole Printrun.
+interface), and a small collection of helpful scripts.
+This package installs whole Printrun.
 
 %package        common
 Group:          Engineering
@@ -43,51 +42,33 @@ This package contains common files.
 %package     -n pronsole
 Summary:        CLI interface for RepRap
 Group:          Engineering
-Requires:       python-module-serial
-Requires:       skeinforge
-Requires:       %name-common = %EVR
+Requires:       python3-module-serial
+Requires:       3dprinter-udev-rules
+Requires:       %{name}-common = %{version}-%{release}
 BuildArch:      noarch
 
 %description -n pronsole
 Pronsole is a featured command line G-code sender.
-It controls the ReRap printer and integrates skeinforge.
-It is a part of Printrun.
-
-%if_with prontserve
-%package     -n prontserve
-Summary:        Web interface for RepRap
-Group:          Engineering
-Requires:       python-module-tornado
-Requires:       pronsole = %EVR
-BuildArch:      noarch
-
-%description -n prontserve
-Pronserve is a featured web G-code sender.
-It controls the ReRap printer and integrates skeinforge.
-It is a part of Printrun.
-%endif
+It controls the ReRap printer. It is a part of Printrun.
 
 %package     -n pronterface
 Summary:        GUI interface for RepRap
 Group:          Engineering
-Requires:       wxPython
-Requires:       python-module-cairosvg
-Requires:       python-module-pyglet
+Requires:       python3-module-wx
 Requires:       simarrange
-Requires:       pronsole = %EVR
+Requires:       pronsole = %{version}-%{release}
+Requires:       3dprinter-udev-rules
 BuildArch:      noarch
 
 %description -n pronterface
 Pronterface is a featured G-code sender with graphical user interface.
-It controls the ReRap printer and integrates skeinforge.
-It is a part of Printrun.
+It controls the ReRap printer. It is a part of Printrun.
 
 %package     -n plater
 Summary:        RepRap STL plater
 Group:          Engineering
-Requires:       wxPython
-Requires:       %name-common = %EVR
-Requires:       python-module-pyglet
+Requires:       python3-module-wx
+Requires:       %{name}-common = %{version}-%{release}
 Requires:       simarrange
 BuildArch:      noarch
 
@@ -95,18 +76,14 @@ BuildArch:      noarch
 Plater is a GUI tool to prepare printing plate from STL files for ReRap.
 It is a part of Printrun.
 
-
 %prep
 %setup -q
+%patch0 -p1
 # Remove unsupported module
 rm -f printrun/power/osx.py
 
-# use launchers for skeinforge
-sed -i 's|python skeinforge/skeinforge_application/skeinforge.py|skeinforge|' %name/pronsole.py
-sed -i 's|python skeinforge/skeinforge_application/skeinforge_utilities/skeinforge_craft.py|skeinforge-craft|' %name/pronsole.py
-
 %build
-%python_build
+%python3_build
 
 # rebuild locales
 cd locale
@@ -117,7 +94,7 @@ done
 cd ..
 
 %install
-%python_install
+%python3_install
 
 # Remove .py extension from executable files
 cd %buildroot%_bindir
@@ -152,8 +129,8 @@ mv %buildroot%_datadir/{metainfo,appdata}
 
 %files common
 %doc README* COPYING
-%python_sitelibdir/%name
-%python_sitelibdir/Printrun-*.egg-info
+%python3_sitelibdir/%name
+%python3_sitelibdir/Printrun-*.egg-info
 %_bindir/printcore*
 %_pixmapsdir/plater.png
 
@@ -185,6 +162,10 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/appdata/plater.appdata.xml
 
 %changelog
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.0.0-alt0.1.rc5
+- New version (ALT #38351).
+- Build with python3 and without skeinforge support.
+
 * Thu Jun 06 2019 Grigory Ustinov <grenka@altlinux.org> 1:1.6.0-alt2
 - Fix desktop files (Closes: #36763).
 
