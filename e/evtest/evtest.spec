@@ -1,6 +1,6 @@
 Name: evtest
 Version: 1.34
-Release: alt1
+Release: alt2
 
 Summary: Input device event monitor and query tool
 License: GPLv2+
@@ -12,8 +12,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: http://cgit.freedesktop.org/%name/snapshot/%name-%version.tar.gz
 
 BuildRequires: asciidoc
-BuildRequires: python-modules-compiler
-BuildRequires: python-modules-encodings
 BuildRequires: time
 BuildRequires: xmlto
 
@@ -61,6 +59,9 @@ X.Org issue.
 %_man1dir/%name.1*
 
 %changelog
+* Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.34-alt2
+- Requires fixed.
+
 * Sat Nov 09 2019 Nazarov Denis <nenderus@altlinux.org> 1.34-alt1
 - Version 1.34
 
