@@ -1,6 +1,6 @@
 %define branch 2.2
 %define version %branch.12
-%define release alt2
+%define release alt3
 %define origname Django
 %define oname django
 %define pkg_name python3-module-%oname
@@ -29,6 +29,10 @@ Obsoletes: %name-tests < %EVR
 %py3_provides django.utils.six.moves
 %py3_provides django.utils.six.moves.urllib.parse
 %py3_provides django.utils.six.moves.urllib.request
+%py3_provides django.core.management.commands.loaddata
+%py3_provides django.core.management.commands.test
+%py3_provides django.core.management.commands.runserver
+
 Conflicts: python3-module-django1.11
 Conflicts: python3-module-django1.11-tests
 
@@ -175,6 +179,9 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt3
+- add more provides
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.12-alt2
 - merge tests package to main
 - move bash-completions to %%_datadir
