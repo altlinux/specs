@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/3.2
 
 Name: wireshark
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -226,6 +226,11 @@ _EOF_
 
 
 %changelog
+* Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 3.2.3-alt1
+- 3.2.3
+- fixes:
+   * the BACapp dissector could crash. CVE-2020-11647
+
 * Wed Apr 01 2020 Anton Farygin <rider@altlinux.ru> 3.2.2-alt1
 - 3.2.2
 
