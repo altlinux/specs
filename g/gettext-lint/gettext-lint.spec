@@ -1,9 +1,9 @@
 Name: gettext-lint
 Version: 0.4
-Release: alt3.1
+Release: alt4
 
 Summary: Gettext linting tools
-License: GPL v2
+License: GPL-2.0
 URL: http://gettext-lint.sourceforge.net/
 Source: %name/%name-%version.tar.gz
 Group: Development/Other
@@ -21,6 +21,8 @@ An experimental glossary building tool is also included.
 
 %prep
 %setup -q
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %autoreconf
@@ -53,6 +55,10 @@ chmod +x %buildroot/%_datadir/%name/Glossary.py
 %_datadir/%name/*
 
 %changelog
+* Tue Apr 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.4-alt4
+- Set correct python2 executable in shebang.
+- Fix License tag according to SPDX.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4-alt3.1
 - Rebuild with Python-2.7
 
