@@ -1,6 +1,6 @@
 Name:		cpu-g
 Version:	0.16.2
-Release:	alt1
+Release:	alt1.1
 
 License:	GPLv3
 Group:		System/Kernel and hardware
@@ -13,6 +13,8 @@ Source2:	%name.desktop
 
 Patch0:		%name-patch.patch
 Patch1:		%name-0.16.2-alt_matplotlib.backends.patch
+
+Requires:	/usr/bin/glxinfo
 
 BuildArch: noarch
 
@@ -64,6 +66,9 @@ convert -resize 16x16 data/icons/cpu-g_192.png %buildroot%_miconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Tue Apr 14 2020 Motsyo Gennadi <drool@altlinux.ru> 0.16.2-alt1.1
+- fix Requires
+
 * Sat Apr 11 2020 Motsyo Gennadi <drool@altlinux.ru> 0.16.2-alt1
 - 0.16.2
 
