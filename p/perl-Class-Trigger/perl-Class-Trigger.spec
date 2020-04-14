@@ -1,28 +1,27 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-Trigger
 Name: perl-%dist
-Version: 0.14
-Release: alt3
+Version: 0.15
+Release: alt1
 
 Summary: Mixin to add / call inheritable triggers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
-BuildRequires: perl-IO-stringy perl-Test-Base perl(inc/Module/Install.pm)
+BuildRequires: perl-IO-stringy perl-Test-Base
 
 %description
 Class::Trigger is a mixin class to add / call triggers (or hooks)
 that get called at some points you specify.
 
 %prep
-%setup -q -n %dist-%version
-rm -r inc/
-sed -i /use_test_base/d Makefile.PL
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +34,9 @@ sed -i /use_test_base/d Makefile.PL
 %perl_vendor_privlib/Class
 
 %changelog
+* Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3
 - NMU: fixed build
 
