@@ -1,11 +1,11 @@
 %define _name libevent
-Name: %{_name}2_5-compat
+Name: %{_name}2
 Version: 2.0.22
 Release: alt2
 
-Summary: An asynchronous event notification library (compat version)
-Group: System/Legacy libraries
-License: BSD-3-Clause and ISC
+Summary: An asynchronous event notification library
+Group: System/Libraries
+License: BSD-style
 Url: http://www.monkey.org/~provos/libevent/
 
 # http://www.monkey.org/~provos/libevent-%version-stable.tar.gz
@@ -14,10 +14,6 @@ Source1: Makefile.sample
 Source2: README.libevent
 # git://git.altlinux.org/gears/l/%name.git
 Patch: %_name-%version-%release.patch
-Patch1: %_name-openssl-1.1.patch
-
-Provides: libevent2 = %EVR
-Obsoletes: libevent2 < %EVR
 
 %def_disable static
 BuildRequires: libssl-devel zlib-devel
@@ -34,13 +30,12 @@ select(2) and epoll(4).
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 %autoreconf
 # force epoll and /dev/epoll support
 export haveepoll=yes
-%configure %{subst_enable static}
+%configure %{subst_enable static} --disable-libevent-regress
 %make_build
 
 %install
@@ -48,20 +43,36 @@ export haveepoll=yes
 
 # Relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+	t=$(readlink "$f") || continue
+	ln -snf ../../%_lib/"$t" "$f"
+done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-rm -rf %buildroot{%_bindir,%_includedir,%_libdir}
+%define docdir %_docdir/%name-%version
+install -pD -m644 %_sourcedir/Makefile.sample \
+	%buildroot%docdir/examples/Makefile
+install -p -m644 sample/*.c %buildroot%docdir/examples/
+install -pm644 %_sourcedir/README.libevent \
+	%buildroot%docdir/README
+
+#Install man
+mkdir -p %buildroot%_man3dir
+install -p -m644 *.3 %buildroot%_man3dir/
 
 %check
-#make verify
+make verify
 
 %files
-%doc README
 /%_lib/*.so.*
+%dir %docdir
+%docdir/README
 
 %changelog
-* Mon Apr 06 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.22-alt2
-- Build compat package for legacy software (R7 Office).
+* Mon Sep 03 2018 Alexei Takaseev <taf@altlinux.org> 2.0.22-alt2
+- Fix build with openssl 1.1.x
+- Disable -devel subpackages
+- Disable regress in make check
 
 * Wed Sep 28 2016 Alexei Takaseev <taf@altlinux.org> 2.0.22-alt1
 - 2.0.22
