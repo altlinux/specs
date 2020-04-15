@@ -4,11 +4,12 @@
 %define ver_major 2.6
 %def_with graphite2
 %def_with icu
-%def_disable introspection
+%def_with gobject
+%def_enable introspection
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
@@ -22,7 +23,7 @@ Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.x
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_with_graphite2:BuildRequires: libgraphite2-devel}
@@ -46,10 +47,20 @@ Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %version-%release
 %{?_with_icu:Requires: %name-icu = %version-%release}
+%{?_with_gobject:Requires: %name-gobject = %version-%release}
 
 %description devel
 The %name-devel package contains files for developing applications that
 use HarfBuzz library.
+
+%package gobject
+Summary: GObject bindings for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gobject
+This package contains functionality to make HarfBuzz library
+integrate well with the GObject object system used by GNOME.
 
 %package devel-doc
 Summary: Development documentation for Pango
@@ -72,7 +83,7 @@ The %name-utils package provides utilities from %name package.
 %package gir
 Summary: GObject introspection data for the HarfBuzz library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name-gobject = %version-%release
 
 %description gir
 GObject introspection data for the HarfBuzz library
@@ -82,6 +93,7 @@ Summary: GObject introspection devel data for the HarfBuzz library
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the HarfBuzz library
@@ -108,7 +120,8 @@ export PYTHON=%__python3
 	--with-cairo \
 	%{subst_with icu} \
 	%{subst_with graphite2} \
-	%{?_enable_introspection:--enable-introspection=yes} \
+    %{subst_with gobject} \
+    %{subst_enable introspection} \
 	%{?_enable_snapshot:--enable-gtk-doc}
 
 %make_build
@@ -135,6 +148,11 @@ export PYTHON=%__python3
 %_pkgconfigdir/%_name-subset.pc
 %_libdir/cmake/%_name/
 %doc NEWS AUTHORS COPYING README
+%if_with gobject
+%_libdir/%name-gobject.so
+%_pkgconfigdir/%_name-gobject.pc
+%endif
+
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -150,6 +168,11 @@ export PYTHON=%__python3
 %_bindir/hb-shape
 %_bindir/hb-subset
 
+%if_with gobject
+%files gobject
+%_libdir/%name-gobject.so.*
+%endif
+
 %if_enabled introspection
 %files gir
 %_typelibdir/*.typelib
@@ -158,8 +181,11 @@ export PYTHON=%__python3
 %_girdir/*.gir
 %endif
 
-
 %changelog
+* Wed Apr 15 2020 Alexey Shabalin <shaba@altlinux.org> 2.6.4-alt3
+- build with gobject
+- enable introspection
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt2
 - build tools, tests switched to python3
 
