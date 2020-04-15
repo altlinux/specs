@@ -1,16 +1,12 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/python pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
-# END SourceDeps(oneline)
 # The git_commit define will have the complement given by git-hub to the source downloaded
 %define git_commit fadf11e
 Name:           libcwiid
 Version:        0.6.00
-Release:        alt2.20100505git%{git_commit}
+Release:        alt3.git%{git_commit}
 Summary:        Wiimote interface library
 
 Group:          System/Libraries
-License:        GPLv2+
+License:        GPL-2.0+
 URL:            http://abstrakraft.org/cwiid/
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
@@ -22,8 +18,9 @@ Source1:        wmgui.desktop
 # there is an upstream bug filed by me at http://abstrakraft.org/cwiid/ticket/105
 Patch0:         0001-Fix-missing-library-from-wmdemo.patch
 
+BuildRequires(pre): rpm-build-python
+BuildRequires: pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
 BuildRequires:  libbluez-devel gawk bison flex gtk2-devel python-devel >= 2.4 desktop-file-utils
-Source44: import.info
 
 %description
 Cwiid is a library that enables your application to communicate with
@@ -72,12 +69,15 @@ input sources like the mouse and keyboard.
 %prep
 %setup -q -n abstrakraft-cwiid-%{git_commit}
 %patch0 -p1
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' wmdemo/wmdemo.py
 
 %build
 aclocal
 autoconf
-%configure CC="gcc %{optflags}" --disable-static
-make %{?_smp_mflags}
+export PYTHON=%__python
+%configure CC="gcc %{optflags}" --disable-static --with-python=%__python
+%make_build
 
 %install
 %makeinstall_std LDCONFIG=/bin/true
@@ -113,6 +113,10 @@ desktop-file-install --dir=%buildroot%_desktopdir %{SOURCE1}
 %{_desktopdir}/wmgui.desktop
 
 %changelog
+* Wed Apr 15 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.00-alt3.gitfadf11e
+- Set correct python2 executable in shebang.
+- Fix License tag according to SPDX.
+
 * Wed Jun 19 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.00-alt2.20100505gitfadf11e
 - Initial import to Sisypus from autoimports
 - Rename to libcwiid according to ALT Linux policy
