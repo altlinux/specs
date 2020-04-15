@@ -1,12 +1,13 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.9.4
-Release:	alt2
+Version:	0.10.0
+Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
 URL:		https://github.com/iovisor/bpftrace
+Vcs:		https://github.com/iovisor/bpftrace.git
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
@@ -23,6 +24,7 @@ BuildRequires: clang%clang_version-devel-static
 BuildRequires:   lld%clang_version
 BuildRequires: libbcc-devel
 BuildRequires: libelf-devel
+BuildRequires: binutils-devel
 BuildRequires: /proc
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-modules-un-def}}
@@ -55,15 +57,15 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 	-DBUILD_TESTING:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_DIR=$(llvm-config --cmakedir) \
-	-DOFFLINE_BUILDS:BOOL=ON
+	-DOFFLINE_BUILDS:BOOL=ON \
+	-DALLOW_UNSAFE_PROBE:BOOL=ON \
 
 %cmake_build bpftrace
 
 %install
 %set_verify_elf_method relaxed
 %cmake_install install/strip DESTDIR=%buildroot
-mkdir -p %buildroot%_man8dir
-mv %buildroot/usr/man/man8/* %buildroot%_man8dir
+find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
 
 %check
 BUILD/src/bpftrace --version	 # not requires root
@@ -102,6 +104,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Apr 15 2020 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
+- Update to v0.10.0 released at 2020-04-12. New features: kfuncs,
+  C++ Symbol demangling, if-else control flow.
+
 * Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt2
 - spec: Rework BuildRequires.
 
