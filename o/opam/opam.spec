@@ -1,6 +1,6 @@
 Name: opam
 Version: 2.0.6
-Release: alt1
+Release: alt2
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -87,6 +87,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Wed Apr 15 2020 Anton Farygin <rider@altlinux.ru> 2.0.6-alt2
+- applied upstream patch for build with dune 2.5
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.0.6-alt1
 - 2.0.6
 
