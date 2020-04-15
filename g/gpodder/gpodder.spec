@@ -2,11 +2,11 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.10.13
+Version: 3.10.15
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Sound
 Url: http://gpodder.org
 
@@ -83,6 +83,9 @@ PYTHON=python3 %make unittest
 
 
 %changelog
+* Wed Apr 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.15-alt1
+- 3.10.15
+
 * Thu Jan 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.13-alt1
 - 3.10.13
 
