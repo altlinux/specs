@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       0.5.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Ruby binding to the Z39.50 Object-Orientation Model (ZOOM)
 Group:         Development/Ruby
 License:       LGPLv2.1
@@ -37,6 +37,7 @@ any ZOOM compliant implementation.
 Summary:       Development files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
 Group:         Development/Ruby
+BuildArch:     noarch
 
 Requires:      libyaz-devel
 Requires:      zlib-devel
@@ -67,6 +68,9 @@ Development files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Wed Apr 15 2020 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt3.1
+- + proper buildarch for devel package
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt3
 - ! spec tags
 

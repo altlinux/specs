@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.2.0.1
-Release:       alt4.3
+Release:       alt4.4
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -12,7 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-#BuildRequires: gem(ronn)
+BuildRequires: gem(ronn)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
@@ -25,8 +25,10 @@ document and passes the Markdown 1.0 test suite.
 %package       -n %pkgname
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 Group:         Development/Ruby
-Provides:      ruby-%pkgname
-Obsoletes:     ruby-%pkgname
+BuildArch:     noarch
+
+Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-%pkgname < %EVR
 
 %description   -n %pkgname
 Discount is an implementation of John Gruber's Markdown markup language
@@ -44,6 +46,7 @@ Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
+
 Provides:      %pkgname-doc
 Obsoletes:     %pkgname-doc
 
@@ -98,6 +101,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Wed Apr 15 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.4
+- + proper buildarch for rdiscount package
+
 * Fri Apr 03 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.3
 - * minor in build requires
 
