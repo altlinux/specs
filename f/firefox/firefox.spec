@@ -7,14 +7,14 @@
 %define gst_version   1.0
 %define nspr_version  4.25
 %define nss_version   3.51.0
-%define rust_version  1.40.0
-%define cargo_version 1.40.0
+%define rust_version  1.42.0
+%define cargo_version 1.42.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        74.0
+Version:        75.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,8 +47,7 @@ Patch007: 0007-ALT-Fix-aarch64-build.patch
 Patch008: 0008-ALT-Remove-deprecated-register-keyword.patch
 Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch011: 0011-MOZILLA-1620973-Wayland-Make-opaque-regions-configur.patch
-Patch012: 0012-MOZILLA-1609538-Wayland-Fullscreen-does-not-work-wit.patch
+Patch011: 0011-MOZILLA-1623060-Wayland-Respect-GtkWidget-size-then-.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -84,7 +83,7 @@ BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libproxy-devel
 BuildRequires: libshell
-BuildRequires: libvpx5-devel
+BuildRequires: libvpx-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
@@ -108,6 +107,7 @@ BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+BuildRequires: python3-modules-sqlite3
 
 # Rust requires
 BuildRequires: /proc
@@ -202,7 +202,6 @@ Most likely you don't need to use this package.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
-%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -450,6 +449,16 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Apr 08 2020 Alexey Gladkov <legion@altlinux.ru> 75.0-alt1
+- New release (75.0).
+- Security fixes:
+  + CVE-2020-6821: Uninitialized memory could be read when using the WebGL copyTexSubImage method
+  + CVE-2020-6822: Out of bounds write in GMPDecodeData when processing large images
+  + CVE-2020-6823: Malicious Extension could obtain auth codes from OAuth login flows
+  + CVE-2020-6824: Generated passwords may be identical on the same site between separate private browsing sessions
+  + CVE-2020-6825: Memory safety bugs fixed in Firefox 75 and Firefox ESR 68.7
+  + CVE-2020-6826: Memory safety bugs fixed in Firefox 75
+
 * Thu Mar 12 2020 Alexey Gladkov <legion@altlinux.ru> 74.0-alt1
 - New release (74.0).
 - Security fixes:
