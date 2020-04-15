@@ -2,8 +2,8 @@ Packager: Alex Negulescu <alecs@altlinux.org>
 Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
 Name: txt2tags
 Version: 2.6
-Release: alt1.1
-License: GPL
+Release: alt1.2
+License: GPL-2.0
 Group: Text tools
 URL: http://txt2tags.sourceforge.net/
 Source: http://dl.sf.net/txt2tags/txt2tags-%{version}.tgz
@@ -21,6 +21,8 @@ no external commands or libraries are needed.
 
 %prep
 %setup
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 for file in $(ls -1 po/*.po); do
 	msgfmt -o ${file//.po/.mo} $file
 done
@@ -54,17 +56,20 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 # for ones installed as %%doc
 find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 
-%clean
-%__rm -rf %buildroot
+%find_lang %name
 
-%files
-%defattr(-, root, root, 0755)
+%files -f %name.lang
 %doc ChangeLog COPYING README doc/*.pdf extras/ samples/
 %_datadir/man/man1/txt2tags.1*
 %_datadir/man/*/man1/txt2tags.1*
 %_bindir/*
 
 %changelog
+* Wed Apr 15 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1.2
+- Set correct python2 executable in shebang
+- Fix License tag according to SPDX.
+- Package localization files.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.6-alt1.1
 - Rebuild with Python-2.7
 
