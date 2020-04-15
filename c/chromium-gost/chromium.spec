@@ -30,7 +30,7 @@
 
 Name:           chromium-gost
 Version:        80.0.3987.132
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -154,7 +154,6 @@ BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
-BuildRequires:  python2-base
 BuildRequires:  python-modules-json
 BuildRequires:  python-modules-distutils
 BuildRequires:  node
@@ -390,10 +389,6 @@ n=%build_parallel_jobs
 [ "$n" -lt 16 ] || n=16
 
 
-## XXX no need?
-##ar r empty.a
-##gcc -shared empty.a -Wl,-soname=libcapi20.so.4 -o libcapi20.so
-##gcc -shared empty.a -Wl,-soname=libcapi10.so.4 -o libcapi10.so
 %ifnarch %{ix86} x86_64
 %define GOSTCFLAGS -DPROCESSOR_TYPE=-1 -O2 -g
 %else
@@ -545,6 +540,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Apr 14 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt2
+- Fix build reqiores
+
 * Sat Apr 04 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt1
 - Build GOST version
 
