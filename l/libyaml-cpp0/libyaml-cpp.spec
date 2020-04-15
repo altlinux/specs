@@ -4,8 +4,8 @@
 %define soversion 0
 
 Name: lib%origname%soversion
-Version: 0.6.2
-Release: alt2
+Version: 0.6.3
+Release: alt1
 
 Summary: A YAML parser and emitter for C++
 License: MIT
@@ -16,9 +16,7 @@ Url: https://github.com/jbeder/yaml-cpp
 # https://github.com/jbeder/yaml-cpp.git
 Source: %name-%version.tar
 
-Patch0: yaml-cpp-static.patch
-Patch1: yaml-cpp-include_dir.patch
-Patch2: CVE-2017-5950.patch
+Patch1: CVE-2017-5950.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-devel-headers cmake gcc-c++
@@ -41,15 +39,13 @@ This package contains static development files for YAML.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %cmake \
-	-DBUILD_SHARED_LIBS=ON \
-	-DYAML_CPP_BUILD_TOOLS=OFF \
-	-DYAML_CPP_BUILD_TESTS=OFF \
+	-DYAML_BUILD_SHARED_LIBS:BOOL=ON \
+	-DYAML_CPP_BUILD_TOOLS:BOOL=OFF \
+	-DYAML_CPP_BUILD_TESTS:BOOL=OFF \
 	%nil
 
 %cmake_build
@@ -68,6 +64,9 @@ This package contains static development files for YAML.
 %_libdir/cmake/%origname
 
 %changelog
+* Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
+- Updated to upstream version 0.6.3.
+
 * Mon Oct 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.2-alt2
 - Applied patches from Fedora (Fixes: CVE-2017-5950)
 
