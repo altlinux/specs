@@ -5,7 +5,7 @@
 
 Name: lib%_name
 Version: 1.3.14
-Release: alt1
+Release: alt2
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -26,8 +26,12 @@ Provides: %_name = %version-%release
 Patch1: graphite2-1.2.0-cmakepath.patch
 # lcc/e2k fixup
 Patch2: graphite2-1.3.13-alt-e2k-lcc123.patch
+Patch3: graphite2-1.3.13-alt-e2k-linking.patch
 
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
+%ifarch %e2k
+BuildRequires: libstdc++5-devel-static
+%endif
 %{?_enable_docs:BuildRequires: doxygen asciidoc-a2x dblatex %_bindir/pdflatex}
 %{?_enable_check:BuildRequires: python3-module-fonttools}
 
@@ -52,24 +56,14 @@ Includes and definitions for developing with Graphite2.
 %setup -n %_name-%version
 %patch1 -p1 -b .cmake
 %patch2 -p1 -b .e2k-lcc123
+%patch3 -p2 -b .e2k-linking
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-
-%ifarch %e2k
-sed -i 's,LINKER_LANGUAGE C,&XX,' `find -name CMakeLists.txt\*`
-%endif
-
 %cmake -DGRAPHITE2_COMPARE_RENDERER=OFF \
 	-DCMAKE_SHARED_LINKER_FLAGS=$LIBS \
-	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3
-
-%ifarch %e2k
-# looks like libgraphite2.so.3 must be linked with -lstdc++ but even g++
-# used as the linker doesn't do that exactly due to -nodefaultlibs
-sed -i 's,-nodefaultlibs ,,' BUILD/src/CMakeFiles/graphite2.dir/link.txt
-%endif
-
+	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 %cmake_build
 
 %if_enabled docs
@@ -94,10 +88,13 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %dir %_libdir/%_name/
 %_libdir/%_name/%_name-release.cmake
 %_libdir/%_name/%_name.cmake
-%_libdir/pkgconfig/%_name.pc
+%_pkgconfigdir/%_name.pc
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Wed Apr 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2
+- updated E2K patches/fixes from git.e2k:/gears/l/libgraphite2.git
+
 * Mon Apr 13 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt1
 - 1.3.14
 
