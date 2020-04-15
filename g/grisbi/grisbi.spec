@@ -1,17 +1,19 @@
-Name: 	 grisbi
-Version: 1.0.0
-Release: alt2
+%define _unpackaged_files_terminate_build 1
 
+Name: 	 grisbi
+Version: 1.2.2
+Release: alt1
 Summary: Personal finance application
 Summary(ru_RU.UTF-8): Программа персонального учёта финансов
-License: GPL
-Group:   Office 
-URL:     http://www.grisbi.org
+License: GPLv2+
+Group:   Office
+URL:     https://www.grisbi.org
 
-Source:  http://prdownloads.sourceforge.net/grisbi/%name-%version.tar.bz2
-# VCS    git://git.code.sf.net/p/grisbi/code
+# https://github.com/grisbi/grisbi
+Source: %name-%version.tar
 
-BuildRequires: glib2-devel libatk-devel libgtk+2-devel libpango-devel libxml2-devel pkgconfig zlib-devel intltool
+BuildRequires: glib2-devel libatk-devel libgtk+3-devel libpango-devel libxml2-devel pkgconfig zlib-devel intltool
+BuildRequires: libgsf-devel
 
 %description
 Grisbi is a personal finance application for Linux, written
@@ -22,15 +24,15 @@ Grisbi - это программа персонального учёта фин�
 написанная под Gnome и Gtk и распространяемая на условиях GPL.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
 %configure
-%make_build 
+%make_build
 
 %install
-%makeinstall_std 
+%makeinstall_std
 
 %find_lang %name
 
@@ -40,14 +42,18 @@ Grisbi - это программа персонального учёта фин�
 %_datadir/%name/*
 %_datadir/mime-info/%name.keys
 %_datadir/mime-info/%name.mime
-%_datadir/mime/packages
+%_datadir/mime/packages/%{name}.xml
+%_datadir/glib-2.0/schemas/*.xml
 %_desktopdir/%name.desktop
 %_pixmapsdir/%{name}*
 %_iconsdir/hicolor/scalable/apps/grisbi.svg
 %doc %_docdir/%name/*
-%doc %_man1dir/%name.1*
+%_man1dir/%name.1*
 
 %changelog
+* Wed Apr 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
+- Updated to upstream version 1.2.2.
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
 - Updated spec to allow any man pages compression.
 
