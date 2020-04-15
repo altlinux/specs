@@ -12,7 +12,7 @@
 %define tmp_vztt_conf %vztmp/tmp_vztt_conf
 
 Name: vztt
-Version: 7.0.68
+Version: 7.0.69
 Release: alt1
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Wed Apr 15 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.69-alt1
+- 7.0.69
+
 * Tue Nov 12 2019 Andrew A. Vasilyev <andy@altlinux.org> 7.0.68-alt1
 - 7.0.68
 
