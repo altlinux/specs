@@ -1,6 +1,6 @@
 Name: libflowcanvas
 Version: 0.7.1
-Release: alt2
+Release: alt3
 
 Summary: A canvas widget for graph-like interfaces
 License: %gpl2plus
@@ -8,13 +8,18 @@ Group: System/Libraries
 
 Url: http://drobilla.net/software/flowcanvas/
 Source: %name-%version.tar.bz2
+Source1: waflib-1.6.2.tar
+Source2: waf
 Patch: graphviz23.patch
 Packager: Timur Batyrshin <erthad@altlinux.org>
 
-BuildPreReq: rpm-build-licenses
-# Automatically added by buildreq on Thu Aug 07 2014
-# optimized out: fontconfig fontconfig-devel glib2-devel libart_lgpl-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgnomecanvas-devel libgtk+2-devel libgtkmm2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel pkg-config python-base python-modules python-modules-compiler python-modules-ctypes python-modules-encodings python-modules-logging
-BuildRequires: boost-devel-headers gcc-c++ libgnomecanvasmm-devel libgraphviz-devel
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: gcc-c++
+BuildRequires: boost-devel-headers
+BuildRequires: libgnomecanvasmm-devel
+BuildRequires: libgraphviz-devel
+BuildRequires: python-modules
+BuildRequires: python-modules-logging
 
 %description
 FlowCanvas is an interactive Gtkmm/Gnomecanvasmm widget for "boxes and lines"
@@ -32,15 +37,18 @@ Headers for building software that uses %name
 
 %prep
 %setup
+tar xf %SOURCE1
+rm -f waf
+cp %SOURCE2 waf
 %patch -p1
 
 %build
 export CXXFLAGS=-std=gnu++11
-./waf configure --prefix %_prefix --libdir %_libdir
-./waf build
+%__python waf configure --prefix %_prefix --libdir %_libdir
+%__python waf build
 
 %install
-./waf install --destdir %buildroot
+%__python waf install --destdir %buildroot
 
 %files
 %_libdir/*.so.*
@@ -52,6 +60,9 @@ export CXXFLAGS=-std=gnu++11
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 15 2020 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt3
+- Fix build by extract waflib and use custom waf for build.
+
 * Wed Oct 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt2
 - Fix build with gcc5
 
