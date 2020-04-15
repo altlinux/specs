@@ -1,6 +1,6 @@
 Name: edac-utils
 Version: 0.16
-Release: alt2.qa1
+Release: alt3
 
 Summary: Userspace helper for kernel EDAC drivers (ECC)
 Group: System/Kernel and hardware
@@ -34,6 +34,7 @@ edac-based software.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make
 
@@ -61,6 +62,13 @@ mv %buildroot/etc/init.d/edac %buildroot/%_initdir
 %_includedir/edac.h
 
 %changelog
+* Wed Apr 15 2020 Nikita Ermakov <arei@altlinux.org> 0.16-alt3
+- Use autoreconf to update the configure script. This fixes riscv64
+  build because old configure was configured with old libtool version
+  which did not contained riscv64 support. As a result the configure
+  script would set wrong sys_lib_search_path_spec and libtool adds
+  RPATH to src/util/edac_util.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
