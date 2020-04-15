@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname nibabel
 
-%def_enable docs
-%def_with python3
+%def_disable docs
 
-Name: python-module-%oname
-URL: http://niftilib.sf.net/pynifti/
-Summary: Easy access to NIfTI images from within Python
+Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
+
+Summary: Easy access to NIfTI images from within Python
 License: MIT
+Group: Development/Python3
+URL: http://niftilib.sf.net/pynifti/
+
 BuildArch: noarch
-Group: Development/Python
 
 # https://github.com/nipy/nibabel.git
 Source: %oname-%version.tar
@@ -21,19 +21,11 @@ Source1: nitest-balls1.tar
 # git://github.com/matthew-brett/nitest-minc2.git
 Source2: nitest-minc2.tar
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-numpy-testing python-module-nose
-BuildRequires: python-modules-sqlite3
-BuildRequires: python-module-alabaster python-module-html5lib python-module-numpydoc python-module-objects.inv python-module-sphinx-pickles
-BuildRequires: python2.7(matplotlib) python2.7(matplotlib.sphinxext.plot_directive) python2.7(texext)
-BuildRequires: python2.7(mock)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-numpy-testing
-BuildRequires: python3(six)
-%endif
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-numpy
 
-%setup_python_module %oname
+Conflicts: python-module-%oname
 
 %description
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -45,36 +37,9 @@ While NiBabel is not yet complete (i.e. doesn't support everything the
 C library can do), it already provides access to the most important
 features of the NIfTI-1 data format and libniftiio capabilities.
 
-%package -n python3-module-%oname
-Summary: Easy access to NIfTI images from within Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-NiBabel aims to provide easy access to NIfTI images from within Python.
-It uses SWIG-generated wrappers for the NIfTI reference library and
-provides the nifti.image.NiftiImage class for Python-style access to the
-image data.
-
-While NiBabel is not yet complete (i.e. doesn't support everything the
-C library can do), it already provides access to the most important
-features of the NIfTI-1 data format and libniftiio capabilities.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for NiBabel
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-NiBabel aims to provide easy access to NIfTI images from within Python.
-It uses SWIG-generated wrappers for the NIfTI reference library and
-provides the nifti.image.NiftiImage class for Python-style access to the
-image data.
-
-This package contains tests for NiBabel.
-
 %package tests
 Summary: Tests for NiBabel
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -86,7 +51,6 @@ image data.
 This package contains tests for NiBabel.
 
 %if_enabled docs
-
 %package doc
 Summary: Documentation and examples for NiBabel
 Group: Development/Documentation
@@ -102,7 +66,7 @@ This package contains documentation and examples for NiBabel.
 
 %package pickles
 Summary: Pickles for NiBabel
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -111,7 +75,6 @@ provides the nifti.image.NiftiImage class for Python-style access to the
 image data.
 
 This package contains pickles for NiBabel.
-
 %endif
 
 %prep
@@ -122,104 +85,63 @@ tar -xf %SOURCE1
 tar -xf %SOURCE2
 popd
 
-%if_with python3
-cp -R . ../python3
-%endif
-
 %if_enabled docs
-sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
-%prepare_sphinx doc
-ln -s ../objects.inv doc/source/
+sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
+sed -i 's|PYTHON ?=.*|PYTHON ?= %__python3|g' doc/Makefile
+sed -i 's|sphinx-build|&-3|' doc/Makefile
 %endif
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	2to3 -w -n $i
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %if_enabled docs
-cp -f doc/source/conf.py %buildroot%python_sitelibdir
-export PYTHONPATH=%buildroot%python_sitelibdir
+cp -f doc/source/conf.py %buildroot%python3_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd doc
 %make html
 popd
 
-#install -d %buildroot%_docdir/%oname/pdf
 install -d %buildroot%_docdir/%oname
 cp -fR build/html %buildroot%_docdir/%oname/
-#install -m644 build/latex/*.pdf %buildroot%_docdir/%oname/pdf
-cp -fR build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-rm -f %buildroot%python_sitelibdir/conf.py
+rm -f %buildroot%python3_sitelibdir/conf.py
 
 %files
 %doc AUTHOR Changelog COPYING
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %if_enabled docs
-%exclude %python_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/%oname/pickle
 %endif
-%exclude %python_sitelibdir/%oname/testing
-%exclude %python_sitelibdir/*/test*
-%exclude %python_sitelibdir/%oname/*/test*
-%exclude %python_sitelibdir/%oname/*/*/test*
+%exclude %python3_sitelibdir/%oname/testing
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/%oname/*/test*
+%exclude %python3_sitelibdir/%oname/*/*/test*
 
 %if_enabled docs
 %files doc
 %_docdir/%oname
 
 %files pickles
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname/pickle
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle
 %endif
 
 %files tests
-%python_sitelibdir/%oname/testing
-%python_sitelibdir/*/test*
-%python_sitelibdir/%oname/*/test*
-%python_sitelibdir/%oname/*/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHOR Changelog COPYING
-%_bindir/*.py3
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/test*
-
-%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/testing
 %python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/test*
-%endif
+%python3_sitelibdir/%oname/*/test*
+%python3_sitelibdir/%oname/*/*/test*
 
 %changelog
+* Wed Apr 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt2
+- Build for python2 disabled.
+
 * Fri Sep 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 
