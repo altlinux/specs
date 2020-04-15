@@ -1,4 +1,4 @@
-%def_without system_celt
+%def_with system_celt
 
 %define _pseudouser_user     _mumble
 %define _pseudouser_group    _mumble
@@ -6,8 +6,8 @@
 %define _pidfile_dir         /run/
 
 Name: mumble
-Version: 1.2.19
-Release: alt5
+Version: 1.3.0
+Release: alt1
 
 Summary: Low latency encrypted VoIP client
 
@@ -18,12 +18,18 @@ Packager: Arseny Maslennikov <arseny@altlinux.org>
 
 # VCS0: git://github.com/mumble-voip/mumble.git
 Source0: %name-%version.tar
-# VCS1: git://github.com/mumble-voip/celt-0.7.0-src.git
-Source1: celt-0.7.0-src.tar
-# VCS2: git://github.com/mumble-voip/celt-0.11.0-src.git
-Source2: celt-0.11.0-src.tar
+# VCS1: git://github.com/mumble-voip/celt-0.7.0.git
+#Source1: celt-0.7.0-src.tar
+# VCS2: git://github.com/mumble-voip/celt-0.11.0.git
+#Source2: celt-0.11.0-src.tar
+# VCS3: git://github.com/mumble-voip/rnnoise.git
+Source3: rnnoise-src.tar
+# VCS4: git://github.com/mumble-voip/mumble-theme.git
+Source4: mumble-theme-src.tar
 
 Patch: %name-%version-%release.patch
+Patch1: link-mumble-with-lGL.patch
+Patch2: link-overlay-with-lGL.patch
 
 %if_with system_celt
 %define celtopts celt no-bundled-celt
@@ -31,7 +37,9 @@ Patch: %name-%version-%release.patch
 %define celtopts celt bundled-celt
 %endif
 
-BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel libalsa-devel libavahi-devel libcap-devel libogg-devel libprotobuf-devel libpulseaudio-devel libqt4-devel libsndfile-devel libspeechd-devel protobuf-compiler
+# Automatically added by buildreq on Sat Apr 25 2020
+BuildRequires: boost-devel-headers libalsa-devel libavahi-devel libcap-devel libprotobuf-devel libpulseaudio-devel libqtav-devel libsndfile-devel libspeechd-devel libssl-devel protobuf-compiler python-modules-xml qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-webview-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+
 BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
 
@@ -40,7 +48,7 @@ BuildRequires: libcelt-devel
 Requires: libcelt >= 0:0.7.0-alt1
 %endif
 
-Requires: libqt4-sql-sqlite
+Requires: qt5-sql-sqlite3
 
 %description
 Mumble is a low-latency, high quality voice chat program primarily intended
@@ -54,7 +62,7 @@ Summary: Mumble voice chat server
 Group: System/Servers
 Provides: %name-server = %version-%release
 
-Requires: libqt4-sql-sqlite
+Requires: qt5-sql-sqlite3
 
 %description -n murmur
 Murmur is the VoIP server component for Mumble. Murmur is installed
@@ -97,12 +105,20 @@ This package is part of Mumble, a low-latency, high quality VoIP suite
 primarily intended for gaming. It provides a KIO protocol description.
 
 %prep
-%setup -a1 -a2
+#setup -a1 -a2
+%setup -a3 -a4
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %add_optflags -fpermissive
-qmake-qt4 -recursive "CONFIG+=no-oss no-ice speex no-bundled-speex %celtopts opus no-bundled-opus no-g15 no-embed-qt-translation no-update c++11" \
+qmake-qt5 -recursive \
+"CONFIG*=release" \
+"CONFIG*=packaged" \
+"CONFIG*=no-oss no-ice" \
+"CONFIG*=speex no-bundled-speex %celtopts opus no-bundled-opus" \
+"CONFIG*=no-g15 no-embed-qt-translation no-update c++11" \
 QMAKE_CFLAGS+='%optflags' \
 QMAKE_CXXFLAGS+='%optflags' \
 DEFINES+=PLUGIN_PATH=%_libdir/%name \
@@ -213,14 +229,18 @@ mkdir -p %buildroot%_logdir/murmur/
 %endif
 
 %files overlay
+%add_findreq_skiplist %_bindir/%name-overlay
 %_bindir/%name-overlay
 
 %files protocol
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Wed Apr 15 2020 Arseny Maslennikov <arseny@altlinux.org> 1.3.0-alt1
+- 1.2.19 -> 1.3.0.
+
 * Mon Mar 25 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.19-alt5
-- build in c++-11 mode
+- Built in c++11 mode.
 
 * Sun Jan 20 2019 Arseny Maslennikov <arseny@altlinux.org> 1.2.19-alt4
 - murmur.service: Fixed wrong path to executable in ExecStart=.
