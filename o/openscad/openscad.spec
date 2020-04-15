@@ -1,6 +1,6 @@
 Name: openscad
 Version: 2019.05
-Release: alt3
+Release: alt4
 Summary: The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -14,10 +14,12 @@ Source1: ru.po
 #Source-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Patch: openscad-polyclipping.patch
 Patch1: %name-%version-upstream-boost-compat.patch
+Patch2: %name-%version-upstream-cgal-compat.patch
+Patch3: %name-%version-upstream-cgal-compat-2.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake
-BuildRequires: cgal libcgal-devel libcgal-qt5-devel
+BuildRequires: cgal-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
 BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
@@ -73,6 +75,8 @@ changes, however many things are already working.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 cp -f %SOURCE1 locale/ru.po
 
 # Remove unwanted things from MCAD, such as nonworking Python tests
@@ -135,6 +139,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Wed Apr 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt4
+- Rebuilt with cgal 5.0.2.
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt3
 - Rebuilt with boost-1.72.0.
 
