@@ -1,24 +1,37 @@
+%define _unpackaged_files_terminate_build 1
+# Suppress warning emerging from mentioning this macro in changelog
+%define _sysconfigdir /etc
+
+# Enable cmake RPATH for unit tests
+%global _cmake_skip_rpath %nil
+
 Name: libnss-role
-Version: 0.4.1
-Release: alt1.1
+Version: 0.5.0
+Release: alt1
 
 Summary: NSS API library and admin tools for roles and privilegies
 
 License: LGPLv2.1
-URL: https://github.com/Etersoft/libnss-role
+URL: https://github.com/altlinux/libnss-role
 Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# https://github.com/Etersoft/libnss-role.git
+# https://github.com/altlinux/libnss-role.git
 Source: %name-%version.tar
-Patch: libnss-role-0.4.1-alt-scons304.patch
 
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 
-BuildRequires: glibc-devel scons
-BuildRequires: libpam-devel
+BuildRequires: glibc-devel
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: libcmocka
+BuildRequires: libcmocka-devel
+BuildRequires: libpam0
+BuildRequires: libpam0-devel
+
+Requires: libpam0
 
 %description
 NSS API library and admin tools for roles and privilegies.
@@ -34,15 +47,22 @@ NSS API library for roles and privilegies.
 
 %prep
 %setup
-%patch -p1
 
 %build
-scons-3
+%cmake \
+	-DNSS_LIBDIR=/%_lib \
+	-DROLE_LIBDIR=%_libdir \
+	-DMANDIR=%_man8dir \
+	-DCMAKE_INSTALL_PREFIX:PATH=%_prefix
+%cmake_build
+
+%check
+cd BUILD
+%make_build test
+mkdir -p %buildroot%_sysconfdir/role.d
 
 %install
-scons-3 install DESTDIR=%buildroot LIBDIR=%_libdir LIBSYSDIR=/%_lib
-mkdir -p %buildroot%_sysconfdir
-install -m644 role.default %buildroot%_sysconfdir/role
+%cmakeinstall_std
 
 %post
 if [ "$1" = "1" ]; then
@@ -62,7 +82,8 @@ fi
 update_chrooted all
 
 %files
-%config(noreplace) %_sysconfdir/role
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/role
+%dir %_sysconfdir/role.d
 %_sysconfdir/pam.d/role*
 /%_lib/libnss_*.so.*
 %_sbindir/*
@@ -75,6 +96,11 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Wed Apr 15 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.5.0-alt1
+- Add support /etc/role.d directory as addition installable configuration
+- Replace build system to cmake
+- Add unit testing
+
 * Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1.1
 - NMU: fixed SConstruct
 
