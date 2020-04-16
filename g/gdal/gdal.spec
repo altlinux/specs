@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1
+Release: alt1.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -119,6 +119,10 @@ Perl modules for GDAL/OGR.
 
 %build
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
+%ifarch %e2k
+# lcc 1.23 can't do those __builtin_functions (mcst#3588)
+%add_optflags -D__INTEL_COMPILER
+%endif
 %configure \
         --enable-static=no \
         --disable-rpath \
@@ -157,7 +161,12 @@ Perl modules for GDAL/OGR.
 	--with-xerces-lib=%_libdir\
 	--without-pcraster        \
 	--with-threads \
-	--with-netcdf=%prefix
+	--with-netcdf=%prefix \
+%ifnarch x86_64
+	--with-avx=no \
+	--with-sse=no \
+	--with-ssse3=no
+%endif
 #	--with-grass=%_libdir/grass62 \
 
 %if_with perl
@@ -242,6 +251,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Thu Apr 16 2020 Michael Shigorin <mike@altlinux.org> 3.0.4-alt1.1
+- E2K: fix build with lcc 1.23
+
 * Thu Feb 27 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.0.4-alt1
 - update to 3.0.4
 - unconditional python3
