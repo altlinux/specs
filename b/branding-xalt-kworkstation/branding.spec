@@ -17,7 +17,7 @@
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -158,7 +158,7 @@ BuildArch: noarch
 Summary: MATE settings for %ProductName
 License: Distributable
 Group:   Graphical desktop/GNOME
-Requires: gksu
+Requires: beesu
 Requires: dconf
 %description mate-settings
 MATE settings for %ProductName
@@ -434,6 +434,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Apr 16 2020 Sergey V Turchin <zerg at altlinux dot org> 9.0.7-alt2
+- require beesu instead of gksu
+
 * Fri Mar 27 2020 Sergey V Turchin <zerg at altlinux dot org> 9.0.7-alt1
 - update indexhtml
 
