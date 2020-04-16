@@ -4,7 +4,7 @@
 
 Name:          selenium
 Version:       3.142.7
-Release:       alt1
+Release:       alt1.1
 Summary:       A browser automation framework and ecosystem
 License:       Apache-2.0
 Group:         Development/Tools
@@ -17,6 +17,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem-%pkgname = %version
 
 %description
@@ -34,6 +35,9 @@ Summary:       Library files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы библиотеки для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description   -n gem-%pkgname
 Library files for %gemname gem.
@@ -80,6 +84,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Apr 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.142.7-alt1.1
+- + obsolete/provides pair for gem-selenium-webdriver
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.142.7-alt1
 - updated (^) 3.141.59 -> 3.142.7
 - changed (*) spec
