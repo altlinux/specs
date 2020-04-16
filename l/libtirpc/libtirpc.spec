@@ -1,5 +1,5 @@
 Name: libtirpc
-Version: 1.0.3
+Version: 1.2.6
 Release: alt1
 
 Summary: transport-independent RPC library
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Thu Apr 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.6-alt1
+- 1.2.6 released
+
 * Thu Jul 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.3-alt1
 - 1.0.3 released
 
