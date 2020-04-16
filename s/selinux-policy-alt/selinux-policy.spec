@@ -6,8 +6,8 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
 Version: 0.0.50
-Release: alt3
-License: %distributable
+Release: alt4
+License: Distributable
 Group: System/Base
 Source: %name-%date.tar
 BuildArch: noarch
@@ -266,6 +266,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/allow_smb.pp
 
 %changelog
+* Thu Apr 16 2020 Anton Farygin <rider@altlinux.ru> 0.0.50-alt4
+- FTBFS: change License tag to Distributable
+
 * Thu Aug 08 2019 Denis Medvedev <nbr@altlinux.org> 0.0.50-alt3
 - to sisyphus
 
