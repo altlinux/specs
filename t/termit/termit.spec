@@ -1,44 +1,47 @@
-%define _unpackaged_files_terminate_build 1
+%define        _unpackaged_files_terminate_build 1
 
-Name: termit
-Version: 2.5.0
-Release: alt3.qa2
+Name:          termit
+Version:       3.1
+Release:       alt1
+Summary:       Minimalistic terminal emulator with tabs and encoding support
+Url:           https://github.com/nonstop/termit/wiki
+Vcs:           https://github.com/nonstop/termit.git
+License:       GPLv3
+Group:         Terminals
+Packager:      Maxim Ivanov <redbaron@altlinux.org>
 
-Summary: Minimalistic terminal emulator with tabs and encoding support
-Url: http://code.google.com/p/termit/
-License: GPLv2
-Group: Terminals
-Packager: Maxim Ivanov <redbaron@altlinux.org>
+Source0:       %name-%version.tar
+Source1:       %name-init.lua
+Patch:         ru.po.patch
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: desktop-file-utils
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libgtk+3-devel
+BuildRequires: libvte3-devel
+BuildRequires: libtinfo-devel
+BuildRequires: libpixman-devel
+BuildRequires: libXau-devel
+BuildRequires: liblua5.3-devel
 
-#http://termit.googlecode.com/files/%name-%version.tar.bz2
-Source0: %name-%version.tar
-Source1: %name-init.lua
-Source2: ru.po
-
-Patch0: %name-%version-%release.patch
-Patch1: %name.desktop.icon.patch
-
-Provides: xvt, %_bindir/xvt
-PreReq: alternatives >= 0:0.2.0-alt0.12
-BuildRequires: desktop-file-utils cmake libvte-devel gcc-c++ libtinfo-devel 
-BuildRequires: libpixman-devel liblua5.1-devel libXau-devel
+Provides:      xvt, %_bindir/xvt
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
+Requires:      fonts-ttf-paratype-pt-mono
 
 %description
-Simple terminal emulator based on vte library. 
+Simple terminal emulator based on vte library.
 
 Features:
-    * multiple tabs
-    * switching encodings
-    * sessions
-    * configurable keybindings
-    * embedded Lua
-    * xterm-like dynamic window title 
+ * multiple tabs
+ * switching encodings
+ * sessions
+ * configurable keybindings
+ * embedded Lua
+ * xterm-like dynamic window title
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-cp %SOURCE2 po/ru.po
+%patch
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX=%_prefix .
@@ -53,9 +56,9 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/xvt %_bindir/termit 40
 EOF
 
-install -m644 -D %SOURCE1 %buildroot%_sysconfdir/xdg/termit/init.lua
-sed -ie 's!@docdir@!%_docdir!g' %buildroot%_sysconfdir/xdg/termit/init.lua
-sed -ie 's!@name@!%name!g' %buildroot%_sysconfdir/xdg/termit/init.lua
+install -m644 -D %SOURCE1 %buildroot%_sysconfdir/xdg/termit/rc.lua
+sed -ie 's!@docdir@!%_docdir!g' %buildroot%_sysconfdir/xdg/termit/rc.lua
+sed -ie 's!@name@!%name!g' %buildroot%_sysconfdir/xdg/termit/rc.lua
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=System \
@@ -68,8 +71,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_docdir/%name
 %_man1dir/*
 %_sysconfdir/xdg/*
+%_metainfodir/%name.metainfo.xml
 
 %changelog
+* Thu Apr 16 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1
+- ^ 2.5.0 -> 3.1
+- * configuration lua-file
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt3.qa2
 - NMU: rebuild with new lua 5.1
 
@@ -88,7 +96,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 - new version
 
 * Mon Jun 08 2009 Maxim Ivanov <redbaron at altlinux.org> 2.2.0-alt2
-- fix missing buildreq 
+- fix missing buildreq
 
 * Sun Apr 19 2009 Maxim Ivaniv <redbaron at altlinux.org> 2.2.0-alt1
 - 2.2.0
