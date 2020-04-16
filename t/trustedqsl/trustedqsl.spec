@@ -4,12 +4,12 @@
 # be updated even if it should be.
 %global srcname tqsl
 %global libtqslver 2.5
-%define tqslver 2.5.2
+%define tqslver 2.5.3
 
 Name:           trustedqsl
 Version:        %tqslver
 # Warning: because libtqslver has different version, always increase release number
-Release:        alt15
+Release:        alt16
 Summary:        TrustedQSL ham-radio applications
 
 
@@ -110,6 +110,9 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Thu Apr 16 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt16
+- New version.
+
 * Wed Apr 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt15
 - New version.
 
