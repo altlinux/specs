@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt7
+Release: alt8
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -277,6 +277,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Wed Apr 15 2020 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt8
+- Fix: Restore the default (false) value of user-authority-in-system-dir
+  (related to altbug 38336).
+
 * Fri Mar 13 2020 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt7
 - Added patches to install the ALT-specific files.
 - Split the patches.
