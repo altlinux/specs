@@ -2,7 +2,7 @@
 
 Name: liblensfun
 Version: 0.3.2
-Release: alt4
+Release: alt5
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: https://lensfun.github.io
 
 # https://github.com/lensfun/lensfun.git
 Source: lensfun-%version.tar
+Patch1: lensfun-0.3.2-alt-pkexec.patch
 
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
 BuildRequires: doxygen rpm-build-python3 python3-module-setuptools python3-module-docutils
@@ -39,6 +40,7 @@ adapters in lensfun.
 
 %prep
 %setup -n lensfun-%version
+%patch1 -p2
 
 %build
 %cmake \
@@ -78,6 +80,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Thu Apr 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt5
+- Replaced gksudo with pkexec.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt4
 - Fixed build.
 
