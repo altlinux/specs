@@ -3,7 +3,7 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 Name: python3-module-%oname
 License: public domain, Python, BSD, GPL (see COPYING.txt)
@@ -34,13 +34,16 @@ what-you-see-is-what-you-get plaintext markup syntax.
 %python3_install
 
 %check
-python3 test3/alltests.py
+python3 test/alltests.py
 
 %files
 %_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 16 2020 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
 * Tue Dec 17 2019 Anton Farygin <rider@altlinux.ru> 0.15.2-alt1
 - 0.14 -> 0.15.2
 - renamed to python3-module-docutils
