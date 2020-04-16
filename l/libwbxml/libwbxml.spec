@@ -1,8 +1,8 @@
 %def_with tests
 
 Name:           libwbxml
-Version:        0.11.6
-Release:        alt1.1
+Version:        0.11.7
+Release:        alt1
 Summary:        Library and tools to parse, encode and handle WBXML documents
 Group:          System/Libraries
 License:        LGPLv2+
@@ -64,6 +64,9 @@ ctest
 %_datadir/cmake/Modules/FindLibWbxml2.cmake
 
 %changelog
+* Thu Apr 16 2020 Andrey Cherepanov <cas@altlinux.org> 0.11.7-alt1
+- New version.
+
 * Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.6-alt1.1
 - NMU: changed CMake Modules install path
 
