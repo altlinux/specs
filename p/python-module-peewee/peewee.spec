@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.6.0
-Release: alt2.git20150421.1.2
+Version: 3.13.2
+Release: alt1
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 License: MIT
 Group: Development/Python
@@ -182,7 +182,6 @@ popd
 %doc *.md *.rst ../python3/examples
 %_bindir/*.py3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/berkeley_build.sh
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
 
@@ -192,6 +191,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 16 2020 Pavel Vasenkov <pav@altlinux.org> 3.13.2-alt1
+- Bump to new version 3.13.2
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.6.0-alt2.git20150421.1.2
 - (NMU) rebuild with python3.6
 
