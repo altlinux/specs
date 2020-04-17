@@ -1,8 +1,7 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators perl(Term/ReadKey.pm)
+BuildRequires: perl(PadWalker.pm) perl(Prima/Application.pm) perl(Prima/Buttons.pm) perl(Prima/Edit.pm) perl(Prima/Label.pm) perl(Prima/MsgBox.pm) perl(Prima/PodView.pm) perl(Prima/Utils.pm) perl(threads.pm) perl(threads/shared.pm) perl-podlators
 # END SourceDeps(oneline)
 # tries to run
 %add_findreq_skiplist %_bindir/pdl2
@@ -34,13 +33,13 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.020
-Version:        2.021
-Release:        alt1
+%global cpan_version 2.021
+Version:        2.21.0
+Release:        alt1_3
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETJ/PDL-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETJ/PDL-%{cpan_version}.tar.gz
 # Uncomment to enable PDL::IO::Browser
 # Patch0:         perl-PDL-2.4.10-settings.patch
 # Disable Proj support when it's not compatible, bug #839651
@@ -59,13 +58,17 @@ BuildRequires:  gcc-c++
 BuildRequires:  gcc-fortran
 BuildRequires:  libgd3-devel
 BuildRequires:  libgsl-devel >= 1.0
+%ifnarch %e2k
+# archdep, requires patching the patched source
 BuildRequires:  hdf-static hdf hdf-devel
+%endif
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl-devel
 # perl(Astro::FITS::Header) not packaged yet
+BuildRequires:  perl(blib.pm)
 # Modified perl(Carp) bundled
 # Modified perl(Carp::Heavy) bundled
 BuildRequires:  perl(Config.pm)
@@ -119,6 +122,7 @@ BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(SelfLoader.pm)
 BuildRequires:  perl(Symbol.pm)
+BuildRequires:  perl(Term/ReadKey.pm)
 BuildRequires:  perl(Text/Balanced.pm)
 BuildRequires:  perl(version.pm)
 # Tests:
@@ -194,7 +198,7 @@ turns perl into a free, array-oriented, numerical language similar to
 such commercial packages as IDL and MatLab.
 
 %prep
-%setup -q -n PDL-%{version}
+%setup -q -n PDL-%{cpan_version}
 # Uncomment to enable PDL::IO::Browser
 # %%patch0 -p1 -b .settings
 %if %{without perl_PDL_enables_proj}
@@ -237,7 +241,8 @@ export PERL5LIB=`pwd`/blib/lib
 make test
 
 %files
-%doc Changes INTERNATIONALIZATION README Bugs.pod Changes_CVS Doc Example
+%doc --no-dereference COPYING
+%doc Changes INTERNATIONALIZATION README TODO
 %{_bindir}/*
 %{perl_vendor_archlib}/Inline/*
 %{perl_vendor_archlib}/PDL*
@@ -245,6 +250,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 2.21.0-alt1_3
+- added e2k patch
+
 * Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 2.021-alt1
 - automated CPAN update
 
