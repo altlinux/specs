@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200320
+Version: 20200416
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -58,6 +58,26 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Fri Apr 17 2020 Cronbuild Service <cronbuild@altlinux.org> 20200416-alt1
+- upstream changes (GIT 6314fa0):
+  + amdgpu: update vega20 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update picasso firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 20.10 (thx Alex Deucher)
+  + amdgpu: add navi14 TA firmware from 20.10 (thx Alex Deucher)
+  + cxgb4: Update firmware to revision 1.24.14.0 (thx Vishal Kulkarni)
+  + add firmware for MT7663 Wifi/BT combo device (thx Sean Wang)
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + qcom: Add SDM845 Adreno ZAP shader firmware (thx Bjorn Andersson)
+  + qca: Enable transparent WBS for WCN3991 (thx Balakrishna Godavarthi)
+  + QCA: Add Bluetooth firmware for QCA6390 (thx Rocky Liao)
+
 * Fri Mar 20 2020 Cronbuild Service <cronbuild@altlinux.org> 20200320-alt1
 - upstream changes (GIT edf390c):
   + mediatek: Add mt8183 SCP firmware (thx Erin Lo)
