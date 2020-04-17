@@ -1,15 +1,22 @@
-Packager: Alex Negulescu <alecs@altlinux.org>
-Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
+%def_without docs
+
 Name: txt2tags
-Version: 2.6
-Release: alt1.2
+Version: 3.7
+Release: alt1
+Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
 License: GPL-2.0
 Group: Text tools
 URL: http://txt2tags.sourceforge.net/
-Source: http://dl.sf.net/txt2tags/txt2tags-%{version}.tgz
+# VCS: https://github.com/txt2tags/txt2tags
+Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: gettext-devel
-Requires: python
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+BuildRequires(pre): rpm-build-python3
+%if_with docs
+BuildRequires: %name
+%endif
 
 %description
 Txt2tags is a generic text converter. From a simple text file with minimal
@@ -22,49 +29,32 @@ no external commands or libraries are needed.
 %prep
 %setup
 # Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
-for file in $(ls -1 po/*.po); do
-	msgfmt -o ${file//.po/.mo} $file
-done
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
+
+%build
+%python3_build
+%if_with docs
+pushd docs
+./build-docs.sh
+popd
+%endif
 
 %install
-%__rm -rf %buildroot
-%__install -Dp -m0755 txt2tags %buildroot%_bindir/txt2tags
-
-# manpages
-%__install -Dp -m0644 doc/manpage.man %buildroot%_mandir/man1/txt2tags.1
-for file in $(ls -1 doc/manpage-*.man); do
-	lang=${file##doc/manpage-}
-	lang=${lang%%.man}
-	%__install -Dp -m0644 $file %buildroot%_mandir/$lang/man1/txt2tags.1
-done
-
-# locale files
-for file in $(ls -1 po/*.mo); do
-	basename=${file##po/}
-	lang=${basename%%.mo}
-	%__install -Dp -m0644 $file %buildroot%_datadir/locale/$lang/LC_MESSAGES/txt2tags.mo
-done
-
-%find_lang %name
-
-# There is a file in the package with a name starting with <tt>._</tt>,
-# the file name pattern used by Mac OS X to store resource forks in non-native
-# file systems. Such files are generally useless in packages and were usually
-# accidentally included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-# for ones installed as %%doc
-find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-
+%python3_install
 %find_lang %name
 
 %files -f %name.lang
-%doc ChangeLog COPYING README doc/*.pdf extras/ samples/
-%_datadir/man/man1/txt2tags.1*
-%_datadir/man/*/man1/txt2tags.1*
+%doc CHANGELOG.md README.md extras/ samples/
+%if_with docs
+%doc markup/*.html rules/*.html userguide/*.html
+%endif
 %_bindir/*
+%python3_sitelibdir/*
 
 %changelog
+* Fri Apr 17 2020 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
+- New version.
+
 * Wed Apr 15 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1.2
 - Set correct python2 executable in shebang
 - Fix License tag according to SPDX.
