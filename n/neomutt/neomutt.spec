@@ -1,5 +1,5 @@
 Name: neomutt
-Version: 20200320
+Version: 20200417
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
 BuildRequires: liblua5-devel libnotmuch-devel libdb4.8-devel
 BuildRequires: libgpgme-devel libncursesw-devel libssl-devel libsasl2-devel libidn2-devel
+BuildRequires: zlib-devel libzstd-devel libsqlite3-devel
 
 Requires: mailcap
 
@@ -30,21 +31,34 @@ mode.
 
 %build
 %configure \
-                --disable-nls \
-		--docdir=%docdir \
-                --with-ui=ncurses  \
-		--gpgme \
-		--notmuch \
-		--lua \
-		--bdb \
-		--ssl \
-		--sasl \
-		--disable-idn --idn2
+	--disable-nls \
+	--docdir=%docdir \
+	--with-ui=ncurses  \
+	--gpgme \
+	--notmuch \
+	--lua \
+	--bdb \
+	--ssl \
+	--sasl \
+	--disable-idn --idn2 \
+	--zlib \
+	--zstd \
+	--sqlite \
 
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+# Simplest test
+./neomutt -v
+# Great tests
+export NEOMUTT_TEST_DIR=$PWD/test-files
+pushd test-files
+./setup.sh
+popd
+make -s test
 
 %files
 %config(noreplace) %_sysconfdir/neomuttrc
@@ -54,6 +68,11 @@ mode.
 %docdir
 
 %changelog
+* Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 20200417-alt1
+- Update to 20200417.
+- Enable zlib, zstd, sqlite.
+- spec: Add %%check section with tests.
+
 * Thu Apr 09 2020 Vitaly Chikunov <vt@altlinux.org> 20200320-alt1
 - Update to 20200320.
 
