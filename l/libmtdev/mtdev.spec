@@ -1,7 +1,7 @@
 %define rname mtdev
 
 Name: lib%rname
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Summary: Multitouch Protocol Translation Library
 Group: System/Libraries
@@ -9,6 +9,8 @@ License: MIT
 URL: http://bitmath.org/code/mtdev/
 
 Source0: %rname-%version.tar.bz2
+
+Provides: %rname = %version-%release
 
 BuildRequires: xorg-util-macros
 
@@ -22,6 +24,7 @@ contact tracking, or type B with contact tracking.
 Summary: Multitouch Protocol Translation Library Development Package
 Group: Development/C
 Requires: %name = %version-%release
+Provides: %rname-tools = %version-%release
 
 %description devel
 Multitouch protocol translation library development package
@@ -43,10 +46,14 @@ make DESTDIR=%buildroot install
 
 %files devel
 %_includedir/*.h
+%_bindir/mtdev-test
 %_libdir/libmtdev.so
 %_pkgconfigdir/mtdev.pc
 
 %changelog
+* Fri Apr 17 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.1.6-alt1
+- 1.1.6
+
 * Thu May 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 
