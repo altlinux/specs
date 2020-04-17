@@ -1,9 +1,9 @@
 %define module_name	lkrg
 %define module_version	0.7
-%define module_release	alt2
+%define module_release	alt5.git0f7c635
 
 %define flavour		std-def
-%define karch		%ix86 x86_64 aarch64
+%define karch		%ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
@@ -22,7 +22,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 ExclusiveOS: Linux
 URL: https://www.openwall.com/lkrg/
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: kernel-source-%module_name = %module_version-%module_release
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -60,6 +60,11 @@ install p_lkrg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Apr 17 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt5.git0f7c635
+- Updated to git commit 0f7c6350a844c4a65a6860bff1172035e3cccae3 (fixed
+  built with kernel 5.6).
+- Disabled aarch64 build.
 
 * Thu Aug 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt2
 - Built with gear km-karch scheme.
