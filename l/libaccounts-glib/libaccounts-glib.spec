@@ -1,133 +1,142 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(pygobject-3.0) python-devel
+BuildRequires(pre): rpm-build-python3
 # END SourceDeps(oneline)
 %filter_from_requires /dbus-test-runner/d
 %add_optflags %optflags_shared
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.23
+Name:           libaccounts-glib
+Version:        1.24
+Release:        alt1_1
+Summary:        Accounts framework for Linux and POSIX based platforms
+License:        LGPLv2
 
-%global commit0 8d14b10652b2fe6c25d8ad8334e2d5023d254313
-%global gittag0 VERSION_%{version}
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-#global snap0 20160216
+URL:            https://gitlab.com/accounts-sso/libaccounts-glib
+Source0:        %{url}/-/archive/%{version}/%{name}-%{version}.tar.gz
 
-Name:		libaccounts-glib
-Version:	1.23
-Release:	alt1_8
-Summary:	Accounts framework for Linux and POSIX based platforms
-License:	LGPLv2
-URL:        https://gitlab.com/accounts-sso/libaccounts-glib
+# proposed patch to fix accidentally bumped SONAME
+Patch0:         %{url}/-/merge_requests/24.patch
 
-Source0:    https://gitlab.com/accounts-sso/%{name}/repository/archive.tar.gz?ref=%{gittag0}#/%{name}-%{version}.tar.gz
+BuildRequires:  gcc
+BuildRequires:  meson >= 0.48.0
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-pygobject3
+BuildRequires:  vala vala-tools
 
-BuildRequires:	libdbus-glib-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	libsqlite3-devel
-BuildRequires:	libcheck-devel
-BuildRequires:	gobject-introspection-devel
-# no needed for final release tarball
-BuildRequires:	libtool
-BuildRequires:	gtk-doc gtk-doc-mkpdf
+BuildRequires:  pkgconfig(gio-2.0) >= 2.26
+BuildRequires:  pkgconfig(gio-unix-2.0)
+BuildRequires:  pkgconfig(glib-2.0) >= 2.26
+BuildRequires:  pkgconfig(gobject-2.0) >= 2.35.1
+BuildRequires:  pkgconfig(gobject-introspection-1.0)
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(sqlite3) >= 3.7.0
+
+# dependencies for building docs
+BuildRequires:  gtk-doc gtk-doc-mkpdf
+
+# dependencies for tests
+BuildRequires:  pkgconfig(check)
 Source44: import.info
+
+# package contains python3-gobject overrides
 
 %description
 %{summary}.
 
+
 %package devel
 Group: Development/C
-Summary:	Development files for %{name}
-Requires:	%{name} = %{version}-%{release}
+Summary:        Development files for %{name}
+Requires:       %{name} = %{version}-%{release}
+
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %package docs
 Group: System/Libraries
-Summary:	Documentation for %{name}
-BuildArch:	noarch
+Summary:        Documentation for %{name}
+BuildArch:      noarch
+
 %description docs
 The %{name}-docs package contains documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{gittag0}-%{commit0}
+%setup -q
+%patch0 -p1
 
-sed -i s,-Werror,, `find . -name Makefile'*'`
 
 
 %build
-test -x configure || \
-NOCONFIGURE=1 \
-./autogen.sh
-
-%configure \
-  --disable-static \
-  --enable-gtk-doc
-
-%make_build
+%meson
+%meson_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%meson_install
 
-rm -fv %{buildroot}%{_libdir}/lib*.la
-
-# create/own data dirs
+# create data directories
 mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,service_types}
 
-# add docs manuall to %%doc instead
-rm -rfv %{buildroot}%{_prefix}/doc/reference
 
 %check
-# advisory and non-fatal for now
-make check || cat tests/test-suite.log ||:
-
-
+# some tests fail without either dbus-test-runner (not packaged) or X11 session
+%meson_test || :
 
 
 %files
 %doc --no-dereference COPYING
-%doc AUTHORS ChangeLog README NEWS
+%doc README.md NEWS
+
 %{_bindir}/ag-backup
 %{_bindir}/ag-tool
-%{_mandir}/man1/ag-backup.1*
-%{_mandir}/man1/ag-tool.1*
-%dir %{_datadir}/backup-framework
-%dir %{_datadir}/backup-framework/applications
-%{_datadir}/backup-framework/applications/*.conf
-%{_libdir}/libaccounts-glib.so.0*
+
+%{_libdir}/libaccounts-glib.so.0
+%{_libdir}/libaccounts-glib.so.%{version}
 %{_libdir}/girepository-1.0/Accounts-1.0.typelib
+
+%dir %{_datadir}/xml/accounts/schema/dtd
+%{_datadir}/xml/accounts/schema/dtd/accounts-*.dtd
+
 %dir %{_datadir}/xml/
 %dir %{_datadir}/xml/accounts/
 %dir %{_datadir}/xml/accounts/schema/
-%dir %{_datadir}/xml/accounts/schema/dtd
-%{_datadir}/xml/accounts/schema/dtd/accounts-*.dtd
 %dir %{_datadir}/accounts/
 %dir %{_datadir}/accounts/applications/
 %dir %{_datadir}/accounts/providers/
 %dir %{_datadir}/accounts/services/
 %dir %{_datadir}/accounts/service_types/
 
+%{python3_sitelibdir}/gi/overrides/Accounts.py
+%{python3_sitelibdir}/gi/overrides/__pycache__/*
+
+
 %files devel
+%{_includedir}/libaccounts-glib/
+
 %{_libdir}/libaccounts-glib.so
 %{_libdir}/pkgconfig/libaccounts-glib.pc
-%{_includedir}/libaccounts-glib
-%{_datadir}/gir-1.0/Accounts-1.0.gir
+
 %{_datadir}/dbus-1/interfaces/*.xml
+%{_datadir}/gettext/its/accounts-*.its
+%{_datadir}/gettext/its/accounts-*.loc
+%{_datadir}/gir-1.0/Accounts-1.0.gir
 %{_datadir}/vala/vapi/libaccounts-glib.deps
 %{_datadir}/vala/vapi/libaccounts-glib.vapi
-## testing bits
-%{_datadir}/libaccounts-glib/
-%{_libdir}/libaccounts-glib/
+
 
 %files docs
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 
 %changelog
+* Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_8
 - fixed build
 
