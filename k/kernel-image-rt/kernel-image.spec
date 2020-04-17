@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.106
-%define kernel_rt_release	rt46
+%define kernel_sublevel		.115
+%define kernel_rt_release	rt48
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -498,6 +498,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Apr 17 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt48
+- Update to 4.19.115-rt48.
+- Add more BPF options, enable IKCONFIG, IKHEADERS.
+
 * Tue Apr 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt46
 - Update to 4.19.106-rt46.
 
