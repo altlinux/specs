@@ -5,9 +5,10 @@ Name: linuxdeployqt
 Summary: Tool to make a bundle from application for AppImage
 Group: Development/C
 Version: 6
-Release: alt0.%{commit_short}.1
+Release: alt0.%{commit_short}.2
 License: GPLv3 or LGPLv3
 Source0: %name-%version.tar
+Patch0:	no-fail-with-system-glibc.patch
 BuildRequires: qt5-base-devel
 BuildRequires: rpm-macros-qt5
 Requires: patchelf
@@ -21,6 +22,7 @@ as an AppImage to users, or can be put into cross-distribution packages
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %qmake_qt5
@@ -34,6 +36,8 @@ install -m 0755 bin/linuxdeployqt %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
-* Fri Apr 17 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 6-alt0.d091b.1
+* Fri Apr 17 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 6-alt0.d091b.2
 - Initial build
+- Patch: do not exit with error if system glibc is too new
+  for production AppImages from the point of view of upstream authors
 
