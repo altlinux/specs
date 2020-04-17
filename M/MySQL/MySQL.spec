@@ -12,7 +12,7 @@
 
 Name: MySQL
 Version: 8.0.19
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -120,6 +120,7 @@ License: GPL
 Group: Databases
 Provides: mysql-client = %EVR
 Obsoletes: mysql-client < %EVR
+Conflicts: mariadb-client
 
 %package server
 Summary: A very fast and reliable SQL database engine
@@ -131,7 +132,7 @@ Requires(pre): shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
 Provides: mysql-server = %EVR MySQL = %EVR mysql = %EVR community-mysql = %EVR
 Obsoletes: mysql-server < %EVR MySQL < %EVR mysql < %EVR
-Conflicts: mariadb-server-control
+Conflicts: mariadb-server-control mariadb-common
 
 %package server-perl
 Summary: Perl utils for MySQL-server
@@ -773,6 +774,11 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Apr 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.19-alt2
+- spec: add explicit conflicts between MySQL and mariadb subpackages
+  to fix MySQL-server biarch package installation failure with mariadb
+  preinstalled
+
 * Sun Jan 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.19-alt1
 - new version
 - spec: switch to strict dependencies
