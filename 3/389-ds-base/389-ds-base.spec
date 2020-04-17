@@ -11,7 +11,7 @@
 %def_with cockpit
 
 Name: 389-ds-base
-Version: 1.4.1.16
+Version: 1.4.1.18
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -601,12 +601,12 @@ fi
 %_datadir/cockpit/389-console/*.js
 %_datadir/cockpit/389-console/*.js.map
 %_datadir/cockpit/389-console/css/
-%_datadir/cockpit/389-console/fonts/
-%_datadir/cockpit/389-console/images/
-%_datadir/cockpit/389-console/static/
 %endif
 
 %changelog
+* Fri Apr 17 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.18-alt1
+- 1.4.1.16 -> 1.4.1.18.
+
 * Mon Mar 23 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.16-alt1
 - 1.4.1.13 -> 1.4.1.16.
 
