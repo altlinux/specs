@@ -15,21 +15,25 @@ Group: System/Libraries
 
 Name:           libqb
 Version:        1.0.5
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 Patch0:         IPC-avoid-temporary-channel-priority-loss.patch
+# https://github.com/ClusterLabs/libqb/pull/383
+Patch1:         libqb-fix-list-handling-gcc10.patch
 
-BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
-# https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
+BuildRequires:  autoconf automake libtool
+BuildRequires:  libcheck-devel
+BuildRequires:  doxygen
 BuildRequires:  gcc
+BuildRequires:  procps
 # for ipc.test only (part of check scriptlet)
 BuildRequires:  pkgconfig(glib-2.0)
 # git-style patch application
-BuildRequires:  git
+BuildRequires:  git-core
 Source44: import.info
 
 %description
@@ -38,18 +42,19 @@ architecture, such as logging, tracing, inter-process communication (IPC),
 and polling.
 
 %prep
-%setup
 %setup -q # for when patches around
 %patch0 -p1
+%patch1 -p1
+
 
 %build
 ./autogen.sh
 %configure --disable-static
-%make_build V=1
+%{make_build}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%{makeinstall_std}
+find $RPM_BUILD_ROOT -name '*.la' -delete
 rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
 
@@ -72,13 +77,15 @@ developing applications that use %{name}.
 
 %files          devel
 %doc README.markdown
-%doc --no-dereference COPYING
 %{_includedir}/qb/
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5
+- update to new release by fcimport
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_2
 - update to new release by fcimport
 
