@@ -1,22 +1,24 @@
-Name: txt2tags
-Version: 2.7
-Release: alt0.1.dev.gitd737c8e
-Epoch: 1
+%def_with docs
 
+Name: txt2tags-python3
+Version: 3.7
+Release: alt3
 Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
 License: GPL-2.0
 Group: Text tools
 URL: http://txt2tags.sourceforge.net/
 # VCS: https://github.com/txt2tags/txt2tags
-Source: %name-%version.tar
+Source: txt2tags-%version.tar
 BuildArch: noarch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 %if_with docs
-BuildRequires: %name
+BuildRequires: txt2tags
 %endif
+
+Conflicts: txt2tags
 
 %description
 Txt2tags is a generic text converter. From a simple text file with minimal
@@ -27,35 +29,36 @@ There are GUI, Web and cmdline interfaces. It's a single Python script and
 no external commands or libraries are needed.
 
 %prep
-%setup
+%setup -n txt2tags-%version
 # Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-%python_build
-for file in $(ls -1 po/*.po); do
-	msgfmt -o ${file//.po/.mo} $file
-done
+%python3_build
+%if_with docs
+pushd docs
+./build-docs.sh
+popd
+%endif
 
 %install
-%python_install
-# locale files
-for file in $(ls -1 po/*.mo); do
-        basename=${file##po/}
-        lang=${basename%%.mo}
-        %__install -Dp -m0644 $file %buildroot%_datadir/locale/$lang/LC_MESSAGES/txt2tags.mo
-done
-%find_lang %name
+%python3_install
+%find_lang txt2tags
 
-%files -f %name.lang
-%doc AUTHORS README samples/
+%files -f txt2tags.lang
+%doc CHANGELOG.md README.md extras/ samples/
+%if_with docs
+%doc docs/markup/*.html docs/rules/*.html docs/userguide/*.html
+%endif
 %_bindir/*
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
-* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.7-alt0.1.dev.gitd737c8e
-- New version.
-- Build without man pages.
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.7-alt3
+- Rename to txt2tags-python3.
+
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.7-alt2
+- Build with generated documentation.
 
 * Fri Apr 17 2020 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
 - New version.
