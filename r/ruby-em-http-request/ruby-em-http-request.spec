@@ -1,11 +1,11 @@
 
 Name:    ruby-em-http-request
 Version: 1.1.5
-Release: alt1.2
+Release: alt2
 
 Summary: EventMachine based, async HTTP Request client
 Group:   Development/Ruby
-License: MIT/Ruby
+License: MIT
 URL:     https://github.com/igrigorik/em-http-request
 
 BuildArch: noarch
@@ -17,7 +17,6 @@ BuildRequires: ruby-tool-setup
 BuildRequires: ruby-addressable
 BuildRequires: ruby-cookiejar
 BuildRequires: ruby-em-socksify
-BuildRequires: ruby-http_parser.rb
 BuildRequires: ruby-multi_json
 BuildRequires: ruby-simple_oauth
 
@@ -72,6 +71,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt2
+- Remove obsoleted requirement.
+- Fix License tag according to SPDX.
+
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1.2
 - Rebuild with new Ruby autorequirements.
 
