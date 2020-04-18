@@ -3,7 +3,7 @@
 %def_enable noise_tools
 
 Name: darktable
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt2
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -110,6 +110,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Sat Apr 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt2
+- 3.0.2
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt2
 - rebuilt with gcc
 
