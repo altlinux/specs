@@ -1,7 +1,7 @@
 # coccinelle.spec
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt3
+Release:	alt4
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/Kernel
@@ -12,6 +12,7 @@ Source:		%name-%version.tar
 Provides:	spatch
 
 BuildRequires(pre): rpm-build-ocaml
+BuildRequires(pre): rpm-build-python3
 BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
 BuildRequires:	ocaml-ocamldoc
@@ -20,14 +21,19 @@ BuildRequires:	ocaml-stdcompat-devel
 BuildRequires:	ocaml-pcre-devel
 BuildRequires:	ocaml-num-devel
 BuildRequires:	ocaml-parmap-devel
-BuildRequires:	rpm-build-python python-devel python-modules-multiprocessing
+BuildRequires:	python3-dev
 
-# only if vim coccigui is used
-%filter_from_requires /^python.*(pida)$/d
-# bogus internal name
-%filter_from_requires /^python.*(coccinelle)$/d
-# no dependencies to OCaml whatever
-%add_ocaml_req_skip .*
+# Bogus internal name
+%filter_from_requires /^python.*(coccinelle)/d
+# Bogus dependencies to OCaml
+AutoReqProv: noocaml
+# Only what's matter
+Provides: ocaml-cmi(Coccilib) = %version-%release
+Provides: ocaml-cmx(Coccilib) = %version-%release
+# No cocciguis (pida for vim, gtk output), yet
+%add_findreq_skiplist %python3_sitelibdir/coccilib/coccigui/*
+# No trac integraion
+%add_findreq_skiplist %python3_sitelibdir/coccilib/trac.py
 
 %description
 Coccinelle is a tool to utilize semantic patches for manipulating
@@ -36,7 +42,7 @@ drivers in the Linux kernel.
 
 %prep
 %setup -q -n %{name}-%{version}
-sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python%__python_version:' tools/pycocci
+sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 
 %build
 ./autogen
@@ -45,19 +51,14 @@ make EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
 make DESTDIR=%buildroot install
+
 # relocate python module
-install -d %buildroot%python_sitelibdir
-mv %buildroot%_libdir/coccinelle/python/coccilib %buildroot%python_sitelibdir/
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%_libdir/coccinelle/python/coccilib %buildroot%python3_sitelibdir/
 rm -rf %buildroot%_libdir/coccinelle/python
-# delete spgen
-rm -rf %buildroot%_bindir/spgen
-rm -rf %buildroot%_libdir/coccinelle/spgen
-rm -rf %buildroot%_mandir/man1/spgen.*
-rm -rf %buildroot%_mandir/man3
 
 # Somebody forgot to install this
 install ./tools/pycocci %buildroot%_bindir/pycocci
-install ./spatch.opt    %buildroot%_bindir/spatch.opt
 
 %check
 export COCCINELLE_HOME=%buildroot%_libdir/coccinelle
@@ -69,13 +70,17 @@ export LD_LIBRARY_PATH=.
 %doc license.txt readme.txt
 %_bindir/pycocci
 %_bindir/spatch
-%_bindir/spatch.opt
+%_bindir/spgen
 %_libdir/%name/
-%python_sitelibdir/coccilib
-%_mandir/man1/*.1*
+%python3_sitelibdir/coccilib
+%_man1dir/*.1*
+%_man3dir/Coccilib.3cocci*
 /usr/share/bash-completion/completions/spatch
 
 %changelog
+* Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt4
+- Convert to python3, add spgen, delete spatch.opt, clean up reqs.
+
 * Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt3
 - Install coccinelle ocaml libs (for coccicheck).
 
