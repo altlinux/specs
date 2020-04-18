@@ -10,7 +10,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.14.3
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -67,9 +67,6 @@ BuildRequires:	libSDL2_image-devel
 BuildRequires:	libSDL2_mixer-devel
 BuildRequires:	libSDL2_ttf-devel
 BuildRequires:	libsqlite3-devel
-%if_with sqlite2
-BuildRequires:	libsqlite-devel
-%endif
 BuildRequires:	libssl-devel
 BuildRequires:	libtool
 BuildRequires:	libunixODBC-devel
@@ -103,6 +100,11 @@ Patch4:		%name-3.12.0-use-libv4l1.patch
 Patch5:		%name-3.11.4-alt-libpoppler-bool-type-fix.patch
 Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-alt-mysql8-bool-type-fix.patch
+Patch8:    	gambas3-3.13.0-poppler-0.73.0.patch
+Patch9:	        gambas3-3.14.1-gst1.patch
+Patch10:        gambas-Fix-segfault-with-poppler-0.83.patch
+Patch11:        gambas-Use-GlobalParams-getUtf8Map-found-in-poppler-0.85.patch
+Patch12:	gambas-poppler0.86-support.patch
 
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
@@ -129,9 +131,6 @@ Requires:      %name-gb-db-form = %version-%release
 Requires:      %name-gb-db-mysql = %version-%release
 Requires:      %name-gb-db-odbc = %version-%release
 Requires:      %name-gb-db-postgresql = %version-%release
-%if_with sqlite2
-Requires:      %name-gb-db-sqlite2 = %version-%release
-%endif
 Requires:      %name-gb-db-sqlite3 = %version-%release
 Requires:      %name-gb-dbus = %version-%release
 Requires:      %name-gb-db = %version-%release
@@ -413,17 +412,6 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-db-postgresql
 This component allows you to access PostgreSQL databases.
-
-%if_with sqlite2
-%package gb-db-sqlite2
-Summary:	Gambas3 component package for db.sqlite2
-Group:		Development/Tools
-Requires:	%name-runtime = %version-%release
-%prov3 gb-db-sqlite2
-
-%description gb-db-sqlite2
-This component allows you to access SQLite 2 databases.
-%endif
 
 %package gb-db-sqlite3
 Summary:	Gambas3 component package for db.sqlite3
@@ -1128,6 +1116,11 @@ This package contains the Gambas3 component for print form.
 %patch5 -p0
 %patch6 -p0
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1315,12 +1308,6 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-db-postgresql
 %_libdir/gambas3/gb.db.postgresql.*
 %appdir/info/gb.db.postgresql.*
-
-%if_with sqlite2
-%files gb-db-sqlite2
-%_libdir/gambas3/gb.db.sqlite2.*
-%appdir/info/gb.db.sqlite2.*
-%endif
 
 %files gb-db-sqlite3
 %_libdir/gambas3/gb.db.sqlite3.*
@@ -1687,6 +1674,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.print.*
 
 %changelog
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.14.3-alt2
+- Fix build (use patches for new poppler).
+- Remove diplicate description.
+- Do not build gambas-gb-db-sqlite2 because sqlite2 is deprecated.
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 3.14.3-alt1
 - new version 3.14.3
 
