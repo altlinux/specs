@@ -19,7 +19,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -57,6 +57,7 @@ Requires: rfkill
 Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
 Requires: iio-sensor-proxy
+Requires: udev-rules-rfkill-uaccess
 
 BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: glib2-devel >= %glib_ver
@@ -159,8 +160,10 @@ The %name-tests package provides programms for testing GSD plugins.
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
-%_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
+%exclude %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 %doc AUTHORS NEWS
+
+%exclude %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 
 %files devel
 %_includedir/%name-%api_ver/
@@ -189,6 +192,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Fri Apr 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- use system rfkill-uaccess.rules instead of own %%name-rfkill.rules
+
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
