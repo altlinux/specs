@@ -1,5 +1,5 @@
 %global import_path github.com/prometheus/prometheus
-%global commit b90be6f32a33c03163d700e1452b54454ddce0ec
+%global commit ae041f97cfc6f43494bed65ec4ea4e3a0cf2ac69
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
@@ -8,7 +8,7 @@
 %brp_strip_none %_bindir/*
 
 Name: prometheus
-Version: 2.16.0
+Version: 2.17.1
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -121,6 +121,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Sat Apr 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.17.1-alt1
+- 2.17.1
+
 * Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.16.0-alt1
 - 2.16.0 (Fixes: CVE-2019-10215)
 
