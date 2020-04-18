@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/git tex(dehypht.tex)
 # END SourceDeps(oneline)
 Name: verilator
 Version: 3.924
-Release: alt1.1
+Release: alt1.2
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Patch0: pkg-config-version-fix.patch
 
 BuildRequires: flex gcc-c++ perl-Pod-LaTeX texlive
+BuildRequires: /usr/bin/pod2html
 
 %description
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
@@ -63,6 +64,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Sat Apr 18 2020 Michael Shigorin <mike@altlinux.org> 3.924-alt1.2
+- added missing BR: /usr/bin/pod2html
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 3.924-alt1.1
 - NMU: applied logoved fixes
 
