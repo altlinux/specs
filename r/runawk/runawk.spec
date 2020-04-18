@@ -1,6 +1,6 @@
 Name: runawk
-Version: 1.5.1
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: Wrapper for AWK providing modules
 License: MIT
@@ -67,6 +67,9 @@ mkcmake install
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Sat Apr 18 2020 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Mon Dec  1 2014 Aleksey Cheusov <cheusov@altlinux.org> 1.5.1-alt2
 - Fix in .gear/rules
 
