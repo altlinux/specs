@@ -1,16 +1,17 @@
 # coccinelle.spec
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt2
+Release:	alt3
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/Kernel
-License:	GPL-2.0
+License:	GPL-2.0-only
 Url:		http://coccinelle.lip6.fr/
 
 Source:		%name-%version.tar
 Provides:	spatch
 
+BuildRequires(pre): rpm-build-ocaml
 BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
 BuildRequires:	ocaml-ocamldoc
@@ -25,6 +26,8 @@ BuildRequires:	rpm-build-python python-devel python-modules-multiprocessing
 %filter_from_requires /^python.*(pida)$/d
 # bogus internal name
 %filter_from_requires /^python.*(coccinelle)$/d
+# no dependencies to OCaml whatever
+%add_ocaml_req_skip .*
 
 %description
 Coccinelle is a tool to utilize semantic patches for manipulating
@@ -42,7 +45,6 @@ make EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
 make DESTDIR=%buildroot install
-rm -rf %buildroot%_libdir/coccinelle/ocaml
 # relocate python module
 install -d %buildroot%python_sitelibdir
 mv %buildroot%_libdir/coccinelle/python/coccilib %buildroot%python_sitelibdir/
@@ -74,6 +76,9 @@ export LD_LIBRARY_PATH=.
 /usr/share/bash-completion/completions/spatch
 
 %changelog
+* Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt3
+- Install coccinelle ocaml libs (for coccicheck).
+
 * Thu Mar 05 2020 Anton Farygin <rider@altlinux.ru> 1.0.8-alt2
 - removed unsafe-string build flag to avoid problems with ocaml-4.10
 - built with external stdcompat
