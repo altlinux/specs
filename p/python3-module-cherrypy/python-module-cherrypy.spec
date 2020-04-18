@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%modulename
-Version: 18.5.0
-Release: alt2
+Version: 18.6.0
+Release: alt1
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
 
@@ -140,6 +140,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 18.6.0-alt1
+- New version.
+
 * Fri Jan 24 2020 Grigory Ustinov <grenka@altlinux.org> 18.5.0-alt2
 - Got rid of python2 support (Closes: #37898).
 - Build with docs.
