@@ -3,13 +3,13 @@
 
 Name: dtc
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
 Group: Development/Tools
-Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 
+Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 Source: %name-%version.tar
 
 BuildRequires: flex bison
@@ -69,6 +69,11 @@ This package provides python bindings for libfdt
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.23 doesn't do -MG and there's -Werror=pointer-arith there
+sed -i 's,-MG ,,;s,-Werror,,' Makefile
+echo '#define DTC_VERSION "%version"' > version_gen.h
+%endif
 
 %build
 %make_build %{?_without_python:NO_PYTHON=1}
@@ -118,6 +123,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Sun Apr 19 2020 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2
+- E2K: fix ftbfs with OSL-inspired hacks
+
 * Sun Dec 15 2019 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt1
 - 1.5.1 release
 
