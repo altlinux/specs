@@ -2,20 +2,25 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(Test/Kit.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl-podlators perl(Data/Perl/Role/String.pm)
+#BuildRequires: perl(Test/CleanNamespaces.pm) perl(Test/EOL.pm) perl(Test/Kit.pm) perl(Test/Kwalitee.pm) perl(Test/MinimumVersion.pm) perl(Test/NoTabs.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm)
+BuildRequires: perl-podlators perl(Data/Perl/Role/String.pm)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Pod-Readme
 Version:        1.2.3
-Release:        alt1
+Release:        alt1_5
 Summary:        Intelligently generate a README file from POD
 License:        GPL+ or Artistic
-URL:            http://search.cpan.org/dist/Pod-Readme/
-Source0:        http://www.cpan.org/authors/id/R/RR/RRWO/Pod-Readme-v%{version}.tar.gz
-Patch0:         Pod-Readme-v1.0.2-no-author-deps.patch
+URL:            https://metacpan.org/release/Pod-Readme
+Source0:        https://cpan.metacpan.org/modules/by-module/Pod/Pod-Readme-v%{version}.tar.gz
 BuildArch:      noarch
 # Module Build
-BuildRequires:  perl
-BuildRequires:  perl(inc/Module/Install.pm)
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  sed
 # Module Runtime
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Class/Method/Modifiers.pm)
@@ -35,13 +40,13 @@ BuildRequires:  perl(Moo/Role.pm)
 BuildRequires:  perl(MooX/HandlesVia.pm)
 BuildRequires:  perl(namespace/autoclean.pm)
 BuildRequires:  perl(Path/Tiny.pm)
+BuildRequires:  perl(Pod/Simple.pm)
 BuildRequires:  perl(Role/Tiny.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Try/Tiny.pm)
 BuildRequires:  perl(Type/Tiny.pm)
 BuildRequires:  perl(Types/Standard.pm)
-BuildRequires:  perl(version.pm)
 BuildRequires:  perl(warnings.pm)
 # Script Runtime
 BuildRequires:  perl(File/Copy.pm)
@@ -50,11 +55,16 @@ BuildRequires:  perl(IO/Handle.pm)
 # Test Suite
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(File/Compare.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(IO/String.pm)
 BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Module/Metadata.pm)
+BuildRequires:  perl(Pod/Simple/Text.pm)
 BuildRequires:  perl(Test/Deep.pm)
 BuildRequires:  perl(Test/Exception.pm)
+# Pod::Readme::Test::Kit not actually used
+#BuildRequires: perl(Test::Kit)
 BuildRequires:  perl(Test/More.pm)
 # Runtime
 Requires:       perl(Role/Tiny.pm)
@@ -67,28 +77,35 @@ specify which parts are included or excluded from the README file.
 %prep
 %setup -q -n Pod-Readme-v%{version}
 
-# Unbundle inc::Module::Install; we'll use the system version instead
-rm -rf inc/
-perl -ni -e 'print unless /^inc\//;' MANIFEST
+# Fix script interpreter
+sed -i -e 's|#!/usr/bin/env perl|#!/usr/bin/perl|' bin/pod2readme
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
+
+# Remove spurious Pod::README files, which are the same as Pod::Readme
+rm -vf %{buildroot}%{_mandir}/man3/Pod::README.3*
 
 %check
 make test
 
 %files
+%doc --no-dereference LICENSE
 %doc Changes README.pod
 %{_bindir}/pod2readme
 %{perl_vendor_privlib}/Pod/
 %{_mandir}/man1/pod2readme.1*
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_5
+- dropped perl-Module-Install frpm BR:
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1
 - automated CPAN update
 
