@@ -1,7 +1,8 @@
+%filter_from_requires /^perl.arybase.pm./d
 %define dist Net-Telnet
 Name: perl-Net-Telnet
 Version: 3.04
-Release: alt1
+Release: alt2
 
 Summary: Script telnetable connections
 License: GPL
@@ -39,6 +40,9 @@ stream, such as the prompt from a shell.
 %perl_vendor_privlib/Net*
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 3.04-alt2
+- dropped perl(arybase.pm) autodependency
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.04-alt1
 - automated CPAN update
 
