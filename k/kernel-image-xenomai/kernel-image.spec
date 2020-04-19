@@ -1,12 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 %define flavour			xenomai
 Name: kernel-image-%flavour
-Release: alt3
 
-%define kernel_base_version	4.14
-# ipipe-core-4.14.134-x86-8
-%define kernel_sublevel		.134
+%define xenomai_version		3.1
+%define ipipe_version		4.19.114-cip24-x86-12
+%define kernel_base_version	4.19
+%define kernel_sublevel		.114
 %define kernel_extra_version	%nil
+%define kernel_cip_release	cip24
+%define kernel_ipipe_release	12
+
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
+Release: alt1.%kernel_cip_release.%kernel_ipipe_release
+
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -19,7 +25,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
 
-# not for xenomai
+# Not for Xenomai
 %def_disable docs
 
 #Remove oss
@@ -35,15 +41,13 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
 %brp_strip_none /boot/*
 
-Summary: The Linux kernel %version with Xenomai real-time Cobalt core and I-pipe
+Summary: The Linux kernel (I-pipe) %ipipe_version with Xenomai %xenomai_version real-time Cobalt core
 License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://xenomai.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-Patch0: stable-%version.patch
-Patch1: ipipe-core-%version-x86-8.patch
-Patch2: alt-%version-%release.patch
+Patch0: %name-%version-%release.patch
 
 ExclusiveArch: x86_64
 
@@ -63,7 +67,7 @@ BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
-BuildRequires: xenomai-kernel-source
+BuildRequires: xenomai-kernel-source >= %xenomai_version
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 BuildRequires: libelf-devel
@@ -96,8 +100,8 @@ Requires(pre,postun): module-init-tools >= 3.1
 Requires(pre,postun): mkinitrd >= 1:2.9.9-alt1
 
 %description
-This package contains the Linux kernel %version with Xenomai real-time
-Cobalt core and Interrupt pipeline (I-pipe) patches.
+This package contains the Linux kernel %ipipe_version with Xenomai
+real-time Cobalt and Interrupt pipeline (I-pipe) patches.
 
 Xenomai brings POSIX and traditional RTOS APIs for porting time-critical
 applications to Linux-based platforms. When the native Linux kernel cannot meet
@@ -110,11 +114,16 @@ the mainline Linux kernel, which introduces a separate, high-priority execution
 stage for running out-of-band interrupt handlers immediately upon IRQ receipt,
 which cannot be delayed by the regular kernel work.
 
+CIP kernels are Super Long Term Service (SLTS) kernels maintained by the Civil
+Infrastructure Platform (CIP) Project, which is open source project hosted by
+The Linux Foundation.
+
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel %name-%version-%release
 Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
+AutoReqProv: nocpp
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -127,6 +136,7 @@ Summary: Files needed for building modules for Linux kernel %name-%version-%rele
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
 Requires: libelf-devel
+AutoReqProv: nocpp
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -137,20 +147,25 @@ If you need to compile a third-party kernel module for the Linux
 kernel package %name-%version-%release, install this package
 and specify %kbuild_dir as the kernel source directory.
 
-
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
 tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -s -p1
-%patch1 -s -p1
-%patch2 -s -p1
 
 # ALT glibc contains strlcpy, so we need disable it there:
 sed -i /strlcpy/d tools/include/linux/string.h
 
+# Undo -cip suffix
+rm -f localversion-cip
+
 /usr/src/xenomai-kernel-source/scripts/prepare-kernel.sh --arch=%_arch
+
+# Fix symlinks into regular files to stop autoreq producing per-file
+# dependency from kernel-headers-module-xenomai to kernel-source-xenomai.
+find -type l -name '*.h' -lname '/usr/src/xenomai-kernel-source/*' -printf '%%l %%p\n' \
+  | xargs -n2 cp --remove-destination --
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -176,6 +191,7 @@ echo "Building Kernel $KernelVer"
 # Configuration construction
 %make_build defconfig
 scripts/config -e IKCONFIG
+scripts/config -e IKCONFIG_PROC
 
 scripts/config -e IPIPE
 scripts/config -e XENOMAI
@@ -188,6 +204,8 @@ scripts/config -e XENO_OPT_SCHED_SPORADIC
 scripts/config -e XENO_OPT_SCHED_QUOTA
 scripts/config -e XENO_OPT_SHIRQ
 scripts/config -e XENO_OPT_SCALABLE_SCHED
+scripts/config -e XENO_OPT_DEBUG
+scripts/config -e XENO_OPT_DEBUG_LEGACY
 scripts/config -e XENO_DRIVERS_16550A
 scripts/config -e XENO_DRIVERS_16550A_ANY
 scripts/config -e XENO_DRIVERS_16550A_PCI
@@ -213,6 +231,7 @@ scripts/config -e XENO_DRIVERS_RTNET_CHECKED
 scripts/config -e XENO_DRIVERS_NET_ETH_P_ALL
 scripts/config -e XENO_DRIVERS_NET_RTIPV4_NETROUTING
 scripts/config -e XENO_DRIVERS_NET_RTIPV4_ROUTER
+scripts/config -m XENO_DRIVERS_NET_RTIPV4_TCP
 scripts/config -m XENO_DRIVERS_NET_NOMAC
 scripts/config -m XENO_DRIVERS_NET_DRV_PCNET32
 scripts/config -m XENO_DRIVERS_NET_DRV_TULIP
@@ -324,11 +343,10 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
 find %buildroot -name '*.ko' | xargs gzip
 
+# TODO: Fix this cargo cult
 mkdir -p %buildroot%kbuild_dir/arch/x86
-install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
 cp -a arch/x86/include %buildroot%kbuild_dir/arch/x86
-
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
@@ -338,14 +356,12 @@ install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/{{scsi,scsi_typedefs}.h,scsi_module.c} \
+cp -a drivers/scsi/scsi.h \
 	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
 cp -a drivers/usb/core/*.h \
 	%buildroot%kbuild_dir/drivers/usb/core/
-cp -a drivers/net/wireless/Kconfig \
-	%buildroot%kbuild_dir/drivers/net/wireless/
 cp -a lib/hexdump.c %buildroot%kbuild_dir/lib/
 cp -a kernel/workqueue.c %buildroot%kbuild_dir/kernel/
 cp -a net/mac80211/ieee80211_i.h \
@@ -434,29 +450,44 @@ popd
 rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 
-
 %check
 KernelVer=%kversion-%flavour-%krelease
 mkdir -p test
 cd test
-msg='Booted successfully'
-%__cc %optflags -s -static -xc -o init - <<__EOF__
+cat > init.c <<__EOF__
 #include <unistd.h>
+#include <stdio.h>
+#include <err.h>
+#include <sys/mount.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/reboot.h>
 int main()
 {
-	static const char msg[] = "$msg\n";
-	write(2, msg, sizeof(msg) - 1);
-	reboot(RB_POWER_OFF);
-	pause();
+        if (mkdir("/proc", 0666))
+                warn("mkdir /proc");
+        else if (mount("proc", "/proc", "proc", 0, NULL))
+                warn("mount /proc");
+        else if (access("/proc/ipipe/version", R_OK))
+                warn("access /proc/ipipe/version");
+        else if (access("/proc/xenomai/version", R_OK))
+                warn("access /proc/xenomai/version");
+        else
+                puts("Boot successful!");
+        reboot(RB_POWER_OFF);
 }
 __EOF__
+gcc -static -o init init.c
 echo init | cpio -H newc -o | gzip -9n > initrd.img
 QEMU=qemu-system-%_arch
-QEMU_OPTS="-bios bios.bin -nographic -no-reboot -m 256M -initrd initrd.img"
+QEMU_OPTS="-nographic -no-reboot -m 256M"
 CONSOLE=ttyS0
+%ifarch x86_64
+ QEMU_OPTS+=" -bios bios.bin"
+%endif
 %ifarch %ix86
  QEMU=qemu-system-i386
+ QEMU_OPTS+=" -bios bios.bin"
 %endif
 %ifarch aarch64
  QEMU=qemu-system-aarch64
@@ -468,12 +499,18 @@ CONSOLE=ttyS0
  QEMU_OPTS+="-cpu power8,compat=power7"
  CONSOLE=hvc0
 %endif
-timeout --foreground 600 $QEMU $QEMU_OPTS -kernel %buildroot/boot/vmlinuz-$KernelVer -append "console=$CONSOLE panic=-1" > boot.log &&
-grep -q "^$msg" boot.log &&
+time -p \
+timeout --foreground 600 \
+$QEMU \
+	$QEMU_OPTS \
+        -kernel %buildroot/boot/vmlinuz-$KernelVer \
+        -initrd initrd.img \
+        -append "console=$CONSOLE panic=-1" > boot.log &&
+grep -q "^Boot successful!" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
-	cat >&2 boot.log
-	echo >&2 'Marker not found'
-	exit 1
+        cat >&2 boot.log
+        echo >&2 'Marker not found'
+        exit 1
 }
 grep -i -e I-pipe -e Xenomai boot.log
 grep -q "head domain Xenomai registered" boot.log
@@ -503,6 +540,12 @@ grep -q "Cobalt v[0-9.]\+" boot.log
 %modules_dir/build
 
 %changelog
+* Sun Apr 19 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.114-alt1.cip24.12
+- Major upgrade of xenomai kernels to Linux 4.19 branch and update to
+  ipipe-core-4.19.114-cip24-x86-12 released at 2020-04-16.
+- Xenomai patches are upgraded from 3.0 to 3.1 branch. Note that with this
+  release Xenomai ABI Revision Level is changed from r16 to r17.
+
 * Fri Nov 29 2019 Vitaly Chikunov <vt@altlinux.org> 4.14.134-alt3
 - Enable kdb/kgdb/lkdtm on x86.
 

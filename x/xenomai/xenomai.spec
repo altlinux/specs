@@ -1,75 +1,85 @@
 %define _unpackaged_files_terminate_build 1
 
-Summary: Real-Time Framework for Linux (Cobalt)
 Name: xenomai
-#         v3.0.9-9-ge71785fe0
-Version: 3.0.9.0.9.ge71785fe0
+Version: 3.1
 Release: alt1
-Source0: %{name}-%{version}.tar
-License: GPL
-Group: Networking/Other
+Source0: %name-%version.tar
+Summary: Real-Time Framework for Linux (Cobalt) (%version)
+License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
+Group: System/Kernel and hardware
 Url: http://www.xenomai.org
+Vcs: https://gitlab.denx.de/Xenomai/xenomai.git
 ExclusiveArch: x86_64
 
 BuildRequires: libiniparser-devel
 #BuildRequires: doxygen asciidoc asciidoc-a2x w3m
 
 %description
-Xenomai is a real-time development framework cooperating with the Linux kernel,
-in order to provide a pervasive, interface-agnostic, hard real-time support to
-user-space applications, seamlessly integrated into the GNU/Linux environment.
+Xenomai is a Free Software project in which engineers from a wide
+background collaborate to build a versatile real-time framework for
+the Linux platform.
 
-Xenomai is based on an abstract RTOS core, usable for building any kind of real-time
-interfaces, over a nucleus which exports a set of generic RTOS services. Any number
-of RTOS personalities called skins can then be built over the nucleus, providing
-their own specific interface to the applications, by using the services of a single
-generic core to implement it.
+The main project goal is to help migrating industrial applications
+from proprietary real-time systems to Linux.
 
-This version is for Cobalt core.
+Xenomai is about making various real-time operating system APIs
+available to Linux-based platforms. When the target Linux kernel
+cannot meet the requirements with respect to response time
+constraints, Xenomai can also supplement it for delivering stringent
+real-time guarantees based on an original dual kernel approach.
 
-%package -n lib%name
-Summary: Xenomai libraries (Cobalt)
-Group: Networking/Other
+%package -n libxenomai1
+Summary: Xenomai (Cobalt) system libraries (v%version)
+Group: System/Libraries
 
-%description -n lib%name
-Library files for Xenomai (Cobalt)
+%description -n libxenomai1
+System libraries for Xenomai (Cobalt)
 
-%package -n lib%name-devel
-Summary: Xenomai development header files
+%package -n libxenomai-devel
+Summary: Xenomai development headers (v%version)
 Group: Development/C
+Requires: libxenomai1 = %EVR
+AutoReqProv: nocpp
 
-%description -n lib%name-devel
-Header files for Xenomai Library files
+%description -n libxenomai-devel
+Header files for Xenomai Libraries
 
-%package -n lib%name-devel-static
-Summary: Xenomai static libraries (Cobalt)
+%package -n libxenomai-devel-static
+Summary: Xenomai static libraries (Cobalt) (v%version)
 Group: Development/C
+Requires: libxenomai-devel = %EVR
 
-%description -n lib%name-devel-static
-Static library files for Xenomai (Cobalt)
+%description -n libxenomai-devel-static
+Static libraries for Xenomai (Cobalt)
 
-%package -n %name-kernel-source
-Summary: Xenomai (Cobalt) patches for Linux kernel
-Group: Development/C
+%package -n xenomai-kernel-source
+Summary: Xenomai (Cobalt) patch for Linux kernel (v%version)
+Group: Development/Kernel
 BuildArch: noarch
+AutoReqProv: no
 
-%description -n %name-kernel-source
-Linux kernel patches for Xenomai (Cobalt)
+%description -n xenomai-kernel-source
+This package is used only internally to build Xenomai kernel.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
 export CFLAGS=-fno-omit-frame-pointer
-%configure --with-core=cobalt \
+%configure \
+	--with-core=cobalt \
 	--includedir=/usr/include/xenomai \
-	--with-testdir=/usr/lib/xenomai \
+	--with-testdir=%_libdir/xenomai/testsuite \
+	--enable-smp \
+	--enable-lazy-setsched \
+	--enable-debug=symbols \
+	--enable-dlopen-libs \
 
-%make_build
+%make_build -s
 
 %install
-%makeinstall_std SUDO=false
+%makeinstall_std -s SUDO=false
 rm -rf %buildroot/usr/src/debug
 rm -rf %buildroot/usr/lib/debug
 rm -rf %buildroot/usr/demo
@@ -85,6 +95,13 @@ for f in kernel/cobalt/udev/*.rules; do
   cp $f %buildroot/etc/udev/rules.d/
 done
 
+# Only .so is required for dlopen test
+rm -f %_libdir/xenomai/testsuite/*.a
+
+# smokey should be non-stripped at all, stripping just
+# debug is not enough.
+%brp_strip_none %_libdir/xenomai/testsuite/smokey
+
 %pre
 %_sbindir/groupadd -r -f xenomai 2> /dev/null ||:
 
@@ -96,27 +113,32 @@ done
 %exclude %_bindir/xeno-config
 %exclude %_bindir/wrap-link.sh
 %_sbindir/*
-%_libexecdir/%name/
+%dir %_libdir/xenomai
+%_libdir/xenomai/testsuite
 
-%files -n lib%name
+%files -n libxenomai1
 %_libdir/lib*.so.*
 
-%files -n lib%name-devel
+%files -n libxenomai-devel
 %_includedir/xenomai
 %_libdir/*.so
 %_bindir/xeno-config
 %_bindir/wrap-link.sh
 %_libdir/*.wrappers
 %_libdir/dynlist.ld
-%_libdir/%name/*.o
+%dir %_libdir/xenomai
+%_libdir/xenomai/*.o
 
-%files -n lib%name-devel-static
+%files -n libxenomai-devel-static
 %_libdir/lib*.a*
 
-%files -n %name-kernel-source
+%files -n xenomai-kernel-source
 %_usrsrc/xenomai-kernel-source
 
 %changelog
+* Sun Apr 19 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt1
+- Update to v3.1 (ABI r17).
+
 * Sat Aug 24 2019 Vitaly Chikunov <vt@altlinux.org> 3.0.9.0.9.ge71785fe0-alt1
 - Update to v3.0.9-9-ge71785fe0.
 
