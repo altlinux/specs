@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define ver_base 3.10
-%define ver_major 3.9
+%define ver_major 3.10
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.gThumb
 
@@ -15,7 +15,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Apr 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
 - 3.9.1
 
