@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -43,6 +43,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Apr 20 2020 Alexey Appolonov <alexey@altlinux.org> 0.8.0-alt1
+- Modified 'ReplaceNotAlfa' function of 'alt' module.
+
 * Wed Mar 25 2020 Alexey Appolonov <alexey@altlinux.org> 0.7.0-alt1
 - Enhanced 'SplitPackageName' function of 'alt' module.
 
