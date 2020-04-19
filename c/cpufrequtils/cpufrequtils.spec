@@ -2,18 +2,16 @@
 
 Name: cpufrequtils
 Version: 008
-Release: alt2
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt3
 
 Summary: Tools to determine and set CPUfreq settings
 License: GPLv2
 Group: System/Base
 
-URL: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html
+Url: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html
 Source: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils-%version.tar.bz2
-
 Patch0: 0001-Only-x86-has-cpuid-instruction.patch
+Patch1: 0001-Only-x86-has-cpuid-h.patch
 
 Requires: %libname = %version-%release
 
@@ -46,16 +44,15 @@ applications which will use %libname.
 
 %prep
 %setup
-%patch -p1
-
-subst 's/--mode=/--tag=CC --mode=/' Makefile
+%patch0 -p1
+%patch1 -p1
+sed -i 's/--mode=/--tag=CC --mode=/' Makefile
 
 %build
 %make_build CFLAGS="%optflags" V=true
 
 %install
 %makeinstall_std mandir=%_mandir libdir=%_libdir V=true
-
 %find_lang cpufrequtils
 
 %files -f cpufrequtils.lang
@@ -70,6 +67,10 @@ subst 's/--mode=/--tag=CC --mode=/' Makefile
 %_libdir/libcpufreq.so
 
 %changelog
+* Sun Apr 19 2020 Michael Shigorin <mike@altlinux.org> 008-alt3
+- further fixed build on non-x86 architectures, notably E2K
+- minor spec cleanup
+
 * Thu Feb 14 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 008-alt2
 - Fixed build on non-x86 architectures (patch by Zhang Le).
 
