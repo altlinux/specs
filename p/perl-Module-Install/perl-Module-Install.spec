@@ -1,8 +1,9 @@
+%filter_from_requires /^perl.arybase.pm./d
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
 Version: 1.19
-Release: alt1
+Release: alt2
 
 Summary: Standalone, extensible Perl module installer
 License: GPL or Artistic
@@ -48,6 +49,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.19-alt2
+- dropped perl(arybase.pm) autodependency
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
