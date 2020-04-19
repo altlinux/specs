@@ -1,3 +1,4 @@
+%filter_from_requires /^perl.arybase.pm./d
 %define _unpackaged_files_terminate_build 1
 #
 #   - MARC-Record -
@@ -16,7 +17,7 @@
 
 Name: perl-MARC-Record
 Version: 2.0.7
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for handling MARC records
 
@@ -56,6 +57,9 @@ in MARC::File::*.
 
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2
+- dropped perl(arybase.pm) autodependency
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1
 - automated CPAN update
 
