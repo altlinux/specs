@@ -1,6 +1,7 @@
+%filter_from_requires /^perl.arybase.pm./d
 Name: perl-Mozilla-LDAP
 Version: 1.5.2
-Release: alt3.2
+Release: alt4.2
 
 Summary: LDAP Perl module that wraps the Mozilla C SDK
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -42,6 +43,9 @@ export LDAPPKGNAME=mozldap
 %perl_vendor_autolib/Mozilla
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4.2
+- dropped perl(arybase.pm) autodependency
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt3.2
 - rebuild with new perl 5.28.1
 
