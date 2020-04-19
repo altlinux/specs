@@ -1,3 +1,4 @@
+%filter_from_requires /^perl.arybase.pm./d
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
 # END SourceDeps(oneline)
@@ -7,7 +8,7 @@ BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
 
 Name:		gcal
 Version:	4.1
-Release:	alt1_4
+Release:	alt2_4
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -76,6 +77,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_4
+- dropped perl(arybase.pm) autodependency
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_4
 - update to new release by fcimport
 
