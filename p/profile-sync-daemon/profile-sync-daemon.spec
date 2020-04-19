@@ -1,5 +1,5 @@
 Name: profile-sync-daemon
-Version: 6.36
+Version: 6.37
 Release: alt1
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
@@ -69,6 +69,9 @@ echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd
 %_libexecdir/systemd/user/psd*.*
 
 %changelog
+* Sun Apr 19 2020 Cronbuild Service <cronbuild@altlinux.org> 6.37-alt1
+- new version 6.37
+
 * Sun Feb 23 2020 Cronbuild Service <cronbuild@altlinux.org> 6.36-alt1
 - new version 6.36
 
