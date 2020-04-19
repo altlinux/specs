@@ -1,3 +1,4 @@
+%filter_from_requires /^perl.arybase.pm./d
 %define module txt2html
 %define m_distro txt2html
 %define m_name txt2html
@@ -5,7 +6,7 @@
 
 Name: txt2html
 Version: 2.5201
-Release: alt1
+Release: alt2
 
 Summary: Convert raw text to something with a little HTML formatting
 
@@ -46,6 +47,9 @@ better ways of doing that.
 %_man1dir/*
 
 %changelog
+* Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.5201-alt2
+- dropped perl(arybase.pm) autodependency
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.5201-alt1
 - automated CPAN update
 
