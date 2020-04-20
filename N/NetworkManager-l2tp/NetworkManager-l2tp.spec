@@ -9,8 +9,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.8.0
-Release: alt2%git_date
+Version: 1.8.2
+Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -103,6 +103,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Apr 20 2020 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Updated to 1.8.2.
+
 * Tue Mar 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt2
 - Rebuild with ppp-2.4.8.
 
