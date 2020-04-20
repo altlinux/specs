@@ -1,7 +1,7 @@
 # coccinelle.spec
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt4
+Release:	alt5
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/Kernel
@@ -46,7 +46,9 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 
 %build
 ./autogen
-%configure
+%configure \
+	--with-python=%_bindir/python3 \
+
 make EXTLIBDIR=`ocamlc -where`/extlib
 
 %install
@@ -78,6 +80,9 @@ export LD_LIBRARY_PATH=.
 /usr/share/bash-completion/completions/spatch
 
 %changelog
+* Mon Apr 20 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt5
+- spec: Fix `Cannot infer Python version'.
+
 * Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt4
 - Convert to python3, add spgen, delete spatch.opt, clean up reqs.
 
