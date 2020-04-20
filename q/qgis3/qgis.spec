@@ -1,11 +1,14 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
 %define grass_version 7.8.2
-%def_disable extra
+%def_disable grass
+%def_enable python
+%def_enable devel
+%def_enable server
 %define rname qgis
 
 Name:    qgis3
-Version: 3.12.1
+Version: 3.12.2
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -45,7 +48,7 @@ BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: flex bison
-%if_enabled extra
+%if_enabled grass
 BuildRequires: grass-devel = %grass_version
 %endif
 BuildRequires: gzip
@@ -61,7 +64,8 @@ BuildRequires: libspatialite-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libzip-devel
 BuildRequires: postgresql-devel
-%if_enabled extra
+%if_enabled python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-PyQt5-devel
 BuildRequires: python3-module-nose2
@@ -69,6 +73,7 @@ BuildRequires: python3-module-qscintilla2-qt5-devel
 BuildRequires: python3-module-sip-devel >= 4.15
 BuildRequires: python3-module-sip
 BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-OWSLib
 %endif
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-location-devel
@@ -91,6 +96,8 @@ Requires: libqwt6-qt5
 
 # We don't want to provide private Python extension libs
 %add_findprov_skiplist %%python_sitelibdir/qgis/*.so 
+%add_python3_path %_datadir/qgis/python
+%filter_from_requires /^python3(processing.core.GeoAlgorithm)/d
 
 %description
 Geographic Information System (GIS) manages, analyzes, and displays
@@ -101,7 +108,6 @@ via a plugin interface. QGIS also supports display of various
 geo-referenced raster and Digital Elevation Model (DEM) formats
 including GeoTIFF, Arc/Info ASCII Grid, and USGS ASCII DEM.
 
-%if_enabled extra
 %package devel
 Summary: Development Libraries for the Quantum GIS
 Group: Development/C
@@ -124,10 +130,10 @@ system.
 Summary: Python integration and plug-ins for Quantum GIS
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
-Requires: python-module-gdal
-Requires: python-module-qscintilla2-qt4
+Requires: python3-module-gdal
+Requires: python3-module-qscintilla2-qt5
 # SPI API >= 9.1
-Requires: python-module-sip
+Requires: python3-module-sip
 
 %description python
 Python integration and plug-ins for Quantum GIS.
@@ -148,7 +154,6 @@ Descriptor) for styling. Sample configurations for Httpd and Lighttpd
 are included.
 
 Please refer to %name-server-README for details!
-%endif
 
 %prep
 %setup -n %rname-%version
@@ -186,13 +191,8 @@ cmake \
 	-DQGIS_MANUAL_SUBDIR:PATH=/share/man \
 	-DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%rname \
 	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
-%if_enabled extra
-	-DWITH_BINDINGS:BOOL=TRUE \
-	-DWITH_SERVER:BOOL=TRUE \
-%else
-	-DWITH_BINDINGS:BOOL=FALSE \
-	-DWITH_SERVER:BOOL=FALSE \
-%endif
+	-DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
+	-DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
 	-DGRASS_PREFIX:PATH=%_libdir/grass \
 	-DGRASS_PREFIX7:PATH=%_libdir/grass \
 	-DMAPSERVER_SKIP_ECW=TRUE \
@@ -287,7 +287,7 @@ mkdir -p %buildroot%_datadir/doc/%rname-server-%version
 cp src/server/admin.sld src/server/wms_metadata.xml %SOURCE4 %SOURCE3 \
    %buildroot%_datadir/doc/%rname-server-%version
 
-%if_enabled extra
+%if_enabled python
 # Copy test utilities form tests to plugins/processing/tests
 cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/processing/tests/
 %endif
@@ -295,8 +295,9 @@ cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/process
 %find_lang %rname --with-qt
 # Add missing localization
 echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %rname.lang
+echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %rname.lang
 
-%if_disabled extra
+%if_disabled devel
 rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
        %buildroot%_includedir/%rname \
        %buildroot%_libdir/lib%{rname}*.so \
@@ -332,42 +333,55 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %_datadir/%rname/images
 %_datadir/%rname/resources
 %_datadir/%rname/svg
-%if_enabled extra
+%if_enabled server
 %_libdir/lib%{rname}_server.so.*
+%endif
+%if_enabled grass
 %exclude %_libdir/libqgisgrass*.so.*
 %exclude %_libdir/%rname/libgrassprovider*.so
 %exclude %_libdir/%rname/libgrassrasterprovider*.so
 %exclude %_libdir/%rname/grass
 %endif
 %_datadir/mimelnk/application/*
+%_datadir/metainfo/org.qgis.qgis.appdata.xml
 
-%if_enabled extra
+%if_enabled devel
 %files devel
 %_datadir/%rname/FindQGIS.cmake
 %_includedir/%rname
 %_libdir/lib%{rname}*.so
 %_libdir/qt5/plugins/designer/libqgis_customwidgets.so*
+%endif
 
+%if_enabled grass
 %files grass
 %_libdir/lib%{rname}grass*.so.*
 %_libdir/%rname/libgrassprovider*.so
 %_libdir/%rname/libgrassrasterprovider*.so
 %_libdir/%rname/grass
 %_datadir/%rname/grass
+%endif
 
+%if_enabled python
 %files python
 %_libdir/libqgispython.so.*
 %_datadir/%rname/python
 %python3_sitelibdir/%rname
 %python3_sitelibdir/PyQt5/uic/widget-plugins/
+%endif
 
+%if_enabled server
 %files server
 %doc %_datadir/doc/%rname-server-%version
 %config(noreplace) %_sysconfdir/httpd/conf.d/%{rname}-server.conf
+%_bindir/qgis_mapserver
 %_libexecdir/%rname
 %endif
 
 %changelog
+* Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.12.2-alt1
+- New version.
+
 * Sat Mar 21 2020 Andrey Cherepanov <cas@altlinux.org> 3.12.1-alt1
 - New version.
 
