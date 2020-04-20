@@ -1,13 +1,10 @@
 Name: blueberry
 Version: 1.3.6
-Release: alt2
+Release: alt3
 Summary: A Bluetooth configuration tool
 License: GPLv3
 Group: System/Configuration/Hardware
 Url: https://github.com/linuxmint/blueberry
-
-Obsoletes: blueman
-Provides: blueman
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -57,6 +54,9 @@ Blueberry applet for Cinnamon
 %_datadir/cinnamon/applets/blueberry@cinnamon.org
 
 %changelog
+* Mon Apr 20 2020 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt3
+- Don't obsoletes and provides blueman
+
 * Mon Mar 30 2020 Vladimir Didenko <cow@altlinux.org> 1.3.6-alt2
 - Don't use symbolic tray icon by default (looks bad in xfce tray)
 
