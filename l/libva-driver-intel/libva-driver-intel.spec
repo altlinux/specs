@@ -1,5 +1,5 @@
 Name: libva-driver-intel
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: VA-API (Video Acceleration API) user mode driver for Intel GEN Graphics family
@@ -38,6 +38,9 @@ find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|'
 %_libdir/dri/*.so
 
 %changelog
+* Mon Jun 29 2020 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Mon Jan 13 2020 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
