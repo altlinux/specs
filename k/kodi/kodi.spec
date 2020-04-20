@@ -1,6 +1,6 @@
 Name: kodi
 Version: 18.6
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL
@@ -169,6 +169,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Mon Apr 20 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 18.6-alt2
+- Fixed build with new libfmt.
+
 * Thu Mar 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.6-alt1
 - 18.6 Leia released
 
