@@ -1,13 +1,14 @@
 Name: laspack
 Version: 1.12.2
-Release: alt5
+Release: alt6
+
 Summary: Solving large sparse systems of linear equations
 License: BSD
 Group: Sciences/Mathematics
-Url: http://www.mgnet.org/mgnet/Codes/laspack/html/laspack.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: http://www.mgnet.org/mgnet/Codes/laspack/html/laspack.html
 Source: %name-%version.tar.gz
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %description
 LASPack is a package for solving large sparse systems of linear equations
@@ -103,7 +104,7 @@ This package contains examples for LASPack.
 %setup
 
 %build
-%ifarch x86_64
+%if "%_lib" == "lib64"
 sed -i 's|^\(ARCH_EXT\).*|\1 = 64|' \
 	xc/makefile laspack/makefile
 %endif
@@ -132,7 +133,7 @@ rmdir %buildroot%_includedir/*.old
 for i in lastest matropt mlstest vectopt
 do
 	pushd laspack/examples/$i
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	sed -i 's|^\(ARCH_EXT\).*|\1 = 64|' makefile
 %endif
 	%make_build DESTDIR=%buildroot
@@ -181,6 +182,9 @@ popd
 %_libdir/%name/examples
 
 %changelog
+* Mon Apr 20 2020 Michael Shigorin <mike@altlinux.org> 1.12.2-alt6
+- Fixed build on 64-bit arches different from x86_64
+
 * Fri Mar 18 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.2-alt5
 - Added -g into compiler flags
 
