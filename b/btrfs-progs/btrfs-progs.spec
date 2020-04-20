@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.4.1
+Version: 5.6
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -82,6 +82,9 @@ rm -f %buildroot/%{_lib}/libbtrfsutil.so
 %_includedir/*
 
 %changelog
+* Mon Apr 20 2020 Anton Farygin <rider@altlinux.ru> 5.6-alt1
+- 5.6
+
 * Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 5.4.1-alt1
 - 5.4.1
 
