@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.3
+Version: 4.1.1
 Release: alt1
 
 Summary: Command-line argument parsing for Python, without the effort
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 20 2020 Pavel Vasenkov <pav@altlinux.org> 4.1.1-alt1
+- new version 4.1.1
+
 * Sat Jun 01 2019 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
 - new version 4.0.3 (with rpmrb script)
 - build python3 module only
