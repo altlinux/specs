@@ -6,10 +6,10 @@
 
 Name: %gst_plugins-base
 Version: %ver_major.36
-Release: alt2
+Release: alt3
 Summary: An essential set of GStreamer plugins (legacy version)
 Group: System/Libraries
-License: LGPL
+License: LGPL-2.0
 URL: http://gstreamer.freedesktop.org/
 
 Requires: lib%gst_plugins = %version-%release
@@ -65,6 +65,7 @@ Obsoletes: %gst_plugins-pango < %version
 Source: %name-%version.tar
 Source1: common.tar
 Patch: %name-%version-%release.patch
+Patch1: gst-plugins-base-make43.patch
 
 BuildRequires: gstreamer0.10-devel gtk-doc intltool libSM-devel libXext-devel libXv-devel libalsa-devel libgtk+2-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel gstreamer0.10-gir-devel
@@ -88,6 +89,7 @@ Helper libraries for GStreamer plugins, containing base classes useful for eleme
 %prep
 %setup -q -a1
 %patch -p1
+%patch1 -p1 -d common
 
 touch ABOUT-NLS config.rpath
 subst '/.PHONY/d' Makefile.am
@@ -116,6 +118,15 @@ subst '/.PHONY/d' Makefile.am
 %_libdir/*.so.*
 
 %changelog
+* Mon Apr 20 2020 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt3
+- Apply patches from Debian.
+- Fixes:
+  + CVE-2017-5837
+  + CVE-2017-5844
+  + CVE-2019-9928
+- Fix build with make 4.3.0 (patch obtained from https://bugs.gentoo.org/show_bug.cgi?id=706076).
+- Fix License tag according to SPDX.
+
 * Wed Jul 24 2019 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt2
 - Rename and package only libraries for legacy software.
 
