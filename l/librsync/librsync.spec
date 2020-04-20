@@ -1,10 +1,11 @@
 Name: librsync
 Version: 0.9.7
-Release: alt4
+Release: alt5
 
 Summary: rsync remote network-delta algorithm library
-Group: System/Libraries
 License: LGPLv2+
+Group: System/Libraries
+
 Url: http://librsync.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
@@ -48,6 +49,8 @@ which will use %name.
 %patch6 -p1
 
 %build
+# E2K: see also http://github.com/librsync/librsync/issues/41
+%add_optflags -std=gnu89
 %autoreconf
 %configure --disable-static --enable-shared
 %make_build
@@ -72,6 +75,9 @@ which will use %name.
 %_man3dir/*
 
 %changelog
+* Mon Apr 20 2020 Michael Shigorin <mike@altlinux.org> 0.9.7-alt5
+- fix build with lcc (and clang: upstream issue #41)
+
 * Fri Feb 15 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.7-alt4
 - synced with Debian librsync-0.9.7-10.
 - %%check added.
