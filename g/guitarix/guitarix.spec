@@ -5,18 +5,16 @@
 %global altname2 guitarix2
 
 Name: guitarix
-Version: 0.38.1
+Version: 0.39.0
 Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://sourceforge.net/projects/guitarix
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-# Source-url: https://sourceforge.net/projects/%name/files/%name/%altname2-%version.tar.xz
-Source1: ru.po
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ python3
 BuildRequires: desktop-file-utils
 BuildRequires: faust-devel
 BuildRequires: libfftw3-devel
@@ -138,7 +136,10 @@ guitarix, but can also be used by any other ladspa host.
 
 %prep
 %setup
-cp %SOURCE1 po/
+
+# fix shebang
+find . -type f -print0 |
+  xargs -0 sed -i 's,/usr/bin/env python,%_bindir/python3,'
 
 #fix PATH include to Eigen
 for i in `grep -r '<Eigen' * | cut -d ':' -f1`; do
@@ -215,6 +216,9 @@ ln -s %_libdir/libgxw.so.0.1 %buildroot%_libdir/libgxw.so
 %_libdir/lv2/*
 
 %changelog
+* Mon Apr 20 2020 Anton Midyukov <antohami@altlinux.org> 0.39.0-alt1
+- new version 0.39.0
+
 * Fri Aug 16 2019 Anton Midyukov <antohami@altlinux.org> 0.38.1-alt1
 - new version 0.38.1
 
