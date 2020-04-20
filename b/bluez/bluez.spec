@@ -8,7 +8,7 @@
 
 Name: bluez
 Version: 5.54
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -111,12 +111,16 @@ find %buildroot%_libdir -name \*.la -delete
 if [ $1 = 1 ]; then
 	chkconfig bluetoothd on
 fi
+if [ $1 = 1 ] ; then
+	/bin/systemctl --user --global preset obex.service || :
+fi
 
 %preun
 %preun_service bluetoothd
+/bin/systemctl --user --global disable obex.service || :
 
-%triggerin -- %name <= 4.37-alt1
-chkconfig bluetoothd on
+%triggerin -- %name < 5.54-alt2
+/bin/systemctl --user --global preset obex.service || :
 
 %files
 %doc AUTHORS ChangeLog README
@@ -175,6 +179,9 @@ chkconfig bluetoothd on
 %endif
 
 %changelog
+* Mon Apr 20 2020 Anton Midyukov <antohami@altlinux.org> 5.54-alt2
+- Enable obex.service (closes #38279).
+
 * Sun Mar 15 2020 L.A. Kostis <lakostis@altlinux.ru> 5.54-alt1
 - 5.54;
 - remove merged patches;
