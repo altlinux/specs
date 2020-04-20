@@ -1,14 +1,19 @@
 Name: finger
 Version: 1.3
-Release: alt1.0
+Release: alt2
 
 Summary: Show user information (client)
 License: BSD
 Group: Networking/Other
-Url: http://ftp.suse.com/pub/people/kukuk/ipv6
+Url: https://build.opensuse.org/package/show/openSUSE:Factory/finger
 
-Source: %url/finger-bsd-%version.tar.bz2
+Source: finger-bsd-%version.tar
 Source1: %name.xinetd
+
+# These patches were taken from the:
+# https://build.opensuse.org/package/show/openSUSE:Factory/finger
+Patch1: finger-memory-leak.patch
+Patch2: finger-utf8_segfault.patch
 
 %package server
 Summary: A Server for Showing User Information
@@ -30,6 +35,8 @@ and you'd like finger information to be available.
 
 %prep
 %setup -q -n finger-bsd-%version
+%patch1 -p1
+%patch2 -p0
 
 %build
 %configure
@@ -51,6 +58,15 @@ install -D -m640 %SOURCE1 $RPM_BUILD_ROOT%_sysconfdir/xinetd.d/%name
 %_man8dir/*
 
 %changelog
+* Mon Apr 20 2020 Nikita Ermakov <arei@altlinux.org> 1.3-alt2
+- Update spec:
+  + Update URL.
+  + Do not compress source code with bzip2.
+- Fix memory leak and wrong return in finger.
+- Fix segfault in finger. Finger segfaults against files with a UTF-8
+  encoding and no LANG environment variable.
+- Bump release.
+
 * Mon Apr 16 2007 ALT QA Team Robot <qa-robot@altlinux.org> 1.3-alt1.0
 - Automated rebuild.
 
