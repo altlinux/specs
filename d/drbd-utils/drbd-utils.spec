@@ -4,7 +4,7 @@
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.12.1
+Version: 9.12.2
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -150,6 +150,9 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Mon Apr 20 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.2-alt1
+- 9.12.2
+
 * Tue Mar 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.1-alt1
 - 9.12.1
 
