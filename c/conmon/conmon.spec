@@ -1,5 +1,7 @@
 Name: conmon
-Version: 2.1
+# because typo in version :(
+Epoch: 1
+Version: 2.0.15
 Release: alt1
 
 Summary: OCI container runtime monitor
@@ -28,6 +30,9 @@ BuildRequires: glib2-devel glibc-devel
 %_bindir/conmon
 
 %changelog
+* Tue Apr 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1:2.0.15-alt1
+- Update to 2.0.15
+
 * Fri Sep 20 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.1-alt1
 - Update to 2.1
 
