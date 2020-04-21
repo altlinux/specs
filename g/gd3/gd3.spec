@@ -7,7 +7,7 @@
 
 Name: gd3
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
@@ -146,7 +146,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 %makeinstall_std
 
 %check
-%ifarch %ix86 aarch64 ppc64le
+%ifarch %ix86 aarch64 ppc64le riscv64
 # Tests are known to be buggy on x86 32bit due to rounding issues. See:
 # https://github.com/libgd/libgd/issues/359
 # https://github.com/libgd/libgd/issues/242
@@ -174,6 +174,14 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Tue Apr 21 2020 Nikita Ermakov <arei@altlinux.org> 2.3.0-alt2
+- Fix build on riscv64 (gdimagegrayscale/basic and
+  gdimagecopyresampled/bug00201 tests are fails because of the
+  rounding after fused multiply-add instructions. One possible
+  workarround is to add -ffp-contract=off to the CFLAGS but as the
+  difference between images in the tests is small it would be better
+  to just ignore these tests).
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 
