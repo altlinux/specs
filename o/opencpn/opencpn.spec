@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable	gtk3
+
 Name: opencpn
 Version: 5.0.0
-Release: alt2
+Release: alt3
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -13,7 +15,7 @@ Source1: %name.desktop
 
 ExcludeArch: ppc64le
 
-Patch1: opencpn-4.4.0-fix_library_path.patch
+Patch1: opencpn-5.0.0-detection_of_wxWebview.patch
 
 Requires: %name-data
 
@@ -26,8 +28,19 @@ BuildRequires: rpm-build-licenses
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel zlib-devel
 
+%if_enabled gtk3
+BuildRequires: libwxGTK3.1-devel libgtk+3-devel
+BuildConflicts: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
+
+BuildRequires: libcairo-devel libpcre-devel libffi-devel libfribidi-devel libpixman-devel libuuid-devel libdrm-devel
+BuildRequires: libtiff-devel libmount-devel libblkid-devel libselinux-devel libxkbcommon-devel libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
+%else
 BuildRequires: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
+BuildConflicts: libwxGTK3.1-devel libgtk+3-devel
+
 Requires: libgtk2-engine-adwaita
+%endif
 
 BuildRequires: tinyxml-devel libgps-devel libportaudio2-devel libcurl-devel libexpat-devel
 BuildRequires: liblz4-devel liblzma-devel libsndfile-devel libarchive-devel libelf-devel
@@ -52,7 +65,8 @@ Architecture independent files for OpenCPN.
 
 %prep
 %setup -n OpenCPN-%version
-#patch1 -p2
+
+%patch1 -p1
 
 #patch100 -p1
 
@@ -138,6 +152,10 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/license.html
 
 %changelog
+* Tue Apr 21 2020 Sergey Y. Afonin <asy@altlinux.org> 5.0.0-alt3
+- fixed FTBFS: added opencpn-5.0.0-detection_of_wxWebview.patch
+- added build time switch for switching gtk+2/gtk+3 (in spec-file)
+
 * Tue Aug 20 2019 Anton Midyukov <antohami@altlinux.org> 5.0.0-alt2
 - add_optflags (pkg-config --cflags pango) (Fix FTBFS)
 - ExcludeArch: ppc64le
