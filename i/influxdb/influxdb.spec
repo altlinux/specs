@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit f46f63d4e2d9684a2dd716594ab609ccd32f0a5b
+%global commit 781490de48220d7695a05c29e5a36f550a4568f5
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.7.10
+Version:	1.8.0
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -27,7 +27,7 @@ Source104: influxdb.tmpfiles
 
 Patch1: influxdb-opentsdb-fix.patch
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires: xmlto asciidoc
 
@@ -46,17 +46,10 @@ events, and performing analytics.
 # This is necessary because the gdm cannot work with the vendor directory and always tries to update
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
-# $ go get -d github.com/influxdata/influxdb
-# pushd ~/go/src/github.com/influxdata/influxdb
-# $ git checkout to %version
-# $ dep ensure -vendor-only
-# popd
 # $ git rm -rf vendor
-# $ cp -r $HOME/go/src/github.com/influxdata/influxdb/vendor ./
+# $ go mod vendor
 # $ git add --force vendor
-# $ git commit -m "update go pkgs by dep ensure -vendor-only"
-# $ rm -rf $HOME/go/src/github.com/influxdata/influxdb
-
+# $ git commit -m "update go pkgs by go mod vendor"
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -130,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sat Apr 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.10-alt1
 - 1.7.10
 
