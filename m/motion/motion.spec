@@ -1,9 +1,11 @@
 Name: motion
 Version: 4.1.1
-Release: alt2
+Release: alt3
+
 Summary: %name - Detect motion using a video4linux device
 License: GPL
 Group: Video
+
 Url: http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
 Source0: %name-%version.tar
 Patch0:	motion-4.1.1-docdir.patch
@@ -11,11 +13,10 @@ Patch1: motion-4.1.1-ffmpeg4.patch
 Patch2: motion-4.1.1-configure-binpath.patch
 Patch3: motion-4.1.1-alt-mysql8-transition.patch
 
-BuildPreReq: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
-BuildPreReq: libmjpegtools-devel libsqlite3-devel 
-BuildPreReq: libpostproc-devel libswscale-devel libavdevice-devel
-BuildPreReq: libavfilter-devel libv4l-devel
-
+BuildRequires: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
+BuildRequires: libmjpegtools-devel libsqlite3-devel
+BuildRequires: libpostproc-devel libswscale-devel libavdevice-devel
+BuildRequires: libavfilter-devel libv4l-devel
 BuildRequires: libavformat-devel libjpeg-devel libmysqlclient-devel postgresql-devel zlib-devel libwebp-devel
 
 %description
@@ -23,33 +24,39 @@ With motion you can use a video4linux device as a motion detector.
 It will make snapshots if motion is detected.
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
 
-%__subst 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' %name.h
-%__subst 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' event.c
-%__subst 's|\(put_mysql[\(]&cnt->conf, cnt->database, filename, tm, sqltype[\)]\)|//\1|' event.c
-%__subst 's|\(motion\.conf\)\(\*\)|\1.\2|' Makefile.in
-%__subst 's|\(^.*c->quality\).*|//\1|' ffmpeg.c
-%__subst 's,\@PACKAGE_NAME@,\%name,' Makefile.in
-%__subst 's,\-@PACKAGE_VERSION@,\-%version,' Makefile.in
+sed -i 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' %name.h
+sed -i 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' event.c
+sed -i 's|\(put_mysql[\(]&cnt->conf, cnt->database, filename, tm, sqltype[\)]\)|//\1|' event.c
+sed -i 's|\(motion\.conf\)\(\*\)|\1.\2|' Makefile.in
+sed -i 's|\(^.*c->quality\).*|//\1|' ffmpeg.c
+sed -i 's,\@PACKAGE_NAME@,\%name,' Makefile.in
+sed -i 's,\-@PACKAGE_VERSION@,\-%version,' Makefile.in
 
 rm -f version.sh
 
 %build
+%ifarch %e2k
+# asm under that ifdef
+%add_optflags -U__MMX__
+%endif
 %autoreconf
-%configure --sysconfdir=%_sysconfdir/%name \
-	--docdir=%_defaultdocdir --with-webp \
+%configure \
+	--sysconfdir=%_sysconfdir/%name \
+	--docdir=%_defaultdocdir \
+	--with-webp \
 	--without-optimizecpu
 
 %make
-%make_build 
+%make_build
 
 %install
-%makeinstall 
+%makeinstall
 
 install -d -m 755 %buildroot%_sysconfdir/%name
 rename -- -dist.conf .conf %buildroot%_sysconfdir/%name/*.conf
@@ -66,6 +73,10 @@ install -pDm0644 %name.service %buildroot/%_unitdir/%name.service
 %_man1dir/*
 
 %changelog
+* Tue Apr 21 2020 Michael Shigorin <mike@altlinux.org> 4.1.1-alt3
+- E2K: fix ftbfs (x86 asm under MMX ifdef, SIMD might do better)
+- minor spec cleanup
+
 * Sun Jan 13 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.1.1-alt2
 - fix FTBFS due to transition to libmysqlclient21
 
