@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gsl
-Version: 2.5
+Version: 2.6
 Release: alt1
 Summary: The GNU Scientific Library for numerical analysis
 License: GPL
@@ -137,6 +137,9 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6-alt1
+- Updated to upstream version 2.6.
+
 * Mon Sep 10 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt1
 - Updated to upstream version 2.5.
 
