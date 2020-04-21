@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit fefd7ff1919d8dbea0e9d1a9df9b8ca77d4c476b
+%global commit 33dd867d0dc1854ba67aef0872f5167c43e4a502
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.14.0
+Version:	1.14.1
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -42,15 +42,10 @@ or Google Analytics).
 # This is necessary because the gdm cannot work with the vendor directory and always tries to update
 # all dependencies from the external servers. So, we can't use Makefile to compile.
 #
-# $ go get -d github.com/influxdata/telegraf
-# $ pushd $HOME/go/src/github.com/influxdata/telegraf
-# $ git checkout %version
-# $ dep ensure -vendor-only
-# $ popd
 # $ git rm -rf vendor
-# $ cp -r $HOME/go/src/github.com/influxdata/telegraf/vendor ./
+# $ go mod vendor -v
 # $ git add -f vendor
-# $ git commit -m "update go pkgs by dep ensure -vendor-only"
+# $ git commit -m "update go pkgs by go mod vendor"
 
 %setup -q
 
@@ -127,6 +122,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Sat Apr 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
