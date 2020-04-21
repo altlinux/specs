@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt138
+Release: alt139
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -406,6 +406,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Apr 21 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt139
+- ldd.in: made preloading of PIE objects work again.
+- Set the value of SOURCE_DATE_EPOCH environment variable (if any)
+  as the source package buildtime.
+
 * Tue Apr 07 2020 Alexey Tourbin <at@altlinux.ru> 4.0.4-alt138
 - find-package, shebang.req: introduced RPM_FINDPACKAGE_MANDATORY=1.
   When an interpreter is invoked by name, as in "#!/usr/bin/env python32",
