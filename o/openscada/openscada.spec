@@ -2,15 +2,15 @@
 %define _unpackaged_files_terminate_build 1
 
 %set_verify_elf_method relaxed
-%ifnarch %e2k
-%set_gcc_version 7
-%endif
-%def_with qt4
+#%ifnarch %e2k
+#set_gcc_version 8
+#endif
+%def_with qt5
 
 #===== DB subsystem modules ======
 %def_enable DBF
 %def_enable SQLite
-%def_enable MySQL
+%def_disable MySQL
 %def_enable FireBird
 %def_enable PostgreSQL
 
@@ -81,12 +81,12 @@ Summary(ru_RU.UTF8): Открытая SCADA система
 Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
-Version: 0.9.0
-Release: alt6
+Version: 0.9.1
+Release: alt1
 Source: openscada-%version.tar
 Source1: openscada-res.tar.xz
 Patch: added_lsb_header.patch
-Patch1: %name-g++8.patch
+#Patch1: %name-g++8.patch
 License: GPLv2
 Group: Engineering
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -98,24 +98,12 @@ BuildRequires: glibc-devel gcc-c++ libpcre-devel libgd2-devel sqlite3
 BuildRequires: libsqlite3-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libfftw3-devel
-%if_enabled MySQL
-BuildRequires: libMySQL-devel
-%endif
-%if_enabled FireBird
-BuildRequires: firebird-devel
-%endif
-%if_enabled PostgreSQL
-BuildRequires: postgresql-devel
-%endif
-%if_enabled System
-BuildRequires: libsensors3-devel
-%endif
-%if_enabled SNMP
-BuildRequires: libnet-snmp-devel
-%endif
-%if_enabled Comedi
-BuildRequires: libcomedi-devel
-%endif
+%{?_enable_MySQL:BuildRequires: libMySQL-devel}
+%{?_enable_FireBird:BuildRequires: firebird-devel}
+%{?_enable_PostgreSQL:BuildRequires: postgresql-devel}
+%{?_enable_System:BuildRequires: libsensors3-devel}
+%{?_enable_SNMP:BuildRequires: libnet-snmp-devel}
+%{?_enable_Comedi:BuildRequires: libcomedi-devel}
 %if_with qt5
 BuildRequires: qt5-base-devel qt5-sensors-devel zlib-devel
 %else
@@ -1276,7 +1264,7 @@ Das Paket %{name}-Special.FLibSYS - bibliothek mit System-API für spezifische P
 %setup -q -n %srcname
 %setup -T -D -a 1 -n %srcname
 %patch -p1
-%patch1 -p2
+#patch1 -p2
 
 %build
 %autoreconf
@@ -1693,6 +1681,11 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Tue Apr 21 2020 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
+- The build of 0.9.1 main update to the production release
+- build with qt5
+- disable build DB.MySQL
+
 * Tue Aug 20 2019 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt6
 - fixed macros
 
