@@ -1,7 +1,7 @@
 %global import_path github.com/containers/libpod
 Name:     podman
 Version:  1.8.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0
@@ -24,7 +24,7 @@ BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel
 BuildRequires: /proc
 
-Requires: conmon >= 2.1
+Requires: conmon >= 2.0.1
 Requires: cni cni-plugins containers-common
 
 %description
@@ -72,6 +72,9 @@ export BUILDTAGS='seccomp ostree varlink containers_image_ostree_stub systemd'
 %doc *.md
 
 %changelog
+* Tue Apr 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.2-alt2
+- fix version in conmon requires
+
 * Sat Mar 21 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.8.2-alt1
 - new version 1.8.2
 
