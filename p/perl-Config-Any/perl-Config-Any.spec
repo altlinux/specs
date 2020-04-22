@@ -2,7 +2,7 @@
 %define dist Config-Any
 Name: perl-Config-Any
 Version: 0.32
-Release: alt2
+Release: alt2.1
 
 Summary: Load configuration from different file formats, transparently
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: perl-JSON-DWIW perl-Module-Install perl-Test-Pod perl-Test-Pod-Coverage perl-YAML-Syck perl(Module/Pluggable/Object.pm)
+BuildRequires: perl-JSON-DWIW perl-Test-Pod perl-Test-Pod-Coverage perl-YAML-Syck perl(Module/Pluggable/Object.pm)
 
 %description
 Config::Any provides a facility for Perl applications and
@@ -35,6 +35,9 @@ configuration, Windows INI files, and even Perl code.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2.1
+- dropped deprecated BR: perl-Module-Install
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2
 - self-br: fix thanks to rider@
 
