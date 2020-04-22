@@ -1,7 +1,7 @@
 %define dist MooseX-Traits-Pluggable
 Name: perl-%dist
 Version: 0.12
-Release: alt1.2
+Release: alt1.3
 
 Summary: Trait loading and resolution for Moose
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/MooseX-Traits-Pluggable-%{v
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 20 2010
-BuildRequires: perl-Class-C3-XS perl-Module-Install perl-Moose perl-Test-Exception perl-namespace-autoclean perl(List/MoreUtils.pm)
+BuildRequires: perl-Class-C3-XS perl-Moose perl-Test-Exception perl-namespace-autoclean perl(List/MoreUtils.pm)
 
 %description
 Use new_with_traits to construct an object with a list of traits and
@@ -33,6 +33,9 @@ apply_traits to apply traits to an instance.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.3
+- dropped deprecated BR: perl-Module-Install
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.2
 - fixed build
 
