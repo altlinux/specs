@@ -1,6 +1,6 @@
 Name: perl-MouseX-Foreign
 Version: 1.000
-Release: alt1
+Release: alt1.1
 Summary: MouseX::Foreign - Extends non-Mouse classes as well as Mouse classes
 
 Group: Development/Perl
@@ -9,7 +9,7 @@ Url: %CPAN MouseX-Foreign
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Mouse perl-Test-Exception perl-Test-Requires perl-Module-Install-Repository perl-Module-Install-AuthorTests perl-Math-BigInt perl-Any-Moose
+BuildRequires: perl-devel perl-Mouse perl-Test-Exception perl-Test-Requires perl-Module-Build perl-Math-BigInt perl-Any-Moose
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-Mouse perl-Test-Exception perl-Test-Requires perl
 %doc Changes README.md
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1.1
+- dropped BR: perl-Module-Install
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1
 - automated CPAN update
 
