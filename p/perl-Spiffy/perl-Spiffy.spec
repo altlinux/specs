@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Spiffy
 Name: perl-%dist
 Version: 0.46
-Release: alt1
+Release: alt1.1
 
 Summary: Spiffy Perl Interface Framework For You
 License: GPL or Artistic
@@ -14,7 +17,7 @@ Source: http://www.cpan.org/authors/id/I/IN/INGY/Spiffy-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
-BuildRequires: perl-Filter perl-Module-Install
+BuildRequires: perl-Filter
 
 %description
 "Spiffy" is a framework and methodology for doing object oriented (OO)
@@ -37,6 +40,9 @@ clean, straightforward and (perhaps someday) standard way.
 %perl_vendor_privlib/Spiffy*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
