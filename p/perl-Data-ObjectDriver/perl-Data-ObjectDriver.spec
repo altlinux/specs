@@ -17,7 +17,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test/Exception.pm) perl(Module/Build/T
 
 Name: perl-Data-ObjectDriver
 Version: 0.19
-Release: alt1
+Release: alt1.1
 
 Summary: Simple, transparent data interface, with caching
 
@@ -31,7 +31,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/S/SI/SIXAPART/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Mar 10 2011
-BuildRequires: libnss-role perl-Class-Accessor perl-Class-Data-Inheritable perl-Class-Trigger perl-DBI perl-Module-Install
+BuildRequires: libnss-role perl-Class-Accessor perl-Class-Data-Inheritable perl-Class-Trigger perl-DBI
 
 %description
 Data::ObjectDriver is an object relational mapper, 
@@ -59,6 +59,9 @@ rm -f %buildroot/%perl_vendor_privlib/Data/ObjectDriver/Driver/DBD/SQLite.pm
 %perl_vendor_privlib/Data/ObjectDriver.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
