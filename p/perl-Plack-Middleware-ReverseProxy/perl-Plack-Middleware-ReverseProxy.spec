@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Plack-Middleware-ReverseProxy
 Version: 0.16
-Release: alt1
+Release: alt1.1
 Summary: Plack::Middleware::ReverseProxy - supports app to run as a reverse proxy backend
 
 Group: Development/Perl
@@ -10,7 +10,7 @@ Url: %CPAN Plack-Middleware-ReverseProxy
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-parent perl-Plack perl-YAML perl-Module-Install perl-Module-Install-AuthorTests perl-Module-Install-Repository perl-Test-Base
+BuildRequires: perl-devel perl-parent perl-Plack perl-YAML perl-Test-Base
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-parent perl-Plack perl-YAML perl-Module-Install p
 %doc Changes README*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Feb 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - new version
 
