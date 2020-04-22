@@ -3,7 +3,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
 Version: 2.5.10
-Release: alt1
+Release: alt1.1
 
 Summary: Moose minus the antlers
 License: GPL or Artistic
@@ -17,7 +17,7 @@ Source0: http://www.cpan.org/authors/id/S/SK/SKAJI/%{dist}-v%{version}.tar.gz
 %add_findreq_skiplist */Mouse/PurePerl.pm
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bi)
-BuildRequires: perl-HTTP-Message perl-IO-String perl-Locale-US perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Params-Coerce perl-Path-Class perl-Regexp-Common perl-Test-Deep perl-Test-Output perl-autodie perl-threads perl(Module/Build/XSUtil.pm) perl(Test/Exception.pm) perl(Test/Requires.pm) perl(Test/Fatal.pm)
+BuildRequires: perl-HTTP-Message perl-IO-String perl-Locale-US perl-Moose perl-Package-Stash-XS perl-Params-Coerce perl-Path-Class perl-Regexp-Common perl-Test-Deep perl-Test-Output perl-autodie perl-threads perl(Module/Build/XSUtil.pm) perl(Test/Exception.pm) perl(Test/Requires.pm) perl(Test/Fatal.pm)
 
 %description
 Moose, a powerful metaobject-fuelled extension of the Perl 5 object system,
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 2.5.10-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 2.5.10-alt1
 - automated CPAN update
 
