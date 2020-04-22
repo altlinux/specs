@@ -5,17 +5,16 @@
 
 Name:		%{name}
 Version:	0.13
-Release:	alt1
+Release:	alt1.1
 Summary:	mro::* interface compatibility for Perls < 5.9.5
 URL:		http://search.cpan.org/dist/%{module}
 Source0:		http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 License:	GPL
 Group:		Development/Perl
 # Automatically added by buildreq on Fri Nov 13 2009 (-bi)
-BuildRequires: perl-Class-C3 perl-Module-Install perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Class-C3 perl-Test-Pod perl-Test-Pod-Coverage
 
 BuildRequires:	perl-devel
-BuildRequires:	perl-Module-Install
 BuildRequires:	perl-Class-C3
 BuildRequires:	perl-Class-C3-XS
 Provides:	perl(mro.pm)
@@ -74,6 +73,9 @@ docs, and contain a lot of other
 
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
