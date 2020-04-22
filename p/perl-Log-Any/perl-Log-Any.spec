@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Name: perl-Log-Any
 Version: 1.708
-Release: alt1
+Release: alt1.1
 
 Summary: Log::Any - bringing loggers and listeners together
 
@@ -13,7 +16,6 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/P/PR/PREACTION/Log-Any-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
-BuildRequires: perl-Module-Install
 
 %description
 `Log::Any' allows CPAN modules to safely and efficiently log messages,
@@ -42,6 +44,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.708-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.708-alt1
 - automated CPAN update
 
