@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Quota
 Name: perl-%dist
-Version: 1.7.4
+Version: 1.8.1
 Release: alt1
 
 Summary: Perl interface to file system quotas
@@ -40,6 +40,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1
+- automated CPAN update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1
 - automated CPAN update
 
