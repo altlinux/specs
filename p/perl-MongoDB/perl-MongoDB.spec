@@ -4,7 +4,7 @@
 %define dist MongoDB
 Name: perl-%dist
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Mongo Driver for Perl
 License: GPL or Artistic
@@ -16,7 +16,7 @@ Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/%{dist}-v%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bb)
-BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm) perl(BSON/Decimal128.pm) perl(UUID/URandom.pm)
+BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm) perl(DateTime/Locale.pm) perl(Authen/SCRAM/Client.pm) perl(Digest/SHA.pm) perl(BSON/Decimal128.pm) perl(UUID/URandom.pm)
 
 %description
 This is the Perl driver for MongoDB, a document-oriented database.
@@ -39,6 +39,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 #perl_vendor_autolib/MongoDB
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1
 - automated CPAN update
 
