@@ -6,14 +6,14 @@ BuildRequires: perl(Devel/Peek.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002
-Release: alt2
+Version: 0.003
+Release: alt1
 Summary: B::COW additional B helpers to check COW status
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/A/AT/ATOOMIC/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{module_name}-%{version}.tar.gz
 
 %description
 B::COW provides some naive additional B helpers to check the COW status of one SvPV.
@@ -28,11 +28,14 @@ B::COW provides some naive additional B helpers to check the COW status of one S
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes examples
+%doc README Changes examples
 %perl_vendor_archlib/B*
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
+- automated CPAN update
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2
 - to Sisyphus as perl-CDB_File dep
 
