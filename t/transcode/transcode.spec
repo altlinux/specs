@@ -31,11 +31,11 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt12
+Release: alt13
 
 Summary: A linux video stream processing utility
 
-License: GPL
+License: GPLv2
 Group: Video
 Url: http://bitbucket.org/france/transcode-tcforge/
 
@@ -239,8 +239,11 @@ find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
-export RPM_LD_PRELOAD_transcode='%buildroot%_bindir/transcode %buildroot%_bindir/tcdecode'
-export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
+export RPM_LD_PRELOAD_tcdecode='%buildroot%_bindir/tcdecode'
+export RPM_FILES_TO_LD_PRELOAD_tcdecode='%_libdir/%name/import_xml.so'
+export RPM_LD_PRELOAD_transcode='%buildroot%_bindir/transcode'
+export RPM_FILES_TO_LD_PRELOAD_transcode="$(find %buildroot/%_libdir/%name -type f -not -name import_xml.so -printf '%_libdir/%name/%%f\n')"
+
 %set_verify_elf_method strict
 
 %files
@@ -265,6 +268,10 @@ export RPM_FILES_TO_LD_PRELOAD_transcode='%_libdir/%name/*.so'
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Tue Apr 21 2020 Anton Farygin <rider@altlinux.ru> 1.1.7-alt13
+- fixed build (by Gleb F-Malinovskiy)
+- license changed in accordance with SPDX
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt12
 - NMU: rebuild with libnetpbm.so.11
 - drop out ubt
