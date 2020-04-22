@@ -15,7 +15,7 @@
 
 Name: perl-prefork
 Version: 1.05
-Release: alt1
+Release: alt1.1
 
 Summary: Pragma to ensure modules are fully loaded before forking
 
@@ -30,7 +30,7 @@ Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/%m_distro/%m_distro-%version.tar.bz2
 
 # Automatically added by buildreq on Sun Jul 22 2007
-BuildRequires: perl-Module-Install perl-Test-Pod
+BuildRequires: perl-Test-Pod
 
 %description
 Optimized module loading for forking or non-forking processes.
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/prefork.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
