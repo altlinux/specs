@@ -7,7 +7,7 @@
 
 Name: perl-File-Flat
 Version: 1.05
-Release: alt1
+Release: alt1.1
 
 Summary: File::Flat - Implements a flat filesystem
 
@@ -21,7 +21,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jul 22 2007
-BuildRequires: perl-File-Copy-Recursive perl-File-Remove perl-File-Slurp perl-Module-Install perl-prefork perl-Test-ClassAPI
+BuildRequires: perl-File-Copy-Recursive perl-File-Remove perl-File-Slurp perl-prefork perl-Test-ClassAPI
 
 %description
 File::Flat implements a flat filesystem. A flat filesystem is a
@@ -46,6 +46,9 @@ file, no matter where it is.
 %perl_vendor_privlib/File/
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sun Dec 30 2018 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
