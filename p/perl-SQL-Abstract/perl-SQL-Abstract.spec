@@ -2,7 +2,7 @@
 %define dist SQL-Abstract
 Name: perl-%dist
 Version: 1.86
-Release: alt1
+Release: alt1.1
 
 Summary: Generate SQL from Perl data structures
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jan 13 2011 (-bi)
-BuildRequires: perl-DBIx-Class perl-Module-Install perl-Term-ANSIColor perl-Test-Deep perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn
+BuildRequires: perl-DBIx-Class perl-Term-ANSIColor perl-Test-Deep perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn
 
 %description
 This module was inspired by the excellent DBIx::Abstract.
@@ -38,6 +38,9 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.86-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.86-alt1
 - automated CPAN update
 
