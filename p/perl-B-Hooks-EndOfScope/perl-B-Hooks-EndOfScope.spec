@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
 Version: 0.24
-Release: alt1
+Release: alt1.1
 
 Summary: Execute code after a scope finished compilation
 License: GPL or Artistic
@@ -13,7 +16,7 @@ Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: perl-Module-Install perl-Sub-Exporter-Progressive perl-Variable-Magic perl-Module-Implementation perl-Module-Runtime
+BuildRequires: perl-Sub-Exporter-Progressive perl-Variable-Magic perl-Module-Implementation perl-Module-Runtime
 
 %description
 This module allows you to execute code when perl finished compiling the
@@ -33,6 +36,9 @@ surrounding scope.
 %perl_vendor_privlib/B/Hooks/EndOfScope*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
