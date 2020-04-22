@@ -6,7 +6,7 @@ BuildRequires: perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/Build/MM.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.15
+Version: 0.16
 Release: alt1
 Summary: Install the C libxml2 library on your system
 Group: Development/Perl
@@ -37,6 +37,9 @@ while.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
