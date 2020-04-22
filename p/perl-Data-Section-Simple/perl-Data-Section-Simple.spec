@@ -1,6 +1,6 @@
 Name: perl-Data-Section-Simple
 Version: 0.07
-Release: alt1
+Release: alt1.1
 Summary: Data::Section::Simple - Read data from __DATA__
 
 Group: Development/Perl
@@ -9,7 +9,7 @@ Url: %CPAN Data-Section-Simple
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Test-Requires perl-Module-Install perl-Module-Install-ReadmeFromPod perl-Module-Install-Repository
+BuildRequires: perl-devel perl-Test-Requires
 
 %description
 %summary
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-Test-Requires perl-Module-Install perl-Module-Ins
 %doc Changes README.md
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
