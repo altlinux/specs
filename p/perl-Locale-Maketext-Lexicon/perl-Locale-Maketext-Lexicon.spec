@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Pod/Man.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module Locale-Maketext-Lexicon
 %define m_distro Locale-Maketext-Lexicon
@@ -8,7 +11,7 @@
 
 Name: perl-Locale-Maketext-Lexicon
 Version: 1.00
-Release: alt2
+Release: alt2.1
 
 Summary: Locale::Maketext::Lexicon - Use other catalog formats in Maketext
 
@@ -22,7 +25,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DR/DRTECH/Locale-Maketext-Lexicon-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jan 02 2011 (-bi)
-BuildRequires: perl-Locale-Maketext perl-Module-Install perl-PPI perl-Template perl-YAML perl(Text/Haml.pm)
+BuildRequires: perl-Locale-Maketext perl-PPI perl-Template perl-YAML perl(Text/Haml.pm)
 
 %description
 This module provides lexicon-handling modules to read from
@@ -48,6 +51,9 @@ for extracting translatable strings from source files.
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2.1
+- dropped deprecated BR: perl-Module-Install
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2
 - fixed unpackaged files
 
