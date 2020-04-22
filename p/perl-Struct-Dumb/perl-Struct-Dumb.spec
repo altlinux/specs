@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.09
 %define module_name Struct-Dumb
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
+Version: 0.12
 Release: alt1
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/P/PE/PEVANS/Struct-Dumb-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
