@@ -13,7 +13,7 @@
 
 Name: perl-Object-Signature
 Version: 1.08
-Release: alt1
+Release: alt1.1
 
 Summary: %m_name - Generate cryptographic signatures for objects
 
@@ -27,7 +27,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Dec 14 2008 (-bi)
-BuildRequires: perl-Log-Agent perl-Module-Install perl-Storable perl-prefork
+BuildRequires: perl-Log-Agent perl-Storable perl-prefork
 
 %description
 Object::Signature is an abstract base class that you can inherit
@@ -49,6 +49,9 @@ cryptographic signatures.
 %doc Changes LICENSE README
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Mon Oct 08 2018 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
