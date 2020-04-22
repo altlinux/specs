@@ -1,8 +1,7 @@
-%filter_from_requires /^perl.arybase.pm./d
 %define dist Class-MethodMaker
 Name: perl-%dist
 Version: 2.24
-Release: alt2.2
+Release: alt2.3
 
 Summary: Easy building of Perl Classes
 License: GPL or Artistic
@@ -33,6 +32,9 @@ accessor methods for your objects that perform standard tasks.
 %perl_vendor_autolib/Class
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.24-alt2.3
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.24-alt2.2
 - dropped perl(arybase.pm) autodependency
 

@@ -1,8 +1,7 @@
-%filter_from_requires /^perl.arybase.pm./d
 %define dist Date-Calc
 Name: perl-%dist
 Version: 6.4
-Release: alt2
+Release: alt3
 
 Summary: %dist module for perl
 License: GPL or Artistic
@@ -51,6 +50,9 @@ of use, multi-language support and special functions for business needs.
 %doc	%perl_vendor_privlib/Date/Calendar/*.pod
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.4-alt3
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 6.4-alt2
 - dropped perl(arybase.pm) autodependency
 

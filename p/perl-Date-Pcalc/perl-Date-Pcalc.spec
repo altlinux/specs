@@ -1,8 +1,7 @@
-%filter_from_requires /^perl.arybase.pm./d
 %define dist Date-Pcalc
 Name: perl-%dist
 Version: 6.1
-Release: alt7.2
+Release: alt7.3
 
 Summary: Gregorian calendar date calculations
 License: GPL or Artistic
@@ -47,6 +46,9 @@ to some extent, ISO 8601 (where applicable).
 %perl_vendor_autolib/Date
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.1-alt7.3
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 6.1-alt7.2
 - dropped perl(arybase.pm) autodependency
 
