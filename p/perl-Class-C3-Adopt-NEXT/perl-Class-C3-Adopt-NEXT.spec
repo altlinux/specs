@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Module/Build.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Class-C3-Adopt-NEXT
 Name: perl-%dist
 Version: 0.14
-Release: alt1
+Release: alt1.1
 
 Summary: Make NEXT suck less
 License: GPL or Artistic
@@ -14,7 +17,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/Class-C3-Adopt-NEXT-%{version}
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 14 2010
-BuildRequires: perl-Class-C3-XS perl-List-MoreUtils perl-MRO-Compat perl-Module-Install perl-NEXT perl-Test-Exception
+BuildRequires: perl-Class-C3-XS perl-List-MoreUtils perl-MRO-Compat perl-NEXT perl-Test-Exception
 
 %description
 This module is intended as a drop-in replacement for NEXT, supporting
@@ -34,6 +37,9 @@ the same interface, but using Class::C3 to do the hard work.
 %perl_vendor_privlib/Class*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
