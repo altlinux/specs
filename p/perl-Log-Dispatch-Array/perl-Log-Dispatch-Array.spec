@@ -15,7 +15,7 @@
 
 Name: perl-Log-Dispatch-Array
 Version: 1.003
-Release: alt1
+Release: alt1.1
 
 Summary: log events to an array (reference)
 
@@ -29,7 +29,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
-BuildRequires: perl-Log-Dispatch perl-Module-Install perl-Test-Deep perl-parent
+BuildRequires: perl-Log-Dispatch perl-Test-Deep perl-parent
 
 %description
 This module provides a logging output method for Log::Dispatch.
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Log/Dispatch/Array.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
 - automated CPAN update
 
