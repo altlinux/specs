@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Server-Starter
 Version: 0.35
-Release: alt1
+Release: alt1.1
 
 Summary: Server::Starter - a superdaemon for hot-deploying server programs
 License: Perl
@@ -12,7 +12,7 @@ Url: %CPAN Server-Starter
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtils perl-Module-Install perl(Test/Requires.pm)
+BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtils perl-Module-Build perl(Test/Requires.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ BuildRequires: perl-Test-TCP perl-Proc-Wait3 perl-Scope-Guard perl-List-MoreUtil
 %doc Changes README*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1.1
+- do not use perl-Module-Install
+
 * Tue Sep 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - new version
 
