@@ -1,6 +1,6 @@
 Name: python3-module-pykcs11
 Version: 1.4.3
-Release: alt2
+Release: alt3
 
 Summary: A complete PKCS#11 wrapper for Python
 Group: Development/Python3
@@ -39,7 +39,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_install
+%python3_build
 
 %install
 %python3_install
@@ -52,6 +52,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Wed Apr 22 2020 Lenar Shakirov <snejok@altlinux.org> 1.4.3-alt3
+- python3 build fixed
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
 - python2 disabled
 
