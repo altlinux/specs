@@ -6,7 +6,7 @@ BuildRequires: perl(DBI.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Sub/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.25
+Version: 1.26
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
 - automated CPAN update
 
