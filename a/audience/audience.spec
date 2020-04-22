@@ -7,11 +7,11 @@
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A modern media player
-License: GPLv3
+License: GPL-3.0
 Group: Video
 Url: https://launchpad.net/audience
 
@@ -60,6 +60,9 @@ hardware acceleration than most players out there.
 %doc README.md
 
 %changelog
+* Wed Apr 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- updated to 2.7.1-3-g3ce47b8
+
 * Tue Dec 03 2019 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - updated to 2.7.0-6-g168d1ed
 
