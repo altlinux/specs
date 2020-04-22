@@ -6,7 +6,7 @@ BuildRequires: libgmp-devel perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.14
+Version: 1.16
 Release: alt1
 Summary: Build and install the GNU Multiple Precision library.
 Group: Development/Perl
@@ -28,12 +28,15 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README author.yml
+%doc Changes README author.yml
 %perl_vendor_archlib/A*
 %perl_vendor_autolib/A*
 %perl_vendor_autolib/share/dist/A*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Tue Jun 26 2018 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
