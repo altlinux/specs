@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Clone
 Name: perl-%dist
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Recursively copy Perl datatypes
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(B/COW.pm)
 
 %description
 This module provides a clone() method which makes recursive
@@ -34,6 +34,9 @@ including tied variables and objects.
 %perl_vendor_autolib/Clone*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
 - automated CPAN update
 
