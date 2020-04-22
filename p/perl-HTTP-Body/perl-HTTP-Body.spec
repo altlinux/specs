@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.22
-Release: alt1
+Release: alt1.1
 
 Summary: %module - HTTP Body Parser
 License: Perl
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/G/GE/GETTY/HTTP-Body-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Mar 17 2010
-BuildRequires: perl-Module-Install perl-Test-Deep perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
+BuildRequires: perl-Test-Deep perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
 
 %description
 HTTP Body Parser.
@@ -33,6 +33,9 @@ export TEST_POD=1
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
