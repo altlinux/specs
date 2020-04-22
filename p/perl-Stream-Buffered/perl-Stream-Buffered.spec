@@ -1,6 +1,6 @@
 Name: perl-Stream-Buffered
 Version: 0.03
-Release: alt1
+Release: alt1.1
 
 Summary: temporary buffer to save bytes
 Group: Development/Perl
@@ -10,7 +10,7 @@ Url: %CPAN Stream-Buffered
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Module-Install perl-Module-Install-ReadmeFromPod perl-Module-Install-Repository
+BuildRequires: perl-devel
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-Module-Install perl-Module-Install-ReadmeFromPod 
 %doc Changes README.md
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
