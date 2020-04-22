@@ -3,7 +3,7 @@
 %endif
 
 Name: quiterss
-Version: 0.19.3
+Version: 0.19.4
 Release: alt1
 
 Summary: RSS/Atom aggregator
@@ -79,6 +79,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Tue Apr 21 2020 Michael Shigorin <mike@altlinux.org> 0.19.4-alt1
+- new version (watch file uupdate)
+
 * Fri Jan 31 2020 Michael Shigorin <mike@altlinux.org> 0.19.3-alt1
 - new version (watch file uupdate)
 
