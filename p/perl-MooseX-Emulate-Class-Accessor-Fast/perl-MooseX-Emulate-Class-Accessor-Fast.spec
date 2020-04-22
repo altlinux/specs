@@ -1,7 +1,7 @@
 %define dist MooseX-Emulate-Class-Accessor-Fast
 Name: perl-%dist
 Version: 0.009032
-Release: alt1
+Release: alt1.1
 
 Summary: Emulate Class::Accessor::Fast behavior using Moose attributes
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 13 2010
-BuildRequires: perl-Class-C3-XS perl-Module-Install perl-Moose perl-Test-Exception perl-namespace-clean
+BuildRequires: perl-Class-C3-XS perl-Moose perl-Test-Exception perl-namespace-clean
 
 %description
 This module attempts to hijack Class::Accessor::Fast in INC and replace
@@ -36,6 +36,9 @@ to MooseX::Emulate::Class::Accessor::Fast and ultimately, to Moose.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.009032-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sun Jul 08 2018 Igor Vlasenko <viy@altlinux.ru> 0.009032-alt1
 - automated CPAN update
 
