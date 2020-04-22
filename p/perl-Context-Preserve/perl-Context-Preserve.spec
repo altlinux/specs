@@ -2,7 +2,7 @@
 %define dist Context-Preserve
 Name: perl-%dist
 Version: 0.03
-Release: alt1.1
+Release: alt1.2
 
 Summary: run code after a subroutine call, preserving the context the subroutine would have seen if it were the last statement in the caller
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 13 2010
-BuildRequires: perl-Module-Install perl-Test-Exception perl-Test-use-ok
+BuildRequires: perl-Test-Exception perl-Test-use-ok
 
 %description
 Sometimes you need to call a function, get the results, act on the
@@ -40,6 +40,9 @@ which is a pain to type in (and maintain).
 %perl_vendor_privlib/Context*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.2
+- dropped deprecated BR: perl-Module-Install
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1
 - automated CPAN update
 
