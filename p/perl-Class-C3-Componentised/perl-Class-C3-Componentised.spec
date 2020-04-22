@@ -2,7 +2,7 @@
 %define dist Class-C3-Componentised
 Name: perl-%dist
 Version: 1.001002
-Release: alt2
+Release: alt2.1
 
 Summary: Load mix-ins or components to your C3-based class.
 
@@ -15,7 +15,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
-BuildRequires: perl-Class-C3 perl-Class-C3-XS perl-Class-Inspector perl-MRO-Compat perl-Module-Install perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Class-C3 perl-Class-C3-XS perl-Class-Inspector perl-MRO-Compat perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 Load mix-ins or components to your C3-based class.
@@ -36,6 +36,9 @@ Load mix-ins or components to your C3-based class.
 %perl_vendor_privlib/Class/C3/Componentised/ApplyHooks.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt2.1
+- dropped deprecated BR: perl-Module-Install
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt2
 - unpackaged files fixed
 
