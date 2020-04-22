@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Task-Weaken -
@@ -16,7 +19,7 @@
 
 Name: perl-Task-Weaken
 Version: 1.06
-Release: alt1
+Release: alt1.1
 
 Summary: Ensure that a platform has weaken support
 
@@ -30,7 +33,6 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 09 2008
-BuildRequires: perl-Module-Install
 
 %description
 Task::Weaken - Ensure that a platform has weaken support
@@ -49,6 +51,9 @@ Task::Weaken - Ensure that a platform has weaken support
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
