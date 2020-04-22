@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Module/Build.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 %define module Clipboard
@@ -8,7 +11,7 @@ BuildRequires: perl-podlators
 
 Name: perl-Clipboard
 Version: 0.24
-Release: alt1
+Release: alt1.1
 
 Summary: Cliboard - Copy and Paste with any OS
 
@@ -22,7 +25,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Feb 08 2011 (-bb)
-BuildRequires: perl-Module-Install xclip
+BuildRequires: xclip
 
 %description
 None.
@@ -57,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
