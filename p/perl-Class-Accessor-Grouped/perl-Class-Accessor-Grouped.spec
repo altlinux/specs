@@ -1,7 +1,7 @@
 %define dist Class-Accessor-Grouped
 Name: perl-Class-Accessor-Grouped
 Version: 0.10014
-Release: alt1
+Release: alt1.1
 
 Summary: Lets you build groups of accessors
 License: GPL or Artistic
@@ -12,7 +12,7 @@ Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: perl-Module-Runtime perl-Class-XSAccessor perl-Module-Install perl-Sub-Name perl-Test-Exception
+BuildRequires: perl-Module-Runtime perl-Class-XSAccessor perl-Sub-Name perl-Test-Exception
 
 %description
 This class lets you build groups of accessors that will call
@@ -32,6 +32,9 @@ different getters and setters.
 %perl_vendor_privlib/Class/Accessor/Grouped.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.10014-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Mon Jul 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.10014-alt1
 - automated CPAN update
 
