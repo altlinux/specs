@@ -17,7 +17,7 @@ BuildRequires: perl(Module/Build.pm)
 
 Name: perl-Event-Notify
 Version: 0.00005
-Release: alt1
+Release: alt1.1
 
 Summary: Simple Observer/Notifier
 
@@ -29,7 +29,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DM/DMAKI/Event-Notify-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jul 12 2008
-BuildRequires: perl-Module-Install perl-Test-MockObject
+BuildRequires: perl-Test-MockObject
 
 %description
 Event::Notify implements a simple Observer pattern. It's not really
@@ -52,6 +52,9 @@ in a class that doesn't necessarily want to be a subclass of a notifier.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.00005-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.00005-alt1
 - automated CPAN update
 
