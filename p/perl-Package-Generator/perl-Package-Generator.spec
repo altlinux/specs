@@ -15,7 +15,7 @@
 
 Name: perl-Package-Generator
 Version: 1.106
-Release: alt1
+Release: alt1.1
 
 Summary: Package-Generator - Perl module
 
@@ -29,7 +29,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Package-Generator-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed May 14 2008
-BuildRequires: perl-Module-Install perl-Params-Util perl-Test-Pod
+BuildRequires: perl-Params-Util perl-Test-Pod
 
 %description
 None.
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.106-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.106-alt1
 - automated CPAN update
 
