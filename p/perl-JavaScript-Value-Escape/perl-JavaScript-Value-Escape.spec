@@ -1,6 +1,6 @@
 Name: perl-JavaScript-Value-Escape
 Version: 0.07
-Release: alt1
+Release: alt1.1
 Summary: JavaScript::Value::Escape - Avoid XSS with JavaScript value interpolation
 
 Group: Development/Perl
@@ -9,7 +9,7 @@ Url: %CPAN JavaScript-Value-Escape
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Module-Install perl-Module-Install-AuthorTests perl-Module-Install-Repository
+BuildRequires: perl-devel perl-Module-Build
 
 %description
 %summary
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-Module-Install perl-Module-Install-AuthorTests pe
 %doc Changes README*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1.1
+- dropped BR: perl-Module-Install
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
