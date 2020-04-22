@@ -2,7 +2,7 @@
 %define dist Class-C3-XS
 Name: perl-%dist
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: XS speedups for Class::C3
 License: GPL or Artistic
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-Module-Install perl-NEXT perl-Sub-Name perl-Test-Pod
+BuildRequires: perl-NEXT perl-Sub-Name perl-Test-Pod
 
 %description
 This contains XS performance enhancers for Class::C3 version 0.16 and
@@ -35,6 +35,9 @@ instead.
 %perl_vendor_autolib/Class
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
