@@ -2,10 +2,10 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt18
+Release: alt19
 
 Summary: RPM helper scripts to calculate Perl dependencies
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 URL: %CPAN %name
@@ -79,6 +79,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Tue Apr 21 2020 Dmitry V. Levin <ldv@altlinux.org> 0.84-alt19
+- B/PerlReq.pm: added arybase.pm to @Skip list.
+
 * Tue Dec 03 2019 Igor Vlasenko <viy@altlinux.ru> 0.84-alt18
 - %%perl_libdb_pkgname set to libdb4 for now
 

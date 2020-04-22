@@ -1,7 +1,6 @@
-%filter_from_requires /^perl.arybase.pm./d
 Name: magicrescue
 Version: 1.1.9
-Release: alt2.qa1
+Release: alt2.qa2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -54,6 +53,9 @@ rm -f %buildroot%_libdir/magicrescue/gimp-resave.pl
 %_man1dir/*
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.9-alt2.qa2
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt2.qa1
 - dropped perl(arybase.pm) autodependency
 

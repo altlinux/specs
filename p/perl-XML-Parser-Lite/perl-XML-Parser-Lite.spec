@@ -1,4 +1,3 @@
-%filter_from_requires /^perl.arybase.pm./d
 %define _unpackaged_files_terminate_build 1
 %define module_name XML-Parser-Lite
 # BEGIN SourceDeps(oneline):
@@ -8,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.722
-Release: alt2
+Release: alt3
 Summary: Lightweight regexp-based XML parser
 Group: Development/Perl
 License: perl
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/X*
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.722-alt3
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 0.722-alt2
 - dropped perl(arybase.pm) autodependency
 

@@ -1,9 +1,8 @@
-%filter_from_requires /^perl.arybase.pm./d
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
 Version: 3.008
-Release: alt2
+Release: alt3
 
 Summary: Manage a mailbox, a folder with messages
 License: Artistic
@@ -39,6 +38,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.008-alt3
+- Reverted previous change.
+
 * Sun Apr 19 2020 Igor Vlasenko <viy@altlinux.ru> 3.008-alt2
 - dropped perl(arybase.pm) autodependency
 
