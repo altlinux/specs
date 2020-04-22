@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.89
-Release: alt1
+Release: alt1.1
 
 Summary: Data driven testing framework for perl
 License: Perl
@@ -15,7 +15,7 @@ Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{module}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Apr 10 2011
-BuildRequires: perl-Module-Install perl-Spiffy perl-Test-Deep perl-Test-Tester perl-Text-Diff
+BuildRequires: perl-Spiffy perl-Test-Deep perl-Test-Tester perl-Text-Diff
 
 %description
 Perl gives you a standard way to run tests with Test::Harness, and basic
@@ -39,6 +39,9 @@ trivial.
 %perl_vendor_privlib/Test/
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.89-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.89-alt1
 - automated CPAN update
 
