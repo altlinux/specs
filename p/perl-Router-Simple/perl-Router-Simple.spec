@@ -1,6 +1,6 @@
 Name: perl-Router-Simple
 Version: 0.17
-Release: alt1
+Release: alt1.1
 Summary: Router::Simple perl module
 
 Group: Development/Perl
@@ -9,7 +9,7 @@ Url: %CPAN Router-Simple
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-Install perl-Module-Install-AuthorTests perl-Perl-Critic perl-Test-Perl-Critic perl-Module-Pluggable perl-Class-Accessor-Lite
+BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-Build perl-Perl-Critic perl-Test-Perl-Critic perl-Module-Pluggable perl-Class-Accessor-Lite
 
 %description
 %summary
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-
 %doc Changes 
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1
+- dropped BR: perl-Module-Install
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
