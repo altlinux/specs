@@ -7,7 +7,7 @@
 
 Name: avahi
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: Local network service discovery
 License: LGPL
@@ -378,7 +378,7 @@ fi
 %config(noreplace) %_sysconfdir/avahi/avahi-autoipd.action
 %_sbindir/avahi-autoipd
 %_man8dir/avahi-autoipd.*
-%attr(0770, root, %autoipd_user) %dir %_localstatedir/autoipd
+%attr(0771, root, %autoipd_user) %dir %_localstatedir/autoipd
 
 %files dnsconfd
 %_initdir/avahi-dnsconfd
@@ -505,6 +505,9 @@ fi
 %endif		    
 
 %changelog
+* Tue Apr 21 2020 Fr. Br. George <george@altlinux.ru> 0.7-alt3
+- enable socket directory x bit to allow user mdns (closes: #37459)
+
 * Fri Mar 13 2020 Nikita Ermakov <arei@altlinux.org> 0.7-alt2
 - Fix python2 shebang.
 
