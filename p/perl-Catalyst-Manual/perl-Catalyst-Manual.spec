@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Manual
 Name: perl-%dist
 Version: 5.9010
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The Catalyst developer's manual
@@ -15,7 +18,6 @@ Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Dec 27 2010 (-bi)
-BuildRequires: perl-Module-Install
 
 %description
 This is just the Catalyst manual.  If you want to develop Catalyst
@@ -37,6 +39,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.9010-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sat Apr 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:5.9010-alt1
 - automated CPAN update
 
