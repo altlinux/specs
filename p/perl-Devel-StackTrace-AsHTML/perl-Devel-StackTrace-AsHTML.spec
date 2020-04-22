@@ -1,7 +1,7 @@
 %define m_distro Devel-StackTrace-AsHTML
 Name: perl-Devel-StackTrace-AsHTML
 Version: 0.15
-Release: alt1
+Release: alt1.1
 Summary: Devel::StackTrace::AsHTML - Displays stack trace in HTML
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -12,7 +12,7 @@ Url: http://search.cpan.org/~miyagawa/Devel-StackTrace-AsHTML/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-BuildRequires: perl-devel perl-Devel-StackTrace perl-Module-Install perl-Test-Base perl-Module-Install-AuthorTests perl-Module-Install-ReadmeFromPod
+BuildRequires: perl-devel perl-Devel-StackTrace perl-Test-Base
 
 %description
 Devel::StackTrace::AsHTML adds "as_html" method to Devel::StackTrace
@@ -36,6 +36,9 @@ sed -i -e '/auto_set_repository/d;/use_test_base/d' Makefile.PL
 %doc Changes README 
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
