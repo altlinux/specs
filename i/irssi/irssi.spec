@@ -1,6 +1,6 @@
 Name: irssi
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Modular text mode IRC client with Perl scripting
 License: GPLv2+
@@ -11,7 +11,8 @@ Url: https://irssi.org/
 Source: %name-%version.tar
 Source1: %name.desktop
 Patch1: irssi-1.2.0-alt-link-libs.patch
-Patch2: %name-1.2.0-alt-strict-subs-syntax.patch
+Patch2: irssi-1.2.0-alt-strict-subs-syntax.patch
+Patch3: irssi-1.2.0-alt-lfs.patch
 
 BuildRequires: elinks glib2-devel libssl-devel libtinfo-devel perl-devel
 # OTR
@@ -50,6 +51,7 @@ Off-the-Record (OTR) Messaging support for irssi.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # no use to run autoreconf twice.
 sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
@@ -66,6 +68,7 @@ NOCONFIGURE=1 ./autogen.sh
 %add_optflags -fpie
 export LDFLAGS=-pie
 %configure \
+	--disable-silent-rules \
 	--disable-static \
 	--enable-ipv6 \
 	--without-ncurses \
@@ -79,8 +82,6 @@ export LDFLAGS=-pie
 	--with-textui \
 	--enable-true-color \
 	#
-#	--disable-silent-rules \
-#	--with-modules \
 
 %make_build
 
@@ -96,12 +97,13 @@ install -pDm644 irssi-icon.png %buildroot%_iconsdir/irssi.png
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/irssi.desktop
 
 %add_findreq_skiplist %_datadir/irssi/scripts/*
-# broke when upgraded to 1.2.0; TODO: someone, fix it
-#export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
-#export RPM_FILES_TO_LD_PRELOAD_irssi='%irssi_modules_dir/lib*.so %perl_vendor_autolib/Irssi/*.so'
-#export RPM_LD_PRELOAD_libperl_core='%buildroot%irssi_modules_dir/libperl_core.so'
-#export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %perl_vendor_autolib/Irssi/*.so'
-#set_verify_elf_method strict
+# ldv: this is required for the strict check, do not disable!
+export RPM_LD_PRELOAD_irssi=%buildroot%_bindir/irssi
+export RPM_FILES_TO_LD_PRELOAD_irssi='%irssi_modules_dir/lib*.so %perl_vendor_autolib/Irssi/*.so'
+export RPM_LD_PRELOAD_libperl_core='%buildroot%irssi_modules_dir/libperl_core.so'
+export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %perl_vendor_autolib/Irssi/*.so'
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %config(noreplace) %_sysconfdir/irssi.conf
@@ -133,8 +135,14 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/irssi.desktop
 
 
 %changelog
+* Wed Apr 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt2
+- Really fixed build by fixing LFS in irssi-otr and
+  re-enabling "%%set_verify_elf_method strict".
+
 * Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
-- NMU: updated to 1.2.0 to fix build (required for perl rebuild)
+- NMU
+- disabled "%%set_verify_elf_method strict" to "fix build" (required for perl rebuild)
+- updated to 1.2.0
 
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.21-alt1.2
 - rebuild with new perl 5.28.1
