@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.7.3
+Version: 0.8.2
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -7,7 +7,7 @@ License: GPLv2+
 Group: System/Configuration/Networking
 
 URL: https://www.firewalld.org/
-# git://git.fedorahosted.org/firewalld.git
+Vcs: https://github.com/firewalld/firewalld
 Source: %name-%version.tar
 Source1: %name.init
 Patch: %name-%version-%release.patch
@@ -18,7 +18,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-xdg python3-devel
 BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel libgio-devel
 
-Requires: iptables ebtables iptables-ipv6 nftables
+Requires: iptables ebtables iptables-ipv6
+Requires: python3-module-nftables >= 0.9.3-alt2
+Requires: libnftables >= 0.9.3-alt2
 
 %allow_python3_import_path %_datadir/firewalld
 %add_python3_path %_datadir/firewalld
@@ -67,6 +69,7 @@ export PYTHON=/usr/bin/python3
 %configure \
 	--enable-sysconfig \
 	--enable-systemd \
+	--localstatedir=%_var \
 	--with-systemd-unitdir=%systemd_unitdir \
 	--with-iptables=/sbin/iptables \
 	--with-iptables-restore=/sbin/iptables-restore \
@@ -74,8 +77,7 @@ export PYTHON=/usr/bin/python3
 	--with-ip6tables-restore=/sbin/ip6tables-restore \
 	--with-ebtables=/sbin/ebtables \
 	--with-ebtables-restore=/sbin/ebtables-restore \
-	--with-ipset=/sbin/ipset \
-	--with-nft=/usr/sbin/nft
+	--with-ipset=/sbin/ipset
 %make
 make update-po
 
@@ -108,6 +110,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_usr/lib/firewalld
 %systemd_unitdir/firewalld.service
 %config %_sysconfdir/modprobe.d/firewalld-sysctls.conf
+%config %_sysconfdir/logrotate.d/*
 %config %_datadir/dbus-1/system.d/FirewallD.conf
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.policy
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.desktop.policy.choice
@@ -138,6 +141,13 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %python3_sitelibdir_noarch/firewall
 
 %changelog
+* Wed Apr 22 2020 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
+- Added Vcs tag.
+- Updated to 0.8.2.
+
+* Thu Feb 27 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Tue Feb 04 2020 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
 - Spec cleanup.
 - Drop rpm-build-licenses usage.
