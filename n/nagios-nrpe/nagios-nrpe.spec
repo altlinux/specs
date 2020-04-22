@@ -11,7 +11,7 @@
 
 Name: nagios-%realname
 Version: 3.2.1
-Release: alt3
+Release: alt4
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
@@ -130,6 +130,8 @@ for d in CHANGELOG.md LEGAL README* SECURITY.md; do
 done
 #install -m 0644 contrib/README.nrpe_check_control %buildroot%plugin_docdir/
 
+mkdir -p %buildroot%nagios_confdir/nrpe-commands
+
 %post
 %post_service %realname
 
@@ -138,6 +140,7 @@ done
 
 %files
 %dir %nagios_confdir
+%dir %nagios_confdir/nrpe-commands
 %config(noreplace) %nagios_confdir/nrpe.cfg
 %_initdir/nrpe
 %_sbindir/nrpe
@@ -155,6 +158,12 @@ done
 %doc %plugin_docdir/*
 
 %changelog
+* Fri Feb 07 2020 Paul Wolneykien <manowar@altlinux.org> 3.2.1-alt4
+- Merged-in changes from v3.2.1-alt2.M80C.3.
+
+* Fri Feb 07 2020 Paul Wolneykien <manowar@altlinux.org> 3.2.1-alt2.M80C.3
+- Enable inclusion of /etc/nagios/nrpe-commands by default.
+
 * Wed Jan 22 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.2.1-alt3
 - merge c8.1 changes into sisyphus
 

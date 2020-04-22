@@ -12,16 +12,18 @@ BuildRequires: /proc
 %define _localstatedir %_var
 Name:           nagstamon
 Version:        3.4.1
-Release:        alt1
+Release:        alt2
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
 Url:            http://nagstamon.ifw-dresden.de/
 Source:         %name-%version.tar
-%py3_requires   secretstorage sip
+%py3_requires   secretstorage sip keyring gssapi
 BuildArch:      noarch
-Patch1:         nagstamon-3.4.1-alt-translation-in-QUI-__init__.patch
+Patch1:         %name-%version-init-translator.patch
 Patch2:         nagstamon-3.0.1-alt-default-values-in-config.patch
+Patch3:         %name-%version-system-config.patch
+Patch4:         %name-%version-abstract-socket.patch
 Source44:       import.info
 Source1:        all.ts
 Source2:        all.qm
@@ -37,6 +39,8 @@ servers.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
@@ -76,6 +80,13 @@ desktop-file-install \
 
 
 %changelog
+* Wed Feb 12 2020 Paul Wolneykien <manowar@altlinux.org> 3.4.1-alt2
+- Fix: Require python module 'gssapi'.
+- Fix: Require python module 'keyring'.
+- Added fixed version of the ALT translation initialization patch.
+- Added abstract-socket patch (thx Denis Medvedev).
+- Read partial configs from /etc/nagstamon/<subject> directory.
+
 * Wed Feb 05 2020 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt1
 - new version 3.4.1
 - Cleanup spec file
