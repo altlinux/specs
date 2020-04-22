@@ -16,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-Apache-AuthCookie
-Version: 3.29
+Version: 3.30
 Release: alt1
 
 Summary: Perl Authentication and Authorization via cookies
@@ -92,6 +92,9 @@ verifies them and returns a session key.
 %perl_vendor_privlib/Apache/AuthCookie
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 3.30-alt1
+- automated CPAN update
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.29-alt1
 - automated CPAN update
 
