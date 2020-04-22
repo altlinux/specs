@@ -3,7 +3,7 @@ BuildRequires: perl-podlators perl(Digest/SHA.pm)
 %define dist Crypt-OpenPGP
 Name: perl-%dist
 Version: 1.12
-Release: alt1
+Release: alt1.1
 
 Summary: Pure-Perl OpenPGP-compatible PGP implementation
 License: GPL or Artistic
@@ -15,7 +15,7 @@ Source: http://www.cpan.org/authors/id/S/SR/SROMANOV/Crypt-OpenPGP-%{version}.ta
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Jan 25 2011
-BuildRequires: openssl perl-Crypt-Blowfish perl-Crypt-CAST5_PP perl-Crypt-DES_EDE3 perl-Crypt-DSA perl-Crypt-IDEA perl-Crypt-RIPEMD160 perl-Crypt-RSA perl-Crypt-Rijndael perl-Crypt-Twofish perl-File-HomeDir perl-Filter perl-Math-BigInt-GMP perl-Module-Install perl-libwww perl(Test/Exception.pm) perl(Term/ReadKey.pm)
+BuildRequires: openssl perl-Crypt-Blowfish perl-Crypt-CAST5_PP perl-Crypt-DES_EDE3 perl-Crypt-DSA perl-Crypt-IDEA perl-Crypt-RIPEMD160 perl-Crypt-RSA perl-Crypt-Rijndael perl-Crypt-Twofish perl-File-HomeDir perl-Filter perl-Math-BigInt-GMP perl-libwww perl(Test/Exception.pm) perl(Term/ReadKey.pm)
 
 %description
 Crypt::OpenPGP is a pure-Perl implementation of the OpenPGP standard.
@@ -51,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
