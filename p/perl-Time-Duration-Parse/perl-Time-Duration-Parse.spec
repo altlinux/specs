@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Time-Duration-Parse -
@@ -16,7 +19,7 @@
 
 Name: perl-Time-Duration-Parse
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Parse string that represents time duration
 
@@ -30,7 +33,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
-BuildRequires: perl-Exporter-Lite perl-Module-Install
+BuildRequires: perl-Exporter-Lite
 
 %description
 Time::Duration::Parse is a module to parse human readable duration
@@ -51,6 +54,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Time/Duration/Parse.pm
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Tue May 21 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
