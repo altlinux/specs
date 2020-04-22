@@ -1,5 +1,5 @@
 Name: xorg-proto-devel
-Version: 2019.1
+Version: 2020.1
 Release: alt1
 Summary: X.Org combined protocol headers
 License: MIT/X11
@@ -50,6 +50,9 @@ X.Org combined protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 22 2020 Valery Inozemtsev <shrek@altlinux.ru> 2020.1-alt1
+- 2020.1
+
 * Fri Jun 21 2019 Valery Inozemtsev <shrek@altlinux.ru> 2019.1-alt1
 - 2019.1
 
