@@ -16,7 +16,7 @@
 
 Name: perl-Algorithm-Dependency
 Version: 1.111
-Release: alt1
+Release: alt1.1
 
 Summary: Algorithm-Dependency - Create extensible and optimized dependency algorithms
 
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jun 13 2008
-BuildRequires: perl-Module-Install perl-Params-Util perl-Test-ClassAPI
+BuildRequires: perl-Params-Util perl-Test-ClassAPI
 
 %description
 Algorithm::Dependency is a framework for creating simple read-only
@@ -56,6 +56,9 @@ confusion.
 %perl_vendor_privlib/Algorithm/
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.111-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Sat Dec 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.111-alt1
 - automated CPAN update
 
