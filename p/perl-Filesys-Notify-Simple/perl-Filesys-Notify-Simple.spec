@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Filesys-Notify-Simple
 Version: 0.14
-Release: alt1
+Release: alt1.1
 
 Summary: Filesys::Notify::Simple - Simple and dumb file system watcher
 Group: Development/Perl
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: perl-devel perl-Test-SharedFork perl-Module-Install perl-Module-Install-Repository perl-Module-Install-ReadmeFromPod perl-Module-Install-AuthorTests perl-Test-Base
+BuildRequires: perl-devel perl-Test-SharedFork perl-Test-Base
 Requires: perl-Linux-Inotify2
 
 %description
@@ -37,6 +37,9 @@ a fallback to the full directory scan if they're not available.
 %doc Changes
 
 %changelog
+* Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1.1
+- dropped deprecated BR: perl-Module-Install
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - new version
 
