@@ -30,7 +30,7 @@
 
 Name:           chromium-gost
 Version:        80.0.3987.132
-Release:        alt2
+Release:        alt3
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -540,6 +540,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Thu Apr 23 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt3
+- Fix startup script
+
 * Tue Apr 14 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt2
 - Fix build reqiores
 
