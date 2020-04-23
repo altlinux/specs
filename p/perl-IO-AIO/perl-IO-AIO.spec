@@ -4,7 +4,7 @@ Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.72
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -15,6 +15,8 @@ Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
+# in perl-devel
+BuildRequires: %{perl_libdb_pkgname}-devel libgdbm-devel
 
 %description
 This module implements asynchronous I/O using whatever means your
@@ -59,6 +61,9 @@ scripts for %name
 
 
 %changelog
+* Fri Apr 24 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt2
+- added explicit BR: on libdb{perl}-devel
+
 * Wed Apr 03 2019 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt1
 - automated CPAN update
 
