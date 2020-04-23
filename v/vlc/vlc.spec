@@ -5,8 +5,8 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.8
-Release: alt3
+Version: 3.0.9.2
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -24,8 +24,8 @@ BuildRequires: libavutil-devel libpostproc-devel libavformat-devel
 BuildRequires: libswscale-devel libmpeg2-devel libebml-devel >= 1.3.5-alt1
 BuildRequires: libmatroska-devel libcddb-devel liblive-devel aalib-devel
 BuildRequires: libtwolame-devel libssh2-devel liba52-devel libalsa-devel
-BuildRequires: libcdio-devel libdvbpsi-devel libdvdnav-devel
-BuildRequires: libdvdread-devel libflac-devel libgcrypt-devel librsvg-devel
+BuildRequires: libcdio-devel libdvbpsi-devel libdvdnav-devel >= 6.1.0
+BuildRequires: libdvdread-devel >= 6.1.0 libflac-devel libgcrypt-devel librsvg-devel
 BuildRequires: libgnutls-devel libgpg-error-devel libjpeg-devel liblirc-devel
 BuildRequires: libmad-devel libmodplug-devel libspeex-devel libspeexdsp-devel libmpcdec-devel
 BuildRequires: libncurses-devel libncursesw-devel libogg-devel libpng-devel
@@ -1395,6 +1395,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Apr 12 2020 Anton Farygin <rider@altlinux.ru> 3.0.9.2-alt1
+- 3.0.9.2
+
 * Thu Mar 19 2020 Anton Farygin <rider@altlinux.ru> 3.0.8-alt3
 - disabled libcaca support
 
