@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Tue Apr 21 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.3-alt1
+- Added new --build-srpm-only mode to build src.rpm from pkg.tar.
+- Enabled --query-repackage mode by default.
+- Added --no-query-repackage argument to retain old behavior.
+
 * Wed Apr 01 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.2-alt1
 - Enhanced --query-repackage mode:
   + Fixed detection of SOURCE_DATE_EPOCH variable;
