@@ -64,7 +64,7 @@
 %endif
 
 Name: Mesa
-Version: 20.0.4
+Version: 20.0.5
 Release: alt1
 Epoch: 4
 License: MIT
@@ -455,6 +455,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Apr 23 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.5-alt1
+- 20.0.5
+
 * Fri Apr 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.4-alt1
 - 20.0.4
 
