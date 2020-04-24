@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt11
+Release: alt12
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -132,6 +132,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Fri Apr 24 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt12
+- update to current version
+
 * Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.1527308405.8b586d5-alt11
 - Fixed build with opencv-4.3.0.
 

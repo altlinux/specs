@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm)
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt11
+Release: alt12
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -38,43 +38,7 @@ Patch1: rmservices.patch
 BuildArch: noarch
 
 BuildRequires: %t_requires
-BuildRequires: perl(DBIx/Class.pm)
-BuildRequires: perl-Package-Generator
-BuildRequires: perl(Mojo/SQLite.pm)
-BuildRequires: spectool
-BuildRequires: postgresql10-server
-BuildRequires: systemd
-BuildRequires: ruby-sass
-BuildRequires: ruby-rb-inotify
-BuildRequires: ruby-sass-listen
-BuildRequires: perl(Mojolicious.pm)
-BuildRequires: perl(Mojolicious/Plugin/AssetPack.pm)
-BuildRequires: perl(Mojo/IOLoop/ReadWriteProcess.pm)
-BuildRequires: perl(Minion.pm)
-BuildRequires: perl(Minion/Backend/SQLite.pm)
-BuildRequires: git-core
-BuildRequires: os-autoinst
-BuildRequires: osc
-BuildRequires: perl(Test/Compile.pm)
-BuildRequires: perl(Test/Fatal.pm)
-BuildRequires: perl(Test/MockModule.pm)
-BuildRequires: perl(Test/MockObject.pm)
-BuildRequires: perl(Test/Mojo.pm)
-BuildRequires: perl(Test/Output.pm)
-BuildRequires: perl(Test/Pod.pm)
-BuildRequires: perl(Test/Warnings.pm)
-BuildRequires: perl(Perl/Critic.pm)
-BuildRequires: perl(DBD/SQLite.pm)
-BuildRequires: perl(DBIx/Class/DeploymentHandler.pm)
-BuildRequires: perl(SQL/SplitStatement.pm)
-BuildRequires: perl(IPC/Cmd.pm)
-BuildRequires: perl(Module/Load/Conditional.pm)
-BuildRequires: perl(CPAN/Meta/YAML.pm)
-BuildRequires: perl(JSON/Validator.pm)
-BuildRequires: perl(Test/Exception.pm)
-BuildRequires: perl(Text/Diff.pm)
-BuildRequires: perl(Test/Strict.pm)
-BuildRequires: perl(Mojo/RabbitMQ/Client.pm)
+BuildRequires: spectool postgresql10-server systemd ruby-sass ruby-rb-inotify ruby-sass-listen os-autoinst osc
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
@@ -86,7 +50,7 @@ Requires: perl(URI.pm)
 Requires: perl(LWP/Protocol/https.pm)
 Requires: perl(Getopt/Long/Descriptive.pm)
 Requires: optipng
-Requires: dbus
+Requires: dbus git-core
 Requires: perl(YAML/XS.pm)
 
 %description
@@ -126,9 +90,7 @@ Requires: openqa-common = %EVR
 Requires: os-autoinst < 5
 Requires: os-autoinst-openvswitch
 Requires: openqa-client = %EVR
-Requires: perl(DBD/SQLite.pm)
-Requires: perl(SQL/SplitStatement.pm)
-Requires: perl(Mojo/SQLite.pm)
+Requires: perl(DBD/SQLite.pm) perl(SQL/SplitStatement.pm) perl(Mojo/SQLite.pm)
 Requires(post): coreutils
 Requires(post): os-autoinst >= 4.4
 PreReq: qemu-common
@@ -252,7 +214,11 @@ rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/40-openqa-clone-job.t
 rm -f t/42-screenshots.t
 rm -f t/api/08-jobtemplates.t 
-
+rm -f t/16-utils-runcmd.t 
+rm -f t/32-openqa_client-script.t
+rm -f t/44-scripts.t
+rm -f t/api/14-plugin_obs_rsync_async.t 
+rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
 
@@ -299,13 +265,12 @@ fi
 %_datadir/openqa/etc/openqa/database.ini
 %config %_sysconfdir/logrotate.d/*
 %dir
+#init
 %_unitdir/openqa-webui.service
+%_unitdir/openqa-livehandler.service
 %_unitdir/openqa-gru.service
 %_unitdir/openqa-scheduler.service
 %_unitdir/openqa-websockets.service
-%_unitdir/openqa-livehandler.service
-%_unitdir/openqa-worker-cacheservice-minion.service
-%_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.service
 %_unitdir/openqa-enqueue-audit-event-cleanup.timer
 %_unitdir/openqa-enqueue-asset-cleanup.service
@@ -316,10 +281,19 @@ fi
 %_unitdir/openqa-enqueue-bug-cleanup.timer
 %_tmpfilesdir/openqa-webui.conf
 # web libs
+%dir %_datadir/openqa/lib
+%dir %_datadir/openqa/lib/OpenQA
+%_datadir/openqa/lib/DBIx/
+%_datadir/openqa/lib/OpenQA/LiveHandler.pm
+%_datadir/openqa/lib/OpenQA/Resource/
+%_datadir/openqa/lib/OpenQA/Scheduler/
+%_datadir/openqa/lib/OpenQA/Schema/
+%_datadir/openqa/lib/OpenQA/WebAPI/
+%_datadir/openqa/lib/OpenQA/WebSockets/
 %_datadir/openqa/templates
 %_datadir/openqa/public
-%_datadir/openqa/dbicdh
 %_datadir/openqa/assets
+%_datadir/openqa/dbicdh
 %dir %_datadir/openqa/script
 %_datadir/openqa/script/check_dependencies
 %_datadir/openqa/script/create_admin
@@ -328,14 +302,19 @@ fi
 %_datadir/openqa/script/openqa
 %_datadir/openqa/script/openqa-scheduler
 %_datadir/openqa/script/openqa-websockets
+%_datadir/openqa/script/openqa-livehandler
+%_datadir/openqa/script/openqa-enqueue-asset-cleanup
+%_datadir/openqa/script/openqa-enqueue-audit-event-cleanup
+%_datadir/openqa/script/openqa-enqueue-bug-cleanup
+%_datadir/openqa/script/openqa-enqueue-result-cleanup
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
-%_datadir/openqa/script/openqa-livehandler
-%_datadir/openqa/script/openqa-workercache
 %dir %_localstatedir/openqa/share
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/db
 %dir %_localstatedir/openqa/images
+%dir %_localstatedir/openqa/webui
+%dir %_localstatedir/openqa/webui/cache
 %dir %_localstatedir/openqa/share/factory
 %dir %_localstatedir/openqa/share/tests
 %_localstatedir/openqa/testresults
@@ -350,27 +329,46 @@ fi
 %dir %_datadir/openqa
 %ghost %dir %_datadir/openqa/packed
 %_datadir/openqa/lib
-%dir %_datadir/openqa/script
+%exclude %_datadir/openqa/lib/OpenQA/CacheService/
+%exclude %_datadir/openqa/lib/DBIx/
 %exclude %_datadir/openqa/lib/OpenQA/Client.pm
+%exclude %_datadir/openqa/lib/OpenQA/Client
+%exclude %_datadir/openqa/lib/OpenQA/UserAgent.pm
+%exclude %_datadir/openqa/lib/OpenQA/LiveHandler.pm
+%exclude %_datadir/openqa/lib/OpenQA/Resource/
+%exclude %_datadir/openqa/lib/OpenQA/Scheduler/
+%exclude %_datadir/openqa/lib/OpenQA/Schema/
+%exclude %_datadir/openqa/lib/OpenQA/WebAPI/
+%exclude %_datadir/openqa/lib/OpenQA/WebSockets/
+%exclude %_datadir/openqa/lib/OpenQA/Worker/
 %dir %_localstatedir/openqa
 %_localstatedir/openqa/factory
 %_localstatedir/openqa/tests
 %_localstatedir/openqa/script
 
 %files worker
+%dir %_datadir/openqa/lib
+%dir %_datadir/openqa/lib/OpenQA
+%{_datadir}/openqa/lib/OpenQA/CacheService/
+%{_datadir}/openqa/lib/OpenQA/Worker
 %config(noreplace) %_sysconfdir/openqa/workers.ini
-%config(noreplace) %attr(0600,_openqa-worker,root) %_sysconfdir/openqa/client.conf
+%config(noreplace) %attr(0400,_openqa-worker,root) %_sysconfdir/openqa/client.conf
 %dir %_unitdir
 /lib/systemd/system-generators/systemd-openqa-generator
 %_unitdir/openqa-worker.target
 %_unitdir/openqa-worker@.service
+%_unitdir/openqa-worker-cacheservice-minion.service
+%_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-worker-no-cleanup@.service
 %_tmpfilesdir/openqa.conf
+#worker libs
+%dir %{_datadir}/openqa
+%dir %{_datadir}/openqa/script
 %_datadir/openqa/script/worker
+%_datadir/openqa/script/openqa-workercache
 %dir %_localstatedir/openqa/pool
-%defattr(-,_geekotest,root)
+%defattr(-,_openqa-worker,root)
 %dir %_localstatedir/openqa/cache
-%dir %_localstatedir/openqa/webui/cache
 
 %files httpd
 %doc COPYING
@@ -384,11 +382,13 @@ fi
 %_datadir/openqa/script/clone_job.pl
 %_datadir/openqa/script/dump_templates
 %_datadir/openqa/script/load_templates
-%_datadir/openqa/lib/OpenQA/Client.pm
-%_datadir/openqa/script/configure-web-proxy
 %_datadir/openqa/script/openqa-clone-job
 %_datadir/openqa/script/openqa-clone-custom-git-refspec
 %_datadir/openqa/script/openqa-validate-yaml
+%_datadir/openqa/script/configure-web-proxy
+%_datadir/openqa/lib/OpenQA/Client.pm
+%_datadir/openqa/lib/OpenQA/Client
+%_datadir/openqa/lib/OpenQA/UserAgent.pm
 %_bindir/openqa-client
 %_bindir/openqa-clone-job
 %_bindir/openqa-dump-templates
@@ -405,6 +405,9 @@ fi
 %_bindir/openqa-setup-db
 
 %changelog
+* Fri Apr 24 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt12
+- update to current version
+
 * Thu Mar 05 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt11
 - update to current version
 
