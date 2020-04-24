@@ -1,6 +1,6 @@
 Name: megatools
-Version: 1.10.2
-Release: alt2
+Version: 1.10.3
+Release: alt1
 Summary: Command line client for MEGA
 License: GPLv3+
 Url: http://megatools.megous.com/
@@ -41,6 +41,9 @@ export LD_LIBRARY_PATH=$PWD/.libs
 %_mandir/man7/%name.7.*
 
 %changelog
+* Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 1.10.3-alt1
+- 1.10.3
+
 * Fri Jun 14 2019 Anton Farygin <rider@altlinux.ru> 1.10.2-alt2
 - removed ubt macros
 
