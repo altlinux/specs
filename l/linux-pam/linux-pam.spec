@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.1.0.210.f8fc
+Version: 1.3.1.0.212.76916
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -180,6 +180,7 @@ done
 	--includedir=%_includedir/security \
 	--docdir=%docdir \
 	--disable-cracklib \
+	--enable-Werror \
 	%{subst_enable selinux} \
 	%{subst_enable audit} \
 	%{subst_enable nls} \
@@ -354,6 +355,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Fri Apr 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.212.76916-alt1
+- v1.3.1-210-gf8fc7504 -> v1.3.1-212-g76916913.
+
 * Fri Apr 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.210.f8fc-alt1
 - v1.3.1-5-g955b3e2 -> v1.3.1-210-gf8fc7504.
 
