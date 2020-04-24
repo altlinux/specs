@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppxlib
 Name: ocaml-%libname
-Version: 0.12.0
-Release: alt2
+Version: 0.13.0
+Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -80,6 +80,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Fri Feb 28 2020 Anton Farygin <rider@altlinux.ru> 0.12.0-alt2
 - build for ocaml-4.10
 - cleanup spec
