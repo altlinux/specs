@@ -1,5 +1,5 @@
 %global import_path github.com/agola-io/agola
-%global commit 074f346c7851df430f11b3934557a4cad5a19cd9
+%global commit 375d8ed1683cae01812d56b737d1eeea92221b90
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,7 +12,7 @@
 
 
 Name:		agola
-Version:	0.4.0
+Version:	0.5.0
 Release:	alt1
 Summary:	CI/CD redefined
 
@@ -71,6 +71,9 @@ install -p -m 755 bin/agola-toolbox %buildroot%_bindir/agola-toolbox
 %_bindir/*
 
 %changelog
+* Fri Apr 24 2020 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Nov 26 2019 Alexey Shabalin <shaba@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
