@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.11
+Version: 2.12
 Release: alt1
 Serial: 1
 
@@ -66,6 +66,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 1:2.12-alt1
+- 2.12
+
 * Mon Oct 07 2019 Anton Farygin <rider@altlinux.ru> 1:2.11-alt1
 - 2.11
 
