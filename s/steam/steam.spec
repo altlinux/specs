@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.61
-Release: alt6
+Version: 1.0.0.62
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -32,15 +32,15 @@ installation, automatic updates, achievements, SteamCloud synchronized
 savegame and screenshot functionality, and many social features.
 
 %prep
-%setup -n %name
+%setup -n %name-launcher
 %patch0 -p1
 %patch1 -p1
 
 %install
 %makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
-%__install -Dp -m0644 lib/udev/rules.d/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
-%__install -Dp -m0644 lib/udev/rules.d/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
+%__install -Dp -m0644 subprojects/%name-devices/60-%name-input.rules %buildroot%_udevrulesdir/60-%name-input.rules
+%__install -Dp -m0644 subprojects/%name-devices/60-%name-vr.rules %buildroot%_udevrulesdir/60-%name-vr.rules
 
 %files
 %_bindir/%name
@@ -63,6 +63,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Fri Apr 24 2020 Nazarov Denis <nenderus@altlinux.org> 1.0.0.62-alt1
+- Version 1.0.0.62
+
 * Mon Mar 16 2020 Nazarov Denis <nenderus@altlinux.org> 1.0.0.61-alt6
 - Remove build requires
 
