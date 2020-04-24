@@ -1,10 +1,10 @@
 Name: linux-pam
-Version: 1.3.1.0.5.955b
-Release: alt2
+Version: 1.3.1.0.210.f8fc
+Release: alt1
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
-License: BSD-style or GPLv2+
+License: BSD-3-Clause or GPLv2+
 Group: System/Base
 Url: https://github.com/linux-pam
 
@@ -165,7 +165,7 @@ cp -p alt/pam_listfile.c modules/pam_listfile/
 find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 
 # Unlink unwanted modules.
-for d in cracklib radius tty_audit unix \
+for d in cracklib tty_audit unix \
 		%{?!_enable_selinux:selinux sepermit}; do
 	sed -i "s,modules/pam_$d/Makefile,," configure.ac
 	sed -i "s/pam_$d //" modules/Makefile.am
@@ -185,10 +185,10 @@ done
 	%{subst_enable nls} \
 	%{subst_enable static} \
 	#
-%make_build sepermitlockdir=%_lockdir/sepermit
+%make_build sepermitlockdir=%_lockdir/sepermit servicedir=%_unitdir
 
 %install
-%makeinstall_std sepermitlockdir=%_lockdir/sepermit
+%makeinstall_std sepermitlockdir=%_lockdir/sepermit servicedir=%_unitdir
 
 mkdir -p %buildroot%_logdir
 touch %buildroot%_logdir/tallylog
@@ -283,6 +283,9 @@ done
 
 %find_lang Linux-PAM
 
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+
 %check
 make check
 
@@ -317,6 +320,8 @@ make check
 %helperdir/pam_tally
 %helperdir/pam_tally2
 %helperdir/mkhomedir_helper
+%helperdir/pam_namespace_helper
+%_unitdir/pam_namespace.service
 %config(noreplace) %_secdir/access.conf
 %config(noreplace) %_secdir/time.conf
 %config(noreplace) %attr(640,root,wheel) %_secdir/group.conf
@@ -349,6 +354,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Fri Apr 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.210.f8fc-alt1
+- v1.3.1-5-g955b3e2 -> v1.3.1-210-gf8fc7504.
+
 * Thu Jul 05 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.5.955b-alt2
 - Fixed Russian translation (closes: #35128).
 
@@ -603,7 +611,7 @@ make check
 - Enhanced errors diagnostics.
 - Fixed compilation warnings.
 
-* Fri Sep 10 2005 Dmitry V. Levin <ldv@altlinux.org> 0.99.0.3-alt2
+* Sat Sep 10 2005 Dmitry V. Levin <ldv@altlinux.org> 0.99.0.3-alt2
 - Added more const and attribute tags to function prototypes.
 - Fixed pam_lastlog.
 
