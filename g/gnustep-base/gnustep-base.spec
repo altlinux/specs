@@ -3,7 +3,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt8.svn20140226
+Release: alt9.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -23,7 +23,7 @@ BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
-BuildPreReq: libicu-devel libcommoncpp2-devel /proc
+BuildPreReq: libicu-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base gnustep-make-doc
 BuildRequires: tzdata ca-certificates
 
@@ -165,6 +165,9 @@ fi
 %_infodir/*
  
 %changelog
+* Fri Apr 24 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.24.6-alt9.svn20140226
+- Blindly s/libcommoncpp2-devel//g to fix FTBFS.
+
 * Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.24.6-alt8.svn20140226
 - Built for aarch64 architecture.
 - Removed useless services(5) hacking from %%post and %%postun scripts.
