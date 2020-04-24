@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2019c
+Version: 2020a
 Release: alt1
 
 Summary: Timezone data
@@ -73,6 +73,9 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Thu Apr 23 2020 Dmitry V. Levin <ldv@altlinux.org> 2020a-alt1
+- 2019c -> 2020a.
+
 * Tue Sep 24 2019 Dmitry V. Levin <ldv@altlinux.org> 2019c-alt1
 - 2019b -> 2019c (closes: #37260).
 
@@ -94,7 +97,7 @@ make -k check_tables
 * Wed May 02 2018 Dmitry V. Levin <ldv@altlinux.org> 2018e-alt1
 - 2018d -> 2018e.
 
-* Thu Apr 06 2018 Maxim Voronov <mvoronov@altlinux.org> 2018d-alt2
+* Fri Apr 06 2018 Maxim Voronov <mvoronov@altlinux.org> 2018d-alt2
 - tzupdate: create /etc/localtime as a symlink if it does not exist.
 
 * Thu Mar 22 2018 Dmitry V. Levin <ldv@altlinux.org> 2018d-alt1
@@ -304,7 +307,7 @@ make -k check_tables
 - Upstream 2008d
   - Changes for Brazil and Mauritius
 
-* Wed May 30 2008 Petr Machata <pmachata@redhat.com> - 2008c-1
+* Fri May 30 2008 Petr Machata <pmachata@redhat.com> - 2008c-1
 - Upstream 2008c
   - Mongolia changes zone
   - Pakistan DST is scheduled until Sep/1, instead of Aug/31
@@ -349,7 +352,7 @@ make -k check_tables
   - Iran will resume DST next year
   - Venezuela is scheduled to change TZ to -4:30 on January 1
 
-* Thu Sep 25 2007 Keith Seitz <keiths@redhat.com> - 2007g-2
+* Tue Sep 25 2007 Keith Seitz <keiths@redhat.com> - 2007g-2
 - Add support for building java's zoneinfo files in new
   tzdata-java RPM.
 
@@ -488,7 +491,7 @@ make -k check_tables
 * Thu Mar 16 2006 Petr Machata <pmachata@redhat.com> - 2006b-2
 - Patch for Sri Lanka time zone change (#184514)
 
-* Thu Feb 22 2006 Petr Machata <pmachata@redhat.com> 2006b-1
+* Wed Feb 22 2006 Petr Machata <pmachata@redhat.com> 2006b-1
 - Upstream 2006b:
   - using tz64code version, as 32 is legacy according to tzdata ML
   - new manual pages for ctime, strftime, tzset
