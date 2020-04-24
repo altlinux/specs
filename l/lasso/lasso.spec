@@ -1,5 +1,5 @@
 %def_with    java
-%def_without php
+%def_with    php
 %def_without perl
 %def_with    python
 %def_without wsf
@@ -7,8 +7,8 @@
 
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.6.0
-Release: alt4
+Version: 2.6.1
+Release: alt1
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -35,8 +35,8 @@ BuildRequires: perl-devel
 BuildRequires: perl-Error
 %endif
 %if_with php
-BuildRequires: rpm-build-php5
-BuildRequires: php5-devel
+BuildRequires: rpm-build-php7
+BuildRequires: php7-devel
 BuildRequires: libexpat-devel
 BuildRequires: python3
 %endif
@@ -100,13 +100,13 @@ library.
 %endif
 
 %if_with php
-%package -n php5-%name
+%package -n php7-%name
 Summary: Liberty Alliance Single Sign On (lasso) PHP bindings
 Group:   System/Servers
 Provides: %name-php = %version-%release
 Requires: lib%name = %version-%release
 
-%description -n php5-%name
+%description -n php7-%name
 PHP language bindings for the lasso (Liberty Alliance Single Sign On)
 library.
 %endif
@@ -125,8 +125,8 @@ library.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p2
-%patch2 -p1
+# %%patch1 -p2
+# %%patch2 -p1
 
 %build
 cp -at . -- /usr/share/gnu-config/config.{sub,guess}
@@ -143,10 +143,10 @@ cp -at . -- /usr/share/gnu-config/config.{sub,guess}
            --disable-perl \
 %endif
 %if_with php
-           --enable-php5=yes \
-           --with-php5-config-dir=%php5_sysconfdir \
+           --enable-php7=yes \
+           --with-php7-config-dir=%php7_sysconfdir \
 %else
-           --enable-php5=no \
+           --enable-php7=no \
 %endif
 %if_with wsf
            --enable-wsf \
@@ -179,12 +179,12 @@ fi
 
 # PHP subpackage
 %if_with php
-install -m 755 -d %buildroot%php5_datadir/%name
-mv %buildroot%php5_datadir/lasso.php %buildroot%php5_datadir/%name/
+install -m 755 -d %buildroot%php7_datadir/%name
+mv %buildroot%php7_datadir/lasso.php %buildroot%php7_datadir/%name/
 
 # rename the PHP config file when needed (PHP 5.6+)
-mkdir -p %buildroot%php5_sysconfdir/cli/php.d
-mv %buildroot%php5_sysconfdir/%name.ini %buildroot%php5_sysconfdir/cli/php.d/%name.ini
+mkdir -p %buildroot%php7_sysconfdir/cli/php.d
+mv %buildroot%php7_sysconfdir/%name.ini %buildroot%php7_sysconfdir/cli/php.d/%name.ini
 %endif
 
 # Remove bogus doc files
@@ -219,11 +219,11 @@ make check
 %endif
 
 %if_with php
-%files -n php5-%name
-%php5_extdir/lasso.so
-%config(noreplace) %php5_sysconfdir/cli/php.d/%name.ini
-%dir %php5_datadir/%name
-%php5_datadir/%name/lasso.php
+%files -n php7-%name
+%php7_extdir/lasso.so
+%config(noreplace) %php7_sysconfdir/cli/php.d/%name.ini
+%dir %php7_datadir/%name
+%php7_datadir/%name/lasso.php
 %endif
 
 %if_with python
@@ -234,6 +234,10 @@ make check
 %endif
 
 %changelog
+* Fri Apr 24 2020 Leontiy Volodin <lvol@altlinux.org> 2.6.1-alt1
+- New version.
+- Built with PHP7 support.
+
 * Tue Mar 24 2020 Leontiy Volodin <lvol@altlinux.org> 2.6.0-alt4
 - Built with java support again.
 
