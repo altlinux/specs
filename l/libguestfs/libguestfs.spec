@@ -10,32 +10,39 @@
 %def_disable erlang
 %def_disable lua
 %def_disable golang
+%def_enable introspection
+%def_enable vala
+%def_disable rust
 %def_disable static
 %def_enable bash_completion
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.40.2
-Release: alt3
+Version: 1.42.0
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
 
 Source: %name-%version.tar
-Source1: gnulib-%name-%version.tar
+Source2: gnulib-%name-%version.tar
+Source3: libguestfs-common-%version.tar
 Patch1: %name-%version-alt-fixes.patch
+Patch2: %name-%version-alt-fixes-common.patch
 
 # libguestfs live service
 #%%Source2: guestfsd.service
 #%%Source3: 99-guestfsd.rules
 
-BuildPreReq: /proc
+BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
 BuildRequires: glibc-utils libselinux-devel libaugeas-devel
 BuildRequires: libgio-devel libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
-BuildRequires: gobject-introspection-devel libgjs
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgjs-devel}
+%{?_enable_vala:BuildRequires(pre): rpm-build-vala}
+%{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: cpio gperf genisoimage xml-utils db4-utils zip unzip
 # po4a 
 BuildRequires: qemu-kvm qemu-system >= 1.3.0
@@ -51,41 +58,20 @@ BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
 #BuildRequires: libtsk-devel
 # BuildRequires: supermin >= 5.1.0
-%if_enabled fuse
-BuildRequires: libfuse-devel
-%endif
-%if_enabled ocaml
-BuildPreReq: rpm-build-ocaml
-BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild
-BuildRequires: ocaml-hivex-devel
-#BuildRequires: ocaml-gettext
-%endif
-%if_enabled python
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-libvirt
-%endif
-%if_enabled ruby
-BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems
-%endif
+%{?_enable_fuse:BuildRequires: libfuse-devel}
+%{?_enable_ocaml:BuildRequires(pre): rpm-build-ocaml}
+%{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel}
+%{?_enable_python:BuildRequires(pre): rpm-build-python3}
+%{?_enable_python:BuildRequires: python3-devel python3-module-libvirt}
+%{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
 BuildRequires: java-devel-default jpackage-utils
-%if_enabled haskell
-BuildRequires: ghc
-%endif
-%if_enabled php
-BuildRequires: php7-devel
-%endif
-%if_enabled erlang
-BuildRequires: erlang-devel
-%endif
-%if_enabled perl
-BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-Module-Build perl-ExtUtils-CBuilder perl-devel
-%endif
-%if_enabled golang
-BuildRequires: golang
-%endif
-%if_enabled bash_completion
-BuildRequires: bash-completion >= 2.0
-%endif
+%{?_enable_haskell:BuildRequires: ghc}
+%{?_enable_php:BuildRequires: php7-devel}
+%{?_enable_erlang:BuildRequires: erlang-devel}
+%{?_enable_perl:BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-Module-Build perl-ExtUtils-CBuilder perl-devel}
+%{?_enable_golang:BuildRequires(pre): rpm-macros-golang}
+%{?_enable_rust:BuildRequires: rust rust-cargo}
+%{?_enable_bash_completion:BuildRequires: bash-completion >= 2.0}
 
 %description
 libguestfs is a set of tools for accessing and modifying virtual
@@ -106,7 +92,13 @@ This package is only required for building the appliance.
 %package devel
 Summary: Header files for libguestfs library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
+Requires: %name-gobject = %EVR
+Requires: %name-gir = %EVR
+Provides: %name-gobject-devel = %EVR
+Obsoletes: %name-gobject-devel < %EVR
+Provides: %name-gir-devel = %EVR
+Obsoletes: %name-gir-devel < %EVR
 
 %description devel
 Header files for libguestfs library.
@@ -114,42 +106,23 @@ Header files for libguestfs library.
 %package gobject
 Summary: GObject'ified version of libguestfs API
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gobject
 GObject'ified version of libguestfs API
 
-%package gobject-devel
-Summary: Libraries and header files for libguestfs gobject development
-Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: %name-gobject = %version-%release
-
-%description gobject-devel
-Header files and libraries necessary for developing
-programs using libguestfs with GObject/glib.
-
 %package gir
 Summary: GObject introspection data for the libguestf library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the libguestfs library
 
-%package gir-devel
-Summary: GObject introspection devel data for the libguestfs library
-Group: Development/Other
-BuildArch: noarch
-Requires: %name-devel = %version-%release %name-gir = %version-%release
-
-%description gir-devel
-GObject introspection devel data for the libguestfs library
-
 %package -n golang-guestfs
 Summary: Golang bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: golang
 
 %description -n golang-guestfs
@@ -159,10 +132,13 @@ golang-%name contains Go language bindings for %name.
 Summary: System administration tools for virtual machines
 Group: File tools
 License: GPLv2+
-Requires: %name = %version-%release
-Provides: %name-tools = %version-%release
-Obsoletes: %name-tools < %version-%release
-
+Requires: %name = %EVR
+Provides: %name-tools = %EVR
+Obsoletes: %name-tools < %EVR
+%if_enabled bash_completion
+Provides: bash-completion-libguestfs = %EVR
+Obsoletes: bash-completion-libguestfs < %EVR
+%endif
 %ifarch %ix86 x86_64 aarch64
 Requires: guestfs-data
 %endif
@@ -186,9 +162,9 @@ tools for virtual machines.
 %package -n ocaml-%name
 Summary: OCaml bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
-Provides: ocaml4-%name = %version-%release
-Obsoletes: ocaml4-%name < %version-%release
+Requires: %name = %EVR
+Provides: ocaml4-%name = %EVR
+Obsoletes: ocaml4-%name < %EVR
 
 %description -n ocaml-%name
 ocaml-%name contains OCaml bindings for %name.
@@ -199,9 +175,9 @@ programs which use %name you will also need ocaml-%name-devel.
 %package -n ocaml-%name-devel
 Summary: OCaml bindings for %name
 Group: Development/Other
-Requires: ocaml-%name = %version-%release
-Provides: ocaml4-%name-devel = %version-%release
-Obsoletes: ocaml4-%name-devel < %version-%release
+Requires: ocaml-%name = %EVR
+Provides: ocaml4-%name-devel = %EVR
+Obsoletes: ocaml4-%name-devel < %EVR
 
 %description -n ocaml-%name-devel
 ocaml-%name-devel contains development libraries
@@ -210,8 +186,8 @@ required to use the OCaml bindings for %name.
 %package -n perl-Sys-Guestfs
 Summary: Perl bindings for %name (Sys::Guestfs)
 Group: Development/Other
-Requires: %name = %version-%release
-Provides: perl-%name = %version-%release
+Requires: %name = %EVR
+Provides: perl-%name = %EVR
 
 %description -n perl-Sys-Guestfs
 perl-Sys-Guestfs contains Perl bindings for %name (Sys::Guestfs).
@@ -219,7 +195,7 @@ perl-Sys-Guestfs contains Perl bindings for %name (Sys::Guestfs).
 %package -n python3-module-%name
 Summary: Python3 bindings for %name
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-%name
 python3-module-%name contains Python3 bindings for %name.
@@ -227,7 +203,7 @@ python3-module-%name contains Python3 bindings for %name.
 %package -n ruby-%name
 Summary: Ruby bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n ruby-%name
 ruby-%name contains Ruby bindings for %name.
@@ -235,7 +211,7 @@ ruby-%name contains Ruby bindings for %name.
 %package java
 Summary: Java bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: jpackage-utils
 
 %description java
@@ -247,8 +223,8 @@ you will also need %name-java-devel.
 %package java-devel
 Summary: Java development package for %name
 Group: Development/Other
-Requires: %name = %version-%release
-Requires: %name-java = %version-%release
+Requires: %name = %EVR
+Requires: %name-java = %EVR
 
 %description java-devel
 %name-java-devel contains the tools for developing Java software
@@ -259,8 +235,8 @@ See also %name-javadoc.
 %package javadoc
 Summary: Java documentation for %name
 Group: Development/Other
-Requires: %name = %version-%release
-Requires: %name-java = %version-%release
+Requires: %name = %EVR
+Requires: %name-java = %EVR
 Requires: jpackage-utils
 BuildArch: noarch
 
@@ -270,7 +246,7 @@ BuildArch: noarch
 %package -n php7-%name
 Summary: PHP bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n php7-%name
 php-%name contains PHP bindings for %name.
@@ -278,7 +254,7 @@ php-%name contains PHP bindings for %name.
 %package -n erlang-%name
 Summary: Erlang bindings for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n erlang-%name
 erlang-%name contains Erlang bindings for %name.
@@ -287,65 +263,21 @@ erlang-%name contains Erlang bindings for %name.
 Summary: Safe and secure diskimage-builder replacement
 Group: Development/Other
 License: GPLv2+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n virt-dib
 Virt-dib is a safe and secure alternative to the OpenStack
 diskimage-builder command.  It is compatible with most
 diskimage-builder elements.
 
-%package -n virt-v2v
-Summary: Convert a virtual machine to run on KVM
-Group: Development/Other
-License: GPLv2+
-Requires: %name = %version-%release
-Requires: guestfs-tools = %version-%release
-Requires: gawk
-Requires: gzip
-Requires: unzip
-Requires: curl
-Requires: /usr/bin/virsh
-
-# For rhsrvany.exe, used to install firstboot scripts in Windows guests.
-# Requires: mingw32-srvany >= 1.0-13
-
-%description -n virt-v2v
-Virt-v2v and virt-p2v are tools that convert virtual machines from
-non-KVM hypervisors, or physical machines, to run under KVM.
-
-%package -n virt-p2v-maker
-Summary: Convert a physical machine to run on KVM
-Group: Development/Other
-License: GPLv2+
-Requires: guestfs-tools = %version-%release
-Requires: gawk
-Requires: gzip
-# 'strip' binary is required by virt-p2v-make-kickstart.
-Requires: binutils
-
-%description -n virt-p2v-maker
-Virt-p2v converts (virtualizes) physical machines so they can be run
-as virtual machines under KVM.
-
-This package contains the tools needed to make a virt-p2v boot CD or
-USB key which is booted on the physical machine to perform the
-conversion.  You also need virt-v2v installed somewhere else to
-complete the conversion.
-
-To convert virtual machines from other hypervisors, see virt-v2v.
-
-%package -n bash-completion-libguestfs
-Summary: bash-completion for libguestfs tools
-Group: Shells
-Requires: bash-completion
-BuildArch: noarch
-
-%description -n bash-completion-libguestfs
-bash-completion for guestfish tool.
-
 %prep
-%setup -a1
+%setup -a2
+tar -xf %SOURCE3 -C common
+
 %patch1 -p1
+pushd common
+%patch2 -p1
+popd
 
 %build
 export PYTHON=%__python3
@@ -365,6 +297,9 @@ export PYTHON=%__python3
 	%{subst_enable erlang} \\\
 	%{subst_enable lua} \\\
 	%{subst_enable goolang} \\\
+	%{subst_enable introspection} \\\
+	%{subst_enable vala} \\\
+	%{subst_enable rust} \\\
 	%{subst_enable static} \\\
 	--with-default-backend=libvirt \\\
 	--with-distro=ALT \\\
@@ -410,7 +345,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 #install -m 0644 %%SOURCE3 %buildroot%_sysconfdir/udev/rules.d
 
 # delete unneeded
-rm -f %buildroot%_bindir/virt-p2v-make-kiwi
+rm -f %buildroot%_man1dir/guestfs-release-notes*
 
 %find_lang %name
 
@@ -440,21 +375,27 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_includedir/guestfs.h
 %_pkgconfigdir/libguestfs.pc
 
-%files gobject
-%_libdir/libguestfs-gobject-*.so.*
-
-%files gobject-devel
+%if_enabled introspection
 %_libdir/libguestfs-gobject-*.so
 %_includedir/guestfs-gobject
 %_includedir/guestfs-gobject.h
 %_pkgconfigdir/libguestfs-gobject-1.0.pc
 %_man3dir/guestfs-gobject.3.*
 
+%_girdir/*.gir
+
+%if_enabled vala
+%_datadir/vala/vapi/libguestfs-gobject-1.0.*
+%endif
+%endif #introspection
+
+%if_enabled introspection
+%files gobject
+%_libdir/libguestfs-gobject-*.so.*
+
 %files gir
 %_typelibdir/*.typelib
-
-%files gir-devel
-%_girdir/*.gir
+%endif
 
 %if_enabled golang
 %files -n golang-guestfs
@@ -543,26 +484,14 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_man1dir/guestfs-hacking.1*
 %_man1dir/guestfs-internals.1*
 %_man1dir/guestfs-performance.1*
-%_man1dir/guestfs-release-notes.1*
 %_man1dir/guestfs-security.1*
+%if_enabled bash_completion
+%_datadir/bash-completion/completions/*
+%endif
 
 %files -n virt-dib
 %_bindir/virt-dib
 %_man1dir/virt-dib.1*
-
-%files -n virt-v2v
-%doc COPYING README
-%_bindir/virt-v2v*
-%_man1dir/virt-v2v*
-#%_datadir/virt-tools
-
-%files -n virt-p2v-maker
-%_bindir/virt-p2v-make-disk
-%_bindir/virt-p2v-make-kickstart
-#_bindir/virt-p2v-make-kiwi
-%_man1dir/virt-p2v*
-%_libdir/virt-p2v
-%_datadir/virt-p2v
 
 #%files live-service
 #%doc COPYING README
@@ -644,12 +573,12 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %_man3dir/guestfs-erlang.3*
 %endif #erlang
 
-%if_enabled bash_completion
-%files -n bash-completion-libguestfs
-%_datadir/bash-completion/completions/*
-%endif
-
 %changelog
+* Fri Apr 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt1
+- 1.42.0
+- build with vala support
+- drop virt-p2v and virt-v2v
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.40.2-alt3
 - removed python-2 support
 - fixed build with python-3.8 by patch from upstream
