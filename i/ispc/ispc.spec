@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
 Name: ispc
-Version: 1.12.0
-Release: alt2
-Summary: Intel SPMD Program Compiler
+Version: 1.13.0
+Release: alt1
+Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
 
@@ -14,7 +14,7 @@ Vcs: https://github.com/ispc/ispc.git
 Url: https://ispc.github.io/
 
 # Tested on 10.0 to be good too.
-%define clang_version 9.0
+%define clang_version 10.0
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -27,6 +27,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-tools
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel
+BuildRequires: /proc
 
 ExclusiveArch: x86_64
 
@@ -69,7 +70,20 @@ program instances execute in parallel on the hardware.
 %_bindir/%name
 %_bindir/check_isa
 
+%check
+PATH=BUILD/bin:$PATH
+# Tests are from .travis.yml
+check_isa
+ispc --support-matrix
+./run_tests.py --jobs=$(nproc)
+./run_tests.py --jobs=$(nproc) --arch=$(arch)
+
 %changelog
+* Sat Apr 25 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt1
+- Update to v1.13.0.
+- Use Clang/LLVM 10.
+- spec: Add tests into %%check section.
+
 * Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 1.12.0-alt2
 - Clean up spec to fix compiling.
 
