@@ -2,7 +2,7 @@
 %define mname imap_tools
 
 Name: python3-module-%mname
-Version: 0.13.1
+Version: 0.14.2
 Release: alt1
 Summary: Working with email and mailbox using IMAP protocol
 License: Apache-2.0
@@ -65,6 +65,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/%mname/examples
 
 %changelog
+* Sat Apr 25 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.2-alt1
+- New version
+
 * Mon Mar 02 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.13.1-alt1
 - New version
 
