@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname ppxfind
 Name: ocaml-%oname
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 Summary: Ocamlfind ppx tool
 License: MIT
 Group: Development/ML
@@ -35,6 +35,9 @@ dune install --destdir=%buildroot
 %_bindir/ppxfind
 
 %changelog
+* Sat Apr 25 2020 Anton Farygin <rider@altlinux.ru> 1.4-alt1
+- 1.4
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.3-alt2
 - fix for build by dune-2.x
 
