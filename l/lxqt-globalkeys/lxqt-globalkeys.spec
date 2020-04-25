@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 0.14.2
-Release: alt1.1
+Version: 0.15.0
+Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
 License: LGPL
@@ -64,6 +64,9 @@ sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
 %_datadir/cmake/*/
 
 %changelog
+* Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
+- new version 0.15.0
+
 * Mon Oct 28 2019 Anton Midyukov <antohami@altlinux.org> 0.14.2-alt1.1
 - Fix FTBFS for lxqt-runner, lxqt-panel
 
