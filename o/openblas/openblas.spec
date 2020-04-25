@@ -1,6 +1,6 @@
 Name: openblas
-Version: 0.2.20
-Release: alt2
+Version: 0.3.9
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -112,6 +112,9 @@ sed -i 's,%buildroot,,' %buildroot%_pkgconfigdir/openblas.pc
 %_includedir/openblas
 
 %changelog
+* Sat Apr 25 2020 Kirill Maslinsky <kirill@altlinux.org> 0.3.9-alt1
+- Version 0.3.9
+
 * Wed May 15 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.20-alt2
 - Added BR: libgomp-devel on ppc64le architecture.
 
