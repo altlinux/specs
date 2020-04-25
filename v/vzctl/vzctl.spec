@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.222
+Version: 7.0.226
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -126,6 +126,10 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Sat Apr 25 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.226-alt1
+- 7.0.226
+- fix vz.service terminates during system boot with modern systemd
+
 * Mon Apr 20 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.222-alt1
 - 7.0.222
 
