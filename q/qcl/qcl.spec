@@ -1,6 +1,6 @@
 Name:           qcl
 Version:        0.6.4
-Release:        alt2
+Release:        alt3
 Summary:        Quantum Computation Language with an emulator of a quantum computer
 License:        GPLv2
 URL:            http://tph.tuwien.ac.at/~oemer/qcl.html
@@ -25,6 +25,7 @@ algorithms (including classical components) in one consistent formalism.
 Summary:        Provides comprehensive documentation for the QCL
 Group:          Sciences/Physics
 Requires:       %name = %version-%release
+BuildArch:      noarch
 
 %description    doc
 Comprehensive PDF documentation for the Quantum Computation Language with an
@@ -54,6 +55,9 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %buildroot%_docdir
 %_docdir/*.pdf
 
 %changelog
+* Sat Apr 25 2020 Andrew Savchenko <bircoph@altlinux.org> 0.6.4-alt3
+- Make doc subpackage noarch.
+
 * Thu Jan 31 2019 Andrew Savchenko <bircoph@altlinux.org> 0.6.4-alt2
 - Fix QCL libdir.
 
