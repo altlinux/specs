@@ -19,12 +19,12 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.7.3
-Release: alt2
+Version: %ver_major.9.0
+Release: alt1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
-License: MPL/GPL/LGPL
+License: MPL-2.0
 Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/52
 
 #Source: %name-%version.tar
@@ -45,6 +45,7 @@ Patch11: xulrunner-24.0-s390-inlines.patch
 Patch12: build-icu-big-endian.patch
 Patch13: build-missing-xlocale-h.patch
 Patch14: mozilla-1253216.patch
+Patch15: fix-tests-build.patch
 
 BuildRequires: gcc-c++ libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
@@ -110,6 +111,8 @@ interface to the JavaScript engine.
 %endif
 
 %patch14 -p1 -b .1253216
+
+%patch15 -p2
 
 
 # Correct sed expression for new sed
@@ -199,6 +202,11 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Sun Apr 26 2020 Vladimir Didenko <cow@altlinux.org> 52.9.0-alt1
+- new version
+- fix license name
+- fix build
+
 * Fri Dec 21 2018 Yuri N. Sedunov <aris@altlinux.org> 52.7.3-alt2
 - rebuilt against libreadline.so.7
 
