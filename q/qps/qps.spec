@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPLv2+
@@ -16,6 +16,8 @@ BuildRequires: cmake
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: lxqt-build-tools >= 0.6.0
+BuildRequires: liblxqt-devel >= 0.15.0
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: /usr/bin/convert
 
 %description
@@ -63,6 +65,9 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Tue Oct 15 2019 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
