@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfm-qt
-Version: 0.14.1
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPLv2+
@@ -68,6 +68,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
+- new version 0.15.0
+
 * Mon Jun 24 2019 Michael Shigorin <mike@altlinux.org> 0.14.1-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
