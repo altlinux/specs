@@ -1,16 +1,21 @@
+%def_enable snapshot
 %define xdg_name org.gnome.clocks
 %define ver_major 3.36
 
 Name: gnome-clocks
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Clock application designed for GNOME 3
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://wiki.gnome.org/Apps/Clocks
 
+%if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define gweather_ver 3.27.2
 %define geocode_ver 3.18.0
@@ -54,6 +59,10 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- updated to 3.36.0-10-g107805f
+  (fixed https://gitlab.gnome.org/GNOME/gnome-clocks/-/issues/91)
+
 * Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
