@@ -1,27 +1,29 @@
 %define _name gupnp-dlna
 %define ver_major 0.10
+%def_enable gtk_doc
 
 Name: libgupnp-dlna
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 Summary: A collection of helpers for building UPnP AV applications
 
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1
 Url: http://www.gupnp.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: libgio-devel
+BuildRequires: libgio-devel >= 2.38
 BuildRequires: pkgconfig(glib-2.0) >= 2.32 pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) >= 1.0
 BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0
 BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0
-BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0)
+BuildRequires: vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0)
 BuildRequires: vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.5.0
 BuildRequires: gtk-doc xml-utils
+
 
 %description
 GUPnP is an object-oriented open source framework for creating UPnP
@@ -71,20 +73,21 @@ Contains developer documentation for %_name.
 
 %build
 %autoreconf
-%configure --disable-static --enable-gtk-doc
+%configure --disable-static \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
+%nil
 %make_build
 
 %install
-
 %makeinstall_std
 
 %files
-%doc AUTHORS COPYING README TODO
 %_bindir/*
 %_libdir/lib*.so.*
 %_datadir/%{_name}*
 %_libdir/%_name/*.so
 %exclude %_libdir/%_name/*.la
+%doc AUTHORS COPYING README TODO
 
 %files devel
 %_libdir/lib*.so
@@ -99,10 +102,13 @@ Contains developer documentation for %_name.
 %files gir-devel
 %_girdir/*.gir
 
-%files devel-doc
-%_datadir/gtk-doc/html/*
+%{?_enable_gtk_doc:%files devel-doc
+%_datadir/gtk-doc/html/*}
 
 %changelog
+* Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt2
+- fixed buildreqs
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
 - 0.10.5
 
