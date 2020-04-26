@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -9,12 +9,15 @@ Url: http://www.scummvm.org
 
 Source: %name-%version.tar.gz
 Patch: scummvm-1.3.0-mp2player.patch
+Patch1: scummvm-2.1.0-fluidsynth.patch
 
 Provides: %_gamesdatadir/%name
 
-# Automatically added by buildreq on Mon Jul 14 2014 (-bi)
-# optimized out: elfutils libGL-devel libGLU-devel libalsa-devel libcloog-isl4 libogg-devel libstdc++-devel pkg-config python-base zlib-devel
-BuildRequires: gcc-c++ git-core libSDL-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
+##  gcc-c++ git-core libSDL-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
+
+# Automatically added by buildreq on Sun Apr 26 2020
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libogg-devel libsasl2-3 libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ git-core libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
 
 %description
 ScummVM is a collection of interpreters, capable of emulating several
@@ -25,23 +28,22 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
-#remove_optflags %optflags_optimization
-#CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
-#CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
-#FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
 ./configure \
 	--prefix=%prefix \
 	--bindir=%_bindir \
 	--mandir=%_mandir \
 	--libdir=%_libdir \
 	--enable-release \
+	--enable-c++11 \
 	--enable-plugins --default-dynamic \
 	--disable-nasm --disable-tremor \
 	--enable-text-console \
-	--enable-engine-dynamic=fullpipe,mohawk,saga,sci,wage
-%make_build
+	--enable-all-engines \
+	--enable-vkeybd
+%make_build 
 
 %install
 %makeinstall_std
@@ -72,6 +74,10 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Sun Apr 26 2020 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
+- Autobuild version bump to 2.1.1
+- Apply gentoo patch
+
 * Wed Nov 06 2019 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 
