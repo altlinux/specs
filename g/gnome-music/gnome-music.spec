@@ -5,7 +5,7 @@
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -85,6 +85,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
