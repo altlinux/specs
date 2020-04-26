@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.1.0.212.76916
+Version: 1.3.1.0.223.c2c0
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -355,6 +355,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Sun Apr 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.223.c2c0-alt1
+- v1.3.1-212-g76916913 -> v1.3.1-223-gc2c0434b (closes: #38389).
+
 * Fri Apr 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.212.76916-alt1
 - v1.3.1-210-gf8fc7504 -> v1.3.1-212-g76916913.
 
