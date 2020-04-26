@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libEMF
-Version: 1.0.11
-Release: alt2
+Version: 1.0.12
+Release: alt1
 
 Summary: A library for generating Enhanced Metafiles
 License: LGPLv2+ and GPLv2+
@@ -11,8 +11,6 @@ Group: System/Libraries
 Url: http://libemf.sourceforge.net
 Source0: http://downloads.sourceforge.net/libemf/libemf-%version.tar.gz
 Source1: libEMF.watch
-Patch0: libEMF-aarch64.patch
-Patch1: libEMF-e2k.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -67,8 +65,6 @@ libEMF static files.
 
 %prep
 %setup -n libemf-%version
-%patch0 -p1 -b .aarch64
-%patch1 -p1 -b .aarch64
 
 %build
 %autoreconf
@@ -100,6 +96,10 @@ make check
 %endif
 
 %changelog
+* Sun Apr 26 2020 Michael Shigorin <mike@altlinux.org> 1.0.12-alt1
+- new version (watch file uupdate)
+- dropped aarch64 patch (merged upstream)
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 1.0.11-alt2
 - E2K: fixed build by faking context structure
 
@@ -119,7 +119,7 @@ make check
 - fixed build on arm
 
 * Sat Nov 27 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.qa1
-- rebuild using girar-nmu to require/provide setversion
+- rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
 
 * Sun Dec 13 2009 Michael Shigorin <mike@altlinux.org> 1.0.4-alt1
