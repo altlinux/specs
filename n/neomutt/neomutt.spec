@@ -1,5 +1,5 @@
 Name: neomutt
-Version: 20200417
+Version: 20200424
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -11,6 +11,7 @@ License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
 Url: https://www.neomutt.org/
 Vcs: https://github.com/neomutt/neomutt.git
+# test-files/ Vcs: https://github.com/neomutt/neomutt-test-files
 Source: %name-%version.tar
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
@@ -68,6 +69,9 @@ make -s test
 %docdir
 
 %changelog
+* Mon Apr 27 2020 Vitaly Chikunov <vt@altlinux.org> 20200424-alt1
+- Update to 20200424.
+
 * Sat Apr 18 2020 Vitaly Chikunov <vt@altlinux.org> 20200417-alt1
 - Update to 20200417.
 - Enable zlib, zstd, sqlite.
