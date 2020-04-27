@@ -2,7 +2,7 @@
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.25
+Version: 1.26
 Release: alt1
 Epoch: 1
 
@@ -38,6 +38,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.26-alt1
+- automated CPAN update
+
 * Tue Apr 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.25-alt1
 - automated CPAN update
 
