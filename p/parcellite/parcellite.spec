@@ -1,6 +1,6 @@
 Name: parcellite
-Version: 1.1.9
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
@@ -30,7 +30,7 @@ sed 's/OnlyShowIn=/OnlyShowIn=MATE;/' -i data/parcellite-startup.desktop.in
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 %find_lang %name
 
@@ -41,6 +41,9 @@ sed 's/OnlyShowIn=/OnlyShowIn=MATE;/' -i data/parcellite-startup.desktop.in
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 27 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Wed Feb 06 2019 Anton Midyukov <antohami@altlinux.org> 1.1.9-alt2
 - Added startup for MATE (Closes: 36000)
 
