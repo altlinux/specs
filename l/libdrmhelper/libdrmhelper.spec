@@ -1,5 +1,5 @@
 Name: libdrmhelper
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: A privileged helper for drm initialization
@@ -60,6 +60,9 @@ statically linked drmhelper-based software.
 %_libdir/*.a
 
 %changelog
+* Mon Apr 27 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.0-alt1
+- Wait for helper to avoid zombies.
+
 * Sun Mar 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt1
 - Drop seccomp.
 
