@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-Declare
 Name: perl-%dist
-Version: 0.006019
-Release: alt1.2
+Version: 0.006022
+Release: alt1
 
 Summary: Adding keywords to perl, in perl
 License: GPL or Artistic
@@ -33,6 +33,9 @@ take over Perl's parser, allowing the creation of new syntax.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.006022-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.006019-alt1.2
 - rebuild with new perl 5.28.1
 
