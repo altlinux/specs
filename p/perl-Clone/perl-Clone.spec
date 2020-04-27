@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Clone
 Name: perl-%dist
-Version: 0.44
+Version: 0.45
 Release: alt1
 
 Summary: Recursively copy Perl datatypes
@@ -34,6 +34,9 @@ including tied variables and objects.
 %perl_vendor_autolib/Clone*
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
