@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name B-COW
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Devel/Peek.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.003
+Version: 0.004
 Release: alt1
 Summary: B::COW additional B helpers to check COW status
 Group: Development/Perl
@@ -33,6 +33,9 @@ B::COW provides some naive additional B helpers to check the COW status of one S
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - automated CPAN update
 
