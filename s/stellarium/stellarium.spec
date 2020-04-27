@@ -1,19 +1,20 @@
 Name: stellarium
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: Astronomical Sky Simulator
+
 License: GPLv2
 Group: Education
-
 Url: http://www.stellarium.org/
+
 Source: %name-%version.tar
 
 BuildRequires: rpm-macros-cmake
 
-# Automatically added by buildreq on Sun Feb 07 2016
-# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-serialport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators qt5-base-devel qt5-tools qt5-script-devel
-BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel qt5-multimedia-devel qt5-location-devel
+BuildRequires: cmake perl-Pod-Usage zlib-devel libdrm-devel
+BuildRequires: qt5-script-devel qt5-serialport-devel qt5-multimedia-devel
+BuildRequires: qt5-tools-devel qt5-location-devel
 BuildRequires: fonts-ttf-dejavu
 
 %ifnarch %e2k
@@ -58,8 +59,21 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/pixmaps/%name.xpm
 %_datadir/mime/packages/stellarium.xml
+# Fix of post-install unowned files
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
+%dir %_iconsdir/hicolor/256x256
+%dir %_iconsdir/hicolor/256x256/apps
+%dir %_iconsdir/hicolor/512x512
+%dir %_iconsdir/hicolor/512x512/apps
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
+%dir %_datadir/metainfo
 
 %changelog
+* Mon Apr 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.20.1-alt1
+- Build new version.
+
 * Mon Mar 30 2020 Grigory Ustinov <grenka@altlinux.org> 0.20.0-alt1
 - Build new version.
 
