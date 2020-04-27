@@ -1,5 +1,5 @@
 Name: 	 tellico
-Version: 3.2.3
+Version: 3.3
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -10,7 +10,7 @@ Url:     http://tellico-project.org/
 
 Source:  %name-%version.tar
 Source2: FindKSane.cmake
-Patch1:  tellico-migrate-to-python3.patch
+Patch1:  tellico-fix-missing-qt-constant.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -93,6 +93,9 @@ find %buildroot -type f -print0 |
 %_datadir/metainfo/org.kde.tellico.appdata.xml
 
 %changelog
+* Sun Apr 26 2020 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
+- New version.
+
 * Mon Dec 02 2019 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - New version.
 - Package appdata file.
