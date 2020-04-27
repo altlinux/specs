@@ -1,8 +1,8 @@
 %def_enable Werror
 
 Name:		vor
-Version:	0.5.7
-Release:	alt2
+Version:	0.5.8
+Release:	alt1
 
 Summary:	Variations on Rockdogders is an 2D space shooter
 
@@ -35,12 +35,15 @@ thumpy beat to help put you in the mood for old-school 2D gaming.
 desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 
 %files
-%doc COPYING README
+%doc COPYING README.md
 %_bindir/%name
 %_datadir/applications/%name.desktop
 %_datadir/%name
 
 %changelog
+* Mon Apr 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.8-alt1
+- Automatically updated to 0.5.8.
+
 * Fri Nov 03 2017 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt2
 - Remove requires from spec and change previous changelog entry.
 
