@@ -2,14 +2,15 @@
 %define farstream_dev  pkgconfig(farstream-0.2) libtelepathy-farstream-devel
 
 %define sover 0
+%define sover_service 1
 %define lib_main libtelepathy-qt5%sover
 %define lib_farstream libtelepathy-qt5-farstream%sover
-%define lib_service libtelepathy-qt5-service%sover
+%define lib_service libtelepathy-qt5-service%sover_service
 %define dev_main libtelepathy-qt5%name-devel
 
 Name: telepathy-qt5
-Version: 0.9.7
-Release: alt4
+Version: 0.9.8
+Release: alt1
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -17,13 +18,8 @@ Group: System/Libraries
 
 URL: https://telepathy.freedesktop.org/components/telepathy-qt/
 
+# https://telepathy.freedesktop.org/releases/telepathy-qt/
 Source: telepathy-qt-%version.tar
-# FC
-Patch1: 0001-FindQt5.cmake-look-in-the-correct-pkg-config-file-fo.patch
-Patch2: 0002-FindQt5.cmake-remove-hardcoded-fPIC-flag.patch
-Patch3: 0003-CMakeLists.txt-require-python-2.7.patch
-Patch4: 0004-Adapt-the-client-registrar-to-the-new-thread-based-i.patch
-Patch5: 0005-Revert-cmake-telepathy-service-does-not-depend-on-te.patch
 
 BuildRequires(pre): qt5-base-devel qt5-tools
 BuildRequires: python < 3 python >= 2.7
@@ -93,11 +89,6 @@ Static libraries for %name.
 
 %prep
 %setup -qn telepathy-qt-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %ifarch %e2k
@@ -134,7 +125,7 @@ export QT_DOC_DIR=%_qt5_docdir
 %_libdir/libtelepathy-qt5-farstream.so.%sover
 %_libdir/libtelepathy-qt5-farstream.so.*
 %files -n %lib_service
-%_libdir/libtelepathy-qt5-service.so.%sover
+%_libdir/libtelepathy-qt5-service.so.%sover_service
 %_libdir/libtelepathy-qt5-service.so.*
 
 %files devel
@@ -148,6 +139,9 @@ export QT_DOC_DIR=%_qt5_docdir
 #%_libdir/lib*.a
 
 %changelog
+* Mon Apr 27 2020 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
+- new version
+
 * Tue Jun 18 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt4
 - add optflags for E2K
 - don't package devel-static
