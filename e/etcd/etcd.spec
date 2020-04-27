@@ -14,7 +14,7 @@
 
 Name:    etcd
 Version: 3.4.7
-Release: alt1
+Release: alt2
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
 
@@ -89,6 +89,12 @@ rm -rf -- %buildroot/%_libdir
 /usr/sbin/groupadd -r -f %etcd_group
 /usr/sbin/useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %doc README.md etcd.conf.yml.sample
 %doc README-*.md READMEv2-etcdctl.md
@@ -100,6 +106,9 @@ rm -rf -- %buildroot/%_libdir
 %_unitdir/%name.service
 
 %changelog
+* Tue Apr 28 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt2
+- add post_service and preun_service
+
 * Sun Apr 26 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt1
 - 3.4.7
 
