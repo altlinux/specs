@@ -11,7 +11,7 @@
 
 Name:    gitea
 Version: 1.11.4
-Release: alt1
+Release: alt2
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -56,7 +56,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-TAGS="bindata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make generate all
+TAGS="bindata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make all
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
@@ -98,6 +98,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Mon Apr 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt2
+- update nodejs modules
+
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt1
 - Build new version.
 
