@@ -4,7 +4,7 @@
 %def_with python2
 
 Name: python-module-%modname
-Version: 0.29.16
+Version: 0.29.17
 Release: alt1
 
 Summary: C-extensions for Python
@@ -12,9 +12,9 @@ Group: Development/Python
 License: Apache-2.0
 Url: http://www.cython.org
 
-#Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
 #VCS: https://github.com/cython/cython.git
-Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
+#Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
 
 Provides: %modname = %EVR
 Conflicts: python-module-Cython0.18
@@ -152,7 +152,7 @@ code.
 This package provides modules for debugging Cython programms.
 
 %prep
-%setup -n cython-%version
+%setup -n %modname-%version
 %if_with python2
 rm -rf ../python2
 cp -a . ../python2
@@ -229,6 +229,9 @@ done
 %endif
 
 %changelog
+* Mon Apr 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.17-alt1
+- 0.29.17
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.16-alt1
 - 0.29.16
 
