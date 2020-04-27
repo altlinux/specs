@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Devel-PatchPerl
-Version: 1.90
+Version: 1.92
 Release: alt1
 
 Summary: Patch perl source a la Devel::PPPort's buildperl.pl
@@ -32,6 +32,9 @@ BuildRequires: perl-Module-Pluggable perl-File-pushd perl-devel perl-IPC-Cmd
 %doc Changes README
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 1.92-alt1
+- new version
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.90-alt1
 - new version
 
