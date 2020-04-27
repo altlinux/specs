@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-AnyEvent-HTTP
-Version: 2.24
+Version: 2.25
 Release: alt1
 Summary: AnyEvent::HTTP - simple but non-blocking HTTP/HTTPS client
 
@@ -30,6 +31,9 @@ BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 %doc Changes README
 
 %changelog
+* Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1
+- new version
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
 - automated CPAN update
 
