@@ -2,7 +2,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
 %define kernel_sublevel		.115
-%define kernel_rt_release	rt48
+%define kernel_rt_release	rt49
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -128,6 +128,8 @@ Provides: kernel = %kversion
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
 Prereq: mkinitrd >= 1:2.9.9-alt1
+
+AutoReqProv: no
 
 %description
 This package contains the Linux kernel %kernel_base_version%kernel_sublevel \
@@ -419,9 +421,9 @@ cat > init.c <<__EOF__
 int main()
 {
 	if (mkdir("/sys", 0666))
-		warn("mkdir /proc");
+		warn("mkdir /sys");
 	else if (mount("sysfs", "/sys", "sysfs", 0, NULL))
-		warn("mount /proc");
+		warn("mount /sys");
 	else if (access("/sys/kernel/realtime", R_OK))
 		warn("access /sys/kernel/realtime");
 	else
@@ -498,6 +500,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Apr 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt49
+- Update to 4.19.115-rt49.
+
 * Fri Apr 17 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt48
 - Update to 4.19.115-rt48.
 - Add more BPF options, enable IKCONFIG, IKHEADERS.
