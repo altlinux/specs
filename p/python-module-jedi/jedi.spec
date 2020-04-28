@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -78,6 +78,7 @@ This package contains documentation for %oname.
 %setup -n %oname-%version
 
 sed 's|env python|env python3|' < sith.py > sith.py3
+subst 's|^#!.*python$|#!%__python|' sith.py
 
 ln -s ../objects.inv docs/
 
@@ -128,6 +129,9 @@ py.test-%_python3_version -vv
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.1-alt1.1
+- Set versioned Python2 interpreter in shebang.
+
 * Fri Aug 03 2018 Fr. Br. George <george@altlinux.ru> 0.12.1-alt1
 - Autobuild version bump to 0.12.1
 
