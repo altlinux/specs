@@ -3,11 +3,11 @@
 
 Name: %lcname-qt
 Version: 0.3.8
-Release: alt3.1
+Release: alt3.2
 
 Summary: qt frontend for recordmydesktop, screencasting program
 Group: Video
-License: GPLv3+ & LGPLv3+
+License: GPL-3.0+ and LGPL-3.0+
 Url: http://sourceforge.net/projects/recordmydesktop/
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
@@ -16,11 +16,11 @@ Source: qt-%lcname-%version.tar.gz
 Patch1: %name-0.3.8-alt-freedesktop.patch
 Patch2: %name-0.3.8-alt-x86_64-build.patch
 Patch3: %name-0.3.8-alt-jack_lsp.patch
+Patch4: %name-use-versioned-python2.patch
 
-BuildPreReq: libqt4-devel >= 4.2 python-module-PyQt4-devel
+BuildRequires: libqt4-devel >= 4.2 python-module-PyQt4-devel
 Requires: %lcname >= %version xwininfo
 
-# Automatically added by buildreq on Thu Mar 04 2010 (-bi)
 BuildRequires: ImageMagick-tools
 
 %description
@@ -33,8 +33,10 @@ producing an ogg-encapsulated theora-vorbis file.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p0
+%patch4 -p2
 
 %build
+%autoreconf
 %configure
 %make_build
 convert -resize 16x16 src/qt-%lcname.png qt-%lcname-16.png
@@ -51,7 +53,7 @@ install -D -m 644 src/qt-%lcname.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 
 %files -f qt-%ucname.lang
 %_bindir/*
-%python_sitelibdir/qt_%ucname/*
+%python_sitelibdir_noarch/qt_%ucname/*
 %_desktopdir/qt-%lcname.desktop
 %_pixmapsdir/*
 %_miconsdir/qt-%lcname.png
@@ -61,6 +63,10 @@ install -D -m 644 src/qt-%lcname.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Apr 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt3.2
+- Use python2 interpreter only with version.
+- Fix License tag according to SPDX.
+
 * Mon Nov 12 2018 Leontiy Volodin <lvol@altlinux.org> 0.3.8-alt3.1
 - fixed x86_64 build
 - clean spec
