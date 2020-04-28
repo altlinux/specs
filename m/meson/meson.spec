@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -26,7 +26,7 @@ Source2: %name.env
 
 BuildArch: noarch
 
-%define python_ver 3.5
+%define python_ver 3.5.2
 Requires: python3 >= %python_ver
 Requires: ninja-build >= 1.7
 
@@ -90,6 +90,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Mon Apr 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.1-alt1
+- 0.54.1
+
 * Mon Mar 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - 0.54.0
 
