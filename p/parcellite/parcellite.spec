@@ -1,6 +1,6 @@
 Name: parcellite
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
@@ -22,11 +22,11 @@ print for those who like simplicity.
 %prep
 %setup
 %patch -p1
-sed 's/OnlyShowIn=/OnlyShowIn=MATE;/' -i data/parcellite-startup.desktop.in
 
 %build
 %autoreconf
 %configure
+sed -i "s|\(.*VERSION \).*|\1\"%version\"|" config.h
 %make_build
 
 %install
@@ -41,6 +41,9 @@ sed 's/OnlyShowIn=/OnlyShowIn=MATE;/' -i data/parcellite-startup.desktop.in
 %_man1dir/%name.1*
 
 %changelog
+* Tue Apr 28 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt2
+- replace icon with edit-paste
+
 * Mon Apr 27 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
