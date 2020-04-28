@@ -2,7 +2,7 @@
 
 Name: xfce4-vala
 Version: 4.10.0
-Release: alt13
+Release: alt14
 
 Summary: Vala bindings for the Xfce framework
 License: LGPL-2.0-only
@@ -48,6 +48,10 @@ Requires: libexo-devel
 /usr/share/vala-%vala_api/vapi/*
 
 %changelog
+* Tue Apr 28 2020 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt14
+- libxfce4panel: Drop remove_event.
+- Dropped bogus patch.
+
 * Mon Mar 16 2020 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt13
 - Fix remote_event signal.
 - Add Vcs tag.
