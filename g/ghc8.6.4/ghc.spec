@@ -1,11 +1,15 @@
 # llvm needs for unregisterised architectures
+%ifarch armh
+%define llvm_version 9.0
+%else
 %define llvm_version 7.0
+%endif
 
 %def_without bootstrap
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt2
+Release: alt3
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -71,8 +75,7 @@ BuildRequires: ghc(hscolour)
 
 Provides: haskell(abi) = %version
 
-%ifarch aarch64
-# Needs for bootstrap on aarch64
+%ifarch armh aarch64
 BuildRequires: llvm%llvm_version
 Requires: llvm%llvm_version
 %endif
@@ -154,9 +157,16 @@ http://haskell.org/ghc/documentation.html
 %prep
 %setup
 %patch -p1
+%ifarch armh aarch64
+sed -ri '/^BuildFlavour/ s,perf$,perf-llvm,' mk/build.mk
+%endif
 
 %build
+%ifarch armh
+%define _configure_target armv7l-unknown-linux-gnueabihf
+%else
 %define _configure_target %nil
+%endif
 #autoreconf -fisv
 ./boot
 %configure --with-system-libffi --disable-unregisterised
@@ -260,6 +270,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Tue Apr 28 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.6.4-alt3
+- built on armh
+
 * Thu Apr 18 2019 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt2
 - Rebuild with ghc 8.6.4
 - Add requires to llvm for aarch64
