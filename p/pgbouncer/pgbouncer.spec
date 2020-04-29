@@ -1,6 +1,6 @@
 %define     pgb_runtimedir   /var/run/pgbouncer
 Name:       pgbouncer
-Version:    1.12.0
+Version:    1.13.0
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    BSD
@@ -78,6 +78,9 @@ This is meant to enforce "autocommit" mode on client, mostly targeted
 for PL/Proxy.
 
 %changelog
+* Wed Apr 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt1
+- Build new version.
+
 * Thu Mar 26 2020 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1
 - Build new version.
 
