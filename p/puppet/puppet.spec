@@ -2,7 +2,7 @@
 %define        confdir        ext/redhat
 
 Name:          %pkgname
-Version:       6.14.0
+Version:       6.15.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
@@ -158,6 +158,9 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 %ruby_gemdocdir
 
 %changelog
+* Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt1
+- New version.
+
 * Tue Mar 10 2020 Andrey Cherepanov <cas@altlinux.org> 6.14.0-alt1
 - New version.
 
