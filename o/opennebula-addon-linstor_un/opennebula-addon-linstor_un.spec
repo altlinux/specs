@@ -4,7 +4,7 @@
 
 Summary: Community driven full-feature Linstor storage driver for OpenNebula
 Name: opennebula-addon-linstor_un
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 License: Apache-2.0
 Group: System/Servers
@@ -70,6 +70,9 @@ fi
 %config(noreplace) %_destination/etc/datastore/linstor_un/linstor_un.conf
 
 %changelog
+* Wed Apr 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Fri Apr 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
