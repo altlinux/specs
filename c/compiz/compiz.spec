@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -68,7 +68,7 @@ cmake .. \
 	-DCOMPIZ_BUILD_TESTING=OFF
 popd
 find -name flags.make | while read l; do sed -i 's|\ -Werror\ | |g' $l; done
-%make_build -C %_target_platform
+%make -C %_target_platform
 
 %install
 %make -C %_target_platform DESTDIR=%buildroot install
@@ -127,6 +127,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/*.egg-info
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Wed Apr 29 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.1-alt3
+- 0.9.14.1+20.10.20200427
+
 * Fri Apr 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.1-alt2
 - drop previous logoved fixes
 
