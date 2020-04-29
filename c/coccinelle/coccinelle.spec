@@ -1,10 +1,12 @@
 # coccinelle.spec
+%define _unpackaged_files_terminate_build 1
+
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt5
+Release:	alt6
 Summary:	Semantic patching for Linux (spatch)
 
-Group:		Development/Kernel
+Group:		Development/C
 License:	GPL-2.0-only
 Url:		http://coccinelle.lip6.fr/
 
@@ -23,6 +25,8 @@ BuildRequires:	ocaml-num-devel
 BuildRequires:	ocaml-parmap-devel
 BuildRequires:	python3-dev
 
+Requires:	python3-dev
+
 # Bogus internal name
 %filter_from_requires /^python.*(coccinelle)/d
 # Bogus dependencies to OCaml
@@ -36,9 +40,56 @@ Provides: ocaml-cmx(Coccilib) = %version-%release
 %add_findreq_skiplist %python3_sitelibdir/coccilib/trac.py
 
 %description
-Coccinelle is a tool to utilize semantic patches for manipulating
-C code. It was originally designed to ease maintenance of device
-drivers in the Linux kernel.
+Coccinelle (French for "ladybug") is a utility for matching and transforming
+the source code of programs written in the C programming language.
+
+The source code to be matched or replaced is specified using
+a "semantic patch" syntax based on the patch syntax.
+The Semantic Patch Language (SmPL) pattern resembles a unified diff
+with C-like declarations.
+
+Coccinelle was initially used to aid the evolution of the Linux kernel
+(and ease the maintenance of device drivers), providing support for
+changes to APIs such as renaming a function, adding a function
+argument whose value is somehow context-dependent, and reorganizing a
+data structure.
+
+It can also be used to find bad programming patterns in code (i.e.,
+pieces of code that are erroneous with high probability such as
+possible NULL pointer dereference) without transforming them.
+(Then coccinelle's role is close to that of static analysis tools.)
+
+%package demos
+%global demos_summary Demos of coccinelle semantic patches with C code examples
+Summary: %demos_summary
+Group: Documentation
+Requires: %name
+BuildArch: noarch
+
+%description demos
+%demos_summary.
+
+They can be applied to the corresponding C code examples by a command like:
+
+  spatch -sp_file F.cocci F.c
+
+and you'll get a normal patch for this C code example.
+
+The tests from coccinelle are also included in this package; they can be run with:
+
+  spatch --testall --no-update-score-file
+
+in the directory which includes the tests/ subdir (with *.res files).
+
+%package checkinstall
+%global checkinstall_summary Immediately run some tests for %name
+Summary: %checkinstall_summary
+Group: Other
+Requires: %name-demos
+BuildArch: noarch
+
+%description checkinstall
+%checkinstall_summary.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -63,9 +114,25 @@ rm -rf %buildroot%_libdir/coccinelle/python
 install ./tools/pycocci %buildroot%_bindir/pycocci
 
 %check
+%define run_tests \
+demos=( \
+        simple # a simple demo \
+        python_identifier # with embedded Python \
+) \
+for f in "${demos[@]}"; do \
+    %spatch -sp_file demos/"$f".{cocci,c} \
+done \
+%nil
+
 export COCCINELLE_HOME=%buildroot%_libdir/coccinelle
-export LD_LIBRARY_PATH=.
-%buildroot%_bindir/spatch -sp_file demos/simple.cocci demos/simple.c
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%global spatch %buildroot%_bindir/spatch
+%run_tests
+
+%pre checkinstall -p %_sbindir/sh-safely
+cd %_docdir/%name-demos-%version
+%global spatch spatch
+%run_tests
 
 %files
 %doc authors.txt bugs.txt changes.txt copyright.txt credits.txt
@@ -79,7 +146,15 @@ export LD_LIBRARY_PATH=.
 %_man3dir/Coccilib.3cocci*
 /usr/share/bash-completion/completions/spatch
 
+%files demos
+%doc demos tests
+
+%files checkinstall
+
 %changelog
+* Wed Apr 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.8-alt6
+- merge changes from p9 branch (imz@altlinux.org)
+
 * Mon Apr 20 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt5
 - spec: Fix `Cannot infer Python version'.
 
