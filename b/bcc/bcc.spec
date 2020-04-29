@@ -8,8 +8,8 @@
 %endif
 
 Name:		bcc
-Version:	0.13.0
-Release:	alt3
+Version:	0.14.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -194,6 +194,9 @@ Command line tools for BPF Compiler Collection (BCC)
 %_man8dir/*
 
 %changelog
+* Wed Apr 29 2020 Vitaly Chikunov <vt@altlinux.org> 0.14.0-alt1
+- Update to bcc 0.14.0, libbpf 0.0.8.
+
 * Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt3
 - spec: Rework BuildRequires.
 
