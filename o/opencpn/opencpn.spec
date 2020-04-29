@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_enable	gtk3
+# 28/04/2020 libwxsvg built with compat-libwxGTK3.0-gtk2
+%def_disable	gtk3
 
 Name: opencpn
 Version: 5.0.0
-Release: alt3
+Release: alt4
 Summary: A free and open source software for marine navigation
 
 Group: Other
-License: %gpl2only
+License: GPL-2.0-or-later
 Url: http://opencpn.org
 Source0: OpenCPN-%version.tar.gz
 Source1: %name.desktop
@@ -16,13 +17,13 @@ Source1: %name.desktop
 ExcludeArch: ppc64le
 
 Patch1: opencpn-5.0.0-detection_of_wxWebview.patch
+Patch2: opencpn-5.0.0-mga-missing_glx_include.patch
+Patch3: opencpn-5.0.0-aarch64-plugindir.patch
 
 Requires: %name-data
 
 #Errara
 #Patch100:
-
-BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Mon Mar 25 2013
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -32,15 +33,18 @@ BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXco
 BuildRequires: libwxGTK3.1-devel libgtk+3-devel
 BuildConflicts: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
 
-BuildRequires: libcairo-devel libpcre-devel libffi-devel libfribidi-devel libpixman-devel libuuid-devel libdrm-devel
-BuildRequires: libtiff-devel libmount-devel libblkid-devel libselinux-devel libxkbcommon-devel libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
+BuildRequires: libcairo-devel libdrm-devel libtiff-devel libmount-devel libblkid-devel
+BuildRequires: libselinux-devel libxkbcommon-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
 %else
 BuildRequires: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
 BuildConflicts: libwxGTK3.1-devel libgtk+3-devel
 
 Requires: libgtk2-engine-adwaita
+
+BuildRequires: libthai-devel libdatrie-devel
 %endif
+BuildRequires: libpcre-devel libffi-devel libfribidi-devel libuuid-devel libpixman-devel
 
 BuildRequires: tinyxml-devel libgps-devel libportaudio2-devel libcurl-devel libexpat-devel
 BuildRequires: liblz4-devel liblzma-devel libsndfile-devel libarchive-devel libelf-devel
@@ -67,6 +71,8 @@ Architecture independent files for OpenCPN.
 %setup -n OpenCPN-%version
 
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 #patch100 -p1
 
@@ -152,6 +158,13 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/license.html
 
 %changelog
+* Tue Apr 28 2020 Sergey Y. Afonin <asy@altlinux.org> 5.0.0-alt4
+- updated License tag to SPDX syntax, changed to GPL-2.0-or-later
+- built with GTK+2
+- added patches from https://github.com/OpenCPN/OpenCPN/issues/1494
+  + opencpn-5.0.0-mga-missing_glx_include.patch (fixed build with wxGTK 3.1.3)
+  + opencpn-5.0.0-aarch64-plugindir.patch
+
 * Tue Apr 21 2020 Sergey Y. Afonin <asy@altlinux.org> 5.0.0-alt3
 - fixed FTBFS: added opencpn-5.0.0-detection_of_wxWebview.patch
 - added build time switch for switching gtk+2/gtk+3 (in spec-file)
