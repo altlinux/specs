@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 6817c5ea58fbc7975e96d2af7801d358a7d4ede4
+%global commit c3c3e9087bc15e058eac89b5b130cc73e90c6d33
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2020-04-23T00-58-49Z
-%define version 2020.04.23
+%global tag RELEASE.2020-04-28T23-56-56Z
+%define version 2020.04.28
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -99,5 +99,8 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Apr 29 2020 Alexey Shabalin <shaba@altlinux.org> 2020.04.28-alt1
+- Update to RELEASE.2020-04-28T23-56-56Z.
+
 * Tue Apr 28 2020 Alexey Shabalin <shaba@altlinux.org> 2020.04.23-alt1
 - Initial build.
