@@ -7,7 +7,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-#define svnrev 32772
+%define svnrev 38184
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -104,6 +104,7 @@
 %def_enable bs2b
 %def_enable dca
 %def_enable libdv
+%def_enable libilbc
 %def_disable crystalhd
 %def_enable mad
 %def_disable toolame
@@ -118,6 +119,8 @@
 %def_enable amrnb
 %def_enable amrwb
 %def_enable libvpx_lavc
+%def_enable libdav1d_lavc
+%def_enable libaom_lavc
 %def_enable libopus
 %def_enable libdca
 
@@ -136,7 +139,6 @@
 %def_disable directx
 %def_disable dxr2
 %def_disable dxr3
-%def_disable ivtv
 %def_enable dvb
 %def_disable mga
 %def_disable xmga
@@ -211,7 +213,7 @@
 
 # Other parameters
 %def_enable nls
-%def_with htmldocs
+%def_without htmldocs
 %def_with tools
 %define default_vo %{subst_o xv}%{subst_o sdl}%{subst_o gl2}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}null
 %define default_ao %{subst_o alsa}%{subst_o oss}%{subst_o openal}%{subst_o sdl}%{subst_o pulse}%{subst_o nas}null
@@ -296,7 +298,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt2
+Release: alt3.38184.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -345,14 +347,13 @@ Patch15: 0015-fix-add-missing-ld-flag.patch
 Patch16: 0016-fix-aarch64-compile.patch
 Patch17: 0017-compilation-fix-with-glibc-2.27.patch
 Patch18: 0018-stream-stream_smb.c-include-time.h.patch
-Patch19: 0019-ffmpeg-libavformat-libsmbclient.c-include-time.h.patch
-Patch20: 0020-ppc-disable-vsx-on-little-endian-systems.patch
-Patch21: 0021-fix-tools-build-with-shared-ffmpeg.patch
-Patch22: 0001-add-NLS-support.patch
-Patch23: 0002-add-po-dir.patch
-Patch24: 0003-fix-usage-mp_msg.patch
-Patch25: 0004-po-mp_msg2po.awk-fix-po-generation.patch
-Patch26: 0005-fix-po-mp_help2msg.awk.patch
+Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
+Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
+Patch21: 0021-add-NLS-support.patch
+Patch22: 0022-add-po-dir.patch
+Patch23: 0023-fix-usage-mp_msg.patch
+Patch24: 0024-po-mp_msg2po.awk-fix-po-generation.patch
+Patch25: 0025-fix-po-mp_help2msg.awk.patch
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -410,6 +411,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_ladspa:BuildRequires: ladspa_sdk}
 %{?_enable_bs2b:BuildRequires: libbs2b-devel}
 %{?_enable_libdv:BuildRequires: libdv-devel}
+%{?_enable_libilbc:BuildRequires: libilbc-devel}
 %{?_enable_crystalhd:BuildRequires: libcrystalhd-devel}
 %{?_enable_mad:BuildRequires: libmad-devel}
 %{?_enable_xmms:BuildRequires: libxmms-devel}
@@ -422,6 +424,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_dca:BuildRequires: libdca-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
 %{?_enable_libvpx_lavc:BuildRequires: libvpx-devel}
+%{?_enable_libdav1d_lavc:BuildRequires: libdav1d-devel}
 %{?_enable_libopus:BuildRequires: libopus-devel}
 %{?_enable_libdca:BuildRequires: libdca-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
@@ -647,7 +650,6 @@ Ukrainian language support for %Name.
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
-sed -i '/\(VP8E_UPD_ENTROPY\|VP8E_UPD_REFERENCE\|VP8E_USE_REFERENCE\)/d' ffmpeg/libavcodec/libvpxenc.c
 ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-'
 echo "NotShowIn=KDE;" >> etc/%lname.desktop
 
@@ -705,7 +707,6 @@ export CFLAGS="%optflags"
 	%{subst_enable dvdnav} \
 	%{subst_enable dvdread} \
 	%{subst_enable vdpau} \
-	%{subst_enable xrender} \
 	%{subst_enable_to dvdread_int dvdread-internal} \
 	%{subst_enable cdparanoia} \
 	%{subst_enable_to bitmap_font bitmap-font} \
@@ -782,6 +783,8 @@ export CFLAGS="%optflags"
 	%{subst_enable_to amrnb libopencore_amrnb} \
 	%{subst_enable_to amrwb libopencore_amrwb} \
 	%{subst_enable_to libvpx_lavc libvpx-lavc} \
+	%{subst_enable_to libdav1d_lavc libdav1d-lavc} \
+	%{subst_enable_to libaom_lavc libaom-lavc} \
 	%{subst_enable libopus} \
 	%{subst_enable libdca} \
 	%{subst_enable vidix} \
@@ -798,7 +801,6 @@ export CFLAGS="%optflags"
 	%{subst_enable directx} \
 	%{subst_enable dxr2} \
 	%{subst_enable dxr3} \
-	%{subst_enable ivtv} \
 	%{subst_enable dvb} \
 	%{subst_enable mga} \
 	%{subst_enable xmga} \
@@ -1036,7 +1038,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %{?_enable_gui:%exclude %_bindir/%gname}
 %endif
 
-
+%if_with htmldocs
 %files docs
 
 
@@ -1055,7 +1057,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %files doc-tech
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/tech
-%_docdir/%name-%version/Changelog.*
+#_docdir/%name-%version/Changelog.*
 
 
 %files doc-en
@@ -1066,6 +1068,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %files doc-ru
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/ru
+%endif
 %endif
 
 
@@ -1119,6 +1122,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Apr 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt3.38184.1
+- Updated to SVN snapshot (revision 38184).
+
 * Sun Nov 24 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt2
 - Fixed python shebangs (use versioned python).
 - Made "Blue" the default skin (as it was provided by upstream).
