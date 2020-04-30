@@ -1,47 +1,39 @@
 %define plugname taglist
 
 Name: vim-plugin-%plugname
-Version: 4.5
-Release: alt1.1
+Version: 4.6
+Release: alt1
 
 Summary: Source code browser for Vim
 Group: Editors
-License: Distributable
+License: BSD-2-Clause
+
 Url: https://www.vim.org/scripts/script.php?script_id=273
 BuildArch: noarch
 
-Source: %name-%version.tar.bz2
-Patch: %name-4.3-alt-disable-default.patch
+Source: taglist-%version.tar.gz
+Patch: %name-4.6-alt-tag_list.patch
 
-PreReq: vim-common >= 4:6.3.007-alt1
 Requires: ctags
 BuildPreReq: vim-devel
 
 Packager: VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
 
-%post
-%update_vimhelp
-
-%postun
-%clean_vimhelp
-
 %description
 This plugin can help you to browse through your source files.
 It uses ctags(1), but doesn't need tags files to be built.
 
-To enable this plugin define "use_taglist_plugin" variable somewhere
-in your .vimrc file.
+Use ":help taglist.txt" to get help
 
-%description -l ru_RU.CP1251
-Этот плагин поможет вам при просмотре исходников. Он использует ctags(1),
-но не требует создания файла с тэгами.
+%description -l ru_RU.UTF-8
+Р­С‚РѕС‚ РїР»Р°РіРёРЅ РїРѕРјРѕР¶РµС‚ РІР°Рј РїСЂРё РїСЂРѕСЃРјРѕС‚СЂРµ РёСЃС…РѕРґРЅРёРєРѕРІ. РћРЅ РёСЃРїРѕР»СЊР·СѓРµС‚ ctags(1),
+РЅРѕ РЅРµ С‚СЂРµР±СѓРµС‚ СЃРѕР·РґР°РЅРёСЏ С„Р°Р№Р»Р° СЃ С‚СЌРіР°РјРё.
 
-Чтобы включить этот плагин, определите переменную use_taglist_plugin в
-своем файле .vimrc.
+Р”Р»СЏ РїСЂРѕСЃРјРѕС‚СЂР° СЃРїСЂР°РІРєРё РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РєРѕРјР°РЅРґСѓ В«:help taglist.txtВ»
 
 %prep
-%setup
-%patch -p1
+%setup -n taglist-%version
+%patch -p2
 
 %install
 mkdir -p %buildroot%vim_runtime_dir
@@ -52,6 +44,11 @@ cp -a {doc,plugin} %buildroot%vim_runtime_dir
 %vim_plugin_dir/*
 
 %changelog
+* Thu Apr 30 2020 Fr. Br. George <george@altlinux.ru> 4.6-alt1
+- Version update
+- New upstream
+- Drop no_default patch
+
 * Wed Oct 24 2018 Grigory Ustinov <grenka@altlinux.org> 4.5-alt1.1
 - Replace %%vim_script_url macro on real url.
 
