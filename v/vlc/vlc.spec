@@ -5,7 +5,7 @@
 %def_enable wayland
 
 Name: vlc
-Version: 3.0.9.2
+Version: 3.0.10
 Release: alt1
 
 Summary: VLC media player
@@ -1395,6 +1395,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Apr 30 2020 Anton Farygin <rider@altlinux.ru> 3.0.10-alt1
+- 3.0.10
+
 * Sun Apr 12 2020 Anton Farygin <rider@altlinux.ru> 3.0.9.2-alt1
 - 3.0.9.2
 
