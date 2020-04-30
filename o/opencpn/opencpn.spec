@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-# 28/04/2020 libwxsvg built with compat-libwxGTK3.0-gtk2
-%def_disable	gtk3
+%def_enable	gtk3
 
 Name: opencpn
 Version: 5.0.0
-Release: alt4
+Release: alt5
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -41,10 +40,9 @@ BuildRequires: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
 BuildConflicts: libwxGTK3.1-devel libgtk+3-devel
 
 Requires: libgtk2-engine-adwaita
-
-BuildRequires: libthai-devel libdatrie-devel
 %endif
 BuildRequires: libpcre-devel libffi-devel libfribidi-devel libuuid-devel libpixman-devel
+BuildRequires: libthai-devel libdatrie-devel
 
 BuildRequires: tinyxml-devel libgps-devel libportaudio2-devel libcurl-devel libexpat-devel
 BuildRequires: liblz4-devel liblzma-devel libsndfile-devel libarchive-devel libelf-devel
@@ -54,10 +52,13 @@ BuildRequires: libexif-devel libwxsvg-devel libsqlite3-devel
 # use bundled unarr : none in Sisyphus 20190327
 
 %description
-OpenCPN is a free software (GPLv2) project to create a concise chart plotter
-and navigation software, for use underway or as a planning tool. OpenCPN is
-developed by a team of active sailors using real world conditions for program
-testing and refinement.
+OpenCPN is a free software project to create a concise chart plotter
+and navigation software, for use underway or as a planning tool.
+OpenCPN is developed by a team of active sailors using real world
+conditions for program testing and refinement. Files developed in
+this project are copyright (c) The OpenCPN developers and distributed
+using a GPLv2+ license. OpenCPN also uses code from other sources
+with other licenses (look to the LICENSING file).
 
 %package data
 Summary: Architecture independent files for OpenCPN
@@ -109,6 +110,7 @@ rm -rf %buildroot/%_datadir/doc
 %doc data/license.txt
 %doc data/copyright
 %doc data/changelog
+%doc LICENSING
 
 %_bindir/opencpn
 
@@ -158,6 +160,10 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/license.html
 
 %changelog
+* Thu Apr 30 2020 Sergey Y. Afonin <asy@altlinux.org> 5.0.0-alt5
+- built with GTK+3 (due to same change of libwxsvg-1.5.22-alt2)
+- updated %%description
+
 * Tue Apr 28 2020 Sergey Y. Afonin <asy@altlinux.org> 5.0.0-alt4
 - updated License tag to SPDX syntax, changed to GPL-2.0-or-later
 - built with GTK+2
