@@ -2,8 +2,8 @@
 
 
 Name: janus
-Version: 0.9.2
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 Summary: Janus WebRTC Server
 
@@ -24,11 +24,14 @@ Patch2: janus-0.9.2-debian-2005_avoid_npm.patch
 Patch3: janus-0.9.2-debian-2006_avoid_doc_privacy_breach.patch
 Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
 
+Patch5: janus-0.9.3-alt-websocket_transport_fix.patch
+Patch6: janus-0.9.3-alt-janus_videoroom_fix.patch
+
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Wed Apr 08 2020
-# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libssl-devel zlib-devel
+# Automatically added by buildreq on Thu Apr 30 2020
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libssl-devel libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libwebsockets-devel zlib-devel
 
 %description
 Janus is a general purpose WebRTC Gateway with a minimal footprint.
@@ -95,6 +98,9 @@ development.
 %patch3 -p1
 %patch4 -p1
 
+%patch5 -p0
+%patch6 -p0
+
 mv -f COPYING COPYING.GPL.orig
 ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
 
@@ -104,6 +110,7 @@ ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
   --enable-docs \
   --enable-rest \
   --enable-post-processing \
+  --disable-aes-gcm \
   %nil
 
 %make_build
@@ -184,6 +191,10 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Tue Apr 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.3-alt1
+- New version
+- Enable websockets support
+
 * Wed Apr 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.2-alt2
 - Build post-processing utilities
 
