@@ -6,7 +6,7 @@
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -50,7 +50,7 @@ Conflicts: notification-daemon < 3.20
 
 BuildRequires(pre): rpm-build-gnome rpm-build-xdg pkgconfig(systemd)
 BuildRequires: gnome-common
-BuildRequires: libgnome-panel-devel >= %version
+BuildRequires: libgnome-panel-devel >= %ver_major
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
@@ -89,9 +89,10 @@ Requires: compiz
 %description session-compiz
 This package permits to log into GNOME Flashback with Compiz.
 
-
 %prep
 %setup
+# remove pre-generated
+find ./ -name "*enum-types.[c,h]" -print0 | xargs -r0 rm -f --
 
 %build
 %autoreconf
@@ -117,6 +118,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_libdir/gnome-panel/modules/system_indicators.so
 %exclude %_libdir/gnome-panel/modules/system_indicators.la
 %_libexecdir/%name-metacity
+%_libexecdir/%name-clipboard
 %_desktopdir/%name.desktop
 %_datadir/gnome-panel/layouts/%name.layout
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
@@ -132,6 +134,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
+%_xdgconfigdir/autostart/%name-clipboard.desktop
 #%_xdgconfigdir/autostart/%name-screensaver.desktop
 %_userunitdir/%name.service
 %_userunitdir/%name.target
@@ -151,6 +154,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

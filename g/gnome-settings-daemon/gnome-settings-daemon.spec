@@ -18,8 +18,8 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -192,6 +192,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Fri Apr 17 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - use system rfkill-uaccess.rules instead of own %%name-rfkill.rules
 

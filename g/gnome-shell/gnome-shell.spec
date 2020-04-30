@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -198,7 +198,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
 #%meson_build %name-pot %name-update-po
 %nil
-%meson_build
+%meson_build -v
 
 %install
 %meson_install
@@ -230,6 +230,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %_xdgconfigdir/autostart/%name-overrides-migration.desktop
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/org.gnome.Extensions.desktop
+%_desktopdir/%xdg_name.Extensions.desktop
 %_desktopdir/evolution-calendar.desktop
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
@@ -268,6 +269,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %endif
 
 %changelog
+* Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
