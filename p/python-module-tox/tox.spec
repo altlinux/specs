@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.14.2
-Release: alt1
+Release: alt2
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -105,6 +105,7 @@ popd
 %check
 pushd ../python3
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export PIP_FIND_LINKS=%python3_sitelibdir_noarch/virtualenv_support
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
@@ -136,6 +137,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Wed Apr 29 2020 Stanislav Levin <slev@altlinux.org> 3.14.2-alt2
+- Fixed FTBFS.
+
 * Thu Dec 12 2019 Stanislav Levin <slev@altlinux.org> 3.14.2-alt1
 - 3.14.1 -> 3.14.2.
 

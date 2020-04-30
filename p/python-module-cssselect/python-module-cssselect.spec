@@ -1,8 +1,10 @@
-%def_with python3
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
 
 Name: python-module-cssselect
 Version: 0.9.1
-Release: alt1.2
+Release: alt2
 
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
 Group: Development/Python
@@ -13,9 +15,11 @@ BuildArch: noarch
 %setup_python_module cssselect
 
 BuildRequires: python-module-lxml
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-lxml
+
+%if_with check
+BuildRequires: python3(tox)
 %endif
 
 # http://pypi.python.org/packages/source/c/cssselect/cssselect-%version.tar.gz
@@ -38,45 +42,39 @@ engine to find the matching elements in an XML or HTML document.
 %prep
 %setup -n cssselect-%version
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-PYTHONPATH=%buildroot%python_sitelibdir python cssselect/tests.py
-%if_with python3
-PYTHONPATH=%buildroot%python3_sitelibdir python3 cssselect/tests.py
-%endif
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python2},py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -vv
 
 %files
 %python_sitelibdir/*
 %doc AUTHORS docs README.rst CHANGES LICENSE PKG-INFO
 
-%if_with python3
 %files -n python3-module-cssselect
 %python3_sitelibdir/*
 %doc AUTHORS docs README.rst CHANGES LICENSE PKG-INFO
-%endif
 
 %changelog
+* Wed Feb 19 2020 Stanislav Levin <slev@altlinux.org> 0.9.1-alt2
+- Fixed FTBS.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.1-alt1.2
 - (NMU) rebuild with python3.6
 

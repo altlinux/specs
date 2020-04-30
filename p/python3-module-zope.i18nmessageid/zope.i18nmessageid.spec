@@ -9,7 +9,7 @@ of the 'zope.i18n' package.
 %def_with check
 
 Name: %fname
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 %if ""==""
@@ -93,6 +93,10 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %if ""==""
 %check
+# coverage is the extra dep
+grep -qs "^[[:space:]]*'coverage',[[:space:]]*$" setup.py || exit 1
+sed -i "/^[[:space:]]*'coverage',[[:space:]]*$/d" setup.py
+
 export PYTHONPATH=src
 python3 setup.py test -v
 
@@ -114,6 +118,9 @@ python3 setup.py test -v
 %endif
 
 %changelog
+* Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 5.0.0 -> 5.0.1.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Build new version.
 - Fix license.

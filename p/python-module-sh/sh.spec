@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.12.14
-Release: alt4
+Release: alt5
 Summary: Python subprocess interface
 License: MIT
 BuildArch: noarch
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/pts
 BuildRequires: python-module-coverage
 BuildRequires: python3-module-coverage
+BuildRequires: python3(tox)
 %endif
 
 %description
@@ -74,11 +75,15 @@ pushd ../python3
 popd
 
 %check
-python sh.py travis
-
-pushd ../python3
-python3 sh.py travis
-popd
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} sh.py travis
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py2,py3
+tox.py3 --sitepackages -o -vv -r
 
 %files
 %doc *.md
@@ -92,6 +97,9 @@ popd
 %python3_sitelibdir/sh-%version-py*.egg-info/
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.12.14-alt5
+- Fixed FTBFS.
+
 * Tue Jan 22 2019 Stanislav Levin <slev@altlinux.org> 1.12.14-alt4
 - Fixed build.
 

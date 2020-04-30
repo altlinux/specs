@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.11
-Release: alt1.1
+Release: alt1.1.1
 Summary: Extends nose.plugins.cover to add Cobertura-style XML reports
 License: BSD
 Group: Development/Python
@@ -71,7 +71,7 @@ popd
 %endif
 
 %check
-python setup.py test
+python2 setup.py test
 nosetests
 %if_with python3
 pushd ../python3
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.0.11-alt1.1.1
+- Fixed FTBFS.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.11-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

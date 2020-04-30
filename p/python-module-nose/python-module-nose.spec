@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt5.git20160316
+Release: alt6.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -97,7 +97,7 @@ ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests-3
 %endif
 
 %check
-./selftest.py
+python2 ./selftest.py
 %if_with python3
 pushd ../python3
 python3 setup.py build_tests
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1:1.3.7-alt6.git20160316
+- Fixed FTBFS.
+
 * Tue Apr 07 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.3.7-alt5.git20160316
 - NMU: rebuilt with python 3.8 to update nosetests-%%pyver -> nosetests-3.8
 

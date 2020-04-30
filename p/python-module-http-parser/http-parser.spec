@@ -1,27 +1,29 @@
+%define _unpackaged_files_terminate_build 1
 %define oname http-parser
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.8.3
-Release: alt1.git20150514.1.3.1
+Version: 0.9.0
+Release: alt1
 Summary: http request/response parser
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/http-parser/
+Url: https://pypi.org/project/http-parser/
 
 # https://github.com/benoitc/http-parser.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-Cython python-module-html5lib python-module-notebook python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook python3-module-pytest
-%endif
+BuildRequires: python2.7(Cython)
+BuildRequires: python3(Cython)
 
-%py_provides http_parser
+%if_with check
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
+%py_provides %oname
 
 %description
 HTTP request/response parser for Python compatible with Python 2.x
@@ -31,7 +33,7 @@ from Ryan Dahl will be used.
 %package -n python3-module-%oname
 Summary: http request/response parser
 Group: Development/Python3
-%py3_provides http_parser
+%py3_provides %oname
 
 %description -n python3-module-%oname
 HTTP request/response parser for Python compatible with Python 2.x
@@ -41,52 +43,61 @@ from Ryan Dahl will be used.
 %prep
 %setup
 
+# regenerate with cython later
 rm -f http_parser/parser.c
 
-%if_with python3
+# remove extra deps
+for pkg in pytest-cov pytest-cache
+do
+    { grep -s -l "^[[:space:]]*${pkg}[[:space:]]*$" tox.ini | xargs \
+        sed -i -e "/^[[:space:]]*${pkg}[[:space:]]*$/d"; } || exit 1
+done
+
 cp -fR . ../python3
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-export PYTHONPATH=$PWD
-py.test
-%if_with python3
-pushd ../python3
-export PYTHONPATH=$PWD
-py.test3
-popd
-%endif
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py2: _PYTEST_BIN=%_bindir\/py.test\
+    py3: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py2,py3
+tox.py3 --sitepackages -vv -r
 
 %files
 %doc NOTICE *.rst *.md THANKS examples
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc NOTICE *.rst *.md THANKS examples
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.3 -> 0.9.0.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt1.git20150514.1.3.1
 - (NMU) Rebuilt with python-3.6.4.
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt2.a0.git20150528
+Release: alt3.a0.git20150528
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
@@ -105,6 +105,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 sed -i 's|(MPIDIR)|%mpidir|' setup.cfg
 %add_optflags -I%mpidir/include -I%_includedir/python%_python_version
 %add_optflags -fno-strict-aliasing
+sed -i 's|^PYTHON.*|PYTHON = python2|' makefile
 %make_ext config
 %make_build_ext
 
@@ -163,6 +164,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Apr 29 2020 Stanislav Levin <slev@altlinux.org> 2.0.0-alt3.a0.git20150528
+- Fixed FTBFS.
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.a0.git20150528
 - Updated build dependencies.
 

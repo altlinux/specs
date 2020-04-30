@@ -2,7 +2,7 @@
 
 Name: python-module-PIL-compat
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Compatibility modules, bridging PIL -> Pillow
 
@@ -28,7 +28,7 @@ Compatibility modules, bridging PIL -> Pillow.
 %build
 # generate Image*
 mkdir -p .git/info
-python materialise.py
+python2 materialise.py
 
 %python_build_debug
 
@@ -41,6 +41,9 @@ python materialise.py
 
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
+- Fixed FTBFS.
+
 * Mon Jul 02 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 

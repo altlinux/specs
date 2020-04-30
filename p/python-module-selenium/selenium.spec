@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.141.0
-Release: alt1
+Release: alt2
 Summary: Python bindings for Selenium
 License: ASL
 Group: Development/Python
@@ -35,12 +35,15 @@ Python.
 find %buildroot -type f -name '*.so' -exec rm -f '{}' +
 
 %check
-python setup.py test
+python2 setup.py test
 
 %files
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 3.141.0-alt2
+- Fixed FTBFS.
+
 * Sun Apr 12 2020 Alexey Shabalin <shaba@altlinux.org> 3.141.0-alt1
 - build for python2 only
 

@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.13.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -19,13 +19,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
+
 %if_with check
 BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(tox)
 %endif
-
-%py3_requires importlib_metadata
-
 
 %description
 This is the plugin manager as used by pytest but stripped of pytest
@@ -52,6 +50,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
 sed -i -e '/^\[testenv\]$/a whitelist_externals =\
@@ -73,6 +72,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 
 
 %changelog
+* Mon Apr 20 2020 Stanislav Levin <slev@altlinux.org> 0.13.1-alt1
+- 0.13.0 -> 0.13.1.
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.13.0-alt2
 - Build for python2 disabled.
 

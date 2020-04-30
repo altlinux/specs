@@ -1,6 +1,6 @@
 Name: monetdb
 Version: 11.27.11
-Release: alt1.2.qa1
+Release: alt2
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
@@ -12,11 +12,7 @@ Source1: %name.init
 Source2: %name.logrotate
 Patch: monetdb-11.5.3-atl-gcc4.7.patch
 
-BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel libpcre-devel libxml2-devel zlib-devel libreadline-devel libgeos-devel libcfitsio-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python3-devel python3-module-setuptools
-
 Requires: %name-common %name-server %name-client
 
 %description
@@ -51,10 +47,8 @@ Group: Databases
 
 %build
 %configure \
-	--with-python2=python \
-	--with-python3=python3 \
-	--with-python2-libdir=%python_sitelibdir_noarch \
-	--with-python3-libdir=%python3_sitelibdir_noarch \
+	--with-python2=no \
+	--with-python3=no \
 	--localstatedir=%_var
 %make_build
 
@@ -66,8 +60,6 @@ mkdir -p %buildroot/%_initdir
 cp %SOURCE1 %buildroot/%_initdir/%name
 mkdir -p %buildroot/%_sysconfdir/logrotate.d/
 cp %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
-cp %buildroot/%_bindir/sqlsample.* .
-cp %buildroot/%_bindir/malsample.* .
 # sysconf/udev policy - /etc is for user
 mkdir -p %buildroot%_tmpfilesdir/
 mv %buildroot%_sysconfdir/tmpfiles.d/* %buildroot%_tmpfilesdir/
@@ -117,6 +109,9 @@ mv %buildroot%_sysconfdir/tmpfiles.d/* %buildroot%_tmpfilesdir/
 %doc sql/dump-restore.*
 
 %changelog
+* Thu Feb 06 2020 Stanislav Levin <slev@altlinux.org> 11.27.11-alt2
+- Built without Python.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 11.27.11-alt1.2.qa1
 - NMU: applied repocop patch
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.git20150226.1.1.1.1
+Release: alt1.git20150226.1.1.1.1.1
 Summary: DB-API 2.0 interface for SQLCIPHER 3.x
 License: zlib/libpng
 Group: Development/Python
@@ -103,7 +103,7 @@ popd
 
 %check
 export OPENSSL_CONF=%_bindir/openssl-config
-python setup.py test
+python2 setup.py test
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd ~
 nosetests -v %oname
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.git20150226.1.1.1.1.1
+- Fixed FTBFS.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1.git20150226.1.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 

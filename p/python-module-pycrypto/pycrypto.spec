@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt4.a1.git20140620
+Release: alt5.a1.git20140620
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -133,7 +133,7 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 epydoc --config=Doc/epydoc-config
 
 %check
-python setup.py test
+python2 setup.py test
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 2.7-alt5.a1.git20140620
+- Fixed FTBFS.
+
 * Sun Feb 23 2020 Grigory Ustinov <grenka@altlinux.org> 2.7-alt4.a1.git20140620
 - Fixed build with python3.8.
 

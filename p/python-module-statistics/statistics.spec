@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt2.b3
+Release: alt3.b3
 Summary: A Python 2.* port of 3.4 Statistics Module
 License: Python Software Foundation
 Group: Development/Python
@@ -32,13 +32,16 @@ sed -i '/install_requires = \[\x27docutils>=0.3\x27\],/d' setup.py
 %python_install
 
 %check
-python setup.py test
+python2 setup.py test
 
 %files
 %doc LICENSE README.rst
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 3.4.0-alt3.b3
+- Fixed FTBFS.
+
 * Fri Dec 21 2018 Stanislav Levin <slev@altlinux.org> 3.4.0-alt2.b3
 - Dropped requirement on docutils.
 
