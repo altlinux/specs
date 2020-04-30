@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
@@ -41,7 +41,7 @@ CXXFLAGS="%optflags" \
 mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 
 %make_install install \
-    destdir=%buildroot prefix=/usr STRIP=: \
+    DESTDIR=%buildroot prefix=/usr STRIP=: \
     mandir=%_mandir docdir=%_docdir/%name-%version datarootdir=%_datadir
 
 %files
@@ -54,6 +54,9 @@ mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 %_pixmapsdir/xca*.xpm
 
 %changelog
+* Thu Apr 30 2020 Pavel Nakonechnyi <zorg@altlinux.ru> 2.3.0-alt1
+- update to 2.3.0 release
+
 * Sun Feb 09 2020 Pavel Nakonechnyi <zorg@altlinux.ru> 2.2.1-alt1
 - update to 2.2.1 release
 
