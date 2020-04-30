@@ -1,16 +1,14 @@
-Name: focuswriter
-Version: 1.6.16
-Release: alt3
+Name:		focuswriter
+Version:	1.7.6
+Release:	alt1
+Summary:	FocusWriter is a fullscreen, distraction-free word processor
+License:	GPLv3
+Packager:	Motsyo Gennadi <drool@altlinux.ru>
+Group:		Text tools
+Url:		http://gottcode.org/focuswriter/
+Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
-Summary: FocusWriter is a fullscreen, distraction-free word processor
-License: GPLv3
-Group: Text tools
-
-Url: http://gottcode.org/focuswriter/
-Source0: http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
-Packager: Motsyo Gennadi <drool@altlinux.ru>
-
-BuildRequires: libhunspell-devel qt5-multimedia-devel qt5-tools zlib-devel gcc-c++
+BuildRequires:	libhunspell-devel qt5-multimedia-devel qt5-tools zlib-devel gcc-c++
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -46,6 +44,9 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 1.7.6-alt1
+- 1.7.6
+
 * Tue Jun 18 2019 Michael Shigorin <mike@altlinux.org> 1.6.16-alt3
 - E2K: better fix (see also mcst#3940)
 
