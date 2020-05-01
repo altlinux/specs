@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Media Sharing Server
@@ -124,6 +124,8 @@ This package contains command line utilities for the PipeWire media server.
 
 %files
 %_bindir/%name
+%_bindir/pw-jack
+%_bindir/pw-pulse
 %{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
@@ -140,20 +142,12 @@ This package contains command line utilities for the PipeWire media server.
 
 %files libs
 %_libdir/lib%name-%api_ver.so.*
-%_libdir/libjack-pw.so.*
-%_libdir/libpulse-pw.so.*
-%_libdir/libpulse-simple-pw.so.*
-%_libdir/libpulse-mainloop-glib-pw.so.*
 %_libdir/%name-%api_ver/
 %_libdir/spa-%spa_api_ver/
 %_libdir/alsa-lib/
 
 %files libs-devel
 %_libdir/lib%name-%api_ver.so
-%_libdir/libjack-pw.so
-%_libdir/libpulse-pw.so
-%_libdir/libpulse-simple-pw.so
-%_libdir/libpulse-mainloop-glib-pw.so
 %_includedir/%name-%api_ver/
 %_includedir/spa-%spa_api_ver/
 %_pkgconfigdir/lib%name-%api_ver.pc
@@ -180,6 +174,9 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %changelog
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- updated to 0.3.4-5-gf11cd322
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
