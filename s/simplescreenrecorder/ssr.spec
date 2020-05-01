@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: simplescreenrecorder
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Simple Screen Recording with OpenGL capture
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
 Group: Video
 
-Url: http://www.maartenbaert.be/simplescreenrecorder/
+Url: https://www.maartenbaert.be/simplescreenrecorder/
 Source: %version.tar.gz
 
 BuildRequires: gcc-c++
@@ -80,9 +80,12 @@ rm -f %buildroot%_libdir/*.la
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*.1.*
 %_datadir/%name
-%_datadir/appdata/*
+%_datadir/metainfo/*
 
 %changelog
+* Fri May 01 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
