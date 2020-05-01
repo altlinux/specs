@@ -5,7 +5,7 @@
 
 Name: python-module-%sname
 Version: 2.0.5
-Release: alt1.bzr20150114.2
+Release: alt1.bzr20150114.3
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -84,7 +84,7 @@ popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs/pydoc
-./builddocs.py
+python2 ./builddocs.py
 popd
 
 %files
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 2.0.5-alt1.bzr20150114.3
+- Fixed FTBFS.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.5-alt1.bzr20150114.2
 - (NMU) rebuild with python3.6
 
