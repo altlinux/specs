@@ -5,7 +5,7 @@
 
 Name: python-module-dbusmock
 Version: 0.19
-Release: alt1
+Release: alt2
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -87,7 +87,7 @@ popd
 python3 setup.py test
 %if_enabled python2
 pushd py2build
-python setup.py test
+python2 setup.py test
 popd
 %endif
 
@@ -102,6 +102,9 @@ popd
 
 
 %changelog
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.19-alt2
+- fixed python2 build
+
 * Fri Jan 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.19-alt1
 - 0.19
 
