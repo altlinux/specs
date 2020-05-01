@@ -17,7 +17,7 @@
 
 Name: buildah
 # Bump version in buildah.go too
-Version: 1.14.5
+Version: 1.14.8
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -85,6 +85,9 @@ rm -rf -- %buildroot%_datadir
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri May 01 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.8-alt1
+- new version 1.14.8
+
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.5-alt1
 - new version 1.14.5
 
