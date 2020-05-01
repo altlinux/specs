@@ -13,7 +13,7 @@
 
 Name: abiword
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -56,7 +56,8 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel
 %{?_with_champlain:BuildRequires: libchamplain-gtk3-devel}
 %{?_with_libical:BuildRequires: libical-devel}
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
-%{?_with_python:BuildRequires: python-module-pygobject3-devel python-module-setuptools}
+%{?_with_python:BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-pygobject3-devel python-module-setuptools}
 %{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel}
 %{?_enable_ots:BuildRequires: libots-devel}
 
@@ -138,8 +139,10 @@ Python bindings for developing with AbiWord library
 %patch12 -p1 -b .boolean
 %patch13 -p0 -b .librevenge
 
+sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
+
 %build
-%add_optflags -std=c++11 -D_FILE_OFFSET_BITS=64
+%add_optflags -std=c++11 %(getconf LFS_CFLAGS)
 NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-print \
@@ -153,7 +156,8 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_with libical} \
 	%{?_without_eds:--without-evolution-data-server} \
 	%{?_enable_collabnet:--enable-collab-backend-service} \
-	--disable-static
+	--disable-static \
+	PYTHON=python2
 %make_build
 
 %install
@@ -197,6 +201,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt3
+- fixed built with python2
+
 * Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt2
 - updated to 3.0.4-2-g1e9e0f99e (
   "gtk+TableWidget: fix display of the TableWidget";
