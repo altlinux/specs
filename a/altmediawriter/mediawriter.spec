@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.0
+Version:        0.4.4
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -11,18 +11,18 @@ License:        GPLv2+
 URL:            https://github.com/altlinux/ALTMediaWriter
 Source:         %oname-%version.tar
 
-BuildRequires:  qt5-base-devel
-BuildRequires:  qt5-declarative-devel qt5-x11extras-devel
-BuildRequires:  gettext
+BuildRequires:  libGConf
 BuildRequires:  libappstream-glib
-BuildRequires:  gcc-c++
 BuildRequires:  liblzma-devel
+BuildRequires:  libnss-mdns
 BuildRequires:  libyaml-cpp-devel
+BuildRequires:  qt5-declarative-devel
+BuildRequires:  qt5-x11extras-devel
 
+Requires:       qt5-quickcontrols
 Requires:       qt5-quickcontrols2
 Requires:       polkit
-
-Requires: udisks2
+Requires:       udisks2
 
 %description
 A tool to write images of ALT media to portable drives
@@ -33,7 +33,7 @@ like flash drives or memory cards.
 
 %build
 %qmake_qt5 PREFIX=%_prefix LIBEXECDIR=%_libexecdir/%name MEDIAWRITER_NAME=%name MEDIAWRITER_VERSION=%version-%release
-make
+%make_build
 
 %install
 make install INSTALL_ROOT=%buildroot
@@ -59,6 +59,23 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Fri May 01 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.4-alt1
+- Added qt5-quickcontrols requirement (closes: 38072)
+- Updated BuildRequires according to gear-buildreq output
+- Changed make to %make_build
+
+* Wed Apr 15 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.3-alt1
+- Added missing SSL dll's to windows build
+
+* Wed Apr 15 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.2-alt1
+- Removed build instructions from README
+- Fixed Unknown architecture text going outside button
+
+* Wed Apr 15 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.1-alt1
+- Fixed incorrect encoding of Russian text on Windows
+- Improved Windows build.sh so that latest version is displayed
+- Fixed MD5 check failing on large files on some 32bit platforms
+
 * Wed Apr 08 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.0-alt1
 - Changed metadata and image assets to yaml files from getalt.org
 - Turned off md5 check for compressed images
