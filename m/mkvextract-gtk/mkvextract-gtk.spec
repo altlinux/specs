@@ -1,6 +1,6 @@
 Name:		mkvextract-gtk
-Version:	0.9.2
-Release:	alt2.1
+Version:	0.9.3
+Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	GUI for extracting tracks from MKV files
 License:	GPLv2
@@ -58,6 +58,9 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 0.9.3-alt1
+- 0.9.3
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.2-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
