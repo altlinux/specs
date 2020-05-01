@@ -20,11 +20,11 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.8.0
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
-License: MPL/GPL/LGPL
+License: MPL-2.0 and GPL-2.0-or-later LGPL-2.1-or-later and BSD
 Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/
 
 #Source: %name-%version.tar
@@ -86,12 +86,12 @@ export srcdir="$PWD"
 mkdir _build
 cd _build
 
-%add_optflags %optflags_shared -D_FILE_OFFSET_BITS=64
+%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 
 export CFLAGS="%optflags"
 export CXXFLAGS="$CFLAGS -fno-tree-vrp -fno-strict-aliasing -fno-delete-null-pointer-checks"
 export SHELL=/bin/sh
-export PYTHON=/usr/bin/python
+export PYTHON=/usr/bin/python2
 
 ../js/src/configure \
 	--prefix=%_prefix \
@@ -164,6 +164,10 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 60.8.0-alt2
+- fixed build with python2
+- fixed License tag
+
 * Wed Aug 28 2019 Yuri N. Sedunov <aris@altlinux.org> 60.8.0-alt1
 - 60.8.0
 
