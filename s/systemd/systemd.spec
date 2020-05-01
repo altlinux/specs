@@ -71,8 +71,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -789,7 +789,11 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
 mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
+mkdir -p %buildroot%_localstatedir/lib/systemd/linger
 mkdir -p %buildroot%_localstatedir/lib/systemd/journal-upload
+mkdir -p %buildroot%_localstatedir/lib/private/systemd/journal-upload
+mkdir -p %buildroot%_logdir/private
+mkdir -p %buildroot%_localstatedir/cache/private
 mkdir -p %buildroot%_localstatedir/lib/systemd/timesync
 mkdir -p %buildroot%_logdir/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
@@ -1430,11 +1434,16 @@ fi
 %endif
 
 %ghost %dir %_logdir/journal
+%ghost %attr(0700,root,root) %dir %_logdir/private
+%ghost %attr(0700,root,root) %dir %_localstatedir/cache/private
+%ghost %attr(0700,root,root) %dir %_localstatedir/lib/private
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
+%ghost %dir %_localstatedir/lib/private/systemd
 %_rpmlibdir/journal-catalog.filetrigger
 %ghost %_localstatedir/lib/systemd/catalog/database
 %ghost %_localstatedir/lib/systemd/random-seed
+%ghost %dir %_localstatedir/lib/systemd/linger
 
 %_defaultdocdir/%name-%version
 %_logdir/README
@@ -1777,7 +1786,6 @@ fi
 %files journal-remote
 %dir %attr(2755,systemd-journal-remote,systemd-journal-remote) %_logdir/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
-%dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_var/lib/systemd/journal-upload
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
@@ -1794,6 +1802,8 @@ fi
 
 %if_enabled libcurl
 %config(noreplace) %_sysconfdir/systemd/journal-upload.conf
+%ghost %dir %_localstatedir/lib/systemd/journal-upload
+%ghost %dir %_localstatedir/lib/private/systemd/journal-upload
 /lib/systemd/systemd-journal-upload
 %_unitdir/systemd-journal-upload.service
 %_man8dir/systemd-journal-upload*
@@ -1899,6 +1909,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Thu Apr 30 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.5-alt1
+- 245.5
+
 * Fri Apr 10 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1:245.4-alt2
 - add resolve files, located at /run, to the list of tracked by altlinux-libresolv files
 
