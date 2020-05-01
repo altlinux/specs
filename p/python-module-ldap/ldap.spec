@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
 License: Python-style
@@ -62,7 +62,7 @@ cp -a . ../python3
 
 # Fix python interpreter path in Demo directory
 grep -rl '^#!/usr/bin/env python' ./ | \
-	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python|'
+	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python2|'
 grep -rl '^#!/usr/bin/env python' ../python3 | \
 	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python3|'
 
@@ -76,7 +76,7 @@ popd
 
 %check
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
+export TOXENV=py%{python_version_nodots python2},py%{python_version_nodots python3}
 tox.py3 --sitepackages -p auto -o -v
 
 %install
@@ -106,6 +106,9 @@ popd
 %python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
+* Fri May 01 2020 Stanislav Levin <slev@altlinux.org> 3.2.0-alt2
+- Fixed FTBFS.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
 - 3.1.0 -> 3.2.0.
 
