@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: A pytest plugin that checks the long description of the project to ensure it renders properly.
 License: MIT
@@ -33,11 +33,11 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-rm -f pyproject.toml
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+tox.py3 --sitepackages -vv -r
 
 %files
 %python3_sitelibdir/__pycache__/*
@@ -45,6 +45,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri May 01 2020 Stanislav Levin <slev@altlinux.org> 1.2.3-alt2
+- Fixed FTBFS.
+
 * Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
 - first build for ALT
 
