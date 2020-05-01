@@ -1,5 +1,5 @@
 Name: strawberry
-Version: 0.6.9
+Version: 0.6.10
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -67,7 +67,7 @@ mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
   -DBUILD_WERROR=OFF \
   -DUSE_SYSTEM_TAGLIB=ON
 
-%make -C BUILD
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -88,6 +88,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Fri May 01 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.10-alt1
+- new version (0.6.10) with rpmgs script
+
 * Mon Apr 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.9-alt1
 - New version (0.6.9) with rpmgs script.
 
