@@ -2,7 +2,7 @@
 
 Name: ispc
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
@@ -72,13 +72,18 @@ program instances execute in parallel on the hardware.
 
 %check
 PATH=BUILD/bin:$PATH
+# Increase timeout from 10 to 100 or beekeeper will sometimes fail.
+sed -i /run_command/s/10/100/ run_tests.py
 # Tests are from .travis.yml
 check_isa
 ispc --support-matrix
-./run_tests.py --jobs=$(nproc)
-./run_tests.py --jobs=$(nproc) --arch=$(arch)
+./run_tests.py --jobs=$(nproc) --non-interactive
+./run_tests.py --jobs=$(nproc) --non-interactive --arch=$(arch)
 
 %changelog
+* Fri May 01 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt2
+- spec: Improve %%check section.
+
 * Sat Apr 25 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt1
 - Update to v1.13.0.
 - Use Clang/LLVM 10.
