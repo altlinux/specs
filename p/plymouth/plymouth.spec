@@ -8,7 +8,7 @@
 
 Name: plymouth
 Version: 0.9.4
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -458,6 +458,10 @@ fi \
 %files system-theme
 
 %changelog
+* Fri May 01 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.4-alt4
+- Add RemainAfterExit=yes to plymouth's systemd service files.
+- Fix type plymouth-start.service.
+
 * Tue Mar 31 2020 Anton Midyukov <antohami@altlinux.org> 1:0.9.4-alt3
 - plymouth-start.service: ExecStart=/bin/true (Closes: 38229)
 
