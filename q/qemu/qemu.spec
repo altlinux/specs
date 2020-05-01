@@ -9,7 +9,6 @@
 
 %def_enable sdl
 %def_enable curses
-%def_enable bluez
 %def_enable vnc
 %def_enable vnc_sasl
 %def_enable vnc_jpeg
@@ -20,6 +19,7 @@
 %def_enable pulseaudio
 %def_enable oss
 %def_enable aio
+%def_enable io_uring
 %def_enable blobs
 %def_enable smartcard
 %def_enable libusb
@@ -40,6 +40,7 @@
 %def_enable rbd
 %endif
 %def_enable libnfs
+%def_enable zstd
 %def_enable seccomp
 %def_enable glusterfs
 %def_enable gtk
@@ -108,7 +109,7 @@
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa}
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_spice:spice-app}
-%define qemu_arches aarch64 alpha arm cris hppa lm32 m68k microblaze mips moxie nios2 or1k ppc riscv s390x sh4 sparc tricore unicore32 x86 xtensa
+%define qemu_arches aarch64 alpha arm cris hppa lm32 m68k microblaze mips moxie nios2 or1k ppc riscv rx s390x sh4 sparc tricore unicore32 x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
@@ -118,8 +119,8 @@
 # }}}
 
 Name: qemu
-Version: 4.2.0
-Release: alt3
+Version: 5.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -155,8 +156,8 @@ Requires: %name-user = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: glib2-devel >= 2.48 libgio-devel
-BuildRequires: makeinfo perl-podlators perl-devel python-module-sphinx
-BuildRequires: libattr-devel-static libcap-devel libcap-ng-devel
+BuildRequires: makeinfo perl-podlators perl-devel python3-module-sphinx
+BuildRequires: libattr-devel-static libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
@@ -169,7 +170,6 @@ BuildRequires: iasl
 BuildRequires: libpcre-devel-static
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
-%{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
@@ -178,6 +178,7 @@ BuildRequires: libpcre-devel-static
 %{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
+%{?_enable_io_uring:BuildRequires: liburing-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.5 spice-protocol >= 0.12.3}
 BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
@@ -187,6 +188,7 @@ BuildRequires: libuuid-devel
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
+%{?_enable_zstd:BuildRequires: libzstd-devel >= 1.4.0}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.3.0}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.14.0 libvte3-devel >= 0.32.0}
@@ -544,7 +546,6 @@ This package provides the system emulator for %%{1}. \
 %%%if %%{1} == ppc \
 %%_datadir/%%name/bamboo.dtb \
 %%_datadir/%%name/canyonlands.dtb \
-%%_datadir/%%name/ppc_rom.bin \
 %%_datadir/%%name/qemu_vga.ndrv \
 %%_datadir/%%name/skiboot.lid \
 %%_datadir/%%name/u-boot.e500 \
@@ -614,8 +615,8 @@ run_configure \
 	--disable-system \
 	--disable-auth-pam \
 	--disable-avx2 \
+	--disable-avx512f \
 	--disable-blobs \
-	--disable-bluez \
 	--disable-bochs \
 	--disable-brlapi \
 	--disable-bsd-user \
@@ -651,6 +652,7 @@ run_configure \
 	--disable-libusb \
 	--disable-libxml2 \
 	--disable-linux-aio \
+	--disable-linux-io-uring \
 	--disable-live-block-migration \
 	--disable-lzfse \
 	--disable-lzo \
@@ -671,6 +673,7 @@ run_configure \
 	--disable-replication \
 	--disable-sdl \
 	--disable-sdl-image \
+	--disable-zstd \
 	--disable-seccomp \
 	--disable-sheepdog \
 	--disable-slirp \
@@ -742,7 +745,6 @@ run_configure \
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
-	%{subst_enable bluez} \
 	%{subst_enable vnc} \
 	%{?_enable_gtk:--enable-gtk --enable-vte} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
@@ -752,6 +754,7 @@ run_configure \
 	%{?_disable_xkbcommon:--disable-xkbcommon} \
 	%{?_disable_vde:--disable-vde} \
 	%{?_disable_aio:--disable-linux-aio} \
+	%{?_disable_io_uring:--disable-linux-io-uring} \
 	%{?_disable_blobs: --disable-blobs} \
 	%{subst_enable spice} \
 	--audio-drv-list="%audio_drv_list" \
@@ -770,6 +773,7 @@ run_configure \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
 	%{subst_enable opengl} \
+	%{subst_enable zstd} \
 	%{subst_enable seccomp} \
 	%{subst_enable libiscsi} \
 	%{subst_enable rbd} \
@@ -1032,6 +1036,10 @@ fi
 %_man1dir/virtfs-proxy-helper.*
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
 %_libexecdir/vhost-user-gpu
+%_libexecdir/virtiofsd
+%_man1dir/virtiofsd.*
+%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
+%_bindir/qemu-storage-daemon
 %if_enabled mpath
 %_bindir/qemu-pr-helper
 %_unitdir/qemu-pr-helper.service
@@ -1068,6 +1076,11 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Thu Apr 30 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- 5.0.0
+- drop bluez support
+- build emulator for RX
+
 * Sun Apr  5 2020 Nikita Ermakov <arei@altlinux.org> 4.2.0-alt3
 - Fix FP context saving in RISC-V target.
 
