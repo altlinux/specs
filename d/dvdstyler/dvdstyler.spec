@@ -1,6 +1,6 @@
 Name: dvdstyler
 Version: 3.1.2
-Release: alt1
+Release: alt2
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -12,7 +12,7 @@ Source2: %name.desktop
 Source4: %name-16x16.png
 Source5: %name-32x32.png
 
-BuildRequires: gcc-c++ compat-libwxGTK3.0-gtk2-devel libmjpegtools-devel netpbm
+BuildRequires: gcc-c++ libwxGTK3.1-devel libmjpegtools-devel netpbm
 BuildRequires: libwxsvg-devel libexif-devel
 BuildRequires: libjpeg-devel libudev-devel libgnomeui-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
@@ -92,6 +92,9 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Wed Apr 29 2020 Anton Farygin <rider@altlinux.ru> 3.1.2-alt2
+- build with gtk3
+
 * Wed Aug 28 2019 Anton Farygin <rider@altlinux.ru> 3.1.2-alt1
 - 3.1.2
 
