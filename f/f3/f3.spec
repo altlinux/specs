@@ -1,11 +1,11 @@
 Name:		f3
-Version:	7.1
-Release:	alt2
+Version:	7.2
+Release:	alt1
 Summary:	Fight Flash Fraud / Fight Fake Flash
 License:	GPLv3
 Group:		System/Configuration/Hardware
 Url:		http://oss.digirati.com.br/f3/
-Source:		https://github.com/AltraMayor/f3/archive/v7.1.tar.gz#/f3-7.1.tar.gz
+Source:		https://github.com/AltraMayor/f3/archive/v7.1.tar.gz#/f3-%version.tar.gz
 
 # Automatically added by buildreq on Sun Mar 06 2016 (-bi)
 # optimized out: elfutils python-base
@@ -46,6 +46,9 @@ install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
 %_man1dir/*
 
 %changelog
+* Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 7.2-alt1
+- 7.2
+
 * Sun Nov 04 2018 Motsyo Gennadi <drool@altlinux.ru> 7.1-alt2
 - build with extras
 
