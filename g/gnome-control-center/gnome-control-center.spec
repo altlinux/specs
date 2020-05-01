@@ -8,10 +8,11 @@
 %def_disable debug
 %def_with cheese
 %def_with bluetooth
+%def_without snap
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Control Center
@@ -45,6 +46,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define upower_ver 0.99.0
 %define grilo_ver 0.3.0
 %define polkit_ver 0.103
+%define snapd_ver 1.49
 
 Requires: %name-data = %version-%release
 
@@ -89,6 +91,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libudisks2-devel
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
+%{?_with_snap:BuildRequires: lisnapd-glib-devel >= %snapd_ver}
 BuildRequires: libgudev-devel libgsound-devel
 BuildRequires: libhandy-devel
 BuildRequires: libepoxy-devel
@@ -127,14 +130,11 @@ you'll want to install this package.
 %setup
 
 %build
-%if_enabled snapshot
-NOCONFIGURE=1 ./autogen.sh
-%else
-%endif
 %meson \
     %{?_with_cheese:-Dcheese=true} \
+    %{?_with_snap:-Dsnap=true} \
     %{?_enable_doc:-Ddocumentation=true}
-
+%nil
 %meson_build
 
 %install
@@ -177,6 +177,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
