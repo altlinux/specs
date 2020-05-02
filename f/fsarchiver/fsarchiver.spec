@@ -2,7 +2,7 @@ Summary: Filesystem Archiver for Linux
 Summary(ru_RU.UTF-8): Архиватор файловых систем
 
 Name: fsarchiver
-Version: 0.8.1
+Version: 0.8.5
 Release: alt1
 Url: https://github.com/fdupoux/fsarchiver
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -73,7 +73,8 @@ FSArchiver предоставляет следующие возможности:
 
 %build
 %autoreconf
-%configure
+%configure --disable-lz4 \
+           --disable-zstd
 
 %make_build
 
@@ -87,6 +88,9 @@ FSArchiver предоставляет следующие возможности:
 %_man8dir/*
 
 %changelog
+* Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 1:0.8.5-alt1
+- Version 0.8.5
+
 * Sat Apr 29 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.8.1-alt1
 - Version 0.8.1
 
