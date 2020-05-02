@@ -39,7 +39,7 @@
 
 Name:    golang
 Version: 1.14.2
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -51,6 +51,7 @@ Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
 Patch100: 0001-Don-t-use-the-bundled-tzdata-at-runtime-except-for-t.patch
+Patch101: 0001-avoid-requires-libselinux-utils.patch
 
 ExclusiveArch: %go_arches
 
@@ -118,6 +119,7 @@ Go sources and documentation.
 
 %patch2 -p1
 %patch100 -p1
+%patch101 -p1
 
 %build
 # go1.5 bootstrapping. The compiler is written in golang.
@@ -291,6 +293,9 @@ mkdir -p -- \
 
 
 %changelog
+* Sat May 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.2-alt2
+- avoid requires libselinux-utils.
+
 * Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.2-alt1
 - 1.14.2
 
