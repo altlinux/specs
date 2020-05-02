@@ -3,13 +3,15 @@
 Name: wxGlade
 Summary: A GUI builder for wxWindows/wxPython
 Version: 0.7.2
-Release: alt2
+Release: alt3
 License: MIT
 Group: Development/Other
 Url: http://wxglade.sourceforge.net/
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: http://heanet.dl.sourceforge.net/project/wxglade/wxglade/%version/%name-%version.tar.gz
+Patch: wxGlade-0.7.2-fix-shebang-python2.patch
+
 BuildRequires: ImageMagick-tools
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
@@ -32,6 +34,7 @@ is the right tool.
 
 %prep
 %setup
+%patch -p2
 chmod a-x CREDITS.txt
 chmod a-x LICENSE.txt
 chmod a-x docs/src/manual.xml
@@ -77,10 +80,12 @@ chmod a+x %buildroot%python_sitelibdir/wxglade/{xrc2wxg,wxglade,templates_ui,msg
 %_iconsdir/%name.png
 %_miconsdir/%name.png
 %_liconsdir/%name.png
-%_datadir/wxglade/icons/*
-%_datadir/wxglade/templates/*
+%_datadir/wxglade
 
 %changelog
+* Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt3
+- Fix shebang python2
+
 * Sun Aug 05 2018 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt2
 - Cleanup no actual requires
 - fix desktop categories
