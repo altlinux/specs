@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.20
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -18,7 +18,7 @@ BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-deve
 BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-anyjson python3-module-serial
 
 %if_with libQgpsmm
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 %endif
 
 BuildRequires: libbluez-devel
@@ -115,6 +115,12 @@ scons \
     libdir=%_libdir \
     python_libdir=%python3_sitelibdir \
     target_python=%__python3 \
+    %if_with libQgpsmm
+	qt=yes \
+	qt_versioned=5 \
+    %else
+	 qt=no \
+    %endif
     debug=yes
 
 %install
@@ -134,11 +140,13 @@ DESTDIR=%buildroot scons install udev-install
 %_man5dir/*
 
 %files -n libgps%abiversion
-%_libdir/libgps*.so.*
+%_libdir/libgps*.so.%abiversion
+%_libdir/libgps*.so.%abiversion.*
 
 %if_with libQgpsmm
 %files -n libQgpsmm%abiversion
-%_libdir/libQgps*.so.*
+%_libdir/libQgps*.so.%abiversion
+%_libdir/libQgps*.so.%abiversion.*
 %endif
 
 %files -n libgps-devel
@@ -160,6 +168,9 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 02 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt2
+- built with Qt5 (thanks to zerg@altlinux)
+
 * Thu Jan 02 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt1
 - 3.20
 - added libgtk+3-devel to BuildRequires (is needed for xgps)
