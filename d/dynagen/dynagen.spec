@@ -1,19 +1,17 @@
 Name: dynagen
 Version: 0.11.0
-Release: alt1.qa1.1.1
+Release: alt2
 
 Summary: Cisco router emulator (dynamips) controller
-License: GPL
+License: GPL-2.0-or-later
 Group: Emulators
 URL: http://dyna-gen.sourceforge.net
-Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
 Source0: %name-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Mar 23 2008
-BuildRequires: python-base
+BuildRequires: python-devel
 
 %description
 A front end to the Dynamips router emulator.  Uses .ini style files
@@ -21,6 +19,8 @@ to build the router instances and control the hypervisor
 
 %prep
 %setup
+# Fix shebang
+sed 's|python|python2|' -i *.py dynagen pemu-start.sh
 
 %install
 mkdir -p %buildroot/%_sysconfdir
@@ -59,19 +59,17 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_sysconfdir/%name.ini
 %_bindir/%name
 %_bindir/pemuwrapper.py
-%python_sitelibdir/confConsole.py
-%python_sitelibdir/configobj.py
-%python_sitelibdir/console.py
-%python_sitelibdir/dynamips_lib.py
-%python_sitelibdir/pemu_lib.py
-%python_sitelibdir/pemubin.py
-%python_sitelibdir/validate.py
+%python_sitelibdir/*
 %dir %_datadir/%name
 %_datadir/%name/configspec
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/*
 
 %changelog
+* Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt2
+- Fix shebang python2
+- Fix License tag
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.11.0-alt1.qa1.1.1
 - Rebuild with Python-2.7
 
