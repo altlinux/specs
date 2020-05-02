@@ -5,7 +5,7 @@
 
 Name: htop
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -60,6 +60,9 @@ htop использует для работы с экраном библиоте
 %patch0 -p1
 %patch1 -p2
 
+# fix shebang
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python2|' scripts/MakeHeader.py
+
 %build
 %configure -C \
 	%{subst_enable openvz} \
@@ -90,6 +93,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2
+- fix shebang to /usr/bin/python2
+
 * Sun Dec 30 2018 Michael Shigorin <mike@altlinux.org> 2.2.0-alt1
 - new version (watch file uupdate)
 - buildreq
