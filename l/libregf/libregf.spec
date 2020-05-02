@@ -14,7 +14,7 @@
 
 Name: libregf
 Version: 20140427
-Release: alt1
+Release: alt2
 
 Summary: Library to access Windows REGF-type Registry files
 License: LGPL-3.0+ and GFDL-1.3+
@@ -80,7 +80,6 @@ applications that want to make use of %name.
 Summary: Python bindings for libregf, a library to access Windows REGF Registry files
 License: LGPL-3.0+
 Group: Development/Python
-Requires: python-base
 
 %description -n python-module-%name
 libregf is a library to access Windows Registry files of the REGF
@@ -123,6 +122,9 @@ cp -a "%SOURCE1" .
 %python_sitelibdir/pyregf.so
 
 %changelog
+* Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20140427-alt2
+- minor spec cleanup (thx ldv@)
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 20140427-alt1
 - initial build for ALT Linux Sisyphus (suggested by Maxim Suhanov)
 

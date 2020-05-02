@@ -14,7 +14,7 @@
 
 Name: libpff
 Version: 20161119
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access Microsoft PFF and OFF format files
 License: LGPLv3+ and GFDLv1.1+ and GFDLv1.3+
@@ -90,7 +90,6 @@ applications that want to make use of libpff.
 Summary: Python bindings for libpff, a PFF/OFF file format parser
 License: LGPLv3+
 Group: Development/Python
-Requires: python-base
 
 %description -n python-module-%name
 Python bindings for libpff, which can read Personal Folder File (PFF)
@@ -135,6 +134,9 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %python_sitelibdir/pypff.so
 
 %changelog
+* Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20161119-alt2
+- minor spec cleanup (thx ldv@)
+
 * Tue May 29 2018 Grigory Ustinov <grenka@altlinux.org> 20161119-alt1
 - Build new version.
 - Fix URL (Closes: #32337).
@@ -213,7 +215,7 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 * Tue Dec 16 2008 Joachim Metz <forensics@hoffmannbv.nl> 20081216-1
 - Changed project URL
 
-* Sat Oct 19 2008 Joachim Metz <forensics@hoffmannbv.nl> 20081018-1
+* Sun Oct 19 2008 Joachim Metz <forensics@hoffmannbv.nl> 20081018-1
 - Added pffexport and pffrecover
 - Added support for libuna
 
