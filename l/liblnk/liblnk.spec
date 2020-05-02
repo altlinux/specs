@@ -14,7 +14,7 @@
 
 Name: liblnk
 Version: 20140323
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
 License: LGPLv3+ and GFDL-1.3+
@@ -73,7 +73,7 @@ applications that want to make use of %name.
 Summary: Python bindings for liblnk, a Windows Shortcut Link parser
 License: LGPLv3+
 Group: Development/Python
-Requires: python-base
+Requires: python2-base
 
 %description -n python-module-%name
 Python binding for liblnk, which can read Windows Shortcut Link files.
@@ -112,6 +112,9 @@ cp -a "%SOURCE1" .
 %python_sitelibdir/pylnk.so
 
 %changelog
+* Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20140323-alt2
+- avoid forbidden R: python-base
+
 * Sat May 10 2014 Michael Shigorin <mike@altlinux.org> 20140323-alt1
 - new version (watch file uupdate)
 
