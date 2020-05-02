@@ -14,7 +14,7 @@
 
 Name: libevtx
 Version: 20140323
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access the Windows XML Event Log (EVTX) format
 License: LGPLv3+ and GFDLv1.3
@@ -83,7 +83,6 @@ applications that want to make use of %name.
 Summary: Python bindings for libevtx
 License: LGPLv3+
 Group: Development/Python
-Requires: python-base
 
 %description -n python-module-%name
 Python bindings for libevtx, which can read Windows XML Event files.
@@ -123,6 +122,9 @@ cp -a "%SOURCE1" .
 %python_sitelibdir/pyevtx.so
 
 %changelog
+* Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20140323-alt2
+- minor spec cleanup (thx ldv@)
+
 * Sun May 11 2014 Michael Shigorin <mike@altlinux.org> 20140323-alt1
 - new version (watch file uupdate)
 
