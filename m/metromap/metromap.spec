@@ -1,9 +1,9 @@
 Name: metromap
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: Metro (subway) navigator
-License: GPL
+License: GPLv2
 Group: Office
 
 Url: http://metromap.antex.ru
@@ -18,13 +18,13 @@ Requires: %name-map-Moscow = %version
 
 %description
 A simple pygtk+2 program to help finding paths
-in metro (subway) maps.
+through metropolitan (subway) routes.
 
 %define metromap_subpackage() \
 %package map-%1 \
 Summary: metro map for %2 \
 Group: Office \
-PreReq: %name = %version-%release \
+Requires: %name = %version-%release \
 AutoReqProv: no \
 \
 %description map-%1 \
@@ -47,9 +47,12 @@ This package contains metro map for %2 city. \
 %define python_site_packages_dir %python_libdir/site-packages
 
 %prep
-%setup -n %name-%version
+%setup
 rm -f modules/MapDisplayGC.py*
 rm -rf tests
+find -type f -print0 -name '*.py' |
+      xargs -r0 sed -ri 's,/usr/bin/python,&2,'
+sed -i 's,python,python2,' locale/Makefile
 
 %build
 mv data/Peter{,s}burg.pmz 
@@ -69,6 +72,10 @@ make install DESTDIR=%buildroot%prefix
 %doc doc/AUTHORS doc/NEWS doc/README doc/README.data doc/TODO
 
 %changelog
+* Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 0.1.4-alt2
+- avoid forbidden python dependency
+- minor spec cleanup
+
 * Tue Feb 14 2012 Michael Shigorin <mike@altlinux.org> 0.1.4-alt1
 - 0.1.4:
   + python-2.7 fixes
