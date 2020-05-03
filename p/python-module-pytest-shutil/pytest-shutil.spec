@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -26,7 +26,7 @@ BuildRequires: python2.7(termcolor)
 BuildRequires: python3(contextlib2)
 BuildRequires: python3(execnet)
 BuildRequires: python3(mock)
-BuildRequires: python3(path.py)
+BuildRequires: python3(path)
 BuildRequires: python3(termcolor)
 BuildRequires: python3(tox)
 %endif
@@ -44,7 +44,7 @@ source for the full listing.
 Summary: A goodie-bag of unix shell and environment tools for py.test
 Group: Development/Python3
 %py3_requires contextlib2
-%py3_requires path.py
+%py3_requires path
 %py3_requires termcolor
 
 %description -n python3-module-%oname
@@ -65,6 +65,9 @@ cp -fR . ../python3
 %python_build
 
 pushd ../python3
+ptrn="'path.py',"
+{ grep -s -l "$ptrn" setup.py | xargs \
+    sed -i -e "s/\(^[[:space:]]*\)$ptrn[[:space:]]*$/\1'path',/"; } || exit 1
 %python3_build
 popd
 
@@ -98,6 +101,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_shutil-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon May 04 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
+- Fixed FTBFS.
+
 * Fri May 31 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.0 -> 1.7.0.
 

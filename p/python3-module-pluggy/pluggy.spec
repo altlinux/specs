@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.1
-Release: alt1
+Release: alt2
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -21,7 +21,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(tox)
 %endif
 
@@ -72,6 +71,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 
 
 %changelog
+* Sun May 03 2020 Stanislav Levin <slev@altlinux.org> 0.13.1-alt2
+- Dropped BR on importlib_metadata.
+
 * Mon Apr 20 2020 Stanislav Levin <slev@altlinux.org> 0.13.1-alt1
 - 0.13.0 -> 0.13.1.
 

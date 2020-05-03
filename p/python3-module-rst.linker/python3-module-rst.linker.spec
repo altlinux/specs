@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: rst.linker provides a routine for adding links and performing other custom replacements to reStructuredText files as a Sphinx extension
 License: MIT
@@ -17,8 +17,6 @@ BuildRequires: python3-dev python3-module-setuptools_scm
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
-
-%py3_requires importlib_metadata
 
 %description
 %{summary}.
@@ -41,6 +39,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun May 03 2020 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
+- Dropped runtime dependency on importlib_metadata.
+
 * Tue Dec 17 2019 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
