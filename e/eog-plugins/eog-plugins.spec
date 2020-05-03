@@ -2,11 +2,12 @@
 %define ver_major 3.26
 %define api_ver 3.0
 %def_enable map
+%def_disable postr
 %def_enable postasa
 
 Name: %_name-plugins
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -16,9 +17,6 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: eog >= %ver_major libpeas-python3-loader
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%_name/plugins
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -61,7 +59,7 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 
 %build
 %autoreconf
-export ac_cv_path_POSTR=%_bindir/postr
+%{?_enable_postr:export ac_cv_path_POSTR=%_bindir/postr}
 %configure
 %make_build
 
@@ -79,17 +77,23 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/libpostasa.so
 %exclude %_datadir/appdata/%_name-postasa.metainfo.xml
 %endif
+%if_enabled postr
+%exclude %_libdir/%_name/plugins/postr.plugin
 %exclude %_libdir/%_name/plugins/libpostr.so
 %exclude %_datadir/appdata/%_name-postr.metainfo.xml
+%endif
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.exif-display.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.fullscreenbg.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.pythonconsole.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.export-to-folder.gschema.xml
 %doc AUTHORS NEWS README
 
+%if_enabled postr
 %files -n %_name-plugins-postr
+%_libdir/%_name/plugins/postr.plugin
 %_libdir/%_name/plugins/libpostr.so
 %_datadir/appdata/%_name-postr.metainfo.xml
+%endif
 
 %if_enabled postasa
 %files -n %_name-plugins-postasa
@@ -101,6 +105,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Sun May 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt2
+- disabled postr plugin
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt1
 - 3.26.5
 
