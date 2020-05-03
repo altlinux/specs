@@ -1,6 +1,6 @@
 Name: herbstluftwm
-Version: 0.7.2
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: A manual tiling window manager
 License: BSD-2-Clause
@@ -12,15 +12,15 @@ Source0: %name-%version.tar
 Source1: %name.watch
 Source2: %name.wmsession
 
-Patch1: 0001-SUSE-examples-remove-executable-bits.patch
+Patch1: 0001-ALT-use-xvt-as-default-terminal.patch
 Patch2: 0002-DEBIAN-reproducible.patch
-Patch3: 0003-ALT-bash-completion-path.patch
-Patch4: 0004-ALT-use-xvt-as-default-terminal.patch
 
-BuildRequires: asciidoc asciidoc-a2x gcc-c++ glib2-devel libxslt-devel libX11-devel libXext-devel
+BuildRequires(pre): cmake rpm-macros-cmake
+BuildRequires: asciidoc asciidoc-a2x gcc-c++ glib2-devel libxslt-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel
 Requires: /usr/bin/xvt
-Requires: dzen2
 Requires: dmenu
+Requires: dzen2
+Requires: xrandr
 
 %package examples
 Summary: Example scripts for %name
@@ -44,11 +44,11 @@ find . -type f -exec sed -i "s@#!/usr/bin/env bash@#!/bin/bash@" {} +
 %build
 export CPPFLAGS="%optflags"
 export CFLAGS="%optflags"
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std \
-	PREFIX="%prefix"
+%cmakeinstall_std
 
 install -D -m0644  %SOURCE2 %buildroot%_sysconfdir/X11/wmsession.d/17%name
 
@@ -59,19 +59,21 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %files
 %doc BUGS LICENSE NEWS
 %dir %_datadir/doc/%name/
+%dir %_datadir/doc/%name/examples/
 %_datadir/doc/%name/herbstclient.html
 %_datadir/doc/%name/%name-tutorial.html
 %_datadir/doc/%name/%name.html
+%_datadir/doc/%name/examples/dmenu.sh
 
 %dir %_sysconfdir/xdg/%name
 %_sysconfdir/X11/wmsession.d/17%name
 %_sysconfdir/xdg/%name/autostart
 %_sysconfdir/xdg/%name/panel.sh
 %_sysconfdir/xdg/%name/restartpanels.sh
+%_sysconfdir/xdg/herbstluftwm/dmenu_run_hlwm
 
 %_bindir/herbstclient
 %_bindir/%name
-%_bindir/dmenu_run_hlwm
 
 %_man1dir/herbstclient.1*
 %_man1dir/%name.1*
@@ -80,14 +82,12 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/xsessions/herbstluftwm.desktop
 
 %dir %_datadir/zsh
-%dir %_datadir/zsh/functions
-%dir %_datadir/zsh/functions/Completion
-%dir %_datadir/zsh/functions/Completion/X
-%_datadir/zsh/functions/Completion/X/_herbstclient
+%dir %_datadir/zsh/site-functions
+%_datadir/zsh/site-functions/_herbstclient
 
 %dir %_datadir/bash-completion/
 %dir %_datadir/bash-completion/completions/
-%_datadir/bash-completion/completions/herbstclient-completion
+%_datadir/bash-completion/completions/herbstclient
 
 %dir %_datadir/fish
 %dir %_datadir/fish/vendor_completions.d
@@ -97,6 +97,9 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/doc/%name/examples
 
 %changelog
+* Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Tue Nov 05 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt2
 - Fixed bash completion location.
 
