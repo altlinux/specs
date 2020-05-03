@@ -1,7 +1,7 @@
 %global import_path github.com/42wim/matterbridge
 
 Name: matterbridge
-Version: 1.16.3
+Version: 1.17.4
 Release: alt1
 
 Summary: A simple chat bridge
@@ -37,6 +37,7 @@ Natively supported:
 * WhatsApp
 * Zulip
 * Keybase
+* msteams
 
 3rd party via matterbridge API:
 
@@ -86,6 +87,9 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.17.4-alt1
+- Updated to 1.17.4.
+
 * Fri Dec 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.3-alt1
 - Updated to 1.16.3.
 
