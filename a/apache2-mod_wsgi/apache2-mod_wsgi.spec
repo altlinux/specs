@@ -3,7 +3,7 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 4.7.0
+Version: 4.7.1
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -94,6 +94,9 @@ popd
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Sun May 03 2020 Andrey Cherepanov <cas@altlinux.org> 4.7.1-alt1
+- New version.
+
 * Tue Dec 24 2019 Stanislav Levin <slev@altlinux.org> 4.7.0-alt1
 - 4.6.8 -> 4.7.0.
 
