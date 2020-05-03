@@ -1,15 +1,15 @@
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
-Version:	0.0.0.0.907.24a1139
-Release:	alt2
+Version:	2020.04
+Release:	alt1.ed9ac85.1
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
 Group:		Graphics
 License:	GPL-3.0-or-later
 
-#		git://git.altlinux.org:/gears/g/glmark2.git
+Vcs:		git://git.altlinux.org:/gears/g/glmark2.git
 Source:		%name-%version-%release.tar
 
 BuildRequires(pre): gcc-c++
@@ -25,39 +25,40 @@ BuildRequires:	libEGL-devel libglvnd-devel
 # DRM support
 BuildRequires:	libdrm-devel libgbm-devel
 # Wayland support
-BuildRequires:	libwayland-client-devel libwayland-egl-devel
+BuildRequires:	libwayland-client-devel libwayland-egl-devel wayland-protocols
 
-Requires:	%name-data
+Requires:	%name-common
 
 %package	es2
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 flavour
 Group:		Graphics
-Requires:	%name-data
+Requires:	%name-common
 
 %package	drm
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - DRM flavor
 Group:		Graphics
-Requires:	%name-data
+Requires:	%name-common
 
 %package	es2-drm
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 DRM flavor
 Group:		Graphics
-Requires:	%name-data
+Requires:	%name-common
 
 %package	wayland
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - Wayland flavor
 Group:		Graphics
-Requires:	%name-data
+Requires:	%name-common
 
 %package	es2-wayland
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark - ES 2.0 Wayland flavor
 Group:		Graphics
-Requires:	%name-data
+Requires:	%name-common
 
-%package	data
-Summary:	an OpenGL 2.0 and ES 2.0 benchmark
+%package	common
+Summary:	Common graphical assets for an OpenGL 2.0 and ES 2.0 benchmark
 Group:		Graphics
 BuildArch:	noarch
+Obsoletes:	%name-data < %version
 
 %define common_descr \
 glmark2 is an OpenGL 2.0 and ES 2.0 benchmark.\
@@ -94,10 +95,11 @@ This package contains Wayland flavor.
 
 This package contains ES 2.0 Wayland flavor.
 
-%description	data
+%description	common
 %common_descr
 
-This package contains data files.
+This package contains common graphical assets for OpenGL 2.0 and ES 2.0
+benchmark.
 
 %prep
 %setup -n %name-%version-%release
@@ -139,10 +141,14 @@ export CXXFLAGS="${CFLAGS}"
 %_bindir/%name-es2-wayland
 %_man1dir/%name-es2-wayland.1.*
 
-%files data
+%files common
 %_datadir/%name
 
 %changelog
+* Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2020.04-alt1.ed9ac85.1
+- Updated to ed9ac857059f3b29fb4dd5ca3a2ec1256bdb0aae.
+- Renamed glmark2-data to glmark2-common.
+
 * Tue Nov 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.0.0.0.907.24a1139-alt2
 - Fixed build dependency.
 
