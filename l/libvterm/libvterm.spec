@@ -1,5 +1,5 @@
 Name: libvterm
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,6 @@ License: MIT
 Group: System/Libraries
 Url: http://www.leonerd.org.uk/code/libvterm/
 
-# git://git.altlinux.org/gears/l/libvterm.git
 Source: %name-%version.tar
 Source1: %name.watch
 Patch1: 0001-ALT-Fix-CVE-2018-20786.patch
@@ -69,6 +68,10 @@ make test
 %_bindir/*
 
 %changelog
+* Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.3-alt1
+- Updated to 0.1.3.
+- Fixed watch file.
+
 * Wed Sep 18 2019 Vladimir Didenko <cow@altlinux.org> 1:0.1.1-alt1
 - Updated to 0.1.1
 
