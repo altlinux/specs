@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define oname path.py
+%define oname path
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.0.1
-Release: alt2
+Version: 13.2.0
+Release: alt1
 
 Summary: A module wrapper for os.path
 License: MIT
 Group: Development/Python
-Url: https://github.com/jaraco/path.py
+Url: https://github.com/jaraco/path
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -22,26 +22,22 @@ BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(appdirs)
-BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(packaging)
-BuildRequires: python3(pytest_flake8)
+BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 %endif
 
-%py3_requires importlib_metadata
 %py3_provides %oname
-Provides: python3-module-path = %EVR
-Obsoletes: python3-module-path < %EVR
+Provides: python3-module-path.py = %EVR
+Obsoletes: python3-module-path.py < %EVR
 
 %description
-path.py implements a path objects as first-class entities, allowing
+path implements a path objects as first-class entities, allowing
 common operations on files to be invoked on those path objects directly.
 
 %prep
 %setup
 %patch -p1
-# currently disable PEP517/518
-rm -f pyproject.toml
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -65,27 +61,24 @@ sed -i -e '/\[testenv\]/a whitelist_externals =\
 commands_pre =\
     \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
--e '/python setup.py checkdocs/d' \
 tox.ini
 
-# dependencies which are needed to check docs
-sed -i \
--e '/pytest-checkdocs/d' \
--e '/pygments/d' \
-setup.cfg
-
 export LC_ALL=C.UTF-8
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='LC_ALL'
 export TOXENV=py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -p auto -o -v
+%_bindir/tox.py3 --sitepackages -vv -r
 
 %files
 %doc *.rst
 %python3_sitelibdir/path/
-%python3_sitelibdir/path.py-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/path-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 21 2020 Stanislav Levin <slev@altlinux.org> 13.2.0-alt1
+- 12.0.1 -> 13.2.0.
+
 * Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 12.0.1-alt2
 - Fixed testing against Pytest 5.
 

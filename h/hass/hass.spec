@@ -1,6 +1,6 @@
 Name: hass
 Version: 0.106.5
-Release: alt1
+Release: alt2
 
 Summary: Home automation platform
 License: APL
@@ -10,7 +10,8 @@ Url: https://www.home-assistant.io/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %package core
 Summary: Home automation platform
@@ -21,6 +22,9 @@ Requires: python3-module-astral >= 1.10.1
 Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-hass-frontend >= 20200220.5
+
+# Python3.8 stdlib
+%add_python3_req_skip importlib_metadata
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -83,6 +87,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Mon May 04 2020 Stanislav Levin <slev@altlinux.org> 0.106.5-alt2
+- Dropped runtime dependency on importlib_metadata.
+
 * Wed Mar 04 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.106.5-alt1
 - 0.106.5 released
 

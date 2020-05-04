@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-helpdev
 Version: 0.6.10
-Release: alt1
+Release: alt2
 
 License: MIT
 Group: Development/Python
@@ -12,12 +14,18 @@ Summary: Helping users and developers to get information about the environment t
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 # for test
-BuildRequires: python3-module-importlib_metadata
+
+%if_with check
+BuildRequires: python3(psutil)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Helping users and developers to get information about the environment
@@ -27,6 +35,7 @@ Python distribution and packages, including Qt-things.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -35,12 +44,30 @@ Python distribution and packages, including Qt-things.
 %python3_install
 
 %check
-%python3_test
+sed -i -e '/^whitelist_externals[ ]*=/a\
+    \/bin\/cp\
+    \/bin\/sed' \
+    -e '/^\[testenv\]$/a\
+setenv =\
+    py3: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
+    -e '/test: -rreq-test\.txt/d' \
+    -e 's/test: pytest --cov /test: pytest /' \
+    tox.ini
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3-test
+tox.py3 --sitepackages -vv -r
 
 %files
 %_bindir/helpdev
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 03 2020 Stanislav Levin <slev@altlinux.org> 0.6.10-alt2
+- Dropped dependency on importlib_metadata.
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.10-alt1
 - initial build for ALT Sisyphus
