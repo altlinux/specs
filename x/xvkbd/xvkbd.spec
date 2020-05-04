@@ -1,14 +1,16 @@
 Name: xvkbd
-Version: 3.9
+Version: 4.1
 Release: alt1
 
 Summary: Virtual (on-screen) keyboard for X
-License: %gpl2plus
+License: GPLv2+
 Group: System/X11
 
-Url: http://homepage3.nifty.com/tsato/xvkbd/
+Url: http://t-sato.in.coocan.jp/xvkbd/
 Source: %url/%name-%version.tar.gz
 Source100: xvkbd.watch
+# one-space patch sent upstream
+Patch: xvkbd-4.1-make.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -29,12 +31,26 @@ This program also has facility to send characters specified as the
 command line option to another client, which can help when one wants to
 fully utilize some modern mice with multiple buttons.
 
+%description -l ru_RU.UTF-8
+%name - виртуальная (графическая) программная клавиатура для X Window,
+которая предоставляет возможность вводить символы в другие клиенты
+(программы) щелчком по клавишам, отображаемым на экране.  Это может
+быть полезно для систем без аппаратной клавиатуры, таким как
+терминалы-киоски или носимые устройства.
+Эта программа также имеет возможность отправки символов, указанных
+в опции командной строки, другому клиенту, что может быть полезно,
+когда хочется полностью задействовать дополнительные кнопки
+некоторых нынешних мышей.
+
 %prep
 %setup
+%patch -p1
 
 %build
 xmkmf
-%make_build CFLAGS="%optflags"
+# make CFLAGS=... broke as of 4.1 (used to work for 3.9)
+export CFLAGS+="%optflags"
+%make_build
 for s in 48 36 32 24 22 16; do
 	convert %{name}_icon.xbm \
 		-resize ${s}x$s \
@@ -65,7 +81,6 @@ Terminal=false
 StartupNotify=true
 Comment=On-screen keyboard for X
 Comment[ru]=Виртуальная (экранная) клавиатура для X
-Comment[uk]=Віртуальна (екранна) клавіатура для X
 __MENU__
 
 %files
@@ -76,6 +91,15 @@ __MENU__
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon May 04 2020 Michael Shigorin <mike@altlinux.org> 4.1-alt1
+- new version (watch file uupdate)
+- minor build/installation fixup
+- added Russian description translation
+- updated Url:
+
+* Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 4.0-alt1
+- new version (watch file uupdate)
+
 * Sun Feb 25 2018 Michael Shigorin <mike@altlinux.org> 3.9-alt1
 - new version (watch file uupdate)
 
