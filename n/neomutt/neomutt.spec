@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: neomutt
-Version: 20200424
+Version: 20200501
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -12,7 +14,12 @@ Group: Networking/Mail
 Url: https://www.neomutt.org/
 Vcs: https://github.com/neomutt/neomutt.git
 # test-files/ Vcs: https://github.com/neomutt/neomutt-test-files
+# Updated as git subtree into test-files/ dir. Example:
+#   git subtree pull --prefix test-files/ test-files master --squash
+# Where test-files remote is https://github.com/neomutt/neomutt-test-files
+
 Source: %name-%version.tar
+
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
 BuildRequires: liblua5-devel libnotmuch-devel libdb4.8-devel
@@ -69,6 +76,9 @@ make -s test
 %docdir
 
 %changelog
+* Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 20200501-alt1
+- Update to 20200501.
+
 * Mon Apr 27 2020 Vitaly Chikunov <vt@altlinux.org> 20200424-alt1
 - Update to 20200424.
 
