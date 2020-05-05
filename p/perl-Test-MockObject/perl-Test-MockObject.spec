@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::MockObject
 
 Name: perl-Test-MockObject
-Version: 1.20180705
+Version: 1.20200122
 Release: alt1
 
 Summary: Perl extension for emulating troublesome interfaces
@@ -21,9 +21,10 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: perl-Sub-Uplevel perl-Tree-DAG_Node perl-devel
-BuildRequires: perl-CGI perl-Test-Exception perl-Test-Warn perl-UNIVERSAL-can perl-UNIVERSAL-isa
+# Automatically added by buildreq on Tue May 05 2020
+# optimized out: perl perl-CPAN perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-devel perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Test-Exception perl-Test-Warn perl-UNIVERSAL-can perl-UNIVERSAL-isa
+BuildRequires: perl-CPAN
 
 %description
 Perl module Test::MockObject allows to create objects that conform to particular
@@ -46,6 +47,9 @@ test purposes.
 %perl_vendor_privlib/Test/MockObject*
 
 %changelog
+* Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.20200122-alt1
+- New version
+
 * Sun Jul 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.20180705-alt1
 - New version
 
