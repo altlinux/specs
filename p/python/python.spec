@@ -3,8 +3,8 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.17
-Release: alt4
+Version: 2.7.18
+Release: alt1
 
 %define package_name		%real_name
 %define weight			1001
@@ -1178,6 +1178,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Tue Apr 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt1
+- Updated to 2.7.18.
+
 * Thu Jan 23 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.7.17-alt4
 - 'Trusted mode' added
 - License tag fixed
