@@ -16,7 +16,7 @@
 
 Name: %llvm_name
 Version: 10.0.0
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -37,6 +37,10 @@ Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: 0001-Don-t-set-rpath-when-installing.patch
 Patch9: lld-9-alt-mipsel-permit-textrels-by-default.patch
 Patch10: llvm-10-alt-python3.patch
+Patch11: CMake-CheckAtomic.cmake-catch-false-positives-in-RIS.patch
+Patch12: Support-Check-for-atomics64-when-deciding-if-latomic.patch
+Patch13: dsymutil-Explicitly-link-against-libatomic-when-nece.patch
+Patch14: llvm-10-alt-riscv64-config-guess.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -215,6 +219,10 @@ mv compiler-rt-%version.src projects/compiler-rt
 %patch8 -p1
 %patch9 -p1 -b .alt-mipsel-permit-textrels-by-default
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 %build
 %cmake -G Ninja \
@@ -243,7 +251,9 @@ mv compiler-rt-%version.src projects/compiler-rt
 	-DLLVM_ENABLE_LLD:BOOL=ON \
 	%else
 	-DLLVM_ENABLE_LTO=On \
+	%ifnarch riscv64
 	-DLLVM_USE_LINKER=gold \
+	%endif
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
@@ -391,6 +401,7 @@ ninja -C BUILD check-all || :
 %dir %_includedir/lld
 %_includedir/lld/*
 
+
 %files doc
 %doc %_docdir/llvm
 
@@ -401,6 +412,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue May  5 2020 Nikita Ermakov <arei@altlinux.org> 10.0.0-alt2
+- add riscv64 support
+
 * Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 10.0.0-alt1
 - 10.0.0
 
