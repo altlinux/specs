@@ -3,7 +3,7 @@
 %define real_name Test-Prereq
 
 Name: perl-Test-Prereq
-Version: 2.002
+Version: 2.003
 Release: alt1
 
 Summary: Check if Makefile.PL has the right pre-requisites
@@ -45,6 +45,9 @@ pre-requisites.
 %perl_vendor_privlib/Test/Prereq*
 
 %changelog
+* Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 2.003-alt1
+- New version
+
 * Sat Jan 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.002-alt1
 - New version
 
