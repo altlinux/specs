@@ -1,8 +1,8 @@
 %define gecko_version 2.47.1
-%define mono_version 4.9.4
+%define mono_version 5.0.0
 
 Name: wine-vanilla
-Version: 5.5
+Version: 5.7
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -358,6 +358,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
 %_datadir/wine/winebus.inf
+%_datadir/wine/wineusb.inf
 %_datadir/wine/winehid.inf
 %_datadir/wine/nls/
 %_datadir/wine/fonts/
@@ -404,7 +405,6 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %doc LICENSE LICENSE.OLD
 %_bindir/function_grep.pl
 %_bindir/winebuild
-%_bindir/msidb
 %_bindir/wmc
 %_bindir/wrc
 %_bindir/widl
@@ -437,6 +437,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue May 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.7-alt1
+- new version 5.7
+
 * Mon Mar 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.5-alt1
 - new version 5.5
 

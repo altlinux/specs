@@ -1,8 +1,8 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 4.9.4
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
 
@@ -12,7 +12,7 @@ Url: http://wiki.winehq.org/Mono
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://dl.winehq.org/wine/wine-mono/%version/wine-mono-bin-%version.tar.gz
+# Source-url: https://dl.winehq.org/wine/wine-mono/%version/wine-mono-%version-x86.tar.xz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ cp -a * %buildroot%winemonodir/%name-%version/
 %winemonodir/%name-%version/
 
 %changelog
+* Tue May 05 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Tue Jan 28 2020 Vitaly Lipatov <lav@altlinux.ru> 4.9.4-alt2
 - switch to unpacked mono files in /usr/share/wine/mono
 
