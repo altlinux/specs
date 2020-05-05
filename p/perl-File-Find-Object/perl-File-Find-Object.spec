@@ -1,7 +1,7 @@
 ## SPEC file for Perl module File::Find::Object
 
 Name: perl-File-Find-Object
-Version: 0.3.4
+Version: 0.3.5
 Serial: 1
 Release: alt1
 
@@ -52,6 +52,9 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.5-alt1
+- New version
+
 * Mon Aug 26 2019 Nikolay A. Fetisov <naf@altlinux.org> 1:0.3.4-alt1
 - New version
 
