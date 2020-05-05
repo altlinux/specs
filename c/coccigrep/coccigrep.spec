@@ -1,7 +1,7 @@
 %def_with check
 
 Name:		coccigrep
-Version:	1.19
+Version:	1.20
 Release:	alt1
 Summary:	Semantic grep for the C language based on coccinelle
 
@@ -20,9 +20,10 @@ BuildRequires:		python3-module-setuptools
 %{?!_without_check:%{?!_disable_check:BuildRequires: spatch}}
 
 %description
-Coccigrep is a semantic grep for the C language based on coccinelle. It can be
-used to find where a given structure is used in code files. coccigrep depends
-on the spatch program which comes with coccinelle.
+Coccigrep is a semantic grep for the C and C++ languages based on Coccinelle
+(http://coccinelle.lip6.fr). It can be used to find where a given structure is
+used in code files. Coccigrep depends on the spatch program which comes with
+Coccinelle.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -48,10 +49,10 @@ cat > test.c <<'EOF'
   }
 EOF
 export PYTHONPATH=./src
-./coccigrep -t 'struct test' test.c		|| exit 1
-./coccigrep -t 'struct test' -a 'y' test.c	|| exit 1
-./coccigrep -t 'struct test' -a 'x' test.c	&& exit 1
-./coccigrep -t 'test' test.c			&& exit 1
+./coccigrep -v -t 'struct test' test.c		|| exit 1
+./coccigrep -v -t 'struct test' -a 'y' test.c	|| exit 1
+./coccigrep -v -t 'struct test' -a 'x' test.c	&& exit 1
+./coccigrep -v -t 'test' test.c			&& exit 1
 %endif
 
 %files
@@ -61,6 +62,9 @@ export PYTHONPATH=./src
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
+- Update to v1.20.
+
 * Tue Apr 07 2020 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
 - Update to v1.19.
 
