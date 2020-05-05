@@ -3,7 +3,7 @@
 %define real_name Devel-CheckLib
 
 Name: perl-Devel-CheckLib
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: check that a library is available
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Mon Sep 28 2015
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent
-BuildRequires: perl-IO-CaptureOutput perl-devel perl-podlators
+# Automatically added by buildreq on Tue May 05 2020
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-Capture-Tiny perl-devel perl-podlators
 
 %description
 Perl module Devel::CheckLib provides a way of checking whether
@@ -48,6 +48,9 @@ attempting to compile a simple program and link against it.
 %perl_vendor_privlib/Devel/CheckLib*
 
 %changelog
+* Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.14-alt1
+- New version
+
 * Mon Jun 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.13-alt1
 - New version
 
