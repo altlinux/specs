@@ -1,7 +1,7 @@
 %define rname mint-x-icons
 
 Name: icon-themes-mint-x
-Version: 1.5.3
+Version: 1.5.5
 Release: alt1
 Summary: Mint-X icon theme
 License: GPLv3+
@@ -30,6 +30,9 @@ cp -a usr %buildroot/
 %_datadir/icons/*
 
 %changelog
+* Tue May 05 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.5.5-alt1
+- 1.5.5
+
 * Wed Mar 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.5.3-alt1
 - initial release
 
