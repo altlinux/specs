@@ -1,6 +1,6 @@
 %define module_name             ipt-ratelimit
-%define module_version          0.3
-%define module_release 		alt2.k
+%define module_version          0.3.1
+%define module_release 		alt1
 
 %define flavour		std-pae
 %define karch i586
