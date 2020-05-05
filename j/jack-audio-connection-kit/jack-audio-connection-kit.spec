@@ -1,8 +1,8 @@
-%def_enable firewire
+%def_disable firewire
 
 Name: jack-audio-connection-kit
-Version: 1.9.12
-Release: alt2
+Version: 1.9.14
+Release: alt1
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -13,14 +13,18 @@ Url: http://www.jackaudio.org
 Source0: https://github.com/jackaudio/jack2/releases/download/v%version/jack2-%version.tar.gz
 Source2: %name-script.pa
 Source3: %name-limits.conf
+Source4: svnversion.h
 Patch: jack-realtime-compat.patch
+# Patch doxygen documentation
+Patch1: %name-doxygen.patch
 
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
 
 BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel libffado-devel
-BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel python-modules-compiler
-BuildRequires: python-modules-email python-modules-encodings python-modules-logging
+BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel
+BuildRequires: python3
+BuildRequires: libopus-devel
 # FIXME: freebob seems obsoleted by ffado
 %{?_enable_firewire:BuildRequires: libfreebob-devel}
 
@@ -67,6 +71,8 @@ Utilities that control and interact with the JACK server-jackd
 %prep
 %setup -n jack2-%version
 %patch -p1
+%patch1 -p1
+cp -p %SOURCE4 .
 
 %build
 # Some plugins use C++ and need lcxa. It can't be loaded
@@ -74,6 +80,8 @@ Utilities that control and interact with the JACK server-jackd
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LINKFLAGS+=" -lcxa"
 %endif
+export CFLAGS="%{optflags} -ggdb -fPIC"
+export CXXFLAGS="$CFLAGS"
 ./waf configure \
 	--prefix=%_prefix \
 	--libdir=/%_libdir \
@@ -148,6 +156,10 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Wed May 06 2020 Anton Midyukov <antohami@altlinux.org> 1:1.9.14-alt1
+- Updated to 1.9.14
+- disable firewire
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 1:1.9.12-alt2
 - E2K: link against -lcxa explicitly (if lcc < 1.23)
 - introduced firewire knob (on by default)
