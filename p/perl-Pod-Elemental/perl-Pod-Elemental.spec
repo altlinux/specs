@@ -3,8 +3,8 @@
 %define real_name Pod-Elemental
 
 Name: perl-Pod-Elemental
-Version: 0.103004
-Release: alt2
+Version: 0.103005
+Release: alt1
 
 Summary: Perl module to work with nestable Pod elements
 
@@ -47,5 +47,8 @@ a lot of document transformations easy.
 %perl_vendor_privlib/Pod/Elemental*
 
 %changelog
+* Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.103005-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 0.103004-alt2
 - Initial build for ALT Linux Sisyphus
