@@ -1,5 +1,5 @@
 Name: vmware-view-userinstall
-Version: 5.3.0
+Version: 5.4.1
 Release: alt1
 
 Summary: VMware Horizon Client pre-installation scripts
@@ -45,6 +45,9 @@ cp -a checksums %buildroot%uinstdir/goodsums
 %uinstdir/goodsums/*
 
 %changelog
+* Tue May 05 2020 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
+- New version.
+
 * Fri Jan 24 2020 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
 - New version.
 
