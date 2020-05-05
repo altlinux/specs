@@ -1,5 +1,5 @@
 Name:		burp
-Version:	2.3.22
+Version:	2.3.26
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
@@ -81,6 +81,9 @@ install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.ser
 %preun_service burp-server
 
 %changelog
+* Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.26-alt1
+- Update to 2.3.26.
+
 * Thu Feb 13 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.22-alt1
 - Update to 2.3.22.
 - Overwrite our `readall=' support with upstream version.
