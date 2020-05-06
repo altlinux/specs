@@ -3,12 +3,11 @@
 %define real_name Time-Format
 
 Name: perl-Time-Format
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Easy-to-use date/time formatting
-License: CC0 1.0 (%pubdomain)
-# CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication
+License: unrestricted
 Group: Development/Perl
 
 URL: https://metacpan.org/release//Time-Format/
@@ -32,6 +31,11 @@ be used inside strings as well as in ordinary expressions. The
 formatting codes used are meant to be easy to remember, use, and
 read.
 
+# Skip tests inside hasher - unstable results leads to periodic rebuild failures
+%ifdef __BTE
+ %def_without test
+%endif
+
 %prep
 %setup -q -n %real_name-%version
 
@@ -48,6 +52,9 @@ rm -f t/xs_DateTime.t
 %perl_vendor_privlib/Time
 
 %changelog
+* Wed May 06 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.16-alt1
+- New version
+
 * Sun Aug 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.15-alt1
 - New version
 
