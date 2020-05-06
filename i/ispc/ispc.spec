@@ -3,7 +3,7 @@
 
 Name: ispc
 Version: 1.13.0
-Release: alt3
+Release: alt4
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
@@ -49,6 +49,15 @@ Parallelization across multiple cores is also supported by ispc, making it
 possible to write programs that achieve performance improvement that scales by
 both number of cores and vector unit size.
 
+%package checkinstall
+Summary: checkinstall for %name
+Group: Development/C
+PreReq: gcc-c++
+PreReq: %name = %EVR
+
+%description checkinstall
+This package will try to build all %name examples.
+
 %prep
 %setup
 
@@ -73,11 +82,18 @@ both number of cores and vector unit size.
 
 %cmake_build
 
+%pre checkinstall
+set -ex
+mkdir /tmp/BUILD
+cd /tmp/BUILD
+cmake %docdir/examples
+make -j$(nproc)
+simple/simple
+
 %install
 %cmake_install DESTDIR=%buildroot install
 
 mkdir -p %buildroot%docdir
-cp -a examples/ %buildroot%docdir
 cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
    docs/ReleaseNotes.txt %buildroot%docdir
 
@@ -85,6 +101,8 @@ cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
 %_bindir/%name
 %_bindir/check_isa
 %docdir
+
+%files checkinstall
 
 %check
 PATH=BUILD/bin:$PATH
@@ -97,6 +115,9 @@ ispc --support-matrix
 ./run_tests.py --jobs=$(nproc) --non-interactive --arch=$(arch)
 
 %changelog
+* Wed May 06 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt4
+- spec: Add test to compile all examples in checkinstall.
+
 * Wed May 06 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt3
 - Add examples and documentation to the package.
 
