@@ -14,16 +14,13 @@ Group: System/Libraries
 %bcond_without check
 
 Name:           libqb
-Version:        1.0.5
-Release:        alt1_5
+Version:        1.0.6
+Release:        alt1
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
-Patch0:         IPC-avoid-temporary-channel-priority-loss.patch
-# https://github.com/ClusterLabs/libqb/pull/383
-Patch1:         libqb-fix-list-handling-gcc10.patch
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -43,9 +40,6 @@ and polling.
 
 %prep
 %setup -q # for when patches around
-%patch0 -p1
-%patch1 -p1
-
 
 %build
 ./autogen.sh
@@ -83,6 +77,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Wed May 06 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5
 - update to new release by fcimport
 
