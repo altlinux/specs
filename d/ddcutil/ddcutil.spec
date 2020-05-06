@@ -15,8 +15,10 @@
 
 # Please submit bugfixes or comments via https://bugzilla.altlinux.org
 
+%define soname 2
+
 Name: ddcutil
-Version: 0.9.2
+Version: 0.9.8
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -46,11 +48,11 @@ effect, e.g. red gain.  ddcutil allows color related settings to be saved at
 the time a monitor is calibrated, and then restored when the calibration is
 applied.
 
-%package -n libddcutil0
+%package -n libddcutil%soname
 Summary: Shared library to query and update monitor settings
 Group: System/Libraries
 
-%description -n libddcutil0
+%description -n libddcutil%soname
 Shared library version of ddcutil, exposing a C API.
 
 ddcutil communicates with monitors implementing MCCS (Monitor Control Command
@@ -60,7 +62,7 @@ Device on USB.
 %package -n libddcutil-devel
 Summary: Development files for libddcutil
 Group: Development/C
-Requires: libddcutil0 = %version
+Requires: libddcutil%soname = %version
 
 %description -n libddcutil-devel
 Header files and pkgconfig control file for libddcutil.
@@ -71,9 +73,10 @@ Header files and pkgconfig control file for libddcutil.
 %build
 ./autogen.sh
 %configure \
-	--enable-lib=yes \
-	--enable-drm=yes \
-	--enable-usb=yes \
+	--enable-lib \
+	--enable-drm \
+	--enable-usb \
+	--enable-x11 \
 	--docdir="%_defaultdocdir/%name-%version"
 %make_build
 
@@ -82,6 +85,9 @@ Header files and pkgconfig control file for libddcutil.
 
 %install
 %makeinstall_std
+install -pDm644 {data,%buildroot}%_datadir/cmake/Modules/FindDDCUtil.cmake
+# need customization if ever used
+#cp -p data/etc/udev/rules.d/*.rules %buildroot/etc/udev/rules.d
 
 %files
 %doc AUTHORS NEWS.md README.md ChangeLog
@@ -89,10 +95,10 @@ Header files and pkgconfig control file for libddcutil.
 %dir %_datadir/%name/data
 %_datadir/%name/data/*rules
 %_datadir/%name/data/90-nvidia-i2c.conf
-%_mandir/man1/ddcutil.1*
+%_man1dir/ddcutil.1*
 %_bindir/ddcutil
 
-%files -n libddcutil0
+%files -n libddcutil%soname
 %doc AUTHORS NEWS.md README.md ChangeLog
 %_libdir/libddcutil.so.*
 
@@ -105,8 +111,13 @@ Header files and pkgconfig control file for libddcutil.
 %_libdir/libddcutil.so
 %dir %_datadir/%name
 %dir %_datadir/%name/data/
-%_datadir/%name/data/FindDDCUtil.cmake
+%_datadir/cmake/Modules/FindDDCUtil.cmake
+
+# TODO: python subpackage?
 
 %changelog
+* Wed May 06 2020 Michael Shigorin <mike@altlinux.org> 0.9.8-alt1
+- 0.9.8 (thx aris@)
+
 * Thu Feb 14 2019 Michael Shigorin <mike@altlinux.org> 0.9.2-alt1
 - built for sisyphus (based on opensuse package by alarrosa@suse)
