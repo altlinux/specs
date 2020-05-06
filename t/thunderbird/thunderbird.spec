@@ -13,7 +13,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	68.8.0
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -564,8 +564,18 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed May 06 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.0-alt2
+- Add security fixes information to changelog.
+
 * Tue May 05 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.0-alt1
 - New version (68.8.0).
+- Fixes:
+  + CVE-2020-12397 Sender Email Address Spoofing using encoded Unicode characters
+  + CVE-2020-12387 Use-after-free during worker shutdown
+  + CVE-2020-6831 Buffer overflow in SCTP chunk input validation
+  + CVE-2020-12392 Arbitrary local file access with 'Copy as cURL'
+  + CVE-2020-12393 Devtools' 'Copy as cURL' feature did not fully escape website-controlled data, potentially leading to command injection
+  + CVE-2020-12395 Memory safety bugs fixed in Thunderbird 68.8.0
 
 * Mon May 04 2020 Andrey Cherepanov <cas@altlinux.org> 68.7.0-alt3
 - Add Wayland support (ALT #38433).
