@@ -11,7 +11,7 @@
 
 Name: clsync
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -20,7 +20,7 @@ Group: File tools
 Url: https://github.com/clsync/clsync
 Source0: %name-%version.tar
 
-BuildRequires: glib2-devel libcap-devel libcgroup-devel libmhash-devel
+BuildRequires: glib2-devel libcap-devel libcgroup-devel
 BuildRequires: doxygen graphviz
 
 %define common_descr \
@@ -118,7 +118,7 @@ patch -p1 < alt/libclsync-pthreads.patch
 	--with-libcgroup \
 	--without-gio \
 	--with-inotify=native \
-	--with-mhash
+	--without-mhash
 %make_build
 doxygen .doxygen
 
@@ -170,6 +170,10 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Wed May 06 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.4-alt2
+- Disable mhash support since it is actually used only with cluster
+  or kqueue code and both are disabled in Alt.
+
 * Wed May 06 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.4-alt1
 - Version bump
 - Package configuration change to follow upstream
