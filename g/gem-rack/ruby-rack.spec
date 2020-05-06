@@ -1,19 +1,25 @@
 %define        pkgname rack
 
-Name:          ruby-%pkgname
-Version:       2.0.7
+Name:          gem-%pkgname
+Version:       2.2.2
 Release:       alt1
 Epoch:         1
 Summary:       Modular Ruby webserver interface
 Group:         Development/Ruby
 License:       MIT
 Url:           https://rack.github.io/
-# VCS:         https://github.com/rack/rack.git
+Vcs:           https://github.com/rack/rack.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Source:        %name-%version.tar
 
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
+
 
 %description
 Rack provides a minimal, modular and adaptable interface for developing
@@ -47,13 +53,13 @@ Rackup is an executable file for rack gem.
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -62,16 +68,21 @@ Rackup is an executable file for rack gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %files         -n rackup
 %_bindir/rackup
 
 %changelog
+* Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 1:2.2.2-alt1
+- ^ 2.0.7 -> 2.2.2
+- ! spec tags
+
 * Wed Jun 05 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.0.7-alt1
-- Bump to 2.0.7
+- ^ 2.0.6 -> 2.0.7
 
 * Thu Jan 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:2.0.6-alt1
-- Bump to 2.0.6.
-- Use Ruby Policy 2.0.
+- > Ruby Policy 2.0
+- ^ 2.0.4 -> 2.0.6.
 
 * Fri Aug 24 2018 Andrey Cherepanov <cas@altlinux.org> 1:2.0.4-alt1
 - New version.

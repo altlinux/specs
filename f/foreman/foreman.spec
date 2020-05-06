@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt2
+Release:       alt3
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -47,7 +47,7 @@ Requires:      libfreetype
 Requires:      node-sass
 BuildRequires:      node-sass
 
-%gem_replace_version rails ~> 5.2.2
+%gem_replace_version rails ~> 5.2
 %gem_replace_version graphql ~> 1.9
 %gem_replace_version jquery-ui-rails ~> 6.0
 %gem_replace_version patternfly-sass ~> 3.38
@@ -136,101 +136,14 @@ useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
-%post_service postgresql
-systemctl start postgresql || exit 1
-
-mkdir -m 750 -p %_var/tmp/%name/pids %_var/tmp/%name/sockets %_var/tmp/%name/cache
-mkdir -m 750 -p %_cachedir/%name
-ln -sf %_var/tmp/%name %_libexecdir/%name/tmp
-ln -sf %_cachedir/%name %_var/tmp/%name/cache
-chown _foreman:foreman %_var/tmp/%name -R
-chown _foreman:foreman %_cachedir/%name -R
-
-export RAILS_ENV=production
-
-appname=%name
-datadir=%_libexecdir
-# CONFDIR=/etc
-rootdir=$datadir/$appname
-confdir=$rootdir/config
-
-# alias bundle exec rake='bundle exec rake'
-
-cd $rootdir
-
-if [ -z "$(psql -U postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='foreman'")" ]; then
-   # create db users with postgres
-   # echo "Please enter password for an admin of the foreman server: "
-   createuser $appname -U postgres --createdb --createrole -w # -W
-fi
-
-# env
-rm -f Gemfile.lock
-bundle >$datadir/$appname/log/bundle.log 2>&1 || exit 2
-# bundle binstubs bundler --force
-# npm install
-
-# secret token used for cookie signing etc.
-if [ ! -f $datadir/$appname/config/initializers/local_secret_token.rb ]; then
-   # echo "Initializing secret..."
-   touch $datadir/$appname/config/initializers/local_secret_token.rb
-   chmod 0660 $datadir/$appname/config/initializers/local_secret_token.rb
-   chgrp foreman $datadir/$appname/config/initializers/local_secret_token.rb
-   bundle exec rake security:generate_token >/dev/null 2>&1 || exit 3
-   chmod 0640 $datadir/$appname/config/initializers/local_secret_token.rb
-fi
-
-# encryption key used to encrypt DB contents
-# move the generated key file to /etc/foreman/ so users back it up, symlink to it from ~foreman
-if [ ! -e $datadir/$appname/config/initializers/encryption_key.rb -a \
-     ! -e $confdir/encryption_key.rb ]; then
-   # echo "Initializing encryption key..."
-   touch $datadir/$appname/config/initializers/encryption_key.rb
-   chmod 0660 $datadir/$appname/config/initializers/encryption_key.rb
-   chgrp foreman $datadir/$appname/config/initializers/encryption_key.rb
-   bundle exec rake security:generate_encryption_key >/dev/null 2>&1 || exit 3
-   chmod 0640 $datadir/$appname/config/initializers/encryption_key.rb
-   mv $datadir/$appname/config/initializers/encryption_key.rb $confdir/
-fi
-
-if [ ! -e $datadir/$appname/config/initializers/encryption_key.rb -a \
-       -e $confdir/encryption_key.rb ]; then
-   # echo "Initializing link to encryption key..."
-   ln -s $confdir/encryption_key.rb $datadir/$appname/config/initializers/
-fi
-
-if ! psql -U postgres -lqt | cut -d \| -f 1 | grep -qw ${appname}_${RAILS_ENV}; then
-   # echo "Initializing database..."
-   # We need to run the db:migrate after the install transaction
-   # always attempt to reencrypt after update in case new fields can be encrypted
-   bundle exec rake db:create >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
-fi
-
-bundle exec rake db:migrate db:encrypt_all >> $datadir/$appname/log/db_migrate.log 2>&1 || exit 4
-bundle exec rake db:seed >> $datadir/$appname/log/db_seed.log 2>&1 || exit 5
-bundle exec rake apipie:cache:index >> $datadir/$appname/log/apipie_cache.log 2>&1 || exit 6
-bundle exec rake tmp:clear >> $datadir/$appname/log/tmp_clear.log 2>&1 || exit 7
- 
-if [ -z "$(ls ./public/webpack/*js 2>/dev/null)" ]; then
-   # echo "Initializing webpack frontend..."
-   bundle exec rake webpack:compile >> $datadir/$appname/log/webpack_compile.log 2>&1 || exit 8
-fi
-
-if [ -z "$(ls ./public/assets/*js 2>/dev/null)" ]; then
-   # echo "Initializing assets frontend..."
-   bundle exec rake assets:precompile >> $datadir/$appname/log/assets_precompile.log 2>&1 || exit 9
-fi
-
-chown _foreman $datadir/$appname/log/*.log -R 2>/dev/null
-
-%post_service foreman
+railsctl setup %name
+# %post_service foreman
 # %post_service dynflowd
 
 %preun
-%preun_service foreman
+railsctl cleanup %name
+# %preun_service foreman
 # %preun_service dynflowd
-
-rm -rf %_libexecdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%name %_libexecdir/%name/Gemfile.lock
 
 
 %files
@@ -257,6 +170,11 @@ rm -rf %_libexecdir/%name/tmp %_var/tmp/%name/cache %_var/tmp/%name %_cachedir/%
 %ruby_ridir/*
 
 %changelog
+* Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt3
+- - post exec in spec
+- * with service run using 'railsctl'
+- ! gem rails deps to ~> 5.2
+
 * Mon Mar 30 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt2
 - * moving code from %%_libdir -> %%_libexecdir
 
