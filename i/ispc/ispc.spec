@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
 
 Name: ispc
 Version: 1.13.0
-Release: alt2
+Release: alt3
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
 Group: Development/C
+
+%define docdir %_docdir/%name-%version
 
 Source: %name-%version.tar
 
@@ -33,10 +36,18 @@ ExclusiveArch: x86_64
 
 %description
 ispc is a compiler for a variant of the C programming language, with
-extensions for single program, multiple data programming. Under the SPMD
-model, the programmer writes a program that generally appears to be a regular
-serial program, though the execution model is actually that a number of
-program instances execute in parallel on the hardware.
+extensions for "single program, multiple data" (SPMD) programming. Under the
+SPMD model, the programmer writes a program that generally appears to be a
+regular serial program, though the execution model is actually that a number
+of program instances execute in parallel on the hardware.
+
+ispc compiles a C-based SPMD programming language to run on the SIMD units of
+CPUs and the Intel Xeon Phi architecture; it frequently provides a 3x or more
+speedup on CPUs with 4-wide vector SSE units and 5x-6x on CPUs with 8-wide AVX
+vector units, without any of the difficulty of writing intrinsics code.
+Parallelization across multiple cores is also supported by ispc, making it
+possible to write programs that achieve performance improvement that scales by
+both number of cores and vector unit size.
 
 %prep
 %setup
@@ -65,10 +76,15 @@ program instances execute in parallel on the hardware.
 %install
 %cmake_install DESTDIR=%buildroot install
 
+mkdir -p %buildroot%docdir
+cp -a examples/ %buildroot%docdir
+cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
+   docs/ReleaseNotes.txt %buildroot%docdir
+
 %files
-%doc LICENSE.txt
 %_bindir/%name
 %_bindir/check_isa
+%docdir
 
 %check
 PATH=BUILD/bin:$PATH
@@ -81,6 +97,9 @@ ispc --support-matrix
 ./run_tests.py --jobs=$(nproc) --non-interactive --arch=$(arch)
 
 %changelog
+* Wed May 06 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt3
+- Add examples and documentation to the package.
+
 * Fri May 01 2020 Vitaly Chikunov <vt@altlinux.org> 1.13.0-alt2
 - spec: Improve %%check section.
 
