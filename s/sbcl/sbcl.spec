@@ -15,8 +15,8 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 1.4.12
-Release: alt3
+Version: 2.0.4
+Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
 License: BSD
@@ -83,18 +83,15 @@ Source201: sbcl.rc
 Source202: sbcl-install-clc.lisp
 %endif
 
-Patch1: %name-1.0-lib_dir.patch
+Patch1: sbcl-2.0.4-lib_dir.patch
 Patch2: sbcl-1.1.13-personality.patch
 Patch3: sbcl-1.3.2-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
-Patch7: sbcl-1.4.2-runtime.patch
+Patch7: sbcl-2.0.4-runtime.patch
 Patch8: concurrency-tests-frlock.patch
+Patch9: sbcl-2.0.4-asm-sb-thread.patch
 ## upstreamable patches
-Patch50: sbcl-1.3.0-generate_version.patch
-
-
-
-
+Patch50: sbcl-2.0.4-generate_version.patch
 ## upstream patches
 
 %if_with bootstrap
@@ -124,15 +121,16 @@ interpreter, and debugger.
 %setup -c -n sbcl-%version -a 1 %{?sbcl_bootstrap_src}
 
 pushd sbcl-%version
-%patch1 -p1 
+%patch1 -p2
 %patch2 -p1 -b .personality
 %patch3 -p1 -b .optflags
 %{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
 %ifarch aarch64 x86_64
-%patch7 -p1
+%patch7 -p2
 %patch8 -p2
 %endif
-%patch50 -p1 -b .generate_version
+%patch9 -p2
+%patch50 -p2
 
 %__subst "s|/usr/lib/sbcl/|%_libdir/sbcl/|" src/runtime/runtime.c
 
@@ -141,11 +139,6 @@ find . -name '*.c' | xargs chmod 644
 
 # set version.lisp-expr
 sed -i.rpmver -e "s|\"%version\"|\"%version-%release\"|" version.lisp-expr
-
-%ifarch aarch64
-f=%sbcl_bootstrap_dir/src/runtime/sbcl
-[ -f ../$f ] && patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 ../$f
-%endif
 
 # make %%doc items available in parent dir to make life easier
 cp -alf BUGS COPYING README CREDITS NEWS TLA TODO PRINCIPLES ..
@@ -271,8 +264,13 @@ popd
 %else
 %_libdir/sbcl/sbcl.core
 %endif
+%_infodir/*.info*
 
 %changelog
+* Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.4-alt1
+- 2.0.4
+- packaged info files
+
 * Fri Dec 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt3
 - drop bootstrap hacks for arm arches
 
@@ -345,7 +343,7 @@ popd
 * Sun Dec 16 2012 Ilya Mashkin <oddity@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
-* Tue Aug 27 2012 Ilya Mashkin <oddity@altlinux.ru> 1.0.58-alt1
+* Mon Aug 27 2012 Ilya Mashkin <oddity@altlinux.ru> 1.0.58-alt1
 - 1.0.58
 
 * Fri Apr 27 2012 Ilya Mashkin <oddity@altlinux.ru> 1.0.56-alt1
