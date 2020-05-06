@@ -5,7 +5,7 @@
 
 Name: polkit-gnome
 Version: 0.106
-Release: alt0.1
+Release: alt0.2
 
 Summary: polkit integration tool for the GNOME 3 desktop
 License: GPLv2+
@@ -25,6 +25,7 @@ Source: http://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar
 Source: %name-%version.tar
 %endif
 Patch: %name-0.106-alt-desktop.patch
+Patch1: %name-0.106-alt-notshowin-enligntenment-desktop.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gnome-common intltool libpolkit-devel libgtk+3-devel libcairo-gobject-devel
@@ -36,6 +37,7 @@ look and feel of the GNOME desktop.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -54,6 +56,9 @@ look and feel of the GNOME desktop.
 %_xdgconfigdir/autostart/%name-authentication-agent-1.desktop
 
 %changelog
+* Wed May 06 2020 Yuri N. Sedunov <aris@altlinux.org> 0.106-alt0.2
+- added Enlightenment to NotShowIn, since 0.24 it has own polkit agent
+
 * Sat Apr 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.106-alt0.1
 - updated to 0.105-66-ga0763a2
 - restored /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop

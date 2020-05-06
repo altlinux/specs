@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.6
+%define ver_major 1.7
 
 %def_enable check
 
@@ -8,7 +8,7 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
-License: BSD
+License: BSD-2-Clause
 Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
@@ -67,6 +67,10 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- fixed License tag
+
 * Wed Nov 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
