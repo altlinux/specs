@@ -4,12 +4,12 @@
 
 Name:          gem-%pkgname-compat
 Version:       1.12.2
-Release:       alt1
+Release:       alt3
 Summary:       CoffeeScript js sources
 License:       MIT
 Group:         Development/Ruby
 Url:           http://coffeescript.org/
-%vcs           https://github.com/NickClark/coffee-script-source.git
+Vcs:           https://github.com/NickClark/coffee-script-source.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -17,6 +17,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 CoffeeScript is a little language that compiles into JavaScript. Underneath all
@@ -62,5 +65,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.12.2-alt3
+- ! spec provides and obsoletes, and EVR
+
 * Wed Sep 25 2019 Pavel Skrylev <majioa@altlinux.org> 1.12.2-alt1
 - added (+) packaged gem with usage Ruby Policy 2.0
