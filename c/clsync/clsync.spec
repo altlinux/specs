@@ -1,77 +1,136 @@
-#
-# author: Enrique Martinez <enmaca@hotmail.com>
+# Original author: Enrique Martinez <enmaca@hotmail.com>
+# For other authors see git log
 # license: GPL-3+
-#
+
+%global _unpackaged_files_terminate_build 1
+%ifarch aarch64
+%def_disable seccomp
+%else
+%def_enable seccomp
+%endif
+
 Name: clsync
-Version: 0.4.2
-Release: alt2
+Version: 0.4.4
+Release: alt1
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
 Group: File tools
 
-Url: https://github.com/xaionaro/clsync
+Url: https://github.com/clsync/clsync
 Source0: %name-%version.tar
-Source1: %name.init
 
-# Automatically added by buildreq on Sat Oct 01 2016
-# optimized out: glib2-devel perl pkg-config python-base python-modules
-BuildRequires: libgio-devel
+BuildRequires: glib2-devel libcap-devel libcgroup-devel libmhash-devel
+BuildRequires: doxygen graphviz
+
+%define common_descr \
+Live sync tool based on inotify, written in GNU C \
+Clsync recursively watches for source directory and executes external \
+program to sync the changes. Clsync is adapted to use together with rsync. \
+This utility is much more lightweight than competitors and supports such\
+features as separate queue for big files, regex file filter, \
+multi-threading.
 
 %description
-live sync tool based on inotify, written in GNU C
-Clsync recursively watches for source directory and executes external
-program to sync the changes. Clsync is adapted to use together with rsync.
-This utility is much more lightweight than competitors and supports such
-features as separate queue for big files, regex file filter,
-multi-threading.
+%common_descr
 
 %package devel
-Summary: Development Files for clsync
+Summary: Development files for clsync
 Group: Development/C
-Requires: clsync = %version-%release
+Requires: clsync = %EVR
 
 %description devel
-live sync tool based on inotify, written in GNU C
-Clsync recursively watches for source directory and executes external
-program to sync the changes. Clsync is adapted to use together with rsync.
-This utility is much more lightweight than competitors and supports such
-features as separate queue for big files, regex file filter,
-multi-threading.
+%common_descr
+
+This package provides clsync development files.
+
+%package -n libclsync
+Summary: Control and monitoring library for clsync
+Group: Development/C
+
+%description -n libclsync
+%common_descr
+
+This package provides libclsync control and monitoring interface library.
+
+%package -n libclsync-devel
+Summary: Development files for the control and monitoring library for clsync
+Group: Development/C
+Requires: libclsync = %EVR
+
+%description -n libclsync-devel
+%common_descr
+
+This package provides development files for the libclsync control and
+monitoring interface library.
+
+%package -n libclsync-devel-static
+Summary: Static development files for the control and monitoring library for clsync
+Group: Development/C
+Requires: libclsync = %EVR
+
+%description -n libclsync-devel-static
+%common_descr
+
+This package provides static development files for the libclsync control and
+monitoring interface library.
+
+%package examples
+Summary: Examples for clsync
+Group: Documentation
+Buildarch: noarch
+
+%description examples
+%common_descr
+
+This package provides config and usage examples for clsync.
+
+%package apidocs
+Summary: API documentation for clsync
+Group: Development/Documentation
+Buildarch: noarch
+
+%description apidocs
+%common_descr
+
+This package provides doxygen API documentation for clsync.
+
 
 %prep
 %setup
+patch -p1 < alt/libclsync-pthreads.patch
 
 %build
 %autoreconf
-%configure
-%make
+%configure \
+	--enable-socket-library \
+	--enable-clsync \
+	--disable-debug \
+	--enable-paranoid=1 \
+	--without-bsm \
+	--without-kqueue \
+	--enable-capabilities \
+	--disable-cluster \
+	--enable-socket \
+	--enable-highload-locks \
+	--enable-unshare \
+	%{subst_enable seccomp} \
+	--with-libcgroup \
+	--without-gio \
+	--with-inotify=native \
+	--with-mhash
+%make_build
+doxygen .doxygen
 
 %install
 %makeinstall_std
-install -pDm755 %SOURCE1 %buildroot%_initdir/%name
-mkdir -p %buildroot%_sysconfdir/%name/rules
-mkdir -p %buildroot%_localstatedir/%name/from
-mkdir -p %buildroot%_localstatedir/%name/to
 
-cat > %buildroot%_sysconfdir/%name/clsync.conf <<EOF
-# This configuration is a simple test
-[default]
-watch-dir = %_localstatedir/%name/from
-rules-file = %_sysconfdir/%name/rules/default
-destination-dir = %_localstatedir/%name/to
-mode = rsyncdirect
-sync-handler = %_bindir/rsync
-background = 1
-syslog = 1
-full-initialsync = 1
-retries = 3
-EOF
+install -Dpm755 alt/%name.init %buildroot%_initdir/%name
+install -Dpm644 alt/%name.sysconf %buildroot%_sysconfdir/sysconfig/%name
+install -Dpm644 alt/%name.conf %buildroot%_sysconfdir/%name/%name.conf
+install -Dpm644 "examples/%name@.service" %buildroot%_unitdir/%name@.service
 
-cat > %buildroot%_sysconfdir/%name/rules/default <<EOF
--d^[Dd]ont[Ss]ync\$
-+*.*
-EOF
+mv doc/doxygen/html %buildroot%_docdir/%name/
 
 %post
 %post_service %name
@@ -81,20 +140,42 @@ EOF
 
 %files
 %_bindir/*
-%doc %_docdir/*
+%doc %_docdir/%name
+%exclude %_docdir/%name/examples
+%exclude %_docdir/%name/html
 %_man1dir/%name.1*
-%dir %_localstatedir/%name/from
-%dir %_localstatedir/%name/to
-%dir %_sysconfdir/%name
-%dir %_sysconfdir/%name/rules
-%config(noreplace) %_sysconfdir/%name/clsync.conf
-%config %_sysconfdir/%name/rules/default
+%_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
 %_initdir/%name
+%_unitdir/%name@.service
 
 %files devel
 %_includedir/%name/
 
+%files -n libclsync
+%_libdir/lib%name.so.0*
+
+%files -n libclsync-devel
+%_includedir/lib%name/
+%_libdir/lib%name.so
+%_pkgconfigdir/lib%name.pc
+
+%files -n libclsync-devel-static
+%_libdir/lib%name.a
+
+%files examples
+%_docdir/%name/examples
+
+%files apidocs
+%_docdir/%name/html
+
 %changelog
+* Wed May 06 2020 Andrew Savchenko <bircoph@altlinux.org> 0.4.4-alt1
+- Version bump
+- Package configuration change to follow upstream
+- Repackage for finer split
+- Fix various bugs
+
 * Sat Oct 01 2016 Michael Shigorin <mike@altlinux.org> 0.4.2-alt2
 - improved initscript to actually stop the service
 - added post/preun service scriptlets
