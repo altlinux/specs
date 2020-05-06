@@ -8,7 +8,7 @@
 
 Name: inkscape
 Version: %major.0
-Release: alt0.beta2.1
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -19,9 +19,11 @@ Url: http://inkscape.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sf.net/%name/%name-%version%pre.tar
-#Source-url: https://inkscape.org/en/gallery/item/3860/download/
-# Source-url: https://launchpad.net/inkscape/%major.x/%version/+download/inkscape-%version.tar.bz2
-# Source-url: https://inkscape.org/gallery/item/14917/inkscape-%version%pre.tar.bz2
+#Source-url: https://launchpad.net/inkscape/%major.x/%version/+download/inkscape-%version.tar.bz2
+#Source-url: https://inkscape.org/gallery/item/14917/inkscape-%version%pre.tar.bz2
+#Source-url: https://gitlab.com/inkscape/inkscape/-/archive/master/inkscape-master.tar.bz2
+#Source-url: https://inkscape.org/gallery/item/18460/inkscape-%version.tar.xz
+# Source-url: https://media.inkscape.org/dl/resources/file/inkscape-%version.tar.xz
 Source: %name-%version.tar
 
 Patch: %name-dia.patch
@@ -38,7 +40,7 @@ BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel-headers cmake gcc-c++ intltool
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel perl-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel
-BuildRequires: python2.7(xml.dom)
+#BuildRequires: python2.7(xml.dom)
 
 # Checking for modules 'gtkmm-3.0>=3.22;gdkmm-3.0>=3.22;gtk+-3.0>=3.22;gdk-3.0>=3.22;gdl-3.0>=3.4'
 BuildRequires: libgtkmm3-devel >= 3.22 libgdl3-devel >= 3.4
@@ -85,9 +87,9 @@ inkview is standalone viewer for Inkscape files (SVG)
 
 %prep
 %setup
-%patch3 -p1
-%patch4 -p1
-%patch5 -p2
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
 
 %build
 %cmake_insource -DBUILD_SHARED_LIBS=off
@@ -131,6 +133,9 @@ true
 %_man1dir/inkview*
 
 %changelog
+* Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- new version (1.0) with rpmgs script
+
 * Tue Apr 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt0.beta2.1
 - FIxed build with python2.
 
