@@ -1,5 +1,5 @@
 Name: websocketpp
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: C++ WebSocket Protocol Library
@@ -62,6 +62,9 @@ iostreams and one based on Boost Asio.
 %_datadir/cmake/websocketpp/
 
 %changelog
+* Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
+- new version 0.8.2 (with rpmrb script)
+
 * Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
 - new version 0.8.1 (with rpmrb script)
 
