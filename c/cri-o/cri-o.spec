@@ -5,7 +5,7 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit 16a05aafdf5d8fb84942ca60497818949b711cbc
+%global commit 7d79f42b28ad00cf2e7d86604a5a4007303ac328
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -19,7 +19,7 @@
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.17.4
+Version: 1.18.0
 Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
@@ -135,6 +135,9 @@ install -p -m 644 contrib/sysconfig/crio %buildroot%_sysconfdir/sysconfig/crio
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Wed May 06 2020 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.17.4-alt1
 - 1.17.4
 
