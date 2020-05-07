@@ -1,7 +1,7 @@
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
-Version: 2.8.94
-Release: alt2
+Version: 2.8.102
+Release: alt1
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
@@ -318,6 +318,9 @@ make check
 %_datadir/gsoap/plugin/curlapi.h
 
 %changelog
+* Wed May 06 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.8.102-alt1
+- Update to latest release
+
 * Mon Oct 21 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.8.94-alt2
 - Remove dynamic libraries defected by design
 
