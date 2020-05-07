@@ -1,5 +1,5 @@
 Name: featherpad
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -59,6 +59,9 @@ done
 %_iconsdir/*/*/*/*
 
 %changelog
+* Thu May 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.14.1-alt1
+- new version 0.14.1
+
 * Mon Apr 27 2020 Leontiy Volodin <lvol@altlinux.org> 0.14.0-alt1
 - new version 0.14.0
 
