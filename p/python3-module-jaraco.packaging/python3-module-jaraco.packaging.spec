@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 6.2
+Version: 8.1.0
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools_scm
+BuildRequires: python3-module-toml
 
 BuildArch: noarch
 
@@ -38,6 +39,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Feb 18 2020 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
 * Mon Aug 05 2019 Andrey Cherepanov <cas@altlinux.org> 6.2-alt1
 - New version.
 
