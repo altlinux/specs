@@ -1,27 +1,32 @@
 %define        pkgname rails
 
-Name:          ruby-%pkgname
-Version:       5.2.3
-Release:       alt1.1
+Name:          gem-%pkgname
+Version:       5.2.4.1
+Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
 Url:           https://rubyonrails.org/
-%vcs           https://github.com/rails/rails.git
+Vcs:           https://github.com/rails/rails.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Source1:       railsctl
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-%gem_replace_version sprockets-rails ~> 3.0
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
+Requires:      rails = %EVR
 
 %description
 Ruby on Rails metapackage gem.
 
 %package       doc
 Summary:       Documentation files for %name
+Summary(ru_RU.UTF-8): Файлы сведений для %name
 Group:         Development/Documentation
 BuildArch:     noarch
 Provides:      activerecord-gems-doc = %EVR
@@ -257,14 +262,28 @@ Obsoletes:     ruby-railties-doc
 %summary
 
 
+%package       -n %pkgname
+Summary:       Executable file for %gemname gem
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Executable file for %gemname gem.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %prep
 %setup
 
 %build
-%ruby_build --use=railties --join=lib:bin
+%ruby_build
 
 %install
 %ruby_install
+install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 %check
 %ruby_test
@@ -340,15 +359,23 @@ Obsoletes:     ruby-railties-doc
 %ruby_gemspecdir/railties-%version.gemspec
 %ruby_gemslibdir/railties-%version
 %doc README*
-%_bindir/*
 
 %files         -n gem-railties-doc
 %ruby_gemsdocdir/railties-%version
 
+%files         -n %pkgname
+%_bindir/*
+%_sbindir/*
+
 
 %changelog
+* Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.1-alt1
+- ^ 5.2.3 -> 5.2.4.1
+- + railsctl command script to control rails app setup
+- ! spec tags
+
 * Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1.1
-- ! spec to fix dependency
+- fixed (!) spec to fix dependency
 
 * Tue Apr 02 2019 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1
 - Bump to 5.2.3

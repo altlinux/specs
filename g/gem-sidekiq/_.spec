@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.2.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple, efficient background processing for Ruby
 License:       LGPLv3
 Group:         Development/Ruby
@@ -15,7 +15,9 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
+%gem_replace_version rack ~> 2.0
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -76,5 +78,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.8-alt1.1
+- * gem deps for rack to ~> 2.0
+
 * Tue Mar 03 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.8-alt1
 - added (+) packaged gem with usage Ruby Policy 2.0
