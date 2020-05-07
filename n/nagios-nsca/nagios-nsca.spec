@@ -1,6 +1,8 @@
+%define nagios_grp nagiosnew
+
 Name: nagios-nsca
 Version: 2.9.2.1
-Release: alt3
+Release: alt5
 
 Summary: Nagios addon to send check results to a central monitoring server
 
@@ -17,7 +19,8 @@ Patch3: nsca-custom-notifications-%version.patch
 
 BuildRequires: libnsl2-devel libsocket libmcrypt-devel
 
-Requires: nagios xinetd
+Requires: nagios >= 3.0.6-alt12
+Requires: xinetd
 
 %description
 This program is designed to accept passive service check results from
@@ -62,7 +65,7 @@ This package provides the send_nsca utility running on the client.
 
 %build
 #%autoreconf
-%configure
+%configure --with-nsca-grp=%nagios_grp
 %make_build
 
 %install
@@ -88,6 +91,12 @@ install -D -m 0755 src/send_nsca %buildroot%_bindir/send_nsca
 %doc Changelog LEGAL README SECURITY
 
 %changelog
+* Thu May 07 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt5
+- Document the new "host_address" client configuration option.
+
+* Thu May 07 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt4
+- Set to use "nagiosnew" group in all configs.
+
 * Tue Jan 28 2020 Paul Wolneykien <manowar@altlinux.org> 2.9.2.1-alt3
 - Fix/improve: Log error on an unexpected message type.
 
