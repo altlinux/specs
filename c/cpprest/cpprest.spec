@@ -13,8 +13,8 @@
 %def_disable check
 
 Name: cpprest
-Version: %ver_major.14
-Release: alt2
+Version: %ver_major.16
+Release: alt1
 
 Summary: C++ REST library
 Group: System/Libraries
@@ -26,10 +26,6 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-
-# https://github.com/microsoft/cpprestsdk/issues/1141
-Patch1: websocketpp-upstream-boost-compat-1.patch
-Patch2: websocketpp-upstream-boost-compat-2.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-devel >= 1.55 boost-interprocess-devel boost-filesystem-devel
@@ -74,12 +70,6 @@ This package provides development files for %name library.
 %setup -n %_name-%version
 # Remove bundled sources of websocketpp
 %{?_with_system_websocketpp:rm -r Release/libs}
-%if_without system_websocketpp
-pushd Release/libs/websocketpp
-%patch1 -p1
-%patch2 -p1
-popd
-%endif
 # Remove file ThirdPartyNotices.txt, which is associated to websocketpp
 rm -f ThirdPartyNotices.txt
 # fix libdir
@@ -87,7 +77,7 @@ subst 's|\(DESTINATION \)lib|\1%_lib|' Release/src/CMakeLists.txt
 
 %build
 cd Release
-%add_optflags %optflags -D_FILE_OFFSET_BITS=64 -Wl,--as-needed
+%add_optflags %optflags %(getconf LFS_CFLAGS) -Wl,--as-needed
 %cmake .. -DCMAKE_BUILD_TYPE=Release \
 	  -DCMAKE_INSTALL_DO_STRIP=OFF \
 	  -DWERROR=OFF \
@@ -115,6 +105,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Thu May 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.16-alt1
+- 2.10.16
+
 * Tue Nov 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.14-alt2
 - Fixed build with boost-1.71.0.
 
