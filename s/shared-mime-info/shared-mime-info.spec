@@ -1,36 +1,34 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable updatedb
-%define ver_major 1
-%define ver_minor 15
+%define ver_major 2
+%define ver_minor 0
 
 Name: shared-mime-info
-Version: 1.15
+Version: %ver_major.%ver_minor
 Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
-License: %gpl2plus
+License: GPL-2.0
 Url: http://www.freedesktop.org/wiki/Software/%name
 
 %if_disabled snapshot
-Source: https://github.com/freedesktop/xdg-%name/archive/Release-%ver_major-%ver_minor/%name-%version.tar.gz
+#Source: https://github.com/freedesktop/xdg-%name/archive/Release-%ver_major-%ver_minor/%name-%version.tar.gz
+Source: https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/freedesktop/xdg-shared-mime-info.git
+#VCS: https://gitlab.freedesktop.org/xdg/shared-mime-info.git
 Source: %name-%version.tar
 %endif
 
 Source1: %name.filetrigger
-Patch: %name-0.19-alt-cachedir-param.patch
-Patch1: %name-1.13.1-alt-swf.patch
-Patch2: %name-1.10-alt-q_option.patch
+Patch: %name-2.0-alt-cachedir-param.patch
+Patch1: %name-2.0-alt-swf.patch
+Patch2: %name-2.0-alt-q_option.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-xdg
-BuildPreReq: intltool itstool xml-utils
-# for build test programs
-BuildPreReq: libgio-devel
-
-BuildRequires: glib2-devel libxml2-devel perl-XML-Parser xml-utils
+BuildRequires(pre): meson rpm-build-licenses rpm-build-xdg
+BuildRequires: libgio-devel libxml2-devel
+BuildRequires: itstool xmllint xmlto
 
 %description
 This is the freedesktop.org shared MIME info database.
@@ -58,19 +56,19 @@ format and merging them together.
 %prep
 %setup %{?_disable_snapshot:-n xdg-%name-Release-%ver_major-%ver_minor}
 cp %SOURCE1 .
-%patch
-%patch1 -b .swf
-%patch2 -b .quiet
+%patch -p1 -b .cachedir
+%patch1 -p1 -b .swf
+%patch2 -p1 -b .quiet
 rm -f freedesktop.org.xml
 
 %build
-%autoreconf
-%configure %{?_disable_updatedb:--disable-update-mimedb}
-# SMP-incompatible build
-%make
+%meson \
+%{?_enable_updatedb:-Dupdate-mimedb=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 cat <<__SH__ >%name.sh
 export XDG_DATA_DIRS="\${XDG_DATA_DIRS-%_datadir}"
@@ -97,23 +95,27 @@ rm -rf %_xdgmimedir/{application,audio,globs,image,inode,magic,message,model,\
 multipart,text,video,XMLnamespaces}
 
 %check
-%make check
+%meson_test
 
 %files -f db.files
 %_bindir/update-mime-database
 %_xdgmimedir/packages/freedesktop.org.xml
 %_man1dir/update-mime-database.1.*
 %_datadir/pkgconfig/%name.pc
+%_datadir/gettext/its/%name.*
 
 %exclude  %config(noreplace) %_sysconfdir/profile.d/*
 
 # filetrigger
 %_rpmlibdir/mime-database.filetrigger
-%doc README shared-mime-info-spec.xml
+%doc README* NEWS data/shared-mime-info-spec.xml
 
 %exclude %_datadir/locale
 
 %changelog
+* Thu May 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- updated to 2.0-1-g6bf9e4f (ported to Meson build system)
+
 * Wed Nov 06 2019 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
 - 1.15
 
