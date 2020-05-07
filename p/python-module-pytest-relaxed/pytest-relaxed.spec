@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.5
-Release: alt2
+Release: alt3
 Summary: pytest plugin for relaxed test discovery
 License: BSD-2-Clause
 Group: Development/Python
@@ -89,6 +89,9 @@ tox.py3 --sitepackages -p auto -o -v -- -v
 %python3_sitelibdir/pytest_relaxed-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 1.1.5-alt3
+- Added compatibility with Pytest 5.4.
+
 * Fri Dec 06 2019 Stanislav Levin <slev@altlinux.org> 1.1.5-alt2
 - Fixed testing against Pytest 5.3+.
 

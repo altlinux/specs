@@ -1,30 +1,27 @@
+%define _unpackaged_files_terminate_build 1
 %define oname wcwidth
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.1.7
-Release: alt2.1
+Version: 0.1.9
+Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/wcwidth/
+Url: https://pypi.org/project/wcwidth/
 
 # https://github.com/jquast/wcwidth.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-coverage python-module-pytest-pep8
-BuildPreReq: python-module-pytest-flakes python-module-pytest-cov
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-coverage python3-module-pytest-pep8
-BuildPreReq: python3-module-pytest-flakes python3-module-pytest-cov
-%endif
 
-%py_provides %oname
+%if_with check
+BuildRequires: python2.7(pytest)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 This API is mainly for Terminal Emulator implementors - any python
@@ -32,23 +29,9 @@ program that attempts to determine the printable width of a string on a
 Terminal. It is implemented in python (no C library calls) and has no
 3rd-party dependencies.
 
-%package tests
-Summary: tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This API is mainly for Terminal Emulator implementors - any python
-program that attempts to determine the printable width of a string on a
-Terminal. It is implemented in python (no C library calls) and has no
-3rd-party dependencies.
-
-This package contains tests for %oname.
-
 %package -n python3-module-%oname
 Summary: Measures number of Terminal column cells of wide-character codes
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 This API is mainly for Terminal Emulator implementors - any python
@@ -56,80 +39,56 @@ program that attempts to determine the printable width of a string on a
 Terminal. It is implemented in python (no C library calls) and has no
 3rd-party dependencies.
 
-%package -n python3-module-%oname-tests
-Summary: tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This API is mainly for Terminal Emulator implementors - any python
-program that attempts to determine the printable width of a string on a
-Terminal. It is implemented in python (no C library calls) and has no
-3rd-party dependencies.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
+rm -r %buildroot%python_sitelibdir/%oname/tests
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
+rm -r %buildroot/%python3_sitelibdir/%oname/tests
 
 %check
-export LC_ALL=en_US.UTF-8
-export PYTHONPATH=$PWD
-rm -fR build
-py.test -vv \
-	-rs -W error --flakes \
-	wcwidth/tests
-%if_with python3
-pushd ../python3
-export PYTHONPATH=$PWD
-rm -fR build
-py.test3 -vv \
-	-x -W error --flakes \
-	--cov wcwidth
-popd
-%endif
+sed -i '/^\[testenv\]$/a whitelist_externals =\
+    \/bin\/cp\
+    \/bin\/sed\
+setenv =\
+    py2: _PYTEST_BIN=%_bindir\/py.test\
+    py3: _PYTEST_BIN=%_bindir\/py.test3\
+commands_pre =\
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py2,py3
+tox.py3 --sitepackages -p auto -o -vv -r
 
 %files
-%doc *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%doc README.rst LICENSE.txt
+%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
+%python_sitelibdir/%oname/
 
-%files tests
-%python_sitelibdir/*/tests
-
-%if_with python3
 %files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%endif
+%doc README.rst LICENSE.txt
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname/
 
 %changelog
+* Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 0.1.9-alt1
+- 0.1.7 -> 0.1.9.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

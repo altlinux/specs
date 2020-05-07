@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.2
-Release: alt3
+Version: 5.4.1
+Release: alt1
 
 Summary: Python test framework
 License: MIT
@@ -42,6 +42,7 @@ BuildRequires: python3(pluggy)
 BuildRequires: python3(requests)
 BuildRequires: python3(wcwidth)
 BuildRequires: python3(xmlschema)
+BuildRequires: python3-module-Pygments > 2.4.2
 %endif
 
 BuildArch: noarch
@@ -69,19 +70,17 @@ scales to support complex functional testing for applications and libraries.
 %patch -p1
 
 # adjust timeouts for testing on aarch64/beehive
-grep -qs 'child\.expect(.*)' \
-testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
-grep -qs 'child\.expect_exact([[:space:]]*$' \
-testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
-grep -qs 'testdir\.spawn_pytest([[:space:]]*$' \
-testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
+for ptrn in 'child\.expect(.*)' 'child\.expect_exact([[:space:]]*$' 'testdir\.spawn_pytest([[:space:]]*$'
+do
+    grep -qs "$ptrn" testing/test_{debugging,terminal,unittest}.py || exit 1
+done
 
 sed -i -e '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;' \
 -e '/child\.expect_exact([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1timeout=60,/g}' \
 -e '/testdir\.spawn_pytest(.*)/s/)[[:space:]]*$/, expect_timeout=30)/g;' \
 -e '/testdir\.spawn_pytest([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1expect_timeout=30,/g}' \
 -e 's/\([[:space:]]*\)child\.sendline(\x22p .*)$/&\n\1import time; time.sleep(child.delaybeforesend)/g' \
-testing/{test_pdb.py,test_terminal.py,test_unittest.py}
+testing/test_{debugging,terminal,unittest}.py
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -122,6 +121,9 @@ tox.py3 --sitepackages -v
 %_bindir/pytest-3
 
 %changelog
+* Tue May 05 2020 Stanislav Levin <slev@altlinux.org> 5.4.1-alt1
+- 5.3.2 -> 5.4.1.
+
 * Tue Apr 28 2020 Stanislav Levin <slev@altlinux.org> 5.3.2-alt3
 - Fixed FTBFS.
 
