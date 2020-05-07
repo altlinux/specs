@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2020.Q1.1
+Version: 2020.Q2.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -25,7 +25,7 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel libssl-devel
+BuildRequires: gcc7-c++ cmake python3-devel curl libstdc++7-devel libxcb-devel libssl-devel llvm-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -53,6 +53,8 @@ AMD developer tools.
 
 %prep
 %setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7
+mkdir -p %_builddir/llvm-project
+mv %_builddir/llvm %_builddir/llvm-project
 pushd %_builddir/spvgen
 %patch1 -p2
 popd
@@ -90,6 +92,16 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Thu May 07 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.Q2.2-alt1
+- 2020-4-30 update:
+  + xgl: d8c926b86b1245badc67e5d55b0eaa45d4a910a0
+  + pal: e1b2dde021a2efd34da6593994f87317a803b065
+  + llpc: 3864fc733e437a6e6ae729c6858b92b39194eada
+  + spvgen: d4817ab957f79762da83b7fc1d3f2816dbdc13fd
+  + llvm: a1299ba9c8e2337f00bdec73e2031144d9811ed7
+- icd: bump vulkan version api version to 1.2.135.
+- update BR.
+
 * Wed Feb 12 2020 L.A. Kostis <lakostis@altlinux.ru> 2020.Q1.1-alt1
 - 2020-1-21 update:
   + llvm: 08268e9955d48ca075b239ae46328694ddff2413
