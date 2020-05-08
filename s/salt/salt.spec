@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3000.1
+Version: 3000.2
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -18,6 +18,8 @@ Source3: salt-api.init
 Source4: salt-master.init
 Source5: salt-minion.init
 Source6: salt-syndic.init
+
+Patch1: salt-alt-and-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -90,6 +92,9 @@ with XMLRPC or even a Websocket API.
 
 %prep
 %setup
+%patch1 -p1
+# Remove local copy documentation mention
+subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
 %build
 %python3_build
@@ -125,6 +130,7 @@ install -p -m 0644 pkg/salt-master.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-syndic.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-minion.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-api.service %buildroot%_unitdir/
+install -p -m 0644 pkg/salt-proxy@.service %buildroot%_unitdir/
 
 mkdir -p %buildroot%_sysconfdir/salt/
 install -p -m 0640 conf/minion %buildroot%_sysconfdir/salt/minion
@@ -143,17 +149,6 @@ install -D -m 0644 pkg/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
 
 install -D -m 0644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/salt-master
 install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
-
-#TODO: temp fix
-#rm -rf %python_sitelibdir/salt/cloud/deploy
-#rm -rf %buildroot%python_sitelibdir/salt/cloud/deploy
-
-#create symlink for opennode
-#cd %buildroot%python_sitelibdir/salt/modules
-#ln -s ../../opennode/cli/actions onode
-
-#check
-#__python setup.py test --runtests-opts=-u
 
 %post master
 %post_service salt-master
@@ -194,13 +189,10 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %config(noreplace) %_sysconfdir/salt/cloud
 %ghost %_logdir/salt/master
 %_var/cache/salt
-
 %_initdir/salt-master
 %_initdir/salt-syndic
-
 %_unitdir/salt-master.service
 %_unitdir/salt-syndic.service
-
 %_bindir/salt
 %_bindir/salt-master
 %_bindir/salt-syndic
@@ -211,7 +203,6 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-ssh
 %_bindir/spm
 %_bindir/salt-unity
-
 %_man1dir/salt.1.*
 %_man1dir/salt-master.1.*
 %_man1dir/salt-cp.1.*
@@ -238,19 +229,26 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %config(noreplace) %_sysconfdir/sysconfig/salt-minion
 %config(noreplace) %_sysconfdir/salt/pki/minion
 %ghost %_logdir/salt/minion
-
 %_initdir/salt-minion
 %_unitdir/salt-minion.service
-
+%_unitdir/salt-proxy@.service
 %_bindir/salt-call
 %_bindir/salt-minion
 %_bindir/salt-proxy
-
 %_man1dir/salt-call.1.*
 %_man1dir/salt-minion.1.*
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Fri May 08 2020 Andrey Cherepanov <cas@altlinux.org> 3000.2-alt1
+- New version.
+- Remove local copy documentation mention in service files.
+- Fix build with Python 3.8.
+- Improve detection of ALT distro.
+- Fixes:
+  + CVE-2020-11651
+  + CVE-2020-11652
+
 * Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 3000.1-alt1
 - New version.
 
