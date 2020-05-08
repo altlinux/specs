@@ -1,8 +1,8 @@
 %define setupdir egroupware
 
 Name: egroupware
-Version: 19.1
-Release: alt2
+Version: 19.1.20200430
+Release: alt1
 
 Summary: Multi-user, web-based groupware suite
 Summary(ru_RU.UTF-8): Многопользовательский web-ориентированный пакет для коллективной работы
@@ -73,6 +73,9 @@ find %_datadir/%setupdir -type f -exec chmod 644 {} \;
 #rm -rf %_datadir/%setupdir
 
 %changelog
+* Fri May 08 2020 Pavel Isopenko <pauli@altlinux.org> 19.1.20200430-alt1
+- maintenance release 19.1.20200430
+
 * Fri May 08 2020 Pavel Isopenko <pauli@altlinux.org> 19.1-alt2
 - do not remove setupdir
 
