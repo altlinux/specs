@@ -13,7 +13,7 @@
 
 Name:		agola
 Version:	0.5.0
-Release:	alt2
+Release:	alt3
 Summary:	CI/CD redefined
 
 Group:		Development/Other
@@ -32,8 +32,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: go-bindata
 
 %description
-Grafana is an open source, feature rich metrics dashboard and graph editor
-for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
+Agola is CI/CD tools.
 
 %prep
 %setup -q
@@ -97,6 +96,9 @@ useradd -r -g _%name -d %_sharedstatedir/%name -s /dev/null -n _%name >/dev/null
 %_unitdir/%name.service
 
 %changelog
+* Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt3
+- fixed description
+
 * Mon Apr 27 2020 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
 - cross build toolbox for amd64 arm64 386 arm ppc64le mipsle riscv64
 - add config and systemd unit
