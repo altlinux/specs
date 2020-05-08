@@ -6,7 +6,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -195,6 +195,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %endif
 
 %changelog
+* Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.4-alt1
+- new version 2.9.4
+
 * Wed Mar 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.3-alt1
 - Initial build.
 
