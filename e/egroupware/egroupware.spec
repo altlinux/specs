@@ -2,7 +2,7 @@
 
 Name: egroupware
 Version: 19.1
-Release: alt1
+Release: alt2
 
 Summary: Multi-user, web-based groupware suite
 Summary(ru_RU.UTF-8): Многопользовательский web-ориентированный пакет для коллективной работы
@@ -70,9 +70,12 @@ composer install --no-plugins --no-scripts --working-dir=%_datadir/%setupdir
 find %_datadir/%setupdir -type f -exec chmod 644 {} \;
 
 %postun
-rm -rf %_datadir/%setupdir
+#rm -rf %_datadir/%setupdir
 
 %changelog
+* Fri May 08 2020 Pavel Isopenko <pauli@altlinux.org> 19.1-alt2
+- do not remove setupdir
+
 * Tue Mar 10 2020 Pavel Isopenko <pauli@altlinux.org> 19.1-alt1
 - initial build for Sisyphus
 
