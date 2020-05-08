@@ -5,7 +5,7 @@
 
 Name: nagiosdigger
 Version: 0.9
-Release: alt3
+Release: alt4
 
 Url: https://www.vanheusden.com/nagiosdigger/
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -15,7 +15,8 @@ Source:%name-%version.tar
 Patch0: %name-%version-mysqli.patch
 Patch1: %name-%version-sql.patch
 Patch2: %name-%version-css.patch
-Patch3: %name-%version-alt.patch
+Patch3: %name-%version-config.patch
+Patch4: %name-%version-alt.patch
 
 BuildArch: noarch
 
@@ -23,12 +24,13 @@ Summary: A powerfull web frontend for the logging produced by Nagios
 License: GPL-2.0
 Group: Monitoring
 
-Requires: nagios-www
+Requires: nagios-www >= 3.0.6-alt12
 Requires: apache2-base apache2-mod_php7
 Requires: perl-DBI perl-DBD-mysql
 Requires: php7-jpgraph php7-mysqli
+Conflicts: nagios < 3.0.6-alt12
 
-BuildRequires: perl-DBI perl-DBD-mysql
+BuildRequires: perl-DBI perl-DBD-mysql perl-Config-INI
 
 %description
 Nagiosdigger is a powerfull web frontend for the logging produced by
@@ -45,6 +47,7 @@ It requires a MySQL database as well as the JPGraph graph creating library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %make_build
@@ -68,12 +71,17 @@ a2enextra httpd-addon.d
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 %config(noreplace) %plugins_cmddir/50-nagiosdigger.cfg
 %dir %configdir
-%config(noreplace) %configdir/config.inc.php
-%attr(0640,root,%nagios_grp) %config(noreplace) %configdir/config.pl
+%attr(0640,root,%nagios_grp) %config(noreplace) %configdir/config.ini
 %_sbindir/%name-import
 %nagios_plugindir/nagiosdigger_event_handler
 
 %changelog
+* Thu May 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt4
+- Fixed nagios dependency: require >= 3.0.6-alt12 (needed for
+  "nagiosnew" group)
+- Updated the readme.txt reflecting config.ini.
+- Use a single INI configuration file for both PHP and Perl.
+
 * Mon Apr 20 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt3
 - Switch to PHP7.
 

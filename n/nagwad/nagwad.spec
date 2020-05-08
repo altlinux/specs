@@ -1,6 +1,6 @@
 Name: 	  nagwad
-Version:  0.9.4
-Release:  alt2
+Version:  0.9.5
+Release:  alt1
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -86,6 +86,10 @@ mkdir -p %buildroot/var/log/nagwad
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Thu May 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.5-alt1
+- Fixed quotation in NSCA shell action.
+- Fixed OSEC regular expression for Nagwad.
+
 * Wed Apr 22 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.4-alt2
 - Switch to cronjob until timerunit patch is accepted by the OSEC's
   maintainer.
