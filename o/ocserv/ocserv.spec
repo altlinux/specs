@@ -4,7 +4,7 @@
 %def_with maxmind
 
 Name: ocserv
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
@@ -124,6 +124,9 @@ install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 %_initdir/%name
 
 %changelog
+* Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt1
+- new version 1.0.1
+
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 
