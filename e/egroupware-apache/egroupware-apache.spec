@@ -2,7 +2,7 @@
 
 Name: egroupware-apache
 Version: 19.1
-Release: alt1
+Release: alt2
 
 Summary: EGroupware CE Apache configuration
 Summary(ru_RU.UTF-8): Конфигурация Apache для EGroupware CE
@@ -45,7 +45,13 @@ service httpd2 condreload
 %preun
 a2dissite egroupware
 
+%postun
+service httpd2 condreload
+
 %changelog
+* Fri May 08 2020 Pavel Isopenko <pauli@altlinux.org> 19.1-alt2
+- add postun condreload
+
 * Tue Mar 31 2020 Pavel Isopenko <pauli@altlinux.org> 19.1-alt1
 - initial build for Sisyphus
 
