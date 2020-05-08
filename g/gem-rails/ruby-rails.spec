@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.2.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -369,6 +369,9 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 
 %changelog
+* Fri May 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.1-alt2
+- ! railsctl
+
 * Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.1-alt1
 - ^ 5.2.3 -> 5.2.4.1
 - + railsctl command script to control rails app setup
