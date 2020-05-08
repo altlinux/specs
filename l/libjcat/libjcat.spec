@@ -1,7 +1,7 @@
 Summary: Library for reading Jcat files
 Name: libjcat
 Version: 0.1.2
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
 Source0: %name-%version.tar
@@ -16,6 +16,8 @@ BuildRequires: libgnutls-devel
 BuildRequires: gnutls-utils
 BuildRequires: libgpgme-devel
 BuildRequires: vala vala-tools
+BuildRequires: help2man
+BuildRequires: /proc
 
 %description
 This library allows reading and writing gzip-compressed JSON catalog files,
@@ -45,7 +47,7 @@ Executable and data files for installed tests.
 %build
 %meson \
     -Dgtkdoc=true \
-    -Dman=false \
+    -Dman=true \
     -Dtests=true
 
 %meson_build
@@ -59,6 +61,7 @@ Executable and data files for installed tests.
 %files
 %doc README.md
 %_bindir/jcat-tool
+%_datadir/man/man1/*.1*
 %dir %_libdir/girepository-1.0
 %_libdir/girepository-1.0/*.typelib
 %_libdir/libjcat.so.1*
@@ -82,6 +85,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Fri May 08 2020 Ivan Razzhivin <underwit@altlinux.org> 0.1.2-alt2
+- fix build man pages
+
 * Wed May 06 2020 Anton Farygin <rider@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 
