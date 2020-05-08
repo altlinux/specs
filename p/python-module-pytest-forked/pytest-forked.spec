@@ -4,16 +4,17 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt2
+Version: 1.1.3
+Release: alt1
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
 Group: Development/Python
 # Source-git: https://github.com/pytest-dev/pytest-forked.git
-Url: https://pypi.python.org/pypi/pytest-forked
+Url: https://pypi.org/project/pytest-forked/
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools_scm
@@ -42,6 +43,8 @@ Group: Development/Python3
 
 %prep
 %setup
+%autopatch -p1
+
 rm -rf ../python3
 cp -fR . ../python3
 
@@ -74,8 +77,9 @@ setenv =\
     py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c \#!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
+export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
@@ -93,6 +97,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/pytest_forked-*.egg-info/
 
 %changelog
+* Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1
+- 1.0.2 -> 1.1.3.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
 - Fixed testing against Pytest 5.
 

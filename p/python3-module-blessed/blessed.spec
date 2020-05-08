@@ -1,47 +1,43 @@
+%define _unpackaged_files_terminate_build 1
 %define oname blessed
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.14.2
-Release: alt2
+Version: 1.17.5
+Release: alt1
 
 Summary: A feature-filled fork of Erik Rose's blessings project
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/blessed/
+Url: https://pypi.org/project/blessed/
 # https://github.com/jquast/blessed.git
 BuildArch: noarch
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-tox python3-module-wcwidth
-BuildRequires: python3-module-coverage python3-module-pytest-flakes
-BuildRequires: python3-module-pytest-xdist python3-module-pytest-pep8
-BuildRequires: python3-module-pytest-cov python3-module-mock
-BuildRequires: python3-modules-curses
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python3(curses)
+BuildRequires: python3(mock)
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+BuildRequires: terminfo-extra
+%endif
 
-%py3_provides %oname
-Requires: /dev/pts
 %py3_requires wcwidth curses
-
 
 %description
 A feature-filled fork of Erik Rose's blessings project.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-A feature-filled fork of Erik Rose's blessings project.
-
-This package contains tests for %oname.
-
 %prep
-%setup -n %oname-%version
+%setup
+%autopatch -p1
+
+# don't package Windows Terminal
+rm blessed/win_terminal.py
 
 sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -53,22 +49,21 @@ sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-export LC_ALL=en_US.UTF-8
-py.test-%_python3_version \
-    --strict --flakes \
-    --junit-xml=results.{envname}.xml --verbose \
-    --cov blessed blessed/tests --cov-report=term-missing
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vv -r
 
 %files
-%doc *.rst docs/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
+%doc LICENSE README.rst
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu May 07 2020 Stanislav Levin <slev@altlinux.org> 1.17.5-alt1
+- 1.14.2 -> 1.17.5.
+- Enabled testing.
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.14.2-alt2
 - disable python2
 
