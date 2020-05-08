@@ -178,8 +178,8 @@
 %endif
 
 Name: libvirt
-Version: 6.2.0
-Release: alt2
+Version: 6.3.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1029,6 +1029,7 @@ fi
 %dir %attr(0700, root, root) %_logdir/libvirt
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
+%config(noreplace) %_sysconfdir/sysconfig/virtproxyd
 %config /lib/tmpfiles.d/libvirtd.conf
 %_unitdir/libvirtd*
 %_unitdir/virtproxyd*
@@ -1112,6 +1113,7 @@ fi
 %if_with driver_modules
 %if_with network
 %files daemon-driver-network
+%config(noreplace) %_sysconfdir/sysconfig/virtnetworkd
 %config(noreplace) %_sysconfdir/libvirt/virtnetworkd.conf
 %_datadir/augeas/lenses/virtnetworkd.aug
 %_datadir/augeas/lenses/tests/test_virtnetworkd.aug
@@ -1123,6 +1125,7 @@ fi
 
 %if_with udev
 %files daemon-driver-nodedev
+%config(noreplace) %_sysconfdir/sysconfig/virtnodedevd
 %config(noreplace) %_sysconfdir/libvirt/virtnodedevd.conf
 %_datadir/augeas/lenses/virtnodedevd.aug
 %_datadir/augeas/lenses/tests/test_virtnodedevd.aug
@@ -1131,6 +1134,7 @@ fi
 %_libdir/%name/connection-driver/libvirt_driver_nodedev.so
 
 %files daemon-driver-interface
+%config(noreplace) %_sysconfdir/sysconfig/virtinterfaced
 %config(noreplace) %_sysconfdir/libvirt/virtinterfaced.conf
 %_datadir/augeas/lenses/virtinterfaced.aug
 %_datadir/augeas/lenses/tests/test_virtinterfaced.aug
@@ -1141,6 +1145,7 @@ fi
 
 %if_with nwfilter
 %files daemon-driver-nwfilter
+%config(noreplace) %_sysconfdir/sysconfig/virtnwfilterd
 %config(noreplace) %_sysconfdir/libvirt/virtnwfilterd.conf
 %_datadir/augeas/lenses/virtnwfilterd.aug
 %_datadir/augeas/lenses/tests/test_virtnwfilterd.aug
@@ -1150,6 +1155,7 @@ fi
 %endif
 
 %files daemon-driver-secret
+%config(noreplace) %_sysconfdir/sysconfig/virtsecretd
 %config(noreplace) %_sysconfdir/libvirt/virtsecretd.conf
 %_datadir/augeas/lenses/virtsecretd.aug
 %_datadir/augeas/lenses/tests/test_virtsecretd.aug
@@ -1160,6 +1166,7 @@ fi
 %files daemon-driver-storage
 
 %files daemon-driver-storage-core
+%config(noreplace) %_sysconfdir/sysconfig/virtstoraged
 %config(noreplace) %_sysconfdir/libvirt/virtstoraged.conf
 %_datadir/augeas/lenses/virtstoraged.aug
 %_datadir/augeas/lenses/tests/test_virtstoraged.aug
@@ -1232,6 +1239,7 @@ fi
 
 %if_with qemu
 %files daemon-driver-qemu
+%config(noreplace) %_sysconfdir/sysconfig/virtqemud
 %config(noreplace) %_sysconfdir/libvirt/virtqemud.conf
 %_datadir/augeas/lenses/virtqemud.aug
 %_datadir/augeas/lenses/tests/test_virtqemud.aug
@@ -1253,6 +1261,7 @@ fi
 
 %if_with lxc
 %files daemon-driver-lxc
+%config(noreplace) %_sysconfdir/sysconfig/virtlxcd
 %config(noreplace) %_sysconfdir/libvirt/virtlxcd.conf
 %_datadir/augeas/lenses/virtlxcd.aug
 %_datadir/augeas/lenses/tests/test_virtlxcd.aug
@@ -1270,6 +1279,7 @@ fi
 
 %if_with libxl
 %files daemon-driver-libxl
+%config(noreplace) %_sysconfdir/sysconfig/virtxend
 %config(noreplace) %_sysconfdir/libvirt/virtxend.conf
 %_datadir/augeas/lenses/virtxend.aug
 %_datadir/augeas/lenses/tests/test_virtxend.aug
@@ -1286,6 +1296,7 @@ fi
 
 %if_with vbox
 %files daemon-driver-vbox
+%config(noreplace) %_sysconfdir/sysconfig/virtvboxd
 %config(noreplace) %_sysconfdir/libvirt/virtvboxd.conf
 %_datadir/augeas/lenses/virtvboxd.aug
 %_datadir/augeas/lenses/tests/test_virtvboxd.aug
@@ -1376,6 +1387,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.3.0-alt1
+- 6.3.0
+
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt2
 - drop requires on bridge-utils
 
