@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.51.0
+Version:	3.52.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -15,7 +15,6 @@ Source2:	nss-config.in
 Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
-Source7:	nss-pem-%version.tar
 
 Patch0:		nss_with_system_nspr.patch
 Patch2:		nss-no-rpath.patch
@@ -23,9 +22,6 @@ Patch3:		nss-use-sqlite.patch
 Patch4:		nss-use-mozsqlite.patch
 Patch5:		nss-fix-objdir.patch
 Patch6:		nss-no-tests.patch
-
-# Fedora patches
-Patch10:	nss-enable-pem.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -86,7 +82,8 @@ Summary:	NSS static libraries
 Group:		Development/C
 Requires:	lib%name-devel = %version-%release
 
-Provides:	%name-devel-static = %version-%release
+Provides:	%name-devel-static        = %version-%release
+Provides:	%name-pkcs11-devel-static = %version-%release
 
 %description -n lib%name-devel-static
 NSS development kit (static libs)
@@ -115,12 +112,9 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
-%setup -q -T -D -a7
 %patch2 -p0
 %patch5 -p2
 %patch6 -p2
-
-%patch10 -p0
 
 :>nss/coreconf/Werror.mk
 
@@ -132,7 +126,7 @@ cat sslstress.txt| sed -r "s/^([^#].*EXPORT|^[^#].*SSL2)/#disabled \1/" > sslstr
 popd
 
 %build
-export BUILD_OPT=1 
+export BUILD_OPT=1
 export NS_USE_GCC=1
 export CC_IS_GCC=1
 export NSS_NO_SSL2_NO_EXPORT=1
@@ -166,14 +160,20 @@ NSS_VMAJOR="$(sed -ne 's,^#define[[:space:]]\+NSS_VMAJOR[[:space:]]\+,,p' "$nss_
 NSS_VMINOR="$(sed -ne 's,^#define[[:space:]]\+NSS_VMINOR[[:space:]]\+,,p' "$nss_h")"
 NSS_VPATCH="$(sed -ne 's,^#define[[:space:]]\+NSS_VPATCH[[:space:]]\+,,p' "$nss_h")"
 
-# Install NSS libraries 
+# Install NSS libraries
 cd dist
 cp -aL "$DESTDIR"/bin/* %buildroot%_bindir
 cp -aL "$DESTDIR"/lib/* %buildroot%_libdir
 
 # Install NSS headers
-cd public
-cp -aL nss %buildroot%_includedir
+cp -aL public/nss %buildroot%_includedir
+
+# Copy some freebl include files we also want
+mkdir -p -- %buildroot/%_includedir/%name/private
+
+for n in blapi.h alghmac.h cmac.h; do
+    cp -aL private/nss/$n %buildroot/%_includedir/%name/private/$n
+done
 
 # Install NSS utils
 sed -e "s,@libdir@,%_libdir,g" \
@@ -196,7 +196,7 @@ sed -e "s,@libdir@,%_libdir,g" \
 chmod 755 %buildroot/%_bindir/nss-config
 
 # Add real RPATH
-find "%buildroot%_bindir" "%buildroot%_libdir" -type f | 
+find "%buildroot%_bindir" "%buildroot%_libdir" -type f |
 while read f; do
   file "$f" | grep -qs ELF || continue
   if chrpath -l "$f" | fgrep -qs "RPATH="; then
@@ -272,6 +272,10 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed May 06 2020 Alexey Gladkov <legion@altlinux.ru> 3.52.0-alt1
+- New version (3.52).
+- Stop pulling in nss-pem automatically, packages that need it should depend on it.
+
 * Sat Mar 14 2020 Alexey Gladkov <legion@altlinux.ru> 3.51.0-alt1
 - New version (3.51).
 
