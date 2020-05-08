@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt3
+Release:       alt4
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -33,6 +33,7 @@ BuildRequires: libX11-devel
 BuildRequires: libnspr-devel
 BuildRequires: fontconfig
 BuildRequires: libfreetype-devel
+BuildRequires: node-sass
 
 Requires:      wget
 Requires:      vixie-cron
@@ -45,7 +46,8 @@ Requires:      fontconfig
 Requires:      libfreetype
 
 Requires:      node-sass
-BuildRequires:      node-sass
+# explicit TODO then remove
+Requires:      gem-secure-headers >= 6.3.0
 
 %gem_replace_version rails ~> 5.2
 %gem_replace_version graphql ~> 1.9
@@ -136,7 +138,7 @@ useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
-railsctl setup %name
+#railsctl setup %name
 # %post_service foreman
 # %post_service dynflowd
 
@@ -170,6 +172,11 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Fri May 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt4
+- + explicit require deps to gem-secure-headers
+- - post call to railsctl on install
+- ! service name call to railsctl in .service
+
 * Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt3
 - - post exec in spec
 - * with service run using 'railsctl'
