@@ -1,7 +1,7 @@
 
 Name: libseccomp
-Version: 2.4.2
-Release: alt2
+Version: 2.4.3
+Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -67,6 +67,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*
 
 %changelog
+* Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.3-alt1
+- new version 2.4.3
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 2.4.2-alt2
 - add upstream fix for chrony FTBFS
 
