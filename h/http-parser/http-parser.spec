@@ -1,7 +1,7 @@
 
 Name: http-parser
-Version: 2.9.2
-Release: alt2
+Version: 2.9.4
+Release: alt1
 Summary: HTTP request/response parser for C
 
 Group: System/Libraries
@@ -65,6 +65,9 @@ EOF
 %_libdir/libhttp_parser.so
 
 %changelog
+* Sat May 09 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.4-alt1
+- new version 2.9.4
+
 * Thu Jan 16 2020 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt2
 - add http_parser.pc (ALT bug 37698)
 
