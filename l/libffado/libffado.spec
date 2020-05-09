@@ -2,7 +2,7 @@
 
 Name: libffado
 Version: 2.4.1
-Release: alt2
+Release: alt3
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -11,12 +11,15 @@ Group: Sound
 Url: http://www.ffado.org/
 Source: %name-%version.tar
 Patch: libffado-2.0-alt.patch
-
-%setup_python_module ffado
+Patch1: libffado-mixer-py3.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel
-BuildRequires: python-module-PyQt4 python-module-dbus python-modules-encodings
+BuildRequires: libalsa-devel
+BuildRequires: libdbus-c++-devel
+BuildRequires: qt5-dbus
+BuildRequires: python3-dev
+BuildRequires: python3-module-PyQt5 python3-module-dbus
 BuildRequires: scons xdg-utils libconfig-c++-devel
 
 %description
@@ -40,17 +43,18 @@ Requires: %name = %EVR
 %description -n ffado
 Applications and utilities for use with libffado.
 
-%package -n %packagename
-Summary: Python bindings for %name, %summary
-Group: Development/Python
+%package -n python3-module-ffado
+Summary: Python 3 bindings for %name, %summary
+Group: Development/Python3
 Buildarch: noarch
 
-%description -n  %packagename
-Python bindings for %name, %summary
+%description -n python3-module-ffado
+Python 3 bindings for %name, %summary
 
 %prep
 %setup
 %patch -p2
+%patch1 -p1
 cp -at admin/ -- /usr/share/gnu-config/config.guess
 
 # XXX this uses non-existing module and is not used itself!
@@ -59,7 +63,17 @@ rm support/mixer-qt4/ffado/mixer/nodevice.py
 # We don't want to install all tests
 sed -i '/Install/d' tests/{,*/}SConscript
 
+# Fix Python shebangs
+sed -i 's|/usr/bin/.*python$|/usr/bin/python3|' \
+    admin/*.py doc/SConscript tests/python/*.py tests/*.py \
+    support/mixer-qt4/ffado-mixer* support/mixer-qt4/SConscript \
+    support/tools/*.py support/tools/SConscript
+
+sed -i 's|-m32||' SConstruct
+
 %build
+export CFLAGS="%optflags -ffast-math"
+export CXXFLAGS="%optflags -ffast-math --std=gnu++11"
 [ -n "$NPROCS" ] || NPROCS=%__nprocs;
 scons -j$NPROCS \
 	PREFIX=%prefix \
@@ -69,6 +83,8 @@ scons -j$NPROCS \
 	CXXFLAGS='%optflags' \
 	CUSTOM_ENV=True \
 	MANDIR=%_mandir \
+	PYPKGDIR=%python3_sitelibdir_noarch/ \
+	PYTHON_INTERPRETER=%__python3
 
 %install
 scons \
@@ -100,12 +116,16 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %_man1dir/*
 %dir %_datadir/libffado
 %_datadir/libffado/*
+%_datadir/dbus-1/services/org.ffado.Control.service
 /lib/udev/rules.d/*ffado*.rules
 
-%files -n %packagename
-%python_sitelibdir_noarch/%modulename
+%files -n python3-module-ffado
+%python3_sitelibdir_noarch/ffado
 
 %changelog
+* Sat May 09 2020 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt3
+- rebuild with python3
+
 * Wed Oct 31 2018 Michael Shigorin <mike@altlinux.org> 2.4.1-alt2
 - E2K: fix FTBFS through recent config.guess
 - Minor spec cleanup
