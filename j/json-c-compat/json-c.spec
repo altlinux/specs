@@ -3,12 +3,12 @@
 %def_enable compat
 
 %if_enabled compat
-Name: %oname-c-compat
+Name: %oname-compat
 %else
 Name: %oname
 %endif
 Version: 0.13.1
-Release: alt2
+Release: alt3
 
 Summary: JSON implementation in C
 License: MIT
@@ -82,6 +82,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Sat May 09 2020 Alexey Shabalin <shaba@altlinux.org> 0.13.1-alt3
+- fixed name
+
 * Sat May 09 2020 Alexey Shabalin <shaba@altlinux.org> 0.13.1-alt2
 - build as compat library
 
