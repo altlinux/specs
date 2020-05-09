@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
 Version:       3.4.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -30,7 +30,6 @@ BuildRequires: libtiff-devel
 BuildRequires: libmount-devel
 BuildRequires: libblkid-devel
 BuildRequires: libat-spi2-core-devel
-BuildRequires: libwlc0-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libXi-devel
@@ -41,6 +40,8 @@ BuildRequires: libpng-devel
 BuildRequires: libxml2-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
+BuildRequires: wayland-protocols
+BuildRequires: libxkbcommon-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: at-spi2-atk-devel
@@ -1134,6 +1135,9 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Sat May 09 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1.2
+- Do not require deprecated libwlc0-devel for wayland-protocols.pc.
+
 * Thu Apr 02 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1.1
 - ! build required package names
 
