@@ -1,11 +1,11 @@
 %define oname tcltls
 
 Name: tcl-tls
-Version: 1.7.19
+Version: 1.7.21
 Release: alt1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
-License: BSD
+License: TCL
 Group: Development/Tcl
 Url: https://core.tcl.tk/tcltls/
 
@@ -13,13 +13,11 @@ Url: https://core.tcl.tk/tcltls/
 Source: %oname-%version.tar
 Source1: tcl-tls.watch
 
-# Debian patches
 # hasher chroot
-Patch1: hostname-tests.patch
-
-# ALT patches
-Patch10: 0001-ALT-TEA.patch
-Patch11: 0002-ALT-tests-auto_path.patch
+Patch1: 0001-DEBIAN-hostname-tests.patch
+Patch2: 0002-ALT-TEA.patch
+Patch3: 0003-ALT-tests-auto_path.patch
+Patch4: 0004-ALT-disable-cipher-tests.patch
 
 BuildPreReq:  rpm-build-tcl >= 0.5-alt1
 BuildRequires: libssl-devel tcl-devel >= 8.6.7-alt2
@@ -32,10 +30,7 @@ on any platform as it uses a generic mechanism for layering on SSL and Tcl.
 
 %prep
 %setup -q -n %oname-%version
-%patch1 -p1
-%patch10 -p2
-%patch11 -p2
-sed -i 's/@lib@/%_lib/g' pkgIndex.tcl.in
+%autopatch -p2
 
 %build
 %autoreconf
@@ -54,10 +49,15 @@ make test AUTO_PATH=%buildroot%_tcllibdir/tcltls%version
 
 %files
 %doc ChangeLog README.txt license.terms tls.htm
-%_tcllibdir/tcltls.so
-%_tcllibdir/tcltls%version
+%_tcllibdir/tcltls%version/tcltls.so
+%_tcllibdir/tcltls%version/pkgIndex.tcl
 
 %changelog
+* Sat May 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.21-alt1
+- Updated to 1.7.21.
+- Disable cipher tests because upstream expects different cipher suits.
+- Fixed license field.
+
 * Tue Oct 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.19-alt1
 - 1.7.19.
 - Fixed ALT TEA.
