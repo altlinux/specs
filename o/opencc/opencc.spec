@@ -1,9 +1,9 @@
 Name:       opencc
-Version:    1.0.6
+Version:    1.1.0
 Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
-License:    ASL 2.0
+License:    Apache-2.0
 Group:      System/Libraries
 URL:        http://code.google.com/p/opencc/
 Source0:    %{name}-%{version}.tar
@@ -89,6 +89,10 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun May 10 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
 - New version.
 
