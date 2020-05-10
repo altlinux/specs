@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 5.2
+%define ver_major 5.3
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -9,7 +9,7 @@ Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
 Group: Graphical desktop/Other
-License: GPLv3+
+License: GPL-3.0
 Url: https://github.com/elementary/icons
 
 # VCS:https://github.com/elementary/icons.git
@@ -48,6 +48,9 @@ theme.
 %doc README*
 
 %changelog
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
+- 5.3.0
+
 * Mon Jan 27 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - 5.2.0
 - updated BR
