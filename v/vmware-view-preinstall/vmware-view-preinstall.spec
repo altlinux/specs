@@ -1,6 +1,6 @@
 Name: vmware-view-preinstall
 Version: 5.4.1
-Release: alt1
+Release: alt2
 
 Summary: VMware Horizon Client pre-installation scripts
 License: public domain
@@ -9,7 +9,6 @@ Group: System/Configuration/Other
 Url: http://altlinux.org/vmware-view
 ExclusiveArch: %ix86 x86_64
 
-Requires: python2-base
 Requires: python-modules-sqlite3
 Requires: python-modules-xml
 Requires: python-modules-logging
@@ -39,6 +38,9 @@ VMware-Horizon-Client-%version bundle on this system.
 %files
 
 %changelog
+* Sun May 10 2020 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt2
+- Does not require python2-base.
+
 * Sun May 10 2020 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
 - Update requirements for new version.
 
