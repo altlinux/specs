@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.16.0.41
+%define tarbolversion 8.16.0.45
 
 Version: %tarbolversion
-Release: alt3
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -48,7 +48,7 @@ Source36: %name-cyrus-imap-localrelay.mc
 # Patches section
 Patch0: %name-8.15.1-alt.patch
 Patch1: %name-8.10.0-makemapman.patch
-Patch2: %name-8.14.3-smrsh.patch
+Patch2: %name-8.16.0.45-smrsh.patch
 Patch3: %name-8.8.7-rmail.patch
 Patch4: %name-8.12.2-aliasesDoS.patch
 Patch5: %name-8.11.1-up-limit.patch
@@ -63,7 +63,7 @@ Patch10: %name-mrs-8.12.11.patch
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-Patch100: sendmail-8.15.2-glibc-2.30.patch
+#Patch100:
 
 %add_findreq_skiplist */include/*
 
@@ -196,7 +196,7 @@ them that you are currently not reading your mail.
 %patch50 -p1
 
 #errata
-%patch100 -p0
+#patch100 -p0
 
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE6 > cf/cf/altlinux.mc
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE11> cf/cf/submit.mc
@@ -499,6 +499,12 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sun May 10 2020 Sergey Y. Afonin <asy@altlinux.org> 8.16.0.45-alt1
+- New version
+- updated smrsh.patch for 8.16.0.45
+- used gethostbyname2 instead of gethostbyname/RES_USE_INET6,
+  removed sendmail-8.15.2-glibc-2.30.patch
+
 * Sun Mar 29 2020 Sergey Y. Afonin <asy@altlinux.org> 8.16.0.41-alt3
 - fixed FTBFS: added sendmail-8.15.2-glibc-2.30.patch (from OpenSUSE)
 - Updated License tag to SPDX syntax
