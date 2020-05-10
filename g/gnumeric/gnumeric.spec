@@ -11,11 +11,11 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.46
+Version: %ver_major.47
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
-License: GPLv2+ GPLv3+
+License: GPL-2.0 or GPL-3.0
 Group: Office
 Url: http://www.gnumeric.org/
 
@@ -29,7 +29,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.44
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.45
+%define goffice_ver 0.10.47
 # Provided by python_loader.so
 %{?_with_python:Provides: python%__python_version(Gnumeric)}
 
@@ -181,6 +181,10 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.12.47-alt1
+- 1.12.47
+- fixed License tag
+
 * Thu Nov 07 2019 Yuri N. Sedunov <aris@altlinux.org> 1.12.46-alt1
 - 1.12.46
 - disabled python2 support
