@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        75.0
+Version:        76.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,7 +47,6 @@ Patch007: 0007-ALT-Fix-aarch64-build.patch
 Patch008: 0008-ALT-Remove-deprecated-register-keyword.patch
 Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch011: 0011-MOZILLA-1623060-Wayland-Respect-GtkWidget-size-then-.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -201,7 +200,6 @@ Most likely you don't need to use this package.
 %patch008 -p1
 %patch009 -p1
 %patch010 -p1
-%patch011 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -449,6 +447,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri May 08 2020 Alexey Gladkov <legion@altlinux.ru> 76.0.1-alt1
+- New release (76.0.1).
+
+* Wed May 06 2020 Alexey Gladkov <legion@altlinux.ru> 76.0-alt1
+- New release (76.0).
+- Security fixes:
+  + CVE-2020-12387: Use-after-free during worker shutdown
+  + CVE-2020-12388: Sandbox escape with improperly guarded Access Tokens
+  + CVE-2020-12389: Sandbox escape with improperly separated process types
+  + CVE-2020-6831: Buffer overflow in SCTP chunk input validation
+  + CVE-2020-12390: Incorrect serialization of nsIPrincipal.origin for IPv6 addresses
+  + CVE-2020-12391: Content-Security-Policy bypass using object elements
+  + CVE-2020-12392: Arbitrary local file access with 'Copy as cURL'
+  + CVE-2020-12393: Devtools' 'Copy as cURL' feature did not fully escape website-controlled data, potentially leading to command injection
+  + CVE-2020-12394: URL spoofing in location bar when unfocussed
+  + CVE-2020-12395: Memory safety bugs fixed in Firefox 76 and Firefox ESR 68.8
+  + CVE-2020-12396: Memory safety bugs fixed in Firefox 76
+
 * Wed Apr 08 2020 Alexey Gladkov <legion@altlinux.ru> 75.0-alt1
 - New release (75.0).
 - Security fixes:
