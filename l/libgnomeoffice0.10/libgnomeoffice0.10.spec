@@ -9,18 +9,18 @@
 %endif
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.46
+Version: %ver_major.47
 Release: alt1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
-License: GPL
+License: GPL-2.0 or GPL-3.0
 Url: http://www.gnumeric.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.28.0
-%define gsf_ver 1.14.44
+%define gsf_ver 1.14.47
 %define gtk_ver 3.0.0
 %define cairo_ver 1.10.0
 %define lasem_ver 0.4.1
@@ -140,6 +140,10 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.47-alt1
+- 0.10.47
+- fixed License tag
+
 * Thu Nov 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.10.46-alt1
 - 0.10.46
 
