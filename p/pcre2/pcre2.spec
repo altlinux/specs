@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: pcre2
-Version: 10.34
+Version: 10.35
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -62,7 +62,7 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %setup -n %name-%version
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 %ifnarch %e2k
@@ -136,6 +136,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 10.35-alt1
+- 10.35
+
 * Mon Nov 25 2019 Yuri N. Sedunov <aris@altlinux.org> 10.34-alt1
 - 10.34
 
