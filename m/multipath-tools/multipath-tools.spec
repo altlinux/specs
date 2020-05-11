@@ -8,7 +8,7 @@
 
 Name: multipath-tools
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -173,6 +173,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon May 11 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.3-alt2
+- fixed build with json-c 0.14.0
+
 * Mon Feb 03 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
