@@ -1,5 +1,5 @@
 
-%global commit 45f6d6dfeefafeec04300edfc19f2771de7bcb5c
+%global commit 122d4c67ab5d304725677834d5d8361ac00c0620
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %define oneadmin_home /var/lib/one
@@ -8,8 +8,8 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.10.4
-Release: alt3
+Version: 5.10.5
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.org
@@ -185,7 +185,7 @@ Conflicts: %name-node-xen
 Requires: %name-common = %EVR
 Requires: openssh-server
 Requires: openssh-clients
-Requires: libvirt-kvm
+Requires: libvirt-kvm libvirt-client polkit
 Requires: qemu-kvm
 Requires: qemu-img
 Requires: nfs-utils
@@ -686,6 +686,10 @@ fi
 %exclude %_man1dir/oneprovision.1*
 
 %changelog
+* Mon May 11 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.5-alt1
+- 5.10.5
+- add requires libvirt-client and polkit to opennebula-node-kvm package
+
 * Fri Apr 10 2020 Alexey Shabalin <shaba@altlinux.org> 5.10.4-alt3
 - update sudoers config for allow use LXD
 - update Requires for node-lxd package
