@@ -3,7 +3,7 @@
 
 Name:          %pkgname
 Version:       6.15.0
-Release:       alt1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       Apache-2.0
@@ -15,6 +15,11 @@ Source:        %name-%version.tar
 Source1:       client.init
 Source2:       puppet.service
 Source3:       puppet-nm-dispatcher
+
+Patch1: puppet-Adjust-default-paths.patch
+Patch2: puppet-fix-locale-loading.patch
+Patch3: puppet-alt-aptrpm-osfamily.patch
+
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(yard)
 
@@ -51,6 +56,9 @@ BuildArch:     noarch
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %ruby_build --ignore=full_catalog,acceptance
@@ -70,7 +78,7 @@ install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver
 
 # Create other configuration directories
 mkdir -p %buildroot%_sysconfdir/puppet/ssl/{public_keys,certificate_requests,certs,ca/requests,ca/private,ca/signed,private,private_keys}
-mkdir -p %buildroot%_sysconfdir/puppet/{code,modules,environments/production/manifests}
+mkdir -p %buildroot%_sysconfdir/puppet/{code,environments/production/manifests}
 
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_tmpfilesdir
@@ -78,10 +86,11 @@ echo "D /run/%name 0755 _%name %name -" > \
     %buildroot%_tmpfilesdir/%name.conf
 
 # Create puppet modules directory for puppet module tool
-mkdir -p %buildroot%_sysconfdir/%name/modules
+mkdir -p %buildroot%_sysconfdir/%name/code/modules
+touch %buildroot%_sysconfdir/puppet/code/modules/.dir
 
 # Create service directory
-mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run,%_cachedir}/puppet
+mkdir -p %buildroot{%_cachedir,%_logdir,/run}/puppet
 
 # Install NetworkManager dispatcher
 install -Dpv %SOURCE3 \
@@ -95,15 +104,21 @@ cat >> %buildroot%_sysconfdir/puppet/puppet.conf << END.
 #storeconfigs_backend = puppetdb
 #report = true
 #reports = puppetdb
+#
+#[agent]
+#server = puppet
 END.
 
 # link to gem library code base
 ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 
+# Create locale and modules directories
+mkdir -p %buildroot%_datadir/puppet-{locale,modules}
+touch %buildroot%_datadir/puppet-{locale,modules}/.dir
 
 %pre
 %_sbindir/groupadd -r -f puppet
-%_sbindir/useradd -r -n -g puppet -d %_localstatedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g puppet -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
 %post
 %post_service puppet
@@ -132,23 +147,21 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 %dir %_sysconfdir/puppet/environments/production
 %dir %_sysconfdir/puppet/environments/production/manifests
 %dir %_sysconfdir/puppet/code
-%dir %_sysconfdir/puppet/modules
+%_sysconfdir/puppet/code
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
 %config(noreplace) %_sysconfdir/puppet/fileserver.conf
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
-%attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
-%_localstatedir/puppet/
+%_datadir/puppet
+%_datadir/puppet-locale
+%_datadir/puppet-modules
+%attr(1770,_puppet,puppet) %dir %_cachedir/puppet
+%_cachedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
-%attr(1770,_puppet,puppet) %dir %_var/run/puppet
+%attr(1770,_puppet,puppet) %dir /run/puppet
 %doc %_man8dir/*
 %doc %_man5dir/puppet.conf.5*
-%dir %_datadir/puppet
-%dir %_logdir/puppet
-%dir %_cachedir/puppet
-%dir %_localstatedir//puppet
-%dir %_var/run/puppet
 
 %files         -n gem-%pkgname
 %ruby_gemspec
@@ -158,6 +171,12 @@ ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
 %ruby_gemdocdir
 
 %changelog
+* Mon May 11 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt2
+- Apply useful part of old patch as actual patches and get patch from Debian.
+- Modules are placed into /etc/puppet/code/modules instead of /etc/puppet/modules.
+- Fix retrieving metainfo folders (ALT #38422).
+- Make system-wide directories /usr/share/puppet-modules and /usr/share/puppet-locale.
+
 * Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt1
 - New version.
 
