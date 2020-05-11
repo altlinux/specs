@@ -6,7 +6,7 @@
 
 Name: libtgvoip
 Version: 2.4.4
-Release: alt2.c5651ffc72
+Release: alt3.dc4e9ec
 
 Summary: VoIP library for Telegram clients
 
@@ -16,7 +16,8 @@ License: Public Domain and BSD
 Url: https://github.com/telegramdesktop/libtgvoip
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/grishka/libtgvoip.git
+#Source-git: https://github.com/grishka/libtgvoip.git
+# Source-git: https://github.com/telegramdesktop/libtgvoip.git
 Source: %name-%version.tar
 
 Patch1: libtgvoip-system-json11.patch
@@ -84,6 +85,10 @@ rm -vf json11.*
 %_pkgconfigdir/tgvoip.pc
 
 %changelog
+* Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt3.dc4e9ec
+- update to the latest repo commit dc4e9ec48207388e41db1c2ef1cccf9899d9765f
+  from https://github.com/telegramdesktop/libtgvoip
+
 * Sat Jan 25 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt2.c5651ffc72
 - update to the latest repo commit c5651ffc728336e56d8567f5c6c179e8a5d4fe55
 - rewrite spec, use autoconf
