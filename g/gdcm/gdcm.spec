@@ -16,7 +16,7 @@ BuildRequires: xsltproc
 %bcond_with tests
 
 Name:       gdcm
-Version:    3.0.1
+Version:    3.0.5
 Release:    alt1_0
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
@@ -31,6 +31,7 @@ Patch2: gdcm-2.8.8-dont_use_EOF.patch
 # Fix for 1687233
 Patch3: 0002-Fix-export-variables.patch
 Patch4: gdcm-3.0.1-poppler-0.84.0.patch
+Patch5: Update_gdcminfo_for_new_poppler.patch
 
 BuildRequires:  libCharLS-devel >= 2.0
 BuildRequires:  ctest cmake
@@ -131,7 +132,8 @@ used this library with python
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
+%patch5 -p1
 
 # Data source
 %setup -n GDCM-%{version} -q -T -D -a 1
@@ -222,28 +224,17 @@ make test -C %{_target_platform} || exit 0
 %files
 %doc AUTHORS README.md
 %doc --no-dereference Copyright.txt README.Copyright.txt
-%{_libdir}/libgdcmCommon.so.3.0
-%{_libdir}/libgdcmCommon.so.3.0.1
-%{_libdir}/libgdcmDICT.so.3.0
-%{_libdir}/libgdcmDICT.so.3.0.1
-%{_libdir}/libgdcmDSED.so.3.0
-%{_libdir}/libgdcmDSED.so.3.0.1
-%{_libdir}/libgdcmIOD.so.3.0
-%{_libdir}/libgdcmIOD.so.3.0.1
-%{_libdir}/libgdcmMEXD.so.3.0
-%{_libdir}/libgdcmMEXD.so.3.0.1
-%{_libdir}/libgdcmMSFF.so.3.0
-%{_libdir}/libgdcmMSFF.so.3.0.1
-%{_libdir}/libgdcmjpeg12.so.3.0
-%{_libdir}/libgdcmjpeg12.so.3.0.1
-%{_libdir}/libgdcmjpeg16.so.3.0
-%{_libdir}/libgdcmjpeg16.so.3.0.1
-%{_libdir}/libgdcmjpeg8.so.3.0
-%{_libdir}/libgdcmjpeg8.so.3.0.1
-%{_libdir}/libgdcmmd5.so.3.0
-%{_libdir}/libgdcmmd5.so.3.0.1
-%{_libdir}/libsocketxx.so.1.2
-%{_libdir}/libsocketxx.so.1.2.0
+%{_libdir}/libgdcmCommon.so.*
+%{_libdir}/libgdcmDICT.so.*
+%{_libdir}/libgdcmDSED.so.*
+%{_libdir}/libgdcmIOD.so.*
+%{_libdir}/libgdcmMEXD.so.*
+%{_libdir}/libgdcmMSFF.so.*
+%{_libdir}/libgdcmjpeg12.so.*
+%{_libdir}/libgdcmjpeg16.so.*
+%{_libdir}/libgdcmjpeg8.so.*
+%{_libdir}/libgdcmmd5.so.*
+%{_libdir}/libsocketxx.so.*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}-3.0/XML/
 #exclude %{_docdir}/%{name}-%version/html/
@@ -295,6 +286,9 @@ make test -C %{_target_platform} || exit 0
 %endif
 
 %changelog
+* Mon May 11 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.5-alt1_0
+- new version
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0
 - new version
 - build w/o python: not to lock python38 update.
