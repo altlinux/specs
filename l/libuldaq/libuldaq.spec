@@ -1,6 +1,6 @@
 Name: libuldaq
-Version: 1.1.2
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: MCC Universal Library for Linux
 License: MIT
@@ -50,8 +50,8 @@ sed -i -e "s@ldconfig@true@" Makefile.am
 #LD_LIBRARY_PATH=. ./botan-test
 
 %files
-%dir /etc/uldaq/
-/etc/uldaq/fpga/
+#%dir /etc/uldaq/
+#/etc/uldaq/fpga/
 %_udevrulesdir/*.rules
 %_libdir/*.so.*
 
@@ -66,6 +66,9 @@ sed -i -e "s@ldconfig@true@" Makefile.am
 #%doc %_defaultdocdir/botan-%version
 
 %changelog
+* Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt2
 - fix summary
 
