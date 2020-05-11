@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-rpi
-Version: 20200318
+Version: 20200416
 Release: alt1
 Summary: UEFI Firmware for Raspberry PI 3 and 4
 
@@ -15,11 +15,7 @@ Source3: berkeley-softfloat-3.tar
 Source4: Logo.bmp
 Source5: edk2-platforms.tar
 Source6: edk2-non-osi.tar
-
-# https://github.com/raspberrypi/firmware/tree/master/boot
-Source7: bcm2710-rpi-3-b.dtb
-Source8: bcm2710-rpi-3-b-plus.dtb
-Source9: bcm2711-rpi-4-b.dtb
+Source7: brotli.tar
 
 Patch1: %name-%version.patch
 
@@ -29,13 +25,10 @@ Url: http://www.tianocore.org
 ExclusiveArch: aarch64
 BuildArch: noarch
 
-Provides: edk2-ovmf-aarch64 = %EVR
-
 BuildRequires: iasl nasm gcc-c++
 BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
 BuildRequires: bc
-BuildRequires: raspberrypi-firmware
 # build MarkDown
 BuildRequires: pandoc
 
@@ -76,6 +69,12 @@ tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/o
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
+# add b
+mkdir -p BaseTools/Source/C/BrotliCompress
+tar -xf %SOURCE7 --directory BaseTools/Source/C/BrotliCompress/
+rmdir MdeModulePkg/Library/BrotliCustomDecompressLib/brotli
+ln -s ../../../BaseTools/Source/C/BrotliCompress/brotli MdeModulePkg/Library/BrotliCustomDecompressLib/brotli
+
 # add /edk2-platforms
 tar -xf %SOURCE5
 
@@ -84,11 +83,6 @@ tar -xf %SOURCE6
 
 # Install ALT Logo
 cp -f %SOURCE4 edk2-non-osi/Platform/RaspberryPi/Drivers/LogoDxe/
-
-# Update dtb
-cp -f %SOURCE7 edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/bcm2710-rpi-3-b.dtb
-cp -f %SOURCE8 edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/bcm2710-rpi-3-b-plus.dtb
-cp -f %SOURCE9 edk2-non-osi/Platform/RaspberryPi/RPi4/DeviceTree/bcm2711-rpi-4-b.dtb
 
 %build
 source ./edksetup.sh
@@ -163,15 +157,11 @@ cp -a out/*.fd %buildroot%_datadir/edk2-rpi/
 mkdir -p out/docs/RPi3
 pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi3/Readme.md -o out/docs/RPi3/Readme.txt
 pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi3/Systems.md -o out/docs/RPi3/Systems.txt
-mkdir -p out/docs/RPi3/DeviceTree
-cp edk2-non-osi/Platform/RaspberryPi/RPi3/DeviceTree/License.txt out/docs/RPi3/DeviceTree
 mkdir -p out/docs/RPi3/TrustedFirmware/
 cp edk2-non-osi/Platform/RaspberryPi/RPi3/TrustedFirmware/License.txt out/docs/RPi3/TrustedFirmware/
 mkdir -p out/docs/RPi4
 pandoc -f markdown -t plain edk2-platforms/Platform/RaspberryPi/RPi4/Readme.md -o out/docs/RPi4/Readme.txt
-mkdir -p out/docs/RPi4/DeviceTree
-cp edk2-non-osi/Platform/RaspberryPi/RPi4/DeviceTree/License.txt out/docs/RPi4/DeviceTree
-mkdir -p out/docs/RPi4/TrustedFirmware/
+mkdir -p out/docs/RPi4/TrustedFirmware
 cp edk2-non-osi/Platform/RaspberryPi/RPi4/TrustedFirmware/License.txt out/docs/RPi4/TrustedFirmware/
 
 %files
@@ -179,10 +169,18 @@ cp edk2-non-osi/Platform/RaspberryPi/RPi4/TrustedFirmware/License.txt out/docs/R
 %_datadir/edk2-rpi
 
 %changelog
+* Fri May 08 2020 Anton Midyukov <antohami@altlinux.org> 20200416-alt1
+- Update edk2 (2020-04-16)
+- Update edk2-platforms (2020-04-30)
+- Update edk2-non-osi (2020-05-01)
+- fix Changelog
+- drop provides: edk2-ovmf-aarch64
+- exclude dtb files
+
 * Sat Apr 04 2020 Anton Midyukov <antohami@altlinux.org> 20200318-alt1
 - Update edk2 (2020-03-18)
 - Update edk2-platforms (2020-03-31)
-- Update edk2-platforms (2020-03-06)
+- Update edk2-non-osi (2020-03-06)
 
 * Wed Feb 19 2020 Anton Midyukov <antohami@altlinux.org> 20191122-alt2
 - Build two variants for rpi4: with ACPI and without ACPI.
