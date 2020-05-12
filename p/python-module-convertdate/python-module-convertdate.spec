@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -12,7 +12,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/convertdate/
 
 # https://github.com/fitnr/convertdate.git
-Source: https://github.com/fitnr/%modname/archive/v%version/%name-%version.tar.gz
+Source: https://github.com/fitnr/%modname/archive/v%version/%modname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ py.test-%_python_version tests/*.py
 
 
 %changelog
+* Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - first build for Sisyphus
 
