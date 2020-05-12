@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Media Sharing Server
@@ -134,6 +134,8 @@ This package contains command line utilities for the PipeWire media server.
 %_prefix/lib/systemd/user/pipewire.service
 %_prefix/lib/systemd/user/pipewire.socket
 %endif
+%_datadir/alsa/alsa.conf.d/50-pipewire.conf
+%_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
 %if_enabled man
 %_man1dir/%name.1*
 %_man5dir/%name.conf.5*
@@ -159,21 +161,34 @@ This package contains command line utilities for the PipeWire media server.
 %endif
 
 %files utils
-%_bindir/pw-mon
-%_bindir/pw-cli
-%_bindir/spa-monitor
-%_bindir/spa-inspect
 %_bindir/pw-cat
+%_bindir/pw-cli
 %_bindir/pw-dot
+%_bindir/pw-metadata
+%_bindir/pw-mididump
+%_bindir/pw-midiplay
+%_bindir/pw-midirecord
+%_bindir/pw-mon
 %_bindir/pw-play
 %_bindir/pw-profiler
 %_bindir/pw-record
+%_bindir/spa-inspect
+%_bindir/spa-monitor
 %if_enabled man
-%_man1dir/pw-mon.1*
+%_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
+%_man1dir/pw-dot.1.*
+%_man1dir/pw-metadata.1.*
+%_man1dir/pw-mididump.1.*
+%_man1dir/pw-mon.1*
+%_man1dir/pw-profiler.1.*
 %endif
 
+
 %changelog
+* Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- updated 0.3.5-2-gfdb3985f
+
 * Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - updated to 0.3.4-5-gf11cd322
 
