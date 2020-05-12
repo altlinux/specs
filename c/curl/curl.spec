@@ -1,7 +1,7 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.69.1
+Version: 7.70.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -105,6 +105,7 @@ applications that utilize lib%name.
 %patch0 -p1
 
 %build
+./maketgz %version only
 ./buildconf
 %configure \
 	--with-ssl \
@@ -150,6 +151,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Apr 29 2020 Anton Farygin <rider@altlinux.ru> 7.70.0-alt1
+- 7.70.0
+- removed DEV from version string (with maketgz script)
+
 * Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 7.69.1-alt1
 - 7.69.1
 
