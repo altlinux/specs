@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Python 2 and 3 compatibility utilities
@@ -94,6 +94,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/six-*.egg-info/
 
 %changelog
+* Tue May 12 2020 Stanislav Levin <slev@altlinux.org> 1.14.0-alt1
+- 1.13.0 -> 1.14.0.
+
 * Mon Nov 11 2019 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
 - 1.12.0 -> 1.13.0.
 
