@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.8.15
+Version: 1.8.17
 Release: alt1
 Epoch: 1
 
@@ -11,23 +11,22 @@ Url: http://www.doxygen.org/
 # ftp://ftp.stack.nl/pub/users/dimitri/doxygen-%version.src.tar.gz
 Source: %name-%version.src.tar.gz
 Source500: %name.unused
-Source501: repatch_spec.sh
 
 ## FC patches
-Patch1: FC-1.8.15-handle_empty_TOC_in_XML_output.patch
-Patch2: FC-1.8.15-test_for_XML_output_with_an_empty_TOC.patch
+Patch1: FC-doxgen-1.8.17-broken-urls-in-the-xml-output.patch
+Patch2: FC-1.8.17-test-suite-is-failing.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-fix-issue-776791.patch
-Patch102: Ubuntu-manpages.patch
-Patch103: Ubuntu-dot-config.patch
-Patch104: Ubuntu-jquery.patch
-Patch105: Ubuntu-no-timestamps.patch
-Patch106: Ubuntu-no-rpath.patch
-Patch107: Ubuntu-avoid-compass.patch
+Patch101: Ubuntu-manpages.patch
+Patch102: Ubuntu-dot-config.patch
+Patch103: Ubuntu-no-timestamps.patch
+Patch104: Ubuntu-avoid-compass.patch
+Patch105: Ubuntu-llvm_libs.patch
+Patch106: Ubuntu-faketime_pdflatex.patch
+Patch107: Ubuntu-libatomic.patch
+Patch108: Ubuntu-sass_fix.patch
 
 ## ALT patches
-
 
 # Automatically added by buildreq on Wed May 10 2017
 # optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
@@ -72,13 +71,14 @@ pdf formats.
 %patch2 -p1
 
 ## Ubuntu apply patches
-#patch101 -p1
+%patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
-#patch106 -p1
+%patch106 -p1
 %patch107 -p1
+%patch108 -p1
 
 ## ALT apply patches
 
@@ -138,6 +138,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Tue May 12 2020 Fr. Br. George <george@altlinux.ru> 1:1.8.17-alt1
+- Autobuild version bump to 1.8.17
+
 * Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 1:1.8.15-alt1
 - Autobuild version bump to 1.8.15
 
