@@ -1,6 +1,6 @@
 Name: vice
 Version: 3.4
-Release: alt1
+Release: alt2
 
 Summary: Versatile Commodore Emulator
 Summary(pl.UTF-8): Uniwersalny emulator Commodore
@@ -41,7 +41,7 @@ BuildRequires: libX11-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: makeinfo
-BuildRequires: xa65
+BuildRequires: xa
 BuildRequires: libpulseaudio-devel
 BuildRequires: libavcodec-devel libswresample-devel
 
@@ -107,6 +107,9 @@ tar xjf %SOURCE13 -C %buildroot%_iconsdir/hicolor/16x16/apps
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue May 12 2020 Anton Midyukov <antohami@altlinux.org> 3.4-alt2
+- Rebuild with xa
+
 * Mon May 04 2020 Anton Midyukov <antohami@altlinux.org> 3.4-alt1
 - New version 3.4
 
