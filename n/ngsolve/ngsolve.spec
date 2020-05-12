@@ -5,7 +5,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.1910
+Version: 6.2.2004
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
@@ -295,6 +295,9 @@ popd
 
 
 %changelog
+* Tue May 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 6.2.2004-alt1
+- New version
+
 * Thu Jan 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.1910-alt1
 - Updated to new version (Closes: #37907)
 
