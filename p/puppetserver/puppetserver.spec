@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.5.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -32,6 +32,9 @@ control over the Ruby runtime.
 
 %prep
 %setup
+sed "s|gem-path: \\[.*\\]|gem-path: [$(echo $(ls /usr/lib/ruby/gems | \
+   sed -e "s,^,/usr/lib/ruby/gems/,") | sed "s/ \\+/, /")]|" \
+   -i puppetserver/config/conf.d/puppetserver.conf
 
 %install
 install -d -m 0755 %buildroot%_datadir/%name
@@ -142,6 +145,9 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Tue May 12 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt2
+- ! gem paths config
+
 * Mon Aug 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.5.0-alt1
 - Version updated to 6.5.0
 
