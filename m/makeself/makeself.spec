@@ -1,5 +1,5 @@
 Name: makeself
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: It's a small shell script that generates a self-extractable archive from a directory
@@ -40,6 +40,9 @@ install -D -m0644 makeself.1 %buildroot%_man1dir/makeself.1
 %_man1dir/*
 
 %changelog
+* Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- new version 2.4.2 (with rpmrb script)
+
 * Mon May 21 2018 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0 (with rpmrb script)
 
