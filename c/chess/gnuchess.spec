@@ -1,6 +1,6 @@
 Name: chess
-Version: 6.2.5
-Release: alt1.1
+Version: 6.2.6
+Release: alt1
 
 %define real_name gnu%name
 
@@ -9,7 +9,8 @@ License: %gpl2plus
 Group: Games/Boards
 URL: http://www.gnu.org/software/chess/
 
-Source: ftp://ftp.gnu.org/gnu/chess/%real_name-%version.tar
+# repacked http://ftp.gnu.org/gnu/chess/gnuchess-%version.tar.gz
+Source: %real_name-%version.tar
 Source1: book_1.00.pgn
 
 Provides: %real_name = %version
@@ -56,6 +57,9 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 %_infodir/%real_name.info.*
 
 %changelog
+* Tue May 12 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.6-alt1
+- Updated to 6.2.6.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 6.2.5-alt1.1
 - NMU: added URL
 
