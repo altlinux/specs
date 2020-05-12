@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 5.0.0
-%define major 5.7
+%define major 5.8
 %define rel %nil
 
 %def_with gtk3
@@ -418,6 +418,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/*.ocx.so
 %_libdir/wine/*.tlb.so
 %_libdir/wine/*.sys.so
+%_libdir/wine/ksproxy.ax.so
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
@@ -502,6 +503,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun May 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.8.1-alt1
+- new version 5.8.1 (with rpmrb script)
+
 * Tue May 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.7.1-alt1
 - new version 5.7.1 (with rpmrb script)
 - update wine-mono require to 5.0.0
