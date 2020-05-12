@@ -1,18 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 Name: pesign
-Version: 0.109
-Release: alt7
+Version: 113
+Release: alt1
 
 Summary: Signing tool for PE-COFF binaries
-License: GPLv2
+License: GPLv3
 Group: Development/Other
 
 Url: https://github.com/vathpela/pesign
 # git://git.altlinux.org/gears/p/pesign.git
 Source: %name-%version-%release.tar
-Patch0: pesign-0.109-warnings.patch
 Patch1: pesign-fix-build-with-nss3.44.patch
 
-BuildRequires: libnss-devel libpopt-devel
+BuildRequires: libnss-devel
+BuildRequires: libpopt-devel
+BuildRequires: libefivar-devel
+BuildRequires: libuuid-devel
 
 %description
 This package contains the pesign utility for signing UEFI binaries
@@ -20,8 +23,8 @@ as well as other associated tools.
 
 %prep
 %setup -n %name-%version-%release
-%patch0 -p1
 %patch1 -p1
+sed -i '/^libexecdir/s/)libexec/)lib/' Make.defaults
 %ifarch %e2k
 # lcc 1.23.20 doesn't do that
 sed -i 's,-fshort-wchar,,g' Make.defaults util/Makefile
@@ -31,20 +34,19 @@ sed -i 's,-fshort-wchar,,g' Make.defaults util/Makefile
 %make_build OPTFLAGS='%optflags'
 
 %install
-%makeinstall_std LIBDIR=%_libdir MACROS_DIR=%_rpmmacrosdir
+%makeinstall_std libdir=%_libdir MACROS_DIR=%_rpmmacrosdir
 mv %buildroot%_rpmmacrosdir/{macros.,}pesign
 %makeinstall_std -C src install_systemd install_sysvinit \
 	INIT_DIR=%_initdir \
 	UNIT_DIR=%_unitdir \
 	TMPFILES_DIR=%_tmpfilesdir \
 	#
-install -pm644 README %buildroot%_docdir/pesign/
+
 mksock -m666 %buildroot%_runtimedir/pesign/socketdir/socket
 touch %buildroot%_runtimedir/pesign.pid
 
-# there's some stuff that's not really meant to be shipped yet
-rm -r %buildroot%_includedir/libdpe
-rm %buildroot%_libdir/libdpe*
+#cleanup
+rm -f %buildroot/etc/rpm/macros.pesign
 
 %pre
 getent group pesign >/dev/null || groupadd -r pesign
@@ -63,11 +65,17 @@ if [ $1 = 1 -a -d /.host -a -d /.in -a -d /.out ]; then
 fi
 
 %files
-%_docdir/pesign/
+%doc README COPYING
 %_bindir/pesign
 %_bindir/pesign-client
 %_bindir/efikeygen
+%_bindir/authvar
+%_bindir/efisiglist
+%_bindir/pesigcheck
+%_libexecdir/pesign/pesign-authorize
 %config(noreplace) %_sysconfdir/popt.d/pesign.popt
+%config(noreplace) %_sysconfdir/pesign/groups
+%config(noreplace) %_sysconfdir/pesign/users
 %_rpmmacrosdir/pesign
 %_mandir/man?/*
 %_tmpfilesdir/pesign.conf
@@ -78,9 +86,13 @@ fi
 %ghost %_runtimedir/pesign/socketdir/socket
 %ghost %_runtimedir/pesign.pid
 
-# NB: pesign 0.113 moved to GPLv3+
-
 %changelog
+* Fri Apr 24 2020 Nikolai Kostrigin <nickel@altlinux.org> 113-alt1
+- new version
+  + rediff ALT patches
+  + remove obsolete warnings patch
+  + change license GPLv2 -> GPLv3
+
 * Fri Nov 22 2019 Michael Shigorin <mike@altlinux.org> 0.109-alt7
 - E2K: avoid lcc-unsupported option
 
