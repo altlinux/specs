@@ -3,7 +3,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Modified Preorder Tree Traversal Django application
 License: BSD
@@ -18,8 +18,7 @@ Requires: Django >= 1.2
 Conflicts: python-module-django-cms < 2.2
 
 BuildRequires: rpm-build-licenses
-BuildRequires: python-module-django-tests >= 1.2
-BuildRequires: python-module-django-dbbackend-sqlite3 >= 1.2
+BuildRequires: python-module-django-tests
 BuildRequires: python-module-sphinx
 
 BuildRequires(pre): rpm-build-python3
@@ -91,6 +90,9 @@ popd
 
 
 %changelog
+* Thu May 12 2020 Maxim Knyazev <mattaku@altlinux.org> 0.9.0-alt2
+- Fix requires
+
 * Fri May 25 2018 Sergey Alembekov <mrdrew@altlinux.ru> 0.9.0-alt1
 - Updated version to 0.9.0
 
