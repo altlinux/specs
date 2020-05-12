@@ -2,11 +2,11 @@
 
 Name: apetag
 Version: 1.12
-Release: alt1.1
+Release: alt2
 
 Summary: A command line ape 2.0 tagger
 Summary(ru_RU.UTF-8): Консольный редактор тэгов ape 2.0
-License: GPL
+License: GPLv3
 Group: Sound
 Url: http://www.muth.org/Robert/Apetag/
 
@@ -16,8 +16,8 @@ Source: %name-%version.tar.gz
 Patch: apetag-gcc43.patch
 
 BuildRequires: gcc-c++
-
 #Requires: glibc-pthread libstdc++-devel
+
 
 %description
 Apetag is command line tagging tool for music files such as Monkey's
@@ -37,10 +37,14 @@ Author: Robert Muth <robert@muth.org>
 %prep
 #setup -n Apetag
 %setup
+
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+
 %patch -p1
 
 %build
-%__make
+%make_build
 
 %install
 install -dm 755  %buildroot%prefix/bin
@@ -50,11 +54,14 @@ install -m 755 *.py \
 	%buildroot%prefix/bin
 
 %files
-%doc 00copying 00readme index.html
 %_bindir/%name
 %_bindir/*.py
 
+
 %changelog
+* Thu May 12 2020 Maxim Knyazev <mattaku@altlinux.org> 1.12-alt2
+- Set correct python2 executable in shebang
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.12-alt1.1
 - Rebuild with Python-2.7
 
