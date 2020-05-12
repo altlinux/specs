@@ -1,12 +1,12 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        0.9.2.0.225.gitd021d87
+Version:        1.0.1
 Release:        alt1
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
-URL:            http://pwr.github.io/Solaar/
+URL:            https://pwr-solaar.github.io/Solaar/
 BuildArch:      noarch
 License:        GPLv2
 
@@ -69,6 +69,9 @@ Logitech's Unifying Receiver peripherals.
 %doc docs
 
 %changelog
+* Tue May 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- New version.
+
 * Mon Apr 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.2.0.225.gitd021d87-alt1
 - Build from recent commit for pyhon3.7 compatibility.
 
