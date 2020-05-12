@@ -1,8 +1,9 @@
 %define _sbindir /sbin
+%define libname libreiserfsprogs
 
 Name: reiserfsprogs
-Version: 3.6.24
-Release: alt3
+Version: 3.6.27
+Release: alt1
 
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
@@ -16,14 +17,31 @@ Obsoletes: reiserfs-utils
 Provides: reiserfs-utils = %version-%release
 Conflicts: progsreiserfs < 0.3.0.5-alt3
 
-# Automatically added by buildreq on Tue Aug 31 2010
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel libcom_err-devel libacl-devel
 
 %description
 Reiserfs is a file system using a plug-in based object oriented variant
 on classical balanced tree algorithms.
 This package contains utilities for create, resize, check, repair, tune, debug
 Reiserfs.
+
+%package -n %libname
+Summary:  The utilities to create reiserfs volumes
+Group:    System/Kernel and hardware
+
+%description -n %libname
+This package contains tools for reiserfs filesystems.
+Reiserfs is a file system using a plug-in based object oriented
+variant on classical balanced tree algorithms.
+
+%package -n %{libname}-devel
+Summary:  Development files for reiserfs
+Group:    Development/C
+
+%description -n %{libname}-devel
+This package contains tools for reiserfs filesystems.
+Reiserfs is a file system using a plug-in based object oriented
+variant on classical balanced tree algorithms.
 
 
 %prep
@@ -40,6 +58,7 @@ Reiserfs.
 
 %install
 %makeinstall_std
+find %buildroot%_libdir -name "*.*a" -delete
 
 
 %files
@@ -47,8 +66,19 @@ Reiserfs.
 %_sbindir/*
 %_man8dir/*
 
+%files -n %libname
+%_libdir/*.so.*
+
+%files -n %{libname}-devel
+%_includedir/reiserfs/
+%_libdir/*.so
+%_libdir/pkgconfig/reiserfscore.pc
 
 %changelog
+* Wed May 13 2020 Grigory Ustinov <grenka@altlinux.org> 3.6.27-alt1
+- Build new version.
+- Add library subpackages.
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 3.6.24-alt3
 - gcc5 FTBFS workaround (-std=gnu89)
 
