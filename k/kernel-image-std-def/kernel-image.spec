@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	5.4
 %define kernel_sublevel .40
@@ -690,6 +690,10 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue May 12 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.40-alt2
+- many scsi and sata controllers enabled on aarch64
+- modules for RPi3 enabled
+
 * Sun May 10 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.40-alt1
 - v5.4.40
 
