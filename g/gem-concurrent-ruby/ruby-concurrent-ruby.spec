@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       %core_version
-Release:       alt1
+Release:       alt2
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
 License:       MIT
 Group:         Development/Ruby
@@ -13,9 +13,25 @@ Url:           http://www.concurrent-ruby.com
 Vcs:           https://github.com/ruby-concurrency/concurrent-ruby.git
 
 Source:        %name-%version.tar
+Source1:       concurrent_ruby.jar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake)
+BuildRequires: gem(rake-compiler)
+BuildRequires: gem(rake-compiler-dock)
+BuildRequires: gem(pry)
+BuildRequires: gem(rspec)
+BuildRequires: gem(yard)
+BuildRequires: gem(redcarpet)
+#BuildRequires: gem(md-ruby-eval)
+BuildRequires: gem(timecop)
+#BuildRequires: gem(sigdump)
+BuildRequires: gem(simplecov)
+BuildRequires: gem(coveralls)
+BuildRequires: gem(benchmark-ips)
+#BuildRequires: gem(bench9000)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-%pkgname < %EVR
 Provides:      ruby-%pkgname = %EVR
 
@@ -94,10 +110,13 @@ Development files for %pkgname-ext gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build # --pre=repackage:all
 
 %install
 %ruby_install
+# TODO: de-build-in
+install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurrent/concurrent_ruby.jar
+
 
 %check
 %ruby_test
@@ -125,9 +144,12 @@ Development files for %pkgname-ext gem.
 %ruby_includedir/concurrent-ruby-ext
 
 %changelog
+* Tue May 12 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.6-alt2
+- + java part
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.6-alt1
-- ^ concurrent-ruby 1.1.5 > 1.1.6
-- ^ concurrent-ruby-ext 1.1.5 > 1.1.6
+- ^ concurrent-ruby 1.1.5 -> 1.1.6
+- ^ concurrent-ruby-ext 1.1.5 -> 1.1.6
 - ^ concurrent-ruby-edge 0.5.0 -> 0.6.0
 - ! spec syntax
 
