@@ -1,14 +1,14 @@
 %def_disable static
 
 Name: numactl
-Version: 2.0.11
+Version: 2.0.13
 Release: alt1
 
 Summary: Simple NUMA policy support
-License: GPL
+License: GPLv2
 Group: System/Libraries
 
-Url: http://oss.sgi.com/projects/libnuma/
+Url: https://github.com/numactl/numactl
 Source: %name-%version.tar.gz
 Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -24,6 +24,7 @@ nodes.
 %package -n libnuma
 Group: System/Libraries
 Summary: Shared libraries for %name
+License: LGPLv2
 
 %description -n libnuma
 %summary
@@ -37,7 +38,6 @@ Requires: libnuma = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%if_enabled static
 %package -n libnuma-devel-static
 Summary: Development files for %name
 Group: Development/C
@@ -46,24 +46,21 @@ Requires: libnuma = %version-%release
 %description -n libnuma-devel-static
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-%endif
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure
+%configure %{subst_enable static}
 %make
 
 %install
 %makeinstall_std
 
 %files
-%doc README CHANGES DESIGN TODO
+%doc README.md
 %_bindir/*
-#_man2dir/* -- see man-pages package
-%_man3dir/*
 %_man8dir/*
 
 %files -n libnuma
@@ -72,6 +69,8 @@ developing applications that use %name.
 %files -n libnuma-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*.pc
+%_man3dir/*
 
 %if_enabled static
 %files -n libnuma-devel-static
@@ -79,6 +78,11 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Wed May 13 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.13-alt1
+- new version
+- update home url
+- update license tag
+
 * Sun Dec 13 2015 Michael Shigorin <mike@altlinux.org> 2.0.11-alt1
 - new version (watch file uupdate)
 
