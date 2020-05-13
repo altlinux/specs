@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:          python-module-%oname
-Version:       1.9.73
-Release:       alt2.1
+Version:       1.9.74
+Release:       alt1
 %setup_python_module %oname
 
 Group:         Development/Python
@@ -56,6 +56,8 @@ API.
 %if_with python3
 cp -fR . ../python3
 sed -i 's|python|python3|g' ../python3/Makefile
+sed -i 's|python$|%__python|g' Makefile
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
 %endif
 
 %build
@@ -92,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed May 13 2020 Pavel Vasenkov <pav@altlinux.org> 1.9.74-alt1
+- Version 1.9.74
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.73-alt2.1
 - (NMU) Rebuilt with python-3.6.4.
 
