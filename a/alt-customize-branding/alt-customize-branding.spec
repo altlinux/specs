@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 %K5init altplace
 
@@ -39,12 +39,17 @@ lrelease-qt5 translations/alt-customize-branding_ru_RU.ts
 mkdir -p %buildroot/%_qt5_translationdir/
 install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 
+# branding_helper script
+install -m 0755 altcusbranding_helper_script %buildroot/%_K5libexecdir/kauth/
+#mkdir -p /tmp/%%rname/
+
 %find_lang --with-qt --all-name %rname
 
 %files -f %rname.lang
 %doc COPYING
 %_K5bin/*
 %_K5libexecdir/kauth/altcusbranding_helper
+%_K5libexecdir/kauth/altcusbranding_helper_script
 %_K5xdgapp/%rname.desktop
 %_datadir/polkit-1/actions/org.kde.altcusbranding.policy
 %_K5dbus_sys_srv/org.kde.altcusbranding.service
@@ -53,5 +58,8 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 #%%doc README
 
 %changelog
+* Wed May 13 2020 Pavel Moseev <mars@altlinux.org>  1.0.2-alt1
+- rewrite the program using bash script
+
 * Fri Apr 17 2020 Pavel Moseev <mars@altlinux.org>  1.0.1-alt1
 - initial build
