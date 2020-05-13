@@ -1,30 +1,18 @@
 Name: liberasurecode
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: Erasure Code API library written in C with pluggable backends
 Group: System/Libraries
 
-# This is a 2-clause BSD with clause numbers edited out for some reason.
-# Some files are under "heavily cut-down "BSD license", see
-# src/utils/chksum/md5.c for example.
-# XXX There is also GPLv3+ in m4/ that upstream is working to remove.
-License: BSD
-Url: https://bitbucket.org/tsg-/liberasurecode/
-# Bitbucket's web export naming is like the old github (== awful), so we pull
-# the tag using git CLI. Save the current command for Source0 below.
-# git archive -o ../liberasurecode-1.0.7.tar.gz --prefix=liberasurecode-1.0.7/ v1.0.7
-Packager: Lenar Shakirov <snejok@altlinux.ru>
-
+License: BSD-2-Clause
+Url: https://github.com/openstack/liberasurecode.git
 Source: %name-%version.tar
+Patch1: liberasurecode-1.6.1-Fix-linking.patch
 Patch2: liberasurecode-1.6.0-docs.patch
+Patch4: liberasurecode-1.6.1-nostrncpy.patch
 
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: libtool
 BuildRequires: doxygen
 BuildRequires: zlib-devel
-
-%set_verify_elf_method unresolved=relaxed
 
 %description
 An API library for Erasure Code, written in C. It provides a number
@@ -48,12 +36,14 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch1 -p1
 %patch2 -p2
+%patch4 -p1
 
 %build
-autoreconf -i -v
-%configure --disable-static
-make V=1 %{?_smp_mflags}
+%autoreconf
+%configure --disable-static --disable-mmi
+%make_build
 
 %install
 %makeinstall_std
@@ -68,8 +58,13 @@ make V=1 %{?_smp_mflags}
 %files devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
+- Build new version.
+- Add a patch for using strncpy on binary data.
+
 * Fri May 31 2019 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
 - Build new version.
 
