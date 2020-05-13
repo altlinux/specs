@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        68.8.0
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -44,6 +44,7 @@ Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch010: 0010-ALT-Fix-aarch64-build.patch
+Patch011: 0011-ALT-User-Agent.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -161,6 +162,7 @@ to run Firefox natively on Wayland.
 %patch007 -p1
 %patch008 -p1
 %patch010 -p1
+%patch011 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -387,6 +389,9 @@ done
 %_datadir/applications/firefox-wayland.desktop
 
 %changelog
+* Wed May 13 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.0-alt2
+- Add ALT operating system string to browser User-Agent (ALT #38475).
+
 * Tue May 05 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.0-alt1
 - New ESR version (68.8.0).
 - Fixes:
