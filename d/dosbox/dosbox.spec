@@ -2,7 +2,7 @@
 
 Name: dosbox
 Epoch: 1
-Version: 0.74.2
+Version: 0.74.3
 Release: alt1
 
 Summary: i8086/DOS/VGA software emulator for running old games
@@ -12,8 +12,6 @@ License: GPLv2+
 Group: Emulators
 
 Url: http://dosbox.com
-
-Packager: Anton Chernyshov <ach@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Source1: DOSBox-russian-lang.zip
@@ -205,6 +203,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Wed May 13 2020 Fr. Br. George <george@altlinux.ru> 1:0.74.3-alt1
+- Version up
+
 * Wed May 15 2019 Grigory Ustinov <grenka@altlinux.org> 1:0.74.2-alt1
 - Build new version (Closes: #36653).
 
@@ -232,18 +233,18 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.74-alt2.1
 - Fixed build
 
-* Mon Nov 8 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt2
+* Mon Nov 08 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt2
 - closes #24306 bug (completely):
   + add to package script dosbox-set-lang to help users set language
     that he/she needed
 - add new build dependency libGLU-devel
 
-* Sat Nov 6 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt1.1
+* Sat Nov 06 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt1.1
 - fix #24306 bug:
   + add dosbox-0.74.conf with support russian language
   + add README_ru.ALT file with problem resolv method
 
-* Sat Nov 6 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt1
+* Sat Nov 06 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt1
 - new upstream release 0.74
 - slightly spec file modifications
 - convert russian DOSBox docs to UTF-8
@@ -306,10 +307,10 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 - bugfix: /usr/share/dosbox was not owned by package
 - new alternatives scheme used in ALTLinux 2.4
 
-* Mon Oct 17 2004 Ilya Evseev <evseev@altlinux.ru> 0.62-alt5
+* Sun Oct 17 2004 Ilya Evseev <evseev@altlinux.ru> 0.62-alt5
 - fixed spec bug with macro man1dir -> _man1dir
 
-* Mon Oct  4 2004 Ilya Evseev <evseev@altlinux.ru> 0.62-alt4
+* Mon Oct 04 2004 Ilya Evseev <evseev@altlinux.ru> 0.62-alt4
 - official 0.62 release
 - added 'BuildPreReq: gcc-c++' for building in ALTLinux hasher environment
 - added --no-main switch to wrapper for running it as subroutines container only
@@ -322,7 +323,7 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 - simplify "%prep" and "%install" sections
 - add support of /etc/dosbox/runargs directory to wrapper and spec
 
-* Mon Jun  7 2004 Ilya Evseev <ilya_evseev@mail.ru> 0.62-1
+* Mon Jun 07 2004 Ilya Evseev <ilya_evseev@mail.ru> 0.62-1
 - updated to version 0.62 from CVS
 - added dosbox-install script
 - added support of loadable fonts
@@ -337,7 +338,7 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 - added patch for loading user-defined fonts to Video-BIOS ROM on startup
 - article removed from packaged stuff and will be managed separately
 
-* Fri Feb 15 2004 Ilya Evseev <ilya_evseev@mail.ru> 0.61-1
+* Sun Feb 15 2004 Ilya Evseev <ilya_evseev@mail.ru> 0.61-1
 - updated to version 0.61
 - manpage and langfile are translated to Russian
 - added script for running binary with global/localized settings
