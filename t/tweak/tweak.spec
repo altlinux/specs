@@ -1,11 +1,11 @@
-Name:		tweak
-Version:	3.01
-Release:	alt2.qa1
-Summary:	An efficient hex editor
-License:	MIT/X11
-Group:		Development/Other
-Source:		%name-%version.tar.gz
-URL:		http://www.chiark.greenend.org.uk/~sgtatham/tweak/
+Name: tweak
+Version: 3.02
+Release: alt1
+Summary: An efficient hex editor
+License: MIT
+Group: Development/Other
+Source: %name-%version.tar.gz
+Url: http://www.chiark.greenend.org.uk/~sgtatham/tweak/
 
 # Automatically added by buildreq on Mon Aug 23 2010
 BuildRequires: halibut libncurses-devel
@@ -32,8 +32,10 @@ rm -f %name.1 btree.html
 %_bindir/*
 %_man1dir/*
 
-
 %changelog
+* Wed May 13 2020 Fr. Br. George <george@altlinux.ru> 3.02-alt1
+- Autobuild version bump to 3.02
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.01-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
