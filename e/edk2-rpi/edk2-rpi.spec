@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-rpi
-Version: 20200416
+Version: 20200507
 Release: alt1
 Summary: UEFI Firmware for Raspberry PI 3 and 4
 
@@ -169,6 +169,10 @@ cp edk2-non-osi/Platform/RaspberryPi/RPi4/TrustedFirmware/License.txt out/docs/R
 %_datadir/edk2-rpi
 
 %changelog
+* Wed May 13 2020 Anton Midyukov <antohami@altlinux.org> 20200507-alt1
+- Update edk2 (2020-05-07)
+- Update edk2-platforms (2020-05-13)
+
 * Fri May 08 2020 Anton Midyukov <antohami@altlinux.org> 20200416-alt1
 - Update edk2 (2020-04-16)
 - Update edk2-platforms (2020-04-30)
