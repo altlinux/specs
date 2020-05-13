@@ -7,7 +7,7 @@
 
 Name: libnss-role
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -60,6 +60,8 @@ NSS API library for roles and privilegies.
 cd BUILD
 %make_build test
 
+./checkver %version
+
 %install
 %cmakeinstall_std
 mkdir -p %buildroot%_sysconfdir/role.d
@@ -86,8 +88,9 @@ update_chrooted all
 %dir %_sysconfdir/role.d
 %_sysconfdir/pam.d/role*
 /%_lib/libnss_*.so.*
-%_sbindir/*
-%_bindir/*
+%_sbindir/roleadd
+%_sbindir/roledel
+%_bindir/rolelst
 %_libdir/*.so.*
 %_man8dir/*
 
@@ -96,6 +99,10 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Wed May 13 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.5.0-alt3
+- Fix roleadd installation
+- Correct show of project version
+
 * Wed Apr 15 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.5.0-alt2
 - Fix install role.d directory (replace mkdir from check section to install)
 
