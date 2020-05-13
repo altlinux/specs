@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.14.2
-Release: alt2
+Version: 3.15.0
+Release: alt1
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -29,7 +29,6 @@ BuildRequires: python3(pathlib2)
 BuildRequires: python3(pip)
 BuildRequires: python3(psutil)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(pytest_cov)
 BuildRequires: python3(pytest_randomly)
 BuildRequires: python3(pytest-xdist)
 BuildRequires: python3(virtualenv)
@@ -107,9 +106,8 @@ pushd ../python3
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export PIP_FIND_LINKS=%python3_sitelibdir_noarch/virtualenv_support
 export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
-PIP_FIND_LINKS TOX_LIMITED_SHEBANG'
+PIP_NO_BUILD_ISOLATION TOX_LIMITED_SHEBANG'
 export TOX_LIMITED_SHEBANG=1
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 export TOXENV=py%{python_version_nodots python3}
@@ -137,6 +135,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Tue May 12 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
+- 3.14.2 -> 3.15.0.
+
 * Wed Apr 29 2020 Stanislav Levin <slev@altlinux.org> 3.14.2-alt2
 - Fixed FTBFS.
 
