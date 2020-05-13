@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt12
+Release: alt13
 
 Summary: Services and network monitoring system
 License: GPL
@@ -390,6 +390,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Wed May 13 2020 Paul Wolneykien <manowar@altlinux.org> 3.0.6-alt13
+- Fix: Require "authn_core" module in 100-nagios.mods.conf.
+
 * Wed Apr 15 2020 Paul Wolneykien <manowar@altlinux.org> 3.0.6-alt12
 - Fixed www-apache2 upgrade: enable httpd-addon.d with
   extra-start.d/100-nagios.conf.
