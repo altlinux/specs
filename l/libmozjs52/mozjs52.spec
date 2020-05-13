@@ -20,7 +20,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.9.0
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -49,6 +49,9 @@ Patch15: fix-tests-build.patch
 
 BuildRequires: gcc-c++ libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
+BuildRequires: python2-base
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pip
 BuildRequires: python-module-distribute
 BuildRequires: python-module-json
 BuildRequires: zlib-devel
@@ -127,7 +130,11 @@ cd js/src
 export CFLAGS="%optflags"
 export CXXFLAGS="$CFLAGS -fno-tree-vrp -fno-strict-aliasing -fno-delete-null-pointer-checks"
 export SHELL=/bin/sh
-export PYTHON=/usr/bin/python
+# cow@: Quick fix for the build. For some reason build script can't calculate correct path
+# for python interpreter with the latest changes made in Sisyphus. I don't have enough
+# time and motivation (this package hopefully will be thrown out in 6 months) to find
+# issue root cause. So for now I just make the easiest fix I have.
+unset PYTHON
 
 ./configure \
 	--prefix=%_prefix \
@@ -202,6 +209,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Wed May 13 2020 Vladimir Didenko <cow@altlinux.org> 52.9.0-alt2
+- fix build
+
 * Sun Apr 26 2020 Vladimir Didenko <cow@altlinux.org> 52.9.0-alt1
 - new version
 - fix license name
