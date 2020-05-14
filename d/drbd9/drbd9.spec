@@ -1,7 +1,7 @@
 Name: drbd9
-Version: 9.0.21
-Release: alt3
-%define githash 449d6bf22b01af7d14a297a4ed3e281aa84c94a5
+Version: 9.0.23
+Release: alt0.rc1.1
+%define githash fb968a804e16aa6493036709f859e308955337ca
 
 Summary: The Linux kernel code for DRBD9.
 License: GPLv2
@@ -57,6 +57,12 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Thu May 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.23-alt0.rc1.1
+- 9.0.23rc1
+
+* Tue Apr 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.22-alt1
+- 9.0.22
+
 * Fri Mar 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.21-alt3
 - Fix pr_warning().
 
