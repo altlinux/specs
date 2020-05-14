@@ -1,10 +1,10 @@
 %def_without xen
-%define githash ed83664dde66b9973bd5f776c1a30dfc5a6d9f5e
+%define githash b24b0f7e42d500d3538d7eeffa017ec78d08f918
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 
 Name: drbd-utils
-Version: 9.12.2
+Version: 9.13.1
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -150,6 +150,9 @@ install -pDm644 scripts/drbd %buildroot%_initdir/drbd
 %_sysconfdir/bash_completion.d/drbdadm*
 
 %changelog
+* Thu May 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.13.1-alt1
+- 9.13.1
+
 * Mon Apr 20 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.12.2-alt1
 - 9.12.2
 
