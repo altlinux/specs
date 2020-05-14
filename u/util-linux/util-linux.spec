@@ -4,11 +4,11 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.33.2
+Version: 2.35.1
 Release: alt1
-License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and Public-Domain
+License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
-URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
+URL: https://kernel.org/pub/linux/utils/util-linux/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 ### Macros
@@ -90,23 +90,16 @@ Requires: libsmartcols = %version-%release
 #due to findmnt
 Requires: libmount = %version-%release
 
-# 151635 - makeing /var/log/lastlog
-Patch5: util-linux-ng-2.21-login-lastlog.patch
-
-# Owl
-Patch41: util-linux-2.29.0-owl-write.patch
-
-Patch50: util-linux-2.25.2-alt-pg.patch
-Patch51: util-linux-ng-2.30.2-mount-pamconsole.patch
-Patch52: util-linux-2.11a-gecossize.patch
-Patch54: util-linux-2.11f-rh-rawman.patch
-Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
-Patch59: util-linux-tests.patch
-Patch60: util-linux-2.33.1-alt-agetty-release.patch
-Patch61: util-linux-2.33.1-add-new-e2k-subarches.patch
-
-# 33152 - logger without systemd support
-Patch70: util-linux-2.29.2-alt-logger_man.patch
+Patch01: 0001-ALT-Create-var-log-lastlog.patch
+Patch02: 0002-OWL-write-1-improvements.patch
+Patch03: 0003-ALT-Replace-vidattr-by-own-function-that-works-like-.patch
+Patch04: 0004-ALT-Add-pamconsole-mount-option-to-allow-users-at-co.patch
+Patch05: 0005-ALT-Do-not-accept-gecos-field-sizes-longer-than-64.patch
+Patch06: 0006-FEDORA-Add-documentation-about-etc-sysconfig-rawdevi.patch
+Patch07: 0007-ALT-some-tests-use-bash4.patch
+Patch08: 0008-ALT-Allow-to-display-altlinux-release-in-the-message.patch
+Patch09: 0009-ALT-Drop-documentation-about-journald-option-since-w.patch
+Patch10: 0010-ALT-use-the-O_NOFOLLOW-flag-when-compare-files.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -198,7 +191,6 @@ for linux newbie, but it is extra stable, and you can trust it.
 
 %package -n hwclock
 Summary: Query and set the hardware clock
-License: GPL
 Group: System/Base
 Serial: 1
 %ifarch alpha sparc sparc64
@@ -272,10 +264,10 @@ Summary: Utilities for manipulating process scheduler attributes
 Group: System/Kernel and hardware
 
 %description -n schedutils
-schedutils is a set of utilities for retrieving and manipulating process 
-scheduler-related attributes, such as real-time parameters and CPU affinity. 
- 
-This package includes the chrt and taskset utilities. 
+schedutils is a set of utilities for retrieving and manipulating process
+scheduler-related attributes, such as real-time parameters and CPU affinity.
+
+This package includes the chrt and taskset utilities.
 
 Install this package if you need to set or get scheduler-related attributes.
 
@@ -411,7 +403,7 @@ This is the smartcols development static library.
 %package -n libfdisk
 Summary: Partitioning library for fdisk-like programs.
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 
 %description -n libfdisk
 This is library for fdisk-like programs, part of util-linux.
@@ -419,7 +411,7 @@ This is library for fdisk-like programs, part of util-linux.
 %package -n libfdisk-devel
 Summary:  Partitioning library for fdisk-like programs.
 Group: Development/C
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Requires: libfdisk = %version-%release
 Requires: pkgconfig
 
@@ -430,7 +422,7 @@ part of util-linux.
 %package -n libfdisk-devel-static
 Summary:  Partitioning library for fdisk-like programs.
 Group: Development/C
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: libfdisk = %version-%release
 Requires: pkgconfig
 
@@ -448,24 +440,38 @@ Requires: %name = %version-%release
 %description -n bash-completion-%name
 Bash completion for %name.
 
+%package -n hardlink
+Summary: Consolidate duplicate files via hardlinks
+Group: System/Base
+
+%description -n hardlink
+This package contains hardlink, an utility which consolidates duplicate
+files in one or more directories using hardlinks.
+
+hardlink traverses one or more directories searching for duplicate files.
+When it finds duplicate files, it uses one of them as the master.  It then
+removes all other duplicates and places a hardlink for each one pointing
+to the master file.  This allows for conservation of disk space where
+multiple directories on a single filesystem contain many duplicate files.
+
+Since hard links can only span a single filesystem, hardlink is only
+useful when all directories specified are on the same filesystem.
+
 %prep
 %setup -q
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
-%patch5 -p1
-
-%patch41 -p1 -b .write
-
-%patch50 -p1
-%patch51 -p2 -b .pamconsole
-%patch52 -p1
-%patch54 -p1
-%patch59 -p2
-%patch60 -p1
-%patch61 -p1
+%patch01 -p2
+%patch02 -p2
+%patch03 -p2
+%patch04 -p2
+%patch05 -p2
+%patch06 -p2
+%patch07 -p2
+%patch08 -p2
 
 %if_without systemd
-%patch70 -p1
+%patch09 -p2
 %endif
 
 echo %version > .tarball-version
@@ -612,7 +618,7 @@ done
 # we install getopt/getopt-*.{bash,tcsh} as doc files
 chmod 644 misc-utils/getopt-*.{bash,tcsh}
 
-# Relocate shared libraries from %_libdir/ to /%_lib/. 
+# Relocate shared libraries from %_libdir/ to /%_lib/.
 mkdir -p -- %buildroot/%_lib
 for f in %buildroot%_libdir/*.so; do
 	t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
@@ -680,7 +686,6 @@ for i in $LINKS; do
 %if_with setarch
 	ln -sf -- setarch %buildroot/%_bindir/$i
 	echo '.so man8/setarch.8' > %buildroot/%_man8dir/$i.8
-	
 	echo "%_bindir/$i"
 	echo "%_man8dir/$i.8.*"
 %endif #with setarch
@@ -710,7 +715,7 @@ done > setarch.files
 	# bindir
 	ls -1 %buildroot/%_bindir |
 		egrep -v "^($exclude_archs)\$" |
-		egrep -v '^(eject|write|getopt|look|taskset|chrt|ionice)$' |
+		egrep -v '^(eject|write|getopt|look|taskset|chrt|ionice|hardlink)$' |
 		sed -e 's|^\(.*\)$|%%_bindir/\1|g'
 
 	# sbindir
@@ -720,7 +725,7 @@ done > setarch.files
 
 	# man1dir
 	ls -1 %buildroot%_man1dir |
-		egrep -v '^(eject|getopt|login|look|taskset|chrt|ionice)' |
+		egrep -v '^(eject|getopt|login|look|taskset|chrt|ionice|hardlink)' |
 		sed -e 's|^\(.*\)$|%%_man1dir/\1*|g'
 
 	# man5dir
@@ -952,6 +957,10 @@ fi
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
+%files -n hardlink
+%_bindir/hardlink
+%_man1dir/hardlink.*
+
 %files -f %name.files
 %if_enabled runuser
 %config(noreplace) %_sysconfdir/pam.d/runuser
@@ -961,6 +970,12 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu May 14 2020 Alexey Gladkov <legion@altlinux.ru> 2.35.1-alt1
+- New version (2.35.1).
+- Update license tag.
+- Update patches.
+- Add hardlink sub-package.
+
 * Thu Apr 11 2019 Alexey Gladkov <legion@altlinux.ru> 2.33.2-alt1
 - New version (2.33.2).
 - Obsolete util-linux-initramfs.
