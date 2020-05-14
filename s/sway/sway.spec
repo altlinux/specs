@@ -2,7 +2,7 @@
 
 Name: sway
 Version: 1.4
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -25,14 +25,17 @@ BuildRequires: libdbus-devel
 BuildRequires: libevdev-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libjson-c-devel
+BuildRequires: libinput-devel
 BuildRequires: libpam-devel
 BuildRequires: libpango-devel
 BuildRequires: libpcre-devel
+BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
-BuildRequires: libwlc0-devel
-BuildRequires: libwlc-devel >= 0.0.10
+BuildRequires: libwayland-server-devel
+BuildRequires: wayland-protocols
 BuildRequires: libwlroots-devel >= 0.10.1-alt2
+BuildRequires: libxkbcommon-devel
 BuildRequires: meson
 BuildRequires: scdoc
 BuildRequires: time
@@ -106,6 +109,13 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Thu May 14 2020 Alexey Shabalin <shaba@altlinux.org> 1:1.4-alt3
+- update BR:
+  + delete libwlc-devel (removed sinse 1.0 relese)
+  + add libwayland-client-devel, libwayland-server-devel, wayland-protocols
+  + add libxkbcommon-devel
+  + add libinput-devel
+
 * Fri Mar 27 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.4-alt2
 - Remove privilege escalation.
 
