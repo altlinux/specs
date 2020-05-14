@@ -2,7 +2,7 @@
 
 Name: wireguard-tools
 
-Version: 1.0.20200510
+Version: 1.0.20200513
 Release: alt1
 
 Summary: Tools for WireGuard: fast, modern, secure VPN tunnel
@@ -90,12 +90,17 @@ popd
 %_man8dir/wg-quick.8*
 %_sbindir/wg-quick
 %_unitdir/wg-quick@.service
+%_unitdir/wg-quick.target
 %_datadir/bash-completion/completions/wg-quick
 
 %files examples
 %doc contrib/*
 
 %changelog
+* Thu May 14 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200513-alt1
+- New version
+  + add upstream wg-quick.target to package
+
 * Tue May 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200510-alt1
 - New version
 
