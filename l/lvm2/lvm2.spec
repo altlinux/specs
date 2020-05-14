@@ -29,7 +29,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
@@ -486,6 +486,10 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Thu May 14 2020 Alexey Shabalin <shaba@altlinux.org> 2.03.9-alt2
+- Not use hard coded paths in blkdeactivate script
+- Update global_filter devices for PVE
+
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 2.03.9-alt1
 - 2.03.9
 
