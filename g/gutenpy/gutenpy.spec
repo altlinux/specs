@@ -6,7 +6,7 @@
 
 Name: gutenpy
 Version: 0.3.0
-Release: alt5.1.1
+Release: alt6
 
 Summary: text reader and catalog browser for Project Gutenberg
 Summary(ru_RU.UTF-8): утилита для поиска и чтения текстов из Project Gutenberg
@@ -18,14 +18,18 @@ URL: http://gutenpy.sourceforge.net/
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 #BuildArch: noarch
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name.png
 Source3: %name-16.png
 Source4: %name-32.png
 Source5: %name-48.png
 
-BuildPreReq: python-base  python-modules  python-modules-encodings rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Thu May 14 2020
+# optimized out: python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: python3-module-mpl_toolkits
 
 %description
 GutenPy  is designed to be a comfortable  text reader and catalog
@@ -48,9 +52,10 @@ GutenPy  предназначается для комфортного чтени
 %setup
 
 %build
-%__subst 's@share/doc/gutenpy@share/gutenpy@' %name.py
-%__subst 's@#!/usr/bin/python2.4@#!/usr/bin/python@' gutenpy.py py2exe_setup.py setup.py
-
+sed -e  's@share/doc/gutenpy@share/gutenpy@' -i %name.py
+sed -e  's@#!/usr/bin/python2.4@#!/usr/bin/python2@' -i gutenpy.py
+sed -e  's@#!/usr/bin/python2.4@#!/usr/bin/python2@' -i py2exe_setup.py
+sed -e  's@#!/usr/bin/python2.4@#!/usr/bin/python2@' -i setup.py
 
 %install
 mkdir -p -- %buildroot%_bindir
@@ -74,7 +79,7 @@ mkdir -p -- %buildroot%_desktopdir
 install -m 0644 -- %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir \
-		%buildroot%_niconsdir %buildroot%_iconsdir/hicolor/64x64/apps
+            %buildroot%_niconsdir %buildroot%_iconsdir/hicolor/64x64/apps
 
 install -m0644 -- %SOURCE2 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -m0644 -- %SOURCE3 %buildroot%_miconsdir/%name.png
@@ -99,6 +104,9 @@ install -m0644 -- %SOURCE5 %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Thu May 14 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.3.0-alt6
+- Update BuildRequires
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.0-alt5.1.1
 - Rebuild with Python-2.7
 
