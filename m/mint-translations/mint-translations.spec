@@ -1,8 +1,8 @@
 Name:    mint-translations
-Version: 2020.01.06
+Version: 2020.05.12
 Release: alt1
 
-License: GPLv2+ and MIT
+License: GPL-2.0+ and MIT
 Summary: Translation files for Linux Mint applications
 
 Group:   Graphical desktop/GNOME
@@ -33,6 +33,10 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 2020.05.12-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Wed Jan 08 2020 Andrey Cherepanov <cas@altlinux.org> 2020.01.06-alt1
 - New version.
 
