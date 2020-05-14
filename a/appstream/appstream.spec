@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.12.10
+Version: 0.12.11
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -26,7 +26,7 @@ BuildRequires: libyaml-devel
 BuildRequires: meson
 BuildRequires: ninja-build
 BuildRequires: protobuf-compiler
-BuildRequires: publican
+BuildRequires: daps
 BuildRequires: qt5-base-devel
 BuildRequires: xmlto
 BuildRequires: gtk-doc
@@ -65,6 +65,7 @@ Requires: %name-qt = %version-%release
 %package doc
 Summary:  Documenation for development using %{name}
 Group:	  Development/Documentation
+BuildArch: noarch
 
 %description doc
 %{summary}.
@@ -74,11 +75,7 @@ Group:	  Development/Documentation
 
 %build
 %meson  -Dqt=true \
-%ifnarch %{ix86}
 	-Ddocs=true \
-%else
-	-Ddocs=false \
-%endif
 	-Dstemming=true
 %meson_build
 
@@ -89,11 +86,6 @@ mkdir -p %{buildroot}/var/cache/app-info/{icons,xapian,xmls}
 touch %{buildroot}/var/cache/app-info/cache.watch
 
 %find_lang appstream
-
-# move metainfo to right/legacy location, at least until our tools can handle it
-mkdir -p %{buildroot}%{_datadir}/appdata/
-mv %{buildroot}%{_datadir}/metainfo/*.xml \
-   %{buildroot}%{_datadir}/appdata/
 
 %check
 #%%meson_test
@@ -114,7 +106,7 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %dir %_cachedir/app-info/xmls
 %_man1dir/appstreamcli.1.*
 %_datadir/gettext/its/metainfo.*
-%_datadir/appdata/org.freedesktop.appstream.cli.*.xml
+%_datadir/metainfo/org.freedesktop.appstream.cli.*.xml
 
 %files devel
 %_includedir/appstream/
@@ -135,6 +127,10 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.11-alt1
+- New version.
+- Use daps instead of publican for documentation build.
+
 * Fri Jan 24 2020 Andrey Cherepanov <cas@altlinux.org> 0.12.10-alt1
 - New version.
 
