@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit 3fa63cfc34668781c7f9b3caafe6d9d400b06b7f
+%global commit a04ef6cefc2f24f901f525263f65cf395e6cff28
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,12 +12,12 @@
 
 
 Name:		grafana
-Version:	6.6.2
+Version:	6.7.3
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
-License:	ASL 2.0
+License:	Apache-2.0
 URL:		https://grafana.com
 
 Source: %name-%version.tar
@@ -49,7 +49,12 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ ./node_modules/.bin/yarn install --pure-lockfile
 # $ npm run build
 # $ rm -rf node_modules/node-sass/vendor
+# $ rm -rf node_modules/iltorb/build/bindings/iltorb.node
+# $ rm -rf node_modules/npm
+# $ rm -rf node_modules/node-sass
+# $ rm -rf node_modules/node-gyp
 # $ git add -f node_modules
+# $ git add -f packages/grafana-*/node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
 %setup -q
@@ -130,7 +135,8 @@ install -p -D -m 640 conf/provisioning/notifiers/sample.yaml %buildroot%_sysconf
 
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
-install -d -m 755 %buildroot%_sharedstatedir/%name
+install -d -m 750 %buildroot%_sharedstatedir/%name
+install -d -m 755 %buildroot%_sharedstatedir/%name/plugins
 # Install pid directory
 install -d -m 775 %buildroot%_runtimedir/%name
 # Install sysconfig
@@ -150,6 +156,20 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 
 %post
 %post_service %name-server
+# create grafana.db with secure permissions on new installations
+# otherwise grafana-server is creating grafana.db on first start
+# with world-readable permissions, which may leak encrypted datasource
+# passwords to all users (if the secret_key in grafana.ini was not changed)
+if [ "$1" = 1 ] && [ ! -f %_sharedstatedir/%name/grafana.db ]; then
+    touch %_sharedstatedir/%name/grafana.db
+fi
+ 
+# apply secure permissions to grafana.db if it exists
+# (may not exist on upgrades, because users can choose between sqlite/mysql/postgres)
+if [ -f %_sharedstatedir/%name/grafana.db ]; then
+    chown %name:%name %_sharedstatedir/%name/grafana.db
+    chmod 640 %_sharedstatedir/%name/grafana.db
+fi
 
 %preun
 %preun_service %name-server
@@ -171,11 +191,19 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/provisioning/*/*.yaml
 #%config(noreplace) %_logrotatedir/%name
-%dir %attr(0770, root, %name) %_logdir/%name
-%dir %attr(0755, %name, %name) %_sharedstatedir/%name
+%dir %attr(0775, root, %name) %_logdir/%name
+%dir %attr(0750, %name, %name) %_sharedstatedir/%name
+%dir %attr(0755, %name, %name) %dir %_sharedstatedir/%name/plugins
 %_datadir/%name
 
 %changelog
+* Fri May 15 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.3-alt1
+- 6.7.3
+- create grafana.db on first installation
+- change permissions of /var/lib/grafana to 750 (Fixes: CVE-2020-12458)
+- change permissions of /var/lib/grafana/grafana.db to 640 and
+  user/group grafana:grafana (CVE-2020-12458)
+
 * Mon Mar 02 2020 Alexey Shabalin <shaba@altlinux.org> 6.6.2-alt1
 - 6.6.2
 
