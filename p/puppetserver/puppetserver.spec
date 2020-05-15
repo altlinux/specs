@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.5.0
-Release:    alt2
+Release:    alt2.1
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -19,8 +19,16 @@ BuildPreReq: rpm-build-ruby
 
 Requires: clojure
 Requires: puppet
-Requires: ruby-puppetserver-ca-cli
-
+Requires: puppetserver-ca
+Requires: gem-multi-json
+Requires: gem-deep-merge
+Requires: gem-text
+Requires: gem-locale
+Requires: gem-fast-gettext
+Requires: gem-gettext
+Requires: gem-semantic-puppet
+Requires: gem-concurrent-ruby >= 1.1.6-alt2
+Conflicts: gem-oj
 
 %description
 Puppet Server is the next-generation application for managing Puppet agents.
@@ -145,6 +153,9 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Wed May 13 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt2.1
+- + explicit require dependenciesa to proper gem packages
+
 * Tue May 12 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt2
 - ! gem paths config
 

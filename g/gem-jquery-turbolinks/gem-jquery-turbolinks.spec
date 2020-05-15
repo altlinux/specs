@@ -2,17 +2,20 @@
 
 Name:          gem-%pkgname
 Version:       2.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       jQuery plugin for drop-in fix binded events problem caused by Turbolinks
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/kossnocorp/jquery.turbolinks
-%vcs           https://github.com/kossnocorp/jquery.turbolinks.git
+Vcs:           https://github.com/kossnocorp/jquery.turbolinks.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 This gem does not work with Turbolinks 5+, and is not compatible with many
@@ -36,24 +39,29 @@ longer maintain this library.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
 
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
+sed "s,'turbolinks','gitlab-turbolinks-classic'," -i %pkgname.gemspec
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -63,5 +71,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Fri May 15 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1.1
+- ! spec syntax, and tags
+- ! replace require dep to gitlab-turbolinks-classic
+
 * Thu Jun 06 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
