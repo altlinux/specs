@@ -1,6 +1,6 @@
 %global import_path github.com/containers/libpod
 Name:     podman
-Version:  1.9.0
+Version:  1.9.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -22,12 +22,12 @@ BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel
 BuildRequires: /proc
 
-Requires: conmon >= 2.0.1
+Requires: conmon >= 2.0.16
 Requires: iptables
 Requires: nftables
 Requires: crun
 Requires: slirp4netns
-Requires: cni cni-plugins containers-common
+Requires: cni cni-plugins >= 0.8.6 containers-common
 
 %description
 %summary.
@@ -98,6 +98,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Fri May 15 2020 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
+- new version 1.9.2
+
 * Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - new version 1.9.0
 - add podman-remote package
