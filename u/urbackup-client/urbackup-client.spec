@@ -1,7 +1,7 @@
 
 Name: urbackup-client
 Version: 2.4.9
-Release: alt1
+Release: alt2
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -78,11 +78,16 @@ touch %buildroot%_logdir/urbackupclient.log
 %_sbindir/urbackupclientbackend
 %_unitdir/%name.service
 %_man1dir/*
-%_datadir/urbackup
-%_localstatedir/urbackup
+%dir %attr(0755,urbackup,urbackup) %_datadir/urbackup
+%attr(-,urbackup,urbackup) %_datadir/urbackup/*
+%dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
+%attr(-,urbackup,urbackup) %_localstatedir/urbackup/*
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Fri May 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.9-alt2
+- file conflict with urbackup-server fixed
+
 * Thu Nov 07 2019 Alexey Shabalin <shaba@altlinux.org> 2.4.9-alt1
 - 2.4.9
 
