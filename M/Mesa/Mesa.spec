@@ -64,7 +64,7 @@
 %endif
 
 Name: Mesa
-Version: 20.0.6
+Version: 20.0.7
 Release: alt1
 Epoch: 4
 License: MIT
@@ -84,10 +84,7 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
-BuildRequires: libclc-devel libglvnd-devel >= 1.2.0
-%ifarch %radeon_arches
-BuildRequires: llvm-devel >= 8.0.0 clang-devel >= 8.0.0
-%endif
+BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 8.0.0 clang-devel >= 8.0.0
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -176,6 +173,9 @@ Mesa software rendering libraries
 Summary: Intel DRI driver
 Group: System/X11
 Requires: libva-driver-intel
+%ifarch x86_64
+Requires: libva-intel-media-driver
+%endif
 
 %description -n xorg-dri-intel
 DRI driver for Intel i8xx, i9xx
@@ -455,6 +455,10 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri May 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.7-alt1
+- 20.0.7
+- returned iris driver for Intel Gen8-11 by default
+
 * Thu Apr 30 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.6-alt1
 - 20.0.6
 
