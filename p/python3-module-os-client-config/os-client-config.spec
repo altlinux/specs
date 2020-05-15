@@ -7,11 +7,11 @@
 %endif
 
 Name: python3-module-%oname
-Version: 1.33.0
+Version: 2.1.0
 Release: alt1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -32,7 +32,9 @@ BuildRequires: python3-module-testrepository
 BuildRequires: python3-module-subunit
 BuildRequires: python3-module-subunit-tests
 BuildRequires: python3-module-extras
-BuildRequires: python3-module-openstacksdk python3-module-oslotest python3-module-glanceclient
+BuildRequires: python3-module-openstacksdk >= 0.13.0
+BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-glanceclient
 %endif
 
 BuildRequires: python3-module-sphinx
@@ -94,6 +96,10 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.33.0-alt1
 - Automatically updated to 1.33.0.
 - Build without python2.

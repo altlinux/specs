@@ -1,41 +1,19 @@
 %global pypi_name mox3
 %def_disable check
 
-Name: python-module-%pypi_name
-Version: 0.28.0
+Name: python3-module-%pypi_name
+Version: 1.0.0
 Release: alt1
 Summary: Mock object framework for Python
 License: Apache-2.0
-Group: Development/Python
+Group: Development/Python3
 Url: http://docs.openstack.org/developer/%pypi_name
 Source: https://tarballs.openstack.org/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel
-BuildRequires: python-module-pbr >= 2.0.0
-BuildRequires: python-module-sphinx-devel
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-openstackdocstheme >= 1.18.1
-BuildRequires: python-module-reno
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-fixtures >= 3.0.0
-BuildRequires: python-module-testtools >= 2.2.0
-BuildRequires: python-module-mimeparse
-BuildRequires: python-module-extras
-BuildRequires: python-module-testrepository
-BuildRequires: python-module-subunit-tests
-BuildRequires: python-module-discover
-BuildRequires: python-module-coverage
-BuildRequires: python-module-hacking
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-flake8
-BuildRequires: pyflakes
-BuildRequires: python-tools-pep8
-BuildRequires: python-module-requests
-
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-setuptools
@@ -55,9 +33,9 @@ BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-flake8
 BuildRequires: python3-pyflakes
 BuildRequires: python3-tools-pep8
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-requests
+
+%py3_provides %pypi_name
 
 %description
 Mox3 is an unofficial port of the Google mox framework
@@ -67,7 +45,7 @@ tested on Python version 3.2, 2.7 and 2.6.
 
 %package tests
 Summary: Tests for %pypi_name
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -80,7 +58,7 @@ This package contains tests for %pypi_name.
 
 %package pickles
 Summary: Pickles for %pypi_name
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 Mox3 is an unofficial port of the Google mox framework
@@ -90,94 +68,51 @@ tested on Python version 3.2, 2.7 and 2.6.
 
 This package contains pickles for %pypi_name.
 
-%package -n python3-module-%pypi_name
-Summary: Mock object framework for Python
-Group: Development/Python3
-%py3_provides %pypi_name
-
-%description -n python3-module-%pypi_name
-Mox3 is an unofficial port of the Google mox framework
-(http://code.google.com/p/pymox/) to Python 3. It was meant to be as compatible
-with mox as possible, but small enhancements have been made. The library was
-tested on Python version 3.2, 2.7 and 2.6.
-
-%package -n python3-module-%pypi_name-tests
-Summary: Tests for %pypi_name
-Group: Development/Python3
-Requires: python3-module-%pypi_name = %EVR
-
-%description -n python3-module-%pypi_name-tests
-Mox3 is an unofficial port of the Google mox framework
-(http://code.google.com/p/pymox/) to Python 3. It was meant to be as compatible
-with mox as possible, but small enhancements have been made. The library was
-tested on Python version 3.2, 2.7 and 2.6.
-
-This package contains tests for %pypi_name.
-
 %prep
 %setup -n %pypi_name-%version
 
-cp -fR . ../python3
 
-%prepare_sphinx doc
+%prepare_sphinx3 doc
 ln -s ../objects.inv doc/source/
 
 %build
-%python_build
-
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd doc/source
-sphinx-build -b pickle -d build/doctrees . build/pickle
-sphinx-build -b html -d build/doctrees . build/html
-cp -fR build/pickle %buildroot%python_sitelibdir/%pypi_name/
-popd
-
-pushd ../python3
 %python3_install
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd doc/source
+export PBR_VERSION=$(pbr.py3 --version)
+sphinx-build-3 -b pickle -d build/doctrees . build/pickle
+sphinx-build-3 -b html -d build/doctrees . build/html
+cp -fR build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 popd
 
 %check
-python setup.py test
-rm -fR build
-py.test
-
-
-pushd ../python3
 python3 setup.py test
 rm -fR build
 py.test3
-popd
-
 
 %files
 %doc COPYING.txt ChangeLog AUTHORS README.rst doc/source/build/html
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%pypi_name
-%doc COPYING.txt ChangeLog AUTHORS README.rst doc/source/build/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/pickle
 
-%files -n python3-module-%pypi_name-tests
+%files pickles
+%python3_sitelibdir/*/pickle
+
+%files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+- Build without python2.
+- Build with docs.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.28.0-alt1
 - Automatically updated to 0.28.0.
 

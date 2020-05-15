@@ -1,11 +1,13 @@
 %define sname automaton
 
+%def_with check
+
 Name: python3-module-%sname
-Version: 1.15.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 Summary: Friendly state machines for python
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: https://wiki.openstack.org/wiki/Oslo#automaton
 Source: %sname-%version.tar.gz
 
@@ -19,6 +21,10 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-prettytable >= 0.7.2
+
+%if_with check
+BuildRequires: python3-module-testtools python3-module-stestr python3-module-oslotest python3-module-hacking
+%endif
 
 BuildArch: noarch
 
@@ -57,8 +63,8 @@ sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
-#%check
-#python setup.py test
+%check
+%__python3 setup.py test
 
 %files
 %python3_sitelibdir/*
@@ -71,6 +77,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html README.rst
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+- Renamed spec file.
+- Build with check.
+
 * Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt2
 - Build without python2.
 

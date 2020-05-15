@@ -1,12 +1,12 @@
 %global oname ovsdbapp
 
 Name: python3-module-%oname
-Version: 0.17.0
+Version: 1.1.0
 Release: alt1
 Summary: A library for creating OVSDB applications
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -58,11 +58,11 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
-# generate html docs
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-python3 setup.py build_sphinx
+# generate html docs
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-rm -rf doc/build/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -76,9 +76,13 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc doc/build/html
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1
 - Automatically updated to 0.17.0.
 - Build without python2.

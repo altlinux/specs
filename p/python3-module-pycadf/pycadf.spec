@@ -1,12 +1,12 @@
 %global oname pycadf
 
 Name: python3-module-%oname
-Version: 2.10.0
+Version: 3.0.0
 Release: alt1
 Summary: DMTF Cloud Audit (CADF) data model
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -25,6 +25,7 @@ BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-sphinx >= 1.1.2
 BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 DMTF Cloud Audit (CADF) data model
@@ -78,6 +79,10 @@ mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
 %doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
 - Automatically updated to 2.10.0.
 - Build without python2.

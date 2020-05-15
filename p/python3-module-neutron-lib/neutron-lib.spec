@@ -1,11 +1,11 @@
 %define oname neutron-lib
 
 Name: python3-module-%oname
-Version: 1.30.0
+Version: 2.3.0
 Release: alt1
 Summary: OpenStack Neutron shared routines and utilities
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -89,6 +89,9 @@ rm -rf build/sphinx/html/.{doctrees,buildinfo}
 %doc build/sphinx/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.30.0-alt1
 - Automatically updated to 1.30.0.
 - Added watch file.

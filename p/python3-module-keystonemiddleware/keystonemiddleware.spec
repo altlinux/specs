@@ -1,13 +1,13 @@
 %define oname keystonemiddleware
 
-%def_without docs
+%def_with docs
 
 Name: python3-module-%oname
-Version: 7.0.1
+Version: 9.0.0
 Release: alt1
 Summary: Middleware for OpenStack Identity
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -37,6 +37,7 @@ BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 
 %description
 This package contains middleware modules designed to provide authentication
@@ -72,9 +73,9 @@ rm -rf %oname.egg-info
 
 %if_with docs
 # generate html docs
-python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-rm -rf build/sphinx/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
@@ -91,10 +92,15 @@ rm -rf build/sphinx/html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE
-build/sphinx/html
+%doc html
 %endif
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
+- Automatically updated to 9.0.0.
+- Renamed spec file.
+- Build with docs.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
 - Automatically updated to 7.0.1.
 

@@ -1,16 +1,16 @@
 %global oname cliff
 
-%def_without docs
-%def_disable check
+%def_with docs
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.17.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -23,7 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-pyparsing >= 2.1.0
-BuildRequires: python3-module-cmd2 >= 0.6.7
+BuildRequires: python3-module-cmd2 >= 0.8.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-yaml >= 3.10.0
@@ -65,6 +65,7 @@ rm -rf *.egg-info
 
 %if_with docs
 # generate html docs
+export PYTHONPATH="$(pwd)"
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
@@ -91,6 +92,10 @@ PYTHONPATH=. nosetests3
 %endif
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+- Build with docs.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.17.0-alt1
 - Automatically updated to 2.17.0.
 - Added watch file.

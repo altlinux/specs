@@ -1,10 +1,10 @@
 %define oname castellan
 
 Name: python3-module-%oname
-Version: 1.4.0
+Version: 3.0.1
 Release: alt1
 Summary: Generic Key Manager interface for OpenStack
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -24,6 +24,8 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 
 %description
 Generic Key Manager interface for OpenStack
@@ -52,9 +54,10 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
-#python setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-#rm -fr doc/build/html/.buildinfo
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -66,10 +69,15 @@ rm -rf %oname.egg-info
 %files tests
 %python3_sitelibdir/*/tests
 
-#%files doc
-#%doc  doc/build/html
+%files doc
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+- Fix license.
+- Build with docs.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 

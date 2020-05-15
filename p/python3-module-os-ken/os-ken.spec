@@ -1,7 +1,7 @@
 %define  oname os-ken
 
 Name:    python3-module-%oname
-Version: 0.4.1
+Version: 1.0.0
 Release: alt1
 
 Summary: A component-based software defined networking framework for OpenStack
@@ -13,8 +13,9 @@ URL:     https://pypi.org/project/os-ken/
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-dev
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 2.0
 
 BuildArch: noarch
 
@@ -40,5 +41,8 @@ Source:  %oname-%version.tar
 %doc *.rst
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Thu Sep 26 2019 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus.

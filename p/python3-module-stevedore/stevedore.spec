@@ -3,11 +3,11 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.31.0
-Release: alt2
+Version: 1.32.0
+Release: alt1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 URL: http://docs.openstack.org/developer/stevedore/
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
@@ -78,6 +78,7 @@ ln -s ../objects.inv doc/source/
 %python3_install
 
 export PYTHONPATH=$PWD
+export PBR_VERSION=$(pbr.py3 --version)
 %make SPHINXBUILD="sphinx-build-3" -C doc pickle
 %make SPHINXBUILD="sphinx-build-3" -C doc html
 
@@ -108,6 +109,10 @@ py.test-%_python3_version
 %doc doc/build/html/*
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt1
+- Automatically updated to 1.32.0.
+- Renamed spec file.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.31.0-alt2
 - Build without python2.
 

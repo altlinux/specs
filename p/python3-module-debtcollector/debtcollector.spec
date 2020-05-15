@@ -1,12 +1,12 @@
 %define oname debtcollector
 
 Name: python3-module-%oname
-Version: 1.22.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 Summary: A collection of Python deprecation patterns and strategies
 Group: Development/Python3
 
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/debtcollector
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -22,7 +22,6 @@ BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-fixtures
 
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx >= 4.7.0
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-doc8 >= 0.6.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
@@ -86,6 +85,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.22.0-alt2
 - Build without python2.
 
