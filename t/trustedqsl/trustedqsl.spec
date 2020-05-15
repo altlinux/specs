@@ -1,40 +1,30 @@
-# Because upstream is not good about bumping the library version for ABI
-# incompatible changes the Release should not be reset to 1 unless both version
-# numbers change, otherwise the NEVR of the library may cause a package not to
-# be updated even if it should be.
-%global srcname tqsl
-%global libtqslver 2.5
-%define tqslver 2.5.3
+Name:    trustedqsl
+Version: 2.5.4
+Release: alt1
+Summary: TrustedQSL ham-radio applications
 
-Name:           trustedqsl
-Version:        %tqslver
-# Warning: because libtqslver has different version, always increase release number
-Release:        alt16
-Summary:        TrustedQSL ham-radio applications
+Group: Communications
+License: BSD
+URL: http://www.rickmurphy.net/trustedqsl.org/
 
+Source0: tqsl-%version.tar
 
-Group:		Communications
-License:        BSD
-URL:            http://www.rickmurphy.net/trustedqsl.org/
-
-Source0:        %srcname-%version.tar
-
-Patch1:         tqsl-tqsllib.patch
-Patch2:         tqsl-fix-undefined-macro.patch
-Patch3:         tqsl-ssl-md5.patch
-Patch4:         tqsl-alt-standard-lib-path.patch
+Patch1: tqsl-tqsllib.patch
+Patch2: tqsl-fix-undefined-macro.patch
+Patch3: tqsl-ssl-md5.patch
+Patch4: tqsl-alt-standard-lib-path.patch
 
 BuildRequires(pre): cmake
-BuildRequires:  gcc-c++
-BuildRequires:  libdb4-devel
-BuildRequires:  libssl-devel
-BuildRequires:  libcurl-devel
-BuildRequires:  libexpat-devel
-BuildRequires:  wxGTK-devel
-BuildRequires:  zlib-devel
-BuildRequires:  desktop-file-utils
+BuildRequires: gcc-c++
+BuildRequires: libdb4-devel
+BuildRequires: libssl-devel
+BuildRequires: libcurl-devel
+BuildRequires: libexpat-devel
+BuildRequires: wxGTK-devel
+BuildRequires: zlib-devel
+BuildRequires: desktop-file-utils
 
-Requires:       curl
+Requires: curl
 
 %description
 The TrustedQSL applications are used for generating digitally signed
@@ -42,9 +32,8 @@ QSO records (records of Amateur Radio contacts). This package
 contains the GUI applications tqslcert and tqsl.
 
 %package -n tqsllib
-Version:        %libtqslver
-Summary:        TrustedQSL library
-Group:		System/Libraries
+Summary: TrustedQSL library
+Group: System/Libraries
 
 %description -n tqsllib
 The TrustedQSL library is used for generating digitally signed
@@ -53,10 +42,9 @@ contains the library and configuration files needed to run
 TrustedQSL applications.
 
 %package -n tqsllib-devel
-Version:        %libtqslver
-Summary:        Development files the for TrustedQSL library
-Group:		Development/C++
-Requires:       tqsllib = %libtqslver-%release
+Summary: Development files the for TrustedQSL library
+Group: 	Development/C++
+Requires: tqsllib = %EVR
 
 %description -n tqsllib-devel
 The TrustedQSL library is used for generating digitally signed
@@ -64,7 +52,7 @@ QSO records (records of Amateur Radio contacts). This package
 contains the to develop with tqsllib.
 
 %prep
-%setup -q -n %srcname-%tqslver
+%setup -q -n tqsl-%version
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
@@ -80,13 +68,12 @@ contains the to develop with tqsllib.
 # Install desktop files
 mkdir -p %buildroot%_desktopdir
 sed -i -e "s/.png//g" -e "s/Application;/Network;/g" -e "s/Utility;/GTK;/g" apps/tqsl.desktop
-desktop-file-install \
-        --dir=%buildroot%_desktopdir apps/tqsl.desktop
+desktop-file-install --dir=%buildroot%_desktopdir apps/tqsl.desktop
 
 # Install icons
 for size in 16 32 48 64 128; do
-    install -Dpm 0644 apps/icons/key${size}.png \
-    %buildroot%_iconsdir/hicolor/${size}x${size}/apps/TrustedQSL.png
+     install -Dpm 0644 apps/icons/key${size}.png \
+     %buildroot%_iconsdir/hicolor/${size}x${size}/apps/TrustedQSL.png
 done
 
 %find_lang --output=%name.lang tqslapp
@@ -103,13 +90,16 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 
 %files -n tqsllib
 %doc src/LICENSE src/ChangeLog.txt
-%_libdir/libtqsllib.so.%libtqslver
+%_libdir/libtqsllib.so.*
 
 %files -n tqsllib-devel
 %_includedir/*
 %_libdir/libtqsllib.so
 
 %changelog
+* Fri May 15 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.4-alt1
+- New version.
+
 * Thu Apr 16 2020 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt16
 - New version.
 
