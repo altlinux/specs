@@ -1,11 +1,11 @@
-%define ver_major 4.4
+%define ver_major 4.6
 %define _libexecdir %_prefix/libexec
 %define _name cinnamon
 
 %def_disable wmsession
 
 Name: %{_name}-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 License: GPLv2+
@@ -119,6 +119,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Tue Feb 18 2020 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
 - 4.4.1
 

@@ -1,6 +1,6 @@
 Name: mintlocale
-Version: 1.5.3
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: Language selection tool for Cinnamon
 License: GPLv2+
@@ -58,6 +58,9 @@ echo 'LANG=$locale' > %{buildroot}%{_datadir}/linuxmint/mintlocale/templates/def
 %doc debian/copyright debian/changelog
 
 %changelog
+* Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 1.5.5-alt1
+- new version
+
 * Tue Mar 24 2020 Vladimir Didenko <cow@altlinux.org> 1.5.3-alt2
 - remove python2 parasite dependency (fixes: #38265)
 

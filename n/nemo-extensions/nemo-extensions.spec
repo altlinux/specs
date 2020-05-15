@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 4.4.0
-Release: alt1
+Version: 4.6.0
+Release: alt2
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -74,6 +74,15 @@ Requires: nemo-python = %version-%release
 %description -n nemo-python-devel
 Python bindings for Nemo
 
+%package -n nemo-terminal
+Summary: Embedded terminal window for Nemo
+License: %gpl3plus
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires: nemo-python
+Requires: libvte3-gir
+Requires: nemo-extensions-translations
+
 %package -n nemo-share
 Summary: Share a folder from the Cinnamon Nemo file manager
 License: %gpl2plus
@@ -95,15 +104,6 @@ BuildArch: noarch
 
 %description -n nemo-share-common
 Common files for nemo-share.
-
-%package -n nemo-terminal
-Summary: Embedded terminal window for Nemo
-License: %gpl3plus
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Requires: nemo-python
-Requires: libvte3-gir
-Requires: nemo-extensions-translations
 
 %description -n nemo-terminal
 Embedded terminal window for Nemo
@@ -263,6 +263,8 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %doc nemo-share/COPYING
 %doc nemo-share/README
 %_datadir/nemo-share/*
+# Mint specific script with deps to Mint tools
+%exclude %_datadir/nemo-share/install-samba
 
 %files -n nemo-share -f nemo-share.lang
 %_libdir/nemo/extensions-%api_ver/libnemo-share.so
@@ -301,6 +303,13 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
+- restore nemo-share
+
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+- don't pack nemo-share since it uses Linux Mint specific tools
+
 * Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

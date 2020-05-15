@@ -1,9 +1,9 @@
-%define ver_major 4.4
+%define ver_major 4.6
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -18,8 +18,7 @@ Source: %name-%version.tar
 Source1: %name.pam
 Patch: %name-%version-%release.patch
 
-# From configure.ac
-BuildPreReq: intltool
+BuildPreReq: meson
 BuildRequires: python3-dev
 BuildRequires: libgio-devel
 BuildRequires: libgtk+3-devel
@@ -27,6 +26,7 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libpam0-devel
+BuildRequires: libXinerama-devel
 Requires: %name-translations
 Requires: typelib(CDesktopEnums)
 
@@ -74,13 +74,12 @@ GObject introspection devel data for the %name library
 %patch0 -p1
 
 %build
-%autoreconf
-%configure --enable-setres
-
-%make_build
+export CFLAGS=-DUSE_SETRES
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 rm -f %buildroot/%_sysconfdir/pam.d/%name
 install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
@@ -119,6 +118,12 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
+- add USE_SETRES flag (screensaver doesn't work properly without it)
+
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Dec 11 2019 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
 - 4.4.1
 

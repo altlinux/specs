@@ -1,4 +1,4 @@
-%define ver_major 4.4
+%define ver_major 4.6
 %define _name cjs
 %define api_ver 1.0
 
@@ -83,6 +83,9 @@ cp %SOURCE1 m4/
 %doc examples/*
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

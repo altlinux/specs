@@ -1,7 +1,7 @@
-%define ver_major 4.4
+%define ver_major 4.6
 
 Name: cinnamon-translations
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
@@ -77,7 +77,6 @@ make
 %install
 install -m 0755 -d %{buildroot}%{_datadir}/locale
 cp -Rp usr/share/locale/* %{buildroot}%{_datadir}/locale
-rm -f %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/cinnamon-bluetooth.mo
 
 %find_lang cinnamon
 %find_lang nemo
@@ -103,6 +102,9 @@ rm -f %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/cinnamon-bluetooth.mo
 %files -n cinnamon-settings-daemon-translations -f cinnamon-settings-daemon.lang
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Jan 8 2020 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
 - 4.4.2
 

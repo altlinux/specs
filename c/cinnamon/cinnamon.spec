@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 4.4.8
+Version: 4.6.0
 Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -97,6 +97,8 @@ Provides: python3(Spices)
 # https://bugzilla.altlinux.org/36995
 Requires: python3-module-PAM
 Requires: python3-module-xapps-overrides
+# Required for xapp-status applet
+Requires: xapp-sn-watcher
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
@@ -197,6 +199,15 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
+- add xapp-sn-watcher to requires
+- remove systray from default applets (xapp-status is used instead)
+- remove printers from default applets (see
+  https://github.com/linuxmint/cinnamon/issues/9265)
+
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Mar 11 2020 Vladimir Didenko <cow@altlinux.org> 4.4.8-alt2
 - fix compatibility with Python 3.8
 

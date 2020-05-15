@@ -1,5 +1,5 @@
 %define api_ver 3.0
-%define ver_major 4.4
+%define ver_major 4.6
 
 %def_enable exempi
 %def_enable tracker
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -185,6 +185,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0-5-g112ed43
+
 * Tue Dec 17 2019 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
 - 4.4.2
 
