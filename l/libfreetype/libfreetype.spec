@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -26,7 +26,7 @@ Patch13: ft2demos-2.4.10-rh-more-demos.patch
 Patch14: freetype-2.10.0-alt-e2k.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
+BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel libpcre-devel libbrotli-devel
 
 %description
 The FreeType engine is a free and portable TrueType font rendering
@@ -157,6 +157,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Fri May 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.2-alt1
+- 2.10.2
+
 * Wed Sep 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 2.10.1-alt1
 - 2.10.1
 
