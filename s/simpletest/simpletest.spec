@@ -1,11 +1,10 @@
+%def_disable bootstrap
 %def_enable profile
-%ifarch %e2k
-%def_enable m32
-%endif
+%def_enable sanitizers
 
 Name:     simpletest
-Version:  8
-Release:  alt3
+Version:  10
+Release:  alt2
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -16,26 +15,20 @@ Packager: Andrew Savchenko <bircoph@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ gcc-fortran libgfortran-devel libgomp-devel
+BuildRequires: gcc-c++ gcc-fortran libgfortran-devel
+%{?!_enable_bootstrap:BuildRequires: libgomp-devel}
+%if_enabled sanitizers
+BuildRequires: /proc libasan-devel-static
 %ifarch %e2k
-%if_enabled m32
-BuildRequires: e2k32-gcc e2k32-gcc-c++
-# For lib.req (and debuginfo etc.) to work properly:
-BuildPreReq: e2k32-glibc
-# Work-around lib.req not knowing that lib32 is in our default search path.
-# TODO: change lib.req to get the idea of the default search path
-# from the corresponding ld.so interpreter.
-%filter_from_requires \:/lib.*\( = \|(\): s:^\(/usr\)\?/lib32/::
-%endif
-%if_enabled profile
-BuildRequires: lcc1.23 >= 1.23.20-alt5
+BuildRequires: liblsan-devel-static libmsan-devel-static
+%else
+%ifarch i586
+BuildRequires: libubsan-devel-static
+%else
+BuildRequires: liblsan-devel-static libtsan-devel-static libubsan-devel-static
 %endif
 %endif
-#ifarch x86_64
-#if_enabled m32
-#BuildRequires: i586-gcc9 i586-gcc9-c++
-#endif
-#endif
+%endif
 
 %description
 Simple suit for testing basic runtime toolchain functionality:
@@ -55,13 +48,13 @@ Also provides useful information about system:
 
 %build
 %configure \
-    %{subst_enable m32} \
-    %{subst_enable profile}
+    %{subst_enable bootstrap} \
+    %{subst_enable profile} \
+    %{subst_enable sanitizers}
 
-%make_build
+%make_build -O
 
-%check
-%make check
+# No need to check since all checks are done during build
 
 %install
 %makeinstall_std
@@ -71,11 +64,23 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Fri May 15 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt2
+- Fix build issues on aarch64 and i586.
+
+* Fri May 15 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt1
+- Add sanitizers support.
+
+* Thu May 14 2020 Andrew Savchenko <bircoph@altlinux.org> 9-alt2
+- Disable bootstrap, reenable profile.
+
+* Mon Apr 27 2020 Andrew Savchenko <bircoph@altlinux.org> 9-alt1
+- Add bootstap support (for lcc updates) with minimal test.
+
 * Fri Jan 17 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt3
 - Use subst_enable macro.
 
 * Sat Jan 11 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt2
-- Update summary
+- Update summary.
 - Fix macro type, thanks ldv@ for noticing.
 
 * Sat Jan 11 2020 Andrew Savchenko <bircoph@altlinux.org> 8-alt1
@@ -104,10 +109,10 @@ Also provides useful information about system:
 - Add OpenMP C and Fortran checks.
 - Add run-time tests.
 
-* Fri Nov 15 2018 Andrew Savchenko <bircoph@altlinux.org> 2-alt2
+* Fri Nov 16 2018 Andrew Savchenko <bircoph@altlinux.org> 2-alt2
 - Use flags properly (they are not exported by rpm by default)
 
-* Fri Nov 15 2018 Andrew Savchenko <bircoph@altlinux.org> 2-alt1
+* Fri Nov 16 2018 Andrew Savchenko <bircoph@altlinux.org> 2-alt1
 - Add C++ and Fortran tests.
 
 * Wed Mar 21 2018 Andrew Savchenko <bircoph@altlinux.org> 1-alt1
