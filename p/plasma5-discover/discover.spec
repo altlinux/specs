@@ -1,12 +1,18 @@
 %define rname discover
 
+%ifarch armh
+%def_disable fwupd
+%else
+%def_enable fwupd
+%endif
+
 %define sover 0
 %define libdiscovercommon libdiscovercommon%sover
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
 Version: 5.18.5
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -30,7 +36,10 @@ Patch5: alt-soversion.patch
 #BuildRequires: appstream-qt-devel extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-plasma-framework-devel libflatpak-devel libssl-devel packagekit-qt-devel python3-dev qt5-declarative-devel qt5-translations rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: libssl-devel qt5-declarative-devel
-BuildRequires: pkgconfig(libmarkdown) pkgconfig(fwupd)
+BuildRequires: pkgconfig(libmarkdown) 
+%if_enabled fwupd
+BuildRequires: pkgconfig(fwupd)
+%endif
 BuildRequires: packagekit-qt-devel
 BuildRequires: appstream-qt-devel
 BuildRequires: libflatpak-devel
@@ -48,7 +57,9 @@ Group: System/Configuration/Packaging
 Requires: %name-kns
 Requires: %name-packagekit
 Requires: %name-flatpak
+%if_enabled fwupd
 Requires: %name-fwupd
+%endif
 %description maxi
 Plasma Discover core files.
 
@@ -193,8 +204,10 @@ done
 %_K5xdgapp/org.kde.discover-flatpak.desktop
 %_K5icon/*/*/apps/*flatpak*.*
 
+%if_enabled fwupd
 %files fwupd
 %_K5plug/discover/fwupd-backend.so
+%endif
 
 %files -n %libdiscovercommon
 %_K5lib/libDiscoverCommon.so.%sover
@@ -205,6 +218,9 @@ done
 
 
 %changelog
+* Fri May 15 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt2
+- disable fwupd support on armh
+
 * Thu May 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt1
 - new version
 
