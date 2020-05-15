@@ -1,12 +1,12 @@
 %define oname troveclient
 
 Name:    python3-module-%oname
-Version: 3.0.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
 
-License: ASL 2.0
+License: Apache-2.0
 Group:   Development/Python3
 Url:     http://docs.openstack.org/developer/python-%oname
 
@@ -96,6 +96,10 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Build without python2.

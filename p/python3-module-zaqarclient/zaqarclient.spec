@@ -1,13 +1,13 @@
 %define sname zaqarclient
 
 Name: python3-module-%sname
-Version: 1.12.0
+Version: 1.13.1
 Release: alt1
 
 Summary: Client Library for OpenStack Zaqar Queueing API
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://pypi.python.org/pypi/python-%sname
 
 Source: %sname-%version.tar
@@ -19,7 +19,6 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -28,6 +27,7 @@ BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneclient >= 2.0.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
+BuildRequires: python3-module-openstackdocstheme
 
 %description
 Python client to Zaqar messaging service API v1.
@@ -57,7 +57,7 @@ rm -rf {,test-}requirements.txt
 %python3_install
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
-#sphinx-build-3 -b html doc/source html
+sphinx-build-3 -b html doc/source html
 
 # Delete tests
 rm -fr %buildroot%python_sitelibdir/tests
@@ -71,12 +71,14 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %files doc
-#%%doc html
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt1
+- Automatically updated to 1.13.1.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1
 - Automatically updated to 1.12.0.
-- Added watch file.
 
 * Fri Oct 25 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
 - Build without python2.

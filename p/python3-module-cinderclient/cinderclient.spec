@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.0.0
+Version: 7.0.0
 Release: alt1
 
 Summary: Python API and CLI for OpenStack Cinder
@@ -83,6 +83,10 @@ install -p -D -m 644 tools/cinder.bash_completion %buildroot%_sysconfdir/bash_co
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1:7.0.0-alt1
+- Automatically updated to 7.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:5.0.0-alt1
 - Automatically updated to 5.0.0.
 - Build without python2.

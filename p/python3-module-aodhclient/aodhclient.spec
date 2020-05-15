@@ -1,13 +1,13 @@
 %define oname aodhclient
 
 Name:       python3-module-%oname
-Version:    1.3.0
+Version:    2.0.1
 Release:    alt1
 
 Summary:    Python API and CLI for OpenStack Aodh
 
 Group:      Development/Python3
-License:    ASL 2.0
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/%oname
 
 Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -30,7 +30,7 @@ BuildRequires: python3-module-pyparsing
 
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.11.0
-BuildRequires: python3-module-osprofiler
+BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-reno >= 1.6.2
 
 %description
@@ -85,6 +85,10 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 - Build without python2.

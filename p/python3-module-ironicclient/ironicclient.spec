@@ -1,13 +1,13 @@
 %define oname ironicclient
 
 Name:       python3-module-%oname
-Version:    3.1.0
+Version:    4.1.0
 Release:    alt1
 
 Summary:    Client for OpenStack bare metal Service
 
 Group:      Development/Python3
-License:    ASL 2.0
+License:    Apache-2.0
 Url:     http://docs.openstack.org/developer/python-%oname
 
 Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -89,7 +89,7 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-#%%_bindir/ironic
+%_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -100,6 +100,10 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %doc build/sphinx/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 - Build without python2.

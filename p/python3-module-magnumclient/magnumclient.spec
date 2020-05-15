@@ -1,13 +1,13 @@
 %define oname magnumclient
 
 Name:       python3-module-%oname
-Version:    2.15.0
+Version:    3.0.0
 Release:    alt1
 
 Summary:    Client Library for OpenStack Magnum Container Management API
 
 Group:      Development/Python3
-License:    ASL 2.0
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -95,6 +95,10 @@ rm -fr build/sphinx/html/.doctrees /build/sphinx/html/.buildinfo
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1
 - Automatically updated to 2.15.0.
 - Build without python2.

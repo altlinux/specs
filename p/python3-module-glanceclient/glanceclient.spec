@@ -1,13 +1,13 @@
 %define oname glanceclient
 
 Name:    python3-module-%oname
-Version: 2.17.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Python API and CLI for OpenStack Glance
 
 Group:   Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url:     http://docs.openstack.org/developer/python-%oname
 
 Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -98,6 +98,10 @@ install -p -D -m 644 man/glance.1 %buildroot%_man1dir/glance.1
 %doc doc/build/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 2.17.0-alt1
 - Automatically updated to 2.17.0.
 

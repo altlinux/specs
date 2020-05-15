@@ -1,12 +1,12 @@
 %define oname barbicanclient
 
 Name:       python3-module-%oname
-Version:    4.9.0
+Version:    4.10.0
 Release:    alt1
 
 Summary:    Client Library for OpenStack Barbican Key Management API
 
-License:    ASL 2.0
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
 Group:      Development/Python3
 
@@ -29,6 +29,7 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 
 %description
 There is a Python library for accessing the API (barbicanclient module),
@@ -83,6 +84,10 @@ rm -f doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt1
+- Automatically updated to 4.10.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
 - Automatically updated to 4.9.0.
 - Build without python2.
