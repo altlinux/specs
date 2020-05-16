@@ -38,8 +38,8 @@
 %def_disable check
 
 Name:    golang
-Version: 1.14.2
-Release: alt2
+Version: 1.14.3
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -293,6 +293,9 @@ mkdir -p -- \
 
 
 %changelog
+* Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.3-alt1
+- New version (1.14.3).
+
 * Sat May 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.2-alt2
 - avoid requires libselinux-utils.
 
