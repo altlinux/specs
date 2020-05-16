@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20191122
+Version: 20200229
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -99,7 +99,7 @@ mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
 %build
-
+export PYTHON_COMMAND=%__python3
 source ./edksetup.sh
 
 # compiler
@@ -117,7 +117,6 @@ CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
 OVMF_FLAGS="${CC_FLAGS}"
 OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_TLS_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_IP6_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
 
 # ovmf + secure boot features
@@ -196,8 +195,11 @@ cp -a ovmf-ia32 %buildroot%_datadir/edk2
 %_libdir/efi/shell.efi
 
 %changelog
+* Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 20200229-alt1
+- edk2-stable202002 (Fixes: CVE-2019-14575, CVE-2019-14559, CVE-2019-14587, CVE-2019-14558, CVE-2019-14586, CVE-2019-14563)
+
 * Wed Dec 18 2019 Alexey Shabalin <shaba@altlinux.org> 20191122-alt1
-- edk2-stable201911
+- edk2-stable201911 (Fixes: CVE-2019-14553, CVE-2019-13224, CVE-2019-13225)
 
 * Wed Jul 31 2019 Alexey Shabalin <shaba@altlinux.org> 20190501-alt2
 - build ovmf and efi-shell only
