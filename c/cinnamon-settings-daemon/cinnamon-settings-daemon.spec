@@ -1,4 +1,4 @@
-%define ver_major 4.4
+%define ver_major 4.6
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -106,11 +106,11 @@ export NPROCS=1
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%_sysconfdir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
+%_datadir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 %_sysconfdir/xdg/autostart/*.desktop
 %_datadir/applications/*.desktop
 
@@ -122,6 +122,9 @@ export NPROCS=1
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

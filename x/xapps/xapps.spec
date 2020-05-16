@@ -3,8 +3,8 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 1.6.10
-Release: alt1
+Version: 1.8.4
+Release: alt2
 
 Summary: Libraries and common resources for XApps
 License: %gpl3only
@@ -33,6 +33,7 @@ BuildRequires: meson
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgnomekbd-devel
 BuildRequires: vala-tools
 BuildRequires: python3-module-pygobject3-devel
+BuildRequires: libdbus-devel libdbusmenu-gtk3-devel
 
 %add_python3_path %libxappsdir
 
@@ -66,6 +67,7 @@ XApps icons.
 %package -n lib%name
 Summary: XApps core libraries
 Group: Graphical desktop/GNOME
+Requires: %name-schemas
 
 %description -n lib%name
 XApps libraries.
@@ -108,6 +110,13 @@ Group: Graphical desktop/GNOME
 
 %description -n %name-applet-constants
 Common constants for XApps applets
+
+%package -n xapp-sn-watcher
+Summary: XApp Status Notifier Watcher
+Group: Graphical desktop/GNOME
+
+%description -n xapp-sn-watcher
+XApp Status Notifier Watcher
 
 %package -n mate-xapp-status-applet
 Summary: XAppStatusIcon applet for mate panel
@@ -176,12 +185,23 @@ XAppStatusIcon applet for mate panel
 %dir %libxappsdir/__pycache__/
 %libxappsdir/__pycache__/*
 
+%files -n xapp-sn-watcher
+%_sysconfdir/xdg/autostart/xapp-sn-watcher.desktop
+%_prefix/lib/xapps/sn-watcher/xapp-sn-watcher
+%_datadir/dbus-1/services/org.x.StatusNotifierWatcher.service
+
 %files -n mate-xapp-status-applet
 %libxappsdir/mate-xapp-status-applet.py
 %_datadir/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 1.8.4-alt2
+- add dependency on xapps-schemas to libxapps package
+
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Tue Feb 11 2020 Vladimir Didenko <cow@altlinux.org> 1.6.10-alt1
 - 1.6.10
 

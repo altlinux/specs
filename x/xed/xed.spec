@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 2.4.2
+Version: 2.6.0
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -120,10 +120,7 @@ rm -f %buildroot%_libdir/%name/*.la
 
 %files
 %_bindir/*
-%dir %pkglibdir
-%dir %pluginsdir
-%pluginsdir/*
-%_libdir/%name
+%pkglibdir
 
 %files data -f %name.lang
 %pkgdatadir/
@@ -132,7 +129,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%name.appdata.xml
 %_datadir/dbus-1/services/org.x.editor.*service
-%doc README AUTHORS NEWS
+%doc README.md AUTHORS NEWS
 
 # All xed python modules are intended for internal usage only
 %filter_from_provides /python3/d
@@ -142,6 +139,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
+- New version
+
 * Mon Dec 23 2019 Vladimir Didenko <cow@altlinux.org> 2.4.2-alt1
 - New version (2.4.2-5-gc19752e)
 

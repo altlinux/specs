@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.4.2
-Release: alt1
+Version: 4.6.0
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -158,7 +158,6 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 %_man1dir/muffin-message.1*
 %_bindir/muffin
 %_bindir/muffin-message
-%_libexecdir/muffin-restart-helper
 %_desktopdir/*.desktop
 %_datadir/muffin
 %_datadir/glib-2.0/schemas/org.cinnamon.muffin.gschema.xml
@@ -175,6 +174,7 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 %dir %_libdir/%name
 %exclude %_libdir/%name/*.la
 %_libdir/%name/*.so
+%_libexecdir/muffin-restart-helper
 
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/default.so
@@ -197,6 +197,12 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
+- fix pkgconfig file
+
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Wed Jan 8 2020 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
 - 4.4.1
 

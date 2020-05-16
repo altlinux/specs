@@ -1,8 +1,8 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 1.8.1
-Release: alt2
+Version: 2.0.1
+Release: alt1
 
 Summary: Python Xapp Library
 
@@ -33,6 +33,9 @@ Python Xapp Library
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
+- New version
+
 * Mon Dec 2 2019 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt2
 - Add rpm-build-gir to build requires
 

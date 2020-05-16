@@ -1,8 +1,8 @@
-%define ver_major 4.4
+%define ver_major 4.6
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt3
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -91,10 +91,10 @@ Requires: seahorse
 Requires: parcellite
 # Display manager
 Requires: lightdm slick-greeter lightdm-settings
-# Samba support for nemo
-Requires: nemo-share
 # Integration with fileroller (see #34711)
 Requires: nemo-fileroller
+# Support Samba files sharing
+Requires: nemo-share
 
 # Default Document viewer
 Requires: xreader
@@ -127,6 +127,15 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt3
+- restore nemo-share
+
+* Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
+- remove nemo-share
+
+* Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt1
+- bump version
+
 * Mon Nov 25 2019 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
 - bump version
 - replace xplayer by celluloid
