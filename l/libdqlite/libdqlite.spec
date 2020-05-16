@@ -1,5 +1,5 @@
 Name: libdqlite
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
@@ -53,6 +53,9 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- Updated
+
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - Updated
 
