@@ -4,13 +4,13 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 13.0.0
+Version: 14.0.0
 Release: alt1
 
 Summary: OpenStack measurement collection service
 
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -75,7 +75,7 @@ BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-oslo.privsep
+BuildRequires: python3-module-oslo.privsep >= 1.32.0
 BuildRequires: python3-module-oslo.reports >= 1.18.0
 BuildRequires: python3-module-oslo.rootwrap >= 2.0.0
 BuildRequires: python3-module-oslo.service >= 0.7.0
@@ -415,6 +415,10 @@ crudini --set %ceilometer_conf oslo_concurrency lock_path %_runtimedir/ceilomete
 %_initdir/%name-polling
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 1:14.0.0-alt1
+- Automatically updated to 14.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:13.0.0-alt1
 - Automatically updated to 13.0.0.
 - Build without python2.

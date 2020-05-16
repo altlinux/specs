@@ -1,10 +1,10 @@
 Name:    openstack-placement
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: OpenStack resource provider inventory allocation service
 
-License: ASL 2.0
+License: Apache-2.0
 Group:   Development/Python3
 URL:     http://tarballs.openstack.org/os-resource-classes
 
@@ -12,7 +12,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
-BuildRequires: python3-module-pbr >= 2.0
+BuildRequires: python3-module-pbr >= 2.0.0
 
 BuildArch: noarch
 
@@ -40,5 +40,9 @@ in a cloud.
 %doc *.rst
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Renamed spec file.
+
 * Thu Oct 17 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.

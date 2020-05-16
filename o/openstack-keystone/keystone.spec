@@ -2,13 +2,13 @@
 
 Name: openstack-%oname
 Epoch: 1
-Version: 16.0.0
+Version: 17.0.0
 Release: alt1
 
 Summary: OpenStack Identity Service
 
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -62,7 +62,7 @@ BuildRequires: python3-module-oslo.db >= 4.27.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.44.0
 BuildRequires: python3-module-oslo.middleware >= 3.31.0
-BuildRequires: python3-module-oslo.policy >= 2.3.0
+BuildRequires: python3-module-oslo.policy >= 3.0.2
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oauthlib >= 0.6.2
@@ -113,7 +113,7 @@ Requires: python3-module-oslo.db >= 4.27.0
 Requires: python3-module-oslo.i18n >= 3.15.3
 Requires: python3-module-oslo.log >= 3.44.0
 Requires: python3-module-oslo.middleware >= 3.31.0
-Requires: python3-module-oslo.policy >= 2.3.0
+Requires: python3-module-oslo.policy >= 3.0.2
 Requires: python3-module-oslo.serialization >= 2.18.0
 Requires: python3-module-oslo.utils >= 3.33.0
 # add not finded requires
@@ -239,6 +239,7 @@ fi
 %apache2_sites_start/*.conf
 %ghost %apache2_sites_enabled/*.conf
 %_tmpfilesdir/openstack-keystone.conf
+%_bindir/keystone-status
 %_bindir/keystone-wsgi-admin
 %_bindir/keystone-wsgi-public
 %dir %attr(0750, root, keystone) %_sysconfdir/keystone
@@ -277,6 +278,10 @@ fi
 #build/sphinx/html
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 1:17.0.0-alt1
+- Automatically updated to 17.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1:16.0.0-alt1
 - Automatically updated to 16.0.0.
 

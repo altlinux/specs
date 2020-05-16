@@ -1,11 +1,11 @@
 Name:           openstack-ironic
 Epoch: 1
-Version:        13.0.1
-Release:        alt1.1
+Version:        15.0.0
+Release:        alt1
 
 Summary:        OpenStack Baremetal Hypervisor API (ironic)
 
-License:        ASL 2.0
+License:        Apache-2.0
 Group:          System/Servers
 URL:            http://www.openstack.org
 
@@ -79,12 +79,12 @@ Requires:       python3-module-netaddr
 Requires:       python3-module-oslo.concurrency >= 3.26.0
 Requires:       python3-module-oslo.config >= 5.2.0
 Requires:       python3-module-oslo.context >= 2.19.2
-Requires:       python3-module-oslo.db >= 4.27.0
+Requires:       python3-module-oslo.db >= 4.40.0
 Requires:       python3-module-oslo.i18n >= 3.15.3
 Requires:       python3-module-oslo.policy >= 1.30.0
 Requires:       python3-module-oslo.rootwrap >= 5.8.0
 Requires:       python3-module-oslo.serialization >= 2.18.0
-Requires:       python3-module-oslo.utils >= 3.33.0
+Requires:       python3-module-oslo.utils >= 3.38.0
 Requires:       python3-module-paramiko
 Requires:       python3-module-pbr >= 2.0.0
 Requires:       python3-module-pecan >= 1.0.0
@@ -103,7 +103,7 @@ Requires:       python3-module-keystoneclient
 Requires:       python3-module-swiftclient
 Requires:       python3-module-jinja2
 Requires:       python3-module-pyghmi
-Requires:       python3-module-alembic >= 0.8.10
+Requires:       python3-module-alembic >= 0.9.6
 Requires:       python3-module-pysendfile >= 2.0.0
 
 Requires(pre):  shadow-utils
@@ -124,7 +124,6 @@ Components common to all OpenStack Ironic services
 # TODO: fix packaging these files
 %config(noreplace) %attr(-,root,ironic) %{_sysconfdir}/ironic/rootwrap.conf
 %config(noreplace) %attr(-,root,ironic) %{_sysconfdir}/ironic/rootwrap.d/ironic-images.filters
-%config(noreplace) %attr(-,root,ironic) %{_sysconfdir}/ironic/rootwrap.d/ironic-lib.filters
 %config(noreplace) %attr(-,root,ironic) %{_sysconfdir}/ironic/rootwrap.d/ironic-utils.filters
 # TODO-end
 %attr(-,ironic,ironic) %{_sharedstatedir}/ironic
@@ -178,6 +177,10 @@ Ironic Conductor for management and provisioning of physical machines
 %preun_service openstack-ironic-conductor.service
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 1:15.0.0-alt1
+- Automatically updated to 15.0.0.
+- Renamed spec file.
+
 * Fri Oct 25 2019 Grigory Ustinov <grenka@altlinux.org> 1:13.0.1-alt1.1
 - Update to 13.0.1.
 - Transfer on python3.
