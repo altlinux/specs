@@ -3,7 +3,7 @@
 
 Name: jfsutils
 Version: 1.1.15
-Release: alt2
+Release: alt3
 Summary: IBM JFS utility programs
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -62,6 +62,9 @@ done
 
 
 %changelog
+* Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.15-alt3
+- fixed build
+
 * Mon Mar 25 2013 Led <led@altlinux.ru> 1.1.15-alt2
 - fixes from upstream's CVS
 - fixed License
