@@ -2,7 +2,7 @@
 %define major 1.4
 
 Name: tcl-img
-Version: 1.4.9
+Version: 1.4.11
 Release: alt1
 
 Summary: Tcl Image Formats (Img)
@@ -16,13 +16,18 @@ Conflicts: tcl < 8.6.7-alt2
 
 # repacked https://sourceforge.net/projects/tkimg/files/tkimg/1.4/ "tkimg %version" Img-%version-Sources.tar.gz
 Source0: tkimg-%version.tar
+Source1: tcl-img.watch
 Patch1: 0001-ALT-TEA.patch
-Patch2: 0002-DEBIAN-system-zlib.patch
-Patch3: 0003-DEBIAN-system-libjpeg.patch
-Patch4: 0004-DEBIAN-system-libpng.patch
+Patch2: 0002-DEBIAN-libz.patch
+Patch3: 0003-DEBIAN-libjpeg.patch
+Patch4: 0004-DEBIAN-libpng.patch
+Patch5: 0005-DEBIAN-libtiff.patch
+Patch6: 0006-DEBIAN-pixmap.patch
+Patch7: 0007-DEBIAN-window.patch
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
+BuildRequires: libtiff-devel
 BuildRequires: tcllib
 
 %description
@@ -31,10 +36,7 @@ BMP, XBM, XPM, GIF, PNG, JPEG, postscript and others.
 
 %prep
 %setup -q -n tkimg-%version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+%autopatch -p2
 find . -name config.cache -delete
 
 %build
@@ -60,6 +62,12 @@ xz ChangeLog
 %_mandir/mann/*
 
 %changelog
+* Sun May 17 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.11-alt1
+- Updated to 1.4.11.
+- Built against system libtiff.
+- Updated patches.
+- Imported watch file from Debian.
+
 * Mon Sep 16 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.9-alt1
 - 1.4.9.
 - Explicitly enabled threads in configure.
