@@ -39,7 +39,7 @@
 
 Name:    golang
 Version: 1.14.3
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -293,6 +293,9 @@ mkdir -p -- \
 
 
 %changelog
+* Sun May 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.3-alt2
+- merge chanlog with p9
+
 * Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.3-alt1
 - New version (1.14.3).
 
@@ -312,8 +315,14 @@ mkdir -p -- \
 * Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.8-alt1
 - 1.13.8
 
+* Thu Feb 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.17-alt1
+- 1.12.17
+
 * Tue Jan 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.6-alt1
 - 1.13.6
+
+* Tue Jan 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.15-alt1
+- 1.12.15
 
 * Fri Dec 13 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.5-alt1
 - 1.13.5
@@ -321,8 +330,17 @@ mkdir -p -- \
 * Wed Nov 06 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.4-alt1
 - 1.13.4 (Fixes: CVE-2019-17596)
 
+* Wed Nov 06 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.13-alt1
+- New version (1.12.13).
+
+* Wed Nov 06 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.11-alt1
+- New version (1.12.11). (Fixes: CVE-2019-17596)
+
 * Thu Oct 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.13.1-alt1
 - 1.13.1
+
+* Thu Oct 10 2019 Alexey Shabalin <shaba@altlinux.org> 1.12.10-alt1
+- New version (1.12.10). (Fixes: CVE-2019-16276)
 
 * Thu Sep 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.13-alt1
 - 1.13
