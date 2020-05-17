@@ -1,9 +1,11 @@
+%define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
+
 Name: mk-configure
-Version: 0.32.1
-Release: alt1
+Version: 0.34.2
+Release: alt2
 
 Summary: Lightweight replacement for GNU autotools
-License: BSD
+License: BSD-2-Clause and MIT and ISC
 Group: Development/Tools
 
 Url: http://sourceforge.net/projects/mk-configure/
@@ -14,24 +16,54 @@ Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildArch: noarch
 
-Requires:      bmake bmkdep
+Requires:      bmake bmkdep coreutils grep
 BuildRequires: bmake mk-files binutils
 
 # required for tests
 BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel bmkdep
-BuildRequires: perl-podlators perl-devel liblua5-devel info-install makeinfo m4
+BuildRequires: perl-podlators perl-devel lua-devel info-install makeinfo m4
+
+%ifarch %clang_arches
+BuildRequires: clang
+%define cc_compilers gcc clang
+%define cxx_compilers g++ clang++
+%else
+%define cc_compilers gcc
+%define cxx_compilers g++
+%endif
+
+# Disable auto-dependencies in shell scripts
+# in order to fix "/usr/xpg4/bin/sh" false positive.
+# Also add "coreutils" and "grep" to "Requires" manually
+AutoReq: noshell
+
+%define pkgdocdir %_docdir/%name-%version
 
 %description
 mk-configure is a lightweight replacement for GNU autotools, written in
 bmake (portable version of NetBSD make), POSIX shell and POSIX utilities.
 
+%package doc
+Summary: %name documentation
+Group: Development/Documentation
+
+%description doc
+Examples and presentation for %name package.
+
 %prep
 %setup
-sed -i -e "s|-Wabi||" mk/mkc_imp.platform.sys.mk
 
 %define env \
   unset MAKEFLAGS; \
-  export PREFIX=%prefix MANDIR=%_mandir SYSCONFDIR=%_sysconfdir
+  export USE_NM=%_bindir/nm \
+  export USE_INSTALL=%_bindir/install \
+  export USE_AWK=%_bindir/awk \
+  export USE_ID=%_bindir/id \
+  export USE_CC_COMPILERS='%cc_compilers' \
+  export USE_CXX_COMPILERS='%cxx_compilers' \
+  export PREFIX=%_prefix \
+  export SYSCONFDIR=%_sysconfdir \
+  export MANDIR=%_mandir
 
 # examples are built and tested either,
 # let's keep a pristine copy
@@ -46,26 +78,52 @@ bmake all
 bmake install DESTDIR=%buildroot
 rm -rf %buildroot%_docdir/%name
 
+# instead of proper %%doc (share docdir among subpackages)
+mkdir -p %buildroot%pkgdocdir
+cp -at %buildroot%pkgdocdir -- \
+	doc/FAQ doc/LICENSE doc/NEWS doc/NOTES README* \
+	doc/examples/ presentation/presentation.pdf
+
 %check
+export PATH="/sbin:$PATH" # /sbin/info-install
 unset MAKEFLAGS
-# lua tests expect correct lua.pc
-export NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd'
-# hello_libdeps was already fixed in upstream, for now we skip it too
-export NOSUBDIR="$NOSUBDIR examples/hello_libdeps"
-# /sbin/install-info
-export PATH=/sbin:$PATH
+# The following tests are disabled because
+# lua.pc does not provide INSTALL_{C,L}MOD
+export NOSUBDIR='hello_lua hello_lua2 hello_lua3 lua_dirs'
 bmake test
+bmake cleandir-examples
+bmake cleandir-tests
 
 %files
-%doc doc/FAQ doc/LICENSE doc/NEWS doc/NOTES README presentation/presentation.pdf
-%doc doc/examples/
+%dir %pkgdocdir
+%pkgdocdir/[A-Z]*
 %_bindir/*
-%_datadir/mk-configure/
-%_datadir/mkc-mk/
+%_datadir/%name/
 %_man1dir/*
 %_man7dir/*
+%_prefix/libexec/%name
+
+%files doc
+%dir %pkgdocdir
+%pkgdocdir/examples/
+%pkgdocdir/presentation.pdf
+
+# TODO:
+# - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Thu May 14 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt2
+- Fix incorrect dependency from /usr/xpg4/bin/sh
+
+* Thu May 14 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt1
+- new version 0.34.2
+
+* Fri May 01 2020 Michael Shigorin <mike@altlinux.org> 0.34.1-alt1
+- 0.34.1
+  + added mk-files to BR: (thx cheusov@)
+  + merged useful opensuse specfile bits
+  + added clang support where available
+  + separate doc subpackage
 * Wed Feb 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.32.1-alt1
 - new version 0.32.1 (with rpmrb script)
 
