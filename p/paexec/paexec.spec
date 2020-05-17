@@ -1,5 +1,5 @@
 Name: paexec
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 
 Summary: paexec distributes tasks over network or CPUs
@@ -71,6 +71,9 @@ mkcmake install
 # - investigate and re-enable tests
 
 %changelog
+* Sat May 16 2020 Aleksey Cheusov <cheusov@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version (1.1.1) with rpmgs script
 
