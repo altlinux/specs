@@ -2,7 +2,7 @@
 
 
 Name: janus
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -24,8 +24,6 @@ Patch2: janus-0.9.2-debian-2005_avoid_npm.patch
 Patch3: janus-0.9.2-debian-2006_avoid_doc_privacy_breach.patch
 Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
 
-Patch5: janus-0.9.3-alt-websocket_transport_fix.patch
-Patch6: janus-0.9.3-alt-janus_videoroom_fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -98,8 +96,6 @@ development.
 %patch3 -p1
 %patch4 -p1
 
-%patch5 -p0
-%patch6 -p0
 
 mv -f COPYING COPYING.GPL.orig
 ln -s $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING.GPL) COPYING.GPL
@@ -191,6 +187,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Sun May 17 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.4-alt1
+- New version
+
 * Tue Apr 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.3-alt1
 - New version
 - Enable websockets support
