@@ -1,8 +1,8 @@
 %define gcc_branch 9
 
 Name: gcc%gcc_branch
-Version: 9.2.1
-Release: alt3
+Version: 9.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -134,7 +134,10 @@ Url: https://gcc.gnu.org/
 
 Source: %srcfilename.tar
 
+Patch0: gcc-9-branch.patch
+
 # Fedora patches.
+Patch99: gcc-fedora-vendor-branch.patch
 Patch100: gcc-hack.patch
 Patch101: gcc-i386-libgomp.patch
 Patch102: gcc-sparc-config-detection.patch
@@ -1030,7 +1033,10 @@ version %version.
 %prep
 %setup -n %srcdirname
 
+%patch0 -p1
+
 # Fedora patches.
+%patch99 -p1
 %patch100 -p0
 %patch101 -p0
 %patch102 -p0
@@ -2127,6 +2133,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon May 18 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3.1-alt1
+- Updated to git://gcc.gnu.org/git/gcc.git releases/gcc-9
+  commit e8dcd6c79335997a80f75db389263b63dfa45ca1.
+- Rebased redhat vendor branch to releases/gcc-9 branch.
+
+
 * Sun Jan 26 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.2.1-alt3
 - Updated to git://gcc.gnu.org/git/gcc.git vendors/redhat/heads/gcc-9-branch
   commit 98ca79bc91558a8ccaf487acc861a50425faf5af.
