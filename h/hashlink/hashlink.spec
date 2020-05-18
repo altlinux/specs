@@ -2,7 +2,7 @@
 
 Name: hashlink
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary:HashLink is a virtual machine for Haxe
 License: MIT
@@ -39,6 +39,8 @@ Group: %group
 
 %install
 %makeinstall_std MAKE=/usr/bin/make
+install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
+
 %find_lang %name
 %files -f %name.lang
 %doc LICENSE README.md
@@ -56,8 +58,12 @@ Group: %group
 %_libdir/libhl.so
 %_includedir/hl.h
 %_includedir/hlc.h
+%_includedir/hlc_main.c
 
 %changelog
+* Mon May 18 2020 Denis Smirnov <mithraen@altlinux.ru> 1.11-alt2
+- add /usr/include/hlc_main.c for HL/C support
+
 * Mon May 18 2020 Denis Smirnov <mithraen@altlinux.ru> 1.11-alt1
 - first build for Sisyphus
 
