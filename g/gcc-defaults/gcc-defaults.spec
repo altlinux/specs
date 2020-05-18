@@ -16,7 +16,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt1
+Release: alt2
 License: None
 Group: Development/Other
 
@@ -198,6 +198,7 @@ This is metapackage for %{1}-%{2}. \
 %endif
 %ifarch %libquadmath_arches
 %do_package libquadmath devel 1 #
+%do_package libquadmath devel-static 1 #
 %endif
 %ifarch %libtsan_arches
 %do_package libtsan devel-static 1 #
@@ -310,6 +311,9 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Mon May 18 2020 Andrew Savchenko <bircoph@altlinux.org> 9-alt2
+- Added libquadmath-devel-static subpackage.
+
 * Wed Oct 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 9-alt1
 - Added gcc-gdc metapacakge.
 - Dropped libmpx-devel-static subpackage.
