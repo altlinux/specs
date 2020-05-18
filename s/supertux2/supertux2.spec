@@ -1,5 +1,5 @@
 Name: supertux2
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
@@ -92,6 +92,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon May 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
+- New version (0.6.2) with rpmgs script.
+
 * Mon Dec 16 2019 Leontiy Volodin <lvol@altlinux.org> 0.6.1-alt1
 - New version (0.6.1) with rpmgs script.
 - Updated License in spec.
