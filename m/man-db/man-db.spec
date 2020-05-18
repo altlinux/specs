@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.9.0
-Release: alt2
+Release: alt3
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPLv2+ and GPLv3+
@@ -33,7 +33,7 @@ Provides: man-pages-reader = %version
 # previous versions of the package contain the files: apropos.1, man.1, whatis.1
 Conflicts: man-pages-ru-extra < 0.1-alt5
 
-Requires: coreutils, grep, groff-base, gzip, less
+Requires: coreutils, grep, groff-base, gzip, less, xz
 
 BuildRequires: gnu-config
 BuildRequires: gdbm-devel
@@ -163,6 +163,9 @@ cat %name.lang %name-gnulib.lang >> %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.0-alt3
+- NMU: Add missing requires: xz (ALT#38217).
+
 * Wed Nov 13 2019 Alexey Gladkov <legion@altlinux.ru> 2.9.0-alt2
 - The catman sometime needs to execute other utilities.
 
