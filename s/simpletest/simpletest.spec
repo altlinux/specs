@@ -4,7 +4,7 @@
 
 Name:     simpletest
 Version:  10
-Release:  alt2
+Release:  alt3
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -15,7 +15,7 @@ Packager: Andrew Savchenko <bircoph@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ gcc-fortran libgfortran-devel
+BuildRequires: gcc-c++ gcc-fortran
 %{?!_enable_bootstrap:BuildRequires: libgomp-devel}
 %if_enabled sanitizers
 BuildRequires: /proc libasan-devel-static
@@ -64,6 +64,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Mon May 18 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt3
+- Remove no longer needed libgfortran-devel dependency.
+
 * Fri May 15 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt2
 - Fix build issues on aarch64 and i586.
 
