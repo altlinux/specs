@@ -3,7 +3,7 @@
 
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
@@ -510,7 +510,7 @@ ReplayGain-Scanner plugin for DeaDBeeF
 
 %prep
 %setup
-%patch6 -p2
+#patch6 -p2
 %patch8 -p1
 
 sed -i '/m4/ d' Makefile.am
@@ -691,6 +691,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon May 18 2020 Anton Midyukov <antohami@altlinux.org> 1.8.3-alt1
+- new version 1.8.3
+
 * Mon Aug 12 2019 Anton Midyukov <antohami@altlinux.org> 1.8.2-alt1
 - new version 1.8.2
 - added plugin opus
