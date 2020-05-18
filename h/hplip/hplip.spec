@@ -28,8 +28,8 @@
 %endif
 
 Name:    hplip
-Version: 3.20.3
-Release: alt4
+Version: 3.20.5
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -168,6 +168,8 @@ Patch14: hplip-alt-use-l10n.patch
 Patch15: hplip-alt-use-python3-in-service.patch
 # Fix systray icon menu (see https://bugs.launchpad.net/ubuntu/+source/mate-panel/+bug/1810745)
 Patch16: hplip-alt-systray-menu.patch
+# Fix undefined _GDB() function
+Patch17: hplip-alt-fix-undefined-_GDB-call.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -635,6 +637,7 @@ tar -xf %SOURCE6
 %endif
 %patch15 -p2
 %patch16 -p2
+%patch17 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1173,6 +1176,35 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.5-alt1
+- New version.
+- Added support for the following new Printers:
+  + HP DeskJet 1200
+  + HP DeskJet Ink Advantage 1200
+  + HP DeskJet 2300 All-in-One
+  + HP DeskJet Ink Advantage 2300 All-in-One
+  + HP ENVY 6000 series
+  + HP DeskJet Plus 6000 series
+  + HP ENVY Pro 6400 series
+  + HP DeskJet Plus 6400 series
+  + HP DeskJet 2700 All-in-One Printer series
+  + HP DeskJet Ink Advantage 2700 All-in-One Printer series
+  + HP DeskJet Plus 4100 All-in-One Printer series
+  + HP DeskJet Ink Advantage 4100 All-in-One Printer series
+  + HP LaserJet Enterprise M610dn
+  + HP LaserJet Enterprise M611dn
+  + HP LaserJet Enterprise M611x
+  + HP LaserJet Enterprise M612dn
+  + HP LaserJet Enterprise M612x
+  + HP LaserJet Enterprise MFP M634dn
+  + HP LaserJet Enterprise MFP M634z
+  + HP LaserJet Enterprise Flow MFP M634h
+  + HP LaserJet Enterprise MFP M635h
+  + HP LaserJet Enterprise MFP M635fht
+  + HP LaserJet Enterprise Flow MFP M635z
+  + HP LaserJet Enterprise MFP M636fh
+  + HP LaserJet Enterprise Flow MFP M636z
+
 * Wed Apr 01 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.3-alt4
 - Add requirement of %_bindir/lsusb for hplip-gui (ALT #38312).
 
