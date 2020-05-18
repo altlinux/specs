@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.6.0
-Release: alt3
+Release: alt4
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -199,6 +199,9 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon May 18 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt4
+- fix applets configuration
+
 * Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt3
 - return systray to default applets (xapp-status doesn't cover
   all use cases)
