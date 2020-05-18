@@ -15,11 +15,11 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 32
 %endif
-%define beta_suffix	b1
+%define beta_suffix	%nil
 
 Name: 	 seamonkey
 Version: 2.53.2
-Release: alt0.1.b1
+Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -90,7 +90,7 @@ BuildRequires: clang%clang_version
 BuildRequires: clang%clang_version-devel
 BuildRequires: llvm%clang_version-devel
 BuildRequires: lld-devel
-BuildRequires: libdnet-devel libgtk+2-devel libgtk+3-devel libIDL-devel wget libarchive-devel lbzip2 libpixman-devel
+BuildRequires: libdnet-devel libgtk+2-devel libgtk+3-devel libIDL-devel wget libarchive-devel libpixman-devel
 BuildRequires: libjpeg-devel libpng-devel libXinerama-devel libXext-devel
 BuildRequires: libXp-devel libXt-devel makedepend net-tools unzip libalsa-devel yasm libwireless-devel
 BuildRequires: xorg-cf-files zip libXft-devel libvpx5-devel
@@ -189,9 +189,7 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 
 # https://bugzilla.altlinux.org/30322
 %ifarch %{ix86}
-pushd mozilla
-%patch10 -p2
-popd
+%patch10 -p1
 %endif
 %patch11 -p1
 %patch12 -p1
@@ -444,6 +442,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.2-alt1
+- New stable version.
+- Remove deprecated lbzip2.
+
 * Thu Apr 30 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.2-alt0.1.b1
 - 2.53.2 Beta 1 compatible with Rust 1.41.0 (ALT #38169).
 - Do not package deprecated seamonkey-devel package.
