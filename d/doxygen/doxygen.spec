@@ -1,6 +1,6 @@
 Name: doxygen
 Version: 1.8.17
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -30,7 +30,7 @@ Patch108: Ubuntu-sass_fix.patch
 
 # Automatically added by buildreq on Wed May 10 2017
 # optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
-BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz phonon-devel python-modules-xml texlive-collection-publishers tex(tabu.sty)
+BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz qt5-base-devel python-modules-xml texlive-collection-publishers tex(tabu.sty)
 
 %description
 Doxygen is a documentation system for C, C++ and IDL.  It can generate
@@ -138,6 +138,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Mon May 18 2020 Nikita Ermakov <arei@altlinux.org> 1:1.8.17-alt2
+- Use Qt5 instead of Qt4 for doxygen-wizard
+
 * Tue May 12 2020 Fr. Br. George <george@altlinux.ru> 1:1.8.17-alt1
 - Autobuild version bump to 1.8.17
 
