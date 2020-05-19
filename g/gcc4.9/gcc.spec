@@ -9,12 +9,12 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.2
-Release: alt7
+Release: alt8
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
-License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
+License: GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-or-later AND GPL-3.0-or-later WITH GCC-exception-3.1
 Group: Development/C
 Url: http://gcc.gnu.org/
 ExcludeArch: aarch64
@@ -221,6 +221,7 @@ Patch731: gcc-asan-fix-missing-include-signal-h.patch
 Patch732: alt-fix-texi2pod-perl.patch
 Patch733: alt-Fix-option-handling-when--std=gnu++14-is-not-used-PR-69865.patch
 Patch734: upstream-ppc64le-fix-lex-r256656.patch
+Patch735: upstream-glibc-ustat-r260684.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
@@ -1123,6 +1124,7 @@ version %version.
 %patch732 -p1
 %patch733 -p1
 %patch734 -p1
+%patch735 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1542,9 +1544,6 @@ mv %buildroot%_libdir/libsanitizer.spec %buildroot%gcc_target_libdir/
 # Package fixed *limits.h
 mv %buildroot%gcc_target_libdir/include{-fixed,}/limits.h
 mv %buildroot%gcc_target_libdir/include{-fixed,}/syslimits.h
-
-# Remove precompiled headers.
-rm -rf %buildroot%_includedir/c++/*/*/*/*.gch
 
 %if_with ada
 # Dispatch Ada 95 libraries.
@@ -2273,6 +2272,10 @@ popd
 %endif # _cross_platform
 
 %changelog
+* Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt8
+- Fixed build with glibc >= 2.28.
+- Changed License tag to SPDX ID.
+
 * Tue Aug 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt7
 - Added ppc64le support.
 - Fixed build with libtool 2.4.6 (ldv@).
