@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt5
+Release:       alt6
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -182,6 +182,9 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Fri May 19 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6
+- * tmpfiles.d file
+
 * Fri May 15 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt5
 - ! patches and requires
 
