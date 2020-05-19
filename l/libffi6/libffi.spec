@@ -1,13 +1,14 @@
-%define soname 7
+%def_without devel
+%define soname 6
 
-Name: libffi
-Version: 3.3
-Release: alt1
+Name: libffi%soname
+Version: 3.2.1
+Release: alt4
 Epoch: 1
 
 Summary: Foreign Function Interface library
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 URL: http://sourceware.org/libffi
 
 # http://sourceware.org/libffi/%name-%version.tar.gz
@@ -22,17 +23,6 @@ Patch: %name-%version-%release.patch
 BuildRequires: makeinfo
 
 %description
-The libffi library provides a portable, high level programming
-interface to various calling conventions.  This allows a programmer
-to call any function specified by a call interface description
-at run time.
-
-%package -n libffi%soname
-Summary: Header files and library for Foreign Function Interface development
-Group: System/Libraries
-Provides: libffi = %epoch:%version-%release
-
-%description -n libffi%soname
 The libffi library provides a portable, high level programming
 interface to various calling conventions.  This allows a programmer
 to call any function specified by a call interface description
@@ -86,11 +76,12 @@ make -k check
 %install
 %makeinstall_std
 
-%files -n %name%soname
+%files
 %_libdir/*.so.*
+%doc README
 
+%if_with devel
 %files devel
-%doc README.md
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
@@ -99,10 +90,11 @@ make -k check
 
 %files devel-static
 %_libdir/*.a
+%endif
 
 %changelog
-* Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.3-alt1
-- Updated to v3.3.
+* Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.1-alt4
+- Packaged as compatibility library.
 
 * Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.1-alt3
 - Fixed testsuite regressions.
