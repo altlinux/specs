@@ -3,7 +3,7 @@
 
 Name:		seamonkey-ru
 Version:	2.53.2
-Release:	alt0.1.b1
+Release:	alt1
 Summary:	Russian (RU) Language Pack for Seamonkey
 
 License:	MPL/NPL
@@ -11,7 +11,7 @@ Group:		Networking/WWW
 URL:		http://mozilla-russia.org/products/seamonkey/
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
-Source0:	seamonkey-%{version}b1.ru.langpack.xpi
+Source0:	seamonkey-%{version}.ru.langpack.xpi
 Source1:	%name.watch
 
 ExclusiveArch: %ix86 x86_64
@@ -43,6 +43,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %ciddir
 
 %changelog
+* Tue May 19 2020 Andrey Cherepanov <cas@altlinux.org> 2.53.2-alt1
+- New version.
+
 * Thu Apr 30 2020 Andrey Cherepanov <cas@altlinux.org> 2.53.2-alt0.1.b1
 - New version (beta1).
 
