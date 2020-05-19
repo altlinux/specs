@@ -2,24 +2,20 @@
 # $Id: tclx,v 1.28 2006/07/22 17:03:48 me Exp $
 
 %define teaname tclx
-%define major 8.4
 
 Name: tclx
-Version: %major.1
+Version: 8.4.4
 Release: alt1
 Epoch: 1
 
 Summary: Tcl extensions for POSIX systems
 License: BSD
 Group: Development/Tcl
-Url: http://www.tcl.tk/
+Url: https://github.com/flightaware/tclx/
 
-%ifdef snapshot
-Source: %name-%snapshot.tar.bz2
-%else
-# repacked http://download.sourceforge.net/%teaname/%teaname%version.tar.bz2
-Source: %teaname%version.tar
-%endif
+# repacked https://github.com/flightaware/tclx/archive/v%version.tar.gz
+Source: %teaname-%version.tar
+Source1: %teaname.watch
 
 Requires: tcl >= 8.4.0-alt1
 BuildRequires: tcl-devel >= 8.4.0-alt1 rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1
@@ -31,24 +27,31 @@ enhances Tcl support for files, network access, debugging, math, lists,
 and message catalogs.
 
 %prep
-%setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
-%teapatch
+%setup
+%tea_patch
 
 %build
 %configure
-%__make
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+make test
 
 %files
-%doc README ChangeLog
-%_tcllibdir/lib%name%major.so
-%_tcllibdir/%name%major
-%_tcldatadir/%name%major
+%doc README.md ChangeLog
+%_tcllibdir/tclx8.6
 %_mandir/mann/*
 
 %changelog
+* Tue May 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:8.4.4-alt1
+- Updated to 8.4.4 (new upstream).
+- Enabled tests.
+- Cleaned up spec.
+- Packed watch file.
+
 * Wed May 08 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:8.4.1-alt1
 - Updated to 8.4.1.
 - Built without devel subpackage.
@@ -82,7 +85,7 @@ and message catalogs.
 
 * Mon Jun 3 2002 Sergey Bolshakov <s.bolshakov@belcaf.com> 8.3.4-alt8
 - Tk part dropped
-- libpath changed to %_tcllibpath
+- libpath changed to %%_tcllibpath
 - src rpm splitted
 
 * Mon Mar 18 2002 Sergey Bolshakov <s.bolshakov@belcaf.com> 8.3.4-alt7
