@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: simplescreenrecorder
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Simple Screen Recording with OpenGL capture
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Tue May 19 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Fri May 01 2020 Leontiy Volodin <lvol@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
