@@ -9,12 +9,12 @@
 
 Name: gcc%gcc_branch
 Version: 6.3.1
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
-License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
+License: GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-or-later AND GPL-3.0-or-later WITH GCC-exception-3.1
 Group: Development/C
 Url: https://gcc.gnu.org/
 
@@ -225,6 +225,7 @@ Patch728: alt-libstdc++-libvtv-rpath-disable.patch
 Patch729: alt-fix-build-with-glibc2.26-ucontext.patch
 Patch730: alt-fix-build-with-glibc2.26-sigaltstack-__res_state.patch
 Patch731: upstream-ppc64le-fix-lex-r256656.patch
+Patch732: upstream-glibc-ustat-r260684.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Obsoletes: egcs gcc3.0 gcc3.1
@@ -1172,6 +1173,7 @@ version %version.
 %patch729 -p1
 %patch730 -p1
 %patch731 -p1
+%patch732 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1650,9 +1652,6 @@ mv %buildroot%_libdir/libsanitizer.spec %buildroot%gcc_target_libdir/
 # Package fixed *limits.h
 mv %buildroot%gcc_target_libdir/include{-fixed,}/limits.h
 mv %buildroot%gcc_target_libdir/include{-fixed,}/syslimits.h
-
-# Remove precompiled headers.
-rm -rf %buildroot%_includedir/c++/*/*/*/*.gch
 
 %if_with ada
 # Dispatch Ada 95 libraries.
@@ -2440,6 +2439,10 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
+* Tue May 19 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt6
+- Fixed build with glibc >= 2.28.
+- Changed License tag to SPDX ID.
+
 * Mon Aug 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.1-alt5
 - Added ppc64le support.
 - Disabled gdb-plugin packaging in compat mode.
