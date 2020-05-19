@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.31.0
+Version: 3.31.1
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -13,8 +13,12 @@ Source0: sqlite-%version.tar
 Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
-Patch4: 0004-ALT-tcl.patch
+Patch4: 0004-ALT-TEA-Policy.patch
 Patch5: 0005-ALT-build-dependencies.patch
+Patch6: 0006-UPSTREAM-CVE-2020-9327-1.patch
+Patch7: 0007-UPSTREAM-CVE-2020-9327-2.patch
+Patch8: 0008-UPSTREAM-Fix-problems-in-the-constant-propagation-op.patch
+Patch9: 0009-UPSTREAM-CVE-2020-11655.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -199,6 +203,11 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Tue May 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.31.1-alt1
+- Updated to 3.31.1.
+- Backported fix for problems in the constant propagation optimization.
+- Backported CVE fixes (fixes CVE-2020-9327 and CVE-2020-11655).
+
 * Thu Jan 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.31.0-alt1
 - 3.31.0 (Fixes: CVE-2019-19923, CVE-2019-19924, CVE-2019-19925,
   CVE-2019-19926).
