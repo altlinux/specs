@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1062.12.1.vz7.145.5
-%define orelease 1062.12.1.vz7.145.5
+#     rh7-3.10.0-1127.vz7.150.5
+%define orelease 1127.vz7.150.5
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -586,6 +586,11 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue May 19 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1127.vz7.150.5
+- Build rh7-3.10.0-1127.vz7.150.5
+- update config up to RHEL7.8 kernel base
+- add CONFIG_INFINIBAND=y for fast-path for vStorage
+
 * Tue Apr 21 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1062.12.1.vz7.145.5
 - Import rh7-3.10.0-1062.12.1.vz7.145.5
 
