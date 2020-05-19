@@ -1,6 +1,6 @@
 Name:     adp
 Version:  1.0
-Release:  alt2
+Release:  alt3
 
 Summary:  ALT Domain Policy
 License:  GPL-3.0+
@@ -13,6 +13,7 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): alterator
+PreReq: pam-config-control
 Requires: krb5-kinit
 Requires: samba-client
 Requires(preun): sssd-client
@@ -20,6 +21,7 @@ Requires(post): sssd-client
 Requires: sssd-client
 Requires: %name-templates
 Requires: python3-modules-sqlite3
+Requires: pam-config >= 1.9.0
 
 BuildArch: noarch
 
@@ -69,24 +71,15 @@ install -d -m 0770 %buildroot%_logdir/%name
 
 install -Dm0644 %name.desktop %buildroot%_sysconfdir/xdg/autostart/%name.desktop
 install -Dm0644 %name.service %buildroot%_unitdir/%name.service
+install -Dm0644 system-policy-%name %buildroot%_sysconfdir/pam.d/system-policy-%name
 
 cd alterator-domain-policy
 %makeinstall
 
 %preun
 %preun_service adp
-if [ $1 -eq 0 ]; then
-    ### Remove adp-fetch from /etc/pam.d/system-auth-sss on package uninstall
-    subst '/adp-fetch/d' /etc/pam.d/system-auth-sss
-fi
 
 %post
-if [ $1 -eq 0 ]; then
-    ### Add adp-fetch to /etc/pam.d/system-auth-sss on package install
-    if ! grep -q 'adp-fetch' /etc/pam.d/system-auth-sss ; then
-	echo -e "session\t\toptional\tpam_exec.so\t/usr/sbin/adp-fetch" >> /etc/pam.d/system-auth-sss
-    fi
-fi
 %post_service adp
 
 %check
@@ -103,6 +96,7 @@ make check
 %attr(0770, root, users) %_logdir/%name
 %_sysconfdir/xdg/autostart/%name.desktop
 %_unitdir/%name.service
+%_sysconfdir/pam.d/system-policy-%name
 %python3_sitelibdir/%name
 #python3_sitelibdir/*.egg-info
 
@@ -117,6 +111,9 @@ make check
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Wed Nov 27 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.0-alt3
+- Add support system-policy for PAM settings
+
 * Mon Nov 11 2019 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
 - Fix is in templates (ALT #37455).
 - Add %%check in spec file.
