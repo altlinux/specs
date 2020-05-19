@@ -9,8 +9,8 @@
 %define real_name Compiler-Lexer
 
 Name: perl-Compiler-Lexer
-Version: 0.22
-Release: alt2.4
+Version: 0.23
+Release: alt1
 
 Summary: Lexical Analyzer for Perl5
 
@@ -35,7 +35,7 @@ Perl module Compiler::Lexer is a Lexical Analyzer for Perl5.
 
 %prep
 %setup
-#%%patch0 -p1
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -49,6 +49,9 @@ Perl module Compiler::Lexer is a Lexical Analyzer for Perl5.
 %perl_vendor_autolib/Compiler/Lexer*
 
 %changelog
+* Tue May 19 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.23-alt1
+- New version
+
 * Wed Oct 02 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.22-alt2.4
 - Built for ppc64le with disabled testsuite.
 
