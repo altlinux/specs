@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.9.2
+Version: 2.3.10.1
 Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
@@ -136,6 +136,8 @@ find %buildroot%_libdir/%name/ -name '*.la' | xargs rm -f
 
 # remove what we don't want
 rm -f %buildroot%_sysconfdir/dovecot/README
+rm -f %buildroot%_bindir/dovecot-sysreport
+rm -f %buildroot%_man1dir/dovecot-sysreport.1*
 
 # hi buildreq!
 ( cd %buildroot%_libdir; ln -s %name/lib*.so.* . )
@@ -209,6 +211,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Wed May 20 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.10.1-alt1
+- Updated to 2.3.10.1 (fixes CVE-2020-10957, CVE-2020-10958, CVE-2020-10967).
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 2.3.9.2-alt1
 - Autobuild version bump to 2.3.9.2
 
