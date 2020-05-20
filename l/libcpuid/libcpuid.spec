@@ -3,14 +3,14 @@
 
 Name: libcpuid
 Version: 0.4.1
-Release: alt1
-Summary: Provides CPU identification for x86 and x86_64
+Release: alt2.20200518
+Summary: Provides CPU identification for x86, x86_64, aarch64, armh
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 aarch64 armh
 
 %description
 Libcpuid provides CPU identification for the x86 and x86_64.
@@ -48,6 +48,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt2.20200518
+- new snapshot
+
 * Wed Apr 17 2019 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
 - new version 0.4.1
 
