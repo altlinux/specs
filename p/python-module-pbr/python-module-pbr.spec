@@ -12,7 +12,7 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python-module-%pypi_name
-Version:    5.4.4
+Version:    5.4.5
 Release:    alt1
 
 Summary:    Python Build Reasonableness
@@ -25,14 +25,9 @@ URL:        http://pypi.python.org/pypi/pbr
 Source: %name-%version.tar
 
 BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
-BuildRequires: python-module-html5lib python-module-mimeparse
-BuildRequires: python-module-alabaster python-module-docutils python-module-subunit-tests python-module-oslosphinx
-BuildRequires: python-module-sphinxcontrib-apidoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-d2to1
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-html5lib python3-module-mimeparse
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -92,7 +87,7 @@ popd
 
 %if_with doc
 # generate html docs
-sphinx-build doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
@@ -144,6 +139,11 @@ popd
 %endif
 
 %changelog
+* Wed May 20 2020 Grigory Ustinov <grenka@altlinux.org> 5.4.5-alt1
+- Build new version 5.4.5.
+- Build docs with python3.
+- Clean up BR's.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 5.4.4-alt1
 - Build new version 5.4.4.
 
