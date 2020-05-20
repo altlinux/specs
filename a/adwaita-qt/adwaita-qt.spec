@@ -1,12 +1,13 @@
 Name: adwaita-qt
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/MartinBriza/adwaita-qt
 Source0: adwaita-qt-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: qt4-devel
 BuildRequires: qt5-base-devel
@@ -68,6 +69,10 @@ popd
 %files
 
 %changelog
+* Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt1
+- new version 1.1.3
+- fix License tag
+
 * Sun Jan 12 2020 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
 - new version 1.1.1
 
