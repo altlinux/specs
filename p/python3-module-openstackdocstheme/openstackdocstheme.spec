@@ -1,7 +1,7 @@
 %define     oname openstackdocstheme
 
 Name:       python3-module-%oname
-Version:    1.31.2
+Version:    2.2.1
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -49,6 +49,9 @@ cp -r %oname/theme/* \
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Wed May 20 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
+- Build new version.
+
 * Tue Feb 11 2020 Grigory Ustinov <grenka@altlinux.org> 1.31.2-alt1
 - Build new version.
 - Drop python2 support.
