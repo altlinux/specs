@@ -1,5 +1,5 @@
 Name: converseen
-Version: 0.9.8.0
+Version: 0.9.8.1
 Release: alt1
 Summary: Converseen is a free cross-platform batch image processor.
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
@@ -54,9 +54,12 @@ done
 %_miconsdir/*
 %exclude %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 0.9.8.1-alt1
+- new version 0.9.8.1
+
 * Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 0.9.8.0-alt1
 - new version 0.9.8.0
 
