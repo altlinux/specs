@@ -8,7 +8,7 @@ Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
 Version: 1.4.2
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/Other
 Url:https://github.com/syncthing/syncthing
@@ -215,6 +215,9 @@ export GO111MODULE=off
 %_bindir/stcli
 
 %changelog
+* Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 1.4.2-alt2
+- build new version 1.4.2 realy
+
 * Fri Apr 24 2020 Anton Midyukov <antohami@altlinux.org> 1.4.2-alt1
 - new version 1.4.2 (Closes: 38377)
 
