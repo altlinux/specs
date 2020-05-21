@@ -2,7 +2,7 @@
 %define mname imap_tools
 
 Name: python3-module-%mname
-Version: 0.14.2
+Version: 0.15.0
 Release: alt1
 Summary: Working with email and mailbox using IMAP protocol
 License: Apache-2.0
@@ -31,14 +31,6 @@ BuildArch: noarch
 %description -n %name-tests
 This package contains tests for %name.
 
-%package -n %name-examples
-Summary: Examples for %name
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n %name-examples
-This package contains examples for %name.
-
 %prep
 %setup
 
@@ -48,23 +40,22 @@ This package contains examples for %name.
 %install
 %python3_install
 cp -pr tests %buildroot%python3_sitelibdir/%mname
-cp -pr examples %buildroot%python3_sitelibdir/%mname
 rm -rf %buildroot%python3_sitelibdir/tests
 
 %files
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/%mname/tests
-%exclude %python3_sitelibdir/%mname/examples
 %doc LICENSE README.rst
 
 %files -n %name-tests
 %python3_sitelibdir/%mname/tests
 
-%files -n %name-examples
-%python3_sitelibdir/%mname/examples
-
 %changelog
+* Thu May 21 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.0-alt1
+- Updated to version 0.15.0
+- Don't build examples
+
 * Sat Apr 25 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.2-alt1
 - New version
 
