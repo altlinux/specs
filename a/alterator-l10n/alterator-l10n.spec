@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.62
+Version: 2.9.63
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed May 20 2020 Georgy A Bystrenin <gkot@altlinux.org> 2.9.63-alt1
+- Update l10n for alterator-net-iptables
+
 * Mon Apr 20 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.9.62-alt1
 - Add l10n for alterator-gpupdate
 - Update l10n for alterator-auth
