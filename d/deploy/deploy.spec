@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,5 +31,8 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Thu May 21 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
+- postgresql: check /var/lib/pgsql/data/global for initialized database.
+
 * Wed May 20 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt1
 - Initial build in Sisyphus.
