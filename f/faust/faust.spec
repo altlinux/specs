@@ -1,9 +1,9 @@
 Name: faust
 Version: 0.9.90
-Release: alt3
+Release: alt3.1
 
 Summary: FAUST is a compiled language for real-time audio signal processing
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Sound
 Url: http://faust.grame.fr/
 
@@ -36,7 +36,7 @@ compile its mathematical meaning (what it actually computes).
 Summary: Documentation for FAUST, a compiled language for real-time audio signal processing
 Group: Sound
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description doc
 FAUST is a compiled language for real-time audio signal processing.
@@ -61,7 +61,7 @@ This package contains documentation for FAUST
 Summary: Examples for FAUST, a compiled language for real-time audio signal processing
 Group: Sound
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description examples
 Examples for FAUST, a compiled language for real-time audio signal processing.
@@ -70,7 +70,7 @@ Examples for FAUST, a compiled language for real-time audio signal processing.
 %package -n faust2appls
 Summary: Useful scripts that combines faust and g++ to generates executable binary
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description -n faust2appls
@@ -95,7 +95,7 @@ This package contains some useful scripts for FAUST
 %package devel
 Summary: Development files for FAUST, a compiled language for real-time audio signal processing
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description devel
@@ -158,6 +158,9 @@ rm -r %buildroot%_libexecdir/%name/iOS*
 %_libexecdir/%name
 
 %changelog
+* Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt3.1
+- Fix License tag
+
 * Wed Nov 27 2019 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt3
 - switch to python3
 
