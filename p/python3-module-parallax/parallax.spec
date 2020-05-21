@@ -1,13 +1,13 @@
 %global pypi_name parallax
 
 Name: python3-module-%pypi_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Execute commands and copy files over SSH to multiple machines at once
 
 Group: Development/Python3
-License: ASL 2.0
-URL: https://pypi.org/project/parallax/
+License: BSD-3-Clause
+URL: https://pypi.org/project/parallax
 Source: %pypi_name-%version.tar
 BuildArch: noarch
 
@@ -16,7 +16,6 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-sphinx >= 1.1.2
-BuildRequires: python3-module-oslosphinx >= 2.5.0
 BuildRequires: python3-module-oslo.config >= 2.1.0
 BuildRequires: python3-module-oslo.serialization >= 1.4.0
 BuildRequires: python3-module-pytz
@@ -40,6 +39,10 @@ Execute commands and copy files over SSH to multiple machines at once.
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 21 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
+- Build new version.
+- Fix license.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Build new version.
 - Build without python2.
