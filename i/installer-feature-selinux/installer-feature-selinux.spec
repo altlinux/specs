@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
 Version: 0.12
-Release: alt8
+Release: alt9
 
 Summary: Installer selinux hooks
 License: GPL
@@ -29,6 +29,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Thu May 21 2020 Denis Medvedev <nbr@altlinux.org> 0.12-alt9
+- fix typos in scripts.
+
 * Fri Apr 24 2020 Denis Medvedev <nbr@altlinux.org> 0.12-alt8
 - prepared scripts for safe values for seapplet. Seapplet doesn't work
 with DRI3 and MITSHM in QT.
