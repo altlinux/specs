@@ -1,14 +1,15 @@
 %define pypi_name yaql
+# Version 1.1.3 doesn't support recent sphinx
 %def_without doc
 
 Name: python3-module-%pypi_name
 Version: 1.1.3
-Release: alt2
+Release: alt3
 Summary: YAQL - Yet Another Query Language
 Group: Development/Python3
 
 License: Apache-2.0
-Url: https://yaql.readthedocs.io
+Url: https://pypi.org/project/yaql
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
@@ -22,7 +23,6 @@ BuildRequires: python3-module-ply
 BuildRequires: python3-module-dateutil >= 2.4.2
 
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-reno >= 1.8.0
 
 %description
@@ -84,6 +84,10 @@ rm -fr doc/build/html/.buildinfo
 %endif
 
 %changelog
+* Thu May 21 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt3
+- Fixed FTBFS.
+- Fixed Url.
+
 * Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt2
 - Build without python2.
 - Fix license.
