@@ -1,18 +1,18 @@
-%define libnettle_soname 8
-%define libhogweed_soname 6
+%define libnettle_soname 7
+%define libhogweed_soname 5
 
 %define _unpackaged_files_terminate_build 1
 
-Name: nettle
-Version: 3.6
-Release: alt1
+Name: nettle3.5
+Version: 3.5.1
+Release: alt2
 Summary: A low-level cryptographic library
 
 License: LGPLv2.1+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.lysator.liu.se/~nisse/nettle/
 
-Vcs: http://git.lysator.liu.se/nettle/nettle.git
+# git://git.altlinux.org/gears/n/nettle.git
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ libgmp-devel libssl-devel makeinfo
@@ -54,21 +54,6 @@ This package contains the asymmetric cryptographic algorithms, which,
 require the GNU multiple precision arithmetic library (libgmp) for
 their large integer computations.
 
-%package -n lib%name-devel
-Summary: Header files, libraries and development documentation for %name
-Group: Development/C
-Requires: %libnettle = %version-%release
-Requires: %libhogweed = %version-%release
-
-%description -n lib%name-devel
-Nettle is a cryptographic library that is designed to fit easily in more
-or less any context: in crypto toolkits for object-oriented languages
-(C++, Python, Pike, ...), in applications like LSH or GNUPG, or even in
-kernel space.
-
-This package contains header files, development libraries and
-development documentation for %name and libhogweed.
-
 %prep
 %setup -n %name-%version-%release
 sed -i 's/ -ggdb3//' configure.ac
@@ -87,26 +72,22 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %check
 %make_build -k check
 
-%files
-%_bindir/*
-
 %files -n %libnettle
-%_libdir/libnettle.so.%{libnettle_soname}*
+%_libdir/libnettle.so.*
 %doc AUTHORS NEWS README
 
 %files -n %libhogweed
-%_libdir/libhogweed.so.%{libhogweed_soname}*
+%_libdir/libhogweed.so.*
 
-%files -n lib%name-devel
-%_pkgconfigdir/*.pc
-%_libdir/lib*.so
-%_includedir/*
-%_infodir/*.*
+%exclude %_bindir/*
+%exclude %_pkgconfigdir/*.pc
+%exclude %_libdir/lib*.so
+%exclude %_includedir/*
+%exclude %_infodir/*.*
 
 %changelog
-* Wed May 13 2020 Mikhail Efremov <sem@altlinux.org> 3.6-alt1
-- Add Vcs tag.
-- Updated to 3.6.
+* Thu May 21 2020 Mikhail Efremov <sem@altlinux.org> 3.5.1-alt2
+- Build as lecacy library.
 
 * Wed Jul 31 2019 Mikhail Efremov <sem@altlinux.org> 3.5.1-alt1
 - Updated patches.
