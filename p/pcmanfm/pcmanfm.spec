@@ -2,7 +2,7 @@
 
 Name: pcmanfm
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: PCMan File Manager
 License: GPL-2.0-or-later
@@ -10,7 +10,8 @@ Group: Graphical desktop/Other
 
 Url: http://pcmanfm.sourceforge.net
 Source: %name-%version.tar
-Patch: 0001-Avoid-undefined-isdigit-behaviour.patch
+Patch0: 0001-Avoid-undefined-isdigit-behaviour.patch
+Patch1: 0003-main-set-the-GIOChannel-encoding-to-binary.patch 
 
 Provides: pcmanfm2 = %version-%release
 Obsoletes: pcmanfm2 < 1.2.0
@@ -51,7 +52,8 @@ This package contains header files.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -76,6 +78,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Fri May 22 2020 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt3
+- Fix system reboot delayed for 90 seconds with systemd (Closes: 38280)
+
 * Thu Mar 26 2020 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt2
 - Added upstream patch for fix undefined 'isdigit()' behaviour
 - Fixed license tag
