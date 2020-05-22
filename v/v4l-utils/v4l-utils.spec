@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.18.0
+Version: 1.20.0
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -143,6 +143,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Fri May 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt1
+- 1.20.0 released
+
 * Fri Sep 27 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.18.0-alt1
 - 1.18.0 released
 
