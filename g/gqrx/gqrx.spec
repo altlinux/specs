@@ -1,6 +1,6 @@
 Name: gqrx
-Version: 2.11.5
-Release: alt2
+Version: 2.12.1
+Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
@@ -10,11 +10,6 @@ Url: https://github.com/csete/gqrx
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-
-# fix build with gnuradio 3.8
-# See: https://github.com/csete/gqrx/pull/703
-Patch0: 0001-Replace-deprecated-qt5_use_modules-macro.patch
-Patch1: 0002-Port-to-GNU-Radio-3.8.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -47,11 +42,8 @@ BuildRequires: libappstream-glib
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
-#qmake_qt5 PREFIX=%_prefix
 %cmake
 %cmake_build
 sed -i -e 's/Accessories;//g' gqrx.desktop
@@ -82,6 +74,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Fri May 22 2020 Anton Midyukov <antohami@altlinux.org> 2.12.1-alt1
+- new version 2.12.1
+
 * Tue Nov 26 2019 Anton Midyukov <antohami@altlinux.org> 2.11.5-alt2
 - rebuild with gnuradio 3.8
 
