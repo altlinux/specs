@@ -1,5 +1,5 @@
 Name: wmnd
-Version: 0.4.17
+Version: 0.4.18
 Release: alt1
 
 Summary: WindowMaker dock-app for network device traffic monitoring
@@ -35,12 +35,15 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 rm -f %buildroot%_defaultdocdir/%name/examples/wmndrc
 
 %files
-%doc AUTHORS ChangeLog examples/ INSTALL NEWS README TODO
+%doc ChangeLog* examples/ NEWS* README* THANKS* TODO*
 %_bindir/*
 %_man1dir/*
 %_menudir/*
 
 %changelog
+* Fri May 22 2020 Michael Shigorin <mike@altlinux.org> 0.4.18-alt1
+- 0.4.18
+
 * Sat Jun 16 2012 Michael Shigorin <mike@altlinux.org> 0.4.17-alt1
 - 0.4.17
 
