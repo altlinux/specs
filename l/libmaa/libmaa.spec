@@ -1,6 +1,6 @@
 Name: libmaa
 Version: 1.4.7
-Release: alt1
+Release: alt3
 
 Summary: Library providing many low-level data structures
 License: MIT
@@ -8,9 +8,10 @@ Group: System/Libraries
 
 Url: http://sourceforge.net/projects/dict/
 Source: %name-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
-BuildRequires: mk-configure >= 0.29.1
+BuildRequires: mk-configure >= 0.34.2-alt4
+BuildRequires: rpm-macros-mk-configure
 
 %description
 The libmaa library provides many low-level data
@@ -38,41 +39,46 @@ This package contains development documentation for libmaa.
 %prep
 %setup
 
-%define env \
-unset MAKEFLAGS \
-export PREFIX=%prefix \
-export LIBDIR=%_libdir \
-export SYSCONFDIR=%_sysconfdir \
-export MANDIR=%_mandir
+%define libmaa_docdir %_docdir/%name-%version
+%define _mkc_env \
+	export DOCDIR=%libmaa_docdir \
+	%mkc_env
 
 %build
-%env
-mkcmake
+%_mkc_env
+%mkcmake_configure
+%mkcmake_build
 
 %check
-%env
-mkcmake test
+%_mkc_env
+%mkcmake test
 
 %install
-%env
-export DESTDIR=%buildroot
-mkcmake install
-
-install -d %buildroot%_docdir/%name
-install -p -m644 doc/*.ps %buildroot%_docdir/%name
+%_mkc_env
+%mkcmake_install
 
 %files
-%doc doc/NEWS README doc/LICENSE doc/TODO
+%libmaa_docdir/README
+%libmaa_docdir/LICENSE
+%libmaa_docdir/TODO
+%libmaa_docdir/NEWS
 %_libdir/*.so.*
 
 %files devel
+%_libdir/*.a
 %_libdir/*.so
 %_includedir/*
 
 %files devel-doc
-%doc doc/libmaa.600dpi.ps
+%libmaa_docdir/libmaa.600dpi.ps
 
 %changelog
+* Tue May 26 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt3
+- 1.4.7-alt3: Fix warnings produced by hasher
+
+* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt2
+- 1.4.7-alt2: use rpm macro provided by mk-configure
+
 * Sun May 17 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.4.7-alt1
 - Version 1.4.7
 

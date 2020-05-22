@@ -2,7 +2,7 @@
 
 Name: mk-configure
 Version: 0.34.2
-Release: alt2
+Release: alt4
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD-2-Clause and MIT and ISC
@@ -11,15 +11,18 @@ Group: Development/Tools
 Url: http://sourceforge.net/projects/mk-configure/
 # Source-url: http://prdownloads.sf.net/%name-%version/%name-%version.tar.bz2
 Source: %name-%version.tar
+Source1: %name.macros
 
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildArch: noarch
 
-Requires:      bmake bmkdep coreutils grep
+Requires:      bmake bmkdep
 BuildRequires: bmake mk-files binutils
 
-# required for tests
+Requires: rpm-macros-%name = %version-%release
+
+# required for %%check
 BuildRequires: flex bison gcc-c++ glib2-devel groff-base zlib-devel bmkdep
 BuildRequires: perl-podlators perl-devel lua-devel info-install makeinfo m4
 
@@ -32,16 +35,11 @@ BuildRequires: clang
 %define cxx_compilers g++
 %endif
 
-# Disable auto-dependencies in shell scripts
-# in order to fix "/usr/xpg4/bin/sh" false positive.
-# Also add "coreutils" and "grep" to "Requires" manually
-AutoReq: noshell
-
 %define pkgdocdir %_docdir/%name-%version
 
 %description
 mk-configure is a lightweight replacement for GNU autotools, written in
-bmake (portable version of NetBSD make), POSIX shell and POSIX utilities.
+bmake (portable version of NetBSD make) and POSIX tools.
 
 %package doc
 Summary: %name documentation
@@ -50,13 +48,20 @@ Group: Development/Documentation
 %description doc
 Examples and presentation for %name package.
 
+%package -n rpm-macros-%name
+Summary: Set of RPM macros for packaging applications that use mk-configure
+Group: Development/Other
+
+%description -n rpm-macros-%name
+Set of RPM macros for packaging applications that use mk-configure.
+
 %prep
 %setup
 
 %define env \
   unset MAKEFLAGS; \
   export USE_NM=%_bindir/nm \
-  export USE_INSTALL=%_bindir/install \
+  export USE_INSTALL=%__install \
   export USE_AWK=%_bindir/awk \
   export USE_ID=%_bindir/id \
   export USE_CC_COMPILERS='%cc_compilers' \
@@ -76,6 +81,7 @@ bmake all
 %install
 %env
 bmake install DESTDIR=%buildroot
+install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 rm -rf %buildroot%_docdir/%name
 
 # instead of proper %%doc (share docdir among subpackages)
@@ -108,10 +114,19 @@ bmake cleandir-tests
 %pkgdocdir/examples/
 %pkgdocdir/presentation.pdf
 
+%files -n rpm-macros-%name
+%_rpmmacrosdir/%name
+
 # TODO:
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Thu May 21 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt4
+- Add rpm macro for packages that use mk-configure
+
+* Thu May 14 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt3
+- Remove AutoReq
+
 * Thu May 14 2020 Aleksey Cheusov <cheusov@altlinux.org> 0.34.2-alt2
 - Fix incorrect dependency from /usr/xpg4/bin/sh
 
