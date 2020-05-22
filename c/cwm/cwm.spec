@@ -1,5 +1,5 @@
 Name: cwm
-Version: 6.6
+Version: 6.7
 Release: alt1
 
 Summary: Calm Window Manager by OpenBSD project
@@ -10,7 +10,7 @@ Group: Graphical desktop/Other
 # is BSD
 License: ISC and BSD
 
-# repacked http://chneukirchen.org/releases/%name-%version.tar.gz
+VCS: git://github.com/leahneukirchen/cwm
 Source0: %name-%version.tar
 Source1: %name.desktop
 
@@ -34,6 +34,7 @@ provided by the original OpenBSD's project.
 %make_build
 
 %install
+export CFLAGS="%optflags"
 make PREFIX=%prefix DESTDIR=%buildroot install
 install -d %buildroot/%_datadir/xsessions
 install -m 644 %SOURCE1 %buildroot/%_datadir/xsessions
@@ -46,5 +47,8 @@ install -m 644 %SOURCE1 %buildroot/%_datadir/xsessions
 %_mandir/man5/cwmrc.5*
 
 %changelog
+* Sat May 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.7-alt1
+- Updated to 6.7.
+
 * Wed Feb 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.6-alt1
 - Initial build for ALT Sisyphus based on Fedora spec.
