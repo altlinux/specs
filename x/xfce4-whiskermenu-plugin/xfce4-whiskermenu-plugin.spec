@@ -3,7 +3,7 @@
 
 Name: xfce4-whiskermenu-plugin
 Version: 2.4.4
-Release: alt1%git_date
+Release: alt2%git_date
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -51,7 +51,12 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Fri May 22 2020 Mikhail Efremov <sem@altlinux.org> 2.4.4-alt2
+- Use dm-tool for switch user command by default (closes: #37278).
+- Fix changelog.
+
 * Wed Apr 22 2020 Mikhail Efremov <sem@altlinux.org> 2.4.4-alt1
+- Don't show menu and profile editors by default (closes: #38349).
 - Updated to 2.4.4.
 
 * Wed Mar 11 2020 Mikhail Efremov <sem@altlinux.org> 2.4.3-alt1
