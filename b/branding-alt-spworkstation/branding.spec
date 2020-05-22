@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.2
-Release: alt1
+Release: alt2
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -317,6 +317,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed May 20 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt2
+- bootmenu bar color fixed
+
 * Wed May 13 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt1
 - spworkstation version based on alt-server
 
