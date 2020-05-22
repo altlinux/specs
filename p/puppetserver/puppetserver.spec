@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.5.0
-Release:    alt2.1
+Release:    alt3
 
 Summary:    Server automation framework and application
 License:    Apache-2.0
@@ -153,8 +153,12 @@ chmod 0700 /var/lib/puppetserver/jars
 
 
 %changelog
+* Fri May 22 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt3
+- ! max memory consumption for JVM by increasing top border an config
+  (closes #38519)
+
 * Wed May 13 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt2.1
-- + explicit require dependenciesa to proper gem packages
+- + explicit require dependencies to proper gem packages
 
 * Tue May 12 2020 Pavel Skrylev <majioa@altlinux.org> 6.5.0-alt2
 - ! gem paths config
