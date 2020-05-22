@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.1.0.223.c2c0
+Version: 1.3.1.0.324.eec5
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -165,10 +165,9 @@ cp -p alt/pam_listfile.c modules/pam_listfile/
 find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 
 # Unlink unwanted modules.
-for d in cracklib tty_audit unix \
-		%{?!_enable_selinux:selinux sepermit}; do
+for d in tty_audit unix; do
 	sed -i "s,modules/pam_$d/Makefile,," configure.ac
-	sed -i "s/pam_$d //" modules/Makefile.am
+	sed -i "s/\\<pam_$d\\>//" modules/Makefile.am
 	sed -i "s/tst-pam_$d[0-9]* //" xtests/Makefile.am
 done
 
@@ -179,8 +178,9 @@ done
 	--sbindir=/sbin \
 	--includedir=%_includedir/security \
 	--docdir=%docdir \
-	--disable-cracklib \
 	--enable-Werror \
+	--enable-tally \
+	--enable-tally2 \
 	%{subst_enable selinux} \
 	%{subst_enable audit} \
 	%{subst_enable nls} \
@@ -204,17 +204,6 @@ for f in %buildroot/%_lib/*.so; do
 	rm -f "$f"
 done
 rm -f %buildroot%_pam_modules_dir/*.la
-
-# Make sure that all modules are built.
->check.log
-for d in modules/pam_*; do
-	[ -d "$d" -a -s "$d/Makefile" ] || continue
-	m="${d##*/}"
-	! ls -1 "%buildroot%_pam_modules_dir/$m"*.so 2>/dev/null || continue
-	echo "ERROR: $m module did not build." >&2
-	echo "$m" >>check.log
-done
-! [ -s check.log ] || exit 1
 
 # Make sure that no module exports symbols beyond standard set.
 >check.log
@@ -258,8 +247,12 @@ install -pm644 alt/50-defaults.conf \
 install -pDm644 alt/linux-pam.macros \
 	%buildroot%_rpmmacrosdir/pam
 
+mkdir -p %buildroot%_tmpfilesdir
+install -pm644 alt/faillock.conf %buildroot%_tmpfilesdir/
+mkdir -p %buildroot/var/run/faillock
+
 %if_enabled selinux
-mkdir -p %buildroot{%_tmpfilesdir,%_lockdir/sepermit}
+mkdir -p %buildroot%_lockdir/sepermit
 install -pm644 alt/sepermit.conf %buildroot%_tmpfilesdir/
 %endif # enabled selinux
 
@@ -288,7 +281,7 @@ done
 %define _unpackaged_files_terminate_build 1
 
 %check
-make check
+%make_build -k check VERBOSE=1
 
 %files -n %libpam
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libpam
@@ -318,12 +311,14 @@ make check
 %_rpmmacrosdir/pam
 
 %files -n pam -f Linux-PAM.lang
+%helperdir/faillock
 %helperdir/pam_tally
 %helperdir/pam_tally2
 %helperdir/mkhomedir_helper
 %helperdir/pam_namespace_helper
 %_unitdir/pam_namespace.service
 %config(noreplace) %_secdir/access.conf
+%config(noreplace) %_secdir/faillock.conf
 %config(noreplace) %_secdir/time.conf
 %config(noreplace) %attr(640,root,wheel) %_secdir/group.conf
 %config(noreplace) %_secdir/limits.conf
@@ -331,6 +326,8 @@ make check
 %config(noreplace) %_secdir/namespace.*
 %config(noreplace) %_secdir/pam_env.conf
 %config(noreplace) %_sysconfdir/environment
+%_tmpfilesdir/faillock.conf
+%dir /var/run/faillock/
 %if_enabled selinux
 %config(noreplace) %_secdir/sepermit.conf
 %dir %_lockdir/sepermit/
@@ -355,6 +352,11 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Fri May 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.324.eec5-alt1
+- v1.3.1-223-gc2c0434b -> v1.3.1-324-geec5fe0d.
+  New module: pam_faillock.
+  Note that pam_tally and pam_tally2 are deprecated in favour of pam_faillock.
+
 * Sun Apr 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.223.c2c0-alt1
 - v1.3.1-212-g76916913 -> v1.3.1-223-gc2c0434b (closes: #38389).
 
@@ -363,6 +365,7 @@ make check
 
 * Fri Apr 24 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.210.f8fc-alt1
 - v1.3.1-5-g955b3e2 -> v1.3.1-210-gf8fc7504.
+  New modules: pam_setquota, pam_usertype.
 
 * Thu Jul 05 2018 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.5.955b-alt2
 - Fixed Russian translation (closes: #35128).
