@@ -4,8 +4,8 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.2.1
-Release: alt2
+Version: 4.2.2
+Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -351,6 +351,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Fri May 22 2020 Alexey Shabalin <shaba@altlinux.org> 4.2.2-alt1
+- 4.2.2
+
 * Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.2.1-alt2
 - NMU: Fixed BuildRequires (dropped needless sqlite-devel).
 
