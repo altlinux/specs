@@ -3,7 +3,7 @@
 
 Name:          %pkgname
 Version:       6.15.0
-Release:       alt2
+Release:       alt3
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       Apache-2.0
@@ -27,14 +27,12 @@ BuildRequires: gem(yard)
 %add_findreq_skiplist %ruby_gemslibdir/*
 Requires:      shadow-change
 
-
 %description
 Puppet lets you centrally manage every important aspect of your
 system using a cross-platform specification language that manages
 all the separate elements normally aggregated in different files,
 like users, cron jobs, and hosts, along with obviously discrete
 elements like packages, services, and files.
-
 
 %package       -n gem-%pkgname
 Summary:       Core library code for %gemname gem
@@ -44,7 +42,6 @@ BuildArch:     noarch
 %description   -n gem-%pkgname
 %summary.
 
-
 %package       -n gem-%pkgname-doc
 Summary:       Documentation for %gemname gem
 Group:         Development/Documentation
@@ -52,7 +49,6 @@ BuildArch:     noarch
 
 %description   -n gem-%pkgname-doc
 %summary.
-
 
 %prep
 %setup -n %name-%version
@@ -78,7 +74,7 @@ install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver
 
 # Create other configuration directories
 mkdir -p %buildroot%_sysconfdir/puppet/ssl/{public_keys,certificate_requests,certs,ca/requests,ca/private,ca/signed,private,private_keys}
-mkdir -p %buildroot%_sysconfdir/puppet/{code,environments/production/manifests}
+mkdir -p %buildroot%_sysconfdir/puppet/code/environments/production/manifests
 
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_tmpfilesdir
@@ -143,9 +139,9 @@ touch %buildroot%_datadir/puppet-{locale,modules}/.dir
 %attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/ca/signed
 %attr(0750,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/private
 %attr(0750,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/private_keys
-%dir %_sysconfdir/puppet/environments
-%dir %_sysconfdir/puppet/environments/production
-%dir %_sysconfdir/puppet/environments/production/manifests
+%dir %_sysconfdir/puppet/code/environments
+%dir %_sysconfdir/puppet/code/environments/production
+%dir %_sysconfdir/puppet/code/environments/production/manifests
 %dir %_sysconfdir/puppet/code
 %_sysconfdir/puppet/code
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
@@ -171,6 +167,9 @@ touch %buildroot%_datadir/puppet-{locale,modules}/.dir
 %ruby_gemdocdir
 
 %changelog
+* Fri May 22 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt3
+- Move environments/production/manifests to /etc/puppet/code (ALT #38520).
+
 * Mon May 11 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt2
 - Apply useful part of old patch as actual patches and get patch from Debian.
 - Modules are placed into /etc/puppet/code/modules instead of /etc/puppet/modules.
