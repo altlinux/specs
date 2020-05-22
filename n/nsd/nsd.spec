@@ -1,6 +1,6 @@
 Name: nsd
-Version: 4.3.0
-Release: alt3
+Version: 4.3.1
+Release: alt1
 
 Summary: Name Server Daemon
 License: BSD
@@ -89,6 +89,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 4.3.1-alt1
+- 4.3.1
+
 * Fri Apr 03 2020 Arseny Maslennikov <arseny@altlinux.org> 4.3.0-alt3
 - nsd-control-setup is run automatically on package installation, if the key
   pairs for nsd-control(8) do not exist.
