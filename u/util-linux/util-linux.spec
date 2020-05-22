@@ -4,7 +4,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.35.1
+Version: 2.35.2
 Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
@@ -47,7 +47,7 @@ BuildRequires: libcap-ng-devel
 %{?_enable_login:BuildRequires: libpam-devel}
 %{?_enable_runuser:BuildRequires: libpam-devel}
 
-%ifnarch %e2k
+%ifnarch armh %e2k
 BuildRequires: klibc-devel
 %endif
 
@@ -540,7 +540,7 @@ automake --add-missing --force-missing
 %endif
 
 # build nologin
-%ifarch %e2k
+%ifarch armh %e2k
 %__cc -static \
 	-Wall -Wextra -Werror nologin.c -o nologin
 %else
@@ -970,6 +970,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Fri May 22 2020 Alexey Gladkov <legion@altlinux.ru> 2.35.2-alt1
+- New version (2.35.2).
+- Build nologin with glibc on armh.
+
 * Thu May 14 2020 Alexey Gladkov <legion@altlinux.ru> 2.35.1-alt1
 - New version (2.35.1).
 - Update license tag.
