@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.4
+%define npmver 6.14.5
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.2
+%define major 14.3
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -367,6 +367,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri May 22 2020 Vitaly Lipatov <lav@altlinux.ru> 14.3.0-alt1
+- new version 14.3.0 (with rpmrb script)
+- npm >= 6.14.5
+
 * Thu May 07 2020 Vitaly Lipatov <lav@altlinux.ru> 14.2.0-alt1
 - new version 14.2.0 (with rpmrb script)
 - set node ABI to 14
