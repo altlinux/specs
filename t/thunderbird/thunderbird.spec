@@ -12,8 +12,8 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	68.8.0
-Release:	alt2
+Version:	68.8.1
+Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -564,6 +564,13 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.1-alt1
+- New version (68.8.1).
+- Fixes:
+  + IMAP stability improvements
+  + HTML tags in IRC topic changes were rendered incorrectly
+  + MailExtensions: Websockets could not be used
+
 * Wed May 06 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.0-alt2
 - Add security fixes information to changelog.
 
