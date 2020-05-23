@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
 Version: 0.12
-Release: alt9
+Release: alt10
 
 Summary: Installer selinux hooks
 License: GPL
@@ -29,6 +29,10 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Fri May 22 2020 Denis Medvedev <nbr@altlinux.org> 0.12-alt10
+- proper escaping in inline documents for scripts that fix working
+of level showing applet.
+
 * Thu May 21 2020 Denis Medvedev <nbr@altlinux.org> 0.12-alt9
 - fix typos in scripts.
 
