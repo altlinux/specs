@@ -2,7 +2,7 @@
 
 
 Name: janus
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -27,9 +27,9 @@ Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Thu Apr 30 2020
-# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libssl-devel libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libsrtp2-devel libwebsockets-devel zlib-devel
+# Automatically added by buildreq on Sat May 23 2020
+# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgpg-error libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libssl-devel libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libpcap-devel libsrtp2-devel libwebsockets-devel zlib-devel
 
 %description
 Janus is a general purpose WebRTC Gateway with a minimal footprint.
@@ -164,7 +164,6 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 %_man1dir/%name.*
 %_man1dir/%name-cfgconv.*
 
-
 %attr(0770,root,%janus_group) %dir %_localstatedir/%name
 %attr(1770,root,%janus_group) %dir %_logdir/%name
 
@@ -175,9 +174,11 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 %files utilities
 %_bindir/mjr2pcap
+%_bindir/pcap2mjr
 %_bindir/janus-pp-rec
 
 %_man1dir/mjr2pcap*
+%_man1dir/pcap2mjr.*
 %_man1dir/janus-pp-rec*
 
 
@@ -187,6 +188,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Sat May 23 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.5-alt1
+- New version
+
 * Sun May 17 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.4-alt1
 - New version
 
