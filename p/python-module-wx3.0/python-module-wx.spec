@@ -4,11 +4,10 @@
 %define oname wx%major
 
 %def_disable docs
-%def_without python3
 
 Name: python-module-%oname
 Version: %major.2.0
-Release: alt1.1.qa3
+Release: alt2
 Epoch: 1
 
 # Enable/disable GLcanvas
@@ -16,7 +15,7 @@ Epoch: 1
 
 Summary: Cross platform GUI toolkit for Python using wxGTK
 
-License: wxWindows Library Licence
+License: LGPL-2.0-or-later and wxWidgets
 Group: Development/Python
 Url: http://www.wxpython.org/
 
@@ -80,48 +79,6 @@ window types and controls, all implemented with a native look and feel
 This package is using the wxGTK port of wxWindows.
 
 This module is built for python %_python_version
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Cross platform GUI toolkit for Python 3 using wxGTK
-Group: Development/Python3
-AutoReq: yes, noperl
-%py3_provides wx
-%py3_provides wxPython
-Provides: python3-module-wx = %version-%release
-Requires: libwxGTK3.3
-%py3_requires enchant PIL
-%add_python3_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy unittest
-
-%description -n python3-module-%oname
-wxPython is a GUI toolkit for Python that is a wrapper around the
-wxWindows C++ GUI library. wxPython provides a large variety of
-window types and controls, all implemented with a native look and feel
-(and native runtime speed) on the platforms it is supported on.
-
-This package is using the wxGTK port of wxWindows.
-
-This module is built for python %_python3_version
-
-%package -n python3-module-%oname-devel
-Summary: Files needed to build wrappers for wxPythonGTK (Python 3)
-Group: Development/Python3
-BuildArch: noarch
-Requires: python3-module-%oname = %EVR
-%add_python3_req_skip _xrc
-
-%description -n python3-module-%oname-devel
-This package contains files required to build extensions that
-interoperate with wxPythonGTK.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for python-module-wx using (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains demo programs files for wxPythonGTK
-%endif
 
 %package devel
 Summary: Files needed to build wrappers for wxPythonGTK
@@ -189,11 +146,6 @@ ln -s README.html docs/index.html
 #sed -i 's|@VER@|%libmajor|' wxPython/config.py
 sed -i -e 's|/usr/lib|%_libdir|' -e 's|-O3|-O2|' wxPython/config.py
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
 cd wxPython
 INCS="$(wx-config --cflags)"
@@ -207,42 +159,6 @@ INCS="$(wx-config --cflags)"
 
 cd ..
 
-%if_with python3
-pushd ../python3
-cd wxPython
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|os\.path\.walk|os.walk|g' $i
-done
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-for i in src/*.i src/*.cpp $(find ./ -name '*.h')
-do
-	sed -i 's|PyInt_AsLong|PyLong_AsLong|g' $i
-	sed -i 's|PyInt_FromLong|PyLong_FromLong|g' $i
-done
-
-%define optflags %optflags_default
-unset CFLAGS
-unset CXXFLAGS
-unset FFLAGS
-%add_optflags -DNPY_PY3K -fno-strict-aliasing $INCS
-
-%python3_build_debug \
-	NO_SCRIPTS=1 \
-	WXPORT=gtk3 \
-	UNICODE=1 \
-%if_enabled glcanvas
-	BUILD_GLCANVAS=1 \
-%else
-	BUILD_GLCANVAS=0 \
-%endif
-	BUILD_STC=1 \
-	BUILD_GIZMOS=1 \
-	USE_SWIG=1 \
-	UNDEF_NDEBUG=0
-popd
-cd ..
-%endif
-
 %if_enabled docs
 cd wxPython
 sed -i '1012d' docs/wxPythonManual.html
@@ -251,47 +167,6 @@ cd ..
 %endif
 
 %install
-%if_with python3
-pushd ../python3
-cd wxPython
-%add_optflags -fno-strict-aliasing
-%python3_build_install
-
-install -d %buildroot%_includedir/wx-%major/wx
-mv %buildroot/include/wx-%major/wx/wxPython \
-	%buildroot%_includedir/wx-%major/wx/wxPython3
-
-%define pythonsite %buildroot%python3_sitelibdir_noarch
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
-	%buildroot%python3_sitelibdir
-#mv %pythonsite/wxaddons/ %buildroot%python3_sitelibdir
-%endif
-
-mkdir -p %buildroot%_bindir
-cp -a scripts/{img2png,img2py,img2xpm,pycrust,pyshell,xrced} %buildroot%_bindir
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i py3_$i
-done
-popd
-# has error
-rm -f \
-	%buildroot%python3_sitelibdir/wx/tools/Editra/tests/syntax/python.python
-cd ..
-cp -fR tests %buildroot%python3_sitelibdir/wx/
-touch %buildroot%python3_sitelibdir/wx/tests/__init__.py
-rm -f \
-	%buildroot%python3_sitelibdir/wx/tools/Editra/tests/syntax/perl.pl
-popd
-
-for i in $(find %buildroot%_includedir -type f); do
-	sed -i 's|wx/wxPython|wx/wxPython3|g' $i
-done
-mv %buildroot%_includedir/wx-%major/wx/wxPython \
-	 %buildroot%_includedir/wx-%major/wx/wxPython3
-%endif # python3
-
 cd wxPython
 %add_optflags -fno-strict-aliasing
 %python_install \
@@ -332,36 +207,20 @@ touch %buildroot%python_sitelibdir/%wxdir/wx/tests/__init__.py
 rm -f \
 	%buildroot%python_sitelibdir/*/wx/tools/Editra/tests/syntax/perl.pl
 
+# fix shebang
+sed -i 's|/usr/bin/env python|%_bindir/python2|' %buildroot%_bindir/*
 
 %triggerpostun -- wxPythonGTK <= 2.4.2.4-alt4.1
 rm -rf %python_sitelibdir/{wx,wxPython} || :
 
 %files
 %_bindir/*
-%if_with python3
-%exclude %_bindir/py3_*
-%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/tests
 #%exclude %python_sitelibdir/*/*/*/*/tests
 %if_enabled docs
 %exclude %python_sitelibdir/wx%major/pickle
 %doc docs/{README.txt,CHANGES.txt}
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%_bindir/py3_*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/*/tests
-
-%files -n python3-module-%oname-devel
-%_includedir/wx-*/wx/wxPython3
-
-%files -n python3-module-%oname-tests
-%python_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/*/tests
 %endif
 
 %files devel
@@ -384,6 +243,11 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Sat May 23 2020 Anton Midyukov <antohami@altlinux.org> 1:3.0.2.0-alt2
+- Fix License Tag
+- Fix shebang
+- Cleanup spec
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.0.2.0-alt1.1.qa3
 - NMU: applied repocop patch
 
