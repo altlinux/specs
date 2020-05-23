@@ -22,13 +22,14 @@ BuildRequires: chrpath
 %define soname  0
 Name:           libu2f-server
 Version:        1.1.0
-Release:        alt1_2.5
+Release:        alt2_2.5
 Summary:        Yubico Universal 2nd Factor (U2F) Server C Library
 License:        BSD-2-Clause
 Group:          Security/Networking
 Url:            https://developers.yubico.com/
 Source0:        https://developers.yubico.com/libu2f-server/Releases/%{name}-%{version}.tar.xz
 Source1:        https://developers.yubico.com/libu2f-server/Releases/%{name}-%{version}.tar.xz.sig
+Patch1: f7c4983b31909299c47bf9b2627c84b6bfe225de.patch
 BuildRequires:  gengetopt
 BuildRequires:  help2man
 BuildRequires:  libhidapi-devel
@@ -75,6 +76,7 @@ Command line tool that implements the server-side of the Universal 2nd Factor (U
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %configure --disable-static
@@ -106,6 +108,9 @@ done
 %{_mandir}/man1/u2f-server.1*
 
 %changelog
+* Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt2_2.5
+- fixed build with json-c-0.14.0
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2.5
 - update by suseimport
 
