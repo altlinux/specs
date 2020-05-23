@@ -1,5 +1,5 @@
 Name: riot-desktop
-Version: 1.4.2
+Version: 1.6.2
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -10,15 +10,12 @@ Group: Networking/Instant messaging
 
 BuildArch: noarch
 
-# Source-url: https://github.com/vector-im/riot-web/archive/v%version.tar.gz
+# Source-url: https://github.com/vector-im/riot-desktop/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
 # ask me about description using: lav@etersoft.ru
 Source1: %name-development-%version.tar
-Source4: %name-production-%version.tar
-
-Source2: %name-app-node_modules-%version.tar
 
 Source3: riot-desktop.desktop
 
@@ -31,26 +28,36 @@ BuildRequires: npm node-asar
 # https://github.com/yarnpkg/yarn/issues/7251
 BuildRequires: /proc yarn
 
+BuildRequires: riot-web = %version
+
+Requires: electron8
+
 %description
 Riot (formerly known as Vector) is a Matrix web client built using the Matrix React SDK.
 
 %prep
-%setup -a1 -a2 -a4
-rm -f scripts/check-i18n.pl
+%setup -a1
+cp -a /var/www/html/riot-web webapp
 
 %build
 # note: configure it
-cat electron_app/riot.im/config.json | grep -v "update_base_url" > config.json
-npm run build
-#npm prune --production
+cat riot.im/release/config.json | grep -v "update_base_url" > webapp/config.json
+# TODO: support hak and build matrix-seshat
+#yarn run hak
+
+#npm run build
+#yarn build
+#yarn dist
 #npm ERR! cb() never called!
 #npm ERR! This is an error with npm itself. Please report this error at:
-rm -rf node_modules/ && mv production/node_modules ./
+rm -vf node_modules/.bin/{npm,npx}
+npm prune --production
+
 asar pack . resources/app.asar
 
 cat <<EOF >%name
 #!/bin/sh
-electron %_datadir/%name/resources/app.asar "\$@"
+electron8 %_datadir/%name/resources/app.asar "\$@"
 EOF
 
 %install
@@ -61,7 +68,7 @@ mkdir -p %buildroot%_datadir/%name/
 cp -a resources %buildroot%_datadir/%name/
 
 for i in 16 22 24 32 48 64 128 256 512 ; do
-    F=electron_app/build/icons/${i}x${i}.png
+    F=build/icons/${i}x${i}.png
     [ -s "$F" ] || continue
     T=%buildroot%_iconsdir/hicolor/${i}x${i}/apps/
     mkdir -p $T/
@@ -78,6 +85,12 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri May 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
+- new version (1.6.2) with rpmgs script
+
+* Fri Apr 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.15-alt1
+- new version 1.5.15 (with rpmrb script)
+
 * Wed Oct 16 2019 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - new version 1.4.2 (with rpmrb script)
 
