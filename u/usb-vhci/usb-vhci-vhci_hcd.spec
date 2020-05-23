@@ -1,6 +1,6 @@
 Name: usb-vhci
 Version: 1.15
-Release: alt1
+Release: alt2
 
 Summary: USB Virtual Host Controller Driver (VHCI)
 License: GPLv2
@@ -32,6 +32,7 @@ USB Virtual Host Controller Driver (VHCI) source.
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%name-%version.tar
 
 %check
+sed -i s/SUBDIRS=/M=/g Makefile test/Makefile
 make KDIR=/lib/modules/*/build
 
 %files -n kernel-source-%name
@@ -41,6 +42,9 @@ make KDIR=/lib/modules/*/build
 %doc README COPYING
 
 %changelog
+* Sat May 23 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.15-alt2
+- Fix 5.x kernels build.
+
 * Fri Oct 18 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.15-alt1
 - Initial import for ALT.
 
