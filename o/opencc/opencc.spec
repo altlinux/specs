@@ -1,5 +1,5 @@
 Name:       opencc
-Version:    1.1.0
+Version:    1.1.1
 Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
@@ -9,9 +9,8 @@ URL:        http://code.google.com/p/opencc/
 Source0:    %{name}-%{version}.tar
 # VCS:      https://github.com/BYVoid/OpenCC.git
 
-Patch:      %name-%version-%release.patch
-
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-ninja-build
 BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: ctest
@@ -51,18 +50,16 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
-%cmake -DBUILD_DOCUMENTATION=ON
-
+%cmake -GNinja -DBUILD_DOCUMENTATION=ON
 export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
 # Build in one thread to prevent race condition
-export NPROCS=1
-%cmake_build #VERBOSE=1
+export NPROCS=4
+%ninja_build -C BUILD
 
 %install
-%cmakeinstall_std
+%ninja_install -C BUILD
 rm -f %buildroot%_libdir/*.a
 
 %find_lang %name
@@ -89,6 +86,10 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version.
+- Use ninja-build for build.
+
 * Sun May 10 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 - Fix License tag according to SPDX.
