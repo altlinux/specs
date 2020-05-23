@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.115
-%define kernel_rt_release	rt50
+%define kernel_sublevel		.124
+%define kernel_rt_release	rt53
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -500,6 +500,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat May 23 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.124-alt1.rt53
+- Update to 4.19.124-rt53.
+
+* Thu May 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.120-alt1.rt52
+- Update to 4.19.120-rt52.
+
 * Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt50
 - Update to 4.19.115-rt50.
 
