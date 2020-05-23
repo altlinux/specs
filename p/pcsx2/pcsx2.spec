@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.6.0
-Release: alt2
+Release: alt3
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -36,14 +36,32 @@ BuildRequires: libsoundtouch-devel
 BuildRequires: libudev-devel
 BuildRequires: libxml2-devel
 
+Requires: %name-i18n = %EVR
+Requires: %name-plugin-cdvd
+Requires: %name-plugin-dev9
+Requires: %name-plugin-firewire
+Requires: %name-plugin-graphics
+Requires: %name-plugin-pad
+Requires: %name-plugin-sound
+Requires: %name-plugin-usb
+
 %description
 PCSX2 is an emulator for the playstation 2 video game console. It is written mostly in C++, some part are in C and x86 assembly.
 There is still lot of on going work to improve compatibility & speed.
+
+%package i18n
+Summary: Localization files for PCSX2
+Group: Emulators
+BuildArch: noarch
+
+%description i18n
+Localization files for PCSX2
 
 %package plugin-cdvdnull
 Summary: CDVDnull plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-cdvd = %EVR
 
 %description plugin-cdvdnull
 CDVDnull plugin for PCSX2
@@ -52,6 +70,7 @@ CDVDnull plugin for PCSX2
 Summary: FWnull plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-firewire = %EVR
 
 %description plugin-fwnull
 FWnull plugin for PCSX2
@@ -60,6 +79,7 @@ FWnull plugin for PCSX2
 Summary: GSdx plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-graphics = %EVR
 
 %description plugin-gsdx
 GSdx plugin for PCSX2
@@ -68,6 +88,7 @@ GSdx plugin for PCSX2
 Summary: USBnull plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-usb = %EVR
 
 %description plugin-usbnull
 USBnull plugin for PCSX2
@@ -76,6 +97,7 @@ USBnull plugin for PCSX2
 Summary: cdvdgigaherz plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-cdvd = %EVR
 
 %description plugin-cdvdgigaherz
 cdvdgigaherz plugin for PCSX2
@@ -84,6 +106,7 @@ cdvdgigaherz plugin for PCSX2
 Summary: dev9ghzdrk plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-dev9 = %EVR
 
 %description plugin-dev9ghzdrk
 dev9ghzdrk plugin for PCSX2
@@ -92,6 +115,7 @@ dev9ghzdrk plugin for PCSX2
 Summary: dev9null plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-dev9 = %EVR
 
 %description plugin-dev9null
 dev9null plugin for PCSX2
@@ -100,6 +124,7 @@ dev9null plugin for PCSX2
 Summary: onepad legacy plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-pad = %EVR
 
 %description plugin-onepad-legacy
 onepad legacy plugin for PCSX2
@@ -108,6 +133,7 @@ onepad legacy plugin for PCSX2
 Summary: onepad plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-pad = %EVR
 
 %description plugin-onepad
 onepad plugin for PCSX2
@@ -116,6 +142,7 @@ onepad plugin for PCSX2
 Summary: spu2x plugin for PCSX2
 Group: Emulators
 Requires: %name = %EVR
+Provides: %name-plugin-sound = %EVR
 
 %description plugin-spu2x
 spu2x plugin for PCSX2
@@ -149,7 +176,7 @@ popd
 %__rm -rf %buildroot%_defaultdocdir/PCSX2
 %find_lang --output=%name.lang %{name}_{Iconized,Main}
 
-%files -f %name.lang
+%files
 %doc bin/docs/*.pdf
 %_bindir/PCSX2*
 %dir %_libdir/%name
@@ -159,6 +186,8 @@ popd
 %_datadir/%name/GameIndex.dbf
 %_datadir/%name/cheats_ws.zip
 %_pixmapsdir/PCSX2.xpm
+
+%files i18n -f %name.lang
 
 %files plugin-cdvdnull
 %_libdir/%name/libCDVDnull.so
@@ -191,6 +220,10 @@ popd
 %_libdir/%name/libspu2x-2.0.0.so
 
 %changelog
+* Sat May 23 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt3
+- Move localization files to separate subpackage
+- Add requires to all plugin types
+
 * Sat May 23 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt2
 - Add build pre requires
 - Return XDG_STD option
