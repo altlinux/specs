@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -14,6 +14,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 ExclusiveArch: %ix86
 
 Source: https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
+
+BuildRequires(pre): bzlib-devel
+BuildRequires(pre): expat-devel
+BuildRequires(pre): libbrotli-devel
+BuildRequires(pre): libpcre-devel
+BuildRequires(pre): libuuid-devel
 
 BuildRequires: cmake
 BuildRequires: compat-libwxGTK3.0-gtk2-devel
@@ -131,6 +137,7 @@ cmake .. \
 	-DPLUGIN_DIR:PATH=%_libdir/%name \
 	-DGAMEINDEX_DIR:PATH=%_datadir/%name \
 	-DPACKAGE_MODE:BOOL=TRUE \
+	-DXDG_STD:BOOL=TRUE \
 	-DwxWidgets_CONFIG_EXECUTABLE=%_libdir/wx/config/gtk2-unicode-3.0 \
 	-Wno-dev
 popd
@@ -184,6 +191,10 @@ popd
 %_libdir/%name/libspu2x-2.0.0.so
 
 %changelog
+* Sat May 23 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt2
+- Add build pre requires
+- Return XDG_STD option
+
 * Fri May 08 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt1
 - Version 1.6.0
 
