@@ -1,7 +1,7 @@
 Name: fvwm
-Version: 2.6.8
+Version: 2.6.9
 #define cvsdate 20031019
-Release: alt2
+Release: alt1
 
 %def_with fribidi
 %def_with libstroke
@@ -356,6 +356,10 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Sat May 23 2020 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt1
+- upstream version 2.6.9
+- remove dependency on Perl4::CoreLibs::getcwd
+
 * Wed Feb 13 2019 Vladislav Zavjalov <slazav@altlinux.org> 2.6.8-alt2
 - build with imlib2 instead of imlib
 - spec: replace PreReq with Requires(pre,postun)
