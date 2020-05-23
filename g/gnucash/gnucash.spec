@@ -6,7 +6,7 @@
 
 Name: 	 gnucash
 Version: 3.902
-Release: alt1
+Release: alt2
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -32,7 +32,7 @@ Patch2: %name-alt-fix-rpath.patch
 AutoReq: yes, noperl
 
 BuildRequires(pre): cmake
-BuildRequires(pre): ninja-build
+BuildRequires(pre): rpm-macros-ninja-build
 BuildRequires: gcc-c++
 BuildRequires: libgtk+3-devel
 BuildRequires: doxygen graphviz guile-devel intltool libglade-devel
@@ -214,6 +214,9 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 3.902-alt2
+- Use rpm-macros-ninja-build instead of monolite ninja-build.
+
 * Wed May 20 2020 Andrey Cherepanov <cas@altlinux.org> 3.902-alt1
 - New version.
 - Build using ninja.
