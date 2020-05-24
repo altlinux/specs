@@ -1,10 +1,10 @@
 %define oname dill
 
-Name:           python-module-%oname
-Version:        0.2.7.1
-Release:        alt2
+Name:           python3-module-%oname
+Version:        0.3.1
+Release:        alt1
 Summary:        Serialize all of Python
-Group:          Development/Python
+Group:          Development/Python3
 License:        BSD
 URL:            https://github.com/uqfoundation/dill
 BuildArch:      noarch
@@ -12,7 +12,8 @@ BuildArch:      noarch
 # https://github.com/uqfoundation/dill.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-setuptools
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -26,20 +27,22 @@ command.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
+
+# Remove unpackges files
+rm -r %buildroot%_bindir
 
 %files
 %doc LICENSE README.md
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-%version-py?.?.egg-info
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py?.?.egg-info
 
 %changelog
-* Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 0.2.7.1-alt2
-- Disable build python3 module
-- Cleanup spec
+* Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
+- New version 0.3.1
 
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.7.1-alt1.qa1
 - NMU: applied repocop patch
