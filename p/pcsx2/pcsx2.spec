@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.6.0
-Release: alt3
+Release: alt4
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -84,6 +84,15 @@ Provides: %name-plugin-graphics = %EVR
 %description plugin-gsdx
 GSdx plugin for PCSX2
 
+%package plugin-gsdx-legacy
+Summary: GSdx legacy plugin for PCSX2
+Group: Emulators
+Requires: %name = %EVR
+Provides: %name-plugin-graphics = %EVR
+
+%description plugin-gsdx-legacy
+GSdx legacy plugin for PCSX2
+
 %package plugin-usbnull
 Summary: USBnull plugin for PCSX2
 Group: Emulators
@@ -163,8 +172,11 @@ cmake .. \
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DPLUGIN_DIR:PATH=%_libdir/%name \
 	-DGAMEINDEX_DIR:PATH=%_datadir/%name \
+	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
 	-DPACKAGE_MODE:BOOL=TRUE \
 	-DXDG_STD:BOOL=TRUE \
+	-DGSDX_LEGACY:BOOL=TRUE \
+	-DDISABLE_BUILD_DATE:BOOL=TRUE \
 	-DwxWidgets_CONFIG_EXECUTABLE=%_libdir/wx/config/gtk2-unicode-3.0 \
 	-Wno-dev
 popd
@@ -196,7 +208,11 @@ popd
 %_libdir/%name/libFWnull-0.7.0.so
 
 %files plugin-gsdx
-%_libdir/%name/libGSdx.so
+%_libdir/%name/libGSdx*.so
+%exclude %_libdir/%name/libGSdx-legacy*.so
+
+%files plugin-gsdx-legacy
+%_libdir/%name/libGSdx-legacy*.so
 
 %files plugin-usbnull
 %_libdir/%name/libUSBnull-0.7.0.so
@@ -220,6 +236,11 @@ popd
 %_libdir/%name/libspu2x-2.0.0.so
 
 %changelog
+* Sun May 24 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt4
+- Build GSdx plugin additionaly without AVX2 & SSE4 support
+- Build GSdx legacy plugin
+- Disable build date
+
 * Sat May 23 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt3
 - Move localization files to separate subpackage
 - Add requires to all plugin types
