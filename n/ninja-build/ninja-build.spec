@@ -3,10 +3,9 @@
 
 Name:           ninja-build
 Version:        1.10.0
-Release:        alt3
+Release:        alt4
 
 Summary:        A small build system with a focus on speed
-
 Group:          Development/Tools
 License:        Apache-2.0
 URL:            https://ninja-build.org/
@@ -32,12 +31,21 @@ to run builds as fast as possible.
 
 %package -n rpm-macros-%name
 Summary:   Helper macros for building RPM packages with %name
-Group:     Development/Other
-Requires:  %name = %EVR
+Group:     System/Configuration/Packaging
 BuildArch: noarch
 
 %description -n rpm-macros-%name
 A set of RPM macros for packaging applications that use %name.
+
+%package -n rpm-build-ninja
+Summary:   Helper macros for building RPM packages using %name
+Group:     System/Configuration/Packaging
+Requires:  rpm-macros-%name = %EVR
+Requires:  %name = %EVR
+BuildArch: noarch
+
+%description -n rpm-build-ninja
+A set of RPM macros for packaging applications using %name.
 
 %prep
 %setup
@@ -86,7 +94,12 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 
+%files -n rpm-build-ninja
+
 %changelog
+* Sun May 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt4
+- New package rpm-build-ninja for build packages using ninja-build.
+
 * Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt3
 - Return rpm-macros-ninja-build as separate package.
 
