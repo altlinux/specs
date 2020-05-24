@@ -1,10 +1,12 @@
 %define oname Pyro4
 
-Name:           python-module-%oname
-Version:        4.75
-Release:        alt2
+%def_without docs
+
+Name:           python3-module-%oname
+Version:        4.80
+Release:        alt1
 Summary:        Python Remote Objects
-Group:          Development/Python
+Group:          Development/Python3
 License:        LGPL-2.0-or-later
 URL:            https://pypi.python.org/pypi/Pyro4/
 BuildArch:      noarch
@@ -13,12 +15,12 @@ BuildArch:      noarch
 Source: %oname-%version.tar
 Patch1: %oname-alt-tune-docs.patch
 
-BuildRequires: python-devel python-module-sphinx-devel
-BuildRequires: python-module-setuptools python-module-serpent python2.7(selectors34) python2.7(wsgiref) python2.7(wsgiref.util)
-BuildRequires: python2.7(cloudpickle) python2.7(msgpack) python2.7(dill)
-
-%py_requires json wsgiref
-%py_requires selectors34
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools python3-module-serpent python3(wsgiref) python3(wsgiref.util)
+BuildRequires: python3(cloudpickle) python3(msgpack) python3(dill)
+%if_with docs
+BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
+%endif #docs
 
 %description
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -31,7 +33,7 @@ free!
 
 %package tests
 Summary: Tests for Pyro4
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -61,41 +63,99 @@ free!
 
 This package contains examples for Pyro4.
 
+%package docs
+Summary: Documentation for for Pyro4
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Pyro is an acronym for PYthon Remote Objects. It is an advanced and
+powerful Distributed Object Technology system written entirely in
+Python, that is designed to be very easy to use. It resembles Java's
+Remote Method Invocation (RMI). It has less similarity to CORBA - which
+is a system- and language independent Distributed Object Technology and
+has much more to offer than Pyro or RMI. But Pyro is small, simple and
+free!
+
+This package contains documentation for Pyro4.
+
+%package pickles
+Summary: Pickles for for Pyro4
+Group: Development/Python3
+
+%description pickles
+Pyro is an acronym for PYthon Remote Objects. It is an advanced and
+powerful Distributed Object Technology system written entirely in
+Python, that is designed to be very easy to use. It resembles Java's
+Remote Method Invocation (RMI). It has less similarity to CORBA - which
+is a system- and language independent Distributed Object Technology and
+has much more to offer than Pyro or RMI. But Pyro is small, simple and
+free!
+
+This package contains pickles for Pyro4.
+
 %prep
 %setup
 %patch1 -p2
 
+%if_with docs
+%prepare_sphinx3 docs
+ln -s ../objects.inv docs/source
+%endif
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
+
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+ln -s $PWD/docs/objects.inv %buildroot%python3_sitelibdir
+pushd docs
+%make html
+%make pickle
+popd
+rm -f %buildroot%python_sitelibdir/objects.inv
+cp -fR build/sphinx/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 # remove remote tests
 rm -f tests/PyroTests/test_socket.py
 rm -f tests/PyroTests/test_naming.py
 rm -f tests/PyroTests/test_naming2.py
-python setup.py test
-PYTHONPATH=%buildroot%python_sitelibdir python tests/run_testsuite.py
+%__python3 setup.py test
+PYTHONPATH=%buildroot%python3_sitelibdir %__python3 tests/run_testsuite.py
 
 %files
 %doc LICENSE README.md
 %_bindir/*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/test
+%python3_sitelibdir/*
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
+%endif #docs
+%exclude %python3_sitelibdir/%oname/test
 
 %files tests
-%python_sitelibdir/%oname/test
+%python3_sitelibdir/%oname/test
 
 %files examples
 %doc examples
 %doc tests
 
+%if_with docs
+%files docs
+%doc build/sphinx/html/*
+
+%files pickles
+%python3_sitelibdir/%oname/pickle
+%endif #docs
+
 %changelog
-* Sat May 23 2020 Anton Midyukov <antohami@altlinux.org> 4.75-alt2
+* Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 4.80-alt1
+- new version 4.80
 - disable build docs
-- disable build python3 subpackages
 
 * Sat Apr 20 2019 Anton Midyukov <antohami@altlinux.org> 4.75-alt1
 - Updated to upstream version 4.75
