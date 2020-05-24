@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Mozilla::CA
 
 Name: perl-Mozilla-CA
-Version: 20180117
+Version: 20200520
 Release: alt1
 
 Summary: Perl module provides CA cert bundle
@@ -21,8 +21,11 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 Requires: ca-certificates
 
-# Automatically added by buildreq on Sat Jan 28 2012
-BuildRequires: ca-certificates perl-devel
+# Automatically added by buildreq on Sun May 24 2020
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-CPAN-Meta perl-devel
+
+BuildRequires: ca-certificates
 
 %description
 Perl module Mozilla::CA provide a single function SSL_ca_file()
@@ -51,6 +54,9 @@ ca-certificates .
 %exclude %perl_vendor_privlib/Mozilla/mk-ca-bundle.pl
 
 %changelog
+* Sun May 24 2020 Nikolay A. Fetisov <naf@altlinux.org> 20200520-alt1
+- New version
+
 * Fri Mar 02 2018 Nikolay A. Fetisov <naf@altlinux.org> 20180117-alt1
 - New version
 
