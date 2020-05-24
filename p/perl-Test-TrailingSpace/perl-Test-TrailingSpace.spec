@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::TrailingSpace
 
 Name: perl-Test-TrailingSpace
-Version: 0.0302
+Version: 0.0400
 Release: alt1
 
 Summary: test for trailing space in source files
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Aug 31 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Object perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-devel perl-parent perl-podlators
-BuildRequires: perl-File-Find-Object-Rule perl-HTML-Parser perl-Module-Build perl-autodie perl-unicore
+# Automatically added by buildreq on Sun May 24 2020
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Encode perl-File-Find-Object perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Text-Glob perl-Tie-RefHash perl-devel perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-File-Find-Object-Rule perl-Module-Build perl-autodie
 
 %description
 Perl module Test::TrailingSpace  is used to test for lack
@@ -42,6 +42,9 @@ of trailing space.
 %perl_vendor_privlib/Test/TrailingSpace*
 
 %changelog
+* Sun May 24 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.0400-alt1
+- New version
+
 * Wed Sep 04 2019 Nikolay A. Fetisov <naf@altlinux.org> 0.0302-alt1
 - New version
 
