@@ -1,13 +1,16 @@
+%define soname_upnp 16
+%define soname_ixml 11
+
 Name: libupnp
-Version: 1.10.1
+Version: 1.12.1
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
 Group: System/Libraries
-Url: http://upnp.sourceforge.net/
-
-Source: %name-%version-%release.tar
+Url: http://pupnp.sourceforge.net/
+# git-vcs: https://github.com/pupnp/pupnp.git
+Source: %name-%version.tar
 
 %define desc \
 The Linux SDK for UPnP Devices (libupnp) provides developers with an API \
@@ -23,11 +26,11 @@ standards and specifications such as TCP/IP, HTTP, and XML. For detailed
 information about UPnP, including the UPnP Device Architecture Specification,
 please visit the UPnP Forum web site.
 
-%package -n libixml11
+%package -n libixml%soname_ixml
 Summary: Complementary library for Linux SDK for UPnP Devices
 Group: System/Libraries
 
-%package -n libupnp15
+%package -n libupnp%soname_upnp
 Summary: Linux SDK for UPnP Devices
 Group: System/Libraries
 
@@ -35,9 +38,9 @@ Group: System/Libraries
 Summary: Development libraries and header files for libupnp
 Group: Development/C
 
-%description -n libixml11 %desc
+%description -n libixml%soname_ixml %desc
 
-%description -n libupnp15 %desc
+%description -n libupnp%soname_upnp %desc
 
 %description devel %desc
 This package contains libraries and header files needed to develop
@@ -54,19 +57,22 @@ applications using libupnp.
 %install
 %make_install DESTDIR=%buildroot install
 
-%files -n libixml11
+%files -n libixml%soname_ixml
 %_libdir/libixml.so.*
 
-%files -n libupnp15
+%files -n libupnp%soname_upnp
 %_libdir/libupnp.so.*
 
 %files devel
 %doc README.md
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %changelog
+* Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- 1.12.1 released
+
 * Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.1-alt1
 - 1.10.1 released
 
