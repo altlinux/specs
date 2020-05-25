@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Adds IO.fdwalk, IO.closefrom and IO.directio
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(test-unit)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -62,6 +63,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1.1
+- + build required gem package
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
 - ! spec tags and syntax
 

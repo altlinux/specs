@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.2.0.1
-Release:       alt4.4
+Release:       alt4.5
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -63,6 +63,8 @@ Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета 
 Group:         Development/Documentation
 BuildArch:     noarch
 
+Conflicts:     libsexpr-devel
+
 %description   -n gem-%pkgname-devel
 Development headers for %gemname gem.
 
@@ -101,6 +103,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.5
+- + conflict dep to libsexpr-devel
+
 * Wed Apr 15 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.4
 - + proper buildarch for rdiscount package
 

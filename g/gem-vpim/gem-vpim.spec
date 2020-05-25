@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       13.11.11
-Release:       alt2
+Release:       alt3
 Summary:       vPim provides calendaring, scheduling, and contact support for Ruby
 License:       GPLv2
 Group:         Development/Ruby
@@ -12,8 +12,12 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         13.11.11.1.patch
 
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -63,6 +67,7 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %ruby_build
@@ -90,6 +95,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue May 26 2020 Pavel Skrylev <majioa@altlinux.org> 13.11.11-alt3
+- + patch to fix deprectard require to "ubygems"
+
 * Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 13.11.11-alt2
 - > Ruby Policy 2.0
 - ! spec tags
