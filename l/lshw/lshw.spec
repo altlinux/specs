@@ -1,6 +1,6 @@
 Name: lshw
 Version: B.02.19.2
-Release: alt1
+Release: alt2
 
 Summary: Hardware Lister
 License: GPL-2.0
@@ -22,7 +22,7 @@ Patch14: lshw-fix-segfault-in-apfs-volume-code.patch
 
 Requires: pciids usbids
 
-BuildRequires(pre): cmake ninja-build
+BuildRequires(pre): cmake rpm-build-ninja
 BuildRequires: gcc-c++ libgtk+2-devel libsqlite3-devel
 
 %description
@@ -101,6 +101,9 @@ install -Dpm0644 %SOURCE102 %buildroot%_man1dir/lshw-gtk.1
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> B.02.19.2-alt2
+- Fix build with rpm-build-ninja.
+
 * Tue May 12 2020 Andrey Cherepanov <cas@altlinux.org> B.02.19.2-alt1
 - New version.
 - Fix License tag according to SPDX.
