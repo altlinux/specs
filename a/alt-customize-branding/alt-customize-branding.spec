@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 %K5init altplace
 
@@ -41,9 +41,49 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 
 # branding_helper script
 install -m 0755 altcusbranding_helper_script %buildroot/%_K5libexecdir/kauth/
-#mkdir -p /tmp/%%rname/
+
+# alt-customize-branding-settings.ini
+mkdir -p %buildroot%_localstatedir/%rname
+#install -m 0644 %%rname-settings.ini %%buildroot%%_localstatedir/%%rname/
+
+# alternatives
+mkdir -p %buildroot%_altdir
+install -m 0644 %rname %buildroot%_altdir/
+
+# branding directories
+mkdir -p %buildroot/boot/grub/themes/%rname
+mkdir -p %buildroot%_datadir/design/%rname
+mkdir -p %buildroot%_datadir/plymouth/themes/%rname
 
 %find_lang --with-qt --all-name %rname
+
+%postun
+if [ $1 -eq 0 ] ; then
+    %define configFile alt-customize-branding-settings.ini
+    %define configDir /var/lib
+    if [ -f %configDir/%rname/%configFile ] ; then
+        previousThemeName=$(awk -F "=" '/ThemeName/ {print $2}' %configDir/%rname/%configFile)
+        echo $previousThemeName
+    fi
+# Change /etc/sysconfig/grub2 and run
+    . shell-config
+    shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/$previousThemeName/theme.txt
+    shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/$previousThemeName/grub.png
+# deprecated
+    shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/$previousThemeName/grub.png
+# generate file "/boot/grub/grub.cfg"
+    /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
+# Change theme name in file 'plymouthd.conf':
+    sed -i "s/Theme=.*/Theme=$previousThemeName/" /etc/plymouth/plymouthd.conf
+# Remove directories
+#rm -R %%_localstatedir/%%rname
+    rm -R /usr/share/design/%rname
+    rm -R /boot/grub/themes/%rname
+    rm -R /usr/share/plymouth/themes/%rname
+# Toggle/repair alternatives
+alternatives-update
+#make-initrd
+fi
 
 %files -f %rname.lang
 %doc COPYING
@@ -54,10 +94,18 @@ install -m 0755 altcusbranding_helper_script %buildroot/%_K5libexecdir/kauth/
 %_datadir/polkit-1/actions/org.kde.altcusbranding.policy
 %_K5dbus_sys_srv/org.kde.altcusbranding.service
 %_K5dbus/system.d/org.kde.altcusbranding.conf
-#%%_qt5_translationdir/*
+%_altdir/%rname
+%_localstatedir/%rname/
+/boot/grub/themes/%rname
+%_datadir/design/%rname
+%_datadir/plymouth/themes/%rname
+#%%_qt5_translationdir/alt-customize-branding_ru_RU.qm
 #%%doc README
 
 %changelog
+* Mon May 25 2020 Pavel Moseev <mars@altlinux.org>  1.0.3-alt1
+- add config-file and uninstall mechanism
+
 * Wed May 13 2020 Pavel Moseev <mars@altlinux.org>  1.0.2-alt1
 - rewrite the program using bash script
 
