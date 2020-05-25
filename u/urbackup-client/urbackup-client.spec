@@ -1,7 +1,7 @@
 
 Name: urbackup-client
 Version: 2.4.9
-Release: alt2
+Release: alt3
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -16,6 +16,8 @@ BuildRequires: zlib-devel
 BuildRequires: libzstd-devel
 BuildRequires: libcryptopp-devel
 BuildRequires: libsqlite3-devel
+
+Requires: urbackup-common
 
 %description
 Efficient Client-Server Backup system for Linux and Windows
@@ -85,6 +87,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Mon May 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.9-alt3
+- dep on urbackup-common added
+
 * Fri May 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.9-alt2
 - file conflict with urbackup-server fixed
 
