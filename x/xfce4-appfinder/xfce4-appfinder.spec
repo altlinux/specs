@@ -1,23 +1,20 @@
 Name: xfce4-appfinder
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
-License: %gpl2plus
+License: GPLv2+
 Url: https://www.xfce.org/
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/xfce4-appfinder
+Vcs: https://gitlab.xfce.org/xfce/xfce4-appfinder.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel >= 4.6.0 libgarcon-devel >= 0.1.2
-BuildPreReq: exo-csource
 BuildRequires: intltool libstartup-notification-devel
 
 # xfrun4 was replaced with xfce4-appfinder
@@ -52,12 +49,17 @@ Desktop entry format.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS
 %_bindir/*
 %_desktopdir/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon May 25 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.0.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 4.14.0-alt1
 - Updated to 4.14.0.
 
