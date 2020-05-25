@@ -1,6 +1,6 @@
 Name:     updater
 Version:  1.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Updater of packages for distros with security and integrity
 License:  GPL v2+
@@ -41,6 +41,9 @@ install -Dm 0750 parser-bootloader-data.awk %buildroot%_sbindir/parser-bootloade
 /lib/systemd/system/*
 
 %changelog
+* Mon May 25 2020 Denis Medvedev <nbr@altlinux.org> 1.2-alt2
+- added code to fix selinux attributes on a newly installed packets.
+
 * Fri Jul 26 2019 Denis Medvedev <nbr@altlinux.org> 1.2-alt1
 - fixed not needed deps on selinux, grub. Audit log now
 renamed after update
