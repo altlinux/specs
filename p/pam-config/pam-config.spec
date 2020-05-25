@@ -1,6 +1,6 @@
 Name: pam-config
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: Systemwide PAM config files for Linux-PAM
 License: GPLv2+
@@ -127,14 +127,18 @@ for f in system-auth system-policy; do
 	fi
 done
 %post_control -s local system-auth
-status_file="/var/run/control/system-policy"
-[ -f "$status_file" ] || {
-	if [ "$(/usr/sbin/control system-auth)" = "local" ]; then
-		echo local
-	else
-		echo remote
-	fi > "$status_file"
-}
+if [ $1 -ge 2 ]; then
+	status_dir='/var/run/control'
+	status_file="$status_dir/system-policy"
+	[ -f "$status_file" ] || {
+		mkdir -p "$status_dir"
+		if [ "$(/usr/sbin/control system-auth)" = "local" ]; then
+			echo local
+		else
+			echo remote
+		fi > "$status_file"
+	}
+fi
 %post_control -s local system-policy
 %post_control -s enabled pam_mktemp
 
@@ -174,6 +178,9 @@ fi
 %config %_controldir/*
 
 %changelog
+* Mon May 25 2020 Dmitry V. Levin <ldv@altlinux.org> 1.9.0-alt2
+- Fix an error in %%post introduced in 1.9.0-alt1.
+
 * Sat May 16 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.9.0-alt1
 - Added configurable substack system-policy.
 - Added filetriggers for system-auth and system-policy methods
