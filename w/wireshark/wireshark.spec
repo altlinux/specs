@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/3.2
 
 Name: wireshark
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -121,7 +121,7 @@ extensions.
 %ifarch %e2k
 cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %endif
-%cmake -D BUILD_sharkd=off
+%cmake -DBUILD_sharkd=off
 %cmake_build
 
 %install
@@ -224,8 +224,12 @@ _EOF_
 %_libdir/libwsutil.so
 %_pkgconfigdir/wireshark.pc
 
-
 %changelog
+* Mon May 25 2020 Anton Farygin <rider@altlinux.ru> 3.2.4-alt1
+- 3.2.4
+- fixes:
+   * the NFS dissector could crash. CVE-2020-13164
+
 * Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 3.2.3-alt1
 - 3.2.3
 - fixes:
