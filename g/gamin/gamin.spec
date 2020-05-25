@@ -1,6 +1,6 @@
 Name: gamin
 Version: 0.1.10
-Release: alt5.2.qa2
+Release: alt6
 
 %def_disable static
 %def_disable debug
@@ -24,7 +24,6 @@ Patch10: gamin-0.1.10-suse-return.patch
 Patch11: gamin-0.1.10-suse-fam_abi_compatibility_FamErrlist.patch
 Patch12: gamin-0.1.10-suse-fix_python_main.patch
 
-BuildPreReq: rpm-build-python python-devel
 %{?_enable_server:BuildRequires: glib2-devel}
 BuildRequires: common-licenses
 
@@ -78,18 +77,6 @@ Static library build of Gamin.
 Gamin is a file and directory monitoring system defined to be
 a subset of the FAM (File Alteration Monitor) system.
 
-%package -n python-module-%name
-Summary: Python bindings for Gamin, a file and directory monitoring system
-Group: Development/Python
-Obsoletes: python-modules-%name
-Provides: python-modules-%name = %version-%release
-Requires: lib%name = %version-%release
-
-%description -n python-module-%name
-Python scripting language bindings for Gamin.
-Gamin is a file and directory monitoring system defined to be
-a subset of the FAM (File Alteration Monitor) system.
-
 %prep
 %setup -q
 %patch
@@ -120,9 +107,6 @@ ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 install -p -m644 doc/*.{html,gif,txt} \
     %buildroot%pkgdocdir/
 
-# remove non-packaged files
-rm -f %buildroot/%python_sitelibdir/*.la
-
 %if_enabled server
 %files
 %_libexecdir/gam_server
@@ -147,10 +131,10 @@ rm -f %buildroot/%python_sitelibdir/*.la
 %exclude %_libdir/libgamin_shared.a
 %endif
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
 %changelog
+* Mon May 25 2020 Grigory Ustinov <grenka@altlinux.org> 0.1.10-alt6
+- Fixed FTBFS: rebuild without python support.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.10-alt5.2.qa2
 - NMU: applied repocop patch
 
