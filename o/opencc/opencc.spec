@@ -1,6 +1,6 @@
 Name:       opencc
 Version:    1.1.1
-Release:    alt1
+Release:    alt2
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    Apache-2.0
@@ -10,7 +10,7 @@ Source0:    %{name}-%{version}.tar
 # VCS:      https://github.com/BYVoid/OpenCC.git
 
 BuildRequires(pre): cmake
-BuildRequires(pre): rpm-macros-ninja-build
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: ctest
@@ -54,8 +54,8 @@ developing applications that use %{name}.
 %build
 %cmake -GNinja -DBUILD_DOCUMENTATION=ON
 export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
-# Build in one thread to prevent race condition
-export NPROCS=4
+# Build in four threads to prevent race condition
+%define __nprocs 4
 %ninja_build -C BUILD
 
 %install
@@ -86,6 +86,10 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt2
+- Use rpm-build-ninja for build.
+- Really use four threads to build by ninja-build.
+
 * Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - New version.
 - Use ninja-build for build.
