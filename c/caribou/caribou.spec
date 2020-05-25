@@ -8,7 +8,7 @@
 
 Name: caribou
 Version: %ver_major.22
-Release: alt0.1
+Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
@@ -25,6 +25,7 @@ Patch1: %name-0.4.20-fix-python-exec.patch
 Patch2: %name-0.4.22-alt-russian_layouts.patch
 Patch4: %name-0.4.2-use-reserved-bar-keycode.patch
 Patch5: %name-0.4.2-fix-keys.patch
+Patch6: %name-0.4.22-alt-fix-comparision.patch
 
 Provides: on-screen-keyboard
 Requires: lib%name = %version-%release
@@ -88,6 +89,7 @@ GObject introspection devel data for the Caribou library.
 %patch2 -p1 -b .rus
 %patch4 -p2 -b .res_keycode
 #%%patch5 -p2
+%patch6 -p2 -b .bool_comparision
 
 %build
 %autoreconf
@@ -142,6 +144,9 @@ GObject introspection devel data for the Caribou library.
 %_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Mon May 25 2020 Vladimir Didenko <cow@altlinux.org> 0.4.22-alt1
+- fix build with new vala
+
 * Sat Aug 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.22-alt0.1
 - updated to 0.4.21-60-gec9041b, switched to Python3
 - caribou-autostart.desktop changed as gnome-shell has it's own OSK
