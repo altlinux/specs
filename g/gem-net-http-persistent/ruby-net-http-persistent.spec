@@ -1,19 +1,24 @@
 %define        pkgname net-http-persistent
 
-Name:          ruby-%pkgname
-Version:       3.0.1
+Name:          gem-%pkgname
+Version:       4.0.0
 Release:       alt1
 Summary:       Thread-safe persistent connections with Net::HTTP
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/drbrain/net-http-persistent
-%vcs           https://github.com/drbrain/net-http-persistent.git
+Vcs:           https://github.com/drbrain/net-http-persistent.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(hoe)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Manages persistent connections using Net::HTTP plus a speed fix for Ruby 1.8.
@@ -63,9 +68,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 4.0.0-alt1
+- ^ 3.0.1 -> 4.0.0
+- ! spec tags
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
-- Bump to 3.0.1
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 3.0.0 -> 3.0.1
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1.1
 - Rebuild with new Ruby autorequirements.

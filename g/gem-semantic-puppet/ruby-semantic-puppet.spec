@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.0.2
-Release:       alt2
+Release:       alt2.1
 Summary:       Library of useful tools for working with Semantic Versions and module dependencies
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -18,8 +18,8 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 %summary.
@@ -60,6 +60,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt2.1
+- ! spec obsolete dep
+
 * Wed May 13 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt2
 - > Ruby Policy 2.0
 - ! spec tags

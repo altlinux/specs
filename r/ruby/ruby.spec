@@ -7,7 +7,7 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.0
+%define        _version 2.7.1
 
 Name:          ruby
 Version:       %_version
@@ -71,7 +71,7 @@ This package contains interpreter of object-oriented scripting language Ruby.
 Summary:       Ruby shared libraries
 Group:         System/Libraries
 Provides:      ruby(enumerator)
-Requires:      ruby = %version-%release
+Provides:      ruby(%ruby_version)
 
 %description   -n %lname
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -126,7 +126,6 @@ Requires:      gem(test-unit) >= 3.3.4
 Requires:      gem(xmlrpc) >= 0.3.0
 Provides:      %name-libs = %version-%release
 Provides:      %name-racc-runtime = %version
-Provides:      ruby(%ruby_version)
 Provides:      ruby(thread)
 %mobsolete     English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete     erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
@@ -251,10 +250,10 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 cp -a /usr/share/gnu-config/config.* tool
 # FIX: automatize
 echo "
-#define RUBY_REVISION \"647ee6f091\"
-#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
+#define RUBY_REVISION \"a0c7c23c9c\"
+#define RUBY_FULL_REVISION \"a0c7c23c9cec0d0ffcba012279cd652d28ad5bf3\"
 #define RUBY_BRANCH_NAME \"%version\"
-#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
+#define RUBY_RELEASE_DATETIME \"2020-03-31T19:27:41Z\"
 " > revision.h
 # NOTE: fix default path to support older ruby versions of gems
 sed "s/path << default_dir/path |= [ default_dir ] | Dir.glob(File.join(RbConfig::CONFIG['rubylibprefix'], 'gems', '*'))/" -i lib/rubygems/defaults.rb
@@ -415,6 +414,10 @@ rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
 %endif
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1-alt1
+- ^ ruby 2.7.0 -> 2.7.1
+- * to unbind ruby and libruby
+
 * Wed Mar 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
 - ^ ruby 2.5.5 -> 2.7.0
 - ^ rubygems 3.0.1 -> 3.1.2

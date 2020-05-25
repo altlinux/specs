@@ -1,9 +1,9 @@
 %define        pkgname http-parser-rb
 %define        gemname http_parser.rb
 
-Name:          gem-%gemname
+Name:          gem-%pkgname
 Version:       0.6.1
-Release:       alt2
+Release:       alt3
 Summary:       A simple callback-based HTTP request/response parser for writing http servers, clients and proxies
 License:       MIT
 Group:         Development/Ruby
@@ -13,6 +13,13 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
+Obsoletes:     gem-%gemname < %EVR
+Provides:      gem-%gemname = %EVR
 
 %description
 Ruby bindings to http://github.com/ry/http-parser and
@@ -77,6 +84,9 @@ Development files for %gemname gem.
 
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt3
+- ! spec tags
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt2
 - ! spec tags and syntax
 

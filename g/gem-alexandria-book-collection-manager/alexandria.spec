@@ -1,7 +1,7 @@
 %define        pkgname alexandria-book-collection-manager
 
 Name:          gem-%pkgname
-Version:       0.7.4
+Version:       0.7.5
 Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPLv2
@@ -21,9 +21,9 @@ BuildRequires: intltool
 BuildRequires: libGConf2-devel
 
 Requires(preun,post): GConf
+Requires:      alexandria
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Alexandria is a GNOME application to help you manage your book collection.
@@ -40,6 +40,9 @@ Summary:       HTML, XML, SAX, and Reader parser
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
 Group:         Books/Other
 BuildArch:     noarch
+
+Requires:      /usr/bin/update-desktop-database
+Requires:      /usr/sbin/update-menus
 
 %description   -n alexandria
 Alexandria is a GNOME application to help you manage your book collection.
@@ -102,6 +105,11 @@ fi
 
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt1
+- ^ 0.7.4 -> 0.7.5
+- ! spec syntax
+- lost require deps to post script executables
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.4-alt1
 - updated (^) 0.7.3 -> 0.7.4
 - fixed (!) spec

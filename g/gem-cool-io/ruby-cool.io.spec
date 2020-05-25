@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       1.6.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple evented I/O for Ruby (but please check out Celluloid::IO instead)
 License:       MIT
 Group:         Development/Ruby
@@ -36,6 +36,8 @@ applications.
 Summary:       Development files for %gemname gem
 Group:         Development/Ruby
 BuildArch:     noarch
+
+Conflicts:     libev-devel
 
 %description   devel
 Development files for %gemname gem.
@@ -82,6 +84,9 @@ Documentation files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1.1
+- + proper conflict dep to libev-devel
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - ^ 1.5.4 -> 1.6.0
 - ! spec syntax and tags
