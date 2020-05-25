@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
 Version:       3.4.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -56,6 +56,7 @@ BuildRequires: libpango-devel
 BuildRequires: gst-plugins-devel
 BuildRequires: gcc-c++
 BuildRequires: gem-cairo-devel
+BuildRequires: libbrotli-devel
 
 BuildRequires: gem(pkg-config)
 BuildRequires: gem(native-package-installer)
@@ -1135,6 +1136,9 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1.3
+- Fix build by adding libbrotli-devel.
+
 * Sat May 09 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1.2
 - Do not require deprecated libwlc0-devel for wayland-protocols.pc.
 
