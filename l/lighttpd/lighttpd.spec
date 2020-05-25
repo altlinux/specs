@@ -4,7 +4,7 @@
 %def_with ssl
 %def_with memcached
 %def_with lua
-%def_with gamin
+%def_without gamin
 %def_with pgsql
 %def_with tests
 
@@ -16,7 +16,7 @@
 
 Name: lighttpd
 Version: 1.4.55
-Release: alt1
+Release: alt2
 
 Summary: A fast webserver with minimal memory-footprint
 License: BSD
@@ -302,6 +302,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon May 25 2020 Alexei Takaseev <taf@altlinux.org> 1.4.55-alt2
+- Disable gamin support
+
 * Sat Feb 01 2020 Alexei Takaseev <taf@altlinux.org> 1.4.55-alt1
 - 1.4.55
 
