@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.30
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -667,6 +667,7 @@ fi
 /sbin/glibc_post_upgrade
 /sbin/glibc_fix_*
 /sbin/*ldconfig
+%_bindir/locale
 %ghost %_sysconfdir/ld.so.cache
 %dir %_sysconfdir/ld.so.conf.d
 %dir %attr(700,root,root) %_cachedir/ldconfig
@@ -694,7 +695,6 @@ fi
 
 %if_with locales
 %files locales -f libc.lang
-%_bindir/locale*
 %dir %_prefix/lib/locale
 %if_disabled langify
 %_prefix/lib/locale/*
@@ -720,7 +720,7 @@ fi
 /sbin/sln
 %_bindir/*
 %exclude %_bindir/iconv*
-%exclude %_bindir/locale*
+%exclude %_bindir/locale
 %if_enabled memusagestat
 %exclude %_bindir/memusage*
 %endif
@@ -778,6 +778,13 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue May 26 2020 Dmitry V. Levin <ldv@altlinux.org> 6:2.30-alt2
+- Updated to glibc-2.30-69-g1ba9ebfce3 from 2.30 branch
+  (fixes: CVE-2020-1751, CVE-2020-1752, CVE-2020-10029)
+  (closes: #38403).
+- Moved %_bindir/locale from %name-locales to %name-core.
+- Moved %_bindir/localedef from %name-locales to %name-utils.
+
 * Tue Nov 05 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.30-alt1
 - Updated to glibc-2.30-8-gfca2d6186a from 2.30 branch.
 
