@@ -1,14 +1,16 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 %K5init altplace
 
+#Group: Graphics
 Group: Graphical desktop/KDE
 Summary: Customize branding tool
 License: GPL-3.0-or-later
-Source: %rname-%version.tar 
+Url: https://www.basealt.ru/
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -21,9 +23,17 @@ BuildRequires: kf5-kio-devel
 BuildRequires: qt5-tools
 BuildRequires: kf5-kwindowsystem-devel
 Requires: qt5-translations convert
+Requires: %rname-backend
 
 %description
 The ALT tool for KDE to customize branding
+
+%package backend
+Summary: Customize branding tool backend
+License: GPL-3.0-or-later
+Group: System/Configuration/Boot and Init
+%description backend
+The ALT tool backend for KDE to customize branding
 
 %prep
 %setup -n %rname-%version
@@ -57,13 +67,13 @@ mkdir -p %buildroot%_datadir/plymouth/themes/%rname
 
 %find_lang --with-qt --all-name %rname
 
-%postun
+%postun backend
 if [ $1 -eq 0 ] ; then
     %define configFile alt-customize-branding-settings.ini
     %define configDir /var/lib
     if [ -f %configDir/%rname/%configFile ] ; then
         previousThemeName=$(awk -F "=" '/ThemeName/ {print $2}' %configDir/%rname/%configFile)
-        echo $previousThemeName
+        echo Previous theme name: $previousThemeName
     fi
 # Change /etc/sysconfig/grub2 and run
     . shell-config
@@ -86,23 +96,29 @@ alternatives-update
 fi
 
 %files -f %rname.lang
-%doc COPYING
 %_K5bin/*
-%_K5libexecdir/kauth/altcusbranding_helper
-%_K5libexecdir/kauth/altcusbranding_helper_script
 %_K5xdgapp/%rname.desktop
-%_datadir/polkit-1/actions/org.kde.altcusbranding.policy
-%_K5dbus_sys_srv/org.kde.altcusbranding.service
+%_K5libexecdir/kauth/altcusbranding_helper
 %_K5dbus/system.d/org.kde.altcusbranding.conf
+%_K5dbus_sys_srv/org.kde.altcusbranding.service
+%_datadir/polkit-1/actions/org.kde.altcusbranding.policy
+%doc COPYING
+
+%files backend
+%_K5libexecdir/kauth/altcusbranding_helper_script
 %_altdir/%rname
-%_localstatedir/%rname/
-/boot/grub/themes/%rname
+%_localstatedir/%rname
 %_datadir/design/%rname
 %_datadir/plymouth/themes/%rname
+/boot/grub/themes/%rname
+
 #%%_qt5_translationdir/alt-customize-branding_ru_RU.qm
 #%%doc README
 
 %changelog
+* Tue May 26 2020 Pavel Moseev <mars@altlinux.org>  1.0.4-alt1
+- split package to frontend and backend
+
 * Mon May 25 2020 Pavel Moseev <mars@altlinux.org>  1.0.3-alt1
 - add config-file and uninstall mechanism
 
