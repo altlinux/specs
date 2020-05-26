@@ -1,20 +1,25 @@
 %define        pkgname net-http-pipeline
 
-Name:          ruby-%pkgname
+Name:          gem-%pkgname
 Version:       1.0.1
-Release:       alt2
+Release:       alt2.1
 Summary:       An HTTP/1.1 pipelining implementation atop Net::HTTP
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/drbrain/net-http-pipeline
-%vcs           https://github.com/drbrain/net-http-pipeline.git
+Vcs:           https://github.com/drbrain/net-http-pipeline.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(hoe)
+BuildRequires: gem-hoe
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 An HTTP/1.1 pipelining implementation atop Net::HTTP.  A pipelined connection
@@ -57,8 +62,11 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue May 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt2.1
+- ! spec tags and syntax
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt2
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1.1
 - Rebuild with new Ruby autorequirements.
