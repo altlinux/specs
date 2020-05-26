@@ -1,6 +1,6 @@
 Name: libpcap
 Version: 1.9.1
-Release: alt1
+Release: alt2
 Epoch: 2
 
 # Default optional switches
@@ -120,6 +120,10 @@ autoconf -f -v
 %endif
 
 %changelog
+* Tue May 26 2020 Nikita Ermakov <arei@altlinux.org> 2:1.9.1-alt2
+- Try to use different sockets (AF_NETLINK, AF_UNIX, AF_INET) for ioctls.
+- Get the ARPHRD_ values from a Linux kernel header.
+
 * Thu Oct 17 2019 Nikita Ermakov <arei@altlinux.org> 2:1.9.1-alt1
 - Update to 1.9.1.
 - Do not compress CHANGES.
