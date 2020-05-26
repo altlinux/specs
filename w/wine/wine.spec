@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 5.0.0
-%define major 5.8
+%define major 5.9
 %define rel %nil
 
 %def_with gtk3
@@ -410,6 +410,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/*.vxd.so
 %endif
 
+%_libdir/wine/ntdll.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -503,6 +504,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue May 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.9.1-alt1
+- new version 5.9.1 (with rpmrb script)
+
 * Sun May 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.8.1-alt1
 - new version 5.8.1 (with rpmrb script)
 
