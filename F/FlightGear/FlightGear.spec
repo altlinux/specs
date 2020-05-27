@@ -1,5 +1,5 @@
 %def_without dbus
-%define origver 2020.1
+%define origver 2020.1.2
 
 Name: FlightGear
 Version: %origver
@@ -112,6 +112,9 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_desktopdir/org.flightgear.FlightGear.desktop
 
 %changelog
+* Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt1
+- 2020.1.2
+
 * Tue May 12 2020 Michael Shigorin <mike@altlinux.org> 2020.1-alt1
 - 2020.1
 
