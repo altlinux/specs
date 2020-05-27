@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.101
+Version: 2.4.102
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -24,7 +24,6 @@ OpenGL drivers
 %package devel
 Summary: The drm Library and Header Files
 Group: Development/C
-Requires: %name = %epoch:%version-%release
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -63,6 +62,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Wed May 27 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.102-alt1
+- 2.4.102
+
 * Fri Apr 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.101-alt1
 - 2.4.101
 
