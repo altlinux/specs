@@ -2,21 +2,22 @@
 
 Name:          gem-%pkgname
 Version:       1.0.7
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Lexical scanner generator for ruby
 Group:         Development/Ruby
-License:       LGPL
+License:       MIT
 Url:           https://github.com/tenderlove/rexical
 Vcs:           https://github.com/tenderlove/rexical.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(hoe)
+BuildRequires: gem-hoe
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Rexical is a lexical scanner generator. It is written in Ruby itself,
@@ -56,6 +57,10 @@ mv %buildroot%_bindir/rex %buildroot%_bindir/rex.rb
 
 
 %changelog
+* Wed May 27 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.7-alt1.3
+- ! spec and syntax
+- * relicensed
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.7-alt1.2
 - fixed (!) spec
 
