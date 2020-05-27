@@ -1,6 +1,6 @@
 Name: pam-config
 Version: 1.9.0
-Release: alt2
+Release: alt3
 
 Summary: Systemwide PAM config files for Linux-PAM
 License: GPLv2+
@@ -178,6 +178,9 @@ fi
 %config %_controldir/*
 
 %changelog
+* Wed May 27 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.9.0-alt3
+- Fix an error in system-policy.filetrigger in 1.9.0-alt1.
+
 * Mon May 25 2020 Dmitry V. Levin <ldv@altlinux.org> 1.9.0-alt2
 - Fix an error in %%post introduced in 1.9.0-alt1.
 
