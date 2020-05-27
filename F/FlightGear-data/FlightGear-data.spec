@@ -1,5 +1,5 @@
 Name: FlightGear-data
-Version: 2020.1
+Version: 2020.1.2
 Release: alt1
 
 Summary: Data pack for FlightGear open-source flight simulator
@@ -75,6 +75,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt1
+- 2020.1.2
+
 * Wed May 13 2020 Michael Shigorin <mike@altlinux.org> 2020.1-alt1
 - 2020.1
 
