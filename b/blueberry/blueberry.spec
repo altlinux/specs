@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -16,18 +16,11 @@ BuildRequires(pre): rpm-build-gir rpm-build-python3
 
 BuildArch: noarch
 Requires: rfkill wmctrl gnome-bluetooth bluez-tools
+# Upstream removed dedicated applet for cinnamon.
+Provides: cinnamon-applet-%name = %version-%release
 
 %description
 Utility for Bluetooth devices graphical configuration
-
-%package -n cinnamon-applet-%name
-Summary: Blueberry applet for Cinnamon
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n cinnamon-applet-%name
-Blueberry applet for Cinnamon
 
 %prep
 %setup
@@ -50,10 +43,11 @@ Blueberry applet for Cinnamon
 %_datadir/glib-2.0/schemas/*.xml
 %_iconsdir/hicolor/*/status/*
 
-%files -n cinnamon-applet-%name
-%_datadir/cinnamon/applets/blueberry@cinnamon.org
-
 %changelog
+* Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 1.3.8-alt1
+- 1.3.8
+- remove cinnamon applet package (dropped by upstream)
+
 * Fri May 15 2020 Vladimir Didenko <cow@altlinux.org> 1.3.7-alt1
 - 1.3.7
 

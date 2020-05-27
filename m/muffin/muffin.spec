@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.6.0
-Release: alt2
+Version: 4.6.1
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -197,6 +197,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt1
+- 4.6.1
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt2
 - fix pkgconfig file
 
