@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        1.0.1
+Version:        1.0.2
 Release:        alt1
 
 Group:          System/Configuration/Hardware
@@ -22,8 +22,8 @@ Requires:  	unifying-receiver-udev
 %add_python3_req_skip gi.repository.GObject gi.repository.Gdk
 %endif
 
-# libaptindicator is not package in ALT Linux
-%add_typelib_req_skiplist typelib(AppIndicator3)
+# typelib(AyatanaAppIndicator3) is not package in ALT Linux
+%add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
 
 Source0:        https://github.com/pwr/Solaar/archive/%{version}.tar.gz
 
@@ -69,6 +69,9 @@ Logitech's Unifying Receiver peripherals.
 %doc docs
 
 %changelog
+* Wed May 27 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version.
+
 * Tue May 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version.
 
