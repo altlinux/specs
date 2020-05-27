@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.6
-%define kernel_sublevel .13
+%define kernel_sublevel .15
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -232,6 +232,7 @@ Provides:  kernel-modules-drm-radeon-%kversion-%flavour-%krelease = %version-%re
 Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease > %version-%release
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
+Requires: kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
 Prereq: %name = %epoch:%version-%release
@@ -684,6 +685,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed May 27 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.6.15-alt1
+- v5.6.15
+
 * Fri May 15 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.6.13-alt1
 - v5.6.13
 
