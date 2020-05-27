@@ -1,6 +1,6 @@
 Name:           jitsi-meet
 Version:        4109
-Release:        alt0.1
+Release:        alt0.2
 
 Summary:        Jitsi Meet - WebRTC JavaScript video conferences
 #Group:          Networking/Instant messaging
@@ -33,6 +33,17 @@ Requires: jitsi-meet-web = %EVR
 Jitsi Meet is a WebRTC JavaScript application that uses Jitsi
 Videobridge to provide high quality, scalable video conferences.
 
+%package -n jitsi-meet-doc
+Summary: Inline documentation for various components of Jitsi Meet
+Group: Documentation
+
+%description -n jitsi-meet-doc
+Jitsi Meet is a WebRTC JavaScript application that uses Jitsi
+Videobridge to provide high quality, scalable video conferences.
+
+This package includes upstream documentation and various configuration examples
+for most Jitsi Meet components from the source code repository.
+
 %package -n jitsi-meet-web
 Summary: WebRTC JavaScript video conferences
 #Group:          Networking/Instant messaging
@@ -43,7 +54,7 @@ Jitsi Meet is a WebRTC JavaScript application that uses Jitsi
 Videobridge to provide high quality, scalable video conferences.
 
 It is a web interface to Jitsi Videobridge for audio and video
-forwarding and relaying
+forwarding and relaying.
 
 %package -n jitsi-meet-web-config
 Summary: Configuration for web serving of Jitsi Meet
@@ -61,9 +72,11 @@ This package contains configuration for Nginx to be used with
 Jitsi Meet.
 
 %package -n jitsi-meet-prosody
-Summary: Prosody configuration for Jitsi Meet
+Summary: Prosody plugins and configuration for Jitsi Meet
 Group: System/Servers
 #Requires: openssl prosody | prosody-trunk | prosody-0.11
+# The first release of 0.11 branch was 0.11.1
+Requires: prosody >= 0.11.1
 
 %description -n jitsi-meet-prosody
 Jitsi Meet is a WebRTC JavaScript application that uses Jitsi
@@ -72,8 +85,9 @@ Videobridge to provide high quality, scalable video conferences.
 It is a web interface to Jitsi Videobridge for audio and video
 forwarding and relaying.
 
-This package contains configuration for Prosody to be used with
-Jitsi Meet.
+This package contains example configuration for Prosody to be used with
+Jitsi Meet, as well as plugins to implement XEP-0340 and other essential
+XMPP extensions.
 
 %if 0
 %package -n jitsi-meet-tokens
@@ -120,7 +134,7 @@ install -m 644 logging_config.js %buildroot%_datadir/%name/
 install -m 644 *.json %buildroot%_datadir/%name/
 install -m 644 *.html %buildroot%_datadir/%name/
 install -m 644 *.ico %buildroot%_datadir/%name/
-install -m 644 css/all.css %buildroot%_datadir/%name/
+install -m 644 -D css/all.css -t %buildroot%_datadir/%name/css
 cp -r sounds %buildroot%_datadir/%name/
 cp -r fonts %buildroot%_datadir/%name/
 cp -r images %buildroot%_datadir/%name/
@@ -130,6 +144,7 @@ install -m 644 resources/robots.txt %buildroot%_datadir/%name/
 #install -m 755 resources/*.sh %buildroot%_datadir/%name/scripts/
 cp -r libs %buildroot%_datadir/%name/
 cp -r static %buildroot%_datadir/%name/
+cp -r resources/prosody-plugins %buildroot%_datadir/%name/
 
 DESTL=%buildroot%_datadir/%name/lang
 LANGUAGES=$(node -p "Object.keys(require('./lang/languages.json')).join(' ')")
@@ -141,34 +156,51 @@ for i in $LANGUAGES ; do
     cp -v $COUNTRIES_DIR/$LOCALE.json $DESTL/countries-$LOCALE.json
 done
 
-#mkdir -p %buildroot%_datadir/%name/jitsi-meet-web-config
-#cp doc/debian/jitsi-meet/* %buildroot%_datadir/%name/jitsi-meet-web-config
+mkdir -p %buildroot%_datadir/jitsi-meet-web-config
+cp config.js %buildroot%_datadir/jitsi-meet-web-config/
+
+# This should be the last step to exclude doc/debian from being packaged
+# into jitsi-meet-doc — parts of this directory are split between docdirs
+# of subpackages.
+mv doc/debian doc_debian
 
 %files
+
+%files -n jitsi-meet-doc
+%doc doc/**
+
+%files -n jitsi-meet-prosody
+%_datadir/%name/prosody-plugins/
+%doc doc_debian/jitsi-meet-prosody/*
 
 %files -n jitsi-meet-web
 %doc LICENSE
 %doc README.md
 %_datadir/%name
+%exclude %_datadir/%name/prosody-plugins
 
-%if 0
 %files -n jitsi-meet-web-config
-%doc doc/debian/jitsi-meet
+%doc doc_debian/jitsi-meet
 %dir %_sysconfdir/jitsi
 %dir %_sysconfdir/jitsi/meet
-#%config %_sysconfdir/jitsi/meet/
+%config %_sysconfdir/jitsi/meet/
+%_datadir/jitsi-meet-web-config/
 #doc doc/debian/jitsi-meet/README
 #%_sysconfdir/jitsi/meet/*
 
-%files -n jitsi-meet-prosody
-%doc doc/debian/jitsi-meet-prosody/README
-
+%if 0
 %files -n jitsi-meet-tokens
 
 %files -n jitsi-meet-turnserver
 %endif
 
 %changelog
+* Thu May 21 2020 Arseny Maslennikov <arseny@altlinux.org> 4109-alt0.2
+- Packaged the webroot for Jitsi Meet's web app.
+- Packaged Prosody plugins for Jitsi Meet.
+  No pre-set configuration is applied yet, unlike the upstream-maintained
+  packages for Debian.
+
 * Thu May 14 2020 Vitaly Lipatov <lav@altlinux.ru> 4109-alt0.1
 - initial build
 
