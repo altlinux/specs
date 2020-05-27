@@ -33,7 +33,7 @@ Version: %hversion.%urelease
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
 
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -99,7 +99,7 @@ BuildRequires: libgtk+3-gir-devel
 # 5.2.0
 #BuildRequires: libCoinMP-devel
 # 5.3.0
-BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel libtelepathy-devel
+BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-devel libmysqlclient-devel
 # 5.3.3
 BuildRequires: doxygen e2fsprogs
 # 5.4.0
@@ -637,6 +637,9 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed May 27 2020 Andrey Cherepanov <cas@altlinux.org> 6.3.6.2-alt3
+- Remove deprecated libtelepathy-devel.
+
 * Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 6.3.6.2-alt2
 - Put libreoffice- prefix to icons and desktop files (ALT #38480).
 
