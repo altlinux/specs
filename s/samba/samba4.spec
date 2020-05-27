@@ -60,7 +60,7 @@
 
 Name:    samba
 Version: 4.11.9
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1814,6 +1814,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed May 27 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.9-alt2
+- Apply patches from fedora:
+  + Add use the new des_crypt56_gnutls() and remove builtin DES crypto
+  + Remove DES support if MIT Kerberos version does not support it
+  + Create working private krb5.conf due it used by DNS update tool and should
+    have enough details to authenticate with GSS-TSIG when running nsupdate
+
 * Wed May 27 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.9-alt1
 - Update to latest stable bugfix release of the Samba 4.11
 
