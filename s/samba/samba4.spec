@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba
-Version: 4.11.8
+Version: 4.11.9
 Release: alt1
 
 Group:   System/Servers
@@ -360,7 +360,7 @@ Provides: libldb-modules-DC = %version-%release
 Obsoletes: libldb-modules-DC < 4.10
 
 %description -n libldb-modules-dc
-The libldb-modules-DC contains the ldb library modules from the Samba domain controller.
+The libldb-modules-dc contains the ldb library modules from the Samba domain controller.
 
 %package -n libsmbclient-devel
 Summary: Developer tools for the SMB client library
@@ -881,7 +881,7 @@ printf "%_bindir/wbinfo\t%_samba_mod_libdir/bin/wbinfo\t20\n" >> %buildroot%_alt
 printf "%_bindir/ntlm_auth\t%_samba_mod_libdir/bin/ntlm_auth\t20\n" >> %buildroot%_altdir/samba-mit-winbind
 
 mv %buildroot%_samba_mod_libdir/ldb %buildroot%_samba_mod_libdir/ldb.mit
-printf "%_samba_mod_libdir/ldb\t%_samba_mod_libdir/ldb.mit\t50\n" > %buildroot%_altdir/samba-mit-dc-modules
+printf "%_samba_mod_libdir/ldb\t%_samba_mod_libdir/ldb.mit\t20\n" > %buildroot%_altdir/samba-mit-dc-modules
 
 mv %buildroot%_bindir/samba-tool %buildroot%_bindir/samba-tool.py3
 printf '#!/bin/bash\nexec %_bindir/samba-tool.py3 "$@"\n' >%buildroot%_samba_mod_libdir/bin/samba-tool
@@ -1814,6 +1814,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed May 27 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.9-alt1
+- Update to latest stable bugfix release of the Samba 4.11
+
 * Tue Apr 28 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.8-alt1
 - Update to latest stable security release of the Samba 4.11
 - Security fixes:
