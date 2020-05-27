@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.0
-Release: alt4
+Version: 9.1
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -317,6 +317,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed May 27 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.1-alt1
+- version 9.1
+
 * Tue Mar 17 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0-alt4
 - minimize buttons border
 
