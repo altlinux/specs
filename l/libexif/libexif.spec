@@ -2,14 +2,14 @@
 %def_disable static
 
 Name: libexif
-Version: 0.6.21
+Version: 0.6.22
 Release: alt1
 
 Summary: libexif is a library for parsing, editing, and saving EXIF data
 License: LGPLv2+
 Group: System/Libraries
-Url: http://libexif.sourceforge.net
-Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
+Url: http://libexif.github.io
+Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 # Source code: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
@@ -76,6 +76,12 @@ linked against %name library.
 %endif
 
 %changelog
+* Wed May 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 0.6.22-alt1
+- 0.6.22 (fixes: CVE-2016-6328, CVE-2017-7544, CVE-2019-9278, CVE-2020-0093,
+  CVE-2020-12767, CVE-2020-13112, CVE-2020-13113, CVE-2020-13114,
+  CVE-2018-20030)
+- changed Url
+
 * Sat Oct 27 2012 Dmitriy Khanzhin <jinn@altlinux.org> 0.6.21-alt1
 - 0.6.21
 - fixed CVE-2012-2812, CVE-2012-2813, CVE-2012-2814, CVE-2012-2836,
