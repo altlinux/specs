@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.24
+Version: 2.5.25
 Release: alt1
 
 Group: System/Libraries
@@ -247,6 +247,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Wed May 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.25-alt1
+- 2.5.25
+
 * Fri Mar 13 2020 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.24-alt1
 - 2.5.24
 - added libcurl-devel into BR for support new Lumix WiFi cameras
