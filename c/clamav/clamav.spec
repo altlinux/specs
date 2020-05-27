@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_with	milter
 %def_without	llvm
 %def_with	systemd
@@ -13,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.102.2
+Version: 0.102.3
 Release: alt1
 %define abiversion 9
 
@@ -308,7 +310,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %files -n lib%{name}%{abiversion}
-%_libdir/lib*.so.*
+%_libdir/lib*.so.%abiversion
+%_libdir/lib*.so.%abiversion.*
+%_libdir/libclammspack.so.*
+%_libdir/libfreshclam.so.*
 
 %files freshclam
 %{?_with_ownconfdir: %dir %clamconfdir}
@@ -349,6 +354,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Wed May 27 2020 Sergey Y. Afonin <asy@altlinux.org> 0.102.3-alt1
+- 0.102.2
+  + CVE-2020-3327 - 0.102.2 only
+  + CVE-2020-3341 - from 0.101 to 0.102.2
+
 * Tue Feb 11 2020 Sergey Y. Afonin <asy@altlinux.org> 0.102.2-alt1
 - 0.102.2
 - updated config's patches
