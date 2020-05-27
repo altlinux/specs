@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -268,6 +268,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Wed May 27 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.2-alt1
+- Updated to 3.1.2.
+
 * Sat May 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.1.1-alt1
 - Updated to 3.1.1.
 
