@@ -1,7 +1,7 @@
 %define oname pycryptodome
 
 Name:     python3-module-%oname
-Version:  3.9.4
+Version:  3.9.7
 Release:  alt1
 
 Summary:  A self-contained cryptographic library for Python
@@ -66,5 +66,8 @@ python3 setup.py test
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 3.9.7-alt1
+- Automatically updated to 3.9.7.
+
 * Mon Dec 09 2019 Grigory Ustinov <grenka@altlinux.org> 3.9.4-alt1
 - Initial build for Sisyphus.
