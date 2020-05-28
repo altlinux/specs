@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: A library for working with sizes in bytes
@@ -82,6 +82,9 @@ the library from Python 3 easier and more convenient.
 
 
 %changelog
+* Thu May 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+
 * Sat Feb 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 

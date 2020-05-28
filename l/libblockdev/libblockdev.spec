@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.23
+%define ver_major 2.24
 %define rev 1
 
 %ifnarch %ix86 x86_64
@@ -452,7 +452,7 @@ sed -i 's/mkfs\.vfat/mkfs.fat/g
 sed -i 's/\(pylint\)-3/\1.py3/' Makefile.*
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{subst_with vdo} \
@@ -645,6 +645,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Thu May 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24-alt1
+- 2.24
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 2.23-alt1
 - 2.23
 
