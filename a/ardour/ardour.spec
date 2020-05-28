@@ -1,10 +1,10 @@
 %set_verify_elf_method unresolved=relaxed
 
-%define name2 ardour5
+%define name2 ardour6
 
 Name:    ardour
-Version: 5.12
-Release: alt3
+Version: 6.0
+Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -91,7 +91,7 @@ See the online user manual at http://en.flossmanuals.net/ardour/index/
 #echo 'namespace ARDOUR { const char* revision = "%%version"; }' >> libs/ardour/revision.cc
 
 %build
-./waf configure \
+%__python ./waf configure \
     --prefix=%_prefix \
     --libdir=%_libdir \
     --configdir=%_sysconfdir \
@@ -103,14 +103,14 @@ See the online user manual at http://en.flossmanuals.net/ardour/index/
     --nls \
     --docs
 
-./waf build \
+%__python ./waf build \
     --nls \
     --docs
 
-./waf i18n_mo
+%__python ./waf i18n_mo
 
 %install
-./waf install --destdir=%buildroot
+%__python ./waf install --destdir=%buildroot
 
 install -d -m 0755 %buildroot%_desktopdir
 install -m 644 %SOURCE1 %buildroot%_desktopdir/
@@ -131,6 +131,9 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_iconsdir/ardour3.png
 
 %changelog
+* Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 6.0-alt1
+- Build new version.
+
 * Mon Sep 02 2019 Michael Shigorin <mike@altlinux.org> 5.12-alt3
 - ExcludeArch: ppc64le for now (undefined symbols)
 
