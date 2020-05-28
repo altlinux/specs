@@ -1,5 +1,5 @@
 Name: rpmidentity
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: calculate rpm package identity
@@ -31,6 +31,9 @@ make DESTDIR=%buildroot PREFIX=%_prefix install
 %_datadir/rpmidentity/taglist
 
 %changelog
+* Thu May 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2-alt1
+- Fixed to work with rpm 4.0.4.
+
 * Sat Apr 25 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt1
 - Initial build for ALT Sisyphus.
 
