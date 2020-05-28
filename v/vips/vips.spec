@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: vips
-Version: 8.9.0
-Release: alt2
+Version: 8.9.2
+Release: alt1
 
 Summary: Large image processing library
 
@@ -149,6 +149,9 @@ rm -fv %buildroot%_bindir/vips%majorver
 # - package python bindings
 
 %changelog
+* Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 8.9.2-alt1
+- new version 8.9.2 (with rpmrb script)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 8.9.0-alt2
 - enable build with poppler-glib, rsvg, libgif, libimagequant
 
