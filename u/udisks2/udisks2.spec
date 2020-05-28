@@ -6,6 +6,7 @@
 %define _localstatedir %_var
 
 %def_enable introspection
+%def_enable gtk_doc
 %def_enable acl
 # since 2.1.5 it is possible to configure udisks to mount devices
 # in /media instead of /run/media but we use own control-based mechanism,
@@ -25,11 +26,11 @@
 %endif
 
 Name: %{_name}2
-Version: 2.8.4
+Version: 2.9.0
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
-License: GPLv2+
+License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
 Group: System/Servers
 Url: https://github.com/storaged-project/udisks
 
@@ -48,7 +49,7 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 2.19
+%define blockdev_ver 2.24
 %define libmount_ver 2.30
 
 Requires(pre): control
@@ -66,7 +67,6 @@ Requires: libblockdev-mdraid
 Requires: libblockdev-part
 Requires: libblockdev-swap
 
-BuildRequires: gtk-doc
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
@@ -75,7 +75,9 @@ BuildRequires: pkgconfig(systemd) libmount-devel >= %libmount_ver
 BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
 BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
 BuildRequires: libblockdev-kbd-devel libblockdev-part-devel
+BuildRequires: libuuid-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_acl:BuildRequires: libacl-devel}
 %{?_enable_lvm2:BuildRequires: libdevmapper-devel liblvm2-devel libblockdev-lvm-devel}
 %{?_enable_iscsi:BuildRequires: iscsi-initiator-utils-devel}
@@ -200,13 +202,13 @@ This package contains UDisks module for VDO management.
 
 %prep
 %setup -n %_name-%version
-subst 's/mkfs\.vfat/mkfs.fat/
+sed -i 's/mkfs\.vfat/mkfs.fat/
        s/dosfslabel/fatlabel/' src/udiskslinuxfsinfo.c
 
 %build
 %autoreconf
 %configure --disable-static \
-	--enable-gtk-doc \
+	%{?_disable_gtk_doc:--enable-gtk-doc=no} \
 	%{subst_enable acl} \
 	%{?_enable_fhs_media:--enable-fhs-media} \
 	%{subst_enable lvm2} \
@@ -217,7 +219,7 @@ subst 's/mkfs\.vfat/mkfs.fat/
 	%{subst_enable lsm} \
 	%{subst_enable bcache} \
 	%{subst_enable vdo}
-
+%nil
 %make_build
 
 %install
@@ -238,7 +240,7 @@ install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
 %find_lang %name
 
 %check
-%make check
+%make check VERBOSE=1
 
 %pre
 if [ -f %_controldir/%name ]; then
@@ -253,6 +255,7 @@ fi
 %_bindir/udisksctl
 /lib/udev/rules.d/80-%name.rules
 %config(noreplace) %_sysconfdir/%name/%name.conf
+%_sysconfdir/%name/mount_options.conf.example
 %_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
@@ -269,7 +272,6 @@ fi
 %ghost %_localstatedir/lib/%name/mtab
 #%attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
-%config %systemd_unitdir/clean-mount-point@.service
 %_tmpfilesdir/%name.conf
 %config %_controldir/%name
 %doc README.md AUTHORS NEWS HACKING
@@ -280,10 +282,16 @@ fi
 %files -n libudisks2-devel
 %_libdir/lib%name.so
 %_includedir/%name/
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
+%_pkgconfigdir/%name-bcache.pc
+%_pkgconfigdir/%name-btrfs.pc
+%_pkgconfigdir/%name-lvm2.pc
+%_pkgconfigdir/%name-zram.pc
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/udisks2/*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -339,6 +347,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu May 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Tue Jul 23 2019 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
 - 2.8.4
 
