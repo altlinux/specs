@@ -1,7 +1,7 @@
 Name: trmltools
 Summary: Tools to convert rml to pdf and html
 Version: 1.1
-Release: alt9.16.1.1
+Release: alt9.16.1.2
 Source: trml2pdf-%version.tar.bz2
 License: BSD-like
 Group: Development/Python
@@ -23,6 +23,8 @@ Tools to convert rml files to pdf and html und Schweinsbacken
 
 %prep
 %setup -q -n trml2pdf-%version
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %install
@@ -40,6 +42,9 @@ chmod 775 %buildroot/%python_sitelibdir/trml2pdf/trml2pdf.py
 %doc rmls
 
 %changelog
+* Thu May 28 2020 Andrey Cherepanov <cas@altlinux.org> 1.1-alt9.16.1.2
+- Set correct python2 executable in shebang.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt9.16.1.1
 - Rebuild with Python-2.7
 
