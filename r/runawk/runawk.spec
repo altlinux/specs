@@ -1,6 +1,6 @@
 Name: runawk
 Version: 1.6.1
-Release: alt1
+Release: alt3
 
 Summary: Wrapper for AWK providing modules
 License: MIT
@@ -10,7 +10,8 @@ Url: http://runawk.sourceforge.net
 Source: %name-%version.tar
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
-BuildRequires: mk-configure >= 0.26.0
+BuildRequires: mk-configure >= 0.34.2-alt4
+BuildRequires: rpm-macros-mk-configure
 
 %description
 RUNAWK is a small wrapper for AWK interpreter that helps to write
@@ -30,27 +31,19 @@ This package contains examples for RunAWK.
 %prep
 %setup
 
-%define env \
-unset MAKEFLAGS \
-export PREFIX=%prefix \
-export SYSCONFDIR=%_sysconfdir \
-export MANDIR=%_mandir
-
 %build
-%env
-mkcmake all
-#mkcmake a_getopt
+%mkc_env
+%mkcmake_configure
+%mkcmake_build
 
 %check
-%env
 export TMPDIR=/tmp
-mkcmake test
+%mkc_env
+%mkcmake test
 
 %install
-%env
-export DESTDIR=%buildroot
-mkcmake install
-#mkcmake install-a_getopt
+%mkc_env
+%mkcmake_install
 
 %files
 %doc doc/LICENSE doc/NEWS doc/TODO README
@@ -67,6 +60,12 @@ mkcmake install
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.6.1-alt3
+- 1.6.1-alt3: fix hasher warnings
+
+* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.6.1-alt2
+- 1.6.1-alt2: use rpm macro provided by mk-configure
+
 * Sat Apr 18 2020 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
@@ -89,4 +88,3 @@ mkcmake install
 * Mon Nov 07 2011 Michael Shigorin <mike@altlinux.org> 1.3.2-alt1
 - built for ALT Linux (new paexec dependency)
   + thanks Aleksey Cheusov for outstanding upstream support
-
