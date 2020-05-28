@@ -1,7 +1,7 @@
 %define oname pyroute2
 
 Name: python3-module-%oname
-Version: 0.5.7
+Version: 0.5.12
 Release: alt1
 
 Summary: Python Netlink library
@@ -12,6 +12,7 @@ Url: https://github.com/svinota/pyroute2
 
 Source: %oname-%version.tar
 Patch: pyroute2_install_parser_module.patch
+Patch1: ee236c8ac3a1c5b8c968f93e9b5d16c1cf355649.patch
 
 BuildArch: noarch
 
@@ -39,6 +40,7 @@ This package contains tests for %oname.
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -55,7 +57,7 @@ find %buildroot \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 %files
-%doc README.md
+%doc README.rst
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -64,6 +66,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.12-alt1
+- Build new version 0.5.12.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt1
 - Build new version 0.5.7.
 
