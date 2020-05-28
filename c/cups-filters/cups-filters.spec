@@ -3,7 +3,7 @@
 
 Name: cups-filters
 Version: 1.27.4
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -117,7 +117,7 @@ serial backend for cups
 	   --with-rcdir=no \
 	   --enable-driverless \
 	   --enable-pclm \
-	   --enable-auto-setup-driverless \
+	   --enable-auto-setup-driverless-only \
 	   --with-gs-path=/usr/bin/gs \
 	   --enable-opvp \
 	   --enable-dbus \
@@ -191,6 +191,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Thu May 28 2020 Anton Farygin <rider@altlinux.ru> 1.27.4-alt2
+- changed the default behavior: autosetup is only for driverless printers
+
 * Mon Apr 13 2020 Anton Farygin <rider@altlinux.ru> 1.27.4-alt1
 - new version 1.27.4
 
