@@ -1,9 +1,9 @@
 %define _name python-efl
-%define efl_ver 1.23.0
+%define efl_ver 1.24.0
 %def_enable python2
 
 Name: python-module-efl
-Version: 1.23.0
+Version: 1.24.0
 Release: alt1
 
 Summary: Python bindings for EFL libraries
@@ -105,6 +105,9 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Tue May 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
 - 1.23.0
 - made python2 build optional

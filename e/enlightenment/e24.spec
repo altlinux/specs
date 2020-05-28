@@ -1,9 +1,9 @@
 %def_disable snapshot
 
-%define ver_major 0.23
+%define ver_major 0.24
 %define beta %nil
-%define efl_ver_major 1.22
-%define efl_ver %efl_ver_major.3
+%define efl_ver_major 1.24
+%define efl_ver %efl_ver_major.2
 
 %def_enable bluetooth
 %def_enable wayland
@@ -13,20 +13,22 @@
 %def_enable systemd
 %def_enable connman
 %def_enable packagekit
+%def_enable polkit
 %def_enable install_sysactions
+%def_disable install_system
 %def_with suid_binaries
 # for silly lightdm
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
 License: BSD
 Group: Graphical desktop/Enlightenment
-URL: http://www.enlightenment.org/
+Url: http://www.enlightenment.org/
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -38,7 +40,7 @@ Source1: E.png
 Source2: start_%name
 Source3: %name.wmsession
 Source8: %name.desktop
-%{?_enable_install_sysactions:Source11: %name-alt-sysactions.conf}
+Source11: %name-alt-sysactions.conf
 
 # revert it for patch enlightenment-0.19.0-alt-pam-helper.patch
 Patch: enlightenment-0.22.2-up-auth.patch
@@ -73,8 +75,10 @@ Requires: geoclue2
 Requires: connman
 # for the evrything module calculator mode
 Requires: bc
+# sinc 0.24
+Requires: %_libdir/libddcutil.so.2
 %{?_enable_xwayland:Requires: xorg-xwayland xorg-drv-libinput}
-%{?_enable_bluetooth:Requires: bluez %_sbindir/rfkill}
+%{?_enable_bluetooth:Requires: bluez %_sbindir/rfkill udev-rules-rfkill-uaccess}
 %{?_enable_connman:Requires: connman}
 %{?_enable_packagekit:Requires: packagekit}
 
@@ -108,7 +112,7 @@ Provides: e18-devel = %EVR
 Development headers for Enlightenment.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 #%patch -p1 -R -b .auth
 %patch1 -p1 -b .gsd
 %{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
@@ -125,10 +129,12 @@ sed -i "s/\(if config_h\.has('HAVE_WAYLAND') == \)false/\1true/" data/session/me
 	%{?_enable_xwayland:-Dxwayland=true -Dxwayland-bin=%_bindir/Xwayland} \
 	%{?_disable_wl_drm:-Dwl-drm=false} \
 	%{?_disable_wl_x11:-Dwl-x11=false} \
-	%{?_disable_install_sysactions:-Dinstall-sysactions=flase} \
+	%{?_disable_install_sysactions:-Dinstall-sysactions=false} \
+	%{?_disable_install_system:-Dinstall-system=false} \
 	%{?_disable_connman:-Dconnman=false} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
-	%nil
+	%{?_disable_polkit:-Dpolkit=false}
+%nil
 %meson_build
 
 %install
@@ -154,7 +160,7 @@ session		required	pam_deny.so
 _PAM_
 
 # replace original sysaction.conf
-cp %SOURCE11 %buildroot%_sysconfdir/%name/sysactions.conf
+%{?_enable_install_sysactions:cp %SOURCE11 %buildroot%_sysconfdir/%name/sysactions.conf}
 
 # replace original menus by symlink to our enlightenment.menu
 ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
@@ -180,9 +186,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %find_lang %name
 
 %files -f %name.lang
-
 %{?_enable_wmsession:%config %_sysconfdir/X11/wmsession.d/*}
-%config %_sysconfdir/%name/sysactions.conf
+%{?_enable_install_sysactions:%config %_sysconfdir/%name/sysactions.conf}
+%{?_enable_install_system:%config %_sysconfdir/%name/system.conf}
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
 %_libdir/%name/modules/
@@ -192,13 +198,13 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_libdir/%name/utils/%{name}_elm_cfgtool
 %_libdir/%name/utils/%{name}_fm
 %_libdir/%name/utils/%{name}_fm_op
-%_libdir/%name/utils/%{name}_static_grabber
+%_libdir/%name/utils/%{name}_wallpaper_gen
 %_libdir/%name/utils/%{name}_thumb
 # suid bit apps
-%_libdir/%name/utils/%{name}_backlight
 %_libdir/%name/utils/%{name}_sys
+%_libdir/%name/utils/%{name}_system
 %_libdir/%name/utils/%{name}_ckpasswd
-%_liconsdir/*.png
+%_iconsdir/hicolor/*/*/*.*
 %_bindir/emixer
 %_bindir/%name
 %_bindir/%{name}_askpass
@@ -211,7 +217,7 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_datadir/%name/
 %_datadir/xsessions/%name-xorg.desktop
 %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
-%_datadir/pixmaps/emixer.png
+#%_datadir/pixmaps/emixer.png
 %_pixmapsdir/%name-askpass.png
 %_desktopdir/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
@@ -225,6 +231,12 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed May 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1:0.24.0-alt1
+- 0.24.0 release
+
+* Sat May 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1:0.24.0-alt0.2
+- 0.24.0-beta1
+
 * Fri Sep 27 2019 Yuri N. Sedunov <aris@altlinux.org> 1:0.23.1-alt1
 - 0.23.1
 

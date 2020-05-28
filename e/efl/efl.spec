@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.23
+%define ver_major 1.24
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -13,7 +13,8 @@
 %def_disable tslib
 %def_enable drm
 %def_enable egl
-%def_enable ibus
+# disabled buy default
+%def_disable ibus
 %def_enable gstreamer
 %def_enable emotion
 %def_disable elogind
@@ -34,12 +35,12 @@
 %endif
 
 Name: efl
-Version: %ver_major.3
+Version: %ver_major.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
-License: BSD/LGPLv2.1+
 Group: System/Libraries
+License: BSD and GPL and LGPL and CC-BY-SA-3.0
 Url: http://www.enlightenment.org/
 
 %if_disabled snapshot
@@ -64,7 +65,7 @@ BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
-BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
+BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel scim-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libGL-devel libgnutls-devel
 
@@ -86,8 +87,6 @@ BuildRequires: libunwind-devel
 %{?_enable_avahi:BuildRequires: libavahi-glib-devel}
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
-# for emotion_generic_players
-%{?_enable_emotion:BuildRequires: libvlc-devel >= 2.0}
 # for evas_generic_loaders
 BuildRequires: libpoppler-cpp-devel
 BuildRequires: libspectre-devel
@@ -267,15 +266,15 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_bindir/eeze_scanner
 %_bindir/eeze_scanner_monitor
 %_bindir/eeze_umount
-%_bindir/efl_wl_test
-%_bindir/efl_wl_test_stack
-
+%_bindir/efl_canvas_wl_test
+%_bindir/efl_canvas_wl_test_stack
 %_bindir/efreetd
 %_bindir/eina_modinfo
 %{?_enable_elua:%_bindir/elua}
 %_bindir/ethumb
 %_bindir/ethumbd
 %_bindir/ethumbd_client
+%_bindir/exactness*
 %_bindir/vieet
 %_libdir/*.so.*
 %exclude %_libdir/libelementary.so.*
@@ -299,16 +298,17 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_datadir/eeze/
 %_datadir/efreet/
 %_datadir/embryo/
+%_datadir/eolian/
 %{?_enable_emotion:%_datadir/emotion/}
 %_datadir/ethumb/
 %_datadir/ethumb_client/
 %_datadir/evas/
+%_datadir/exactness/
 %{?_enable_elua:%_datadir/elua/}
-# /usr/share/elua/checkme
 %{?_disable_elua:%exclude %_datadir/elua}
 %_datadir/mime/packages/edje.xml
 %_prefix/lib/systemd/user/ethumb.service
-%doc AUTHORS README NEWS COMPLIANCE
+%doc AUTHORS README NEWS COMPLIANCE COPYING*
 
 %files -n %name-libs-devel
 %_bindir/ecore_evas_convert
@@ -329,9 +329,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %exclude %_libdir/cmake/Elementary/
 %_libdir/*.so
 %exclude %_libdir/libelementary.so
-#%_pkgconfigdir/ecore-audio-cxx.pc
 %_pkgconfigdir/ecore-audio.pc
-%_pkgconfigdir/ecore-avahi.pc
 %_pkgconfigdir/ecore-con.pc
 %_pkgconfigdir/ecore-cxx.pc
 %{?_enable_drm:%_pkgconfigdir/ecore-drm2.pc}
@@ -357,7 +355,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_pkgconfigdir/efl-cxx.pc
 %_pkgconfigdir/efl-net.pc
 %_pkgconfigdir/efl-ui.pc
-%_pkgconfigdir/%name-wl.pc
+%_pkgconfigdir/%name-canvas-wl.pc
 %_pkgconfigdir/efreet-mime.pc
 %_pkgconfigdir/efreet-trash.pc
 %_pkgconfigdir/efreet.pc
@@ -367,7 +365,6 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_pkgconfigdir/eio.pc
 %_pkgconfigdir/eldbus.pc
 %_pkgconfigdir/eldbus-cxx.pc
-%_pkgconfigdir/elocation.pc
 %_pkgconfigdir/elput.pc
 %{?_enable_elua:%_pkgconfigdir/elua.pc}
 %_pkgconfigdir/embryo.pc
@@ -377,17 +374,10 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_pkgconfigdir/eo.pc
 %_pkgconfigdir/eolian-cxx.pc
 %_pkgconfigdir/eolian.pc
-%_pkgconfigdir/ephysics.pc
 %_pkgconfigdir/ethumb.pc
 %_pkgconfigdir/ethumb_client.pc
 %_pkgconfigdir/ethumb-client.pc
 %_pkgconfigdir/evas-cxx.pc
-#%{?_enable_drm:%_pkgconfigdir/evas-drm.pc}
-#%{?_enable_fb:%_pkgconfigdir/evas-fb.pc}
-#%_pkgconfigdir/evas-opengl-x11.pc
-#%_pkgconfigdir/evas-software-buffer.pc
-#%_pkgconfigdir/evas-software-x11.pc
-#%{?_enable_wayland:%_pkgconfigdir/evas-wayland-shm.pc}
 %_pkgconfigdir/evas.pc
 
 %exclude %_datadir/gdb
@@ -405,8 +395,6 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_libdir/elementary/modules/test_entry/*/*.so
 %_libdir/elementary/modules/access_output/*/*.so
 %_libdir/elementary/modules/test_map/*/*.so
-#%_libdir/elementary/modules/clock_input_ctxpopup/*/*.so
-#%_libdir/elementary/modules/prefs/*/*.edj
 %_libdir/elementary/modules/prefs/*/*.so
 %_libdir/elementary/modules/web/*/*/module.so
 
@@ -429,6 +417,15 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed May 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
+- 1.24.2
+
+* Mon May 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
+- 1.24.1
+
+* Wed Apr 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Mon Dec 02 2019 Yuri N. Sedunov <aris@altlinux.org> 1.23.3-alt1
 - 1.23.3 (ported to Meson build system)
 
