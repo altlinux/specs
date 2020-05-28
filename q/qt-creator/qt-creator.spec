@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-# clang 4.0.1 is not supported, only missing clang 3.9
 %def_with ClangCodeModel
+%define llvm_version 10.0
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
 Version: 4.12.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -23,6 +23,7 @@ Source1: qbs.tar
 Source2: perfparser.tar
 
 Patch0:  %name-%version-%release.patch
+Patch1:  0001-Link-against-libclang-cpp.so.patch
 
 Requires: %name-data = %EVR
 Provides: qtcreator = %EVR
@@ -45,12 +46,12 @@ BuildRequires: qt5-x11extras-devel >= 5.9.0
 BuildRequires: qt5-xmlpatterns-devel >= 5.9.0
 BuildRequires: qt5-tools-devel >= 5.9.0
 %if_with ClangCodeModel
-BuildRequires: llvm-devel
-BuildRequires: llvm-devel-static
-BuildRequires: clang-devel
-BuildRequires: clang-devel-static
-BuildRequires: clang
-BuildRequires: lld
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: llvm%llvm_version-devel-static
+BuildRequires: clang%llvm_version-devel
+BuildRequires: clang%llvm_version-devel-static
+BuildRequires: clang%llvm_version
+BuildRequires: lld%llvm_version
 %endif
 
 Requires: qt5-quickcontrols
@@ -96,6 +97,7 @@ tar xf %SOURCE2
 sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 # strip UTF-8 BOM, lcc 1.23 won't ignore it yet
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
@@ -153,6 +155,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu May 28 2020 Andrey Cherepanov <cas@altlinux.org> 4.12.1-alt2
+- Build with LLVM 10.0.
+
 * Wed May 20 2020 Andrey Cherepanov <cas@altlinux.org> 4.12.1-alt1
 - New version.
 
