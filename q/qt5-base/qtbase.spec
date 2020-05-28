@@ -34,7 +34,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.12.8
-Release: alt3
+Release: alt4
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -67,6 +67,8 @@ Patch1008: alt-mkspecs-features.patch
 Patch1009: alt-false-detect-groupswitchmodifier.patch
 Patch1010: alt-glx-check-version.patch
 Patch1011: alt-kernel-requires.patch
+# Upstream
+Patch2000: Add-RISC-V-detection.patch
 
 # macros
 %define _qt5 %gname
@@ -393,6 +395,8 @@ EGL integration library for the Qt%major toolkit
 %patch1009 -p1
 %patch1010 -p2
 %patch1011 -p1
+#
+%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -814,6 +818,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu May 28 2020 Nikita Ermakov <arei@altlinux.org> 5.12.8-alt4
+- add RISC-V detection
+
 * Wed May 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.8-alt3
 - reduce kernel version requires for OVZ kernel
 
