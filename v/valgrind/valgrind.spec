@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.15.0
+Version: 3.16.0
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -14,9 +14,9 @@ Patch2: valgrind-alt-vki_siginfo.patch
 Patch3: valgrind-rh-cachegrind-improvements.patch
 Patch4: valgrind-rh-helgrind-race-supp.patch
 Patch5: valgrind-rh-ldso-supp.patch
-Patch6: valgrind-rh-alt-some-stack-protector.patch
-Patch104: valgrind-3.15.0-pkglibexecdir.patch
-Patch105: valgrind-3.15.0-disable-s390x-z13.patch
+Patch6: valgrind-rh-pkglibexecdir.patch
+Patch7: valgrind-rh-alt-some-stack-protector.patch
+Patch8: valgrind-rh-some-Wl-z-now.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -66,15 +66,7 @@ needed to compile Valgrind tools separately from the Valgrind core.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch104 -p1
-%patch105 -p1
+%autopatch -p1
 
 %build
 autoreconf -vi
@@ -147,6 +139,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Thu May 28 2020 Dmitry V. Levin <ldv@altlinux.org> 3.16.0-alt1
+- 3.15.0 -> 3.16.0.
+- Synced with valgrind-3.16.0-2 from Fedora.
+
 * Tue Apr 16 2019 Dmitry V. Levin <ldv@altlinux.org> 3.15.0-alt1
 - 3.14.0 -> 3.15.0.
 - Synced with valgrind-3.15.0-1 from Fedora.
