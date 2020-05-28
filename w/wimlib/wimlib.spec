@@ -1,6 +1,6 @@
 %define libname libwim
 Name: wimlib
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
@@ -13,9 +13,6 @@ ExclusiveArch: %ix86 x86_64
 
 Source: https://wimlib.net/downloads/wimlib-%version.tar
 
-# manually removed: glibc-devel-static  ruby ruby-stdlibs  python3
-# Automatically added by buildreq on Tue Apr 15 2014
-# optimized out: libcloog-isl4 libntfs-3g pkg-config
 BuildRequires: libattr-devel libfuse-devel libntfs-3g-devel libssl-devel libxml2-devel mt-st
 
 %description
@@ -90,6 +87,9 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.2-alt1
+- Build new version.
+
 * Mon May 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt1
 - Build new version.
 
