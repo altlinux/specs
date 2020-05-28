@@ -1,0 +1,46 @@
+%define  modulename authlib
+
+Name:    python3-module-%modulename
+Version: 0.14.3
+Release: alt1
+
+Summary: The ultimate Python library in building OAuth and OpenID Connect servers
+
+License: BSD 3-Clause License
+Group:   Development/Python3
+URL:     https://authlib.org/
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# Source-url: https://github.com/lepture/authlib/archive/v%version.tar.gz
+Source:  %modulename-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-setuptools
+
+BuildArch: noarch
+
+%add_python3_req_skip authlib.integrations._client
+%add_python3_req_skip authlib.integrations._client.oauth_registry
+%add_python3_req_skip authlib.oauth2.rfc7636.grant
+
+%description
+The ultimate Python library in building OAuth and OpenID Connect servers.
+JWS, JWK, JWA, JWT are included.
+
+%prep
+%setup -n %modulename-%version
+
+%build
+%python3_build
+
+%install
+%python3_install
+
+%files
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info/
+
+%changelog
+* Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 0.14.3-alt1
+- Initial build for Sisyphus
