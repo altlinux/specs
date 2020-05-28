@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.4
+Version:        0.4.5
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Fri May 22 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.5-alt1
+- Fixed searching releases in Russian (closes: 38478)
+
 * Fri May 01 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.4-alt1
 - Added qt5-quickcontrols requirement (closes: 38072)
 - Updated BuildRequires according to gear-buildreq output
