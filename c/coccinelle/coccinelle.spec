@@ -3,7 +3,7 @@
 
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt6
+Release:	alt7
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -152,6 +152,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Fri May 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.8-alt7
+- fix changelog
+
 * Wed Apr 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.8-alt6
 - merge changes from p9 branch (imz@altlinux.org)
 
@@ -171,6 +174,14 @@ cd %_docdir/%name-demos-%version
 
 * Mon Feb 17 2020 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt1
 - Update to 1.0.8.
+
+* Thu Dec 19 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.0.6-alt2
+- Adapted BuildReqs for any OCaml (whether with "num" or without in the core),
+  so that it can be built in Sisyphus/p9 and p8.
+- For testing, made a checkinstall subpkg and added more tests
+  (with embedded Python scripts).
+- Worked-around the problem with the loading of libpython (to enable
+  the built-in Python interpreter).
 
 * Wed Aug 07 2019 Vitaly Chikunov <vt@altlinux.org> 1.0.7.0.217.ged1eb8e0-alt1
 - Update to 1.0.7-217-ged1eb8e0.
