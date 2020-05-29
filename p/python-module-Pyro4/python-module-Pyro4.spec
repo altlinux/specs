@@ -2,7 +2,7 @@
 
 Name:           python-module-%oname
 Version:        4.75
-Release:        alt2
+Release:        alt3
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPL-2.0-or-later
@@ -79,9 +79,12 @@ rm -f tests/PyroTests/test_naming2.py
 python setup.py test
 PYTHONPATH=%buildroot%python_sitelibdir python tests/run_testsuite.py
 
+# remove unpackages files
+rm -r %buildroot%_bindir
+
 %files
 %doc LICENSE README.md
-%_bindir/*
+#_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test
 
@@ -93,6 +96,9 @@ PYTHONPATH=%buildroot%python_sitelibdir python tests/run_testsuite.py
 %doc tests
 
 %changelog
+* Fri May 29 2020 Anton Midyukov <antohami@altlinux.org> 4.75-alt3
+- unpackage %_bindir/*
+
 * Sat May 23 2020 Anton Midyukov <antohami@altlinux.org> 4.75-alt2
 - disable build docs
 - disable build python3 subpackages
