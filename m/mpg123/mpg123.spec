@@ -5,8 +5,10 @@
 # list of audio output modules
 %define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
 
+%def_enable check
+
 Name: mpg123
-Version: 1.25.13
+Version: 1.26.0
 Release: alt1
 
 Summary: MPEG audio player
@@ -81,6 +83,9 @@ install -p -m644 %SOURCE1 .
 mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %find_lang %name
 
+%check
+%make check
+
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README mp3license doc/
 
@@ -96,17 +101,23 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %files -n libmpg123
 %_libdir/libmpg123.so.*
 %_libdir/libout123.so.*
+%_libdir/libsyn123.so.*
 %doc NEWS.lib%name
 
 %files -n libmpg123-devel
 %_libdir/libmpg123.so
 %_libdir/libout123.so
+%_libdir/libsyn123.so
 %_pkgconfigdir/lib%name.pc
 %_pkgconfigdir/libout123.pc
+%_pkgconfigdir/libsyn123.pc
 %_includedir/*.h
 
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Sat Oct 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.25.13-alt1
 - 1.25.13
 
