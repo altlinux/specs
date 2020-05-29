@@ -3,7 +3,7 @@
 
 Name: node-msgpack
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: MessagePack implementation for Node.js
 
@@ -16,7 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/msgpack/msgpack-node/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Source1: %name-development-%version.tar
+#Source1: %name-development-%version.tar
 
 #BuildArch: noarch
 
@@ -28,7 +28,8 @@ BuildRequires(pre): rpm-macros-nodejs
 %if_with system_msgpack
 BuildRequires: libmsgpack-devel
 %endif
-BuildRequires: node-nodeunit node-nan node-typescript
+
+BuildRequires: node-nodeunit node-nan
 BuildRequires: /proc
 
 #AutoReq: no
@@ -41,7 +42,7 @@ The performance of this addon compared to the native JSON object isn't too bad,
 and the space required for serialized data is far less than JSON.
 
 %prep
-%setup -a 1
+%setup
 %if_with system_msgpack
 rm -rfv deps/msgpack/
 cat <<EOF >binding.gyp
@@ -103,5 +104,8 @@ cp bin/* %buildroot%_bindir/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt2
+- regenerate addition modules
+
 * Fri Feb 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - initial build for ALT Sisyphus
