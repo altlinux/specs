@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.19
 %define src_version 9.11.19
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -167,16 +167,7 @@ rather than the DNS protocol.
 %setup
 
 # NB: there must be at least one patch :)
-%patch0001 -p2
-%patch0002 -p2
-%patch0003 -p2
-%patch0004 -p2
-%patch0005 -p2
-%patch0006 -p2
-%patch0007 -p2
-%patch0008 -p2
-#%%patch0009 -p2
-%patch0010 -p2
+%autopatch -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -434,6 +425,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri May 29 2020 Stanislav Levin <slev@altlinux.org> 9.11.19-alt2
+- Re-applied the lost patch.
+
 * Tue May 19 2020 Stanislav Levin <slev@altlinux.org> 9.11.19-alt1
 - 9.11.18 -> 9.11.19 (fixes: CVE-2020-8616, CVE-2020-8617).
 
