@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 Name: mypaint
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: A simple paint program
@@ -16,11 +16,11 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 Source: %name-%version.tar
 %endif
 
-%define mypaintlib_ver 1.5
+%define mypaintlib_ver 1.6
 
 Requires: %name-data = %version-%release
 Requires: mypaint-brushes >= 2.0
-Requires: typelib(MyPaint) = 1.5
+Requires: typelib(MyPaint) = 1.6
 
 %add_python3_path %_datadir/%name %_libdir/%name
 
@@ -92,6 +92,9 @@ subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 %doc README.md Changelog.md Licenses.md
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

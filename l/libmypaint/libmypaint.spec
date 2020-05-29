@@ -1,5 +1,5 @@
 %define _name mypaint
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver %ver_major
 
 %def_enable gegl
@@ -74,7 +74,7 @@ This package provides GObject introspection devel data for %name.
 %find_lang %name
 
 %files -f %name.lang
-%_libdir/%name-%api_ver.so.*
+%_libdir/%name.so.*
 %{?_enable_gegl:%_libdir/%name-gegl.so.*}
 
 %files devel
@@ -93,6 +93,12 @@ This package provides GObject introspection devel data for %name.
 %{?_enable_gegl:%_girdir/MyPaintGegl-%api_ver.gir}
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
+* Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Tue Mar 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
