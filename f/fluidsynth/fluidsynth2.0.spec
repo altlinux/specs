@@ -16,13 +16,13 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
 Group: Sound
-URL: http://www.fluidsynth.org
+Url: http://www.fluidsynth.org
 License: LGPL-2.1-or-later
 
 %if_disabled snapshot
@@ -206,6 +206,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
+- 2.1.3
+
 * Mon Apr 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 

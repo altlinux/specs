@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libinstpatch
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: MIDI instrument patch library
@@ -74,6 +74,9 @@ This package includes the development libraries and header files for
 %doc examples/*.c
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
+- 1.1.5
+
 * Tue Apr 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
 - 1.1.4
 
