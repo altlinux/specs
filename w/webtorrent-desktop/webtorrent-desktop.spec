@@ -1,6 +1,6 @@
 Name: webtorrent-desktop
-Version: 0.20.0
-Release: alt3
+Version: 0.21.0
+Release: alt1
 
 Summary: Streaming torrent app for Mac, Windows, and Linux
 
@@ -73,6 +73,9 @@ cp -a static/linux/share/applications/%name.desktop %buildroot%_desktopdir/%name
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
+- new version (0.21.0) with rpmgs script
+
 * Sat Mar 09 2019 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt3
 - update node_modules
 
