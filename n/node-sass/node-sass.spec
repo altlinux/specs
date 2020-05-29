@@ -2,7 +2,7 @@
 
 Name: node-sass
 Version: 4.14.1
-Release: alt1
+Release: alt2
 
 Summary: Node.js bindings to libsass
 
@@ -25,6 +25,8 @@ BuildRequires: rpm-build-nodejs node
 BuildRequires(pre): rpm-macros-nodejs
 
 BuildRequires: libsass-devel
+
+BuildRequires: node-gyp node-mocha node-nan
 
 #Requires: node >= 8
 
@@ -73,6 +75,9 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt2
+- rebuild with optimized modules set
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt1
 - new version 4.14.1 (with rpmrb script)
 
