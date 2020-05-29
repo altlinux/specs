@@ -1,8 +1,8 @@
 %define pname node-sass
 
 Name: node-sass
-Version: 4.13.1
-Release: alt2
+Version: 4.14.1
+Release: alt1
 
 Summary: Node.js bindings to libsass
 
@@ -73,6 +73,9 @@ cp -a vendor %buildroot/%nodejs_sitelib/%pname/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.14.1-alt1
+- new version 4.14.1 (with rpmrb script)
+
 * Tue Mar 03 2020 Vitaly Lipatov <lav@altlinux.ru> 4.13.1-alt2
 - rewrite spec
 
