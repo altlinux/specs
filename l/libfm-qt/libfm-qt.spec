@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfm-qt
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -68,6 +68,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri May 29 2020 Anton Midyukov <antohami@altlinux.org> 0.15.1-alt1
+- new version 0.15.1
+
 * Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 0.15.0-alt1
 - new version 0.15.0
 
