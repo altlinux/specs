@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 4.6.1
-Release: alt1
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -63,6 +63,7 @@ BuildRequires: libwayland-server-devel libwayland-egl-devel
 BuildRequires: libdrm-devel libGL-devel
 BuildRequires: libxcb-devel libXtst-devel
 BuildRequires: libgudev-devel libinput-devel
+BuildRequires: libEGL-devel
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -197,6 +198,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Fri May 29 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt2
+- add libEGL-devel to build deps for armh platform
+
 * Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt1
 - 4.6.1
 
