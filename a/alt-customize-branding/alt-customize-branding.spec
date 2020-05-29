@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 %K5init altplace
 
@@ -74,24 +74,32 @@ if [ $1 -eq 0 ] ; then
     if [ -f %configDir/%rname/%configFile ] ; then
         previousThemeName=$(awk -F "=" '/ThemeName/ {print $2}' %configDir/%rname/%configFile)
         echo Previous theme name: $previousThemeName
-    fi
 # Change /etc/sysconfig/grub2 and run
-    . shell-config
-    shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/$previousThemeName/theme.txt
-    shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/$previousThemeName/grub.png
-# deprecated
-    shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/$previousThemeName/grub.png
+        . shell-config
+        shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/$previousThemeName/theme.txt
+        shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/$previousThemeName/grub.png
+        shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/$previousThemeName/grub.png
 # generate file "/boot/grub/grub.cfg"
-    /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
+        /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
 # Change theme name in file 'plymouthd.conf':
-    sed -i "s/Theme=.*/Theme=$previousThemeName/" /etc/plymouth/plymouthd.conf
+        sed -i "s/Theme=.*/Theme=$previousThemeName/" /etc/plymouth/plymouthd.conf
+    fi
 # Remove directories
 #rm -R %%_localstatedir/%%rname
-    rm -R /usr/share/design/%rname
-    rm -R /boot/grub/themes/%rname
-    rm -R /usr/share/plymouth/themes/%rname
+    if [ -d "/usr/share/design/%rname" ]; then
+        rm -R /usr/share/design/%rname
+    fi
+    if [ -d "/boot/grub/themes/%rname" ]; then
+        rm -R /boot/grub/themes/%rname
+    fi
+    if [ -d "/usr/share/plymouth/themes/%rname" ]; then
+        rm -R /usr/share/plymouth/themes/%rname
+    fi
+    if [ -d "/tmp/%rname" ]; then
+        rm -R /tmp/%rname
+    fi
 # Toggle/repair alternatives
-alternatives-update
+    alternatives-update
 #make-initrd
 fi
 
@@ -116,6 +124,9 @@ fi
 #%%doc README
 
 %changelog
+* Fri May 29 2020 Pavel Moseev <mars@altlinux.org>  1.0.5-alt1
+- fix script
+
 * Tue May 26 2020 Pavel Moseev <mars@altlinux.org>  1.0.4-alt1
 - split package to frontend and backend
 
