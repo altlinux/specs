@@ -1,11 +1,12 @@
 Summary: A disassembly framework
 Name: capstone
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 License: BSD
 Group: Development/Tools
 Url: http://capstone-engine.org/
 Source: %name-%version-%release.tar
+Patch1: Allow-to-override-PYTHON-23-in-Makefiles.patch
 Packager: Nikita Ermakov <arei@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
@@ -49,11 +50,11 @@ This package contains java bindings for %name.
 
 %prep
 %setup
-# versioned Python
-find -type f -name Makefile -exec \
-sed -i 's/^PYTHON2 = python[[:space:]]*$/PYTHON2 = python2/g' {} \;
+%patch1 -p1
 
 %build
+export PYTHON2="%__python"
+export PYTHON3="%__python3"
 DESTDIR=%buildroot CFLAGS="%optflags" LIBDIRARCH=%_lib INCDIR="%_includedir" %make_build
 
 # fix the pkgconfig file
@@ -111,6 +112,9 @@ LD_LIBRARY_PATH="%buildroot%_libdir" make check
 %_javadir/
 
 %changelog
+* Fri May 29 2020 Nikita Ermakov <arei@altlinux.org> 4.0.2-alt1
+- Updated to 4.0.2.
+
 * Wed Feb 05 2020 Stanislav Levin <slev@altlinux.org> 4.0.1-alt2
 - Fixed FTBS.
 
