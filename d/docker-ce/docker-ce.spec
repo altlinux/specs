@@ -11,11 +11,11 @@
 %global build_dir ./_build
 %global build_dir_cli %build_dir/src/%import_path_cli
 %global build_dir_engine %build_dir/src/%import_path_engine
-%global commit      c44165232879f5b1c8121d38677e4fcd6bcb3938
+%global commit      9424aeaee927a5ddd19ee10702159cd91cc3f48e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    19.03.8
+Version:    19.03.10
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: Apache-2.0
@@ -174,6 +174,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Fri May 29 2020 Vladimir Didenko <cow@altlinux.org> 19.03.10-alt1
+- 19.03.10
+
 * Thu Mar 12 2020 Vladimir Didenko <cow@altlinux.org> 19.03.8-alt1
 - 19.03.8 (better mitigation for CVE-2019-14271)
 
