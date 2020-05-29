@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit 33dd867d0dc1854ba67aef0872f5167c43e4a502
+%global commit 1b35d6c24591228787c69f3eb31d67961fa5ba5f
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.14.1
+Version:	1.14.3
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -101,6 +101,7 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/useradd -r -g %name -G %name  -c 'Telegraf Agent Daemon' \
         -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
 %_sbindir/usermod -a -G proc telegraf ||:
+
 %post
 %post_service %name
 
@@ -122,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.3-alt1
+- 1.14.3
+
 * Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
