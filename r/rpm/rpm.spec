@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt20
+Release: alt21
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -574,6 +574,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri May 29 2020 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt21
+- Add support for >= gcc10.
+- E2K: Add lcc to the generic devel exceptions list.
+
 * Tue Apr 07 2020 Alexey Tourbin <at@altlinux.ru> 4.13.0.1-alt20
 - find-package, shebang.req: introduced RPM_FINDPACKAGE_MANDATORY=1.
   When an interpreter is invoked by name, as in "#!/usr/bin/env python32",
