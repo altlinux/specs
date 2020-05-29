@@ -1,5 +1,5 @@
 Name: rpm-build-fpc
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: RPM helpers for Free Pascal packages
@@ -24,15 +24,18 @@ install -pD -m755 fpc.req %buildroot%_rpmlibdir/fpc.req
 ln -s fpc.req %buildroot%_rpmlibdir/fpc.prov
 install -pD -m755 fpc.req.files %buildroot%_rpmlibdir/fpc.req.files
 ln -s fpc.req.files %buildroot%_rpmlibdir/fpc.prov.files
-install -pD -m644 fpc.macros %buildroot/etc/rpm/macros.d/fpc
+install -pD -m644 fpc.macros %buildroot%_rpmmacrosdir/fpc
 
 %files
 %doc README.ALT
 %_rpmlibdir/fpc.req*
 %_rpmlibdir/fpc.prov*
-%config /etc/rpm/macros.d/fpc
+%config %_rpmmacrosdir/fpc
 
 %changelog
+* Fri May 29 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
+- Move macros to %%_rpmmacrosdir.
+
 * Sun May 02 2010 Alexey Tourbin <at@altlinux.ru> 2.5-alt1
 - handle indirect checksum in ppudump output (#23362, Slava Dubrovskiy)
 - updated scripts for rpm 4.0.4-alt78 find-requires/provides system
