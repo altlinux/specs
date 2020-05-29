@@ -1,9 +1,9 @@
-%global commit 0effd37412ba5ae7e00af0db1f36f5dbc1671df9
+%global commit de40ad007797e0dcd8b7126f27bb87401d224240
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 Name:		tini
-Version:	0.18.0
-Release:	alt2
+Version:	0.19.0
+Release:	alt1
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -42,6 +42,9 @@ cp -a -- tini-static    %buildroot%_bindir/tini
 %_bindir/tini
 
 %changelog
+* Fri May 29 2020 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt1
+- New version
+
 * Mon May 14 2018 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt2
 - define ExclusiveArch as %%go_arches
 
