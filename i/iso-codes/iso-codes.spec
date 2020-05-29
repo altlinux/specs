@@ -1,12 +1,12 @@
 %def_enable check
 
 Name: iso-codes
-Version: 4.4
+Version: 4.5.0
 Release: alt1
 
 Group: System/Internationalization
 Summary: ISO code lists and translations
-License: LGPL 2.1
+License: LGPL-2.1
 Url: https://salsa.debian.org/iso-codes-team/iso-codes
 
 # Cloned from https://salsa.debian.org/iso-codes-team/iso-codes.git
@@ -58,6 +58,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- 4.5.0
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
 - 4.4
 
