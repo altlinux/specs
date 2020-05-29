@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit a04ef6cefc2f24f901f525263f65cf395e6cff28
+%global commit ef5b586d7d9e561b78c8aaa098c4e9f1e3a78d62
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,7 +12,7 @@
 
 
 Name:		grafana
-Version:	6.7.3
+Version:	7.0.1
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -30,14 +30,12 @@ Source103: %name-server.service
 Source104: %name.tmpfiles
 
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
 BuildRequires: npm yarn
-BuildRequires: node node-devel node-gyp node-sass libsass
+BuildRequires: node node-devel node-gyp node-iltorb node-sass libsass
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
-
-%add_verify_elf_skiplist %_datadir/%name/vendor/phantomjs/phantomjs
 
 %description
 Grafana is an open source, feature rich metrics dashboard and graph editor
@@ -48,9 +46,7 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ npm install yarn
 # $ ./node_modules/.bin/yarn install --pure-lockfile
 # $ npm run build
-# $ rm -rf node_modules/node-sass/vendor
-# $ rm -rf node_modules/iltorb/build/bindings/iltorb.node
-# $ rm -rf node_modules/npm
+# $ rm -rf node_modules/iltorb
 # $ rm -rf node_modules/node-sass
 # $ rm -rf node_modules/node-gyp
 # $ git add -f node_modules
@@ -68,7 +64,7 @@ echo "9" > node_modules/.node-gyp/$node_ver/installVersion
 
 ln -sf %nodejs_sitelib/node-gyp node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-sass node_modules/node-sass
-ln -sf %nodejs_sitelib/npm node_modules/npm
+ln -sf %nodejs_sitelib/iltorb node_modules/iltorb
 
 %build
 
@@ -197,6 +193,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 7.0.1-alt1
+- 7.0.1
+
 * Fri May 15 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.3-alt1
 - 6.7.3
 - create grafana.db on first installation
