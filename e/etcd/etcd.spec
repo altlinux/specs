@@ -1,5 +1,5 @@
 %global import_path github.com/etcd-io/etcd
-%global commit e694b7bb087538c146e188a29753967d189d202b
+%global commit 54ba9589114fc3fa5cc36c313550b3c0c0938c91
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %define etcd_group etcd
@@ -13,8 +13,8 @@
 %brp_strip_none %_bindir/*
 
 Name:    etcd
-Version: 3.4.7
-Release: alt2
+Version: 3.4.9
+Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
 
@@ -86,8 +86,8 @@ install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%name/%name.conf
 rm -rf -- %buildroot/%_libdir
 
 %pre
-/usr/sbin/groupadd -r -f %etcd_group
-/usr/sbin/useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
+groupadd -r -f %etcd_group
+useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -106,11 +106,14 @@ rm -rf -- %buildroot/%_libdir
 %_unitdir/%name.service
 
 %changelog
+* Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.9-alt1
+- 3.4.9.
+
 * Tue Apr 28 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt2
-- add post_service and preun_service
+- add post_service and preun_service.
 
 * Sun Apr 26 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt1
-- 3.4.7
+- 3.4.7.
 
 * Tue Aug 08 2017 Alexey Gladkov <legion@altlinux.ru> 3.2.5-alt1
 - First build for ALTLinux.
