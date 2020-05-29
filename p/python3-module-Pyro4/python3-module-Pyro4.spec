@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        4.80
-Release:        alt1
+Release:        alt2
 Summary:        Python Remote Objects
 Group:          Development/Python3
 License:        LGPL-2.0-or-later
@@ -21,6 +21,8 @@ BuildRequires: python3(cloudpickle) python3(msgpack) python3(dill)
 %if_with docs
 BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
 %endif #docs
+
+Conflicts: python-module-Pyro4 < 0.75-alt3
 
 %description
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -116,7 +118,7 @@ pushd docs
 %make html
 %make pickle
 popd
-rm -f %buildroot%python_sitelibdir/objects.inv
+rm -f %buildroot%python3_sitelibdir/objects.inv
 cp -fR build/sphinx/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
@@ -153,6 +155,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir %__python3 tests/run_testsuite.py
 %endif #docs
 
 %changelog
+* Fri May 29 2020 Anton Midyukov <antohami@altlinux.org> 4.80-alt2
+- Added conflict with python-module-Pyro4 < 0.75-alt3
+
 * Sun May 24 2020 Anton Midyukov <antohami@altlinux.org> 4.80-alt1
 - new version 4.80
 - disable build docs
