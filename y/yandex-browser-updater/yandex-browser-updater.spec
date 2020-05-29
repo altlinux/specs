@@ -1,5 +1,5 @@
 Name: yandex-browser-updater
-Version: 1.5
+Version: 1.6
 Release: alt1
 Summary: Script for automation installing and updating yandex browser
 License: MIT
@@ -25,6 +25,9 @@ Requires: python3-module-tqdm
 %_sbindir/%name
 
 %changelog
+* Fri May 29 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.6-alt1
+- Version updated to 1.6
+
 * Sun Mar 08 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.5-alt1
 - Version updated to 1.5
 
