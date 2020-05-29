@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt139
+Release: alt140
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -406,6 +406,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri May 29 2020 Andrew Savchenko <bircoph@altlinux.org> 4.0.4-alt140
+- Export FCFLAGS as modern FFLAGS replacement for gfortran.
+
 * Tue Apr 21 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt139
 - ldd.in: made preloading of PIE objects work again.
 - Set the value of SOURCE_DATE_EPOCH environment variable (if any)
