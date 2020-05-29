@@ -10,8 +10,8 @@
 %brp_strip_none %_bindir/*
 
 Name:    gitea
-Version: 1.11.4
-Release: alt2
+Version: 1.11.5
+Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -98,6 +98,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.5-alt1
+- Build new version.
+
 * Mon Apr 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt2
 - update nodejs modules
 
