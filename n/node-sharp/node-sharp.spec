@@ -5,7 +5,7 @@
 
 Name: node-sharp
 Version: 0.25.3
-Release: alt1
+Release: alt2
 
 Summary: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP and TIFF images. Uses the libvips library
 
@@ -27,8 +27,6 @@ BuildRequires(pre): rpm-build-intro >= 1.9.18
 BuildRequires: rpm-build-nodejs node node-gyp
 BuildRequires(pre): rpm-macros-nodejs
 
-BuildRequires: node-mocha
-
 BuildRequires: gcc-c++
 
 # check the version in package.json
@@ -45,6 +43,8 @@ Obsoletes: %node_module < %version
 #AutoReq: no
 AutoProv: no
 Requires: node
+
+BuildRequires: node-nyc node-mocha
 
 %description
 The typical use case for this high speed Node.js module is to convert large images
@@ -72,8 +72,11 @@ echo "FIXME: who breaks pkg-config's result"
 node-gyp build
 
 # check
-#nyc --reporter=lcov --branches=99 mocha --slow=5000 --timeout=60000 ./test/unit/*.js
-mocha --slow=5000 --timeout=60000 ./test/unit/*.js || :
+#npm run test
+node_modules/.bin/semistandard
+#cpplint
+npm run test-unit || :
+npm run test-licensing 
 
 npm prune --production
 
@@ -96,5 +99,8 @@ cp -a build/Release/sharp.node %buildroot/%nodejs_sitelib/%node_module/build/Rel
 #doc docs
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 0.25.3-alt2
+- use external modules for tests
+
 * Wed May 27 2020 Vitaly Lipatov <lav@altlinux.ru> 0.25.3-alt1
 - initial build for ALT Sisyphus
