@@ -2,8 +2,8 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.29.0.9.e227c
-Release: alt2
+Version: 2.1.33.0.4.0f97
+Release: alt1
 Epoch: 5
 
 %define mm_user %name
@@ -24,7 +24,7 @@ Epoch: 5
 Summary: Mailing list manager with built in web access
 License: GPL-2.0-or-later
 Group: System/Servers
-Url: http://www.list.org/
+Url: https://www.list.org/
 
 # http://prdownloads.sourceforge.net/%name/%name-%version.tar.tgz
 # http://bazaar.launchpad.net/~mailman-coders/mailman/2.1
@@ -384,6 +384,10 @@ fi
 %docdir/mailman-*
 
 %changelog
+* Fri May 29 2020 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.33.0.4.0f97-alt1
+- 2.1.29-9-ge227cb9f -> 2.1.33-4-g0f97bcba.
+- mm_config.py: reset MAILMAN_SITE_LIST to default (closes: #36460).
+
 * Thu Nov 21 2019 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.29.0.9.e227c-alt2
 - Fixed python shebangs.
 
