@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 3.0.9
+Version: 4.0.1
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -27,7 +27,7 @@ BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libX
 BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
 
 # Video
-BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel python3-module-yuicompressor
+BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel
 
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static
@@ -44,6 +44,8 @@ BuildRequires: python3-module-OpenGL python3-module-OpenGL_accelerate
 Requires: python3-module-OpenGL python3-module-OpenGL_accelerate
 
 BuildRequires: python3-module-Pillow python3-module-websockify
+
+BuildRequires: /usr/bin/uglifyjs
 
 BuildRequires: xorg-server brotli
 
@@ -102,6 +104,8 @@ If connecting from a remote machine, you would use something like (or you can al
 find xpra -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
 %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|" scripts/* cups/*
 
+%__subst "s|^#!/usr/bin/.*sh$|^$#!/bin/sh|" scripts/*
+
 # fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
 #__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
 
@@ -136,7 +140,10 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %files
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/*
-%_bindir/*
+%_bindir/xpra
+%_bindir/xpra_launcher
+%_bindir/xpra_signal_listener
+%_bindir/xpra_udev_product_version
 %_libexecdir/%name/
 %python3_sitelibdir/*
 %_desktopdir/*
@@ -159,6 +166,10 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
+- use uglifyjs instead of yuicompressor python module
+
 * Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.9-alt1
 - new version 3.0.9 (with rpmrb script)
 
