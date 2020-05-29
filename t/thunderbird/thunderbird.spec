@@ -13,7 +13,7 @@
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
 Version:	68.8.1
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		Networking/Mail
 URL:		https://www.thunderbird.net
@@ -56,9 +56,9 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %ifarch %{arm} %{ix86}
 BuildRequires: gcc-c++
 %endif
-BuildRequires: clang7.0
-BuildRequires: clang7.0-devel
-BuildRequires: llvm7.0-devel
+BuildRequires: clang
+BuildRequires: clang-devel
+BuildRequires: llvm-devel
 BuildRequires: lld-devel
 BuildRequires: libstdc++-devel
 BuildRequires: rust
@@ -457,14 +457,11 @@ EOF
 chmod 755 %buildroot/%_bindir/thunderbird
 
 # rpm-build-thunderbird files
-mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
-
-cp -a rpm-build/rpm.macros %buildroot/%_sysconfdir/rpm/macros.d/%r_name
-
-sed -i \
-	-e 's,@tbird_version@,%version,' \
-	-e 's,@tbird_release@,%release,' \
-	%buildroot/%_sysconfdir/rpm/macros.d/%r_name
+mkdir -p %buildroot%_rpmmacrosdir
+sed -e 's,@tbird_version@,%version,' \
+    -e 's,@tbird_release@,%release,' \
+    rpm-build/rpm.macros \
+    > %buildroot%_rpmmacrosdir/%r_name
 
 %if_with enigmail
 cp -a \
@@ -561,9 +558,13 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 #%%tbird_develdir
 
 %files -n rpm-build-%name
-%_sysconfdir/rpm/macros.d/%r_name
+%_rpmmacrosdir/%r_name
 
 %changelog
+* Fri May 29 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.1-alt2
+- Build with default llvm-devel in repository.
+- Fix rpm macros placement.
+
 * Sat May 23 2020 Andrey Cherepanov <cas@altlinux.org> 68.8.1-alt1
 - New version (68.8.1).
 - Fixes:
