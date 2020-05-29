@@ -4,6 +4,7 @@
 %define ver_major 2.64
 %define api_ver 2.0
 %define pcre_ver 8.31
+%define gtk_doc_ver 1.32
 %define gio_module_dir %_libdir/gio/modules
 
 %set_verify_elf_method strict
@@ -21,7 +22,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -84,7 +85,7 @@ BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
 BuildRequires(pre): meson rpm-build-licenses rpm-build-python3
-BuildRequires: gcc-c++ gtk-doc indent
+BuildRequires: gcc-c++ gtk-doc >= %gtk_doc_ver indent
 BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel
 BuildRequires: libffi-devel zlib-devel libelf-devel
 %{?_enable_libmount:BuildRequires: libmount-devel}
@@ -437,6 +438,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu May 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.3-alt1
+- 2.64.3
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.2-alt1
 - 2.64.2
 

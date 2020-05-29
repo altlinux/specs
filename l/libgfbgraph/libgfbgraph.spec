@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A GObject library for Facebook Graph API
@@ -108,6 +108,9 @@ GObject introspection devel data for the LibGFBGraph library.
 %endif
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Wed Jul 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3 release
 
