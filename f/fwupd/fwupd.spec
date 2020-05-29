@@ -13,8 +13,8 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.3.9
-Release: alt2
+Version: 1.4.2
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/hughsie/fwupd
@@ -50,7 +50,8 @@ BuildRequires: gtk-doc
 BuildRequires: libuuid-devel
 BuildRequires: libgnutls-devel
 BuildRequires: gnutls-utils
-BuildRequires: meson
+BuildRequires: meson git
+BuildRequires: libjcat-devel
 BuildRequires: vala-tools
 BuildRequires: help2man
 BuildRequires: libxmlb-devel
@@ -59,14 +60,12 @@ BuildRequires: libtpm2-tss-devel
 BuildRequires: cmake
 BuildRequires: libgusb-gir-devel
 BuildRequires: python3 python3-module-pycairo python3-module-pygobject3 python3-module-Pillow rpm-build-python3
+BuildRequires: /proc
 
 %if_enabled dell
 BuildRequires: libsmbios-devel
 %endif
 
-%if_enabled tests
-BuildRequires: /proc
-%endif
 
 %if_enabled uefi
 BuildRequires: libpango-devel
@@ -169,6 +168,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 
 %files -f %name.lang
 %doc README.md AUTHORS COPYING
+%config(noreplace)%_sysconfdir/fwupd/ata.conf
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
 %config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
 %config(noreplace)%_sysconfdir/fwupd/upower.conf
@@ -228,11 +228,13 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %dir %_libdir/fwupd-plugins-3
 %_libdir/fwupd-plugins-3/libfu_plugin_altos.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ata.so
-%_libdir/fwupd-plugins-3/libfu_plugin_csr.so
 %_libdir/fwupd-plugins-3/libfu_plugin_amt.so
 %_libdir/fwupd-plugins-3/libfu_plugin_emmc.so
+%_libdir/fwupd-plugins-3/libfu_plugin_ccgx.so
 %_libdir/fwupd-plugins-3/libfu_plugin_colorhug.so
 %_libdir/fwupd-plugins-3/libfu_plugin_coreboot.so
+%_libdir/fwupd-plugins-3/libfu_plugin_csr.so
+%_libdir/fwupd-plugins-3/libfu_plugin_cpu.so
 %if_enabled dell
 %_libdir/fwupd-plugins-3/libfu_plugin_dell.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_esrt.so
@@ -240,6 +242,7 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_libdir/fwupd-plugins-3/libfu_plugin_dell_dock.so
 %_libdir/fwupd-plugins-3/libfu_plugin_dfu.so
 %_libdir/fwupd-plugins-3/libfu_plugin_ebitdo.so
+%_libdir/fwupd-plugins-3/libfu_plugin_ep963x.so
 %_libdir/fwupd-plugins-3/libfu_plugin_fresco_pd.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm.so
 %_libdir/fwupd-plugins-3/libfu_plugin_tpm_eventlog.so
@@ -304,9 +307,11 @@ mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 %_datadir/installed-tests/fwupd/*.test
 %_datadir/installed-tests/fwupd/*.cab
 %_datadir/installed-tests/fwupd/*.sh
-%_datadir/installed-tests/fwupd/*.py*
 
 %changelog
+* Thu May 21 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+
 * Mon Mar 30 2020 Anton Farygin <rider@altlinux.ru> 1.3.9-alt2
 - 1.3.9
 
