@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 %endif
 
 %define gtk_ver 3.22
-%define gexiv_ver 0.10.4
+%define gexiv_ver 0.12.1
 %define soup_ver 2.42
 
 Requires: dconf
@@ -103,6 +103,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.31.2-alt1
+- 0.31.2
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.31.1-alt1
 - updated to 0.31.1-35-g15004a41
 - enabled check

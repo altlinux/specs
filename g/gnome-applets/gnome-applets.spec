@@ -11,7 +11,7 @@
 %def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -162,7 +162,6 @@ remaining battery charge percentage in a graphical window.
 Summary: GNOME CPUFreq Applet
 Group: Monitoring
 Requires(pre): %name-common = %EVR
-Requires: polkit-gnome
 
 %description cpufreq
 GNOME CPUFreq Applet is a CPU Frequency Scaling Monitor for GNOME Panel.
@@ -527,6 +526,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
+- 3.36.4
+
 * Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

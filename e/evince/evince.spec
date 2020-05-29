@@ -15,8 +15,8 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -216,6 +216,9 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la}
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - made nautilus extension optional
 

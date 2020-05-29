@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnome-photos
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -31,8 +31,9 @@ Source: %name-%version.tar
 %define gegl_ver 0.4.2
 %define grilo_ver 0.3
 %define png_ver 1.6
-%define gfbgraph_ver 0.2.1
+%define gfbgraph_ver 0.2.4
 %define dazzle_ver 3.28
+%define gexiv2_ver 0.12.1
 
 Requires: grilo-plugins >= %grilo_ver
 
@@ -45,7 +46,8 @@ BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libgegl-devel >= %gegl_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libpng-devel >= %png_ver
-BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
+BuildRequires: libgexiv2-devel >= %gexiv2_ver
+BuildRequires: libexempi-devel liblcms2-devel librsvg-devel
 BuildRequires: libjpeg-devel libgfbgraph-devel >= %gfbgraph_ver
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
 BuildRequires: libgeocode-glib-devel
@@ -91,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
+- 3.34.2
+
 * Wed Feb 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

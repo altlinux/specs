@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.34
+%define ver_major 3.36
 %define xdg_name org.gnome.Logs
 
 %def_with man
@@ -11,7 +11,7 @@ Release: alt1
 
 Summary: The GNOME logfile viewer
 Group: Graphical desktop/GNOME
-License: GPLv3
+License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Logs
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -63,6 +63,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Tue Sep 10 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 
