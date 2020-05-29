@@ -1,63 +1,81 @@
-%define _unpackaged_files_terminate_build 1
 %define node_module uglify-js
 
-%def_without check
+%filter_from_requires /^nodejs.engine./d
+%{?nodejs_find_provides_and_requires}
 
 Name: node-uglify-js
-Version: 2.8.22
+Version: 3.9.4
 Release: alt1
 
 Summary: JavaScript parser, minifier, compressor and beautifier toolkit
-License: BSD
-Group: Development/Tools
-Url: https://www.npmjs.com/package/uglify-js
-# Source-git: https://github.com/mishoo/UglifyJS2
 
+License: BSD License
+Group: Development/Tools
+Url: http://lisperator.net/uglifyjs/
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# Source-url: https://github.com/mishoo/UglifyJS/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-nodejs
-BuildRequires: rpm-build-nodejs
-BuildRequires: node
+Source1: %name-development-%version.tar
 
-%if_with check
-BuildRequires: npm(acorn)
-BuildRequires: npm(async)
-BuildRequires: npm(mocha)
-BuildRequires: npm(optimist)
-BuildRequires: npm(source-map)
-%endif
-
-Provides: nodejs-%node_module = %EVR
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-intro >= 1.9.18
+
+BuildRequires: rpm-build-nodejs node
+BuildRequires(pre): rpm-macros-nodejs
+
+BuildRequires: node-mocha
+
+Provides: uglifyjs = %version-%release
+
+Provides: nodejs-%node_module = %version-%release
+Obsoletes: nodejs-%node_module < %version
+
+#AutoReq: no
+AutoProv: no
+Requires: node
+
 %description
-%summary.
+UglifyJS is a JavaScript parser, minifier, compressor and beautifier toolkit.
+
+Note:
+* uglify-js@3 has a simplified API and CLI that is not backwards compatible with uglify-js@2.
+* uglify-js only supports JavaScript (ECMAScript 5).
+* To minify ECMAScript 2015 or above, transpile using tools like Babel.
 
 %prep
-%setup
-%nodejs_fixdep yargs
+%setup -a 1
 
 %build
 
+# check
+npm run test
+
+npm prune --production
+
+#check
+#npm test
+
 %install
-mkdir -p %buildroot%nodejs_sitelib/%node_module
-cp -a bin lib tools package.json %buildroot/%nodejs_sitelib/%node_module
-
 mkdir -p %buildroot%_bindir
-ln -s %nodejs_sitelib/%node_module/bin/uglifyjs %buildroot%_bindir
-
-%nodejs_symlink_deps
-
-%check
-%nodejs_symlink_deps --check
-node -e 'require("./")'
-node test/run-tests.js
+ln -sr %buildroot%nodejs_sitelib/%node_module/bin/uglifyjs %buildroot%_bindir/uglifyjs
+ln -sr %buildroot%nodejs_sitelib/%node_module/bin/uglifyjs %buildroot%_bindir/uglify-js
+mkdir -p %buildroot%nodejs_sitelib/%node_module/
+cp -a LICENSE README.md package.json bin/ lib/ tools/ node_modules/ %buildroot/%nodejs_sitelib/%node_module/
+rm -rf %buildroot/%nodejs_sitelib/%node_module/test/
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md CONTRIBUTING.md
 %_bindir/uglifyjs
-%nodejs_sitelib/%node_module
+%_bindir/uglify-js
+%nodejs_sitelib/%node_module/
 
 %changelog
-* Wed Jul 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.22-alt1
-- Initial build for Sisyphus
+* Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.9.4-alt1
+- new version, full spec rewrite
+
+-* Wed Jul 18 2018 Stanislav Levin <slev@altlinux.org> 2.8.22-alt1
+-- Initial build for Sisyphus
