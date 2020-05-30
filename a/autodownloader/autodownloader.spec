@@ -1,6 +1,6 @@
 Name: autodownloader
 Version: 0.3.0
-Release: alt1.qa1.1.1
+Release: alt1.qa1.1.2
 Summary: GUI-tool to automate the download of certain files
 License: GPLv2+
 Group: Networking/File transfer
@@ -27,6 +27,8 @@ are not permitted to be (re)distributed unlike most files in Fedora.
 
 %prep
 %setup -q
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 # nothing to build pure python code only
@@ -40,6 +42,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_datadir/icons/hicolor/*/apps/autodl.png
 
 %changelog
+* Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1.qa1.1.2
+- FTBFS: set correct python2 executable in shebang.
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.0-alt1.qa1.1.1
 - Rebuild with Python-2.7
 
