@@ -10,17 +10,17 @@
 %def_disable check
 
 Name: libnice
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
-License: LGPLv2+/MPL
+License: LGPL-2.0-or-later and MPL-1.1
 Url: http://nice.freedesktop.org
 
 Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
-%define glib_ver 2.48
+%define glib_ver 2.54
 %define gi_ver 1.30
 %define tls_ver 2.12.0
 
@@ -164,6 +164,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.17-alt1
+- 0.1.17
+
 * Sat May 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.16-alt1
 - 0.1.16
 
