@@ -8,6 +8,8 @@
 
 %def_enable xps
 %def_enable ps
+%def_enable t1lib
+%def_enable dbus
 %def_enable introspection
 %def_enable browser_plugin
 %def_enable multimedia
@@ -15,7 +17,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A document viewer
@@ -39,6 +41,7 @@ Requires: dconf
 %define gtk_ver 3.16.0
 %define spectre_ver 0.2.0
 
+BuildRequires(pre): meson
 BuildRequires: libpoppler-glib-devel >= %poppler_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc libappstream-glib-devel yelp-tools
@@ -48,6 +51,8 @@ BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-
 BuildRequires: zlib-devel libsecret-devel libarchive-devel libgspell-devel
 BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
+%{?_enable_t1lib:BuildRequires: t1lib-devel}
+%{?_enable_dbus:BuildRequires: libdbus-devel}
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
@@ -115,33 +120,28 @@ via the Evince.
 %prep
 %setup
 
-[ ! -d m4 ] && mkdir m4
-
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-export BROWSER_PLUGIN_DIR=%browser_plugins_path
-%autoreconf
-%configure \
-	--disable-schemas-compile \
-	--enable-pdf \
-	--enable-tiff \
-	--enable-djvu \
-	--enable-dvi \
-	--enable-comics \
-	--enable-gtk-doc \
-	--enable-dbus \
-	%{subst_enable xps} \
-	%{subst_enable ps} \
-	%{subst_enable introspection} \
-	%{?_enable_browser_plugin:--enable-browser-plugin} \
-	%{subst_enable multimedia} \
-	%{subst_enable nautilus} \
-	--disable-static \
-	%{subst_enable debug}
-%make_build
+%meson \
+    -Dpdf=enabled \
+    -Dtiff=enabled \
+    -Ddjvu=enabled \
+    -Ddvi=enabled \
+    %{?_disable_t1lib:-Dt1lib=disabled} \
+    -Dcomics=enabled \
+    -Dgtk_doc=true \
+    %{?_enable_dbus:-Ddbus=true} \
+    %{?_disable_xps:-Dxps=disabled} \
+    %{?_enable_ps:-Dps=enabled} \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_enable_browser_plugin:-Dbrowser_plugin=true \
+    -Dbrowser_plugin_dir='%browser_plugins_path'} \
+    %{?_enable_multimedia:-Dmultimedia=enabled} \
+    %{?_disable_nautilus:-Dnautilus=false}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name --with-gnome
 
 %files -f %name.lang
@@ -211,11 +211,11 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %browser_plugins_path/libevbrowserplugin.so
 %endif
 
-%exclude %browser_plugins_path/libevbrowserplugin.la
-%exclude %_libdir/%name/%so_ver/backends/*.la
-%{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la}
 
 %changelog
+* Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2 (ported to Meson build system)
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
