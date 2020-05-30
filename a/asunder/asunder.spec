@@ -1,9 +1,9 @@
 Name: asunder
-Version: 2.9.5
+Version: 2.9.6
 Release: alt1
 
 Summary: Audio CD ripper and encoder for Linux
-License: %gpl2only
+License: GPL-2.0
 Group: Sound
 Url: http://littlesvr.ca/%name/index.php
 
@@ -16,11 +16,10 @@ Requires: vorbis-tools
 Requires: lame
 Requires: flac
 
-BuildPreReq: rpm-build-licenses >= 0.7 intltool
-
 BuildPreReq: libgtk+2-devel >= 2.4.0
 BuildPreReq: glib2-devel >= 2.4.0
 BuildPreReq: libcddb-devel >= 0.9.5
+BuildRequires: intltool
 
 %description
 Asunder is a graphical Audio CD ripper and encoder for Linux. You can use
@@ -43,24 +42,29 @@ Features:
 %build
 %autoreconf
 %configure
-%make
+%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
-# Copy the icon to the standard location
-mkdir -p %buildroot%_liconsdir
+# Copy the icons to the standard location
+mkdir -p %buildroot{%_liconsdir,%_iconsdir/hicolor/scalable/apps}
 cp %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir/
+cp %buildroot%_pixmapsdir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
+%_pixmapsdir/%name.*
 %_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.6-alt1
+- 2.9.6
+
 * Mon Oct 21 2019 Yuri N. Sedunov <aris@altlinux.org> 2.9.5-alt1
 - 2.9.5
 
