@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: High productivity build system
@@ -90,6 +90,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.2-alt1
+- 0.54.2
+
 * Mon Apr 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.1-alt1
 - 0.54.1
 
