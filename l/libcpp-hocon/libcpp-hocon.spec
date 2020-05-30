@@ -1,6 +1,6 @@
 Name:    libcpp-hocon
-Version: 0.2.1
-Release: alt4
+Version: 0.2.2
+Release: alt1
 Summary: A C++ port of the Typesafe Config library
 
 Group:   System/Libraries
@@ -10,8 +10,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: cpp-hocon-%version.tar
 Patch1: libcpp-hocon-shared-library.patch
-Patch2: libcpp-hocon-0.2.1-fix-Werror-catch-value.patch
-Patch3: libcpp-hocon-build-with-boost-1.72.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -39,8 +37,6 @@ Development libraries for cpp-hocon.
 %prep
 %setup -n cpp-hocon-%version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %cmake
@@ -58,6 +54,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1
+- New version.
+
 * Fri Mar 27 2020 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt4
 - Upstream fix build with Boost 1.72.
 - Fix License tag according SPDX.
