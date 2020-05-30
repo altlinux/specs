@@ -1,6 +1,6 @@
 Name: asciidoc
 Version: 8.6.9
-Release: alt1.1
+Release: alt1.2
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 Group: Text tools
@@ -76,6 +76,8 @@ This package contains AsciiDoc syntax highlighting support for Vim.
 %prep
 %setup
 %patch -p1
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %configure docdir=%docdir
@@ -133,6 +135,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %vim_syntax_dir/*.vim
 
 %changelog
+* Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 8.6.9-alt1.2
+- FTBFS: set correct python2 executable in shebang.
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 8.6.9-alt1.1
 - NMU: rebuild with rpm-build-tex
 
