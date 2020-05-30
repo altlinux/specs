@@ -2,8 +2,8 @@
 %define        confdir        ext/redhat
 
 Name:          %pkgname
-Version:       6.15.0
-Release:       alt3
+Version:       6.16.0
+Release:       alt1
 Summary:       A network tool for managing many disparate systems
 Group:         System/Servers
 License:       Apache-2.0
@@ -167,6 +167,9 @@ touch %buildroot%_datadir/puppet-{locale,modules}/.dir
 %ruby_gemdocdir
 
 %changelog
+* Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 6.16.0-alt1
+- New version.
+
 * Fri May 22 2020 Andrey Cherepanov <cas@altlinux.org> 6.15.0-alt3
 - Move environments/production/manifests to /etc/puppet/code (ALT #38520).
 
