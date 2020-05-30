@@ -4,7 +4,7 @@
 %def_disable palettes
 
 Name: elementary-icon-theme
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
@@ -20,7 +20,7 @@ BuildArch: noarch
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): meson
-BuildRequires: inkscape xcursorgen
+BuildRequires: inkscape xcursorgen /usr/bin/rsvg-convert
 
 %description
 The official elementary icons are designed to be simple and appealing.
@@ -48,6 +48,9 @@ theme.
 %doc README*
 
 %changelog
+* Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt1
+- 5.3.1
+
 * Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
