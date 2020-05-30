@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -18,7 +18,6 @@ Source: %url/archive/%version/%name-%version.tar.gz
 # VCS: https://github.com/johnfactotum/foliate.git
 Source: %name-%version.tar
 %endif
-Patch: %name-1.5.0-alt-python3_syntax.patch
 
 %define gjs_ver 1.52
 
@@ -31,11 +30,15 @@ Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
+Requires: typelib(Gspell)
 Requires: typelib(Gtk)
+Requires: typelib(Handy)
 Requires: typelib(Pango)
+Requires: typelib(Soup)
+Requires: typelib(Tracker)
 Requires: typelib(WebKit2)
 
-%add_python3_path %_datadir/%name
+%add_python3_path %_datadir/%rdn_name
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: desktop-file-utils libappstream-glib-devel
@@ -54,9 +57,9 @@ Foliate is a simple and modern GTK eBook reader with following features:
 
 %prep
 %setup
-%patch
 # switch python shebangs to python3
-sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
+sed -i 's|\(#\!/usr/bin/env python\)$|\13|
+	s|\(/usr/bin/python\)$|\13|' src/assets/KindleUnpack/*.py
 
 %build
 %meson
@@ -78,6 +81,9 @@ sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/assets/KindleUnpack/*.py
 
 
 %changelog
+* Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- updated to 2.2.0-3-g9ac9c23
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
