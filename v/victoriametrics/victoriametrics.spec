@@ -1,5 +1,5 @@
 %global import_path github.com/VictoriaMetrics/VictoriaMetrics
-%global commit 43bbffebb3040b7296370190e264870778bf0ea8
+%global commit 0ec43cb8b019359b0e3ead38eb39d3472967bd45
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name: victoriametrics
-Version: 1.34.9
+Version: 1.36.2
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -98,6 +98,9 @@ install -m644 %SOURCE2 \
 %_bindir/vm*
 
 %changelog
+* Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 1.36.2-alt1
+- 1.36.2.
+
 * Mon Apr 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.34.9-alt1
 - Initial build.
 
