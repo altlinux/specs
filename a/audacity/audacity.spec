@@ -1,6 +1,16 @@
+%define commit d6f8410d566527f10ae697c47fe34fdc81b09116
+%define commit_short %(echo %commit | head -c 6)
+
+# Ensure no unpackaged files
+%global _unpackaged_files_terminate_build 1
+
+# https://github.com/audacity/audacity/issues/554
+# loffice-libcxx-wrapper.sh will put -lxxx into the end of CLI options
+%global optflags %optflags -DDISABLE_DYNAMIC_LOADING_LAME=1 -lmp3lame
+
 Name: audacity
-Version: 2.3.3
-Release: alt2
+Version: 2.4.1
+Release: alt0.git%{commit_short}.2
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
@@ -10,7 +20,9 @@ Url: http://audacity.sourceforge.net/
 # Source0: https://github.com/audacity/audacity/archive/Audacity-%{version}.tar.gz
 # https://www.fosshub.com/Audacity.html/audacity-manual-%{version}.zip
 Source0: %name-minsrc-%version.tar
-Source6: %name-%version-help-en.tar
+Source1: %name-%version-help-en.tar
+# XXX
+Source2: loffice-libcxx-wrapper.sh
 
 # Debian patches are from https://salsa.debian.org/multimedia-team/audacity/tree/master/debian/patches
 # NetBSD patches are from http://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/audio/audacity/patches/
@@ -19,9 +31,17 @@ Source6: %name-%version-help-en.tar
 Patch20: Debian-0004-desktop.patch
 Patch50: NetBSD-ALT-Session-directory-in-home.patch
 Patch60: ALT-system-sbsms.patch
-Patch170: ALT-Remove-warning-about-alpha-version.patch
+Patch70: ALT-Remove-warning-about-alpha-version.patch
+Patch80: 0001-HACK-off-bundled-libmp3lame.patch
+# Updated Russian translation
+# https://github.com/audacity/audacity/pull/558
+Patch91: 0001-update-PO-files-by-update_po_files.sh.patch
+Patch92: 0002-Fix-fuzzies-in-Russian-transaltion.patch
+Patch93: 0003-Fix-translation-of-Filter-Curve.patch
 
 BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: patchelf
 BuildRequires: gettext-devel
 BuildRequires: ImageMagick
 BuildRequires: ladspa_sdk
@@ -92,69 +112,82 @@ For the most up to date manual content, use the on-line manual.
 %setup -n %name-src-%version
 %autopatch -p1
 
+ln -s locale po || :
+
 sed -i -e 's,/usr/lib/ladspa,%{_libdir}/ladspa,g' src/effects/ladspa/LadspaEffect.cpp
+
+# Make version in "About" dialog and other places match the package version
+# even if a post-release git snapshot is built where AUDACITY_REVISION was bumped
+n=1
+for i in AUDACITY_VERSION AUDACITY_RELEASE AUDACITY_REVISION ; do
+  text="$(echo "%{version}" | awk -F '.' "{print \$${n}}")"
+  if [ -n "$text" ] && ! echo "$text" | grep -qvE '[[:digit:]]' ; then
+    sed -i -E -e "s,#define[[:blank:]]([[:blank:]])*${i}[[:blank:]].+,#define ${i} ${text}," src/Audacity.h
+  fi
+  n=$((++n))
+done
 
 %build
 # src/RevisionIdent.h is in src/.gitignore and may be missing,
 # what leads to build errors, but it's empty in release tarballs
 [ ! -f src/RevisionIdent.h ] && echo ' ' > src/RevisionIdent.h
 
-%ifarch %mips
-export LDFLAGS="${LDFLAGS} -latomic"
-%endif
-
-%autoreconf
-
 # From SUSE's spec about PortAudio:
 # "This [using system PortAudio] would require to patch our portaudio package with "PortMixer"...
 # an extra API that never got integrated in PortAudio".
 # Patents on mp3 (liblame) expired in April 2017.
-%configure \
-	--enable-sse \
-	--enable-nyquist \
-	--enable-ladspa \
-	--enable-vst \
-	--disable-dynamic-loading \
-%ifnarch %ix86 x86_64 %e2k
-	--disable-sse \
-%else
-	--enable-sse \
-%endif
-	--with-expat=system \
-	--with-ffmpeg=system \
-	--with-lame=system \
-	--with-libflac=system \
-	--with-libid3tag=system \
-	--with-libmad=system \
-	--with-sbsms=system \
-	--with-libsndfile=system \
-	--with-soundtouch=system \
-	--with-libsoxr=system \
-	--with-libtwolame=system \
-	--with-libvamp=system \
-	--with-libvorbis=system \
-	--with-lv2=system \
-	--with-portaudio=local \
-	--with-midi=local \
-	--without-xaudio \
-	--with-widgetextra=local
 
-%make_build
+# TODO: probably drop $(wx-config --libs)
+# https://github.com/audacity/audacity/issues/552
+export ADD_LIBS="$(wx-config --libs)"
+%ifarch %mips
+export ADD_LIBS="$ADD_LIBS -latomic"
+%endif
+install -m0755 %SOURCE2 ./g++
+export CXX="$PWD/g++"
+
+%cmake \
+  -Daudacity_lib_preference:STRING=system \
+  -Daudacity_use_ffmpeg:STRING=linked \
+  -Daudacity_use_lame:STRING=system \
+  -Daudacity_use_libflac:STRING=system \
+  -Daudacity_use_libid3tag:STRING=system \
+  -Daudacity_use_libsndfile:STRING=system \
+  -Daudacity_use_libsoxr:STRING=system \
+  -Daudacity_use_libtwolame:STRING=system \
+  -Daudacity_use_libvamp:STRING=system \
+  -Daudacity_use_libvorbis:STRING=system \
+  -Daudacity_use_libv2:STRING=system \
+  -Daudacity_use_sbsms:STRING=system \
+  -Daudacity_use_soundtouch:STRING=system \
+  -Daudacity_use_portaudio:STRING=local \
+  -Daudacity_use_midi:STRING=local \
+  -DAUDACITY_SUFFIX:STRING=""
+
+%cmake_build
 
 %install
-%makeinstall_std
-tar -xf %SOURCE6 -C %buildroot%_datadir/%name
+%cmakeinstall_std
+tar -xf %SOURCE1 -C %buildroot%_datadir/%name
 rm -rf %buildroot%_defaultdocdir/%name
 %find_lang %name
 
+%check
+p="$(patchelf --print-needed %buildroot/%_bindir/audacity)"
+# upstream seems to assume statically linking bundled libsbsms,
+# verify that system one is used
+echo "$p" | grep -q sbsms
+# ffmpeg and mp3lame can be either dlopen'ed or linked explicitly,
+# ensure that they are linked explicitly
+echo "$p" | grep -q libavcodec
+echo "$p" | grep -q libmp3lame
+
 %files -f %name.lang
 %doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.txt todo.txt
-%_bindir/*
+%_bindir/audacity
 %_mandir/man?/*
-%_liconsdir/%name.png
-%_niconsdir/%name.png
-%_miconsdir/%name.png
 %_iconsdir/*/*/apps/%name.svg
+%_iconsdir/hicolor/*/%name.png
 %dir %_datadir/%name
 %exclude %_datadir/%name/help
 %_datadir/%name/*
@@ -169,6 +202,13 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Sat May 30 2020 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.4.1-alt0.gitd6f841.2
+- Version v2.4.1 + git master from 2020-05-30, commit d6f8410d5
+  Git has fixes for newest wxWidgets 3.1.3 and some other important bug fixes
+- Ensuring that libmp3lame and ffmpeg are linked but not dlopened
+- Ensuring that package version and the one in the "About" dialog are the same
+- Fixed Russian translation
+  PRed to upstream: https://github.com/audacity/audacity/pull/558
 
 * Wed Dec 18 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3.3-alt2
 - Drop Fedora-libmp3lame-default.patch because dlopen()-ing libmp3lame
