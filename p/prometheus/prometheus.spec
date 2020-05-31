@@ -9,7 +9,7 @@
 
 Name: prometheus
 Version: 2.18.1
-Release: alt1
+Release: alt2
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
@@ -98,6 +98,7 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %pre common
 %_sbindir/groupadd -r -f %name > /dev/null 2>&1 ||:
 %_sbindir/useradd -r -g %name -d %_localstatedir/%name -s /dev/null -c "Prometheus services" %name > /dev/null 2>&1 ||:
+%_sbindir/usermod -a -G proc %name ||:
 
 %post
 %post_service %name
@@ -121,6 +122,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.18.1-alt2
+- add user prometheus to proc group
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.18.1-alt1
 - 2.18.1.
 
