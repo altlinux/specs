@@ -1,6 +1,6 @@
 Name: libcap
 Version: 2.27.0.2.ac1e
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
@@ -11,7 +11,7 @@ Url: https://sites.google.com/site/fullycapable/
 Source: %name-%version-%release.tar
 
 # For backwards compatibility.
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
+%{expand:%%global lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
 Provides: %name.so.1%lib_suffix
 
 BuildRequires: gperf
@@ -94,6 +94,9 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Sun May 31 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt2
+- Fixed errno value set by cap_*_bound and cap_*_ambient functions.
+
 * Sun Apr 21 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt1
 - libcap-2.26 -> libcap-2.27-2-gac1ef31.
 
