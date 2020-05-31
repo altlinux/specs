@@ -1,8 +1,9 @@
 %define  modulename portend
+%def_without python2
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 2.4
+Version: 2.6
 Release: alt1
 
 Summary: Use portend to monitor TCP ports for bound or unbound states
@@ -12,9 +13,11 @@ URL:     https://github.com/jaraco/portend
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+%if_with python2
 BuildRequires: rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools_scm
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools_scm
@@ -45,7 +48,9 @@ cp -a . ../python3
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%if_with python2
 %python_build
+%endif
 %if_with python3
 pushd ../python3
 %python3_build
@@ -54,15 +59,19 @@ popd
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%if_with python2
 %python_install
+%endif
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
 
+%if_with python2
 %files
 %python_sitelibdir/%{modulename}*
+%endif
 
 %if_with python3
 %files -n python3-module-%modulename
@@ -71,6 +80,15 @@ popd
 %endif
 
 %changelog
+* Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
+- New version.
+
+* Thu Jun 13 2019 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1
+- New version.
+
+* Wed Apr 24 2019 Andrey Cherepanov <cas@altlinux.org> 2.4-alt2
+- Build only for python3.
+
 * Sun Dec 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
 - New version.
 
