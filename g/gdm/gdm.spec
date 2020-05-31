@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -15,11 +15,9 @@
 %def_enable ipv6
 %def_with xinerama
 %def_with xdmcp
-%def_without tcp_wrappers
 %def_with selinux
 %def_with libaudit
 %def_without plymouth
-%def_without xevie
 %def_enable wayland
 %def_enable xsession
 #Enable running X server as user
@@ -27,8 +25,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -80,6 +78,7 @@ Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 Requires: gnome-session >= 3.33.92
 Requires: gnome-session-wayland
+Requires: /bin/dbus-run-session
 
 BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-macros-pam0
 BuildRequires: gcc-c++ desktop-file-utils gnome-common yelp-tools
@@ -91,14 +90,13 @@ BuildRequires: dconf libsystemd-devel libpam-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
-%{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
 BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel
 
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
-BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel libXevie-devel
+BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel
 BuildRequires: xorg-xephyr xorg-server
-
+BuildRequires: libkeyutils-devel
 BuildRequires: libcheck-devel >= %check_ver
 
 BuildRequires: libdmx-devel
@@ -191,10 +189,8 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	--with-sysconfsubdir=X11/gdm \
 	%{subst_with xinerama} \
 	%{subst_with xdmcp} \
-	%{?_with_tcp_wrappers:--with-tcp-wrappers} \
 	--with-pam-prefix=%_sysconfdir \
 	--with-default-pam-config=%default_pam_config \
-	%{subst_with xevie} \
 	%{subst_with libaudit} \
 	%{subst_with plymouth} \
 	--with-default-path="/bin:/usr/bin:/usr/local/bin" \
@@ -317,6 +313,12 @@ dbus-run-session %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Sun May 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt2
+- updated to 3.36.2-real-1-g38fc7ef8 (fixed user switching)
+
+* Tue May 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 
