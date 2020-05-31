@@ -6,7 +6,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 2.9.4
+Version: 2.9.5
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -102,9 +102,9 @@ On-line version is available on https://www.knot-dns.cz/documentation/
 
 %autoreconf
 %configure \
-  --libexecdir=/usr/lib/knot \
-  --with-rundir=/run/knot \
-  --with-storage=/var/lib/knot \
+  --libexecdir=/usr/lib/%name \
+  --with-rundir=/run/%name \
+  --with-storage=/var/lib/%name \
   %{?configure_db_sizes} \
 %if_enabled dnstap
   --enable-dnstap=yes \
@@ -144,22 +144,22 @@ find %buildroot -type f -name "*.la" -delete -print
 %make check ||:
 
 %pre
-%_sbindir/groupadd -r -f knot
-%_sbindir/useradd -M -r -d /var/lib/%name -s /bin/false -c "Knot DNS server" -g knot knot >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f %name
+%_sbindir/useradd -M -r -d /var/lib/%name -s /bin/false -c "Knot DNS server" -g %name %name >/dev/null 2>&1 ||:
 
 %post
-%post_service knot
+%post_service %name
 
 %preun
-%preun_service knot
+%preun_service %name
 
 %files
 %doc COPYING NEWS README samples
-%dir %attr(750,root,knot) %_sysconfdir/%name
-%config(noreplace) %attr(640,root,knot) %_sysconfdir/%name/%name.conf
-%dir %attr(775,root,knot) %_sharedstatedir/%name
-%dir %attr(770,root,knot) %_sharedstatedir/%name/keys
-%_unitdir/knot.service
+%dir %attr(750,root,%name) %_sysconfdir/%name
+%config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.conf
+%dir %attr(775,root,%name) %_sharedstatedir/%name
+%dir %attr(770,root,%name) %_sharedstatedir/%name/keys
+%_unitdir/%name.service
 %_tmpfilesdir/%name.conf
 %_bindir/kzonecheck
 %_sbindir/*
@@ -195,6 +195,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %endif
 
 %changelog
+* Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.5-alt1
+- new version 2.9.5
+
 * Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.4-alt1
 - new version 2.9.4
 
