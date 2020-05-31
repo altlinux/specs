@@ -3,7 +3,7 @@
 
 %global import_path github.com/ncw/rclone
 Name:     rclone
-Version:  1.51.0
+Version:  1.52.0
 Release:  alt1
 
 Summary:  rsync for cloud storage
@@ -74,6 +74,9 @@ trap - EXIT
 %doc *.md
 
 %changelog
+* Sun May 31 2020 Vitaly Chikunov <vt@altlinux.org> 1.52.0-alt1
+- New version 1.52.0.
+
 * Sun Mar 15 2020 Vitaly Chikunov <vt@altlinux.org> 1.51.0-alt1
 - Update to v1.51.0.
 - Add some %%check tests.
