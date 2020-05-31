@@ -1,6 +1,6 @@
 %def_enable perl
 %def_enable python
-%def_enable ruby
+%def_disable ruby
 %def_disable tcl
 %def_disable static
 %def_disable swig
@@ -21,7 +21,7 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name: obexftp
 Version: 0.24.2
-Release: alt2.4
+Release: alt2.5
 
 License: GPLv2
 Group: Communications
@@ -54,9 +54,7 @@ BuildRequires: perl-devel
 %if_enabled python
 BuildRequires: python-devel
 %endif
-%if_enabled ruby
 BuildRequires: ruby libruby-devel
-%endif
 %if_enabled tcl
 BuildRequires: tcl-devel tcl
 %endif
@@ -207,6 +205,9 @@ rm -f %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so
 %endif
 
 %changelog
+* Sun May 31 2020 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt2.5
+- FTBFS: build without Ruby support.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt2.4
 - Rebuild with Ruby 2.5.1
 
