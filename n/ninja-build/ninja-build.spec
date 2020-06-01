@@ -3,7 +3,7 @@
 
 Name:           ninja-build
 Version:        1.10.0
-Release:        alt4
+Release:        alt5
 
 Summary:        A small build system with a focus on speed
 Group:          Development/Tools
@@ -16,6 +16,7 @@ Source1:        ninja.vim
 Source2:        ninja.1
 Source3:        ninja.macros
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: re2c
 BuildRequires: asciidoc
@@ -49,6 +50,8 @@ A set of RPM macros for packaging applications using %name.
 
 %prep
 %setup
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 #CFLAGS="%optflags"
@@ -97,6 +100,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Mon Jun 01 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt5
+- FTBFS: set correct python3 executable in shebang.
+
 * Sun May 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt4
 - New package rpm-build-ninja for build packages using ninja-build.
 
