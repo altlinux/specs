@@ -1,6 +1,6 @@
 Name: paexec
-Version: 1.1.3
-Release: alt3
+Version: 1.1.4
+Release: alt1
 
 Summary: paexec distributes tasks over network or CPUs
 
@@ -17,6 +17,7 @@ BuildRequires: %_bindir/pod2man
 BuildRequires: mk-configure >= 0.34.2-alt4
 BuildRequires: rpm-macros-mk-configure
 BuildRequires: runawk
+BuildRequires: libmaa-devel
 
 Requires: runawk
 
@@ -44,10 +45,10 @@ This package contains examples for PAEXEC.
 %mkcmake_configure
 %mkcmake_build
 
-# NB: the test might be a bit stressy, disabled so far
-#%%check
-#%%mkc_env
-#%%mkcmake test
+%check
+%mkc_env
+export USE_TEST_BUFSIZES='1 10 100 1000'
+%mkcmake test
 
 %install
 %mkc_env
@@ -62,15 +63,18 @@ This package contains examples for PAEXEC.
 %doc examples
 
 %changelog
-* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.ru> 1.1.3-alt3
+* Mon Jun 1 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.1.4-alt1
+- 1.1.4-alt1
+
+* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.1.3-alt3
 - 1.1.3-alt3:
   + fix build failure on Sisyphus with gcc9
   + fix hasher warnings and build-time dependencies
 
-* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.ru> 1.1.3-alt2
+* Fri May 22 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.1.3-alt2
 - 1.1.3-alt2: use rpm macro provided by mk-configure
 
-* Sat May 16 2020 Aleksey Cheusov <cheusov@altlinux.ru> 1.1.3-alt1
+* Sat May 16 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
 * Sun Mar 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
