@@ -2,7 +2,7 @@
 
 Name: gwyddion
 Version: 2.55
-Release: alt1
+Release: alt2
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -121,7 +121,8 @@ autoconf -f
 	--disable-rpath \
 	--enable-library-bloat \
 	--with-gl \
-	--with-gtksourceview
+	--with-gtksourceview \
+	--without-ruby
 %make_build
 
 %install
@@ -213,9 +214,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkglibdir/python/Gwyddion/*
 %dir %pkglibdir/python/Gwyddion
 %dir %pkglibdir/python
-%pkglibdir/ruby/gwyddion/*
-%dir %pkglibdir/ruby/gwyddion
-%dir %pkglibdir/ruby
+# pkglibdir/ruby/gwyddion/*
+# dir %pkglibdir/ruby/gwyddion
+# dir %pkglibdir/ruby
 
 %files -n lib%name-doc
 # Documentation
@@ -245,6 +246,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Mon Jun 01 2020 Alexei Mezin <alexvm@altlinux.org> 2.55-alt2
+- Drop Ruby support
+
 * Thu Jan 02 2020 Alexei Mezin <alexvm@altlinux.org> 2.55-alt1
 - new version
 - drop depreciated plugins support and GNOME thumbnaler
