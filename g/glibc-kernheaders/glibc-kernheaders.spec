@@ -1,4 +1,4 @@
-%define kernel_base_version 5.6
+%define kernel_base_version 5.7
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -52,7 +52,6 @@ Patch12: 0012-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch13: 0013-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
 Patch14: 0014-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
 Patch15: 0015-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
-Patch16: 0016-Revert-ALSA-uapi-Drop-asound.h-inclusion-from-asoc.h.patch
 
 BuildRequires: rpm-build-kernel rsync
 BuildRequires: %kernel_source = 1.0.0
@@ -187,7 +186,6 @@ cd %kernel_source
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 # No exceptions, please!
 sed -i 's/^no-export-headers/#&/' include/uapi/Kbuild
@@ -325,6 +323,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun May 31 2020 Dmitry V. Levin <ldv@altlinux.org> 5.7-alt1
+- v5.6 -> v5.7.
+
 * Sun Mar 29 2020 Dmitry V. Levin <ldv@altlinux.org> 5.6-alt1
 - v5.5 -> v5.6.
 
