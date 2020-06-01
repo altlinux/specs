@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.12.4
+Release: alt0.12.5
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -32,6 +32,9 @@ with more open patches/features inclusion policy.
 %prep
 %setup -n elinks-0.12pre5
 %patch -p1
+
+# fix shebang
+sed -i 's,/usr/bin/env python,%_bindir/python2,' doc/tools/asciidoc/asciidoc.py
 
 %build
 cat config/m4/*.m4 >acinclude.m4
@@ -82,6 +85,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Sun May 31 2020 Anton Midyukov <antohami@altlinux.org> 0.12-alt0.12.5
+- Fix FTBFS
+
 * Tue Sep 17 2019 Ivan A. Melnikov <iv@altlinux.org> 0.12-alt0.12.4
 - fix double dereference (closes: #36113)
 
