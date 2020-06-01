@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -44,8 +44,6 @@ Group: Graphical desktop/GNOME
 
 Requires: cinnamon-minimal = %version-%release
 Provides: cinnamon-full = %version-%release
-# Sound support
-Requires: pulseaudio-daemon alsa-plugins-pulse
 # Control Center
 Requires: cinnamon-control-center
 # Default terminal
@@ -81,6 +79,8 @@ Group: Graphical desktop/GNOME
 
 Requires: cinnamon-default = %version-%release
 
+# Sound support
+Requires: pulseaudio-daemon alsa-plugins-pulse
 # Color manager
 Requires: gnome-color-manager
 # Password keeper
@@ -127,6 +127,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt4
+- move pulseaudio from cinnamon-default to cinnamon-regular since
+  it is not mandatory dependency
+
 * Sat May 16 2020 Vladimir Didenko <cow@altlinux.org> 4.6.0-alt3
 - restore nemo-share
 
