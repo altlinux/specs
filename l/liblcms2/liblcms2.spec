@@ -1,21 +1,25 @@
+%def_disable snapshot
 %def_disable static
+%def_enable check
+
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.9
+Version: 2.10
 Release: alt1
 
 Summary: Little cms color engine, version 2
-License: %mit
+License: MIT
 Group: System/Libraries
 Url: http://www.littlecms.com
 
+%if_disabled snapshot
+Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
+%else
 # VCS: https://github.com/mm2/Little-CMS.git
-#Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
 Source: %rname-%version.tar
-Patch: %rname-2.5-alt-link.patch
+%endif
 
-BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sat Nov 06 2010
 BuildRequires: gcc-c++ libjpeg-devel libtiff-devel zlib-devel
 
@@ -63,10 +67,9 @@ This package contains various %name-based utilities
 
 %prep
 %setup -n %rname-%version
-%patch
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -75,6 +78,9 @@ This package contains various %name-based utilities
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -95,6 +101,10 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Mon Jun 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10-alt1
+- 2.10
+- %%check section
+
 * Wed Nov 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt1
 - 2.9
 
