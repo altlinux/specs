@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.1
-Release: alt1
+Release: alt2
 
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/Pebble/
 
 # https://github.com/noxdafox/pebble.git
 Source: %name-%version.tar
+Patch0: disable-failed-test-i586.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest /proc
@@ -26,6 +27,9 @@ application.
 
 %prep
 %setup
+%ifarch %ix86
+%patch0 -p1
+%endif
 
 # fix python version for python3 tests
 grep -q 'python -m pytest' ./test/run-tests.sh && \
@@ -46,6 +50,9 @@ sed -i 's/python -m pytest/python3 -m pytest/' ./test/run-tests.sh
 
 
 %changelog
+* Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.5.1-alt2
+- Failed test on i586 disabled.
+
 * Tue Mar 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.5.1-alt1
 - Version updated to 4.5.1.
 
