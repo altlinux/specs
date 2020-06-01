@@ -1,8 +1,9 @@
+%define ver_major 1.6
 %define api_ver 1.0
 %define _name wpebackend-fdo
 
 Name: lib%_name
-Version: 1.6.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -11,12 +12,11 @@ License: BSD-2-Clause
 Url: https://github.com/Igalia/WPEBackend-fdo
 
 Source: %url/releases/download/%version/%_name-%version.tar.xz
-Patch: wpebackend-fdo-1.4.0-up-build_egl.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libgio-devel libEGL-devel
-BuildRequires: libwpe-devel >= %version
+BuildRequires: libwpe-devel >= %ver_major
 BuildRequires: wayland-devel libwayland-server-devel libwayland-egl-devel
 
 %description
@@ -32,7 +32,6 @@ This package provides files for developing applications that use %name.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -52,6 +51,9 @@ This package provides files for developing applications that use %name.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue Jun 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
