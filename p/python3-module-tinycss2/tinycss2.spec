@@ -1,8 +1,10 @@
 %define oname tinycss2
 
+%def_without check
+
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: Modern CSS parser for Python
 License: BSD
@@ -25,17 +27,6 @@ BuildRequires: python3-module-pytest-cov
 tinycss2 is a rewrite of tinycss with a simpler API, based on the more
 recent CSS Syntax Level 3 specification.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-tinycss2 is a rewrite of tinycss with a simpler API, based on the more
-recent CSS Syntax Level 3 specification.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
@@ -52,16 +43,11 @@ export LC_ALL=en_US.UTF-8
 %files
 %doc CHANGES TODO LICENSE *.rst docs/*.rst docs/css_diagram_role.py
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test.*
-%exclude %python3_sitelibdir/*/*/test.*
-%exclude %python3_sitelibdir/*/css-parsing-tests
-
-%files tests
-%python3_sitelibdir/*/test.*
-%python3_sitelibdir/*/*/test.*
-%python3_sitelibdir/*/css-parsing-tests
 
 %changelog
+* Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt1
+- Version updated to 1.0.2.
+
 * Thu Apr 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt2
 - Build for python2 disabled.
 
