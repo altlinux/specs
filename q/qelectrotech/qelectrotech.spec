@@ -1,6 +1,6 @@
 Name: qelectrotech
 Version: 0.61
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: An electric diagrams editor
@@ -158,7 +158,7 @@ rm -rf %buildroot/usr/doc/%name \
        %buildroot%_mandir/fr
 
 # Fix excessive categories in desktop file
-subst 's/^Categories=.*$/Categories=Engineering;/' %buildroot%_desktopdir/%name.desktop
+subst 's/^Categories=.*$/Categories=Graphics;Engineering;/' %buildroot%_desktopdir/%name.desktop
 
 mv %buildroot%_mandir/fr.UTF-8 %buildroot%_mandir/fr
 
@@ -186,6 +186,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Mon Jun 01 2020 Anton Midyukov <antohami@altlinux.org> 1:0.61-alt3
+- Add missing main categorie (Graphics) for desktop entry file
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 1:0.61-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - spec cleanup
