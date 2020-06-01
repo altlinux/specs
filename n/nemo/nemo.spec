@@ -8,7 +8,7 @@
 
 Name: nemo
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -22,6 +22,7 @@ Patch: %name-%version-%release.patch
 Provides: %name = %version-%release
 
 Requires: %name-translations
+Requires: xapps-icons
 
 %define pkgconfig_ver 0.8
 %define icon_theme_ver 2.10.0
@@ -185,6 +186,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt2
+- add xapps-icons to dependencies (closes: #38562)
+
 * Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt1
 - 4.6.2
 

@@ -5,7 +5,7 @@
 
 Name: xviewer
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Fast and functional image viewer.
 License: %gpl2plus
@@ -32,6 +32,8 @@ BuildPreReq: libjpeg-devel librsvg-devel
 BuildPreReq: libpeas-devel >= 0.7.4
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
+
+Requires: xapps-icons
 
 %description
 This is Xviewer, a fast and functional image viewer.
@@ -122,6 +124,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
+- Add xapps-icons to dependencies
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - New version
 

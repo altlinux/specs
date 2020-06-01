@@ -11,7 +11,7 @@
 
 Name: pix
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
@@ -36,6 +36,7 @@ Source: %name-%version.tar
 %define desktop_file_utils_ver 0.8
 
 Requires: %name-data = %version-%release
+Requires: xapps-icons
 
 # From configure.in
 BuildPreReq: glib2-devel >= %glib_ver
@@ -140,6 +141,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.4.8-alt2
+- add xapps-icons to dependencies
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.4.8-alt1
 - New version
 

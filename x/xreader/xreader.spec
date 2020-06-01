@@ -7,7 +7,7 @@
 
 Name: xreader
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: A document viewer
 Group: Office
@@ -22,6 +22,7 @@ Requires: lib%name = %version-%release
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
+Requires: xapps-icons
 
 %define poppler_ver 0.24.0
 %define gtk_ver 3.14.0
@@ -144,6 +145,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt2
+- add xapps-icons to dependencies
+
 * Tue May 26 2020 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt1
 - New version
 

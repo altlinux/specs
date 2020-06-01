@@ -4,7 +4,7 @@
 
 Name: xed
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: xed is a small and lightweight text editor.
 License: GPLv2
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Requires: %name-data = %version-%release
 Requires: dconf gnome-icon-theme gvfs zenity
 %{?_enable_zeitgeist:Requires: zeitgeist}
+Requires: xapps-icons
 
 Provides: typelib(Xed)
 
@@ -139,6 +140,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
+- add xapps-icons to dependencies
+
 * Thu May 14 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1
 - New version
 
