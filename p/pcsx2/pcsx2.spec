@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.6.0
-Release: alt4
+Release: alt5
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -185,11 +185,9 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__rm -rf %buildroot%_defaultdocdir/PCSX2
 %find_lang --output=%name.lang %{name}_{Iconized,Main}
 
 %files
-%doc bin/docs/*.pdf
 %_bindir/PCSX2*
 %dir %_libdir/%name
 %_desktopdir/PCSX2.desktop
@@ -198,6 +196,8 @@ popd
 %_datadir/%name/GameIndex.dbf
 %_datadir/%name/cheats_ws.zip
 %_pixmapsdir/PCSX2.xpm
+%dir %_defaultdocdir/PCSX2
+%_defaultdocdir/PCSX2/*.pdf
 
 %files i18n -f %name.lang
 
@@ -236,6 +236,9 @@ popd
 %_libdir/%name/libspu2x-2.0.0.so
 
 %changelog
+* Mon Jun 01 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt5
+- Use directory /usr/share/doc/PCSX2 for Configuration Guide and Readme / FAQ
+
 * Sun May 24 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt4
 - Build GSdx plugin additionaly without AVX2 & SSE4 support
 - Build GSdx legacy plugin
