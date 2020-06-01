@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 3.0.111
+Version: 3.0.113
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -306,6 +306,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Mon Jun 01 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.113-alt1
+- 3.0.113
+
 * Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.111-alt1
 - 3.0.111
 - build with libfuse3
