@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.4
-Release: alt2
+Release: alt3
 
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD
@@ -21,6 +21,7 @@ BuildRequires: python3-module-markdown
 BuildRequires: python3-module-watchdog
 
 Requires: ghp-import.py3
+Requires: python3-module-livereload
 
 %description
 MkDocs is a fast, simple and downright gorgeous static site generator
@@ -69,6 +70,9 @@ install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
 %python3_sitelibdir/*/test*
 
 %changelog
+* Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.4-alt3
+- Requires fixed.
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.4-alt2
 - Build for python2 disabled.
 

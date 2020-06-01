@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.2
-Release: alt2
+Release: alt4
 
 Summary: Parser interpreter based on PEG grammars written in Python
 License: MIT
@@ -25,7 +25,7 @@ grammars (aka Packrat parser).
 %build
 %python3_build_debug -b build3
 
-mkdocs.py3 build
+mkdocs build
 
 %install
 rm -rf build && ln -sf build3 build
@@ -38,6 +38,9 @@ rm -rf build && ln -sf build3 build
 
 
 %changelog
+* Mon Jun 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.2-alt4
+- Docs build fixed.
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.ru> 1.9.2-alt2
 - disable python2
 
