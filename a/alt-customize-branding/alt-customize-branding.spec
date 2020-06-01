@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 %K5init altplace
 
@@ -100,7 +100,7 @@ if [ $1 -eq 0 ] ; then
     fi
 # Toggle/repair alternatives
     alternatives-update
-#make-initrd
+    make-initrd
 fi
 
 %files -f %rname.lang
@@ -124,6 +124,9 @@ fi
 #%%doc README
 
 %changelog
+* Mon Jun 01 2020 Pavel Moseev <mars@altlinux.org>  1.0.7-alt1
+- fix return settings after package removal
+
 * Mon Jun 01 2020 Pavel Moseev <mars@altlinux.org>  1.0.6-alt1
 - clean code
 
