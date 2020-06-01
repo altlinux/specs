@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 %K5init altplace
 
@@ -124,6 +124,9 @@ fi
 #%%doc README
 
 %changelog
+* Mon Jun 01 2020 Pavel Moseev <mars@altlinux.org>  1.0.6-alt1
+- clean code
+
 * Fri May 29 2020 Pavel Moseev <mars@altlinux.org>  1.0.5-alt1
 - fix script
 
