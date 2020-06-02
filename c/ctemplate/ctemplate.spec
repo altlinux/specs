@@ -1,14 +1,15 @@
 Name: ctemplate
-Version: 2.3
-Release: alt1.svn20140319.1
-License: BSD
+Version: 2.4
+Release: alt1
+License: BSD-3-Clause
 Group: System/Libraries
 Summary: HTML template library written in C inspired by perl HTML::Template
 URL: http://code.google.com/p/ctemplate
 # http://ctemplate.googlecode.com/svn/trunk/
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
+BuildRequires: python3-base
 
 %description
 HTML template library written in C inspired by perl HTML::Template.
@@ -18,8 +19,8 @@ Use library to build a variable list and pass it to a template.
 %package -n lib%name
 Summary: HTML template library written in C inspired by perl HTML::Template
 Group: System/Libraries
-Conflicts: google-ctemplate
-Obsoletes: google-ctemplate
+Provides: google-ctemplate = %EVR
+Obsoletes: google-ctemplate < %EVR
 
 %description -n lib%name
 HTML template library written in C inspired by perl HTML::Template.
@@ -29,10 +30,10 @@ Use library to build a variable list and pass it to a template.
 %package -n lib%name-devel
 Summary: HTML template library written in C inspired by perl HTML::Template
 Group: System/Libraries
-Requires: lib%name = %version-%release
-Provides: %name-devel = %version-%release
-Conflicts: google-ctemplate-devel
-Obsoletes: google-ctemplate-devel
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
+Provides: google-ctemplate-devel = %EVR
+Obsoletes: google-ctemplate-devel < %EVR
 
 %description -n lib%name-devel
 HTML template library written in C inspired by perl HTML::Template.
@@ -46,13 +47,14 @@ Use library to build a variable list and pass it to a template.
 %autoreconf
 %configure \
 	--enable-static=no
-%make_build V=1
+%make_build
 
 %install
 %makeinstall_std
 
 
 %files -n lib%name
+%doc README.md
 %_libdir/*so.*
 %_defaultdocdir/*
 
@@ -63,6 +65,10 @@ Use library to build a variable list and pass it to a template.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jun 02 2020 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3-alt1.svn20140319.1
 - Rebuilt for gcc5 C++11 ABI.
 
