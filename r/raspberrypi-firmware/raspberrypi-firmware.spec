@@ -2,8 +2,8 @@
 
 Summary: bootloader and GPU firmware for Raspberry Pi
 Name: raspberrypi-firmware
-Version: 20200228
-Release: alt3
+Version: 20200527
+Release: alt1
 Url: https://github.com/raspberrypi/firmware
 License: distributable
 Group: System/Kernel and hardware
@@ -83,12 +83,21 @@ disable_overscan=1
 dtparam=audio=on
 EOF
 
+cat>>%buildroot/%target_rpi4/config.txt<<EOF
+dtoverlay=vc4-fkms-v3d
+EOF
+
 %files
 %target_rpi3/*
 %target_rpi4/*
 %doc %_docdir/%name
 
 %changelog
+* Tue Jun 02 2020 Dmitry Terekhin <jqt4@altlinux.org> 20200527-alt1
+- Added parameter in config.txt for RPi4:
+- dtoverlay=vc4-fkms-v3d
+- New snapshot
+
 * Thu Apr 16 2020 Anton Midyukov <antohami@altlinux.org> 20200228-alt3
 - Also added parameters in config.txt for RPi3:
 - disable_overscan=1
