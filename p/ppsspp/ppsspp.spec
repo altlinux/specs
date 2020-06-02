@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.9.4
-Release: alt3
+Release: alt4
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -18,13 +18,20 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 aarch64 armh mipsel
 
-Source0: https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
-Source1: https://github.com/Kingcom/armips/archive/%armips_commit/armips-%armips_commit.tar.gz
-Source2: https://github.com/discord/discord-rpc/archive/%discord_rpc_commit/discord-rpc-%discord_rpc_commit.tar.gz
-Source3: https://github.com/hrydgard/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
-Source4: https://github.com/hrydgard/ppsspp-ffmpeg/archive/%ppsspp_ffmpeg_commit/ppsspp-ffmpeg-%ppsspp_ffmpeg_commit.tar.gz
-Source5: https://github.com/hrydgard/ppsspp-lang/archive/%ppsspp_lang_commit/ppsspp-lang-%ppsspp_lang_commit.tar.gz
-Source6: https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
+# https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
+# https://github.com/Kingcom/armips/archive/%armips_commit/armips-%armips_commit.tar.gz
+Source1: armips-%armips_commit.tar
+# https://github.com/discord/discord-rpc/archive/%discord_rpc_commit/discord-rpc-%discord_rpc_commit.tar.gz
+Source2: discord-rpc-%discord_rpc_commit.tar
+# https://github.com/hrydgard/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
+Source3: glslang-%glslang_commit.tar
+# https://github.com/hrydgard/ppsspp-ffmpeg/archive/%ppsspp_ffmpeg_commit/ppsspp-ffmpeg-%ppsspp_ffmpeg_commit.tar.gz
+Source4: ppsspp-ffmpeg-%ppsspp_ffmpeg_commit.tar
+# https://github.com/hrydgard/ppsspp-lang/archive/%ppsspp_lang_commit/ppsspp-lang-%ppsspp_lang_commit.tar.gz
+Source5: ppsspp-lang-%ppsspp_lang_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
+Source6: SPIRV-Cross-%spirv_cross_commit.tar
 Source7: %name.desktop
 Source8: %name-qt.desktop
 
@@ -177,6 +184,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt4
+- Don't gzip sources to speedup rpmbuild -bp
+
 * Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt3
 - Build also ARMv7hf and MIPS Little Endian
 
