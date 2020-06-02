@@ -1,21 +1,21 @@
 Name: tuxpaint
-Version: 0.9.23
-Release: alt4
+Version: 0.9.24
+Release: alt1
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
 
-License: GPL
+License: GPL-2.0
 Group: Graphics
 Url: http://www.tuxpaint.org/
 
 Source: %name-%version.tar.gz
 Source1: %name.desktop
 
-Patch: kdelibs4-removal.patch
 Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 
-BuildRequires: libSDL-devel >= 1.2.4 libSDL_image-devel libSDL_mixer-devel libSDL_pango-devel libSDL_ttf-devel
+BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel
+BuildRequires: libSDL_pango-devel libSDL_ttf-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
 BuildPreReq: gperf
 
@@ -52,7 +52,6 @@ Development shared library for %name
 
 %prep
 %setup
-%patch -p1
 # we can do it not only on e2k
 %patch1 -p2
 
@@ -88,6 +87,7 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_bindir/tuxpaint*
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
+%_sysconfdir/bash_completion.d/tuxpaint-completion.bash
 %_libdir/%name
 
 
@@ -98,7 +98,6 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 # data files
 %_datadir/%name
 %_datadir/applications/*
-%_iconsdir/hicolor/*/*/*
 
 # menu
 %_datadir/pixmaps/*
@@ -110,6 +109,10 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Jun 02 2020 Grigory Ustinov <grenka@altlinux.org> 0.9.24-alt1
+- Build new version.
+- Fix license.
+
 * Mon Jun 03 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.23-alt4
 - Fix previous patch attachment.
 
