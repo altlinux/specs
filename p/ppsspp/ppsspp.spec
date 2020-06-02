@@ -7,7 +7,7 @@
 
 Name: ppsspp
 Version: 1.9.4
-Release: alt2
+Release: alt3
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -16,7 +16,7 @@ Group: Emulators
 Url: https://www.%name.org
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 aarch64 armh mipsel
 
 Source0: https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
 Source1: https://github.com/Kingcom/armips/archive/%armips_commit/armips-%armips_commit.tar.gz
@@ -177,6 +177,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt3
+- Build also ARMv7hf and MIPS Little Endian
+
 * Fri May 29 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt2
 - Add ppsspp-ffmpeg 3dparty library
 - Don't use system ffmpeg
