@@ -1,6 +1,6 @@
 Name: gcc-common
 Version: 1.4.24
-Release: alt3
+Release: alt4
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL-2.0-or-later
@@ -15,6 +15,15 @@ Source: gcc_wrapper.c
 # On powerpc, even though target is ppc32, compiler is inherently 64-bit,
 # thus the wrapper should call ppc64-alt-linux-*.
 %define _target_platform ppc64-alt-linux
+%endif
+
+%ifarch %e2k
+# On e2k we are using command names such as %%_configure_platform-gcc.
+# %%_configure_platform is a normalized (short) %%_target_platform, which
+# on e2k is being stripped off the CPU modification/optimization.
+%define _platform %_configure_platform
+%else
+%define _platform %_target_platform
 %endif
 
 %package -n gcc-c++-common
@@ -97,23 +106,27 @@ This package contains common symlinks for the GNU Ada compiler (GNAT).
 build_with()
 {
 "$1" %optflags -Werror '-DBINDIR="%_bindir"' \
-	'-DTARGET="%_target_platform"' %_sourcedir/gcc_wrapper.c -o gcc_wrapper
+	'-DTARGET="%_platform"' %_sourcedir/gcc_wrapper.c -o gcc_wrapper
 }
 
 # Directly access the compiler (not via gcc -> gcc_wrapper;
 # in case of errors in the previous build of this package).
 # And fallback to the default command--in case this is a bootstrap build.
-%global __cc_directly %_target_platform-gcc%{?_gcc_version:-%_gcc_version}
+%global __cc_directly %_platform-gcc%{?_gcc_version:-%_gcc_version}
 build_with %__cc_directly ||
 build_with %__cc
 
 %install
-mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_bindir,%_includedir/c++}
+mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_platform,%_libexecdir/gcc/%_platform,%_bindir,%_includedir/c++}
 install -p -m755 gcc_wrapper %buildroot%_bindir/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
+%ifarch %e2k
+for n in cc cpp g++ gcc-{ar,nm,ranlib} gcov gfortran; do
+%else
 for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gdc gfortran gnat gtreelang protoize unprotoize; do
+%endif
 	ln -s gcc "%buildroot%_bindir/$n"
 done
 for n in dump tool; do
@@ -122,13 +135,17 @@ done
 for n in f77 f95 g77; do
 	ln -s gfortran "%buildroot%_bindir/$n"
 done
+%ifnarch %e2k
 for n in gnatbind gnatchop gnatclean gnatfind gnatgcc gnatkr gnatlink gnatls gnatmake gnatname gnatprep gnatxref; do
 	ln -s gnat "%buildroot%_bindir/$n"
 done
+%endif
 
 ln -s ..%_bindir/cpp %buildroot/lib/cpp
 ln -s g++ %buildroot%_bindir/c++
+%ifnarch %e2k
 ln -s gtreelang %buildroot%_bindir/tree1
+%endif
 
 %check
 which %__cc_directly || { echo 'Skipping the test of gcc_wrapper.'; exit 0; }
@@ -169,16 +186,20 @@ cpp --version
 %_bindir/gcov
 %_bindir/gcov-tool
 %_bindir/gcov-dump
+%ifnarch %e2k
 %_bindir/protoize
 %_bindir/unprotoize
+%endif
 
 %files -n gcc-c++-common
 %_bindir/c++
 %_bindir/g++
 %_includedir/c++
 
+%ifnarch %e2k
 %files -n gcc-gdc-common
 %_bindir/gdc
+%endif
 
 %files -n gcc-fortran-common
 %_bindir/f77
@@ -186,6 +207,7 @@ cpp --version
 %_bindir/g77
 %_bindir/gfortran
 
+%ifnarch %e2k
 %files -n gcc-go-common
 %_bindir/gccgo
 
@@ -195,8 +217,12 @@ cpp --version
 
 %files -n gcc-gnat-common
 %_bindir/gnat*
+%endif
 
 %changelog
+* Tue Jun 02 2020 Andrew Savchenko <bircoph@altlinux.org> 1.4.24-alt4
+- Add %%e2k arch support.
+
 * Mon Dec 16 2019 Dmitry V. Levin <ldv@altlinux.org> 1.4.24-alt3
 - checkinstall: changed %%post to %%pre, to workaround
   rpm > 4.0.4 that ignores %%post exit status.
