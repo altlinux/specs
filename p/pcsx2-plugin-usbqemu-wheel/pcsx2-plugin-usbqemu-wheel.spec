@@ -1,5 +1,5 @@
 %define rname USBqemu-wheel
-%define rversion 0.9.1-0
+%define rversion 0.9.2-0
 
 Name: pcsx2-plugin-usbqemu-wheel
 Version: %(sed 's|-|.|g' <<< %rversion)
@@ -14,7 +14,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-Source: https://github.com/jackun/%rname/archive/%rversion/%rname-%rversion.tar.gz
+# https://github.com/jackun/%rname/archive/%rversion/%rname-%rversion.tar.gz
+Source: %rname-%rversion.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -54,5 +55,8 @@ popd
 %_libdir/pcsx2/lib%rname-*.so
 
 %changelog
+* Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 0.9.2.0-alt1
+- Version 0.9.2-0
+
 * Mon May 25 2020 Nazarov Denis <nenderus@altlinux.org> 0.9.1.0-alt1
 - Initial build for ALT Linux
