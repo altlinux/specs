@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43
+Version: 0.43.1
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
@@ -132,6 +132,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jun 02 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.1-alt1
+- Fix hide user list for new version of lightdm.
+- Do not remove local DNS from resolvconf.
+
 * Mon Jun 01 2020 Andrey Cherepanov <cas@altlinux.org> 0.43-alt1
 - Hide user list in Lightdm for domain login.
 
