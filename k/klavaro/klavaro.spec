@@ -1,5 +1,5 @@
 Name: klavaro
-Version: 3.09
+Version: 3.10
 Release: alt1
 
 Summary: Yet another touch typing tutor
@@ -22,7 +22,7 @@ subst 's#/usr/share/icons/hicolor/24x24/apps/klavaro.png#klavaro#' data/klavaro.
 subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 export DATADIRNAME=share
 %autoreconf
 %configure --disable-shared \
@@ -41,10 +41,12 @@ export DATADIRNAME=share
 %_iconsdir/hicolor/*/apps/%name.png
 %_datadir/metainfo/%name.appdata.xml
 
-%exclude %_includedir
 %exclude %_libdir/libgtkdataboks.a
 
 %changelog
+* Tue Jun 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
+- 3.10
+
 * Tue Jul 09 2019 Yuri N. Sedunov <aris@altlinux.org> 3.09-alt1
 - 3.09
 
