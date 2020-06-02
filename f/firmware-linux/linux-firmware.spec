@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20200422
-Release: alt2
+Version: 20200519
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -82,6 +82,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 02 2020 Cronbuild Service <cronbuild@altlinux.org> 20200519-alt1
+- upstream changes (GIT 8ba6fa6):
+  + iwlwifi: update and add new FWs from core50-70 and core52-81
+    releases (thx Luca Coelho)
+  + rtw88: RTL8821C: add firmware file v24.5 (thx Yan-Hsuan Chuang)
+  + iwlwifi: update FWs to core47-142 release (thx Luca Coelho)
+  + iwlwifi: update 8265 FW (thx Luca Coelho)
+  + rtw88: update firmware information and README (thx Yan-Hsuan Chuang)
+  + add firmware for MT7915E (thx Ryder Lee)
+  + QCA: Add Bluetooth firmware for QCA9377 (thx Christian Hewitt)
+  + add rebb firmware for mt7663 (thx Lorenzo Bianconi)
+
 * Thu May 28 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 20200422-alt2
 - netronome and liquidio moved to subpackages
 - hardlinking identical files
