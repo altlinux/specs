@@ -1,21 +1,21 @@
 Name: xfce4-stopwatch-plugin
-Version: 0.3.1
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Stopwatch plugin for the Xfce panel
 License: BSD-2-Clause
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-stopwatch-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-stopwatch-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
-BuildRequires: vala libxfce4panel-gtk3-vala libxfce4util-vala
+BuildRequires: libxfce4panel-gtk3-devel libxfce4util-devel
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.12
 
 %define _unpackaged_files_terminate_build 1
 
@@ -42,13 +42,18 @@ automatically.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS NEWS
+%doc README.md AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %_iconsdir/hicolor/*/apps/*.*
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed Jun 03 2020 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Added Vcs tag.
+- Updated url.
+- Updated to 0.4.0.
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt2
 - NMU: Fix license.
 
