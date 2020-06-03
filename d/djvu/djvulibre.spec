@@ -1,5 +1,5 @@
 Name: djvu
-Version: 3.5.25.3
+Version: 3.5.27
 Release: alt1
 
 Summary: DjVu viewers, encoders and utilities
@@ -121,7 +121,6 @@ for f in hi*-djvu.png; do
 		%buildroot%_iconsdir/hicolor/"$i"x"$i"/mimetypes/image-vnd.djvu.mime.png
 done
 install -Dpm644 djvulibre-mime.xml %buildroot%_datadir/mime/packages/djvulibre-mime.xml
-install -Dpm644 vnd.djvu.desktop %buildroot%_datadir/mimelnk/image/vnd.djvu.desktop
 popd
 
 %define docdir %_docdir/%name-%version
@@ -134,6 +133,7 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %files common
 %_datadir/djvu/
 %_iconsdir/*/*/*/*.png
+%_iconsdir/*/scalable/*/*.svgz
 %_datadir/mime*/*
 %dir %docdir/
 %docdir/[CNR]*
@@ -166,6 +166,11 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %endif #static
 
 %changelog
+* Wed Jun 03 2020 L.A. Kostis <lakostis@altlinux.ru> 3.5.27-alt1
+- Updated to 3.5.27.
+- Remove deprecated desktop files install.
+- Added scalable icons.
+
 * Sat Apr 13 2013 Dmitry V. Levin <ldv@altlinux.org> 3.5.25.3-alt1
 - Updated to 3.5.25.3.
 
