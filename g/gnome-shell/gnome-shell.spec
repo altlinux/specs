@@ -11,7 +11,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -269,6 +269,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %endif
 
 %changelog
+* Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
+- 3.36.3
+
 * Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
