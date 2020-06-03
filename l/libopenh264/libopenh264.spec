@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name openh264
 %def_enable check
 
 Name: lib%_name
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 
 Summary: H.264 codec library
@@ -23,6 +23,7 @@ Source: %_name-%version.tar
 %endif
 
 ExclusiveArch: x86_64
+#ExcludeArch: %ix86 ppc64le
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ nasm
@@ -76,6 +77,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%name.a
 
 %changelog
+* Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
+* Thu Apr 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - updated to v2.0.0-7-g0e377291
 
