@@ -1,6 +1,6 @@
 Name: PySolFC-Cardsets
 Version: 2.0
-Release: alt1
+Release: alt1.1
 Summary: Various cardsets for PySolFC
 Group: Games/Cards
 License: GPLv2+
@@ -8,7 +8,7 @@ Url: http://pysolfc.sourceforge.net/
 Source: %name-%version.tar.bz2
 BuildArch: noarch
 
-Requires: PySolFC = %version
+Requires: PySolFC >= %version
 
 %description
 This package contains various cardsets for PySolFC.
@@ -32,6 +32,9 @@ find %buildroot%_datadir/PySolFC -type f -name 'COPYRIGHT' -exec chmod 0644 '{}'
 %_datadir/PySolFC/cardset*
 
 %changelog
+* Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1.1
+- Support PySolFC >= 2.0
+
 * Thu Jul 28 2011 Fr. Br. George <george@altlinux.ru> 2.0-alt1
 - Autobuild version bump to 2.0
 
