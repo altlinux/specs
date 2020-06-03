@@ -7,7 +7,7 @@
 
 %define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel
 %define vulkan_radeon_arches x86_64 ppc64le mipsel
-%define nouveau_arches %ix86 x86_64 aarch64 ppc64le mipsel
+%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches x86_64
 %define virgl_arches %ix86 x86_64 aarch64 ppc64le mipsel
@@ -65,7 +65,7 @@
 
 Name: Mesa
 Version: 20.1.0
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -269,6 +269,9 @@ Mesa-based DRI drivers
 %else
 	-Dgallium-xa=false \
 %endif
+%ifarch armh
+	-Dlibunwind=false \
+%endif
 	-Dgles1=false \
 	-Dopengl=true \
 	-Dselinux=true \
@@ -455,6 +458,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Jun 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt2
+- fixed build on armh
+
 * Thu May 28 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt1
 - 20.1.0
 
