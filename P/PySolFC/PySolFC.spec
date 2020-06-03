@@ -1,10 +1,9 @@
 Name: PySolFC
-Version: 2.0
-Release: alt2
-%setup_python_module %name
+Version: 2.8.0
+Release: alt1
 Summary: A collection of solitare card games
 Group: Games/Cards
-License: GPLv2+
+License: GPL-2.0+
 Url: http://pysolfc.sourceforge.net
 Source0: http://downloads.sourceforge.net/pysolfc/%name-%version.tar.bz2
 Source1: PySol.desktop
@@ -13,9 +12,10 @@ Patch0: pysolfc-setup.py-noglade.patch
 Patch1: PySolFC-pillow.patch
 
 Provides: pysol = 5.%version
+Requires: PySolFC-Cardsets
 
+BuildRequires(pre): rpm-build-python
 BuildArch: noarch
-Requires: %packagename = %version
 
 %description
 %name is a collection of more than 1000 solitaire card games. It is a fork
@@ -24,18 +24,19 @@ set), multiple cardsets and tableau backgrounds, sound, unlimited undo, player
 statistics, a hint system, demo games, a solitaire wizard, support for user
 written plug-ins, an integrated HTML help browser, and lots of documentation.
 
-%package -n %packagename
+%package -n python-module-PySolFC
 Summary: Supplemental python module for %name solitaire game collection
 Group: Games/Cards
-License: GPLv2+
 
-%description -n %packagename
+%description -n python-module-PySolFC
 Supplemental python module for %name solitaire game collection
 
 %prep
 %setup
-%patch0 -p0
-%patch1 -p1
+#patch0 -p0
+#patch1 -p1
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 %python_build
@@ -46,8 +47,6 @@ Supplemental python module for %name solitaire game collection
 # install desktop file
 rm %buildroot%_desktopdir/*.desktop
 install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D data/images/misc/pysol01.png %buildroot%_niconsdir/%name.png
-install -D data/images/misc/pysol02.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
 
 # install the startup wrapper
 mv %buildroot%_bindir/pysol.py %buildroot%_datadir/%name
@@ -56,21 +55,23 @@ install -m755 %SOURCE2 %buildroot/%_bindir/pysol
 %find_lang pysol
 
 %files -f pysol.lang
-%doc README PKG-INFO COPYING
+%doc AUTHORS.md README.md PKG-INFO
 %dir %_datadir/%name
-%dir %python_sitelibdir/pysollib
-%exclude %_iconsdir/*.png
 %_bindir/pysol
 %_datadir/%name/*
 %_datadir/pixmaps/*
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/pysol.png
 
-%files -n %packagename
+%files -n python-module-PySolFC
 %python_sitelibdir/pysollib/*
 %python_sitelibdir/*egg-info
 
 %changelog
+* Sat May 30 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
+- New version
+- Fix License tag according to SPDX
+
 * Thu Nov 27 2014 Fr. Br. George <george@altlinux.ru> 2.0-alt2
 - Import FC patch
 
