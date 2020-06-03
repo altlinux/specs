@@ -1,61 +1,46 @@
 Name: euca2ools
-Version: 1.1
-Release: alt1.1
-Summary: Elastic Utility Computing Architecture Command-Line Tools
+Version: 3.4.1
+Release: alt1
+Summary: Eucalyptus/AWS-compatible command line tools
 
 Group: Networking/Other
 License: BSD
-Url: http://open.eucalyptus.com/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Url: https://github.com/eucalyptus/euca2ools
 
-Source: http://eucalyptussoftware.com/downloads/releases/%name-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Feb 03 2010
-BuildRequires: python-module-m2crypto python-module-setuptools
+BuildRequires(pre): rpm-build-python
 
 BuildArch: noarch
 
 %description
-EUCALYPTUS is an open source service overlay that implements elastic
-computing using existing resources. The goal of EUCALYPTUS is to allow
-sites with existing clusters and server infrastructure to co-host an
-elastic computing service that is interface-compatible with Amazon's EC2.
-
-This package contains the command line tools to interact with Eucalyptus.
-This tools are compatible with Amazon EC2.
+Euca2ools are command line tools used to interact with Amazon Web
+Services (AWS) as well as other services that are compatible with AWS,
+such as Eucalyptus.  They aim to use the same input as similar tools
+provided by AWS for each service individually along with several
+enhancements that make them easier to use with multiple clouds at once.
 
 %prep
-%setup -q
+%setup
 
 %build
-cd euca2ools
 %python_build
 
 %install
-
-pushd euca2ools
-%__python setup.py install --skip-build --root %buildroot
-%__python setup.py install -O1 --skip-build --root %buildroot
-popd
-
-mkdir -p %buildroot/%_bindir
-mkdir -p %buildroot/%_man1dir
-cp -p bin/* %buildroot/%_bindir
-cp -p man/* %buildroot/%_man1dir
+%python_install
 
 %files
-%_bindir/euca-*
-%_man1dir/euca*
-%python_sitelibdir/%name-*.egg-info
-%python_sitelibdir/%name/*.py
-%python_sitelibdir/%name/*.pyc
-%python_sitelibdir/%name/*.pyo
-%doc CHANGELOG
-%doc COPYING
-%doc INSTALL
 %doc README
+%_bindir/eu*
+%python_sitelibdir/%{name}*
+%_man1dir/eu*
+%_man5dir/euca2ools.ini.5*
+%_man7dir/euca2ools.7*
 
 %changelog
+* Tue Jun 02 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
+- New version.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.1
 - Rebuild with Python-2.7
 
