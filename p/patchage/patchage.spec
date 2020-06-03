@@ -1,16 +1,19 @@
 Name: patchage
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.2
+Release: alt1
 
 Summary: A modular patch bay for JACK and LASH audio systems
 License: %gpl2plus
 Group: Sound
-Url: http://www.altlinux.org/SampleSpecs/program
+Url: https://drobilla.net/software/patchage
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
+Source1: waf.tar
 
-BuildPreReq: rpm-build-licenses doxygen graphviz libganv-devel
-BuildRequires: gcc-c++ libraul-devel libflowcanvas-devel boost-devel
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-python3
+BuildRequires: doxygen graphviz libganv-devel
+BuildRequires: gcc-c++ libflowcanvas-devel boost-devel
 BuildRequires: libglademm-devel libalsa-devel libjack-devel
 BuildRequires: desktop-file-utils libdbus-devel libdbus-glib-devel
 
@@ -20,15 +23,18 @@ Jack, Lash, and Alsa.
 
 %prep
 %setup
+tar xf %SOURCE1
+# Set correct python3 executable in shebang
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 ./waf configure \
 	--prefix=%prefix \
 	--configdir=%_sysconfdir \
 	--libdir=%_libdir \
+	--jack-dbus \
+	--jack-session-manage \
 	--docs \
-	--lv2-user \
-	--lv2-system \
 	--debug
 ./waf build -j %__nprocs
 
@@ -42,18 +48,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/patchage.desktop
 
 %files -f %name.lang
-%doc AUTHORS NEWS README 
+%doc AUTHORS NEWS README.md
 %_bindir/*
 %_desktopdir/*
 %_liconsdir/*
 %_niconsdir/*
 %_miconsdir/*
-%_iconsdir/hicolor/22x22/apps/*
-%_iconsdir/hicolor/24x24/apps/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/apps/*.*
 %_datadir/%name/*
+%_man1dir/%name.1*
 
 %changelog
+* Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version.
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
