@@ -4,12 +4,12 @@
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: gspiceui
-Version: 1.1.00
+Version: 1.2.36
 Release: alt1
 Summary: A frontend to Spice circuit similators
 
 Group: Engineering
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://sourceforge.net/projects/gspiceui
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -19,7 +19,7 @@ Source1: %name.desktop
 Source2: %name-32x32.xpm
 
 BuildRequires: gcc-c++
-BuildRequires: compat-libwxGTK3.0-gtk2-devel desktop-file-utils
+BuildRequires: libwxGTK3.0-devel desktop-file-utils
 Requires: ngspice geda-gnetlist geda-gschem geda-gattrib gnucap
 #Requires: gwave
 
@@ -93,6 +93,9 @@ cp -pr sch/ examples
 rm -f examples/*/Makefile
 rm -rf examples/lib/sym
 
+# Fix desktop entry categories
+subst 's/^Categories=.*$/Categories=Science;Engineering;/' %buildroot%_desktopdir/%name.desktop
+
 %files
 %doc Authors License ReadMe ChangeLog ToDo
 %doc examples html/*.html
@@ -103,5 +106,8 @@ rm -rf examples/lib/sym
 %_datadir/gEDA/sym/%name
 
 %changelog
+* Wed Jun 03 2020 Anton Midyukov <antohami@altlinux.org> 1.2.36-alt1
+- New version
+
 * Sun Oct 28 2018 Anton Midyukov <antohami@altlinux.org> 1.1.00-alt1
 - Initial build for ALT
