@@ -1,7 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_with compat
+%def_without compat
 %def_with webkitgtk
 %def_with sdl
 
@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.4
-Release: alt5
+Release: alt6
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -445,6 +445,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Jun 03 2020 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt6
+- Disable build compat-libwxGTK3.0-gtk2
+
 * Fri Apr 26 2019 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt5
 - switches for build with webkitgtk, SDL
 
