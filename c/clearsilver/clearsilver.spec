@@ -1,6 +1,6 @@
 Name: clearsilver
 Version: 0.10.5
-Release: alt1.2
+Release: alt1.3
 
 Summary: Neotonic ClearSilver
 License: Open Source - Neotonic ClearSilver License (Apache 1.1 based)
@@ -17,8 +17,7 @@ BuildPreReq: python-devel >= %__python_version
 #set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
-# Automatically added by buildreq on Sun Oct 17 2004
-BuildRequires: python-base python-modules-encodings zlib-devel
+BuildRequires: rpm-build-python python-modules-encodings zlib-devel
 
 %description
 ClearSilver is a fast, powerful, and language-neutral HTML template system.
@@ -57,6 +56,8 @@ clearsilver CGI kit and templating system.
 %setup -q -n %name
 sed -i 's/LIBRARIES = inserted + LIBRARIES/LIBRARIES = LIBRARIES + inserted/' \
 	python/setup.py
+# Set correct python2 executable in shebang
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
 #__subst 's,python_versions=".*",python_versions="%__python_version",' configure.in
@@ -99,6 +100,9 @@ rm -rf %buildroot{%_libdir/*.a,%_includedir/*,%_man3dir/*}
 %python_sitelibdir/neo_cgi.so
 
 %changelog
+* Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 0.10.5-alt1.3
+- FTBFS: fix build without forbidden requirement of python-base
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.5-alt1.2
 - Fixed build
 
