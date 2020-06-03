@@ -1,5 +1,5 @@
 %define kernel_base_version	5.6
-%define kernel_sublevel        .12
+%define kernel_sublevel        .16
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -16,7 +16,7 @@ Release: alt1
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	9
+%define kgcc_version	8
 
 ## Don't edit below this line ##################################
 
@@ -257,6 +257,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Jun 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.6.16-alt1
+- 5.6.16
+
 * Tue May 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.6.12-alt1
 - 5.6.12
 
