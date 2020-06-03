@@ -1,7 +1,9 @@
 %define  modulename sphinxcontrib-programoutput
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Sphinx extension for capturing program output
@@ -14,6 +16,11 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sphinx-tests
+%endif
 
 BuildArch: noarch
 
@@ -32,12 +39,23 @@ documents, helping you to keep your command examples up to date.
 %install
 %python3_install
 
+# remove .pth file which is useless under python3 and breaks namespace modules
+rm %buildroot%python3_sitelibdir/*programoutput*.pth
+
+%check
+PYTHONPATH=build/lib/ py.test3 -v build/lib/sphinxcontrib
+
 %files
 %python3_sitelibdir/sphinxcontrib/programoutput
 %python3_sitelibdir/*.egg-info
 %doc *.rst
 
 %changelog
+* Wed Jun 03 2020 Grigory Ustinov <grenka@altlinux.org> 0.16-alt1
+- Build new version.
+- Build without specsubst scheme.
+- Build with check.
+
 * Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 0.15-alt1
 - Build new version.
 
