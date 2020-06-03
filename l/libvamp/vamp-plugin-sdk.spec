@@ -2,7 +2,7 @@
 
 Name: libvamp
 Version: 2.9.0
-Release: alt3
+Release: alt4
 Summary: An API for audio analysis and feature extraction plugins
 
 License: BSD
@@ -65,6 +65,7 @@ find . -name '*.pc.in' -exec sed -i 's|/lib|/%_lib|' {} ';'
 
 find %buildroot -name '*.la' -exec rm -f {} ';'
 rm -f %buildroot%_libdir/libvamp-*.a
+make clean -C examples
 
 %files
 %doc COPYING README
@@ -82,6 +83,9 @@ rm -f %buildroot%_libdir/libvamp-*.a
 # %_libdir/*.a
 
 %changelog
+* Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt4
+- Remove executable files from examples in documentation
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt3
 - Rename to libvamp (ALT #38566)
 
