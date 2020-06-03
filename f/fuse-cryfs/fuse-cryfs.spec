@@ -1,8 +1,8 @@
 %define oname cryfs
 %def_without system_spdlog
 Name: fuse-cryfs
-Version: 0.9.10
-Release: alt2
+Version: 0.9.11
+Release: alt1
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -70,6 +70,9 @@ find . -type f | xargs sed -i \
 %_man1dir/*
 
 %changelog
+* Wed Jun 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
+- new version 0.9.11 (with rpmrb script)
+
 * Mon Dec 16 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.10-alt2
 - Rebuilt with boost-1.71.0.
 
