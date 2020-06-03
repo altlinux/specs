@@ -6,10 +6,11 @@
 %def_with icu
 %def_with gobject
 %def_enable introspection
+%def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.4
-Release: alt3
+Version: %ver_major.7
+Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
@@ -17,7 +18,8 @@ License: MIT
 Url: http://harfbuzz.org/
 
 %if_disabled snapshot
-Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.xz
+#Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.xz
+Source: https://github.com/%_name/%_name/archive/%version/%_name-%version.tar.gz
 %else
 # VCS: https://github.com/harfbuzz/harfbuzz.git
 Source: %_name-%version.tar
@@ -101,15 +103,6 @@ GObject introspection devel data for the HarfBuzz library
 %prep
 %setup -n %_name-%version
 
-sed -i 's|\(#\!/usr/bin/env python\)|\13|' src/*.py test/*/*.py test/*/*/*/*.py \
-test/shaping/hb-diff-stat \
-test/shaping/hb-unicode-prettyname \
-test/shaping/hb-diff-filter-failures \
-test/shaping/hb-unicode-decode \
-test/shaping/hb-diff \
-test/shaping/hb-diff-colorize \
-test/shaping/hb-unicode-encode \
-
 %build
 export PYTHON=%__python3
 %add_optflags %(getconf LFS_CFLAGS)
@@ -120,9 +113,9 @@ export PYTHON=%__python3
 	--with-cairo \
 	%{subst_with icu} \
 	%{subst_with graphite2} \
-    %{subst_with gobject} \
-    %{subst_enable introspection} \
-	%{?_enable_snapshot:--enable-gtk-doc}
+        %{subst_with gobject} \
+        %{subst_enable introspection} \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
 
@@ -153,9 +146,10 @@ export PYTHON=%__python3
 %_pkgconfigdir/%_name-gobject.pc
 %endif
 
-
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_with icu
 %files icu
@@ -182,6 +176,9 @@ export PYTHON=%__python3
 %endif
 
 %changelog
+* Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.7-alt1
+- 2.6.7 (updated to Unicode-13.0.0)
+
 * Wed Apr 15 2020 Alexey Shabalin <shaba@altlinux.org> 2.6.4-alt3
 - build with gobject
 - enable introspection
