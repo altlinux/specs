@@ -16,7 +16,7 @@
 
 Name: mutter
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -90,6 +90,7 @@ BuildRequires: libgraphene-gir-devel
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
 BuildRequires: libGL-devel libGLES-devel xorg-xwayland
 BuildRequires: libdbus-devel
+%{?_enable_egl_device:BuildRequires: libEGL-devel}
 %{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
 
 %description
@@ -216,6 +217,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Thu Jun 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.3-alt1.1
+- BR: explicitly required libEGL-devel if EGLDevice enabled (fixed armh build)
+
 * Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.3-alt1
 - 3.36.3
 
