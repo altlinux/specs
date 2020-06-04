@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.2.0.1
-Release:       alt4.5
+Release:       alt4.6
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -64,6 +64,9 @@ Group:         Development/Documentation
 BuildArch:     noarch
 
 Conflicts:     libsexpr-devel
+Conflicts:     libbobpp-devel
+Conflicts:     libdiscount-devel
+Conflicts:     libpicosat-devel
 
 %description   -n gem-%pkgname-devel
 Development headers for %gemname gem.
@@ -103,6 +106,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Thu Jun 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.6
+- + conflict dep to libbobpp-devel, libdiscount-devel, libpicosat-devel
+
 * Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.1-alt4.5
 - + conflict dep to libsexpr-devel
 

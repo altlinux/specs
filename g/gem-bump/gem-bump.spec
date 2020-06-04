@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       0.8.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Bump is a gem that will simplify the way you build gems
 License:       MIT
 Group:         Development/Ruby
@@ -13,6 +13,9 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Bump is a gem that will simplify the way you build gems and chef-cookbooks.
@@ -40,6 +43,7 @@ Group:         Development/Ruby
 BuildArch:     noarch
 
 Conflicts:     mesa-demos
+Conflicts:     bumper
 
 %description   -n bump
 Bump is the executable file for bump gem, which is a gem that will simplify
@@ -73,6 +77,9 @@ the way you build gems and chef-cookbooks.
 %_bindir/*
 
 %changelog
+* Thu Jun 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt3.1
+- + conflict dep to bumper
+
 * Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt3
 - ! spec by adding explicit conflict for bump to mesa-demos
 
