@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.6
-%define kernel_sublevel .16
+%define kernel_base_version	5.7
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -21,7 +21,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
 
-# Enable/disable SGML docs formatting
+# Enable/disable docs formatting
 %if "%sub_flavour" == "def" && %kgcc_version > 5
 %def_enable docs
 %else
@@ -595,7 +595,7 @@ console=hvc0
 %ifarch aarch64
 qemu_opts="-machine accel=tcg,type=virt -cpu cortex-a57 -drive if=pflash,unit=0,format=raw,readonly,file=%_datadir/AAVMF/QEMU_EFI-pflash.raw"
 %endif
-timeout --foreground 600 qemu-system-"$qemu_arch" $qemu_opts -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console="$console" -initrd initrd.img > boot.log &&
+timeout --foreground 600 qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console="$console" -initrd initrd.img > boot.log &&
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -685,6 +685,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Jun 03 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.7.0-alt1
+- v5.7.0
+
 * Wed Jun 03 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.6.16-alt1
 - v5.6.16
 
