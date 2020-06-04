@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.25
-%define nss_version   3.51.0
+%define nss_version   3.53.0
 %define rust_version  1.42.0
 %define cargo_version 1.42.0
 
@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        76.0.1
+Version:        77.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -53,10 +53,10 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang7.0
-BuildRequires: clang7.0-devel
-BuildRequires: llvm7.0-devel
-BuildRequires: lld-devel
+BuildRequires: clang10.0
+BuildRequires: clang10.0-devel
+BuildRequires: llvm10.0-devel
+BuildRequires: lld10.0-devel
 %ifarch %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -99,6 +99,7 @@ BuildRequires: libdrm-devel
 
 # Python requires
 BuildRequires: /dev/shm
+
 BuildRequires: python2-base
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pip
@@ -106,6 +107,10 @@ BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
+
+BuildRequires: python3-base
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pip
 BuildRequires: python3-modules-sqlite3
 
 # Rust requires
@@ -224,6 +229,10 @@ ac_add_options --disable-elf-hack
 %endif
 EOF
 
+find third_party \
+	-type f \( -name '*.so' -o -name '*.o' \) \
+	-print -delete
+
 
 %build
 # compile cbindgen
@@ -284,20 +293,19 @@ export srcdir="$PWD"
 export SHELL=/bin/sh
 export RUSTFLAGS="-Cdebuginfo=0"
 export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
+export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
-./mach configure
+python3 ./mach python --exec-file /dev/null
 
 # Fix virtualenv
-python_ver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
-python_sitedir="objdir/_virtualenvs/init_py3/lib/$python_ver/site-packages"
+pyver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
 
-if [ -z "$(find "$python_sitedir" -type f -name '*.pth' -print -quit)" ]; then
-	rm -rf -- "$python_sitedir"
-	cp -ar objdir/_virtualenvs/init_py3/lib/python3/site-packages "$python_sitedir/"
-fi
+find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
+	-mindepth 1 -maxdepth 1 \
+	-exec mv -t "objdir/_virtualenvs/init_py3/lib/$pyver/site-packages" -- '{}' '+'
 
-./mach build
+python3 ./mach build
 
 while read -r loc; do
 	./mach build chrome-$loc
@@ -447,6 +455,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jun 04 2020 Alexey Gladkov <legion@altlinux.ru> 77.0.1-alt1
+- New release (77.0.1).
+- Security fixes:
+  + CVE-2020-12399: Timing attack on DSA signatures in NSS library
+  + CVE-2020-12405: Use-after-free in SharedWorkerService
+  + CVE-2020-12406: JavaScript type confusion with NativeTypes
+  + CVE-2020-12407: WebRender leaking GPU memory when using border-image CSS directive
+  + CVE-2020-12408: URL spoofing when using IP addresses
+  + CVE-2020-12409: URL spoofing with unicode characters
+  + CVE-2020-12410: Memory safety bugs fixed in Firefox 77 and Firefox ESR 68.9
+  + CVE-2020-12411: Memory safety bugs fixed in Firefox 77
+
 * Fri May 08 2020 Alexey Gladkov <legion@altlinux.ru> 76.0.1-alt1
 - New release (76.0.1).
 
