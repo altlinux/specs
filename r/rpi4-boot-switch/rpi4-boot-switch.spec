@@ -9,7 +9,7 @@
 %define vars rpi4-boot-vars
 
 Name: rpi4-boot-switch
-Version: 0.7
+Version: 0.8
 Release: alt1
 Summary: Switch of boot mode for Raspberry Pi 4
 License: GPLv2+
@@ -95,6 +95,11 @@ install -Dpm 0644 %SOURCE8 %buildroot%_sbindir/%vars
 %_rpmlibdir/%ftrigger2
 
 %changelog
+* Thu Jun 04 2020 Dmitry Terekhin <jqt4@altlinux.org> 0.8-alt1
+- Removed read-only remounting
+- Changed copying kernel, initrd, dtb to FAT
+- Added copying overlays along with dtb
+
 * Sat May 23 2020 Dmitry Terekhin <jqt4@altlinux.org> 0.7-alt1
 - Common file for variables
 - Adapted for armh
