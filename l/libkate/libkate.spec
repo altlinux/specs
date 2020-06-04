@@ -2,9 +2,9 @@
 
 Name: libkate
 Version: 0.4.1
-Release: alt1.4
+Release: alt1.5
 Summary: kate is a karaoke and text codec for embedding in ogg
-License: BSD-style
+License: BSD-3-Clause
 Group: Video
 URL: http://code.google.com/p/libkate/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -12,6 +12,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-python
 BuildRequires: flex libogg-devel liboggz libpng-devel
 
 %description
@@ -55,15 +56,19 @@ new Kate streams to an Ogg file.
 %prep
 %setup -q
 %patch -p1
+subst 's|#!.*python$|#!%__python|' tools/KateDJ/KateDJ
 
 %build
+export PYTHON=%__python
 %autoreconf
 %configure \
 	--disable-static
 %make
 
 %install
+export PYTHON=%__python
 %make DESTDIR=%buildroot pythondir=%python_sitelibdir_noarch install
+rm -rf %buildroot%_datadir/doc/libkate
 
 %files
 %doc AUTHORS THANKS
@@ -85,6 +90,11 @@ new Kate streams to an Ogg file.
 %_man1dir/KateDJ.1*
 
 %changelog
+* Thu Jun 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.5
+- FTBFS: set correct python 2.x executable for autotools and in shebang.
+- Remove unpackaged files.
+- Fix License tag according to SPDX.
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.4
 - Fixed build
 
