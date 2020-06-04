@@ -8,7 +8,7 @@
 %define soname 2.1
 
 Name:           lib%oname
-Version:        2.1.13.0
+Version:        2.1.16.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -187,6 +187,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.16.0-alt1
+- Updated to upstream version 2.1.16.0.
+
 * Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.13.0-alt1
 - Updated to upstream version 2.1.13.0.
 
