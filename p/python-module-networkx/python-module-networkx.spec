@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt2
+Release:        alt3
 Epoch:          2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
@@ -74,8 +74,6 @@ Requires: python-module-yaml
 Requires: python-module-numpy
 Requires: python-module-scipy
 %add_python_req_skip tests
-%add_python_req_skip networkx.drawing
-%add_python_req_skip networkx.readwrite.nx_shp
 %add_python_req_skip networkx.tests.test
 
 %description core
@@ -104,8 +102,6 @@ Requires: python3-module-yaml
 Requires: python3-module-numpy
 Requires: python3-module-scipy
 %add_python3_req_skip tests
-%add_python3_req_skip networkx.drawing
-%add_python3_req_skip networkx.readwrite.nx_shp
 %add_python3_req_skip networkx.tests.test
 
 %description -n python3-module-%oname-core
@@ -283,6 +279,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/*/*/*/tests
 
 %changelog
+* Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.2-alt3
+- Fixed dependencies of core modules.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2:2.2-alt2
 - drop panda buildrequire
 
