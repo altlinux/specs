@@ -8,7 +8,7 @@
 %endif
 
 Name: zbar
-Version: 0.23
+Version: 0.23.1
 Release: alt1
 %define libname libzbar
 
@@ -271,6 +271,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Thu Jun 04 2020 Fr. Br. George <george@altlinux.ru> 0.23.1-alt1
+- Autobuild version bump to 0.23.1
+
 * Fri Dec 20 2019 Fr. Br. George <george@altlinux.ru> 0.23-alt1
 - Huge version update
 - Switch to python3/qt5/gtk3
