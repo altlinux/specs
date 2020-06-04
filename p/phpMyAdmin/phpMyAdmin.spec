@@ -1,6 +1,6 @@
 Name: phpMyAdmin
-Version: 5.0.1
-Release: alt3
+Version: 5.0.2
+Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -177,6 +177,9 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Thu Jun 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
+- new version 5.0.2 (with rpmrb script)
+
 * Fri Jan 31 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt3
 - fix blowfish_secret length, add tmp dir path (ALT bug 37954)
 
