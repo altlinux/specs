@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 %K5init altplace
 
@@ -124,6 +124,9 @@ fi
 #%%doc README
 
 %changelog
+* Thu Jun 04 2020 Pavel Moseev <mars@altlinux.org>  1.0.8-alt1
+- fix form cleaning
+
 * Mon Jun 01 2020 Pavel Moseev <mars@altlinux.org>  1.0.7-alt1
 - fix return settings after package removal
 
