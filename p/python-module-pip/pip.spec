@@ -4,7 +4,7 @@
 
 Summary: The PyPA recommended tool for installing Python packages
 Name: python-module-pip
-Version: 19.3.1
+Version: 20.1.1
 Release: alt1
 Source0: pip-%version.tar.gz
 License: MIT
@@ -111,6 +111,9 @@ PYTHONPATH=`pwd`/build/lib sphinx-build -c docs/html docs/html html2
 %python3_sitelibdir/pip-*.egg-info/
 
 %changelog
+* Thu Jun 04 2020 Fr. Br. George <george@altlinux.ru> 20.1.1-alt1
+- Autobuild version bump to 20.1.1
+
 * Fri Oct 18 2019 Stanislav Levin <slev@altlinux.org> 19.3.1-alt1
 - 19.3 -> 19.3.1.
 
