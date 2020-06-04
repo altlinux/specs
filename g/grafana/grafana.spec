@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit ef5b586d7d9e561b78c8aaa098c4e9f1e3a78d62
+%global commit 00ee734baf8ddc86839cb20e8f6e9cb8aeb6c754
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,7 +12,7 @@
 
 
 Name:		grafana
-Version:	7.0.1
+Version:	7.0.3
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -193,6 +193,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Jun 04 2020 Alexey Shabalin <shaba@altlinux.org> 7.0.3-alt1
+- 7.0.3 (Fixes: CVE-2020-13379)
+
 * Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 7.0.1-alt1
 - 7.0.1
 
