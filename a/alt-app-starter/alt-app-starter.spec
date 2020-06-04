@@ -1,7 +1,7 @@
 %define rname alt-app-starter
 
 Name: %rname
-Version: 1.1.9
+Version: 1.2.0
 Release: alt1
 %K5init altplace
 
@@ -62,6 +62,9 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 %_K5xdgapp/*.desktop
 
 %changelog
+* Thu Jun 04 2020 Pavel Moseev <mars@altlinux.org>  1.2.0-alt1
+- new version
+
 * Mon Jun 01 2020 Pavel Moseev <mars@altlinux.org>  1.1.9-alt1
 - clean code
 
