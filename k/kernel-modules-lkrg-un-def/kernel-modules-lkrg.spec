@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.7
-%define module_release	alt5.git0f7c635
+%define module_release	alt6.gitd57b4c0
 
 %define flavour		un-def
 %define karch		%ix86 x86_64
@@ -61,9 +61,13 @@ install p_lkrg.ko %buildroot%module_dir
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
 
+* Thu Jun 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt6.gitd57b4c0
+- Updated to git commit d57b4c0f0e63d4d88761e098c53280967f2d1aec (fixed
+  build with kernel 5.7).
+
 * Fri Apr 17 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt5.git0f7c635
 - Updated to git commit 0f7c6350a844c4a65a6860bff1172035e3cccae3 (fixed
-  built with kernel 5.6).
+  build with kernel 5.6).
 - Disabled aarch64 build.
 
 * Thu Aug 15 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt2
