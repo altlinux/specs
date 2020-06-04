@@ -30,7 +30,7 @@
 %def_enable unit_tests
 
 Name: libcogl
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
@@ -44,7 +44,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.
 Source: %oname-%version.tar
 %endif
 Patch: cogl-1.16.1-alt-gles2.patch
-Patch1: cogl-1.22.6-fc-egl_includes.patch
 
 # fc patches
 # Vaguely related to https://bugzilla.gnome.org/show_bug.cgi?id=772419
@@ -154,7 +153,6 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %prep
 %setup -n %oname-%version
 %patch -p1
-%patch1 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -215,6 +213,9 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Thu Jun 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
+- 1.22.8
+
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.6-alt1
 - 1.22.6
 
