@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with check
+%def_without check
 
 Name: py
 Version: 1.8.0
-Release: alt5
+Release: alt6
 
 Summary: Testing and distributed programming library
 License: MIT
@@ -19,16 +19,16 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python2.7(setuptools_scm)
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python2.7(apipkg)
+BuildRequires: python3(apipkg)
 
 %if_with check
 BuildRequires: subversion
 BuildRequires: subversion-server-common
-BuildRequires: python2.7(apipkg)
 BuildRequires: python2.7(decorator)
 BuildRequires: python2.7(iniconfig)
 BuildRequires: python2.7(jinja2)
 BuildRequires: python2.7(pytest)
-BuildRequires: python3(apipkg)
 BuildRequires: python3(decorator)
 BuildRequires: python3(iniconfig)
 BuildRequires: python3(jinja2)
@@ -142,6 +142,9 @@ tox.py3 --sitepackages -p auto -o -v -r
 %python3_sitelibdir/py-*.egg-info/
 
 %changelog
+* Thu Jun 04 2020 Stanislav Levin <slev@altlinux.org> 1.8.0-alt6
+- Disabled testing.
+
 * Sun Dec 01 2019 Stanislav Levin <slev@altlinux.org> 1.8.0-alt5
 - Fixed testing against Pytest 5.3+.
 
