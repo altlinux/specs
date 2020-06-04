@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt8
+Release: alt9
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -32,7 +32,6 @@ Patch14: %name-1.30.0-alt-shells.patch
 Patch15: %name-1.30.0-alt-04-systemd.patch
 Patch16: %name-1.30.0-alt-05-tmpfiles.patch
 
-Requires: accountsservice
 Requires: dm-tool
 
 BuildRequires: gcc-c++ intltool
@@ -277,6 +276,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu Jun 04 2020 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt9
+- Remove the explicit relationship to the accountsservice package
+  (closes: 38573).
+
 * Wed Apr 15 2020 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt8
 - Fix: Restore the default (false) value of user-authority-in-system-dir
   (related to altbug 38336).
