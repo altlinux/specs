@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.10.2
-Release: alt2
+Version: 3.11.0
+Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -15,12 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-git: https://github.com/encode/django-rest-framework.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with docs
-BuildRequires: python3(mkdocs)
+BuildRequires: python3-module-mkdocs >= 1.0.4-alt2
 BuildRequires: python3(tornado)
 BuildRequires: python3(livereload)
 %endif
@@ -55,6 +56,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%autopatch -p1
+
 sed -i \
 -e '/requirements\/requirements-optionals\.txt/d' \
 tox.ini
@@ -70,7 +73,7 @@ requirements/requirements-testing.txt
 %python3_build_debug
 
 %if_with docs
-mkdocs.py3 build
+mkdocs build
 %endif
 
 %install
@@ -92,6 +95,12 @@ tox.py3 --sitepackages -v
 
 
 %changelog
+* Thu Jun 04 2020 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
+- 3.10.2 -> 3.11.0.
+
+* Wed Feb 05 2020 Stanislav Levin <slev@altlinux.org> 3.10.2-alt3
+- Fixed FTBS.
+
 * Mon Aug 19 2019 Stanislav Levin <slev@altlinux.org> 3.10.2-alt2
 - Allowed testing against Pytest5.1+.
 

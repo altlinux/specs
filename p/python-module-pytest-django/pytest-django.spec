@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 3.5.1
+Version: 3.9.0
 Release: alt1
 
 Summary: A Django plugin for py.test
@@ -103,6 +103,9 @@ tox.py3 --sitepackages -v
 
 
 %changelog
+* Thu Jun 04 2020 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.5.1 -> 3.9.0.
+
 * Fri Aug 16 2019 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
 - 2.8.0 -> 3.5.1.
 - Enabled testing for Python3.
