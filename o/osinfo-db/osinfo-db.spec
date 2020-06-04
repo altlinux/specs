@@ -1,7 +1,7 @@
 
 Summary: osinfo database files
 Name: osinfo-db
-Version: 20200515
+Version: 20200529
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -26,6 +26,9 @@ osinfo-db-import --root %buildroot --system %SOURCE0
 %_datadir/osinfo/*
 
 %changelog
+* Thu Jun 04 2020 Alexey Shabalin <shaba@altlinux.org> 20200529-alt1
+- 20200529
+
 * Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 20200515-alt1
 - 20200515
 
