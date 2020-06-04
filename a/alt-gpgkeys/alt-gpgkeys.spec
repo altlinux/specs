@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.172
+Version: 0.7.173
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,9 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Thu Jun 04 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.173-alt1
+- Updated key: darktemplar@ (D4C6316F; closes: #35057).
+
 * Tue Jun 02 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.172-alt1
 - Updated expired key: underwit@ (1FA66FA3; closes: #38571).
 
