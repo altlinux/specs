@@ -2,7 +2,7 @@
 
 Name: ibsim
 Summary: InfiniBand fabric simulator for management
-Version: 0.8
+Version: 0.9
 Release: alt1
 License: GPLv2 or BSD
 Group: Monitoring
@@ -37,6 +37,9 @@ OFA OpenSM, diagnostic and management tools.
 %_bindir/*
 
 %changelog
+* Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt1
+- Updated to version 0.9.
+
 * Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8-alt1
 - Updated to version 0.8.
 
