@@ -1,5 +1,5 @@
 Name: riot-web
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -43,5 +43,8 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Thu Jun 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.3-alt1
+- new version 1.6.3 (with rpmrb script)
+
 * Fri May 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - initial release for ALT Sisyphus
