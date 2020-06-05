@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.2
+Version: 0.43.3
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
@@ -132,6 +132,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Jun 05 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.3-alt1
+- Disable avahi-daemon if login to .local domain is requested (ALT #37082).
+
 * Thu Jun 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.2-alt1
 - join_ipa_domain(): adapt dm and delete obsoleted fix for nsswitch.conf.
 
