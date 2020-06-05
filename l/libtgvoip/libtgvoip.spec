@@ -6,7 +6,7 @@
 
 Name: libtgvoip
 Version: 2.4.4
-Release: alt3.dc4e9ec
+Release: alt4.d2e6342
 
 Summary: VoIP library for Telegram clients
 
@@ -60,6 +60,8 @@ developing applications that use %name.
 rm -vf json11.*
 %endif
 
+%__subst "s|-std=gnu++0x|-std=gnu++17|" Makefile.am
+
 %build
 %autoreconf
 %configure --disable-static
@@ -85,6 +87,11 @@ rm -vf json11.*
 %_pkgconfigdir/tgvoip.pc
 
 %changelog
+* Thu Jun 04 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt4.d2e6342
+- update to the latest repo commit d2e63429ec94ee178a62b55be01f1cca98e9de83
+  from https://github.com/telegramdesktop/libtgvoip
+- switch to -std=gnu++17
+
 * Mon May 11 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt3.dc4e9ec
 - update to the latest repo commit dc4e9ec48207388e41db1c2ef1cccf9899d9765f
   from https://github.com/telegramdesktop/libtgvoip
