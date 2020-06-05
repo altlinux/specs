@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-BOM
-Version:        0.16
-Release:        alt1_3
+Version:        0.18
+Release:        alt1
 Summary:        Utilities for handling Byte Order Marks
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-BOM
-Source0:        https://cpan.metacpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/MA/MATTLAW/File-BOM-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  rpm-build-perl
@@ -68,10 +69,13 @@ perl Build.PL installdirs=vendor
 ./Build test
 
 %files
-%doc Changes README TODO
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3
 - update to new release by fcimport
 
