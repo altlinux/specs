@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.62
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -8,7 +8,6 @@ Group: Games/Other
 
 URL: http://www.steampowered.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Vendor: Valve Corporation
 
 ExclusiveArch: %ix86
 
@@ -44,25 +43,21 @@ savegame and screenshot functionality, and many social features.
 
 %files
 %_bindir/%name
-%dir %_libdir/%name
-%_libdir/%name/*
-%_desktopdir/*
-%_docdir/*
-%_miconsdir/*
-%dir %_iconsdir/hicolor/24x24
-%dir %_iconsdir/hicolor/24x24/apps
-%_iconsdir/hicolor/24x24/apps/*
-%_niconsdir/*
-%_liconsdir/*
-%dir %_iconsdir/hicolor/256x256
-%dir %_iconsdir/hicolor/256x256/apps
-%_iconsdir/hicolor/256x256/apps/*
-%_man6dir/*
-%_pixmapsdir/*
+%dir %_libexecdir/%name
+%_libexecdir/%name/*
+%_desktopdir/%name.desktop
+%dir %_defaultdocdir/%name
+%_defaultdocdir/%name/*
+%_iconsdir/hicolor/*/apps/%name.png
+%_man6dir/%{name}*
+%_pixmapsdir/%{name}*.png
 %config %_udevrulesdir/60-%name-input.rules
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Fri Jun 05 2020 Nazarov Denis <nenderus@altlinux.org> 1.0.0.62-alt2
+- Remove dirs not related to steam package
+
 * Fri Apr 24 2020 Nazarov Denis <nenderus@altlinux.org> 1.0.0.62-alt1
 - Version 1.0.0.62
 
