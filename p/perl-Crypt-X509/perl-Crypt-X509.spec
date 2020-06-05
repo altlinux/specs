@@ -6,7 +6,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-X509
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 License: Artistic
@@ -44,6 +44,9 @@ perl-ldap-dev-Mailinglist by Chriss Ridd.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- automated CPAN update
+
 * Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - automated CPAN update
 
