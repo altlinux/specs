@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: lordsawar
-Version: 0.3.1
-Release: alt3
+Version: 0.3.2
+Release: alt1
 
 Summary: Turn-based strategy game in a fantasy setting
 License: GPLv2+
@@ -8,13 +10,13 @@ Group: Games/Arcade
 
 Url: http://www.nongnu.org/lordsawar/
 
+# http://download.savannah.gnu.org/releases/lordsawar/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch1: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ intltool libgtkmm3-devel
 BuildRequires: libxslt-devel libxml++2-devel libarchive-devel libgstreamermm1.0-devel
 
-Requires: %name-data = %version
+Requires: %name-data = %EVR
 
 %description
 LordsAWar! is a turn-based strategy game set in a fantasy setting. The goal of
@@ -30,7 +32,6 @@ Data files for lordsawar game.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %autoreconf
@@ -53,6 +54,9 @@ Data files for lordsawar game.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt1
+- Updated to stable upstream version 0.3.2.
+
 * Mon Apr 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt3
 - Fixed build.
 
