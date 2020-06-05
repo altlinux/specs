@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: rng-tools
-Version: 6.9
+Version: 6.10
 Release: alt1
 
 Summary: Random number generator related utilities
@@ -22,9 +22,8 @@ BuildRequires: libxml2-devel
 BuildRequires: libp11-devel
 BuildRequires: libsysfs-devel
 BuildRequires: jitterentropy-devel
-# Systems that support RDRAND but not AES-NI will require libgcrypt
-# in order to use RDRAND as an entropy source.
-BuildRequires: libgcrypt-devel
+BuildRequires: libjansson-devel
+BuildRequires: rtl-sdr-devel
 
 Obsoletes: kernel-utils
 
@@ -67,6 +66,11 @@ make check
 %_man8dir/rngd.8*
 
 %changelog
+* Mon Jun 01 2020 Nikolai Kostrigin <nickel@altlinux.org> 6.10-alt1
+- Version 6.10
+- add new BR: libjansson-devel, rtl-sdr-devel (add rtlsdr radio entropy source)
+- remove BR: libgcrypt (all entropy sources now use openssl instead of gcrypt)
+
 * Tue Dec 17 2019 Nikolai Kostrigin <nickel@altlinux.org> 6.9-alt1
 - Version 6.9
 - remove obsolete patches
