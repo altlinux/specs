@@ -1,7 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Module/Build.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 %define module Clipboard
 %define m_distro Clipboard
@@ -10,8 +10,8 @@ BuildRequires: perl-podlators
 %define _enable_test 1
 
 Name: perl-Clipboard
-Version: 0.24
-Release: alt1.1
+Version: 0.26
+Release: alt1
 
 Summary: Cliboard - Copy and Paste with any OS
 
@@ -60,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
