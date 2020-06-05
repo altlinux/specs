@@ -9,8 +9,8 @@
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.2.5
-Release: alt2
+Version: 1.2.7
+Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD
@@ -204,6 +204,7 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_datadir/cmake/Modules/*.cmake
 
 %if_enabled static
 %files -n %upname-devel-static
@@ -221,6 +222,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.7-alt1
+- Updated to upstream version 1.2.7.
+
 * Sat Apr 11 2020 Ivan A. Melnikov <iv@altlinux.org> 3:1.2.5-alt2
 - Link with libatomic on %%mips32.
 
