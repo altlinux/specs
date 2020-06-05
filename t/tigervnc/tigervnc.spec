@@ -2,7 +2,7 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 Summary: A TigerVNC remote display system
 
@@ -274,6 +274,10 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Thu Jun 04 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.10.1-alt1
+- New version
+- Update FC-passwd-crash-with-malloc-checks.patch
+
 * Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 1.10.0-alt1
 - Version up
 - Update to XServer 1.20.6
