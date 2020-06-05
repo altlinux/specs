@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-Linux-Smaps
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: a Perl interface to /proc/PID/smaps
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/O/OP/OPI/Linux-Smaps-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AE/AERUDER/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Mar 10 2011
 BuildRequires: perl-Class-Member perl-devel
@@ -39,7 +39,7 @@ estimate the effect of copy-on-write. This module implements a Perl
 interface.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -47,9 +47,13 @@ interface.
 %perl_vendor_install
 
 %files
+%doc README Changes
 %perl_vendor_privlib/Linux/*
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
