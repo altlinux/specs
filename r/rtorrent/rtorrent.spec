@@ -3,7 +3,7 @@
 %define _optlevel s
 
 Name: rtorrent
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel libgssapi-devel
 BuildRequires: cppunit-devel
 BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
-BuildRequires: libtorrent-devel >= 0.13.7-alt1
+BuildRequires: libtorrent-devel >= 0.13.8
 
 %description
 rTorrent is a ncurses based client and is therefor ideal to use with
@@ -50,6 +50,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_bindir/%name
 
 %changelog
+* Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8-alt1
+- Updated to upstream version 0.9.8.
+
 * Wed Sep 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
 - Updated to upstream version 0.9.7.
 
