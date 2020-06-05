@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.52.0
+Version:	3.53.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -16,16 +16,12 @@ Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
 
-Patch0:		nss_with_system_nspr.patch
-Patch2:		nss-no-rpath.patch
-Patch3:		nss-use-sqlite.patch
-Patch4:		nss-use-mozsqlite.patch
-Patch5:		nss-fix-objdir.patch
-Patch6:		nss-no-tests.patch
-
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
 BuildRequires:  rpm-macros-alternatives
+BuildRequires:  python3
+BuildRequires:  gyp
+BuildRequires:  ninja-build
 BuildRequires:  libnspr-devel >= %nspr_version
 Requires:       libnspr       >= %nspr_version
 
@@ -109,51 +105,30 @@ Provides:	%name-tools
 %description -n %name-utils
 Netscape Network Security Services Utilities
 
-
 %prep
 %setup -q
-%patch2 -p0
-%patch5 -p2
-%patch6 -p2
-
-:>nss/coreconf/Werror.mk
-
-pushd nss/tests/ssl
-# Create versions of sslcov.txt and sslstress.txt that disable tests
-# for SSL2 and EXPORT ciphers.
-cat sslcov.txt| sed -r "s/^([^#].*EXPORT|^[^#].*SSL2)/#disabled \1/" > sslcov.noSSL2orExport.txt
-cat sslstress.txt| sed -r "s/^([^#].*EXPORT|^[^#].*SSL2)/#disabled \1/" > sslstress.noSSL2orExport.txt
-popd
 
 %build
-export BUILD_OPT=1
-export NS_USE_GCC=1
-export CC_IS_GCC=1
-export NSS_NO_SSL2_NO_EXPORT=1
-export NSS_ENABLE_ECC=1
-export NSS_ENABLE_WERROR=0
-export NSS_USE_SYSTEM_SQLITE=1
-export USE_SYSTEM_ZLIB=1
-export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-export NSPR_INCLUDE_DIR=/usr/include/nspr
-export NSPR_LIB_DIR=%_libdir
+mkdir -p bin
+export PATH="$PWD/bin:$PATH"
 
-# Generate symbolic info for debuggers
-export XCFLAGS=$RPM_OPT_FLAGS
+ln -s %_bindir/python3 bin/python
 
 %{?_is_lp64:export USE_64=1}
 
-make -C nss/coreconf
-make -C nss/coreconf platform 2>/dev/null |grep '^Linux' >destdir
-make -C nss/lib/dbm
-make -C nss
+cd nss
+./build.sh \
+	--gcc \
+	--opt \
+	--system-nspr \
+	--system-sqlite \
+	--disable-tests
 
 %install
 mkdir -p %buildroot{%_bindir,%_libdir/pkgconfig,%_includedir}
 
 # Get some variables
-DESTDIR="$(head -1 destdir)"
+DESTDIR="$PWD/dist/Release"
 NSPR_VERSION="$(nspr-config --version)"
 nss_h="nss/lib/nss/nss.h"
 NSS_VMAJOR="$(sed -ne 's,^#define[[:space:]]\+NSS_VMAJOR[[:space:]]\+,,p' "$nss_h")"
@@ -164,6 +139,7 @@ NSS_VPATCH="$(sed -ne 's,^#define[[:space:]]\+NSS_VPATCH[[:space:]]\+,,p' "$nss_
 cd dist
 cp -aL "$DESTDIR"/bin/* %buildroot%_bindir
 cp -aL "$DESTDIR"/lib/* %buildroot%_libdir
+rm -f -- %buildroot%_libdir/*.TOC
 
 # Install NSS headers
 cp -aL public/nss %buildroot%_includedir
@@ -182,7 +158,7 @@ sed -e "s,@libdir@,%_libdir,g" \
     -e "s,@includedir@,%_includedir/nss,g" \
     -e "s,@NSPR_VERSION@,$NSPR_VERSION,g" \
     -e "s,@NSS_VERSION@,%version,g" \
-	%SOURCE1 > %buildroot/%_libdir/pkgconfig/nss.pc
+    %SOURCE1 > %buildroot/%_libdir/pkgconfig/nss.pc
 
 sed -e "s,@libdir@,%_libdir,g" \
     -e "s,@prefix@,%_prefix,g" \
@@ -230,15 +206,7 @@ EOF
 %files -n %name-utils
 %_bindir/*
 %exclude %_bindir/setup-nsssysinit.sh
-# Remove tests and samples
 %exclude %_bindir/%name-config
-%exclude %_bindir/bltest
-%exclude %_bindir/dbtest
-%exclude %_bindir/mangle
-%exclude %_bindir/ocspclnt
-%exclude %_bindir/oidcalc
-%exclude %_bindir/sdrtest
-%exclude %_bindir/shlibsign
 
 %files -n lib%name
 %_altdir/libnssckbi-%name
@@ -272,6 +240,11 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Jun 04 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt1
+- New version (3.53).
+- Security fixes:
+  + CVE-2020-12399 - Force a fixed length for DSA exponentiation
+
 * Wed May 06 2020 Alexey Gladkov <legion@altlinux.ru> 3.52.0-alt1
 - New version (3.52).
 - Stop pulling in nss-pem automatically, packages that need it should depend on it.
