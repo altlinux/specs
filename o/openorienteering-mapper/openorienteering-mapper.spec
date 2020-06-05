@@ -3,7 +3,7 @@
 %def_with check
 
 Name: openorienteering-mapper
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
@@ -87,6 +87,9 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jun 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.3-alt1
+- New version
+
 * Mon Apr 06 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.2-alt1
 - New version
   + quit using ACCEPT_USE_OF_DEPRECATED_PROJ_API_H against libproj 6.3.1
