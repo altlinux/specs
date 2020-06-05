@@ -44,7 +44,7 @@
 
 Name: freeipa
 Version: 4.8.6
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -228,6 +228,8 @@ Requires: python3-module-pki-base >= %pki_version
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: python3-module-samba
 Requires: librpm
+Obsoletes: python3-module-ipaserver-ntp < %EVR
+Provides: python3-module-ipaserver-ntp = %EVR
 
 %description -n python3-module-ipaserver
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -376,6 +378,8 @@ Group: System/Libraries
 Requires: %name-client-common = %EVR
 Requires: python3-module-freeipa = %EVR
 Requires: python3-module-dns
+Obsoletes: python3-module-ipaclient-ntp < %EVR
+Provides: python3-module-ipaclient-ntp = %EVR
 
 %description -n python3-module-ipaclient
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -621,26 +625,32 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 %if_without only_client
 
 %post server
-%post_service certmonger
-%post_service dbus
-%post_service oddjobd
+/bin/systemctl daemon-reload 2>&1 ||:
+# upgrade
+if [ $1 -gt 1 ] ; then
+    /bin/systemctl condrestart certmonger.service 2>&1 ||:
+fi
+/bin/systemctl try-reload-or-restart \
+    dbus \
+    oddjobd ||:
 
 systemd-tmpfiles --create ipa.conf >/dev/null 2>&1 ||:
 
 %preun server
-%preun_service ipa
-if [ $1 = 0 ]; then
-    /bin/systemctl reload-or-try-restart dbus ||:
-    /bin/systemctl reload-or-try-restart oddjobd ||:
+# removal
+if [ $1 -eq 0 ]; then
+    /bin/systemctl -q --no-reload disable ipa.service ||:
+    /bin/systemctl -q stop ipa.service ||:
+    /bin/systemctl try-reload-or-restart \
+        dbus \
+        oddjobd ||:
 fi
 
 %pre server
 # Stop ipa_kpasswd if it exists before upgrading so we don't have a
 # zombie process when we're done.
 if [ -e /usr/sbin/ipa_kpasswd ]; then
-# NOTE: systemd specific section
     /bin/systemctl stop ipa_kpasswd.service >/dev/null 2>&1 ||:
-# END
 fi
 
 %pre server-common
@@ -655,25 +665,34 @@ getent passwd ipaapi >/dev/null || useradd -r -g ipaapi -s /sbin/nologin -d / -c
 id -Gn apache2 | grep '\bipaapi\b' >/dev/null || usermod apache2 -a -G ipaapi ||:
 
 %post server-dns
-%post_service ipa-dnskeysyncd
-/bin/systemctl reload-or-try-restart ipa-ods-exporter.socket ||:
-%post_service ipa-ods-exporter
+# first installation
+if [ $1 -eq 1 ] ; then
+    /bin/systemctl -q preset \
+        ipa-dnskeysyncd \
+        ipa-ods-exporter.socket \
+        ipa-ods-exporter.service ||:
+fi
 
 %preun server-dns
-%preun_service ipa-dnskeysyncd
-/bin/systemctl disable ipa-ods-exporter.socket ||:
-/bin/systemctl stop ipa-ods-exporter.socket ||:
-%preun_service ipa-ods-exporter
+# removal
+# preun_service(P9) doesn't handle not *.service systemd names
+if [ $1 -eq 0 ] ; then
+    /bin/systemctl --no-reload disable --now \
+        ipa-dnskeysyncd \
+        ipa-ods-exporter.socket \
+        ipa-ods-exporter.service ||:
+fi
 
 %post server-trust-ad
-%post_service dbus
-%post_service oddjobd
-%post_service httpd2
+/bin/systemctl try-reload-or-restart \
+    dbus \
+    oddjobd ||:
 
 %preun server-trust-ad
-if [ $1 = 0 ]; then
-    /bin/systemctl reload-or-try-restart dbus ||:
-    /bin/systemctl reload-or-try-restart oddjobd ||:
+if [ $1 -eq 0 ]; then
+    /bin/systemctl try-reload-or-restart \
+        dbus \
+        oddjobd ||:
 fi
 %endif # only_client
 
@@ -999,6 +1018,9 @@ fi
 %python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Fri Jun 05 2020 Stanislav Levin <slev@altlinux.org> 4.8.6-alt2
+- Applied upstream fixes.
+
 * Tue Apr 07 2020 Stanislav Levin <slev@altlinux.org> 4.8.6-alt1
 - 4.7.4 -> 4.8.6.
 
