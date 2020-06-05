@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-experimental
-Version:        0.021
+Version:        0.022
 Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
+- automated CPAN update
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
 - automated CPAN update
 
