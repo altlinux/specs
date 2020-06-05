@@ -15,8 +15,8 @@
 %define _enable_test 1
 
 Name: perl-Algorithm-Dependency
-Version: 1.111
-Release: alt1.1
+Version: 1.112
+Release: alt1
 
 Summary: Algorithm-Dependency - Create extensible and optimized dependency algorithms
 
@@ -56,6 +56,9 @@ confusion.
 %perl_vendor_privlib/Algorithm/
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.112-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.111-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
