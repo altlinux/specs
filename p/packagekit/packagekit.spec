@@ -2,9 +2,9 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.1.13
+Version:   1.2.0
 Release:   alt1
-License:   GPLv2+ and LGPLv2+
+License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
 
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): meson
 BuildRequires: gcc-c++
 BuildRequires: gobject-introspection-devel
 BuildRequires: gtk-doc
@@ -20,14 +21,13 @@ BuildRequires: intltool
 BuildRequires: libsqlite3-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libsystemd-devel
-BuildRequires: autoconf-archive
 BuildRequires: libapt-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: appstream-devel
+BuildRequires: bash-completion
 
 BuildRequires: vala-tools
-BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
 
 BuildRequires: boost-devel
@@ -106,33 +106,35 @@ Python3 backend for PackageKit.
 %build
 %add_optflags -std=c++14
 %add_optflags -D_FILE_OFFSET_BITS=64
-%define _configure_script ./autogen.sh
-%configure \
-	--disable-static \
-	--localstatedir=%_var \
-	--disable-bash-completion \
-	--enable-aptcc \
-	--enable-python3 \
-	--disable-dummy \
-	--disable-daemon-tests \
-	--enable-scripts \
+%meson \
+	-Dpackaging_backend=aptcc \
+	-Dsystemd=true \
+	-Doffline_update=true \
+	-Dgtk_doc=true \
+	-Dlocal_checkout=false \
+	-Dpython_backend=true \
+	-Ddaemon_tests=false \
 	%nil
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
-find %buildroot -name '*.la' -delete
+%meson_install
 
 # Create directories for downloaded appstream data
 mkdir -p %buildroot%_cachedir/app-info/{icons,xmls}
-touch %buildroot%_cachedir/PackageKit/groups.sqlite
 
 # create a link that GStreamer will recognise
 pushd %buildroot%_libexecdir
 ln -s pk-gstreamer-install gst-install-plugins-helper
 popd
+
+# enable packagekit-offline-updates.service here for now, till we
+# decide how to do it upstream after the meson conversion:
+# https://github.com/hughsie/PackageKit/issues/401
+# https://bugzilla.redhat.com/show_bug.cgi?id=1833176
+mkdir -p %{buildroot}%{_unitdir}/system-update.target.wants/
+ln -sf ../packagekit-offline-update.service %{buildroot}%{_unitdir}/system-update.target.wants/packagekit-offline-update.service
 
 # get rid of test backend
 rm -f %buildroot%_libdir/packagekit-backend/libpk_backend_test_*.so
@@ -140,6 +142,9 @@ rm -rf %buildroot%_datadir/PackageKit/helpers/test_spawn
 
 # Following scripts seems unused, and it needs to be patched for ALT should it be used
 rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
+
+# Remove unused files
+rm -f %buildroot%_datadir/PackageKit/helpers/aptcc/pkconffile.nodiff
 
 touch %buildroot%_localstatedir/PackageKit/upgrade_lock
 
@@ -186,8 +191,6 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %dir %_cachedir/app-info
 %dir %_cachedir/app-info/icons
 %dir %_cachedir/app-info/xmls
-%dir %_cachedir/PackageKit
-%ghost %verify(not md5 size mtime) %_cachedir/PackageKit/groups.sqlite
 %dir %_libdir/packagekit-backend
 %config(noreplace) %_sysconfdir/PackageKit/PackageKit.conf
 %config(noreplace) %_sysconfdir/PackageKit/Vendor.conf
@@ -196,6 +199,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_man1dir/pkmon.1*
 %_datadir/polkit-1/actions/*.policy
 %_datadir/polkit-1/rules.d/*
+%_datadir/bash-completion/completions/pkcon
 %_libexecdir/packagekitd
 %_libexecdir/packagekit-direct
 %_bindir/pkmon
@@ -225,7 +229,6 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_libexecdir/gst-install-plugins-helper
 
 %files -n lib%name-gtk3-module
-%_libdir/gtk-2.0/modules/*.so
 %_libdir/gtk-3.0/modules/*.so
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/*.desktop
 
@@ -243,11 +246,15 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_datadir/gir-1.0/PackageKitGlib-1.0.gir
 %_datadir/gtk-doc/html/PackageKit
 %_datadir/vala/vapi/packagekit-glib2.vapi
+%_datadir/vala/vapi/packagekit-glib2.deps
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
+- Updated to upstream version 1.2.0.
+
 * Wed Apr 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.13-alt1
 - Updated to upstream version 1.1.13.
 
