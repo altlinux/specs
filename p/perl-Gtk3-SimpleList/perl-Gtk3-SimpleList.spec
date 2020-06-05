@@ -6,7 +6,7 @@ BuildRequires: libgtk+3-gir perl(ExtUtils/MakeMaker.pm) perl(Gtk3.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
+Version: 0.21
 Release: alt1
 Summary: A simple interface to Gtk3's complex MVC list widget
 Group: Development/Perl
@@ -29,10 +29,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README Changes COPYING
+%doc README Changes
 %perl_vendor_privlib/G*
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Fri Nov 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
