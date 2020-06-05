@@ -7,7 +7,7 @@ BuildRequires: perl(Term/ReadLine.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
-Version:        1.08
+Version:        1.09
 Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
@@ -88,6 +88,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Wed Dec 11 2019 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
