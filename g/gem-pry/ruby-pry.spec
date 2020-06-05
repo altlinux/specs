@@ -1,8 +1,8 @@
 %define        pkgname pry
 
 Name:          gem-%pkgname
-Version:       0.12.2
-Release:       alt3.2
+Version:       0.13.1
+Release:       alt1
 Summary:       An IRB alternative and runtime developer console
 License:       MIT
 Group:         Development/Ruby
@@ -21,8 +21,8 @@ BuildRequires: gem(simplecov) >= 0.16
 BuildRequires: gem(rubocop) >= 0.74
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Pry is a powerful alternative to the standard IRB shell for Ruby. It is written
@@ -54,6 +54,7 @@ Documentation files for %gemname gem.
 %check
 %ruby_test
 
+
 %files
 %doc README*
 %_bindir/%pkgname
@@ -65,6 +66,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Apr 23 2020 Pavel Skrylev <majioa@altlinux.org> 0.13.1-alt1
+- ^ 0.12.2 -> 0.13.1
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.12.2-alt3.2
 - fixed (!) spec
 
