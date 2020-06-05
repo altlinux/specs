@@ -4,18 +4,20 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.16.4
+Version: 2.16.6
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
-License: Apache
+License: Apache-2.0
 Group: System/Libraries
 
 Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-Source: https://tls.mbed.org/download/%name-%version-apache.tgz
 
-Patch0: %name-threading-alt.patch
+# https://github.com/ARMmbed/mbedtls/archive/%name-%version/%name-%name-%version.tar.gz
+Source: %name-%name-%version.tar
+
+Patch0: %name-alt-threading.patch
 
 BuildRequires: cmake
 BuildRequires: libpkcs11-helper-devel
@@ -85,7 +87,7 @@ Group: Development/Tools
 Cryptographic utilities based on mbed TLS 
 
 %prep
-%setup
+%setup -n %name-%name-%version
 %patch0 -p1
 
 %build
@@ -146,6 +148,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Fri Jun 05 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.6-alt1
+- Version 2.16.6
+
 * Wed Feb 12 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.4-alt1
 - Version 2.16.4
 
