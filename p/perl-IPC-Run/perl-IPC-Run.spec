@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: perl-%module
-Version: 20180523.0
+Version: 20200505.0
 Release: alt1
 
 Summary: IPC-Run - system() and background procs w/ piping, redirs, ptys (Unix, Win32)
@@ -34,11 +34,14 @@ mixed.
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes TODO README.md
+%doc README.md Changelog
 %perl_vendor_privlib/IPC/
 %exclude %perl_vendor_privlib/IPC/Run/Win*
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 20200505.0-alt1
+- automated CPAN update
+
 * Fri May 25 2018 Igor Vlasenko <viy@altlinux.ru> 20180523.0-alt1
 - automated CPAN update
 
