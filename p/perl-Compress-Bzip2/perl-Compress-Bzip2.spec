@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Bzip2
 Name: perl-%dist
-Version: 2.26
-Release: alt1.2
+Version: 2.27
+Release: alt1
 
 Summary: Interface to Bzip2 compression library
 License: GPL or Artistic
@@ -34,6 +34,9 @@ export BUILD_BZLIB=0
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.26-alt1.2
 - rebuild with new perl 5.28.1
 
