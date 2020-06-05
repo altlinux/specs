@@ -2,7 +2,7 @@
 
 Name: spice-html5
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: Pure Javascript SPICE client
 Group: Networking/Remote access
 
@@ -13,7 +13,7 @@ Patch1: Spice-devel-Add-Send-Ctrl-Alt-Delete-button-to-spice_auto.html.patch
 
 BuildArch: noarch
 # this path is used for symlinking into an actual project
-Provides: %_datadir/spice-html5
+Provides: %_datadir/spice-html5/src
 
 %description
 %name is a Javascript SPICE client.  This includes a simple HTML
@@ -34,6 +34,9 @@ file for Apache, but should work with any web server.
 %doc COPYING COPYING.LESSER README TODO apache.conf.sample
 
 %changelog
+* Fri Jun 05 2020 Stanislav Levin <slev@altlinux.org> 0.2.2-alt2
+- Corrected spice-html5 path to provide.
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 0.2.2-alt1
 - new version 0.2.2
 

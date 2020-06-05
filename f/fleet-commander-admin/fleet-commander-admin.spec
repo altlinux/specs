@@ -5,7 +5,7 @@
 %def_with check
 
 Name: fleet-commander-admin
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
 
 Summary: Fleet Commander
@@ -25,7 +25,7 @@ BuildRequires: python3(gi)
 BuildRequires: python3(libvirt)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(samba)
-BuildRequires: spice-html5
+BuildRequires: spice-html5 >= 0.2.2-alt2
 BuildRequires: iproute2
 
 %if_with check
@@ -37,6 +37,7 @@ BuildRequires: python3(dbusmock)
 BuildRequires: python3(ipalib)
 BuildRequires: python3(six)
 BuildRequires: python3(sqlite3)
+BuildRequires: samba-common
 %endif
 
 # don't generate Python2 auto requires
@@ -44,9 +45,10 @@ BuildRequires: python3(sqlite3)
 %add_python3_compile_exclude %_datadir/fleet-commander-admin/python/
 
 Requires: cockpit
-Requires: realmd
-Requires: spice-html5
 Requires: python3-module-freeipa-desktop-profile-client
+Requires: realmd
+Requires: samba-common
+Requires: spice-html5 >= 0.2.2-alt2
 
 %description
 Fleet Commander is an application that allows you to manage the desktop
@@ -119,7 +121,8 @@ sed -i 's/time\.sleep(0\.1)/time.sleep(1)/g' tests/_wait_for_name.py
 rm -r admin/cockpit/fleet-commander-admin/js/spice-html5
 # use here a symlink to ensure that our packaged version is synced with bundled
 # one
-ln -s %_datadir/spice-html5 admin/cockpit/fleet-commander-admin/js/
+ln -s %_datadir/spice-html5/src \
+    admin/cockpit/fleet-commander-admin/js/spice-html5
 
 %build
 %autoreconf
@@ -133,7 +136,8 @@ export PYTHON=python3
 install -m 755 -d %buildroot/%_localstatedir/lib/fleet-commander-admin/profiles
 # remove bundled spice-html5
 rm -r %buildroot%_datadir/cockpit/fleet-commander-admin/js/spice-html5
-ln -s %_datadir/spice-html5 %buildroot%_datadir/cockpit/fleet-commander-admin/js/
+ln -s %_datadir/spice-html5/src \
+    %buildroot%_datadir/cockpit/fleet-commander-admin/js/spice-html5
 
 %check
 %make check || { cat ./tests/test-suite.log; exit 1; }
@@ -157,14 +161,21 @@ ln -s %_datadir/spice-html5 %buildroot%_datadir/cockpit/fleet-commander-admin/js
 %files -n fleet-commander-logger
 %doc README
 %attr(755, root, root) %_libexecdir/fleet-commander-logger
+%attr(755, root, root) %_libexecdir/firefox-bookmark-fclogger
 %dir %_datadir/fleet-commander-logger
 %_datadir/fleet-commander-logger/fc-chromium-policies.json
 %dir %_datadir/fleet-commander-logger/python
 %attr(644, root, root) %_datadir/fleet-commander-logger/python/*.py
 %_xdgconfigdir/autostart/fleet-commander-logger.desktop
 %_udevrulesdir/81-fleet-commander-logger.rules
+%_libdir/mozilla/native-messaging-hosts/firefox_bookmark_fclogger.json
+%_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Mon Apr 27 2020 Stanislav Levin <slev@altlinux.org> 0.15.1-alt1
+- 0.14.1 -> 0.15.1.
+- Applied upstream fixes.
+
 * Thu Nov 28 2019 Stanislav Levin <slev@altlinux.org> 0.14.1-alt1
 - 0.14.0 -> 0.14.1.
 
