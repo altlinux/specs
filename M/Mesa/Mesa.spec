@@ -65,7 +65,7 @@
 
 Name: Mesa
 Version: 20.1.0
-Release: alt2
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -458,11 +458,17 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Sat Jun 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt3
+- no-change rebuild for p9 branch
+
 * Wed Jun 03 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt2
 - fixed build on armh
 
 * Thu May 28 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt1
 - 20.1.0
+
+* Wed May 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:19.2.2-alt1.p9
+- backport to p9 branch
 
 * Fri May 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.0.7-alt1
 - 20.0.7
