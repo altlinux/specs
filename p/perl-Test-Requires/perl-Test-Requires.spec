@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Test-Requires
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Checks to see if the module can be loaded
@@ -26,9 +27,12 @@ BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm)
 
 %files
 %perl_vendor_privlib/Test/Requires*
-%doc Changes LICENSE README.md
+%doc Changes README.md
 
 %changelog
+* Sat Jun 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- new version
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
