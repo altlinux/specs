@@ -1,7 +1,7 @@
 Name: liquidwar6
 Version: 0.6.3902
 Summary: A unique multiplayer wargame
-Release: alt4
+Release: alt5
 License: GPL
 Group: Games/Strategy
 Source: %name-%version.tar
@@ -10,9 +10,9 @@ Url: http://www.gnu.org/software/liquidwar6
 Patch0: liquidwar6-0.6.3902-alt-drop-Werror.patch
 Patch1: liquidwar6-0.6.3902-alt-guile22.patch
 
-# Automatically added by buildreq on Wed Jul 18 2018
-# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libcrypt-devel libfreetype-devel libfribidi-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgpg-error libltdl7-devel libpango-devel libpng15-devel libtinfo-devel libwayland-client libwayland-server perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python-base python-modules xz zlib-devel
-BuildRequires: doxygen guile-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libltdl-devel libncurses-devel libolpcsound-devel libreadline-devel libsqlite3-devel makeinfo
+# Automatically added by buildreq on Sat Jun 06 2020
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 guile guile-devel guile22 libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgc-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmp-devel libgpg-error libharfbuzz-devel libpango-devel libpng-devel libsasl2-3 libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python2-base sh4 shared-mime-info xz zlib-devel
+BuildRequires: doxygen guile22-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgomp-devel libgperftools-devel libgtk+2-devel libjpeg-devel libltdl7-devel libncurses-devel libreadline-devel libsqlite3-devel makeinfo
 
 %description
 Liquid War 6 is a unique multiplayer wargame. Your army is a blob of
@@ -55,6 +55,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Sat Jun 06 2020 Fr. Br. George <george@altlinux.ru> 0.6.3902-alt5
+- Fix build
+
 * Wed Nov 21 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.3902-alt4
 - rebuilt with guile-2.2
 
