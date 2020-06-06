@@ -3,7 +3,7 @@
 
 Name: tigervnc
 Version: 1.10.1
-Release: alt1
+Release: alt2
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -54,7 +54,7 @@ Patch502: ALT-FC-xserver120.patch
 
 # Automatically added by buildreq on Thu Dec 19 2019
 # optimized out: cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libcrypt-devel libglvnd-devel libgpg-error libgpg-error-devel libsasl2-3 libstdc++-devel perl pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libSM-devel libXdamage-devel libXdmcp-devel libXfont2-devel libXinerama-devel libXrandr-devel libXtst-devel libdrm-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-xtrans-devel zlib-devel
+BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libGL-devel libSM-devel libXdamage-devel libXdmcp-devel libXfont2-devel libXinerama-devel libXrandr-devel libXtst-devel libdrm-devel libfltk-devel libgcrypt-devel libgnutls-devel libjpeg-devel libpam-devel libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel libxshmfence-devel xorg-xtrans-devel zlib-devel
 
 BuildRequires: libfltk-devel >= 1.3.3
 
@@ -274,6 +274,9 @@ popd
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Sat Jun 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.1-alt2
+- add explicit libGL-devel buildreq
+
 * Thu Jun 04 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.10.1-alt1
 - New version
 - Update FC-passwd-crash-with-malloc-checks.patch
