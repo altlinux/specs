@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Text-Xslate
-Version: 3.5.7
+Version: 3.5.8
 Release: alt1
 
 Summary: Text::Xslate - Scalable template engine for Perl5
@@ -42,6 +42,9 @@ Xslate is a template engine for Perl5 with the following features:
 %doc Changes README.md HACKING
 
 %changelog
+* Sat Jun 06 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.8-alt1
+- new version
+
 * Wed Nov 27 2019 Igor Vlasenko <viy@altlinux.ru> 3.5.7-alt1
 - new version
 
