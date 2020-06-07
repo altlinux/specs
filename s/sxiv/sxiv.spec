@@ -1,6 +1,6 @@
 Name: sxiv
-Version: 25
-Release: alt2
+Version: 26
+Release: alt1
 
 Summary: Simple X Image Viewer
 License: GPLv2
@@ -59,6 +59,9 @@ install -pm644 {README.md,LICENSE} %buildroot%docdir/
 %doc %docdir/*
 
 %changelog
+* Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 26-alt1
+- Version update.
+
 * Mon Mar 04 2019 Andrey Bergman <vkni@altlinux.org> 25-alt2
 - Updated build req.
 
