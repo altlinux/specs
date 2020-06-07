@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.17.1
-Release: alt2
+Version: 4.18.1
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -130,6 +130,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 4.18.1-alt1
+- Version update
+
 * Sat Sep 21 2019 Andrey Bergman <vkni@altlinux.org> 4.17.1-alt2
 - Add desktop file to xsessions.
 
