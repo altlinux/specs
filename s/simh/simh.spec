@@ -1,5 +1,5 @@
 Name: simh
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 Summary: A highly portable, multi-system emulator
 
@@ -81,13 +81,16 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 %files
 %_bindir/*
 %doc ALTAIR/altair.txt NOVA/eclipse.txt 0readme_ethernet.txt
-%doc HP2100/hp2100_diag.txt I7094/i7094_bug_history.txt Interdata/id_diag.txt
+%doc I7094/i7094_bug_history.txt Interdata/id_diag.txt
 %doc PDP1/pdp1_diag.txt PDP10/pdp10_bug_history.txt PDP18B/pdp18b_diag.txt
 %doc S3/haltguide.txt S3/readme_s3.txt S3/system3.txt SDS/sds_diag.txt
 %doc VAX/vax780_bug_history.txt
 #%%doc DOC/*.pdf
 
 %changelog
+* Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 3.11.0-alt1
+- Version update.
+
 * Tue Jul 16 2019 Andrey Bergman <vkni@altlinux.org> 3.10.0-alt1
 - Version update.
 
