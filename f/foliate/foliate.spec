@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 2.2
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -46,7 +46,7 @@ BuildRequires: libgjs-devel
 
 %description
 Foliate is a simple and modern GTK eBook reader with following features:
-- View EPUB and Kindle files
+- View EPUB, Kindle, FictionBook, Comic book and plain text files
 - Two-page view and scrolled view
 - Customize font and line-spacing
 - Light, sepia, dark, and invert mode
@@ -81,6 +81,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Sun Jun 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - updated to 2.2.0-3-g9ac9c23
 
