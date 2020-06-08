@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name cloudproviders
 %define ver_major 0.3
 
@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -107,10 +107,10 @@ the functionality of the installed %_name library.
 %_vapidir/%_name.*
 
 %files gir
-%_typelibdir/CloudProviders-%version.typelib
+%_typelibdir/CloudProviders-%ver_major.typelib
 
 %files gir-devel
-%_girdir/CloudProviders-%version.gir
+%_girdir/CloudProviders-%ver_major.gir
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -127,6 +127,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Mon Jun 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Sat Jan 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 - new -gir, -gir-devel, -tests subpackages
