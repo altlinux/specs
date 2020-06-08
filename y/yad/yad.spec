@@ -1,12 +1,12 @@
 Name: yad
-Version: 0.40.3
+Version: 6.0
 Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
 Group: Graphical desktop/GNOME
 License: GPLv3+
-Url: http://sourceforge.net/projects/yad-dialog/
-# https://github.com/v1cont/yad
+# http://sourceforge.net/projects/yad-dialog/
+Url: https://github.com/v1cont/yad
 Source0: v%version.tar.gz
 Patch0: fix-missing-buttons.patch
 Patch1: show-cursor-initially.patch
@@ -23,7 +23,7 @@ custom buttons, additional dialogs, pop-up menu in notification icon and more.
 
 %prep
 %setup
-%patch0 -p0
+#patch0 -p0
 %patch1 -p1
 %patch2 -p1
 
@@ -55,8 +55,12 @@ desktop-file-install --remove-key Encoding     \
 %exclude %_datadir/aclocal/%name.m4
 %_man1dir/*
 %_desktopdir/*
+%_datadir/glib-2.0/schemas/yad.gschema.xml
 
 %changelog
+* Mon Jun 08 2020 Fr. Br. George <george@altlinux.ru> 6.0-alt1
+- Autobuild version bump to 6.0
+
 * Tue Apr 10 2018 Fr. Br. George <george@altlinux.ru> 0.40.3-alt1
 - Autobuild version bump to 0.40.3
 
