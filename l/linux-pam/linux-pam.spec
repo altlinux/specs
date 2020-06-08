@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.1.0.324.eec5
+Version: 1.4.0
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -352,6 +352,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Jun 04 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
+- v1.3.1-324-geec5fe0d -> v1.4.0.
+
 * Fri May 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.1.0.324.eec5-alt1
 - v1.3.1-223-gc2c0434b -> v1.3.1-324-geec5fe0d.
   New module: pam_faillock.
