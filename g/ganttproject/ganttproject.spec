@@ -1,6 +1,6 @@
 Name: ganttproject
 Version: 2.7.2
-Release: alt3
+Release: alt4
 
 Summary: GanttProject is a tool for creating a project schedule by means of Gantt chart and resource load chart
 
@@ -8,8 +8,12 @@ License: GPLv2 with library exceptions
 Group: Office
 Url: http://www.ganttproject.biz/
 
-Source: %name-%version.tar
 Packager: Andrey Chetepanov <cas@altlinux.org> 
+
+Source: %name-%version.tar
+Source1: %name.desktop
+Source2: %name.xml
+Source3: %name.png
 
 BuildArch: noarch
 
@@ -19,9 +23,6 @@ BuildRequires: java-1.8.0-openjdk-devel
 AutoProv: yes,noosgi
 
 Requires: java >= 1.8.0
-
-Requires(post): desktop-file-utils
-Requires(postun): desktop-file-utils
 
 %description
 GanttProject is a tool for creating a project schedule by means
@@ -53,50 +54,26 @@ install -d %buildroot%_bindir
 ln -s %_datadir/%name/%name %buildroot%_bindir/%name 
 
 # Create the desktop entry
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop << EOF
-[Desktop Entry]
-Name=GanttProject
-Comment=Project Management
-Comment[ru]=Управление проектами
-Exec=%name %U
-Icon=%name
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Office;Development;ProjectManagement;
-EOF
+install -Dm0755 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Create the mime-type for GanttProject
-mkdir -p %buildroot%_datadir/mimelnk/application
-cat > %buildroot%_datadir/mimelnk/application/x-%name.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-MimeType=application/x-ganttproject
-Comment=GanttProject File
-Comment[es]=Archivo de GanttProject
-Comment[ru]=Файл проекта GanttProject
-Icon=%name
-Type=MimeType
-Patterns=*.gan;
-X-KDE-AutoEmbed=false
-[Property::X-KDE-NativeExtension]
-Type=QString
-Value=.gan
-EOF
+install -Dm0644 %SOURCE2 %buildroot%_datadir/mime/packages/%name.xml
 
 # Copy the icon
-install -D ../ganttproject/data/resources/icons/ganttproject.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
+install -Dm0644 %SOURCE3 %buildroot%_datadir/icons/hicolor/64x64/apps/%name.png
 
 %files
 %doc ganttproject/AUTHORS ganttproject/LICENSE ganttproject/README
 %_bindir/%name
 %_datadir/%name/
-%_desktopdir/*
-%_datadir/mimelnk/application/*
-%_datadir/icons/hicolor/32x32/apps/*
+%_desktopdir/*.desktop
+%_datadir/mime/packages/%name.xml
+%_datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Jun 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.7.2-alt4
+- Fix open *.gan files in ganttproject (ALT #38024).
+
 * Fri Feb 21 2020 Andrey Cherepanov <cas@altlinux.org> 2.7.2-alt3
 - Open *.gan files in ganttproject (ALT #38024).
 
