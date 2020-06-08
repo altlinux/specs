@@ -7,8 +7,8 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.18
-Release: alt2
+Version: %ver_major.20
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -118,6 +118,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Mon Jun 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.20-alt1
+- 2.10.20
+
 * Wed Mar 18 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.18-alt2
 - rebuilt against libmypaint-1.5.1/mypaint-brushes1.0-1.3.1
 
