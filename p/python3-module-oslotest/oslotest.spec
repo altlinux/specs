@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.9.0
+Version: 4.2.0
 Release: alt1
 Summary: OpenStack test framework
 License: ASLv2.0
@@ -96,6 +96,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.9.0-alt1
 - Automatically updated to 3.9.0.
 - Added watch file.

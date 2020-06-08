@@ -1,12 +1,12 @@
 %define oname openstacksdk
 
 Name: python3-module-%oname
-Version: 0.36.0
+Version: 0.46.0
 Release: alt1
 Summary: An SDK for building applications to work with OpenStack
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -18,7 +18,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.17.1
-BuildRequires: python3-module-keystoneauth1 >= 3.16.0
+BuildRequires: python3-module-keystoneauth1 >= 3.18.0
 BuildRequires: python3-module-deprecation >= 1.0
 
 %description
@@ -82,6 +82,10 @@ rm -rf requirements.txt test-requirements.txt
 %exclude %python3_sitelibdir/*/tests/functional/examples
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
+- Automatically updated to 0.46.0.
+- Renamed spec file.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.36.0-alt1
 - Automatically updated to 0.36.0.
 - Build without python2.

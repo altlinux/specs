@@ -1,14 +1,14 @@
 %define oname taskflow
 
 Name: python3-module-%oname
-Version: 3.8.0
+Version: 4.1.0
 Release: alt1
 Epoch: 1
 
 Summary: Taskflow structured state management library
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -80,7 +80,11 @@ rm -rf {test-,}requirements.txt
 
 # Prevent doc build warnings from causing a build failure
 sed -i '/warning-is-error/d' setup.cfg
-python3 setup.py build_sphinx
+
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -89,17 +93,18 @@ python3 setup.py build_sphinx
 %doc README.rst LICENSE ChangeLog
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/test*
 
 %files tests
-%python3_sitelibdir/*/tests
 %python3_sitelibdir/*/test*
 
 %files doc
-%doc doc/build/html
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1:4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.8.0-alt1
 - Automatically updated to 3.8.0.
 - Added watch file.

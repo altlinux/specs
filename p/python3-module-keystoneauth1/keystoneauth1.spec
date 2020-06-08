@@ -1,11 +1,11 @@
 %define oname keystoneauth1
 
 Name: python3-module-%oname
-Version: 3.17.1
+Version: 4.0.0
 Release: alt1
 Summary: OpenStack authenticating tools
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -56,9 +56,9 @@ Documentation for OpenStack authenticating tools.
 %python3_build
 
 # generate html docs
-#python setup.py build_sphinx
+#sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-#rm -rf doc/build/html/.{doctrees,buildinfo}
+#rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -71,10 +71,15 @@ Documentation for OpenStack authenticating tools.
 %files tests
 %python3_sitelibdir/*/tests
 
-#%files doc
-#%doc doc/build/html
+#%%files doc
+#%%doc html
 
 %changelog
+* Thu Jun 04 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+- Renamed spec file.
+- Fix license.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 3.17.1-alt1
 - Automatically updated to 3.17.1
 - Build without python2.

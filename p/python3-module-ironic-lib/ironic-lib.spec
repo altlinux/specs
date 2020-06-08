@@ -1,11 +1,11 @@
 %define oname ironic-lib
 
 Name: python3-module-%oname
-Version: 2.21.0
+Version: 4.2.0
 Release: alt1
 Summary:  A python library of common ironic utilities
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: %name-%version.tar
 
@@ -24,7 +24,8 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-zeroconf >= 0.19.1
+BuildRequires: python3-module-zeroconf >= 0.24.0
+BuildRequires: python3-module-openstackdocstheme
 
 %description
 A common library to be used exclusively by projects under the Ironic governance.
@@ -50,10 +51,11 @@ Documentation for %oname
 %build
 %python3_build
 
+export PYTHONPATH="$(pwd)"
 # generate html docs
-#python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-#rm -rf build/sphinx/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -67,9 +69,13 @@ Documentation for %oname
 %files tests
 %python3_sitelibdir/*/tests
 
-#%%files doc
-#%%doc build/sphinx/html
+%files doc
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+- Build with docs.
+
 * Thu Oct 31 2019 Grigory Ustinov <grenka@altlinux.org> 2.21.0-alt1
 - Initial build for Sisyphus.

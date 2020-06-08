@@ -1,11 +1,11 @@
 %define oname futurist
 
 Name: python3-module-%oname
-Version: 1.10.0
+Version: 2.1.1
 Release: alt1
 Summary: Useful additions to futures, from the future
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/futurist
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
@@ -49,7 +49,7 @@ Tests for futurist library.
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
-sphinx-build-3 -b html -d build/doctrees source build/html
+PBR_VERSION=$(pbr.py3 --version) sphinx-build-3 -b html -d build/doctrees source build/html
 popd
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
@@ -69,6 +69,10 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+- Renamed spec file.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
 - Automatically updated to 1.10.0.
 

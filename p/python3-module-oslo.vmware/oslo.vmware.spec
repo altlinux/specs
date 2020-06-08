@@ -1,11 +1,11 @@
 %define oname oslo.vmware
 
 Name: python3-module-%oname
-Version: 2.34.1
+Version: 3.4.0
 Release: alt1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -86,6 +86,10 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Fri Jun 05 2020 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+- Fix license.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.34.1-alt1
 - Automatically updated to 2.34.1.
 - Added watch file.

@@ -1,11 +1,11 @@
 %define oname osprofiler
 
 Name: python3-module-%oname
-Version: 2.9.0
+Version: 3.1.0
 Release: alt1
 Summary: OpenStack cross-project profiling library
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -60,9 +60,10 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
@@ -77,9 +78,12 @@ rm -fr doc/build/html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc doc/build/html
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Automatically updated to 2.9.0.
 - Added watch file.
