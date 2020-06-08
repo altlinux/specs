@@ -3,7 +3,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.53.0
-Release:	alt1
+Release:	alt2
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -122,6 +122,7 @@ cd nss
 	--opt \
 	--system-nspr \
 	--system-sqlite \
+	--enable-legacy-db \
 	--disable-tests
 
 %install
@@ -240,6 +241,9 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Mon Jun 08 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt2
+- Enable NSS legacy DBM type (ALT#38590).
+
 * Thu Jun 04 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt1
 - New version (3.53).
 - Security fixes:
