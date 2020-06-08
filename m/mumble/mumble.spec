@@ -6,7 +6,7 @@
 %define _pidfile_dir         /run/
 
 Name: mumble
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Low latency encrypted VoIP client
@@ -236,6 +236,9 @@ mkdir -p %buildroot%_logdir/murmur/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Mon Jun 08 2020 Arseny Maslennikov <arseny@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1.
+
 * Wed Apr 15 2020 Arseny Maslennikov <arseny@altlinux.org> 1.3.0-alt1
 - 1.2.19 -> 1.3.0.
 
