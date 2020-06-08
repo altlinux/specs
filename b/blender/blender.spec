@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blender
-Version: 2.82
-Release: alt1.a
+Version: 2.83
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -23,7 +23,6 @@ Source4: tools-%version.tar
 Patch11: 0001-blender_thumbnailer.patch
 Patch12: 0002-install_in_usr_share.patch
 Patch13: 0004-do_not_use_version_number_in_system_path.patch
-Patch14: blender-2.82-fedora-fix_appdata_validation.patch
 
 Patch21: blender-2.66-alt-pcre.patch
 Patch22: blender-2.77-alt-enable-localization.patch
@@ -114,9 +113,6 @@ scripting, rendering, compositing, post-production and game creation
 %patch12 -p1
 %patch13 -p1
 
-# fedora
-%patch14 -p1
-
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
@@ -199,6 +195,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Mon Jun 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83-alt1
+- Updated to upstream version 2.83.
+
 * Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.82-alt1.a
 - Updated to upstream version 2.82a.
 
