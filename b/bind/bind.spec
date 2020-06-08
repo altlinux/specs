@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.19
 %define src_version 9.11.19
-Release: alt2
+Release: alt3
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -46,6 +46,7 @@ Patch0007: 0007-alt-nofile.patch
 Patch0008: 0008-alt-ads-remove.patch
 Patch0009: 0009-Minimize-linux-capabilities.patch
 Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
+Patch0011: 0011-ALT-Make-it-possible-to-retain-Linux-capabilities-of.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -67,7 +68,7 @@ Provides: bind-chroot(%_chrootdir)
 Obsoletes: bind-chroot, bind-debug, bind-slave, caching-nameserver
 # Because of /etc/syslog.d/ feature.
 Conflicts: syslogd < 1.4.1-alt11
-Requires(pre): bind-control >= 1.2
+Requires(pre): bind-control >= 1.3
 
 # due to %_chrootdir/dev/log
 BuildPreReq: coreutils
@@ -291,7 +292,7 @@ rm -v %buildroot%docdir/*/{Makefile*,README-SGML,*.xml}
 /usr/sbin/groupadd -r -f named
 /usr/sbin/useradd -r -g named -d %_chrootdir -s /dev/null -n -c "Domain Name Server" named >/dev/null 2>&1 ||:
 [ -f %_initdir/named -a ! -L %_initdir/named ] && /sbin/chkconfig --del named ||:
-%pre_control bind-chroot bind-debug bind-slave
+%pre_control bind-chroot bind-debug bind-slave bind-caps
 
 %preun
 %preun_service bind
@@ -308,7 +309,7 @@ if grep -qs '^SYSLOGD_OPTIONS=.*-a %_chrootdir/dev/log' "$SYSLOGD_CONFIG"; then
 fi
 
 %post_control -s enabled bind-chroot
-%post_control -s disabled bind-debug bind-slave
+%post_control -s disabled bind-debug bind-slave bind-caps
 %post_service bind
 
 %pre -n lwresd
@@ -321,10 +322,11 @@ fi
 %preun -n lwresd
 %preun_service lwresd
 
-%triggerun -- bind < 9.10.4
+%triggerun -- bind < 9.11.19-alt3
 F=/etc/sysconfig/bind
 if [ $2 -gt 0 -a -f $F ]; then
 	grep -q '^#\?CHROOT=' $F || echo '#CHROOT="-t /"' >> $F
+	grep -q '^#\?RETAIN_CAPS=' $F || echo '#RETAIN_CAPS="-r"' >> $F
 fi
 
 %files -n libbind
@@ -425,6 +427,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri May 29 2020 Stanislav Levin <slev@altlinux.org> 9.11.19-alt3
+- Placed Linux capabilities dropping under control(1).
+
 * Fri May 29 2020 Stanislav Levin <slev@altlinux.org> 9.11.19-alt2
 - Re-applied the lost patch.
 
