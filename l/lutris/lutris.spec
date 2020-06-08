@@ -1,7 +1,7 @@
 %global appid net.lutris.Lutris
 Name: lutris
 Version: 0.5.6
-Release: alt1
+Release: alt2
 Summary: Manager for game installation and execution
 License: GPL-3.0
 Group: Games/Other
@@ -14,7 +14,7 @@ Patch: lutris-python3-pixbuf-path.patch
 # optimized out: bash4 bashrc kmod perl python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources rpm-build-python3 sh4 tzdata xz
 BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
 #BuildRequires: gobject-introspection-devel icon-theme-hicolor python3-devel python3-module-pygobject3 python3-module-pygobject3-pygtkcompat libgdk-pixbuf-gir-devel libgtk+3-gir libwebkit2gtk-gir libnotify-gir libgnome-desktop3-gir python3-module-distutils-extra python3-module-setuptools
-Requires: cabextract fluid-soundfont-gm python3-module-Pillow python3-module-yaml python3-module-pygobject python3-module-requests winetricks libgdk-pixbuf-gir psmisc libgnome-desktop3-gir xrandr pciutils
+Requires: cabextract fluid-soundfont-gm python3-module-Pillow python3-module-yaml python3-module-pygobject python3-module-requests winetricks libgdk-pixbuf-gir psmisc libgnome-desktop3-gir xrandr pciutils psmisc
 # controller support
 Requires: python3-module-evdev
 
@@ -51,6 +51,9 @@ or emulated console games and browser games.
 %_datadir/metainfo/%appid.metainfo.xml
 
 %changelog
+* Mon Jun 08 2020 Leontiy Volodin <lvol@altlinux.org> 0.5.6-alt2
+- Fixed build errors.
+
 * Thu Apr 16 2020 Leontiy Volodin <lvol@altlinux.org> 0.5.6-alt1
 - New version (0.5.6) with rpmgs script.
 
