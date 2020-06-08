@@ -2,7 +2,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.22
+Version: %api_ver.24
 Release: alt1
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
@@ -18,7 +18,7 @@ BuildRequires: libgexiv2-devel libgomp-devel libgtk+3-devel libjasper-devel libj
 BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel libsuitesparse-devel libswscale-devel
 BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
 BuildRequires: python-module-pygobject3-common-devel libpoppler-glib-devel libspiro-devel liblua-devel libSDL2-devel
-%ifarch %arm aarch64 %ix86 x86_64
+%ifarch %arm aarch64 %ix86 x86_64 ppc64le
 BuildRequires: libluajit-devel
 %endif
 
@@ -72,7 +72,7 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %dir %_libdir/%rname-%api_ver
 %_libdir/%rname-%api_ver/*.so
 %_libdir/%rname-%api_ver/grey2.json
-%ifarch %arm aarch64 %ix86 x86_64
+%ifarch %arm aarch64 %ix86 x86_64 ppc64le
 %_datadir/%rname-%api_ver
 %endif
 
@@ -89,6 +89,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Mon Jun 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.4.24-alt1
+- 0.4.24
+
 * Mon Mar 02 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.4.22-alt1
 - 0.4.22
 
