@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.11
+Version:  1.3.12
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Tue Jun 09 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.12-alt1
+- Fix official source for c8 branch.
+
 * Mon Mar 30 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt1
 - Add new repositories: c8.1, autoimports.p9 and altlinuxclub.p9.
 - Use proxy from APT for network operations (thanks asy@) (ALT #38294).
