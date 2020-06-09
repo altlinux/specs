@@ -8,7 +8,7 @@
 
 Name: bluez
 Version: 5.54
-Release: alt4
+Release: alt5
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -78,7 +78,7 @@ https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
+export CFLAGS="$CFLAGS %(getconf LFS_CFLAGS)"
 %configure \
 	--enable-library \
 	--enable-threads \
@@ -108,20 +108,20 @@ find %buildroot%_libdir -name \*.la -delete
 %make check
 
 %post
-%post_service bluetoothd
 if [ $1 = 1 ]; then
+%post_service bluetoothd
 	chkconfig bluetoothd on
-	/bin/systemctl --user --global preset obex.service || :
+	/bin/systemctl --user --global preset obex.service >/dev/null 2>&1 || :
 fi
 
 %preun
+if [ $1 = 0 ]; then
 %preun_service bluetoothd
-if [ $1 = 1 ]; then
-	/bin/systemctl --user --global disable obex.service || :
+	/bin/systemctl --user --global disable obex.service >/dev/null 2>&1 || :
 fi
 
-%triggerin -- %name < 5.54-alt4
-/bin/systemctl --user --global preset obex.service || :
+%triggerin -- %name < 5.54-alt5
+/bin/systemctl --user --global preset obex.service >/dev/null 2>&1 || :
 
 %files
 %doc AUTHORS ChangeLog README
@@ -180,6 +180,10 @@ fi
 %endif
 
 %changelog
+* Tue Jun 09 2020 Yuri N. Sedunov <aris@altlinux.org> 5.54-alt5
+- fixed %%post, %%preun scripts
+- used LFS_CFLAGS
+
 * Tue Jun 09 2020 Anton Midyukov <antohami@altlinux.org> 5.54-alt4
 - Disable obex.service only when uninstalling package
 - Install package bluez after installing systemd-utils
