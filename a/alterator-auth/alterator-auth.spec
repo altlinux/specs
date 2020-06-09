@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.3
+Version: 0.43.4
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
@@ -132,6 +132,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jun 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.4-alt1
+- Place dns source immediately after files instead of disabling avahi-daemon service (ALT #37082).
+
 * Fri Jun 05 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.3-alt1
 - Disable avahi-daemon if login to .local domain is requested (ALT #37082).
 
