@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name JSON-MaybeXS
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(JSON/PP.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(if.pm)
+BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(JSON/PP.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(if.pm) perl(Test/Needs.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.004000
+Version: 1.004002
 Release: alt1
 Summary: use L<Cpanel::JSON::XS> with a fallback to L<JSON::PP>
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 Requires: perl(Cpanel/JSON/XS.pm)
 
@@ -34,6 +34,9 @@ Requires: perl(Cpanel/JSON/XS.pm)
 %perl_vendor_privlib/J*
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.004002-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 1.004000-alt1
 - automated CPAN update
 
