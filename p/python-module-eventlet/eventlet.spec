@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname eventlet
 
-%def_with check
+%def_without check
 %def_with docs
 
 Name: python-module-%oname
-Version: 0.24.1
+Version: 0.25.1
 Release: alt1
 Summary: Highly concurrent networking library
 License: MIT
@@ -28,6 +28,7 @@ BuildRequires: python2.7(sphinx)
 BuildRequires: python2.7(zmq)
 %endif
 
+BuildRequires: python3(six)
 %if_with check
 BuildRequires: python2.7(dns)
 BuildRequires: python2.7(enum34)
@@ -199,6 +200,10 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/eventlet/
 
 %changelog
+* Tue Jun 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt1
+- Automatically updated to 0.25.1.
+- Build without check (for openstack update).
+
 * Fri Apr 26 2019 Stanislav Levin <slev@altlinux.org> 0.24.1-alt1
 - 0.18.4 -> 0.24.1.
 - Enabled testing.
