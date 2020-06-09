@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MIME-ContentType
 Name: perl-%dist
-Version: 1.022
+Version: 1.024
 Release: alt1
 
 Summary: Parse a MIME Content-Type Header
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm)
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm) perl(Text/Unidecode.pm)
 
 %description
 This module is responsible for parsing email content type headers
@@ -36,6 +36,9 @@ attributes.
 %perl_vendor_privlib/Email
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.024-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.022-alt1
 - automated CPAN update
 
