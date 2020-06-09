@@ -2,7 +2,7 @@
 
 
 Name: janus
-Version: 0.9.5
+Version: 0.10.0
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -19,10 +19,10 @@ Patch0:  %name-%version-%release.patch
 
 Source1: %name.service
 
-Patch1: janus-0.9.2-debian-2004_avoid_stun_privacy_breach.patch
-Patch2: janus-0.9.2-debian-2005_avoid_npm.patch
-Patch3: janus-0.9.2-debian-2006_avoid_doc_privacy_breach.patch
-Patch4: janus-0.9.2-debian-2002_force_tolerate_recent_doxygen.patch
+Patch1: janus-0.10.0-debian-2004_avoid_stun_privacy_breach.patch
+Patch2: janus-0.10.0-debian-2005_avoid_npm.patch
+Patch3: janus-0.10.0-debian-2006_avoid_doc_privacy_breach.patch
+Patch4: janus-0.10.0-debian-2002_force_tolerate_recent_doxygen.patch
 
 
 BuildRequires(pre): rpm-build-licenses
@@ -188,6 +188,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Tue Jun 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.10.0-alt1
+- New version
+
 * Sat May 23 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.9.5-alt1
 - New version
 
