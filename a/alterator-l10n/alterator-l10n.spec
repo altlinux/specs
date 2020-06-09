@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.63
+Version: 2.9.64
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,10 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Jun 09 2020 Slava Aseev <ptrnine@altlinux.org> 2.9.64-alt1
+- Update Russian translations and help for alterator-openvpn-server
+  and alterator-net-openvpn
+
 * Wed May 20 2020 Georgy A Bystrenin <gkot@altlinux.org> 2.9.63-alt1
 - Update l10n for alterator-net-iptables
 
