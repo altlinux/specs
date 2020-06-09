@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.4
-%define kernel_sublevel .35
+%define kernel_sublevel .45
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -690,6 +690,37 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Jun 08 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.45-alt1
+- v5.4.45  (Fixes: CVE-2020-10757)
+
+* Wed Jun 03 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.44-alt1
+- v5.4.44
+
+* Wed May 27 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.43-alt1
+- v5.4.43
+
+* Wed May 20 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.42-alt1
+- v5.4.42
+
+* Fri May 15 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.41-alt1
+- v5.4.41
+
+* Tue May 12 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.40-alt2
+- many scsi and sata controllers enabled on aarch64
+- modules for RPi3 enabled
+
+* Sun May 10 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.40-alt1
+- v5.4.40
+
+* Wed May 06 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.39-alt1
+- v5.4.39
+
+* Sun May 03 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.38-alt1
+- v5.4.38
+
+* Thu Apr 30 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.36-alt1
+- v5.4.36  (Fixes: CVE-2020-11884)
+
 * Fri Apr 24 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.35-alt1
 - v5.4.35  (Fixes: CVE-2019-19377)
 
