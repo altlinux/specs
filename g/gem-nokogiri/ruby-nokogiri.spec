@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.11.0
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 Group:         Development/Ruby
 License:       MIT
@@ -13,8 +13,12 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 Patch:         shutdown-libxml2-warning.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libxml2-devel libxslt-devel ruby-pkg-config zlib-devel
-BuildRequires: gem(hoe)
+BuildRequires: ruby-pkg-config
+BuildRequires: libxml2-devel
+BuildRequires: libxslt-devel
+BuildRequires: zlib-devel
+BuildRequires: gem(hoe) >= 3.22.1
+BuildRequires: gem(hoe-markdown)
 BuildRequires: gem(rake-compiler)
 BuildRequires: gem(rake-compiler-dock)
 BuildRequires: gem(concourse)
@@ -24,8 +28,8 @@ BuildRequires: gem(mini_portile2)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
@@ -66,10 +70,10 @@ Summary:       Development files for %gemname gem
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      ruby-pkg-config
 Requires:      libxml2-devel
 Requires:      libxslt-devel
 Requires:      java-devel
-Requires:      ruby-pkg-config
 Requires:      zlib-devel
 
 %description   devel
@@ -92,6 +96,7 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
@@ -106,6 +111,9 @@ Development files for %gemname gem.
 %ruby_includedir/*
 
 %changelog
+* Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 1.11.0-alt0.2
+- ^ 1.11.0rc1 -> 1.11.0rc2+
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.11.0-alt0.1
 - ^ 1.10.7 -> 1.11.0rc1
 - ! spec tags and syntax, requires for the devel package

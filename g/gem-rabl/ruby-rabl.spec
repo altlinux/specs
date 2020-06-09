@@ -1,8 +1,8 @@
 %define        pkgname rabl
 
 Name:          gem-%pkgname
-Version:       0.14.2
-Release:       alt1.1
+Version:       0.14.3.1
+Release:       alt1
 Summary:       General ruby templating with json, bson, xml, plist and msgpack support
 License:       MIT
 Group:         Development/Ruby
@@ -12,11 +12,13 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         0.14.3.patch
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 RABL (Ruby API Builder Language) is a Rails and Padrino ruby templating system
@@ -69,10 +71,11 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
+%patch
 
 %build
-%ruby_build
-
+%ruby_build --ignore=padrino_test,rails2,rails3,rails3_2,rails4,rails5,rails5_api,rails6,sinatra_test \
+            --use=%gemname --version-replace=%version
 %install
 %ruby_install
 
@@ -89,6 +92,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 0.14.3.1-alt1
+- ^ 0.14.2 -> 0.14.3+
+- ! fault to require to active_view explicitly in code by patch
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.14.2-alt1.1
 - fixed (!) spec
 

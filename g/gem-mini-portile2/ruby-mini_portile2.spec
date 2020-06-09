@@ -1,18 +1,24 @@
-%define        pkgname mini_portile2
+%define        pkgname mini-portile2
+%define        gemname mini_portile2
 
-Name: 	       ruby-%pkgname
-Version:       2.4.0
-Release:       alt2
+Name: 	       gem-%pkgname
+Version:       2.5.0
+Release:       alt1
 Summary:       Simple autoconf builder for developers
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/flavorjones/mini_portile
-%vcs           https://github.com/flavorjones/mini_portile.git
+Vcs:           https://github.com/flavorjones/mini_portile.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 It's intended primarily to make sure that you, as the developer of a
@@ -56,8 +62,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
+- ^ 2.4.0 -> 2.5.0
+- ! spec tags
+
 * Sat Jul 20 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt2
-^ Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Wed Jan 16 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
 - Bump to 2.4.0;
