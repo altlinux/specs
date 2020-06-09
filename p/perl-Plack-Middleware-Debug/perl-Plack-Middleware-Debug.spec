@@ -3,7 +3,7 @@
 %def_without test
 
 Name: perl-%dist
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: The debug middleware offers a configurable set of panels that displays information about the current request and response.
@@ -29,11 +29,14 @@ BuildRequires: perl-Plack perl-Text-MicroTemplate perl-Data-Dump perl-Catalyst-D
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README examples
+%doc Changes README examples
 %perl_vendor_privlib/*
 %doc README examples
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
