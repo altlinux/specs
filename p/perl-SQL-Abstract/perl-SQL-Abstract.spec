@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Abstract
 Name: perl-%dist
-Version: 1.86
-Release: alt1.1
+Version: 1.87
+Release: alt1
 
 Summary: Generate SQL from Perl data structures
 License: GPL or Artistic
@@ -38,6 +38,9 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.87-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.86-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
