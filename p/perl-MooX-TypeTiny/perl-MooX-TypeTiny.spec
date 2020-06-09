@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Moo.pm) perl(Sub/Quote.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002002
+Version: 0.002003
 Release: alt1
 Summary: Optimized type checks for Moo + Type::Tiny
 Group: Development/Perl
@@ -43,6 +43,9 @@ making this module unnecessary.
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.002003-alt1
+- automated CPAN update
+
 * Mon Apr 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.002002-alt1
 - automated CPAN update
 
