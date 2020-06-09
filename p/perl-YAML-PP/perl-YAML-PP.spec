@@ -7,7 +7,7 @@ BuildRequires: perl(strict.pm) perl(warnings.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.021
+Version: 0.022
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
@@ -48,6 +48,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
+- automated CPAN update
+
 * Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.021-alt1
 - automated CPAN update
 
