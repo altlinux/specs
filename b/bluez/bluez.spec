@@ -8,10 +8,10 @@
 
 Name: bluez
 Version: 5.54
-Release: alt3
+Release: alt4
 
 Summary: Bluetooth utilities
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Networking/Other
 
 Url: http://www.bluez.org/
@@ -23,6 +23,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
 Obsoletes: obex-data-server < 0.4.6-alt3
 Conflicts: udev-extras < 169
+Requires(post,preun): /bin/systemctl
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc
@@ -110,15 +111,17 @@ find %buildroot%_libdir -name \*.la -delete
 %post_service bluetoothd
 if [ $1 = 1 ]; then
 	chkconfig bluetoothd on
-	a= systemctl --user --global preset obex.service || :
+	/bin/systemctl --user --global preset obex.service || :
 fi
 
 %preun
 %preun_service bluetoothd
-a= systemctl --user --global disable obex.service || :
+if [ $1 = 1 ]; then
+	/bin/systemctl --user --global disable obex.service || :
+fi
 
-%triggerin -- %name < 5.54-alt2
-a= systemctl --user --global preset obex.service || :
+%triggerin -- %name < 5.54-alt4
+/bin/systemctl --user --global preset obex.service || :
 
 %files
 %doc AUTHORS ChangeLog README
@@ -177,6 +180,12 @@ a= systemctl --user --global preset obex.service || :
 %endif
 
 %changelog
+* Tue Jun 09 2020 Anton Midyukov <antohami@altlinux.org> 5.54-alt4
+- Disable obex.service only when uninstalling package
+- Install package bluez after installing systemd-utils
+(not avoid systemd-utils dependency)
+- Fix License tag
+
 * Mon Apr 20 2020 Michael Shigorin <mike@altlinux.org> 5.54-alt3
 - avoid systemd-utils dependency
 - minor spec cleanup
