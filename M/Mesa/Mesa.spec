@@ -14,7 +14,7 @@
 %define armsoc_arches %arm aarch64
 
 %define opencl_arches %ix86 x86_64 aarch64
-%define gallium_pipe_arches %ix86 x86_64 aarch64
+%define gallium_pipe_arches %ix86 x86_64 aarch64 mipsel
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches
@@ -64,8 +64,8 @@
 %endif
 
 Name: Mesa
-Version: 20.1.0
-Release: alt4
+Version: 20.1.1
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -464,6 +464,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Jun 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.1-alt1
+- 20.1.1
+
 * Wed Jun 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt4
 - enabled vulran drivers for ix86
 
