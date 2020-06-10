@@ -10,7 +10,7 @@
 
 Name: ssh-provider-%provider
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Other
 Summary: Virtual SSH packages
@@ -50,5 +50,8 @@ Requires: %name-openssh-common
 %package_end openssh-common
 
 %changelog
+* Wed Jun 10 2020 Sergey V Turchin <zerg@altlinux.org> 1.0-alt2
+- rename packages
+
 * Wed Jun 10 2020 Sergey V Turchin <zerg at altlinux dot org> 1.0-alt1
 - initial build
