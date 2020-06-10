@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: xreader
-Version: 2.6.1
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -145,6 +145,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Wed Jun 10 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- New version
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.1-alt2
 - add xapps-icons to dependencies
 

@@ -10,8 +10,8 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.8
-Release: alt2
+Version: %ver_major.9
+Release: alt1
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
@@ -141,6 +141,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Jun 9 2020 Vladimir Didenko <cow@altlinux.org> 2.4.9-alt1
+- New version
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.4.8-alt2
 - add xapps-icons to dependencies
 
