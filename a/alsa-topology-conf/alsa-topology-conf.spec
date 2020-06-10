@@ -1,5 +1,5 @@
 Name: alsa-topology-conf
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) topology data
@@ -31,6 +31,9 @@ cp -at %buildroot%alsadata -- topology
 %doc LICENSE
 
 %changelog
+* Wed Jun 10 2020 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Thu Feb 20 2020 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

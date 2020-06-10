@@ -1,7 +1,7 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Epoch: 1
 
@@ -70,8 +70,7 @@ touch config.rpath
 
 %files -f %name.lang
 %doc ChangeLog README*
-%_udevrulesdir/89-alsa-ucm.rules
-%_udevrulesdir/90-alsa-restore.rules
+%_udevrulesdir/*.rules
 %_bindir/*
 %exclude %_bindir/aplay
 %exclude %_bindir/arecord
@@ -104,6 +103,10 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Wed Jun 10 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.3-alt1
+- 1.2.3 (closes: #38416)
+- dropped 89-alsa-ucm.rules (following upstream)
+
 * Thu Feb 20 2020 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt1
 - 1.2.2
 
