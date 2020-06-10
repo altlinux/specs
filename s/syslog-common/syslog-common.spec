@@ -1,5 +1,5 @@
 Name: syslog-common
-Version: 2
+Version: 2.1
 Release: alt1
 
 Summary: Common files for syslog servers
@@ -65,6 +65,9 @@ done ||:
 %config(noreplace) %_sysconfdir/logrotate.d/*
 
 %changelog
+* Wed Jun 10 2020 Dmitry V. Levin <ldv@altlinux.org> 2.1-alt1
+- reload-syslog: added systemd support (closes: #38594).
+
 * Tue Aug 28 2018 Dmitry V. Levin <ldv@altlinux.org> 2-alt1
 - Split syslog-common out of sysklogd package.
 - Moved /etc/syslog.d to filesystem package.
