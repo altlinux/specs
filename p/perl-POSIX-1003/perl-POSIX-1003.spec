@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(POSIX.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(base.pm)
 # END SourceDeps(oneline)
 %define module_name POSIX-1003
 
 Name: perl-POSIX-1003
-Version: 0.99_07
-Release: alt1.1
+Version: 1.00
+Release: alt1
 
 Summary: POSIX::1003, alternative for POSIX in core
 
@@ -35,11 +36,14 @@ BuildRequires: alternatives atop
 %perl_vendor_install
 
 %files
-%doc TODO ChangeLog README
+%doc ChangeLog README PODTAIL.txt README.md
 %perl_vendor_archlib/P*
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Jun 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- new version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.99_07-alt1.1
 - rebuild with new perl 5.28.1
 
