@@ -1,9 +1,7 @@
-%define nspr_version 4.25-alt1
-
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.53.0
-Release:	alt2
+Release:	alt3
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -16,14 +14,15 @@ Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
 
+Patch00: 0001-MOZILLA-1643528-Cannot-compile-code-with-nss-headers.patch
+
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
 BuildRequires:  rpm-macros-alternatives
 BuildRequires:  python3
 BuildRequires:  gyp
 BuildRequires:  ninja-build
-BuildRequires:  libnspr-devel >= %nspr_version
-Requires:       libnspr       >= %nspr_version
+BuildRequires:  libnspr-devel
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -107,6 +106,8 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
+
+%patch00 -p2
 
 %build
 mkdir -p bin
@@ -241,6 +242,9 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Jun 10 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt3
+- Fix build with nss headers and -Werror=strict-prototypes (ALT#38597).
+
 * Mon Jun 08 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt2
 - Enable NSS legacy DBM type (ALT#38590).
 
