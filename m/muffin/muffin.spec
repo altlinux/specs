@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.6.1
-Release: alt2
+Version: 4.6.2
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -198,6 +198,9 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Tue Jun 9 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt1
+- 4.6.2
+
 * Fri May 29 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt2
 - add libEGL-devel to build deps for armh platform
 

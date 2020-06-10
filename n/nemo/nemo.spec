@@ -7,8 +7,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -186,6 +186,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Jun 9 2020 Vladimir Didenko <cow@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt2
 - add xapps-icons to dependencies (closes: #38562)
 
