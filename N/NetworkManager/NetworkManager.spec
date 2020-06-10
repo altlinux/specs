@@ -65,8 +65,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.18.6
-Release: alt2%git_hash
+Version: 1.18.8
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -795,6 +795,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jun 10 2020 Mikhail Efremov <sem@altlinux.org> 1.18.8-alt1
+- Fixed build with libnss-3.53.0.
+- Updated to 1.18.8.
+
 * Tue Jun 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.6-alt2
 - Fixed selinux labels of replaced configuration files.
 
