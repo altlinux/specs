@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Media Sharing Server
@@ -138,6 +138,8 @@ This package contains command line utilities for the PipeWire media server.
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
 %if_enabled man
 %_man1dir/%name.1*
+%_man1dir/pw-jack.1*
+%_man1dir/pw-pulse.1*
 %_man5dir/%name.conf.5*
 %endif
 %doc README* NEWS
@@ -186,6 +188,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Wed Jun 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- updated to 0.3.6-5-gda9d17e7
+
 * Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - updated 0.3.5-2-gfdb3985f
 
