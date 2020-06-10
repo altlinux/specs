@@ -1,16 +1,16 @@
-%define docver 3.40
+%define docver 3.49.03
 
 Summary: Painting program for creating icons and pixel-based artwork
 Name: mtpaint
-Version: 3.40
-Release: alt2.1
-License: GPLv3+
+Version: 3.49.27
+Release: alt1
+License: GPL-3.0+
 Group: Graphics
 Url: http://mtpaint.sourceforge.net/
 Source: %name-%version.tar.bz2
 Source1: http://downloads.sf.net/%name/%{name}_handbook-%docver.zip
-Patch: %name-3.40-xdg-open.patch
-Patch1: %name-3.40-openjpeg.patch
+Patch1: %name-xdg-open.patch
+Patch2: %name-openjpeg.patch
 
 BuildRequires: gtk2-devel zlib-devel unzip
 BuildRequires: libpng-devel libungif-devel libjpeg-devel libtiff-devel
@@ -38,15 +38,8 @@ application mtpaint.
 
 %prep
 %setup -a 1
-%patch -p1
-%patch1 -p1
-
-# We have moved docs
-sed -i 's,#define HANDBOOK_LOCATION "/usr/doc/mtpaint/index.html",#define HANDBOOK_LOCATION "%_docdir/%name-handbook-%version/index.html",' src/spawn.c
-
-chmod 0755 %{name}_handbook-%docver/docs/{en_GB,img,files,cs}
-dos2unix -k %{name}_handbook-%docver/docs/index.html
-dos2unix -k %{name}_handbook-%docver/docs/{en_GB,cs}/*.html
+%patch1 -p2
+%patch2 -p2
 
 %build
 # This is not a "normal" configure
@@ -55,7 +48,6 @@ dos2unix -k %{name}_handbook-%docver/docs/{en_GB,cs}/*.html
 %make_build
 
 %install
-rm -rf %buildroot
 %makeinstall MT_PREFIX=%buildroot%prefix            \
                   MT_MAN_DEST=%buildroot%_mandir     \
 		  MT_DATAROOT=%buildroot%_datadir \
@@ -66,19 +58,26 @@ desktop-file-install --delete-original         \
     --vendor "" \
     --dir %buildroot%_datadir/applications \
     %buildroot%_datadir/applications/%name.desktop
+
+mkdir -p %buildroot%_defaultdocdir/%name
+cp -a %{name}_handbook-%docver/docs/* %buildroot%_defaultdocdir/%name
+
 %find_lang %name
 
 %files -f %name.lang
 %doc COPYING NEWS README
-%_mandir/man1/%{name}*
 %_bindir/%name
-%_datadir/applications/*.desktop
+%_man1dir/%{name}.1*
+%_desktopdir/*.desktop
 %_datadir/pixmaps/%name.png
 
 %files handbook
-%doc %{name}_handbook-%docver/COPYING %{name}_handbook-%docver/docs/*
+%_defaultdocdir/%name/
 
 %changelog
+* Wed Jun 10 2020 Andrey Cherepanov <cas@altlinux.org> 3.49.27-alt1
+- New version from https://github.com/wjaguar/mtPaint.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.40-alt2.1
 - Rebuilt with libpng15
 
