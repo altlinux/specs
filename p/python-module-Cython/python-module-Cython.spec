@@ -4,7 +4,7 @@
 %def_with python2
 
 Name: python-module-%modname
-Version: 0.29.19
+Version: 0.29.20
 Release: alt1
 
 Summary: C-extensions for Python
@@ -229,6 +229,9 @@ done
 %endif
 
 %changelog
+* Wed Jun 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.20-alt1
+- 0.29.20
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.29.19-alt1
 - 0.29.19
 
