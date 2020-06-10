@@ -1,8 +1,8 @@
 %define        pkgname sprockets-rails
 
 Name:          gem-%pkgname
-Version:       3.2.1
-Release:       alt3.1
+Version:       3.2.1.1
+Release:       alt1
 Summary:       Sprockets Rails integration
 License:       MIT
 Group:         Development/Ruby
@@ -15,8 +15,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Provides Sprockets implementation for Rails 4.x (and beyond) Asset Pipeline.
@@ -39,7 +40,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%pkgname --version-replace=%version
 
 %install
 %ruby_install
@@ -57,6 +58,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.1.1-alt1
+- ^ 3.2.1 -> 3.2.2[1]
+- ! spec syntax
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt3.1
 - fixed (!) spec
 
