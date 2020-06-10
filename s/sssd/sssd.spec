@@ -5,10 +5,11 @@
 %def_disable local_provider
 %def_with check
 %def_with samba
+%def_with openssl
 
 Name: sssd
-Version: 2.2.3
-Release: alt3
+Version: 2.3.0
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -93,6 +94,9 @@ BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
 BuildRequires: libaugeas-devel
+%if_with openssl
+BuildRequires: libssl-devel libgnutls-devel libp11-kit-devel
+%endif
 BuildRequires: nscd
 %if_with kcm
 BuildRequires: libuuid-devel libjansson-devel
@@ -109,6 +113,9 @@ BuildRequires: nss-utils
 BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: uid_wrapper
 BuildRequires: nss_wrapper
+%if_with openssl
+BuildRequires: softhsm
+%endif
 %endif
 
 %description
@@ -467,6 +474,9 @@ Provides python3 module for calculating the murmur hash version 3
     %{subst_with samba} \
     %{subst_with secrets} \
     --without-python2-bindings \
+%if_with openssl
+    --with-crypto=libcrypto \
+%endif
     #
 
 %make_build all
@@ -828,6 +838,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Wed Jun 10 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.3.0-alt1
+- Update to 2.3.0
+
 * Sun May 17 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.2.3-alt3
 - Rewrite PAM rules for sss system-auth method with new pam-config-1.9.0 scheme
   using pam_localuser.so to separate configuration for local and remote users.
