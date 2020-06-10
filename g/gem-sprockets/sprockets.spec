@@ -1,14 +1,14 @@
 %define        pkgname sprockets
 
-Name:          %pkgname
+Name:          gem-%pkgname
 Epoch:         1
-Version:       3.7.2
-Release:       alt2
+Version:       4.0.0
+Release:       alt1
 Summary:       Rack-based asset packaging system
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/rails/sprockets
-%vcs           https://github.com/rails/sprockets.git
+Vcs:           https://github.com/rails/sprockets.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,8 @@ Source:  %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     %gemname < %EVR
 
 %description
 Sprockets is a Ruby library for compiling and serving web assets. It features
@@ -24,16 +26,16 @@ a powerful preprocessor pipeline that allows you to write assets in languages
 like CoffeeScript, Sass and SCSS.
 
 
-%package       -n gem-%pkgname
+%package       -n %pkgname
 Summary:       Library files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы библиотеки для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname
+%description   -n %pkgname
 Library files for %gemname gem.
 
-%description   -n gem-%pkgname -l ru_RU.UTF8
+%description   -n %pkgname -l ru_RU.UTF8
 Файлы библиотеки для самоцвета %gemname.
 
 
@@ -64,19 +66,24 @@ Documentation files for %gemname gem.
 
 %files
 %doc README*
-%_bindir/%{pkgname}*
-
-%files         -n gem-%pkgname
 %ruby_gemspec
 %ruby_gemlibdir
+
+%files         -n %pkgname
+%doc README*
+%_bindir/%{pkgname}*
 
 %files         -n gem-%pkgname-doc
 %ruby_gemdocdir
 
 
 %changelog
+* Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 1:4.0.0-alt1
+- updated (^) 3.7.2 -> 4.0.0
+- fixed (-) spec
+
 * Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 1:3.7.2-alt2
-- ^ Ruby Policy 2.0
+- used (>) Ruby Policy 2.0
 
 * Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:3.7.2-alt1
 - Build stable version.

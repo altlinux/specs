@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt6
+Release:       alt6.1
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -65,6 +65,8 @@ Requires:      gem-gridster-rails >= 0.5.6.1-alt1
 %gem_replace_version patternfly-sass ~> 3.38
 %gem_replace_version fog-core ~> 2.1
 %gem_replace_version prometheus-client ~> 2.0
+%gem_replace_version sprockets ~> 4.0
+%gem_replace_version sass-rails ~> 6.0
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
 %add_findreq_skiplist *.erb
@@ -182,6 +184,9 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.1
+- ! gems dep for sprockets to 4.0, and sass-rails to 6.0
+
 * Fri May 19 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6
 - * tmpfiles.d file
 

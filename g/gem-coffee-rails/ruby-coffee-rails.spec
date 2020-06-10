@@ -1,14 +1,14 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname sass-rails
+%define  pkgname coffee-rails
 
-Name:          ruby-%pkgname
-Version:       5.1.0
+Name:          gem-%pkgname
+Version:       5.0.0
 Release:       alt1
-Summary:       Ruby on Rails stylesheet engine for Sass
+Summary:       CoffeeScript adapter for the Rails asset pipeline. Also adds support for .coffee views.
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/rails/sass-rails
-%vcs           
+Url:           https://github.com/rails/coffee-rails
+#Vcs:           https://github.com/rails/coffee-rails.git
+
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,10 +16,13 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
-This gem provides official integration for Ruby on Rails projects with
-the Sass stylesheet language.
+CoffeeScript adapter for the Rails asset pipeline. Also adds support to
+use CoffeeScript to respond to JavaScript requests (use .coffee views).
 
 
 %package       doc
@@ -39,7 +42,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --ignore=sass_project,scss_project,alternate_config_project,engine_project
+%ruby_build
 
 %install
 %ruby_install
@@ -57,12 +60,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 5.1.0-alt1
-- 5.0.7 -> 5.1.0
-- update to Ruby Policy 2.0
+* Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 5.0.0-alt1
+- ^ 4.2.2 -> 5.0.0
+- ! spec name and syntax
 
-* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.7-alt1.1
-- Rebuild with new Ruby autorequirements.
-
-* Sun Jul 08 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.7-alt1
+* Thu Jul 26 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
 - Initial build for Sisyphus
