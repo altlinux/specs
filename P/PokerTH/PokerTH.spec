@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt5
+Release: alt6
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -15,6 +15,8 @@ Patch: %name-%version-%release.patch
 # https://github.com/pokerth/pokerth/issues/368
 Patch1: PokerTH-upstream-boost-compat-1.patch
 Patch2: PokerTH-upstream-boost-compat-2.patch
+
+Patch3: %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
 
@@ -54,6 +56,8 @@ pushd src/third_party/websocketpp
 %patch2 -p1
 popd
 
+%patch3 -p2
+
 %build
 %add_optflags -fno-strict-aliasing
 
@@ -88,6 +92,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt6
+- Rebuilt with boost-1.73.0.
+
 * Mon Nov 11 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt5
 - Rebuilt with boost-1.71.0.
 

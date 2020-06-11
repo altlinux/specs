@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.62.0
-Release:  alt1
+Release:  alt2
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -18,6 +18,7 @@ Source2:  %name.watch
 
 Patch1:   %name-alt-fix-name-in-version-file.patch
 Patch2:   imagescan-alt-config-cleanup.patch
+Patch3:   %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -66,6 +67,7 @@ line option.
 %setup -n utsushi-%utsushi_version
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %undefine _configure_gettext
@@ -133,6 +135,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.62.0-alt2
+- Rebuilt with boost-1.73.0.
+
 * Fri Feb 07 2020 Andrey Cherepanov <cas@altlinux.org> 3.62.0-alt1
 - New version.
 

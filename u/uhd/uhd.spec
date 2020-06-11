@@ -17,7 +17,7 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -30,6 +30,7 @@ Source1: %name-limits.conf
 Source2: images.tar
 
 Patch: uhd-0.14.1.1-python3-fix.patch
+Patch2: %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -93,6 +94,7 @@ Python 3 API for %name
 sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
 
 %patch -p1
+%patch2 -p1
 
 # fix python shebangs
 find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
@@ -195,6 +197,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt3
+- Rebuilt with boost-1.73.0.
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt2
 - Fixed build with numpy.
 

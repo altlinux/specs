@@ -3,7 +3,7 @@
 
 Name: FlightGear
 Version: %origver
-Release: alt1
+Release: alt2
 
 Summary: open-source flight simulator
 License: GPLv2+
@@ -26,6 +26,7 @@ Patch1: 0001-check-to-be-sure-that-n-is-not-being-set-as-format-t.patch
 Patch2: 0002-make-ShivaVG-and-FGAdminUI-static-libraries.patch
 Patch5: 0005-explicitely-link-with-libX11.patch
 Patch6: 0006-make-fglauncher-a-static-library.patch
+Patch7: FlightGear-alt-rename-version-file.patch
 
 Requires: FlightGear-data = %version
 #Requires: fgrun >= 1.6.1
@@ -70,6 +71,7 @@ http://ericbrasseur.org/flight_simulator_tutorial.html
 #patch2 -p1
 #patch5 -p1
 %patch6 -p1
+%patch7 -p2
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
@@ -89,6 +91,10 @@ sed -i 's,/lib/FlightGear,/share/flightgear,' CMakeLists.txt
 # unsupported as of lcc-1.23.21
 sed -i 's,-fno-fast-math,,' 3rdparty/sqlite3/CMakeLists.txt
 %endif
+
+# rename version file to flightgear_version because it's incorrectly detected as header file
+# by boost-1.73.0, and compilation fails when it's being incorrectly used as header file
+mv version flightgear_version
 
 %build
 # FIXME: tests got linking problems with lcc 1.23.20, cf. mcst#3675?
@@ -112,6 +118,9 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_desktopdir/org.flightgear.FlightGear.desktop
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.1.2-alt2
+- Rebuilt with boost-1.73.0.
+
 * Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt1
 - 2020.1.2
 

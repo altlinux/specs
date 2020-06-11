@@ -1,6 +1,6 @@
 Name:    libleatherman
 Version: 1.12.0
-Release: alt1
+Release: alt2
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -9,6 +9,7 @@ Url:     https://github.com/puppetlabs/leatherman
 Packager: Andrey Cherepanov <cas@altlinux.org>
  
 Source: leatherman-%version.tar
+Patch1: fedora-shared_nowide.patch
  
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -26,12 +27,14 @@ Summary: cpp-hocon development headers
 Group: Development/Other
 Provides: leatherman-devel = %version-%release
 Obsoletes: leatherman-devel < %version-%release
+Requires: boost-locale-devel
 
 %description devel
 Development headers for leatherman.
 
 %prep
 %setup -n leatherman-%version
+%patch1 -p1
 # Ruby 2.3 fix: replace rb_data_object_alloc symbol with rb_data_object_wrap
 sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 	$( grep -rl rb_data_object_alloc ruby )
@@ -50,12 +53,13 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 
 %files devel
 %_libdir/leatherman_*.so
-%_includedir/boost/nowide/*.hpp
-%_includedir/boost/nowide/integration/*.hpp
 %_includedir/leatherman
 %_libdir/cmake/leatherman
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt2
+- Unbundled boost-nowide library.
+
 * Wed Apr 29 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.0-alt1
 - New version.
 

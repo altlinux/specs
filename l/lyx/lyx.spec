@@ -1,6 +1,6 @@
 Name: lyx
 Version: 2.3.4.4
-Release: alt1
+Release: alt2
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
@@ -19,6 +19,7 @@ Source5: lyxcat
 Patch2: lyx-2.1.2-xdg_open.patch
 Patch3: 0004-Use-python3-internally-in-the-C-code-as-well.patch
 Patch4: 0006-Fix-os.popen-for-Python-3.patch
+Patch5: %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc
@@ -70,6 +71,7 @@ sed -i 's|#! */usr/bin/env python|#!/usr/bin/env python3|' \
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %autoreconf
@@ -139,6 +141,9 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.3.4.4-alt2
+- Rebuilt with boost-1.73.0.
+
 * Wed May 20 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.3.4.4-alt1
 - Updated to 2.3.4.4.
 - Switched to python3.

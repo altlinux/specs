@@ -1,6 +1,6 @@
 Name: enblend
 Version: 4.2
-Release: alt4
+Release: alt5
 
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 License: GPLv2+
@@ -10,6 +10,8 @@ Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
 Source0: %name-%version.tar.gz
 Source1: %name.readme
+
+Patch1: %name-%version-alt-boost-1.73.0-compat.patch
 
 Provides: enfuse
 
@@ -35,6 +37,7 @@ the input images invisible and very suitable to make panoramas.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %autoreconf
@@ -51,6 +54,9 @@ the input images invisible and very suitable to make panoramas.
 
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2-alt5
+- Rebuilt with boost-1.73.0.
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 4.2-alt4
 - E2K: avoid BR: hevea for now
 

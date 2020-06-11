@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt2_12
+Release:        alt3_12
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -33,6 +33,10 @@ Patch4:         %{name}-clipper.patch
 Patch5:         %{name}-1.3.0-fixtest.patch
 Patch6:         %{name}-wayland.patch
 Patch7:         %{name}-boost169.patch
+
+Patch100:       %name-%version-upstream-boost-1.73.0-compat-1.patch
+Patch101:       %name-%version-upstream-boost-1.73.0-compat-2.patch
+Patch102:       %name-%version-alt-boost-1.73.0-compat.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -137,6 +141,10 @@ for more information.
 %patch5 -p1 -b .fixtest
 %patch6 -p1
 %patch7 -p1
+
+%patch100 -p1
+%patch101 -p1
+%patch102 -p2
 
 # Optional removals
 %if %{use_system_admesh}
@@ -252,6 +260,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt3_12
+- Rebuilt with boost-1.73.0.
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_12
 - update to new release by fcimport
 

@@ -2,7 +2,7 @@
 
 Name: SimGear
 Version: %origver
-Release: alt1
+Release: alt2
 
 Summary: Simulator Construction Tools
 
@@ -18,6 +18,7 @@ Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 Patch2: %name-g++8.patch
 Patch3: simgear-2018.2.2-alt-e2k.patch
+Patch4: SimGear-alt-rename-version-file.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -65,7 +66,12 @@ This package contains header files for SimGear.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 #sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
+
+# rename version file to simgear_version because it's incorrectly detected as header file
+# by boost-1.73.0, and compilation fails when it's being incorrectly used as header file
+mv version simgear_version
 
 %build
 %add_optflags %optflags_shared
@@ -95,6 +101,9 @@ This package contains header files for SimGear.
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.1.2-alt2
+- Rebuilt with boost-1.73.0.
+
 * Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 2020.1.2-alt1
 - 2020.1.2
 
