@@ -18,7 +18,7 @@
 
 Name: apache2-mod_python%__python_package_version
 Version: 3.5.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Python module for Apache2
 License: Free
@@ -37,9 +37,9 @@ BuildPreReq: rpm-build-apache2 >= %a2_version
 BuildRequires: flex python-devel python-modules-encodings
 BuildRequires: apache2-devel >= %a2_version
 BuildRequires: rpm-build-python >= 0.21-alt1
-BuildRequires: python-base >= 2.4.4
+BuildRequires: python2-base >= 2.4.4
 
-Requires: python = %__python_version
+Requires: python2-base
 Requires: apache2 >= %a2_version
 
 Conflicts: mod_python
@@ -63,7 +63,7 @@ Apache internals.
 sed -i "s/!(b == APR_BRIGADE_SENTINEL(b) ||/!(b == APR_BRIGADE_SENTINEL(bb) ||/g" src/connobject.c
 
 %build
-%configure --with-apxs=%apache2_apxs --prefix=%prefix --with-python-bin=%__python
+%configure --with-apxs=%apache2_apxs --prefix=%prefix --with-python=/usr/bin/python2
 %make OPT="-fPIC $RPM_OPT_FLAGS -DEAPI" dso
 
 %install
@@ -166,6 +166,9 @@ fi
 %_docdir/%modname-%version
 
 %changelog
+* Thu Jun 11 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt2.qa1
+- NMU: fixed BR: on python-base
+
 * Wed Oct 02 2019 Michael Shigorin <mike@altlinux.org> 3.5.0-alt2
 - e2kv4+: fix installation
 
