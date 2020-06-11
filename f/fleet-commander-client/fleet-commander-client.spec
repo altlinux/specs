@@ -4,7 +4,7 @@
 %def_with check
 
 Name: fleet-commander-client
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Fleet Commander Client
@@ -28,12 +28,14 @@ BuildRequires: python3(ldap)
 BuildRequires: python3(samba)
 BuildRequires: libnm-gir
 BuildRequires: libjson-glib-gir
+BuildRequires: samba-common
 %endif
 
 # mark Python code as Python3
 %add_python3_path %_datadir/fleet-commander-client/python/
 %add_python3_compile_exclude %_datadir/fleet-commander-client/python/
 Requires: libnm-gir
+Requires: samba-common
 
 %description
 Profile data retriever for Fleet Commander client hosts. Fleet Commander is an
@@ -74,16 +76,20 @@ configure.ac
 %post_service fleet-commander-client
 %post_service fleet-commander-clientad
 
+# first installation
+if [ $1 -eq 1 ]; then
+    systemctl -q preset --global fleet-commander-adretriever ||:
+else
+    systemctl try-restart --global fleet-commander-adretriever ||:
+fi
+
 %preun
 %preun_service fleet-commander-client
 %preun_service fleet-commander-clientad
 
-if /sbin/sd_booted && /bin/systemctl --version >/dev/null 2>&1; then
-    if [ "$1" -eq 0 ]; then
-        # uninstall
-        /bin/systemctl --no-reload -q disable --global \
-            fleet-commander-adretriever ||:
-    fi
+if [ "$1" -eq 0 ]; then
+    # uninstall
+    systemctl --no-reload -q disable --global --now fleet-commander-adretriever ||:
 fi
 
 %files
@@ -107,6 +113,10 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.FleetCommanderClientAD.service
 
 %changelog
+* Thu Jun 11 2020 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
+- 0.14.0 -> 0.15.0.
+- Added compatibility against samba 4.11+ (thanks to ptrnine@).
+
 * Thu Nov 28 2019 Stanislav Levin <slev@altlinux.org> 0.14.0-alt1
 - 0.10.2 -> 0.14.0.
 
