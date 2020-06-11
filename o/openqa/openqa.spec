@@ -15,11 +15,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm)
 
 Name: openqa
 Version: 4.5.1528009330.e68ebe2b
-Release: alt12
+Release: alt13
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -50,7 +50,7 @@ Requires: perl(URI.pm)
 Requires: perl(LWP/Protocol/https.pm)
 Requires: perl(Getopt/Long/Descriptive.pm)
 Requires: optipng
-Requires: dbus git-core
+Requires: dbus git-core 
 Requires: perl(YAML/XS.pm)
 
 %description
@@ -120,6 +120,7 @@ Summary: Client tools for remote openQA management
 Group: Development/Tools
 Requires: perl(Config/IniFiles.pm)
 Requires: perl(Mojolicious.pm)
+Requires: perl(Test/More.pm)
 
 %description client
 This package contains the openQA client script, along with several
@@ -144,6 +145,16 @@ Requires: postgresql10-server
 You only need this package if you have a local postgresql server
 next to the webui.
 
+%package single-instance
+Summary:        Convenience package for a single-instance setup
+Group:          Development/Tools
+Requires:       %name-local-db
+Requires:       %name-worker
+Requires:       apache2
+
+%description single-instance
+Use this package to setup a local instance with all services provided together.
+
 %package doc
 Summary: The openQA documentation
 Group: Development/Tools
@@ -166,9 +177,11 @@ sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' e
 sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
 sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
-#These services are not used.
+#These services and files are not used.
 rm -rf systemd/openqa-vde_switch.service
 rm -rf systemd/openqa-slirpvde.service
+rm -rf script/openqa-slirpvde
+rm -rf script/openqa-vde_switch
 
 %build
 %make_build
@@ -181,6 +194,7 @@ ln -s %_sysconfdir/openqa/openqa.ini %buildroot%_datadir/openqa/etc/openqa/openq
 ln -s %_sysconfdir/openqa/database.ini %buildroot%_datadir/openqa/etc/openqa/database.ini
 mkdir -p %buildroot%_bindir
 ln -s %_datadir/openqa/script/client %buildroot%_bindir/openqa-client
+ln -s %_datadir/openqa/script/openqa-cli %buildroot%_bindir/openqa-cli
 ln -s %_datadir/openqa/script/clone_job.pl %buildroot%_bindir/openqa-clone-job
 ln -s %_datadir/openqa/script/dump_templates %buildroot%_bindir/openqa-dump-templates
 ln -s %_datadir/openqa/script/load_templates %buildroot%_bindir/openqa-load-templates
@@ -208,22 +222,21 @@ rm -rf %buildroot%_sysconfdir/apparmor.d
 mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 
 %check
+rm -f t/05-scheduler-full.t
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-service.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
-rm -f t/40-openqa-clone-job.t
 rm -f t/42-screenshots.t
-rm -f t/api/08-jobtemplates.t 
 rm -f t/16-utils-runcmd.t 
-rm -f t/32-openqa_client-script.t
 rm -f t/44-scripts.t
-rm -f t/api/14-plugin_obs_rsync_async.t 
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
+sed -i -e 's,unshare -r -n ,,g' t/40-openqa-clone-job.t t/32-openqa_client-script.t
+sed -i -e '/fails without network/d' t/32-openqa_client-script.t
 make test-with-database OBS_RUN=1 PROVE_ARGS='-l -r' TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
@@ -294,19 +307,24 @@ fi
 %_datadir/openqa/public
 %_datadir/openqa/assets
 %_datadir/openqa/dbicdh
+%_datadir/openqa/script/configure-web-proxy
 %dir %_datadir/openqa/script
-%_datadir/openqa/script/check_dependencies
 %_datadir/openqa/script/create_admin
 %_datadir/openqa/script/fetchneedles
 %_datadir/openqa/script/initdb
 %_datadir/openqa/script/openqa
 %_datadir/openqa/script/openqa-scheduler
+%_datadir/openqa/script/openqa-scheduler-daemon
 %_datadir/openqa/script/openqa-websockets
+%_datadir/openqa/script/openqa-websockets-daemon
 %_datadir/openqa/script/openqa-livehandler
+%_datadir/openqa/script/openqa-livehandler-daemon
 %_datadir/openqa/script/openqa-enqueue-asset-cleanup
 %_datadir/openqa/script/openqa-enqueue-audit-event-cleanup
 %_datadir/openqa/script/openqa-enqueue-bug-cleanup
 %_datadir/openqa/script/openqa-enqueue-result-cleanup
+%_datadir/openqa/script/openqa-gru
+%_datadir/openqa/script/openqa-webui-daemon
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
 %dir %_localstatedir/openqa/share
@@ -366,6 +384,8 @@ fi
 %dir %{_datadir}/openqa/script
 %_datadir/openqa/script/worker
 %_datadir/openqa/script/openqa-workercache
+%_datadir/openqa/script/openqa-workercache-daemon
+%_datadir/openqa/script/openqa-worker-cacheservice-minion
 %dir %_localstatedir/openqa/pool
 %defattr(-,_openqa-worker,root)
 %dir %_localstatedir/openqa/cache
@@ -382,14 +402,15 @@ fi
 %_datadir/openqa/script/clone_job.pl
 %_datadir/openqa/script/dump_templates
 %_datadir/openqa/script/load_templates
+%_datadir/openqa/script/openqa-cli
 %_datadir/openqa/script/openqa-clone-job
 %_datadir/openqa/script/openqa-clone-custom-git-refspec
 %_datadir/openqa/script/openqa-validate-yaml
-%_datadir/openqa/script/configure-web-proxy
 %_datadir/openqa/lib/OpenQA/Client.pm
 %_datadir/openqa/lib/OpenQA/Client
 %_datadir/openqa/lib/OpenQA/UserAgent.pm
 %_bindir/openqa-client
+%_bindir/openqa-cli
 %_bindir/openqa-clone-job
 %_bindir/openqa-dump-templates
 %_bindir/openqa-load-templates
@@ -404,7 +425,12 @@ fi
 %_datadir/openqa/script/setup-db
 %_bindir/openqa-setup-db
 
+%files single-instance
+
 %changelog
+* Wed Jun 10 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt13
+- update to current version
+
 * Fri Apr 24 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1528009330.e68ebe2b-alt12
 - update to current version
 
