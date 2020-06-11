@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.2.0
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 Patch: gr-osmosdr-0.1.1-pkgconfig-fix.patch
 Patch1: gr-osmosdr-0.1.4-gnuradio38-blocks-fix.patch
 Patch2: gr-osmosdr-0.1.4-python3-fix.patch
+Patch3: gr-osmosdr-0.2.0-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++
@@ -61,6 +62,7 @@ Documentation files for gr-osmosdr.
 #patch0 -p1 -b .pkgconfig-fix
 #patch1 -p1 -b .gnuradio38-blocks-fix
 #patch2 -p1 -b .python3-fix
+%patch3 -p1
 
 # TODO fix the lib location nicer way
 %__subst 's|/lib/|/%_lib/|g' CMakeLists.txt
@@ -117,6 +119,9 @@ EOF
 %doc %_docdir/%name/xml
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2
+- Rebuilt with boost-1.73.0.
+
 * Mon Mar 23 2020 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
 - new version 0.2.0
 - generate .pc in spec as dropped upstream

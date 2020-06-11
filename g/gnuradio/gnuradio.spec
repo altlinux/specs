@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.8.1.0
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -18,6 +18,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
 Patch1: gnuradio-3.8.1-python3-fix.patch
+Patch2: gnuradio-3.8.1.0-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3 rpm-build-gir
 BuildRequires: gcc-c++ cmake
@@ -111,6 +112,7 @@ GNU Radio Headers.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
@@ -171,6 +173,9 @@ rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1.0-alt2
+- Rebuilt with boost-1.73.0.
+
 * Thu May 21 2020 Anton Midyukov <antohami@altlinux.org> 3.8.1.0-alt1
 - new version 3.8.1.0
 

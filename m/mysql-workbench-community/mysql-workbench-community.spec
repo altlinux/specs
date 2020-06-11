@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.20
-Release: alt1
+Release: alt2
 
 Summary: A MySQL visual database modeling tool
 
@@ -21,6 +21,7 @@ Patch4: %name-6.3.4-alt-gcc6.patch
 Patch5: mysql-workbench-community-6.3.10-32bit.patch
 Patch6: mysql-workbench-community-8.0.15-antlr4-runtime.patch
 Patch7: mysql-workbench-8.0.17.suppress-unsupported.patch
+Patch8: %name-%version-alt-boost-1.73.0-compat.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -137,6 +138,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 #endif
 %patch6 -p2
 %patch7 -p2
+%patch8 -p2
 
 sed -i "s|pcre.h|pcre/pcre.h|" library/grt/src/grtpp_shell.cpp
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
@@ -223,6 +225,9 @@ popd
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.20-alt2
+- Rebuilt with boost-1.73.0.
+
 * Thu Jun 04 2020 Sergey Y. Afonin <asy@altlinux.org> 8.0.20-alt1
 - Updated to last release (ALT #38563)
 

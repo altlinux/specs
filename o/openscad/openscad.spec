@@ -1,6 +1,6 @@
 Name: openscad
 Version: 2019.05
-Release: alt4
+Release: alt5
 Summary: The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -16,6 +16,7 @@ Patch: openscad-polyclipping.patch
 Patch1: %name-%version-upstream-boost-compat.patch
 Patch2: %name-%version-upstream-cgal-compat.patch
 Patch3: %name-%version-upstream-cgal-compat-2.patch
+Patch4: %name-%version-alt-boost-1.73.0-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake
@@ -77,6 +78,7 @@ changes, however many things are already working.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 cp -f %SOURCE1 locale/ru.po
 
 # Remove unwanted things from MCAD, such as nonworking Python tests
@@ -139,6 +141,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt5
+- Rebuilt with boost-1.73.0.
+
 * Wed Apr 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt4
 - Rebuilt with cgal 5.0.2.
 

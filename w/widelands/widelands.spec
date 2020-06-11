@@ -18,7 +18,7 @@ Requires: fonts-ttf-wqy-microhei
 
 Name:           widelands
 Version:        0
-Release:        alt7_0.77.%{buildid}
+Release:        alt8_0.77.%{buildid}
 Summary:        Open source realtime-strategy game
 
 License:        GPLv2+
@@ -29,6 +29,7 @@ Source2:        %{name}.appdata.xml
 Patch0:         widelands-build19-ppc64le.patch
 Patch1:         widelands-build20-gcc91.patch
 Patch2:         widelands-build20-gcc10.patch
+Patch3:         widelands-alt-boost-1.73.0-compat.patch
 
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_image-devel
@@ -60,6 +61,7 @@ perhaps will have a thought, what Widelands is all about.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 echo 'target_link_libraries(widelands GL)' >> src/CMakeLists.txt
 echo 'target_link_libraries(graphic_gl_utils GL)' >> src/graphic/CMakeLists.txt
@@ -190,6 +192,9 @@ popd
 
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0-alt8_0.77.build20
+- Rebuilt with boost-1.73.0.
+
 * Sun Mar 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:0-alt7_0.77.build20
 - update
 

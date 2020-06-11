@@ -1,6 +1,6 @@
 Name: virtualgl
 Version: 2.6.3
-Release: alt2
+Release: alt3
 
 %define vgl_name vgl
 
@@ -72,11 +72,6 @@ This package contains VirtualGL development libraries.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-
-# fix compute endian on aarch64
-cat <<__EOF__ >include/boost/endian.hpp
-#include <boost/detail/endian.hpp>
-__EOF__
 
 sed -i -e 's,"glx.h",<GL/glx.h>,' server/*.[hc]*
 sed -i -e 's,"glxext.h",<GL/glxext.h>,' server/*.[hc]*
@@ -151,6 +146,9 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.3-alt3
+- Rebuilt with boost-1.73.0.
+
 * Wed Feb 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.3-alt2
 - FTBFS against Mesa 19.3.0+ headers
   + add upstream-FTBFS-against-Mesa19.3.0-headers patch
