@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.4.2
-Release: alt3
+Version: 0.4.4
+Release: alt1
 
 Summary: Scikits sparse matrix package
 License: GPL
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/scikits.sparse/
 
 # https://github.com/njsmith/scikits-sparse.git
 Source: %name-%version.tar
+Patch0: fix-compilation-crash.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libsuitesparse-devel gcc-c++
@@ -60,6 +61,7 @@ This package contains pickles for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
@@ -106,6 +108,9 @@ touch %buildroot%python3_sitelibdir/%mname/__init__.py
 
 
 %changelog
+* Thu Jun 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.4-alt1
+- Version updated to 0.4.4.
+
 * Fri Feb 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.2-alt3
 - Build for python2 disabled.
 
