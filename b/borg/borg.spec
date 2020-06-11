@@ -1,10 +1,10 @@
 Name: borg
-Version: 1.1.11
+Version: 1.1.13
 Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
-License: BSD like
+License: BSD-3-Clause
 Group: File tools
 Url: https://borgbackup.github.io/borgbackup/
 
@@ -55,6 +55,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 11 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.13-alt1
+- 1.1.13 release
+
 * Fri Mar 27 2020 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.1.11-alt1
 - update version to 1.1.11
 
