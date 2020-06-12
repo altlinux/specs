@@ -1,5 +1,5 @@
 Name: libnetfilter_queue
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: Netfilter queue userspace library
@@ -50,6 +50,9 @@ rm %buildroot%_libdir/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.5-alt1
+- 1.0.3 -> 1.0.5.
+
 * Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
 - 1.0.2 -> 1.0.3.
 
