@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: progress
-Version: 0.14
+Version: 0.15
 Release: alt1
-
 Summary: Linux tool to show progress for cp, mv, dd, ... (formerly known as cv)
-License: GNU 3.0
+License: GPL-3.0
 Group: Other
-
 URL: https://github.com/Xfennec/progress
 Source: %name-%version.tar
+Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: libncurses-devel
 
@@ -18,7 +17,6 @@ This tool can be described as a Tiny, Dirty, Linux-and-OSX-Only C command that l
 coreutils basic commands (cp, mv, dd, tar, gzip/gunzip, cat, etc.) currently running on
 your system and displays the percentage of copied data. It can also show estimated time
 and throughput, and provides a "top-like" mode (monitoring).
-
 
 %prep
 %setup
@@ -38,6 +36,9 @@ install -m 0644 %name.1* %buildroot%_man1dir
 %doc LICENSE
 
 %changelog
+* Wed Jun 10 2020 Alexander Makeenkov <amakeenk@altlinux.org> 0.15-alt1
+- Updated to version 0.15
+
 * Tue Mar 19 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.14-alt1
 - Initial build for ALT
 
