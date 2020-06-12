@@ -2,11 +2,11 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.10.5
-Release:       alt2
+Version:       0.10.6
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
-License:       GPLv2+ and MIT
-Group:         Other
+License:       GPL-2.0 and Apache-2.0 and MIT
+Group:         System/Servers
 Url:           https://github.com/ClusterLabs/pcs
 Vcs:           https://github.com/ClusterLabs/pcs.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
@@ -33,10 +33,9 @@ BuildRequires: python3-devel python3-module-setuptools
 Pacemaker/Corosync configuration system with remote access
 Pacemaker/Corosync gui/cli configuration system and daemon
 
-
 %package       -n python3-module-pcs
 Summary:       Python module for pacemaker/corosync gui/cli configuration system and daemon
-Group:         Other
+Group:         Development/Python3
 BuildArch:     noarch
 Requires:      %name = %version
 Requires:      pacemaker >= 2.0.3-alt2
@@ -44,11 +43,10 @@ Requires:      pacemaker >= 2.0.3-alt2
 %description   -n python3-module-pcs
 Python module for pacemaker/corosync gui/cli configuration system and daemon
 
-
 %package       -n python3-module-snmp
-Group:         Other
+Group:         Development/Python3
 Summary:       Pacemaker cluster SNMP agent
-License:       GPLv2 or BSD-2-Clause
+License:       GPL-2.0 or BSD-2-Clause
 Requires:      %name = %EVR
 Requires:      pacemaker >= 2.0.3-alt2
 Requires:      net-snmp
@@ -59,11 +57,12 @@ Provides:      pcs-snmp = %EVR
 SNMP agent that provides information about pacemaker cluster to the master
 agent (snmpd).
 
-
 %prep
 %setup
 %patch -p1
-sed -e "s,/usr/lib/pcsd/vendor/bundle/ruby,/usr/lib/ruby," -i pcsd/pcsd-ruby.service
+subst "s,/usr/lib/pcsd/vendor/bundle/ruby,/usr/lib/ruby," pcsd/pcsd-ruby.service
+# ALT-specific path to pacemaker executables
+subst 's|/usr/libexec/pacemaker|/usr/lib/pacemaker|' pcs/settings_default.py
 mkdir -p pcs/bundled/tmp
 tar xf %SOURCE1 -C pcs/bundled/tmp
 
@@ -105,7 +104,6 @@ install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 %preun         -n python3-module-snmp
 %preun_service pcs_snmp_agent
 
-
 %files
 %doc CHANGELOG.md COPYING README.md
 
@@ -138,8 +136,12 @@ install -Dm 0644 %SOURCE3 %buildroot%_localstatedir/pcsd/known-hosts
 %_datadir/snmp/mibs/PCMK-PCS*-MIB.txt
 %_man8dir/pcs_snmp_agent.*
 
-
 %changelog
+* Fri Jun 12 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.10.6-alt1
+- New version.
+- Tranasform old ALT-specific to replace regexp.
+- Fix License and Group tags.
+
 * Fri Apr 03 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.5-alt2
 - + proper patch to fix config
 - + pcsd init script
