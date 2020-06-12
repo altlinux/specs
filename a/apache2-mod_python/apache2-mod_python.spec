@@ -2,23 +2,13 @@
 %define modname mod_python
 %define module_name python
 
-%ifarch %ix86
-%define parch i686
-%else
-%ifarch %e2k
-%define parch e2k
-%else
-%define parch %_arch
-%endif
-%endif
-
 %define a2_version 2.4.18-alt1
 
 %define python_bindir %apache2_htdocsdir/%module_name
 
 Name: apache2-mod_python%__python_package_version
 Version: 3.5.0
-Release: alt2.qa1
+Release: alt3
 
 Summary: Python module for Apache2
 License: Free
@@ -82,7 +72,7 @@ mkdir -p %buildroot{%python_sitelibdir/%modname,%_docdir/%modname-%version/icons
 %apache2_cgibindir}
 
 install -c src/%modname.so %buildroot%apache2_libexecdir
-install -c dist/build/lib.%{_os}-%{parch}-%{__python_version}/%modname/*.so %buildroot%python_sitelibdir/%modname
+install -c dist/build/lib.%{_os}-*-%{__python_version}/%modname/*.so %buildroot%python_sitelibdir/%modname
 
 for i in `ls lib/python/%modname/*.py`; do
   install -m 0644 $i %buildroot%python_sitelibdir/%modname;
@@ -166,6 +156,9 @@ fi
 %_docdir/%modname-%version
 
 %changelog
+* Fri Jun 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.5.0-alt3
+- fixed packaging on armh
+
 * Thu Jun 11 2020 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt2.qa1
 - NMU: fixed BR: on python-base
 
