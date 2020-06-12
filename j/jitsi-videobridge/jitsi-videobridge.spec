@@ -1,11 +1,11 @@
-%define         pseudouser_name jvb
+%define         pseudouser_name _jvb
 %define         service_name jitsi-videobridge
 %define _localstatedir %{_var}
 
 
 Name:           jitsi-videobridge
 Version:        2.1
-Release:        alt0.3
+Release:        alt0.4
 
 Summary:        Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 #Group:          Networking/Instant messaging
@@ -55,7 +55,7 @@ install -D -m644 config/20-jvb-udp-buffers.conf %buildroot%_sysconfdir/sysctl.d/
 mkdir -p %buildroot%_datadir/%name/lib
 install -m 644 lib/videobridge.rc %buildroot%_datadir/%name/lib/
 install -m 644 target/dependency/* %buildroot%_datadir/%name/lib/
-install -m 644 resources/jvb.sh %buildroot%_datadir/%name/
+install -m 755 resources/jvb.sh %buildroot%_datadir/%name/
 install -m 644 resources/graceful_shutdown.sh %buildroot%_datadir/%name/
 install -m 644 resources/collect-dump-logs.sh %buildroot%_datadir/%name/
 install -m 644 target/jitsi-videobridge-%version-SNAPSHOT.jar %buildroot%_datadir/%name/
@@ -67,6 +67,7 @@ install -Dm0755 %SOURCE2 %buildroot%_sbindir/%{name}-configure
 # debian
 install -D -m 644 debian/manpage.1 %buildroot%_man1dir/%name.1
 install -D -m 644 debian/jitsi-videobridge2.service %buildroot%_unitdir/%service_name.service
+sed -i 's,User=jvb,User=%pseudouser_name,' %buildroot%_unitdir/%service_name.service
 install -D -m 644 debian/init.d %buildroot%_initdir/%service_name
 sed -i 's,NAME=jvb,NAME=%buildroot%_initdir/%service_name,' %buildroot%_initdir/%service_name
 
@@ -110,6 +111,10 @@ fi
 %dir %_localstatedir/log/jitsi
 
 %changelog
+* Fri Jun 12 2020 Arseny Maslennikov <arseny@altlinux.org> 2.1-alt0.4
+- Made the daemon executable.
+- Implemented system pseudouser policy: jvb -> _jvb.
+
 * Mon Jun 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.1-alt0.3
 - added service files
 - added default configuration
