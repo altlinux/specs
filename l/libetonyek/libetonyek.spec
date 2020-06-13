@@ -1,6 +1,6 @@
 Name: libetonyek
 Version: 0.1.9
-Release: alt1.1
+Release: alt2
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
@@ -9,6 +9,7 @@ License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
 Patch1: 0001-glm-force-dmat3-initialization-needed-from-v0.9.9.0.patch
+Patch2: libetonyek-0.1.9-ALT-C++11.patch
 
 BuildRequires: cppunit-devel
 
@@ -49,6 +50,7 @@ Currently supported: XHTML, raw, text.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 ## XXX hack out mdds=1.0 (too low)
 #sed -i 's/mdds-1.0/mdds/' configure.ac
 %ifarch e2k
@@ -93,6 +95,9 @@ make check
 %_bindir/*
 
 %changelog
+* Sat Jun 13 2020 Fr. Br. George <george@altlinux.ru> 0.1.9-alt2
+- Fix build
+
 * Tue Apr 28 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.9-alt1.1
 - Fix build with mdds-1.5.
 - glm: force dmat3 initialization.
