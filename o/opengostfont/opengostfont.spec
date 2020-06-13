@@ -1,18 +1,18 @@
 Name: opengostfont
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Open-source version of the fonts by Russian standard GOST 2.304-81
 License: OFL-1.1
 Group: System/Fonts/True type
 Url: https://bitbucket.org/fat_angel/opengostfont
 Source: %name-src-%version.tar.xz
-Patch: opengostfont-python2.diff
+Patch: opengostfont-python3.diff
 
 BuildArch: noarch
 # Automatically added by buildreq on Tue Sep 04 2012
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings xz
-BuildRequires: libfontforge-devel python-module-fontforge
+BuildRequires: libfontforge-devel python3-module-fontforge
 
 BuildRequires: rpm-build-fonts
 
@@ -38,7 +38,7 @@ GOST 2.304-81 "Letters for drawings"
 
 %prep
 %setup -n %name-src-%version
-%patch -p2
+%patch -p1
 
 %build
 make all
@@ -61,6 +61,9 @@ make all
 %doc LICENSE
 
 %changelog
+* Sat Apr 25 2020 Fr. Br. George <george@altlinux.ru> 0.3-alt3
+- Switch to python3
+
 * Mon Jan 13 2020 Fr. Br. George <george@altlinux.ru> 0.3-alt2
 - Remove FontConfig
 
