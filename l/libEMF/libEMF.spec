@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libEMF
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 
 Summary: A library for generating Enhanced Metafiles
@@ -96,9 +96,12 @@ make check
 %endif
 
 %changelog
+* Sun Jun 14 2020 Michael Shigorin <mike@altlinux.org> 1.0.13-alt1
+- new version (watch file uupdate)
+
 * Sun Apr 26 2020 Michael Shigorin <mike@altlinux.org> 1.0.12-alt1
 - new version (watch file uupdate)
-- dropped aarch64 patch (merged upstream)
+- dropped arch support patches (merged upstream, #3)
 
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 1.0.11-alt2
 - E2K: fixed build by faking context structure
