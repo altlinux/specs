@@ -1,16 +1,16 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 20.04.1
+Version: 20.04.2
 Release: alt1
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
 URL:     https://userbase.kde.org/Kamoso
 
-License: GPLv2+
+License: GPL-2.0+
 
-# Download from http://download.kde.org/unstable/release-service/$version/src/kamoso-$version.tar.xz
+# Download from http://download.kde.org/stable/release-service/$version/src/kamoso-$version.tar.xz
 Source0: %name-%version.tar
 Source1: %name.watch
 Source2: po.tar
@@ -97,6 +97,10 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sun Jun 14 2020 Andrey Cherepanov <cas@altlinux.org> 20.04.2-alt1
+- New version.
+- Fix License and download URL.
+
 * Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 20.04.1-alt1
 - New version.
 
