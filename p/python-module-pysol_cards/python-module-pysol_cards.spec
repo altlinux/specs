@@ -1,7 +1,7 @@
 %define  modulename pysol_cards
 
 Name:    python-module-%modulename
-Version: 0.8.18
+Version: 0.10.1
 Release: alt1
 
 Summary: Python library for dealing cards like PySol FC, MS Freecell/Freecell Pro, or PySol legacy
@@ -42,5 +42,8 @@ rm -rf %buildroot%python_sitelibdir/%modulename/tests
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Jun 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
+- New version.
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.18-alt1
 - Initial build for Sisyphus.
