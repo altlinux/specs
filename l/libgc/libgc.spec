@@ -1,6 +1,6 @@
 Name: libgc
 Version: 7.6.8
-Release: alt1
+Release: alt2
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 
@@ -13,6 +13,8 @@ Source: gc-%version.tar
 Patch: gc-aarch64.patch
 # https://github.com/ivmai/bdwgc/issues/87
 Patch1: libgc-7.6.0-upstream-c++.patch
+# https://github.com/ivmai/bdwgc/pull/318
+Patch2: gc-riscv64.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libatomic_ops-devel-static
@@ -52,6 +54,7 @@ This package contains static libgc library.
 %setup -n gc-%version
 #patch -p1
 #patch1 -p1
+%patch2 -p1
 
 %build
 # see bugzilla.redhat.com/689877
@@ -102,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Mon Jun 15 2020 Nikita Ermakov <arei@altlinux.org> 7.6.8-alt2
+- Make __data_start a weak symbol on RISC-V.
+
 * Sun Nov 04 2018 Vitaly Lipatov <lav@altlinux.ru> 7.6.8-alt1
 - new version 7.6.8 (with rpmrb script)
 
