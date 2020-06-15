@@ -53,7 +53,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: Boost Software License
@@ -92,6 +92,8 @@ Patch90: boost-1.73.0-fedora-beast-coroutines.patch
 
 # https://github.com/boostorg/geometry/issues/721
 Patch91: boost-1.73-fedora-geometry-issue721.patch
+
+Patch1000: boost-1.73.0-alt-disable-version-symlinks.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1326,6 +1328,7 @@ applications. This package contains python module.
 %patch89 -p1
 %patch90 -p1
 %patch91 -p1
+%patch1000 -p2
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1602,11 +1605,6 @@ ln -s bjam %buildroot%_bindir/boost-jam
 
 %if_without devel_static
 rm -f %buildroot%_libdir/*.a || :
-%endif
-
-%if_without devel
-# remove symlinks to get rid of file collisions
-find %buildroot%_libdir -type l -delete
 %endif
 
 #files
@@ -1997,6 +1995,9 @@ done
 
 
 %changelog
+* Mon Jun 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.73.0-alt2
+- Removed versioned symlinks (Closes: #38611).
+
 * Mon Jun 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.73.0-alt1
 - Updated to upstream version 1.73.0.
 
