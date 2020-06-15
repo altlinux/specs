@@ -1,11 +1,10 @@
 %set_verify_elf_method unresolved=relaxed
 
-# TODO:fix build Python bindings
 %def_enable python
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 3.904
+Version: 3.905
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -190,9 +189,6 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %dir %_libdir/%name/
 %_libdir/%name/lib*.so
 
-# hbci отдельно
-#%exclude %_libdir/%name/libgncmod-hbci*
-
 %files program -f %name.lang
 %doc AUTHORS ChangeLog.tar.xz HACKING NEWS README*
 %doc doc/README.* doc/examples
@@ -209,12 +205,12 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %_datadir/metainfo/%name.appdata.xml
 %_datadir/glib-2.0/schemas/org.%name.*.xml
 
-#hbci отдельно
-#%exclude %_datadir/%name/glade/hbci*
-
 %files quotes
 
 %changelog
+* Mon Jun 15 2020 Andrey Cherepanov <cas@altlinux.org> 3.905-alt1
+- New version.
+
 * Mon Jun 08 2020 Andrey Cherepanov <cas@altlinux.org> 3.904-alt1
 - New version.
 
