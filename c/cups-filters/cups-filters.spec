@@ -2,8 +2,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.27.4
-Release: alt2
+Version: 1.27.5
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -191,6 +191,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 1.27.5-alt1
+- 1.27.5
+
 * Thu May 28 2020 Anton Farygin <rider@altlinux.ru> 1.27.4-alt2
 - changed the default behavior: autosetup is only for driverless printers
 
