@@ -1,10 +1,10 @@
 %define kernel_base_version	4.9
-%define kernel_sublevel        .216
+%define kernel_sublevel        .227
 %define kernel_extra_version	%nil
 
 Name: kernel-image-bmitx-def
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2
+Release: alt1
 
 %define kernel_extra_version_numeric 1.0.0
 
@@ -251,6 +251,10 @@ rm -f /boot/dtb
 ln -s /lib/devicetree/%kversion-%flavour-%krelease /boot/dtb
 
 %changelog
+* Mon Jun 15 2020 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.9.227-alt1
+- Merged with the latest linux-stable/v4.9.227
+- Enabled more WiFi drivers
+
 * Sat May 23 2020 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.9.216-alt2
 - Fixed monitor wakeup from the idle state and switching between virtual
   consoles. Mali drivers still breaks power management.
