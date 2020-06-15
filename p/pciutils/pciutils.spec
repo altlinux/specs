@@ -1,7 +1,7 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.6.4
+Version: 3.7.0
 Release: alt1
 
 Summary: Linux PCI utilities
@@ -94,6 +94,9 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 3.7.0-alt1
+- 3.7.0
+
 * Thu Mar 12 2020 Anton Farygin <rider@altlinux.ru> 3.6.4-alt1
 - 3.6.4
 
