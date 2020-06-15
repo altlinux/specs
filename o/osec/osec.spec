@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osec
-Version: 1.2.9
+Version: 1.3.0
 Release: alt1
 
 Summary: Lightweight file permission checker
@@ -113,6 +113,15 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Mon Jun 15 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.0-alt1
+- New version (1.3.0);
+- Database creation is more error tolerant (ALT#38408, ALT#33207):
+   - if osec failed to get the owner and user group by id, a numeric value will be used (ALT#33018).
+   - if osec failed to read the file to calculate the checksum, an empty value will be used.
+   - if osec failed to read symlink an empty value will be used.
+- The mtime field includes nanoseconds.
+- The basepath field has been added to the database.
+
 * Tue May 14 2019 Alexey Gladkov <legion@altlinux.ru> 1.2.9-alt1
 - New version (1.2.9);
 
