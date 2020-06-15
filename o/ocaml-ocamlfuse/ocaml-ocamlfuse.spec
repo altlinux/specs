@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ocamlfuse
 Version: 2.7.1
-Release: alt9
+Release: alt10
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -61,6 +61,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_libdir/ocaml/ocamlfuse/*.ml*
 
 %changelog
+* Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt10
+- added fix to building using dune-2.6
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt9
 - build with dune-2
 
