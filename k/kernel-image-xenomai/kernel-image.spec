@@ -3,12 +3,12 @@
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1
-%define ipipe_version		4.19.114-cip24-x86-12
+%define ipipe_version		4.19.124-cip27-x86-12
 %define kernel_base_version	4.19
-%define kernel_sublevel		.114
+%define kernel_sublevel		.124
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip24
-%define kernel_ipipe_release	12
+%define kernel_cip_release	cip27
+%define kernel_ipipe_release	13
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
@@ -540,6 +540,9 @@ grep -q "Cobalt v[0-9.]\+" boot.log
 %modules_dir/build
 
 %changelog
+* Mon Jun 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.124-alt1.cip27.13
+- Update to ipipe-core-4.19.124-cip27-x86-13.
+
 * Sun Apr 19 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.114-alt1.cip24.12
 - Major upgrade of xenomai kernels to Linux 4.19 branch and update to
   ipipe-core-4.19.114-cip24-x86-12 released at 2020-04-16.
