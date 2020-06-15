@@ -1,7 +1,10 @@
 %define     oname openstackdocstheme
 
+%def_with docs
+%def_without check
+
 Name:       python3-module-%oname
-Version:    2.2.1
+Version:    2.2.2
 Release:    alt1
 
 Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
@@ -19,11 +22,22 @@ BuildArch:  noarch
 
 BuildRequires: python3-module-pbr
 
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-dulwich
+%endif
+
 %description
 OpenStack Sphinx Theme
 
 Theme and extension support for Sphinx documentation that is published to
 docs.openstack.org. Intended for use by OpenStack projects.
+
+%package doc
+Summary:    %oname documentation
+Group:      Development/Documentation
+%description doc
+Documentation for %oname
 
 %prep
 %setup
@@ -34,11 +48,21 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH=.
+sphinx-build-3 -b html doc/source doc/build/html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
+
 %install
 %python3_install
 mkdir -p %buildroot%python3_sitelibdir_noarch/%oname/theme
 cp -r %oname/theme/* \
 %buildroot%python3_sitelibdir_noarch/%oname/theme
+
+%check
+python3 setup.py test
 
 %files
 %doc README.rst
@@ -48,7 +72,16 @@ cp -r %oname/theme/* \
 %python3_sitelibdir_noarch/%oname
 %python3_sitelibdir_noarch/*.egg-info
 
+%if_with docs
+%files doc
+%doc doc/build/html
+%endif
+
 %changelog
+* Mon Jun 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
+- Build new version.
+- Build with docs.
+
 * Wed May 20 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Build new version.
 
