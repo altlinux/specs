@@ -1,6 +1,6 @@
 Name: pcsc-lite-ccid
 Version: 1.4.32
-Release: alt1
+Release: alt2
 
 Summary: USB CCID IFD Handler
 Group: System/Libraries
@@ -51,6 +51,9 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Mon Jun 15 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.32-alt2
+- Rebuild with pcsc-lite-1.9.0.
+
 * Wed Apr 22 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.32-alt1
 - New version.
 
