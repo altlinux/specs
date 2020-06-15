@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -68,6 +68,7 @@ sed -i '/^(name/a (version %version)' dune-project
 %_man1dir/dune-install.1*
 %_man1dir/dune-init.1*
 %_man1dir/dune-installed-libraries.1*
+%_man1dir/dune-ocaml-merlin.1*
 %_man1dir/dune-rules.1*
 %_man1dir/dune-runtest.1*
 %_man1dir/dune-subst.1*
@@ -96,6 +97,7 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune*/META
 %_libdir/ocaml/dune*/*.cma
 %_libdir/ocaml/dune*/*.cmi
+%_libdir/ocaml/dune-configurator/.private
 %_libdir/ocaml/dune-private-libs/*/*.cma
 %_libdir/ocaml/dune-private-libs/*/*.cmxa
 %_libdir/ocaml/dune-private-libs/*/*.cmi
@@ -123,6 +125,9 @@ sed -i '/^(name/a (version %version)' dune-project
 
 
 %changelog
+* Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 
