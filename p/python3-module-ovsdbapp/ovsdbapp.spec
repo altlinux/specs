@@ -1,7 +1,7 @@
 %global oname ovsdbapp
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: A library for creating OVSDB applications
 
@@ -79,6 +79,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Tue Jun 16 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Automatically updated to 1.2.0.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 - Renamed spec file.

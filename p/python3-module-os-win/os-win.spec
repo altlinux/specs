@@ -1,7 +1,7 @@
 %define oname os-win
 
 Name: python3-module-%oname
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python3
@@ -73,6 +73,9 @@ rm -fr doc/build/html/.buildinfo
 %doc README.rst doc/build/html
 
 %changelog
+* Tue Jun 16 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.2-alt1
+- Automatically updated to 5.0.2.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
 - Automatically updated to 5.0.1.
 - Renamed spec file.
