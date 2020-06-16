@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kdevelop5
-Version: 5.4.80
+Version: 5.5.2
 Release: alt1
 Summary: A cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
 Group: Development/Tools
@@ -79,6 +79,9 @@ chmod +x %buildroot/%_bindir/kdevelop5
 %_K5link/*
 
 %changelog
+* Tue Jun 16 2020 Fr. Br. George <george@altlinux.ru> 5.5.2-alt1
+- Autobuild version bump to 5.5.2
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 5.4.80-alt1
 - Autobuild version bump to 5.4.80
 
