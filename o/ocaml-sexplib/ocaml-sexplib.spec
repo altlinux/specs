@@ -1,18 +1,17 @@
 %set_verify_elf_method textrel=relaxed
 %define oname sexplib
 Name: ocaml-%oname
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
-BuildRequires: dune >= 1.8
+BuildRequires: dune >= 2.0
 BuildRequires: ocaml
 BuildRequires: ocaml-num
-BuildRequires: opam
-BuildRequires: ocaml-parsexp-devel >= 0.12.0
+BuildRequires: ocaml-parsexp-devel >= 0.13.0
 
 %description
 This library contains functionality for parsing and pretty-printing
@@ -82,6 +81,9 @@ rm -rf %buildroot/usr/share/doc
 %_libdir/ocaml/sexplib/*/*.ml
 
 %changelog
+* Wed Jun 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 

@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname parsexp
 Name: ocaml-%libname
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
@@ -76,6 +76,9 @@ dune runtest
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Jun 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
