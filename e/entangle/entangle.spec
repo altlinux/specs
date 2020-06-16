@@ -1,8 +1,9 @@
 %define api_ver 0.1
 %define gst_api_ver 1.0
+%define rdn_name org.entangle_photo.Manager
 
 Name: entangle
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: Tethered Camera Control and Capture tool
@@ -18,7 +19,7 @@ Requires: libpeas-python3-loader
 
 %add_python3_path %_libdir/%name/plugins
 
-BuildRequires(pre): meson >= 0.41.0 rpm-build-gir rpm-build-python3
+BuildRequires(pre): meson >= 0.49.0 rpm-build-gir rpm-build-python3
 BuildRequires: yelp-tools gtk-doc perl-podlators
 BuildRequires: glib2-devel >= 2.38.0
 BuildRequires: libgtk+3-devel >= 3.22.0
@@ -60,14 +61,14 @@ and 'hands off' shooting directly from the controlling computer.
 %_libdir/%name/plugins/
 %_datadir/%name/
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_man1dir/%name.1*
 %_datadir/glib-2.0/schemas/org.%name-photo.manager.gschema.xml
-%_iconsdir/hicolor/*/apps/%{name}*.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_typelibdir/Entangle-%api_ver.typelib
-%doc README AUTHORS NEWS ChangeLog
+%doc README* AUTHORS NEWS ChangeLog
 
 # devel, devel-doc
 %_datadir/gtk-doc/html/%name/
@@ -76,6 +77,9 @@ and 'hands off' shooting directly from the controlling computer.
 %_girdir/Entangle-%api_ver.gir
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Mon Jan 21 2019 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - first build for Sisyphus
 
