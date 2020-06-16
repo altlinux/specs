@@ -3,7 +3,7 @@
 %define  version_suffix %nil
 
 Name:    rex
-Version: 1.6.0
+Version: 1.11.0
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -24,11 +24,15 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sat Dec 09 2017
-# optimized out: libsasl2-3 lsb-release perl perl-App-Cmd perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Load perl-Clone perl-Clone-Choose perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Cpanel-JSON-XS perl-DBI perl-Data-Dump perl-Data-OptList perl-Data-Section perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-Zilla perl-Dist-Zilla-Plugin-MetaProvides perl-Dist-Zilla-Role-ModuleMetadata perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Find-Rule perl-File-HomeDir perl-File-Which perl-File-pushd perl-Getopt-Long-Descriptive perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-String perl-IO-Stty perl-IO-Tty perl-IPC-Run perl-JSON-MaybeXS perl-List-MoreUtils perl-Log-Dispatch perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Perl perl-MooseX-Types-Stringlike perl-NetAddr-IP perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-PrereqScanner perl-PerlIO-utf8_strict perl-Pod-Escapes perl-Pod-Eventual perl-Pod-Simple perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Safe-Isa perl-Socket6 perl-Software-License perl-Specio perl-String-Flogger perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Term-ANSIColor perl-Term-Encoding perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-URI perl-Variable-Magic perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-YAML-Tiny perl-aliased perl-autodie perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators perl-unicore python-base python-modules python3 python3-base
-BuildRequires: curl iproute2 libnss-myhostname libnss-mymachines lsb-core openssh-clients perl-AWS-Signature4 perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-Data-Validate-IP perl-Digest-HMAC perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-Dist-Zilla-Plugin-MetaProvides-Package perl-Dist-Zilla-Plugin-OSPrereqs perl-Dist-Zilla-Plugin-OurPkgVersion perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-Test-MinimumVersion perl-Dist-Zilla-Plugin-Test-Perl-Critic perl-Expect perl-Hash-Merge perl-Net-OpenSSH perl-Net-SFTP-Foreign perl-Net-SSH2 perl-PPI-XS perl-Parallel-ForkManager perl-PathTools perl-Ref-Util perl-Ref-Util-XS perl-Sort-Naturally perl-String-Escape perl-Test-Pod perl-Test-UseAllModules perl-XML-Simple perl-YAML subversion wget
+# Automatically added by buildreq on Mon May 18 2020
+# optimized out: git-core libnss-myhostname libsasl2-3 lsb-release perl perl-App-Cmd perl-B-Hooks-EndOfScope perl-CPAN-Changes perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Load perl-Clone perl-Clone-Choose perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Cpanel-JSON-XS perl-DBI perl-Data-Dump perl-Data-OptList perl-Data-Section perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-Zilla perl-Dist-Zilla-Plugin-MetaProvides perl-Dist-Zilla-Role-ModuleMetadata perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Find-Rule perl-File-Which perl-File-chdir perl-File-pushd perl-Getopt-Long-Descriptive perl-Git-Wrapper perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-String perl-IO-Stty perl-IO-Tty perl-IPC-Run perl-JSON-MaybeXS perl-JSON-PP perl-List-AllUtils perl-List-MoreUtils perl-List-MoreUtils-XS perl-List-SomeUtils perl-List-UtilsBy perl-Log-Dispatch perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Perl perl-MooseX-Types-Stringlike perl-NetAddr-IP perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-PrereqScanner perl-Perl-Version perl-PerlIO-utf8_strict perl-Pod-Escapes perl-Pod-Simple perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Safe-Isa perl-Socket6 perl-Software-License perl-Sort-Versions perl-Specio perl-String-Flogger perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Term-ANSIColor perl-Term-Encoding perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-URI perl-Unicode-Collate perl-Variable-Magic perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-YAML-Tiny perl-aliased perl-autodie perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4 utf8proc
+BuildRequires: curl iproute2 libnss-myhostname libnss-mymachines openssh-clients perl-AWS-Signature4 perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-Data-Validate-IP perl-Digest-HMAC perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-ContributorsFile perl-Dist-Zilla-Plugin-Git-Contributors perl-Dist-Zilla-Plugin-MakeMaker-Awesome perl-Dist-Zilla-Plugin-Meta-Contributors perl-Dist-Zilla-Plugin-MetaProvides-Package perl-Dist-Zilla-Plugin-NextVersion-Semantic perl-Dist-Zilla-Plugin-OSPrereqs perl-Dist-Zilla-Plugin-OurPkgVersion perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-Run perl-Dist-Zilla-Plugin-Test-CPAN-Changes perl-Dist-Zilla-Plugin-Test-Kwalitee perl-Dist-Zilla-Plugin-Test-MinimumVersion perl-Dist-Zilla-Plugin-Test-Perl-Critic perl-Expect perl-File-LibMagic perl-Hash-Merge perl-Net-OpenSSH perl-Net-SFTP-Foreign perl-Net-SSH2 perl-PPI-XS perl-Parallel-ForkManager perl-PathTools perl-Ref-Util perl-Ref-Util-XS perl-Sort-Naturally perl-String-Escape perl-Test-UseAllModules perl-YAML subversion wget
 
-BuildRequires: perl-IPC-Shareable
+# Extra automatic dependencies, need to remove:
+#BuildRequires: lsb-core lsb-release
+
+# Missed by buildreq:
+BuildRequires: perl-IPC-Shareable perl-XML-Simple
 
 # Perl find-requires skips File::Spec::* modules, add File::Spec::Win32 manually
 Requires: perl-PathTools
@@ -53,13 +57,25 @@ and software deployment.
 %patch1 -p0
 
 # Now (1.5.99_01) there are Virtualization::Docker::images.pm file
-sed -e '/^images$/ d' -i MANIFEST.SKIP
+#sed -e '/^images$/ d' -i MANIFEST.SKIP
+
+## Fix dist.ini:
+### Remove [NextRelease] section:
+sed -e '/^\[NextRelease/,/^$/ d' -i dist.ini
+
+# Force version for NextVersion::Semantic:
+export V=%{version}
 
 # This creates Makefile.PL from dist.ini
 /usr/bin/dzil build
 
 %build
 cd Rex-%{version}%{version_suffix}
+
+# Fix test to work with ALT libmime-4.26 (see ALT#38497):
+sed -e 's/utf-8/binary/'      -i t/write_utf8_files.t
+sed -e 's/iso-8859-1/binary/' -i t/write_utf8_files.t
+
 %perl_vendor_build
 
 %install
@@ -68,6 +84,10 @@ cd Rex-%{version}%{version_suffix}
 
 install -dp %buildroot%_sysconfdir/bash_completion.d/
 install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_completion.d/%name
+
+mv -f CONTRIBUTORS ../
+mv -f ChangeLog    ../
+
 
 %files
 %doc ChangeLog README.md CONTRIBUTORS doc/Rexfile-example1
@@ -83,6 +103,9 @@ install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_co
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Wed Jun 10 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.11.0-alt1
+- New version
+
 * Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.6.0-alt1
 - New version
 
