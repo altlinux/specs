@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qtest
 Name: ocaml-%libname
-Version: 2.10.1
-Release: alt3
+Version: 2.11
+Release: alt1
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
 Group: Development/ML
@@ -60,6 +60,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 2.11-alt1
+- 2.11
+
 * Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 2.10.1-alt3
 - oUnit to ounit2 replace has been moved to specfile
 
