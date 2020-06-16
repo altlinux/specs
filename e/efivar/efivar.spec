@@ -1,12 +1,11 @@
 Name: efivar
 Version: 37
-Release: alt2
+Release: alt3
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
 Url: https://github.com/rhinstaller/efivar
 Requires: %name-libs = %version-%release
-ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires: libpopt-devel libabigail
 Source0: %name-%version.tar
@@ -58,6 +57,10 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS -flto" LDFLAGS="$RPM
 %_libdir/*.so.*
 
 %changelog
+* Tue May 12 2020 Nikolai Kostrigin <nickel@altlinux.org> 37-alt3
+- remove ExclusiveArch tag to enable build on ppc64le
+  + this enables pesign-111+ build
+
 * Thu Oct 24 2019 Anton Farygin <rider@altlinux.ru> 37-alt2
 - fixed build with gcc-9 by applying patches from upstream
 
