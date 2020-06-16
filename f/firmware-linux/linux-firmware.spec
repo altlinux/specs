@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200519
+Version: 20200527
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,17 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 16 2020 Cronbuild Service <cronbuild@altlinux.org> 20200527-alt1
+- upstream changes (GIT 887d2a1):
+  + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth AX201 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9560 (thx Amit K Bag)
+  + Update firmware file for Intel Bluetooth 9260 (thx Amit K Bag)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2007.1168 (thx Petr Machata)
+  + rtw88: RTL8822C: update firmware version to v9.9 (thx Yan-Hsuan Chuang)
+  + cxgb4: Update firmware to revision 1.24.17.0 (thx Vishal Kulkarni)
+  + mrvl: add firmware for Prestera ASIC devices (thx Vadym Kochan)
+
 * Tue Jun 02 2020 Cronbuild Service <cronbuild@altlinux.org> 20200519-alt1
 - upstream changes (GIT 8ba6fa6):
   + iwlwifi: update and add new FWs from core50-70 and core52-81
