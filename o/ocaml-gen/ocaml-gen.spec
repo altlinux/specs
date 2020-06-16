@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname gen
 Name: ocaml-%libname
-Version: 0.5.2
-Release: alt3
+Version: 0.5.3
+Release: alt1
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
@@ -57,6 +57,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/*.cmxs
 
 %changelog
+* Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1
+- 0.5.3
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 0.5.2-alt3
 - rebuilt by dune-2.x
 
