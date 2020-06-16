@@ -5,12 +5,12 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1127.vz7.150.11
-%define orelease 1127.vz7.150.11
+#     rh7-3.10.0-1127.8.2.vz7.151.6
+%define orelease 1127.8.2.vz7.151.6
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt2.%orelease
+Release: alt3.%orelease
 Epoch: 1
 
 %define kernel_req %nil
@@ -586,6 +586,12 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Jun 16 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.8.2.vz7.151.6
+- Build rh7-3.10.0-1127.8.2.vz7.151.6
+
+* Wed Jun 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.8.2.vz7.151.3
+- Build rh7-3.10.0-1127.8.2.vz7.151.3
+
 * Mon Jun 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt2.1127.vz7.150.11
 - Build rh7-3.10.0-1127.vz7.150.11
 - merge changelog from p9
