@@ -3,12 +3,12 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
-License: GPL
+License: GPLv3
 Url: http://www.gnu.org/software/freeipmi/
 
 PreReq: lib%name = %version-%release
@@ -176,6 +176,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
+- new version 1.6.5
+
 * Wed Oct 02 2019 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
 - new version 1.6.4
 
