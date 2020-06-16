@@ -1,32 +1,27 @@
 Name: dblatex
-Version: 0.3.10
-Release: alt2
+Version: 0.3.11
+Release: alt1
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
-License: %gpl2plus
+License: GPL-2.0-or-later and MIT and W3C
 Group: Text tools
-
 Url: http://dblatex.sourceforge.net/
-Source: %name-%version.tar
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python rpm-build-tex
-# Automatically added by buildreq on Thu Jun 26 2008
-BuildRequires: python-devel python-modules-encodings python-modules-logging texlive-latex-extra xsltproc
+Source: %name-%version.tar
+
+Requires: ImageMagick-tools xsltproc docbook-dtds
+
+BuildRequires(pre): rpm-build-python3 rpm-build-tex
+BuildRequires: python3-devel texlive-latex-extra xsltproc
 BuildRequires: transfig
 
 BuildArch: noarch
 
-Requires: ImageMagick-tools xsltproc docbook-dtds
-#Requires: ImageMagick tetex-latex-listings tetex-latex-cmap tetex-latex tetex-context xsltproc docbook-dtds tetex-dvips ghostscript-utils fonts-type1-cm-super-tex
-#Requires: tetex-latex-unicode >= 20041017-alt1
-
 # this is xelatex's sty, skip to workaround texmf dep tracing unefficiency
 %add_texmf_req_skip xecyr.sty
-
-# for backwards compatibility: skip deps not provided by tetex
-#add_texmf_req_skip CJKutf8.sty appendix.sty bibtopic.sty enumitem.sty listings.sty pinyin.sty
+# 4Suite python2 only, xsltproc will be used
+%filter_from_requires /Ft\./d
 
 %define _dblatex_datadir %_datadir/%name
 %define _dblatex_texdir %_texmfmain/tex/latex/%name
@@ -57,15 +52,21 @@ sed -i 's/\\cyrchar//g' lib/dbtexmf/dblatex/unient.py
 # invalid inkscape parameters order
 sed -i '/inkscape.*format, *input, *output/s/input, *output/output, input/' lib/dbtexmf/core/imagedata.py
 
+#fix shebangs
+sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' \
+scripts/dblatex tools/pdfscan.py \
+lib/dbtexmf/dblatex/xetex/*.py lib/contrib/which/which.py \
+lib/contrib/debian/dblatex
+
 %build
-%python_build
+%python3_build
 
 %install 
-%python_install
+%python3_install
 
 mkdir -p %buildroot/%_dblatex_texdir
 mv %buildroot/%_dblatex_datadir/latex/{contrib,misc/multirow2.sty,style} %buildroot/%_dblatex_texdir
-rm -rvf %buildroot/%_dblatex_datadir/latex/misc 
+rm -rvf %buildroot/%_dblatex_datadir/latex/misc
 
 #mkdir -p %buildroot/%_dblatex_datadir
 #cp -a buildroot/%_dblatex_datadir/xsl %buildroot/%_dblatex_datadir
@@ -76,20 +77,29 @@ ln -s ../../texmf/tex/latex/dblatex/contrib %buildroot/%_dblatex_datadir/latex/c
 mv %buildroot/%_dblatex_datadir/latex/graphics %buildroot/%_dblatex_texdir
 
 mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
+cp COPYRIGHT %buildroot%_docdir/%name-%version
+
+# another fix shebang
+sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 
 %pre
 [ -h %_datadir/%name/latex/contrib ] || rm -rf %_datadir/%name/latex/contrib
 
 %files 
-%_bindir/dblatex
+%_bindir/%name
 %_dblatex_datadir
 %_dblatex_texdir
-%python_sitelibdir/dbtexmf/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/dbtexmf/
+%python3_sitelibdir/*.egg-info
 %_docdir/%name-%version
-%_man1dir/dblatex.1.*
+%_man1dir/%name.1*
+
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- 0.3.11 (Python3 version: https://downloads.sf.net/dblatex/dblatex-0.3.11py3.tar.bz2)
+- fixed License tag
+
 * Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt2
 - Remove dependency on ImageMagick.
 
