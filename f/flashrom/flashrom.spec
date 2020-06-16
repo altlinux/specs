@@ -1,5 +1,5 @@
 Name: flashrom
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Universal flash programming utility
@@ -51,6 +51,10 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Tue Jun 16 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.2-alt1
+- The first and hopefully not the last release of 2020
+- Support MT25QU256 for Baikal-M firmware
+
 * Tue Jul 30 2019 Anton Farygin <rider@altlinux.ru> 1.1-alt1
 - 1.0 -> 1.1
 
