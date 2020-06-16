@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: High productivity build system
@@ -90,6 +90,10 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.3-alt1
+- 0.54.3
+- meson.macros: export modern fortran FCFLAGS
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.54.2-alt1
 - 0.54.2
 
