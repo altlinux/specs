@@ -1,7 +1,7 @@
 %define oname os-brick
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: OpenStack Cinder brick library for managing local volume attaches
 Group: Development/Python3
@@ -86,6 +86,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %doc README.rst doc/build/html
 
 %changelog
+* Tue Jun 16 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
+- Automatically updated to 3.0.2.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

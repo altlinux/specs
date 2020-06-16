@@ -1,7 +1,7 @@
 %define oname ironic-lib
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 Summary:  A python library of common ironic utilities
 Group: Development/Python3
@@ -73,6 +73,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Tue Jun 16 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
+- Automatically updated to 4.2.1.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 - Build with docs.
