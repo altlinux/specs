@@ -4,7 +4,7 @@
 
 Name:	 	php7-%{php7_extension}
 Version:	%php7_version
-Release:	%php7_release
+Release:	%php7_release.1
 
 Summary:	PHP7 bindings for the libssh2 library
 
@@ -77,6 +77,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Tue Jun 16 2020 Nikolay A. Fetisov <naf@altlinux.org> 7.3.18-alt1.1
+- Fix module configuration
 
 * Mon Jun 15 2020 Nikolay A. Fetisov <naf@altlinux.org> 7.3.18-alt1
 - Initial build for ALT Linux Sisyphus
