@@ -3,7 +3,7 @@
 
 Name: hddtemp
 Version: 0.3
-Release: alt14.beta%beta
+Release: alt15.beta%beta
 Epoch: 20110629
 
 Summary: Hard Drive Temperature Monitoring
@@ -23,6 +23,7 @@ Patch1: hddtemp-0.3beta15-guessedvalue.patch
 Patch2: hddtemp-0.3beta15-compile.patch
 Patch3: hddtemp-fedora-user-context-type.patch
 Patch4: hddtemp-0.3beta15-doublefork.patch
+Patch5: 0001-Prevent-crash-on-numeric-unit-conversion-when-disk-i.patch
 
 %description
 hddtemp is a tool that gives you the temperature of your IDE,
@@ -34,6 +35,7 @@ SATA or SCSI hard drive by reading S.M.A.R.T. information.
 %patch2 -p2
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 %build
 %autoreconf
@@ -77,6 +79,9 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Tue Jun 16 2020 Vitaly Chikunov <vt@altlinux.org> 20110629:0.3-alt15.beta15
+- fix crash on numeric output if disk is not in db (closes: #38616)
+
 * Mon Sep 16 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 20110629:0.3-alt14.beta15
 - systemd service file added
 
