@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -81,7 +81,12 @@ install -pDm644 kiosk/%name-kiosk.man %buildroot%_man1dir/%name-kiosk.1
 %_man1dir/%name-kiosk.*
 
 %changelog
-* Tue Jun 02 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.3-alt1
+* Wed Jun 17 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.4-alt1
+- kiosk:
+ + fixed disable from cmdline
+ + fixed webkiosk for firefox < 71
+
+* Tue Jun 09 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.3-alt1
 - new stable version
 
 * Tue Jun 02 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.9.0.rc2-alt1
