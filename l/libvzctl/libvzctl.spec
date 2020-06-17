@@ -1,7 +1,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.583
+Version: 7.0.588
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -14,13 +14,13 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64
 
 Requires: libvzevent >= 7.0.0
-Requires: libploop >= 7.0.92
+Requires: libploop >= 7.0.199
 Requires: cgroup
 Requires: crtools >= 2.8.0.15
 Requires: libvcmmd >= 7.0.22
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: libvzevent-devel >= 5.0.0
-BuildRequires: libploop-devel >= 7.0.92
+BuildRequires: libploop-devel >= 7.0.199
 BuildRequires: libvcmmd-devel >= 7.0.14
 BuildRequires: libe2fs-devel
 BuildRequires: libxml2-devel >= 2.6.16
@@ -65,6 +65,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Wed Jun 17 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.588-alt1
+- 7.0.588
+
 * Wed May 27 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.583-alt1
 - 7.0.583
 
