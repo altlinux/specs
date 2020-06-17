@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.7.2
+Version: 4.7.3
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -55,11 +55,14 @@ effects for Pulseaudio applications.
 
 %install
 %meson_install
+# system-wide config directory since 4.7.3
+mkdir -p %buildroot%_sysconfdir/PulseEffects
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
+%dir %_sysconfdir/PulseEffects
 %_libdir/gstreamer-%gst_api_ver/libgstpeconvolver.so
 %_libdir/gstreamer-%gst_api_ver/libgstpecrystalizer.so
 %_libdir/gstreamer-%gst_api_ver/libgstpeautogain.so
@@ -72,6 +75,9 @@ effects for Pulseaudio applications.
 %doc README* CHANGELOG.*
 
 %changelog
+* Wed Jun 17 2020 Yuri N. Sedunov <aris@altlinux.org> 4.7.3-alt1
+- 4.7.3
+
 * Mon Mar 23 2020 Yuri N. Sedunov <aris@altlinux.org> 4.7.2-alt1
 - 4.7.2 (required lsp-plugins-1.1.14)
 
