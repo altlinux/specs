@@ -35,7 +35,7 @@
 %endif
 
 Name: efl
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -417,6 +417,9 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed Jun 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.3-alt1
+- 1.24.3
+
 * Wed May 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
 - 1.24.2
 
