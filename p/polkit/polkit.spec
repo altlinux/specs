@@ -3,7 +3,7 @@
 
 Name: polkit
 Version: 0.116
-Release: alt2
+Release: alt3
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
 BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs60-devel libsystemd-devel
+BuildRequires: libmozjs68-devel pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Wed Jun 17 2020 Yuri N. Sedunov <aris@altlinux.org> 0.116-alt3
+- updated to 0.116-20-g47890bf (ported to mozjs68)
+
 * Tue Dec 10 2019 Yuri N. Sedunov <aris@altlinux.org> 0.116-alt2
 - updated to 0.116-10-gb806f0c (fixed memory leaks)
 
