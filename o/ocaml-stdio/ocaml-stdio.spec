@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define oname stdio
 Name: ocaml-%oname
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: Standard IO library for OCaml
 License: Apache-2.0
@@ -62,6 +62,9 @@ dune runtest
 %_libdir/ocaml/%oname/dune-package
 
 %changelog
+* Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
