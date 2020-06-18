@@ -1,15 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
+
+%define api_ver 2.0
+
 %def_disable python
-%def_disable python2
 %def_enable check
 
 Name: libplist
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
-License: LGPLv2+
+License: GPL-2.0 and LGPL-2.1
 Url: http://www.libimobiledevice.org/
 
 %if_disabled snapshot
@@ -23,8 +25,6 @@ Patch: libplist-2.0.0-alt-e2k-lcc123.patch
 BuildRequires: gcc-c++ xml-utils
 %{?_enable_python:BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-Cython}
-%{?_enable_python2:BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-Cython}
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -55,15 +55,6 @@ Requires: %name = %version-%release
 %description devel
 This package provides development headers and libraries for %name
 
-%package -n python-module-%name
-Summary: Python package for libplist
-Group: Development/Python
-Requires: %name = %version-%release
-Requires: %{name}mm = %version-%release
-
-%description -n python-module-%name
-Python libraries and bindings for %name
-
 %package -n python3-module-%name
 Summary: Python3 package for libplist
 Group: Development/Python3
@@ -77,12 +68,9 @@ Python3 libraries and bindings for %name
 %prep
 %setup -a0
 %patch -p1 -b .e2k
-%{?_enable_python2:mv %name-%version py2build
-subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' py2build/m4/ac_python_devel.m4
-}
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64 %optflags_shared
+%add_optflags %(getconf LFS_CFLAGS) %optflags_shared
 %autoreconf
 %configure --disable-static CC=gcc \
 %{?_enable_python:PYTHON=%__python3} \
@@ -90,50 +78,31 @@ subst 's/\(PYTHON-config --ldflags\)/\1 -lpython%__python_version/' py2build/m4/
 
 %make_build
 
-%if_enabled python2
-pushd py2build
-%autoreconf
-%configure --disable-static PYTHON=%__python
-%make_build
-popd
-%endif
-
 %install
 %makeinstall_std
-
-%if_enabled python2
-pushd py2build
-%makeinstall_std
-popd
-%endif
 
 %check
 %make check
 
 %files
 %_bindir/plistutil
-%_libdir/libplist.so.*
+%_libdir/libplist-%api_ver.so.*
+%_man1dir/plistutil.1*
 %doc AUTHORS README* NEWS
 
 %files devel
 %_includedir/plist/
-%_libdir/libplist.so
-%_libdir/pkgconfig/libplist.pc
+%_libdir/libplist-%api_ver.so
+%_libdir/pkgconfig/libplist-%api_ver.pc
 %exclude %_includedir/plist/plist++.h
 
 %files -n %{name}mm
-%_libdir/libplist++.so.*
+%_libdir/libplist++-%api_ver.so.*
 
 %files -n %{name}mm-devel
 %_includedir/plist/plist++.h
-%_libdir/libplist++.so
-%_pkgconfigdir/libplist++.pc
-
-%if_enabled python2
-%files -n python-module-%name
-%python_sitelibdir/plist.so
-%exclude %python_sitelibdir/plist.la
-%endif
+%_libdir/libplist++-%api_ver.so
+%_pkgconfigdir/libplist++-%api_ver.pc
 
 %if_enabled python
 %files -n python3-module-%name
@@ -142,6 +111,11 @@ popd
 %endif
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+- removed python2 support
+- fixed License tag
+
 * Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - updated to 2.1.0-11-g878d0d8
 - disabled useless python support
