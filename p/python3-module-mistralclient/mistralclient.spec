@@ -1,12 +1,12 @@
 %define oname mistralclient
 
 Name:       python3-module-%oname
-Version:    3.10.0
+Version:    4.0.1
 Release:    alt1
 
 Summary:    Client Library for OpenStack Mistral Workflow Service API
 
-License:    ASL 2.0
+License:    Apache-2.0
 Group:      Development/Python3
 Url:        http://docs.openstack.org/developer/python-%oname
 
@@ -97,6 +97,10 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE build/sphinx/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Automatically updated to 3.10.0.
 - Build without python2.

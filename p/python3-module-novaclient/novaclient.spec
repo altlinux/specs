@@ -1,13 +1,13 @@
 %define oname novaclient
 
 Name: python3-module-%oname
-Version: 16.0.0
+Version: 17.0.0
 Release: alt1
 
 Summary: Python API and CLI for OpenStack Nova
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/python-%oname
 
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -110,9 +110,11 @@ install -pm 644 tools/nova.bash_completion \
 %doc build/sphinx/html build/sphinx/man
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt1
+- Automatically updated to 17.0.0.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 16.0.0-alt1
 - Automatically updated to 16.0.0.
-- Added watch file.
 - Renamed spec file.
 
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 15.1.0-alt1

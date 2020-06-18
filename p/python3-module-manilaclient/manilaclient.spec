@@ -1,12 +1,12 @@
 %define oname manilaclient
 
 Name:       python3-module-%oname
-Version:    1.29.0
+Version:    2.1.0
 Release:    alt1
 
 Summary:    Client Library for OpenStack Manila shared file system service API
 
-License:    ASL 2.0
+License:    Apache-2.0
 Group:      Development/Python3
 Url: http://docs.openstack.org/developer/python-%oname
 
@@ -93,6 +93,10 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.29.0-alt1
 - Automatically updated to 1.29.0.
 - Build without python2.

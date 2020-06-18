@@ -1,7 +1,7 @@
 %define sname senlinclient
 
 Name: python3-module-%sname
-Version: 1.11.0
+Version: 2.0.1
 Release: alt1
 Source: %sname-%version.tar
 Summary: OpenStack Clustering API Client Library
@@ -13,7 +13,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstacksdk >= 0.24.0
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-oslotest
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-pip
@@ -44,6 +43,9 @@ Python bindings to the Senlin Clustering API
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+
 * Thu Oct 31 2019 Grigory Ustinov <grenka@altlinux.org> 1.11.0-alt1
 - new version 1.11.0
 - Build without python2.

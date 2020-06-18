@@ -1,13 +1,13 @@
 %define oname blazarclient
 
 Name:       python3-module-%oname
-Version:    2.2.1
+Version:    3.0.1
 Release:    alt1
 
 Summary:    Client for OpenStack Reservation Service
 
 Group:      Development/Python3
-License:    ASL 2.0
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -60,6 +60,10 @@ rm -f {,test-}requirements.txt
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Automatically updated to 2.2.1.
 - Build without python2.

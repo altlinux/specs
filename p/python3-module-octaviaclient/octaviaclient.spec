@@ -1,13 +1,13 @@
 %define oname octaviaclient
 
 Name:       python3-module-%oname
-Version:    1.10.0
+Version:    2.0.1
 Release:    alt1
 
 Summary:    Octavia client for OpenStack Load Balancing
 
 Group:      Development/Python3
-License:    ASL 2.0
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -49,6 +49,7 @@ BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 
 %description
 Octavia client for OpenStack Load Balancing
@@ -89,12 +90,12 @@ sed -i '/warning-is-error/d' setup.cfg
 %install
 %python3_install
 
-# Build HTML docs and man page
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-python3 setup.py build_sphinx
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
-# Fix hidden-file-or-dir warnings
-rm -rf html/.doctrees html/.buildinfo
 
 %files
 %doc LICENSE README.rst
@@ -105,9 +106,13 @@ rm -rf html/.doctrees html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
 - Automatically updated to 1.10.0.
 - Build without python2.

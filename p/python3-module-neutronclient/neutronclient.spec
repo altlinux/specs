@@ -1,13 +1,13 @@
 %define oname neutronclient
 
 Name: python3-module-%oname
-Version: 6.14.0
+Version: 7.1.1
 Release: alt1
 
 Summary: Python API and CLI for OpenStack Neutron
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/python-%oname
 
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -24,7 +24,7 @@ BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.log
+BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
@@ -99,6 +99,10 @@ rm -rf %buildroot%python3_sitelibdir/*/tests/functional/hooks
 %doc build/sphinx/html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt1
+- Automatically updated to 7.1.1.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 6.14.0-alt1
 - Automatically updated to 6.14.0.
 - Build without python2.

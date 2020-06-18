@@ -1,7 +1,7 @@
 %define oname designateclient
 
 Name:    python3-module-%oname
-Version: 3.0.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Openstack DNS (Designate) API Client
@@ -67,11 +67,11 @@ sed -i '/warning-is-error/d' setup.cfg
 %install
 %python3_install
 
-# Build HTML docs and man page
-python3 setup.py build_sphinx
-
-# Fix hidden-file-or-dir warnings
-rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
+export PYTHONPATH=$PWD
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %files
 %doc README.rst
@@ -85,9 +85,13 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %python3_sitelibdir/*/functionaltests
 
 %files doc
-%doc doc/build/html
+%doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Build without python2.

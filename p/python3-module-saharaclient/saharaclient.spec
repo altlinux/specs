@@ -1,13 +1,13 @@
 %define oname saharaclient
 
 Name: python3-module-%oname
-Version: 2.3.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Python API and CLI for OpenStack  Sahara
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/python-%oname
 
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -20,7 +20,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
-BuildRequires: python3-module-osc-lib >= 1.11.0
+BuildRequires: python3-module-osc-lib >= 2.0.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -88,6 +88,10 @@ sphinx-build-3 -b html doc/source html
 %doc html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 - Build without python2.

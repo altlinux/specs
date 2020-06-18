@@ -1,12 +1,12 @@
 %define oname keystoneclient
 
 Name:       python3-module-%oname
-Version:    3.22.0
+Version:    4.0.0
 Release:    alt1
 
 Summary:    Client library for OpenStack Identity API
 
-License:    ASL 2.0
+License:    Apache-2.0
 Group:      Development/Python3
 Url:        http://docs.openstack.org/developer/python-%oname
 
@@ -75,8 +75,10 @@ sed -i '/warning-is-error/d' setup.cfg
 %install
 %python3_install
 
-python3 setup.py build_sphinx
-rm -f doc/build/html/.buildinfo
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %files
 %doc LICENSE README.rst
@@ -87,12 +89,14 @@ rm -f doc/build/html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE html
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.22.0-alt1
 - Automatically updated to 3.22.0.
-- Added watch file.
 - Renamed spec file.
 
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 3.21.0-alt1
