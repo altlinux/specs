@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: remmina
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -217,6 +217,7 @@ that shows up under the display manager session menu.
     -DWITH_LIBSSH=ON \
      %{?_without_telepathy:-DWITH_TELEPATHY=OFF} \
     -DWITH_VTE=ON \
+    -DWITH_KIOSK_SESSION=ON \
     -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
 
 %cmake_build
@@ -302,6 +303,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jun 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt1
+- new version 1.4.6
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.5-alt1
 - new version 1.4.5
 
