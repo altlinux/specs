@@ -1,6 +1,6 @@
 Name: ideviceinstaller
-Version: 1.1.0
-Release: alt3.git.f7988de8
+Version: 1.1.1
+Release: alt1
 
 Summary: A tool to manage installed apps on iOS device
 Group: System/Kernel and hardware
@@ -11,8 +11,8 @@ Source: %name.tar
 
 Patch0: alt-fix-build.patch
 
-BuildRequires: libplist-devel >= 0.15
-BuildRequires: libimobiledevice-devel >= 1.2.0
+BuildRequires: libplist-devel >= 2.2.0
+BuildRequires: libimobiledevice-devel >= 1.3.0
 BuildRequires: libzip-devel >= 0.10
 
 %description
@@ -22,7 +22,7 @@ and enumerate installed or archived apps.
 
 %prep
 %setup -n %name
-%patch0 -p1
+#%patch0 -p1
 
 %build
 %autoreconf
@@ -35,9 +35,12 @@ and enumerate installed or archived apps.
 %files
 %_bindir/ideviceinstaller
 %_man1dir/%{name}*
-%doc AUTHORS README NEWS
+%doc AUTHORS README.md NEWS
 
 %changelog
+* Thu Jun 18 2020 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.1-alt1
+- updated to upstream release 1.1.1
+
 * Wed Jun 20 2018 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.0-alt3.git.f7988de8
 - updated to upstream commit 'f7988de8' (minor bugfixes)
 

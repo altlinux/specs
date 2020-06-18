@@ -4,7 +4,7 @@
 
 Name: upower
 Version: 0.99.11
-Release: alt1
+Release: alt2
 
 Summary: Power Management Service
 License: GPLv2+
@@ -21,13 +21,15 @@ Patch: %name-%version-%release.patch
 
 %define glib_ver 2.34
 %define dbus_ver 1.9.18
+%define imobiledevice_ver 1.3
+%define plist_ver 2.2.0
 
 Requires: dbus >= %dbus_ver
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gtk-doc libusb-devel libgudev-devel libdbus-devel >= %dbus_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
-BuildRequires: libimobiledevice-devel pkgconfig(systemd)
+BuildRequires: libimobiledevice-devel > %imobiledevice_ver pkgconfig(libplist-2.0) pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock libumockdev-gir python3-module-dbus}
 
 %description
@@ -76,7 +78,7 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-#%%patch -p1
+%patch -p1
 
 rm -f acinclude.m4
 
@@ -129,6 +131,11 @@ PYTHON=%__python3 %make check
 %_girdir/*.gir
 
 %changelog
+* Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.99.11-alt2
+- updated to UPOWER_0_99_11-12-g0c6fa20 (fixed memory leak in Bluez
+  backend)
+- built against libplist-2.0
+
 * Fri Oct 04 2019 Yuri N. Sedunov <aris@altlinux.org> 0.99.11-alt1
 - 0.99.11
 

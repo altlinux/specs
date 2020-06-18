@@ -1,8 +1,10 @@
 %define MOUNT_DIR /media
 
+%def_disable pygobject
+
 Name: libgpod4
 Version: 0.8.3
-Release: alt6
+Release: alt7
 
 Summary: iPod access library
 Group: Sound
@@ -12,15 +14,17 @@ URL: http://www.gtkpod.org/libgpod
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-0.8.3-alt-swig.patch
+Patch2: %name-0.8.3-alt-libplist-2.0.patch
 
 Provides: libgpod = %version-%release
 Obsoletes: libgpod < 0.7
 
 BuildRequires: gcc-c++ gtk-doc intltool
-BuildRequires: glib2-devel libgio-devel libsqlite3-devel libplist-devel
-BuildRequires: libsgutils-devel libusb-devel zlib-devel libimobiledevice-devel
-BuildRequires: libtag-devel libxml2-devel libgdk-pixbuf-devel
-BuildRequires: python-module-pygobject-devel python-module-mutagen swig
+BuildRequires: glib2-devel libgio-devel libsqlite3-devel
+BuildRequires: libimobiledevice-devel >= 1.3.0  libplist-devel >= 2.2.0
+BuildRequires: libxml2-devel libsgutils-devel libusb-devel zlib-devel
+BuildRequires: libtag-devel libgdk-pixbuf-devel
+%{?_enable_pygobject:BuildRequires: python-module-pygobject-devel python-module-mutagen swig}
 BuildRequires: rpm-build-licenses
 %if 0
 BuildRequires: /proc mono-devel libgtk-sharp2-devel
@@ -85,16 +89,18 @@ libgpod-sharp.
 %setup
 %patch -p1
 %patch1
+%patch2 -p1
 
 # remove execute perms on the python examples as they'll be installed in %%doc
 chmod -x bindings/python/examples/*.py
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-static \
 	--enable-gtk-doc \
-	--enable-pygobject \
+	%{subst_enable pygobject} \
 	--without-hal \
 	--without-mono \
 	--enable-udev \
@@ -132,9 +138,11 @@ rm -f %buildroot%_pkgconfigdir/libgpod-sharp.pc
 %files -n libgpod-devel-doc
 %_datadir/gtk-doc/html/*
 
+%if_enabled pygobject
 %files -n python-module-gpod
 %doc COPYING bindings/python/README bindings/python/examples
 %python_sitelibdir/gpod
+%endif
 
 %if 0
 %files -n libgpod-sharp
@@ -145,6 +153,10 @@ rm -f %buildroot%_pkgconfigdir/libgpod-sharp.pc
 %endif
 
 %changelog
+* Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt7
+- rebuilt against libplist-2.0 (2.2.0)
+- disabled useless python2 module
+
 * Thu Jul 20 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.3-alt6
 - rebuilt without mono
 

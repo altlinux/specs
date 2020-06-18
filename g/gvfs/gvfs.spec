@@ -33,7 +33,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: LGPL-2.0-or-later
@@ -49,6 +49,7 @@ Source: %name-%version.tar
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
 Patch1: gvfs-1.19.90-alt-1-logind-state.patch
+Patch10: gvfs-1.45.3-up-libplist-2.0.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -67,7 +68,7 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define mtp_ver 1.1.5
 %define goa_ver 3.17.1
 %define libarchive_ver 3.0.22
-%define imobiledevice_ver 1.1.5
+%define imobiledevice_ver 1.3
 %define nfs_ver 1.9.7
 %define gdata_ver 0.17.3
 %define libusb_ver 1.0.21
@@ -90,7 +91,7 @@ BuildRequires: openssh-clients
 BuildRequires: libgudev-devel
 # required if autoreconf used
 BuildRequires: libgcrypt-devel
-%{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver}
+%{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver pkgconfig(libplist-2.0)}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
 %{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
 %{?_enable_dnssd:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
@@ -159,6 +160,7 @@ Requires: %name = %version-%release
 Summary: i{Phone,Pod} backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
+Requires: usbmuxd
 
 %package backend-afp
 Summary: Apple Filing Protocol backend for gvfs
@@ -294,6 +296,7 @@ The %name-tests package provides programms for testing GVFS.
 %prep
 %setup
 #%%patch1 -p2 -b .logind-state
+%patch10 -p1 -b .plist
 
 %build
 %meson \
@@ -305,7 +308,7 @@ The %name-tests package provides programms for testing GVFS.
         %{?_enable_keyring:-Dkeyring=true} \
         %{?_enable_samba:-Dsmb=true} \
         %{?_enable_archive:-Darchive=true} \
-        %{?_enable_afc:-Dafc=true} \
+        %{?_disable_afc:-Dafc=false} \
         %{?_enable_afp:-Dafp=true} \
         %{?_enable_gdu:-Dgdu=true} \
         %{?_enable_udisks2:-Dudisks2=true} \
@@ -533,6 +536,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.44.1-alt2
+- rebuilt against libimobiledevece-1.3/libplist-2.2.0
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.44.1-alt1
 - 1.44.1
 

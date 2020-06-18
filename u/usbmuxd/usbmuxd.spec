@@ -1,16 +1,16 @@
 %def_enable snapshot
 %def_enable check
 %define _localstatedir %_var
-%define git g9af2b12
+%define git %nil
 %define _group usbmux
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt0.3.g%git
+Release: alt1
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
-License: GPLv3+
+License: GPL-2.0 and GPL-3.0
 Url: http://www.libimobiledevice.org/
 
 %if_disabled snapshot
@@ -20,15 +20,15 @@ Source: http://www.libimobiledevice.org/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-%define plist_ver 1.11
+%define plist_ver 2.2.0
 %define usb_ver 1.0.9
-%define imobiledevice_ver 1.2.1
+%define imobiledevice_ver 1.3.0
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: libplist-devel >= %plist_ver
 BuildRequires: libusb-devel >= %usb_ver
 BuildRequires: libimobiledevice-devel >= %imobiledevice_ver
-BuildRequires: libudev-devel systemd-devel
+BuildRequires: libudev-devel pkgconfig(systemd)
 
 %description
 usbmuxd (USB Multiplex Daemon) is a daemon used for communicating with
@@ -39,7 +39,7 @@ the device to be accessed simultaneously.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static
 %make_build
@@ -63,6 +63,9 @@ the device to be accessed simultaneously.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1 release
+
 * Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt0.3.gg9af2b12
 - updated to 1.1.0-66-g9af2b12
 - %%check section

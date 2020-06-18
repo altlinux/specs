@@ -1,14 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
+%define api_ver 1.0
+
 %def_disable python
 %def_enable check
 
 Name: libimobiledevice
-Version: 1.2.1
-Release: alt0.3
+Version: 1.3.0
+Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
-License: LGPLv2+
+License: GPL-2.0 and LGPL-2.1
 Url: http://www.libimobiledevice.org
 
 %if_disabled snapshot
@@ -18,8 +20,8 @@ Source: %url/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-%define plist_ver 1.11
-%define usbmuxd_ver 1.1.0
+%define plist_ver 2.2.0
+%define usbmuxd_ver 2.0.2
 %define cython_ver 0.18
 
 BuildPreReq: libplist-devel >= %plist_ver
@@ -27,7 +29,7 @@ BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
 
 BuildRequires: gcc-c++ autoconf-archive glib2-devel libxml2-devel libusb-devel libplistmm-devel
 BuildRequires: libgnutls-devel libtasn1-devel libgcrypt-devel libssl-devel
-%{?_enable_python:BuildRequires: python-devel python-module-Cython >= %cython_ver python-module-libplist}
+%{?_enable_python:BuildRequires: python3-devel python3-module-Cython >= %cython_ver python3-module-libplist}
 
 %description
 libimobiledevice is a library for connecting to Apple's iPhone or iPod touch devices
@@ -54,7 +56,8 @@ Python bindings for libimobiledevice.
 %build
 %autoreconf
 %configure --disable-static \
-	%{?_disable_python:--without-cython}
+	%{?_disable_python:--without-cython} \
+	%{?_enable_python:PYTHON=%__python3}
 %make_build
 
 %install
@@ -65,13 +68,13 @@ Python bindings for libimobiledevice.
 
 %files
 %_bindir/idevice*
-%_libdir/*.so.*
+%_libdir/%name-%api_ver.so.*
 %_man1dir/*
 %doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/%name
-%_libdir/*.so
+%_libdir/%name-%api_ver.so
 %_pkgconfigdir/*.pc
 
 %if_enabled python
@@ -81,6 +84,10 @@ Python bindings for libimobiledevice.
 %endif
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+- fixed License tag
+
 * Thu Dec 12 2019 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt0.3
 - updated to 1.2.0-152-g9f79242
 

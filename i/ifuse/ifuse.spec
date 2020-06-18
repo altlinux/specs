@@ -1,10 +1,12 @@
+%def_disable snapshot
+
 Name: ifuse
-Version: 1.1.3
-Release: alt5
+Version: 1.1.4
+Release: alt1
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
-License: LGPLv2+
+License: LGPL-2.1
 URL: http://www.libimobiledevice.org/
 
 %if_disabled snapshot
@@ -14,9 +16,15 @@ Source: %url/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-Requires: fuse
+%define fuse_ver 2.7.0
+%define plist_ver 2.2.0
+%define imobiledevice_ver 1.3.0
 
-BuildRequires: libfuse-devel libimobiledevice-devel >= 1.1.4 glib2-devel
+Requires: fuse >= %fuse_ver
+
+BuildRequires: libfuse-devel >= %fuse_ver
+BuildRequires: libplist-devel >= %plist_ver
+BuildRequires: libimobiledevice-devel >= %imobiledevice_ver
 
 %description
 iFuse is a FUSE filesystem driver which uses libiphone to connect to devices
@@ -38,9 +46,12 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %files
 %_bindir/ifuse
 %_man1dir/ifuse.1*
-%doc AUTHORS README
+%doc AUTHORS README*
 
 %changelog
+* Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
+- 1.1.4
+
 * Thu Dec 19 2019 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt5
 - updated to 1.1.3-6-ge75d32c
 
