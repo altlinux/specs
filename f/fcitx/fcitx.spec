@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(blkid) pkgconfig(bzip2) p
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.7
-Release:		alt1_2
+Release:		alt1_3
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -21,7 +21,10 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu65
+%ifnarch riscv64
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html
+%endif
+BuildRequires:		qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, libicu65
 BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -152,7 +155,11 @@ sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 %build
 mkdir -p build
 pushd build
-%{fedora_cmake} .. -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT_IM_MODULE=On -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off
+%{fedora_cmake} .. -DENABLE_GTK3_IM_MODULE=On -DENABLE_QT_IM_MODULE=On -DENABLE_OPENCC=On -DENABLE_LUA=On -DENABLE_GIR=On -DENABLE_XDGAUTOSTART=Off \
+%ifarch riscv64
+-DENABLE_QT=OFF
+%endif
+
 make VERBOSE=1 %{?_smp_mflags}
 
 %install
@@ -301,10 +308,15 @@ EOF
 %files gtk3
 %{_libdir}/gtk-3.0/%{gtk3_binary_version}/immodules/im-fcitx.so
 
+%ifnarch riscv64
 %files qt4
 %{_libdir}/qt4/plugins/inputmethods/qtim-fcitx.so
+%endif
 
 %changelog
+* Thu Jun 18 2020 Nikita Ermakov <arei@altlinux.org> 4.2.9.7-alt1_3
+- Exclude qt4 support for riscv64
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.2.9.7-alt1_2
 - update to new release by fcimport
 
