@@ -9,7 +9,7 @@
 
 Name: openvswitch
 Version: 2.12.0
-Release: alt3
+Release: alt4
 
 Summary: An open source, production quality, multilayer virtual switch
 License: ASL 2.0 and LGPLv2+ and SISSL
@@ -491,6 +491,10 @@ rm -f %buildroot%_bindir/ovs-benchmark \
 %endif
 
 %changelog
+* Thu Jun 18 2020 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt4
+- Add support vlan for ovsport (ALT #38578)
+- Add --may-exist option for ovsbond
+
 * Sun Mar 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt3
 - Fixed build with python3.8.
 
