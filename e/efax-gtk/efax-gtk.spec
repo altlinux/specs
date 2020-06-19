@@ -1,5 +1,5 @@
 Name: efax-gtk
-Version: 3.2.14
+Version: 3.2.15
 Release: alt1
 
 Summary: GUI front end for the efax fax program
@@ -79,6 +79,9 @@ ln -sf efix %buildroot%_bindir/efix-0.9a
 %_spooldir/fax/%name-*
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.15-alt1
+- new version 3.2.15 (with rpmrb script)
+
 * Wed Jun 03 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.14-alt1
 - new version 3.2.14 (with rpmrb script)
 
