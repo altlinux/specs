@@ -1,8 +1,10 @@
 %define oname blazarclient
 
+# TODO: try to build docs, when they will appear!
+
 Name:       python3-module-%oname
 Version:    3.0.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Client for OpenStack Reservation Service
 
@@ -38,6 +40,8 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+This package contains documentation for %oname.
+
 %prep
 %setup -n python-%oname-%version
 
@@ -51,6 +55,7 @@ rm -f {,test-}requirements.txt
 %python3_install
 
 %files
+%doc *.rst LICENSE
 %doc LICENSE
 %_bindir/blazar
 %python3_sitelibdir/*
@@ -60,6 +65,9 @@ rm -f {,test-}requirements.txt
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Just rebuild with TODO in spec.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 - Renamed spec file.

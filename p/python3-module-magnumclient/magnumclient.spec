@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    3.0.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Client Library for OpenStack Magnum Container Management API
 
@@ -52,12 +52,14 @@ Requires: %name = %EVR
 This package contains tests for %oname.
 
 %package doc
-Summary:    Documentation for OpenStack Magnum Container Management API
-Group:  Development/Documentation
+Summary: Documentation for OpenStack Magnum Container Management API
+Group: Development/Documentation
 
 %description doc
-Documentation for the client library for interacting with Openstack
-Magnum Container Management API.
+There is a Python library for accessing the API (magnumclient module),
+and a command-line script (magnum).
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -73,28 +75,43 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-python3 setup.py build_sphinx
+# install man page
+install -p -D -m 644 man/python-magnumclient.1 %buildroot%_man1dir/magnumclient.1
 
-# Fix hidden-file-or-dir warnings
-rm -fr build/sphinx/html/.doctrees /build/sphinx/html/.buildinfo
+# install bash completion
+install -p -D -m 644 tools/magnum.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/magnum.bash_completion
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %_bindir/magnum
+%_man1dir/magnumclient*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/magnum*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Renamed spec file.

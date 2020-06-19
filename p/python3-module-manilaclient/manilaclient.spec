@@ -2,12 +2,12 @@
 
 Name:       python3-module-%oname
 Version:    2.1.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Client Library for OpenStack Manila shared file system service API
 
-License:    Apache-2.0
 Group:      Development/Python3
+License:    Apache-2.0
 Url: http://docs.openstack.org/developer/python-%oname
 
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -37,7 +37,7 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-programoutput
 
 %description
-There is a Python library for accessing the API (manilaclient module),
+This is a Python library for accessing the API (manilaclient module),
 and a command-line script (manilac).
 
 %package tests
@@ -49,12 +49,14 @@ Requires: %name = %EVR
 This package contains tests for %oname.
 
 %package doc
-Summary:    Documentation for OpenStack  Manila shared file system service API
-Group:  Development/Documentation
+Summary: Documentation for OpenStack  Manila shared file system service API
+Group: Development/Documentation
 
 %description doc
-Documentation for the client library for interacting with Openstack
-Manila shared file system service API.
+This is a Python library for accessing the API (manilaclient module),
+and a command-line script (manilac).
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -70,20 +72,31 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build-3 -b html doc/source html
+# install man page
+install -p -D -m 644 man/python-manilaclient.1 %buildroot%_man1dir/manilaclient.1
 
-# Fix hidden-file-or-dir warnings
-rm -fr html/.doctrees html/.buildinfo
+# install bash completion
+install -p -D -m 644 tools/manila.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/manila.bash_completion
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %_bindir/manila
+%_man1dir/manilaclient*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/manila*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -93,6 +106,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 - Renamed spec file.

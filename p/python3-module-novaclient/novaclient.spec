@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 17.0.0
-Release: alt1
+Release: alt2
 
 Summary: Python API and CLI for OpenStack Nova
 
@@ -42,8 +42,8 @@ BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 This is a client for the OpenStack Nova API. There's a Python API (the
-novaclient module), and a command-line script (nova). Each implements 100 percent of
-the OpenStack Nova API.
+novaclient module), and a command-line script (nova). Each implements
+100 percent of the OpenStack Nova API.
 
 %package tests
 Summary: Tests for %oname
@@ -59,10 +59,10 @@ Group: Development/Documentation
 
 %description doc
 This is a client for the OpenStack Nova API. There's a Python API (the
-novaclient module), and a command-line script (nova). Each implements 100 percent of
-the OpenStack Nova API.
+novaclient module), and a command-line script (nova). Each implements
+100 percent of the OpenStack Nova API.
 
-This package contains auto-generated documentation.
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -79,27 +79,30 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
-python3 setup.py build_sphinx
-python3 setup.py build_sphinx -b html
-python3 setup.py build_sphinx -b man
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
-mkdir -p %buildroot%_sysconfdir/bash_completion.d
-install -pm 644 tools/nova.bash_completion \
-    %buildroot%_sysconfdir/bash_completion.d/nova
+# install man page
+install -p -D -m 644 man/nova.1 %buildroot%_man1dir/nova.1
 
-#install -p -D -m 644 doc/build/man/nova.1 %buildroot%_man1dir/nova.1
+# install bash completion
+install -p -D -m 644 tools/nova.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/nova.bash_completion
 
 %files
-%doc README.rst
-%doc LICENSE
+%doc *.rst LICENSE
 %_bindir/nova
-#%%_man1dir/nova.*
-%_sysconfdir/bash_completion.d
+%_man1dir/nova*
+%_sysconfdir/bash_completion.d/nova*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -107,9 +110,12 @@ install -pm 644 tools/nova.bash_completion \
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html build/sphinx/man
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt1
 - Automatically updated to 17.0.0.
 

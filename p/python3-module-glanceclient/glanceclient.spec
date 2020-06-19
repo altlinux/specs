@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: Python API and CLI for OpenStack Glance
 
@@ -62,6 +62,8 @@ glanceclient module), and a command-line script (glance). Each implements
 
 This package contains auto-generated documentation.
 
+This package contains documentation for %oname.
+
 %prep
 %setup -n python-%oname-%version
 %patch -p1
@@ -75,29 +77,44 @@ rm -rf {,test-}requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-sphinx-build-3 -b html doc/source doc/build/html
-# generate man page
-sphinx-build-3 -b man doc/source man
+# install man page
 install -p -D -m 644 man/glance.1 %buildroot%_man1dir/glance.1
 
+# install bash completion
+install -p -D -m 644 tools/glance.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/glance.bash_completion
+
+
 %files
-%doc README.rst
-%doc LICENSE
-%_man1dir/glance*
+%doc *.rst LICENSE
 %_bindir/glance
+%_man1dir/glance*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/glance*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc doc/build/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 - Renamed spec file.

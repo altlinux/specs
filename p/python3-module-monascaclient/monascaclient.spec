@@ -2,12 +2,12 @@
 
 Name:       python3-module-%oname
 Version:    2.1.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Python API and CLI for OpenStack Monasca
 
-License:    Apache-2.0
 Group:      Development/Python3
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -37,8 +37,6 @@ This is a client library for Monasca built to interface with the Monasca API. It
 provides a Python API the monascaclient module and a command-line tool
 monasca.
 
-The Monasca Client was written using the OpenStack Heat Python client as a framework.
-
 %package tests
 Summary: Tests for %oname
 Group: Development/Python3
@@ -49,12 +47,14 @@ This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Monasca API Client
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
 This is a client library for Monasca built to interface with the Monasca API. It
 provides a Python API the monascaclient module and a command-line tool
 monasca.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -65,19 +65,25 @@ rm -f {,test-}requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build-3 -b html doc/source html
-
-# Fix hidden-file-or-dir warnings
-rm -fr html/.doctrees html/.buildinfo
+# install man page
+install -p -D -m 644 man/python-monascaclient.1 %buildroot%_man1dir/monascaclient.1
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %_bindir/monasca
+%_man1dir/monascaclient*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -88,6 +94,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 - Renamed spec file.

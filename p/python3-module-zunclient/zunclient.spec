@@ -1,10 +1,8 @@
-%def_enable doc
-
 %define oname zunclient
 
 Name:       python3-module-%oname
 Version:    4.0.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Client Library for Zun
 
@@ -52,12 +50,14 @@ This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Octavia client
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
 This is a client library for Zun built on the Zun API.
 It provides a Python API (the zunclient module)
 and a command-line tool (zun).
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -71,32 +71,43 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-%if_enabled doc
-export PYTHONPATH="$PWD"
-# generate html docs
-sphinx-build-3 doc/source html
-# remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
-%endif
+# install man page
+install -p -D -m 644 man/python-zunclient.1 %buildroot%_man1dir/zunclient.1
+
+# install bash completion
+install -p -D -m 644 tools/zun.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/zun.bash_completion
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %_bindir/zun
+%_man1dir/zunclient*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/zun*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
-%if_enabled doc
 %files doc
 %doc LICENSE html
-%endif
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
+- Remove doc knob for unifying.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Automatically updated to 4.0.1.
 

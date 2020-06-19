@@ -3,7 +3,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: Python API and CLI for OpenStack Cinder
 
@@ -33,7 +33,9 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
 
 %description
-This is a client for the OpenStack Cinder API. There's a Python API (the cinderclient module), and a command-line script (cinder). Each implements 100%% of the OpenStack Cinder API.
+This is a client for the OpenStack Cinder API. There's a Python API
+(the cinderclient module), and a command-line script (cinder).
+Each implements 100%% of the OpenStack Cinder API.
 
 %package tests
 Summary: Tests for %oname
@@ -42,6 +44,17 @@ Requires: %name = %EVR
 
 %description tests
 This package contains tests for %oname.
+
+%package doc
+Summary: Documentation for Python API and CLI for OpenStack Cinder
+Group: Development/Documentation
+
+%description doc
+This is a client for the OpenStack Cinder API. There's a Python API
+(the cinderclient module), and a command-line script (cinder).
+Each implements 100%% of the OpenStack Cinder API.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -55,34 +68,47 @@ rm -f {,test-}requirements.txt
 %build
 %python3_build
 
-#sed -i 's/warn.*//' ./setup.cfg
-# disabling git call for last modification date from git repo
-#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python3 setup.py build_sphinx
-# for some reason previous command no longer autogenerates manpage
-PBR_VERSION=%version %make SPHINXBUILD="sphinx-build-3" -C doc html
+export PBR_VERSION=$(pbr.py3 --version)
+export PYTHONPATH="$PWD"
 
-mkdir man/
-cp -fR doc/build/html/* man/
-
-# Fix hidden-file-or-dir warnings
-rm -fr doc/*/html/.buildinfo
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
-install -p -D -m 644 tools/cinder.bash_completion %buildroot%_sysconfdir/bash_completion.d/cinder.bash_completion
+# install man page
+install -p -D -m 644 man/cinder.1 %buildroot%_man1dir/cinder.1
+
+# install bash completion
+install -p -D -m 644 tools/cinder.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/cinder.bash_completion
 
 %files
-%doc LICENSE *.rst man/
+%doc *.rst LICENSE
+
 %_bindir/cinder
+%_man1dir/cinder*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/cinder*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
+%files doc
+%doc LICENSE html
+
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 1:7.0.0-alt2
+- Unify documentation building.
+- Added docs subpackage.
+- Spec refactoring.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1:7.0.0-alt1
 - Automatically updated to 7.0.0.
 - Renamed spec file.

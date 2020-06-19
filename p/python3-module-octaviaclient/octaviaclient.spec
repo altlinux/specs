@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    2.0.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Octavia client for OpenStack Load Balancing
 
@@ -52,8 +52,6 @@ BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 
 %description
-Octavia client for OpenStack Load Balancing
-
 This is an OpenStack Client (OSC) plugin for Octavia, an OpenStack
 Load Balancing project.
 
@@ -67,13 +65,13 @@ This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Octavia client
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
-Octavia client for OpenStack Load Balancing
-
 This is an OpenStack Client (OSC) plugin for Octavia, an OpenStack
 Load Balancing project.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -87,18 +85,24 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
-%install
-%python3_install
-
 export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
+%install
+%python3_install
+
+# install man page
+install -p -D -m 644 man/python-octaviaclient.1 %buildroot%_man1dir/octaviaclient.1
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
+%_man1dir/octaviaclient*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -109,6 +113,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 - Renamed spec file.

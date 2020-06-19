@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 7.1.1
-Release: alt1
+Release: alt2
 
 Summary: Python API and CLI for OpenStack Neutron
 
@@ -59,7 +59,7 @@ Group: Development/Documentation
 Client library and command line utility for interacting with Openstack
 Neutron's API.
 
-This package contains auto-generated documentation.
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -70,23 +70,24 @@ rm -f test-requirements.txt requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
-
-# Install other needed files
+# install bash completion
 install -p -D -m 644 tools/neutron.bash_completion \
     %buildroot%_sysconfdir/bash_completion.d/neutron.bash_completion
 
-rm -rf %buildroot%python_sitelibdir/*/tests/functional/hooks
 rm -rf %buildroot%python3_sitelibdir/*/tests/functional/hooks
 
 %files
-%doc LICENSE
-%doc README.rst
+%doc *.rst LICENSE
 %_bindir/neutron
 %python3_sitelibdir/*
 %_sysconfdir/bash_completion.d
@@ -96,9 +97,12 @@ rm -rf %buildroot%python3_sitelibdir/*/tests/functional/hooks
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt1
 - Automatically updated to 7.1.1.
 - Renamed spec file.
