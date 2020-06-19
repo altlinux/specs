@@ -1,13 +1,17 @@
 %define oname oslo.utils
 
 Name: python3-module-%oname
-Version: 3.42.1
+Version: 4.1.1
 Release: alt1
+
 Summary: OpenStack Oslo Utility library
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/oslo.utils
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
 BuildArch: noarch
 
 Provides: python3-module-oslo-utils = %EVR
@@ -62,16 +66,18 @@ rm -f requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
-python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-rm -rf build/sphinx/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
 %files
-%doc README.rst LICENSE
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -79,9 +85,14 @@ rm -rf build/sphinx/html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html LICENSE
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
+- Automatically updated to 4.1.1.
+- Unify documentation building.
+- Fix license.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 3.42.1-alt1
 - Automatically updated to 3.42.1.
 - Added watch file.

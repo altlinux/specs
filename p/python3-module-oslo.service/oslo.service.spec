@@ -1,16 +1,16 @@
 %global oname oslo.service
 
-%def_without docs
-
 Name: python3-module-%oname
-Version: 1.41.1
+Version: 2.1.1
 Release: alt1
+
 Summary: Oslo service library
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: oslo.service.watch
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-webob >= 1.7.1
-BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-eventlet >= 0.22.0
 BuildRequires: python3-module-greenlet >= 0.4.10
 BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-oslo.utils >= 3.40.2
@@ -31,6 +31,7 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-routes >= 2.3.1
 BuildRequires: python3-module-paste >= 2.0.2
+BuildRequires: python3-module-yappi
 
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
@@ -62,30 +63,34 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
-%if_with docs
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
-%endif
 
 %install
 %python3_install
 
 %files
-%doc README.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
-%if_with docs
 %files doc
-%doc html
-%endif
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+- Unify documentation building.
+- Fix license.
+- Removed watch file.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.41.1-alt1
 - Automatically updated to 1.41.1.
 - Added watch file.

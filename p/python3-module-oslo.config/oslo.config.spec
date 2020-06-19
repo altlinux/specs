@@ -1,15 +1,16 @@
 %define oname oslo.config
 
 Name:       python3-module-%oname
-Version:    6.12.0
+Version:    8.0.2
 Release:    alt1
 
 Summary:    OpenStack common configuration library
 
 Group:      Development/Python3
-License:    ASL 2.0
-URL: http://docs.openstack.org/developer/oslo.config/
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+License:    Apache-2.0
+URL:        http://docs.openstack.org/developer/oslo.config/
+
+Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch:  noarch
 
@@ -71,19 +72,18 @@ Documentation for the oslo-config library.
 %build
 %python3_build
 
-# disabling git call for last modification date from git repo
-#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+export PYTHONPATH="$PWD"
+
 # generate html docs
-#sphinx-build -W -b html doc/source doc/build/html
-python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-rm -rf doc/build/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
 %files
-%doc README.rst
+%doc *.rst LICENSE
 %_bindir/oslo-config-generator
 %_bindir/oslo-config-validator
 %python3_sitelibdir/*
@@ -93,9 +93,14 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 8.0.2-alt1
+- Automatically updated to 8.0.2.
+- Unify documentation building.
+- Fix license.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 6.12.0-alt1
 - Automatically updated to 6.12.0.
 - Added watch file.

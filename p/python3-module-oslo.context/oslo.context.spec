@@ -1,15 +1,18 @@
 %define oname oslo.context
 
-Name: python3-module-%oname
-Version: 2.23.0
-Release: alt1
-Summary: OpenStack oslo.context library
-Group: Development/Python3
-License: ASL 2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Name:       python3-module-%oname
+Version:    3.0.2
+Release:    alt1
 
-BuildArch: noarch
+Summary:    OpenStack oslo.context library
+
+Group:      Development/Python3
+License:    Apache-2.0
+Url:        http://docs.openstack.org/developer/%oname
+
+Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+
+BuildArch:  noarch
 
 Provides: python3-module-oslo-context = %EVR
 
@@ -54,6 +57,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -63,7 +68,7 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -71,9 +76,15 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
+- Automatically updated to 3.0.2.
+- Renamed spec file.
+- Unify documentation building.
+- Fix license.
+
 * Fri Sep 20 2019 Grigory Ustinov <grenka@altlinux.org> 2.23.0-alt1
 - new version 2.23.0
 - Build without python2.

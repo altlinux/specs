@@ -1,14 +1,17 @@
 %define oname oslo.i18n
 
 Name: python3-module-%oname
-Version: 3.25.1
+Version: 4.0.1
 Release: alt1
+
 Summary: OpenStack i18n library
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/oslo.i18n
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: oslo.i18n.watch
+
 BuildArch: noarch
 
 Provides: python3-module-oslo-i18n = %EVR
@@ -25,6 +28,7 @@ BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-sphinx >= 1.2.1
 BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
 The oslo.i18n library contain utilities for working with internationalization
@@ -62,16 +66,18 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
-python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-rm -rf doc/build/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
 
 %files
-%doc AUTHORS ChangeLog CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -79,9 +85,15 @@ rm -rf doc/build/html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc doc/build/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+- Unify documentation building.
+- Removed watch file.
+- Fix license.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.25.1-alt1
 - Automatically updated to 3.25.1.
 - Added watch file.

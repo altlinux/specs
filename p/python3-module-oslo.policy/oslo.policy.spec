@@ -1,12 +1,15 @@
 %define oname oslo.policy
 
 Name: python3-module-%oname
-Version: 2.4.1
+Version: 3.1.0
 Release: alt1
+
 Summary: RBAC policy enforcement library for OpenStack
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -50,11 +53,10 @@ Documentation for the Oslo policy handling library.
 %prep
 %setup -n %oname-%version
 
-# Remove bundled egg-info
-#rm -rf %oname.egg-info
-
 %build
 %python3_build
+
+export PYTHONPATH="$PWD"
 
 # generate html docs
 sphinx-build-3 doc/source html
@@ -65,18 +67,22 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
 %_bindir/*
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+- Fix license.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
 - Automatically updated to 2.4.1.
 - Added watch file.
