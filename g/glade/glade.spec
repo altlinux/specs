@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.36
 %define api_ver 2.0
+%define xdg_name org.gnome.Glade
 %def_enable python
 %def_enable gladeui
 %def_enable webkit2gtk
 %def_enable check
 
 Name: glade
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
@@ -25,7 +26,7 @@ Source: %name-%version.tar
 
 Requires: libgladeui%api_ver = %version-%release
 
-%define gtk_ver 3.20
+%define gtk_ver 3.22
 
 BuildRequires: rpm-build-gnome gnome-common
 BuildRequires: gtk-doc yelp-tools intltool libappstream-glib-devel
@@ -121,11 +122,12 @@ xvfb-run %make check
 %_bindir/%name
 %_bindir/%name-previewer
 %_desktopdir/*
-%_iconsdir/hicolor/*/apps/*.png
-%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/glade-previewer.1.*
 %_man1dir/glade.1.*
-%doc AUTHORS COPYING NEWS README TODO
+%_datadir/metainfo/%xdg_name.appdata.xml
+%doc AUTHORS COPYING NEWS TODO
+#%doc README*
 
 %files -n libgladeui%api_ver
 %dir %_libdir/%name
@@ -139,9 +141,7 @@ xvfb-run %make check
 %dir %_datadir/%name/catalogs
 %_datadir/%name/catalogs/*.xml
 %_datadir/%name/catalogs/glade-catalog.dtd
-%_iconsdir/hicolor/scalable/apps/glade-brand-symbolic.svg
 %_datadir/%name/pixmaps
-%_datadir/metainfo/%name.appdata.xml
 
 %exclude %_libdir/%name/modules/*.la
 
@@ -160,6 +160,9 @@ xvfb-run %make check
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Thu May 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 - enabled %%check
