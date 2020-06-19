@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libbotan
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 
 Summary: A C++ Crypto Library
@@ -12,8 +12,6 @@ Url: http://botan.randombit.net
 
 # Source-url: https://github.com/randombit/botan/archive/%version.tar.gz
 Source: %name-%version.tar
-
-Patch1: botan-fedora-remove-rpath-gcc.patch
 
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++
@@ -54,7 +52,6 @@ Python extensions for botan
 
 %prep
 %setup
-%patch1 -p0
 
 %build
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
@@ -104,6 +101,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.0-alt1
+- new version 2.14.0 (with rpmrb script)
+
 * Mon Feb 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.13.0-alt1
 - restore package, build new version
 
