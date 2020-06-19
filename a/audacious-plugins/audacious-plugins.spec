@@ -7,7 +7,7 @@
 
 Name: audacious-plugins
 Version: 4.0.4
-Release: alt1
+Release: alt2
 
 Summary: Plugins for Audacious
 License: GPL
@@ -58,6 +58,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 	--enable-sid \
 	%{subst_enable pulse} \
 	%{subst_enable jack} \
+%ifarch armh
+	--disable-qtglspectrum \
+%endif
 %ifnarch x86_64
 	--disable-sse2 \
 %endif
@@ -74,6 +77,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Fri Jun 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.4-alt2
+- fixed packaging on armh
+
 * Sat Jun 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.4-alt1
 - new version 4.0.4 (with rpmrb script)
 
