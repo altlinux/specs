@@ -3,8 +3,8 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 3.8.0
-Release: alt1.a
+Version: 3.10.0
+Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
 License: GPL-2.0+
@@ -44,14 +44,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc COPYING
 %doc AUTHORS ChangeLog README README.md
 %_bindir/%name
+%_libdir/qalculate-search-provider
 %_man1dir/*.1*
 %_datadir/metainfo/%name.appdata.xml
 %_defaultdocdir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*x*/apps/%{shortname}.png
 %_iconsdir/hicolor/scalable/apps/%{shortname}.svg
+%_datadir/dbus-1/services/io.github.Qalculate.SearchProvider.service
+%_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Fri Jun 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.10.0-alt1
+- Updated to upstream version 3.10.0.
+
 * Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt1.a
 - Updated to upstream version 3.8.0a.
 

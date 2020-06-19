@@ -3,7 +3,7 @@
 %def_without static
 
 Name: qalculate
-Version: 3.8.0
+Version: 3.10.0
 Release: alt1
 
 Summary: A very versatile desktop calculator
@@ -111,6 +111,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Jun 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.10.0-alt1
+- Updated to upstream version 3.10.0.
+
 * Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.0-alt1
 - Updated to upstream version 3.8.0.
 
