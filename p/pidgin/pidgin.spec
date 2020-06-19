@@ -32,8 +32,8 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.13.0
-Release: alt7
+Version: 2.14.1
+Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPLv2
@@ -55,14 +55,14 @@ Source2: purple-altlinux-prefs.xml
 Patch0: %name-%version-%release.patch
 
 # From configure.ac
-BuildRequires: glib2-devel libgtk+2-devel
+BuildRequires: glib2-devel libgtk+2-devel libgio-devel >= 2.26
 BuildRequires: libpango-devel >= 1.4.0
 BuildRequires: libXext-devel libX11-devel
 %{?_enable_gtkspell:BuildRequires: libgtkspell-devel >= 2.0.2}
 %{?_enable_nss:BuildRequires: libnss-devel libnspr-devel}
 %{?_enable_cyrus_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
-%{?_enable_consoleui:BuildRequires: libncurses-devel libncursesw-devel}
+%{?_enable_consoleui:BuildRequires: libncurses-devel libncursesw-devel libgnt-devel >= 2.14.0}
 %{?_enable_nm:BuildRequires: libnm-devel}
 %{?_enable_meanwhile:BuildRequires: libmeanwhile-devel}
 %{?_enable_perl:BuildRequires: perl-devel}
@@ -449,19 +449,17 @@ fi
 %files -n finch
 %_man1dir/finch.*
 %_bindir/finch
-%_libdir/libgnt.so.*
-%_libdir/gnt
 %_libdir/finch
 
 %files -n finch-devel
 %_includedir/finch
-%_includedir/gnt
-%_pkgconfigdir/gnt.pc
 %_pkgconfigdir/finch.pc
-%_libdir/libgnt.so
 %endif
 
 %changelog
+* Fri Jun 19 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.1-alt1
+- 2.14.1
+
 * Sat Feb 08 2020 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt7
 - Fix build with python3.8.
 - Fix license.
