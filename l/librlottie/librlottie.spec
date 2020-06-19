@@ -4,7 +4,7 @@
 %define soname 0.0.1
 Name: librlottie
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Platform independent standalone library that plays Lottie Animation
 
@@ -70,6 +70,9 @@ developing applications that use %name.
 %_pkgconfigdir/rlottie.pc
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt2
+- update with correct internal version
+
 * Thu Jun 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - new version (0.1) with rpmgs script
 - swith to build from upstream tarball
