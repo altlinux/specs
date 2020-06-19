@@ -1,5 +1,5 @@
 Name:    mint-translations
-Version: 2020.05.12
+Version: 2020.06.17
 Release: alt1
 
 License: GPL-2.0+ and MIT
@@ -33,6 +33,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 2020.06.17-alt1
+- New version.
+
 * Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 2020.05.12-alt1
 - New version.
 - Fix License tag according to SPDX.
