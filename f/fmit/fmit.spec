@@ -1,6 +1,6 @@
 Name: fmit
-Version: 1.2.6
-Release: alt2
+Version: 1.2.13
+Release: alt1
 
 Summary: Free Music Instrument Tuner
 
@@ -13,12 +13,15 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/gillesdegottex/fmit/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-# manually removed: git-core i586-libxcb python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope  ruby ruby-stdlibs
-# Automatically added by buildreq on Fri Jul 29 2016
-# optimized out: gcc-c++ libGL-devel libgpg-error libjson-c libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-svg libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel
-BuildRequires: itstool libalsa-devel libfftw3-devel libportaudio2-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel
+BuildRequires: itstool libalsa-devel libfftw3-devel libportaudio2-devel
+# core gui opengl multimedia svg
+BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-svg-devel
 
 BuildRequires: desktop-file-utils
+
+# due missed GL headers
+# ../src/modules/GLStatistics.cpp:374:2: error: 'glShadeModel' was not declared in this scope
+ExcludeArch: armh
 
 %description
 Free Music Instrument Tuner. Features:
@@ -62,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.13-alt1
+- new version 1.2.13 (with rpmrb script)
+
 * Sun Jun 02 2019 Michael Shigorin <mike@altlinux.org> 1.2.6-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
