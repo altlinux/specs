@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.36
@@ -18,7 +18,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major
+Version: %ver_major.2
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -96,6 +96,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Sat Jun 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- updated to 3.36.2-1-ge5bac093
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36-alt1
 - 3.36
 
