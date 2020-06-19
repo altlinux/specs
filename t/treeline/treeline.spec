@@ -1,6 +1,6 @@
 BuildRequires: desktop-file-utils
 Name: treeline
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Treeline stores almost any kind of information
@@ -9,8 +9,8 @@ License: GPL
 Group: Text tools
 Url: http://treeline.bellz.org/
 
+# Source-url: https://github.com/doug-101/TreeLine/archive/v%version.tar.gz
 Source: %name-%version.tar
-#Source1: http://download.berlios.de/treeline/%name-i18n-%{version}a.tar.bz2
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt1
+- new version 3.1.2 (with rpmrb script)
+
 * Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1
 
