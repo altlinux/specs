@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -37,5 +37,8 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Jun 19 2020 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
+- Improved performance by the use of binary dumps.
+
 * Tue May 12 2020 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
 - Initial release.
