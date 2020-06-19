@@ -4,7 +4,7 @@
 
 Name:     simpletest
 Version:  10
-Release:  alt3
+Release:  alt4
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -22,7 +22,7 @@ BuildRequires: /proc libasan-devel-static
 %ifarch %e2k
 BuildRequires: liblsan-devel-static libmsan-devel-static
 %else
-%ifarch i586
+%ifarch i586 armh
 BuildRequires: libubsan-devel-static
 %else
 BuildRequires: liblsan-devel-static libtsan-devel-static libubsan-devel-static
@@ -47,7 +47,11 @@ Also provides useful information about system:
 %setup
 
 %build
+# armv7a (armh) build hosts tells us it's aarch64, so set arch explicitly
 %configure \
+%ifarch armh
+    --arch=armv7a \
+%endif
     %{subst_enable bootstrap} \
     %{subst_enable profile} \
     %{subst_enable sanitizers}
@@ -64,6 +68,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Fri Jun 19 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt4
+- Add armh support.
+
 * Mon May 18 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt3
 - Remove no longer needed libgfortran-devel dependency.
 
