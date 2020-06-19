@@ -2,7 +2,7 @@
 %def_with doc
 
 Name: libyaml
-Version: 0.2.2
+Version: 0.2.5
 Release: alt1
 
 Summary: A C library for parsing and emitting YAML
@@ -55,7 +55,7 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %makeinstall_std
 
 %files -n %name%abiversion
-%doc README
+%doc ReadMe.md
 %_libdir/lib*.so.*
 
 %files devel
@@ -67,6 +67,9 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
+- new version 0.2.5 (with rpmrb script)
+
 * Wed May 08 2019 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt1
 - new version 0.2.2 (with rpmrb script)
 
