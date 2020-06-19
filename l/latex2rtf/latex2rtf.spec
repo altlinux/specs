@@ -1,11 +1,11 @@
 Name: latex2rtf
-Version: 2.3.17
+Version: 2.3.18
 Release: alt1
 
 Summary: Convert a LaTeX file to an RTF file
 Summary(ru_RU.UTF8): Преобразователь файлов LaTeX в формат RTF
 
-License: LGPL
+License: LGPLv2
 Group: Text tools
 Url: http://sourceforge.net/projects/latex2rtf/
 
@@ -27,14 +27,15 @@ information is translated to RTF.
 %setup
 
 %build
-%make_build DESTDIR=%prefix
+make clean
+%make_build PREFIX=%prefix
 make -C doc latex2rtf.html
 
 %install
-make install DESTDIR=%buildroot%prefix
+%makeinstall_std PREFIX=%prefix
 
 # hack for 2.3.15
-chmod 755 %buildroot%_bindir/latex2png
+#chmod 755 %buildroot%_bindir/latex2png
 
 %files
 %doc HACKING README
@@ -43,6 +44,9 @@ chmod 755 %buildroot%_bindir/latex2png
 %_man1dir/*
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.18-alt1
+- new version 2.3.18 (with rpmrb script)
+
 * Sun Apr 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.17-alt1
 - new version 2.3.17 (with rpmrb script)
 
