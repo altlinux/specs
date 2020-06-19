@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.43.4
-Release: alt1
+Release: alt2
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
 
@@ -132,6 +132,12 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.4-alt2
+- Add changelog from p9 allows copy from sisyphus to p9.
+
+* Tue Jun 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.41-alt1.3.p9
+- Place dns source immediately after files instead of disabling avahi-daemon service (ALT #37082).
+
 * Tue Jun 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.4-alt1
 - Place dns source immediately after files instead of disabling avahi-daemon service (ALT #37082).
 
