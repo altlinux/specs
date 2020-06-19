@@ -1,5 +1,5 @@
 Name: kiosk
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Source: %name-%version.tar
@@ -26,6 +26,9 @@ Utility for managing kiosk mode
 %_bindir/kiosk
 
 %changelog
+* Fri Jun 19 2020 Oleg Solovyov <mcpain@altlinux.org> 0.3-alt1
+- remove system-list restrictions
+
 * Wed Mar 25 2020 Oleg Solovyov <mcpain@altlinux.org> 0.2-alt1
 - change netlink family
 - fix error messages
