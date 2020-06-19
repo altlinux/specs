@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.1.16.0
-Release:        alt1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -134,6 +134,10 @@ rm -rf src/include/tbb
 # Try disabling old CMP
 sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
 
+%ifarch armh
+sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
+%endif
+
 %build
 %cmake \
 	-DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
@@ -169,14 +173,16 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %python3_sitelibdir/OpenImageIO.so
 
 %files -n %oname-utils
-%exclude %_bindir/iv
 %_bindir/*
-%exclude %_man1dir/iv.1*
 %_man1dir/*.1*
+%ifnarch armh
+%exclude %_bindir/iv
+%exclude %_man1dir/iv.1*
 
 %files -n %oname-iv
 %_bindir/iv
 %_man1dir/iv.1*
+%endif
 
 %files devel
 %_libdir/libOpenImageIO.so
@@ -187,6 +193,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Fri Jun 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.16.0-alt2
+- fixed packaging on armh
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.16.0-alt1
 - Updated to upstream version 2.1.16.0.
 
