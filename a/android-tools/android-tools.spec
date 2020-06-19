@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 8.1.0
-Release: alt2.r23
+Release: alt3.r23
 
 Summary: Android Debug CLI tools
 License: APL
@@ -149,6 +149,9 @@ case %_arch in
     "ppc64le")
         CPU="ppc64"
         ;;
+    "mipsel")
+        CPU="mips"
+        ;;
     *)
         false
         ;;
@@ -287,6 +290,9 @@ done
 %aprefix
 
 %changelog
+* Fri Jun 19 2020 Ivan A. Melnikov <iv@altlinux.org> 8.1.0-alt3.r23
+- mipsel support
+
 * Sun Oct 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 8.1.0-alt2.r23
 - udev-android added as a requirement (closes #37284)
 
