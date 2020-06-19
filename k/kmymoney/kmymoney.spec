@@ -1,10 +1,10 @@
 Name:    kmymoney
-Version: 5.0.8
+Version: 5.1.0
 Release: alt1
 
-Summary: A Personal Finance Manager for KDE4
-Summary(ru_RU.UTF-8): Учёт финансов под KDE4
-License: GPLv2 or GPLv3
+Summary: A Personal Finance Manager for KDE
+Summary(ru_RU.UTF-8): Учёт финансов под KDE
+License: GPL-2.0 or GPL-3.0
 Group:   Office
 URL:     http://kmymoney2.sourceforge.net
 
@@ -105,7 +105,7 @@ Obsoletes: kde4-kmymoney-devel
 
 %description devel
 Include files and libraries mandatory for development with package
-kmymoney (KDE4).
+kmymoney (KDE).
 
 %package kbanking
 Summary: Online Banking plugin for KMyMoney
@@ -367,6 +367,10 @@ Internationalization and documentation for KMyMoney
 %exclude %_K5doc/en
 
 %changelog
+* Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+- Fix License and Summary.
+
 * Mon Feb 03 2020 Andrey Cherepanov <cas@altlinux.org> 5.0.8-alt1
 - New version.
 
