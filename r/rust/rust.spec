@@ -1,5 +1,5 @@
 %define rust_ver 1.42.0
-%define rust_rel alt1
+%define rust_rel alt2
 %define cargo_ver %rust_ver
 %define cargo_rel %rust_rel
 
@@ -22,7 +22,11 @@ BuildRequires: curl gcc-c++ python-devel cmake libffi-devel patchelf
 
 %def_without  bootstrap
 %def_with  bundled_llvm
+%ifarch armh
+%define abisuff eabihf
+%else
 %define abisuff %nil
+%endif
 
 %if_without bundled_llvm
 
@@ -56,7 +60,6 @@ Source6: https://static.rust-lang.org/dist/rust-%r_ver-powerpc64le-unknown-linux
 %endif
 %ifarch armh
 %define r_src %SOURCE5
-%define abisuff eabihf
 %endif
 %ifarch ppc64le
 %define r_src %SOURCE6
@@ -325,6 +328,9 @@ rm -rf %rustdir
 %_libdir/rustlib/%r_arch-unknown-linux-gnu%abisuff/analysis
 
 %changelog
+* Fri Jun 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.42.0-alt2
+- fixed packaging on armh
+
 * Thu Apr 09 2020 Vladimir Lettiev <crux@altlinux.org> 1:1.42.0-alt1
 - 1.42.0 (Closes: #38338)
 
