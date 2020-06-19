@@ -1,6 +1,6 @@
 %define module_name     usb-vhci
 %define module_version  1.15
-%define module_release  alt2
+%define module_release  alt3
 %define flavour         un-def
 %define karch %ix86 x86_64 aarch64 ppc64le
 
@@ -11,7 +11,7 @@
 Summary: USB Virtual Host Controller Driver (VHCI)
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Epoch: %(echo %kepoch | sed s/://)
+Epoch: 1
 Release: %module_release.%kcode.%kbuildrelease
 License: GPLv2
 Group: System/Kernel and hardware
