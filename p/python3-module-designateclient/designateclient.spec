@@ -2,12 +2,12 @@
 
 Name:    python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Openstack DNS (Designate) API Client
 
-License: Apache-2.0
 Group:   Development/Python3
+License: Apache-2.0
 Url:     http://docs.openstack.org/developer/python-%oname
 
 Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -27,6 +27,7 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
+
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
@@ -50,6 +51,8 @@ Group: Development/Documentation
 %description doc
 This package contains documentation files for %name.
 
+This package contains documentation for %oname.
+
 %prep
 %setup -n python-%oname-%version
 # Let RPM handle the dependencies
@@ -64,19 +67,25 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
-%install
-%python3_install
-
 export PYTHONPATH=$PWD
+
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
+%install
+%python3_install
+
+# install man page
+install -p -D -m 644 man/python-designateclient.1 %buildroot%_man1dir/designateclient.1
+
 %files
-%doc README.rst
-#%%_bindir/designate
+%doc *.rst LICENSE
 %python3_sitelibdir/*
+%_man1dir/designateclient*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/functionaltests
 
@@ -85,9 +94,12 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/functionaltests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 - Renamed spec file.

@@ -2,12 +2,12 @@
 
 Name:       python3-module-%oname
 Version:    4.0.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Client library for OpenStack Identity API
 
-License:    Apache-2.0
 Group:      Development/Python3
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -52,11 +52,13 @@ This package contains tests for %oname.
 
 %package doc
 Summary:    Documentation for OpenStack Identity API Client
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
-Documentation for the client library for interacting with Openstack
+Client library and command line utility for interacting with Openstack
 Identity API.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -69,20 +71,28 @@ rm -f test-requirements.txt requirements.txt
 # Prevent doc build warnings from causing a build failure
 sed -i '/warning-is-error/d' setup.cfg
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %build
 %python3_build
 
 %install
 %python3_install
 
-# generate html docs
-sphinx-build-3 doc/source html
-# remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
+# install man page
+install -p -D -m 644 man/python-keystoneclient.1 %buildroot%_man1dir/keystoneclient.1
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
+%_man1dir/keystoneclient*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -92,6 +102,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 

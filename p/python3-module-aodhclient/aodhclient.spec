@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    2.0.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Python API and CLI for OpenStack Aodh
 
@@ -47,12 +47,14 @@ This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Aodh API Client
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
 This is a client library for Aodh built on the Aodh API. It
 provides a Python API (the aodhclient module) and a command-line tool
 (aodh).
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
@@ -63,18 +65,25 @@ rm -f {,test-}requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build-3 -b html doc/source html
-
-# Fix hidden-file-or-dir warnings
-rm -fr html/.doctrees html/.buildinfo
+# install man page
+install -p -D -m 644 man/aodhclient.1 %buildroot%_man1dir/aodhclient.1
 
 %files
+%doc *.rst LICENSE
 %_bindir/aodh
+%_man1dir/aodhclient*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -85,6 +94,9 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 - Renamed spec file.

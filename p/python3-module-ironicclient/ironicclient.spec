@@ -2,15 +2,15 @@
 
 Name:       python3-module-%oname
 Version:    4.1.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Client for OpenStack bare metal Service
 
 Group:      Development/Python3
 License:    Apache-2.0
-Url:     http://docs.openstack.org/developer/python-%oname
+Url:        http://docs.openstack.org/developer/python-%oname
 
-Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch:  noarch
 
@@ -61,11 +61,25 @@ Requires: %name = %EVR
 This package contains tests for %oname.
 
 %package doc
-Summary: Openstack DNS (Designate) API Client - Documentation
+Summary: Documentation for Openstack DNS (Designate) API Client
 Group: Development/Documentation
 
 %description doc
-This package contains documentation files for %name.
+Ironic provision bare metal machines instead of virtual machines. It is a fork
+of the Nova Baremetal driver. It is best thought of as a bare metal hypervisor
+API and a set of plugins which interact with the bare metal hypervisors. By
+default, it will use PXE and IPMI in concert to provision and turn on/off
+machines, but Ironic also supports vendor-specific plugins which may
+implement
+additional functionality.
+
+This is a client for the OpenStack Ironic API. There's a Python API
+(the "ironicclient" module), and a command-line script ("ironic").
+
+Installing this package gets you a shell command, that you can use to
+interact with Ironic's API.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -78,18 +92,25 @@ rm -rf python_designateclient.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-python3 setup.py build_sphinx
-
-# Fix hidden-file-or-dir warnings
-rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
+# install man page
+install -p -D -m 644 man/python-ironicclient.1 %buildroot%_man1dir/ironicclient.1
 
 %files
-%doc LICENSE README.rst
-%_bindir/*
+%doc *.rst LICENSE
+%_bindir/baremetal
+%_man1dir/ironicclient*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -97,9 +118,12 @@ rm -fr  doc/build/html/.doctrees  doc/build/html/.buildinfo
 %exclude %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 - Renamed spec file.

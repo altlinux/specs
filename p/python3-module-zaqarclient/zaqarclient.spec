@@ -1,16 +1,16 @@
-%define sname zaqarclient
+%define oname zaqarclient
 
-Name: python3-module-%sname
+Name: python3-module-%oname
 Version: 1.13.1
-Release: alt1
+Release: alt2
 
 Summary: Client Library for OpenStack Zaqar Queueing API
 
 Group: Development/Python3
 License: Apache-2.0
-Url: http://pypi.python.org/pypi/python-%sname
+Url: http://pypi.python.org/pypi/python-%oname
 
-Source: %sname-%version.tar
+Source: %oname-%version.tar
 
 BuildArch: noarch
 
@@ -30,19 +30,27 @@ BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme
 
 %description
-Python client to Zaqar messaging service API v1.
+Python client to Zaqar messaging service API.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Zaqar Queueing API Client
 Group: Development/Documentation
 
 %description doc
-Python client to Zaqar messaging service API v1.
+Python client to Zaqar messaging service API.
 
-This package contains auto-generated documentation.
+This package contains documentation for %oname.
 
 %prep
-%setup -n %sname-%version
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rf *.egg-info
@@ -53,27 +61,38 @@ rm -rf {,test-}requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build-3 -b html doc/source html
-
-# Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
+# install man page
+install -p -D -m 644 man/python-zaqarclient.1 %buildroot%_man1dir/zaqarclient.1
 
 %files
-%doc README.rst
-%doc LICENSE
+%doc *.rst LICENSE
+%_man1dir/zaqarclient*
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files tests
+%python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt2
+- Unify documentation building.
+- Add tests subpackage.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt1
 - Automatically updated to 1.13.1.
 

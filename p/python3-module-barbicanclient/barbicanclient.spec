@@ -2,13 +2,13 @@
 
 Name:       python3-module-%oname
 Version:    4.10.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Client Library for OpenStack Barbican Key Management API
 
+Group:      Development/Python3
 License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
-Group:      Development/Python3
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
@@ -45,11 +45,13 @@ This package contains tests for %oname.
 
 %package doc
 Summary:    Documentation for OpenStack Barbican Key Management API
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
 Documentation for the client library for interacting with Openstack
 Barbican Key Management API.
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -65,14 +67,18 @@ sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-python3 setup.py build_sphinx
-rm -f doc/build/html/.buildinfo
-
 %files
+%doc *.rst LICENSE
 %_bindir/barbican
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -81,9 +87,12 @@ rm -f doc/build/html/.buildinfo
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE doc/build/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt1
 - Automatically updated to 4.10.0.
 - Renamed spec file.

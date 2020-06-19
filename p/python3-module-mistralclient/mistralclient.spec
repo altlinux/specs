@@ -2,12 +2,12 @@
 
 Name:       python3-module-%oname
 Version:    4.0.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Client Library for OpenStack Mistral Workflow Service API
 
-License:    Apache-2.0
 Group:      Development/Python3
+License:    Apache-2.0
 Url:        http://docs.openstack.org/developer/python-%oname
 
 Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -40,7 +40,7 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
 
 %description
-There is a Python library for accessing the API (mistralclient module),
+This is a Python library for accessing the API (mistralclient module),
 and a command-line script (mistral).
 
 %package tests
@@ -53,11 +53,13 @@ This package contains tests for %oname.
 
 %package doc
 Summary: Documentation for OpenStack Mistral Workflow Service API
-Group:  Development/Documentation
+Group: Development/Documentation
 
 %description doc
-Documentation for the client library for interacting with Openstack
-Mistral Workflow Service API.
+This is a Python library for accessing the API (mistralclient module),
+and a command-line script (mistral).
+
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -76,27 +78,43 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-# Build HTML docs and man page
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
+# install man page
+install -p -D -m 644 man/mistral_client.1 %buildroot%_man1dir/mistralclient.1
+
+# install bash completion
+install -p -D -m 644 tools/mistral.bash_completion \
+    %buildroot%_sysconfdir/bash_completion.d/mistral.bash_completion
 
 %files
-%doc LICENSE README.rst
+%doc *.rst LICENSE
 %_bindir/mistral
+%_man1dir/mistralclient*
 %python3_sitelibdir/*
+%_sysconfdir/bash_completion.d/mistral*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc LICENSE build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Automatically updated to 4.0.1.
 - Renamed spec file.

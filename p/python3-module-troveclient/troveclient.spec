@@ -2,12 +2,12 @@
 
 Name:    python3-module-%oname
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Client library for OpenStack DBaaS API
 
-License: Apache-2.0
 Group:   Development/Python3
+License: Apache-2.0
 Url:     http://docs.openstack.org/developer/python-%oname
 
 Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
@@ -59,7 +59,7 @@ This is a client for the Trove API. There's a Python API (the
 troveclient module), and a command-line script (trove). Each
 implements 100 percent (or less ;) ) of the Trove API.
 
-This package contains auto-generated documentation.
+This package contains documentation for %oname.
 
 %prep
 %setup -n python-%oname-%version
@@ -73,17 +73,25 @@ rm -f {test-,}requirements.txt
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+
 %install
 %python3_install
 
-sphinx-build-3 -b html doc/source html
-
-# Remove the sphinx-build leftovers
-rm -rf html/.{doctrees,buildinfo}
+# install man page
+install -p -D -m 644 man/python-troveclient.1 %buildroot%_man1dir/troveclient.1
 
 %files
-%doc README.rst LICENSE
+%doc *.rst LICENSE
 %_bindir/trove
+%_man1dir/troveclient*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/compat/tests
@@ -93,9 +101,12 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/%oname/compat/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt2
+- Unify documentation building.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Automatically updated to 3.3.1.
 - Renamed spec file.
