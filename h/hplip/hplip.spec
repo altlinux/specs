@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.20.5
+Version: 3.20.6
 Release: alt1
 Epoch:   1
 
@@ -1176,6 +1176,35 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.6-alt1
+- New version.
+- Added support for the following new Printers:
+  + HP Color LaserJet Managed MFP E78223a
+  + HP Color LaserJet Managed MFP E78223dv
+  + HP Color LaserJet Managed MFP E78223dn
+  + HP Color LaserJet Mngd MFP E78223dn Plus
+  + HP Color LaserJet Mngd MFP E78223dn CN
+  + HP Color LaserJet Managed MFP E78228dn 
+  + HP Color LaserJet Managed MFP E78228dn Plus
+  + HP Color LaserJet Managed MFP E78228dn CN
+  + HP Color LaserJet Managed Flow MFP E78330z Plus
+  + HP Color LaserJet Managed Flow MFP E78330z CN
+  + HP Color LaserJet Managed MFP E78330dn
+  + HP Color LaserJet Mngd MFP E78330dn Plus
+  + HP Color LaserJet Mngd MFP E78330dn CN
+  + HP Color LaserJet Managed MFP E78330z
+  + HP Color LaserJet Managed Flow MFP E78325z Plus
+  + HP Color LaserJet Managed Flow MFP E78325dn CN
+  + HP Color LaserJet Managed Flow MFP E78325z CN
+  + HP Color LaserJet Managed MFP E78325dn
+  + HP Color LaserJet Managed MFP E78325z
+  + HP Color LaserJet Managed Flow MFP E78323z
+  + HP Color LaserJet Mgd Flw MFPE78323Z Plus
+  + HP Color LaserJet Mgd Flw MFPE78323z CN
+  + HP Color LaserJet Managed MFP E78323dn
+  + HP Color LaserJet Mngd MFP E78323dn Plus
+  + HP Color LaserJet Mngd MFP E78323dn CN
+
 * Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.5-alt1
 - New version.
 - Added support for the following new Printers:
