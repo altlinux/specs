@@ -1,7 +1,7 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -166,6 +166,9 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
 - new version 4.0.1 (with rpmrb script)
 - use uglifyjs instead of yuicompressor python module
