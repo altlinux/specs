@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 4.17.0
+Version: 4.18.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -210,6 +210,9 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 4.18.0-alt1
+- new version 4.18.0 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.17.0-alt1
 - new version 4.17.0 (with rpmrb script)
 
