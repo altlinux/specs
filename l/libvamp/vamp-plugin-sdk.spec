@@ -1,8 +1,8 @@
 %set_verify_elf_method relaxed
 
 Name: libvamp
-Version: 2.9.0
-Release: alt4
+Version: 2.10.0
+Release: alt1
 Summary: An API for audio analysis and feature extraction plugins
 
 License: BSD
@@ -83,6 +83,9 @@ make clean -C examples
 # %_libdir/*.a
 
 %changelog
+* Sat Jun 20 2020 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
+- New version.
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt4
 - Remove executable files from examples in documentation
 
