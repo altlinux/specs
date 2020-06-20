@@ -1,13 +1,13 @@
 %define oname oslo.concurrency
 
 Name: python3-module-%oname
-Version: 3.31.0
+Version: 4.0.2
 Release: alt1
 
 Summary: OpenStack oslo.concurrency library
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -19,7 +19,6 @@ Provides: python3-module-oslo-concurrency = %EVR
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -55,6 +54,8 @@ Documentation for the Oslo concurrency handling library.
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -64,18 +65,23 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
 %_bindir/lockutils-wrapper
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt1
+- Automatically updated to 4.0.2.
+- Unify documentation building.
+- Fix license.
+
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 3.31.0-alt1
 - Automatically updated to 3.31.0.
 

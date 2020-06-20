@@ -1,6 +1,6 @@
 Name: librdkafka
-Version: 0.11.6
-Release: alt2
+Version: 1.4.4
+Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
 
@@ -13,8 +13,6 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Source-url: https://github.com/edenhill/librdkafka/archive/v%{version}.tar.gz
 Source: %name-%version.tar
 Source1: rdkafka.pc
-Patch0: 01-lz4-alt.patch
-Patch1: 02-xxhash-alt.patch
 
 # Automatically added by buildreq on Fri Nov 09 2018
 # optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base zlib-devel
@@ -39,8 +37,6 @@ msgs/second for the producer and 3 million msgs/second for the consumer.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
 
 %build
 #%cmake_insource
@@ -53,7 +49,6 @@ mkdir -p %buildroot%_libdir/pkgconfig
 cp %SOURCE1 %buildroot%_libdir/pkgconfig/
 %__subst 's|@VERSION@|%{version}|g' %buildroot%_libdir/pkgconfig/*.pc
 
-
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 
@@ -61,11 +56,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
     mv %buildroot/usr/lib/* %buildroot%_libdir/
 %endif
 
-
-
 %files
 %doc LICENSE README.md
-%_libdir/*.so
+%_libdir/*.so*
 
 %files devel
 %dir %_includedir/%name
@@ -75,6 +68,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Jun 20 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
+- Build new version for python3-module-confluent-kafka.
+
 * Wed Mar 27 2019 Pavel Vainerman <pv@altlinux.ru> 0.11.6-alt2
 - added patch for use system libxxhash (altbug #36399)
 

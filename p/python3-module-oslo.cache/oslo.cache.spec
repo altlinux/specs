@@ -1,12 +1,13 @@
 %define oname oslo.cache
 
 Name: python3-module-%oname
-Version: 1.38.1
+Version: 2.3.0
 Release: alt1
+
 Summary: Cache storage for Openstack projects
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -59,6 +60,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -68,6 +71,7 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -75,10 +79,14 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
-%doc README.rst LICENSE
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+- Unify documentation building.
+- Fix license.
+
 * Fri Dec 27 2019 Grigory Ustinov <grenka@altlinux.org> 1.38.1-alt1
 - Automatically updated to 1.38.1.
 - Added watch file.

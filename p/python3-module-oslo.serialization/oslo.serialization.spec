@@ -1,12 +1,15 @@
 %define oname oslo.serialization
 
 Name: python3-module-%oname
-Version: 2.29.2
+Version: 3.1.1
 Release: alt1
+
 Summary: OpenStack oslo.serialization library
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -55,6 +58,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -64,7 +69,7 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -72,9 +77,14 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+- Renamed spec file.
+- Fix license.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.29.2-alt1
 - Automatically updated to 2.29.2.
 - Build without python2.

@@ -1,17 +1,16 @@
 %define oname oslo.log
 
 Name: python3-module-%oname
-Version: 3.45.2
+Version: 4.1.3
 Release: alt1
 
 Summary: OpenStack oslo.log library
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: oslo.log.watch
 
 BuildArch: noarch
 
@@ -22,7 +21,6 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 3.1.1
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-six >= 1.11.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.20.0
@@ -72,8 +70,10 @@ sed -i '/warning-is-error/d' setup.cfg
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
-python3 setup.py build_sphinx
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
@@ -81,7 +81,7 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
+%doc *.rst LICENSE
 %_bindir/convert-json
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -90,9 +90,15 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc build/sphinx/html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.3-alt1
+- Automatically updated to 4.1.3.
+- Unify documentation building.
+- Removed watch file.
+- Fix license.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 3.45.2-alt1
 - Automatically updated to 3.45.2.
 - Added watch file.

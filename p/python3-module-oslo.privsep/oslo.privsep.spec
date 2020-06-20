@@ -1,12 +1,15 @@
 %define oname oslo.privsep
 
 Name: python3-module-%oname
-Version: 1.33.3
+Version: 2.1.1
 Release: alt1
+
 Summary: OpenStack library for privilege separation
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
@@ -16,8 +19,8 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-greenlet >= 0.4.10
-BuildRequires: python3-module-msgpack >= 0.5.0
+BuildRequires: python3-module-greenlet >= 0.4.14
+BuildRequires: python3-module-msgpack >= 0.6.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
@@ -58,6 +61,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -67,18 +72,23 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc README.rst
-%python3_sitelibdir/*
+%doc *.rst LICENSE
 %_bindir/privsep-helper
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+- Renamed spec file.
+- Fix license.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.33.3-alt1
 - Automatically updated to 1.33.3
 - Build without python2.

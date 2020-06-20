@@ -1,15 +1,16 @@
 %define oname oslo.rootwrap
 
 Name: python3-module-%oname
-Version: 5.17.1
+Version: 6.0.2
 Release: alt1
+
 Summary: Oslo Rootwrap
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
+
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: oslo.rootwrap.watch
 
 BuildArch:      noarch
 
@@ -58,6 +59,8 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+export PYTHONPATH="$PWD"
+
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
@@ -67,19 +70,23 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_install
 
 %files
-%doc README.rst LICENSE
-%python3_sitelibdir/*
+%doc *.rst LICENSE
 %_bindir/oslo-rootwrap
 %_bindir/oslo-rootwrap-daemon
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc html
+%doc LICENSE html
 
 %changelog
+* Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 6.0.2-alt1
+- Automatically updated to 6.0.2.
+- Fix license.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.17.1-alt1
 - Automatically updated to 5.17.1.
 - Added watch file.
