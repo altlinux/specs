@@ -8,25 +8,26 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 %define xdg_name org.gnome.%name
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
-License: GPL
+License: GPL-2.0
 Group: File tools
-Url: http://www.freesoftware.fsf.org/gcmd/
+Url: https://gcmd.github.io
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: dconf
+%define gtk_ver 2.24
+
+Requires: dconf xdg-utils
 Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 
 BuildRequires: flex gcc-c++
 BuildRequires: yelp-tools libappstream-glib-devel
-BuildRequires: libgnomeui-devel libgnome-keyring-devel gnome-vfs-devel
-BuildRequires: python-devel
+BuildRequires: libgtk+2-devel >= %gtk_ver libgnome-keyring-devel gnome-vfs-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_libchm:BuildRequires: libchm-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
@@ -35,9 +36,9 @@ BuildRequires: python-devel
 %{?_with_unique:BuildRequires: libunique-devel}
 
 %description
-Gnome Commander is a file manager that just like the classical Norton Commander (TM)
-lets you do everything with the keyboard. It can perform all standard file operations
-and some extra features like FTP support.
+Gnome Commander is a file manager that just like the classical Norton
+Commander (TM) lets you do everything with the keyboard. It can perform
+all standard file operations and some extra features like FTP support.
 
 %prep
 %setup
@@ -45,6 +46,7 @@ and some extra features like FTP support.
 %build
 %autoreconf
 %configure --disable-static \
+	--disable-schemas-compile \
 	%{subst_with exiv2} \
 	%{subst_with libchm} \
 	%{subst_with taglib} \
@@ -67,7 +69,7 @@ and some extra features like FTP support.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/pixmaps/%name.svg
 %_datadir/pixmaps/%name/
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_datadir/%name
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README TODO doc/*.txt
@@ -77,6 +79,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
+- 1.10.3
+
 * Thu May 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 
