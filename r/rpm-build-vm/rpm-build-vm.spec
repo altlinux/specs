@@ -6,8 +6,8 @@
 #
 
 Name: rpm-build-vm
-Version: 1.7
-Release: alt2
+Version: 1.8
+Release: alt1
 
 Summary: RPM helper to run in virtualised environment
 License: GPL-2.0
@@ -15,7 +15,9 @@ Group: Development/Other
 
 Source: %name-%version.tar
 
-%ifarch %ix86 x86_64 ppc64le aarch64
+%define supported_arches %ix86 x86_64 ppc64le aarch64
+
+%ifarch %supported_arches
 # = QEMU supported arches =
 # Other arches will get a stub which will always return success
 
@@ -25,6 +27,14 @@ Source: %name-%version.tar
 # over `/proc/self/fd/%%d'.
 Requires: /proc
 Requires: /dev/kvm
+
+# Try to load un-def kernel this way to avoid "forbidden dependencies"
+# from sisyphus_check
+Requires: kernel > 5.0
+
+Requires: make-initrd
+Requires: mount
+%endif
 
 %ifarch %ix86 x86_64
 Requires: qemu-system-x86-core
@@ -36,19 +46,17 @@ Requires: qemu-system-ppc-core
 Requires: qemu-system-aarch64-core
 %endif
 
-# Try to load un-def kernel this way to avoid "forbidden dependencies"
-# from sisyphus_check
-Requires: kernel > 5.0
-
-Requires: make-initrd
-Requires: mount
-
 %description
 RPM helper to run QEMU inside hasher. This is mainly intended
 for %%check section to test software under better emulated root
 than fakeroot.
 
 This is similar to multiple vm scripts, virtme, vido, and eudyptula-boot.
+%ifnarch %supported_arches
+
+This package is a stub instead of RPM helper to run QEMU inside hasher
+on supported architectures (this one (%_arch) is unsupported).
+%endif
 
 %package checkinstall
 Summary: Checkinstall for vm-run
@@ -63,17 +71,27 @@ Run checkinstall tests for vm-run.
 %setup
 
 %install
+%ifnarch %supported_arches
+install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
+%else
 install -D -p -m 0755 vm-run      %buildroot%_bindir/vm-run
 install -D -p -m 0755 vm-init     %buildroot%_sbindir/vm-init
 install -D -p -m 0755 initrd-init %buildroot%_libexecdir/%name/sbin/init-bin
 install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
+%endif
+
+%pre
+# Only allow to install inside of hasher.
+[ -d /.host -a -d /.in -a -d /.out ]
+
+%files checkinstall
 
 %files
 %_bindir/vm-run
+
+%ifarch %supported_arches
 %_sbindir/vm-init
 %_libexecdir/%name
-
-%files checkinstall
 
 %pre checkinstall
 set -ex
@@ -113,31 +131,13 @@ chmod a+twx /mnt
 
 # Allow user creation
 chmod a+r /etc/login.defs
-
-%else
-# = QEMU un-supported arches =
-
-%description
-A stub package instead of RPM helper to run QEMU inside hasher
-on supported architectures (this one (%_arch) is unsupported).
-
-%prep
-%setup
-
-%install
-install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
-
-%files
-%_bindir/vm-run
-
-# endif for QEMU un-supported arches
 %endif
 
-%pre
-# Only allow to install inside of hasher.
-[ -d /.host -a -d /.in -a -d /.out ]
-
 %changelog
+* Sat Jun 20 2020 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
+- aarch64: Fix `.gic_version not found' (qemu).
+- spec: Fix `different set of noarch packages' (girar).
+
 * Mon Feb 24 2020 Vitaly Chikunov <vt@altlinux.org> 1.7-alt2
 - Require /dev/kvm.
 
