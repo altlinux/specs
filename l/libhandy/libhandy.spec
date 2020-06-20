@@ -1,10 +1,11 @@
 %define api_ver 0.0
 
 %def_enable check
+%def_disable glade_catalog
 
 Name: libhandy
 Version: 0.0.13
-Release: alt1
+Release: alt1.1
 
 Summary: Library with GTK+3 widgets for mobile devices
 Group: System/Libraries
@@ -19,7 +20,7 @@ Source: https://source.puri.sm/Librem5/libhandy/-/archive/v%version/%name-v%vers
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(gladeui-2.0)
+%{?_enable_glade_catalog:BuildRequires: pkgconfig(gladeui-2.0)}
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
@@ -90,10 +91,10 @@ xvfb-run -s -noreset %meson_test
 
 %files devel
 %_includedir/%name-%api_ver/
-%_libdir/glade/modules/libglade-handy.so
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
-%_datadir/glade/catalogs/%name.xml
+%{?_enable_glade_catalog:%_libdir/glade/modules/libglade-handy.so
+%_datadir/glade/catalogs/%name.xml}
 %_vapidir/%name-%api_ver.*
 
 %files gir
@@ -106,6 +107,9 @@ xvfb-run -s -noreset %meson_test
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.0.13-alt1.1
+- disabled glade catalog incompatible with glade-3.36
+
 * Thu Jan 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.0.13-alt1
 - 0.0.13
 
