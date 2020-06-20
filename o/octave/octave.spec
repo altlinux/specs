@@ -7,7 +7,7 @@
 
 Name: octave
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -27,6 +27,7 @@ Patch1: octave-alt-desktop-l10n.patch
 Patch2: octave-alt-fix-build.patch
 Patch3: octave-alt-fix-doc-build.patch
 Patch4: assume-blas-integer-size.patch
+Patch5: octave-alt-lcc.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
@@ -142,6 +143,7 @@ GNU Octave является высокоуровневым языком, в пе
 %patch0 -p2
 %patch1 -p2
 %patch4 -p1
+%patch5 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -222,6 +224,10 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sat Jun 20 2020 Andrew Savchenko <bircoph@altlinux.org> 5.2.0-alt2
+- E2K: workaround lcc build problem with default destructor in a
+  parent template class.
+
 * Tue Feb 18 2020 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
 - New version.
 
