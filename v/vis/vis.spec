@@ -1,5 +1,5 @@
 Name: vis
-Version: 0.5.0.181.08a550d
+Version: 0.6
 Release: alt1
 
 Summary: simple yet efficient editor, combining the strengths of both vi(m) and sam
@@ -87,6 +87,9 @@ rm -r -- %buildroot%_datadir/doc/vis/
 %_datadir/vis/themes/*
 
 %changelog
+* Sat Jun 20 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6-alt1
+- 0.6.
+
 * Tue Apr 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.0.181.08a550d-alt1
 - Initial build for ALT Sisyphus.
 
