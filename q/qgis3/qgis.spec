@@ -8,7 +8,7 @@
 %define rname qgis
 
 Name:    qgis3
-Version: 3.12.3
+Version: 3.14.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -44,8 +44,9 @@ Conflicts: qgis
 # http://code.google.com/p/pyspatialite/issues/detail?id=3
 # It also is sort of a fork of pysqlite, which is not elegant.
 
+BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: flex bison
 %if_enabled grass
@@ -88,6 +89,13 @@ BuildRequires: spatialindex-devel
 BuildRequires: libexiv2-devel
 BuildRequires: txt2tags
 BuildRequires: libqwt6-qt5-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: libprotobuf-lite-devel
+BuildRequires: protobuf-compiler
+BuildRequires: ocl-icd-devel
+BuildRequires: libhdf5-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: libxml2-devel
 
 #Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
@@ -172,19 +180,7 @@ gzip ChangeLog
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
 export LD_LIBRARY_PATH=`pwd`/output/%_lib
-cmake \
-	-DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
-	-DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
-	-DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_INSTALL_PREFIX:PATH=%_prefix \
-	-DINCLUDE_INSTALL_DIR:PATH=%_includedir \
-	-DLIB_INSTALL_DIR:PATH=%_libdir \
-	-DSYSCONF_INSTALL_DIR:PATH=%_sysconfdir \
-	-DSHARE_INSTALL_PREFIX:PATH=%_datadir \
-%if "%_lib" == "lib64"
-	-DLIB_SUFFIX="64" \
-%endif
+%cmake_insource -GNinja \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DQGIS_LIB_SUBDIR:PATH=%_lib \
@@ -193,10 +189,10 @@ cmake \
 	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
 	-DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
 	-DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
+%if_with grass
 	-DGRASS_PREFIX:PATH=%_libdir/grass \
 	-DGRASS_PREFIX7:PATH=%_libdir/grass \
-	-DMAPSERVER_SKIP_ECW=TRUE \
-	-DWITH_MAPSERVER:BOOL=TRUE \
+%endif
 	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
 	-DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
 	-DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
@@ -205,21 +201,7 @@ cmake \
         -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
         -DQWT_LIBRARY=%_libdir/libqwt-qt5.so \
 	-DENABLE_TESTS:BOOL=FALSE \
-	-DWITH_INTERNAL_DATEUTIL:BOOL=FALSE \
-	-DWITH_INTERNAL_HTTPLIB2:BOOL=FALSE \
-	-DWITH_INTERNAL_JINJA2:BOOL=FALSE \
-	-DWITH_INTERNAL_MARKUPSAFE:BOOL=FALSE \
-	-DWITH_INTERNAL_OWSLIB:BOOL=FALSE \
-	-DWITH_INTERNAL_PYGMENTS:BOOL=FALSE \
-	-DWITH_INTERNAL_PYTZ:BOOL=FALSE \
-	-DWITH_INTERNAL_QEXTSERIALPORT:BOOL=TRUE \
-	-DWITH_INTERNAL_QWTPOLAR:BOOL=TRUE \
-	-DWITH_INTERNAL_SIX:BOOL=FALSE \
-	-DWITH_INTERNAL_SPATIALITE:BOOL=FALSE \
-	-DWITH_PYSPATIALITE:BOOL=FALSE \
-	-DWITH_SPATIALITE:BOOL=TRUE \
 	-DWITH_QTMOBILITY:BOOL=FALSE \
-	-DWITH_TOUCH:BOOL=TRUE \
         -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
         -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
         -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
@@ -227,10 +209,10 @@ cmake \
         -DPYRCC_PROGRAM=%_bindir/pyrcc5.py3 \
 	.
 #export NPROCS=1
-%make_build VERBOSE=1
+%ninja_build
 
 %install
-%makeinstall_std
+%ninja_install
 
 # Install desktop files
 #desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
@@ -308,7 +290,7 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %files -f %rname.lang
-%doc BUGS NEWS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
+%doc BUGS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
 # QGIS shows these files in the GUI
 %_datadir/%rname/doc
 %dir %_datadir/%rname/i18n/
@@ -379,6 +361,11 @@ rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 3.14.0-alt1
+- New version.
+- Build using ninja-build.
+- Remove obsoleted and unnecessary CMake flags.
+
 * Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.12.3-alt1
 - New version.
 
