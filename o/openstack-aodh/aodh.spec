@@ -1,13 +1,13 @@
 %global oname aodh
 
 Name: openstack-%oname
-Version: 9.0.0
+Version: 10.0.0
 Release: alt1
 
 Summary: OpenStack Telemetry Alarming
 
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -352,6 +352,10 @@ rm -fr %buildroot/usr/etc
 %_initdir/%name-expirer
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
+- Automatically updated to 10.0.0.
+- Renamed spec file.
+
 * Fri Oct 18 2019 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
 - Automatically updated to 9.0.0.
 - Build without python2.

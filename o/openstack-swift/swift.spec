@@ -1,10 +1,10 @@
 Name: openstack-swift
-Version: 2.23.1
+Version: 2.25.0
 Release: alt1
 Summary: OpenStack Object Storage (Swift)
 
 Group: System/Servers
-License: ASL 2.0
+License: Apache-2.0
 Url: http://launchpad.net/swift
 Source: %name-%version.tar
 
@@ -66,18 +66,18 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-dns >= 1.9.4
-BuildRequires: python3-module-eventlet >= 0.16.1
-BuildRequires: python3-module-greenlet >= 0.3.1
-BuildRequires: python3-module-netifaces >= 0.5
+BuildRequires: python3-module-eventlet >= 0.25.0
+BuildRequires: python3-module-greenlet >= 0.3.2
+BuildRequires: python3-module-netifaces >= 0.8
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-simplejson >= 2.0.9
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-pyxattr >= 0.4
 BuildRequires: python3-module-pyeclib >= 1.0.7
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 # for build doc
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-openstackdocstheme
@@ -454,6 +454,10 @@ done
 #doc/build/html
 
 %changelog
+* Sat May 16 2020 Grigory Ustinov <grenka@altlinux.org> 2.25.0-alt1
+- Automatically updated to 2.25.0.
+- Renamed spec file.
+
 * Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 2.23.1-alt1
 - 2.23.1 (attention! not packaged some files).
 - Transfer on python2.
