@@ -23,8 +23,8 @@ BuildRequires: gcc-c++
 %global vcs_rel %{download_date}svn%{svn_rev}
 
 Name:           python-module-pycxx
-Version:        7.1.3
-Release:        alt2
+Version:        7.1.4
+Release:        alt1
 Summary:        Write Python extensions in C++
 
 Group:          Development/Other
@@ -157,6 +157,9 @@ test "$(pkg-config --modversion PyCXX)" = "%{version}"
 
 
 %changelog
+* Sun Jun 21 2020 Grigory Ustinov <grenka@altlinux.org> 7.1.4-alt1
+- Build new version.
+
 * Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 7.1.3-alt2
 - Fixed FTBFS.
 
