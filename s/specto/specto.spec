@@ -2,7 +2,7 @@
 
 Name: specto
 Version: 0.4.1
-Release: alt2
+Release: alt3
 
 Summary: A desktop application that will watch configurable events
 Group: Graphical desktop/GNOME
@@ -17,8 +17,9 @@ BuildArch: noarch
 
 Requires: GConf gnome-keyring
 
-BuildRequires: python-devel rpm-build-python intltool
-%add_python_req_skip pygst gst
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel intltool
+%add_python_req_skip pygst gst pysvn
 
 %description
 Specto is a desktop application that watches configurable events (such
@@ -61,6 +62,9 @@ subst 's|share/doc/%name|share/doc/%name-%version|g' setup.py spectlib/util.py
 %exclude %_datadir/indicators/messages/applications/specto
 
 %changelog
+* Sun Jun 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt3
+- removed useless pysvn dep
+
 * Wed Feb 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt2
 - updated dependencies
 
