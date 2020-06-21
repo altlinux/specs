@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.32.2
+Version: 3.32.3
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -15,7 +15,6 @@ Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
 Patch4: 0004-ALT-TEA-Policy.patch
 Patch5: 0005-ALT-build-dependencies.patch
-Patch6: 0006-DEBIAN-Fix-CVE-2020-13871.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -200,6 +199,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sun Jun 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.32.3-alt1
+- 3.32.3.
+
 * Mon Jun 08 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.32.2-alt1
 - 3.32.2.
 - Applied Debian patch (fixes CVE-2020-13871).
