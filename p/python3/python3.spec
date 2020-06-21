@@ -99,7 +99,7 @@
 %endif
 
 Name: python3
-Version: %{pybasever}.2
+Version: %{pybasever}.3
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -181,6 +181,12 @@ Patch251: 00251-change-user-install-location.patch
 # 00274 #
 # Upstream uses Debian-style architecture naming. Change to match Fedora.
 Patch274: 00274-fix-arch-names.patch
+
+# 00350 #
+# bpo-40784: Fix sqlite3 deterministic test (GH-20448)
+# https://bugs.python.org/issue40784
+# https://github.com/python/cpython/commit/00a240bf7f95bbd220f1cfbf9eb58484a5f9681a
+Patch350: 00350-sqlite-fix-deterministic-test.patch
 
 # (New patches go here ^^^)
 #
@@ -444,8 +450,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %endif
 
 %patch251 -p1
-
 %patch274 -p1
+%patch350 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -997,6 +1003,8 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/config-%pybasever%pyabi-%pyarch/*
 %exclude %pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
 %include_dir/*.h
+%dir %include_dir/cpython
+%dir %include_dir/internal
 %include_dir/internal/*.h
 %include_dir/cpython/*.h
 %exclude %include_dir/%_pyconfig_h
@@ -1075,6 +1083,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.3-alt1
+- Updated to upstream version 3.8.3.
+
 * Fri Mar 13 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.2-alt1
 - Updated to upstream version 3.8.2.
 - Fixed python3-config --configdir output.
