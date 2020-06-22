@@ -16,13 +16,14 @@
 %ifnarch %arm
 %def_disable neon
 %endif
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Graphene is a library of data types commonly used to implement 2D-in-3D or full 3D canvases
-License: BSD-like
+License: MIT
 Group: System/Libraries
 Url: https://ebassi.github.io/%_name
 
@@ -141,6 +142,10 @@ the functionality of the installed Graphene library.
 
 
 %changelog
+* Mon Jun 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
+- 1.10.2
+- fixed License tag
+
 * Sun Sep 08 2019 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
