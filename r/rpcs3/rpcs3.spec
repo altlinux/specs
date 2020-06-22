@@ -15,7 +15,7 @@
 
 Name: rpcs3
 Version: 0.0.8
-Release: alt2
+Release: alt3
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -39,6 +39,9 @@ Source9: cereal-%cereal_version.tar
 Source10: FAudio-%faudio_version.tar
 Source11: span-%span_commit.tar
 
+Patch0: %name-alt-git.patch
+Patch1: %name-alt-vk-dynamic-state-range-size.patch
+
 BuildRequires: cmake
 BuildRequires: cvs
 BuildRequires: git-core
@@ -53,22 +56,28 @@ BuildRequires: libpng-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
-BuildRequires: libvulkan-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libxml2-devel
-BuildRequires: rpm-build-python3 python3-devel python3-module-yaml python3-module-Pygments
+BuildRequires: ocaml-findlib
+BuildRequires: python3-dev
+BuildRequires: python3-module-yaml
 BuildRequires: qt5-declarative-devel
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
+BuildPreReq: python3-module-Pygments
 
 %description
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+
+%patch0 -p1
+%patch1 -p1
+
 %__mv -Tf ../glslang-%glslang_version Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
@@ -108,7 +117,7 @@ cmake .. \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
 	-DPYTHON_EXECUTABLE="%__python3" \
-	#
+	-Wno-dev
 popd
 
 %make_build -C %_target_platform
@@ -129,6 +138,10 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Jun 22 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt3
+- Don't find git package
+- Remove more deprecated VK_DYNAMIC_STATE_RANGE_SIZE usage
+
 * Sat Jan 04 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt2
 - Update glslang to 7.13.3496
 
