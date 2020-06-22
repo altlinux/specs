@@ -6,25 +6,26 @@
 
 Name: geda-gaf
 Version: %major.2
-Release: alt2
+Release: alt4
 Epoch: 2
 
 Summary: Design Automation toolkit for electronic design
-
 License: GPLv2
 Group: Video
-Url: http://www.geda-project.org/
 
+Url: http://www.geda-project.org/
+Source: http://ftp.geda-project.org/geda-gaf/unstable/v%major/%version/geda-gaf-%version.tar
+Patch: %name.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ftp.geda-project.org/geda-gaf/unstable/v%major/%version/geda-gaf-%version.tar
-
-Patch: %name.patch
-
-BuildRequires: desktop-file-utils flex git-core glibc-devel guile22-devel libgtk+2-devel makeinfo
+BuildRequires: desktop-file-utils flex git-core glibc-devel guile-devel libgtk+2-devel makeinfo
 BuildRequires: groff-base groff-extra
 # https://bugzilla.altlinux.org/show_bug.cgi?id=13685
 BuildRequires: groff-ps
+# python.req: ERROR: /usr/src/tmp/geda-gaf-buildroot/usr/bin/tragesym: no codec search functions registered: can't find encoding (line 0)
+BuildRequires: python-modules-encodings
+# ps2pdf
+BuildRequires: ghostscript-utils
 
 %description
 The GPL Electronic Design Automation (gEDA) project has produced and
@@ -130,10 +131,12 @@ Several utilities for the gEDA project.
 %prep
 %setup
 %patch -p2
-%__subst "s|guile-2.0|guile-2.2|" m4/geda-guile.m4
-find -type f | xargs %__subst "s|/usr/bin/python\$|/usr/bin/python2|"
-find -type f | xargs %__subst "s|#! */usr/bin/python\$|/usr/bin/python2|"
-find -type f | xargs %__subst "s|#! */usr/bin/env python\$|/usr/bin/python2|"
+if [ -x %_bindir/guile22 ]; then
+	sed -i "s|guile-2.0|guile-2.2|" m4/geda-guile.m4
+fi	# 20200621: e2k still has 2.0
+find -type f | xargs sed -i "s|/usr/bin/python\$|/usr/bin/python2|"
+find -type f | xargs sed -i "s|#! */usr/bin/python\$|/usr/bin/python2|"
+find -type f | xargs sed -i "s|#! */usr/bin/env python\$|/usr/bin/python2|"
 
 %build
 %autoreconf
@@ -141,7 +144,7 @@ find -type f | xargs %__subst "s|#! */usr/bin/env python\$|/usr/bin/python2|"
 # fix rpath
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 # remove direct glib includes
-find -name *.c | xargs %__subst "s|#include <glib/g[mt].*||g"
+find -name *.c | xargs sed -i "s|#include <glib/g[mt].*||g"
 %make_build
 
 %install
@@ -154,7 +157,7 @@ find -name *.c | xargs %__subst "s|#include <glib/g[mt].*||g"
 %find_lang geda-gsymcheck
 
 # Fixing rpaths
-%__subst 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
+sed -i 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
 
 # remove unwanted files
 #rm -f %buildroot%_infodir/dir
@@ -319,6 +322,13 @@ rm -f %buildroot/%_datadir/mime/version
 %_man1dir/tragesym.1.*
 
 %changelog
+* Mon Jun 22 2020 Michael Shigorin <mike@altlinux.org> 2:1.9.2-alt4
+- fix docs build (thx noarch check, see task#253806 log)
+
+* Sun Jun 21 2020 Michael Shigorin <mike@altlinux.org> 2:1.9.2-alt3
+- fix build on %%e2k (guile20 there so far)
+- minor spec cleanup
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2:1.9.2-alt2
 - fix build (add missed groff-extra, fix python2 using)
 
