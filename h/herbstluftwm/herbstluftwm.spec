@@ -1,5 +1,5 @@
 Name: herbstluftwm
-Version: 0.8.1
+Version: 0.8.3
 Release: alt1
 
 Summary: A manual tiling window manager
@@ -94,9 +94,13 @@ rm -f %buildroot%_datadir/doc/%name/{INSTALL,NEWS,LICENSE,BUGS}
 %_datadir/fish/vendor_completions.d/herbstclient.fish
 
 %files examples
+%exclude %_datadir/doc/%name/examples/dmenu.sh
 %_datadir/doc/%name/examples
 
 %changelog
+* Mon Jun 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.3-alt1
+- Updated to 0.8.3.
+
 * Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
 - Updated to 0.8.1.
 
