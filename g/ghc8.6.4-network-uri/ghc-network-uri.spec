@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 2.6.1.0
+Version: 2.6.3.0
 Release: alt1
 License: BSD3
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
@@ -62,5 +62,8 @@ That is, get the module from either @network < 2.6@ or from @network-uri >=
 %files -f %name-files.all
 
 %changelog
+* Sun Jun 21 2020 Denis Smirnov <mithraen@altlinux.ru> 2.6.3.0-alt1
+- 2.6.3.0
+
 * Wed Apr 17 2019 Evgeny Sinelnikov <sin@altlinux.org> 2.6.1.0-alt1
 - Spec created by cabal2rpm 0.20_11
