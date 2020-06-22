@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.1
+Version:      1.1.1
 Release:      alt2
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -13,8 +13,10 @@ Source:        %name-%version.tar
 BuildRequires: gcc-c++ libgtkmm3-devel libcairomm-devel
 BuildRequires: libjansson-devel libxml2-devel libzip-devel zlib-devel libproj-devel
 BuildRequires: libjpeg-devel libgif-devel libtiff-devel libpng-devel libdb4.7-devel
-BuildRequires: librsvg-devel
+BuildRequires: librsvg-devel libcurl-devel
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html /usr/bin/unzip
+
+ExcludeArch: armh
 
 %description
 mapsoft2 - programs for working with maps and geodata
@@ -37,6 +39,12 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/mapsoft2.css
 
 %changelog
+* Mon Jun 22 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.1.1-alt2
+- ExcludeArch: armh (libjpeg + c++ exceptions problem)
+
+* Sun Jun 21 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.1.1-alt1
+- update documentation, add GB projection alias, further development
+
 * Sat Apr 04 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.1-alt2
 - fix build on i586 (rounding errors in modules/geom_tools/np.test.cpp)
 
