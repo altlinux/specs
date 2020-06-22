@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.3
+%define major 14.4
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -26,13 +26,12 @@
 %global libuv_abi 1.37.0
 %def_with systemuv
 
-# use 5.6 as c8
-%global libicu_abi 5.6
+%global libicu_abi 6.5
 %def_with systemicu
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
 
-%global libnghttp2_abi 1.40.0
+%global libnghttp2_abi 1.41.0
 %def_with systemnghttp2
 
 # to use internal llhttp
@@ -367,6 +366,12 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 14.4.0-alt1
+- new version 14.4.0 (with rpmrb script)
+- set libicu >= 6.5
+- set libnghttp2 >= 1.41.0
+- CVE-2020-8172, CVE-2020-11080, CVE-2020-8174
+
 * Fri May 22 2020 Vitaly Lipatov <lav@altlinux.ru> 14.3.0-alt1
 - new version 14.3.0 (with rpmrb script)
 - npm >= 6.14.5
