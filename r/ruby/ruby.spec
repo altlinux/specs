@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -334,10 +334,10 @@ install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version
 install -D .ext/include/%ruby_arch/ruby/config.h %buildroot%ruby_includedir/ruby/config.h
 
 %define ruby_libdir %libdir
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%version:%buildroot%libdir/gems/%version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | sed "s/ /:/") %buildroot%_bindir/%name
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch:%buildroot%libdir/site_ruby/%version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%version:%buildroot%libdir/gems/%version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | tr ' ' ':') %buildroot%_bindir/%name
 
 export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%version/%ruby_arch
-export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%ruby_arch
+export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version/%ruby_arch
 
 %if_without bootstrap
 mkdir -p %buildroot%_datadir/%name-%version-miniruby
@@ -349,6 +349,13 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 # Make empty dir for ri documentation
 mkdir -p %buildroot%_datadir/ri/site/%version
 rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
+
+%ifarch armh
+# workaround inconsistency between extension install path and search path
+EX="%buildroot%libdir/gems/%ruby_version/extensions"
+mkdir -p "$EX/armh-linux"
+ln -s armh-linux "${EX}/armh-linux-eabi"
+%endif
 
 %check
 %make_build test
@@ -414,6 +421,9 @@ rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
 %endif
 
 %changelog
+* Mon Jun 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7.1-alt2
+- fixed packaging on so-called armh
+
 * Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1-alt1
 - ^ ruby 2.7.0 -> 2.7.1
 - * to unbind ruby and libruby
