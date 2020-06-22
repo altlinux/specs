@@ -1,7 +1,7 @@
 %global import_path github.com/42wim/matterbridge
 
 Name: matterbridge
-Version: 1.17.4
+Version: 1.17.5
 Release: alt1
 
 Summary: A simple chat bridge
@@ -87,6 +87,10 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Mon Jun 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.17.5-alt1
+- Updated to 1.17.5.
+- Updated watch file.
+
 * Sun May 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.17.4-alt1
 - Updated to 1.17.4.
 
