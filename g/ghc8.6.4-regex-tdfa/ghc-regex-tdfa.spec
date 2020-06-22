@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.2.3.2
+Version: 1.3.1.0
 Release: alt1
 License: BSD3
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -28,6 +28,11 @@ A new all Haskell "tagged" DFA regex engine, inspired by libtre
 %patch -p1
 
 %build
+cat << __EOF__ > Setup.hs
+import Distribution.Simple
+main = defaultMain
+__EOF__
+
 %hs_configure2
 %hs_build
 
@@ -38,5 +43,8 @@ A new all Haskell "tagged" DFA regex engine, inspired by libtre
 %files -f %name-files.all
 
 %changelog
+* Mon Jun 22 2020 Denis Smirnov <mithraen@altlinux.ru> 1.3.1.0-alt1
+- 1.3.1.0
+
 * Fri Aug 30 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.3.2-alt1
 - Build new version for ghc8.6.4.
