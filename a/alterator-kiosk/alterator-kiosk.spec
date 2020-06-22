@@ -1,6 +1,6 @@
 Name: alterator-kiosk
-Version: 1.2
-Release: alt2
+Version: 1.3
+Release: alt1
 
 Source: %name-%version.tar
 Source1: activate-kiosk.sh
@@ -40,6 +40,10 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_bindir/activate-kiosk.sh
 
 %changelog
+* Mon Jun 22 2020 Oleg Solovyov <mcpain@altlinux.org> 1.3-alt1
+- KDE: fix profiles
+- enable service when committing changes
+
 * Mon Jun 22 2020 Oleg Solovyov <mcpain@altlinux.org> 1.2-alt2
 - add service
 
