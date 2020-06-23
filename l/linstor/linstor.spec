@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.4.3
+Version: 1.7.1
 Release: alt1
 Summary: LINSTOR SDS
 Group: System/Servers
@@ -24,7 +24,10 @@ BuildRequires: python3
 BuildRequires: gradle
 
 %description
-TODO.
+LINSTOR developed by LINBIT, is a software that manages replicated volumes across a group of machines.
+With native integration to Kubernetes, LINSTOR makes building, running, and controlling block storage simple.
+LINSTOR is open-source software designed to manage block storage devices for large Linux server clusters.
+It's used to provide persistent Linux block storage for cloudnative and hypervisor environments.
 
 %prep
 %setup -n %NAME_VERS
@@ -134,5 +137,8 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Tue Jun 23 2020 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Mar 05 2020 Alexey Shabalin <shaba@altlinux.org> 1.4.3-alt1
 - Initial build
