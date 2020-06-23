@@ -1,6 +1,6 @@
 Name: npm
 Version: 6.14.5
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-nodejs
 #Requires:	node >= 6.9
 
 # Note! Change version with new npm
-Requires: npm(node-gyp) = 5.0.7
+#Requires: npm(node-gyp) = 5.0.7
 
 BuildArch:	noarch
 
@@ -32,6 +32,9 @@ node programs. It manages dependencies and does other cool stuff.
 npm is configured to use npm, Inc.'s public package registry
 at https://registry.npmjs.org by default.
 
+It is not recommended to build binary libraries within npm module,
+but you can install node-gyp package to support that.
+In most cases it is enough to install appropriate node- subpackage (like node-sass).
 
 %prep
 %setup
@@ -67,6 +70,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Tue Jun 23 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.5-alt2
+- drop node-gyp requires (to avoid toolchain requires)
+
 * Fri May 22 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.5-alt1
 - new version 6.14.5 (with rpmrb script)
 
