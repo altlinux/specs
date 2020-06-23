@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Python client for Docker.
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 23 2020 Vladimir Didenko <cow@altlinux.ru> 4.2.1-alt1
+- 4.2.1
+
 * Wed Mar 11 2020 Vladimir Didenko <cow@altlinux.ru> 4.2.0-alt1
 - 4.2.0
 
