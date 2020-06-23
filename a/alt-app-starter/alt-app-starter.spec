@@ -1,7 +1,7 @@
 %define rname alt-app-starter
 
 Name: %rname
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 %K5init altplace
 
@@ -62,6 +62,9 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 %_K5xdgapp/*.desktop
 
 %changelog
+* Tue Jun 23 2020 Pavel Moseev <mars@altlinux.org>  1.2.4-alt1
+- add choosing application from list and folder
+
 * Fri Jun 19 2020 Pavel Moseev <mars@altlinux.org>  1.2.3-alt1
 - clean code
 
