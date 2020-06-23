@@ -1,6 +1,6 @@
 
 Name: pve-storage-linstor
-Version: 4.1.2
+Version: 5.1.2
 Release: alt1
 Summary: LINSTOR Proxmox Plugin
 Group: System/Servers
@@ -46,6 +46,9 @@ LINSTOR Proxmox Plugin
 %perl_vendor_privlib/LINBIT/PluginHelper.pm
 
 %changelog
+* Tue Jun 23 2020 Andrew A. Vasilyev <andy@altlinux.org> 5.1.2-alt1
+- 5.1.2
+
 * Tue Mar 17 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.1.2-alt1
 - initial build for ALT
 
