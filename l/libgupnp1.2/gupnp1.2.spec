@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -118,6 +118,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3 (Add mitigations for CVE-2020-12695 (CallStranger),
+  Implement UDA 2.0 April 17 2020 Addendum (Partial fix for CVE-2020-12695))
+
 * Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

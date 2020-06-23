@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -122,6 +122,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Thu Jan 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
