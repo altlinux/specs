@@ -2,20 +2,20 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 %def_enable zart
 
-%define gmic_git_ver v.2.9.0
+%define gmic_git_ver 2.9.1
 # https://github.com/c-koi/zart
 # no tags
-%define zart_ver 793d41d
+%define zart_ver d3a2931
 # https://github.com/c-koi/gmic-qt
 # v.2.6.2
-%define gmic_qt_ver v.2.9.0
+%define gmic_qt_ver v.2.9.1-1-gd40db0f
 # https://github.com/dtschump/gmic-community.git
 # 1.6.3.2-1245-g44ad9cb
-%define gmic_comm_ver 1.6.3.2-1690-g90af492
+%define gmic_comm_ver 1.6.3.2-1815-ge03c6a1
 
 Name: gmic
-Version: 2.9.0
-Release: alt2
+Version: 2.9.1
+Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -32,9 +32,6 @@ Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
 
-Patch1: gmic-alt-opencv4.patch
-Patch2: gmic-fedora-opencv.patch
-
 Requires: lib%name = %version-%release
 
 BuildRequires: dos2unix
@@ -44,7 +41,7 @@ BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-d
 BuildRequires: libcurl-devel
 BuildRequires: bash-completion
 # for -zart and -qt
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 
 %description
 G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
@@ -109,8 +106,6 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
-%patch1 -p2
-%patch2 -p1
 dos2unix src/Makefile
 # fix libdir
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
@@ -191,6 +186,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
+- 2.9.1
+
 * Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.0-alt2
 - Fixed build with opencv-4.3.0.
 
