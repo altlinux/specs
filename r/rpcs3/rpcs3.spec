@@ -15,7 +15,7 @@
 
 Name: rpcs3
 Version: 0.0.8
-Release: alt3
+Release: alt4
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -26,17 +26,29 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
+# https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
+# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
 Source1: glslang-%glslang_version.tar
+# https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source2: asmjit-%asmjit_commit.tar
+# https://github.com/zeux/pugixml/archive/%pugixml_commit/pugixml-%pugixml_commit.tar.gz
 Source3: pugixml-%pugixml_commit.tar
+# https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source4: hidapi-%hidapi_commit.tar
+# https://github.com/libusb/libusb/archive/%libusb_commit/libusb-%libusb_commit.tar.gz
 Source5: libusb-%libusb_commit.tar
+# https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source6: yaml-cpp-%yaml_cpp_commit.tar
+# https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
 Source7: xxHash-%xx_hash_version.tar
+# https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
 Source8: llvm-%llvm_commit.tar
+# https://github.com/RPCS3/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
 Source9: cereal-%cereal_version.tar
+# https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
 Source10: FAudio-%faudio_version.tar
+# https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
 Source11: span-%span_commit.tar
 
 Patch0: %name-alt-git.patch
@@ -130,14 +142,14 @@ popd
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
-%dir %_datadir/metainfo
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Jun 23 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt4
+- Remove dirs not related to %name package
+
 * Mon Jun 22 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt3
 - Don't find git package
 - Remove more deprecated VK_DYNAMIC_STATE_RANGE_SIZE usage
