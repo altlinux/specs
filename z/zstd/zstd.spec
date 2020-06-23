@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.4.5
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -63,7 +63,7 @@ using lib%name library.
 %setup -n %name-%version-%release
 # reenable recipe echoing
 sed -i 's/^\([[:space:]]*\)@\$/\1\$/' Makefile */Makefile
-%define make_params GZFILES= ZSTD_LEGACY_SUPPORT=0 HAVE_ZLIB=0
+%define make_params PREFIX=%prefix LIBDIR=%_libdir GZFILES= ZSTD_LEGACY_SUPPORT=0 HAVE_ZLIB=0
 
 %build
 export CFLAGS="%optflags $(getconf LFS_CFLAGS)"
@@ -71,15 +71,14 @@ export CXXFLAGS="$CFLAGS"
 for dir in lib programs; do
 	%make_build -C $dir all %make_params
 done
-%{?!_disable_pzstd:%make_build -C contrib/pzstd}
+%{?!_disable_pzstd:%make_build -C contrib/pzstd %make_params}
 
 %install
 export CC=false CXX=false # nothing should be compiled or linked during install
 for dir in lib programs; do
-	%makeinstall_std -C $dir \
-		INSTALL_SCRIPT=: PREFIX=%prefix LIBDIR=%_libdir %make_params
+	%makeinstall_std -C $dir INSTALL_SCRIPT=: %make_params
 done
-%{?!_disable_pzstd:%makeinstall_std PREFIX=%prefix -C contrib/pzstd}
+%{?!_disable_pzstd:%makeinstall_std -C contrib/pzstd %make_params}
 
 # Relocate shared library from %_libdir/ to /%_lib/
 mkdir -p %buildroot/%_lib
@@ -88,6 +87,11 @@ for f in %buildroot%_libdir/*.so; do
 	ln -rsnf %buildroot/%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+if grep -Frsl /usr/local %buildroot; then
+	printf >&2 '%s leaked into %s\n' /usr/local %buildroot
+	exit 1
+fi
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -118,6 +122,9 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 23 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt2
+- Fixed /usr/local leaking into installed files.
+
 * Fri May 22 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt1
 - 1.4.4 -> 1.4.5.
 
