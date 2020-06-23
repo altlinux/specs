@@ -6,7 +6,7 @@
 %define Name newLISP
 Name: newlisp
 Version: 10.6.2
-Release: alt3
+Release: alt4
 Summary: Lisp-like, general purpose scripting language
 License: GPLv3
 Group: Development/Lisp
@@ -122,10 +122,8 @@ This package contains VIm syntax for %Name.
 
 install -m 0644 %SOURCE1 ./Makefile.alt
 
-# Fix like in debian or fedora
-# aarch64-alt-linux-gcc: error: unrecognized command line option '-m64'
-%ifarch aarch64
-find . -type f | xargs sed -i "s/-m64//g"
+%ifarch armh aarch64
+sed -ri 's, -m(32|64),,' makefile_linux*
 %endif
 
 %build
@@ -214,6 +212,9 @@ ln -s %name-%version %name
 
 
 %changelog
+* Tue Jun 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.6.2-alt4
+- fixed packaging on so-called armh
+
 * Fri Mar 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 10.6.2-alt3
 - NMU: Fixed BuildRequires: libsqlite-devel -> libsqlite3-devel.
 
