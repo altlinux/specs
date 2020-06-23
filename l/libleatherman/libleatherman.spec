@@ -1,10 +1,10 @@
 Name:    libleatherman
 Version: 1.12.0
-Release: alt2
+Release: alt3
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
-License: Apache 2.0
+License: Apache-2.0
 Url:     https://github.com/puppetlabs/leatherman
 Packager: Andrey Cherepanov <cas@altlinux.org>
  
@@ -38,6 +38,11 @@ Development headers for leatherman.
 # Ruby 2.3 fix: replace rb_data_object_alloc symbol with rb_data_object_wrap
 sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 	$( grep -rl rb_data_object_alloc ruby )
+%ifarch %e2k
+# actually any EDG-based compiler (up to and including 5.0 it seems);
+# see also http://bugs.webkit.org/show_bug.cgi?id=29034 and mcst#5101
+sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
+%endif
 
 %build
 %cmake -DLEATHERMAN_SHARED=TRUE -DENABLE_CXX_WERROR=OFF
@@ -57,6 +62,9 @@ sed -i 's/rb_data_object_alloc/rb_data_object_wrap/g' \
 %_libdir/cmake/leatherman
 
 %changelog
+* Mon Jun 22 2020 Michael Shigorin <mike@altlinux.org> 1.12.0-alt3
+- E2K: workaround cast problem.
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.0-alt2
 - Unbundled boost-nowide library.
 
