@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 4.6.2
-Release: alt1
+Release: alt3
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -142,6 +142,10 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 %endif
 
 %build
+# Fix for e2k build: lcc is more strict comparing to gcc and finds additional issues
+# that triggers build fail with -Werror=maybe-uninitialized
+sed -i 's,-Werror=maybe-uninitialized,,' cogl/configure.ac
+
 %autoreconf
 %configure --disable-static \
 	   --disable-schemas-compile \
@@ -198,6 +202,13 @@ sed -i 's,-Werror=pointer-arith,,' */configure.ac
 
 
 %changelog
+* Tue Jun 23 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt3
+- Disable -Werror=maybe-uninitialized for cogl build to fix
+  e2k build (previous solution didn't work)
+
+* Tue Jun 23 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt2
+- Don't build deprecated symbols for cogl (fixes build for e2k)
+
 * Tue Jun 9 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt1
 - 4.6.2
 
