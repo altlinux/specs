@@ -1,11 +1,11 @@
-# TODO: switch to python3
 # TODO: botocore
 
 %def_with plugins
+%def_without dns_route53
 
 Name: certbot
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: A free, automated certificate authority client
 
@@ -172,8 +172,10 @@ cd ../certbot-nginx
 %python3_install --install-purelib=%certbotdir
 #cd ../certbot-postfix
 #python_install --install-purelib=%certbotdir
+%if_with dns_route53
 cd ../certbot-dns-route53
 %python3_install --install-purelib=%certbotdir
+%endif
 cd ../certbot-dns-rfc2136
 %python3_install --install-purelib=%certbotdir
 cd -
@@ -246,13 +248,18 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %certbotdir/certbot_dns_rfc2136/
 %certbotdir/certbot_dns_rfc2136-%{version}*.egg-info
 
+%if_with dns_route53
 %files dns_route53
 %doc LICENSE.txt
 %certbotdir/certbot_dns_route53/
 %certbotdir/certbot_dns_route53-%{version}*.egg-info
 %endif
+%endif
 
 %changelog
+* Tue Jun 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
+- build without dns-route53 (AWS Route 53) plugin
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 
