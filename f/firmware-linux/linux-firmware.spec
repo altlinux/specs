@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200527
+Version: 20200615
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jun 24 2020 Cronbuild Service <cronbuild@altlinux.org> 20200615-alt1
+- upstream changes (GIT 3890db3):
+  + rtl_nic: add firmware for RTL8125B (thx Heiner Kallweit)
+
 * Tue Jun 16 2020 Cronbuild Service <cronbuild@altlinux.org> 20200527-alt1
 - upstream changes (GIT 887d2a1):
   + Update firmware file for Intel Bluetooth AX200 (thx Amit K Bag)
