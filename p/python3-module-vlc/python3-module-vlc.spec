@@ -2,7 +2,7 @@
 %define oname vlc
 
 Name: python3-module-%oname
-Version: 3.0.9113
+Version: 3.0.10114
 Release: alt1
 Summary: Binding for the native libvlc API
 License: LGPLv2.1+
@@ -33,6 +33,9 @@ video player. Note that it relies on an already present install of VLC.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.10114-alt1
+- Updated to version 3.0.10114
+
 * Fri May 29 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.9113-alt1
 - Updated to version 3.0.9113
 - Changed url tag
