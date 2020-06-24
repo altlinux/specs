@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rinutils
-Version: 0.2.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Shlomi Fish's gnu11 C Library of Random headers
@@ -31,11 +31,14 @@ that have been extracted from Shlomi Fishs projects.
 
 %files
 %_includedir/%name/
-%_libdir/Rinutils/
+%_libdir/cmake/Rinutils/
 %_pkgconfigdir/librinutils.pc
 %doc README.asciidoc NEWS.asciidoc LICENSE
 
 %changelog
+* Fri Feb 19 2021 Konstantin Rybakov <kastet@altlinux.org> 0.8.0-alt1
+- Upgrade to upstream version.
+
 * Mon Feb 10 2020 Konstantin Rybakov <kastet@altlinux.org> 0.2.0-alt1
 - Initial build for ALT.
 
