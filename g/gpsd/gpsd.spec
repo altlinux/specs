@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.20
-Release: alt3
+Release: alt4
 License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -172,6 +172,10 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 24 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt4
+- updated gpsd-3.20-SConstruct.patch: sync all checks
+  for target_python for xgps with upstream
+
 * Wed Jun 24 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt3
 - fixed check for aiogps for target_python
   (based on upstream's commit e876f4558)
