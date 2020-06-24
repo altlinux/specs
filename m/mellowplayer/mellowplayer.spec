@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mellowplayer
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 Summary: Cloud music integration for your desktop
 License: GPL-2.0
@@ -50,6 +50,9 @@ ln -sv %_bindir/MellowPlayer %buildroot%_bindir/%name
 %doc LICENSE
 
 %changelog
+* Tue Jun 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.4-alt1
+- Updated to version 3.6.4
+
 * Wed Jun 10 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.3-alt1
 - Updated to version 3.6.3
 
