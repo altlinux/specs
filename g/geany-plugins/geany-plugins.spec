@@ -1,6 +1,6 @@
 Name: geany-plugins
 Version: 1.36
-Release: alt1
+Release: alt2
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -64,6 +64,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 sed -i '/^geanyluadir/s@.*@geanyluadir = %_libdir/geany@' geanylua/Makefile.am
 
 %build
+export PYTHON_VERSION=2
 %autoreconf
 %configure
 %make_build
@@ -90,6 +91,9 @@ sed -i '/^geanyluadir/s@.*@geanyluadir = %_libdir/geany@' geanylua/Makefile.am
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Wed Jun 24 2020 Michael Shigorin <mike@altlinux.org> 1.36-alt2
+- Fix ftbfs (specify python version explicitly)
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.36-alt1
 - Autobuild version bump to 1.36
 
