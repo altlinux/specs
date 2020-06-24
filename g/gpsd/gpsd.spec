@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.20
-Release: alt2
+Release: alt3
 License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -12,6 +12,8 @@ Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 Source: %name-%version.tar
 Requires: libgps%abiversion = %version-%release
+
+Patch0: gpsd-3.20-SConstruct.patch
 
 BuildRequires: asciidoc docbook-dtds docbook-style-xsl scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel
 
@@ -93,6 +95,8 @@ Python bindings to libgps
 %prep
 %setup
 
+%patch0 -p2
+
 # don't set RPATH
 #sed -i 's|env.Prepend.*RPATH.*|pass #\0|' SConstruct
 
@@ -168,6 +172,10 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 24 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt3
+- fixed check for aiogps for target_python
+  (based on upstream's commit e876f4558)
+
 * Sat May 02 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt2
 - built with Qt5 (thanks to zerg@altlinux)
 
