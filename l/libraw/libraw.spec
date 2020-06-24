@@ -5,7 +5,7 @@
 
 Name: libraw
 Version: 0.19.5
-Release: alt1
+Release: alt1.1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -71,6 +71,11 @@ This package contains static library.
 %setup -n %_name-%version -a1 -a2
 
 %build
+%ifarch %e2k
+# lcc 1.23.20 doesn't link a shared library against -lomp
+# explicitly even if -fopenmp is there
+export LIBS+="-lpthread -lomp"
+%endif
 %autoreconf
 %configure --docdir=%_datadir/doc/libraw-%version \
     --enable-jasper \
@@ -105,6 +110,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Mon Oct 07 2019 Michael Shigorin <mike@altlinux.org> 0.19.5-alt1.1
+- E2K: work around lack of explicit linking against libomp
+
 * Wed Aug 21 2019 Yuri N. Sedunov <aris@altlinux.org> 0.19.5-alt1
 - 0.19.5
 
