@@ -1,7 +1,7 @@
 %def_with nghttp2
 
 Name: curl
-Version: 7.70.0
+Version: 7.71.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -151,6 +151,12 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Jun 24 2020 Anton Farygin <rider@altlinux.ru> 7.71.0-alt1
+- 7.71.0
+- fixes:
+  * CVE-2020-8177: curl overwrite local file with -J
+  * CVE-2020-8169: Partial password leak over DNS on HTTP redirect
+
 * Wed Apr 29 2020 Anton Farygin <rider@altlinux.ru> 7.70.0-alt1
 - 7.70.0
 - removed DEV from version string (with maketgz script)
