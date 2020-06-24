@@ -4,8 +4,8 @@
 
 Summary: Community driven full-feature Linstor storage driver for OpenNebula
 Name: opennebula-addon-linstor_un
-Version: 1.6.1
-Release: alt2
+Version: 1.6.2
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://github.com/OpenNebula/addon-linstor_un
@@ -13,8 +13,8 @@ Url: https://github.com/OpenNebula/addon-linstor_un
 Source: %name-%version.tar
 Patch: %name-%version.patch
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
-#BuildArch: noarch
-ExcludeArch: %arm
+BuildArch: noarch
+#ExcludeArch: %arm
 Requires: jq linstor-satellite opennebula-server
 
 %description
@@ -70,6 +70,10 @@ fi
 %config(noreplace) %_destination/etc/datastore/linstor_un/linstor_un.conf
 
 %changelog
+* Wed Jun 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.6.2-alt1
+- 1.6.2
+- revert build for arm arch
+
 * Thu Jun 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt2
 - exclude build for arm arch
 
