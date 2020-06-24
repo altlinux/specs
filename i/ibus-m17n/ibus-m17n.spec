@@ -1,41 +1,41 @@
 Name:    ibus-m17n
-Version: 1.4.2
-Release: alt2
-Group: System/Libraries
+Version: 1.4.3
+Release: alt1
+Group:   System/Libraries
 Summary: The M17N engine for IBus platform
 License: GPL-2.0+
 URL: https://github.com/ibus/ibus-m17n
 
-Source0: https://github.com/ibus/%name/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 
 # Fedora specific patches:
 # Enable lv3:ralt_switch option for some Indic engines in default.xml.
-Patch100:     ibus-m17n-xkb-options.patch
+Patch100: ibus-m17n-xkb-options.patch
 # Don't make the status button clickable (maybe obsolete).
-Patch101:     ibus-m17n-hide-title-status.patch
+Patch101: ibus-m17n-hide-title-status.patch
 # Use ar-kbd as default keymap for Arabic
 # https://bugzilla.redhat.com/show_bug.cgi?id=1076945
-Patch103:     ibus-m17n-enable-ar-kbd.patch
+Patch103: ibus-m17n-enable-ar-kbd.patch
 
-BuildRequires:  gettext-tools libasprintf-devel
-BuildRequires:  gcc-c++
-BuildRequires:  gnome-common
-BuildRequires:  libm17n-devel
-BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires:  libibus-devel libibus-gir-devel
+BuildRequires: gettext-tools libasprintf-devel
+BuildRequires: gcc-c++
+BuildRequires: gnome-common
+BuildRequires: libm17n-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libibus-devel libibus-gir-devel
 
-Requires:   ibus python3-module-ibus-overrides
-Requires:   libm17n m17n-utils
+Requires: ibus python3-module-ibus-overrides
+Requires: libm17n m17n-utils
 
 %description
 M17N engine for IBus input platform. It allows input of many languages using
 the input table maps from m17n-db.
 
 %prep
-%setup -q
-%patch100 -p1 -b .xkb-options
-%patch101 -p1 -b .hide-title-status
-%patch103 -p1 -b .enable-ar-kbd
+%setup
+%patch100 -p1
+%patch101 -p1
+%patch103 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -61,6 +61,10 @@ make check
 %_datadir/glib-2.0/schemas/org.freedesktop.ibus.engine.m17n.gschema.xml
 
 %changelog
+* Wed Jun 24 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
+- New version.
+- Build from upstream tag.
+
 * Mon Mar 23 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt2
 - Initial import to Sisyphus from Fedora.
 
