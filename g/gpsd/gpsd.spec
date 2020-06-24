@@ -4,7 +4,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.20
-Release: alt4
+Release: alt5
 License: BSD-2-Clause
 Group: System/Servers
 Url: http://www.catb.org/gpsd
@@ -75,6 +75,7 @@ Development files for libgps
 Summary: Clients for gpsd with an X interface
 Group: Sciences/Geosciences
 Requires: libgps%abiversion = %version-%release
+Requires: python3-module-gps = %version-%release
 
 %description -n gpsd-clients
 xgpsspeed is a speedometer that uses position information from the GPS.
@@ -172,6 +173,9 @@ DESTDIR=%buildroot scons install udev-install
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 24 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt5
+- added python3-module-gps to Requires of gpsd-clients subpackage
+
 * Wed Jun 24 2020 Sergey Y. Afonin <asy@altlinux.org> 3.20-alt4
 - updated gpsd-3.20-SConstruct.patch: sync all checks
   for target_python for xgps with upstream
