@@ -1,8 +1,8 @@
 Name: evz
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
-Summary: OpenVZ control tool
+Summary: virtualization control tool wrapper
 
 License: AGPLv3
 Group: System/Configuration/Packaging
@@ -16,7 +16,8 @@ Source: ftp://updates.etersoft.ru/pub/Korinf/sources/tarball/%name-%version.tar
 BuildArch: noarch
 
 %description
-EVZ is implemented as wrapper around vzctl with accent to group operations on containers.
+EVZ is implemented as wrapper around docker, vzctl and simular control tool
+with accent to group operations on containers.
 
 See detailed description in russian here: http://wiki.etersoft.ru/EVZ
 
@@ -40,6 +41,9 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Wed Jun 24 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
+- small fixes
+
 * Sun Mar 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - evz-qm list: list only running by default
 - evz: use first engine by default
