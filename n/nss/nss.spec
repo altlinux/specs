@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.53.0
-Release:	alt3
+Release:	alt4
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -124,6 +124,7 @@ cd nss
 	--system-nspr \
 	--system-sqlite \
 	--enable-legacy-db \
+	--enable-libpkix \
 	--disable-tests
 
 %install
@@ -242,6 +243,9 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Jun 24 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt4
+- Enable an RFC3280 compliant certificate path validation library (ALT#38636).
+
 * Wed Jun 10 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt3
 - Fix build with nss headers and -Werror=strict-prototypes (ALT#38597).
 
