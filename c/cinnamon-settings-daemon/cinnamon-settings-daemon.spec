@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -120,6 +120,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 22 2020 Vladimir Didenko <cow@altlinux.org> 4.6.4-alt1
+- 4.6.4
+
 * Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt1
 - 4.6.1
 - re-enable parallel build (fixed by upstream)
