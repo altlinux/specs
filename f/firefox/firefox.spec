@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        77.0.1
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -47,6 +47,8 @@ Patch007: 0007-ALT-Fix-aarch64-build.patch
 Patch008: 0008-ALT-Remove-deprecated-register-keyword.patch
 Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch011: 0011-arm-js-src-wasm-add-struct-user_vfp-definition.patch
+Patch012: 0012-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -57,7 +59,7 @@ BuildRequires: clang10.0
 BuildRequires: clang10.0-devel
 BuildRequires: llvm10.0-devel
 BuildRequires: lld10.0-devel
-%ifarch %{ix86}
+%ifarch armh %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
@@ -205,6 +207,10 @@ Most likely you don't need to use this package.
 %patch008 -p1
 %patch009 -p1
 %patch010 -p1
+%patch011 -p1
+%ifarch armh
+%patch012 -p1
+%endif
 ### Finish apply patches
 
 cd mozilla
@@ -218,14 +224,18 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch %{ix86} ppc64le
+%ifnarch armh %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch x86_64
 ac_add_options --disable-webrtc
 %endif
 %endif
-%ifarch %{ix86} x86_64
+%ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
+%endif
+%ifarch armh
+ac_add_options --disable-av1
+ac_add_options --disable-rust-simd
 %endif
 EOF
 
@@ -281,13 +291,17 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
+%ifarch armh
+export CC="gcc"
+export CXX="g++"
+%else
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
-
+%endif
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
@@ -455,6 +469,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jun 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 77.0.1-alt2
+- fixed packaging on so-called armh
+
 * Thu Jun 04 2020 Alexey Gladkov <legion@altlinux.ru> 77.0.1-alt1
 - New release (77.0.1).
 - Security fixes:
