@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.1.16.0
-Release:        alt2
+Release:        alt3
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -34,11 +34,9 @@ BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libopenjpeg2.0-devel
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel
 BuildRequires:  libhdf5-devel
-BuildRequires:  libdcmtk-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libjasper-devel
 BuildRequires:  libpugixml-devel
-BuildRequires:  libopencv-devel
 BuildRequires:  libraw-devel
 BuildRequires:  librobin-map-devel
 BuildRequires:  pybind11-devel
@@ -46,6 +44,10 @@ BuildRequires:  libsquish-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  freetype2-devel
 BuildRequires:  libfmt-devel
+%ifnarch %e2k
+BuildRequires:  libdcmtk-devel
+BuildRequires:  libopencv-devel
+%endif
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -152,6 +154,11 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 	-DVERBOSE=TRUE \
+%ifarch %e2k
+	-DUSE_SIMD=0 \
+	-DCMAKE_CXX_FLAGS="-DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__" \
+	-DSKIP_TESTS=1 \
+%endif
 	%nil
 
 %cmake_build
@@ -193,6 +200,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon Jun 22 2020 Michael Shigorin <mike@altlinux.org> 2.1.16.0-alt3
+- E2K: avoid BR: dcmtk, opencv for now (not available yet)
+
 * Fri Jun 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.16.0-alt2
 - fixed packaging on armh
 
