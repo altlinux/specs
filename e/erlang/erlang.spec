@@ -53,7 +53,7 @@ Name: erlang
 Epoch: 1
 %define subver 3.6
 Version: %ver.%subver
-Release: alt2
+Release: alt3
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -605,7 +605,7 @@ cp -p /usr/share/gnu-config/config.* erts/autoconf/
 #if_with ssl
 #subst "s/\/usr\/local\/kerberos\/include/\/usr\/include\/krb5/g" erts/configure.in
 #endif
-%__mkdir_p lib/hipe/ebin
+mkdir -p lib/hipe/ebin
 subst "s/\@libdir\@/\@libexecdir\@/g" Makefile.in
 sed -i 's/ -Wl,-R\$(.*) / /' lib/crypto/priv/Makefile
 sed -i 's/@SSL_DED_LD_RUNTIME_LIBRARY_PATH@/ /' lib/crypto/c_src/Makefile.in
@@ -619,6 +619,11 @@ sed -i '/^include .*\/make\/otp_release_targets.mk/iMAKEFLAGS += -j1' \
 sed -i '/^bootstrap_setup_target:/s|:| $(BOOTSTRAP_ROOT)/bootstrap/target:|' Makefile.in
 subst "s/^.*ERL_COMPILE_FLAGS.*\+debug_info/#\0/g" make/otp.mk.in
 sed -i 's,armv7hl,armh,' erts/aclocal.m4
+
+%ifarch %e2k
+# beam/erl_bif_lists.c:779: non-void subtract_continue() w/o return
+sed -i '/-Werror=return-type/d' erts/configure.in
+%endif
 
 %build
 %define _optlevel 2
@@ -820,9 +825,12 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %files
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/AUTHORS
-%_docdir/%name-%version/COPYRIGHT
 %_docdir/%name-%version/LICENSE.txt
+%if_enabled docs
+%_docdir/%name-%version/COPYRIGHT
 %_docdir/%name-%version/PR.template
+%dir %_erldocdir
+%endif
 %_docdir/%name-%version/README.md
 %_bindir/*
 %exclude %_bindir/ct_run
@@ -831,7 +839,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 ##dir %_otpdir/doc
 %dir %_otpdir/bin
 %dir %_otplibdir
-%dir %_erldocdir
 %_otpdir/bin/*
 %dir %_otpdir/erts-*
 %_otpdir/erts-*/bin
@@ -1033,7 +1040,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/observer-*/priv
 %dir %_otplibdir/reltool-*
 %dir %_otplibdir/wx-*
+%ifnarch %e2k
+# error: File not found by glob: /usr/src/tmp/erlang-buildroot/usr/lib/erlang/lib/wx-*/priv
 %_otplibdir/wx-*/priv
+%endif
 
 %files visual-devel
 %_otplibdir/debugger-*/src
@@ -1239,6 +1249,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Wed Jun 24 2020 Michael Shigorin <mike@altlinux.org> 1:21.3.6-alt3
+- E2K: ftbfs workaround
+- fixed docs knob
+
 * Mon Jun 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:21.3.6-alt2
 - fixed packaging on so-called armh
 
