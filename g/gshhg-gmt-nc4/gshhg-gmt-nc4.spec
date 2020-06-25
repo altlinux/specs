@@ -2,19 +2,20 @@ Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           gshhg-gmt-nc4
-Version:        2.3.3
-Release:        alt1_5
+Version:        2.3.7
+Release:        alt1_1
 Summary:        Global Self-consistent Hierarchical High-resolution Geography (GSHHG)
 
 License:        LGPLv3+
-URL:            http://www.soest.hawaii.edu/pwessel/gshhg/
+URL:            https://github.com/GenericMappingTools/gshhg-gmt
 # seems to be derived at least from 2 Public Domain datasets, 
 # CIA World DataBank II and World Vector Shoreline (already in fedora),
 # then modified.
-Source0:        http://www.soest.hawaii.edu/pwessel/gshhg/gshhg-gmt-%{version}.tar.gz
+Source0:        https://github.com/GenericMappingTools/gshhg-gmt/releases/download/%{version}/gshhg-gmt-%{version}.tar.gz
 BuildArch:      noarch
 Obsoletes:      GMT-coastlines < 2.2.4-2
 Provides:       GMT-coastlines = %{version}-%{release}
+Provides:       gshhg-gmt = %{version}-%{release}
 Source44: import.info
 
 
@@ -36,6 +37,7 @@ Summary:        GSHHG - full resolution
 Requires:       %{name}
 Obsoletes:      GMT-coastlines-full < 2.2.4-2
 Provides:       GMT-coastlines-full = %{version}-%{release}
+Provides:       gshhg-gmt-full = %{version}-%{release}
 
 %description    full
 %{summary}.
@@ -47,6 +49,7 @@ Summary:        GSHHG - high resolution
 Requires:       %{name}
 Obsoletes:      GMT-coastlines-high < 2.2.4-2
 Provides:       GMT-coastlines-high = %{version}-%{release}
+Provides:       gshhg-gmt-high = %{version}-%{release}
 
 %description    high
 %{summary}.
@@ -60,6 +63,7 @@ Requires:       %{name}-full
 Requires:       %{name}-high
 Obsoletes:      GMT-coastlines-all < 2.2.4-2
 Provides:       GMT-coastlines-all = %{version}-%{release}
+Provides:       gshhg-gmt-all = %{version}-%{release}
 
 %description    all
 %{summary}.
@@ -86,6 +90,9 @@ cp -a *.nc %{buildroot}/%{_datadir}/%{name}
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_5
 - new version
 
