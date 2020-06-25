@@ -1,9 +1,9 @@
-%define static 0
+%def_disable static
 %define oname zvbi
 
 Name: libzvbi
 Version: 0.2.35
-Release: alt1
+Release: alt2
 
 Summary: Raw VBI, Teletext and Closed Caption decoding library
 
@@ -13,15 +13,13 @@ Url: http://zapping.sourceforge.net/
 
 Source: http://prdownloads.sf.net/zapping/%oname-%version.tar.bz2
 
-BuildRequires: cvs doxygen libpng-devel libX11-devel
-BuildPreReq: intltool gcc-c++ libICE-devel
+BuildRequires: doxygen libpng-devel libX11-devel intltool libICE-devel
+# for build tests
+BuildRequires: gcc-c++
 
-%if %static
-BuildPreReq: glibc-devel-static
+%if_enabled static
+BuildRequires: glibc-devel-static
 %endif
-
-Provides: %name
-Obsoletes: %name
 
 %description
 This library provides routines to
@@ -51,11 +49,11 @@ Requires: %name = %version-%release
 Header files and static library of bzip2 functions, for developing apps which
 will use the zvbi library (aka libzvbi)
 
-%if %static
+%if_enabled static
 %package devel-static
 Summary: Static library for developing apps which will use libzvbi
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Static library of bzip2 functions, for developing apps which
@@ -97,12 +95,17 @@ will use the zvbi library (aka libzvbi)
 %_includedir/libzvbi.h
 %_pkgconfigdir/zvbi*
 
-%if %static
+%if_enabled static
 %files devel-static
 %_libdir/lib*.a
 %endif
 
 %changelog
+* Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.35-alt2
+- NMU: drop Obsoleted/Provides: %name
+- drop cvs from BR:
+- cleanup spec
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.35-alt1
 - Version 0.2.35
 
