@@ -1,19 +1,19 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pstreams-devel
-Version:        0.8.1
-Release:        alt1_8
+Version:        1.0.3
+Release:        alt1_1
 Summary:        POSIX Process Control in C++
 
-License:        LGPLv3+
+License:        Boost
 URL:            http://pstreams.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pstreams/pstreams-%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  doxygen
+BuildRequires:  perl
+BuildRequires:  gawk
 BuildArch:      noarch
 Source44: import.info
 Provides: pstreams = %version
@@ -31,15 +31,21 @@ library.
 
 %build
 %make_build
+make docs
 
 %install
 make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
 
 %files
-%doc doc/html COPYING.LIB README AUTHORS ChangeLog
+%doc --no-dereference LICENSE_1_0.txt
+%doc doc/html README AUTHORS ChangeLog
 %{_includedir}/pstreams
 
+
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_8
 - update to new release by fcimport
 
