@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Minion-Backend-SQLite
-Version:        4.005
+Version:        5.0.1
 Release:        alt1
 Summary:        SQLite backend for Minion job queue
 License:        Artistic 2.0
 Group: 		Development/Perl
 URL:            https://metacpan.org/release/Minion-Backend-SQLite/
-Source0:        	http://www.cpan.org/authors/id/D/DB/DBOOK/Minion-Backend-SQLite-%{version}.tar.gz
+Source0:        	http://www.cpan.org/authors/id/D/DB/DBOOK/Minion-Backend-SQLite-v%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl(Data/Dumper.pm)
@@ -38,7 +38,7 @@ named minion. If no connection string or :temp: is provided, the database
 will be created in a temporary directory.
 
 %prep
-%setup -q -n Minion-Backend-SQLite-%{version}
+%setup -q -n Minion-Backend-SQLite-v%{version}
 
 %build
 %perl_vendor_build
@@ -51,6 +51,9 @@ will be created in a temporary directory.
 %{perl_vendorlib}/Minion*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
+- automated CPAN update
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.005-alt1
 - automated CPAN update
 
