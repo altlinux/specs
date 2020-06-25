@@ -15,8 +15,8 @@
 %define _enable_test 1
 
 Name: perl-Calendar-Simple
-Version: 1.23
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Calendar-Simple - Perl module
 
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{module}-v%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jun 23 2006
 BuildRequires: perl-devel perl-Module-Build
@@ -36,7 +36,7 @@ BuildRequires: perl-devel perl-Module-Build
 A very simple module that exports one function called calendar.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{module}-v%{version}
 
 %build
 %perl_vendor_build
@@ -48,10 +48,13 @@ A very simple module that exports one function called calendar.
 rm -f %buildroot%_bindir/pcal
 
 %files
-%doc Changes README
+%doc README Changes.md
 %perl_vendor_privlib/Calendar/
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
+- automated CPAN update
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.23-alt2
 - fixed unpackaged files
 
