@@ -8,14 +8,14 @@ BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-ninja-build
 %global appname Mustache
 
 Name: mustache-cpp
-Version: 4.0
-Release: alt1_2
+Version: 4.1
+Release: alt1_1
 
 License: Boost
 Summary: Mustache text templates for modern C++
 
 URL: https://github.com/kainjow/%{appname}
-Source0: %{url}/archive/v%{version}.tar.gz#/%{oldname}-%{version}.tar.gz
+Source0: %{url}/archive/v%{version}/%{oldname}-%{version}.tar.gz
 
 BuildRequires: ninja-build
 BuildRequires: gcc-c++
@@ -47,6 +47,7 @@ sed -e '/-Werror/d' -i CMakeLists.txt
 %build
 pushd %{_target_platform}
     %{fedora_cmake} -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
     ..
 popd
 %ninja_build -C %{_target_platform}
@@ -66,6 +67,9 @@ install -m 0644 -p %{oldname}.hpp %{buildroot}%{_includedir}
 %{_includedir}/%{oldname}.hpp
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
