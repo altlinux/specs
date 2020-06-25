@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.3.1
-Release: alt2
+Release: alt3
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,6 +17,8 @@ Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%versi
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
+
+Patch1: gimagereader-cmake-3.17.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -124,6 +126,7 @@ Common files for %name.
 
 %prep
 %setup
+%patch1 -p2
 # remove with new version
 # https://redmine.basealt.space/issues/2497
 cp -fv %SOURCE1 po/
@@ -166,7 +169,7 @@ cp -al build-qt5 BUILD
 %cmakeinstall_std
 
 %find_lang %name
-rm -rfv %_datadir/locale/sr_Cyrl/ %_datadir/locale/sr_Latn/
+rm -rfv %buildroot%_datadir/locale/{sr_Cyrl,sr_Latn}/
 
 # make link to old base command
 ln -s %name-gtk %buildroot%_bindir/%name
@@ -202,6 +205,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt3
+- fix build with cmake after 3.17.0 (ALT bug 38643)
+
 * Mon Mar 09 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt2
 - apply updated russian translation
 - apply russian manual
