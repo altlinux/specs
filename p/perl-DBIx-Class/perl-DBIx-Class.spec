@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-DBIx-Class
-Version: 0.082841
+Version: 0.082842
 Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
@@ -13,7 +13,7 @@ Source0: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/DBIx-Class-%{version}.tar
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Nov 10 2011 (-bi)
-BuildRequires: perl-Module-Install perl-Test-Deep perl-Class-C3 perl-Class-C3-Componentised perl-Class-Trigger perl-Class-Unload perl-Clone perl-Config-Any perl-Context-Preserve perl-DBD-Pg perl-DBD-SQLite perl-DBIx-ContextualFetch perl-Data-Compare perl-Data-Dumper-Concise perl-Data-Page perl-Date-Simple perl-DateTime-Format-Strptime perl-JSON-Any perl-JSON-DWIW perl-Math-Base36 perl-Module-Find perl-MooseX-Getopt perl-MooseX-Types-JSON perl-MooseX-Types-Path-Class perl-PPerl perl-SQL-Abstract perl-SQL-Translator perl-Scope-Guard perl-Test-Exception perl-Test-Memory-Cycle perl-Test-Warn perl-Text-CSV perl-Text-CSV_XS perl-Time-Piece perl-namespace-autoclean perl-podlators perl-threads perl-MooseX-Types-LoadableClass
+BuildRequires: perl-Module-Install perl-Test-Deep perl-Class-C3 perl-Class-C3-Componentised perl-Class-Trigger perl-Class-Unload perl-Clone perl-Config-Any perl-Context-Preserve perl-DBD-Pg perl-DBD-SQLite perl-DBIx-ContextualFetch perl-Data-Compare perl-Data-Dumper-Concise perl-Data-Page perl-Date-Simple perl-DateTime-Format-Strptime perl-JSON-Any perl-JSON-DWIW perl-Math-Base36 perl-Module-Find perl-MooseX-Getopt perl-MooseX-Types-JSON perl-MooseX-Types-Path-Class perl-PPerl perl-SQL-Abstract perl-SQL-Translator perl-Scope-Guard perl-Test-Exception perl-Test-Memory-Cycle perl-Test-Warn perl-Text-CSV perl-Text-CSV_XS perl-Time-Piece perl-namespace-autoclean perl-podlators perl-threads perl-MooseX-Types-LoadableClass perl(SQL/Abstract/Util.pm)
 
 
 # Avoid dependency on DBD::ADO
@@ -51,6 +51,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.082842-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.082841-alt1
 - automated CPAN update
 
