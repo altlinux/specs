@@ -1,6 +1,6 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf python-devel
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -15,8 +15,8 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mk
 %{archivename} provides a collection of free scalable Thai fonts.
 
 Name:      fonts-ttf-thai-scalable
-Version:   0.6.5
-Release:   alt1_6
+Version:   0.7.2
+Release:   alt1_1
 Summary:   Thai TrueType fonts
 License:   GPLv2+ and Bitstream Vera
 URL:       http://linux.thai.net/projects/thaifonts-scalable
@@ -45,7 +45,7 @@ Source23:  %{fontname}-laksaman.metainfo.xml
 
 
 BuildArch: noarch
-BuildRequires: fontforge libfontforge
+BuildRequires: fontforge libfontforge python3-module-fontforge
 BuildRequires: fontpackages-devel
 Source44: import.info
 Provides: fonts-ttf-thai = 0.1-alt7
@@ -84,7 +84,7 @@ This package provides the Garuda family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf1}-garuda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-garuda.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Garuda*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Garuda*.otf
 %{_datadir}/appdata/%{fontname}-garuda.metainfo.xml
 
 
@@ -102,7 +102,7 @@ This package provides the Kinnari family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf1}-kinnari.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-kinnari.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Kinnari*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Kinnari*.otf
 %{_datadir}/appdata/%{fontname}-kinnari.metainfo.xml
 
 
@@ -118,7 +118,7 @@ This package provides the Loma family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-loma
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Loma*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Loma*.otf
 %{_datadir}/appdata/%{fontname}-loma.metainfo.xml
 
 
@@ -136,7 +136,7 @@ This package provides the Norasi family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf2}-norasi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf2}-norasi.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Norasi*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Norasi*.otf
 %{_datadir}/appdata/%{fontname}-norasi.metainfo.xml
 
 
@@ -152,7 +152,7 @@ This package provides the Purisa family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-purisa
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Purisa*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Purisa*.otf
 %{_datadir}/appdata/%{fontname}-purisa.metainfo.xml
 
 
@@ -168,7 +168,7 @@ This package provides the Sawasdee family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-sawasdee
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Sawasdee*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Sawasdee*.otf
 %{_datadir}/appdata/%{fontname}-sawasdee.metainfo.xml
 
 
@@ -184,7 +184,7 @@ This package provides the TlwgMono family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgmono
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/TlwgMono*.ttf
+%{_fontbasedir}/*/%{_fontstem}/TlwgMono*.otf
 %{_datadir}/appdata/%{fontname}-tlwgmono.metainfo.xml
 
 
@@ -200,7 +200,7 @@ This package provides the TlwgTypewriter family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypewriter
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/TlwgTypewriter*.ttf
+%{_fontbasedir}/*/%{_fontstem}/TlwgTypewriter*.otf
 %{_datadir}/appdata/%{fontname}-tlwgtypewriter.metainfo.xml
 
 
@@ -216,7 +216,7 @@ This package provides the TlwgTypist family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypist
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/TlwgTypist*.ttf
+%{_fontbasedir}/*/%{_fontstem}/TlwgTypist*.otf
 %{_datadir}/appdata/%{fontname}-tlwgtpist.metainfo.xml
 
 
@@ -232,7 +232,7 @@ This package provides the TlwgTypo family of Thai fonts.
 
 %files -n fonts-ttf-thai-scalable-tlwgtypo
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/TlwgTypo*.ttf
+%{_fontbasedir}/*/%{_fontstem}/TlwgTypo*.otf
 %{_datadir}/appdata/%{fontname}-tlwgtypo.metainfo.xml
 
 
@@ -250,7 +250,7 @@ This package provides the Umpush family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf1}-umpush.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-umpush.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Umpush*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Umpush*.otf
 %{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
 
 %package -n fonts-ttf-thai-scalable-laksaman
@@ -267,7 +267,7 @@ This package provides the Laksaman family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf1}-laksaman.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf1}-laksaman.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Laksaman*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Laksaman*.otf
 %{_datadir}/appdata/%{fontname}-laksaman.metainfo.xml
 
 %package -n fonts-ttf-thai-scalable-waree
@@ -284,7 +284,7 @@ This package provides the Waree family of Thai fonts.
 %{_fontconfig_templatedir}/%{fontconf2}-waree.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf2}-waree.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/Waree*.ttf
+%{_fontbasedir}/*/%{_fontstem}/Waree*.otf
 %{_datadir}/appdata/%{fontname}-waree.metainfo.xml
 
 
@@ -293,7 +293,7 @@ This package provides the Waree family of Thai fonts.
 
 
 %build
-%configure --with-ttfdir=%{_fontdir} --enable-ttf
+%configure --with-otfdir=%{_fontdir}
 make
 
 
@@ -402,6 +402,9 @@ fi
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_6
 - update to new release by fcimport
 
