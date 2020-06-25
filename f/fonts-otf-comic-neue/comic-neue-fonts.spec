@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -14,11 +15,10 @@ and writing passive aggressive office memos.
 
 
 Name:           fonts-otf-comic-neue
-Version:        2.3
+Version:        2.5
 Release:        alt1_1
 Summary:        A typeface family inspired by Comic Sans
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://comicneue.com/
 Source0:        http://comicneue.com/%{fontname}-%{version}.zip
@@ -67,7 +67,7 @@ The Comic Neue Angular variant features angular terminals rather than round.
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p OTF/*.otf %{buildroot}%{_fontdir}
+install -m 0644 -p %{fontname}-%{version}/OTF/*/*.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -122,22 +122,23 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/ComicNeue-Regular.otf
-%{_fontbasedir}/*/%{_fontstem}/ComicNeue_*.otf
+%{_fontbasedir}/*/%{_fontstem}/ComicNeue-*.otf
 %files -n fonts-otf-comic-neue-angular
 %{_fontconfig_templatedir}/%{fontconf}-angular.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-angular.conf
 %dir %{_fontbasedir}/*/%{_fontstem}/
-%{_fontbasedir}/*/%{_fontstem}/ComicNeue-Angular-Regular.otf
-%{_fontbasedir}/*/%{_fontstem}/ComicNeue-Angular_*.otf
+%{_fontbasedir}/*/%{_fontstem}/ComicNeueAngular-*.otf
 
 
 %files -n fonts-otf-comic-neue-common
-%doc Booklet-ComicNeue.pdf FONTLOG.txt
-%doc --no-dereference SIL-License.txt OFL-FAQ.txt
+%doc %{fontname}-%{version}/Booklet-ComicNeue.pdf %{fontname}-%{version}/FONTLOG.txt
+%doc --no-dereference %{fontname}-%{version}/OFL.txt %{fontname}-%{version}/OFL-FAQ.txt
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1
 - update to new release by fcimport
 
