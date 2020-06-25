@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Lingua-Stem
 Name: perl-%dist
-Version: 0.84
+Version: 2.30
 Release: alt1
 
 Summary: Provides word stemming algorithms localized by language
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SN/SNOWHARE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ returning the stemmed words as appropriate to the selected
 locale.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,13 @@ locale.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Artistic_License.txt GPL_License.txt examples
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1
+- automated CPAN update
+
 * Sun Jan 16 2011 Alexey Tourbin <at@altlinux.ru> 0.84-alt1
 - 0.81 -> 0.84
 - decoupled language-specific modules
