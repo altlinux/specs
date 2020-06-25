@@ -2,7 +2,7 @@ Group: Development/Tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.10
+Version:        2.3.11
 Release:        alt1_2
 Summary:        6502/65816 cross-assembler
 
@@ -11,8 +11,6 @@ URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
 # update the build system, reported in private email
 Patch0:         %{name}-2.3.7-make.patch
-# https://gcc.gnu.org/gcc-10/porting_to.html#common
-Patch1:         %{name}-2.3.10-extern.patch
 BuildRequires:  gcc
 # Perl needed for test-suite
 BuildRequires:  rpm-build-perl
@@ -39,7 +37,6 @@ Key amongst its features:
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 
 # fix encoding
@@ -70,6 +67,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.11-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.10-alt1_2
 - update to new release by fcimport
 
