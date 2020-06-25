@@ -8,16 +8,17 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libaccounts-glib
-Version:        1.24
-Release:        alt1_1
+Version:        1.25
+Release:        alt1_2
 Summary:        Accounts framework for Linux and POSIX based platforms
 License:        LGPLv2
 
-URL:            https://gitlab.com/accounts-sso/libaccounts-glib
-Source0:        %{url}/-/archive/%{version}/%{name}-%{version}.tar.gz
+# workaround for GitLab bug that puts commit hash into tarball root directory name
+# https://gitlab.com/gitlab-org/gitlab/-/issues/214535
+%global ver_str VERSION_%{version}
 
-# proposed patch to fix accidentally bumped SONAME
-Patch0:         %{url}/-/merge_requests/24.patch
+URL:            https://gitlab.com/accounts-sso/libaccounts-glib
+Source0:        %{url}/-/archive/%{ver_str}/%{name}-%{ver_str}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  meson >= 0.48.0
@@ -66,8 +67,7 @@ The %{name}-docs package contains documentation for %{name}.
 
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{ver_str}
 
 
 
@@ -134,6 +134,9 @@ mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,servi
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1_2
+- update to new release by fcimport
+
 * Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1_1
 - update to new release by fcimport
 
