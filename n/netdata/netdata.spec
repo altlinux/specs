@@ -3,7 +3,7 @@
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.22.1
+Version: 1.23.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -192,6 +192,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 1.23.0-alt1
+- new version 1.23.0 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.22.1-alt1
 - new version 1.22.1 (with rpmrb script)
 
