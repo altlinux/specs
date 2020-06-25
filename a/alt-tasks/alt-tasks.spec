@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -22,7 +22,8 @@ a given criteria.
 %setup
 
 %build
-%make_build
+make tests
+make
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -37,6 +38,9 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Jun 25 2020 Alexey Appolonov <alexey@altlinux.org> 0.2.1-alt1
+- Couple of minor bug fixes.
+
 * Fri Jun 19 2020 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
 - Improved performance by the use of binary dumps.
 
