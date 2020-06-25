@@ -2,17 +2,19 @@ Group: Development/Other
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global snapshot 20190722
+%global snapshot 20200430
 # Do not create debuginfo sub-package because there is no binary executable
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_2
+Release:    alt1_1
 Summary:    Compiler built-ins
 License:    BSD or GPLv2+
 URL:        http://software.schmorp.de/pkg/libecb.html
 # Snapshot from CVS :pserver:anonymous@cvs.schmorp.de/schmorpforge libecb 
 Source0:    %{name}-%{snapshot}.tar.xz
+# Fix POD syntax, mailed to the author
+Patch0:     libecb-20200430-fix_pod.patch
 BuildRequires:  coreutils
 BuildRequires:  perl-podlators
 Source44: import.info
@@ -44,6 +46,7 @@ noinline, assume, unreachable and so on.
 
 %prep
 %setup -q -n %{name}-%{snapshot}
+%patch0 -p0
 
 %build
 pod2man ecb.pod > ecb.3
@@ -61,6 +64,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.20200430-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 0.20190722-alt1_2
 - update to new release by fcimport
 
