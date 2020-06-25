@@ -11,13 +11,13 @@ BuildRequires: perl(AutoLoader.pm) perl(Exporter.pm) perl(XSLoader.pm) perl-podl
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt4_17
+Release:    alt4_19
 
 Summary:    Perl interface to the personality(2) Linux system call
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Linux/%{upstream_name}-%{upstream_version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/Linux/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl-devel
@@ -41,10 +41,10 @@ program.
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
-%make
+%make_build
 
 %check
-%make test
+%make_build test
 
 %install
 %makeinstall_std
@@ -57,6 +57,9 @@ program.
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.01-alt4_19
+- update by mgaimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.01-alt4_17
 - update by mgaimport
 
