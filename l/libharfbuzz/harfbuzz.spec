@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name harfbuzz
 %define ver_major 2.6
@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -176,6 +176,9 @@ export PYTHON=%__python3
 %endif
 
 %changelog
+* Thu Jun 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.8-alt1
+- updated to 2.6.8-5-g20d1fa367
+
 * Wed Jun 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.6.7-alt1
 - 2.6.7 (updated to Unicode-13.0.0)
 
