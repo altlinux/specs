@@ -1,23 +1,23 @@
 Group: System/Fonts/True type
 %define oldname julietaula-montserrat-fonts
-%define fedora 28
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global fontname julietaula-montserrat
 %global fontconf 61-%{fontname}
 %global common_desc \
-A typeface inspired by signs around the Montserrat area of Buenos Aires, Argentina
+A typeface inspired by signs around the Montserrat area \
+of Buenos Aires, Argentina
 
 Name:		fonts-otf-julietaula-montserrat
-Version:	7.200
-Release:	alt1_5
+Version:	7.210
+Release:	alt1_1
 # Override versioning to sync with upstream
 Epoch:		1
 Summary:	Sans-serif typeface inspired from Montserrat area
 
 License:	OFL
 URL:		https://github.com/JulietaUla/Montserrat
-Source0:	%{url}/archive/Montserrat/v%{version}.tar.gz#/Montserrat-%{version}.tar.gz
+Source0:	%{url}/releases/download/v%{version}/Montserrat-%{version}.tar.gz
 Source1:	%{oldname}-fontconfig.conf
 Source2:	%{oldname}-alternates-fontconfig.conf
 Source3:	%{fontname}.metainfo.xml
@@ -25,9 +25,7 @@ Source4:	%{fontname}-alternates.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-%if 0%{?fedora} >= 21
 BuildRequires:	libappstream-glib
-%endif
 
 # Reset the old date based versioning
 Obsoletes:	%{oldname} < 1:%{version}-%{release}
@@ -103,7 +101,6 @@ for fconf in %{fontconf}.conf \
 done
 
 # Add AppStream metadata file, Repeat for every font family
-%if 0%{?fedora} >= 21
 install -Dm 0644 -p %{SOURCE3} \
 		%{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 install -Dm 0644 -p %{SOURCE4} \
@@ -146,13 +143,15 @@ fi
 %check
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{fontname}-alternates.metainfo.xml
-%endif
 
 %files -n fonts-otf-julietaula-montserrat-common
 %doc --no-dereference Montserrat-%{version}/OFL.txt
 %doc Montserrat-%{version}/README.md 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1:7.210-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 1:7.200-alt1_5
 - update to new release by fcimport
 
