@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.1.16.0
-Release:        alt3
+Release:        alt4
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -141,6 +141,10 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 %endif
 
 %build
+%ifarch %e2k
+# skip x86 asm (reported upstream); suggested by darktemplar@
+%add_optflags -DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__
+%endif
 %cmake \
 	-DINCLUDE_INSTALL_DIR:PATH=%_includedir/%oname \
 	-DPYTHON_VERSION=%_python3_version \
@@ -156,7 +160,6 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DVERBOSE=TRUE \
 %ifarch %e2k
 	-DUSE_SIMD=0 \
-	-DCMAKE_CXX_FLAGS="-DOIIO_NO_AVX=1 -DOIIO_NO_SSE=1 -U__AES__" \
 	-DSKIP_TESTS=1 \
 %endif
 	%nil
@@ -200,6 +203,10 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 2.1.16.0-alt4
+- E2K: don't miss %%optflags while working around SIMD issue
+  (thx darktemplar@)
+
 * Mon Jun 22 2020 Michael Shigorin <mike@altlinux.org> 2.1.16.0-alt3
 - E2K: avoid BR: dcmtk, opencv for now (not available yet)
 
