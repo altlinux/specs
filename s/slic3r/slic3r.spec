@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 # END SourceDeps(oneline)
 %set_perl_req_method relaxed
 
-%define fedora 30
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global use_system_admesh 0
@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt3_12
+Release:        alt3_14
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -34,9 +34,12 @@ Patch5:         %{name}-1.3.0-fixtest.patch
 Patch6:         %{name}-wayland.patch
 Patch7:         %{name}-boost169.patch
 
-Patch100:       %name-%version-upstream-boost-1.73.0-compat-1.patch
-Patch101:       %name-%version-upstream-boost-1.73.0-compat-2.patch
-Patch102:       %name-%version-alt-boost-1.73.0-compat.patch
+# Use GCC predefined macros instead of deprecated Boost header
+Patch8:         %{name}-endian.patch
+# Make boost::Placeholders::_1 visible
+Patch9:         %{name}-bind-placeholders.patch
+# Use boost/nowide/cstdlib.hpp instead of boost/nowide/cenv.hpp
+Patch10:         %{name}-boost-nowide.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -111,16 +114,20 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ImageMagick-tools
 Requires:       perl(Growl/GNTP.pm) >= 0.150
 Requires:       perl(XML/SAX.pm)
+
+# Optional dependency. Not packaged in Fedora yet, hence we cannot list it.
+# It's only used for magically finding octoprint servers.
+# #Recommends:    perl(Net::Bonjour)
+
+# Optional dependencies to allow background processing.
+Requires:     perl(Thread/Queue.pm)
+Requires:     perl(threads/shared.pm)
 Source44: import.info
 # alt bug #34434
 Requires:       perl(OpenGL.pm)
 Requires:       perl(Class/Accessor.pm)
 Requires:       perl(Math/Trig.pm)
 Requires:       perl-Wx-GLCanvas
-
-# Optional dependency. Not packaged in Fedora yet, hence we cannot list it.
-# It's only used for magically finding octoprint servers.
-# #Recommends:    perl(Net::Bonjour)
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -141,10 +148,9 @@ for more information.
 %patch5 -p1 -b .fixtest
 %patch6 -p1
 %patch7 -p1
-
-%patch100 -p1
-%patch101 -p1
-%patch102 -p2
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 # Optional removals
 %if %{use_system_admesh}
@@ -260,6 +266,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt3_14
+- update to new release by fcimport
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt3_12
 - Rebuilt with boost-1.73.0.
 
