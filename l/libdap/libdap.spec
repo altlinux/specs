@@ -10,7 +10,7 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.20.5
+Version: 3.20.6
 Release: alt1_1
 
 License: LGPLv2+
@@ -113,7 +113,7 @@ done
 
 %files
 %doc --no-dereference COPYRIGHT_W3C COPYING COPYRIGHT_URI
-%doc README NEWS README.dodsrc
+%doc README.md NEWS README.dodsrc
 %{_bindir}/getdap
 %{_bindir}/getdap4
 %{_libdir}/libdap.so.25*
@@ -139,6 +139,9 @@ done
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.20.6-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.20.5-alt1_1
 - update to new release by fcimport
 
