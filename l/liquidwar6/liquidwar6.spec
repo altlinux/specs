@@ -1,11 +1,13 @@
 Name: liquidwar6
 Version: 0.6.3902
+Release: alt6
+
 Summary: A unique multiplayer wargame
-Release: alt5
 License: GPL
 Group: Games/Strategy
-Source: %name-%version.tar
+
 Url: http://www.gnu.org/software/liquidwar6
+Source: %name-%version.tar
 
 Patch0: liquidwar6-0.6.3902-alt-drop-Werror.patch
 Patch1: liquidwar6-0.6.3902-alt-guile22.patch
@@ -26,7 +28,10 @@ on Internet.
 %prep
 %setup
 %patch0 -p1
+%ifnarch %e2k
+# guile 2.0 so far
 %patch1 -p1
+%endif
 
 # Building the package
 %build
@@ -55,6 +60,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 0.6.3902-alt6
+- E2K: guile 2.0 so far, no need for patch1
+
 * Sat Jun 06 2020 Fr. Br. George <george@altlinux.ru> 0.6.3902-alt5
 - Fix build
 
