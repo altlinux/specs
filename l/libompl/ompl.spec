@@ -2,35 +2,36 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/R boost-devel boost-filesystem-devel boost-program_options-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname ompl
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# This package depends on automagic byte compilation
-# https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
-%global _python_bytecompile_extra 1
+%global soversion 16
+%global apiversion 1.5
 
 Name:           libompl
-Version:        1.3.2
-Release:        alt2_6
+Version:        1.5.0
+Release:        alt1_1
 Summary:        The Open Motion Planning Library
 
-Group:          System/Libraries
 License:        BSD
 URL:            http://ompl.kavrakilab.org/
-Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
+Source0:        https://github.com/%{oldname}/%{oldname}/archive/%{version}/%{oldname}-%{version}.tar.gz
 BuildRequires:  gcc-c++
 BuildRequires:  boost-complete >= 1.42.0
 BuildRequires:  ctest cmake
 BuildRequires:  doxygen
+BuildRequires:  eigen3
 BuildRequires:  libflann-devel
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libode-devel
-BuildRequires:  python
-BuildRequires:  erb
 
-Patch0: ompl-1.3.2-pybindings.patch
-Patch1: ompl-1.3.2-upstream-boost-compat.patch
+# Move the installed CMake configuration from datadir to libdir.
+# Refelects best practice with respect to arch-ful CMake configuration.
+# Disable build/installation of plannerarena.
+# Not submitted upstream.
+Patch0: ompl-1.5.0-cmakeinstall.patch
 Source44: import.info
 Provides: ompl = %{version}-%{release}
 
@@ -42,8 +43,8 @@ a deliberate design choice, so that OMPL is not tied to a particular
 collision checker or visualization front end.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{oldname}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Requires:       boost-complete
 Provides: ompl-devel = %{version}-%{release}
@@ -54,28 +55,30 @@ developing applications that use %{oldname}.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}-Source
-# Get rid of bundled odeint
-rm -rf src/external/omplext_odeint/
-%patch0 -p0 -b .pybindings
-%patch1 -p1
+%setup -n %{oldname}-%{version} -q
+# Get rid of bundled libs
+rm -rf src/external/
+rm -rf scripts/plannerarena
+%patch0 -p0 -b .cmakeinstall
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
 mkdir build
 cd build
-%{fedora_cmake} -DCMAKE_SKIP_RPATH=ON \
+%{fedora_cmake} .. \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_RPATH=ON \
   -DOMPL_BUILD_PYBINDINGS=OFF \
   -DOMPL_LIB_INSTALL_DIR=%{_lib} \
   -DBOOST_LIBRARYDIR=%{_libdir} \
   -DODE_LIB_PATH=%{_libdir} \
   -DBUILD_OMPL_TESTS=ON  \
   -DOMPL_ODESOLVER=ON \
-  -DOMPL_REGISTRATION=OFF ..
+  -DOMPL_REGISTRATION=OFF
 
 %make_build
-make doc
-rm -f doc/html/installdox
+make ompl_doc
+rm -f ompl_doc/installdox
 
 %install
 make -C build install DESTDIR=%{buildroot}
@@ -83,28 +86,35 @@ make -C build install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
 rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
 rm -rf %{buildroot}%{_bindir}
+rm -f %{buildroot}%{_mandir}/man1/plannerareana*
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-make -C build test || exit 0
+# Test failures can be triggered by builder CPU speed.
+# Accept test failures for slow builders.
+VERBOSE=1 make -C build test  || exit 0
 
 
 
 
 %files
 %doc LICENSE README.md
-%{_libdir}/libompl.so.*
+%{_libdir}/libompl.so.%{version}
+%{_libdir}/libompl.so.%{soversion}
 %{_mandir}/man1/*.1*
 
 %files devel
-%doc doc/html
+%doc build/ompl_doc
 %{_libdir}/libompl.so
-%{_includedir}/%{oldname}
+%{_includedir}/%{oldname}-%{apiversion}
 %{_datadir}/%{oldname}
 %{_libdir}/pkgconfig/*.pc
-%{_libdir}/cmake/%{oldname}
+%{_libdir}/%{oldname}
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt2_6
 - Rebuilt with boost-1.71.0.
 
