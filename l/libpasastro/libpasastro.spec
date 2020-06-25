@@ -5,19 +5,19 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 
 Name:           libpasastro
-Version:        1.1
+Version:        1.3.0
 Release:        alt1_1
 Summary:        Pascal interface for standard astronomy libraries
 Group:          Sciences/Astronomy
 License:        GPLv2+
-URL:            http://sourceforge.net/projects/libpasastro/
+URL:            https://sourceforge.net/projects/libpasastro/
 # Official stable version doesn't include yet fixes required upstream
 # for packaging in Fedora, so we use svn version.
 # Use the following commands to generate the tarball:
 # svn export -r 9 svn://svn.code.sf.net/p/libpasastro/code/trunk libpasastro-1.0
 # tar -cJvf libpasastro-1.0-svn.tar.xz libpasastro-1.0
-Source0:        https://github.com/pchev/libpasastro/archive/v1.1.tar.gz#/libpasastro-1.1.tar.gz
-#Source0:        http://downloads.sourceforge.net/%%{name}/%%{name}-%%{version}-src.tar.xz
+Source0:        https://github.com/pchev/libpasastro/archive/v1.3.0.tar.gz#/libpasastro-1.3.0.tar.gz
+#Source0:        https://downloads.sourceforge.net/%%{name}/%%{name}-%%{version}-src.tar.xz
 
 # Patch to fix stripping and permissions of library files
 # Since this is Fedora specific we don't ask upstream to include
@@ -54,6 +54,9 @@ mkdir -p plan404/obj
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1
+- update by mgaimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - new version
 
