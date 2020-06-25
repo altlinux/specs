@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 %define oldname lklug-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,9 +11,8 @@ Name:	fonts-ttf-lklug
 # update versions on file changes. When in doubt use the timestamp of the most
 # recent file as version.
 Version:	0.6
-Release:	alt3_16.%{cvsdate}cvs
+Release:	alt3_22.%{cvsdate}cvs
 Summary:	Fonts for Sinhala language
-Group:	System/Fonts/True type
 License:	GPLv2
 URL:	http://sinhala.sourceforge.net/
 # cvs snapshot created with following steps
@@ -24,7 +24,7 @@ Source:	lklug-%{cvsdate}.tar.gz
 Source1:	%{fontconf}
 Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel fontforge libfontforge
+BuildRequires:	fontpackages-devel fontforge libfontforge python3-module-fontforge
 Source44: import.info
 
 %description
@@ -94,11 +94,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc CREDITS COPYING README.fonts 
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_22.20090803cvs
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_16.20090803cvs
 - update to new release by fcimport
 
