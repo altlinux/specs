@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: libwacom
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -87,11 +87,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/%name/*.tablet
 %_datadir/%name/*.stylus
 %_datadir/%name/layouts/
+%_udevhwdbdir/65-%name.hwdb
 
 #%files devel-doc
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jun 25 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 - built with Meson instead of Autotools
