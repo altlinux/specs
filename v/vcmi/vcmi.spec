@@ -1,14 +1,14 @@
 Name: vcmi
 Version: 0.99
-Release: alt5
+Release: alt5.1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
-Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
 License: GPLv2+
 Group: Games/Strategy
-URL: http://wiki.vcmi.eu/index.php?title=Main_Page
-Packager: Anton Midyukov <antohami@altlinux.org>
+
+Url: http://wiki.vcmi.eu/index.php?title=Main_Page
 Source: %name-%version.tar
+
 Patch1: vcmi-boost-1.66.patch
 Patch2: vcmi-boost-1.66-2.patch
 # https://github.com/vcmi/vcmi/pull/615
@@ -17,6 +17,8 @@ Patch4: vcmi-boost-1.66-4.patch
 Patch5: vcmi-boost-1.66-5.patch
 Patch6: vcmi-boost-1.66-6.patch
 Patch7: vcmi-boost-1.66-7.patch
+
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -48,9 +50,11 @@ BuildRequires: pkgconfig(zlib)
 
 Requires: ffmpeg
 
+Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
+
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
-scratch, giving it new and extended possibilities. We hope to support 
+scratch, giving it new and extended possibilities. We hope to support
 mods and new towns already made by fans but abandoned because of game
 code limitations.
 
@@ -64,15 +68,15 @@ graphics. You need to install WoG before running VCMI.
 
 %description -l ru_RU.UTF8
 Цель проекта VCMI состоит в том, чтобы переписать полностью движок
-HoMM 3: WoG, и тем самым дать ему новые и расширенные возможности.
+HoMM 3: WoG и тем самым дать ему новые и расширенные возможности.
 Мы надеемся реализовать поддержку модов и новых городов, которые уже
 сделаны фанатами, но от которых отказались из-за ограничений кода игры.
 
-VCMI это фанатский проект с открытым исходным кодом. Мы уже реализовали
+VCMI - это фанатский проект с открытым исходным кодом. Мы уже реализовали
 поддержку карт любых размеров, более высокое разрешение и расширенные
-возможности движка. Тем не менее хотя игра и работает, она ещё не
-закончена. Есть еще много особенностей которые нужно добавить, как 
-старых так и новых.
+возможности движка. Тем не менее, хотя игра и работает, она ещё не
+закончена. Есть еще много особенностей, которые нужно добавить, как
+старых, так и новых.
 
 Пока VCMI не отдельная программа, она использует файлы от Wake of Gods.
 Вам нужно установить WoG перед запуском VCMI.
@@ -86,7 +90,13 @@ VCMI это фанатский проект с открытым исходным
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-    
+
+%ifarch %e2k
+# unsupported as of lcc 1.24.11
+%add_optflags -fno-error-always-inline
+%endif
+
+%build
 %cmake -DLIB_DIR=%_lib/%name \
        -DCMAKE_INSTALL_LIBDIR=%_lib \
        -DCMAKE_SKIP_RPATH=OFF \
@@ -109,6 +119,10 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 0.99-alt5.1
+- Spec fixup/cleanup
+- E2K: avoid lcc-unsupported option
+
 * Wed Dec 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt5
 - Rebuilt with boost-1.71.0.
 
