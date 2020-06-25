@@ -6,8 +6,8 @@ BuildRequires: libgmp-devel perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.51
-Release: alt1.1
+Version: 0.52
+Release: alt1
 Summary: Utilities related to prime numbers, using GMP
 Group: Development/Perl
 License: perl
@@ -51,11 +51,14 @@ test, rather than any number.
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes TODO examples
+%doc README Changes examples
 %perl_vendor_archlib/M*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1.1
 - rebuild with new perl 5.28.1
 
