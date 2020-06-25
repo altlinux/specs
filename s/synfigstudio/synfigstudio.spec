@@ -2,17 +2,19 @@
 
 Name:    synfigstudio
 Version: 1.3.14
-Release: alt1
+Release: alt2
 
 Summary: Synfig studio - animation program
-Group:   Office
 License: GPLv2+
+Group:   Office
+
 Url:     http://www.synfig.org
 #Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch:   %name-%version-%release.patch
 
-ExclusiveArch: %ix86 x86_64
+# FIXME: would be nice on aarch64 as well
+ExclusiveArch: %ix86 x86_64 %e2k
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-python3
@@ -102,9 +104,13 @@ Obsoletes: libsynfig-devel < %version-%release
 Header files for Synfig studio.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 mkdir local-pkg-config
+%ifarch %e2k
+# -lgcov not there yet...
+find -name subs.m4 | xargs sed -i 's, -pg,,;s, -fprofile-arcs,,'
+%endif
 
 %build
 %add_optflags -fpermissive -std=c++11 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
@@ -205,6 +211,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 1.3.14-alt2
+- E2K: avoid profiling (no -lgcov just yet).
+
 * Sun Apr 26 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.14-alt1
 - New version.
 
