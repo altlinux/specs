@@ -1,6 +1,6 @@
 %define rname kreslimit
 Name: kde5-kreslimit
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 %K5init altplace
@@ -41,10 +41,14 @@ Resource limit for launched applications
 %files -f %rname.lang
 %_K5plug/*.so
 %_K5srv/*.desktop
-%_K5bin/*
 
 
 %changelog
+* Thu Jun 25 2020 Ivan Razzhivin <underwit@altlinux.org> 1.1.0-alt1
+- update translation
+- remove unit size column
+- remove pidtransit.sh script
+
 * Fri Jun 05 2020 Ivan Razzhivin <underwit@altlinux.org> 1.0.3-alt1
 - add ability to edit records
 
