@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	26
+Version:	27.0.9.f5434cf
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -132,6 +132,9 @@ make check
 %_libdir/libkmod.so
 
 %changelog
+* Thu Jun 25 2020 Alexey Gladkov <legion@altlinux.ru> 27.0.9.f5434cf-alt1
+- Version (27).
+
 * Mon Apr 01 2019 Alexey Gladkov <legion@altlinux.ru> 26-alt1
 - Version (26).
 - Add PKCS7 signatures support.
