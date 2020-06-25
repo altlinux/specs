@@ -1,5 +1,5 @@
 Name: xxhash
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Extremely fast hash algorithm
@@ -75,6 +75,9 @@ make test-xxhsum-c
 %_pkgconfigdir/libxxhash.pc
 
 %changelog
+* Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt1
+- new version 0.7.4 (with rpmrb script)
+
 * Thu Mar 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.3-alt1
 - new version 0.7.3 (with rpmrb script)
 
