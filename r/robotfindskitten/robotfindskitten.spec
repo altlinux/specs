@@ -1,23 +1,20 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		robotfindskitten
-Version:	2.7182818.701
-Release:	alt1_1
-Summary:	A game/zen simulation. You are robot. Your job is to find kitten.
+Name:      robotfindskitten
+Version:   2.8284271.702
+Release:   alt1_1
+Summary:   A game/zen simulation. You are robot. Your job is to find kitten.
 
-Group:		Games/Other
-License:	GPLv2+
-URL:		http://robotfindskitten.org
-Source0:	http://robotfindskitten.org/download/POSIX/%{name}-%{version}.tar.gz
-Patch0:		robotfindskitten-1.7320508.406-info-direntry.patch
-Patch1:		robotfindskitten-2.7182818.701-nki-makefile.patch
+License:   GPLv2+
+URL:       http://robotfindskitten.org
+Source0:   https://github.com/%{name}/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:    robotfindskitten-2.8284271.702-maybe-uninitialized.patch
 
-BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo autoconf automake libtool
-Requires(post):	info info-install
-Requires(preun):info info-install
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo autoconf automake libtool
 Source44: import.info
 
 %description
@@ -29,16 +26,13 @@ ends when robotfindskitten.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+
 autoreconf -i
 
 
 %build
 %configure
 %make_build
-# rebuild the info page to include the patched-in direntry
-rm -f doc/robotfindskitten.info
-make -C doc robotfindskitten.info
 
 
 %install
@@ -49,16 +43,18 @@ ln -sf ../games/robotfindskitten $RPM_BUILD_ROOT/%{_bindir}/robotfindskitten
 # make install creates this, but we don't need it
 rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 
-
 %files
 %doc AUTHORS BUGS ChangeLog COPYING NEWS README
 %{_bindir}/robotfindskitten
 %{_prefix}/games/robotfindskitten
-%{_datadir}/games/%{name}/
+%{_datadir}/games/robotfindskitten/
 %{_datadir}/info/robotfindskitten.info*
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.8284271.702-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.7182818.701-alt1_1
 - update to new release by fcimport
 
