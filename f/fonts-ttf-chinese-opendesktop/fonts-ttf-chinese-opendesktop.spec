@@ -3,7 +3,7 @@
 Summary:	OpenDesktop.Org.tw Font -- Simplified and Traditional Chinese and Japanese Ming and Kai Face
 Name:		fonts-ttf-chinese-opendesktop
 Version:	1.6.100
-Release:	alt1_8
+Release:	alt1_11
 # Extracted from ftp://opensource.nchc.org.tw/odp/others/fc17/SRPMS/opendesktop-fonts-1.6.100-1.fc17.src.rpm
 Source0:	opendesktop-fonts-%{version}.tar.bz2
 URL:		http://www.opendesktop.org.tw/
@@ -11,10 +11,15 @@ License:	Arphic Public License
 Group:		System/Fonts/True type
 BuildArch:	noarch
 BuildRequires: 	fontconfig
-Requires(post): mkfontscale, mkfontscale
-Requires(postun): mkfontscale, mkfontscale
+Requires(post): mkfontdir, mkfontscale
+Requires(postun): mkfontdir, mkfontscale
 Obsoletes:	fonts-ttf-chinese-compat
 Provides:	fonts-ttf-chinese-compat = %{version}-%{release}
+
+Source1:	69-odofonts.conf
+Source2:	80-odohei.conf
+Source3:	80-odokai.conf
+Source4:	80-odosung.conf
 Source44: import.info
 
 %description
@@ -32,6 +37,7 @@ This package provides default TrueType font for zh_TW locale.
 
 %prep
 %setup -q -n opendesktop-fonts-%{version} 
+sed -i s,/usr/share/fonts/opendesktop/TrueType,/usr/share/fonts/ttf/chinese-opendesktop, *map.zh_??
 
 %install
 install -d %{buildroot}/%{_datadir}/fonts/ttf/chinese-opendesktop/
@@ -40,13 +46,13 @@ install -m 644 odokai.ttf %{buildroot}/%{_datadir}/fonts/ttf/chinese-opendesktop
 install -m 644 odohei.ttf %{buildroot}/%{_datadir}/fonts/ttf/chinese-opendesktop/
 
 install -d %{buildroot}%{_datadir}/fontconfig/conf.avail/
-install -m 644 69-odofonts.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
+install -m 644 %{SOURCE1} %{buildroot}%{_datadir}/fontconfig/conf.avail/
 install -m 644 80-odofonts-original.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
 install -m 644 80-odofonts-simulate-MS-simplified-chinese.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
 install -m 644 80-odofonts-simulate-MS-traditional-chinese.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
-install -m 644 80-odohei.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
-install -m 644 80-odokai.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
-install -m 644 80-odosung.conf %{buildroot}%{_datadir}/fontconfig/conf.avail/
+install -m 644 %{SOURCE2} %{buildroot}%{_datadir}/fontconfig/conf.avail/
+install -m 644 %{SOURCE3} %{buildroot}%{_datadir}/fontconfig/conf.avail/
+install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/fontconfig/conf.avail/
 
 # for ghostscript
 install -d %{buildroot}/%{_datadir}/ghostscript/conf.d/
@@ -80,10 +86,10 @@ fi
 %{_datadir}/fontconfig/conf.avail/*
 %{_datadir}/ghostscript/conf.d/*
 
-%files -n fonts-ttf-default-zh_TW
-
-
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.100-alt1_11
+- update by mgaimport
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.100-alt1_8
 - new version
 
