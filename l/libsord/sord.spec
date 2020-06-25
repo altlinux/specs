@@ -16,7 +16,7 @@ Group: System/Libraries
 
 Name:       libsord
 Version:    0.16.4
-Release:    alt1_3
+Release:    alt1_5
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 License:    ISC
@@ -60,9 +60,9 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
 
 %build
 
-# Work around a possible GCC 10 bug
-# GCC 10 crashes on these arches in for loop with ZixBTreeIter
-%ifarch %{power64} %{arm} aarch64
+# Work around a possible GCC 10.1 bug
+# GCC 10.1 crashes on these arches in for loop with ZixBTreeIter
+%ifarch %{power64} %{arm} aarch64 s390 s390x
 CFLAGS+=" -O1"
 CXXFLAGS+=" -O1"
 %endif
@@ -100,6 +100,9 @@ install -pm 644 AUTHORS NEWS README.md COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_5
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.4-alt1_3
 - update to new release by fcimport
 
