@@ -16,7 +16,7 @@ BuildRequires: /usr/bin/doxygen pkgconfig(bluez)
 
 Name:           libdivecomputer-subsurface
 Summary:        Library for communication with dive computers
-Version:        4.9.3
+Version:        4.9.4
 Release:        alt1_1
 # includes "Public domain" portions from https://github.com/kokke/tiny-AES128-C :
 # aes.c
@@ -79,6 +79,9 @@ rm -f %{buildroot}%{_libdir}/lib*.la
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 4.9.4-alt1_1
+- update by mgaimport
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.9.3-alt1_1
 - update by mgaimport
 
