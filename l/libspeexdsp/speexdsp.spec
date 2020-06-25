@@ -1,26 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: pkgconfig(fftw3f)
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname speexdsp
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libspeexdsp
-Version:        1.2
-%global rc_ver  rc3
-Release:        alt3_0.12.%{rc_ver}
+Version:        1.2.0
+Release:        alt1_1
 Summary:        A voice compression format (DSP)
 
-Group:          System/Libraries
 License:        BSD
 URL:            http://www.speex.org/
-Source0:        http://downloads.xiph.org/releases/speex/%{oldname}-%{version}%{rc_ver}.tar.gz
-# a patch to speex (774c87d) was done usptream to fix this issue but it seems it
-# hasn't been replicated in speexdsp. Issue seen in at least pjproject
-# upstream ML thread http://lists.xiph.org/pipermail/speex-dev/2014-May/008488.html
-Patch0:         speexdsp-fixbuilds-774c87d.patch
+Source0:        http://downloads.xiph.org/releases/speex/%{oldname}-%{version}.tar.gz
 
-BuildRequires: libtool-common autoconf-common automake-common
+BuildRequires:  gcc
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
 Conflicts: libspeex <= 1.2-0.21.rc1
@@ -38,8 +33,8 @@ data (e.g. voice mail).
 This is the DSP package, see the speex package for the codec part.
 
 %package devel
+Group: Development/Other
 Summary: 	Development package for %{oldname}
-Group: 		Development/Other
 Requires: 	%{name} = %{version}-%{release}
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
@@ -55,22 +50,26 @@ This is the DSP package, see the speex package for the codec part.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}%{rc_ver}
-%patch0 -p1 -b .inc
+%setup -n %{oldname}-%{version} -q
+
 
 %build
-autoreconf -vif
 %configure \
+%ifarch aarch64
 	--disable-neon \
+%endif
 	--disable-static
 
-%make_build V=1
+%make_build
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install
+%makeinstall_std
 
 # Remove libtool archives
 find %{buildroot} -type f -name "*.la" -delete
+
+
+
 
 %files
 %doc AUTHORS COPYING TODO ChangeLog README NEWS doc/manual.pdf
@@ -83,6 +82,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1
+- update to new release by fcimport
+
 * Tue Jan 08 2019 Michael Shigorin <mike@altlinux.org> 1.2-alt3_0.12.rc3
 - disable neon unconditionally, we don't do it on armh either
   (which might be just wrong by now)
