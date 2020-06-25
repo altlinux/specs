@@ -2,8 +2,8 @@ Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           colordiff
-Version:        1.0.18
-Release:        alt1_2
+Version:        1.0.19
+Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -14,9 +14,9 @@ BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 Requires:       diffutils
 Requires:       less
-Requires:     bzip2 gzip-utils less
-Requires:     gzip gzip-utils less
-Requires:     gzip-utils less xz
+Requires:     bzip2
+Requires:     gzip gzip-utils
+Requires:     xz
 Requires:       curl
 Provides:       cdiff
 Source44: import.info
@@ -43,7 +43,7 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc BUGS CHANGES colordiffrc colordiffrc-gitdiff colordiffrc-lightbg README
 %config(noreplace) %{_sysconfdir}/colordiffrc
 %{_bindir}/cdiff
@@ -53,6 +53,9 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %changelog
+* Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.19-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1_2
 - update to new release by fcimport
 
