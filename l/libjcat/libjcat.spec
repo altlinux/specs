@@ -1,7 +1,7 @@
 Summary: Library for reading Jcat files
 Name: libjcat
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
 Source0: %name-%version.tar
@@ -85,6 +85,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Fri Jun 26 2020 Anton Farygin <rider@altlinux.ru> 0.1.3-alt1
+- 0.1.3
+
 * Fri May 08 2020 Ivan Razzhivin <underwit@altlinux.org> 0.1.2-alt2
 - fix build man pages
 
