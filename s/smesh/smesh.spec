@@ -1,20 +1,39 @@
+%def_without netgen
+
 Name:     smesh
-Version:  6.7.6
+Version:  8.3.0.4
 Release:  alt1
 
-Summary:  An extension to oce, provides advanced meshing features
-License:  LGPLv2
+Summary:  OpenCascade based MESH framework
+License:  LGPL-2.1
 Group:    System/Libraries
-Url:      https://github.com/tpaviot/smesh
+Url:      https://github.com/LaughlinResearch/SMESH
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Patch1:   smesh-install.patch
+Patch2:   smesh-alt-return-type.patch
+Patch3:   smesh-alt-link-with-dl.patch
+Patch4:   smesh-alt-cmake-pathes.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
-BuildRequires: OCE-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-polygon-devel
+BuildRequires: opencascade-devel
+BuildRequires: libvtk8.2-devel
+%if_with netgen
+BuildRequires: libnetgen-devel netgen
+%endif
+BuildRequires: fontconfig-devel
+BuildRequires: libXext-devel
+BuildRequires: libXi-devel
+BuildRequires: libXmu-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: libxml2-devel
 BuildRequires: doxygen graphviz
 
 %description
@@ -45,25 +64,22 @@ Requires: libsmesh = %EVR
 %description -n libsmesh-devel
 Development files and headers for libsmesh.
 
-%package -n libsmesh-doc
-Summary: Development documentation for libsmesh
-Group: Development/Documentation
-Requires: libsmesh = %EVR
-BuildArch: noarch
-
-%description -n libsmesh-doc
-Development documentation for libsmesh.
-
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%cmake -GNinja \
+       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DSMESH_TESTING=ON \
-%cmake_build all doc
+       -DENABLE_NETGEN=%{?_with_netgen:ON}%{!?_with_netgen:OFF}
+%ninja_build -C BUILD
 
 %install
-%cmakeinstall_std
+%ninja_install -C BUILD
 
 %files -n libsmesh
 %doc README.md
@@ -72,10 +88,17 @@ Development documentation for libsmesh.
 %files -n libsmesh-devel
 %_libdir/*.so
 %_includedir/*
-
-%files -n libsmesh-doc
-%_datadir/doc/smesh/html
+%_libdir/cmake/SMESHConfig.cmake
 
 %changelog
+* Fri Jun 26 2020 Andrey Cherepanov <cas@altlinux.org> 8.3.0.4-alt1
+- New version.
+
+* Sat May 09 2020 Andrey Cherepanov <cas@altlinux.org> 8.3.0.3-alt1
+- New version.
+- New upstream https://github.com/LaughlinResearch/SMESH.
+- Fix License tag according to SPDX.
+- Build with opencascade instead of obsoleted OCE.
+
 * Thu Apr 26 2018 Andrey Cherepanov <cas@altlinux.org> 6.7.6-alt1
 - Initial build for Sisyphus

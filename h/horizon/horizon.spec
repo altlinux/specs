@@ -1,6 +1,6 @@
 Name: horizon
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0
@@ -23,7 +23,7 @@ BuildRequires: libgit2-devel
 BuildRequires: libcurl-devel
 BuildRequires: libglm-devel
 BuildRequires: boost-devel-headers
-BuildRequires: OCE-devel
+BuildRequires: opencascade-devel
 
 %description
 %summary
@@ -46,5 +46,8 @@ BuildRequires: OCE-devel
 %doc *.md
 
 %changelog
+* Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1.1
+- NMU: rebuild with opencascade-devel
+
 * Tue May 12 2020 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus

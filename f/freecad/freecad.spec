@@ -1,11 +1,6 @@
-%define IF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
-%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
-%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
-%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
-
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
-
+%add_python3_path %_libdir/freecad/Mod %_libdir/freecad/Ext/*
+%add_python3_req_skip FreeCADGui FreeCAD
+%add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
 %def_with bundled_libs
 %def_with glvnd
 %define oname freecad
@@ -14,18 +9,14 @@
 %define build_parallel_jobs 7
 %endif
 
-%IF_ver_gteq %ubt_id M100
 %define vtkver 8.2
-%else
-%define vtkver 8.1
-%endif
 
 # Last number in version is computed by command:
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.18.5
-Release: alt3
+Version: 0.19.2
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -34,26 +25,13 @@ Url:     http://free-cad.sourceforge.net/
 # VCS:   https://github.com/FreeCAD/FreeCAD
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExcludeArch: armh
-
 Source: %name-%version.tar
 Source1: freecad.1
 
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
-Patch2: %name-build-with-external-smesh.patch
 %endif
-
-# branch releases/FreeCAD-0-17
-#Patch3: upstream.patch
-Patch4: %name-desktop-ru.patch
-
-Patch5: %name-0.18.4-alt-boost-1.73.0-compat.patch
-Patch6: %name-0.18.4-upstream-qt-5.15-compat-1.patch
-Patch7: %name-0.18.4-upstream-qt-5.15-compat-2.patch
-Patch8: %name-0.18.4-upstream-qt-5.15-compat-3.patch
-Patch9: %name-0.18.4-upstream-qt-5.15-compat-4.patch
-Patch10: %name-alt-ignore-macro-with-empty-name.patch 
+Patch2: %name-0.18.4-alt-boost-1.73.0-compat.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -61,29 +39,31 @@ Obsoletes: free-cad < %version-%release
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-ninja
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python3
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-assistant
 BuildRequires: qt5-designer
-BuildRequires: qt5-sql-sqlite
+BuildRequires: qt5-sql-sqlite3
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-phonon-devel
-BuildRequires: python-module-PySide2
-BuildRequires: pyside2-tools-python2
-BuildRequires: python-module-shiboken2-devel
+BuildRequires: qt5-xmlpatterns-devel
+BuildRequires: python3-module-PySide2
+BuildRequires: pyside2-tools
+BuildRequires: python3-module-PySide2-devel
+BuildRequires: python3-module-shiboken2-devel
 %define qmake %qmake_qt5
 %define qtbindir %_qt5_bindir
-BuildRequires: python-devel swig gcc-fortran libf2c-ng-devel chrpath
+BuildRequires: python3-devel swig gcc-fortran libf2c-ng-devel chrpath
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-geometry-devel
 BuildRequires: boost-polygon-devel
 BuildRequires: boost-program_options-devel
-BuildRequires: boost-python-devel
+BuildRequires: boost-python3-devel
 BuildRequires: boost-signals-devel
 BuildRequires: libcoin3d-devel
 #BuildRequires: libSoQt-devel
@@ -91,21 +71,21 @@ BuildRequires: zlib-devel
 BuildRequires: libopencv2-devel libxerces-c-devel gcc-c++
 BuildRequires: java-devel-default
 BuildRequires: libXxf86misc-devel
-BuildRequires: OCE-devel libgts-devel
+BuildRequires: opencascade-devel libgts-devel
 BuildRequires: libode-devel libann-devel
 BuildRequires: doxygen graphviz
 BuildRequires: eigen3
 #BuildRequires: python-module-pivy
-BuildRequires: libnumpy-devel
+BuildRequires: libnumpy-py3-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: gdb
 BuildRequires: libvtk%{vtkver}-devel vtk%{vtkver}-examples vtk%{vtkver}-python
-#BuildRequires: libhdf5-devel libhdf5-mpi-devel
+BuildRequires: libhdf5-devel
 BuildRequires: libmed-devel libspnav-devel
-BuildRequires: python-module-matplotlib
+BuildRequires: python3-module-matplotlib-qt5
 BuildRequires: libkdtree++-devel
 %if_without bundled_libs
-BuildRequires: libsmesh-devel libnetgen-devel
+BuildRequires: libsmesh-devel libnetgen-devel netgen
 %endif
 %if_with glvnd
 BuildRequires: libglvnd-devel
@@ -114,14 +94,19 @@ Requires: libEGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
 
-%py_requires pivy matplotlib.backends.backend_qt4
-%py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
-%py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
-%py_provides ImageGui PartDesignGui _PartDesign
-%add_python_req_skip pyopencl IfcImport Units
+%py3_requires pivy matplotlib.backends.backend_qt5
+#py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
+#py3_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
+#py3_provides ImageGui PartDesignGui _PartDesign
+%add_python3_req_skip pyopencl IfcImport Units
 %add_findreq_skiplist %ldir/Mod/*
+
+%ifnarch armh
+# TODO: cgal needed for openscad was not built for armh
 Requires: openscad
-Requires: python-module-GitPython
+%endif
+Requires: python3-module-GitPython
+Requires: netgen
 
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -158,51 +143,42 @@ This package contains documentation for FreeCAD.
 %if_without bundled_libs
 # Removed bundled libraries
 %patch1 -p1
-%patch2 -p1
 rm -rf src/3rdParty
 %endif
-
-#patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+%patch2 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
 %add_optflags -Wl,-rpath,%ldir/lib
-%cmake_insource -GNinja \
+# Unable to use ninja-build because
+# ninja: error: dependency cycle: src/Mod/TechDraw/Gui/mtextedit.h -> src/Mod/TechDraw/Gui/mtextedit.h
+#cmake_insource -GNinja \
+%cmake_insource \
 	-DBUILD_ENABLE_CXX_STD:STRING="C++14" \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
 	-DCMAKE_INSTALL_DOCDIR=%ldir/doc \
 	-DCMAKE_INSTALL_LIBDIR=%ldir/lib \
 	-DOPENMPI_INCLUDE_DIRS=%_libdir/openmpi/include \
+	-DPYTHON_EXECUTABLE=%__python3 \
 	-DFREECAD_LIBPACK_USEPYSIDE=OFF \
 	-DBUILD_QT5=ON \
 %if_without bundled_libs
 	-DFREECAD_USE_EXTERNAL_SMESH=ON \
-	-DSMESH_DIR=%_libdir \
+	-DSMESH_DIR=%_libdir/cmake \
 	-DSMESH_INCLUDE_DIR=%_includedir/smesh \
-	-DSMESH_VERSION_MAJOR=7 \
+	-DBUILD_FEM_NETGEN=ON \
 %endif
 %if_with glvnd
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
-	-DFREECAD_USE_EXTERNAL_PIVY=ON 
-
-# Fix Unknown release and repository URL
-sed -i 's,FCRevision      \"Unknown\",FCRevision      \"%{release} (Git)\",' src/Build/Version.h
-sed -i 's,FCRepositoryURL \"Unknown\",FCRepositoryURL \"git://github.com/FreeCAD/FreeCAD.git master\",' src/Build/Version.h
-
+	-DFREECAD_USE_EXTERNAL_PIVY=ON \
+	-Wno-dev
 export NPROCS=%build_parallel_jobs
-%ninja_build
+%make_build
 
 %install
-%ninja_install
+%makeinstall_std
 
 # binaries
 mkdir -p %buildroot%ldir/bin
@@ -211,14 +187,6 @@ ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/freecad
 ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/freecadcmd
 ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/FreeCAD
 ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/FreeCADCmd
-
-# icons
-for size in 16 32 48 64
-do
-  install -Dm0644 %buildroot%ldir/%name-icon-${size}.png %buildroot%_iconsdir/hicolor/${size}x${size}/apps/%name.png
-done
-install -Dm0644 %buildroot%ldir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-install -Dm0644 %buildroot%ldir/%name.xpm %buildroot%_pixmapsdir/%name.xpm
 
 # manpage
 install -Dm0644 %SOURCE1 %buildroot%_man1dir/%name.1
@@ -232,6 +200,20 @@ rm -rf %buildroot%_prefix/Ext
 # l10n
 %find_lang --with-kde %name
 
+# fix python shebang
+sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod/AddonManager/AddonManager.py \
+						       %buildroot%_libdir/freecad/Mod/Spreadsheet/importXLSX.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DHatchTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DProjGroupTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVAnnoSymImageTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVBalloonTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVDimensionTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVPartTest.py \
+						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVSectionTest.py \
+						       %buildroot%_libdir/freecad/Mod/Test/testmakeWireString.py
+sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod/Robot/MovieTool.py
+
+
 %files -f %name.lang
 %doc ChangeLog.txt README.md
 %doc %ldir/License.txt
@@ -242,22 +224,29 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/Gui
 %ldir/Ext
 %ldir/Mod
+%ldir/3Dconnexion
 %ldir/examples
-%ldir/*.png
-%ldir/*.svg
-%ldir/*.xpm
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*
 %_xdgdatadir/mime/packages/*
 %_pixmapsdir/%name.xpm
-%_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/metainfo/*.appdata.xml
+%_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %files docs
 %ldir/doc
 
 %changelog
+* Wed May 05 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.2-alt1
+- New version.
+- Build with opencascade instead of obsoleted OCE.
+- Enable bundled libs to add lazy_loader python module (thanks rider@).
+- Several fixes by rider@.
+
+* Wed Mar 24 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.19.1-alt1
+- New version.
+
 * Tue Mar 16 2021 Sergey V Turchin <zerg@altlinux.org> 1:0.18.5-alt3
 - Add compatibility with p9.
 
