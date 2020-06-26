@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.0.30
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -20,6 +20,7 @@ Source2: %name.xinetd
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
+Patch5: sane-backends-1.0.30-avision-av186plus-av188.patch
 
 # Mandriva patches
 Patch201: sane-backends-1.0.18-plustek-s12.patch
@@ -149,6 +150,7 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
+%patch5 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -259,6 +261,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Jun 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.30-alt2
+- add ID information for Avision AV186+ and AV188 sheetfed USB scanners
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.30-alt1
 - new version (1.0.30) with rpmgs script
 
