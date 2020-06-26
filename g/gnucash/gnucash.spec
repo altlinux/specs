@@ -4,7 +4,7 @@
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 3.905
+Version: 3.906
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -19,6 +19,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %name-%version.tar
 Source1: gtest.tar
 Source2: %name.1
+# This source got from https://sourceforge.net/projects/gnucash/files/gnucash%20(unstable)/3.906/gnucash-3.906.tar.bz2
 Source3: gnc-vcs-info.h
 Source4: ChangeLog
 Source5: %name-README.RU
@@ -208,6 +209,9 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Tue Jun 23 2020 Andrey Cherepanov <cas@altlinux.org> 3.906-alt1
+- New version.
+
 * Mon Jun 15 2020 Andrey Cherepanov <cas@altlinux.org> 3.905-alt1
 - New version.
 
