@@ -3,7 +3,7 @@
 
 
 Name:       python3-module-%oname
-Version:    0.1.2
+Version:    0.1.4
 Release:    alt1
 
 License:    %mit
@@ -60,6 +60,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Fri Jun 19 2020 Anton Farygin <rider@altlinux.ru> 0.1.4-alt1
+- 0.1.4
+
 * Fri Feb 21 2020 Anton Farygin <rider@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 
