@@ -2,14 +2,15 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.7
-Release: alt4
+Release: alt5
+
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
-Url: http://eigen.tuxfamily.org/
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
+Url: http://eigen.tuxfamily.org/
 Source: %name-%version.tar
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Install FindEigen3.cmake
 # Adapted from Debian eigen3 package
@@ -139,6 +140,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %endif
 
 %changelog
+* Fri Jun 26 2020 Michael Shigorin <mike@altlinux.org> 3.3.7-alt5
+- E2K: lcc 1.24 workaround
+
 * Thu Aug 29 2019 Sergey V Turchin <zerg@altlinux.org> 3.3.7-alt4
 - build without Qt4
 
