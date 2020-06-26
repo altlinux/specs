@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libebml
-Version: 1.3.10
+Version: 1.4.0
 Release: alt1
 
 Summary: Extensible Binary Meta Language access library
@@ -48,6 +48,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
+- Updated to upstream version 1.4.0.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.10-alt1
 - Updated to upstream version 1.3.10.
 
