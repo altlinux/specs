@@ -1,6 +1,6 @@
 Name: liblmdbxx
 Version: 0.9.14.1
-Release: alt2
+Release: alt3
 
 Summary: A C++11 wrapper for LMDB
 
@@ -9,6 +9,7 @@ License: Public Domain
 Url: https://github.com/drycpp/lmdbxx
 
 Source: %name-%version.tar
+Patch0: lmdbxx-master-pandoc.patch
 
 BuildRequires: gcc-c++ doxygen
 BuildRequires: liblmdb-devel >= 0.9.14
@@ -38,6 +39,7 @@ applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %if_with pandoc
@@ -60,6 +62,9 @@ applications that use %name.
 %_includedir/*
 
 %changelog
+* Fri Jun 26 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.14.1-alt3
+- Added patch fixing new pandoc smartypants syntax.
+
 * Tue Dec 04 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.14.1-alt2
 - Package the Doxygen docs. Use pandoc for README if available.
 
