@@ -1,6 +1,7 @@
 %set_verify_elf_method textrel=relaxed
+%def_with check
 Name: ocaml-gettext
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Summary: OCaml library for i18n
 Group: Development/ML
@@ -12,11 +13,15 @@ Source: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: dune
 BuildRequires: ocaml-ocamldoc
+BuildRequires: ocaml-cppo
 BuildRequires: ocaml-camomile-devel
 BuildRequires: ocaml-fileutils-devel >= 0.4.4
 BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
 BuildRequires: libxml2
+%if_with check
+BuildRequires: ocaml-ounit-devel
+%endif
 
 %description
 Ocaml-gettext provides support for internationalization of Ocaml
@@ -48,6 +53,9 @@ dune build
 %install
 dune install --destdir=%buildroot
 
+%check
+find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
+dune runtest
 
 %files
 %doc LICENSE.txt
@@ -72,6 +80,10 @@ dune install --destdir=%buildroot
 %_man5dir/*.5*
 
 %changelog
+* Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 0.4.2-alt1
+- 0.4.2
+- enabled tests
+
 * Tue Oct 08 2019 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
 - 0.4.1
 
