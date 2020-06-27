@@ -1,5 +1,7 @@
+%def_with check
+
 Name: ethtool
-Version: 5.3
+Version: 5.7
 Release: alt1
 Epoch: 1
 
@@ -11,6 +13,7 @@ Url: http://sourceforge.net/projects/gkernel/
 # http://git.kernel.org/?p=network/ethtool/ethtool.git;a=summary
 # git://git.kernel.org/pub/scm/network/ethtool/ethtool.git
 Source: %name-%version-%release.tar
+BuildRequires: libmnl-devel
 
 Summary(ru_RU.UTF-8): утилита настройки Ethernet-карт
 Summary(uk_UA.UTF-8): утил╕та налаштування Ethernet-карток
@@ -43,6 +46,9 @@ Ethernet-картки, таких як швидк╕сть, порт, autonegoti
 install -pDm755 ethtool.init %buildroot%_initdir/%name
 install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 
+%check
+make check
+
 %post
 %post_service %name
 
@@ -58,6 +64,10 @@ install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_datadir/bash-completion
 
 %changelog
+* Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 1:5.7-alt1
+- 5.7
+- enabled tests
+
 * Wed Sep 25 2019 Anton Farygin <rider@altlinux.ru> 1:5.3-alt1
 - 5.3
 - added bash-completion
