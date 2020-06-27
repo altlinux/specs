@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -47,6 +47,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %def_enable docs
 %def_enable man
 
+%define glib_ver 2.62
 %define libxml2_ver 2.6
 %define poppler_ver 0.16.0
 %define vorbis_ver 0.22
@@ -69,6 +70,7 @@ BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 
 BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: tracker%api_ver_major-devel >= %ver_major
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
 BuildRequires: libenca-devel libseccomp-devel libdbus-devel pkgconfig(systemd)
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
@@ -141,22 +143,22 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %install
 %meson_install
-%find_lang %_name-%api_ver_major
+%find_lang tracker%api_ver_major-miners
 
-%files -f %_name-%api_ver_major.lang
+%files -f tracker%api_ver_major-miners.lang
 %_xdgconfigdir/autostart/tracker-miner-fs-%api_ver_major.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss-%api_ver_major.desktop
-%_libdir/%_name-%api_ver_major/
+%_libdir/%_name-%api_ver/
 %_libexecdir/tracker-extract-%api_ver_major
 %_libexecdir/tracker-miner-fs-%api_ver_major
 %_libexecdir/tracker-writeback-%api_ver_major
-%_libexecdir/tracker-%api_ver_major/
+%_libexecdir/tracker%api_ver_major/
 %{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
 %{?_enable_man:
 #%_man1dir/tracker-miner-fs.*
 #%{?_enable_rss:%_man1dir/tracker-miner-rss-%api_ver_major.1.*}
 }
-%_datadir/%_name-%api_ver_major/
+%_datadir/tracker%api_ver_major-miners/
 %_prefix/lib/systemd/user/tracker-extract*.service
 %_prefix/lib/systemd/user/tracker-miner-fs*.service
 %_prefix/lib/systemd/user/tracker-miner-rss*.service
@@ -180,6 +182,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.2-alt1
+- 2.99.2
+
 * Sun May 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - 2.99.1
 
