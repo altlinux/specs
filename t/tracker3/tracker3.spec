@@ -23,7 +23,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -155,15 +155,15 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 
 %install
 %meson_install
-%find_lang %_name-%api_ver_major
+%find_lang %name
 
-%files -f %_name-%api_ver_major.lang
+%files -f %name.lang
 %_bindir/%name
 %dir %_libdir/%_name-%api_ver
 %_libexecdir/*
-%dir %_datadir/%_name-%api_ver_major
-%_datadir/%_name-%api_ver_major/stop-words/
-%_datadir/%_name-%api_ver_major/ontologies/
+%dir %_datadir/%name
+%_datadir/%name/stop-words/
+%_datadir/%name/ontologies/
 %_datadir/bash-completion/completions/%name
 %if 0
 %_man1dir/tracker-info.*
@@ -208,6 +208,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %endif
 
 %changelog
+* Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.2-alt1
+- 2.99.2
+
 * Sun May 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - 2.99.1
 
