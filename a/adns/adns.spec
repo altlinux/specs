@@ -1,5 +1,5 @@
 Name: adns
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: GNU adns, an asynchronous DNS resolver
@@ -57,12 +57,16 @@ development of statically linked %name-based software.
 %patch0 -p1
 
 %build
+%autoreconf
 %configure
-%make_build srcdir=$PWD/src
+%make
 
 %install
 mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 %makeinstall
+
+%check
+make check
 
 %files
 %_bindir/%{name}*
@@ -79,6 +83,9 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 %_libdir/lib%name.a
 
 %changelog
+* Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Sun Jun 14 2020 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
 - 1.5.2 (Fixes: CVE-2017-9103 CVE-2017-9104 CVE-2017-9105 CVE-2017-9109, 
 	CVE-2017-9106, CVE-2017-9107, CVE-2017-9108)
@@ -87,7 +94,7 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_includedir}
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
 * Thu May 11 2017 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
 - new version
