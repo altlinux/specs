@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron9
-Version: 9.0.0
+Version: 9.0.4
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -15,8 +15,10 @@ Source: %name-%version.tar
 Source1: %name-%version-i586.tar
 # Source2-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-arm64.zip
 Source2: %name-%version-aarch64.tar
+# Source3-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-armv7l.zip
+Source3: %name-%version-armh.tar
 
-%define supported_arch x86_64 i586 aarch64
+%define supported_arch x86_64 i586 aarch64 armh
 
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
@@ -43,6 +45,11 @@ tar xfv %SOURCE2
 rm -rf swiftshader
 %endif
 
+%ifarch armh
+tar xfv %SOURCE3
+rm -rf swiftshader
+%endif
+
 %install
 mkdir -p %buildroot%_libdir/%name/
 cp -a * %buildroot%_libdir/%name/
@@ -56,6 +63,10 @@ ln -rs %buildroot%_libdir/%name/electron %buildroot/%_bindir/%name
 %endif
 
 %changelog
+* Sat Jun 27 2020 Vitaly Lipatov <lav@altlinux.ru> 9.0.4-alt1
+- new version (9.0.4) with rpmgs script
+- add armh (armv7l) arch
+
 * Sat May 23 2020 Vitaly Lipatov <lav@altlinux.ru> 9.0.0-alt1
 - new version (9.0.0) with rpmgs script
 - build as electron9
