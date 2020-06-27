@@ -2,7 +2,7 @@
 
 %define oname ppx_tools_versioned
 Name: ocaml-%oname
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 Summary: Tools for authors of ppx rewriters and other syntactic tools
 License: MIT
@@ -59,6 +59,7 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%oname/metaquot_408
 %_libdir/ocaml/%oname/metaquot_409
 %_libdir/ocaml/%oname/metaquot_410
+%_libdir/ocaml/%oname/metaquot_411
 
 %files devel
 %_libdir/ocaml/%oname/*.cmx
@@ -67,6 +68,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%oname/*.ml
 
 %changelog
+* Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 5.4.0-alt1
+- 5.4.0
+
 * Tue Apr 14 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
 - 5.3.0
 

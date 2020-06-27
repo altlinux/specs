@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
-Version: 1.6.0
+Version: 1.7.2
 Release: alt1
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
@@ -65,6 +65,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/*/driver-main/*.ml
 
 %changelog
+* Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 1.7.2-alt1
+- 1.7.2
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
