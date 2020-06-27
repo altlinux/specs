@@ -1,13 +1,13 @@
 %define armips_commit 7885552b208493a6a0f21663770c446c3ba65576
 %define discord_rpc_commit 3d3ae7129d17643bc706da0a2eea85aafd10ab3a
-%define glslang_commit f9d08a25fbe17e0677a89d398f4d7f232339c3f9
-%define ppsspp_ffmpeg_commit 90701640c7f458461310b54e7d4041230e2d5d5a
-%define ppsspp_lang_commit bfc3a511f60e84de4d49170e2c442ac36b09cdfd
+%define glslang_commit d0850f875ec392a130ccf00018dab458b546f27c
+%define ppsspp_ffmpeg_commit 55147e5f33f5ae4904f75ec082af809267122b94
+%define ppsspp_lang_commit d184ba2b607a03435be579406b816c90add334e6
 %define spirv_cross_commit a1f7c8dc8ea2f94443951ee27003bffa562c1f13
 
 Name: ppsspp
-Version: 1.9.4
-Release: alt4
+Version: 1.10
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -16,7 +16,7 @@ Group: Emulators
 Url: https://www.%name.org
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64 aarch64 armh mipsel
+ExcludeArch: ppc64le armh
 
 # https://github.com/hrydgard/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -36,7 +36,6 @@ Source7: %name.desktop
 Source8: %name-qt.desktop
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-libpng.patch
 
 BuildRequires: cmake
 BuildRequires: libGLEW-devel
@@ -44,8 +43,7 @@ BuildRequires: libSDL2-devel
 BuildRequires: libpng-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libzip-devel
-BuildRequires: python3
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-multimedia-devel
 BuildRequires: rapidjson
 
 Requires: %name-common = %EVR
@@ -90,7 +88,6 @@ This build using the Qt frontend.
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
 
 %patch0 -p1
-%patch1 -p1
 
 echo "// This is a generated file.
 
@@ -184,6 +181,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Sat Jun 27 2020 Nazarov Denis <nenderus@altlinux.org> 1.10-alt1
+- Version 1.10
+
 * Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.4-alt4
 - Don't gzip sources to speedup rpmbuild -bp
 
