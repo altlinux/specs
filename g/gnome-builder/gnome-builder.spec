@@ -12,10 +12,10 @@
 %def_with autotools
 %def_with jedi
 # disabled by default
-%def_without vala
+%def_with vala
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.53.2
 %define gtk_ver 3.22.1
-%define gtksourceview_ver 4.0.2
+%define gtksourceview_ver 4.6.1
 %define git2_ver 0.28.0.1
 %define devhelp_ver 3.30.0
 %define gjs_ver 1.42
@@ -120,7 +120,6 @@ This package provides noarch data needed for Gnome Builder to work.
 %_bindir/%name
 %_libexecdir/%name-clang
 %_libexecdir/%name-git
-%{?_with_vala:%_libexecdir/%name-vala}
 %dir %_libdir/%name
 
 %dir %_libdir/%name/girepository-1.0
@@ -151,7 +150,6 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild.plugin
 %_libdir/%name/plugins/jhbuild_plugin.py
-%{?_with_vala:%_libdir/%name/plugins/libplugin-vala-pack.so}
 %_libdir/%name/plugins/make.plugin
 %_libdir/%name/plugins/make_plugin.gresource
 %_libdir/%name/plugins/make_plugin.py
@@ -175,7 +173,8 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/rustup_plugin.py
 %_libdir/%name/plugins/stylelint.plugin
 %_libdir/%name/plugins/stylelint_plugin.py
-%{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin}
+%{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin
+%_libdir/%name/plugins/vala_pack_plugin.py}
 %_libdir/%name/plugins/valgrind.plugin
 %_libdir/%name/plugins/valgrind_plugin.gresource
 %_libdir/%name/plugins/valgrind_plugin.py
@@ -224,6 +223,9 @@ This package provides noarch data needed for Gnome Builder to work.
 %endif
 
 %changelog
+* Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
