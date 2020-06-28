@@ -1,5 +1,5 @@
 Name: chicken
-Version: 5.0.0
+Version: 5.2.0
 Release: alt1
 License: BSD style (see LICENSE)
 Group: Development/Scheme
@@ -65,7 +65,7 @@ make PLATFORM=linux PREFIX=%_prefix LIBDIR=%_libdir \
     DESTDIR=$RPM_BUILD_ROOT install
 rm -rf $RPM_BUILD_ROOT%_datadir/%name/doc
 
-for i in %buildroot%_bindir/* %buildroot%_libdir/%name/9/*.so
+for i in %buildroot%_bindir/* %buildroot%_libdir/%name/11/*.so
 do
 	chrpath -d $i ||:
 done
@@ -91,6 +91,9 @@ done
 %_libdir/lib*.a
 
 %changelog
+* Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
+- 5.2.0
+
 * Thu May 16 2019 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
 - updated to 5.0.0
 - added conflicts with mono-devel package
