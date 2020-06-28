@@ -3,7 +3,7 @@
 %define  version_suffix %nil
 
 Name:    rex
-Version: 1.11.0
+Version: 1.11.0.1
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -103,6 +103,9 @@ mv -f ChangeLog    ../
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sun Jun 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.11.0.1-alt1
+- New version
+
 * Wed Jun 10 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.11.0-alt1
 - New version
 
