@@ -1,5 +1,5 @@
 Name: liferea
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -114,6 +114,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Sun Jun 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.1-alt1
+- 1.13.1
+
 * Fri Mar 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
