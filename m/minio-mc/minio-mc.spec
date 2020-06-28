@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit 2403e7a7441b85c19ff4155568b409457bd14958
+%global commit bb3c0d45f2e64eab2b83e7f5376e1b621f0821a9
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2020-05-28T23-43-36Z
-%define version 2020.05.28
+%global tag RELEASE.2020-06-26T19-56-55Z
+%define version 2020.06.26
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -71,6 +71,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jun 28 2020 Alexey Shabalin <shaba@altlinux.org> 2020.06.26-alt1
+- Update to RELEASE.2020-06-26T19-56-55Z
+
 * Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 2020.05.28-alt1
 - Update to RELEASE.2020-05-28T23-43-36Z
 
