@@ -1,14 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-curses
-Version: 1.0.3
-Release: alt8
+Version: 1.0.6
+Release: alt1
 Summary: OCaml bindings for ncurses
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://savannah.nongnu.org/projects/ocaml-tmk/
 Source: http://download.savannah.gnu.org/releases/ocaml-tmk/%name-%version.tar
-Patch0:ocaml-curses-1.0.3-fix-term-h-detection.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
@@ -32,11 +31,10 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
-autoreconf
 
 %build
+%autoreconf
 %configure --enable-widec
 make all opt
 
@@ -64,6 +62,9 @@ ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 %_libdir/ocaml/curses/*.mli
 
 %changelog
+* Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
+- 1.0.6
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 1.0.3-alt8
 - rebuilt with ocaml-4.08
 
