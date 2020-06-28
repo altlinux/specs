@@ -1,5 +1,5 @@
 Name: irqbalance
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Evenly distribute interrupt load across CPUs
@@ -9,7 +9,10 @@ Group: System/Kernel and hardware
 Url: https://github.com/Irqbalance/irqbalance
 Source: %name-%version.tar
 
-BuildRequires: gccmakedep glib2-devel libcap-ng-devel libnuma-devel libncurses-devel
+BuildRequires: gccmakedep glib2-devel libcap-ng-devel libncurses-devel
+%ifnarch armh
+BuildRequires: libnuma-devel
+%endif
 
 %define sysconfig %_sysconfdir/sysconfig/%name
 
@@ -53,6 +56,9 @@ install -pDm644 misc/%name.service %buildroot%systemd_unitdir/%name.service
 %systemd_unitdir/%name.service
 
 %changelog
+* Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Wed May 01 2019 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
