@@ -1,7 +1,7 @@
 # on i586: verify-elf: ERROR: ./usr/lib/ocaml/site-lib/lwt/lwt.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
-Version: 5.1.1
+Version: 5.3.0
 Release: alt1
 Summary: OCaml lightweight thread library
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml-findlib ocaml-ocamldoc termutils ocaml-ssl ocaml-react glib2-devel libev-devel chrpath
-BuildRequires: dune opam ocaml-cppo ocaml-bisect_ppx-devel ocaml-ocplib-endian-devel
+BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ocplib-endian-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-ppx_tools_versioned-devel ocaml-result-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -75,6 +75,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
+- 5.3.0
+
 * Wed Feb 12 2020 Anton Farygin <rider@altlinux.ru> 5.1.1-alt1
 - 5.1.1
 - fixed License tag
