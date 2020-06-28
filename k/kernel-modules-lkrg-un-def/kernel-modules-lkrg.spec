@@ -1,6 +1,6 @@
 %define module_name	lkrg
-%define module_version	0.7
-%define module_release	alt6.gitd57b4c0
+%define module_version	0.8
+%define module_release	alt1
 
 %define flavour		un-def
 %define karch		%ix86 x86_64
@@ -22,7 +22,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 ExclusiveOS: Linux
 URL: https://www.openwall.com/lkrg/
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version-%module_release
+BuildRequires: kernel-source-%module_name = %module_version
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -60,6 +60,9 @@ install p_lkrg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Sun Jun 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
+- Updated to 0.8.
 
 * Thu Jun 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt6.gitd57b4c0
 - Updated to git commit d57b4c0f0e63d4d88761e098c53280967f2d1aec (fixed
