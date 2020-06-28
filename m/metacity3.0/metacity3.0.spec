@@ -7,7 +7,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Metacity window manager
 License: %gpl2plus
@@ -19,6 +19,8 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
+
+Patch10: %_name-3.37.1-up-Drop-use-of-VK_PHYSICAL_DEVICE_TYPE_RANGE_SIZE.patch
 
 # From configure.ac
 %define gtk_ver 3.22.0
@@ -87,6 +89,7 @@ This package contains the lib%name static library.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %autoreconf
@@ -135,6 +138,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sun Jun 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
+- fixed build against newest Vulkan
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
