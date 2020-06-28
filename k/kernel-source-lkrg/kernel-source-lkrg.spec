@@ -1,9 +1,9 @@
 %define module_name lkrg
-%define module_version 0.7
+%define module_version 0.8
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt6.gitd57b4c0
+Release: alt1
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -12,6 +12,7 @@ Group: Development/Kernel
 Url:  https://www.openwall.com/lkrg/
 
 VCS: https://bitbucket.org/Adam_pi3/lkrg-main.git
+# repacked https://www.openwall.com/lkrg/lkrg-%version.tar.gz
 Source: %module_name-%version.tar
 
 ExclusiveArch: i586 x86_64 aarch64
@@ -42,6 +43,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sun Jun 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
+- Updated to 0.8.
+
 * Thu Jun 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7-alt6.gitd57b4c0
 - Updated to git commit d57b4c0f0e63d4d88761e098c53280967f2d1aec (fixed
   build with kernel 5.7).
