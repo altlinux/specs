@@ -2,7 +2,7 @@
 
 
 Name: janus
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -188,6 +188,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Sun Jun 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.10.2-alt1
+- New version
+
 * Mon Jun 15 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.10.1-alt1
 - New version
 
