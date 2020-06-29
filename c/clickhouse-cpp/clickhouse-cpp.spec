@@ -1,22 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse-cpp
-Version: 0.0.1
-Release: alt1.git3b1e996
+Version: 1.2.0
+Release: alt1
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
 Url: https://github.com/artpaul/clickhouse-cpp
 
+# currently doesn't build for 32bit systems
+ExcludeArch: %ix86 armh
+
 # https://github.com/artpaul/clickhouse-cpp.git
 Source: %name-%version.tar
+Source1: %name.watch
 
 Patch1: %name-alt-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: liblz4-devel
 BuildRequires: libcityhash-devel
-BuildRequires: libgtest-devel
 
 %description
 C++ client for Yandex ClickHouse.
@@ -95,5 +98,8 @@ rm -rf contrib
 %_libdir/*.so
 
 %changelog
+* Mon Jun 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
+- Updated to upstream release version 1.2.0.
+
 * Thu Aug 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt1.git3b1e996
 - Initial build for ALT.
