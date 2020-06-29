@@ -1,5 +1,5 @@
 Name:    libzim
-Version: 6.1.5
+Version: 6.1.6
 Release: alt1
 Summary: Library for reading/writing ZIM files
 
@@ -21,6 +21,7 @@ BuildRequires: libicu-devel
 BuildRequires: python3-dev
 BuildRequires: python3-module-Cython
 BuildRequires: ninja-build
+BuildRequires: libzstd-devel
 
 Provides: zimlib = %version-%release
 
@@ -64,6 +65,9 @@ developing applications that use %{name}.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jun 25 2020 Andrey Cherepanov <cas@altlinux.org> 6.1.6-alt1
+- New version.
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 6.1.5-alt1
 - New version.
 
