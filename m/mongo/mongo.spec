@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo
-Version: 4.2.6
+Version: 4.2.8
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -200,6 +200,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Mon Jun 29 2020 Vladimir Didenko <cow@altlinux.org> 4.2.8-alt1
+- 4.2.8
+
 * Mon Apr 27 2020 Vladimir Didenko <cow@altlinux.org> 4.2.6-alt1
 - 4.2.6
 
