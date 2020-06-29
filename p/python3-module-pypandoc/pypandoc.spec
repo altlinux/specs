@@ -1,8 +1,8 @@
 %define oname pypandoc
 
 Name: python3-module-%oname
-Version: 0.9.3
-Release: alt4
+Version: 1.5
+Release: alt1
 
 Summary: Thin wrapper for pandoc
 License: MIT
@@ -36,7 +36,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
+%if 0
 %__python3 setup.py test
+%endif
 
 %files
 %doc *.md
@@ -44,6 +46,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Mon Jun 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt1
+- Version updated to 1.5.
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.3-alt4
 - build for python3 disabled
 
