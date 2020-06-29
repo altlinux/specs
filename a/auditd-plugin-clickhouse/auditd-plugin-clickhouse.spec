@@ -9,10 +9,13 @@
 
 Name:    auditd-plugin-clickhouse
 Version: 20200207.3
-Release: alt1
+Release: alt2
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
+
+# dependency clickhouse-cpp currently doesn't build for 32bit systems
+ExcludeArch: %ix86 armh
 
 Source: %name-%version.tar
 
@@ -52,6 +55,9 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Mon Jun 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200207.3-alt2
+- Updated supported architectures.
+
 * Fri Feb 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200207.3-alt1
 - Logged and ignored potential exceptions when saving data to temporary storage.
 
