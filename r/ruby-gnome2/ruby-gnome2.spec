@@ -1,6 +1,6 @@
 Name: 	       ruby-gnome2
-Version:       3.4.1
-Release:       alt1.3
+Version:       3.4.3
+Release:       alt1
 Summary:       Ruby bindings for GNOME
 License:       MIT
 Group:         Development/Ruby
@@ -65,6 +65,7 @@ BuildRequires: gem-cairo
 BuildRequires: gem-rake
 
 Requires:      gem(atk)
+Requires:      gem(atk-no-gi)
 Requires:      gem(cairo-gobject)
 Requires:      gem(clutter)
 Requires:      gem(clutter-gdk)
@@ -73,6 +74,7 @@ Requires:      gem(clutter-gtk)
 Requires:      gem(gdk3)
 Requires:      gem(gdk4)
 Requires:      gem(gdk_pixbuf2)
+Requires:      gem(gdk_pixbuf2-no-gi)
 Requires:      gem(gegl)
 Requires:      gem(gio2)
 Requires:      gem(glib2)
@@ -83,16 +85,22 @@ Requires:      gem(gsf)
 Requires:      gem(gstreamer)
 Requires:      gem(gtk2)
 Requires:      gem(gtk3)
+Requires:      gem(gtk3-no-gi)
 Requires:      gem(gtk4)
 Requires:      gem(gtksourceview2)
 Requires:      gem(gtksourceview3)
+Requires:      gem(gtksourceview3-no-gi)
 Requires:      gem(gtksourceview4)
 Requires:      gem(gvlc)
 Requires:      gem(pango)
+Requires:      gem(pango-no-gi)
 Requires:      gem(poppler)
+Requires:      gem(poppler-no-gi)
 Requires:      gem(rsvg2)
+Requires:      gem(rsvg2-no-gi)
 Requires:      gem(vte)
 Requires:      gem(vte3)
+Requires:      gem(vte3-no-gi)
 Requires:      gem(webkit-gtk)
 Requires:      gem(webkit-gtk2)
 Requires:      gem(webkit2-gtk)
@@ -126,6 +134,33 @@ Group:         Documentation
 BuildArch:     noarch
 
 %description   -n gem-atk-doc
+Documentation files for %{name}.
+
+
+%package       -n gem-atk-no-gi
+Summary:       Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-atk-no-gi
+%summary.
+
+
+%package       -n gem-atk-no-gi-devel
+Summary:       Headers for gem-atk-no-gi
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-atk-no-gi-devel
+%summary.
+
+
+%package       -n gem-atk-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-atk-no-gi-doc
 Documentation files for %{name}.
 
 
@@ -272,12 +307,39 @@ BuildArch:     noarch
 %summary.
 
 
+%package       -n gem-gdk-pixbuf2-devel
+Summary:       Headers for gem-gdk-pixbuf2
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-gdk-pixbuf2-devel
+%summary.
+
+
 %package       -n gem-gdk-pixbuf2-doc
 Summary:       Documentation files for %name
 Group:         Documentation
 BuildArch:     noarch
 
 %description   -n gem-gdk-pixbuf2-doc
+Documentation files for %{name}.
+
+
+%package       -n gem-gdk-pixbuf2-no-gi
+Summary:       Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-gdk-pixbuf2-no-gi
+%summary.
+
+
+%package       -n gem-gdk-pixbuf2-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-gdk-pixbuf2-no-gi-doc
 Documentation files for %{name}.
 
 
@@ -300,7 +362,7 @@ Documentation files for %{name}.
 
 
 %package       -n gem-gio2
-Summary:       Ruby/GIO2 is a Ruby binding of gio-2.0.x
+Summary:       Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x
 Group:         Development/Ruby
 
 %description   -n gem-gio2
@@ -520,6 +582,23 @@ BuildArch:     noarch
 Documentation files for %{name}.
 
 
+%package       -n gem-gtk3-no-gi
+Summary:       Ruby/GTK3 is a Ruby binding of GTK+ 3 with no Graphic Interface
+Group:         Development/Ruby
+
+%description   -n gem-gtk3-no-gi
+%summary.
+
+
+%package       -n gem-gtk3-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-gtk3-no-gi-doc
+Documentation files for %{name}.
+
+
 %package       -n gem-gtk4
 Summary:       Ruby/GTK4 is a Ruby binding of GTK+ 4
 Group:         Development/Ruby
@@ -573,12 +652,39 @@ BuildArch:     noarch
 %summary.
 
 
+%package       -n gem-gtksourceview3-devel
+Summary:       Headers for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-gtksourceview3-devel
+%summary.
+
+
 %package       -n gem-gtksourceview3-doc
 Summary:       Documentation files for %name
 Group:         Documentation
 BuildArch:     noarch
 
 %description   -n gem-gtksourceview3-doc
+Documentation files for %{name}.
+
+
+%package       -n gem-gtksourceview3-no-gi
+Summary:       Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-gtksourceview3-no-gi
+%summary.
+
+
+%package       -n gem-gtksourceview3-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-gtksourceview3-no-gi-doc
 Documentation files for %{name}.
 
 
@@ -652,12 +758,38 @@ BuildArch:     noarch
 Documentation files for %{name}.
 
 
+%package       -n gem-pango-no-gi
+Summary:       Ruby/Pango is a Ruby binding of pango based on GObject-Introspection with no Graphic Interface
+Group:         Development/Ruby
+
+%description   -n gem-pango-no-gi
+%summary.
+
+
+%package       -n gem-pango-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-pango-no-gi-doc
+Documentation files for %{name}.
+
+
 %package       -n gem-poppler
 Summary:       Ruby/Poppler is a Ruby binding of poppler-glib
 Group:         Development/Ruby
 BuildArch:     noarch
 
 %description   -n gem-poppler
+%summary.
+
+
+%package       -n gem-poppler-devel
+Summary:       Headers for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-poppler-devel
 %summary.
 
 
@@ -670,6 +802,24 @@ BuildArch:     noarch
 Documentation files for %{name}.
 
 
+%package       -n gem-poppler-no-gi
+Summary:       Ruby/Poppler is a Ruby binding of poppler-glib with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-poppler-no-gi
+%summary.
+
+
+%package       -n gem-poppler-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-poppler-no-gi-doc
+Documentation files for %{name}.
+
+
 %package       -n gem-rsvg2
 Summary:       Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection
 Group:         Development/Ruby
@@ -679,12 +829,39 @@ BuildArch:     noarch
 %summary.
 
 
+%package       -n gem-rsvg2-devel
+Summary:       Headers for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-rsvg2-devel
+%summary.
+
+
 %package       -n gem-rsvg2-doc
 Summary:       Documentation files for %name
 Group:         Documentation
 BuildArch:     noarch
 
 %description   -n gem-rsvg2-doc
+Documentation files for %{name}.
+
+
+%package       -n gem-rsvg2-no-gi
+Summary:       Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-rsvg2-no-gi
+%summary.
+
+
+%package       -n gem-rsvg2-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-rsvg2-no-gi-doc
 Documentation files for %{name}.
 
 
@@ -723,12 +900,39 @@ BuildArch:     noarch
 %summary.
 
 
+%package       -n gem-vte3-devel
+Summary:       Headers for %name
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-vte3-devel
+%summary.
+
+
 %package       -n gem-vte3-doc
 Summary:       Documentation files for %name
 Group:         Documentation
 BuildArch:     noarch
 
 %description   -n gem-vte3-doc
+Documentation files for %{name}.
+
+
+%package       -n gem-vte3-no-gi
+Summary:       Ruby/VTE3 is a Ruby binding of VTE for use with GTK3 with no Graphic Interface
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n gem-vte3-no-gi
+%summary.
+
+
+%package       -n gem-vte3-no-gi-doc
+Summary:       Documentation files for %name
+Group:         Documentation
+BuildArch:     noarch
+
+%description   -n gem-vte3-no-gi-doc
 Documentation files for %{name}.
 
 
@@ -837,12 +1041,11 @@ Documentation files for libsecret gem.
 %description   -n gem-libsecret-doc -l ru_RU.UTF8
 Файлы сведений для самоцвета libsecret.
 
-
 %prep
 %setup
 
 %build
-%ruby_build --ignore=ruby-gnome2
+%ruby_build --ignore=ruby-gnome2,gdk3-no-gi
 
 %install
 %ruby_install
@@ -856,8 +1059,18 @@ Documentation files for libsecret gem.
 %ruby_gemspecdir/atk-%version.gemspec
 %ruby_gemslibdir/atk-%version
 
+%files         -n gem-atk-devel
+%ruby_includedir/atk
+
 %files         -n gem-atk-doc
 %ruby_gemsdocdir/atk-%version
+
+%files         -n gem-atk-no-gi
+%ruby_gemspecdir/atk-no-gi-%version.gemspec
+%ruby_gemslibdir/atk-no-gi-%version
+
+%files         -n gem-atk-no-gi-doc
+%ruby_gemsdocdir/atk-no-gi-%version
 
 %files         -n gem-cairo-gobject
 %ruby_gemspecdir/cairo-gobject-%version.gemspec
@@ -916,8 +1129,18 @@ Documentation files for libsecret gem.
 %ruby_gemspecdir/gdk_pixbuf2-%version.gemspec
 %ruby_gemslibdir/gdk_pixbuf2-%version
 
+%files         -n gem-gdk-pixbuf2-devel
+%ruby_includedir/gdk_pixbuf2
+
 %files         -n gem-gdk-pixbuf2-doc
 %ruby_gemsdocdir/gdk_pixbuf2-%version
+
+%files         -n gem-gdk-pixbuf2-no-gi
+%ruby_gemspecdir/gdk_pixbuf2-no-gi-%version.gemspec
+%ruby_gemslibdir/gdk_pixbuf2-no-gi-%version
+
+%files         -n gem-gdk-pixbuf2-no-gi-doc
+%ruby_gemsdocdir/gdk_pixbuf2-no-gi-%version
 
 %files         -n gem-gegl
 %ruby_gemspecdir/gegl-%version.gemspec
@@ -1013,6 +1236,13 @@ Documentation files for libsecret gem.
 %files         -n gem-gtk3-doc
 %ruby_gemsdocdir/gtk3-%version
 
+%files         -n gem-gtk3-no-gi
+%ruby_gemspecdir/gtk3-no-gi-%version.gemspec
+%ruby_gemslibdir/gtk3-no-gi-%version
+
+%files         -n gem-gtk3-no-gi-doc
+%ruby_gemsdocdir/gtk3-no-gi-%version
+
 %files         -n gem-gtk4
 %ruby_gemspecdir/gtk4-%version.gemspec
 %ruby_gemslibdir/gtk4-%version
@@ -1035,8 +1265,18 @@ Documentation files for libsecret gem.
 %ruby_gemspecdir/gtksourceview3-%version.gemspec
 %ruby_gemslibdir/gtksourceview3-%version
 
+%files         -n gem-gtksourceview3-devel
+%ruby_includedir/gtksourceview3
+
 %files         -n gem-gtksourceview3-doc
 %ruby_gemsdocdir/gtksourceview3-%version
+
+%files         -n gem-gtksourceview3-no-gi
+%ruby_gemspecdir/gtksourceview3-no-gi-%version.gemspec
+%ruby_gemslibdir/gtksourceview3-no-gi-%version
+
+%files         -n gem-gtksourceview3-no-gi-doc
+%ruby_gemsdocdir/gtksourceview3-no-gi-%version
 
 %files         -n gem-gtksourceview4
 %ruby_gemspecdir/gtksourceview4-%version.gemspec
@@ -1067,19 +1307,46 @@ Documentation files for libsecret gem.
 %files         -n gem-pango-doc
 %ruby_gemsdocdir/pango-%version
 
+%files         -n gem-pango-no-gi
+%ruby_gemspecdir/pango-no-gi-%version.gemspec
+%ruby_gemslibdir/pango-no-gi-%version
+
+%files         -n gem-pango-no-gi-doc
+%ruby_gemsdocdir/pango-no-gi-%version
+
 %files         -n gem-poppler
 %ruby_gemspecdir/poppler-%version.gemspec
 %ruby_gemslibdir/poppler-%version
 
+%files         -n gem-poppler-devel
+%ruby_includedir/poppler
+
 %files         -n gem-poppler-doc
 %ruby_gemsdocdir/poppler-%version
+
+%files         -n gem-poppler-no-gi
+%ruby_gemspecdir/poppler-no-gi-%version.gemspec
+%ruby_gemslibdir/poppler-no-gi-%version
+
+%files         -n gem-poppler-no-gi-doc
+%ruby_gemsdocdir/poppler-no-gi-%version
 
 %files         -n gem-rsvg2
 %ruby_gemspecdir/rsvg2-%version.gemspec
 %ruby_gemslibdir/rsvg2-%version
 
+%files         -n gem-rsvg2-devel
+%ruby_includedir/rsvg2
+
 %files         -n gem-rsvg2-doc
 %ruby_gemsdocdir/rsvg2-%version
+
+%files         -n gem-rsvg2-no-gi
+%ruby_gemspecdir/rsvg2-no-gi-%version.gemspec
+%ruby_gemslibdir/rsvg2-no-gi-%version
+
+%files         -n gem-rsvg2-no-gi-doc
+%ruby_gemsdocdir/rsvg2-no-gi-%version
 
 %files         -n gem-vte
 %ruby_gemspecdir/vte-%version.gemspec
@@ -1096,8 +1363,18 @@ Documentation files for libsecret gem.
 %ruby_gemspecdir/vte3-%version.gemspec
 %ruby_gemslibdir/vte3-%version
 
+%files         -n gem-vte3-devel
+%ruby_includedir/vte3
+
 %files         -n gem-vte3-doc
 %ruby_gemsdocdir/vte3-%version
+
+%files         -n gem-vte3-no-gi
+%ruby_gemspecdir/vte3-no-gi-%version.gemspec
+%ruby_gemslibdir/vte3-no-gi-%version
+
+%files         -n gem-vte3-no-gi-doc
+%ruby_gemsdocdir/vte3-no-gi-%version
 
 %files         -n gem-webkit-gtk
 %ruby_gemspecdir/webkit-gtk-%version.gemspec
@@ -1136,6 +1413,13 @@ Documentation files for libsecret gem.
 
 
 %changelog
+* Tue Jun 30 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
+- ^ 3.4.1 -> 3.4.3
+- + a few package task build depended gem
+
+* Thu Jun 04 2020 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1.4
+- Fix
+
 * Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1.3
 - Fix build by adding libbrotli-devel.
 

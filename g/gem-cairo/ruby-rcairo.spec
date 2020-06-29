@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.16.5
-Release:       alt1
+Release:       alt1.1
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
@@ -28,6 +28,7 @@ BuildRequires: libffi-devel
 BuildRequires: bzlib-devel
 BuildRequires: libossp-uuid-dce-devel
 BuildRequires: libdrm-devel
+BuildRequires: libbrotli-devel
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(xshmfence)
@@ -120,6 +121,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue May 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.16.5-alt1.1
+- + lost build require dep to "libbrotli-devel"
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.16.5-alt1
 - ^ 1.16.4 -> 1.16.5
 - ! spec tags and syntax

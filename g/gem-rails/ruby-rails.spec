@@ -1,8 +1,8 @@
 %define        pkgname rails
 
 Name:          gem-%pkgname
-Version:       5.2.4.1
-Release:       alt4
+Version:       5.2.4.3
+Release:       alt1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -369,6 +369,15 @@ install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 
 %changelog
+* Mon Jun 29 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.3-alt1
+- ^ 5.2.4.1 -> 5.2.4.3
+- ! bugfixes
+ + - CVE-2020-8162
+ + - CVE-2020-8164
+ + - CVE-2020-8165
+ + - CVE-2020-8166
+ + - CVE-2020-8167
+
 * Tue May 19 2020 Pavel Skrylev <majioa@altlinux.org> 5.2.4.1-alt4
 - * railsctl tmp detection, minor fixes
 

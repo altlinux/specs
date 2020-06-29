@@ -1,8 +1,8 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.3
-Release:       alt15
+Version:       5.999.4
+Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -15,9 +15,7 @@ Source:        %name-%version.tar
 Patch:         patch.patch
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(olddoc)
 
-Requires:      ruby-pry
 Requires:      chrpath
 Requires:      setup-rb
 
@@ -62,7 +60,7 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
 %build
 %__setup_rb build --use=setup --alias=setup-rb
@@ -89,6 +87,35 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Jun 30 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt1
+- ^ 5.999.3 -> 5.999.4
+- + actor module
+- + 3 actors: copy, link, touch
+- + dep-source command line key, to define a name of a source for the
+    specified used source, and set to show requires
+- + append and skip lists support in source gem and gemfile
+- + check to wheither the gemfile is exist, if no skip install
+- + echoe spec core extension module
+- + echo gemspec parser
+- + gemspec detector for bones gemspec types
+- + bones extension for core
+- + blank method to replace embedded one in gem's specification class
+- + autorequire for olddoc and wrongdoc modules if no
+- + simple replacement for gem olddoc
+- + simple replacement for gem wrongdoc
+- + check to wheither the gemfile is exist, if no skip install
+- + log module
+- - unnecessary deps
+- - duplication extfiles due to block in gem source module
+- * installation of compiled modules by actors
+- * gemspec scheme enumeration and requiring
+- * name of rakefile to package task gemspec load
+- * gemspecs evaluating and loading in module space for bones, echoe, hoe
+    and package task
+- * proper loading Rakefile into named module instead of unnamed to
+    allowing root level defined methods access
+- ! rookbook gemspec detector
+
 * Wed Apr 08 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.3-alt15
 - - explicit use of prefixes key in build section
 

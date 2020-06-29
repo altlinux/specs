@@ -1,13 +1,13 @@
-%define        pkgname little-plugger
+%define        pkgname fog-aliyun
 
 Name:          gem-%pkgname
-Version:       1.1.4.1
-Release:       alt0.1
-Summary:       LittlePlugger is a module that provides Gem based plugin management
+Version:       0.3.13
+Release:       alt1
+Summary:       Fog provider for aliyun
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/TwP/little-plugger
-Vcs:           https://github.com/TwP/little-plugger.git
+Url:           https://github.com/fog/fog-aliyun
+Vcs:           https://github.com/fog/fog-aliyun.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -20,9 +20,7 @@ Obsoletes:     ruby-%gemname < %EVR
 Provides:      ruby-%gemname = %EVR
 
 %description
-LittlePlugger is a module that provides Gem based plugin management. By
-extending your own class or module with LittlePlugger you can easily
-manage the loading and initializing of plugins provided by other gems.
+%summary.
 
 
 %package       doc
@@ -42,7 +40,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -60,18 +58,18 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Tue Jun 30 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.4.1-alt0.1
-- ^ 1.1.4 -> 1.1.4.1pre
+* Thu Jun 18 2020 Pavel Skrylev <majioa@altlinux.org> 0.3.13-alt1
+- > Ruby Policy 2.0
+- ^ 0.3.2 -> 0.3.13
 
-* Fri Mar 06 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt2
-- > Use Ruby Policy 2.0
-- ! spec tags
+* Tue Jul 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1.1
+- Rebuild with new Ruby autorequirements.
 
-* Thu Aug 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1.1
-- Rebuild for new Ruby autorequirements.
-
-* Wed May 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+* Mon Jun 25 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
 - New version.
 
-* Sun May 27 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+* Fri Jun 22 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
+- New version.
+
+* Thu May 24 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
