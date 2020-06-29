@@ -1,7 +1,7 @@
 %define pyname rdbtools
 
 Name: redis-rdb-tools
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
@@ -45,7 +45,7 @@ This package contains python3 module for %name.
 
 %prep
 %setup
-%patch0 -p2
+#patch0 -p2
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'run_tests' \))
@@ -81,6 +81,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%pyname/
 
 
 %changelog
+* Mon Jun 29 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1.15-alt1
+- new version 0.1.15 (with rpmrb script)
+
 * Fri Apr 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1.14-alt1
 - new version 0.1.14 (with rpmrb script)
 
