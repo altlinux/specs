@@ -4,11 +4,11 @@
 %def_with pam
 
 Name: monit
-Version: 5.26.0
+Version: 5.27.0
 Release: alt1
 
 Summary: Process monitor and restart utility
-License: AGPLv3
+License: AGPL-3.0
 Group: Monitoring
 
 Url: http://mmonit.com/monit
@@ -31,6 +31,7 @@ Requires(post,preun): service >= 0.5-alt1
 # Automatically added by buildreq on Fri Apr 06 2012
 # optimized out: libcom_err-devel libkrb5-devel
 BuildRequires: flex libpam-devel libssl-devel zlib-devel
+BuildRequires: /usr/bin/pod2man
 
 %define _ssldir %_var/lib/ssl
 %define _pemdir %_ssldir/certs
@@ -91,7 +92,7 @@ sed -i \
 
 %build
 sh bootstrap
-%autoreconf
+#autoreconf
 %configure \
 	%{subst_with pam}
 
@@ -157,7 +158,7 @@ fi
 %preun_service %name
 
 %files
-%doc README* examples/
+%doc examples/
 %config %_initdir/%name
 %_unitdir/%name.service
 %ghost %attr(600,root,root) %config(noreplace,missingok) %_pemdir/*
@@ -182,6 +183,10 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Mon Jun 29 2020 Michael Shigorin <mike@altlinux.org> 5.27.0-alt1
+- new version (watch file uupdate)
+- skip autoreconf (triggers ftbfs): bootstrap is there already
+
 * Sat Jul 06 2019 Michael Shigorin <mike@altlinux.org> 5.26.0-alt1
 - new version (watch file uupdate)
 
