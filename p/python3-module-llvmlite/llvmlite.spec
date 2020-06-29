@@ -1,8 +1,8 @@
 %define  oname llvmlite
 
 Name:    python3-module-%oname
-Version: 0.31.0
-Release: alt2
+Version: 0.33.0
+Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -14,12 +14,11 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: clang7.0 llvm7.0-devel libstdc++-devel
-%if "3"!="3"
-BuildRequires: python-module-enum34
-%endif
+BuildRequires: clang10.0 llvm10.0-devel libstdc++-devel
 
 Source:  %oname-%version.tar
+
+Patch: llvmlite-0.33.0-llvm-10.patch
 
 %description
 A lightweight LLVM python binding for writing JIT compilers
@@ -40,12 +39,17 @@ following approach:
 
 %prep
 %setup -n %oname-%version
+%patch -p1
+%ifarch armh
+sed -ri '/^\S+FLTO_FLAGS/ s,=.+$,=,' ffi/Makefile.linux
+%endif
 
 %build
 %remove_optflags -frecord-gcc-switches
-%add_optflags -grecord-gcc-switches
+%add_optflags -grecord-gcc-switches -fPIC
 export CXX="clang++"
 export LLVM_CONFIG=%_bindir/llvm-config
+export LLVMLITE_SKIP_LLVM_VERSION_CHECK=1
 %python3_build
 
 %install
@@ -57,6 +61,10 @@ export LLVM_CONFIG=%_bindir/llvm-config
 %doc *.rst
 
 %changelog
+* Sat Jun 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.33.0-alt1
+- Build new version.
+- Build without python2 support.
+
 * Fri Feb 14 2020 Grigory Ustinov <grenka@altlinux.org> 0.31.0-alt2
 - Add explicit BR on llvm7, because porting on llvm9 is still not finished.
 

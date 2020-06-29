@@ -1,7 +1,7 @@
 %define  oname numba
 
 Name:    python3-module-%oname
-Version: 0.46.0
+Version: 0.50.1
 Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
@@ -12,10 +12,9 @@ URL:     https://pypi.org/project/numba
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: gcc-c++ libgomp9-devel libnumpy-devel libnumpy-py3-devel
-BuildRequires: python3-module-six
+BuildRequires(pre): rpm-build-python3 python3-module-six
+BuildRequires: python3-module-setuptools
+BuildRequires: gcc-c++ libgomp9-devel libnumpy-py3-devel
 
 Source:  %oname-%version.tar
 
@@ -40,14 +39,8 @@ find -type f -name '*.py*' -exec sed -i 's|numba.six.moves|six.moves|'  -- '{}' 
 %install
 %python3_install
 
-%if "3"=="3"
 mv %buildroot%_bindir/numba %buildroot%_bindir/numba3
 mv %buildroot%_bindir/pycc %buildroot%_bindir/pycc3
-%endif
-
-%if "3"==""
-rm -rf %buildroot/%python_sitelibdir/numba/tests
-%endif
 
 %files
 %_bindir/numba3
@@ -57,6 +50,9 @@ rm -rf %buildroot/%python_sitelibdir/numba/tests
 %doc CHANGE_LOG *.rst
 
 %changelog
+* Sat Jun 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.50.1-alt1
+- Build new version.
+
 * Wed Dec 18 2019 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
 - Build new version.
 
