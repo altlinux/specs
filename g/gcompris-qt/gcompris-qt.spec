@@ -1,10 +1,10 @@
 Name:    gcompris-qt
-Version: 0.97
+Version: 0.97.1
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
-License: GPLv3
+License: GPL-3.0
 Group:   Games/Educational
 URL:     http://www.gcompris.net
 
@@ -72,7 +72,8 @@ tar xf %SOURCE1
 tar xf %SOURCE2
 
 %build
-%cmake -DKDE_INSTALL_APPDIR=%_desktopdir \
+%cmake \
+       -DKDE_INSTALL_APPDIR=%_desktopdir \
        -DKDE_INSTALL_METAINFODIR=%_datadir/metainfo
 %cmake_build
 
@@ -93,6 +94,10 @@ tar xf %SOURCE2
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Mon Jun 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.97.1-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Thu Dec 12 2019 Andrey Cherepanov <cas@altlinux.org> 0.97-alt1
 - New version.
 
