@@ -5,7 +5,7 @@
 
 Name:     simpletest
 Version:  11
-Release:  alt2
+Release:  alt3
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -71,6 +71,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Tue Jun 30 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt3
+- Simplify compiler specific pg-args selection.
+
 * Tue Jun 30 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt2
 - Workaround gcc incompatibility between -pg and
   -fomit-frame-pointer. This fixes armh build.
