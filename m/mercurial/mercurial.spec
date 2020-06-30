@@ -1,14 +1,16 @@
-Version: 5.1
+Version: 5.4.1
 Release: alt1
 Name: mercurial
 %setup_python_module %name
 
 Summary: Mercurial source code management system
+
 Group: Development/Other
 License: GPLv2+
 Url: https://mercurial-scm.org
 
 Source0: %name-%version.tar
+Patch1: %name-%version-%release.patch
 
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
@@ -82,12 +84,13 @@ This extensions are included in package:
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python_build_debug
 
-make -C doc clean
-make -C doc all
+make PYTHON=%__python -C doc clean
+make PYTHON=%__python -C doc all
 
 # TODO: run tests on build
 
@@ -126,6 +129,11 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python_sitelibdir/hgext3rd
 
 %changelog
+* Tue Jun 30 2020 Grigory Ustinov <grenka@altlinux.org> 5.4.1-alt1
+- 5.4.1 (Closes: #38654).
+- spec: Set explicitly PYTHON=%%__python to make the docs. (thx arei@)
+- Set python version explicitly in the shebang of hg-ssh. (thx arei@)
+
 * Thu Aug 08 2019 Grigory Ustinov <grenka@altlinux.org> 5.1-alt1
 - 5.1
 
