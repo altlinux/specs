@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200615
+Version: 20200629
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,20 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 30 2020 Cronbuild Service <cronbuild@altlinux.org> 20200629-alt1
+- upstream changes (GIT 1a0c0c2):
+  + amdgpu: add UVD firmware for SI asics (thx Alex Deucher)
+  + amdgpu: update renoir firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update picasso firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update raven2 firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update raven firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: add vega20 TA firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update vega20 firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update vega12 firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update vega10 firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update navi10 firmware from 20.20 release (thx Alex Deucher)
+  + amdgpu: update navi14 firmware from 20.20 release (thx Alex Deucher)
+
 * Wed Jun 24 2020 Cronbuild Service <cronbuild@altlinux.org> 20200615-alt1
 - upstream changes (GIT 3890db3):
   + rtl_nic: add firmware for RTL8125B (thx Heiner Kallweit)
