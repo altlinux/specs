@@ -2,11 +2,11 @@
 %define  descr Python code for GeoIP2 webservice client and database reader
 
 Name:    python3-module-%oname
-Version: 2.9.0
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: %descr
-License: ASLv2.0
+License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/maxmind/GeoIP2-python
 
@@ -46,9 +46,13 @@ rm -rf html/.{buildinfo,doctrees}
 %python3_sitelibdir/*.egg-info
 
 %files doc
-%doc html/
+%doc LICENSE html/
 
 %changelog
+* Tue Jun 30 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Fix license.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt2
 - Build without python2.
 - Build with docs.
