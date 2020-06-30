@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -134,6 +134,9 @@ chmod a+r /etc/login.defs
 %endif
 
 %changelog
+* Tue Jun 30 2020 Vitaly Chikunov <vt@altlinux.org> 1.9-alt1
+- Propagate exported functions into vm subshell.
+
 * Sat Jun 20 2020 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
 - aarch64: Fix `.gic_version not found' (qemu).
 - spec: Fix `different set of noarch packages' (girar).
