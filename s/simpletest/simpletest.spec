@@ -1,10 +1,11 @@
 %def_disable bootstrap
 %def_enable profile
 %def_enable sanitizers
+%def_enable coverage
 
 Name:     simpletest
-Version:  10
-Release:  alt4
+Version:  11
+Release:  alt2
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -35,7 +36,8 @@ Simple suit for testing basic runtime toolchain functionality:
 - build chroot installability;
 - C/C++/Fortran base testing (compiles & works);
 - OpenMP tests for both C and Fortran (C++ OpenMP is the same as C);
-- profiler testing.
+- profiler testing;
+- coverage testing.
 
 Also provides useful information about system:
 - running CPU version and architecture;
@@ -54,7 +56,8 @@ Also provides useful information about system:
 %endif
     %{subst_enable bootstrap} \
     %{subst_enable profile} \
-    %{subst_enable sanitizers}
+    %{subst_enable sanitizers} \
+    %{subst_enable coverage}
 
 %make_build -O
 
@@ -68,6 +71,15 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Tue Jun 30 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt2
+- Workaround gcc incompatibility between -pg and
+  -fomit-frame-pointer. This fixes armh build.
+
+* Tue Jun 30 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt1
+- Add coverage support: gcov and gprof on all arches.
+- Allow running tests in parallel (for fixed build options).
+- Add multiple exceptions to workaround lcc shortcomings.
+
 * Fri Jun 19 2020 Andrew Savchenko <bircoph@altlinux.org> 10-alt4
 - Add armh support.
 
