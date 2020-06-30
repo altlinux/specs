@@ -1,5 +1,5 @@
 Name: gptfdisk
-Version: 1.0.1
+Version: 1.0.5
 Release: alt1
 
 Summary: GPT partitioning and MBR repair software
@@ -11,8 +11,7 @@ Source: %name-%version.tar
 # GIT: git://git.code.sf.net/p/gptfdisk/code
 
 BuildRequires(pre): rpm-macros-make
-BuildRequires: gcc-c++ libuuid-devel libpopt-devel ncurses-devel
-BuildPreReq: libncursesw-devel
+BuildRequires: gcc-c++ libuuid-devel libpopt-devel libncursesw-devel
 
 %description
 Partitioning software for GPT disks and to repair MBR
@@ -81,6 +80,9 @@ install -pm644 *.8 %buildroot%_man8dir/
 %_man8dir/fixparts*
 
 %changelog
+* Tue Jun 30 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Mon Jan 11 2016 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
 - 1.0.1
   + upstream dropped cgdisk
