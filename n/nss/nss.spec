@@ -1,7 +1,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.53.0
-Release:	alt4
+Version:	3.54.0
+Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -38,6 +38,12 @@ Group:		System/Libraries
 
 Provides:	%name = %version-%release
 
+Provides:	%name-sysinit
+Provides:	%name-system-init
+
+Provides:	lib%name-sysinit = %version-%release
+Obsoletes:	lib%name-sysinit
+
 %description -n lib%name
 Network Security Services (NSS) is a set of libraries designed
 to support cross-platform development of security-enabled server
@@ -45,21 +51,6 @@ applications. Applications built with NSS can support SSL v2
 and v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12, S/MIME,
 X.509 v3 certificates, and other security standards.  See:
 http://www.mozilla.org/projects/security/pki/nss/overview.html
-
-%package -n lib%name-sysinit
-Summary:	System NSS Initilization
-Group:		System/Libraries
-Requires:	lib%name = %version-%release
-
-Provides:	%name-sysinit
-Provides:	%name-system-init
-
-%description -n lib%name-sysinit
-Default Operating System module that manages applications loading
-NSS globally on the system. This module loads the system defined
-PKCS #11 modules for NSS and chains with other NSS modules to load
-any system or user configured modules.
-
 
 %package -n lib%name-devel
 Summary:	NSS development kit
@@ -220,10 +211,6 @@ EOF
 %config(noreplace) %_sysconfdir/pki/nssdb/cert8.db
 %config(noreplace) %_sysconfdir/pki/nssdb/key3.db
 %config(noreplace) %_sysconfdir/pki/nssdb/secmod.db
-%exclude %_libdir/libnsssysinit.so
-
-%files -n lib%name-sysinit
-%_libdir/libnsssysinit.so
 %config(noreplace) %_sysconfdir/pki/nssdb/cert9.db
 %config(noreplace) %_sysconfdir/pki/nssdb/key4.db
 %config(noreplace) %_sysconfdir/pki/nssdb/pkcs11.txt
@@ -243,6 +230,22 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Mon Jun 29 2020 Alexey Gladkov <legion@altlinux.ru> 3.54.0-alt1
+- New version (3.54).
+- Merge libnss and libnss-sysinit.
+- Certificate Authority Changes:
+  + Add CN = certSIGN Root CA G2
+  + Add CN = e-Szigno Root CA 2017
+  + Add CN = Microsoft ECC Root Certificate Authority 2017
+  + Add CN = Microsoft RSA Root Certificate Authority 2017
+  + Remove CN = AddTrust Class 1 CA Root
+  + Remove CN = AddTrust External CA Root
+  + Remove CN = LuxTrust Global Root 2
+  + Remove CN = Staat der Nederlanden Root CA - G2
+  + Remove CN = Symantec Class 2 Public Primary Certification Authority - G4
+  + Remove CN = Symantec Class 1 Public Primary Certification Authority - G4
+  + Remove CN = VeriSign Class 3 Public Primary Certification Authority - G3
+
 * Wed Jun 24 2020 Alexey Gladkov <legion@altlinux.ru> 3.53.0-alt4
 - Enable an RFC3280 compliant certificate path validation library (ALT#38636).
 
