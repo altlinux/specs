@@ -43,8 +43,8 @@
 %define openldap_version 2.4.47-alt2
 
 Name: freeipa
-Version: 4.8.6
-Release: alt2
+Version: 4.8.8
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -60,10 +60,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libcmocka-devel
 BuildRequires: libini_config-devel
 BuildRequires: libkrb5-devel >= %krb5_version
-BuildRequires: libnss-devel
 BuildRequires: libpopt-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
+BuildRequires: libsystemd-devel
 BuildRequires: libxmlrpc-devel
 BuildRequires: openldap-devel >= %openldap_version
 
@@ -75,11 +75,11 @@ BuildRequires: libsss_idmap-devel
 BuildRequires: libsss_certmap-devel
 BuildRequires: libsss_nss_idmap-devel >= %sssd_version
 BuildRequires: libunistring-devel
-BuildRequires: libsystemd-devel
 
 BuildRequires: 389-ds-base-devel >= %ds_version
 BuildRequires: samba-devel >= %samba_version
-BuildRequires: node-uglify-js
+BuildRequires: nodejs
+BuildRequires: python3(rjsmin)
 %endif # only_client
 
 # python
@@ -98,6 +98,7 @@ BuildRequires: python3-module-six
 BuildRequires: python3-module-sss_nss_idmap
 
 %if_with fasttest
+BuildRequires: chrony
 BuildRequires: keyutils
 BuildRequires: systemd
 %endif
@@ -352,6 +353,17 @@ on the machine enrolled into a FreeIPA environment
 
 ###############################################################################
 
+%package client-epn
+Summary: Tools to configure Expiring Password Notification in IPA
+Group: System/Base
+Requires: %name-client = %EVR
+
+%description client-epn
+This package provides a service to collect and send expiring password
+notifications via email (SMTP).
+
+###############################################################################
+
 %package client-automount
 Summary: IPA Automount for use on clients
 Group: System/Base
@@ -567,6 +579,7 @@ mkdir -p %buildroot%_sysconfdir/cron.d
 
 mkdir -p %buildroot%_sysconfdir/bind
 touch %buildroot%_sysconfdir/bind/ipa-ext.conf
+touch %buildroot%_sysconfdir/bind/ipa-options-ext.conf
 
 mkdir -p %buildroot%_sharedstatedir/ipa/backup
 mkdir -p %buildroot%_sharedstatedir/ipa/gssproxy
@@ -764,6 +777,18 @@ if [ -f '/etc/openssh/sshd_config' -a $restore -ge 2 ]; then
     fi
 fi
 
+%post client-epn
+# first installation
+if [ $1 -eq 1 ]; then
+    systemctl -q preset ipa-epn.{service,timer} ||:
+fi
+
+%preun client-epn
+# removal (not upgrade)
+if [ $1 -eq 0 ]; then
+    systemctl --no-reload -q disable --now ipa-epn.{service,timer} ||:
+fi
+
 %if_without only_client
 %files server
 %_sbindir/ipa-backup
@@ -799,6 +824,7 @@ fi
 %_libexecdir/ipa/ipa-pki-retrieve-key
 %_libexecdir/ipa/ipa-pki-wait-running
 %_libexecdir/ipa/ipa-otpd
+%_libexecdir/ipa/ipa-print-pac
 %dir %_libexecdir/ipa/custodia
 %attr(755,root,root) %_libexecdir/ipa/custodia/ipa-custodia-dmldap
 %attr(755,root,root) %_libexecdir/ipa/custodia/ipa-custodia-pki-tomcat
@@ -877,7 +903,6 @@ fi
 %_datadir/ipa/*.ldif
 %_datadir/ipa/*.uldif
 %_datadir/ipa/*.template
-%_datadir/ipa/bind.ipa-ext.conf
 %_datadir/ipa/advise/
 %_datadir/ipa/profiles/
 %dir %_datadir/ipa/html
@@ -896,6 +921,7 @@ fi
 %ghost %attr(0644,root,root) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,root) %config(noreplace) %_datadir/ipa/html/ca.crt
 %ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-ext.conf
+%ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-options-ext.conf
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krb.con
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krb5.ini
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krbrealm.con
@@ -976,6 +1002,15 @@ fi
 %_sbindir/ipa-client-samba
 %_man1dir/ipa-client-samba.1*
 
+%files client-epn
+%_sbindir/ipa-epn
+%_man1dir/ipa-epn.1*
+%_man5dir/epn.conf.5*
+%attr(644,root,root) %_unitdir/ipa-epn.service
+%attr(644,root,root) %_unitdir/ipa-epn.timer
+%dir %attr(0755,root,root) %_sysconfdir/ipa/epn
+%attr(644,root,root) %_sysconfdir/ipa/epn/expire_msg.template
+
 %files client-automount
 %_sbindir/ipa-client-automount
 %_mandir/man1/ipa-client-automount.1*
@@ -1015,9 +1050,11 @@ fi
 %python3_sitelibdir/ipapython-*.egg-info/
 %python3_sitelibdir/ipalib-*.egg-info/
 %python3_sitelibdir/ipaplatform-*.egg-info/
-%python3_sitelibdir/ipaplatform-*-nspkg.pth
 
 %changelog
+* Tue Jun 30 2020 Stanislav Levin <slev@altlinux.org> 4.8.8-alt1
+- 4.8.6 -> 4.8.8.
+
 * Fri Jun 05 2020 Stanislav Levin <slev@altlinux.org> 4.8.6-alt2
 - Applied upstream fixes.
 
