@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.4
-Release: alt2
+Version: 0.43.5
+Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
 
@@ -132,6 +132,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Jul 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.5-alt1
+- Add ad_gpo_ignore_unreadable and cache_credentials defaults for sssd.conf
+
 * Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 0.43.4-alt2
 - Add changelog from p9 allows copy from sisyphus to p9.
 

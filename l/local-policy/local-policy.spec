@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 
 Summary: ALT Local policies
@@ -29,7 +29,10 @@ for i in sshd-gssapi-auth \
          ssh-gssapi-auth \
          krb5-conf-ccache \
          ldap-reverse-dns-lookup \
-         ldap-tls-cert-check
+         ldap-tls-cert-check \
+         sssd-ad-gpo-ignore-unreadable \
+         sssd-cache-credentials \
+         autofs-browse-mode
 do
         install -pD -m755 "controls/$i" \
                 "%buildroot%_sysconfdir/control.d/facilities/$i"
@@ -49,6 +52,14 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Wed Jul 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
+- Add sssd-cache-credentials control
+- Update sssd-ad-gpo-ignore-unreadable control
+
+* Wed Jul 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.0-alt1
+- Add autofs-browse-mode and sssd-ad-gpo-ignore-unreadable controls
+- Open SSH port by default for all templates
+
 * Tue Apr 21 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.3.0-alt1
 - Replace machine local Registry policy in Samba backup format
 - krb5-conf-ccache control added for Kerberos client default credential cache:
