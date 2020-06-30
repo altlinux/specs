@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define pkgname ocplib-endian
 Name: ocaml-%pkgname
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Functions to read/write int16/32/64 from strings, bigarrays
 License: LGPLv2+
@@ -12,8 +12,8 @@ Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: ocaml-cppo
-BuildRequires: ocaml-ocamlbuild-devel
 BuildRequires: ocaml-ocamldoc
+BuildRequires: dune
 
 %description
 Optimised functions to read and write int16/32/64 from strings,
@@ -42,16 +42,13 @@ signature files for developing applications that use %name.
 %setup
 
 %build
-ocaml setup.ml -configure --enable-tests
-%make_build build
+dune build --profile=release
 
 %install
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p $OCAMLFIND_DESTDIR
-make install DESTDIR=%buildroot
+dune install --destdir=%buildroot --profile=release
 
 %check
-make test
+dune runtest --profile=release
 
 %files
 %doc COPYING.txt README.md CHANGES.md
@@ -68,6 +65,9 @@ make test
 %_libdir/ocaml/%pkgname/*.mli
 
 %changelog
+* Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 1.1-alt1
+- 1.1
+
 * Thu Feb 13 2020 Anton Farygin <rider@altlinux.ru> 1.0-alt1
 - first build for Sisyphus
 
