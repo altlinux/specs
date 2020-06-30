@@ -1,6 +1,6 @@
 Name: picolisp
-Version: 19.12
-Release: alt1
+Version: 20.6
+Release: alt2
 
 Summary: Interpreted Lisp
 License: MIT
@@ -12,6 +12,9 @@ Source100: picolisp.watch
 
 # 64-bit build bootstraps using 32-bit one or Java
 BuildRequires: java /proc
+
+# armh-alt-linux-gnueabi-gcc: error: unrecognized command line option '-m32'; did you mean '-mbe32'?
+ExcludeArch: armh
 
 # trickery inside
 %set_verify_elf_method textrel=none
@@ -53,6 +56,12 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Tue Jun 30 2020 Michael Shigorin <mike@altlinux.org> 20.6-alt2
+- ExcludeArch: armh
+
+* Mon Jun 29 2020 Michael Shigorin <mike@altlinux.org> 20.6-alt1
+- new version (watch file uupdate)
+
 * Sun Dec 29 2019 Michael Shigorin <mike@altlinux.org> 19.12-alt1
 - new version (watch file uupdate)
 
