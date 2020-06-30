@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,11 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Jun 30 2020 Elena Mishina <lepata@altlinux.org>9.0-alt3
+Beta version of ALT Education 9.1
+- added jitsi-meet
+- added grub-customizer
+
 * Mon Oct 21 2019 Elena Mishina <lepata@altlinux.org> 9.0-alt2
 - added recoll
 - fix typo
