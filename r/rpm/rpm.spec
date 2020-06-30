@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt21
+Release: alt22
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -264,6 +264,7 @@ Summary: Run tests for %name immediately when this package is installed
 Group: Other
 BuildArch: noarch
 Requires: %name
+Requires: rpminstall-tests-archcompat-checkinstall
 Requires: rpminstall-tests-checkinstall
 
 %description checkinstall
@@ -574,6 +575,14 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sun Jun 28 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt22
+- Improved machine detection & configuration for:
+  + x86_64 on Darwin, armv5tl, Transmeta Crusoe as i686, parisc as hppa (on linux)
+    (cherry-picked from upstream);
+  + armv8[h]l (further refined by me on the base of changes from upstream and
+    Peter Robinson).
+  (Accompanying macros have been added, too.)
+
 * Fri May 29 2020 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt21
 - Add support for >= gcc10.
 - E2K: Add lcc to the generic devel exceptions list.

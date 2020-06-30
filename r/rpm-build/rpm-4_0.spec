@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt140
+Release: alt141
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -210,6 +210,7 @@ BuildArch: noarch
 Requires: %name
 # rpminstall-tests-checkinstall first uses rpm-build to build packages,
 # then tests how rpm installs them. Useful for testing rpm-build, too.
+Requires: rpminstall-tests-archcompat-checkinstall
 Requires: rpminstall-tests-checkinstall
 
 %description checkinstall
@@ -406,6 +407,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Jun 28 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt141
+- Added /usr/lib/rpm/armv8l-alt-linux/macros for builds on armv8l machines;
+  added armv8l to the %%arm list and optflags for it for builds targeting it.
+  (Fixes 4.0.4-alt108:
+  - installplatform, rpmrc.in: made armv8l compatible with armh.)
+
 * Fri May 29 2020 Andrew Savchenko <bircoph@altlinux.org> 4.0.4-alt140
 - Export FCFLAGS as modern FFLAGS replacement for gfortran.
 
