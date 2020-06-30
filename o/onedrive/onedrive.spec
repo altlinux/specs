@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -66,6 +66,9 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Mon Jun 29 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- new version 2.4.3 (with rpmrb script)
+
 * Wed May 27 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - new version 2.4.2 (with rpmrb script)
 
