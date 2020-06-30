@@ -2,10 +2,10 @@
 %add_ocaml_req_skip Ppx_sigs_reflected
 %define libname tyxml
 Name:           ocaml-%libname
-Version:        4.3.0
-Release:        alt3
+Version:        4.4.0
+Release:        alt1
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
-License:        LGPL with exeptions
+License:        LGPL2.1 with exeptions
 Group:          Development/ML
 Url:            https://ocsigen.org/tyxml/
 # https://github.com/ocsigen/tyxml
@@ -58,6 +58,14 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.a
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.cmxa
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.mli
+%_libdir/ocaml/%libname-jsx
+%exclude %_libdir/ocaml/%libname-jsx/*.a
+%exclude %_libdir/ocaml/%libname-jsx/*.cmxa
+%exclude %_libdir/ocaml/%libname-jsx/*.cmx
+%_libdir/ocaml/%libname-syntax
+%exclude %_libdir/ocaml/%libname-syntax/*.a
+%exclude %_libdir/ocaml/%libname-syntax/*.cmxa
+%exclude %_libdir/ocaml/%libname-syntax/*.cmx
 
 
 %files devel
@@ -71,8 +79,17 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname-ppx/internal/*.a
 %_libdir/ocaml/%libname-ppx/internal/*.cmxa
 %_libdir/ocaml/%libname-ppx/internal/*.mli
+%_libdir/ocaml/%libname-jsx/*.a
+%_libdir/ocaml/%libname-jsx/*.cmxa
+%_libdir/ocaml/%libname-jsx/*.cmx
+%_libdir/ocaml/%libname-syntax/*.a
+%_libdir/ocaml/%libname-syntax/*.cmxa
+%_libdir/ocaml/%libname-syntax/*.cmx
 
 %changelog
+* Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1
+- 4.4.0
+
 * Wed Jan 29 2020 Anton Farygin <rider@altlinux.ru> 4.3.0-alt3
 - fix for build by dune-2
 
