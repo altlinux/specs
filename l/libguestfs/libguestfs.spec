@@ -19,7 +19,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.42.0
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -60,7 +60,7 @@ BuildRequires: libtirpc-devel
 # BuildRequires: supermin >= 5.1.0
 %{?_enable_fuse:BuildRequires: libfuse-devel}
 %{?_enable_ocaml:BuildRequires(pre): rpm-build-ocaml}
-%{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel}
+%{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel}
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
 %{?_enable_python:BuildRequires: python3-devel python3-module-libvirt}
 %{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
@@ -574,6 +574,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Tue Jun 30 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt2
+- Set default guestfs appliance path to $libdir/guestfs
+
 * Fri Apr 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt1
 - 1.42.0
 - build with vala support
