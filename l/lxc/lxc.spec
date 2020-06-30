@@ -28,7 +28,7 @@
 %def_with systemd
 
 Name: lxc
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Url: https://linuxcontainers.org/
@@ -37,6 +37,7 @@ Url: https://linuxcontainers.org/
 Source0: %name-%version.tar
 Source1: lxc-net.sysconfig
 Source2: lxc-user-nic.control
+Source3: lxc.watch
 
 Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
 Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
@@ -224,6 +225,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Jun 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.3-alt1
+- Updated to 4.0.3.
+
 * Wed Apr 29 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.2-alt1
 - Updated to 4.0.2.
 
