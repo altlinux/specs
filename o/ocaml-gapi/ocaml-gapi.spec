@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-gapi
-Version: 0.3.17
+Version: 0.4.1
 Release: alt1
 Summary: A simple OCaml client for Google Services
 License: MIT
@@ -86,6 +86,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/gapi-ocaml/*.mli
 
 %changelog
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 0.3.17-alt1
 - 0.3.17
 
