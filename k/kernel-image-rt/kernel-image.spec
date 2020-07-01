@@ -2,7 +2,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
 %define kernel_sublevel		.127
-%define kernel_rt_release	rt54
+%define kernel_rt_release	rt55
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -405,6 +405,8 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 # eu-findtextrel will fail if it is not a DSO or PIE.
 %add_verify_elf_skiplist /boot/vmlinuz-*
 
+# Fix: eu-elflint failed for modules
+%add_verify_elf_skiplist %modules_dir/*
 
 %check
 KernelVer=%kversion-%flavour-%krelease
@@ -500,6 +502,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt1.rt55
+- Update to v4.19.127-rt55 (22 Jun 2020).
+
 * Mon Jun 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt1.rt54
 - Update to 4.19.127-rt54 (08 Jun 2020).
 
