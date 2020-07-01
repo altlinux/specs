@@ -1,10 +1,14 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
 Name: libbpf
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
 Url: https://github.com/libbpf/libbpf
+Vcs: https://github.com/libbpf/libbpf.git
 
 Source: %name-%version.tar
 
@@ -47,6 +51,7 @@ cd src
 %_libdir/libbpf.so.*
 
 %files devel
+%doc LICENSE* README.md
 %_includedir/bpf
 %_libdir/libbpf.so
 %_pkgconfigdir/libbpf.pc
@@ -55,5 +60,8 @@ cd src
 %_libdir/libbpf.a
 
 %changelog
+* Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 0.0.9-alt1
+- Update to v0.0.9.
+
 * Mon Apr 27 2020 Vitaly Chikunov <vt@altlinux.org> 0.0.8-alt1
 - First import of v0.0.8.
