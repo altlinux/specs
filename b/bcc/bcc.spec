@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
 # Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
 # Lua jit is not available for some architectures
@@ -7,8 +10,16 @@
 %def_without luajit
 %endif
 
+# Update How-to:
+#   git merge -s ours v0.0.9
+#   gear-update-tag libbpf v0.0.9
+#   git commit
+#   git merge v0.15.0
+#   (merge) git rm src/cc/libbpf
+#   (merge) git merge --continue
+
 Name:		bcc
-Version:	0.14.0
+Version:	0.15.0
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -24,6 +35,19 @@ Source:		%name-%version.tar
 Source1:	libbpf.tar
 
 ExclusiveArch:	x86_64 aarch64 ppc64le
+
+# Note: clang-10.0 have tests failed:
+#  # /usr/src/tmp/bcc-buildroot/usr/share/bcc/tools/cpudist 1 1
+#  Traceback (most recent call last):
+#    File "/usr/src/tmp/bcc-buildroot/usr/share/bcc/tools/cpudist", line 15, in <module>
+#      from bcc import BPF
+#    File "/usr/src/tmp/bcc-buildroot/usr/lib64/python3/site-packages/bcc/__init__.py", line 26, in <module>
+#      from .libbcc import lib, bcc_symbol, bcc_symbol_option, bcc_stacktrace_build_id, _SYM_CB_TYPE
+#    File "/usr/src/tmp/bcc-buildroot/usr/lib64/python3/site-packages/bcc/libbcc.py", line 17, in <module>
+#      lib = ct.CDLL("libbcc.so.0", use_errno=True)
+#    File "/usr/lib64/python3.8/ctypes/__init__.py", line 373, in __init__
+#      self._handle = _dlopen(self._name, mode)
+#  OSError: /usr/src/tmp/bcc-buildroot/usr/lib64/libbcc.so.0: undefined symbol: _ZN4llvm19RTDyldMemoryManager16registerEHFramesEPhmm
 
 %define clang_version 9.0
 
@@ -69,10 +93,46 @@ includes a C wrapper around LLVM), and front-ends in Python and Lua. It is
 suited for many tasks, including performance analysis and network traffic
 control.
 
+%package -n libbcc
+Summary:	Shared Library for BPF Compiler Collection (BCC)
+Group:		System/Libraries
+Requires:	libelf
+%description -n libbcc
+Shared Library for BPF Compiler Collection (BCC)
+
+%package -n libbcc-devel
+Summary:	BPF Compiler Collection (BCC) (devel package)
+Group:		Development/C
+Requires:	libbcc = %version-%release
+AutoReq:	nocpp
+%description -n libbcc-devel
+Includes and pkg-config for developing BCC programs
+
+%package -n python3-module-bcc
+Summary:	Python bindings for BPF Compiler Collection (BCC)
+Group:		Development/Python
+Requires:	libbcc = %version-%release
+%description -n python3-module-bcc
+Python bindings for BPF Compiler Collection (BCC)
+
+%package -n bcc-lua
+Summary:	Standalone tool to run BCC tracers written in Lua
+Group:		Development/Other
+Requires:	libbcc = %version-%release
+%description -n bcc-lua
+Standalone tool to run BCC tracers written in Lua
+
+%package -n bcc-tools
+Summary:	Command line tools for BPF Compiler Collection (BCC)
+Group:		Development/Debuggers
+Requires:	python3-module-bcc = %version-%release
+%description -n bcc-tools
+Command line tools for BPF Compiler Collection (BCC)
+
 %if_with luajit
 %global lua_include `pkg-config --variable=includedir luajit`
 %global lua_libs `pkg-config --variable=libdir luajit`/lib`pkg-config --variable=libname luajit`.so
-%global lua_config -DLUAJIT_INCLUDE_DIR=%{lua_include} -DLUAJIT_LIBRARIES=%{lua_libs}
+%global lua_config -DLUAJIT_INCLUDE_DIR=%lua_include -DLUAJIT_LIBRARIES=%lua_libs
 %endif
 
 %prep
@@ -122,7 +182,7 @@ mv %buildroot/%python3_sitelibdir_noarch %buildroot/%python3_sitelibdir
 install -d %buildroot%_man8dir
 rmdir %buildroot%_man8dir
 mv %buildroot/usr/share/bcc/man/man8 %buildroot%_man8dir
-pushd %{buildroot}%{_man8dir}
+pushd %buildroot%_man8dir
 rename '' bcc- *.gz
 popd
 rm -rf %buildroot/usr/share/bcc/man
@@ -135,41 +195,6 @@ if [ -w /dev/kvm ]; then
 	PYTHONPATH=%buildroot%python3_sitelibdir \
 	vm-run %buildroot%_datadir/bcc/tools/cpudist 1 1
 fi
-
-%package -n libbcc
-Summary:	Shared Library for BPF Compiler Collection (BCC)
-Group:		System/Libraries
-Requires:	libelf
-%description -n libbcc
-Shared Library for BPF Compiler Collection (BCC)
-
-%package -n libbcc-devel
-Summary:	BPF Compiler Collection (BCC) (devel package)
-Group:		Development/C
-Requires:	libbcc = %version-%release
-%description -n libbcc-devel
-Includes and pkg-config for developing BCC programs
-
-%package -n python3-module-bcc
-Summary:	Python bindings for BPF Compiler Collection (BCC)
-Group:		Development/Python
-Requires:	libbcc = %version-%release
-%description -n python3-module-bcc
-Python bindings for BPF Compiler Collection (BCC)
-
-%package -n bcc-lua
-Summary:	Standalone tool to run BCC tracers written in Lua
-Group:		Development/Other
-Requires:	libbcc = %version-%release
-%description -n bcc-lua
-Standalone tool to run BCC tracers written in Lua
-
-%package -n bcc-tools
-Summary:	Command line tools for BPF Compiler Collection (BCC)
-Group:		Development/Debuggers
-Requires:	python3-module-bcc = %version-%release
-%description -n bcc-tools
-Command line tools for BPF Compiler Collection (BCC)
 
 %files -n libbcc
 %doc LICENSE.txt
@@ -194,6 +219,9 @@ Command line tools for BPF Compiler Collection (BCC)
 %_man8dir/*
 
 %changelog
+* Thu Jul 02 2020 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
+- Update to bcc 0.15.0, libbpf 0.0.9.
+
 * Wed Apr 29 2020 Vitaly Chikunov <vt@altlinux.org> 0.14.0-alt1
 - Update to bcc 0.14.0, libbpf 0.0.8.
 
