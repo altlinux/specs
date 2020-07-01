@@ -1,7 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 
 Name: neomutt
-Version: 20200501
+Version: 20200626
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -19,7 +20,7 @@ Vcs: https://github.com/neomutt/neomutt.git
 # Where test-files remote is https://github.com/neomutt/neomutt-test-files
 
 Source: %name-%version.tar
-
+ExcludeArch: armh
 
 BuildRequires: docbook-style-xsl xsltproc tcl elinks
 BuildRequires: liblua5-devel libnotmuch-devel libdb4.8-devel
@@ -76,6 +77,9 @@ make -s test
 %docdir
 
 %changelog
+* Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 20200626-alt1
+- Update to 20200626.
+
 * Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 20200501-alt1
 - Update to 20200501.
 
