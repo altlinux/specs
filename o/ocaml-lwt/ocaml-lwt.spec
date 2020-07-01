@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-lwt
 Version: 5.3.0
-Release: alt1
+Release: alt2
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
@@ -26,6 +26,7 @@ is part of the Ocsigen project.
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+Requires: ocaml-ocplib-endian-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -75,6 +76,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt2
+- added ocaml-ocplib-endian-devel requires to devel package
+
 * Sun Jun 28 2020 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
 - 5.3.0
 
