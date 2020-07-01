@@ -1,6 +1,6 @@
 Name: inxi
 Version: 3.1.04
-Release: alt1
+Release: alt2
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -21,7 +21,7 @@ Requires: procps
 Requires: lm_sensors
 Requires: usbutils
 Requires: hddtemp
-Requires: glxinfo
+# Recommends: glxinfo
 
 AutoReq: no
 
@@ -52,6 +52,9 @@ install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jul 01 2020 Leontiy Volodin <lvol@altlinux.org> 3.1.04-alt2
+- Remove glxinfo from requires
+
 * Tue Jun 30 2020 Leontiy Volodin <lvol@altlinux.org> 3.1.04-alt1
 - New version (3.1.04)
 - Add glxinfo for graphics info
