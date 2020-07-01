@@ -5,15 +5,15 @@
 %define build_lang uk_UA.KOI8-U
 
 %define oname iceBw
-%define oversion 10_0
+%define oversion 14_14
 
 Name:    icebw
-Version: 14.13
+Version: 14.14
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
 Group:   Office
-License: GPL
+License: GPL-2.0
 Url:     http://www.iceb.net.ua
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -22,9 +22,11 @@ Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name.watch
 Patch1:	 %name-fix-pathes.patch
 Patch2:  %name-alt-fix-missing-global-variables.patch
+Patch3:  %name-bindir.patch
 Patch4:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: libmariadb-devel
 BuildRequires: libgtk+3-devel
@@ -37,16 +39,18 @@ Free financial accounting system.
 %setup -q -c
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 %patch4 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/uk_ru
 
 %build
-%cmake_insource
-%make_build
+%cmake_insource -GNinja
+%ninja_build
 
 %install
-mkdir -p %buildroot%_bindir
-find buhg_g -perm 0755 -a -name i_\* -a ! -name \*.dir -exec cp -v '{}' %buildroot%_bindir ';'
+%ninja_install
+#mkdir -p %buildroot%_bindir
+#find buhg_g -perm 0755 -a -name i_\* -a ! -name \*.dir -exec cp -v '{}' %buildroot%_bindir ';'
 mkdir -p %buildroot%_datadir/locale/uk/LC_MESSAGES
 pushd locale
 ./uk_ru
@@ -63,6 +67,11 @@ cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Wed Jul 01 2020 Andrey Cherepanov <cas@altlinux.org> 14.14-alt1
+- new version 14.14
+- build using ninja
+- fix License tag according to SPDX
+
 * Fri May 01 2020 Cronbuild Service <cronbuild@altlinux.org> 14.13-alt1
 - new version 14.13
 
