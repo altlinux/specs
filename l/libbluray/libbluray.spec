@@ -1,10 +1,10 @@
 Name: libbluray
-Version: 1.0.2
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: BD library
 
 Group: System/Libraries
-License: LGPL
+License: LGPLv2.1
 Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
@@ -53,6 +53,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Mon Sep 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt2
 - fix ftbfs by actually disable bdjava jar build
 
