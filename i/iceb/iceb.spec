@@ -1,7 +1,7 @@
 %define oname iceB
 
 Name:    iceb
-Version: 19.13
+Version: 19.14
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -9,7 +9,7 @@ Summary: Free financial accounting system (console)
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Group:   Office
-License: GPL
+License: GPL-2.0
 Url:     http://iceb.net.ua
 
 Source:  %name-%version.tar
@@ -17,6 +17,7 @@ Source1: %name.watch
 Patch2:  %name-fix-mariadb-link-library.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: glib2-devel
 BuildRequires: libmariadb-devel
@@ -31,24 +32,23 @@ Free financial accounting system.
 %patch2 -p2
 
 %build
-%cmake
-%cmake_build
+%cmake -GNinja
+%ninja_build -C BUILD
 
 %install
+%ninja_install -C BUILD
+
 install -d %buildroot%_bindir
 find BUILD/buhg -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
 #find BUILD/additionally/other -perm 0755 -a -type f -exec cp '{}' %buildroot%_bindir ';'
 
-install -d %buildroot%_datadir/%oname/%name
-cp buhg/alx/*.alx %buildroot%_datadir/%oname/%name
-
-install -d %buildroot%_datadir/%oname/doc
-cp buhg/doc/*.txt %buildroot%_datadir/%oname/doc
-
 install -d %buildroot%_desktopdir
-cp desktop/applications/*.desktop %buildroot%_desktopdir
+cp -a desktop/applications/*.desktop %buildroot%_desktopdir
 install -d %buildroot%_pixmapsdir
-cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
+cp -a desktop/pixmaps/*.png %buildroot%_pixmapsdir
+
+# Remove terminfo
+rm -rf %buildroot/lib/terminfo
 
 %files
 %doc CHANGES COPYING READMI.TXT
@@ -56,8 +56,16 @@ cp desktop/pixmaps/*.png %buildroot%_pixmapsdir
 %_datadir/%oname
 %_desktopdir/*.desktop
 %_pixmapsdir/*.png
+%_sysconfdir/cups/iceb.*
+%_libexecdir/cups/filter/iceb_ps
 
 %changelog
+* Wed Jul 01 2020 Andrey Cherepanov <cas@altlinux.org> 19.14-alt1
+- new version 19.14
+- build using ninja
+- package cups filter
+- fix License tag according to SPDX
+
 * Fri May 01 2020 Cronbuild Service <cronbuild@altlinux.org> 19.13-alt1
 - new version 19.13
 
