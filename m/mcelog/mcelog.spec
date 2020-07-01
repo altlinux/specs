@@ -1,6 +1,6 @@
 Name: mcelog
-Version: 162
-Release: alt2
+Version: 170
+Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
@@ -69,6 +69,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/cron.hourly/mcelog.cron
 
 %changelog
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 170-alt1
+- 162 -> 170
+
 * Fri Mar 22 2019 Anton Farygin <rider@altlinux.ru> 162-alt2
 - added post script for service mcelog (closes: #36342)
 
