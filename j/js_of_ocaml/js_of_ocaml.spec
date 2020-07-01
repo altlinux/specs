@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: js_of_ocaml
-Version: 3.5.2
-Release: alt2
+Version: 3.6.0
+Release: alt1
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
@@ -115,6 +115,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%{name}*/*/*.cmx
 
 %changelog
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
 * Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 3.5.2-alt2
 - cleaned up build requires
 
