@@ -1,9 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_disable docs
 
 %define _name granite
 %define rdn_name io.elementary.%_name
-%define ver_major 5.4
+%define ver_major 5.5
 %define api_ver 1.0
 %define sover 5
 
@@ -127,6 +127,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/%_name.vapi
 
 %changelog
+* Thu Jul 02 2020 Yuri N. Sedunov <aris@altlinux.org> 5.5.0-alt1
+- updated to 5.5.0-2-g5bab90be
+
 * Fri May 01 2020 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
 - 5.4.0
 
