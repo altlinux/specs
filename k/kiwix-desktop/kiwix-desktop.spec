@@ -1,5 +1,5 @@
 Name:     kiwix-desktop
-Version:  2.0.2
+Version:  2.0.3
 Release:  alt1
 
 Summary:  Kiwix for Windows and GNU/Linux desktops
@@ -44,6 +44,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Jul 02 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
+- New version.
+
 * Wed Jul 01 2020 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
 - New version.
 
