@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 2.3
+%define ver_major 2.4
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.52
 
-Requires: libgjs >= %gjs_ver dconf
+Requires: libgjs >= %gjs_ver dconf iso-codes
 #Recommends: espeak, espeak-ng or festival
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -81,6 +81,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Thu Jul 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - updated to 2.3.0-2-g5c4bc78
 
