@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -134,6 +134,9 @@ chmod a+r /etc/login.defs
 %endif
 
 %changelog
+* Thu Jul 02 2020 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
+- ppc: Use cap-ccf-assist=off for kvm-type=HV.
+
 * Tue Jun 30 2020 Vitaly Chikunov <vt@altlinux.org> 1.9-alt1
 - Propagate exported functions into vm subshell.
 
