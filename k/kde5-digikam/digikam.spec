@@ -26,7 +26,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 6.4.0
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -199,6 +199,10 @@ while read f ; do
 %endif
 done
 
+%ifarch armh
+sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' CMakeLists.txt
+%endif
+
 %build
 %K5build \
 %ifarch ppc64le
@@ -299,6 +303,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Jul 02 2020 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt3
+- fix build on armh
+
 * Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.4.0-alt2
 - Rebuilt with opencv-4.3.0.
 
