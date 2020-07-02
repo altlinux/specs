@@ -1,5 +1,5 @@
 Name: nasm
-Version: 2.15.01
+Version: 2.15.02
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
@@ -79,6 +79,9 @@ ln -sf nasmdoc0.html index.html
 %_man1dir/rdx*
 
 %changelog
+* Thu Jul 02 2020 Yuri N. Sedunov <aris@altlinux.org> 2.15.02-alt1
+- 2.15.02
+
 * Sun Jun 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.15.01-alt1
 - 2.15.01
 - fixed License tag
