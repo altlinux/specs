@@ -1,5 +1,5 @@
 Name: profanity
-Version: 0.5.1
+Version: 0.9.5
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
@@ -8,13 +8,15 @@ Source: %version.tar.gz
 # wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
 Patch: no_acx_pthread.patch
+Patch1: otr_incorrect_atgs.patch
 Url: http://www.profanity.im
+
+# Automatically added by buildreq on Thu Jul 02 2020
+# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python2-base sh4 xorg-proto-devel
+BuildRequires: libXScrnSaver-devel libcurl-devel libmesode-devel libncursesw-devel libnotify-devel libotr-devel libreadline-devel libsqlite3-devel
 
 BuildRequires: libcmocka-devel
 
-# Automatically added by buildreq on Wed Nov 05 2014
-# optimized out: glib2-devel libX11-devel libcloog-isl4 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libssl-devel libmesode-devel libxml2-devel libreadline-devel
 # libmesode vs libstrophe
 
 %description
@@ -44,12 +46,13 @@ A console based jabber client development suite
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 touch NEWS README AUTHORS ChangeLog
 cp %SOURCE1 profrc.exmaple2
 
 %build
 %autoreconf
-%configure --with-libxml2 --enable-notifications --enable-otr
+LIBS=-pterad %configure --with-libxml2 --enable-notifications --enable-otr
 
 %make_build LDFLAGS=-pthread
 mv %name %name.app
@@ -70,6 +73,7 @@ LC_ALL=C.UTF8 make check
 %_bindir/%name
 %_man1dir/*
 %_datadir/%name
+%_libdir/*.so.*
 
 %files X11
 %_bindir/%name.app
@@ -79,6 +83,15 @@ LC_ALL=C.UTF8 make check
 %_libdir/*.so
 
 %changelog
+* Thu Jul 02 2020 Fr. Br. George <george@altlinux.ru> 0.9.5-alt1
+- Autobuild version bump to 0.9.5
+
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 0.7.1-alt1
+- Autobuild version bump to 0.7.1
+
+* Wed Mar 06 2019 Fr. Br. George <george@altlinux.ru> 0.6.0-alt1
+- Autobuild version bump to 0.6.0
+
 * Thu Jul 19 2018 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
 - Autobuild version bump to 0.5.1
 - Use autor's fork of libstrophe (libmesode)
