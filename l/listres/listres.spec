@@ -1,6 +1,6 @@
 Name: listres
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: list resources in X widgets
 License: MIT/X11
@@ -35,6 +35,9 @@ The listres program generates a list of a widget's resource database. The class 
 %_man1dir/*
 
 %changelog
+* Fri Mar 20 2020 Fr. Br. George <george@altlinux.ru> 1.0.4-alt2
+- Rebuild with new libXaw
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
