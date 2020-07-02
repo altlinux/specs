@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
-Version: 2.2.10.0.646.git93944747
-Release: alt2
+Version: 2.2.10.0.689.git0a574792
+Release: alt1
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -152,7 +152,6 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/emoticons
 %_datadir/%name/examples
 %_datadir/%name/sounds
-%_datadir/%name/update_geoip
 %_datadir/%name/luascripts
 %_miconsdir/%name.png
 %_niconsdir/%name.png
@@ -173,6 +172,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Thu Jul 02 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.10.0.689.git0a574792-alt1
+- Build from last commit.
+
 * Sat Feb 22 2020 Nikita Ermakov <arei@altlinux.org> 2.2.10.0.646.git93944747-alt2
 - Change BR from liblua5.1-devel to more general liblua-devel.
 
