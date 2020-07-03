@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-lablgtk
-Version: 2.18.10
+Version: 2.18.11
 Release: alt1
 
 Summary: Objective Caml interface to gtk+
@@ -135,6 +135,9 @@ find examples -name .cvsignore -exec rm {} \;
 %doc examples doc/html
 
 %changelog
+* Fri Jul 03 2020 Anton Farygin <rider@altlinux.ru> 2.18.11-alt1
+- 2.18.11
+
 * Fri Jan 24 2020 Anton Farygin <rider@altlinux.ru> 2.18.10-alt1
 - 2.18.10
 
