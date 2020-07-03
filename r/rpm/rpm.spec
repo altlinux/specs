@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt22
+Release: alt23
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -575,6 +575,13 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri Jul 03 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt23
+- Fixed a bug in ARM hardfloat detection (armv?h* archs), introduced
+  in 4.13.0.1-alt22, which would prevent normal installation of armh
+  packages on such machines. (Note that rpm-build-4.0.4-alt141 is still
+  ignorant of armv?h* arches, so the only way to build packages installable
+  on such machines is with --target armh.)
+
 * Sun Jun 28 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt22
 - Improved machine detection & configuration for:
   + x86_64 on Darwin, armv5tl, Transmeta Crusoe as i686, parisc as hppa (on linux)
