@@ -1,7 +1,7 @@
 %define  modulename distro
 
 Name:    python-module-%modulename
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: A much more elaborate, renewed alternative implementation for Python's platform.linux_distribution()
@@ -43,5 +43,8 @@ BuildPreReq: python3-devel python3-module-setuptools
 %doc *.md
 
 %changelog
+* Fri Jul 03 2020 Vladimir Didenko <cow@altlinux.org> 1.5.0-alt1
+- New version
+
 * Mon Apr 08 2019 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus

@@ -1,21 +1,26 @@
 %define oname jsonschema
 
-Name:		python-module-%oname
-Version:	2.6.0
-Release:	alt1.2
+Name:		python3-module-%oname
+Version:	3.2.0
+Release:	alt1
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
-Group:		Development/Python
+Group:		Development/Python3
 URL:		http://pypi.python.org/pypi/jsonschema/
 Source0:	%name-%version.tar.gz
 BuildArch:	noarch
 
-BuildRequires:	python-devel python-module-setuptools
-BuildPreReq: python-modules-json python-module-nose python-module-mock
-BuildPreReq: python-module-vcversioner python-module-functools32
-
-%py_requires functools32
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-nose python3-module-mock
+BuildPreReq: python3-module-vcversioner
+BuildRequires: python3-module-setuptools_scm
+# BuildRequires for tests
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-pyrsistent
+BuildRequires: python3-module-twisted-core
+BuildRequires: python3-module-pyperf
 
 %description
 jsonschema is JSON Schema validator currently based on
@@ -36,29 +41,27 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-nosetests -v
+nosetests3 -v
 
 %files
 %doc *.rst COPYING
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
 
 %changelog
-* Fri Jul 03 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1.2
-- (NMU) Build Python 3 version in separate package
+* Fri Jul 03 2020 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
+- Updated to upstream release 3.2.0
+- Build python3 version as separate package
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
