@@ -1,5 +1,5 @@
 Name: riot-desktop
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -85,6 +85,9 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jul 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
+- new version 1.6.8 (with rpmrb script)
+
 * Tue Jun 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt1
 - new version 1.6.7 (with rpmrb script)
 
