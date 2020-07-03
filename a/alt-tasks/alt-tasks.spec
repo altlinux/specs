@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,10 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Jul 03 2020 Alexey Appolonov <alexey@altlinux.org> 0.3.0-alt1
+- Ability to format the output according to a given format string;
+- Ability to choose between verbose and not verbose output mode.
+
 * Thu Jun 25 2020 Alexey Appolonov <alexey@altlinux.org> 0.2.1-alt1
 - Couple of minor bug fixes.
 
