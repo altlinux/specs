@@ -3,8 +3,8 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 2.6.0
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: xed is a small and lightweight text editor.
 License: GPLv2
@@ -140,6 +140,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- New version
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - add xapps-icons to dependencies
 

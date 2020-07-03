@@ -1,5 +1,5 @@
 Name: blueberry
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 Summary: A Bluetooth configuration tool
 License: GPLv3
@@ -44,6 +44,9 @@ Utility for Bluetooth devices graphical configuration
 %_iconsdir/hicolor/*/status/*
 
 %changelog
+* Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 1.3.9-alt1
+- 1.3.9
+
 * Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 1.3.8-alt1
 - 1.3.8
 - remove cinnamon applet package (dropped by upstream)
