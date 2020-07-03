@@ -15,8 +15,8 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.16.0
-Release: alt2%git_date
+Version: 1.18.0
+Release: alt1%git_date
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -105,6 +105,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Fri Jul 03 2020 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
+- Updated to 1.18.0.
+
 * Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt2
 - Fixed wireless page.
 
