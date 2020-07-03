@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.2
+Release: alt1.3
 
 Summary: Use the pseudo-tty of a docker container.
 
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.ru> 0.4.1-alt1.3
+- rebuild with python3.8
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt1.2
 - (NMU) rebuild with python3.6
 
