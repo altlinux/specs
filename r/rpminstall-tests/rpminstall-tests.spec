@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.1.3
-Release: alt5
+Release: alt6
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -87,7 +87,7 @@ echo 'Simple test (to fail fast):'\
 %nil
 
 %define archcompat_test \
-echo 'Simple arch_compat test (between `uname -m`, rpmbuild, and rpm -i):'\
+echo 'Simple arch_compat tests (between `uname -m`, rpmbuild, and rpm -i):'\
 echo 'diagnostics'\
 uname -a ||:\
 cat /proc/cpuinfo ||:\
@@ -95,7 +95,24 @@ LD_SHOW_AUXV=1 /bin/echo ||:\
 cat %_sysconfdir/rpm/platform ||:\
 rpm --eval %%_host_cpu ||:\
 rpm --eval %%_arch ||:\
-%make_build %{?opts} TESTS=dummy_installable minimal_arch=\
+\
+system_arch="$(rpm -q rpm --qf='%%{ARCH}')"\
+echo "...with a package built for the system rpm's arch ($system_arch):"\
+%make_build %{?opts} TESTS=dummy_installable minimal_arch= TESTS_TARGET="$system_arch"\
+%make_build %{?opts} clean\
+\
+default_arch="$(rpmbuild --eval %%_arch ||:)"\
+echo "...with a package built for the machine's default arch ($default_arch):"\
+%make_build %{?opts} TESTS=dummy_installable minimal_arch= ||\
+    case "$default_arch" in\
+        arm*)\
+            echo 'ARM arch detection is not ideal in rpm-build;'\
+            echo 'IGNORING THE FAILURE until better times.'\
+            ;;\
+        *)\
+            false\
+            ;;\
+    esac\
 %make_build %{?opts} clean\
 %nil
 
@@ -145,6 +162,13 @@ export NPROCS=1
 %simple_test
 
 %changelog
+* Fri Jul  3 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt6
+- Run additionally a test with a package built for system rpm's ARCH
+  (i.e., with rpmbuild --target set to it).
+- Ignore an arch_compat test on ARM (the one introduced in 1.1.3-alt5:
+  with the default arch on this machine) until better times, because
+  the ARM arch detection in rpm-build (<= 4.0.4-alt141) is not ideal yet.
+
 * Tue Jun 30 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt5
 - Also test the compatibility between `uname -m`, rpmbuild, and rpm -i.
   (A separate archcompat-checkinstall subpkg does this.)
