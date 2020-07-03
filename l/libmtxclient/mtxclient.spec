@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmtxclient
-Version: 0.2.1
+Version: 0.3.1
 Release: alt1
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
@@ -64,6 +64,9 @@ library.
 %_libdir/*.so
 
 %changelog
+* Thu Jul 02 2020 Paul Wolneykien <manowar@altlinux.org> 0.3.1-alt1
+- Release 0.3.1 (thx Nicolas Werner).
+
 * Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
 - New upstream: https://github.com/Nheko-Reborn/mtxclient.
 - New upstream version 0.2.1.

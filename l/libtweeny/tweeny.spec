@@ -1,5 +1,5 @@
 Name: libtweeny
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: An inbetweening library for complex animations (C++)
@@ -44,8 +44,8 @@ mv BUILD/doc/man/man3/tweeny_tween_\ T\ _.3 \
 for f in BUILD/doc/man/man3/*.3; do \
 	install -D -m0644 $f %buildroot%_man3dir/${f##*/}; \
 done
-install -D -m0644 README.md %%buildroot%_datadir/doc/%name-devel-%version/README.md
-install -D -m0644 LICENSE %%buildroot%_datadir/doc/%name-devel-%version/LICENSE
+install -D -m0644 README.md %buildroot%_datadir/doc/%name-devel-%version/README.md
+install -D -m0644 LICENSE %buildroot%_datadir/doc/%name-devel-%version/LICENSE
 	
 %files devel
 %_includedir/tweeny
@@ -54,5 +54,10 @@ install -D -m0644 LICENSE %%buildroot%_datadir/doc/%name-devel-%version/LICENSE
 %_datadir/doc/%name-devel-%version
 
 %changelog
+* Thu Jul 02 2020 Paul Wolneykien <manowar@altlinux.org> 3.1.0-alt1
+- Fresh up to v3.1.0.
+- Fixed TweenyTargets installation path.
+- Fixed packaging of the README and LICENSE files.
+
 * Mon Dec 03 2018 Paul Wolneykien <manowar@altlinux.org> 3.0.0-alt1
 - Initial version (3.0.0).

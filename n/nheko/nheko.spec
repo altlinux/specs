@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.6.4
-Release: alt1
+Version: 0.7.2
+Release: alt2
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -12,15 +12,17 @@ Url: https://github.com/Nheko-Reborn/nheko.git
 
 Source: %name-%version.tar
 
-Patch0: nheko-fix-missing-libfmt.patch
-
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-svg-devel
+BuildRequires: qt5-declarative-devel qt5-quickcontrols2-devel
 BuildRequires: boost-asio-devel boost-devel-headers boost-signals-devel
 BuildRequires: libssl-devel zlib-devel libtweeny-devel liblmdbxx-devel
 BuildRequires: libmtxclient-devel liblmdb-devel cmark-devel
 BuildRequires: nlohmann-json-devel libfmt-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
+
+# Additional (runtime) dependencies
+Requires: qt5-graphicaleffects qt5-quickcontrols2 qt5-multimedia
 
 %description
 The motivation behind the project is to provide a native desktop app
@@ -29,7 +31,6 @@ and less like an IRC client.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %cmake -DUSE_BUNDLED_BOOST=OFF  \
@@ -53,9 +54,17 @@ and less like an IRC client.
 %_bindir/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Fri Jul 10 2020 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt2
+- Fix: Additional (runtime) QT dependencies.
+
+* Wed Jul 08 2020 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt1
+- Fresh up to v0.7.2.
+- Package the SVG icon.
+
 * Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.4-alt1
 - New upstream: https://github.com/Nheko-Reborn/nheko.git
 - Added -DCMAKE_BUILD_TYPE=Release

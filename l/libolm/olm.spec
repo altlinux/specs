@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libolm
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: An implementation of the Double Ratchet cryptographic ratchet
 
 Group: Development/Other
 License: Apache v2.0
-Url: https://git.matrix.org/git/olm
+Url: https://gitlab.matrix.org/matrix-org/olm.git
 
 Source: %name-%version.tar
 
@@ -58,6 +58,9 @@ applications that use %name.
 %_libdir/cmake/Olm
 
 %changelog
+* Fri Jul 03 2020 Paul Wolneykien <manowar@altlinux.org> 3.1.5-alt1
+- Fresh up to v3.1.5.
+
 * Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 3.1.4-alt1
 - New upstream version 3.1.4.
 
