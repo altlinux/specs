@@ -1,5 +1,5 @@
 Name:           berusky
-Version:        1.7.1.0.8.gitc5f0c88
+Version:        1.7.2
 Release:        alt1
 Summary:        Berusky, 2D logic game
 License:        GPLv2
@@ -42,11 +42,15 @@ popd
 
 %files
 %doc %_defaultdocdir/%name
-%_bindir/berusky
+%_bindir/%name
 %_datadir/%name
-/var/games/berusky/berusky.ini
+%dir /var/games/%name
+/var/games/%name/berusky.ini
 
 %changelog
+* Fri Jul 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
+- Build new version.
+
 * Thu Aug 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.1.0.8.gitc5f0c88-alt1
 - Build from last commit.
 - Fix program crash at start, adding the config file.
