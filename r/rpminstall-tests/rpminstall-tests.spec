@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.1.3
-Release: alt4
+Release: alt5
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -11,8 +11,10 @@ Url: http://git.altlinux.org/people/imz/packages/rpminstall-tests.git
 
 BuildArch: noarch
 
-Requires: make rpm-build tmpdir.sh
-%{?!_without_check:%{?!_disable_check:BuildRequires: make rpm-build tmpdir.sh}}
+%global REQS make tmpdir.sh rpm-build rpm
+Requires: %REQS
+# For %%check, whcih is called %%build in this pkg because of the e2k Girar:
+BuildRequires: %REQS
 
 Source: %name-%version.tar
 
@@ -35,6 +37,34 @@ Immediately run %name when installing this package.
 
 They test rpm (applied to the results of rpm-build).
 
+%package archcompat-checkinstall
+Summary: Immediately run arch_compat %name when installing this package
+Group: Other
+Requires(pre): %name
+
+%description archcompat-checkinstall
+Immediately run a few arch_compat RPM tests when installing this package.
+
+They test rpm -i, applied to the results of rpmbuild, which is used
+to build packages without explicitly specifying the architecture, so
+that their architecture is derived automatically based on `uname -m`.
+
+%package archcompat-with-proc-checkinstall
+Summary: Immediately run arch_compat %name when installing this package (with /proc)
+Group: Other
+Requires(pre): /proc
+# to be sure:
+Requires: /proc
+Requires(pre): %name
+
+%description archcompat-with-proc-checkinstall
+Immediately run a few arch_compat RPM tests when installing this package
+(with /proc).
+
+They test rpm -i, applied to the results of rpmbuild, which is used
+to build packages without explicitly specifying the architecture, so
+that their architecture is derived automatically based on `uname -m`.
+
 %prep
 %setup
 
@@ -43,13 +73,43 @@ mkdir -p %buildroot%_datadir/%name
 install -m0644 Makefile HELPER *.mk -t %buildroot%_datadir/%name/
 install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 
-%check
-# To pass the usual parallelism flags etc:
+# Normally, this would be %%check,
+# but it's convenient for me to do this check also in the e2k Girar,
+# where --without check is enabled. Turn this back into %%check in future.
+%build
+# We use %%make_build to pass the usual parallelism flags etc:
 %global _make_bin ./makeme.sh
-%make_build %{?opts}
-# Also test with "Epoch: 0" instead of no Epoch:
-%make_build %{?opts} clean
-%make_build %{?opts} minimal_epoch=0
+
+%define simple_test \
+echo 'Simple test (to fail fast):'\
+%make_build %{?opts} TESTS=dummy_installable\
+%make_build %{?opts} clean\
+%nil
+
+%define archcompat_test \
+echo 'Simple arch_compat test (between `uname -m`, rpmbuild, and rpm -i):'\
+echo 'diagnostics'\
+uname -a ||:\
+cat /proc/cpuinfo ||:\
+LD_SHOW_AUXV=1 /bin/echo ||:\
+cat %_sysconfdir/rpm/platform ||:\
+rpm --eval %%_host_cpu ||:\
+rpm --eval %%_arch ||:\
+%make_build %{?opts} TESTS=dummy_installable minimal_arch=\
+%make_build %{?opts} clean\
+%nil
+
+%define all_tests \
+echo 'Main tests:'\
+%make_build %{?opts}\
+echo 'Now test also with "Epoch: 0" instead of no Epoch:'\
+%make_build %{?opts} clean\
+%make_build %{?opts} minimal_epoch=0\
+%nil
+
+%simple_test
+%archcompat_test
+%all_tests
 
 %files
 %_datadir/%name
@@ -57,16 +117,49 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 %files checkinstall
 
 %pre checkinstall -p %_sbindir/sh-safely
-%_datadir/%name/makeme.sh %{?opts}
-%_datadir/%name/makeme.sh %{?opts} clean
-%_datadir/%name/makeme.sh %{?opts} minimal_epoch=0
+# Avoid parallelism with possible nasty races
+# (until a good implementation is in place):
+export NPROCS=1
+%global _make_bin %_datadir/%name/makeme.sh
+%simple_test
+%all_tests
+
+%files archcompat-checkinstall
+
+%pre archcompat-checkinstall -p %_sbindir/sh-safely
+# Avoid parallelism with possible nasty races
+# (until a good implementation is in place):
+export NPROCS=1
+%global _make_bin %_datadir/%name/makeme.sh
+%archcompat_test
+%simple_test
+
+%files archcompat-with-proc-checkinstall
+
+%pre archcompat-with-proc-checkinstall -p %_sbindir/sh-safely
+# Avoid parallelism with possible nasty races
+# (until a good implementation is in place):
+export NPROCS=1
+%global _make_bin %_datadir/%name/makeme.sh
+%archcompat_test
+%simple_test
 
 %changelog
+* Tue Jun 30 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt5
+- Also test the compatibility between `uname -m`, rpmbuild, and rpm -i.
+  (A separate archcompat-checkinstall subpkg does this.)
+- First, run a simple test (to fail fast).
+
 * Tue Jun  4 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt4
 - To catch more errors:
-  + upgradable.mk strictly_newer_* helpers:
-    a special reason for xfailing just the asymmetry test.
-  (The tests failing for other reasons will just fail rather than xfail.)
+  + in upgradable.mk strictly_newer_* helpers, separated the xfail reasons:
+    a special reason for xfailing just the asymmetry test
+    (i.e., a pair of pkgs non-upgradable in bad direction),
+    and another one for xfailing just the upgrade test
+    (i.e., the same pair of pkgs upgradable in good direction).
+  (Now, the tests failing for one of the two reasons which is not marked as xfail
+  will just fail rather than xfail. Previously, we couldn't distinguish them
+  and could overlook a real unexpected failure.)
 
 * Fri Apr 26 2019 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt3
 - To catch more errors (evidenced by file conflicts during rpm -U),
