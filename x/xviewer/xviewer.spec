@@ -4,8 +4,8 @@
 %def_enable introspection
 
 Name: xviewer
-Version: 2.6.0
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: Fast and functional image viewer.
 License: %gpl2plus
@@ -124,6 +124,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 2.6.2-alt1
+- New version
+
 * Mon Jun 1 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt2
 - Add xapps-icons to dependencies
 
