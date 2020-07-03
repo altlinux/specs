@@ -2,7 +2,7 @@
 %define  modulename svg2pdfconverter
 
 Name:    %prefixname-%modulename
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Sphinx SVG to PDF converter extension
@@ -60,6 +60,19 @@ Converts SVG images to PDF in case the builder does not support SVG images
 natively (e.g. LaTeX).
 This package contains converter using libRSVG.
 
+
+%package -n %prefixname-cairosvgconverter
+Summary: Sphinx SVG to PDF Converter Extension - CairoSVG converter
+Group:   Development/Python3
+
+Requires: /usr/bin/python3-cairosvg
+Requires: %name-common = %EVR
+
+%description -n %prefixname-cairosvgconverter
+Converts SVG images to PDF in case the builder does not support SVG images
+natively (e.g. LaTeX).
+This package contains converter using CairoSVG.
+
 %prep
 %setup -n %modulename-%version
 
@@ -89,6 +102,15 @@ This package contains converter using libRSVG.
 %python3_sitelibdir/sphinxcontrib/__pycache__/rsvgconverter.*.pyc
 %python3_sitelibdir/sphinxcontrib/rsvgconverter.py
 
+
+%files -n %prefixname-cairosvgconverter
+%python3_sitelibdir/sphinxcontrib/__pycache__/cairosvgconverter.*.pyc
+%python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
+
 %changelog
+* Fri Jul 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+- Added cairosvgconverter subpackage.
+
 * Tue Dec 31 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
