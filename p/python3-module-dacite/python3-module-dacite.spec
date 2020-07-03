@@ -1,7 +1,7 @@
 %define  modulename dacite
 
 Name:    python3-module-%modulename
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Simple creation of data classes from dictionaries
@@ -36,6 +36,9 @@ This module simplifies creation of data classes (PEP 557) from dictionaries.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jul 03 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- New version.
+
 * Sun May 03 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version.
 
