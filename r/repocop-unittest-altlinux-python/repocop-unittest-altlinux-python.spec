@@ -2,7 +2,7 @@
 %define install_all_tests 1
 
 Name: repocop-unittest-altlinux-python
-Version: 0.14
+Version: 0.15
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,12 +10,14 @@ Url: http://repocop.altlinux.org
 
 Summary: repocop package checks for conformance with Python Packaging Policy.
 Group: Development/Other
-License: GPL or Artistic
+License: GPLv2 or Artistic-2.0
 Source: %name-%version.tar
 
 Requires: repocop > 0.40
 Requires: repocop-collector-specfile
 Requires: repocop-collector-repocop-hint
+
+BuildRequires: perl(RPM/Source/Editor.pm)
 
 %description
 set of ALTLinux-specific integration tests for repocop test platform.
@@ -45,7 +47,8 @@ install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
     %buildroot%_datadir/repocop/pkgtests/altlinux-python-test-is-packaged/repocop-helper-altlinux-python-filelist-pattern-filter
 
-
+install -pD -m 755 repocop-helper-altlinux-python-python2-in-spec \
+    %buildroot%_datadir/repocop/pkgtests/altlinux-python-python2-in-spec/repocop-helper-altlinux-python-python2-in-spec
 
 
 
@@ -57,6 +60,9 @@ install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
 %endif
 
 %changelog
+* Fri Jul 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- added altlinux-python-python2-in-spec posttest
+
 * Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - added exception for python-module-pygobject3-common-devel
 
