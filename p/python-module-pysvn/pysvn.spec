@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.9.11
+Version: 1.9.12
 Release: alt1
 Summary: Subversion support for python
 License: Apache-1.1
@@ -65,12 +65,12 @@ popd
 %endif
 
 %install
-mkdir -p %buildroot%python_sitelibdir 
+mkdir -p %buildroot%python_sitelibdir
 cp -r Source/pysvn %buildroot%python_sitelibdir
 
 %if_with python3
 pushd ../python3
-mkdir -p %buildroot%python3_sitelibdir 
+mkdir -p %buildroot%python3_sitelibdir
 cp -r Source/pysvn %buildroot%python3_sitelibdir
 popd
 %endif
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 03 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.12-alt1
+- Build new version.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.9.11-alt1
 - Build new version.
 - Fix license.
