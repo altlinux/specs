@@ -2,7 +2,7 @@
 
 Name:		bpftrace
 Version:	0.10.0
-Release:	alt1
+Release:	alt2
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -104,6 +104,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sat Jul 04 2020 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt2
+- Fix build with libbcc-devel-0.15.0.
+
 * Wed Apr 15 2020 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to v0.10.0 released at 2020-04-12. New features: kfuncs,
   C++ Symbol demangling, if-else control flow.
