@@ -2,11 +2,11 @@
 %define discord_rpc_commit 3d3ae7129d17643bc706da0a2eea85aafd10ab3a
 %define glslang_commit d0850f875ec392a130ccf00018dab458b546f27c
 %define ppsspp_ffmpeg_commit 55147e5f33f5ae4904f75ec082af809267122b94
-%define ppsspp_lang_commit d184ba2b607a03435be579406b816c90add334e6
+%define ppsspp_lang_commit 942934a3d55f600622fb3f3ad60ecc1f3da23b6b
 %define spirv_cross_commit a1f7c8dc8ea2f94443951ee27003bffa562c1f13
 
 Name: ppsspp
-Version: 1.10
+Version: 1.10.1
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -181,6 +181,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Sat Jul 04 2020 Nazarov Denis <nenderus@altlinux.org> 1.10.1-alt1
+- Version 1.10.1
+
 * Sat Jun 27 2020 Nazarov Denis <nenderus@altlinux.org> 1.10-alt1
 - Version 1.10
 
