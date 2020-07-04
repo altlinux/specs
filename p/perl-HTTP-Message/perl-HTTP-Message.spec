@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.24
+Version: 6.25
 Release: alt1
 
 Summary: HTTP style messages
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 Provides: perl(HTTP/Request/Common.pm) = 6.060
@@ -37,6 +37,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 6.25-alt1
+- automated CPAN update
+
 * Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 6.24-alt1
 - automated CPAN update
 
