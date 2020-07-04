@@ -2,7 +2,7 @@
 
 Name: json-c
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Summary: JSON implementation in C
 License: MIT
@@ -87,6 +87,9 @@ popd
 %_libdir/cmake/%name
 
 %changelog
+* Sat Jul 04 2020 Alexey Shabalin <shaba@altlinux.org> 0.14-alt2
+- Fixes: CVE-2020-12762
+
 * Sat May 09 2020 Alexey Shabalin <shaba@altlinux.org> 0.14-alt1
 - Updated to 0.14.
 
