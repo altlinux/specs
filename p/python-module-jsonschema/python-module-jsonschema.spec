@@ -2,7 +2,7 @@
 
 Name:		python-module-%oname
 Version:	2.6.0
-Release:	alt1.2
+Release:	alt3
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
@@ -46,10 +46,8 @@ nosetests -v
 
 %files
 %doc *.rst COPYING
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
+# Python 3 version provides jsonschema tool
+%exclude %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -57,6 +55,9 @@ nosetests -v
 %python_sitelibdir/*/tests
 
 %changelog
+* Sat Jul 04 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt3
+- (NMU) Don't pack jsonschema tool (closes: #38673)
+
 * Fri Jul 03 2020 Vladimir Didenko <cow@altlinux.org> 2.6.0-alt1.2
 - (NMU) Build Python 3 version in separate package
 
