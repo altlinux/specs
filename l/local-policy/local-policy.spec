@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: ALT Local policies
@@ -30,6 +30,7 @@ for i in sshd-gssapi-auth \
          krb5-conf-ccache \
          ldap-reverse-dns-lookup \
          ldap-tls-cert-check \
+         sssd-ad-gpo-access-control \
          sssd-ad-gpo-ignore-unreadable \
          sssd-cache-credentials \
          autofs-browse-mode
@@ -52,6 +53,9 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Sat Jul 04 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.2-alt1
+- Add sssd-ad-gpo-access-control control
+
 * Wed Jul 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
 - Add sssd-cache-credentials control
 - Update sssd-ad-gpo-ignore-unreadable control
