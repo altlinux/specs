@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-JSON-Validator
-Version: 4.00
+Version: 4.01
 Release: alt1
 Summary: Validate data against a JSON schema
 License: Artistic 2.0
@@ -64,6 +64,9 @@ rm -f t/invalid-ref.t
 %doc Changes README.md
 
 %changelog
+* Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1
+- automated CPAN update
+
 * Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.00-alt1
 - automated CPAN update
 
