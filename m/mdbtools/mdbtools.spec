@@ -3,17 +3,17 @@
 %def_enable gmdb2
 
 Name: mdbtools
-Version: 0.7.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Utilities for use M$ Access databases under Linux
 
 Group: Databases
-License: GPL/LGPL
-Url: https://github.com/brianb/mdbtools
+License: GPL-2.0 and LGPL-2.0
+Url: https://github.com/cyberemissary/mdbtools
 
 %if_disabled snapshot
-Source: %name-%version.tar.gz
+Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -37,6 +37,7 @@ and get results.
 %package -n gmdb
 Summary: MS Access MDB File Viewer
 Group: Databases
+License: GPL-2.0
 Requires: lib%name = %version-%release
 
 %description -n gmdb
@@ -46,6 +47,7 @@ great progress.
 %package -n lib%name
 Summary: MDB Tools shared libraries
 Group: System/Libraries
+License: LGPL-2.0
 
 %description -n lib%name
 MDB Tools is a set of libraries and programs to help you use Microsoft
@@ -60,6 +62,7 @@ libmdbodbc	an ODBC driver for use with unixODBC driver manager. Allows
 %package -n lib%name-devel
 Summary: MDB Tools development files and libraries
 Group: Development/C
+License: LGPL-2.0
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -69,6 +72,7 @@ MDB Tools.
 %package -n lib%name-devel-static
 Summary: MDB Tools static libraries
 Group: Development/C
+License: LGPL-2.0
 Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
@@ -79,7 +83,7 @@ statically linked with MDB Tools.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -120,6 +124,9 @@ install -pD -m644 src/gmdb2/gmdb.desktop %buildroot/%_desktopdir/gmdb.desktop
 %endif
 
 %changelog
+* Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- updated to 0.8.2-4-ga6c3fa2 from new %%url
+
 * Thu Jun 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt2
 - updated to 0.7.1-82-gd6f5745
 - enabled gmdb build
