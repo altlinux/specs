@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.12
+Version:  1.3.13
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Sat Jul 04 2020 Anton Midyukov <antohami@altlinux.org> 1.3.13-alt1
+- Added armh repo support.
+
 * Tue Jun 09 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.12-alt1
 - Fix official source for c8 branch.
 
