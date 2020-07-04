@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Slurp
 Name: perl-%dist
-Version: 9999.30
+Version: 9999.32
 Release: alt1
 
 Summary: Efficient Reading/Writing of Complete Files
@@ -38,6 +38,9 @@ in a directory.
 %perl_vendor_privlib/File/Slurp.pm
 
 %changelog
+* Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 9999.32-alt1
+- automated CPAN update
+
 * Sat Mar 14 2020 Igor Vlasenko <viy@altlinux.ru> 9999.30-alt1
 - automated CPAN update
 
