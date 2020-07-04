@@ -2,7 +2,7 @@
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
-%ifnarch s390 %arm alpha armel armhf hppa m68k mips mips64el mipsel sh4 %e2k riscv64
+%ifnarch %arm %mips %e2k riscv64
 %def_enable dma_coherent
 %else
 %def_disable dma_coherent
@@ -10,7 +10,7 @@
 
 
 Name: rdma-core
-Version: 28.0
+Version: 30.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -32,10 +32,7 @@ BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
 BuildRequires: /usr/bin/rst2man
-# need haskell :(
-%ifarch %ix86 x86_64
 BuildRequires: pandoc
-%endif
 Conflicts: infiniband-diags < 2.0.0
 
 %define docdir %_docdir/%name-%version
@@ -386,10 +383,10 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %config(noreplace) %_sysconfdir/rdma/ibacm_opts.cfg
 %_bindir/ib_acme
 %_sbindir/ibacm
-%_man1dir/ibacm.*
 %_man1dir/ib_acme.*
 %_man7dir/ibacm.*
 %_man7dir/ibacm_prov.*
+%_man8dir/ibacm.*
 %_unitdir/ibacm.service
 %_unitdir/ibacm.socket
 %_initdir/ibacm
@@ -571,13 +568,19 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %_sbindir/srp_daemon
 %_sbindir/run_srp_daemon
 %_udevrulesdir/60-srp_daemon.rules
-%_man1dir/ibsrpdm.*
 %_man5dir/srp_daemon.service.*
 %_man5dir/srp_daemon_port@.service.*
+%_man8dir/ibsrpdm.*
 %_man8dir/srp_daemon.*
 %docdir/ibsrpdm.md
 
 %changelog
+* Thu Jul 02 2020 Alexey Shabalin <shaba@altlinux.org> 30.0-alt1
+- 30.0
+
+* Sat Apr 18 2020 Alexey Shabalin <shaba@altlinux.org> 29.0-alt1
+- 29.0
+
 * Fri Feb 21 2020 Alexey Shabalin <shaba@altlinux.org> 28.0-alt1
 - 28.0
 
