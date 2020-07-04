@@ -62,9 +62,12 @@
 %ifarch %vulkan_radeon_arches
 %vulkan_drivers_add amd
 %endif
+%ifarch %armsoc_arches
+%vulkan_drivers_add freedreno
+%endif
 
 Name: Mesa
-Version: 20.1.1
+Version: 20.1.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -424,7 +427,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_intel.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
-%_datadir/vulkan/icd.d/intel_icd*
+%_datadir/vulkan/icd.d/intel_icd*.json
 %endif
 %endif
 
@@ -453,22 +456,32 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_radeon.so
 %dir %_datadir/vulkan
 %dir %_datadir/vulkan/icd.d
-%_datadir/vulkan/icd.d/radeon_icd*
+%_datadir/vulkan/icd.d/radeon_icd*.json
 %endif
 %endif
 
 %ifarch %armsoc_arches
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
+%_libdir/libvulkan_freedreno.so
+%dir %_datadir/vulkan
+%dir %_datadir/vulkan/icd.d
+%_datadir/vulkan/icd.d/freedreno_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Sat Jul 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.2-alt1
+- 20.1.2
+
+* Fri Jun 12 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.1-alt2
+- enabled vulkan drivers for freedreno
+
 * Wed Jun 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.1-alt1
 - 20.1.1
 
 * Wed Jun 10 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt4
-- enabled vulran drivers for ix86
+- enabled vulkan drivers for ix86
 
 * Sat Jun 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.0-alt3
 - no-change rebuild for p9 branch
