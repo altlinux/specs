@@ -1,8 +1,8 @@
 %define gecko_version 2.47.1
-%define mono_version 5.0.0
+%define mono_version 5.1.0
 
 Name: wine-vanilla
-Version: 5.10
+Version: 5.12
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -439,6 +439,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Jul 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.12-alt1
+- new version 5.12
+- set strict require wine-mono 5.1.0
+
 * Sat Jun 06 2020 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
 - new version 5.10
 
