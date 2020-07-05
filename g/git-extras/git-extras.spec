@@ -3,7 +3,7 @@
 
 Name: git-extras
 Version: 6.0.0
-Release: alt1
+Release: alt2
 
 Summary: Little git extras
 License: MIT
@@ -49,5 +49,8 @@ install -D etc/git-extras-completion.zsh \
 %_datadir/zsh/Completion/Unix/_git-extras
 
 %changelog
+* Sun Jul 05 2020 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt2
+- Fix git brv.
+
 * Sun Jul 05 2020 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt1
 - Initial import of v6.0.0.
