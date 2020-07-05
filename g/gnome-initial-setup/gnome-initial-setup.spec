@@ -9,7 +9,7 @@
 %def_enable cheese
 
 Name: gnome-initial-setup
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -89,6 +89,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
+- 3.36.4
+
 * Sun May 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 
