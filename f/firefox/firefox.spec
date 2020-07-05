@@ -5,8 +5,8 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.25
-%define nss_version   3.53.0
+%define nspr_version  4.26
+%define nss_version   3.54.0
 %define rust_version  1.42.0
 %define cargo_version 1.42.0
 
@@ -14,8 +14,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        77.0.1
-Release:        alt2
+Version:        78.0.1
+Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -44,11 +44,10 @@ Patch004: 0004-FEDORA-build-arm.patch
 Patch005: 0005-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
 Patch006: 0006-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch007: 0007-ALT-Fix-aarch64-build.patch
-Patch008: 0008-ALT-Remove-deprecated-register-keyword.patch
-Patch009: 0009-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch010: 0010-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch011: 0011-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch012: 0012-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
+Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
+Patch011: 0011-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -208,9 +207,6 @@ Most likely you don't need to use this package.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
-%ifarch armh
-%patch012 -p1
-%endif
 ### Finish apply patches
 
 cd mozilla
@@ -469,6 +465,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat Jul 04 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.1-alt1
+- New release (78.0.1).
+- Security fixes:
+  + CVE-2020-12415: AppCache manifest poisoning due to url encoded character processing
+  + CVE-2020-12416: Use-after-free in WebRTC VideoBroadcaster
+  + CVE-2020-12417: Memory corruption due to missing sign-extension for ValueTags on ARM64
+  + CVE-2020-12418: Information disclosure due to manipulated URL object
+  + CVE-2020-12419: Use-after-free in nsGlobalWindowInner
+  + CVE-2020-12420: Use-After-Free when trying to connect to a STUN server
+  + CVE-2020-12402: RSA Key Generation vulnerable to side-channel attack
+  + CVE-2020-12421: Add-On updates did not respect the same certificate trust rules as software updates
+  + CVE-2020-12422: Integer overflow in nsJPEGEncoder::emptyOutputBuffer
+  + CVE-2020-12423: DLL Hijacking due to searching %%PATH%% for a library
+  + CVE-2020-12424: WebRTC permission prompt could have been bypassed by a compromised content process
+  + CVE-2020-12425: Out of bound read in Date.parse()
+  + CVE-2020-12426: Memory safety bugs fixed in Firefox 78
+
 * Tue Jun 23 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 77.0.1-alt2
 - fixed packaging on so-called armh
 
