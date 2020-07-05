@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt141
+Release: alt142
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -357,6 +357,7 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %rpmattr %_rpmlibdir/find-provides
 %rpmattr %_rpmlibdir/find-requires
 %rpmattr %_rpmlibdir/find-debuginfo-files
+%rpmattr %_rpmlibdir/process-debuginfo
 %rpmattr %_rpmlibdir/find-scriptlet-requires
 %rpmattr %_rpmlibdir/fixup-*
 %rpmattr %_rpmlibdir/files.*
@@ -407,6 +408,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Jul 05 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt142
+- Generate debuginfo for kernel packages.
+- Process debuginfo in parallel using process-debuginfo script.
+- debugedit -n to avoid recomputing build-id.
+
 * Sun Jun 28 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt141
 - Added /usr/lib/rpm/armv8l-alt-linux/macros for builds on armv8l machines;
   added armv8l to the %%arm list and optflags for it for builds targeting it.
