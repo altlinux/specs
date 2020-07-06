@@ -9,12 +9,12 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.14.3
-Release:	alt2
+Version:	3.15.0
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
-License:	GPLv2+
+License:	GPL-2.0+
 
 URL:		http://gambas.sourceforge.net/
 Source0:	%name-%version.tar
@@ -102,9 +102,6 @@ Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-alt-mysql8-bool-type-fix.patch
 Patch8:    	gambas3-3.13.0-poppler-0.73.0.patch
 Patch9:	        gambas3-3.14.1-gst1.patch
-Patch10:        gambas-Fix-segfault-with-poppler-0.83.patch
-Patch11:        gambas-Use-GlobalParams-getUtf8Map-found-in-poppler-0.85.patch
-Patch12:	gambas-poppler0.86-support.patch
 
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
@@ -209,6 +206,7 @@ Requires:      %name-gb-qt5-webkit = %version-%release
 Requires:      %name-gb-qt5-ext = %version-%release
 Requires:      %name-gb-form-terminal = %version-%release
 Requires:      %name-gb-term = %version-%release
+Requires:      %name-gb-test = %version-%release
 Requires:      %name-gb-form-print = %version-%release
 
 %description
@@ -286,6 +284,7 @@ Requires:	%name-gb-net-curl = %version-%release
 %if_with jit
 Requires:	%name-gb-jit = %version-%release
 %endif
+Requires:       %name-gb-test = %version-%release
 Requires:	%name-gb-form-print = %version-%release
 
 %description ide
@@ -1099,6 +1098,15 @@ Requires:	%name-runtime = %version-%release
 This package contains the Gambas3 component for making the GUI of
 terminal applications.
 
+%package gb-test
+Summary:	Gambas3 component package for tests
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+%prov3 gb-test
+
+%description gb-test
+This package contains the Gambas3 component for tests.
+
 %package gb-form-print
 Summary:	Gambas3 component package for print form
 Group:		Development/Tools
@@ -1118,9 +1126,6 @@ This package contains the Gambas3 component for print form.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1194,6 +1199,9 @@ rm -rf %buildroot%_libdir/gambas3/gb.la %buildroot%_libdir/gambas3/gb.so*
 # No need for the static libs
 rm -rf %buildroot%_libdir/gambas3/*.a
 
+# Remove man page for gbh3
+rm -f %buildroot%_man1dir/gbh3.1* 
+
 # Mime types.
 mkdir -p %buildroot%_datadir/mime/packages/
 install -m 0644 -p app/mime/application-x-gambasscript.xml %buildroot%_xdgmimedir/packages/
@@ -1231,12 +1239,17 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/icons/application-x-gambas3.png
 %_xdgmimedir/packages/application-x-gambas3.xml
 %appdir/icons/application-x-gambasserverpage.png
+%_man1dir/gbr3.1*
+%_man1dir/gbx3.1*
 
 %files devel
 %doc COPYING
 %_bindir/gbc3
 %_bindir/gba3
 %_bindir/gbi3
+%_man1dir/gbc3.1*
+%_man1dir/gba3.1*
+%_man1dir/gbi3.1*
 
 %files scripter
 %_bindir/gbs3
@@ -1244,11 +1257,14 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_bindir/gbw3
 %appdir/icons/application-x-gambasscript.png
 %_xdgmimedir/packages/application-x-gambasscript.xml
+%_man1dir/gbs3.1*
+%_man1dir/gbw3.1*
 
 %files ide
 %_bindir/gambas
 %_bindir/gambas3
 %_bindir/gambas3.gambas
+%_man1dir/gambas3.1*
 
 %files gb-args
 %_libdir/gambas3/gb.args.*
@@ -1669,11 +1685,19 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/gambas3/gb.term.*
 %appdir/info/gb.term.*
 
+%files gb-test
+%_libdir/gambas3/gb.test.*
+%appdir/info/gb.test.*
+
 %files gb-form-print
 %_libdir/gambas3/gb.form.print.*
 %appdir/info/gb.form.print.*
 
 %changelog
+* Sun Jul 05 2020 Andrey Cherepanov <cas@altlinux.org> 3.15.0-alt1
+- New version.
+- New component gambas-gb-test.
+
 * Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 3.14.3-alt2
 - Fix build (use patches for new poppler).
 - Remove diplicate description.
