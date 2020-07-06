@@ -1,10 +1,10 @@
 # -*- mode: rpm-spec; mode: folding -*-
 Name: asterisk
-Version: 16.4.1
+Version: 17.5.1
 Release: alt1
 
 Summary: Open source PBX
-License: GPL
+License: GPLv2
 Group: System/Servers
 Url: https://www.asterisk.org/
 
@@ -109,12 +109,13 @@ sh bootstrap.sh
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std install-headers
 install -pm0755 -D alt/asterisk.init %buildroot%_initdir/asterisk
 install -pm0644 -D alt/asterisk.service %buildroot%_unitdir/asterisk.service
 install -pm0644 -D alt/asterisk.sysconfig %buildroot%_sysconfdir/sysconfig/asterisk
 install -pm0644 -D alt/asterisk.tmpfiles %buildroot%_tmpfilesdir/asterisk.conf
 cp -av alt/config/* %buildroot%_sysconfdir/asterisk
+fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,python3,'
 
 #{{{
 
@@ -276,11 +277,15 @@ cp -av alt/config/* %buildroot%_sysconfdir/asterisk
 %files devel
 %_includedir/asterisk.h
 %_includedir/asterisk
+%_libdir/libasteriskpj.so
 %_libdir/libasteriskssl.so
 
 #}}}
 
 %changelog
+* Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.5.1-alt1
+- 17.5.1 released
+
 * Wed Aug 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.4.1-alt1
 - 16.4.1 released
 - built with bundled pjproject (closes: 37149)
