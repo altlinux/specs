@@ -1,7 +1,7 @@
 Name: qiv
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Summary: Quick Image Viewer
 License: GPL2
@@ -10,8 +10,6 @@ Group: Graphics
 Url: http://spiegl.de/qiv
 Source0: %url/download/%name-%version.tgz
 Source1: %name.watch
-# dfo:
-Patch: %name-jumping.patch
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: fontconfig glib2-devel imlib2 libX11-devel libXext-devel libcairo-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config xorg-xextproto-devel xorg-xproto-devel
@@ -33,7 +31,6 @@ Summary(uk_UA.UTF-8): Швидкий проглядач зображень
 
 %prep
 %setup
-%patch -p1
 
 %build
 %define _optlevel 3
@@ -43,7 +40,7 @@ Summary(uk_UA.UTF-8): Швидкий проглядач зображень
 %install
 install -pDm0755 %name %buildroot/%_bindir/%name
 install -pDm0644 %name.1 %buildroot/%_man1dir/%name.1
-gzip -9f Changelog
+xz Changelog
 
 %files
 %doc README Changelog.* README.TODO contrib/%name-command.example
@@ -51,6 +48,10 @@ gzip -9f Changelog
 %_man1dir/*
 
 %changelog
+* Mon Jul 06 2020 Michael Shigorin <mike@altlinux.org> 1:2.3.2-alt1
+- new version (watch file uupdate)
+- dropped patch (merged upstream)
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1:2.3.1-alt1
 - new version (watch file uupdate)
 - built against lib{exif,jpeg,lcms2,tiff}
