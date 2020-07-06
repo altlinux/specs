@@ -5,7 +5,7 @@
 %define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -67,6 +67,9 @@ This package provides graphical dconf configuration editor.
 %doc README*
 
 %changelog
+* Mon Jul 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
+- 3.36.4
+
 * Sat Apr 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
