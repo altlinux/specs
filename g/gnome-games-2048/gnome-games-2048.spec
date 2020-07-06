@@ -7,7 +7,7 @@
 %define xdg_name org.gnome.TwentyFortyEight
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A 2048 clone for GNOME
@@ -54,6 +54,9 @@ Move the tiles until you obtain the 2048 tile.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Jul 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
+- 3.36.4
+
 * Sun May 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 
