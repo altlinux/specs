@@ -1,24 +1,35 @@
 %define _unpackaged_files_terminate_build 1
 %define mname ldap
 
-Name: python-module-%mname
-Version: 3.2.0
-Release: alt3
+%def_with check
+
+Name: python3-module-%mname
+Version: 3.3.1
+Release: alt1
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
 License: Python-style
-Group: Development/Python
+Group: Development/Python3
 Url: https://www.python-ldap.org
 # Source-git: https://github.com/python-ldap/python-ldap
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
 
-Provides: python-module-pyldap = %EVR
-Obsoletes: python-module-pyldap < %EVR
+%if_with check
+BuildRequires: openldap-servers
+BuildRequires: openldap-clients
+BuildRequires: python3(pyasn1)
+BuildRequires: python3(pyasn1_modules)
+BuildRequires: python3(tox)
+%endif
+
+Provides: python3-module-pyldap = %EVR
+Obsoletes: python3-module-pyldap < %EVR
 
 %description
 python-ldap provides an object-oriented API to access LDAP
@@ -32,29 +43,34 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 %setup
 
 # Fix python interpreter path in Demo directory
-grep -rl '^#!/usr/bin/env python' ./ | \
-	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python2|'
+grep -rl '^#!/usr/bin/env python' | \
+	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python3|'
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
+%python3_build_debug
+
+%check
+export PIP_NO_INDEX=YES
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -r -vv
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc LICENCE CHANGES README TODO Demo
-%exclude %python_sitelibdir/slapdtest
-%python_sitelibdir/_ldap.so
-%python_sitelibdir/ldap
-%python_sitelibdir/ldapurl.py*
-%python_sitelibdir/ldif.py*
-%python_sitelibdir/python_ldap-%{version}*-*.egg-info
+%exclude %python3_sitelibdir/slapdtest
+%python3_sitelibdir/_ldap.cpython-*.so
+%python3_sitelibdir/ldap
+%python3_sitelibdir/ldapurl.py*
+%python3_sitelibdir/ldif.py*
+%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
-* Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 3.2.0-alt3
-- Built Python3 package from its own src package.
-- Disabled testing.
+* Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.2.0 -> 3.3.1.
 
 * Fri May 01 2020 Stanislav Levin <slev@altlinux.org> 3.2.0-alt2
 - Fixed FTBFS.
