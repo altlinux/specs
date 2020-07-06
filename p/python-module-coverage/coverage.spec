@@ -2,11 +2,11 @@
 
 %define oname coverage
 
-%def_with check
-%def_with doc
+%def_without check
+%def_without doc
 
 Name: python-module-%oname
-Version: 5.0.4
+Version: 5.2
 Release: alt1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
@@ -15,7 +15,6 @@ Url: https://pypi.org/project/coverage/
 
 # https://github.com/nedbat/coveragepy.git
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 %if_with doc
 BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-spelling
@@ -91,7 +90,6 @@ by tests, and which are not.
 
 %prep
 %setup
-%patch -p1
 
 cp -a . ../python3
 
@@ -139,7 +137,7 @@ export TOXENV=py%{python_version_nodots python3}
 tox.py3 --sitepackages -v
 
 %files
-%doc CHANGES.rst README.rst TODO.txt
+%doc CHANGES.rst README.rst
 %python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
 %if_with doc
@@ -165,6 +163,11 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jul 06 2020 Grigory Ustinov <grenka@altlinux.org> 5.2-alt1
+- 5.0.4 -> 5.2 (Closes: #38318).
+- Build without docs.
+- Build without check.
+
 * Tue Mar 17 2020 Grigory Ustinov <grenka@altlinux.org> 5.0.4-alt1
 - 4.5.4 -> 5.0.4.
 - Enable check.
