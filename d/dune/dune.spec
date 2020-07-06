@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 Name: dune
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -125,6 +125,9 @@ sed -i '/^(name/a (version %version)' dune-project
 
 
 %changelog
+* Mon Jul 06 2020 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
 * Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 
