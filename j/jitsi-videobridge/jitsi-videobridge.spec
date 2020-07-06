@@ -5,7 +5,7 @@
 
 Name:           jitsi-videobridge
 Version:        2.1
-Release:        alt0.4
+Release:        alt0.5
 
 Summary:        Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 #Group:          Networking/Instant messaging
@@ -108,9 +108,12 @@ fi
 %_initdir/%service_name
 %_sbindir/%{name}-configure
 %_datadir/%name
-%dir %_localstatedir/log/jitsi
+%dir %attr(0755,_jvb,_jvb) %_localstatedir/log/jitsi
 
 %changelog
+* Mon Jul 06 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.1-alt0.5
+- /var/log/jitsi ownership fixed
+
 * Fri Jun 12 2020 Arseny Maslennikov <arseny@altlinux.org> 2.1-alt0.4
 - Made the daemon executable.
 - Implemented system pseudouser policy: jvb -> _jvb.
