@@ -8,8 +8,8 @@
 %define soname 2.1
 
 Name:           lib%oname
-Version:        2.1.16.0
-Release:        alt4
+Version:        2.1.17.0
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -176,8 +176,10 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
 %doc LICENSE.md LICENSE-THIRD-PARTY.md
-%_libdir/libOpenImageIO.so.*
-%_libdir/libOpenImageIO_Util.so.*
+%_libdir/libOpenImageIO.so.%{soname}
+%_libdir/libOpenImageIO.so.%{soname}.*
+%_libdir/libOpenImageIO_Util.so.%{soname}
+%_libdir/libOpenImageIO_Util.so.%{soname}.*
 
 %files -n python3-module-%oname
 %python3_sitelibdir/OpenImageIO.so
@@ -203,6 +205,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Mon Jul 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.17.0-alt1
+- Updated to upstream version 2.1.17.0.
+
 * Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 2.1.16.0-alt4
 - E2K: don't miss %%optflags while working around SIMD issue
   (thx darktemplar@)
