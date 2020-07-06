@@ -1,5 +1,5 @@
 Name: libutempter
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: A privileged helper for utmp/wtmp updates
@@ -69,6 +69,10 @@ statically linked utempter-based software.
 %_libdir/*.a
 
 %changelog
+* Mon Jul 06 2020 Dmitry V. Levin <ldv@altlinux.org> 1.2.1-alt1
+- utempter: relaxed host argument validation: it is now allowed
+  to contain spaces except in the first character.
+
 * Tue May 05 2020 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt1
 - Removed obsolete FreeBSD support.
 - Enabled build with non-glibc libcs.
