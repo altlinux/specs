@@ -3,7 +3,7 @@
 %define oname robin-map
 
 Name:    lib%oname
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 Summary: C++ implementation of a fast hash map and hash set using robin hood hashing 
 Group:   Development/C++
@@ -46,5 +46,8 @@ with backward shift deletion to resolve collisions.
 %_datadir/cmake/*
 
 %changelog
+* Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
+- Updated to upstream version 0.6.3.
+
 * Mon May 27 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
 - Initial build for ALT.
