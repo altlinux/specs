@@ -1,10 +1,11 @@
 Summary: Library for reading Jcat files
 Name: libjcat
 Version: 0.1.3
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 Group: System/Libraries
 BuildRequires: gtk-doc
 BuildRequires: meson
@@ -43,6 +44,7 @@ Executable and data files for installed tests.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %meson \
@@ -85,6 +87,10 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Mon Jul 06 2020 Anton Farygin <rider@altlinux.ru> 0.1.3-alt2
+- added patch from upstream to solve problem with lfvs signature,
+  upstream issue #2223 (closes: 38672)
+
 * Fri Jun 26 2020 Anton Farygin <rider@altlinux.ru> 0.1.3-alt1
 - 0.1.3
 
