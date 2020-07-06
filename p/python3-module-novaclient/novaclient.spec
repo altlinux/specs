@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 17.0.0
-Release: alt2
+Release: alt3
 
 Summary: Python API and CLI for OpenStack Nova
 
@@ -13,6 +13,10 @@ Url: http://docs.openstack.org/developer/python-%oname
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch: noarch
+
+# ALT 38677
+Conflicts: python-module-novaclient
+Obsoletes: python-module-novaclient
 
 Requires: python3-module-simplejson >= 3.5.1
 Requires: python3-module-keystoneclient
@@ -113,6 +117,9 @@ install -p -D -m 644 tools/nova.bash_completion \
 %doc LICENSE html
 
 %changelog
+* Mon Jul 06 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt3
+- Solved installation conflict (Closes: #38677).
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt2
 - Unify documentation building.
 
