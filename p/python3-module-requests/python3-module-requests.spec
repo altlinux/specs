@@ -4,12 +4,12 @@
 %def_disable check
 
 Name:           python3-module-%pkgname
-Version:        2.23.0
+Version:        2.24.0
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://pypi.io/project/requests
 Source0:        %pkgname-%version.tar
 # Explicitly use the system certificates in ca-certificates.
@@ -25,9 +25,6 @@ Patch2:         Remove-tests-that-use-the-tarpit.patch
 # could technically be IPv6 or something, and our no-network env is
 # a pretty odd one so this is a niche requirement.
 Patch3:         requests-2.12.4-tests_nonet.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1567862
-Patch4:         Don-t-inject-pyopenssl-into-urllib3.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1653223
 Patch5:         requests-2.20.0-no-py2-httpbin.patch
@@ -53,7 +50,6 @@ designed to make HTTP requests easy for developers.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 
 # Unbundle the certificate bundle from mozilla.
@@ -70,6 +66,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.24.0-alt1
+- 2.24.0
+
 * Thu Mar 19 2020 Alexey Shabalin <shaba@altlinux.org> 2.23.0-alt1
 - 2.23.0
 - build as python3 module
