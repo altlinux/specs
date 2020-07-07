@@ -61,6 +61,10 @@
 %def_enable ldconfig
 %endif
 
+%ifnarch riscv64
+%def_enable kexec
+%endif
+
 %ifarch ia64 %ix86 ppc64le x86_64 aarch64
 %define mmap_min_addr 65536
 %else
@@ -72,7 +76,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -143,7 +147,7 @@ BuildRequires: libaudit-devel
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_lz4:BuildRequires: pkgconfig(liblz4) >= 1.3.0}
 BuildRequires: libkmod-devel >= 15 kmod
-BuildRequires: kexec-tools
+%{?_enable_kexec:BuildRequires: kexec-tools}
 BuildRequires: quota
 BuildRequires: pkgconfig(blkid) >= 2.24
 # temporarily lower libmount version check
@@ -617,7 +621,7 @@ Static library for libudev.
 	-Dquotaon-path=/sbin/quotaon \
 	-Dquotacheck-path=/sbin/quotacheck \
 	-Dkmod-path=/bin/kmod \
-	-Dkexec-path=/sbin/kexec \
+	%{?_enable_kexec:-Dkexec-path=/sbin/kexec} \
 	-Dsulogin-path=/sbin/sulogin \
 	-Dmount-path=/bin/mount \
 	-Dumount-path=/bin/umount \
@@ -1909,6 +1913,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Jul 07 2020 Nikita Ermakov <arei@altlinux.org> 1:245.6-alt2
+- disable kexec-tools for riscv64
+
 * Thu Jun 04 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.6-alt1
 - 245.6
 
