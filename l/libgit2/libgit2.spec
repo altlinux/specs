@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: libgit2
-Version: 0.28.4
+Version: 0.28.5
 Release: alt1
 
 Summary: linkable library for Git
@@ -65,6 +65,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.28.5-alt1
+- 0.28.5
+
 * Wed Dec 11 2019 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
 - 0.28.4
 
