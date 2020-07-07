@@ -1,5 +1,5 @@
 Name: python3-module-netdisco
-Version: 2.6.0
+Version: 2.7.1
 Release: alt1
 
 Summary: Python library to discover local devices and services
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/netdisco-%version-*-info
 
 %changelog
+* Tue Jul 07 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7.1-alt1
+- 2.7.1 released
+
 * Thu Nov 28 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.0-alt1
 - initial
