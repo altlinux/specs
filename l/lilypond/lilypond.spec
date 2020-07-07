@@ -1,26 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 2.18
-%define ver_minor 2
+%define ver_major 2.20
+%define ver_minor 0
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt3
-
+Release: alt1
 Group: Publishing
 Summary: A program for printing sheet music
 License: GPLv3
 Url: http://www.lilypond.org
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: russian-lirycs-test.ly
-
-Requires: ghostscript
 
 BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile18-devel
 BuildRequires: help2man libfreetype-devel libpango-devel makeinfo python-devel texlive
+BuildRequires: texlive-collection-basic
+
+Requires: texlive-collection-basic
 
 %package -n emacs-mode-%name
 Summary: Major mode for editing GNU LilyPond music scores 
@@ -58,8 +58,9 @@ subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' 
 %build
 %configure \
 	PYTHON=python2 \
-	--with-ncsb-dir=/usr/share/fonts/type1/urw \
-	--disable-documentation
+	--with-texgyre-dir=/usr/share/texmf-dist/fonts/opentype/public/tex-gyre/ \
+	--disable-documentation \
+	%nil
 
 %make_build
 
@@ -100,6 +101,9 @@ done
 %_emacslispdir/%{name}*.el
 
 %changelog
+* Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.20.0-alt1
+- Updated to stable upstream version 2.20.0.
+
 * Tue Feb 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.2-alt3
 - Fixed build.
 
@@ -122,7 +126,7 @@ done
 - New version: 2.18.0
 
 * Sat Dec 07 2013 Michael Pozhidaev <msp@altlinux.ru> 2.16.0-alt0.2
-- %autoreconf added to fix compilation errors
+- %%autoreconf added to fix compilation errors
 
 * Sat Oct 06 2012 Michael Pozhidaev <msp@altlinux.ru> 2.16.0-alt0.1
 - New version
