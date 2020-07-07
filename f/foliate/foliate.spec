@@ -4,7 +4,7 @@
 %define rdn_name com.github.johnfactotum.Foliate
 
 Name: foliate
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -81,6 +81,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|
 
 
 %changelog
+* Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Mon Jul 06 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
