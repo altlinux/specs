@@ -1,80 +1,46 @@
+%define _unpackaged_files_terminate_build 1
 %define oname invoke
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 0.21.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: Simple Python task execution
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/invoke/
+Url: https://www.pyinvoke.org/
 # https://github.com/pyinvoke/invoke.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-reqs.patch
-Patch2: %oname-%version-alt-docs.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-html5lib python3-module-pbr
-BuildRequires: python3-module-spec python3-module-unittest2
-BuildRequires: python3-module-yaml python3-module-six
 
-%py3_provides %oname
-
+%py3_requires lexicon
+%py3_requires six
+%py3_requires yaml
 
 %description
 Invoke is a Python (2.6+ and 3.2+) task execution tool & library,
 drawing inspiration from various sources to arrive at a powerful & clean
 feature set.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Invoke is a Python (2.6+ and 3.2+) task execution tool & library,
-drawing inspiration from various sources to arrive at a powerful & clean
-feature set.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Invoke is a Python (2.6+ and 3.2+) task execution tool & library,
-drawing inspiration from various sources to arrive at a powerful & clean
-feature set.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
     $(find ./ -name '*.py')
 
 # remove some vendored stuff
-rm -rf invoke/vendor/yaml{2,3}
-rm -rf invoke/vendor/six.*
-
-sed -i \
-	-e 's|from \.vendor import yaml3 as yaml # noqa|import yaml # noqa|g' \
-	-e 's|from \.vendor import yaml2 as yaml # noqa|import yaml # noqa|g' \
-	-e 's|from \.vendor import six|import six|g' \
-	-e 's|from \.vendor\.six\.moves import reduce # noqa|from six.moves import reduce # noqa|g' \
-	invoke/util.py
+rm -r invoke/vendor/yaml{2,3}
+rm -r invoke/vendor/lexicon
+rm invoke/vendor/six.py
+rm invoke/vendor/decorator.py
 
 find . -name '*.py' | xargs sed -i \
-	-e 's|from invoke\.vendor\.six import |from six import |g'
+   -e 's|from invoke\.vendor\.six\(.*\) import |from six\1 import |g'
 
 %build
 %python3_build_debug
@@ -82,31 +48,15 @@ find . -name '*.py' | xargs sed -i \
 %install
 %python3_install
 
-pushd sites/docs
-sphinx-build-3 -b pickle -d build/doctrees . build/pickle
-sphinx-build-3 -b html -d build/doctrees . build/html
-popd
-
-cp -fR sites/docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-
-%check
-%__python3 setup.py test
-PYTHONPATH=$(pwd) spec.py3 ||:
-
 %files
 %doc *.rst
 %_bindir/*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc sites/docs/build/html/*
-
 
 %changelog
+* Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
+- 0.21.0 -> 1.4.1.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.21.0-alt2
 - python2 disabled
 
