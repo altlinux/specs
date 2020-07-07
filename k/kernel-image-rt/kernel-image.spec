@@ -5,7 +5,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt55
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt1.%kernel_rt_release
+Release: alt2.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -502,6 +502,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jul 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt2.rt55
+- Rebuild with debuginfo package.
+
 * Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt1.rt55
 - Update to v4.19.127-rt55 (22 Jun 2020).
 
