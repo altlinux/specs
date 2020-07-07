@@ -6,7 +6,7 @@
 %define spirv_cross_commit a1f7c8dc8ea2f94443951ee27003bffa562c1f13
 
 Name: ppsspp
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -181,6 +181,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Tue Jul 07 2020 Nazarov Denis <nenderus@altlinux.org> 1.10.2-alt1
+- Version 1.10.2
+
 * Sat Jul 04 2020 Nazarov Denis <nenderus@altlinux.org> 1.10.1-alt1
 - Version 1.10.1
 
