@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.30
+Version: 0.2.31
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Jul 07 2020 Mikhail Efremov <sem@altlinux.org> 0.2.31-alt1
+- mki-fakedev: Dropped unused and broken --number argument.
+
 * Tue Feb 25 2020 Anton Midyukov <antohami@altlinux.org> 0.2.30-alt1
 - mki-copy-ieee1275boot: replaced alt0 to boot
 - mki-copy-grubaa64boot, mki-pack-efionly-isoboot: replaced grub-efi
