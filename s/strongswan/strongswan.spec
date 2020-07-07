@@ -44,7 +44,7 @@
 %def_disable manager
 %def_disable medsrv
 %def_disable mysql
-%def_disable nm
+%def_enable nm
 %def_disable sqlite
 %def_disable static
 %def_disable uci
@@ -64,7 +64,7 @@
 
 Name: strongswan
 Version: 5.8.4
-Release: alt2
+Release: alt3
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -81,6 +81,10 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Mon Jul 02 2012
 # optimized out: pkg-config
 BuildRequires: flex gperf libcap-devel libcurl-devel libgmp-devel libldap-devel libpam-devel libssl-devel libxml2-devel
+
+%if_enabled nm
+BuildRequires: libnm-devel
+%endif
 
 Provides: libstrongswan = %version-%release
 Obsoletes: libstrongswan < 4.3
@@ -109,6 +113,14 @@ BuildArch: noarch
 %description testing
 This package contains testing scripts and configuration snippets
 of strongSwan documentation
+
+%package charon-nm
+Summary: NetworkManager plugin for Strongswan
+Group: System/Servers
+
+%description charon-nm
+NetworkManager plugin integrates a subset of Strongswan capabilities
+to NetworkManager.
 
 %prep
 %setup -n %name-%version%beta
@@ -215,7 +227,15 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %config(noreplace) %_initdir/ipsec
 %_unitdir/ipsec.service
 %_datadir/%name/
-%_libdir/%name/
+%dir %_libdir/%name/
+%dir %_libdir/%name/ipsec/
+%_libdir/%name/ipsec/charon
+%_libdir/%name/ipsec/_copyright
+%_libdir/%name/ipsec/scepclient
+%_libdir/%name/ipsec/starter
+%_libdir/%name/ipsec/stroke
+%_libdir/%name/ipsec/_updown
+%_libdir/%name/ipsec/xfrmi
 %_libdir/ipsec/
 %_sbindir/charon-cmd
 %_sbindir/ipsec
@@ -227,11 +247,19 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %files testing
 %pkgdocdir/testing/
 
+%files charon-nm
+%_datadir/dbus-1/system.d/nm-strongswan-service.conf
+%_libdir/%name/ipsec/charon-nm
+
+
 # TODO:
 # - libstrongswan{,-devel} subpackages
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.8.4-alt3
+- build charon-nm subpackage with NetworkManager support
+
 * Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.8.4-alt2
 - enable charon-cmd build
 - fix elf skiplist for plugins
