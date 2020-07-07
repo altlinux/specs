@@ -1,5 +1,5 @@
 Name: cvise
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
@@ -61,6 +61,8 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 
 %prep
 %setup
+# TODO: https://bugzilla.altlinux.org/show_bug.cgi?id=38660
+%__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
 
 %build
 %cmake -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir
@@ -86,5 +88,8 @@ pytest3 -v .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Tue Jun 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - initial build for ALT Sisyphus
