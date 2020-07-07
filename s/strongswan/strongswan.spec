@@ -5,6 +5,7 @@
 %def_enable agent
 %def_enable ccm
 %def_enable cisco_quirks
+%def_enable cmd
 %def_enable ctr
 %def_enable curl
 %def_enable dhcp
@@ -63,7 +64,7 @@
 
 Name: strongswan
 Version: 5.8.4
-Release: alt1
+Release: alt2
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -85,7 +86,7 @@ Provides: libstrongswan = %version-%release
 Obsoletes: libstrongswan < 4.3
 
 %define pkgdocdir %_docdir/%name-%version
-%add_verify_elf_skiplist %_libdir/%name/ipsec/plugins/*
+%add_verify_elf_skiplist %_libdir/ipsec/plugins/*.so
 
 %description
 strongSwan is a free implementation of IPsec & IKE for Linux. IPsec is the
@@ -120,6 +121,7 @@ of strongSwan documentation
 	%{subst_enable addrblock} \
 	%{subst_enable agent} \
 	%{subst_enable ccm} \
+	%{subst_enable cmd} \
 	%{subst_enable ctr} \
 	%{subst_enable curl} \
 	%{subst_enable dhcp} \
@@ -215,8 +217,11 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_datadir/%name/
 %_libdir/%name/
 %_libdir/ipsec/
-%_sbindir/*
-%_bindir/*
+%_sbindir/charon-cmd
+%_sbindir/ipsec
+%_sbindir/swanctl
+%_bindir/pki
+%_bindir/pt-tls-client
 %_mandir/*/*
 
 %files testing
@@ -227,6 +232,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.8.4-alt2
+- enable charon-cmd build
+- fix elf skiplist for plugins
+
 * Sun Mar 29 2020 Michael Shigorin <mike@altlinux.org> 5.8.4-alt1
 - new version (watch file uupdate)
 
