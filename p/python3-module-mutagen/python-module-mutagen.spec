@@ -1,18 +1,17 @@
-Name: python-module-mutagen
-Version: 1.36
-Release: alt2
-Summary: Helpers for better testing
+Name: python3-module-mutagen
+Version: 1.44.0
+Release: alt1
 
+Summary: Python module to handle audio metadata
 License: GPLv2
 Group: Development/Python
 Url: https://github.com/quodlibet/mutagen.git
-Packager: Python Development Team <python@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-%py_provides mutagen
+BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: python3(pytest) python3(hypothesis)
 
 %description
 Mutagen is a Python module to handle audio metadata. It supports FLAC,
@@ -23,26 +22,39 @@ accurately calculate the bitrate and length of MP3s. ID3 and APEv2 tags
 can be edited regardless of audio format. It can also manipulate Ogg
 streams on an individual packet/page level.
 
+%package -n mutagen
+Summary: Various mutagen (python module to handle audio metadata) binary tools
+Group: Sound
+Requires: python3-module-mutagen = %version-%release
+
+%description -n mutagen
+%summary
+
 %prep
 %setup
+rm tests/quality/test_*.py
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %check
-export LC_ALL=en_US.UTF-8
-python setup.py test
+LC_ALL=en_US.UTF-8 \
+python3 setup.py test
 
 %files
 %doc COPYING NEWS README.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
+
+%files -n mutagen
+%_bindir/*
+%_man1dir/*
 
 %changelog
-* Tue Jul 07 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.36-alt2
-- rebuilt as legacy python2 package
+* Tue Jul 07 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.44.0-alt1
+- 1.44.0 released
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.36-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
