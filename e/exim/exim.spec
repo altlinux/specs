@@ -1,6 +1,6 @@
 Name: exim
 Version: 4.94
-Release: alt1
+Release: alt2
 Summary: Exim MTA
 Group: Networking/Mail
 License: GPLv2+
@@ -184,12 +184,12 @@ test -s mail-server.key || exim-mkcert
 %dir %_logdir/%name
 %config %_initdir/%name
 %config %_sysconfdir/logrotate.d/%name
-%config %_sysconfdir/aliases.sample
-%ghost %config (noreplace) %_sysconfdir/aliases
-%config %_sysconfdir/%name/*.conf.sample
-%ghost %config (noreplace) %_sysconfdir/%name/mail-server.key
-%ghost %config (noreplace) %_sysconfdir/%name/mail-server.crt
-%config (noreplace) %_sysconfdir/%name/*.conf
+%attr(0640,root,mail) %config %_sysconfdir/aliases.sample
+%attr(0640,root,mail) %ghost %config (noreplace) %_sysconfdir/aliases
+%attr(0640,root,mail) %config %_sysconfdir/%name/*.conf.sample
+%attr(0640,root,mail) %ghost %config (noreplace) %_sysconfdir/%name/mail-server.key
+%attr(0640,root,mail) %ghost %config (noreplace) %_sysconfdir/%name/mail-server.crt
+%attr(0640,root,mail) %config (noreplace) %_sysconfdir/%name/*.conf
 %_sbindir/%name-mkcert
 # symlink to actual binary
 %ghost %_sbindir/%name
@@ -215,6 +215,9 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94-alt2
+- fix config permissions
+
 * Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94-alt1
 - update to 4.94
 
