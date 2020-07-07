@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 2.7
 %define gst_api_ver 1.0
@@ -7,7 +7,7 @@
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A modern media player
@@ -16,10 +16,10 @@ Group: Video
 Url: https://launchpad.net/audience
 
 %if_disabled snapshot
-Source: %_name-%version.tar.gz
+Source: https://github.com/elementary/videos/archive/%version/%_name-%version.tar.gz
 %else
 #VCS: https://github.com/elementary/videos.git
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 Provides: %rdn_name = %version-%release
@@ -41,7 +41,7 @@ Audience is a simple, modern media player that makes greater use of
 hardware acceleration than most players out there.
 
 %prep
-%setup -n %name-%version
+%setup -n %_name-%version
 
 %build
 %meson
@@ -60,6 +60,9 @@ hardware acceleration than most players out there.
 %doc README.md
 
 %changelog
+* Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
+- 2.7.2
+
 * Wed Apr 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - updated to 2.7.1-3-g3ce47b8
 
