@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.20.1.19
-Release: alt4
+Release: alt5
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -27,33 +27,34 @@ Source3: monolite.tar.gz
 Source4: mono-cert-sync.filetrigger
 
 # External dependencies (git submodules)
-Source5: Newtonsoft.Json-%version.tar
-Source6: api-doc-tools-%version.tar
-Source7: Lucene.Net.Light-%version.tar
-Source8: SharpZipLib-%version.tar
-Source9: api-snapshot-%version.tar
-Source10: aspnetwebstack-%version.tar
-Source11: binary-reference-assemblies-%version.tar
-Source12: bockbuild-%version.tar
-Source13: boringssl-%version.tar
-Source14: cecil-%version.tar
-Source15: cecil-legacy-%version.tar
-Source16: corefx-%version.tar
-Source17: corert-%version.tar
-Source18: ikdasm-%version.tar
-Source19: ikvm-%version.tar
-Source20: linker-%version.tar
-Source21: linker-cecil-%version.tar
-Source22: nuget-buildtasks-%version.tar
-Source23: nunit-lite-%version.tar
-Source24: roslyn-binaries-%version.tar
-Source25: rx-%version.tar
-Source26: xunit-binaries-%version.tar
+Source5: %name-%version-external-api-doc-tools.tar
+Source6: %name-%version-external-api-doc-tools-external-Lucene.Net.Light.tar
+Source7: %name-%version-external-api-doc-tools-external-SharpZipLib.tar
+Source8: %name-%version-external-api-snapshot.tar
+Source9: %name-%version-external-aspnetwebstack.tar
+Source10: %name-%version-external-binary-reference-assemblies.tar
+Source11: %name-%version-external-bockbuild.tar
+Source12: %name-%version-external-boringssl.tar
+Source13: %name-%version-external-cecil.tar
+Source14: %name-%version-external-cecil-legacy.tar
+Source15: %name-%version-external-corefx.tar
+Source16: %name-%version-external-corert.tar
+Source17: %name-%version-external-ikdasm.tar
+Source18: %name-%version-external-ikvm.tar
+Source19: %name-%version-external-linker.tar
+Source20: %name-%version-external-linker-cecil.tar
+Source21: %name-%version-external-Newtonsoft.Json.tar
+Source22: %name-%version-external-nuget-buildtasks.tar
+Source23: %name-%version-external-nunit-lite.tar
+Source24: %name-%version-external-roslyn-binaries.tar
+Source25: %name-%version-external-rx.tar
+Source26: %name-%version-external-xunit-binaries.tar
 
 Patch1: %name-alt-linking1.patch
 Patch2: %name-alt-linking2.patch
 Patch3: %name-alt-monodoc-sourcesdir.patch
 Patch4: %name-upstream-crash-Use-safer-invalid-free-test-12864.patch
+Patch5: %name-alt-make-compat.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -507,35 +508,12 @@ Development files for libmono.
 %endif
 
 %prep
-%setup
-
-pushd external/Newtonsoft.Json                         ; tar xf %SOURCE5  --strip-components=1 ; popd
-pushd external/api-doc-tools                           ; tar xf %SOURCE6  --strip-components=1 ; popd
-pushd external/api-doc-tools/external/Lucene.Net.Light ; tar xf %SOURCE7  --strip-components=1 ; popd
-pushd external/api-doc-tools/external/SharpZipLib      ; tar xf %SOURCE8  --strip-components=1 ; popd
-pushd external/api-snapshot                            ; tar xf %SOURCE9  --strip-components=1 ; popd
-pushd external/aspnetwebstack                          ; tar xf %SOURCE10 --strip-components=1 ; popd
-pushd external/binary-reference-assemblies             ; tar xf %SOURCE11 --strip-components=1 ; popd
-pushd external/bockbuild                               ; tar xf %SOURCE12 --strip-components=1 ; popd
-pushd external/boringssl                               ; tar xf %SOURCE13 --strip-components=1 ; popd
-pushd external/cecil                                   ; tar xf %SOURCE14 --strip-components=1 ; popd
-pushd external/cecil-legacy                            ; tar xf %SOURCE15 --strip-components=1 ; popd
-pushd external/corefx                                  ; tar xf %SOURCE16 --strip-components=1 ; popd
-pushd external/corert                                  ; tar xf %SOURCE17 --strip-components=1 ; popd
-pushd external/ikdasm                                  ; tar xf %SOURCE18 --strip-components=1 ; popd
-pushd external/ikvm                                    ; tar xf %SOURCE19 --strip-components=1 ; popd
-pushd external/linker                                  ; tar xf %SOURCE20 --strip-components=1 ; popd
-pushd external/linker/cecil                            ; tar xf %SOURCE21 --strip-components=1 ; popd
-pushd external/nuget-buildtasks                        ; tar xf %SOURCE22 --strip-components=1 ; popd
-pushd external/nunit-lite                              ; tar xf %SOURCE23 --strip-components=1 ; popd
-pushd external/roslyn-binaries                         ; tar xf %SOURCE24 --strip-components=1 ; popd
-pushd external/rx                                      ; tar xf %SOURCE25 --strip-components=1 ; popd
-pushd external/xunit-binaries                          ; tar xf %SOURCE26 --strip-components=1 ; popd
-
+%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %if_enabled bootstrap
 mkdir -p mcs/class/lib/monolite-linux
@@ -1147,6 +1125,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt5
+- Fixed build with new make.
+
 * Thu Jan 23 2020 Vitaly Lipatov <lav@altlinux.ru> 5.20.1.19-alt4
 - drop sqlite require from mono-data-sqlite
 - use python3 for internal build scripts
