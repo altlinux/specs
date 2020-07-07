@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -187,6 +187,7 @@ fi
 %exclude %_datadir/%myname/features/plymouth
 %exclude %_datadir/%myname/features/mdadm
 %exclude %_datadir/%myname/features/ucode
+%exclude %_datadir/%myname/guess/ucode
 %doc Documentation/*.md
 
 %files devmapper
@@ -213,9 +214,13 @@ fi
 %ifarch %ix86 x86_64
 %files ucode
 %_datadir/%myname/features/ucode
+%_datadir/%myname/guess/ucode
 %endif
 
 %changelog
+* Tue Jul 07 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.1-alt2
+- Moved the guess/ucode directory to the appropriate package (ALT#38684).
+
 * Sun Jul 05 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.1-alt1
 - Feature changes:
   + fsck: Always add fsck utilities
