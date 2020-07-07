@@ -1,10 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable doc
+
+%define subst_enable_meson_feature() %{expand:%%{?_enable_%{1}:-D%{2}=enabled}} %{expand:%%{?_disable_%{1}:-D%{2}=disabled}}
+%define subst_enable_meson_bool() %{expand:%%{?_enable_%{1}:-D%{2}=true}} %{expand:%%{?_disable_%{1}:-D%{2}=false}}
+
 Name: ncmpc
-Version: 0.31
+Version: 0.38
 Release: alt1
 Summary: curses client for mpd
-License: GPL
+License: GPL-2.0+
 Group: Sound
 Url: https://www.musicpd.org/
 
@@ -18,8 +23,11 @@ BuildRequires: glib2-devel libncursesw-devel libtinfo-devel pkg-config
 BuildRequires: liblirc-devel
 BuildRequires: libmpdclient-devel
 BuildRequires: desktop-file-utils
+BuildRequires: boost-complete
+%if_enabled doc
 BuildRequires: doxygen
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+%endif
 
 %description
 ncmpc is a curses client for the Music Player Daemon (MPD). ncmpc
@@ -30,13 +38,18 @@ with a remote control.
 
 %prep
 %setup
-sed -i -e "s,sphinx-build,sphinx-build-3,g" doc/meson.build
 
 %build
 %meson \
-	-D lirc=true \
-	-D lyrics_screen=true \
-	-D lyrics_plugin_dir=%_datadir/%name/lyrics
+	-Dlirc=enabled \
+	-Dlyrics_screen=true \
+	-Dnls=enabled \
+	-Dlocale=enabled \
+	-Dlyrics_plugin_dir=%_datadir/%name/lyrics \
+	%{subst_enable_meson_feature doc documentation} \
+	%{subst_enable_meson_bool doc manual} \
+	%{subst_enable_meson_bool doc html_manual} \
+	%nil
 
 %meson_build
 
@@ -58,12 +71,17 @@ rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
 
 %files -f %name.lang
 %_bindir/*
+%if_enabled doc
 %_man1dir/*
+%endif
 %_desktopdir/%name.desktop
 %_defaultdocdir/%name
 %_datadir/%name
 
 %changelog
+* Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.38-alt1
+- Updated to upstream version 0.38.
+
 * Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.31-alt1
 - Updated to upstream version 0.31.
 

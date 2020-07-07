@@ -1,12 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable debug
-%def_disable prof
-%def_disable werror
 %def_enable ao
 %def_enable shout
 %def_enable tcp
-%def_enable un
 %def_enable curl
 %def_disable ipv6
 %def_enable fluidsynth
@@ -16,32 +12,28 @@
 %def_enable jack
 %def_enable pulse
 %def_enable fifo
-%def_enable mvp
 %def_enable vorbis
-%def_enable oggflac
 %def_enable flac
 %def_enable mad
 %def_enable vorbisenc
 %def_enable lame
-%def_enable aac
 %def_enable audiofile
 %def_enable mikmod
 %def_disable modplug
 %def_enable faad
 %def_disable mpc
 %def_disable ffmpeg
-%def_disable mp4
 %def_enable wavpack
 %def_enable id3
 %def_enable lsr
 %def_enable mms
 %def_enable bzip2
 %def_enable zip
-%def_disable iso9660
+%def_enable iso9660
 %def_enable sqlite
 %def_disable sidplay
 %def_enable doc
-%def_without tremor
+%def_disable tremor
 %def_enable mpg123
 %def_enable nfs
 %def_enable webdav
@@ -49,33 +41,38 @@
 %def_enable mpdclient
 %def_enable smbclient
 %def_enable opus
-# auto|avahi|bonjour|no
+%def_enable systemd
+# auto|avahi|bonjour|disabled
 %define zeroconf avahi
 %define mpd_user _mpd
 %define mpd_group _mpd
 #----------------------------------------------------------------------
-%define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
+%define subst_enable_meson_feature() %{expand:%%{?_enable_%{1}:-D%{2}=enabled}} %{expand:%%{?_disable_%{1}:-D%{2}=disabled}}
+%define subst_enable_meson_bool() %{expand:%%{?_enable_%{1}:-D%{2}=true}} %{expand:%%{?_disable_%{1}:-D%{2}=false}}
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 
-%if_with tremor
-%set_disable shout
-%set_disable oggflac
+%if_enabled systemd
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %endif
-%{!?zeroconf:%define zeroconf no}
+
+%if_enabled tremor
+%set_disable shout
+%endif
+%{!?zeroconf:%define zeroconf disabled}
 
 %define  Name MPD
 
 Name:    mpd
-Version: 0.20.23
-Release: alt3
+Version: 0.21.24
+Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
 Group:   Sound
+Url:     https://musicpd.org
 
-Url:     http://musicpd.org
-Source: %name-%version.tar
 # VCS:   https://github.com/MusicPlayerDaemon/MPD.git
+Source:  %name-%version.tar
 Source1: %name.conf
 Source2: %name.sys.conf.in
 Source3: %name.init.in
@@ -83,6 +80,10 @@ Source4: %name.logrotate
 Source5: %name.tmpfile
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): meson
+%if_enabled systemd
+BuildRequires(pre): systemd-devel /usr/bin/pkg-config
+%endif
 BuildRequires: zlib-devel gcc-c++
 %{?_enable_curl:BuildRequires: libcurl-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel >= 0.9.0}
@@ -94,14 +95,12 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_modplug:BuildRequires: libmmodplug-devel}
 %{?_enable_faad:BuildRequires: libfaad-devel}
 %{?_enable_flac:BuildRequires: libflac-devel >= 1.1.3}
-%{?_enable_oggflac:BuildRequires: liboggflac-devel}
 %{?_enable_id3:BuildRequires: libid3tag-devel}
 %{?_enable_mad:BuildRequires: libmad-devel}
 %{?_enable_vorbisenc:BuildRequires: libvorbis-devel}
 %{?_enable_lame:BuildRequires: liblame-devel}
 %{?_enable_mpc:BuildRequires: libmpcdec-devel}
 %{?_enable_ffmpeg:BuildRequires: libavformat-devel}
-%{?_enable_mp4:BuildRequires: libmp4ff-devel}
 %{?_enable_wavpack:BuildRequires: libwavpack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_vorbis:BuildRequires: libvorbis-devel}
@@ -120,13 +119,12 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_mpdclient:BuildRequires: libmpdclient-devel}
 %{?_enable_smbclient:BuildRequires: libsmbclient-devel}
 %{?_enable_opus:BuildRequires: libopus-devel}
-%{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2 /usr/bin/dot}
-BuildRequires: systemd-devel
+%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink}
 %if %zeroconf == avahi
 BuildRequires: libavahi-glib-devel libdbus-devel
 %endif
 
-BuildRequires: boost-devel libicu-devel
+BuildRequires: boost-complete libicu-devel
 
 %description
 Music Player Daemon (%Name) allows remote access for playing music
@@ -151,94 +149,68 @@ system that provides control for music playback over a local network.
 It is also makes a great desktop music player, especially if you are a
 console junkie, like frontend options, or restart X often.
 This package contains %Name documentation.
-
-%package doc-api
-Summary: Music Player Daemon (%Name) documentation
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc-api
-Music Player Daemon (%Name) allows remote access for playing music
-(MP3, Ogg Vorbis, FLAC, AAC, Mod, and wave files) and managing
-playlists. %Name is designed for integrating a computer into a stereo
-system that provides control for music playback over a local network.
-It is also makes a great desktop music player, especially if you are a
-console junkie, like frontend options, or restart X often.
-This package contains %Name's API documentation.
 %endif
 
 %prep
 %setup
-[ $(rpmvercmp %{get_version libflac-devel} 1.1.3) -lt 0 ] || sed -i 's/AM_PATH_LIBOGGFLAC/AM_PATH_LIBFLAC/' configure.ac
-# libmad.pc describes 'libmad', not 'mad'
-sed -i 's/\[mad\]/[libmad]/' configure.ac
 
 %build
-%define _optlevel 3
 %add_optflags -D_FILE_OFFSET_BITS=64
-%autoreconf
-%configure \
-    %{subst_enable debug} \
-    %{subst_enable_to prof gprof} \
-    %{subst_enable werror} \
-    %{subst_with tremor} \
-    %{subst_enable ao} \
-    %{subst_enable shout} \
-    %{subst_enable tcp} \
-    %{subst_enable un} \
-    %{subst_enable curl} \
-    %{?_enable_curl:--enable-lastfm} \
-    %{subst_enable ipv6} \
-    %{subst_enable sun} \
-    %{subst_enable oss} \
-    %{subst_enable alsa} \
-    %{subst_enable jack} \
-    %{subst_enable pulse} \
-    %{subst_enable fifo} \
-    %{subst_enable mvp} \
-    %{subst_enable vorbis} \
-    %{subst_enable flac} \
-    %{subst_enable oggflac} \
-    %{subst_enable mad} \
-    %{?_enable_lame:--enable-lame-encoder} \
-    %{?_enable_vorbisenc:--enable-vorbis-encoder} \
-    %{subst_enable aac} \
-    %{subst_enable audiofile} \
-    %{subst_enable mikmod} \
-    %{subst_enable modplug} \
-    %{subst_enable mpc} \
-    %{subst_enable ffmpeg} \
-    %{subst_enable mp4} \
-    %{subst_enable wavpack} \
-    %{subst_enable id3} \
-    %{subst_enable lsr} \
-    %{subst_enable mms} \
-    %{subst_enable sidplay} \
-    %{subst_enable bzip2} \
-    %{subst_enable zip} \
-    %{subst_enable iso9660} \
-    %{subst_enable sqlite} \
-    %{subst_enable fluidsynth} \
-    %{subst_enable wildmidi} \
-    %{subst_enable mpg123} \
-    %{subst_enable nfs} \
-    %{subst_enable webdav} \
-    %{subst_enable upnp} \
-    %{subst_enable mpdclient} \
-    %{subst_enable smbclient} \
-    %{subst_enable opus} \
-    %{subst_enable_to doc documentation} \
-    --with-systemdsystemunitdir=/lib/systemd/system \
-    --with-zeroconf=%zeroconf \
-    --docdir=%_docdir/%name-%version
-%make_build
-bzip2 --best --keep --force NEWS
+
+%meson \
+	%{subst_enable_meson_feature tremor tremor} \
+	%{subst_enable_meson_feature ao ao} \
+	%{subst_enable_meson_feature shout shout} \
+	%{subst_enable_meson_bool tcp tcp} \
+	%{subst_enable_meson_feature curl curl} \
+	%{subst_enable_meson_feature ipv6 ipv6} \
+	%{subst_enable_meson_feature oss oss} \
+	%{subst_enable_meson_feature alsa alsa} \
+	%{subst_enable_meson_feature jack jack} \
+	%{subst_enable_meson_feature pulse pulse} \
+	%{subst_enable_meson_bool fifo fifo} \
+	%{subst_enable_meson_feature vorbis vorbis} \
+	%{subst_enable_meson_feature flac flac} \
+	%{subst_enable_meson_feature mad mad} \
+	%{subst_enable_meson_feature lame lame} \
+	%{subst_enable_meson_feature vorbisenc vorbisenc} \
+	%{subst_enable_meson_feature audiofile audiofile} \
+	%{subst_enable_meson_feature mikmod mikmod} \
+	%{subst_enable_meson_feature modplug modplug} \
+	%{subst_enable_meson_feature mpc mpcdec} \
+	%{subst_enable_meson_feature ffmpeg ffmpeg} \
+	%{subst_enable_meson_feature wavpack wavpack} \
+	%{subst_enable_meson_feature id3 id3tag} \
+	%{subst_enable_meson_feature lsr libsamplerate} \
+	%{subst_enable_meson_feature mms mms} \
+	%{subst_enable_meson_feature sidplay sidplay} \
+	%{subst_enable_meson_feature bzip2 bzip2} \
+	%{subst_enable_meson_feature zip zzip} \
+	%{subst_enable_meson_feature iso9660 iso9660} \
+	%{subst_enable_meson_feature sqlite sqlite} \
+	%{subst_enable_meson_feature fluidsynth fluidsynth} \
+	%{subst_enable_meson_feature wildmidi wildmidi} \
+	%{subst_enable_meson_feature mpg123 mpg123} \
+	%{subst_enable_meson_feature nfs nfs} \
+	%{subst_enable_meson_feature webdav webdav} \
+	%{subst_enable_meson_feature upnp upnp} \
+	%{subst_enable_meson_feature mpdclient libmpdclient} \
+	%{subst_enable_meson_feature smbclient smbclient} \
+	%{subst_enable_meson_feature opus opus} \
+	%{subst_enable_meson_bool doc documentation} \
+	%{subst_enable_meson_feature systemd systemd} \
+%if_enabled systemd
+	-Dsystemd_system_unit_dir=%_unitdir \
+	-Dsystemd_user_unit_dir=%_userunitdir \
+%endif
+	-Dzeroconf=%zeroconf \
+	%nil
+
+%meson_build
 
 %install
-%makeinstall_std protocoldir=%_docdir/%name-%version/html
-%if_enabled doc
-ln -s html %buildroot%_docdir/%name-%version/protocol
-%endif
+%meson_install
+
 install -d %buildroot{%_localstatedir/%name/playlists,{%_runtimedir,%_logdir}/%name,%_sysconfdir,%_initdir,%_tmpfilesdir}
 sed -e "s|@localstatedir@|%_localstatedir|g" -e "s|@logdir@|%_logdir|g" %SOURCE1 > %buildroot%_sysconfdir/%name.conf
 chmod 644 %buildroot%_sysconfdir/%name.conf
@@ -249,7 +221,6 @@ chmod 755 %buildroot%_initdir/%name
 sed 's/@MPD_USER@/%mpd_user/g' %SOURCE5 > %buildroot%_tmpfilesdir/%name.conf
 chmod 644 %buildroot%_tmpfilesdir/%name.conf
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
-bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 %pre
 %_sbindir/groupadd -r -f %mpd_group &>/dev/null ||:
@@ -264,22 +235,22 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %preun_service %name ||:
 
 %files
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/AUTHORS
-%doc %_docdir/%name-%version/README.md
-%doc %_docdir/%name-%version/COPYING
-%doc %_docdir/%name-%version/%{name}conf.example
 %if_disabled doc
-%doc %_docdir/%name-%version/NEWS.*
+%_defaultdocdir/%name
 %endif
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/%name.sys.conf
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %_bindir/*
+%if_enabled doc
 %_man1dir/*
 %_man5dir/*
+%endif
 %_initdir/*
+%if_enabled systemd
 %_unitdir/*
+%_userunitdir/*
+%endif
 %_tmpfilesdir/*
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name/playlists
@@ -288,20 +259,15 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 %if_enabled doc
 %files doc
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/NEWS.*
-%doc %_docdir/%name-%version/html
-%doc %_docdir/%name-%version/protocol
-%doc %_docdir/%name-%version/user
-%doc %_docdir/%name-%version/developer
-
-%files doc-api
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/api
+%_defaultdocdir/%name
 %endif
 
-
 %changelog
+* Mon Jul 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.24-alt1
+- Updated to upstream version 0.21.24.
+- Enabled again iso9660 support.
+- Switched to meson build system.
+
 * Thu May 09 2019 Michael Shigorin <mike@altlinux.org> 0.20.23-alt3
 - fixed doc knob
 - minor spec cleanup

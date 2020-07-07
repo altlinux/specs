@@ -1,12 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable doc
+
+%define subst_enable_meson_feature() %{expand:%%{?_enable_%{1}:-D%{2}=enabled}} %{expand:%%{?_disable_%{1}:-D%{2}=disabled}}
+%define subst_enable_meson_bool() %{expand:%%{?_enable_%{1}:-D%{2}=true}} %{expand:%%{?_disable_%{1}:-D%{2}=false}}
+
 Name: mpc
-Version: 0.30
+Version: 0.33
 Release: alt1
 Summary: Command line tool to interface MPD
 License: %gpl2plus
 Group: Sound
-Url: http://mpd.wikia.com/?page=mpc
+Url: https://mpd.wikia.com/?page=mpc
 
 # https://github.com/MusicPlayerDaemon/mpc.git
 Source: %name-%version.tar
@@ -14,7 +19,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): meson
 BuildRequires: libmpdclient-devel
-BuildRequires: python3-module-sphinx
+%if_enabled doc
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+%endif
 
 %description
 Music Player Command (%name) is a client for MPD, the Music Player
@@ -22,14 +29,14 @@ Daemon. %name connects to a MPD running on a machine via a network.
 
 %prep
 %setup
-sed -i -e "s,sphinx-build,sphinx-build-3,g" doc/meson.build
 
 %build
-%meson -D iconv=true
-%meson_build
+%meson \
+	-Diconv=enabled \
+	%{subst_enable_meson_feature doc documentation} \
+	%nil
 
-%check
-%meson_test
+%meson_build
 
 %install
 %meson_install
@@ -42,13 +49,21 @@ install -p -D -m0644 contrib/mpc-completion.bash \
 rm -f %buildroot%_defaultdocdir/%name/contrib/mpc-completion.bash
 rm -f %buildroot%_defaultdocdir/%name/html/.buildinfo
 
+%check
+%meson_test
+
 %files
 %config(noreplace) %_sysconfdir/bash_completion.d/%name
 %_bindir/*
+%if_enabled doc
 %_man1dir/*
+%endif
 %_defaultdocdir/%name
 
 %changelog
+* Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.33-alt1
+- Updated to upstream version 0.33.
+
 * Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30-alt1
 - Updated to upstream version 0.30.
 
