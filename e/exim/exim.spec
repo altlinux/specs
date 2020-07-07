@@ -1,6 +1,6 @@
 Name: exim
-Version: 4.92.3
-Release: alt2
+Version: 4.94
+Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
 License: GPLv2+
@@ -215,7 +215,10 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
-* Mon Sep 30 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.3-alt2
+* Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94-alt1
+- update to 4.94
+
+* Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.3-alt2
 - quick fix for the startup script (#38633)
 
 * Mon Sep 30 2019 Gremlin from Kremlin <gremlin@altlinux.org> 4.92.3-alt1
