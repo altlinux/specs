@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt143
+Release: alt144
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Jul 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt144
+- debuginfo: Fix processing of hard-linked binaries.
+
 * Mon Jul 06 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt143
 - debuginfo: Improve search for vmlinux binary.
 
