@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200629
+Version: 20200702
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 07 2020 Cronbuild Service <cronbuild@altlinux.org> 20200702-alt1
+
+
 * Tue Jun 30 2020 Cronbuild Service <cronbuild@altlinux.org> 20200629-alt1
 - upstream changes (GIT 1a0c0c2):
   + amdgpu: add UVD firmware for SI asics (thx Alex Deucher)
