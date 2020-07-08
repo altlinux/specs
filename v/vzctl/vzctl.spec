@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.227
+Version: 7.0.228
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -15,14 +15,14 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64
 
 # these reqs are for vz helper scripts
-Requires: ploop >= 7.0.160
+Requires: ploop >= 7.0.199
 Requires: network-config-subsystem
 Requires: libvzctl >= 7.0.583
 
 BuildRequires: glibc-devel libuuid-devel
 BuildRequires: systemd-devel libudev-devel
 BuildRequires: libvzctl-devel >= 7.0.583
-BuildRequires: libploop-devel >= 7.0.160
+BuildRequires: libploop-devel >= 7.0.199
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 
 %define _libexecdir /usr/libexec
@@ -94,6 +94,7 @@ exit 0
 %preun
 %preun_service vz
 %preun_service vzeventd
+%preun_service vz-k8s-inside-ct
 # Last deinstallation, not upgrade.
 #if [ $1 -eq 0 ]; then
 #	# Remove iptables rules.
@@ -126,6 +127,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Wed Jul 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.228-alt1
+- 7.0.228 with "k8s inside a CT" feature enabled
+
 * Wed May 27 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.227-alt1
 - 7.0.227
 
