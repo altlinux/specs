@@ -2,7 +2,7 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt3.qa1
+Release:    alt4
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
 Source0:    %{name}-%{version}.tar
@@ -28,6 +28,7 @@ Patch8:     fix-missing-unistd.h.patch
 Patch9:     fix-method-call.patch
 Patch10:    fix-project-libs.patch
 Patch20:    %name-%version-alt-gcc6.patch
+Patch21:    %name-%version-alt-python2-compat.patch
 #Requires:   qt
 #Requires:   GConf-dbus
 Requires:   %{name}-configs
@@ -138,6 +139,7 @@ Sensorfw configuration files.
 # fix-project-libs.patch
 %patch10
 %patch20 -p2
+%patch21 -p2
 # >> setup
 # << setup
 find . -type f -name \*.pr\? | while read f; do sed -i 's|/usr/lib|%_libdir|' $f; done
@@ -259,6 +261,9 @@ install -D -m644 %{SOURCE9} %buildroot%_sysconfdir/sysconfig/sensord
 # << files configs
 
 %changelog
+* Wed Jul 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt4
+- Updated python dependencies.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt3.qa1
 - NMU: applied repocop patch
 
