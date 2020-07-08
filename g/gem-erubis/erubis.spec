@@ -1,18 +1,21 @@
 %define        pkgname erubis
 
-Name: 	       %pkgname
+Name:          gem-%pkgname
 Version:       2.7.0
-Release:       alt4
+Release:       alt5
 Summary:       A fast and extensible eRuby implementation
 License:       MIT
 Group:         Development/Ruby
 Url:           http://www.kuwata-lab.com/erubis/
-%vcs           https://github.com/kwatch/erubis.git
+Vcs:           https://github.com/kwatch/erubis.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Erubis is a fast, secure, and very extensible implementation of eRuby.
@@ -51,16 +54,16 @@ Documentation files for %gemname gem.
 Файлы сведений для %gemname самоцвета.
 
 
-%package       -n gem-%pkgname
+%package       -n %pkgname
 Summary:       Library file for %gemname gem
 Summary(ru_RU.UTF-8): Библиотеки для самоцвета %gemname
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname
+%description   -n %pkgname
 Library file for %gemname gem.
 
-%description   -n gem-%pkgname -l ru_RU.UTF8
+%description   -n %pkgname -l ru_RU.UTF8
 Библиотеки для %gemname самоцвета.
 
 
@@ -78,18 +81,24 @@ Library file for %gemname gem.
 
 %files
 %doc README*
-%_bindir/%name
+%ruby_gemspec
+%ruby_gemlibdir
 
-%files         -n gem-%pkgname
-%ruby_sitelibdir/*
-%rubygem_specdir/*
+%files         -n %pkgname
+%doc README*
+%_bindir/%gemname
 
 %files         doc
-%ruby_ri_sitedir/*
+%ruby_gemdocdir
+
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt5
+- + upstream gear repo
+- ! spec tags
+
 * Wed Jul 10 2019 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt4
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Wed Jul 11 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt3.1
 - Rebuild with new Ruby autorequirements.

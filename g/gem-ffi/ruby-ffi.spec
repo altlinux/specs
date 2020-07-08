@@ -1,7 +1,7 @@
 %define        pkgname ffi
 
 Name:          gem-%pkgname
-Version:       1.12.2
+Version:       1.13.1
 Release:       alt1
 Summary:       Ruby foreign function interface
 Group:         Development/Ruby
@@ -81,6 +81,9 @@ Documentation files for %gemname gem.
 %ruby_includedir/ffi*
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.13.1-alt1
+- ^ 1.12.2 -> 1.13.1
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.12.2-alt1
 - ^ 1.11.3 -> 1.12.2
 - ! spec tags

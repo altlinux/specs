@@ -1,21 +1,21 @@
 %define        pkgname ohai
 
-Name:          %pkgname
-Version:       15.0.34
+Name:          gem-%pkgname
+Version:       16.2.4
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/chef/ohai
-# VCS:         https://github.com/chef/ohai.git
+Vcs:           https://github.com/chef/ohai.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-
 BuildRequires(pre): rpm-build-ruby
 
-%filter_from_requires /wmi-lite/d
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then
@@ -23,42 +23,63 @@ provide these attributes to the chef-client at the start of every
 chef-client run. Ohai is required by the chef-client and must be present
 on a node.
 
+%package       -n %pkgname
+Summary:       Executable for Ohai profiling your system and emits JSON
+Group:         Development/Other
+BuildArch:     noarch
+
+%description   -n %pkgname
+%summary.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Исполнямка для %gemname самоцвета.
+
+
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
-Documentation files for %{name}.
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
+
 
 %prep
 %setup
 
 %build
-%gem_build --join=lib:bin
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %doc README*
-%_bindir/%pkgname
 %ruby_gemlibdir
 %ruby_gemspec
+
+%files         -n %pkgname
+%doc README*
+%_bindir/%pkgname
 
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
-* Fri Apr 26 2019 Andrey Cherepanov <cas@altlinux.org> 15.0.34-alt1
-- New version.
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.2.4-alt1
+- ^ 15.0.30 -> 16.2.4
 
 * Mon Mar 25 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.30-alt1
-- Bump to 15.0.30
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 15.0.25 -> 15.0.30
 
 * Mon Dec 10 2018 Andrey Cherepanov <cas@altlinux.org> 15.0.25-alt1
 - New version.

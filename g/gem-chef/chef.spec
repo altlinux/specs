@@ -1,14 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 %define        pkgname chef
 
-Name:          %pkgname
-Version:       15.2.19
+Name:          gem-%pkgname
+Version:       16.2.89
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Networking/Other
 License:       Apache-2.0
 Url:           https://www.chef.io/
-%vcs           https://github.com/opscode/chef.git
+Vcs:           https://github.com/opscode/chef.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -20,9 +20,11 @@ Source4:       chef-client.rb
 
 BuildRequires(pre): rpm-build-ruby
 
-%gem_replace_version highline ~> 2.0
-%gem_replace_version train-core ~> 3.0
+%gem_replace_version bcrypt_pbkdf ~> 1.1.0
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     %pkgname-doc < %EVR
+Provides:      %pkgname-doc = %EVR
 
 %description
 Chef is a systems integration framework and configuration management
@@ -38,6 +40,18 @@ This package contains the chef-client, chef-solo and knife binaries as
 well as the chef library.
 
 
+%package       -n %pkgname
+Summary:       Chef's default configuration and config loading
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   -n %pkgname
+Chef's default configuration and config loading.
+
+%description   -n %pkgname -l ru_RU.UTF8
+Настройки для самоцвета %gemname.
+
+
 %package       doc
 Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
@@ -51,53 +65,77 @@ Documentation files for %gemname gem.
 Файлы сведений для самоцвета %gemname.
 
 
-%package       -n gem-%pkgname-config
+%package       config
 Summary:       Chef's default configuration and config loading
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-config
+%description   config
 Chef's default configuration and config loading.
 
-%description   -n gem-%pkgname-config -l ru_RU.UTF8
+%description   config -l ru_RU.UTF8
 Настройки для самоцвета %gemname.
 
 
-%package       -n gem-%pkgname-config-doc
+%package       config-doc
 Summary:       Documentation files for %gemname-config gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-config-doc
+%description   config-doc
 Documentation files for %gemname-config gem.
 
-%description   -n gem-%pkgname-config-doc -l ru_RU.UTF8
+%description   config-doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname-config.
 
 
-%package       -n gem-%pkgname-bin
+%package       utils
+Summary:       Basic utility functions for Core Chef development
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   utils
+%summary.
+
+%description   utils -l ru_RU.UTF8
+Утилиты для самоцвета %gemname.
+
+
+%package       utils-doc
+Summary:       Documentation files for %gemname-utils gem
+Group:         Development/Ruby
+BuildArch:     noarch
+
+%description   utils-doc
+%summary.
+
+%description   utils-doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname-utils.
+
+
+%package       bin
 Summary:       Chef-branded binstubs for chef-client
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-bin
+%description   bin
 Chef-branded binstubs for chef-client.
 
-%description   -n gem-%pkgname-bin -l ru_RU.UTF8
+%description   bin -l ru_RU.UTF8
 Исполняемые заглушки для самоцвета %gemname.
 
 
-%package       -n gem-%pkgname-bin-doc
+%package       bin-doc
 Summary:       Documentation files for %gemname-bin gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-bin-doc
+%description   bin-doc
 Documentation files for %gemname-bin gem.
 
-%description   -n gem-%pkgname-bin-doc -l ru_RU.UTF8
+%description   bin-doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname-bin.
 
 
@@ -105,7 +143,7 @@ Documentation files for %gemname-bin gem.
 %setup
 
 %build
-%ruby_build --ignore=standalone_cookbook,omnibus,kitchen-tests,win32-eventlog --use=chef --join=lib:bin
+%ruby_build --ignore=standalone_cookbook,omnibus,kitchen-tests,win32-eventlog
 
 %install
 %ruby_install
@@ -125,9 +163,35 @@ mkdir -p %buildroot/run/chef
 %ruby_test
 
 %files
-%doc README*
 %ruby_gemspecdir/chef-%version.gemspec
 %ruby_gemslibdir/chef-%version
+
+%files         config
+%ruby_gemspecdir/chef-config-%version.gemspec
+%ruby_gemslibdir/chef-config-%version
+
+%files         utils
+%ruby_gemspecdir/chef-utils-%version.gemspec
+%ruby_gemslibdir/chef-utils-%version
+
+%files         bin
+%ruby_gemspecdir/chef-bin-%version.gemspec
+%ruby_gemslibdir/chef-bin-%version
+
+%files         doc
+%ruby_gemsdocdir/chef-%version
+
+%files         config-doc
+%ruby_gemsdocdir/chef-config-%version
+
+%files         utils-doc
+%ruby_gemsdocdir/chef-utils-%version
+
+%files         bin-doc
+%ruby_gemsdocdir/chef-bin-%version
+
+%files         -n %pkgname
+%doc README*
 %_bindir/*
 %_initdir/chef-client
 %_unitdir/chef-client.service
@@ -138,40 +202,27 @@ mkdir -p %buildroot/run/chef
 %dir %attr(0750, _chef, _chef) %_var/lib/chef
 %dir %attr(0750, _chef, _chef) %_var/cache/chef
 
-%files         -n gem-%pkgname-config
-%ruby_gemspecdir/chef-config-%version.gemspec
-%ruby_gemslibdir/chef-config-%version
-
-%files         -n gem-%pkgname-bin
-%ruby_gemspecdir/chef-bin-%version.gemspec
-%ruby_gemslibdir/chef-bin-%version
-
-%files         doc
-%ruby_gemsdocdir/chef-%version
-
-%files         -n gem-%pkgname-config-doc
-%ruby_gemsdocdir/chef-config-%version
-
-%files         -n gem-%pkgname-bin-doc
-%ruby_gemsdocdir/chef-bin-%version
-
-%pre
+%pre           -n %pkgname
 getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.2.89-alt1
+- ^ 15.2.19 -> 16.2.89
+- + chef-utils gem package
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 15.2.19-alt1
-^ v15.2.19
+- ^ 15.0.201 -> 15.2.19
 
 * Wed Apr 03 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.201-alt1
-- Bump to 15.0.201
+- ^ 15.0.167 -> 15.0.201
 
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.167-alt2
-- Use setup gem's dependency detection
+- > setup gem's dependency detection
 
 * Wed Feb 20 2019 Pavel Skrylev <majioa@altlinux.org> 15.0.167-alt1
-- Bump to 15.0.167;
-- Use Ruby Policy 2.0.
+- > Ruby Policy 2.0
+- ^ 15.0.120 -> 15.0.167
 
 * Fri Jan 04 2019 Andrey Cherepanov <cas@altlinux.org> 15.0.120-alt1
 - New version.

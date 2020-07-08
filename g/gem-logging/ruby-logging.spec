@@ -1,8 +1,8 @@
 %define        pkgname logging
 
 Name:          gem-%pkgname
-Version:       2.2.2
-Release:       alt2.1
+Version:       2.3.0
+Release:       alt1
 Summary:       A flexible logging library for use in Ruby programs based on the design of Java's log4j library
 License:       MIT
 Group:         Development/Ruby
@@ -15,8 +15,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Logging is a flexible logging library for use in Ruby programs based on
@@ -42,7 +43,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -60,6 +61,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 2.3.0-alt1
+- ^ 2.2.2 -> 2.3.0
+- ! spec
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.2-alt2.1
 - fixed (!) spec
 

@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       2.0.0
-Release:       alt2
+Release:       alt3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       MIT
 Group:         Development/Ruby
@@ -17,6 +17,7 @@ Source:        %name-%version.tar
 Source1:       settings.yml
 Source2:       %pkgname.service
 Patch:         %version.patch
+Patch1:        config.patch
 BuildRequires(pre): rpm-build-ruby
 
 %gem_replace_version json ~> 2.3.1
@@ -74,6 +75,7 @@ Documentation files for %gemname gem.
 %prep
 %setup
 %patch
+%patch1 -p1
 
 %build
 %ruby_build
@@ -106,6 +108,9 @@ install -dm750 %buildroot%_logdir/%pkgname %buildroot%_runtimedir/%pkgname
 
 
 %changelog
+* Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt3
+- + settings yamls
+
 * Mon Jun 15 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt2
 - * dependencies by patch
 
