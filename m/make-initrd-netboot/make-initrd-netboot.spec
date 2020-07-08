@@ -1,0 +1,45 @@
+%add_findreq_skiplist /usr/share/make-initrd/features/*
+
+Name: make-initrd-netboot
+Version: 0.3
+Release: alt2
+
+Summary: Netboot feature for make-initrd
+License: GPL
+Group: System/Base
+
+Source0: %name-%version.tar
+
+# For modern init script scheme
+Requires: make-initrd >= 0.9.0
+
+BuildArch: noarch
+
+%description
+Make-initrd netboot feature to do special type of network boot:
+1) Get ip address via DHCP (for all ethernet adapters)
+2) Mount tmpfs as root filesystem (with <netboot_fs_size> size)
+3) Download and untar <netboot_url>/common.tar.zst
+4) Download and untar <netboot_url>/<IP_ADDRESS>.tar.zst
+
+Ethernet module should be added to MODULES_PRELOAD.
+
+%prep
+%setup
+
+%install
+mkdir -p %buildroot/usr/share/make-initrd/features/
+cp -a netboot %buildroot/usr/share/make-initrd/features/
+
+%files 
+%_datadir/make-initrd/features/netboot
+
+%changelog
+* Wed Jul 08 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt2
+- Updated package %%description.
+
+* Wed Jun 26 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt1
+- Ported to modern make-initrd scheme with modules made as init-scripts.
+
+* Tue May 29 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1-alt1
+- initial
