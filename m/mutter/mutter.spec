@@ -15,8 +15,8 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -217,6 +217,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.4-alt1
+- 3.36.4
+
 * Thu Jun 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.3-alt1.1
 - BR: explicitly required libEGL-devel if EGLDevice enabled (fixed armh build)
 
