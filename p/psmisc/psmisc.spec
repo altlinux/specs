@@ -3,7 +3,7 @@
 
 Name: psmisc
 Version: 23.3
-Release: alt1
+Release: alt2
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -61,7 +61,7 @@ PATH=%buildroot/sbin:%buildroot%_bindir:$PATH
 %endif
 
 my_tests() {
-  type killall pstree prtstat fuser pslog peekfd
+  type killall pstree prtstat fuser pslog peekfd || :
   killall --list
   sleep 1m & sleep 1; killall sleep
   sleep 1m & sleep 1; killall -e sleep
@@ -111,7 +111,9 @@ vm-run "set -xe
   /sbin/capsh --user=nobody -- -c 'sleep 1m' & sleep 1; killall sleep
   /sbin/capsh --user=nobody -- -c 'sleep 1m' & sleep 1; killall -u nobody
   # conflicts with kernel.yama.ptrace_scope=1
-  timeout 1 peekfd \$\$ || test \$? = 124
+  if type peekfd 2>/dev/null; then
+    timeout 1 peekfd \$\$ || test \$? = 124
+  fi
   my_tests"
 popd
 
@@ -127,18 +129,15 @@ my_tests
 make check
 
 %files -f %name.lang
-/sbin/fuser
-%_bindir/pstree.x11
-%_bindir/fuser
-%_bindir/peekfd
-%_bindir/pstree
-%_bindir/prtstat
-%_bindir/pslog
-%_bindir/killall
+/sbin/*
+%_bindir/*
 %_man1dir/*.1*
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Wed Jul 08 2020 Vitaly Chikunov <vt@altlinux.org> 23.3-alt2
+- spec: Simplify binaries packing.
+
 * Fri Jul 03 2020 Vitaly Chikunov <vt@altlinux.org> 23.3-alt1
 - Fresh re-import of v23.3.
 - spec: Add tests into %%check section.
