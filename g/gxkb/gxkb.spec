@@ -1,13 +1,15 @@
 Name: gxkb
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
-Summary: Keyboard indicator and switcher
-License: GPLv2
+Summary: X11 keyboard indicator and switcher
+License: GPL-2.0
 Group: System/X11
 Url: http://sourceforge.net/projects/%name/
 
 Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
+
+Requires: setxkbmap
 
 BuildRequires: libgtk+2-devel libxklavier-devel libwnck-devel
 
@@ -31,9 +33,12 @@ switch to another one. It's written in C and uses the GTK library.
 %_datadir/%name/
 %_datadir/pixmaps/%name.xpm
 %_man1dir/%name.1.*
-%doc doc/AUTHORS doc/NEWS
+%doc README* doc/AUTHORS doc/NEWS 
 
 %changelog
+* Wed Jul 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Sat Jan 12 2019 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
