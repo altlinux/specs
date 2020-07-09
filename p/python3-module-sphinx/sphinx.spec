@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.2.0
-Release: alt3
+Version: 2.4.4
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -25,13 +25,12 @@ Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
 
 # https://github.com/sphinx-doc/sphinx.git
-Source0: %name-%version.tar
+Source0: sphinx-%version.tar.gz
 Source1: conf.py.template
 Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
-Patch2: %oname-2.2.0-Drop-extra-dep-on-Pytest.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -140,9 +139,8 @@ multiple reStructuredText sources)
 This packages contains RPM macros for build with Sphinx.
 
 %prep
-%setup
+%setup -n sphinx-%version
 %patch1 -p1
-%patch2 -p1
 
 install -pm644 %SOURCE1 .
 
@@ -255,6 +253,12 @@ PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Jul 09 2020 Fr. Br. George <george@altlinux.ru> 1:2.4.4-alt1
+- Version up
+
+* Wed Jul 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.0-alt4
+- Updated macros.
+
 * Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 1:2.2.0-alt3
 - Dropped extra dep on testing/tests.
 
