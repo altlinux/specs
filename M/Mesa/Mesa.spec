@@ -67,7 +67,7 @@
 %endif
 
 Name: Mesa
-Version: 20.1.2
+Version: 20.1.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -323,7 +323,7 @@ d=%buildroot%_libdir/vdpau
                 ln -v -snf "${t##*/}" "$f"
         done
 d=%buildroot%_libdir
-	for f in $d/libXvMC*.so; do
+	for f in $d/libXvMC*.so.1.0.0; do
                 [ ! -L "$f" ] || continue
                 n="${f##*/}"
                 s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
@@ -412,7 +412,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/gallium-pipe/pipe_swrast.so
 %endif
 %ifarch %gallium_megadriver_arches
-%_libdir/libXvMCgallium.so
+%_libdir/libXvMCgallium.so.1
 %_libdir/dri/libgallium_drv_video.so
 %endif
 %ifarch %vdpau_arches
@@ -436,7 +436,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
-%_libdir/libXvMCnouveau.so
+%_libdir/libXvMCnouveau.so.*
 %ifarch %gallium_pipe_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
@@ -448,7 +448,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/r?00_dri.so
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
-%_libdir/libXvMCr*.so
+%_libdir/libXvMCr*.so.*
 %ifarch %gallium_pipe_arches
 %_libdir/gallium-pipe/pipe_r*.so
 %endif
@@ -471,6 +471,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.3-alt1
+- 20.1.3
+
 * Sat Jul 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.2-alt1
 - 20.1.2
 
