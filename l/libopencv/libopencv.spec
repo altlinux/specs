@@ -1,8 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_disable debug
-%def_enable apps
-%def_disable openmp
+%def_without openmp
 %def_without unicap
 %def_with swig
 %def_with python
@@ -14,16 +12,15 @@
 %def_with 1394libs
 %def_with v4l
 %def_with gtk
-%def_with gthread
-%def_without carbon
-%def_without imageio
 %def_without quicktime
-%def_with pic
-%ifarch %{ix86} x86_64
+%ifarch %{ix86} x86_64 armh
 %def_with gdcm
-%def_with openni
 %else
 %def_without gdcm
+%endif
+%ifarch %{ix86} x86_64
+%def_with openni
+%else
 %def_without openni
 %endif
 #----------------------------------------------------------------------
@@ -41,7 +38,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.3.0
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -64,7 +61,7 @@ Patch2: %name-%version-alt-linking.patch
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
 BuildRequires: cmake eigen3 doxygen python2.7(bs4) zlib-devel
-BuildRequires: libucil-devel libv4l-devel libtbb-devel bzlib-devel
+BuildRequires: libucil-devel libtbb-devel bzlib-devel
 BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
 BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
 BuildRequires: libGLU-devel libXau-devel libXdmcp-devel
@@ -72,10 +69,14 @@ BuildRequires: python-module-sphinx-devel python-module-Pygments
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
 BuildRequires: libgflags-devel
-%ifarch %{ix86} x86_64
-BuildRequires: ceres-solver-devel libglog-devel
+%ifarch %{ix86} x86_64 armh
+BuildRequires: libglog-devel
 %endif
-%{?_enable_openmp:BuildRequires: libgomp-devel}
+%ifarch %{ix86} x86_64
+BuildRequires: ceres-solver-devel
+%endif
+%{?_with_v4l:BuildRequires: libv4l-devel}
+%{?_with_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libavresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
@@ -248,7 +249,7 @@ Conflicts: lib%{bname}2-examples
 Provides: lib%{bname}3.4-examples = %EVR
 Conflicts: lib%{bname}3.4-examples < %EVR
 Obsoletes: lib%{bname}3.4-examples < %EVR
-
+AutoReq:no
 
 %description examples
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -280,14 +281,14 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 	-DBUILD_EXAMPLES:BOOL=ON \
 	-DINSTALL_C_EXAMPLES:BOOL=ON \
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
-	-DENABLE_OPENMP:BOOL=OFF \
+	-DENABLE_OPENMP:BOOL=%{?_with_openmp:ON}%{!?_with_openmp:OFF} \
 	-DWITH_TBB:BOOL=ON \
 	-DBUILD_PYTHON_SUPPORT:BOOL=ON \
 	-DCMAKE_VERBOSE:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DWITH_UNICAP:BOOL=ON \
-	-DWITH_QUICKTIME:BOOL=ON \
+	-DWITH_UNICAP:BOOL=%{?_with_unicap:ON}%{!?_with_unicap:OFF} \
+	-DWITH_QUICKTIME:BOOL=%{?_with_quicktime:ON}%{!?_with_quicktime:OFF} \
 	-DWITH_XINE:BOOL=%{?_with_xine:ON}%{!?_with_xine:OFF} \
 	-DWITH_FFMPEG:BOOL=%{?_with_ffmpeg:ON}%{!?_with_ffmpeg:OFF} \
 	-DWITH_GSTREAMER=%{?_with_gstreamer:ON}%{!?_with_gstreamer:OFF} \
@@ -358,6 +359,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/quality
 
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.0-alt2
+- Disabled any requires for examples subpackage (by Vitaly Lipatov)
+- Updated build switches.
+
 * Mon Apr 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.0-alt1
 - Updated to upstream version 4.3.0.
 
