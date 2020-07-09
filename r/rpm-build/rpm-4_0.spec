@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt145
+Release: alt146
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Jul 09 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt146
+- brp-debuginfo: Re-enable processing of kernel modules.
+- debuginfo.req: Fix 'vmlinux' processing error on ppc64le.
+- process-debuginfo: Do not call eu-elfcompress if it doesn't exist.
+
 * Wed Jul 08 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt145
 - brp-debuginfo: fixed regression (in handling of packages containing
   ELF relocatable objects) introduced in 4.0.4-alt142.
