@@ -31,7 +31,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Web browser engine
@@ -342,6 +342,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Thu Jul 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
+- 2.28.3
+
 * Fri Apr 24 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.2-alt1
 - 2.28.2
 
