@@ -2,7 +2,7 @@
 
 Name:    iceb
 Version: 19.14
-Release: alt1
+Release: alt2
 
 Summary: Free financial accounting system (console)
 
@@ -23,6 +23,8 @@ BuildRequires: glib2-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libncursesw-devel
 BuildRequires: libpcre-devel
+
+Conflicts: python-module-spec
 
 %description
 Free financial accounting system.
@@ -60,6 +62,9 @@ rm -rf %buildroot/lib/terminfo
 %_libexecdir/cups/filter/iceb_ps
 
 %changelog
+* Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 19.14-alt2
+- Conflicts: python-module-spec due to /usr/bin/spec (ALT #38687).
+
 * Wed Jul 01 2020 Andrey Cherepanov <cas@altlinux.org> 19.14-alt1
 - new version 19.14
 - build using ninja
