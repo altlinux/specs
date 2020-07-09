@@ -1,87 +1,46 @@
+%define _unpackaged_files_terminate_build 1
+
 %define origname FIAT
 
-%def_without new_package
+Name: python3-module-fiat
+Version: 2019.1.0
+Release: alt1
+Summary: FInite element Automatic Tabulator
+Group: Development/Python3
+License: LGPLv3+
+URL: https://fenicsproject.org/
 
-Name:           python-module-fiat
-Version:        1.6.0
-Release:        alt2.dev.git20150429
-Summary:        FInite element Automatic Tabulator
-Group:          Development/Python
-License:        LGPLv3+
-URL:           http://fenicsproject.org/
 BuildArch: noarch
 
 # https://bitbucket.org/fenics-project/fiat.git
-Source:        %origname-%version.tar
+Source: %name-%version.tar
 
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel texlive-latex-recommended
-BuildRequires: /usr/bin/pdflatex tex(pdftex.def)
-
-%setup_python_module %origname
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
 FIAT is a FInite element Automatic Tabulator.
-
-%package new
-Summary: New experimental FIAT package
-Group: Development/Python
-BuildArch: noarch
-%setup_python_module %{origname}_NEW
-
-%description new
-FIAT is a FInite element Automatic Tabulator.
-
-This is a new experimental FIAT package.
-
-%package manual
-Summary: Documentation for FIAT
-Group: Documentation
-BuildArch: noarch
-
-%description manual
-FIAT is a FInite element Automatic Tabulator.
-
-This package contains documentation for FIAT.
 
 %prep
 %setup
 
 %build
-%python_build
-
-pushd doc
-pdflatex manual.tex
-popd
+%python3_build
 
 %install
-CFLAGS="%optflags" python setup.py install \
-	--root=%buildroot --optimize=2
-
-%if_with new_package
-cp -fR %{origname}_NEW %buildroot%python_sitelibdir/
-%endif
-
-install -d %buildroot%_docdir/%origname
-install -m644 doc/*.pdf %buildroot%_docdir/%origname
+%python3_build_install --optimize=2
 
 %files
-%doc AUTHORS COPYING ChangeLog README
-%python_sitelibdir/*
-%if_with new_package
-%exclude %python_sitelibdir/%{origname}_NEW
-%endif
-
-%if_with new_package
-%files new
-%python_sitelibdir/%{origname}_NEW
-%endif
-
-%files manual
-%_docdir/%origname
+%doc COPYING COPYING.LESSER
+%doc AUTHORS ChangeLog.rst README.rst
+%python3_sitelibdir/*
 
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.1.0-alt1
+- Updated to upstream version 2019.1.0.
+- Switched to python-3.
+
 * Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt2.dev.git20150429
 - Updated build dependencies.
 

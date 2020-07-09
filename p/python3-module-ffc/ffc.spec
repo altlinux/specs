@@ -1,26 +1,37 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev.git20150430.1
-Name:           ffc
-Version:        1.6.0
-#Release:        alt1.dev.git20150430
+%define _unpackaged_files_terminate_build 1
+
+%define oname ffc
+
+Name: python3-module-%oname
 Epoch: 1
-Summary:        Compiler for finite element variational forms
-Group:          Development/Tools
-License:        LGPL v3
-URL:            http://fenicsproject.org/
+Version: 2019.1.0
+Release: alt1
+Summary: Compiler for finite element variational forms
+Group: Development/Tools
+License: LGPLv3+
+URL: https://fenicsproject.org/
+
+BuildArch: noarch
+
 # https://bitbucket.org/fenics-project/ffc.git
-Source: %name-%version.tar.gz
-Source1: http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Source: %name-%version.tar
+# http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
+Source1: ffc-user-manual.pdf
 
-Requires: python-module-%name = %epoch:%version-%release
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-fiat
+BuildRequires: python3-module-ufl
+# test dependencies
+BuildRequires: python3-module-pytest
+BuildRequires: cmake gcc-c++
 
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel swig
-BuildPreReq: libnumpy-devel python-module-fiat
-BuildPreReq: python-module-ferari gcc-c++
+Provides: %oname = %EVR
+Obsoletes: %oname < %EVR
 
-Obsoletes: python-module-ufc
+%add_python3_req_skip coffee.base coffee.plan coffee.visitors
+%add_python3_req_skip tsfc.driver tsfc.kernel_interface.ufc
 
 %description
 FFC is a compiler for finite element variational forms. From a high-level
@@ -39,6 +50,7 @@ just-in-time (JIT) compiler for DOLFIN.
 Summary: User manual for FFC
 Group: Development/Documentation
 BuildArch: noarch
+Requires: %name = %EVR
 
 %description doc
 FFC is a compiler for finite element variational forms. From a high-level
@@ -49,79 +61,39 @@ form may be assembled into a vector.
 
 This package contains user manual for UFL (Unified Form Language).
 
-%package -n python-module-%name
-Summary: Python module of FFC
-Group: Development/Python
-Requires: python-module-fiat python-module-ferari
-%setup_python_module ffc
-%py_provides ffc
-%py_requires FIAT ferari
-Obsoletes: python-module-ufc
-#add_python_req_skip reassign
-
-%description -n python-module-%name
-FFC is a compiler for finite element variational forms. From a high-level
-description of the form, it generates efficient low-level C++ code that
-can be used to assemble the corresponding discrete operator (tensor). In
-particular, a bilinear form may be assembled into a matrix and a linear
-form may be assembled into a vector.
-
-This package contains python module of FFC.
-
-%package -n ufc-devel
-Summary: Development files for UFC
-Group: Development/Other
-Requires: %name = %EVR
-
-%description -n ufc-devel
-UFC (Unified Form-assembly Code) is a unified framework for finite
-element assembly. More precisely, it defines a fixed interface for
-communicating low level routines (functions) for evaluating and
-assembling finite element variational forms. The UFC interface
-consists of a single header file ufc.h that specifies a C++ interface
-that must be implemented by code that complies with the UFC
-specification. Examples of form compilers that support the UFC
-interface are FFC and SyFi.
-
-This package contains development files for UFC.
-
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_build_install --optimize=2
+%python3_build_install --optimize=2
 
 install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
-%if "%_libexecdir/pkgconfig" != "%_pkgconfigdir"
-install -d %buildroot%_pkgconfigdir
-mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
-%endif
-
-touch %buildroot%python_sitelibdir/ffc_time_ext/__init__.py
+%check
+# test_evaluate.py uses libs/ffc-factory, which is currently ignored
+# test_elements.py uses dijitso
+python3 -m pytest -v test/ --ignore=test/unit/ufc/finite_element/test_evaluate.py --ignore=test/unit/misc/test_elements.py
 
 %files
-%doc README* AUTHORS ChangeLog COPYING
+%doc COPYING COPYING.LESSER LICENSE
+%doc AUTHORS ChangeLog.* README.rst
 %_bindir/*
 %_man1dir/*
+%python3_sitelibdir/*
 
 %files doc
 %_docdir/%name
 %doc demo
 
-%files -n python-module-%name
-%python_sitelibdir/*
-
-%files -n ufc-devel
-%_includedir/*
-%_pkgconfigdir/*
-%_datadir/ufc
-
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2019.1.0-alt1
+- Updated to upstream version 2019.1.0.
+- Switched to python-3.
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.6.0-alt1.dev.git20150430.1
 - (AUTO) subst_x86_64.
 
