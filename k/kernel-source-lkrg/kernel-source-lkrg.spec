@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8
+%define module_version 0.8.1
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -43,6 +43,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Jul 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
+- Update to 0.8.1 (bugfix release preventing Oops).
+
 * Sun Jun 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
 - Updated to 0.8.
 
