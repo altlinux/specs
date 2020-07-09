@@ -1,20 +1,24 @@
-Name:           ufl
-Version:        1.6.0
-Release:        alt1.dev.git20150427
-Summary:        Unified Form Language
-Group:          Development/Tools
-License:        LGPL v3+
-URL:            http://fenicsproject.org/
-# https://bitbucket.org/fenics-project/ufl.git
-Source:  %name-%version.tar.gz
-Source1: http://www.fenics.org/pub/documents/ufl/ufl-user-manual/ufl-user-manual.pdf
+%define _unpackaged_files_terminate_build 1
+
+%define oname ufl
+
+Name: python3-module-%oname
+Version: 2019.1.0
+Release: alt1
+Summary: Unified Form Language
+Group: Development/Python3
+License: LGPLv3+
+URL: https://fenicsproject.org/
+
 BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Requires: python-module-%name = %version-%release
+# https://bitbucket.org/fenics-project/ufl.git
+Source:  %name-%version.tar
+# http://www.fenics.org/pub/documents/ufl/ufl-user-manual/ufl-user-manual.pdf
+Source1: ufl-user-manual.pdf
 
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
 
 %description
 Unified Form Language.
@@ -23,42 +27,36 @@ Unified Form Language.
 Summary: User manual for UFL
 Group: Development/Documentation
 BuildArch: noarch
+Requires: %name = %EVR
 
 %description doc
 User manual for UFL (Unified Form Language).
-
-%package -n python-module-%name
-Summary: Python module of UFL
-Group: Development/Python
-BuildArch: noarch
-
-%description -n python-module-%name
-Python module of UFL (Unified Form Language).
 
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
 %files
-%doc COPYING ChangeLog README
-%_bindir/*
-%_man1dir/*
+%doc COPYING COPYING.LESSER
+%doc AUTHORS ChangeLog.rst README.rst
+%python3_sitelibdir_noarch/*
 
 %files doc
 %_docdir/%name
 
-%files -n python-module-%name
-%python_sitelibdir_noarch/*
-
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.1.0-alt1
+- Updated to upstream version 2019.1.0.
+- Switched to python-3.
+
 * Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev.git20150427
 - Version 1.6.0dev
 
