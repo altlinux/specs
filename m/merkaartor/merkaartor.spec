@@ -1,23 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: merkaartor
-Version: 0.18.3
-Release: alt5
+Version: 0.18.4
+Release: alt1
 
 Summary: an OpenStreetMap editor
-License: LGPL
+License: GPLv2
 Group: Sciences/Geosciences
 Url: https://github.com/openstreetmap/merkaartor
 
+# https://github.com/openstreetmap/merkaartor.git
 Source: %name-%version.tar
-Patch1: %name-%version-fedora-no-git-version.patch
-Patch2: %name-%version-alt-qtwebkit-support.patch
-# Remove in next version
-Patch3: eca7495890b2b671167ededf538b8d8d5cbcaf5d.patch
+Patch1: %name-0.18.3-fedora-no-git-version.patch
 
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
-BuildRequires: qt5-base-devel qt5-webkit-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: libqtsingleapplication-qt5-devel
 
 %description
@@ -28,8 +27,6 @@ editing environment for free geographical data.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 # remove bundled libraries
 rm -rf 3rdparty
@@ -43,6 +40,7 @@ lrelease-qt5 Merkaartor.pro
 qmake-qt5 \
 	CONFIG+=release CONFIG+=force_debug_info \
 	PREFIX=%_prefix \
+	USEWEBENGINE=1 \
 	SYSTEM_QTSA=1 \
 	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
 	-after QMAKE_CFLAGS+='%optflags' \
@@ -58,10 +56,13 @@ qmake-qt5 \
 %_bindir/merkaartor
 %_datadir/%name/
 %_libdir/%name/
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.4-alt1
+- Updated to upstream version 0.18.4.
+
 * Wed Nov 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt5
 - NMU: Rebuild with gdal 3.0.1.
 
