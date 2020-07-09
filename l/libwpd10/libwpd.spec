@@ -1,19 +1,19 @@
-Name: libwpd10
-Version: 0.10.2
+%define _unpackaged_files_terminate_build 1
+
+%define oname wpd
+%define soname 10
+
+Name: lib%oname%soname
+Version: 0.10.3
 Release: alt1
-
 Summary: Library for reading and converting WordPerfect(tm) documents
-
-License: LGPL
+License: LGPLv2+ or MPL-2.0
 Group: System/Libraries
 Url: http://libwpd.sf.net/
 
-Source: libwpd-%version.tar.xz
+Source: libwpd-%version.tar
 
-# Automatically added by buildreq on Tue Feb 20 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel perl perl-Encode perl-Locale-gettext perl-parent pkg-config python-base xz
-BuildRequires: boost-devel-headers doxygen gcc-c++ help2man librevenge-devel
-
+BuildRequires: boost-devel-headers help2man librevenge-devel
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 BuildRequires: pkgconfig(cppunit)
@@ -27,9 +27,10 @@ Library that handles Word Perfect documents
 %package tools
 Summary: Tools to transform WordPerfect Documents into other formats
 Group: Publishing
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libwpd-tools < %version
 Conflicts: libwpd9-tools < %version
+Provides: lib%oname-tools = %EVR
 
 %description tools
 Tools to transform WordPerfect Documents into other formats.
@@ -38,9 +39,10 @@ Currently supported: html, raw, text
 %package devel
 Summary: Files for developing with libwpd
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libwpd-devel < %version
 Conflicts: libwpd9-devel < %version
+Provides: lib%oname-devel = %EVR
 
 %description devel
 Includes and definitions for developing with libwpd
@@ -49,12 +51,13 @@ Includes and definitions for developing with libwpd
 Summary: Documentation of %name API
 Group: Documentation
 BuildArch: noarch
+Provides: lib%oname-doc = %EVR
 
 %description doc
 The %name-doc package contains API documentation for %name.
 
 %prep
-%setup -n libwpd-%version
+%setup -n lib%oname-%version
 
 %build
 %autoreconf
@@ -79,7 +82,8 @@ LD_LIBRARY_PATH=../lib/.libs make check
 
 %files
 %doc COPYING.LGPL COPYING.MPL CREDITS README
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files tools
 %_bindir/*
@@ -98,6 +102,9 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt1
+- Updated to upstream version 0.10.3.
+
 * Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.10.2-alt1
 - Autobuild version bump to 0.10.2
 
