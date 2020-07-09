@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.8
+%define module_version	0.8.1
 %define module_release	alt1
 
 %define flavour		un-def
@@ -60,6 +60,9 @@ install p_lkrg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Jul 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
+- Update to 0.8.1 (bugfix preventing Oops).
 
 * Sun Jun 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8-alt1
 - Updated to 0.8.
