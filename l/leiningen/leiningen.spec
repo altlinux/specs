@@ -1,7 +1,7 @@
 %define write_group users
 
 Name:           leiningen
-Version:        2.9.3
+Version:        2.9.4
 Release:        alt1
 Summary:        Leiningen is for automating Clojure projects without setting your hair on fire
 
@@ -60,6 +60,9 @@ find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|
 %attr(775,root,%write_group) %config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
 
 %changelog
+* Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.4-alt1
+- New version.
+
 * Tue Mar 24 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt1
 - New version.
 
