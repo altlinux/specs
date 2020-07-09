@@ -1,7 +1,7 @@
 %define rname alt-app-starter
 
 Name: %rname
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 %K5init altplace
 
@@ -47,6 +47,9 @@ install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
 %_K5xdgapp/*.desktop
 
 %changelog
+* Thu Jul 09 2020 Pavel Moseev <mars@altlinux.org>  1.2.7-alt1
+- fix priority setting from current user
+
 * Mon Jul 06 2020 Pavel Moseev <mars@altlinux.org>  1.2.6-alt1
 - clean code
 
