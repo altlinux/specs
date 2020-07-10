@@ -1,30 +1,51 @@
-%define video_format pal
+%set_verify_elf_method stack=strict
+%def_enable snapshot
+%define video_format PAL
+# imagemagick or graphicsmagick
+%define magick graphicsmagick
 
 Name: dvdauthor
 Version: 0.7.2
-Release: alt3
+Release: alt4
 
 Summary: set of tools to author a DVD
 Group: Video
 License: GPLv2
 Url: http://sourceforge.net/projects/dvdauthor/
 
+%if_disabled snapshot
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+%else
+#VCS: https://github.com/ldo/dvdauthor.git
+Source: %name-%version.tar
+%endif
+
 Provides: /etc/%name.conf
 
-BuildRequires: libImageMagick-devel libdvdread-devel libfreetype-devel
+%if %magick == "imagemagick"
+BuildRequires: libImageMagick-devel
+%else %if %magick == "graphicsmagick"
+BuildRequires: libGraphicsMagick-devel
+%endif
+
+BuildRequires: bison flex
+BuildRequires: libdvdread-devel libfreetype-devel
 BuildRequires: fontconfig-devel libpng-devel libxml2-devel libfribidi-devel
+BuildRequires: docbook-utils
 
 %description
 dvdauthor is a program that will generate a DVD movie from a valid
 mpeg2 stream that should play when you put it in a DVD player.
 
 %prep
-%setup -n %name
+%setup -n %name%{?_enable_snapshot:-%version}
 
 %build
+%add_optflags -Wl,-z,noexecstack
+./bootstrap
 %autoreconf
-%configure --enable-default-video-format=%video_format
+%configure --enable-default-video-format=%video_format \
+       --with-%magick
 %make_build
 
 %install
@@ -46,6 +67,11 @@ touch %buildroot%_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Fri Jul 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt4
+- updated to 0.7.2-9-gd5bb0bd
+- implemented "magick" knob (set to "graphicsmagick" by default)
+- built with "-z noexecstack" linker flags (ALT #38694)
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt3
 - rebuilt against ImageMagick-6.9.9.47 libraries
 
