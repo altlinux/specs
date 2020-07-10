@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: source-highlight
-Version: 3.1.8
-Release: alt8
-
+Version: 3.1.9
+Release: alt1.git.904949c
 Summary: syntax highlighting for source documents
-License: GPL
+License: GPL-3.0+
 Group: Text tools
-
 Url: http://www.gnu.org/software/src-highlite/
+
 # git://git.savannah.gnu.org/src-highlite.git
 Source: %name-%version.tar
-Patch: https://src.fedoraproject.org/rpms/source-highlight/raw/master/f/source-highlight-3.1.8-no-black.patch
 
 BuildRequires: boost-devel gcc-c++ ctags help2man doxygen texlive-collection-basic texinfo
 BuildRequires: flex
@@ -25,7 +25,6 @@ XHTML, LaTeX, etc.
 
 %package -n lib%name
 Summary: source highlighting library
-License: GPL
 Group: Development/C++
 
 %description -n lib%name
@@ -37,7 +36,6 @@ used by other C++ programs to get source code highlighting capabilities.
 
 %package -n lib%name-devel
 Summary: Header files for libsource-highlight library
-License: GPL
 Group: Development/C++
 Requires: lib%name = %EVR
 
@@ -55,7 +53,6 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -92,6 +89,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.9-alt1.git.904949c
+- Updated to latest snapshot.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt8
 - NMU: remove rpm-build-ubt from BR:
 
@@ -99,16 +99,16 @@ BuildArch: noarch
 - added fedora patch to avoid black-on-black (see rh#1688372)
 - dropped %%ubt
 
-* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt6%ubt
+* Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt6
 - NMU: rebuilt with boost-1.67.0
 
-* Tue Apr 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt5%ubt
+* Tue Apr 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt5
 - Rebuilt with new boost.
 
-* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt4%ubt
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt4
 - NMU: rebuild with TeXLive instead of TeTeX
 
-* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt3%ubt
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt3
 - Rebuilt with boost 1.65.0.
 - Added %%ubt to release.
 
