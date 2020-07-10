@@ -30,7 +30,7 @@
 
 Name: qt5-webengine
 Version: 5.12.9
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -247,7 +247,7 @@ ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
 NUM_PROCS="%__nprocs"
 cat /proc/meminfo | grep ^Mem
 ulimit -a | grep mem
-MEM_PER_PROC=2000000
+MEM_PER_PROC=10000000
 MAX_MEM=`grep ^MemTotal: /proc/meminfo | sed -e 's|^\(.*\)[[:space:]].*|\1|' -e 's|.*[[:space:]]||'`
 NUM_PROCS="$(($MAX_MEM / $MEM_PER_PROC))"
 [ "$NUM_PROCS" -ge 2  ] || NUM_PROCS=2
@@ -372,6 +372,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt2
+- tune build for p9
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 
