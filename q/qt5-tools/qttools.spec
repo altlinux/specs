@@ -1,13 +1,13 @@
 
 %global qt_module qttools
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.12.9
-Release: alt2
+Version: 5.15.0
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -28,7 +28,7 @@ Source23: qdbusviewer.desktop
 Source24: qtconfig.desktop
 
 # FC
-Patch1: qttools-opensource-src-5.5.0-qmake-qt5.patch
+Patch1: qttools-opensource-src-5.13.2-runqttools-with-qt5-suffix.patch
 # ALT
 Patch10: alt-build-qtconfig.patch
 
@@ -173,14 +173,20 @@ Requires: libqt5-core = %_qt5_version
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
+%if %qdoc_found
 export QT_HASH_SEED=0
 %make docs
+%endif
 %endif
 
 %install
 >main.filelist
 %install_qt5
-%make INSTALL_ROOT=%buildroot install_docs
+%if_disabled bootstrap
+%if %qdoc_found
+%make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
+%endif
 
 # fix pc-files
 sed -i -e '/^Requires:/s/Qt5UiPlugin//' %buildroot/%_pkgconfigdir/*.pc
@@ -249,6 +255,7 @@ fi
 %_bindir/qtplugininfo*
 %_bindir/qtattributionsscanner*
 %_bindir/qdistancefieldgenerator*
+%_bindir/lprodump*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
@@ -260,6 +267,7 @@ fi
 %_qt5_bindir/qtplugininfo*
 %_qt5_bindir/qtattributionsscanner*
 %_qt5_bindir/qdistancefieldgenerator*
+%_qt5_bindir/lprodump*
 %kf5_bindir/qtpaths
 
 %if_enabled qtconfig
@@ -346,6 +354,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Jul 08 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Fri Jul 03 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt2
 - build docs
 

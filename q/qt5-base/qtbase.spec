@@ -34,7 +34,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.12.9
+Version: 5.15.0
 Release: alt1
 %define libname  lib%gname
 
@@ -50,26 +50,24 @@ Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
-# bugreports.qt.io
-Patch11: QTBUG-35459.patch
-Patch12: xcberror_filter.patch
+Patch3: qtbase-use-wayland-on-gnome.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
+Patch101: 0001-Do-not-multithread-if-already-in-a-global-threadpool.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
-Patch1004: alt-timezone.patch
+#
 Patch1005: alt-hidpi_scale_at_192.patch
-Patch1006: e2k-qt-5.12.4.patch
+Patch1006: e2k-qt-5.15.patch
 Patch1007: alt-decrease-iconloader-fallback-depth.patch
-Patch1008: alt-mkspecs-features.patch
+#Patch1008: alt-mkspecs-features.patch
 Patch1009: alt-false-detect-groupswitchmodifier.patch
 Patch1010: alt-glx-check-version.patch
 Patch1011: alt-kernel-requires.patch
-# Upstream
-Patch2000: Add-RISC-V-detection.patch
+Patch1012: alt-fix-paths.patch
 
 # macros
 %define _qt5 %gname
@@ -377,28 +375,26 @@ EGL integration library for the Qt%major toolkit
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
 %patch2 -p1
-#
-%patch11 -p1 -b .QTBUG
-#%patch12 -p1
+%patch3 -p1
 #
 %patch100 -p1
+%patch101 -p1
 #
 %patch1000 -p1 -b .ibase
 #%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
-%patch1004 -p1 -b .timezone
+#
 #%patch1005 -p1 -b .hidpi-scale
 %ifarch %e2k
 %patch1006 -p1 -b .e2k
 %endif
 %patch1007 -p1
-%patch1008 -p1
+#%patch1008 -p1
 %patch1009 -p1
 %patch1010 -p2
 %patch1011 -p1
-#
-%patch2000 -p1
+%patch1012 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -426,6 +422,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -opensource \
     -confirm-license \
     -prefix %_qt5_prefix \
+    -extprefix %_qt5_prefix \
     -archdatadir %_qt5_archdatadir \
     -bindir %_qt5_bindir \
     -datadir %_qt5_datadir \
@@ -492,8 +489,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 %else
     -qt-harfbuzz \
 %endif
-    -sm -xcb -xcb-xinput -system-xcb \
-    -xkb -xkbcommon \
+    -sm \
+    -xkbcommon \
     #
 
 %make_build
@@ -558,7 +555,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.12.9
+Version: 5.15.0
 __EOF__
 
 # rpm macros
@@ -670,6 +667,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %files doc
 %if_disabled bootstrap
 %doc %_qt5_docdir/*
+%exclude %_qt5_docdir/config/
 %exclude %_qt5_docdir/global/
 %endif
 %_qt5_examplesdir/*
@@ -678,6 +676,7 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_rpmmacrosdir/%gname
 
 %files devel
+%_qt5_docdir/config/
 %_qt5_docdir/global/
 %dir %_qt5_bindir
 %_bindir/moc*
@@ -700,6 +699,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_qt5_bindir/qlalr*
 %_bindir/qvkgen*
 %_qt5_bindir/qvkgen*
+%_bindir/tracegen*
+%_qt5_bindir/tracegen*
 %dir %_qt5_headerdir
 %dir %_qt5_prefix/include/
 %_qt5_headerdir/Qt*/
@@ -711,6 +712,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_qt5_libdir/libQt%{major}*.so
 %dir %_qt5_libdir/cmake/
 %_qt5_libdir/cmake/Qt%{major}*/
+%dir %_qt5_libdir/metatypes/
+%_qt5_libdir/metatypes/qt5*.json
 %_pkgconfigdir/Qt%{major}.pc
 %_pkgconfigdir/Qt%{major}Concurrent.pc
 %_pkgconfigdir/Qt%{major}Core.pc
@@ -820,6 +823,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Jul 09 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 

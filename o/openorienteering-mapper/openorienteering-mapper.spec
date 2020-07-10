@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -13,6 +13,8 @@ Group: Graphics
 Url: http://www.openorienteering.org/apps/mapper/
 #Source: https://github.com/OpenOrienteering/mapper.git
 Source: %name-%version.tar
+
+Patch1: mapper-0.9.3-upstream-Fix-build-with-Qt-5.15.patch
 
 BuildRequires: ccmake
 BuildRequires: doxygen
@@ -54,6 +56,7 @@ are happy about feedback to the program.
 
 %prep
 %setup
+%patch1 -p1
 
 #provide licensing information search path patterns specific for Altlinux
 cp doc/licensing/fedora-licensing.cmake doc/licensing/altlinux-licensing.cmake
@@ -87,6 +90,10 @@ popd
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Aug 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.3-alt2
+- Fix FTBFS against Qt 5.15
+  + add upstream-Fix-build-with-Qt-5.15 patch
+
 * Tue Jun 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.9.3-alt1
 - New version
 

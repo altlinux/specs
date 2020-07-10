@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.12.9
+Version: 5.15.0
 Release: alt1
 
 Group: System/Libraries
@@ -92,7 +92,7 @@ export QT_HASH_SEED=0
 %_qt5_libdatadir/lib*.so
 %_qt5_libdatadir/lib*.prl
 %_qt5_libdir/cmake/Qt?Svg/
-#%_qt5_libdir/cmake/Qt?Gui/*
+%_qt5_libdir/cmake/Qt?Gui/*Svg*.cmake
 %_qt5_libdir/pkgconfig/Qt5Svg.pc
 %_qt5_archdatadir/mkspecs/modules/qt_lib_svg*.pri
 
@@ -103,6 +103,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 

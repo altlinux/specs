@@ -1,5 +1,5 @@
 Name: python-module-PySide2
-Version: 5.12.6
+Version: 5.15.0
 Release: alt1
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
@@ -8,7 +8,7 @@ License: BSD-3-Clause and GPL-2.0 and GPL-3.0 and LGPL-3.0
 URL: https://wiki.qt.io/Qt_for_Python
 
 # Download from https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-$version-src/
-Source: pyside-setup-everywhere-src-%version.tar.xz
+Source: pyside-setup-everywhere-src-%version.tar
 Patch1: pyside2-link-with-python.patch
 
 BuildRequires(pre): rpm-build-python
@@ -24,7 +24,6 @@ BuildRequires: python-module-sphinx
 BuildRequires: python-module-wheel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-charts-devel
 BuildRequires: qt5-datavis3d-devel
@@ -38,9 +37,7 @@ BuildRequires: qt5-scxml-devel
 BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-speech-devel
 BuildRequires: qt5-svg-devel
-%ifnarch ppc64le
 BuildRequires: qt5-webengine-devel
-%endif
 BuildRequires: qt5-websockets-devel
 BuildRequires: qt5-3d-devel
 BuildRequires: qt5-tools-devel
@@ -140,16 +137,6 @@ for name in PySide2 shiboken2 shiboken2_generator; do
         %buildroot%python_sitelibdir/$name-%version-py%_python_version.egg-info/
 done
 
-# Remove python3 code from python2 module
-rm -rf %buildroot%python_sitelibdir/pyside2uic/port_v3/
-
-# Remove pyside_tool.py and shiboken_tool.py
-rm -f %buildroot%_bindir/{pyside_tool.py,shiboken_tool.py}
-
-# Replace python2 shebang to %__python
-subst 's|#!/usr/bin/env python|#!%__python|' \
-	%buildroot%_bindir/pyside2-uic \
-	%buildroot%python_sitelibdir/pyside2uic/icon_cache.py
 
 %files
 %doc README.md
@@ -168,13 +155,11 @@ subst 's|#!/usr/bin/env python|#!%__python|' \
 %files -n pyside2-tools-python2
 %doc README.pyside2.md
 %_bindir/pyside2-*
-%_man1dir/pyside2-*.1*
-%python_sitelibdir/pyside2uic/
+%_man1dir/pyside2-*
  
 %files -n shiboken2-python2
 %doc README.shiboken2-generator.md
 %_bindir/shiboken2
-%_mandir/man1/shiboken2.1.*
  
 %files -n python-module-shiboken2
 %doc README.shiboken2.md
@@ -192,5 +177,8 @@ subst 's|#!/usr/bin/env python|#!%__python|' \
 %python_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Thu May 14 2020 Andrey Cherepanov <cas@altlinux.org> 5.12.6-alt1
 - Initial build in Sisyphus for Python2.

@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt5-wayland
-Version: 5.12.9
+Version: 5.15.0
 Release: alt1
 
 Group: System/Libraries
@@ -112,7 +112,10 @@ export QT_HASH_SEED=0
 %_qt5_plugindir/wayland-graphics-integration-server/
 %_qt5_plugindir/wayland-graphics-integration-client/
 %_qt5_plugindir/wayland-shell-integration/
+%dir %_qt5_qmldir/QtWayland/
 %_qt5_qmldir/QtWayland/Compositor/
+%dir %_qt5_qmldir/QtWayland/Client/
+%_qt5_qmldir/QtWayland/Client/TextureSharing/
 
 #%files -n libqt5-compositor
 #%_qt5_libdir/libQt?Compositor.so.*
@@ -140,6 +143,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 
