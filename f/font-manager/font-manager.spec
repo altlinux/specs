@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -28,10 +28,13 @@ Patch: font-manager-0.7.5-alt-build.patch
 Requires: file-roller
 
 %define vala_ver 0.42
+%define pango_ver 1.4
+%define gtk_ver 3.22
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: vala-tools >= %vala_ver
-BuildRequires: libgtk+3-devel libjson-glib-devel
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
@@ -77,6 +80,7 @@ Enlightenment, and even KDE.
 %_datadir/dbus-1/services/%xdg_name1.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name1.gschema.xml
+%_iconsdir/hicolor/*/apps/*.png
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/metainfo/%xdg_name1.appdata.xml
@@ -85,6 +89,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Fri Jul 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
+- updated to 0.7.8-1-ge750377
+
 * Fri Dec 20 2019 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
 - updated to 0.7.7-2-g456d80b
 
