@@ -1,21 +1,21 @@
 %define major 3.7
+
 Name: ice
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: Files common to all Ice packages
-
 License: GPLv2
 Group: System/Libraries
-Url: http://www.zeroc.com/
 
+Url: http://www.zeroc.com/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: fix missed /usr
 #ExcludeArch: aarch64
 
 # Source-url: https://github.com/zeroc-ice/ice/archive/v%version.tar.gz
-Source: Ice-%version.tar
+Source0: Ice-%version.tar
 Source1: Ice-rpmbuild-%version.tar
 Patch1: ice-3.3.1-rh-openssl.patch
 Patch2: ice-3.3-alt-build.patch
@@ -136,7 +136,7 @@ mv %buildroot/bin %buildroot/%_bindir
 #mv %buildroot/lib/ImportKey.class %buildroot%_datadir/Ice-%version
 
 ## libs
-%ifarch ppc64le
+%ifarch ppc64le %e2k
 mv %buildroot/lib %buildroot%_libdir
 %else
 mv %buildroot/%_lib %buildroot%_libdir
@@ -294,6 +294,9 @@ fi
 
 
 %changelog
+* Fri Jul 10 2020 Michael Shigorin <mike@altlinux.org> 3.7.3-alt2
+- E2K: fixed build (lib64 workaround following ppc64le)
+
 * Sun Feb 09 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
 - new version 3.7.3 (with rpmrb script)
 - use python2 for scripts
