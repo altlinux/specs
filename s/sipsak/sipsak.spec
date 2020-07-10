@@ -1,12 +1,15 @@
-Name: sipsak
-Version: 0.9.6
-Release: alt2.1
-Summary: CLI tool for SIP developers and administrators
-License: GPL
-Group: Communications
+%define _unpackaged_files_terminate_build 1
 
-URL: http://sipsak.org/
-Source: %name-%version.tar.bz2
+Name: sipsak
+Version: 0.9.7
+Release: alt1
+Summary: CLI tool for SIP developers and administrators
+License: GPLv2+
+Group: Communications
+URL: https://github.com/nils-ohlmeier/sipsak
+
+# https://github.com/nils-ohlmeier/sipsak.git
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Oct 08 2009 (-bi)
 BuildRequires: libssl-devel
@@ -20,19 +23,23 @@ simple tests on SIP applications and devices.
 %setup
 
 %build
-%add_optflags -fgnu89-inline
+%autoreconf
 %configure
-%make
+%make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
+%doc COPYING
+%doc AUTHORS ChangeLog NEWS README TODO
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS INSTALL COPYING README NEWS TODO
 
 %changelog
+* Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
+- Updated to upstream version 0.9.7.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt2.1
 - NMU: Rebuild with new openssl 1.1.0.
 
