@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.7.2
+Version: 3.8.0
 Release: alt2
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
@@ -13,7 +13,8 @@ Url: https://github.com/nlohmann/json
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
 # Source: https://github.com/nlohmann/json/releases/download/v%{version}/json.hpp
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: json_test_data-2.0.0.tar
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -40,24 +41,34 @@ Our class had these design goals:
 This package contains the single header C++ file and CMake dependency files.
 
 %prep
-%setup 
+%setup -a1
+rm -rf test/cmake_fetch_content
+sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
 
 %build
 %cmake
-
 %cmake_build
 
 %install
 %cmakeinstall_std
 
 %check
-%make_build check
+ln -sf ../json_test_data-2.0.0 BUILD/json_test_data
+%cmake_build test
 
 %files devel
 %_includedir/nlohmann
 %_libdir/cmake/nlohmann_json
 
 %changelog
+* Fri Jul 03 2020 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt2
+- Added the test data bundle.
+- Fix: Run the tests with CMake.
+- Skip the cmake_fetch_content test.
+
+* Thu Jul 02 2020 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt1
+- Freshed up to v3.8.0.
+
 * Tue Mar 31 2020 Paul Wolneykien <manowar@altlinux.org> 3.7.2-alt2
 - Run the auto-tests.
 - Package CMake dependency files.
