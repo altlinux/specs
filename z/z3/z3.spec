@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: z3
-Version: 4.8.7
+Version: 4.8.8
 Release: alt1
 Summary: High-performance theorem prover
 License: MIT
@@ -10,8 +10,6 @@ Url: https://github.com/Z3Prover/z3
 
 # https://github.com/Z3Prover/z3.git
 Source: %name-%version.tar
-
-Patch1: %name-upstream-32bit-build.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-build-python3
@@ -72,7 +70,6 @@ This package contains Python bindings of %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %cmake \
@@ -119,6 +116,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.8-alt1
+- Updated to upstream version 4.8.8.
+
 * Thu Apr 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.7-alt1
 - Updated to upstream version 4.8.7.
 - Disabled bindings for python-2.
