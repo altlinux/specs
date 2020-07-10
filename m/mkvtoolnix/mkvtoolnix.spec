@@ -15,13 +15,13 @@
 
 Name: mkvtoolnix
 Version: 47.0.0
-Release: alt1
+Release: alt2
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
-URL: https://mkvtoolnix.download/
 
+Url: https://mkvtoolnix.download/
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
 
@@ -94,6 +94,9 @@ This package contains some additional tools.
 %prep
 %setup
 rm -rf lib/pugixml
+%ifarch %e2k riscv64
+sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
+%endif
 
 %build
 ./autogen.sh
@@ -171,6 +174,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Fri Jul 10 2020 Michael Shigorin <mike@altlinux.org> 47.0.0-alt2
+- e2k, riscv64: fix broken boost.m4
+
 * Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 47.0.0-alt1
 - Updated to upstream version 47.0.0.
 
