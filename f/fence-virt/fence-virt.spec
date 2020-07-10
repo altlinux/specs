@@ -6,12 +6,12 @@
 %def_enable cpg_plugin
 %def_disable libvirt_qmf_plugin
 
-%global commit      34ab24718795f8676a67f555f44f6db56f90a91d
-%global shortcommit 34ab247
+%global commit      370685ad523e8a724b8f4f312fe02c5085eda54f
+%global shortcommit 370685a
 
 Name: fence-virt
-Version: 0.4.0
-Release: alt0.2.%shortcommit
+Version: 1.0.0
+Release: alt1
 Summary: A pluggable fencing framework for virtual machines
 License: GPLv2+
 Group: System/Base
@@ -95,6 +95,7 @@ are located on corosync cluster nodes.
 
 %prep
 %setup
+echo -n %version-%release > .tarball-version
 
 %build
 #%autoreconf
@@ -104,6 +105,8 @@ are located on corosync cluster nodes.
 
 %install
 %makeinstall_std
+rm -f %buildroot%_libdir/%name/*.a
+rm -f %buildroot%_libdir/%name/*.la
 
 # Systemd unit file
 mkdir -p %buildroot{%_unitdir,%_initdir}
@@ -145,12 +148,15 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_libdir/%name/vsock.so
 
 %files -n fence-virtd-libvirt
-%_libdir/%name/libvirt.so
+%_libdir/%name/virt.so
 
 %files -n fence-virtd-cpg
 %_libdir/%name/cpg.so
 
 %changelog
+* Fri Jul 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Tue Nov 05 2019 Andrew A. Vasilyev <andy@altlinux.org> 0.4.0-alt0.2.34ab247
 - master snapshot 34ab24718795f8676a67f555f44f6db56f90a91d
 
