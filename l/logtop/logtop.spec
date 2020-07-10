@@ -1,22 +1,22 @@
-Name: logtop
-Version: 0.6.1
-Release: alt3
+%define _unpackaged_files_terminate_build 1
 
+Name: logtop
+Version: 0.7
+Release: alt1
 Summary: Display real time statistics of whatever you want
-License: BSD
+License: BSD-2-Clause
 Group: Text tools
 Url: http://julienpalard.github.io/logtop/
-# https://github.com/JulienPalard/logtop.git
 
+# https://github.com/JulienPalard/logtop.git
 Source: %name-%version.tar
-Patch0: rm-python2-from-makefile.patch
+Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: swig libncurses-devel libuthash-devel
-BuildPreReq: python3-devel
+BuildRequires: swig libncurses-devel libncursesw-devel libuthash-devel
+BuildRequires: python3-devel
 
 Requires: lib%name = %EVR
-
 
 %description
 logtop displays real-time count of strings received in standard input.
@@ -47,7 +47,7 @@ This package contains Python module of %name.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -61,7 +61,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 
 %files
-%doc ChangeLog README examples
+%doc COPYRIGHT NCURSES_COPYRIGHT
+%doc ChangeLog README.md examples
 %_bindir/*
 %_man1dir/*
 
@@ -73,6 +74,9 @@ sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 
 
 %changelog
+* Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1
+- Updated to upstream version 0.7.
+
 * Thu Oct 31 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
 - python2 -> python3
 
