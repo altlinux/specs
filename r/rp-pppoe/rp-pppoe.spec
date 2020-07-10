@@ -1,8 +1,8 @@
 Name: rp-pppoe
-Version: 3.13
+Version: 3.14
 Release: alt1
 
-License: %gpl2plus
+License: GPLv2+
 Url: https://dianne.skoll.ca/projects/rp-pppoe/
 Summary: PPP Over Ethernet (xDSL support)
 Summary(ru_RU.UTF-8): PPP через Ethernet (поддержка xDSL)
@@ -17,8 +17,6 @@ Source6: pppoe-wrapper.control
 Source7: %name-MINI-HOWTOs.tar
 
 Patch0: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: ppp
 Provides: rp-pppoe
@@ -189,6 +187,10 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Fri Jul 10 2020 Mikhail Efremov <sem@altlinux.org> 3.14-alt1
+- Don't use rpm-build-licenses.
+- Updated to 3.14.
+
 * Mon Nov 26 2018 Mikhail Efremov <sem@altlinux.org> 3.13-alt1
 - Use _unpackaged_files_terminate_build.
 - Update url.
