@@ -1,39 +1,39 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.8
-Release: alt3
+Release: alt4
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
-Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
-# Licensed like freeware. See POVLEGAL.DOC.
-License: povray
+License: AGPL-3.0 and CC-BY-NC-SA-2.5 and CC-BY-SA-3.0
 Group: Graphics
+
 Url: http://www.povray.org
-# git https://github.com/POV-Ray/povray
+# VCS: https://github.com/POV-Ray/povray
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Patch: %name-%version-alt.patch
 
 Requires: %name-common
 
 BuildRequires: gcc-c++ imake libjpeg-devel libpng-devel libtiff-devel libXpm-devel libXt-devel
 BuildRequires: boost-devel boost-flyweight-devel
 
+Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
+
 %description
 POV-Ray is a free, full-featured ray tracer, written and
-maintained  by  a  team of volunteers on the Internet.
+maintained by a team of volunteers on the Internet.
 POV-Ray has the right balance of power and versatility
 to satisfy extremely experienced and competent users, while
 at the same time not being so intimidating as to completely
 scare new users off.
 
 %description -l ru_RU.UTF-8
-POV-Ray - это свободный, полнофункциональный трассировщик
+POV-Ray - это свободный полнофункциональный трассировщик
 лучей, написанный и поддерживаемый командой добровольцев
 через Интернет. POV-Ray сохраняет баланс между мощностью
 и гибкостью, отвечая желаниям самых опытных пользователей,
-в то же время, не отпугивая новичков.
+в то же время не отпугивая совсем новичков.
 
-#---------------------------------------------------------
 %package common
 Group: Graphics
 Summary: POV-Ray common files
@@ -49,13 +49,16 @@ scenes, scripts etc.
 
 %prep
 %setup 
-%patch0 -p1
+%patch -p1
+%ifarch %e2k riscv64
+sed -i 's,aarch64,&|riscv64|e2k,' unix/config/ax_boost_base.m4
+%endif
 
 %build
 pushd unix
 ./prebuild.sh
 popd
-%configure COMPILED_BY='ALT Linux Team (http://www.altlinux.ru, mailto:community@lists.altlinux.org)' --with-x --without-svga
+%configure COMPILED_BY='ALT Linux Team (http://www.altlinux.org, mailto:community@lists.altlinux.org)' --with-x --without-svga
 %make_build CFLAGS=-Wno-multichar CXXFLAGS=-Wno-multichar
 # Adjust bogus paths
 sed -i \
@@ -64,7 +67,7 @@ sed -i \
   scripts/{allanim,allscene,portfolio}.sh
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 # remove carriage return symbols
 find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 	xargs -r0 sed -i -e 's,\r$,,g'
@@ -81,6 +84,11 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Fri Jul 10 2020 Michael Shigorin <mike@altlinux.org> 3.7.0.8-alt4
+- fixed build on %%e2k (and riscv64, hopefully)
+- License: clarification (3.7+)
+- minor spec cleanup
+
 * Wed Oct 02 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.0.8-alt3
 - Fixed build on ppc64le.
 
