@@ -178,7 +178,7 @@
 %endif
 
 Name: libvirt
-Version: 6.3.0
+Version: 6.5.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -258,6 +258,7 @@ BuildRequires: glibc-utils
 BuildRequires: kmod
 BuildRequires: radvd
 BuildRequires: dnsmasq
+BuildRequires: mdevctl
 BuildRequires: libxfs-devel
 
 %description
@@ -343,6 +344,7 @@ iptables and ip6tables capabilities
 Summary: Nodedev driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon = %EVR
+Requires: mdevctl
 
 %description daemon-driver-nodedev
 The nodedev driver plugin for the libvirtd daemon, providing
@@ -989,6 +991,7 @@ fi
 %files
 
 %files docs
+%doc NEWS.rst README.rst
 %doc docs/*.xml
 %doc docs/html docs/*.gif
 
@@ -1387,6 +1390,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jul 10 2020 Alexey Shabalin <shaba@altlinux.org> 6.5.0-alt1
+- 6.5.0
+
 * Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.3.0-alt1
 - 6.3.0
 
