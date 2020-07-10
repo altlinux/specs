@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1127.8.2.vz7.151.14
-%define orelease 1127.8.2.vz7.151.14
+#     rh7-3.10.0-1127.10.1.vz7.162.5
+%define orelease 1127.10.1.vz7.162.5
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -32,7 +32,7 @@ Epoch: 1
 %def_enable docs
 %def_enable htmldocs
 %def_enable man
-%def_disable debug
+%def_enable debug
 %def_disable module_sig
 %def_without firmware
 %def_without perf
@@ -51,7 +51,7 @@ Epoch: 1
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
-Summary: The Linux kernel (the core of the Linux operating system)
+Summary: The Linux kernel with OpenVZ support
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/
@@ -586,6 +586,13 @@ grep beancounter boot.log
 
 
 %changelog
+* Fri Jul 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.10.1.vz7.162.5
+- Build rh7-3.10.0-1127.10.1.vz7.162.5
+
+* Mon Jul 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.10.1.vz7.162.3
+- Build rh7-3.10.0-1127.10.1.vz7.162.3
+- Enable CONFIG_DEBUG_INFO
+
 * Wed Jul 01 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.8.2.vz7.151.14
 - Build rh7-3.10.0-1127.8.2.vz7.151.14
 
