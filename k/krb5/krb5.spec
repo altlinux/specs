@@ -4,11 +4,12 @@
 %def_with ldap
 %def_with selinux
 %def_with verto
+%def_with lmdb
 %def_enable check
 
 Name: krb5
-Version: 1.17.1
-Release: alt1
+Version: 1.18.2
+Release: alt2
 
 %if_without bootstrap
 %if_with doc
@@ -33,19 +34,16 @@ Source11: ltxcmds.sty
 Source100: noport.c
 
 # fedora patches:
-Patch6: krb5-1.12-fedora-ksu-path.patch
-Patch12: krb5-1.12-fedora-ktany.patch
 Patch23: krb5-1.3.1-fedora-dns.patch
 Patch39: krb5-1.12-fedora-api.patch
-Patch60: krb5-1.12.1-fedora-pam.patch
-Patch63: krb5-1.17-beta1-fedora-selinux-label.patch
-Patch71: krb5-1.13-fedora-dirsrv-accountlock.patch
+Patch60: krb5-1.18-fedora-pam.patch
+Patch63: krb5-1.18-fedora-selinux-label.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 Patch134: krb5-1.11-fedora-kpasswdtest.patch
 
 # alt patches:
-Patch200: krb5-1.16-alt-default_keytab_group.patch
+Patch200: krb5-1.18-alt-default_keytab_group.patch
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -55,6 +53,7 @@ BuildRequires: libpam-devel
 %{?_with_ldap:BuildRequires: libldap-devel libsasl2-devel}
 %{?_with_verto:BuildRequires: libverto-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
+%{?_with_lmdb:BuildRequires: liblmdb-devel}
 
 %if_with doc
 BuildRequires: python-module-sphinx
@@ -84,6 +83,9 @@ practice of cleartext passwords.
 Summary: The shared libraries used by Kerberos 5
 Group: System/Libraries
 Requires: gawk
+
+# RH/Fedora compatibility
+Provides: krb5-libs = %EVR
 
 %package -n lib%name-ldap
 Summary: The shared Kerberos 5 libraries, LDAP support
@@ -138,7 +140,7 @@ Obsoletes: %name-workstation < %version-%release
 %package ksu
 Summary: Kerberized super-user
 Group: System/Base
-PreReq: control
+Requires(pre,postun): control
 Requires: lib%name = %version-%release
 Conflicts: %name-kinit < %version-%release
 
@@ -198,11 +200,8 @@ MIT Kerberos.
 # fedora patches:
 %patch60 -p1 -b .pam
 %patch63 -p1 -b .selinux-label
-%patch6  -p1 -b .ksu-path
-%patch12 -p1 -b .ktany
 %patch23 -p1 -b .dns
 %patch39 -p1 -b .api
-%patch71 -p1 -b .dirsrv-accountlock
 %patch86 -p1 -b .debuginfo
 # Apply when the hard-wired or configured default location is
 # DIR:/run/user/%%{uid}/krb5cc.
@@ -249,8 +248,8 @@ autoreconf --verbose --force
 	%{?_with_verto:--with-system-verto} \
 	%{subst_with ldap} \
 	%{subst_with selinux} \
+        %{subst_with lmdb} \
 	--enable-dns-for-realm \
-	--with-dirsrv-account-locking \
 	--enable-pkinit \
 %if_without bootstrap
 	--with-pkinit-crypto-impl=openssl \
@@ -421,6 +420,9 @@ fi
 %dir %_libdir/%name/plugins/preauth
 %dir %_libdir/%name/plugins/tls
 %_libdir/%name/plugins/kdb/db2.so
+%if_with lmdb
+%_libdir/%name/plugins/kdb/klmdb.so
+%endif
 %_libdir/%name/plugins/preauth/otp.so
 %_libdir/%name/plugins/preauth/pkinit.so
 %_libdir/%name/plugins/preauth/spake.so
@@ -540,6 +542,15 @@ fi
 # {{{ changelog
 
 %changelog
+* Mon Jul 06 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18.2-alt2
+- provide krb5-libs (RH/Fedora compatibility, suggested by cas@)
+
+* Mon May 25 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18.2-alt1
+- 1.18.2
+
+* Sat Feb 15 2020 Ivan A. Melnikov <iv@altlinux.org> 1.18-alt1
+- 1.18
+
 * Thu Dec 12 2019 Ivan A. Melnikov <iv@altlinux.org> 1.17.1-alt1
 - 1.17.1
 
