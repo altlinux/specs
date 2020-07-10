@@ -1,17 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xosview
-Version: 1.21
-Release: alt2
-
+Version: 1.22
+Release: alt1
 Summary: An X Window System utility for monitoring system resources
-License: GPL
+License: GPL-2.0 and BSD-4-Clause-UC
 Group: Monitoring
-
 Url: http://xosview.sourceforge.net/
+
 # https://github.com/hills/xosview.git
 Source: %name-%version.tar
 Source1: xosview16.png
 Source2: xosview32.png
 Source3: xosview48.png
+
 Patch: xosview-1.21-alt-e2k.patch
 
 BuildRequires: gcc-c++ libXpm-devel libX11-devel desktop-file-utils
@@ -23,9 +25,7 @@ Xosview runs under the X Window System.
 
 %prep
 %setup
-%ifarch %e2k
 %patch -p1
-%endif
 
 %build
 %make_build OPTFLAGS="${CFLAGS:-%optflags}"
@@ -58,6 +58,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/xosview.desktop
 
 %files
+%doc COPYING*
+%doc CHANGES README.linux TODO
 %config %_x11appconfdir/*
 %_bindir/*
 %_man1dir/*
@@ -65,9 +67,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_liconsdir/*.png
 %_niconsdir/*.png
 %_miconsdir/*.png
-%doc CHANGES README.linux TODO
 
 %changelog
+* Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.22-alt1
+- Updated to upstream version 1.22.
+
 * Wed Nov 06 2019 Michael Shigorin <mike@altlinux.org> 1.21-alt2
 - E2K: fix ftbfs (patch sent upstream)
 - NB: there's xosview2 2.3.1 out there too!
