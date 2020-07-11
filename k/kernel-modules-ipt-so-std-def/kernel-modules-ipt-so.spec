@@ -1,6 +1,6 @@
 %define module_name     ipt-so
 %define module_version  1.0
-%define module_release  alt4
+%define module_release  alt5
 %define flavour         std-def
 
 %setup_kernel_module %flavour
@@ -23,7 +23,7 @@ BuildRequires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 BuildRequires: rpm-build-kernel-perms make-initrd
 BuildRequires: iptables iproute2 iptables-devel
 %ifarch i586 x86_64
-BuildRequires: qemu-system-x86-core
+BuildRequires: qemu-system-x86-core /dev/kvm
 %else
 %def_without check
 %endif
@@ -106,7 +106,10 @@ make-initrd --no-checks --config=/usr/src/config.mk --kernel=%kversion-%flavour-
 %ifarch x86_64
 %define qemu qemu-system-x86_64
 %endif
-%qemu -kernel /boot/vmlinuz* -initrd /usr/src/initramfs.*.img -m 256 -append console=ttyS0 -nographic 2>&1 | tr -d \\f | tee boot.log
+timeout 60 \
+%qemu -kernel /boot/vmlinuz* -initrd /usr/src/initramfs.*.img \
+	-m 512 -nographic -bios bios.bin -M accel=kvm:tcg \
+	-append 'console=ttyS0 panic=1' 2>&1 | tr -d \\f | tee boot.log
 egrep -q ' BUG:|Call Trace:|Kernel panic|Oops' boot.log && exit 1
 grep -q TEST-MARKER-OF-SUCCESS boot.log || exit 1
 
