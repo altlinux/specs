@@ -1,14 +1,14 @@
 %define        pkgname license-scout
 %define        gemname license_scout
 
-Name: 	       ruby-%pkgname
-Version:       1.0.24
+Name:          gem-%pkgname
+Version:       1.1.8
 Release:       alt1
 Summary:       Discovers license information of the dependencies of a project.
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/license_scout
-%vcs           https://github.com/chef/license_scout.git
+Vcs:           https://github.com/chef/license_scout.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,9 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 License Scout is a utility that discovers and aggregates the licenses for your
@@ -58,9 +61,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Jul 10 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.8-alt1
+- ^ 1.0.24 -> 1.1.8
+- ! spec tags
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.24-alt1
-- Bump to 1.0.24
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 1.0.16 -> 1.0.24
 
 * Fri Sep 28 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt1
 - New version.

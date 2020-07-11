@@ -1,23 +1,26 @@
 %define        pkgname net-ssh-multi
  
-Name: 	       ruby-%pkgname
-Version:       1.2.1
-Release:       alt1
+Name:          gem-%pkgname
+Version:       1.3.0
+Release:       alt0.1
 Summary:       SSH connection multiplexing: execute commands simultaneously on multiple hosts via SSH
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/net-ssh/net-ssh-multi
-# VCS:         https://github.com/net-ssh/net-ssh-multi.git
+Vcs:           https://github.com/net-ssh/net-ssh-multi.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
  
 Source:        %name-%version.tar
- 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-mocha
-BuildRequires: ruby-net-ssh
-BuildRequires: ruby-net-ssh-gateway
+BuildRequires: gem(mocha)
+BuildRequires: gem(net-ssh)
  
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
+
 %description
 Net::SSH::Multi is a library for controlling multiple Net::SSH
 connections via a single interface. It exposes an API similar to that of
@@ -33,24 +36,28 @@ parallel, and allows commands to be executed on subsets of servers
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
- 
+
 %description   doc
 Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
  
 %build
-%gem_build
+%ruby_build --use=%gemname --version-replace=%version
  
 %install
-%gem_install
+%ruby_install
  
 %check
-%gem_test
+%ruby_test
  
 %files
 %doc README*
@@ -61,6 +68,10 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
  
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt0.1
+- ^ 1.2.1 -> 1.3.0.pre1
+- ! spec tags
+
 * Fri Mar 22 2019 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt1
 - Bump to 1.2.1
 - Use Ruby Policy 2.0

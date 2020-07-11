@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.7.7
-Release:       alt1
+Release:       alt1.1
 Summary:       A library for creating machines and infrastructures idempotently in Chef.
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -14,10 +14,11 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%gem_replace_version net-scp ~> 2.0
+%gem_replace_version net-ssh ~> 6.0
+%gem_replace_version net-scp ~> 3.0
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 Chef Provisioning is a Cookbook and Recipe based approach for managing your
@@ -63,6 +64,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Jul 10 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.7-alt1.1
+- ! spec deps and syntax
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.7-alt1
 - updated (^) 2.7.6 -> 2.7.7
 - fixed (!) spec

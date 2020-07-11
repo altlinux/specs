@@ -1,20 +1,25 @@
 %define        pkgname net-ssh
 
-Name:          ruby-%pkgname
-Version:       4.2.0
-Release:       alt3
+Name:          gem-%pkgname
+Version:       6.1.0
+Release:       alt1
 Epoch:         1
 Summary:       Pure-Ruby implementation of the SSH2 client protocol
 Group:         Development/Ruby
 License:       MIT
 Url:           https://github.com/net-ssh/net-ssh
-# VCS:         https://github.com/net-ssh/net-ssh.git
+Vcs:           https://github.com/net-ssh/net-ssh.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-mocha
+BuildRequires: gem(mocha)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Net::SSH is a pure-Ruby implementation of the SSH2 client protocol. It
@@ -23,24 +28,29 @@ remote servers, via SSH2.
 
 
 %package       doc
-Summary:       Documentation files for %name
+Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
+BuildArch:     noarch
 
 %description   doc
-Documentation files for %name
+Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
 %files
 %ruby_gemspec
@@ -49,7 +59,12 @@ Documentation files for %name
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1:6.1.0-alt1
+- ^ 4.2.0 -> 6.1.0
+- ! spec syntax and tags
+
 * Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 1:4.2.0-alt3
 - Use Ruby Policy 2.0.
 

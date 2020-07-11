@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       1.24.2
-Release:       alt6.1
+Release:       alt6.2
 Summary:       An application that automates the lifecycle of servers
 License:       GPLv3
 Group:         System/Servers
@@ -18,6 +18,7 @@ Source5:       %name.tmpfiles
 # Source7:       dynflowd.service
 Source8:       %name.service
 Source9:       %name-production-%version.tar
+Source10:      manifest.js
 Patch:         patch.patch
 Patch1:        sass.patch
 Patch2:        1.22.2.patch
@@ -67,6 +68,7 @@ Requires:      gem-gridster-rails >= 0.5.6.1-alt1
 %gem_replace_version prometheus-client ~> 2.0
 %gem_replace_version sprockets ~> 4.0
 %gem_replace_version sass-rails ~> 6.0
+%gem_replace_version net-ssh ~> 6.0
 %add_findreq_skiplist *.pyc
 %add_findreq_skiplist *.pyo
 %add_findreq_skiplist *.erb
@@ -110,6 +112,7 @@ Foreman code documentation.
 sed -e "s/a2x/asciidoctor/" -e "s/-f/-b/" -i Rakefile.dist # NOTE patching a2x to asciidoctor
 sed "s,gem 'turbolinks'.*,gem 'gitlab-turbolinks-classic'," -i Gemfile
 rm -rf ./node_modules/node-sass/ ./node_modules/.bin/node-sass
+install -Dm0755 %SOURCE10 app/assets/config/manifest.js
 
 %build
 %ruby_build --ignore=font-awesome-sass --use=foreman --join=lib:bin --srcexedirs= --srcconfdirs= --srclibdirs=
@@ -144,9 +147,9 @@ install -d %buildroot%_logdir/%name
 
 %pre
 # Add the "foreman" user and group
-getent group foreman >/dev/null || groupadd -r foreman
+getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
+   %_sbindir/useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
 exit 0
 
 %post
@@ -184,6 +187,11 @@ railsctl cleanup %name
 %ruby_ridir/*
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.2
+- ! spec dep replace for net-ssh gem to 6.x
+- ! spec post script
+- + external manifest.js
+
 * Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 1.24.2-alt6.1
 - ! gems dep for sprockets to 4.0, and sass-rails to 6.0
 

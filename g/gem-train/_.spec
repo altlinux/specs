@@ -2,7 +2,7 @@
 %define        pkgname train
 
 Name:          gem-%pkgname
-Version:       3.2.26
+Version:       3.3.7
 Release:       alt1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 License:       MIT
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -107,6 +108,9 @@ Documentation files for %gemname-core gem.
 
 
 %changelog
+* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
+- ^ 3.2.26 -> 3.3.7
+
 * Thu Mar 26 2020 Pavel Skrylev <majioa@altlinux.org> 3.2.26-alt1
 - ^ 3.2.24 -> 3.2.26
 

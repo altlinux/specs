@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt1
+Release:       alt2
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -60,7 +60,7 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
-#%patch -p1
+%patch -p1
 
 %build
 %__setup_rb build --use=setup --alias=setup-rb
@@ -87,6 +87,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt2
+- - additional config path part for config folder for gem target
+
 * Tue Jun 30 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt1
 - ^ 5.999.3 -> 5.999.4
 - + actor module

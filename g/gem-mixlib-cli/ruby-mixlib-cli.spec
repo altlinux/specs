@@ -1,18 +1,23 @@
 %define        pkgname mixlib-cli
 
-Name: 	       ruby-%pkgname
-Version:       2.1.3
+Name:          gem-%pkgname
+Version:       2.1.6
 Release:       alt1
 Summary:       A mixin for creating command line applications
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/mixlib-cli
-%vcs           https://github.com/chef/mixlib-cli.git
+Vcs:           https://github.com/chef/mixlib-cli.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 Mixlib::CLI provides a class-based command line option parsing object,
@@ -54,9 +59,13 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Jul 10 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.6-alt1
+- ^ 2.1.3 -> 2.1.6
+- ! spec tags
+
 * Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 2.1.3-alt1
-^ v2.1.3
-^ Ruby Policy 2.0
+- > Ruby Policy 2.0
+- ^ 1.7.6 -> 2.1.3
 
 * Wed Sep 19 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
 - New version.

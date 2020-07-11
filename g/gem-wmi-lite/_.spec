@@ -1,15 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname unicode-utils
-%define        gemname unicode_utils
+%define        pkgname wmi-lite
 
 Name:          gem-%pkgname
-Version:       1.4.0
-Release:       alt1.2
-Summary:       additional Unicode aware functions for Ruby 1.9
-License:       Embedded
+Version:       1.0.5
+Release:       alt1
+Summary:       Lightweight, low-dependency wrapper for basic WMI functionality on Windows
+License:       Apache-2.0
 Group:         Development/Ruby
-Url:           https://github.com/lang/unicode_utils
-Vcs:           https://github.com/lang/unicode_utils.git
+Url:           https://github.com/chef/wmi-lite
+Vcs:           https://github.com/chef/wmi-lite.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -20,10 +19,10 @@ BuildRequires(pre): rpm-build-ruby
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
-%summary.
-
-UnicodeUtils implements Unicode algorithms for case conversion, normalization,
-text segmentation and more in pure Ruby code.
+A lightweight utility over win32ole for accessing basic WMI (Windows Management
+Instrumentation) functionality in the Microsoft Windows operating system. It has
+no runtime dependencies other than Ruby, so it can be used without concerns
+around dependency issues.
 
 
 %package       doc
@@ -52,7 +51,7 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README* LICENSE*
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
@@ -61,11 +60,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.2
-- ! spec syntax
-
-* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.1
-- ! spec according to changelog rules
-
-* Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
+* Wed Jul 8 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt1
 - + packaged gem with usage Ruby Policy 2.0
