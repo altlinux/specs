@@ -3,7 +3,7 @@
 
 Name:    crash
 Version: 7.2.8.0.21.gc4862e1
-Release: alt2
+Release: alt3
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -17,6 +17,7 @@ Vcs:     https://github.com/crash-utility/crash.git
 Source0: %name-%version.tar
 Source1: gdb-7.6.tar.gz
 
+ExcludeArch: e2k
 BuildRequires: ncurses-devel
 BuildRequires: zlib-devel
 BuildRequires: makeinfo
@@ -56,6 +57,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash/extensions
 
 %changelog
+* Sun Jul 12 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.8.0.21.gc4862e1-alt3
+- spec: ExcludeArch: e2k
+
 * Wed Jul 08 2020 Vitaly Chikunov <vt@altlinux.org> 7.2.8.0.21.gc4862e1-alt2
 - Add crash-extensions 80b218f.
 
