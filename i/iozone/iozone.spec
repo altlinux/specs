@@ -1,7 +1,7 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: iozone
-Version: 3.471
+Version: 3.489
 Release: alt1
 
 Summary: IOzone Filesystem Benchmark
@@ -14,9 +14,8 @@ Url: http://www.iozone.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: http://www.iozone.org/src/current/%name%oversion.tar
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %name-graphs
-Patch: %name.patch
 
 # for convert doc document to txt
 BuildPreReq: catdoc
@@ -48,25 +47,29 @@ Iozone полезна для выполнения обширного анали�
 Запускайте iozone-graphs для получения графиков в каталоге,
 расположенном на тестируемой файловой системе. Учтите, что в ходе тестирования
 будет занято до 550 мегабайт, и результаты тестирования будут записаны
-в текущем каталоге. Также можно указать iozone-graphs файл, полученный в результате
-выполнения любым способом iozone -a.
+в текущем каталоге. Также можно указать iozone-graphs файл, полученный
+в результате выполнения любым способом iozone -a.
 ВНИМАНИЕ! Тест может выполняться десятки минут, столько требуется для
 передачи нескольких десятков гигабайт.
 
 %prep
 %setup
-#patch
 
 %build
 cd src/current
 %ifarch x86_64
 %make_build linux-AMD64
 %else
+%ifarch ppc64le
+%make_build linux-powerpc64
+%else
+%ifarch armh
+%make_build linux-arm
+%else
 %make_build linux
 %endif
-
-# fix hard xrange
-#%__subst "s/set xrange/#set xrange/" $RPM_BUILD_DIR/src/current/gnu3d.dem
+%endif
+%endif
 
 %install
 cd src/current
@@ -90,6 +93,11 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sun Jul 12 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt1
+- new version 3.489
+- drop long-unneeded spec bits
+- somewhat more involved arch handling
+
 * Sat Mar 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.471-alt1
 - new version 3.471 (with rpmrb script)
 
