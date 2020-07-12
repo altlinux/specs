@@ -2,7 +2,7 @@
 
 Name: iozone
 Version: 3.489
-Release: alt1
+Release: alt2
 
 Summary: IOzone Filesystem Benchmark
 Summary(ru_RU.UTF-8): Эталонный тест файловой подсистемы IOzone
@@ -93,6 +93,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sun Jul 12 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt2
+- e2k build fix kindly provided by Don Capps himself
+
 * Sun Jul 12 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt1
 - new version 3.489
 - drop long-unneeded spec bits
