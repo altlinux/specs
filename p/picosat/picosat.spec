@@ -1,12 +1,13 @@
 Name: picosat
 Version: 965
-Release: alt2
+Release: alt3
+
 Summary: PicoSAT solver
 License: MIT
 Group: Sciences/Mathematics
+
 Url: http://fmv.jku.at/picosat/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-make
@@ -15,8 +16,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 
 Requires: lib%name = %EVR
-
-ExclusiveArch: x86_64 %ix86
 
 %description
 The SAT problem is the classical NP complete problem of searching for a
@@ -68,23 +67,21 @@ This package contains Python bindings of %name.
 
 %build
 %add_optflags %optflags_shared
-./configure.sh \
-	--shared
+./configure.sh --shared
 %make_build_ext libpicosat.so
 %make_build_ext all
-
 %python3_build
 
 %install
-%ifarch x86_64
+%if "%_lib" == "lib64"
 LIB_SUFF=64
 %endif
 %makeinstall_std LIB_SUFF=$LIB_SUFF
-
 install -d %buildroot%python3_sitelibdir
 install -m644 build/lib*/*.so %buildroot%python3_sitelibdir/
 
 %check
+# FIXME: ~, hmm
 pushd ~
 export LD_LIBRARY_PATH=%buildroot%_libdir
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -106,6 +103,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 12 2020 Michael Shigorin <mike@altlinux.org> 965-alt3
+- fixed build on non-x86 64-bit arches
+
 * Wed Feb 05 2020 Stanislav Levin <slev@altlinux.org> 965-alt2
 - Stopped build for Python2.
 
