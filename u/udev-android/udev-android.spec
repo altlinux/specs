@@ -1,12 +1,9 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%define pkgdocdir %_docdir/libtool-%version
-%define targetlicense %pkgdocdir/license.txt
-%define sourcelicense %_licensedir/GPL-3
 %define adbusersgroup adbusers
 
 Name: udev-android
-Version: 0.0.20190315
+Version: 0.0.20200613
 Release: alt1
 
 Summary: Udev rules for adb and fastboot
@@ -17,11 +14,6 @@ Url: https://github.com/M0Rf30/android-udev-rules
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Requires: %_licensedir/GPL-3
-
-BuildPreReq: rpm-build-licenses
-BuildRequires: /usr/bin/relative
 
 %description
 This package provides an UDEV rules enabling adb and fastboot to work
@@ -34,17 +26,18 @@ without root access to the host machine.
 mkdir -p %buildroot%_udevrulesdir
 install -p -m644 51-android.rules %buildroot%_udevrulesdir/
 
-mkdir -p %buildroot/%pkgdocdir
-ln -snf "`relative "%targetlicense" "%sourcelicense"`" %buildroot%targetlicense
-
 %pre
 /usr/sbin/groupadd -r -f %adbusersgroup ||:
 
 %files
+%doc LICENSE README.md
 %_udevrulesdir/*
-%pkgdocdir
 
 %changelog
+* Mon Jul 13 2020 Grigory Ustinov <grenka@altlinux.org> 0.0.20200613-alt1
+- New version: 20200613
+- Fix license packaging (Closes: #38521)
+
 * Tue Aug 06 2019 Pavel Nakonechnyi <zorg@altlinux.org> 0.0.20190315-alt1
 - New version: 20190315
 
