@@ -3,7 +3,7 @@
 %define name2 ardour6
 
 Name:    ardour
-Version: 6.0
+Version: 6.2
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -12,12 +12,9 @@ Group:   Sound
 
 Url:     http://ardour.org
 Source:  %name-%version.tar
-Source1: ardour3.desktop
+Source1: ardour6.desktop
 #Source2: ardour3-3.2-ru.po
 Packager: Grigory Ustinov <grenka@altlinux.org>
-
-# FIXME: bunch of undefined symbols in libevoral.so.0.0.0
-ExcludeArch: ppc64le
 
 BuildRequires: boost-devel
 BuildRequires: cppunit-devel >= 1.12.0
@@ -116,7 +113,8 @@ install -d -m 0755 %buildroot%_desktopdir
 install -m 644 %SOURCE1 %buildroot%_desktopdir/
 
 install -d -m 0755 %buildroot%_iconsdir
-cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%_iconsdir/ardour3.png
+cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
+%buildroot%_iconsdir/ardour6.png
 
 %add_findprov_lib_path %_libdir/%name2
 %find_lang --output=%name.lang %name2 gtk2_ardour3 gtkmm2ext3
@@ -128,9 +126,13 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_datadir/%name2
 %_desktopdir/*.desktop
 %_sysconfdir/%name2
-%_iconsdir/ardour3.png
+%_iconsdir/ardour6.png
 
 %changelog
+* Mon Jul 13 2020 Grigory Ustinov <grenka@altlinux.org> 6.2-alt1
+- Build new version (for ppc64le too).
+- Fix desktop file (Closes: #38420).
+
 * Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 6.0-alt1
 - Build new version.
 
