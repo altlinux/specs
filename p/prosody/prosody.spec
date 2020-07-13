@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.11.5
-Release: alt2
+Release: alt3
 
 Summary: Modern XMPP communication server
 
@@ -36,6 +36,9 @@ Patch1: prosody-0.11.5-alt-user.patch
 %makeinstall_std
 mkdir -p %buildroot/%systemd_unitdir
 mkdir -p %buildroot/%_localstatedir/prosody
+# ALT 38692
+mkdir -p %buildroot/%_sysconfdir/prosody/conf.d
+
 mv %buildroot/%_sysconfdir/prosody/prosody.cfg.lua %buildroot/%_sysconfdir/prosody/prosody.cfg.example.lua
 cp %SOURCE1 %buildroot/%_sysconfdir/prosody
 cp %SOURCE2 %buildroot/%systemd_unitdir
@@ -63,6 +66,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Mon Jul 13 2020 Grigory Ustinov <grenka@altlinux.org> 0.11.5-alt3
+- Add possibility of including additional config files (Closes: #38692).
+
 * Fri May 15 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.5-alt2
 - Fixed default user and group for ch[ug]id: use _prosody as these system
   user and group were created by package installation.
