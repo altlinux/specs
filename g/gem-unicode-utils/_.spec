@@ -4,9 +4,9 @@
 
 Name:          gem-%pkgname
 Version:       1.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       additional Unicode aware functions for Ruby 1.9
-License:       Embedded
+License:       BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/lang/unicode_utils
 Vcs:           https://github.com/lang/unicode_utils.git
@@ -61,8 +61,12 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.3
+- * relicensing to BSD-2-Clause
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.2
 - ! spec syntax
+- * relicensing to BSD-3-Clause-UU
 
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.1
 - ! spec according to changelog rules

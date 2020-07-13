@@ -1,22 +1,21 @@
 %define        pkgname chef-zero
 
-Name: 	       %pkgname
-Version:       14.0.12
+Name:          gem-%pkgname
+Version:       15.0.0
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
-License:       Apache 2.0
+License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://www.opscode.com/
-# VCS:         https://github.com/chef/chef-zero
+Vcs:           https://github.com/chef/chef-zero.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(ffi-yajl)
-BuildRequires: ruby-mixlib-log
-BuildRequires: ruby-hashie
-BuildRequires: ruby-uuidtools
+BuildRequires: gem(mixlib-log)
+BuildRequires: gem(uuidtools)
 
 %description
 Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
@@ -32,55 +31,63 @@ perfect for testing against a "real" Chef Server without mocking the entire
 Internet.
 
 
-%package       -n gem-%pkgname
+%package       -n %pkgname
+Summary:       Executable for Chef server for testing and solo setup purposes
 Summary:       Library files for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname
-Library files for %gemname gem.
+%description   -n %pkgname
+%summary.
 
-
-%package       -n gem-%pkgname-doc
+%package       doc
 Summary:       Documentation files for %gemname gem
 Group:         Development/Documentation
 BuildArch:     noarch
 Obsoletes:     %pkgname-doc
 Provides:      %pkgname-doc
 
-%description   -n gem-%pkgname-doc
+%description   doc
 Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
 %setup
 
 %build
-%gem_build
+%ruby_build
 
 %install
-%gem_install
+%ruby_install
 
 %check
-%gem_test
+%ruby_test
 
-%files         -n gem-%pkgname
+%files
 %ruby_gemlibdir
 %ruby_gemspec
 
-%files         -n gem-%pkgname-doc
+%files         -n %pkgname
+%_bindir/%pkgname
+
+%files         doc
 %ruby_gemdocdir
 
-%files
-%_bindir/chef-zero
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 15.0.0-alt1
+- ^ 14.0.12 -> 15.0.0
+- ! spec tags and license
+
 * Mon Apr 08 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.12-alt1
-- Bump to 14.0.12
-- Fix spec
+- ^ 14.0.11 -> 14.0.12
+- ! spec
 
 * Thu Mar 07 2019 Pavel Skrylev <majioa@altlinux.org> 14.0.11-alt2
-- Use Ruby Policy 2.0.
+- > Ruby Policy 2.0.
 
 * Tue Nov 20 2018 Andrey Cherepanov <cas@altlinux.org> 14.0.11-alt1
 - New version.

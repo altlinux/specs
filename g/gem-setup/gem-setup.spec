@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt2
+Release:       alt3
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -66,11 +66,9 @@ Documentation files for %gemname gem.
 %__setup_rb build --use=setup --alias=setup-rb
 
 %install
-%ruby_install
 %__setup_rb install --install_prefix=%buildroot
 
 %check
-%ruby_test
 %__setup_rb test
 
 %files
@@ -87,6 +85,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt3
+- ! gemfile dep export in one line when dep name is the same
+- ! spec syntax
+
 * Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt2
 - - additional config path part for config folder for gem target
 
