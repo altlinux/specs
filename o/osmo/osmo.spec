@@ -3,13 +3,14 @@
 %define ver_micro %nil
 
 Name: osmo
-Version: 0.4.2
-Release: alt3
+Version: 0.4.4
+Release: alt1
 
 Summary: Personal organizer
 License: GPLv2+
 Group: Office
 Url: http://clayo.org/osmo/
+
 Source: http://downloads.sourceforge.net/%name-pim/%name-%version%ver_micro.tar.gz
 
 %define gtk_ver 3.10
@@ -38,20 +39,23 @@ meet user preferences.
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %_datadir/applications/*.desktop
-%_datadir/icons/hicolor/*/*/%name.*
+%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
 %_man1dir/*
 %dir %_datadir/sounds/%name
 %_datadir/sounds/%name/alarm.wav
-%_pixmapsdir/%name.png
+%_pixmapsdir/*.png
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Mon Jul 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
+- 0.4.4
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt3
 - rebuilt against libgspell-1.so.2
 
