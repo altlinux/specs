@@ -4,12 +4,13 @@
 
 Name:    OCE
 Version: 0.18.3
-Release: alt1.1
-Summary: OpenCASCADE Community Edition
+Release: alt2
 
-Group:   System/Libraries
+Summary: OpenCASCADE Community Edition
 License: LGPLv2 with exception
-URL:     https://github.com/tpaviot/oce
+Group:   System/Libraries
+
+Url:     https://github.com/tpaviot/oce
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
@@ -41,10 +42,12 @@ BuildRequires: libXmu-devel
 BuildRequires: ftgl-devel
 BuildRequires: libfreeimage-devel
 BuildRequires: libgl2ps-devel
-BuildRequires: libgomp
+BuildRequires: libgomp-devel
 BuildRequires: tcl-devel
 BuildRequires: tk-devel
+%ifnarch %e2k
 BuildRequires: tbb-devel
+%endif
 BuildRequires: desktop-file-utils
 BuildRequires: ctest
 
@@ -154,10 +157,15 @@ OpenCASCADE CAE platform library development files.
        -DOCE_INSTALL_LIB_DIR=%_lib \
        -DOCE_WITH_FREEIMAGE=ON \
        -DOCE_WITH_GL2PS=ON \
+%ifnarch %e2k
        -DOCE_MULTITHREAD_LIBRARY:STRING=TBB \
+%endif
        -DCMAKE_SKIP_RPATH=FALSE \
        -DOCE_DRAW=ON \
-       -DOCE_TESTING=ON 
+%if_enabled test
+       -DOCE_TESTING=ON \
+%endif
+       #
 %cmake_build
 
 %install
@@ -279,7 +287,15 @@ export CTEST_OUTPUT_ON_FAILURE=1
 %_libdir/oce-%ver_major.%ver_minor/*.so
 %_libdir/oce-%ver_major.%ver_minor/*.cmake
 
+# TODO:
+# - E2K: reenable tbb when it's updated (2018 doesn't cut it)
+
 %changelog
+* Mon Jul 13 2020 Michael Shigorin <mike@altlinux.org> 0.18.3-alt2
+- Fixed BR:
+- Minor spec cleanup.
+- NB: obsoleted by opencascade, need to build 7.4.0+ probably.
+
 * Mon Jun 11 2018 Anton Midyukov <antohami@altlinux.org> 0.18.3-alt1.1
 - Rebuilt for aarch64.
 
