@@ -1,6 +1,6 @@
 Name:    libcpp-hocon
 Version: 0.3.0
-Release: alt1
+Release: alt2
 Summary: A C++ port of the Typesafe Config library
 
 Group:   System/Libraries
@@ -15,6 +15,7 @@ BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
+BuildRequires: boost-locale-devel
 BuildRequires: boost-log-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: libleatherman-devel
@@ -54,6 +55,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Mon Jul 13 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt2
+- Use boost-locale-devel for building.
+
 * Fri Jul 03 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - New version.
 

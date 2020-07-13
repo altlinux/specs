@@ -1,6 +1,6 @@
 Name:    libleatherman
-Version: 1.12.0
-Release: alt3
+Version: 1.12.1
+Release: alt1
 Summary: A collection of C++ and CMake utility libraries
  
 Group:   System/Libraries
@@ -62,6 +62,9 @@ sed -r -i.orig 's,reinterpret_cast<char\*\*\*>,(char***),g' ruby/src/api.cc
 %_libdir/cmake/leatherman
 
 %changelog
+* Tue Jul 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.12.1-alt1
+- New version.
+
 * Mon Jun 22 2020 Michael Shigorin <mike@altlinux.org> 1.12.0-alt3
 - E2K: workaround cast problem.
 
