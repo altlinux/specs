@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       6.16.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A network tool for managing many disparate systems
 Group:         Development/Ruby
 License:       Apache-2.0
@@ -127,7 +127,7 @@ touch %buildroot%_datadir/puppet-{locale,modules}/.dir
    rm -rf %_sysconfdir/puppetlabs/puppet/ssl)
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
-%_sbindir/useradd -r -n -g puppet,foreman -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -G puppet,foreman -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
 %post          -n %pkgname
 %post_service puppet
@@ -181,6 +181,9 @@ getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %ruby_gemdocdir
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 6.16.0-alt1.2
+- ! groups creation proc in post section
+
 * Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 6.16.0-alt1.1
 - + puppet user to foreman group
 - ! spec tags
