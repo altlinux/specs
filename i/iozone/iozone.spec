@@ -2,7 +2,7 @@
 
 Name: iozone
 Version: 3.489
-Release: alt2
+Release: alt3
 
 Summary: IOzone Filesystem Benchmark
 Summary(ru_RU.UTF-8): Эталонный тест файловой подсистемы IOzone
@@ -57,7 +57,10 @@ Iozone полезна для выполнения обширного анали�
 
 %build
 cd src/current
-%ifarch x86_64
+# Forgot to mention.  If you have Little Endian 64bit compiler,
+# then the make target for linux-AMD64 should work fine,
+# and produce a 64 bit version. :-)
+%ifarch x86_64 aarch64 riscv64 %e2k
 %make_build linux-AMD64
 %else
 %ifarch ppc64le
@@ -93,6 +96,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Mon Jul 13 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt3
+- 64-bit LE arches may use linux-AMD64 target (Don's advice again)
+
 * Sun Jul 12 2020 Michael Shigorin <mike@altlinux.org> 3.489-alt2
 - e2k build fix kindly provided by Don Capps himself
 
