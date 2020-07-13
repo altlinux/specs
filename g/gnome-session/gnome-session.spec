@@ -6,11 +6,12 @@
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
+%def_enable docs
 %def_enable man
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -47,7 +48,7 @@ Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
-BuildRequires(pre): meson rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome pkgconfig(systemd)
 BuildRequires: libGConf2-devel
 BuildRequires: libgio-devel glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -58,10 +59,11 @@ BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel
 BuildRequires: libGL-devel libGLES-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
-BuildRequires: docbook-dtds docbook-style-xsl
+BuildRequires: docbook-utils
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
-%{?_enable_man:BuildRequires: xmlto}
+%{?_enable_docs:BuildRequires: docbook-utils xmlto}
+%{?_enable_man:BuildRequires: docbook-utils docbook-style-xsl xsltproc}
 # since 3.22.2
 BuildRequires: libepoxy-devel
 
@@ -98,11 +100,12 @@ This package permits to log into GNOME using Wayland.
 %build
 export PATH=$PATH:/sbin
 %meson \
-    %{?_enable_systemd:-Dsystemd=true} \
+    %{?_disable_systemd:-Dsystemd=false} \
     %{?_enable_consolekit:-Dconsolekit=true} \
     %{?_enable_session_selector:-Dsession_selector=true} \
-    %{?_enable_man:-Dman=true}
-
+    %{?_disable_docs:-Ddocbook=false} \
+    %{?_disable_man:-Dman=false}
+%nil
 %meson_build
 
 %install
@@ -133,9 +136,10 @@ export PATH=$PATH:/sbin
 %_datadir/xsessions/gnome-xorg.desktop
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
+%{?_enable_man:
 %_man1dir/%name-inhibit.*
 %_man1dir/%name-quit.*
-%_man1dir/%name.*
+%_man1dir/%name.*}
 %doc AUTHORS NEWS README
 
 %_userunitdir/%name-failed.service
@@ -161,7 +165,7 @@ export PATH=$PATH:/sbin
 %_bindir/%name-custom-session
 %_bindir/%name-selector
 %_datadir/%name/session-selector.ui
-%_man1dir/%name-selector.*
+%{?_enable_man:%_man1dir/%name-selector.*}
 %_datadir/xsessions/gnome-custom-session.desktop
 %endif
 
@@ -170,6 +174,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Jul 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1.1
+- spec: improved build knobs
+
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
