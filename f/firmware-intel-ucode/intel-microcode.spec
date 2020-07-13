@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20191115
-%define orig_rev .2
+%define orig_timestamp 20200616
+%define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 12
+Version: 13
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,48 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon Jul 13 2020 L.A. Kostis <lakostis@altlinux.ru> 2:13-alt1.20200616
+- Sync with Debian 3.20200616.1:
+  + New upstream microcode datafile 20200616
+    + Downgraded microcodes (to a previously shipped revision):
+      sig 0x000406e3, pf_mask 0xc0, 2019-10-03, rev 0x00d6, size 101376
+      sig 0x000506e3, pf_mask 0x36, 2019-10-03, rev 0x00d6, size 101376
+  + Works around hangs on boot on Skylake-U/Y and Skylake Xeon E3,
+  + https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/issues/31
+  + This update *removes* the SRBDS mitigations from the above processors
+- REGRESSION FIX: 0x406e3: rollback to rev 0xd6 and document regression
+- Security fixes:
+  + Implements mitigation for CVE-2020-0543 Special Register Buffer Data
+    Sampling (SRBDS), aka INTEL-SA-00320
+  + Implements mitigation for CVE-2020-0548 Vector Register Data Sampling
+    (VRDS), INTEL-SA-00329
+  + Implements mitigation for CVE-2020-0549 L1D Cache Eviction Sampling
+    (L1DCES), INTEL-SA-00329
+  + Known to fix the regression introduced in release 2019-11-12 (sig
+    0x50564, rev. 0x2000065), which would cause several systems with
+    Skylake Xeon, Skylake HEDT processors to hang while rebooting
+  + Updated Microcodes:
+    sig 0x000306c3, pf_mask 0x32, 2019-11-12, rev 0x0028, size 23552
+    sig 0x000306d4, pf_mask 0xc0, 2019-11-12, rev 0x002f, size 19456
+    sig 0x00040651, pf_mask 0x72, 2019-11-12, rev 0x0026, size 22528
+    sig 0x00040661, pf_mask 0x32, 2019-11-12, rev 0x001c, size 25600
+    sig 0x00040671, pf_mask 0x22, 2019-11-12, rev 0x0022, size 14336
+    sig 0x000406e3, pf_mask 0xc0, 2020-04-27, rev 0x00dc, size 104448
+    sig 0x00050653, pf_mask 0x97, 2020-04-24, rev 0x1000157, size 32768
+    sig 0x00050654, pf_mask 0xb7, 2020-04-24, rev 0x2006906, size 34816
+    sig 0x00050656, pf_mask 0xbf, 2020-04-23, rev 0x4002f01, size 52224
+    sig 0x00050657, pf_mask 0xbf, 2020-04-23, rev 0x5002f01, size 52224
+    sig 0x000806e9, pf_mask 0x10, 2020-04-27, rev 0x00d6, size 103424
+    sig 0x000806e9, pf_mask 0xc0, 2020-04-27, rev 0x00d6, size 103424
+    sig 0x000806ea, pf_mask 0xc0, 2020-04-27, rev 0x00d6, size 103424
+    sig 0x000806eb, pf_mask 0xd0, 2020-04-27, rev 0x00d6, size 103424
+    sig 0x000806ec, pf_mask 0x94, 2020-04-23, rev 0x00d6, size 103424
+    sig 0x000906e9, pf_mask 0x2a, 2020-04-23, rev 0x00d6, size 103424
+    sig 0x000906ea, pf_mask 0x22, 2020-04-27, rev 0x00d6, size 102400
+    sig 0x000906eb, pf_mask 0x02, 2020-04-23, rev 0x00d6, size 103424
+    sig 0x000906ec, pf_mask 0x22, 2020-04-27, rev 0x00d6, size 102400
+    sig 0x000906ed, pf_mask 0x22, 2020-04-23, rev 0x00d6, size 103424
+
 * Mon Jan 20 2020 L.A. Kostis <lakostis@altlinux.ru> 2:12-alt1.20191115.2
 - Sync with Debian 3.20191115.2:
   + New upstream microcode datafile 20191115
