@@ -1,6 +1,6 @@
 Name: xneur
 Version: 0.20.0
-Release: alt2
+Release: alt3
 
 Summary: X Neural Switcher
 
@@ -9,6 +9,8 @@ Group: Office
 Url: http://xneur.ru/
 
 Source: %{name}_%version.orig.tar.gz
+Patch0: xneur-memset.patch
+Patch1: xneur-unnest-function.patch
 
 # Automatically added by buildreq on Mon May 29 2017
 # optimized out: glib2-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel perl perl-XML-Parser pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -40,6 +42,8 @@ applications which will use %name.
 
 %prep
 %setup
+%patch0 -p2
+%patch1 -p2
 # Stupid unhack
 sed -i 's/loKg_message/log_message/' lib/main/program.c
 
@@ -81,6 +85,12 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 13 2020 Andrew Savchenko <bircoph@altlinux.org> 0.20.0-alt3
+- Get rid of nested function in Levenshtein distance calculation:
+  this allows build on non-gcc compilers.
+- Optimize array setup for Levenstein distance using memset instead
+  of inefficient nested array.
+
 * Wed Oct 03 2018 Fr. Br. George <george@altlinux.ru> 0.20.0-alt2
 - Rebuild with grstreamer1.0
 
