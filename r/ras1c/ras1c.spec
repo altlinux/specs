@@ -1,9 +1,9 @@
 Name: ras1c
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: 1C:Enterprise 8 Remote Administration Server init script
-Summary(ru_RU.UTF-8): Скрипт запуска Сервера Удалённого Администрирования 1С:Предприятие 8
+Summary(ru_RU.UTF-8): Скрипт запуска сервера удалённого администрирования 1С:Предприятие 8
 
 Group: System/Configuration/Boot and Init
 License: CC-BY-4.0
@@ -16,7 +16,7 @@ Packager: Pavel Isopenko <pauli@altlinux.org>
 %description
 1C:Enterprise 8 Remote Administration Server (RAS) initialization script. Start, stop, restart, status. 1C_Enterprise83-server required
 %description -l ru_RU.UTF-8
-Сценарий инициализации Сервера Удалённого Администрирования (RAS) платформы 1С:Предприятие 8. Запуск, остановка, перезапуск и запрос состояния. Требуется 1C_Enterprise83-server - Сервер 1С:Предприятие 8.3 для Linux
+Сценарий инициализации сервера удалённого администрирования (RAS) платформы 1С:Предприятие 8. Запуск, остановка, перезапуск и запрос состояния. Требуется 1C_Enterprise83-server - сервер 1С:Предприятие 8.3 для Linux
 
 %prep
 %setup
@@ -35,6 +35,9 @@ service %name start
 service %name stop
 
 %changelog
+* Mon Jul 13 2020 Pavel Isopenko <pauli@altlinux.org> 1.2-alt1
+- add init info
+
 * Mon Jul 13 2020 Pavel Isopenko <pauli@altlinux.org> 1.1-alt1
 - add condstop condrestart targets
 
