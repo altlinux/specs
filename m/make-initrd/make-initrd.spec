@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.8.1
-Release: alt2
+Version: 2.8.2
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -218,6 +218,17 @@ fi
 %endif
 
 %changelog
+* Mon Jul 13 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.2-alt1
+- Feature changes:
+  + add-modules: Put MODULES_PRELOAD into the modules-preudev (thx Gleb F-Malinovskiy)
+  + add-modules: Fix kmodule.deps.d execution (ALT#38696)
+- Utilities:
+  + bug-report: Fix device list
+  + depinfo: Do not stop on error (ALT#38698)
+  + depinfo: Add option to read names from the file
+- Misc:
+  + Change the priority of directories when copying to an image
+
 * Tue Jul 07 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.1-alt2
 - Moved the guess/ucode directory to the appropriate package (ALT#38684).
 
