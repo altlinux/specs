@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.7.7
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A library for creating machines and infrastructures idempotently in Chef.
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -16,7 +16,9 @@ BuildRequires(pre): rpm-build-ruby
 
 %gem_replace_version net-ssh ~> 6.0
 %gem_replace_version net-scp ~> 3.0
+%gem_replace_version cheffish >= 4.0
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-%pkgname < %EVR
 Provides:      ruby-%pkgname = %EVR
 
@@ -64,6 +66,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.7-alt1.2
+- ! spec syntax and deps
+
 * Fri Jul 10 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.7-alt1.1
 - ! spec deps and syntax
 

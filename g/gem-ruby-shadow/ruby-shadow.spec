@@ -2,9 +2,9 @@
 
 Name:          gem-%pkgname
 Version:       2.5.0
-Release:       alt5
+Release:       alt5.1
 Summary:       Shadow Password module for Ruby
-License:       Free or CC-PDDC
+License:       ALT-Public-Domain or CC-PDDC
 Group:         Development/Ruby
 Url:           https://github.com/apalmblad/ruby-shadow
 Vcs:           https://github.com/apalmblad/ruby-shadow.git
@@ -40,6 +40,9 @@ related to password files.
 
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt5.1
+- * relicesing Free to ALT-Public-Domain
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt5
 - ! spec tags and syntax
 - * license

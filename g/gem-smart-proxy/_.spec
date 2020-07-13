@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       2.0.0
-Release:       alt3
+Release:       alt4
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       MIT
 Group:         Development/Ruby
@@ -79,16 +79,28 @@ Documentation files for %gemname gem.
 
 %build
 %ruby_build
-sed 's,#libdir,%ruby_gemlibdir,' -i %SOURCE2
 
 %install
 %ruby_install
 install -m644 %SOURCE1 %buildroot%ruby_gemlibdir/config/
 install -Dm644 %SOURCE2 %buildroot%_unitdir/%pkgname.service
 install -dm750 %buildroot%_logdir/%pkgname %buildroot%_runtimedir/%pkgname
+install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgname/Gemfile
 
 %check
 %ruby_test
+
+%pre           -n %pkgname
+getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
+getent passwd _foreman >/dev/null || \
+   %_sbindir/useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
+
+%post          -n %pkgname
+%post_service smart-proxy
+
+%preun         -n %pkgname
+%preun_service smart-proxy
+
 
 %files
 %doc README*
@@ -102,12 +114,19 @@ install -dm750 %buildroot%_logdir/%pkgname %buildroot%_runtimedir/%pkgname
 %_unitdir/%pkgname.service
 %attr(750,_foreman,foreman) %_logdir/%pkgname
 %attr(751,_foreman,foreman) %_runtimedir/%pkgname
+%attr(751,_foreman,foreman) %_localstatedir/%pkgname
 
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
+* Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt4
+- + copy Gemfile to %%_localstatedir/smart-proxy
+- + setup foreman user and groups
+- - service dep out of the foreman
+- ! service work dir
+
 * Thu Jul 09 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt3
 - + settings yamls
 
