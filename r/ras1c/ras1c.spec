@@ -1,5 +1,5 @@
 Name: ras1c
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: 1C:Enterprise 8 Remote Administration Server init script
@@ -35,6 +35,9 @@ service %name start
 service %name stop
 
 %changelog
+* Mon Jul 13 2020 Pavel Isopenko <pauli@altlinux.org> 1.1-alt1
+- add condstop condrestart targets
+
 * Fri Jul 10 2020 Pavel Isopenko <pauli@altlinux.org> 1.0-alt1
 - initial build for Sisyphus
 
