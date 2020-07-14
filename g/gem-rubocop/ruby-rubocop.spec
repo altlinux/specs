@@ -1,8 +1,8 @@
 %define        pkgname rubocop
 
 Name:          gem-%pkgname
-Version:       0.74.0
-Release:       alt1.1
+Version:       0.88.0
+Release:       alt1
 Summary:       A Ruby static code analyzer and formatter.
 License:       MIT
 Group:         Development/Ruby
@@ -69,6 +69,10 @@ Executable file for rubocop.
 %_bindir/*
 
 %changelog
+* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 0.88.0-alt1
+- ^ 0.74.0 -> 0.88.0
+- ! executable runnning (closes #38650)
+
 * Tue Sep 10 2019 Pavel Skrylev <majioa@altlinux.org> 0.74.0-alt1.1
 - ! spec according to changelog rules
 

@@ -1,14 +1,15 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname regexp_parser
+%define        pkgname regexp-parser
+%define        gemname regexp_parser
 
-Name:          ruby-%pkgname
-Version:       1.6.0
+Name:          gem-%pkgname
+Version:       1.7.1
 Release:       alt1
 Summary:       A regular expression parser library for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/ammar/regexp_parser
-%vcs           https://github.com/ammar/regexp_parser.git
+Vcs:           https://github.com/ammar/regexp_parser.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,9 +17,13 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 %summary.
+
 
 %package       -n %pkgname
 Summary:       Executable file for %gemname gem
@@ -68,6 +73,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
+- ^ 1.6.0 -> 1.7.1
+- ! spec tags
+
 * Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - updated to (^) v1.6.0
 - fix (!) spec

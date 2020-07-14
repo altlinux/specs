@@ -1,25 +1,25 @@
-%define        pkgname ast
+# vim: set ft=spec: -*- rpm-spec -*-
+%define        pkgname rubocop-ast
 
 Name:          gem-%pkgname
-Version:       2.4.1
+Version:       0.1.0
 Release:       alt1
-Summary:       A library for working with Abstract Syntax Trees
+Summary:       RuboCop's Node and NodePattern classes
 License:       MIT
 Group:         Development/Ruby
-Url:           https://whitequark.github.io/ast/
-Vcs:           https://github.com/whitequark/ast.git
+Url:           https://rubocop.org/
+Vcs:           https://github.com/rubocop-hq/rubocop-ast.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
-AST is a small library for working with immutable abstract syntax trees.
+%summary.
 
 
 %package       doc
@@ -48,16 +48,14 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README*
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         doc
 %ruby_gemdocdir
 
-%changelog
-* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.1-alt1
-- ^ 2.4.0 -> 2.4.1
-- ! spec syntax
 
-* Thu Feb 28 2019 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
-- Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
+%changelog
+* Mon Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt1
+- + packaged gem with usage Ruby Policy 2.0
