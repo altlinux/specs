@@ -16,7 +16,7 @@
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
-#define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 # Leave this alone, please.
 %global target out/Release
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        80.0.3987.132
+Version:        83.0.4103.61
 Release:        alt3
 
 Summary:        An open source web browser developed by Google
@@ -54,7 +54,7 @@ Source300:	chromium-gost.tar
 Obsoletes:      chromium-GOST
 
 # Unsupported target_cpu
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le armh
 
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
@@ -71,24 +71,23 @@ Patch011: 0011-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
 Patch012: 0012-ALT-Fix-last-commit-position-issue.patch
 Patch013: 0013-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch014: 0014-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch015: 0015-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch016: 0016-FEDORA-Fix-gcc-round.patch
-Patch017: 0017-FEDORA-Fix-memcpy.patch
-Patch018: 0018-ALT-openh264-always-pic-on-x86.patch
-Patch019: 0019-ALT-allow-to-override-clang-through-env-variables.patch
-Patch020: 0020-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch021: 0021-ALT-Add-missing-header-on-aarch64.patch
-Patch022: 0022-GENTOO-Clang-allows-detection-of-these-builtins.patch
-Patch023: 0023-FEDORA-vtable-symbol-undefined.patch
-Patch024: 0024-FEDORA-remove-noexcept.patch
-Patch025: 0025-Include-cmath-for-std-pow.patch
-Patch026: 0026-gcc-abstract.patch
-Patch027: 0027-gcc-blink.patch
-Patch028: 0028-BookmarkModelMerger-Move-RemoteTreeNode-declaration-.patch
-Patch029: 0029-gcc-permissive.patch
+Patch015: 0015-FEDORA-Fix-gcc-round.patch
+Patch016: 0016-FEDORA-Fix-memcpy.patch
+Patch017: 0017-ALT-openh264-always-pic-on-x86.patch
+Patch018: 0018-ALT-allow-to-override-clang-through-env-variables.patch
+Patch019: 0019-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch020: 0020-ALT-Add-missing-header-on-aarch64.patch
+Patch021: 0021-GENTOO-Clang-allows-detection-of-these-builtins.patch
+Patch022: 0022-FEDORA-vtable-symbol-undefined.patch
+Patch023: 0023-FEDORA-remove-noexcept.patch
+Patch024: 0024-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch025: 0025-Add-missing-algorithm-header-in-crx_install_error.cc.patch
+Patch026: 0026-libstdc-fix-incomplete-type-in-AXTree-for-NodeSetSiz.patch
+Patch027: 0027-IWYU-std-numeric_limits-is-defined-in-limits.patch
+Patch028: 0028-Make-some-of-blink-custom-iterators-STL-compatible.patch
+Patch029: 0029-Include-memory-header-to-get-the-definition-of-std-u.patch
+Patch030: 0030-ServiceWorker-Avoid-double-destruction-of-ServiceWor.patch
 ### End Patches
-Patch301: GOST-boringssl.patch
-Patch302: GOST-chromium.patch
 
 BuildRequires: /proc
 
@@ -101,10 +100,10 @@ BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
-BuildRequires:  clang7.0
-BuildRequires:  clang7.0-devel
-BuildRequires:  llvm7.0-devel
-BuildRequires:  lld7.0-devel
+BuildRequires:  clang10.0
+BuildRequires:  clang10.0-devel
+BuildRequires:  llvm10.0-devel
+BuildRequires:  lld10.0-devel
 %endif
 BuildRequires:  ninja-build
 BuildRequires:  gperf
@@ -154,8 +153,12 @@ BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
+BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(gbm)
+BuildRequires:  python
 BuildRequires:  python-modules-json
 BuildRequires:  python-modules-distutils
+BuildRequires:  python-module-pkg_resources
 BuildRequires:  node
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -239,10 +242,14 @@ tar -xf %SOURCE1
 %patch027 -p1
 %patch028 -p1
 %patch029 -p1
+%patch030 -p1
 ### Finish apply patches
 
-%patch301 -p0
-%patch302 -p1
+sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
+sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/chromium.patch | patch -p1
+
+# Change APPNAME (not in GOST patches for now)
+sed -i 's/APPNAME=chromium$/APPNAME=chromium-gost/' .rpm/chromium.sh
 
 echo > "third_party/adobe/flash/flapper_version.h"
 
@@ -253,13 +260,8 @@ for f in .rpm/blinkpy-common/*.py; do
 done
 touch third_party/blink/tools/blinkpy/__init__.py
 
-# unknown warning option '-Wno-ignored-pragma-optimize'
-# unknown warning option '-Wno-defaulted-function-deleted'
-# clang7: error: unknown argument: '-fsplit-lto-unit'
 sed -i \
-	-e '/"-Wno-ignored-pragma-optimize"/d' \
-	-e '/"-Wno-defaulted-function-deleted"/d' \
-	-e '/"-fsplit-lto-unit"/d' \
+	-e '/"-Wno-non-c-typedef-for-linkage"/d' \
 	build/config/compiler/BUILD.gn
 
 sed -i \
@@ -268,14 +270,14 @@ sed -i \
 	third_party/libaom/source/config/linux/ia32/config/aom_config.h
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
-ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/
 
 rm -f -- .rpm/depot_tools/ninja
-ln -s /usr/bin/ninja .rpm/depot_tools/ninja
-ln -s /usr/bin/python2 .rpm/depot_tools/python
+ln -s %_bindir/ninja .rpm/depot_tools/ninja
+ln -s %_bindir/python2 .rpm/depot_tools/python
 
 # GOST icons
-egrep "chromium_strings|product_logo|third_party" chromium-gost/build_linux/chromium-gost-prepare.sh > prepare.sh
+egrep "^perl -pi -e|^cp -f" chromium-gost/build_linux/chromium-gost-prepare.sh > prepare.sh
 CHROMIUM_GOST_REPO=chromium-gost sh prepare.sh
 
 # Hack in PROCESSOR_TYPE
@@ -388,16 +390,11 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-pat
 n=%build_parallel_jobs
 [ "$n" -lt 16 ] || n=16
 
-
 %ifnarch %{ix86} x86_64
 %define GOSTCFLAGS -DPROCESSOR_TYPE=-1 -O2 -g
 %else
 %define GOSTCFLAGS -O2 -g
 %endif
-
-##g++ %GOSTCFLAGS -Wl,--no-as-needed -std=c++11 -fPIC -shared -Werror -Wno-attributes -Wno-unused-function -ldl chromium-gost/src/gostssl.cpp chromium-gost/src/msspi/src/msspi.cpp -I chromium-gost/src/msspi/src -I chromium-gost/src/msspi/third_party/cprocsp/include -I third_party/boringssl/src/include -lcapi10 -lcapi20 -L. -o gostssl.so
-
-
 
 ninja \
 	-vvv \
@@ -415,12 +412,9 @@ mkdir -p -- \
 	%buildroot/%_libdir/%name \
 	%buildroot/%_sysconfdir/%name \
 #
-## XXX
-## install gostssl.so %buildroot%_libdir/%name/gostssl.so
 install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
-# XXX check if it's critical for GOST
 # add directories for policy management
 mkdir -p %buildroot%_sysconfdir/%name/policies/managed
 mkdir -p %buildroot%_sysconfdir/%name/policies/recommended
@@ -540,16 +534,62 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Jul 14 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt3
+- Build GOST version
+
+* Mon Jun 29 2020 Andrey Cherepanov <cas@altlinux.org> 83.0.4103.61-alt2
+- Prevent ignored null byte warning in Flash plugin version detection.
+- Add default parameters to system-wide variable $CHROMIUM_FLAGS.
+- Use Chromium name in GenericName in desktop file (ALT #36815).
+- Exclude armh from build.
+
+* Thu May 21 2020 Alexey Gladkov <legion@altlinux.ru> 83.0.4103.61-alt1
+- New version (83.0.4103.61).
+- Security fixes:
+  - CVE-2020-6465: Use after free in reader mode.
+  - CVE-2020-6466: Use after free in media.
+  - CVE-2020-6467: Use after free in WebRTC.
+  - CVE-2020-6468: Type Confusion in V8.
+  - CVE-2020-6469: Insufficient policy enforcement in developer tools.
+  - CVE-2020-6470: Insufficient validation of untrusted input in clipboard.
+  - CVE-2020-6471: Insufficient policy enforcement in developer tools.
+  - CVE-2020-6472: Insufficient policy enforcement in developer tools.
+  - CVE-2020-6473: Insufficient policy enforcement in Blink.
+  - CVE-2020-6474: Use after free in Blink.
+  - CVE-2020-6475: Incorrect security UI in full screen.
+  - CVE-2020-6476: Insufficient policy enforcement in tab strip.
+  - CVE-2020-6477: Inappropriate implementation in installer.
+  - CVE-2020-6478: Inappropriate implementation in full screen.
+  - CVE-2020-6479: Inappropriate implementation in sharing.
+  - CVE-2020-6480: Insufficient policy enforcement in enterprise.
+  - CVE-2020-6481: Insufficient policy enforcement in URL formatting.
+  - CVE-2020-6482: Insufficient policy enforcement in developer tools.
+  - CVE-2020-6483: Insufficient policy enforcement in payments.
+  - CVE-2020-6484: Insufficient data validation in ChromeDriver.
+  - CVE-2020-6485: Insufficient data validation in media router.
+  - CVE-2020-6486: Insufficient policy enforcement in navigations.
+  - CVE-2020-6487: Insufficient policy enforcement in downloads.
+  - CVE-2020-6488: Insufficient policy enforcement in downloads.
+  - CVE-2020-6489: Inappropriate implementation in developer tools.
+  - CVE-2020-6490: Insufficient data validation in loader.
+  - CVE-2020-6491: Incorrect security UI in site information.
+
+* Wed May 13 2020 Alexey Gladkov <legion@altlinux.ru> 81.0.4044.138-alt1
+- New version (81.0.4044.138).
+- Security fixes:
+  - CVE-2020-6464: Type Confusion in Blink.
+  - CVE-2020-6831: Stack buffer overflow in SCTP.
+  - CVE-2020-6461: Use after free in storage.
+  - CVE-2020-6462: Use after free in task scheduling.
+  - CVE-2020-6458: Out of bounds read and write in PDFium.
+  - CVE-2020-6459: Use after free in payments.
+  - CVE-2020-6460: Insufficient data validation in URL formatting.
+  - CVE-2020-6463: Use after free in ANGLE.
+
 * Thu Apr 23 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt3
 - Fix startup script
 
-* Tue Apr 14 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt2
-- Fix build reqiores
-
-* Sat Apr 04 2020 Fr. Br. George <george@altlinux.ru> 80.0.3987.132-alt1
-- Build GOST version
-
-* Fri Mar 06 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.3987.132-alt0
+* Fri Mar 06 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.3987.132-alt1
 - New version (80.0.3987.132).
 - Security fixes:
   - CVE-2019-18197: Multiple vulnerabilities in XML.
@@ -739,9 +779,6 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
   - CVE-2019-5879: Extensions can read some local files.
   - CVE-2019-5880: SameSite cookie bypass.
   - CVE-2019-5881: Arbitrary read in SwiftShader.
-
-* Wed Sep 18 2019 Fr. Br. George <george@altlinux.ru> 76.0.3809.87-alt2
-- Reanme to chromium-gost
 
 * Fri Aug 02 2019 Alexey Gladkov <legion@altlinux.ru> 76.0.3809.87-alt1
 - New version (76.0.3809.87).
