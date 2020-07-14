@@ -18,7 +18,7 @@
 %define beta_suffix	%nil
 
 Name: 	 seamonkey
-Version: 2.53.2
+Version: 2.53.3
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -442,6 +442,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Jul 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.3-alt1
+- New version.
+
 * Mon May 18 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.2-alt1
 - New stable version.
 - Remove deprecated lbzip2.
