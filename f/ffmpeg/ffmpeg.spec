@@ -40,7 +40,7 @@
 %def_enable libdav1d
 %def_enable libdc1394
 %def_enable libdrm
-%def_enable libflite
+%def_disable libflite
 %def_enable libfontconfig
 %def_enable libfreetype
 %def_enable libfribidi
@@ -102,7 +102,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.2.3
+Version:	4.3.1
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -779,6 +779,12 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Jul 13 2020 Anton Farygin <rider@altlinux.ru> 2:4.3.1-alt1
+- 4.3.1
+
+* Thu Jun 18 2020 Anton Farygin <rider@altlinux.ru> 2:4.3-alt1
+- 4.3
+
 * Mon May 25 2020 Anton Farygin <rider@altlinux.ru> 2:4.2.3-alt1
 - 4.2.3 (Fixes: CVE-2019-13312,CVE-2020-12284)
 
