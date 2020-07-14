@@ -34,7 +34,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.17.5
+Version:	3.17.6
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -123,6 +123,7 @@ BuildPreReq:	perl-XML-SimpleObject
 BuildPreReq:	perl-URI
 BuildPreReq: 	perl-libwww
 BuildPreReq: 	perl-Text-CSV_XS
+BuildPreReq: 	perl-File-Which
 
 %description
 Claws Mail is an email client (and news reader), based on GTK+,
@@ -909,6 +910,9 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Tue Jul 14 2020 Mikhail Efremov <sem@altlinux.org> 3.17.6-alt1
+- Updated to 3.17.6.
+
 * Tue Feb 25 2020 Mikhail Efremov <sem@altlinux.org> 3.17.5-alt1
 - tools: Don't pull dos2unix.
 - tools: Don't package gitlog2changelog.py.
