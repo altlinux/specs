@@ -3,7 +3,7 @@
 
 Name: vulkan
 Version: 1.2.141
-Release: alt1
+Release: alt1.1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -105,6 +105,11 @@ sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 popd
 
 %build
+%ifarch %e2k
+# lcc 1.24.11 considers parameter_validation_utils.cpp partially meaningless
+# and vk_mem_alloc.h somewhat pointless and overdeclaring
+%add_optflags -Wno-error=ignored-qualifiers -Wno-error=type-limits -Wno-error=unused-variable
+%endif
 # vulkan-headers first
 pushd %_builddir/vulkan-headers
 %_cmake
@@ -183,6 +188,10 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Tue Jul 14 2020 L.A. Kostis <lakostis@altlinux.ru> 1.2.141-alt1.1
+- Applied fix for e2k (by @mike):
+  + E2K: ftbfs workaround (selective -Wno-error).
+
 * Fri Jun 05 2020 L.A. Kostis <lakostis@altlinux.ru> 1.2.141-alt1
 - Updated to v1.2.141.
 - Update buildrequires.
