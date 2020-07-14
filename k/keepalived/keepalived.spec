@@ -16,11 +16,11 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.0.20
+Version: 2.1.5
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
-License: GPL
+License: GPLv2
 Group: Networking/Other
 
 Url: http://www.keepalived.org/software/
@@ -122,6 +122,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Tue Jul 14 2020 Anton Farygin <rider@altlinux.ru> 2.1.5-alt1
+- 2.1.5
+
 * Sat Jan 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.20-alt1
 - 2.0.20
 
