@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.36
 %define api_ver 1.0
@@ -25,8 +25,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -313,6 +313,9 @@ dbus-run-session %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Jul 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
+- 3.36.3
+
 * Sun May 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt2
 - updated to 3.36.2-real-1-g38fc7ef8 (fixed user switching)
 
