@@ -1,19 +1,22 @@
 %define        pkgname parser
 
 Name:          gem-%pkgname
-Version:       2.7.0.4
+Version:       2.7.1.4
 Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/whitequark/parser
-%vcs           https://github.com/whitequark/parser.git
+Vcs:           https://github.com/whitequark/parser.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bundler)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -69,10 +72,14 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %files         -n ruby-parse
-%_bindir/*
+%_bindir/ruby-parse
+%_bindir/ruby-rewrite
 
 
 %changelog
+* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1.4-alt1
+- ^ 2.7.0.4 -> 2.7.1.4
+
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.0.4-alt1
 - updated (^) 2.6.4.1 -> 2.7.0.4
 - changed (*) spec

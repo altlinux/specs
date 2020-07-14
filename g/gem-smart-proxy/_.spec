@@ -3,8 +3,8 @@
 %define        gemname smart_proxy
 
 Name:          gem-%pkgname
-Version:       2.0.0
-Release:       alt4
+Version:       2.1.0
+Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       MIT
 Group:         Development/Ruby
@@ -91,9 +91,10 @@ install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgn
 %ruby_test
 
 %pre           -n %pkgname
+getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent passwd _foreman >/dev/null || \
-   %_sbindir/useradd -r -g foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
+   %_sbindir/useradd -r -G puppet,foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
 
 %post          -n %pkgname
 %post_service smart-proxy
@@ -121,6 +122,10 @@ getent passwd _foreman >/dev/null || \
 
 
 %changelog
+* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
+- ^ 2.0.0 -> 2.1.0
+- + _foreman user to puppet group
+
 * Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt4
 - + copy Gemfile to %%_localstatedir/smart-proxy
 - + setup foreman user and groups
