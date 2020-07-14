@@ -1,7 +1,10 @@
 
+# %%define _without_vcmmd yes
+%{?_without_vcmmd:%global _without_vcmmd --without-vcmmd}
+
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.590
+Version: 7.0.592
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -17,15 +20,18 @@ Requires: libvzevent >= 7.0.0
 Requires: libploop >= 7.0.199
 Requires: cgroup
 Requires: crtools >= 2.8.0.15
-Requires: libvcmmd >= 7.0.22
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: libvzevent-devel >= 5.0.0
 BuildRequires: libploop-devel >= 7.0.199
-BuildRequires: libvcmmd-devel >= 7.0.14
 BuildRequires: libe2fs-devel
 BuildRequires: libxml2-devel >= 2.6.16
 BuildRequires: libuuid-devel
 BuildRequires: libdbus-devel
+
+%if 0%{!?_without_vcmmd:1}
+Requires: libvcmmd >= 7.0.22
+BuildRequires: libvcmmd-devel >= 7.0.22
+%endif
 
 %add_findreq_skiplist %_datadir/%name/dists/scripts/*
 %filter_from_requires /^\/etc\/vz\/vz.conf/d
@@ -49,7 +55,7 @@ OpenVZ Containers API development library
 
 %build
 %autoreconf
-%configure
+%configure %{?_without_vcmmd}
 %make_build
 
 %install
@@ -65,6 +71,10 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Tue Jul 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.592-alt1
+- 7.0.592
+- ability to build without vcmmd
+
 * Wed Jun 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.590-alt1
 - 7.0.590
 
