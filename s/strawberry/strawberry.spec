@@ -1,6 +1,8 @@
+%def_disable clang
+
 Name: strawberry
-Version: 0.6.12
-Release: alt2
+Version: 0.6.13
+Release: alt1
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
@@ -15,8 +17,10 @@ Url: https://www.strawberrymusicplayer.org/
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
-Patch: strawberry_0.6.12_build.patch
 
+%if_enabled clang
+BuildRequires: clang10.0-devel
+%endif
 BuildRequires: boost-program_options-devel ccache gcc-c++ gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler
 %ifnarch s390 s390x
@@ -55,7 +59,6 @@ Features:
 
 %prep
 %setup
-%patch -p2
 
 # Remove most 3rdparty libraries
 # Unbundle taglib next release:
@@ -65,6 +68,16 @@ mv 3rdparty/singleapplication/LICENSE 3rdparty/singleapplication/LICENSE-singlea
 mv 3rdparty/taglib/COPYING 3rdparty/taglib/COPYING-taglib
 
 %build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+%else
+export CC="gcc"
+export CXX="g++"
+export AR="ar"
+%endif
+
 %cmake \
   -DBUILD_WERROR=OFF \
   -DUSE_SYSTEM_TAGLIB=ON
@@ -90,6 +103,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Tue Jul 14 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.13-alt1
+- New version (0.6.13) with rpmgs script.
+
 * Thu Jun 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.12-alt2
 - Fixed build with new libusbmuxd and libplist.
 
