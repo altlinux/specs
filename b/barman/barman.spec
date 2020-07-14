@@ -1,9 +1,9 @@
 Name: barman
-Version: 2.10
+Version: 2.11
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
-License: GPL-3.0-only
+License: GPL-3.0+
 Group: Databases
 Url: http://www.pgbarman.org/
 
@@ -109,11 +109,17 @@ touch %buildroot/var/log/barman/barman.log
 %_bindir/barman-wal-archive
 %_bindir/barman-wal-restore
 %_bindir/barman-cloud-backup
+%_bindir/barman-cloud-restore
+%_bindir/barman-cloud-backup-list
 %_bindir/barman-cloud-wal-archive
+%_bindir/barman-cloud-wal-restore
 %doc %_man1dir/barman-wal-archive.1.xz
 %doc %_man1dir/barman-wal-restore.1.xz
 %doc %_man1dir/barman-cloud-backup.1.xz
 %doc %_man1dir/barman-cloud-wal-archive.1.xz
+%doc %_man1dir/barman-cloud-backup-list.1.xz
+%doc %_man1dir/barman-cloud-restore.1.xz
+%doc %_man1dir/barman-cloud-wal-restore.1.xz
 
 %files -n python3-module-barman
 %doc NEWS README.rst
@@ -128,6 +134,10 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Tue Jul 14 2020 Leontiy Volodin <lvol@altlinux.org> 2.11-alt1
+- New version (2.11) with rpmgs script.
+- Updated license tag.
+
 * Mon Dec 09 2019 Leontiy Volodin <lvol@altlinux.org> 2.10-alt1
 - New version (2.10) with rpmgs script.
 
