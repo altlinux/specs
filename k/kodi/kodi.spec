@@ -1,6 +1,6 @@
 Name: kodi
 Version: 18.7.1
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL
@@ -59,7 +59,6 @@ BuildRequires: pkgconfig(libmicrohttpd)
 BuildRequires: pkgconfig(libnfs)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(libpcrecpp)
-BuildRequires: pkgconfig(libplist)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpostproc)
 BuildRequires: pkgconfig(libpulse-simple)
@@ -169,6 +168,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Tue Jul 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.7.1-alt2
+- drop unused libplist BR
+
 * Tue Jun 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.7.1-alt1
 - 18.7.1 Leia released
 
