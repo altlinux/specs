@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.20.2
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -251,8 +251,10 @@ find -type f -name libtool -print0 |
 install -pD -m755 %_sourcedir/msghack.py \
 	%buildroot%_bindir/msghack
 install -pm644 %_sourcedir/msghack.1 %buildroot%_man1dir/
+%if_with emacs
 install -pD -m644 %_sourcedir/gettext-po-mode-start.el \
 	%buildroot%_sysconfdir/emacs/site-start.d/gettext.el
+%endif
 
 %if_with included_gettext
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -366,6 +368,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libtextstyle/
 
 %changelog
+* Tue Jul 14 2020 Michael Shigorin <mike@altlinux.org> 0.20.2-alt2
+- Fixed emacs knob given nonzero _unpackaged_files_terminate_build.
+
 * Tue Apr 14 2020 Dmitry V. Levin <ldv@altlinux.org> 0.20.2-alt1
 - 0.20.1 -> 0.20.2.
 
