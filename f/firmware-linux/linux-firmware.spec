@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200702
+Version: 20200714
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jul 15 2020 Cronbuild Service <cronbuild@altlinux.org> 20200714-alt1
+- upstream changes (GIT f39b687):
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + wilc1000: add wilc1000 v15.4 FW (thx Ajay Singh)
+  + QCA: Update Bluetooth firmware for QCA6390 (thx Rocky Liao)
+
 * Tue Jul 07 2020 Cronbuild Service <cronbuild@altlinux.org> 20200702-alt1
 
 
