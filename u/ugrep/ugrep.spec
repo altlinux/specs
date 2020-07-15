@@ -17,7 +17,7 @@
 
 Name: ugrep
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -42,6 +42,10 @@ fuzzy search.
 %setup
 
 %build
+%ifarch %e2k
+# cpuid.h is x86-specific
+%add_optflags -UHAVE_SSE2
+%endif
 %configure \
 	--disable-avx \
 	--enable-color
@@ -60,6 +64,9 @@ fuzzy search.
 %_datadir/%name
 
 %changelog
+* Wed Jul 15 2020 Michael Shigorin <mike@altlinux.org> 2.4.1-alt2
+- E2K: ftbfs workaround (SIMD related)
+
 * Wed Jul 15 2020 Michael Shigorin <mike@altlinux.org> 2.4.1-alt1
 - initial build (thx opensuse)
 
