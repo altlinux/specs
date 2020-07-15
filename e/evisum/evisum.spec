@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 Name: evisum
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: The Enlightenment system and process monitor
@@ -44,6 +44,9 @@ System and process monitor for Enlightenment
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Jul 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus (v0.5.0-2-gd71b1a2)
 
