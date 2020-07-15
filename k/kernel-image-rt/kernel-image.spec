@@ -1,11 +1,11 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.127
-%define kernel_rt_release	rt55
+%define kernel_sublevel		.132
+%define kernel_rt_release	rt59
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_rt_release
+Release: alt1.%kernel_rt_release
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
 # 0.X.0 -- rcX
@@ -502,6 +502,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jul 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.132-alt1.rt59
+- Update to v4.19.132-rt59 (14 Jul 2020).
+
 * Tue Jul 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt2.rt55
 - Rebuild with debuginfo package.
 
