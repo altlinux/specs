@@ -5,7 +5,7 @@
 %def_without check
 
 Name: cmake
-Version: 3.17.3
+Version: 3.18.0
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -196,7 +196,8 @@ install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
 rm -rf %buildroot%_datadir/%name/editors/vim
 install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
-mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completion.d/%name
+#mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completion.d/%name
+rm -vf %buildroot/usr/share/emacs/site-lisp/cmake-mode.el
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
@@ -286,7 +287,8 @@ popd
 %vim_syntax_dir/*
 
 %files -n bash-completion-%name
-%_sysconfdir/bash_completion.d/*
+#%_sysconfdir/bash_completion.d/*
+%_datadir/bash-completion/completions/*
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
@@ -294,6 +296,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Jul 15 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.0-alt1
+- new version 3.18.0 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17.3-alt1
 - new version 3.17.3 (with rpmrb script)
 
