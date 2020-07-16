@@ -64,7 +64,7 @@
 
 Name: strongswan
 Version: 5.8.4
-Release: alt4
+Release: alt5
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -245,7 +245,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_sbindir/swanctl
 %_libexecdir/%name/pki
 %_libexecdir/%name/pt-tls-client
-%_mandir/*/*
+%_man1dir/pt-tls-client.*
+%_man5dir/*
+%_man8dir/*
 
 %files testing
 %pkgdocdir/testing/
@@ -260,6 +262,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Thu Jul 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt5
+- don't package pki manpages
+
 * Thu Jul 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt4
 - fix conflict with pki-tools (Closes: 32705)
 - package strongswan-starter unit
