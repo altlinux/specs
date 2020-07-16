@@ -1,6 +1,6 @@
 Name: tcb
-Version: 1.1.0.1
-Release: alt2
+Version: 1.1.9.1
+Release: alt1
 
 Summary: Libraries and tools implementing the %name password shadowing scheme
 License: GPL or BSD
@@ -166,6 +166,9 @@ fi
 %_man8dir/tcb_*
 
 %changelog
+* Thu Jul 16 2020 Dmitry V. Levin <ldv@altlinux.org> 1.1.9.1-alt1
+- 1.1.0.1 -> 1.1.9.1.
+
 * Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 1.1.0.1-alt2
 - Replaced PreReq with Requires.
 
