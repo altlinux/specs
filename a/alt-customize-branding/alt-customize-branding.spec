@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.0.9
+Version: 1.1.0
 Release: alt1
 %K5init altplace
 
@@ -126,6 +126,9 @@ fi
 #%%doc README
 
 %changelog
+* Thu Jul 16 2020 Pavel Moseev <mars@altlinux.org>  1.1.0-alt1
+- cleanup and optimize code
+
 * Fri Jun 26 2020 Pavel Moseev <mars@altlinux.org>  1.0.9-alt1
 - fix logo duplication (closes: #38585)
 
