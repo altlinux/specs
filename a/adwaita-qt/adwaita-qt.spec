@@ -1,5 +1,5 @@
 Name: adwaita-qt
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPL-2.0-or-later
@@ -69,6 +69,9 @@ popd
 %files
 
 %changelog
+* Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.1.4-alt1
+- new version 1.1.4
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt1
 - new version 1.1.3
 - fix License tag
