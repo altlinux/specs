@@ -1,6 +1,6 @@
 Name:           rpi-imager
-Version:        0.1.3
-Release:        alt1.git.f3bc47a309
+Version:        1.3
+Release:        alt1
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
 
@@ -40,6 +40,9 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 
 %changelog
-* Sat May 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.1.3-alt1.git.f3bc47a309
+* Fri Jul 17 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1
+- Fix version and update to official release
+
+* Sat May 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1.git.f3bc47a309
 - Initial build for Sisyphus
 
