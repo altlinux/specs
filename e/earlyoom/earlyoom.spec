@@ -4,7 +4,7 @@
 %def_without check
 
 Name:     earlyoom
-Version:  1.6
+Version:  1.6.1
 Release:  alt1
 
 Summary:  Early OOM Daemon for Linux
@@ -70,6 +70,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/default/%name
 
 %changelog
+* Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
+- new version 1.6.1
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 1.6-alt1
 - new version 1.6
 
