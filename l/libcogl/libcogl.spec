@@ -3,6 +3,7 @@
 %define oname cogl
 %define ver_major 1.22
 %define gst_api_ver 1.0
+%define gles2_libname libGLESv2.so.2
 
 %ifarch %arm
 %def_enable gles2
@@ -20,7 +21,7 @@
 %def_enable cogl_pango
 %def_enable gdk_pixbuf
 %def_disable examples_install
-%def_enable gl
+
 %def_enable wayland_egl
 %def_enable wayland_server
 %def_enable kms_egl
@@ -31,7 +32,7 @@
 
 Name: libcogl
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -44,6 +45,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.
 Source: %oname-%version.tar
 %endif
 Patch: cogl-1.16.1-alt-gles2.patch
+Patch1: cogl-1.22.8-alt-egl-glvnd.patch
 
 # fc patches
 # Vaguely related to https://bugzilla.gnome.org/show_bug.cgi?id=772419
@@ -57,6 +59,9 @@ Patch11: 0002-add-GL_ARB_shader_texture_lod-support.patch
 # effect by being abel to copy partial of framebuffer contents as texture
 # and do post blurring.
 Patch12: 0003-texture-support-copy_sub_image.patch
+
+# e2k build fix with lcc 1.24.11
+Patch2000: cogl-1.22.8-alt-e2k-initialize-attribute.patch
 
 Conflicts: libclutter < 1.8.0
 
@@ -153,9 +158,13 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch1 -p1 -b .glvnd
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 %build
 %autoreconf
@@ -176,7 +185,8 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 	%{?_enable_xlib_egl:--enable-xlib-egl-platform} \
 	%{?_enable_gst:--enable-cogl-gst} \
 	%{subst_enable deprecated} \
-	%{?_disable_unit_tests:--enable-unit-tests=no}
+	%{?_disable_unit_tests:--enable-unit-tests=no} \
+	--with-gles2-libname=%gles2_libname
 
 %make_build
 
@@ -213,6 +223,10 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Thu Jul 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt2
+- E2K: fixed ftbfs (vseleznv@)
+- armh: fixed ftbfs (sbolshakov@)
+
 * Thu Jun 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
 - 1.22.8
 
