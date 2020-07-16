@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.21
+Version: 1.1.24
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -67,11 +67,11 @@ Documentation for LSP (Linux Studio Plugins) plugins.
 %setup -n %name-%name-%version
 
 %build
-%add_optflags %optflags_warnings %(getconf LFS_CFLAGS)
 export PLATFORM=Linux SYSTEM=Linux
+export VERSION=%version
 %make PREFIX=%_prefix \
     BUILD_PROFILE=%_arch \
-    CC_FLAGS=-DLSP_NO_EXPERIMENTAL \
+    CC_FLAGS="-DLSP_NO_EXPERIMENTAL %optflags_warnings %(getconf LFS_CFLAGS)" \
     BIN_PATH=%_bindir LIB_PATH=%_libdir \
     DOC_PATH=%_docdir VERBOSE=1
 
@@ -110,6 +110,12 @@ export PLATFORM=Linux SYSTEM=Linux
 
 
 %changelog
+* Thu Jul 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.24-alt1
+- 1.1.24
+
+* Sun May 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.22-alt1
+- 1.1.22
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.21-alt1
 - 1.1.21
 
