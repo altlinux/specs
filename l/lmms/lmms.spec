@@ -1,11 +1,14 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 
 Name: lmms
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Linux MultiMedia Studio
-License: GPL
+License: GPL-2.0-or-later
 Group: Sound
 
 Url: http://lmms.sourceforge.net
@@ -17,7 +20,8 @@ Source6: %name-48x48.png
 Patch1: %name-1.2.0-no_werror.patch
 Patch2: %name-1.2.0-vst-nowine.patch
 
-BuildPreReq: rpm-build-lmms libfltk-devel rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-lmms libfltk-devel 
 BuildRequires: gcc-c++ cmake
 
 BuildRequires: desktop-file-utils
@@ -60,7 +64,7 @@ samples, using effects, playing live with keyboard and much more...
 %package devel
 Summary:	Development package for %name
 Group:		Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files and headers for %name
@@ -78,20 +82,30 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %build
 %cmake \
     -DWANT_QT5=ON \
+    -DCMAKE_INSTALL_LIBDIR=%_lib \
 %ifarch %ix86
     -DWANT_VST:BOOL=ON \
 %else
     -DWANT_VST:BOOL=OFF \
 %endif
-    -DCMAKE_INSTALL_LIBDIR=%_lib \
-    -Wno-dev \
-    -DWANT_VST_NOWINE:BOOL=ON
+    -DWANT_SDL:BOOL=ON \
+    -DWANT_PORTAUDIO:BOOL=ON \
+    -DWANT_CAPS:BOOL=ON \
+    -DWANT_TAP:BOOL=ON \
+    -DWANT_SWH:BOOL=ON \
+    -DWANT_CALF:BOOL=ON \
+    -DWANT_VST_NOWINE:BOOL=ON \
+    -DWANT_CARLA:BOOL=OFF
+
 %cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
 
 rm -fr %buildroot%_datadir/bash-completion/completions/lmms
+
+# remove static library
+rm -f %buildroot%_libdir/*.a
 
 %find_lang %name
 
@@ -110,6 +124,9 @@ rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 %_includedir/%name
 
 %changelog
+* Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt1
+- Version 1.2.2
+
 * Mon Nov 18 2019 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 
