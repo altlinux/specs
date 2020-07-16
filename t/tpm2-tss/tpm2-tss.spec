@@ -2,7 +2,7 @@
 %define soname 0
 %define _localstatedir /var
 Name: tpm2-tss
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -102,6 +102,9 @@ mkdir -p %buildroot%_sharedstatedir/%name/system/keystore
 %_man7dir/*
 
 %changelog
+* Wed Jul 15 2020 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
