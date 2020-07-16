@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -43,6 +43,13 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Jul 15 2020 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt1
+- Enhanced 'Printer' class;
+- Enhanced functions of version comparison;
+- New function 'NearlyEqualShares' that helps to divide data (before processing
+  that data in parallel, for example);
+- The 'mode' module is deprecated.
+
 * Mon Apr 20 2020 Alexey Appolonov <alexey@altlinux.org> 0.8.0-alt1
 - Modified 'ReplaceNotAlfa' function of 'alt' module.
 

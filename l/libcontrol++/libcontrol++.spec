@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,11 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Jul 15 2020 Alexey Appolonov <alexey@altlinux.org> 0.24.1-alt1
+- Corrected functions 'StripPath' and 'GetWordFromLine';
+- Corrected behaviour of 'TPrinter' class in case when winsize cannot be
+  properly defined.
+
 * Sat Nov 23 2019 Alexey Appolonov <alexey@altlinux.org> 0.24.0-alt1
 - Some of the classes and functions have been relocated, some of the headers
   are gone and the new headers have been added;
