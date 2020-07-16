@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.29.1
-Release: alt8
+Release: alt9
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -121,6 +121,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Jul 16 2020 Terechkov Evgenii <evg@altlinux.org> 0.29.1-alt9
+- Cherry-pick commit from lakostis@ (ALT#37106)
+
 * Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 0.29.1-alt8
 - NMU: add BR: libuchardet to fix auto guess of subtitle encoding
 - NMU: fix unpacked files
