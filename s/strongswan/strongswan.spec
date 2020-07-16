@@ -64,7 +64,7 @@
 
 Name: strongswan
 Version: 5.8.4
-Release: alt3
+Release: alt4
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -81,6 +81,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Mon Jul 02 2012
 # optimized out: pkg-config
 BuildRequires: flex gperf libcap-devel libcurl-devel libgmp-devel libldap-devel libpam-devel libssl-devel libxml2-devel
+BuildRequires: pkgconfig(systemd)
 
 %if_enabled nm
 BuildRequires: libnm-devel
@@ -130,6 +131,7 @@ to NetworkManager.
 %configure \
 	--sysconfdir=%_sysconfdir/%name \
 	--libexecdir=%_libdir/%name \
+	--bindir=%_libexecdir/%name \
 	%{subst_enable addrblock} \
 	%{subst_enable agent} \
 	%{subst_enable ccm} \
@@ -226,6 +228,7 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %config(noreplace) %_sysconfdir/%name/ipsec.secrets
 %config(noreplace) %_initdir/ipsec
 %_unitdir/ipsec.service
+%_unitdir/strongswan-starter.service
 %_datadir/%name/
 %dir %_libdir/%name/
 %dir %_libdir/%name/ipsec/
@@ -240,8 +243,8 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_sbindir/charon-cmd
 %_sbindir/ipsec
 %_sbindir/swanctl
-%_bindir/pki
-%_bindir/pt-tls-client
+%_libexecdir/%name/pki
+%_libexecdir/%name/pt-tls-client
 %_mandir/*/*
 
 %files testing
@@ -257,6 +260,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Thu Jul 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt4
+- fix conflict with pki-tools (Closes: 32705)
+- package strongswan-starter unit
+
 * Tue Jul 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.8.4-alt3
 - build charon-nm subpackage with NetworkManager support
 
