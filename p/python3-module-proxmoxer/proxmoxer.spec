@@ -1,13 +1,13 @@
 %define oname proxmoxer
 
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt5
+Version: 1.1.1
+Release: alt1
 
 Summary: Wrapper around Proxmox REST API v2
 License: %mit
 Group: Development/Python3
-Url: https://github.com/swayf/proxmoxer
+Url: https://github.com/proxmoxer/proxmoxer
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -55,6 +55,10 @@ This package contains tests for %oname.
 
 
 %changelog
+* Thu Jul 16 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt1
+- Updated to version 1.1.1
+- Fixed url tag
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt5
 - Porting on Python3.
 
