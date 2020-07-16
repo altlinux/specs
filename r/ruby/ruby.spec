@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt2.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -85,8 +85,20 @@ This package contains Ruby shared libraries.
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
 %{?_enable_shared:Requires: %lname = %version-%release}
+Requires:      doxygen
+Requires:      groff-base
 Requires:      libssl-devel
 Requires:      libreadline-devel
+Requires:      libdb4-devel
+Requires:      libffi-devel
+Requires:      libgdbm-devel
+Requires:      libncursesw-devel
+Requires:      zlib-devel
+Requires:      libyaml-devel
+Requires:      libgit-devel
+%ifarch %valgrind_arches
+Requires:      valgrind-devel
+%endif
 
 %description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -421,6 +433,9 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
 %changelog
+* Thu Jul 23 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1-alt2.1
+- ! ruby development deps
+
 * Mon Jun 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7.1-alt2
 - fixed packaging on so-called armh
 

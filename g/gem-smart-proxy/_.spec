@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       2.1.0
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       MIT
 Group:         Development/Ruby
@@ -16,8 +16,10 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Source1:       settings.yml
 Source2:       %pkgname.service
+Source3:       %pkgname.conf
 Patch:         %version.patch
 Patch1:        config.patch
+Patch2:        config-path.patch
 BuildRequires(pre): rpm-build-ruby
 
 %gem_replace_version json ~> 2.3.1
@@ -76,16 +78,22 @@ Documentation files for %gemname gem.
 %setup
 %patch
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ruby_build
 
 %install
 %ruby_install
-install -m644 %SOURCE1 %buildroot%ruby_gemlibdir/config/
+install -dm750 %buildroot%_logdir/%pkgname \
+               %buildroot%_sysconfdir/%pkgname/config/settings.d \
+               %buildroot/run/%pkgname
+install -m644 %SOURCE1 %buildroot%_sysconfdir/%pkgname/config/
 install -Dm644 %SOURCE2 %buildroot%_unitdir/%pkgname.service
-install -dm750 %buildroot%_logdir/%pkgname %buildroot%_runtimedir/%pkgname
+install -Dm644 %SOURCE3 %buildroot%_tmpfilesdir/%pkgname.conf
 install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgname/Gemfile
+#TODO move to setup.rb
+cp -p config/settings.d/*.yml %buildroot%_sysconfdir/%pkgname/config/settings.d
 
 %check
 %ruby_test
@@ -93,35 +101,44 @@ install -Dm750 %buildroot%ruby_gemlibdir/Gemfile %buildroot%_localstatedir/%pkgn
 %pre           -n %pkgname
 getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
-getent passwd _foreman >/dev/null || \
-   %_sbindir/useradd -r -G puppet,foreman -d %_libexecdir/%name -s /bin/bash -c "Foreman" _foreman
+getent passwd _smartforeman >/dev/null || \
+   %_sbindir/useradd -r -G puppet,foreman -d %_localstatedir/%pkgname -s /bin/bash -c "Foreman" _smartforeman
 
 %post          -n %pkgname
-%post_service smart-proxy
+%post_service %pkgname
 
 %preun         -n %pkgname
-%preun_service smart-proxy
+%preun_service %pkgname
 
 
 %files
 %doc README*
 %ruby_gemspec
 %ruby_gemlibdir
-%config(noreplace) %ruby_gemlibdir/config/settings.yml
+%config(noreplace) %_sysconfdir/%pkgname/config/settings.yml
+%config(noreplace) %_sysconfdir/%pkgname/config/settings.d/*.yml
 
 %files         -n %pkgname
 %doc README*
 %_bindir/%{pkgname}*
 %_unitdir/%pkgname.service
-%attr(750,_foreman,foreman) %_logdir/%pkgname
-%attr(751,_foreman,foreman) %_runtimedir/%pkgname
-%attr(751,_foreman,foreman) %_localstatedir/%pkgname
+%_tmpfilesdir/%pkgname.conf
+%attr(750,_smartforeman,foreman) %_logdir/%pkgname
+%attr(751,_smartforeman,foreman) %_localstatedir/%pkgname
+%attr(751,_smartforeman,foreman) /run/%pkgname
 
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
+* Thu Jul 16 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
+- + conf file to keep rights on some folders after reset
+- + _smartforeman user with home of /var/lib/smart-proxy
+- * moving config files to sysconf folder
+- ! config dependent code
+- ! config syntax
+
 * Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - ^ 2.0.0 -> 2.1.0
 - + _foreman user to puppet group
