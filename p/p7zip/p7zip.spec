@@ -1,24 +1,19 @@
 %define includedir %_includedir/%name
 
 Name: p7zip
-Version: 16.02
-Release: alt5
+Version: 17.02
+Release: alt1
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
 Group: Archiving/Compression
 
-Url: http://p7zip.sourceforge.net/
-Source: %{name}_%{version}_src_all.tar
-# debian patches
-Patch1: 12-CVE-2016-9296.patch
-Patch2: 13-CVE-2017-17969.patch
-Patch3: 06-CVE-2018-5996.patch
-Patch4: CVE-2018-10115.patch
+Url: https://github.com/szcnick/p7zip
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ /proc
 %ifarch %ix86
 BuildRequires: nasm
 %endif
@@ -55,11 +50,14 @@ Requires: %name = %EVR
 The devel package contains the p7zip include files.
 
 %prep
-%setup -n p7zip_%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup
+chmod +x *.sh */*.sh
+
+# Make p7zip looks for plugins in fixed directory. Upstream behavior was to
+# look in current directory by default (when environment variable P7ZIP_HOME_DIR
+# is not set)
+find . -name '*.cpp' -exec \
+subst 's@getenv("P7ZIP_HOME_DIR")@(getenv("P7ZIP_HOME_DIR")==NULL? "%_libdir/p7zip/" : getenv("P7ZIP_HOME_DIR"))@g' {} \;
 
 %build
 %ifarch %e2k
@@ -68,12 +66,6 @@ The devel package contains the p7zip include files.
 # -ffast is faster but its -floop-apb-conditional-loads is potentially dangerous
 %add_optflags -fcache-opt
 %endif
-
-# Make p7zip looks for plugins in fixed directory. Upstream behavior was to
-# look in current directory by default (when environment variable P7ZIP_HOME_DIR
-# is not set)
-find . -name '*.cpp' -exec \
-subst 's@getenv("P7ZIP_HOME_DIR")@"%_libdir/p7zip/"@g' {} \;
 
 %ifarch %ix86
 cp -f makefile.linux_x86_asm_gcc_4.X makefile.machine
@@ -116,7 +108,15 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 %files devel
 %includedir
 
+%check
+make test_7z
+
 %changelog
+* Fri Jul 17 2020 Fr. Br. George <george@altlinux.ru> 17.02-alt1
+- Autobuild version bump to 17.02
+- New upstream
+- Provide check secktion
+
 * Thu Apr 23 2020 Andrey Cherepanov <cas@altlinux.org> 16.02-alt5
 - build with asssembler code (ex. for benchmarking AES256CBC:2)
 
