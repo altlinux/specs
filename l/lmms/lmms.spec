@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -26,7 +26,9 @@ BuildRequires: gcc-c++ cmake
 
 BuildRequires: desktop-file-utils
 BuildRequires: libfluidsynth-devel
+%ifnarch %e2k riscv64
 BuildRequires: libsoundio-devel
+%endif
 BuildRequires: qt5-base-devel
 BuildRequires: liblame-devel
 BuildRequires: qt5-tools-devel
@@ -124,6 +126,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Fri Jul 17 2020 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt2
+- Build without libsoundio on e2k, riscv64
+
 * Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt1
 - Version 1.2.2
 
