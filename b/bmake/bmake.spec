@@ -1,6 +1,6 @@
 Name: bmake
-Version: 20181221
-Release: alt2
+Version: 20200710
+Release: alt1
 
 Summary: The NetBSD make(1) tool
 
@@ -10,7 +10,7 @@ Url: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: ftp://ftp.NetBSD.org/pub/NetBSD/misc/sjg/%name-%version.tar
+Source: %name-%version.tar.gz
 
 #Requires: pkgsrc-mk-files
 
@@ -51,6 +51,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Fri Jul 17 2020 Fr. Br. George <george@altlinux.ru> 20200710-alt1
+- Autobuild version bump to 20200710
+
 * Thu Feb 28 2019 Vitaly Lipatov <lav@altlinux.ru> 20181221-alt2
 - drop pkgsrc-mk-files requirement
 
