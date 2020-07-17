@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 4.42.1
-Release: alt2
+Version: 4.48.0
+Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -52,6 +52,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.48.0-alt1
+- 4.48.0 released
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 4.42.1-alt2
 - add conflicts/obsoletes for python-module-tqdm (due bindir/tqdm)
 
