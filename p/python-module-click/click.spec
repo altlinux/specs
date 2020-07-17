@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: A simple wrapper around optparse for powerful command line utilities
 License: BSD
@@ -14,10 +14,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
-
-BuildPreReq: python3-module-setuptools
 BuildRequires: python-module-pallets-sphinx-themes
 
 %py_provides %oname
@@ -50,38 +47,6 @@ implement an intended CLI API.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: A simple wrapper around optparse for powerful command line utilities
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-Click is a Python package for creating beautiful command line interfaces
-in a composable way with as little code as necessary.  It's the "Command
-Line Interface Creation Kit".  It's highly configurable but comes with
-sensible defaults out of the box.
-
-It aims to make the process of writing command line tools quick and fun
-while also preventing any frustration caused by the inability to
-implement an intended CLI API.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-Click is a Python package for creating beautiful command line interfaces
-in a composable way with as little code as necessary.  It's the "Command
-Line Interface Creation Kit".  It's highly configurable but comes with
-sensible defaults out of the box.
-
-It aims to make the process of writing command line tools quick and fun
-while also preventing any frustration caused by the inability to
-implement an intended CLI API.
-
-This package contains tests for %oname.
-
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -103,14 +68,8 @@ This package contains documentation for %oname.
 %setup
 rm -fv click/_winconsole.py
 
-cp -fR . ../python3
-
 %build
 %python_build_debug
-
-pushd ../python3
-%python3_build_debug
-popd
 
 export PYTHONPATH=$PWD
 %make -C docs/ man
@@ -118,16 +77,8 @@ export PYTHONPATH=$PWD
 %install
 %python_install
 
-pushd ../python3
-%python3_install
-popd
-
 %check
 python setup.py test
-
-pushd ../python3
-python3 setup.py test
-popd
 
 %files
 %doc README.* LICENSE.rst
@@ -140,18 +91,10 @@ popd
 %files docs
 %doc docs/*/man/*
 
-%files -n python3-module-%oname
-%doc README.* LICENSE.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-
-
 %changelog
+* Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.0-alt2
+- rebuilt without python3
+
 * Mon Jul 01 2019 Andrey Bychkov <mrdrew@altlinux.org> 7.0-alt1
 - Version updated to 7.0
 
