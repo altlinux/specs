@@ -1,9 +1,9 @@
-%def_with python3
+%def_without python3
 
 Summary: A powerful declarative parser/builder for binary data
 Name: python-module-construct
 Version: 2.5.1
-Release: alt1
+Release: alt2
 License: MIT
 Group: Development/Python
 Url: http://construct.readthedocs.org
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt2
+- rebuilt without python3
+
 * Mon Dec 12 2016 Lenar Shakirov <snejok@altlinux.ru> 2.5.1-alt1
 - Initial build for ALT (based on 2.5.1-8.fc25.src)
 
