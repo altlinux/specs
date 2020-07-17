@@ -1,8 +1,8 @@
 %global oname croniter
 
 Name: python3-module-%oname
-Version: 0.3.4
-Release: alt3
+Version: 0.3.34
+Release: alt1
 
 Summary: Iteration for datetime object with cron like format
 License: MIT
@@ -15,7 +15,9 @@ Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-natsort
 BuildRequires: python3-module-pytz
+BuildRequires: python3-module-tzlocal
 
 %description
 Croniter provides iteration for datetime object with cron like format.
@@ -44,6 +46,9 @@ rm -fr %buildroot%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/%oname-%version-py?.?.egg-info
 
 %changelog
+* Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.34-alt1
+- 0.3.34 released
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.4-alt3
 - Build for python2 removal.
 
