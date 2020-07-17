@@ -1,8 +1,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.10.0
-Release:	alt2
+Version:	0.11.0
+Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -41,7 +41,6 @@ tracers such as DTrace and SystemTap.
 See http://www.brendangregg.com/ebpf.html#bpftrace
     http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
 
-
 %prep
 %setup
 
@@ -75,11 +74,13 @@ if [ -w /dev/kvm ]; then
 	# Great run-time tests
 
 	# Some fail due to no BUILD_TESTING
-	.gear/delete-blocks syscalls: ./tests/runtime/*
+	.gear/delete-blocks syscalls:	tests/runtime/*
+	.gear/delete-blocks testprogs	tests/runtime/*
 	.gear/delete-blocks uprobe	tests/runtime/*
 	.gear/delete-blocks usdt	tests/runtime/usdt
 	.gear/delete-blocks vfs_read	tests/runtime/*     # TIMEOUT
 	.gear/delete-blocks hardware	tests/runtime/probe # TIMEOUT
+	.gear/delete-blocks k.*_order	tests/runtime/probe # TIMEOUT
 	.gear/delete-blocks watchpoint:	tests/runtime/watchpoint
 	.gear/delete-blocks string_args	tests/runtime/other
 	.gear/delete-blocks interval_order tests/runtime/probe
@@ -104,6 +105,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Jul 17 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
+- Update to v0.11.0.
+
 * Sat Jul 04 2020 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt2
 - Fix build with libbcc-devel-0.15.0.
 
