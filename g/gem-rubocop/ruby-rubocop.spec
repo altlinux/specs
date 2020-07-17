@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       0.88.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby static code analyzer and formatter.
 License:       MIT
 Group:         Development/Ruby
 Url:           https://www.rubocop.org/
-%vcs           https://github.com/rubocop-hq/rubocop.git
+Vcs:           https://github.com/rubocop-hq/rubocop.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,9 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bundler)
 BuildRequires: gem(bump)
 BuildRequires: gem(rack)
+# fix #38650
+Requires:      gem-regexp-parser >= 1.7.1-alt1.1
+Requires:      gem-parser >= 2.7.1.4-alt1.1
 
 %description
 A Ruby static code analyzer and formatter, based on the community Ruby style
@@ -69,6 +72,10 @@ Executable file for rubocop.
 %_bindir/*
 
 %changelog
+* Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 0.88.0-alt1.1
+- ! dep to gem-regexp-parser, and gem-parser (closes #38650)
+- ! spec syntax
+
 * Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 0.88.0-alt1
 - ^ 0.74.0 -> 0.88.0
 - ! executable runnning (closes #38650)

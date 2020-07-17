@@ -1,29 +1,37 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname regexp-parser
-%define        gemname regexp_parser
+%define        pkgname gauntlet
 
 Name:          gem-%pkgname
-Version:       1.7.1
-Release:       alt1.1
-Summary:       A regular expression parser library for Ruby
+Version:       2.1.0
+Release:       alt1
+Summary:       Gauntlet is a pluggable means of running code against all the latest gems and storing off the data
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/ammar/regexp_parser
-Vcs:           https://github.com/ammar/regexp_parser.git
+Url:           https://github.com/seattlerb/gauntlet
+Vcs:           https://github.com/seattlerb/gauntlet.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ragel >= 6.0
+BuildRequires: gem(hoe) >= 3.12
+BuildRequires: gem(minitest) >= 5.4
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(net-http-persistent) >= 1.4.1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+%gem_replace_version net-http-persistent >= 1.4.1
 
 %description
 %summary.
+
+* Downloads all the latest gems and converts them to tarballs for easy access.
+* Iterates through all downloaded gems, unpacks them, and then runs your code.
+* Automates storage of results to YAML files.
+* Easily skips over projects that already have results (overridable).
+* gauntlet commandline locates your gauntlet library via rubygems:
+  * eg. `gauntlet flog` finds gauntlet_flog.rb in the flog gem.
 
 
 %package       -n %pkgname
@@ -56,7 +64,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --pre=build
+%ruby_build
 
 %install
 %ruby_install
@@ -69,25 +77,13 @@ Documentation files for %gemname gem.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%files         -n %pkgname
+%_bindir/%{pkgname}*
+
 %files         doc
 %ruby_gemdocdir
 
 
 %changelog
-* Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1.1
-- ! building by usage of compilation with ragel
-
-* Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
-- ^ 1.6.0 -> 1.7.1
-- ! spec tags
-
-* Tue Sep 24 2019 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
-- updated to (^) v1.6.0
-- fix (!) spec
-
-* Thu Jul 11 2019 Pavel Skrylev <majioa@altlinux.org> 1.5.1-alt1
-- updated to (^) Ruby Policy 2.0
-- updated to (^) v1.5.1
-
-* Tue Oct 30 2018 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
-- added (+) initial build for Sisyphus
+* Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
+- + packaged gem with usage Ruby Policy 2.0

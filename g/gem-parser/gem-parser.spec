@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       2.7.1.4
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
@@ -13,7 +13,16 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler)
+BuildRequires: gem(bundler) >= 1.15 gem(bundler) < 3.0.0
+BuildRequires: racc gem(racc) >= 1.4.15
+BuildRequires: gem(cliver) >= 0.3.2
+BuildRequires: gem(gauntlet)
+BuildRequires: gem(kramdown)
+BuildRequires: gem(minitest) >= 5.1
+BuildRequires: gem(rake) >= 13.0.1
+BuildRequires: gem(simplecov) >= 0.15.1
+BuildRequires: gem(yard)
+BuildRequires: ragel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -56,7 +65,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=parser --alias=parse
+%ruby_build --pre=build --use=parser --alias=parse
 
 %install
 %ruby_install
@@ -77,6 +86,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Fri Jul 17 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1.4-alt1.1
+- ! building by usage of compilation with ragel
+
 * Tue Jul 14 2020 Pavel Skrylev <majioa@altlinux.org> 2.7.1.4-alt1
 - ^ 2.7.0.4 -> 2.7.1.4
 
