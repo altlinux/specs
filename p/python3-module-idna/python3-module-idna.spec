@@ -1,50 +1,43 @@
 %define oname idna
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.10
 Release: alt1
 
 Summary: A library to support the Internationalised Domain Names in Applications (IDNA)
 
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://github.com/kjd/idna
 
 Source: %oname-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: rpm-build-python
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools
-#BuildRequires: python-devel python-module-distribute
-
-%setup_python_module %oname
+BuildRequires: python3-module-setuptools rpm-build-python3
 
 %description
 A library to support the Internationalised Domain Names in Applications (IDNA)
 protocol as specified in RFC 5891. This version of the protocol is often referred
 to as "IDNA2008" and can produce different results from the earlier standard from 2003.
 
-
 %prep
 %setup -n %oname-%version
 
+
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc HISTORY.rst LICENSE.rst
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-*
 
 %changelog
 * Fri Jul 17 2020 Vladimir Didenko <cow@altlinux.org> 2.10-alt1
 - New version
-- Build only Python2 version (Python3 version is built as separate package)
+- Build Python3 version as separate package
 
 * Wed Mar 18 2020 Vladimir Didenko <cow@altlinux.org> 2.9-alt1
 - New version
