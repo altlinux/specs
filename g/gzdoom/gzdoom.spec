@@ -1,5 +1,5 @@
 Name: gzdoom
-Version: 4.3.3
+Version: 4.4.2
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -11,14 +11,13 @@ Url: http://zdoom.org
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
+ExclusiveArch: x86_64
+
 Source: %name-%version.tar
 Source1: %name.png
 
-Patch0: gzdoom-4.3.3-dl.patch
-Patch1: gzdoom-4.3.3-sse2.patch
-
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
-BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz
+BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libgomp5-devel libtimidity-devel xz zmusic-devel
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 
 %description
@@ -45,9 +44,6 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 
 %prep
 %setup -n %name-%version
-
-%patch0 -p1
-%patch1 -p1
 
 %build
 %cmake_insource \
@@ -93,6 +89,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Jul 16 2020 Artyom Bystrov <arbars@altlinux.org> 4.4.2-alt1
+- Update version to 4.4.2, now is x86_64-bit only
+- zmusic is now a standalone library
+
 * Mon Jan 27 2020 Artyom Bystrov <arbars@altlinux.org> 4.3.3-alt1
 - Update version to 4.3.3
 - Add patches for correct building for i586, aarch64, ppc64le
