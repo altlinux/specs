@@ -5,17 +5,17 @@
 %define firefox_prefix  %_libdir/firefox
 %define firefox_datadir %_datadir/firefox
 
-%define gst_version 1.0
-%define nspr_version 4.21
-%define nss_version 3.45.0
-%define rust_version  1.35.0
-%define cargo_version 1.35.0
+%define gst_version   1.0
+%define nspr_version  4.26
+%define nss_version   3.54.0
+%define rust_version  1.42.0
+%define cargo_version 1.42.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        68.9.0
+Version:        78.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -33,28 +33,33 @@ Source6:        firefox.desktop
 Source7:        firefox-wayland.desktop
 Source8:        firefox.c
 Source9:        firefox-prefs.js
+Source10:       firefox-l10n.txt
+Source11:       l10n.tar
+Source12:       firefox-privacy-prefs.js
 
 ### Start Patches
-Patch001: 0001-ALT-fix-werror-return-type.patch
-Patch002: 0002-SUSE-NonGnome-KDE-integration.patch
-Patch003: 0003-ALT-Use-system-nspr-headers.patch
-Patch004: 0004-FEDORA-build-arm-libopus.patch
-Patch005: 0005-FEDORA-build-arm.patch
-Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch007: 0007-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch008: 0008-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch010: 0010-ALT-Fix-aarch64-build.patch
+Patch001: 0001-SUSE-NonGnome-KDE-integration.patch
+Patch002: 0002-ALT-Use-system-nspr-headers.patch
+Patch003: 0003-FEDORA-build-arm-libopus.patch
+Patch004: 0004-FEDORA-build-arm.patch
+Patch005: 0005-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch006: 0006-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch007: 0007-ALT-Fix-aarch64-build.patch
+Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
+Patch011: 0011-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: clang7.0
-BuildRequires: clang7.0-devel
-BuildRequires: llvm7.0-devel
-BuildRequires: lld-devel
-%ifarch %{ix86}
+BuildRequires: clang10.0
+BuildRequires: clang10.0-devel
+BuildRequires: llvm10.0-devel
+BuildRequires: lld10.0-devel
+%ifarch armh %{ix86}
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
@@ -79,7 +84,7 @@ BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libproxy-devel
 BuildRequires: libshell
-BuildRequires: libvpx5-devel
+BuildRequires: libvpx-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
@@ -92,17 +97,23 @@ BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
+BuildRequires: libdrm-devel
 
 # Python requires
 BuildRequires: /dev/shm
-BuildRequires: python3-base
-BuildRequires: python-module-distribute
+
+BuildRequires: python2-base
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
+BuildRequires: python3-base
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pip
+BuildRequires: python3-modules-sqlite3
 
 # Rust requires
 BuildRequires: /proc
@@ -115,19 +126,20 @@ BuildRequires: libnss-devel-static
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
-Obsoletes:	firefox-3.6 firefox-4.0 firefox-5.0
-Conflicts:	firefox-settings-desktop
-
-Provides:	webclient
-Provides:	firefox = %EVR
-Conflicts:	firefox
-Requires:	mozilla-common
+Provides: webclient
+Requires: mozilla-common
 
 # ALT#30732
-Requires:	gst-plugins-ugly%gst_version
+Requires: gst-plugins-ugly%gst_version
 
 Requires: libnspr >= %nspr_version
 Requires: libnss >= %nss_version
+
+Conflicts:  firefox
+
+# Localization languages
+%define langlist kk ru uk
+%{expand:%(for lang in %{langlist}; do echo -e "Provides: firefox-esr-$lang = %%EVR\nObsoletes: firefox-esr-$lang < %%EVR"; done)}
 
 %description
 The Mozilla Firefox project is a redesign of Mozilla's browser component,
@@ -135,18 +147,39 @@ written using the XUL user interface language and designed to be
 cross-platform.
 
 %description -l ru_RU.UTF-8
-Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
-созданная с использованием языка XUL для описания интерфейса пользователя.
+Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера
+Mozilla, созданная с использованием языка XUL для описания интерфейса
+пользователя.
 
 %package wayland
 Summary:    Firefox Wayland launcher.
 Group:      Networking/WWW
 BuildArch:  noarch
 Requires:   %name
+Conflicts:  firefox-wayland
 
 %description wayland
 The firefox-wayland package contains launcher and desktop file
 to run Firefox natively on Wayland.
+
+%package config-privacy
+Summary:    Firefox configuration with the paranoid privacy settings
+Group:	    System/Configuration/Networking
+BuildArch:  noarch
+Requires: %name = %version-%release
+Conflicts:  firefox-config-privacy
+
+%description config-privacy
+Settings disable:
+* obsolete ssl protocols;
+* safebrowsing, trackingprotection and other requests to third-party services;
+* telemetry;
+* webrtc;
+* the social features;
+* dns and network predictors/prefetch;
+* and some more...
+
+Most likely you don't need to use this package.
 
 %prep
 %setup -q -n firefox-%version -c
@@ -160,52 +193,72 @@ to run Firefox natively on Wayland.
 %patch006 -p1
 %patch007 -p1
 %patch008 -p1
+%patch009 -p1
 %patch010 -p1
+%patch011 -p1
 ### Finish apply patches
 
 cd mozilla
 
 tar -xf %SOURCE1
 tar -xf %SOURCE2
+tar -xf %SOURCE11
 
 cp -f %SOURCE4 .mozconfig
 
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch %{ix86} ppc64le
+%ifnarch armh %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch x86_64
 ac_add_options --disable-webrtc
 %endif
 %endif
-%ifarch %{ix86} x86_64
+%ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
+%endif
+%ifarch armh
+ac_add_options --disable-av1
+ac_add_options --disable-rust-simd
 %endif
 EOF
 
-mkdir -p -- my_rust_vendor
-tar --strip-components=1 -C my_rust_vendor --overwrite -xf %SOURCE3
+find third_party \
+	-type f \( -name '*.so' -o -name '*.o' \) \
+	-print -delete
 
-mkdir -p -- .cargo
-cat > .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "$PWD/my_rust_vendor"
-EOF
 
 %build
+# compile cbindgen
+CBINDGEN_HOME="$PWD/cbindgen"
+CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
+
+if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
+	mkdir -p -- "$CBINDGEN_HOME"
+
+	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
+
+	cat > "$CBINDGEN_HOME/config" <<-EOF
+		[source.crates-io]
+		replace-with = "vendored-sources"
+
+		[source.vendored-sources]
+		directory = "$CBINDGEN_HOME"
+	EOF
+
+	env CARGO_HOME="$CBINDGEN_HOME" \
+		cargo install cbindgen
+fi
+
+# compile firefox
 cd mozilla
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %firefox_prefix
 
-env CARGO_HOME="$PWD/.cargo" \
-	cargo install cbindgen
-
 export MOZ_BUILD_APP=browser
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
@@ -222,37 +275,42 @@ export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
-# Add fake RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-%if_without system_nss
-# see mozilla/security/nss/coreconf/Linux.mk:203
-export RPATH="-Wl,-rpath,$rpath"
-%endif
 
-#ifnarch %{ix86}
+%ifarch armh
+export CC="gcc"
+export CXX="g++"
+%else
 export CC="clang"
 export CXX="clang++"
-#else
-#export CC="gcc"
-#export CXX="g++"
-#endif
-
+export AR="llvm-ar"
+export NM="llvm-nm"
+export RANLIB="llvm-ranlib"
+export LLVM_PROFDATA="llvm-profdata"
+%endif
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
-export RUST_BACKTRACE=1
 export RUSTFLAGS="-Cdebuginfo=0"
-export BUILD_VERBOSE_LOG=1
-export MOZ_MAKE_FLAGS="-j8"
-export PATH="$PWD/.cargo/bin:$PATH"
+export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
+export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
+export PATH="$CBINDGEN_BINDIR:$PATH"
 
-autoconf old-configure.in > old-configure
-pushd js/src
-autoconf old-configure.in > old-configure
-popd
+python3 ./mach python --exec-file /dev/null
 
-./mach build
+# Fix virtualenv
+pyver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
+
+find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
+	-mindepth 1 -maxdepth 1 \
+	-exec mv -t "objdir/_virtualenvs/init_py3/lib/$pyver/site-packages" -- '{}' '+'
+
+python3 ./mach build
+
+while read -r loc; do
+	./mach build chrome-$loc
+done < %SOURCE10
+
+make -C objdir/browser/installer multilocale.txt
 
 $CC $CFLAGS \
 	-Wall -Wextra \
@@ -266,6 +324,7 @@ $CC $CFLAGS \
 cd mozilla
 
 export SHELL=/bin/sh
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -280,7 +339,8 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE9 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
@@ -300,14 +360,6 @@ if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
 	what="$(relative %browser_plugins_path %firefox_prefix/plugins)"
 	ln -s -- "$what" %buildroot/%firefox_prefix/plugins
 fi
-
-# install rpm-build-firefox
-mkdir -p -- \
-	%buildroot/%_rpmmacrosdir
-sed \
-	-e 's,@firefox_version@,%version,' \
-	-e 's,@firefox_release@,%release,' \
-	rpm-build/rpm.macros.firefox.standalone > %buildroot/%_rpmmacrosdir/firefox
 
 install -m755 firefox %buildroot/%_bindir/firefox
 
@@ -353,22 +405,23 @@ rm -rf -- \
 # Add real RPATH
 (set +x
 	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-	find %buildroot/%firefox_prefix -type f |
+	find %buildroot -type f |
 	while read f; do
 		t="$(readlink -ev "$f")"
-		file "$t" | fgrep -qs ELF || continue
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
-			chrpath -r "%firefox_prefix" "$t"
-		fi
+		file "$t" | fgrep -qs ELF ||
+			continue
+		chrpath -l "$t" |
+			fgrep -qs \
+				-e "RPATH=$rpath" \
+				-e "RUNPATH=$rpath" ||
+			continue
+		chrpath -r "%firefox_prefix" "$t"
 	done
 )
 
-%pre
-for n in defaults browserconfig.properties; do
-	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
-done
-
 %files
+%dir %_sysconfdir/firefox
+%dir %_sysconfdir/firefox/pref
 %_altdir/firefox
 %_bindir/firefox
 %firefox_prefix
@@ -386,7 +439,36 @@ done
 %_bindir/firefox-wayland
 %_datadir/applications/firefox-wayland.desktop
 
+%files config-privacy
+%config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
+
 %changelog
+* Sat Jul 18 2020 Andrey Cherepanov <cas@altlinux.org> 78.0.2-alt1
+- New ESR version (78.0.2) (based on legion@ spec and patches).
+- Package localization files bundled (only kk,ru,uk locales are suppored).
+
+* Mon Jul 13 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.2-alt1
+- New release (78.0.2).
+- Security fixes:
+  + MFSA-2020-0003: X-Frame-Options bypass using object or embed tags
+
+* Sat Jul 04 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.1-alt1
+- New release (78.0.1).
+- Security fixes:
+  + CVE-2020-12415: AppCache manifest poisoning due to url encoded character processing
+  + CVE-2020-12416: Use-after-free in WebRTC VideoBroadcaster
+  + CVE-2020-12417: Memory corruption due to missing sign-extension for ValueTags on ARM64
+  + CVE-2020-12418: Information disclosure due to manipulated URL object
+  + CVE-2020-12419: Use-after-free in nsGlobalWindowInner
+  + CVE-2020-12420: Use-After-Free when trying to connect to a STUN server
+  + CVE-2020-12402: RSA Key Generation vulnerable to side-channel attack
+  + CVE-2020-12421: Add-On updates did not respect the same certificate trust rules as software updates
+  + CVE-2020-12422: Integer overflow in nsJPEGEncoder::emptyOutputBuffer
+  + CVE-2020-12423: DLL Hijacking due to searching %%PATH%% for a library
+  + CVE-2020-12424: WebRTC permission prompt could have been bypassed by a compromised content process
+  + CVE-2020-12425: Out of bound read in Date.parse()
+  + CVE-2020-12426: Memory safety bugs fixed in Firefox 78
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 68.9.0-alt1
 - New ESR version (68.9.0).
 - Fixes:
