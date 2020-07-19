@@ -1,5 +1,5 @@
 Name: 	  laptop-mode-tools
-Version:  1.73.1
+Version:  1.74
 Release:  alt1
 
 Summary:  Tools for power savings based on battery/AC status
@@ -58,6 +58,9 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMP
 %_man8dir/*
 
 %changelog
+* Sun Jul 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.74-alt1
+- New version.
+
 * Tue Jan 14 2020 Andrey Cherepanov <cas@altlinux.org> 1.73.1-alt1
 - New version.
 - Fix License according to SPDX.
