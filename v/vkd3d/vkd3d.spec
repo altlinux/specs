@@ -3,11 +3,11 @@
 
 Name: vkd3d
 Version: 1.1
-Release: alt0.3.gbe4ca96
+Release: alt0.6.g4bea4b8
 Summary: The vkd3d 3D Graphics Library
 
 Group: System/Libraries
-License: GPL
+License: LGPL-2.1
 Url: https://source.winehq.org/git/vkd3d.git/
 
 Source: %name-%version.tar
@@ -18,6 +18,9 @@ BuildRequires: libspirv-tools-devel spirv-tools
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
 %endif
+
+# same as wine
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 Vkd3d is a 3D graphics library built on top of Vulkan. It has an API very
@@ -81,6 +84,17 @@ done
 %endif
 
 %changelog
+* Sun Jul 19 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.6.g4bea4b8
+- GIT 4bea4b8.
+- Fix License.
+- Add exclusivearch.
+
+* Sat Jun 06 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.5.gf68bf0d
+- GIT f68bf0d.
+
+* Sun May 10 2020 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.4.gc8c05c7
+- GIT c8c05c7.
+
 * Sun May 05 2019 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt0.3.gbe4ca96
 - GIT be4ca96.
 
