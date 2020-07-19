@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 Name: zam-plugins
-Version: 3.12
+Version: 3.13
 Release: alt1
 
 Summary: A collection of LV2/LADSPA/JACK audio plugins
@@ -64,7 +64,7 @@ base_opts+=" -msse -mfpmath=sse"
 base_opts+=" -msse2 -mfpmath=sse"
 %endif
 
-export HAVE_ZITA_CONVOLVER=true 
+export HAVE_ZITA_CONVOLVER=true
 %define opts PREFIX=%_prefix LIBDIR=%_lib SKIP_STRIPPING=true
 %make_build BASE_OPTS="$base_opts" %opts
 
@@ -88,6 +88,9 @@ rm -rf %buildroot%_libdir/vst %buildroot/*-dssi*
 %doc README.md NOTICE.*
 
 %changelog
+* Sun Jul 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.13-alt1
+- 3.13
+
 * Mon Dec 16 2019 Yuri N. Sedunov <aris@altlinux.org> 3.12-alt1
 - 3.12
 
