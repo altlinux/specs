@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -218,6 +218,11 @@ fi
 %endif
 
 %changelog
+* Sun Jul 19 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.3-alt1
+- Misc:
+  + Guess root: Show device name only
+  + tests: Add test for btrfs with subvol
+
 * Mon Jul 13 2020 Alexey Gladkov <legion@altlinux.ru> 2.8.2-alt1
 - Feature changes:
   + add-modules: Put MODULES_PRELOAD into the modules-preudev (thx Gleb F-Malinovskiy)
