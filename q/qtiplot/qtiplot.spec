@@ -4,25 +4,25 @@
 
 Name: qtiplot
 Version: 0.9.8.9
-Release: alt8.svn20120124
+Release: alt9.svn20120124
 
 Summary: WYSIWYG tool to make two- and three-dimensional plots of scientific data
-ExclusiveArch:  %ix86 x86_64
-Group: Sciences/Other
 License: GPL
+Group: Sciences/Other
+
 Url: http://soft.proindependent.com/%name.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %define pkgdocdir %_docdir/%name-%version
 
 # http://svn.berlios.de/svnroot/repos/qtiplot/trunk
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: %name.xml
 Source2: %name.png
 Source3: %name.desktop
 Source4: faq.html
 Source5: help.html
-Source6: colormaps.tar.gz
+Source6: colormaps.tar
 Source7: %{name}_ru.ts
 Source8: build.conf
 
@@ -40,6 +40,10 @@ Patch11: %name-0.9.8.9-gentoo-sip-4.19.patch
 Patch12: %name-0.9.8.9-alt-disable_pdf.patch
 # https://salsa.debian.org/science-team/qtiplot/blob/master/debian/patches/20_fix_FTBFS_sip4.19.patch
 Patch13: %name-0.9.8.9-debian-fix_FTBFS_sip4.19.patch
+
+# task 255111 try 2:
+# /usr/include/GL/gl.h:129:17: error: conflicting declaration 'typedef double GLdouble'
+ExcludeArch: armh
 
 BuildPreReq: texlive-latex-extra
 
@@ -119,7 +123,7 @@ Conflicts: %name-manual
 %patch12 -p1
 %patch13 -p1
 
-subst "s/lupdate/lupdate-qt4/;s/lrelease/lrelease-qt4/;\
+sed -i "s/lupdate/lupdate-qt4/;s/lrelease/lrelease-qt4/;\
 s/#system(lupdate/system(lupdate/;s/#system(lrelease/system(lrelease/" \
 	%name/%name.pro
 sed -i "s|/usr/local|%_libdir|" %name/%name.pro
@@ -137,7 +141,7 @@ install -m644 %SOURCE8 .
 mkdir -p tmp/qtiplot
 export QTI_ROOT=$PWD
 qmake-qt4 %name.pro
-%make
+%make_build
 
 pushd qtiplot/translations
 %_qt4dir/bin/lrelease *.ts
@@ -159,7 +163,7 @@ install -pD -m644 {%SOURCE4,%SOURCE5} %buildroot%pkgdocdir
 mkdir -p %buildroot%_man1dir
 install -pD -m644 %name.1 %buildroot%_man1dir
 
-tar xzvf %SOURCE6 -C $RPM_BUILD_ROOT%_datadir/%name
+tar xvf %SOURCE6 -C $RPM_BUILD_ROOT%_datadir/%name
 
 #mv -f %buildroot%_docdir/%name/manual %buildroot%pkgdocdir/
 #install -p -m644 manual/%name-manual-en.pdf %buildroot%pkgdocdir/manual
@@ -171,7 +175,7 @@ install -m755 %name/%name %buildroot%_bindir
 install -m644 %name/qti*.py %name/*.txt %buildroot%_libdir/%name
 chmod 644 %buildroot%_libdir/%name/*.txt
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 install -d %buildroot%_libdir/%name/plugins
 mv %buildroot%_libexecdir/%name/plugins/* \
 	%buildroot%_libdir/%name/plugins/
@@ -210,6 +214,11 @@ mv %buildroot%_libexecdir/%name/plugins/* \
 #pkgdocdir/manual/*.pdf
 
 %changelog
+* Sun Jul 19 2020 Michael Shigorin <mike@altlinux.org> 0.9.8.9-alt9.svn20120124
+- fixed build on non-x86 64-bit arches (but not armh)
+- enabled parallel build
+- avoid compressing tarballs inside compressed srpm
+
 * Mon Dec 17 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt8.svn20120124
 - Fixed FTBFS:
   + disabled pdf generation and qtiplot-manual-pdf subpackage;
