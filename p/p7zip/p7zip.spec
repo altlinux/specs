@@ -2,7 +2,7 @@
 
 Name: p7zip
 Version: 17.02
-Release: alt1
+Release: alt2
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 License: Freely distributable
@@ -10,6 +10,7 @@ Group: Archiving/Compression
 
 Url: https://github.com/szcnick/p7zip
 Source: %name-%version.tar.gz
+Patch: p7zip-17.02-P7ZIP_HOME_DIR.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
@@ -51,13 +52,8 @@ The devel package contains the p7zip include files.
 
 %prep
 %setup
+%patch -p1
 chmod +x *.sh */*.sh
-
-# Make p7zip looks for plugins in fixed directory. Upstream behavior was to
-# look in current directory by default (when environment variable P7ZIP_HOME_DIR
-# is not set)
-find . -name '*.cpp' -exec \
-subst 's@getenv("P7ZIP_HOME_DIR")@(getenv("P7ZIP_HOME_DIR")==NULL? "%_libdir/p7zip/" : getenv("P7ZIP_HOME_DIR"))@g' {} \;
 
 %build
 %ifarch %e2k
@@ -75,6 +71,7 @@ cp -f makefile.linux_amd64_asm makefile.machine
 %endif
 
 # NB: 'all' is not default target in this makefile
+%add_optflags -DP7ZIP_HOME_DIR='\"%_libdir/p7zip/\"'
 %make_build OPTFLAGS="%optflags" all2
 
 # NB: Someday I probably should build and package 7zG (7z GUI), but for now
@@ -109,9 +106,12 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 %includedir
 
 %check
-make test_7z
+P7ZIP_HOME_DIR=`pwd`/bin/ make test_7z
 
 %changelog
+* Mon Jul 20 2020 Fr. Br. George <george@altlinux.ru> 17.02-alt2
+- Fix out-of path .so error
+
 * Fri Jul 17 2020 Fr. Br. George <george@altlinux.ru> 17.02-alt1
 - Autobuild version bump to 17.02
 - New upstream
