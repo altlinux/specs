@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt13
+Release: alt14
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -58,7 +58,7 @@ BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
 BuildRequires: qemu-img qemu-aux
 BuildRequires: perl(Mojo/File.pm)
-BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm)
+BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint
 BuildRequires: perl(Mojolicious.pm)
 Requires: qemu-kvm
 Requires: tesseract
@@ -130,6 +130,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Wed Jul 15 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt14
+- update to current version
+
 * Wed Jun 10 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt13
 - update to current version
 
