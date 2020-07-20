@@ -1,9 +1,9 @@
-%define ver_major 5.2
+%define ver_major 5.4
 %def_with emacs
 
 Name: gnuplot
-Version: 5.2.8
-Release: alt2
+Version: 5.4.0
+Release: alt1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -23,8 +23,15 @@ Source12: %name.48.png
 
 Source14: gnuplot-emacs.el
 
-Patch1: %name-alt.patch
-Patch2: gnuplot-5.0.6-gentoo-no-picins.patch
+Patch1: gnuplot-5.0.6-gentoo-no-picins.patch
+# these from fedora
+Patch2: gnuplot-4.2.0-fonts.patch
+Patch3: gnuplot-4.6.1-plot-sigsegv.patch
+Patch4: gnuplot-5.2.2-doc.patch
+# this from suse
+Patch5: gnuplot-5.4.0-libgd.patch
+# ALT 34350
+Patch6: gnuplot-5.4.0-fix-help.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
@@ -136,6 +143,10 @@ plotting tool
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
@@ -182,11 +193,10 @@ bunzip *.html.bz2
 ln -s ../wx/src/gnuplot src/
 export PERL5LIB=$(pwd)/docs:$(pwd)/docs/htmldocs
 ln -s ../VERSION docs/VERSION
-make -C docs html pdf
+make -C docs pdf
 export GNUPLOT_PS_DIR=../../term/PostScript
 make -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
 rm -rf docs/htmldocs/images.idx
-make -C tutorial
 make -C docs gih
 
 %install
@@ -257,14 +267,16 @@ rm -f demo/html/Makefile*
 %_datadir/%name/%ver_major/qt
 
 %files doc
-%doc ChangeLog Copyright BUGS README NEWS RELEASE_NOTES
-%doc tutorial/tutorial.dvi gnuplot-faq.html
-%doc docs/psdoc/ps_* docs/gnuplot.pdf docs/htmldocs
+%doc Copyright BUGS README NEWS RELEASE_NOTES
+%doc docs/psdoc/ps_* docs/gnuplot.pdf
 
 %files demo
 %doc demo
 
 %changelog
+* Mon Jul 20 2020 Grigory Ustinov <grenka@altlinux.org> 1:5.4.0-alt1
+- Automatically updated to 5.4.0.
+
 * Wed Dec 11 2019 Grigory Ustinov <grenka@altlinux.org> 1:5.2.8-alt2
 - Fix desktop file (Closes: 37306).
 
