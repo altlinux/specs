@@ -14,7 +14,7 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.16
+Version: 1.18
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
@@ -120,6 +120,7 @@ Summary: libknet1 crypto plugins meta package
 Group: System/Libraries
 %{?_enable_nss:Requires: libknet1-crypto-nss-plugin}
 %{?_enable_openssl:Requires: libknet1-crypto-openssl-plugin}
+BuildArch: noarch
 
 %description -n libknet1-crypto-plugins-all
 meta package to install all of libknet1 crypto plugins
@@ -188,6 +189,7 @@ Group: System/Libraries
 %{?_enable_lzma:Requires: libknet1-compress-lzma-plugin}
 %{?_enable_bzip2:Requires: libknet1-compress-bzip2-plugin}
 %{?_enable_zstd:Requires: libknet1-compress-zstd-plugin}
+BuildArch: noarch
 
 %description -n libknet1-compress-plugins-all
 Meta package to install all of libknet1 compress plugins
@@ -198,6 +200,7 @@ Summary: Provides libknet1 plugins meta package
 Group: System/Libraries
 Requires: libknet1-compress-plugins-all
 Requires: libknet1-crypto-plugins-all
+BuildArch: noarch
 
 %description -n libknet1-plugins-all
 Meta package to install all of libknet1 plugins
@@ -352,6 +355,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.18-alt1
+- 1.18
+
 * Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.16-alt1
 - 1.16
 
