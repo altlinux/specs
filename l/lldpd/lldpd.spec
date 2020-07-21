@@ -1,10 +1,10 @@
 Name: lldpd
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
-License: GPL
+License: ICS
 Url: https://vincentbernat.github.io/lldpd/
 
 Source1: lldpd.init
@@ -165,6 +165,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
+- new version 1.0.5
+
 * Fri Oct 04 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.4-alt1
 - new version 1.0.4
 - merge complitions subpackages with main package
@@ -172,14 +175,14 @@ fi
 * Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
-* Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1%ubt
+* Fri Apr 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
-* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt2%ubt
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt2
 - add tmpfiles for chroot dir
 - move chroot dir from /var/lib/lldpd to /var/ran/lldpd
 
-* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1%ubt
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1
 - add ubt suffix to release
 
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1
