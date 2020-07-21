@@ -2,7 +2,7 @@
 
 Name: polkit-qt5
 Version: 0.112.0
-Release: alt3
+Release: alt4
 
 Summary: Qt 5 bindings for PolicyKit
 License: GPLv2+
@@ -13,7 +13,7 @@ Source0: polkit-qt-1-%version.tar.bz2
 Source1: Doxyfile
 
 BuildRequires: gcc-c++
-BuildRequires: extra-cmake-modules
+BuildRequires: extra-cmake-modules rpm-macros-cmake cmake
 BuildRequires: doxygen
 BuildRequires: libpolkit1-devel
 BuildPreReq: qt5-base-devel
@@ -97,9 +97,6 @@ Provides: polkitqt5-devel  = %version-%release
 %setup -n polkit-qt-1-%version
 
 %build
-%ifarch %e2k
-%add_optflags -std=c++11
-%endif
 %cmake_insource \
 	-DBUILD_EXAMPLES:BOOL=OFF \
 	-DLIB_DESTINATION=%_libdir \
@@ -114,6 +111,10 @@ rm -fv html/installdox
 %makeinstall_std
 
 %changelog
+* Tue Jul 21 2020 Michael Shigorin <mike@altlinux.org> 0.112.0-alt4
+- explicit BR: rpm-macros-cmake cmake
+- minor spec cleanup
+
 * Thu Dec 27 2018 Michael Shigorin <mike@altlinux.org> 0.112.0-alt3
 - adapted for e2kv4 and lcc-1.23
 
