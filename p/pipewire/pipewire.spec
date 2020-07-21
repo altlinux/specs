@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Media Sharing Server
@@ -188,6 +188,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Tue Jul 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
+- updated to 0.3.7-5-gcc0727e6
+
 * Wed Jun 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - updated to 0.3.6-5-gda9d17e7
 
