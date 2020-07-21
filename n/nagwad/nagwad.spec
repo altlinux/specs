@@ -1,6 +1,6 @@
 Name: 	  nagwad
-Version:  0.9.6
-Release:  alt2
+Version:  0.9.7
+Release:  alt1
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -51,18 +51,15 @@ markdown -f links,smarty,toc,autolink -o signal.html signal.md
 %install
 install -Dm 0755 scripts/nsca-shell %buildroot%_bindir/nsca-shell
 install -Dm 0755 scripts/nagwad %buildroot%_sbindir/nagwad
-install -Dm 0755 scripts/nagwad.sh  %buildroot%_libexecdir/nagwad/nagwad.sh
-install -Dm 0755 scripts/nrpe/check_authdata %buildroot/%_libexecdir/nagios/plugins/check_authdata
-install -Dm 0755 scripts/nrpe/check_devices %buildroot/%_libexecdir/nagios/plugins/check_devices
-install -Dm 0755 scripts/nrpe/check_login %buildroot/%_libexecdir/nagios/plugins/check_login
+install -Dm 0755 scripts/nrpe/check_nagwad %buildroot/%_libexecdir/nagios/plugins/check_nagwad
 install -Dm 0755 scripts/nrpe/check_osec %buildroot/%_libexecdir/nagios/plugins/check_osec
 
 install -Dm 0644 conf/audit/rules.d/50-nagwad.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad.rules
 install -Dm 0644 conf/nagios/templates/50-nagwad.cfg %buildroot%_sysconfdir/nagios/templates/50-nagwad.cfg
-install -Dm 0644 conf/nagwad/authdata/authdata.regexp %buildroot%_sysconfdir/nagwad/authdata/authdata.regexp
-install -Dm 0644 conf/nagwad/device/device.regexp %buildroot%_sysconfdir/nagwad/device/device.regexp
-install -Dm 0644 conf/nagwad/login/login.regexp %buildroot%_sysconfdir/nagwad/login/login.regexp
-install -Dm 0644 conf/nagwad/osec/osec.regexp %buildroot%_sysconfdir/nagwad/osec/osec.regexp
+install -Dm 0644 conf/nagwad/authdata.regexp %buildroot%_sysconfdir/nagwad/authdata.regexp
+install -Dm 0644 conf/nagwad/device.regexp %buildroot%_sysconfdir/nagwad/device.regexp
+install -Dm 0644 conf/nagwad/login.regexp %buildroot%_sysconfdir/nagwad/login.regexp
+install -Dm 0644 conf/nagwad/osec.regexp %buildroot%_sysconfdir/nagwad/osec.regexp
 install -Dm 0644 conf/nagios/nrpe/nagwad.cfg %buildroot%_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 install -Dm 0644 conf/nagstamon/actions/action_Lock_host.conf %buildroot%_sysconfdir/nagstamon/actions/action_Lock_host.conf
 install -Dm 0644 conf/nagstamon/actions/action_NSCA_shell.conf %buildroot%_sysconfdir/nagstamon/actions/action_NSCA_shell.conf
@@ -71,16 +68,38 @@ install -Dm 0644 unit/nagwad.service %buildroot/%_unitdir/nagwad.service
 
 mkdir -p %buildroot/var/log/nagwad
 
+%pre
+
+if [ -e %_sysconfdir/nagwad/authdata/authdata.regexp ]; then
+    mv -nv %_sysconfdir/nagwad/authdata/authdata.regexp \
+       %_sysconfdir/nagwad/authdata.regexp ||:
+    rm -df %_sysconfdir/nagwad/authdata ||:
+fi
+if [ -e %_sysconfdir/nagwad/device/device.regexp ]; then
+    mv -nv %_sysconfdir/nagwad/device/device.regexp \
+       %_sysconfdir/nagwad/device.regexp ||:
+    rm -df %_sysconfdir/nagwad/device ||:
+fi
+if [ -e %_sysconfdir/nagwad/login/login.regexp ]; then
+    mv -nv %_sysconfdir/nagwad/login/login.regexp \
+       %_sysconfdir/nagwad/login.regexp ||:
+    rm -df %_sysconfdir/nagwad/login ||:
+fi
+if [ -e %_sysconfdir/nagwad/osec/osec.regexp ]; then
+    mv -nv %_sysconfdir/nagwad/osec/osec.regexp \
+       %_sysconfdir/nagwad/osec.regexp ||:
+    rm -df %_sysconfdir/nagwad/osec ||:
+fi
+
 %files
 %doc README.md signal.html signal.md
 %_bindir/nsca-shell
 %_sbindir/nagwad
-%_libexecdir/nagwad
 %_unitdir/nagwad.*
 %_libexecdir/nagios/plugins/*
 %_sysconfdir/nagwad
 %config(noreplace) %_sysconfdir/audit/rules.d/*nagwad*.rules
-%config(noreplace) %_sysconfdir/nagwad/*/*.regexp
+%config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 /var/log/nagwad
 
@@ -92,6 +111,12 @@ mkdir -p %buildroot/var/log/nagwad
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Tue Jul 21 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.7-alt1
+- Fix/improve: Explicitly check for the signal file directory.
+- Use universal "check_nagwad" script for typical nagwad NRPE checks.
+- Make the nagwad.sh a simple service (ranamed to /usr/sbin/nagwad).
+- Handle /etc/nagwad/*.regexp files automatically.
+
 * Thu May 28 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.6-alt2
 - Fixed documentation (signal.md):
   -- replace '.cnf' with '.cfg' (thx vercha@);
