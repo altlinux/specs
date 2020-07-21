@@ -1,13 +1,13 @@
 %define oname cryptography
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
 License: %asl
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/cryptography/
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -15,20 +15,16 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 # Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python rpm-build-licenses
-BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools
-BuildRequires: python-module-asn1crypto >= 0.21.0
+BuildRequires(pre): rpm-build-python3 python3-devel python3-module-cffi python3-module-setuptools rpm-build-licenses
+BuildRequires: libssl-devel
+BuildRequires: python3-module-asn1crypto >= 0.21.0
 %if_enabled test
-BuildRequires: python-module-cryptography-vectors
-BuildRequires: python-module-pretend python-module-iso8601 python-module-pytz
-BuildRequires: python-module-pytest >= 3.9.3
-BuildRequires: python-module-hypothesis
+BuildRequires: python3-module-cryptography-vectors
+BuildRequires: python3-module-pretend python3-module-iso8601 python3-module-pytz
+BuildRequires: python3-module-pytest >= 3.9.3
+BuildRequires: python3-module-hypothesis
 %endif
 
-%py_requires cffi
-%py_requires enum34
-
-%setup_python_module %oname
 
 %description
 cryptography is a package which provides cryptographic recipes and primitives to Python developers.
@@ -41,26 +37,30 @@ digests and key derivation functions.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
+
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._commoncrypto[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._constant_time[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._openssl[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._padding[)]/d
 
 %if_enabled test
 %check
-python setup.py test
+python3 setup.py test
 %endif
 
 
 %files
-%doc AUTHORS.rst  CHANGELOG.rst  CONTRIBUTING.rst  README.rst
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-*
 
 %changelog
 * Tue Jul 21 2020 Vladimir Didenko <cow@altlinux.ru> 3.0-alt1
 - new version (3.0)
-- build Python 2 version only (Python 3 version moved to separate package)
+- build Python 3 version as separate package
 
 * Fri Apr 3 2020 Vladimir Didenko <cow@altlinux.ru> 2.9-alt1
 - new version (2.9)
