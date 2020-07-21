@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init altplace
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: accounts-qt5-devel extra-cmake-modules intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby signon-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: accounts-qt5-devel signon-devel intltool
-BuildRequires: extra-cmake-modules qt5-declarative-devel
+BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-webengine-devel
 BuildRequires: kde5-kaccounts-integration-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -52,10 +52,14 @@ Requires: kf5-filesystem
 %config(noreplace) /etc/signon-ui/webkit-options.d/*.conf
 %_K5plug/kaccounts/ui/*.so
 %_datadir/accounts/providers/kde/
-%_K5data/kpackage/genericqml/org.kde.kaccounts.owncloud/
+%_datadir/accounts/services/kde/
+%_K5data/kpackage/genericqml/org.kde.kaccounts.*/
 
 
 %changelog
+* Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

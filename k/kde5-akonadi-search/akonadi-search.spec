@@ -1,8 +1,8 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -118,6 +118,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Fri Apr 03 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - disable krunner plugin by default
 

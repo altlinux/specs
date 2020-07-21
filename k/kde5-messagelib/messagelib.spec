@@ -10,7 +10,7 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -157,7 +157,9 @@ KF5 library
 %files -n %libkf5messageviewer
 %_K5lib/libKF5MessageViewer.so.%sover
 %_K5lib/libKF5MessageViewer.so.*
-%_K5plug/messageviewer/messageviewer_*.so
+%dir %_K5plug/messageviewer/
+%dir %_K5plug/messageviewer/headerstyle/
+%_K5plug/messageviewer/headerstyle/*.so
 %_K5plug/messageviewer/grantlee/
 %files -n %libkf5messagelist
 %_K5lib/libKF5MessageList.so.%sover
@@ -173,6 +175,9 @@ KF5 library
 %_K5lib/libKF5WebEngineViewer.so.*
 
 %changelog
+* Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

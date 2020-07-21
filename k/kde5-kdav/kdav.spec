@@ -4,7 +4,7 @@
 %define libkpimkdav libkpimkdav%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -40,11 +40,11 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkpimkdav
+%package -n libkf5dav
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %version-%release
-%description -n %libkpimkdav
+%description -n libkf5dav
 %name library
 
 
@@ -52,9 +52,7 @@ Requires: %name-common = %version-%release
 %setup -n %rname-%version
 
 %build
-%K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
-    #
+%K5build
 
 %install
 %K5install
@@ -62,22 +60,24 @@ Requires: %name-common = %version-%release
 
 %files common -f %name.lang
 %doc COPYING*
-#%config(noreplace) %_K5xdgconf/*.*categories
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/KPim/kpimkdav_version.h
-%_K5inc/KPim/KDAV/
-%_K5inc/KPim/kdav/
+%_K5inc/kdav_version.h
+%_K5inc/KDAV/
+%_K5inc/kdav/
 %_K5link/lib*.so
-%_K5lib/cmake/KPimKDAV/
+%_K5lib/cmake/KF5DAV/
 %_K5archdata/mkspecs/modules/qt_kdav.pri
 
-%files -n %libkpimkdav
-%_K5lib/libKPimKDAV.so.%sover
-%_K5lib/libKPimKDAV.so.*
+%files -n libkf5dav
+%_K5lib/libKF5DAV.so.%sover
+%_K5lib/libKF5DAV.so.*
 
 %changelog
+* Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 
