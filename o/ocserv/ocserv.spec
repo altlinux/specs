@@ -4,7 +4,7 @@
 %def_with maxmind
 
 Name: ocserv
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 Summary: OpenConnect SSL VPN server
 Group: System/Servers
@@ -38,6 +38,11 @@ BuildRequires: libkrb5-devel libtasn1-devel >= 3.4
 BuildRequires: libpcl-devel
 BuildRequires: iproute2
 BuildRequires: gperf
+BuildRequires: haproxy
+BuildRequires: openconnect
+BuildRequires: curl
+BuildRequires: gssntlmssp
+BuildRequires: /proc
 
 Requires: gnutls-utils
 Requires: iproute2
@@ -93,7 +98,8 @@ mkdir -p %buildroot%_initrddir
 install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 
 %check
-%make_build check
+export PATH=/sbin:/usr/sbin:$PATH
+%make_build check XFAIL_TESTS=test-sighup-key-change
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -118,12 +124,16 @@ install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
 %_bindir/%name-fw
 %_bindir/%name-script
 %_sbindir/%name
+%_sbindir/%name-worker
 #%_sbindir/%name-genkey
 %_localstatedir/lib/ocserv/profile.xml
 %_unitdir/%name.service
 %_initdir/%name
 
 %changelog
+* Tue Jul 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt1
 - new version 1.0.1
 
