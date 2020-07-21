@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200714
+Version: 20200720
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 21 2020 Cronbuild Service <cronbuild@altlinux.org> 20200720-alt1
+- upstream changes (GIT 2b823fc):
+  + Update AMD SEV firmware (thx John Allen)
+  + rtl_nic: update firmware for RTL8125B (thx Heiner Kallweit)
+
 * Wed Jul 15 2020 Cronbuild Service <cronbuild@altlinux.org> 20200714-alt1
 - upstream changes (GIT f39b687):
   + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
