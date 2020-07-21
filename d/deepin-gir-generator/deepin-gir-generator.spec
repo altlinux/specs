@@ -10,7 +10,7 @@ BuildRequires: libgudev-gir
 
 Name:           deepin-gir-generator
 Version:        2.0.2
-Release:        alt1
+Release:        alt1.1
 Summary:        Generate static golang bindings for GObject
 License:        GPLv3
 URL:            https://github.com/linuxdeepin/go-gir-generator
@@ -58,6 +58,9 @@ export GOPATH="%{go_path}"
 %{go_path}/src/pkg.deepin.io/gir/
 
 %changelog
+* Tue Jul 21 2020 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt1.1
+- rebuilt with armh
+
 * Fri Sep 06 2019 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt1
 - new version (2.0.2) with rpmgs script
 
