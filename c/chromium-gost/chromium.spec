@@ -30,7 +30,7 @@
 
 Name:           chromium-gost
 Version:        83.0.4103.61
-Release:        alt3
+Release:        alt4
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -248,9 +248,6 @@ tar -xf %SOURCE1
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
 sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/chromium.patch | patch -p1
 
-# Change APPNAME (not in GOST patches for now)
-sed -i 's/APPNAME=chromium$/APPNAME=chromium-gost/' .rpm/chromium.sh
-
 echo > "third_party/adobe/flash/flapper_version.h"
 
 # lost sources
@@ -413,6 +410,7 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/%name \
 #
 install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
+sed -i 's/APPNAME=chromium$/APPNAME=chromium-gost/' %buildroot%_libdir/%name/%name-generic
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
 # add directories for policy management
@@ -534,6 +532,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jul 22 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt4
+- Fix typo in start script
+
 * Tue Jul 14 2020 Fr. Br. George <george@altlinux.ru> 83.0.4103.61-alt3
 - Build GOST version
 
