@@ -1,6 +1,6 @@
 Name:     curseofwar
-Version:  1.2.0.0.11.git47f7989
-Release:  alt2
+Version:  1.3.0
+Release:  alt1
 
 Summary:  A Real Time Strategy game for Linux
 License:  GPLv3
@@ -86,6 +86,9 @@ Requires: %name-common
 %files
 
 %changelog
+* Wed Jul 22 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Wed May 23 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.0.0.11.git47f7989-alt2
 - Disable Werror flag for building on e2k arch.
 
