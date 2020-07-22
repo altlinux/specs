@@ -1,20 +1,29 @@
+# SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.2.1
-Release: alt5
+Version: 1.3
+Release: alt1
 
 Summary: IMA/EVM support utilities
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Configuration/Other
 
 Url: http://linux-ima.sourceforge.net/
+Vcs: https://git.code.sf.net/p/linux-ima/ima-evm-utils
+# Docs: https://sourceforge.net/p/linux-ima/wiki/Home/
+# Manual: https://en.opensuse.org/SDB:Ima_evm
+
 # Repacked http://sourceforge.net/projects/linux-ima/files/ima-evm-utils/%name-%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Tue Feb 14 2017
-# optimized out: docbook-dtds libgpg-error perl pkg-config python-base python-modules xml-common
-BuildRequires: asciidoc docbook-style-xsl libattr-devel libkeyutils-devel libssl-devel python-modules-compiler python-modules-encodings time xsltproc
+BuildRequires: asciidoc
+BuildRequires: docbook-style-xsl
+BuildRequires: libattr-devel
+BuildRequires: libkeyutils-devel
+BuildRequires: libssl-devel
+BuildRequires: libtpm2-tss-devel
+BuildRequires: xsltproc
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: openssl attr e2fsprogs xxd rpm-build-vm >= 1.0-alt4}}
@@ -92,6 +101,9 @@ vm-run --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Wed Jul 22 2020 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
+- Update to v1.3 (2020-07-21).
+
 * Mon Aug 19 2019 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt5
 - Enable Large File Support.
 
