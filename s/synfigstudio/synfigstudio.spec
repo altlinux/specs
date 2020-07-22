@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.14
-Release: alt2
+Version: 1.3.15
+Release: alt1
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -211,6 +211,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 21 2020 Andrey Cherepanov <cas@altlinux.org> 1.3.15-alt1
+- New version.
+
 * Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 1.3.14-alt2
 - E2K: avoid profiling (no -lgcov just yet).
 
@@ -245,7 +248,7 @@ cat synfig.lang >> %name.lang
 * Mon May 21 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.8-alt1
 - New version.
 
-* Mon Feb 13 2018 Alexandr Antonov <aas@altlinux.org> 1.3.5-alt1
+* Tue Feb 13 2018 Alexandr Antonov <aas@altlinux.org> 1.3.5-alt1
 - New version.
 
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.4-alt2
