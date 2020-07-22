@@ -5,18 +5,14 @@
 
 Name: nagiosdigger
 Version: 0.9
-Release: alt4
+Release: alt5
 
 Url: https://www.vanheusden.com/nagiosdigger/
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source:%name-%version.tar
 
-Patch0: %name-%version-mysqli.patch
-Patch1: %name-%version-sql.patch
-Patch2: %name-%version-css.patch
-Patch3: %name-%version-config.patch
-Patch4: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
 
 BuildArch: noarch
 
@@ -26,11 +22,13 @@ Group: Monitoring
 
 Requires: nagios-www >= 3.0.6-alt12
 Requires: apache2-base apache2-mod_php7
-Requires: perl-DBI perl-DBD-mysql
-Requires: php7-jpgraph php7-mysqli
+Requires: perl-DBI
+Requires: php7-jpgraph
 Conflicts: nagios < 3.0.6-alt12
 
-BuildRequires: perl-DBI perl-DBD-mysql perl-Config-INI
+Requires: %name-dbi
+
+BuildRequires: perl-DBI perl-DBD-mysql perl-DBD-Pg perl-Config-INI
 
 %description
 Nagiosdigger is a powerfull web frontend for the logging produced by
@@ -39,15 +37,36 @@ enabling you to quickly determine trends and/or systems with problems.
 Searching, SLA calculations and problem predictions are some of the
 features.
 
-It requires a MySQL database as well as the JPGraph graph creating library.
+It requires a MySQL or PostgreSQL database as well as the JPGraph
+graph creating library.
+
+%package mysql
+Summary: MySQL support for the powerfull Nagios web logging frontend
+License: GPL-2.0
+Group: Monitoring
+
+Requires: perl-DBD-mysql
+Requires: php7-mysqli
+Provides: %name-dbi
+
+%description mysql
+MySQL dependencies and documentation (examples) for Nagiosdigger.
+
+%package pgsql
+Summary: PostgreSQL support for the powerfull Nagios web logging frontend
+License: GPL-2.0
+Group: Monitoring
+
+Requires: perl-DBD-Pg
+Requires: php7-pgsql
+Provides: %name-dbi
+
+%description pgsql
+PostgreSQL dependencies and documentation (examples) for Nagiosdigger.
 
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %make_build
@@ -63,7 +82,7 @@ a2enextra httpd-addon.d
 [ ! -f %_initdir/nagios ] || /sbin/service nagios condreload
 
 %files
-%doc readme.txt upgrading.txt create_tables.sql
+%doc readme.txt upgrading.txt create_tables_mysql.sql create_tables_psql.sql
 %dir %_var/www/webapps/%name
 %_var/www/webapps/%name/*.php
 %attr(0640,root,%nagios_grp) %_var/www/webapps/%name/config.inc.php
@@ -75,7 +94,19 @@ a2enextra httpd-addon.d
 %_sbindir/%name-import
 %nagios_plugindir/nagiosdigger_event_handler
 
+%files mysql
+%files pgsql
+
 %changelog
+* Wed Jul 22 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt5
+- Use a single patch due to merges.
+- Fixed typo: COLSPNA -> COLSPAN.
+- Fixed divide by zero error with the average events calculation.
+- On error, output the last SQL error message and show the query.
+- Fix: Use pg_num_rows() with Postgres.
+- Add packages for MySQL and PostgreSQL support.
+- Added the create table script for PostgreSQL.
+
 * Thu May 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt4
 - Fixed nagios dependency: require >= 3.0.6-alt12 (needed for
   "nagiosnew" group)
