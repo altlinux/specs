@@ -11,7 +11,7 @@
 
 Name: rdma-core
 Version: 30.0
-Release: alt1
+Release: alt2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -63,8 +63,6 @@ Provides: libibmad-devel = %EVR
 Obsoletes: libibmad-devel < %EVR
 Provides: libibnetdisc-devel = %EVR
 Obsoletes: libibnetdisc-devel < %EVR
-Provides: libinfiniband-diags = %EVR
-Obsoletes: libinfiniband-diags < %EVR
 
 %description devel
 RDMA core development libraries and headers.
@@ -190,6 +188,7 @@ Summary: OpenFabrics InfiniBand Diagnostic Tools
 Group: System/Base
 Provides: openib-diags = %version
 Obsoletes: openib-diags
+Conflicts: libinfiniband-diags =< 2.2.0-alt1 
 
 %description -n infiniband-diags
 This package provides IB diagnostic programs and scripts needed to
@@ -575,6 +574,9 @@ cp -r kernel-headers/rdma %buildroot%_includedir/
 %docdir/ibsrpdm.md
 
 %changelog
+* Wed Jul 22 2020 Alexey Shabalin <shaba@altlinux.org> 30.0-alt2
+- not provides and obsoletes of libinfiniband-diags
+
 * Thu Jul 02 2020 Alexey Shabalin <shaba@altlinux.org> 30.0-alt1
 - 30.0
 
