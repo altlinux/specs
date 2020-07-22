@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rpi-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_need_version	5.4
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -490,6 +490,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Jul 22 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.51-alt2
+- CONFIG_DEBUG_INFO is off, because p9 packages is huge
+
 * Sat Jul 18 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.51-alt1
 - updated to 5.4.51 (still RPi-specific)
 
