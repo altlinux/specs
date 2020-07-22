@@ -2,15 +2,14 @@
 %define abiversion 0
 
 Name: iperf3
-Version: 3.7
-Release: alt4
+Version: 3.8.1
+Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: BSD-3-Clause and MIT
 Group: Monitoring
 
 Url: http://software.es.net/iperf
-Vcs: https://github.com/esnet/iperf.git
 Source0: http://downloads.es.net/pub/iperf/%native-%version.tar.gz
 Source1: iperf3.sysconfig
 Source2: iperf3.init
@@ -68,7 +67,7 @@ autoheader
 automake --foreign --add-missing --copy
 autoconf
 
-%configure --disable-profiling
+%configure
 %make_build
 
 %install
@@ -103,6 +102,11 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 %_libdir/lib%native.so
 
 %changelog
+* Wed Jul 22 2020 Sergey Y. Afonin <asy@altlinux.org> 3.8.1-alt1
+- New version
+- Removed Vcs tag (unsupported in p8 branch)
+- Removed --disable-profiling (disabled by default in 3.8)
+
 * Fri Apr 10 2020 Vitaly Chikunov <vt@altlinux.org> 3.7-alt4
 - Further systemd iperf3.service hardening
 
