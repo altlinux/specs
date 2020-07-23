@@ -1,8 +1,10 @@
+%set_python3_req_method strict
+%define _unpackaged_files_terminate_build 1
 %define oname proxmoxer
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt3
+Release: alt4
 
 Summary: Wrapper around Proxmox REST API v2
 License: %mit
@@ -13,16 +15,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-
 BuildRequires(pre): rpm-build-licenses rpm-build-python3
 
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-paramiko
 
-Requires: python3-module-requests
-Requires: python3-module-paramiko
-Requires: python3-module-openssh-wrapper
-
+%add_python3_req_skip httplib # python3(http) is used instead this
+%add_python3_req_skip urlparse # python3(urllib) is used instead this
 
 %description
 Pythonic API for a Proxmox cluster manipulation.
@@ -37,9 +36,17 @@ Pythonic API for a Proxmox cluster manipulation.
 %python3_install
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/tests
+%doc README.rst LICENSE.txt
 
 %changelog
+* Thu Jul 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt4
+- Used the strict dependency search method (closes: #38751)
+- Fixed %%files section
+- Package license and readme files
+
 * Thu Jul 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt3
 - Don't package tests
 
