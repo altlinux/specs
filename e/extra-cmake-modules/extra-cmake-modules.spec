@@ -10,8 +10,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.70.0
-Release: alt1
+Version: 5.72.0
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -22,9 +22,7 @@ Url: http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
 BuildArch: noarch
 
 Requires: cmake
-%ifnarch %e2k
 Requires: clang-devel
-%endif
 
 Source: %name-%version.tar
 Patch1: alt-find-qcollectiongenerator.patch
@@ -52,13 +50,12 @@ Additional modules for CMake build system needed by KDE Frameworks.
 #%patch3 -p1
 %patch4 -p1
 
-%ifarch %e2k
-# unsupported as of lcc 1.23.12 (should be in 1.23.16)
-sed -i 's|-fno-operator-names||' kde-modules/KDECompilerSettings.cmake
-# lcc-1.23.12/binutils-2.29.0-alt2.E2K.23.018:
-# kf5-kcoreaddons linking warning gets fatal otherwise
-sed -i 's|-Wl,--fatal-warnings||' kde-modules/KDECompilerSettings.cmake
-%endif
+# can't do %%ifarch here becouse noarch build
+if [ "$(arch)" = "e2k" ]; then
+	# kf5-kcoreaddons linking warning gets fatal otherwise (mcst#3675)
+	sed -i 's|-Wl,--fatal-warnings|-Wl,--no-warn-shared-textrel|' \
+		kde-modules/KDECompilerSettings.cmake
+fi
 
 %build
 %cmake \
@@ -79,6 +76,12 @@ sed -i 's|-Wl,--fatal-warnings||' kde-modules/KDECompilerSettings.cmake
 %endif
 
 %changelog
+* Mon Aug 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt2
+- fix build for e2k; thanks mike@alt
+
+* Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
+- new version
+
 * Tue May 12 2020 Sergey V Turchin <zerg@altlinux.org> 5.70.0-alt1
 - new version
 
