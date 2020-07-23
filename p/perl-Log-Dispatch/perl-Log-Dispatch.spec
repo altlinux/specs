@@ -2,7 +2,7 @@
 %define dist Log-Dispatch
 
 Name: perl-%dist
-Version: 2.69
+Version: 2.70
 Release: alt1
 
 Summary: Dispatches messages to one or more outputs
@@ -40,6 +40,9 @@ and particularly for creating new outputs.
 %perl_vendor_privlib/Log/
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.70-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 2.69-alt1
 - automated CPAN update
 
