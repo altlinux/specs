@@ -7,7 +7,7 @@ Release:	%php7_release.3
 Summary:	Zend Opcache extension for opcode caching and optimization
 
 Group:		System/Servers
-License:	PHP Licence
+License:	PHP-3.01
 URL:		http://php.net/manual/en/book.opcache.php
 #		http://pecl.php.net/package/ZendOpcache
 
@@ -18,7 +18,6 @@ Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
 
 Patch0: php7-opcache-sapi-names.patch
-Patch1: php7-opcache-file_cache.patch
 
 BuildRequires(pre): rpm-build-php7
 BuildRequires: gcc-c++
@@ -40,7 +39,6 @@ faster.
 cp -pr -- %php7_extsrcdir/%php7_extension/* .
 
 %patch0
-%patch1
 
 # Fix path to pdo*.h
 subst 's@php/ext@php/%_php7_version/ext@g' config.m4
@@ -77,7 +75,6 @@ NO_INTERACTION=1 make test
 %files
 %php7_extconf/%php7_extension
 %php7_extdir/*
-%doc README
 
 %post
 %php7_extension_postin

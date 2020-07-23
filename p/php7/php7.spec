@@ -7,12 +7,12 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.3.19
+Version: 7.4.8
 Release: alt1
 
 %define php7_name      %name
 %define _php7_version  %version
-%define _php7_major  7.3
+%define _php7_major  7.4
 %define php7_release   %release
 %define rpm_build_version %_php7_version
 
@@ -30,24 +30,22 @@ Source4: phpinfo.tar
 Patch1: php-version.patch
 Patch2: php-shared-1.patch
 Patch3: php-cli-build.patch
-Patch4: php-test-pcntl.patch
 Patch5: php-5.3.3-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
-Patch7: php-7.1.0-dlopen.patch
-Patch8: php-4.3.11-libtool.patch
-Patch9: php-5.2.5-norpath.patch
-Patch10: php-5.1.0b1-cxx.patch
-Patch11: php-no-static-program.patch
-Patch12: php-set-session-save-path.patch
-Patch13: php7-7.1.10-alt-lsattr.patch
-Patch14: php-7.2.12-acinclude.patch
-Patch15: php7-7.2.21-alt-e2k-lcc123.patch
-Patch16: php5-5.5.9-phar-phppath.patch
-Patch17: php-mysqlnd-socket.patch
-Patch18: php-7.2.14-alt-zend-signal-visibility.patch
-Patch19: php-7.2-alt-phar-manfile-suffix.patch
-Patch20: php7-7.1.0-phpize.patch
-Patch21: php7-7.3-alt-tests-fix.patch
+Patch7: php-4.3.11-libtool.patch
+Patch8: php7-source-7.4-cxx.patch
+Patch9: php-7.4-no-static-program.patch
+Patch10: php-set-session-save-path.patch
+Patch11: php7-7.1.10-alt-lsattr.patch
+Patch12: php-7.4-save-ldlibs.patch
+Patch13: php5-5.5.9-phar-phppath.patch
+Patch14: php-mysqlnd-socket.patch
+Patch15: php-7.2.14-alt-zend-signal-visibility.patch
+Patch16: php-7.2-alt-phar-manfile-suffix.patch
+Patch17: php7-7.4-phpize-php-config-name.patch
+Patch18: php7-7.3-alt-tests-fix.patch
+Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
+Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch22: php7-7.3.10-alt-e2k-lcc123.patch
 
 Patch70: php7-debian-Add-support-for-use-of-the-system-timezone-database.patch
@@ -57,7 +55,7 @@ PreReq:  php7-libs = %version-%release
 Provides: php-engine = %version-%release
 Provides: %name = %rpm_build_version-%release
 
-BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives
+BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives libsqlite3-devel
 
 # for tests
 BuildRequires: /proc
@@ -163,15 +161,14 @@ in use by other PHP7-related packages.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p1
 %patch5 -p1 -b .scandir
 %patch6 -p2 -b .alternatives
 %patch7 -p0
-%patch8 -p0
-%patch9 -p2
+%patch8 -p1
+%patch9 -p1
 %patch10 -p2
-%patch11 -p2
-%patch12 -p2
+%patch11 -p1
+%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
@@ -180,7 +177,7 @@ in use by other PHP7-related packages.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
+
 %ifarch %e2k
 %patch22 -p1
 %endif
@@ -188,16 +185,12 @@ in use by other PHP7-related packages.
 %patch71 -p1
 
 
-mv README.SELF-CONTAINED-EXTENSIONS SELF-CONTAINED-EXTENSIONS
-
 cp -dpR %SOURCE2 .
 
 LIBS="$LIBS -lpthread"
 CFLAGS="%optflags -fPIC"
 export LIBS CFLAGS
 
-subst "s,./vcsclean,," build/buildcheck.sh
-subst "s,./stamp=$,," build/buildcheck.sh
 # symbols visibility fix
 sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((visibility("default"))) \2,;' ext/*/*.c
 
@@ -215,7 +208,7 @@ sed -is 's,\(zend_module_entry \)\(.*= {\),zend_module_entry __attribute__ ((vis
 	--with-config-file-path=%php7_sysconfdir/ \
 	--with-config-file-scan-dir=%php7_sysconfdir/%php7_sapi/php.d/ \
 	--with-pic \
-	\
+	--enable-rtld-now \
 	--enable-cli \
 	--disable-cgi \
 	\
@@ -286,9 +279,6 @@ do
   subst 's,@SAPI@,%php7_sapi,g' "$f"
 done
 
-[ -f "%buildroot/%_bindir/phpextdist" ] || 
-    cp -dpR scripts/dev/phpextdist %buildroot/%_bindir/
-
 chmod 755 %buildroot/%_bindir/*
 
 # This file is not needed by any program.
@@ -342,11 +332,6 @@ install -m644 -D ext/mysqlnd/mysqlnd_structs.h %buildroot%_includedir/php/%_php7
 mkdir -p %buildroot/%php7_extconf/mysqlnd
 echo "file_ini=01_mysqlnd.ini" >%buildroot/%php7_extconf/mysqlnd/params
 echo "extension=mysqlnd.so" >%buildroot/%php7_extconf/mysqlnd/config
-
-# install correct phar
-mv %buildroot%_bindir/phar.phar %buildroot%_bindir/phar7.phar
-ln -sf phar7.phar %buildroot%_bindir/phar7
-sed -i -s 's,%buildroot,,' %buildroot%_bindir/phar7.phar
 
 # rpm macros 
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
@@ -428,7 +413,7 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %_man1dir/phpdbg7.*
 %_man1dir/phar7*.1*
 %_rpmlibdir/%name.filetrigger
-%doc CODING_STANDARDS CREDITS INSTALL LICENSE
+%doc CODING_STANDARDS.md LICENSE CONTRIBUTING.md
 %doc NEWS README.* php.ini-* EXTENSIONS
 %doc UPGRADING*
 
@@ -452,18 +437,19 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %files devel
 %_bindir/php-config7
 %_bindir/phpize7
-%_bindir/phpextdist
 %_includedir/php
 %php7_libdir/build
 %_altdir/php7-devel
-%_libdir/libphp-%_php7_version.a
 %_usrsrc/php7-devel
 %_man1dir/php-config7.*
 %_man1dir/phpize7.*
-%doc SELF-CONTAINED-EXTENSIONS php-packaging.readme
+%doc docs/*.md php-packaging.readme
 %doc tests run-tests.php 
 
 %changelog
+* Tue Jul 21 2020 Anton Farygin <rider@altlinux.ru> 7.4.8-alt1
+- 7.4.8
+
 * Sat Jun 20 2020 Anton Farygin <rider@altlinux.ru> 7.3.19-alt1
 - 7.3.19 
 

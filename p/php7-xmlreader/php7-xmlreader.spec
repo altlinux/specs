@@ -6,7 +6,7 @@ Release:	%php7_release
 
 Summary:	PHP module for support XML
 Group:		System/Servers
-License:	PHP Licence
+License:	PHP-3.01
 
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh

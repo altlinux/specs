@@ -7,7 +7,7 @@ Release: %php7_release
 
 Summary: The php7 HTML-embedded scripting language for use with Apache2
 Group: System/Servers
-License: PHP
+License: PHP-3.01
 Url: http://www.php.net/
 
 Prereq: php7 = %php7_version
@@ -27,8 +27,7 @@ Patch0: apache2-mod_php7-7.1.0.patch
 Patch1: php-alt-namespace.patch
 
 BuildRequires(pre): rpm-build-php7 apache2-devel
-# Automatically added by buildreq on Wed Mar 23 2011
-BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel php7-devel zlib-devel
+BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel php7-devel zlib-devel libsqlite3-devel
 BuildRequires: php7-devel = %php7_version
 
 %description

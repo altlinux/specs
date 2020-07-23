@@ -6,7 +6,7 @@ Release: %php7_release.1
 Summary: The PHP7 HTML-embedded scripting language as a php-fpm (FastCGI) binary.
 Group: System/Servers
 Url: http://www.php.net/
-License: PHP
+License: PHP-3.01
 
 Requires: php7 = %php7_version
 Requires: php7 >= %php7_version-%php7_release
