@@ -62,7 +62,7 @@
 
 Name: virtualbox
 Version: 6.1.12a
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -201,6 +201,7 @@ It allows to share files and sync time with host system.
 %package guest-common
 Summary: Additions common files for VirtualBox OSE guest systems
 Group: Emulators
+Provides: %name-guest-common = 6.1.8
 
 %description guest-common
 This packages contains common files for VirtualBox OSE guest systems.
@@ -209,6 +210,7 @@ It consists modprobe rules to load kernel modules guest on guest system.
 %package guest-common-vboxvideo
 Summary: Additions common files for VirtualBox OSE vboxvideo driver
 Group: Emulators
+Provides: %name-guest-common-vboxvideo = 6.1.8
 
 %description guest-common-vboxvideo
 This packages contains common files for VirtualBox OSE vboxvideo driver.
@@ -217,6 +219,7 @@ It consists modprobe rules to load kernel module vboxvideo on guest system.
 %package guest-common-vboxguest
 Summary: Additions common files for VirtualBox OSE vboxguest driver
 Group: Emulators
+Provides: %name-guest-common-vboxguest = 6.1.8
 
 %description guest-common-vboxguest
 This packages contains common files for VirtualBox OSE vboxguest driver.
@@ -895,6 +898,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Jul 23 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.12a-alt2
+- Add compatibility provides for old kernel modules builds for virtualbox-6.1.8
+
 * Tue Jul 21 2020 Valery Sinelnikov <greh@altlinux.org> 6.1.12a-alt1
 - Update to newest version 6.1.12a
 
