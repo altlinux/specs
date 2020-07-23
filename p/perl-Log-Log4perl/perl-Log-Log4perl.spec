@@ -2,7 +2,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/Log/Log4perl/Filter/MDC.pm
 %define dist Log-Log4perl
 Name: perl-%dist
-Version: 1.49
+Version: 1.50
 Release: alt1
 
 Summary: Log4j implementation for Perl
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MS/MSCHILLI/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{dist}-%{version}.tar.gz
 Patch: perl-Log-Log4perl-1.37-alt-disable-tobedone-LDAP.patch
 
 BuildArch: noarch
@@ -77,6 +77,9 @@ or rrdtool graph for graphic displays.
 %perl_vendor_privlib/Log/Log4perl/Appender/RRDs.pm
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
+- automated CPAN update
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
 - automated CPAN update
 
