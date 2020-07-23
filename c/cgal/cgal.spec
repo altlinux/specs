@@ -2,7 +2,7 @@
 
 Name: cgal
 Version: 5.0.2
-Release: alt1
+Release: alt1.1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -17,6 +17,8 @@ BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
 BuildRequires: zlib-devel libX11 phonon-devel
 BuildRequires: liblapack-devel libtaucs-devel
+
+ExcludeArch: armh
 
 %description
 The goal of the CGAL Open Source Project is to provide easy access to
@@ -84,6 +86,9 @@ popd
 %doc %_docdir/%{name}*
 
 %changelog
+* Thu Jul 23 2020 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1.1
+- NMU: exclude armh from build architectures.
+
 * Wed Apr 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.2-alt1
 - Updated to upstream version 5.0.2.
 
