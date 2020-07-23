@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Wrapper around Proxmox REST API v2
 License: %mit
@@ -31,6 +31,8 @@ Pythonic API for a Proxmox cluster manipulation.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+Conflicts: python3-module-pymta-tests
+Conflicts: python3-module-m2r
 
 %description tests
 Pythonic API for a Proxmox cluster manipulation.
@@ -55,6 +57,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Thu Jul 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt2
+- Added conflicts with python3-module-pymta-tests and python3-module-m2r
+
 * Thu Jul 16 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt1
 - Updated to version 1.1.1
 - Fixed url tag
