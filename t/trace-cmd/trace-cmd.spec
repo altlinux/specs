@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     trace-cmd
-Version:  2.9
+Version:  2.9.1
 Release:  alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -31,9 +31,6 @@ debugfs file system under the tracing directory.
 %prep
 %setup
 sed -i s/not-a-git-repo/%version-%release/ scripts/utils.mk
-# For tests:
-sed -i 's/-lcunit -/- -lcunit/' Makefile
-sed -i 's/\\#include/#include/' Makefile
 
 %build
 export CFLAGS="%optflags -D_FORTIFY_SOURCE=2 -fstack-protector-strong -fstack-check"
@@ -71,6 +68,9 @@ vm-run --cpu=2 '
 %_libdir/traceevent
 
 %changelog
+* Thu Jul 23 2020 Vitaly Chikunov <vt@altlinux.org> 2.9.1-alt1
+- Update to trace-cmd-v2.9.1 (2020-07-22).
+
 * Mon Jul 20 2020 Vitaly Chikunov <vt@altlinux.org> 2.9-alt1
 - Import of trace-cmd-v2.9 (2020-07-17).
 - Add some testing into %%check section.
