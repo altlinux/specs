@@ -2,7 +2,7 @@
 %define install_all_tests 1
 
 Name: repocop-unittest-altlinux-python
-Version: 0.15
+Version: 0.16
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,7 @@ Url: http://repocop.altlinux.org
 
 Summary: repocop package checks for conformance with Python Packaging Policy.
 Group: Development/Other
-License: GPLv2 or Artistic-2.0
+License: GPLv2+ or Artistic-2.0
 Source: %name-%version.tar
 
 Requires: repocop > 0.40
@@ -60,6 +60,9 @@ install -pD -m 755 repocop-helper-altlinux-python-python2-in-spec \
 %endif
 
 %changelog
+* Wed Jul 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- added altlinux-python-python2-in-spec patchgenerator
+
 * Fri Jul 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - added altlinux-python-python2-in-spec posttest
 
