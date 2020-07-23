@@ -1,11 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Manual
 Name: perl-%dist
-Version: 5.9010
-Release: alt1.1
+Version: 5.9011
+Release: alt1
 Epoch: 1
 
 Summary: The Catalyst developer's manual
@@ -39,6 +39,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.9011-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.9010-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
