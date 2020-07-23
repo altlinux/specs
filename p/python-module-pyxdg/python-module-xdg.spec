@@ -1,61 +1,92 @@
-Version: 0.25
-Release: alt1.1.1
-%setup_python_module pyxdg
-Name: %packagename
+%define modname pyxdg
+%def_with python2
+%def_enable check
+
+Name: python-module-%modname
+Version: 0.26
+Release: alt1
 
 Summary: Implementations of freedesktop.org standards in Python
 License: LGPLv2
 Group: Development/Python
-URL: http://freedesktop.org/Software/pyxdg
+Url: http://freedesktop.org/Software/pyxdg
 
-Source0: %modulename-%version.tar
-
+#VCS: https://gitlab.freedesktop.org/xdg/pyxdg.git
+# https://github.com/takluyver/pyxdg.git
+Source: %modname-%version.tar
+Patch: %modname-0.26-alt-TryExec-test-py3.patch
+Patch1: %modname-0.26-alt-TryExec-test-py2.patch
 Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildArch: noarch
 
 Provides: pyxdg = %version-%release
 
-# Automatically added by buildreq on Sat Sep 29 2007 (-bi)
-BuildRequires: python-devel python-modules-compiler
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%{?_enable_check:BuildRequires: python3-module-nose}
 
-# Build dependencies specific to Python 3
-BuildRequires: rpm-build-python3 python3-devel
+%{?_with_python2:
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-modules-compiler
+%{?_enable_check:BuildRequires: python-module-nose icon-theme-hicolor shared-mime-info %_bindir/python2}}
 
 %description
 PyXDG contains implementations of freedesktop.org standards in Python.
 
-%package -n python3-module-%modulename
+%package -n python3-module-%modname
 Summary: Implementations of freedesktop.org standards in Python 3
 Group: Development/Python3
 
-%description -n python3-module-%modulename
+%description -n python3-module-%modname
 PyXDG contains implementations of freedesktop.org standards in Python 3.
 
 %prep
-%setup -n %modulename-%version
-%setup -D -c -n %modulename-%version
-mv %modulename-%version py3build
+%setup -n %modname-%version %{?_with_python2:-a0
+cp -a %modname-%version py2build
+pushd py2build
+%patch1 -p1
+popd}
+%patch -p1
 
 %build
-%python_build
-pushd py3build
 %python3_build
+%{?_with_python2:
+pushd py2build
+%python_build}
 
 %install
-%python_install
-pushd py3build
 %python3_install
+%{?_with_python2:
+pushd py2build
+%python_install
+popd}
 
-%files
-%doc AUTHORS ChangeLog README TODO
-%python_sitelibdir/*
+%check
+pushd test
+PYTHONPATH=%buildroot%python3_sitelibdir nosetests-3
+popd
+%{?_with_python2:
+pushd py2build/test
+PYTHONPATH=%buildroot%python_sitelibdir nosetests-2
+popd}
 
-%files -n python3-module-%modulename
+%files -n python3-module-%modname
 %doc AUTHORS ChangeLog README TODO
 %python3_sitelibdir/*
 
+%{?_with_python2:
+%files
+%doc AUTHORS ChangeLog README TODO
+%python_sitelibdir/*}
+
+
 %changelog
+* Thu Jul 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
+- updated to rel-0.26-2-g7ad4b32
+- made python2 build optional
+- enabled %%check
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.25-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
