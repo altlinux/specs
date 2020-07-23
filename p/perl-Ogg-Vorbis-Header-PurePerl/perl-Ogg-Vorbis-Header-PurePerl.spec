@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 # vim: set ft=spec: -*- rpm-spec -*-
 #   - Ogg::Vorbis::Header::PurePerl -
@@ -15,8 +16,8 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-Ogg-Vorbis-Header-PurePerl
-Version: 1.0
-Release: alt2
+Version: 1.03
+Release: alt1
 
 Summary: An object-oriented interface to Ogg Vorbis
 
@@ -27,7 +28,7 @@ Url: http://www.cpan.org
 Packager: Sir Raorn <raorn@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DANIEL/Ogg-Vorbis-Header-PurePerl-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Jan 04 2007
 BuildRequires: perl-devel
@@ -39,7 +40,7 @@ Ogg Vorbis information and comment fields.  (NOTE: This module currently
 supports only read operations).
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 [ %version = 1.0 ] && rm test.pl
 
 %build
@@ -49,9 +50,13 @@ supports only read operations).
 %perl_vendor_install
 
 %files
+%doc README Changes LICENSE.GPL examples
 %perl_vendor_privlib/Ogg*
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
 - NMU: fixed build
 
