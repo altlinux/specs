@@ -2,7 +2,7 @@
 
 Name: rcnet
 Version: 1.0
-Release: alt2
+Release: alt3
 Group: System/Base
 Summary: minimalistic and extremely flexible network setup environment
 License: WTFPL
@@ -28,6 +28,7 @@ not limited to) network equipment.
 %package netdevconf
 Group: System/Base
 Summary: Network device pre-configuration script for %name
+Conflicts: etcnet NetworkManager
 BuildArch: noarch
 %description netdevconf
 %summary
@@ -35,6 +36,7 @@ BuildArch: noarch
 %package -n sysconfig-network
 Group: System/Base
 Summary: One-file package to satisfy archaic dependencies
+Conflicts: etcnet NetworkManager
 BuildArch: noarch
 %description -n sysconfig-network
 %summary
@@ -104,5 +106,8 @@ rm -rf %buildroot
 
 
 %changelog
+* Thu Jul 23 2020 Gremlin from Kremlin <gremlin@altlinux.org> 1.0-alt3
+- explicit conflict with other network-config-subsystem packages (#38746)
+
 * Tue Jan 22 2019 Gremlin from Kremlin <gremlin@altlinux.org> 1.0-alt2
 - first release for Sisyphus (bumped to recover from a fuqup)
