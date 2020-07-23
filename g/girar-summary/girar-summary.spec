@@ -3,7 +3,7 @@
 
 Name: girar-summary
 Version: 1.0
-Release: alt1
+Release: alt2
 Summary: Summarize task build in a table
 License: GPL-2.0-only
 Group: Development/Other
@@ -21,13 +21,16 @@ Source: %name-%version.tar
 
 %install
 mkdir -p %buildroot%_bindir
-install -p -m644 girar-summary      %buildroot%_bindir
-install -p -m644 girar-summary-task %buildroot%_bindir
+install -p -m755 girar-summary      %buildroot%_bindir
+install -p -m755 girar-summary-task %buildroot%_bindir
 
 %files
 %_bindir/girar-summary
 %_bindir/girar-summary-task
 
 %changelog
+* Thu Jul 23 2020 Vitaly Chikunov <vt@altlinux.org> 1.0-alt2
+- Fix executable perms.
+
 * Wed Jul 22 2020 Vitaly Chikunov <vt@altlinux.org> 1.0-alt1
 - Version 1.0.
