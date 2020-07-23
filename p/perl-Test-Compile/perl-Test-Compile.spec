@@ -2,7 +2,7 @@
 %define sname test-compile
 
 Name: perl-Test-Compile
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: Check whether Perl module files compile correctly
 License: GPL+ or Artistic
@@ -50,6 +50,9 @@ file, and report its results in standard Test::Simple fashion.
 %perl_vendorlib/*
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
+- automated CPAN update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1
 - automated CPAN update
 
