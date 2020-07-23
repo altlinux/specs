@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Bzip2
 Name: perl-%dist
-Version: 2.093
+Version: 2.095
 Release: alt1
 
 Summary: Low-level interface to the bzip2 compression library
@@ -39,6 +39,9 @@ export BUILD_BZIP2=0 BZIP2_INCLUDE=%_includedir BZIP2_LIB=%_libdir
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 2.095-alt1
+- automated CPAN update
+
 * Wed Dec 11 2019 Igor Vlasenko <viy@altlinux.ru> 2.093-alt1
 - automated CPAN update
 
