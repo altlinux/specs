@@ -6,11 +6,11 @@
 %define avahi_group_priv netadmin
 
 Name: avahi
-Version: 0.7
-Release: alt3
+Version: 0.8
+Release: alt1
 
 Summary: Local network service discovery
-License: LGPL
+License: LGPLv2
 Group: System/Servers
 Url: http://www.avahi.org/
 
@@ -25,9 +25,11 @@ Obsoletes: mdnsresponder
 %endif
 
 BuildRequires: doxygen gcc-c++ glib2-devel graphviz intltool libcap-devel libdaemon-devel >= 0.13-alt2
-BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+2-devel libgtk+3-devel xmltoman
-%{?_with_python:BuildRequires: python-devel python-module-pygtk python-module-dbus pkgconfig(pygobject-3.0)}
+BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+3-devel libevent-devel qt5-base-devel xmltoman
 BuildRequires: desktop-file-utils
+%if_with python
+BuildRequires: python3-devel python3(dbus) pkgconfig(pygobject-3.0)
+%endif
 
 %description
 Avahi is a system which facilitates service discovery on
@@ -63,26 +65,10 @@ Obsoletes: libmdnsresponder
 Provides: libmdnsresponder
 %endif
 
-%package -n lib%name-devel
-Summary: Libraries and header files for avahi development
-Group: Development/C
-Requires: lib%name = %version-%release
-
-%if_with mdns
-Obsoletes: libmdnsresponder-devel
-%endif
-
 %package -n lib%name-glib
 Summary: Glib libraries for avahi
 Group: System/Libraries
 Requires: lib%name = %version-%release
-
-%package -n lib%name-glib-devel
-Summary: Libraries and header files for avahi glib development
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-glib = %version-%release
-Requires: glib2-devel
 
 %package -n lib%name-gobject
 Summary: GObject'ified version of avahi API
@@ -90,59 +76,31 @@ Group: System/Libraries
 Requires: lib%name = %version-%release
 Requires: lib%name-glib = %version-%release
 
-%package -n lib%name-gobject-devel
-Summary: Libraries and header files for avahi gobject development
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-glib-devel = %version-%release
-Requires: lib%name-gobject = %version-%release
-
-%package -n lib%name-ui
-Summary: UI libraries for avahi
+%package -n lib%name-libevent
+Summary: Libevent mainloop adapter for avahi
 Group: System/Libraries
 Requires: lib%name = %version-%release
-Requires: lib%name-glib = %version-%release
 
-%package -n lib%name-ui-common-devel
-Summary: Common header files for avahi UI development
-Group: Development/GNOME and GTK+
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-glib-devel = %version-%release
+%package -n lib%name-qt5
+Summary: Gt5 UI libraries for avahi
+Group: System/Libraries
+Requires: lib%name = %version-%release
 
-%package -n lib%name-ui-devel
-Summary: Libraries for avahi UI development
-Group: Development/GNOME and GTK+
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-ui-common-devel = %version-%release
-Requires: lib%name-glib-devel = %version-%release
-Requires: lib%name-ui = %version-%release
-
-%package -n lib%name-ui-gtk3
+%package -n lib%name-ui
 Summary: GTK3 UI libraries for avahi
 Group: System/Libraries
 Requires: lib%name = %version-%release
 Requires: lib%name-glib = %version-%release
+Provides: lib%name-ui-gtk3 = %version-%release
+Obsoletes: lib%name-ui-gtk3
 
-%package -n lib%name-ui-gtk3-devel
-Summary: Libraries for avahi GTK3 UI development
-Group: Development/GNOME and GTK+
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-glib-devel = %version-%release
-Requires: lib%name-ui-gtk3 = %version-%release
-Requires: lib%name-ui-common-devel = %version-%release
-
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for Avahi
 Group: Development/Python
 
 %package bookmarks
 Summary: Web service showing mDNS/DNS-SD announced HTTP services using the Avahi
 Group: Networking/WWW
-Requires: python-module-%name = %version-%release
-# still needed. that sucks
-%py_requires gobject dbus twisted twisted.internet
-# p-m-t-w doesn't provide twisted.web. that sucks too
-Requires: python-module-twisted-web
 BuildArch: noarch
 
 %package tools
@@ -154,8 +112,19 @@ Requires: lib%name = %version-%release
 Summary: UI tools for mDNS discovery
 Group: Graphical desktop/Other
 Requires: %name-daemon = %version-%release
-Requires: python-module-%name = %version-%release
-%py_requires gtk gobject dbus
+
+%package -n lib%name-devel
+Summary: Libraries and header files for avahi development
+Group: Development/C
+Provides: lib%name-glib-devel = %version-%release
+Provides: lib%name-gobject-devel = %version-%release
+Provides: lib%name-ui-devel = %version-%release
+Provides: lib%name-ui-gtk3-devel = %version-%release
+Obsoletes: lib%name-glib-devel lib%name-gobject-devel
+Obsoletes: lib%name-ui-devel lib%name-ui-gtk3-devel
+%if_with mdns
+Obsoletes: libmdnsresponder-devel
+%endif
 
 # {{{ descriptions
 
@@ -192,41 +161,23 @@ This package provides complementary DNS tracking service.
 %description -n lib%name
 Libraries for use of avahi.
 
-%description -n lib%name-devel
-Header files and libraries necessary for developing
-programs using avahi.
-
 %description -n lib%name-glib
 Libraries for easy use of avahi from glib applications.
-
-%description -n lib%name-glib-devel
-Header files and libraries necessary for developing
-programs using avahi with glib.
 
 %description -n lib%name-gobject
 GObject'ified version of avahi API
 
-%description -n lib%name-gobject-devel
-Header files and libraries necessary for developing
-programs using avahi with GObject/glib.
+%description -n lib%name-libevent
+Libevent mainloop adapter for avahi.
+
+%description -n lib%name-qt5
+Libraries for easy use of avahi from Qt UI applications.
 
 %description -n lib%name-ui
-Libraries for easy use of avahi from UI applications.
+Libraries for easy use of avahi from Gtk UI applications.
 
-%description -n lib%name-ui-common-devel
-Common header files necessary for developing programs using avahi with
-GTK+2 or GTK+3 UI.
-
-%description -n lib%name-ui-devel
-Header files and libraries necessary for developing
-programs using avahi with UI.
-
-%description -n lib%name-ui-gtk3
-Libraries for easy use of avahi from UI applications.
-
-%description -n lib%name-ui-gtk3-devel
-Header files and libraries necessary for developing
-programs using avahi with UI.
+%description -n python3-module-%name
+Python bindings for Avahi.
 
 %description bookmarks
 A web service for listing HTTP services that are announced via mDNS/DNS-SD
@@ -241,8 +192,9 @@ command-line utilitiesthat use avahi to browse and publish mDNS services and hos
 %description ui
 Various UI tools that use avahi to discover and use mDNS services and hosts.
 
-%description -n python-module-%name
-Python bindings for Avahi.
+%description -n lib%name-devel
+Header files and libraries necessary for developing
+programs using avahi.
 
 # }}}
 
@@ -252,7 +204,7 @@ touch config.rpath
 
 %build
 %autoreconf
-PYTHON=%__python; export PYTHON
+export PYTHON=%__python3
 %configure \
     --localstatedir=%_var \
     --with-distro=altlinux \
@@ -265,11 +217,9 @@ PYTHON=%__python; export PYTHON
     --disable-static \
 %if_with python
     --enable-python \
-    --enable-pygtk \
     --enable-python-dbus \
 %else
     --disable-python \
-    --disable-pygtk \
     --disable-python-dbus \
 %endif
 %if_with mdns
@@ -286,8 +236,8 @@ PYTHON=%__python; export PYTHON
 
 %install
 %make_install DESTDIR=%buildroot \
-    pythondir=%python_sitelibdir \
-    pyexecdir=%python_sitelibdir \
+    pythondir=%python3_sitelibdir \
+    pyexecdir=%python3_sitelibdir \
     install
 
 mkdir -p %buildroot%_var/resolv/var/avahi \
@@ -304,9 +254,11 @@ EOF
 
 find %buildroot%_libdir -name '*.la' -delete
 %find_lang %name
+%if_with python
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RemoteAccess \
 	%buildroot%_desktopdir/avahi-discover.desktop
+%endif
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RemoteAccess \
 	%buildroot%_desktopdir/bvnc.desktop
@@ -335,6 +287,9 @@ fi
 
 %preun daemon
 %preun_service avahi-daemon
+
+%add_python3_req_skip anydbm
+%set_python3_req_method strict
 
 %files
 
@@ -433,78 +388,73 @@ fi
 %_desktopdir/bssh.desktop
 %_desktopdir/bvnc.desktop
 
-%python_sitelibdir/avahi_discover
-
 %_man1dir/bssh.*
 %_man1dir/bvnc.*
 %_man1dir/avahi-discover.*
 %endif #python
 
-%files -n lib%name-devel
-%_libdir/libavahi-common.so
-%_libdir/libavahi-core.so
-%_libdir/libavahi-client.so
-
-%if_with mdns
-%_libdir/libdns_sd.so
-%endif
-
-%_includedir/avahi-client
-%_includedir/avahi-common
-%_includedir/avahi-core
-
-%_datadir/dbus-1/interfaces/*
-
-%if_with mdns
-%_includedir/avahi-compat-libdns_sd
-%endif
-
-%_pkgconfigdir/avahi-core.pc
-%_pkgconfigdir/avahi-client.pc
-
-%if_with mdns
-%_pkgconfigdir/avahi-compat-libdns_sd.pc
-%endif
-
 %files -n lib%name-glib
 %_libdir/libavahi-glib.so.*
-
-%files -n lib%name-glib-devel
-%_libdir/libavahi-glib.so
-%_includedir/avahi-glib
-%_pkgconfigdir/avahi-glib.pc
 
 %files -n lib%name-gobject
 %_libdir/libavahi-gobject.so.*
 
-%files -n lib%name-gobject-devel
-%_libdir/libavahi-gobject.so
-%_includedir/avahi-gobject
-%_pkgconfigdir/avahi-gobject.pc
+%files -n lib%name-libevent
+%_libdir/libavahi-libevent.so.*
+
+%files -n lib%name-qt5
+%_libdir/libavahi-qt5.so.*
 
 %files -n lib%name-ui
-%_libdir/libavahi-ui.so.*
-
-%files -n lib%name-ui-common-devel
-%_includedir/avahi-ui
-
-%files -n lib%name-ui-devel
-%_libdir/libavahi-ui.so
-%_pkgconfigdir/avahi-ui.pc
-
-%files -n lib%name-ui-gtk3
 %_libdir/libavahi-ui-gtk3.so.*
 
-%files -n lib%name-ui-gtk3-devel
-%_libdir/libavahi-ui-gtk3.so
-%_pkgconfigdir/avahi-ui-gtk3.pc
-
 %if_with python
-%files -n python-module-%name
-%python_sitelibdir/%name
-%endif		    
+%files -n python3-module-%name
+%python3_sitelibdir/%name
+%endif
+
+%files -n lib%name-devel
+%_includedir/avahi-client
+%_includedir/avahi-common
+%_includedir/avahi-core
+%_includedir/avahi-glib
+%_includedir/avahi-gobject
+%_includedir/avahi-libevent
+%_includedir/avahi-qt5
+%_includedir/avahi-ui
+%if_with mdns
+%_includedir/avahi-compat-libdns_sd
+%endif
+
+%_datadir/dbus-1/interfaces/*
+
+%_libdir/libavahi-common.so
+%_libdir/libavahi-core.so
+%_libdir/libavahi-client.so
+%_libdir/libavahi-glib.so
+%_libdir/libavahi-gobject.so
+%_libdir/libavahi-libevent.so
+%_libdir/libavahi-ui-gtk3.so
+%_libdir/libavahi-qt5.so
+%if_with mdns
+%_libdir/libdns_sd.so
+%endif
+
+%_pkgconfigdir/avahi-core.pc
+%_pkgconfigdir/avahi-client.pc
+%_pkgconfigdir/avahi-glib.pc
+%_pkgconfigdir/avahi-gobject.pc
+%_pkgconfigdir/avahi-libevent.pc
+%_pkgconfigdir/avahi-ui-gtk3.pc
+%_pkgconfigdir/avahi-qt5.pc
+%if_with mdns
+%_pkgconfigdir/avahi-compat-libdns_sd.pc
+%endif
 
 %changelog
+* Fri Jul 24 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8-alt1
+- 0.8 released
+
 * Tue Apr 21 2020 Fr. Br. George <george@altlinux.ru> 0.7-alt3
 - enable socket directory x bit to allow user mdns (closes: #37459)
 
