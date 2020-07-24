@@ -4,6 +4,7 @@
 %def_with parallelism
 %def_without fetch
 %def_without lto
+%def_with dconf
 
 # enable kde5 UI
 %def_enable kde5
@@ -28,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt5
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -102,6 +103,10 @@ BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
 
 %if_without python
 BuildRequires: python3-dev
+%endif
+
+%if_with dconf
+BuildRequires: libdconf-devel
 %endif
 
 %description
@@ -378,6 +383,9 @@ export CXXFLAGS="$CFLAGS"
 %if_with python
 	--enable-python=internal \
 %endif
+%if_with dconf
+    --enable-dconf \
+%endif
 %if_with fetch
 	--enable-fetch-external
 %else
@@ -566,6 +574,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Jul 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0.3-alt5
+- Rebuild with dconf enabled (Closes: 38752).
+
 * Mon Jun 01 2020 Ivan A. Melnikov <iv@altlinux.org> 6.3.0.3-alt4
 - Fix build with poppler 0.86.0 (see
   https://bugs.documentfoundation.org/show_bug.cgi?id=131353).
