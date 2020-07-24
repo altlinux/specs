@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.25.6
+Version: 1.25.10
 Release: alt1
 
 Epoch: 2
@@ -164,6 +164,9 @@ popd
 #python3_sitelibdir/*/test*
 
 %changelog
+* Fri Jul 24 2020 Anton Farygin <rider@altlinux.ru> 2:1.25.10-alt1
+- 1.25.6 -> 1.25.10
+
 * Sat Oct 05 2019 Anton Farygin <rider@altlinux.ru> 2:1.25.6-alt1
 - 1.24.3 -> 1.25.6
 
