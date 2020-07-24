@@ -6,7 +6,7 @@ Release:	%php7_release.1
 
 Summary:	OpenSSL module for php7
 Group:		System/Servers
-License:	PHP Licence
+License:	PHP-3.01
 
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
@@ -14,8 +14,9 @@ Source2:	php-%php7_extension-params.sh
 BuildRequires(pre): rpm-build-php7
 BuildRequires:	php7-devel = %php7_version
 
-# Automatically added by buildreq on Fri Jul 01 2005
 BuildRequires: libssl-devel pkgconfig
+# for tests
+BuildRequires: php7 /proc
 
 %description
 This module uses the functions of OpenSSL for generation and verification 
@@ -42,6 +43,9 @@ export LDFLAGS=-lphp-%_php7_version
 	#
 %php7_make
 
+%check
+make test
+
 %install
 %php7_make_install
 install -D -m 644 %SOURCE1 %buildroot/%php7_extconf/%php7_extension/config
@@ -50,7 +54,7 @@ install -D -m 644 %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %files
 %php7_extconf/%php7_extension
 %php7_extdir/*
-%doc CREDITS README
+%doc CREDITS
 
 %post
 %php7_extension_postin

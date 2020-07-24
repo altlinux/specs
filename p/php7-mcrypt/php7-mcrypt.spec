@@ -7,7 +7,7 @@ Release:	%php7_release
 
 Summary:	Mcrypt library support for PHP
 Group:		System/Servers
-License:	PHP Licence
+License:	PHP-3.01
 Source0:	%name-%mcrypt_version.tar
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
@@ -15,8 +15,7 @@ Source2:	php-%php7_extension-params.sh
 BuildRequires(pre): rpm-build-php7
 BuildRequires:	php7-devel = %php7_version
 
-# Automatically added by buildreq on Fri Jul 01 2005
-BuildRequires:  libmcrypt-devel
+BuildRequires:  libmcrypt-devel libltdl-devel
 
 %description
 The %name includes a dynamic shared object (DSO) that adds

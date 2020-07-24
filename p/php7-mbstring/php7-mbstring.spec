@@ -6,7 +6,7 @@ Release:	%php7_release
 
 Summary:	PHP module for support multi-byte strings.
 Group:		System/Servers
-License:	PHP License
+License:	PHP-3.01
 
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
@@ -14,6 +14,7 @@ Source2:	php-%php7_extension-params.sh
 BuildRequires(pre): rpm-build-php7
 BuildRequires:	php7-devel = %php7_version
 BuildRequires:	php7 = %php7_version
+BuildRequires:  liboniguruma-devel
 
 %description
 This package allows you to handle multiple Japanese encodings (SJIS, EUC,

@@ -6,7 +6,7 @@ Release:	%php7_release
 
 Summary:	PHP Data Objects Interface
 
-License:	PHP Licence
+License:	PHP-3.01
 Group:		System/Servers
 URL:		http://www.php.net/manual/en/book.pdo.php
 #URL:		http://pecl.php.net/package/pdo
@@ -16,10 +16,15 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 #Source0:	standart PHP module
 Source1:	php-%php7_extension.ini
 Source2:	php-%php7_extension-params.sh
+Patch1: 	php7-pdo-7.4-re2c-require.patch
+
 
 BuildRequires(pre): rpm-build-php7
 BuildRequires: php7-devel = %php7_version
 BuildRequires: gcc-c++ 
+BuildRequires: re2c
+
+BuildRequires: php7
 
 Requires: php7-pdo-driver
 
@@ -33,6 +38,7 @@ core, but still accessed using the same API.
 %prep
 %setup -T -c
 cp -pr -- %php7_extsrcdir/%php7_extension/* .
+%patch1 -p1
 
 %build
 phpize
@@ -47,6 +53,9 @@ export LDFLAGS=-lphp-%_php7_version
 
 %php7_make
 
+%check
+NO_INTERACTION=1 make test
+
 %install
 %php7_make_install
 install -D -m 644 -- %SOURCE1 %buildroot/%php7_extconf/%php7_extension/config
@@ -55,7 +64,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %files
 %php7_extconf/%php7_extension
 %php7_extdir/*
-%doc CREDITS README
+%doc CREDITS
 %exclude %php7_includedir/*
 
 %post
