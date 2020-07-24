@@ -1,13 +1,11 @@
 
-%define temporary_hack 1
-
 %define sover 5
 %define libtemplates libgrantlee_templates%sover
 %define libtextdocument libgrantlee_textdocument%sover
 
 Name: grantlee5
 Version: 5.2.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
@@ -18,16 +16,12 @@ License: LGPLv2+
 Source: %name-%version.tar
 # FC
 Patch1: grantlee-5.2.0-install_headers_into_versioned_directory.patch
-%ifdef temporary_hack
-Patch2: alt-51.patch
-Patch3: grantlee-5.1.0-install_headers_into_versioned_directory.patch
-%endif
 
 # Automatically added by buildreq on Mon Aug 10 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-script libstdc++-devel libwayland-client libwayland-server python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: cmake doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-type1-urw fonts-type1-xorg gcc-c++ graphviz libdb4-devel python-module-google qt5-script-devel rpm-build-python3 rpm-build-ruby
 BuildRequires: cmake doxygen gcc-c++ graphviz
-BuildRequires: qt5-base-devel qt5-script-devel rpm-build-kf5
+BuildRequires: qt5-base-devel qt5-declarative-devel rpm-build-kf5
 
 %description
 Grantlee is a plug-in based String Template system written
@@ -87,12 +81,7 @@ format for easy browsing.
 
 %prep
 %setup -q
-%ifndef temporary_hack
 %patch1 -p1
-%else
-%patch2 -p1
-%patch3 -p1
-%endif
 sed -i 's| -ansi ||' CMakeLists.txt
 
 %build
@@ -137,6 +126,10 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Fri Jul 24 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt3
+- return 5.2
+- fix build requries
+
 * Fri Jul 24 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt2
 - temporaty rollback to 5.1
 
