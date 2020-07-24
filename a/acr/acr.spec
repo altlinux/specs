@@ -1,5 +1,5 @@
 Name:     acr
-Version:  1.7.2
+Version:  1.9.3
 Release:  alt1
 
 Summary:  Auto Conf Replacement
@@ -40,5 +40,8 @@ This means that ACR is faster, smaller and easy to use.
 %_datadir/doc/%name-%version
 
 %changelog
+* Fri Jul 24 2020 Nikita Ermakov <arei@altlinux.org> 1.9.3-alt1
+- Update to 1.9.3
+
 * Mon Apr 08 2019 Nikita Ermakov <arei@altlinux.org> 1.7.2-alt1
 - Initial build for ALT Sisyphus
