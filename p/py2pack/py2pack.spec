@@ -1,25 +1,24 @@
 %define oname py2pack
 
 Name:       py2pack
-Version:    0.6.4
-Release:    alt2
+Version:    0.8.4
+Release:    alt1
 
 Summary:    Generate distribution packages from Python packages on PyPI
-License:    GPLv2
+License:    GPL-2.0+
 Group:      Development/Python3
 Url:        http://github.com/saschpe/py2pack
-Packager:   Vitaly Lipatov <lav@altlinux.ru>
+Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch:  noarch
 
 Source:     %name-%version.tar
-Source44:   import.info
-Patch0:     port-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-jinja2 python3-module-six
 BuildRequires: python3-module-cssselect python3-module-lxml
-BuildRequires: python3-module-requests python-tools-2to3
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-pbr
 
 Requires: python3-module-py2pack = %version-%release
 
@@ -42,26 +41,29 @@ universal tool to package Python modules.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p2
-
-%__subst "s|man/man1|share/man/man1|g" setup.py
 
 %build
+export PBR_VERSION=%version
 %python3_build
 
 %install
+export PBR_VERSION=%version
 %python3_install
 
 %files
 %_bindir/%oname
-%_man1dir/%oname.*
 
 %files -n python3-module-py2pack
-%_docdir/%name
 %python3_sitelibdir_noarch/%{oname}*
 
 
 %changelog
+* Fri Jul 24 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt1
+- New version (ALT #38757).
+- Fix License tag according to SPDX.
+- Build from upstream tag.
+- Change maintainer.
+
 * Fri Jan 31 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.4-alt2
 - Porting on Python3.
 
