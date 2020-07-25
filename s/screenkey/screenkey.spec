@@ -1,6 +1,6 @@
 Name: screenkey
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: A screen-cast tool to show your keys and based on key-mon project
 License: GPLv3+
@@ -43,10 +43,28 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/screenkey-stop.desktop
 %exclude %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jul 25 2020 Artyom Bystrov <arbars@altlinux.org> 1.1-alt2
+- Restoring changelog history of old versions
+
 * Mon Jul 20 2020 Artyom Bystrov <arbars@altlinux.org> 1.1-alt1
 - update version to 1.1
 - changed URL of sources
 - added translation to russian
 
 * Mon Dec 02 2019 Artyom Bystrov <arbars@altlinux.org> 0.10-alt1
-- initial build for ALT Sisyphus
+- Total update to version 0.10
+
+* Fri Nov 29 2019 Michael Shigorin <mike@altlinux.org> 0.3-alt3
+- screenkey-stop.desktop: consider rm#9540 notes
+
+* Thu Nov 28 2019 Michael Shigorin <mike@altlinux.org> 0.3-alt2
+- it's noarch
+- added screenkey-stop.desktop
+- fixed License: tag
+- minor spec cleanup
+
+* Thu Sep 05 2013 Denis Smirnov <mithraen@altlinux.ru> 0.3-alt1
+- %name.desktop fixes
+
+* Wed Sep 04 2013 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt1
+- initial build for ALT Linux Sisyphus
