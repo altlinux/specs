@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,9 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Sun Jul 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.4-alt1
+- hsh-install: changed to pass --ignoresize to rpmi --justdb.
+
 * Tue Apr 21 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.3-alt1
 - Added new --build-srpm-only mode to build src.rpm from pkg.tar.
 - Enabled --query-repackage mode by default.
