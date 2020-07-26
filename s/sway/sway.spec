@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sway
-Version: 1.4
-Release: alt3
+Version: 1.5
+Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -36,6 +36,8 @@ BuildRequires: libwayland-server-devel
 BuildRequires: wayland-protocols
 BuildRequires: libwlroots-devel >= 0.10.1-alt2
 BuildRequires: libxkbcommon-devel
+BuildRequires: libEGL-devel
+BuildRequires: libinput-devel
 BuildRequires: meson
 BuildRequires: scdoc
 BuildRequires: time
@@ -91,9 +93,7 @@ rm -rf -- \
 %doc README.md
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/config.d
-%dir %_sysconfdir/%name/security.d
 %config(noreplace) %_sysconfdir/%name/config
-%config(noreplace) %_sysconfdir/%name/security.d/00-defaults
 %_bindir/sway
 %_bindir/startsway
 %_bindir/swaybar
@@ -109,6 +109,9 @@ rm -rf -- \
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sun Jul 26 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.5-alt1
+- New version (1.5)
+
 * Thu May 14 2020 Alexey Shabalin <shaba@altlinux.org> 1:1.4-alt3
 - update BR:
   + delete libwlc-devel (removed sinse 1.0 relese)

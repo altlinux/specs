@@ -1,8 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 0.10
+%define ver_major 0.11
 
-%def_enable libcap
 %def_enable x11
 %def_enable xcb_icccm
 %def_enable xwayland
@@ -13,8 +12,8 @@
 %def_enable check
 
 Name: wlroots
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -39,7 +38,6 @@ BuildRequires: libinput-devel libxkbcommon-devel
 BuildRequires: libudev-devel libpixman-devel
 BuildRequires: pkgconfig(systemd)
 BuildRequires: libdrmhelper-devel
-%{?_enable_libcap:BuildRequires: libcap-devel}
 %{?_enable_x11:BuildRequires: pkgconfig(x11-xcb) pkgconfig(xcb) pkgconfig(xcb-xinput) pkgconfig(xcb-xfixes)}
 %{?_enable_xwayland:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-composite) pkgconfig(xcb-render) pkgconfig(xcb-xfixes)}
 %{?_enable_xcb_icccm:BuildRequires: pkgconfig(xcb-icccm)}
@@ -90,6 +88,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jul 26 2020 Alexey Gladkov <legion@altlinux.ru> 0.11.0-alt1
+- New version (0.11.0)
+
 * Fri Mar 27 2020 Alexey Gladkov <legion@altlinux.ru> 0.10.1-alt2
 - Add drm backend based on libdrmhelper library.
 
