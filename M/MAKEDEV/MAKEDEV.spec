@@ -1,6 +1,6 @@
 Name: MAKEDEV
 Version: 3.3.1
-Release: alt21
+Release: alt22
 
 %define revision 3
 
@@ -16,6 +16,7 @@ Patch2: MAKEDEV-3.3.1-dvb-alt.patch
 Patch3: MAKEDEV-3.3.1-alt-pack.patch
 Patch4: MAKEDEV-3.3.1-alt-dahdi.patch
 Patch5: MAKEDEV-3.3.1-alt-microcode-ACM.patch
+Patch6: MAKEDEV-3.3.1-alt-sysmacros.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildPreReq: rpm >= 0:4.0.3-alt1
@@ -84,6 +85,7 @@ This package contains commonly used /dev entries.
 %patch3 -p0
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 subst 's/-g -Wall/%optflags/;s/install /\$(INSTALL) /g' Makefile
 find -type f -name \*.orig -print0 | xargs -r0 rm -vf
@@ -311,6 +313,9 @@ PCA=/sbin/pam_console_apply
 # - add dev-asterisk (=> no more nonexistant group spam :)
 
 %changelog
+* Mon Jun 15 2020 Nikita Ermakov <arei@altlinux.org> 3.3.1-alt22
+- Fix undefined reference to makedev.
+
 * Sun May 12 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.1-alt21
 - replace Zaptel to DAHDI
 - remove /dev/MAKEDEV
