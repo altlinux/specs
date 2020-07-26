@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 0.15.7
+Version: 0.15.8
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -55,6 +55,9 @@ python3 setup.py test
 %doc *.rst LICENSE man/
 
 %changelog
+* Sun Jul 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.15.8-alt1
+- 0.15.8
+
 * Mon Jun 22 2020 Yuri N. Sedunov <aris@altlinux.org> 0.15.7-alt1
 - 0.15.7
 
