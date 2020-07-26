@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.4.2
+Version: 1.4.12
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -70,6 +70,8 @@ rm -rf %buildroot%_datadir/%name/web
 %preun
 %preun_service upmpdcli
 
+%set_python3_req_method strict
+
 # self-contained:
 %add_python3_req_skip StreamDecoder
 %add_python3_req_skip cmdtalkplugin
@@ -79,7 +81,7 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip uprclindex uprclinit uprclsearch uprclutils
 
 %files
-%config(noreplace) %_sysconfdir/%name.conf
+%config(noreplace) %attr(0640,root,_upmpd) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/upmpdcli
 
 %_initdir/upmpdcli
@@ -106,6 +108,12 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Sun Jul 26 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.12-alt1
+- 1.4.12 released
+
+* Wed Jan 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.5-alt1
+- 1.4.5 released
+
 * Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
 - 1.4.2 released
 
