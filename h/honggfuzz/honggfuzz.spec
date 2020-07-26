@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: honggfuzz
-Version: 2.2
+Version: 2.3.1
 Release: alt1
 Summary: Security oriented software fuzzer
 License: Apache-2.0
@@ -35,12 +35,12 @@ based on code coverage (SW and HW based).
 %install
 %makeinstall_std PREFIX=%_prefix
 mkdir -p %buildroot%docdir
-cp -a CHANGELOG COPYING CONTRIBUTING README.md docs/* \
+cp -a CHANGELOG COPYING CONTRIBUTING.md README.md docs/* \
    %buildroot%docdir
 
 %check
 PATH=%buildroot/%_bindir:$PATH
-honggfuzz --help
+honggfuzz 2>/dev/null
 honggfuzz -v -i examples/openssl/corpus_client -N 1 --run_time 1 -n 1 -P -- /bin/ls
 
 %files
@@ -52,5 +52,8 @@ honggfuzz -v -i examples/openssl/corpus_client -N 1 --run_time 1 -n 1 -P -- /bin
 %docdir
 
 %changelog
+* Sun Jul 26 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.1-alt1
+- Update to 2.3.1 (2020-07-22).
+
 * Thu May 14 2020 Vitaly Chikunov <vt@altlinux.org> 2.2-alt1
 - Initial import of 2.2
