@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.12.10
+Version: 1.14.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -22,6 +22,7 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
+BuildRequires: autoconf-archive
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
 %{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.24.0}
@@ -232,6 +233,10 @@ fi
 %endif
 
 %changelog
+* Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 1.14.0-alt1
+- Added autoconf-archive to BR.
+- Updated to 1.14.0.
+
 * Tue May 12 2020 Mikhail Efremov <sem@altlinux.org> 1.12.10-alt1
 - Updated to 1.12.10.
 

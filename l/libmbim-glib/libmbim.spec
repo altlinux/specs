@@ -1,8 +1,10 @@
 %define _name libmbim
 %define _libexecdir %prefix/libexec
 
+%def_enable introspection
+
 Name: %_name-glib
-Version: 1.22.0
+Version: 1.24.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -17,6 +19,7 @@ Patch: %_name-%version-%release.patch
 BuildRequires: glib2-devel libgio-devel libgudev-devel
 BuildRequires: python-modules-json
 BuildRequires: autoconf-archive
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 BuildRequires: gtk-doc help2man
 
 %define _unpackaged_files_terminate_build 1
@@ -49,6 +52,24 @@ Requires: glib2-devel
 This package contains libraries and header files for
 developing applications that use %name.
 
+%package gir
+Summary: GObject introspection data for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+%summary
+
+%package gir-devel
+Summary: GObject introspection devel data for %name
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
+
+%description gir-devel
+%summary
+
 %package devel-doc
 Summary: This package contains development documentation for %name
 Group: Development/Documentation
@@ -74,6 +95,7 @@ touch README ChangeLog
 %configure \
 	--disable-static \
 	--with-udev \
+	%{subst_enable introspection} \
 	--enable-gtk-doc \
 	--enable-more-warnings=%more_warnings
 %make_build
@@ -101,11 +123,23 @@ make check
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 
+%if_enabled introspection
+%files gir
+%_libdir/girepository-1.0/*.typelib
+
+%files gir-devel
+%_datadir/gir-1.0/*.gir
+%endif
+
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
 
 %changelog
+* Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
+- Enabled gobject-introspection support.
+- Updated to 1.24.0.
+
 * Tue Jan 21 2020 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt1
 - BR: Add autoconf-archive.
 - Updated to 1.22.0.
