@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blender
-Version: 2.83.1
-Release: alt2
+Version: 2.83.3
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -31,7 +31,6 @@ Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
 Patch26: blender-2.82-alt-link-fix.patch
 Patch27: blender-2.83.1-alt-remove-python2-dependency.patch
-Patch28: blender-2.83.1-alt-fix-armh-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
@@ -120,7 +119,6 @@ scripting, rendering, compositing, post-production and game creation
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%patch28 -p1
 
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
@@ -197,6 +195,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Mon Jul 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83.3-alt1
+- Updated to upstream version 2.83.3.
+
 * Fri Jul 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83.1-alt2
 - Removed dependency to python2-base.
 
