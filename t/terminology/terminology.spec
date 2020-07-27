@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.8
 
 %def_enable check
 
@@ -27,7 +27,7 @@ Provides: xvt
 BuildRequires(pre): meson rpm-build-licenses
 Conflicts: libelementary < 1.20.0
 BuildRequires: efl-libs-devel
-BuildRequires: libelementary-devel >= 1.20.0
+BuildRequires: libelementary-devel >= 1.22.0
 
 %description
 An EFL terminal emulator with some extra bells and whistles. It's brand
@@ -67,6 +67,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Mon Jul 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - fixed License tag
