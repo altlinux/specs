@@ -1,12 +1,11 @@
 %define modname colorlog
-%def_disable python2
 
-Name: python-module-%modname
-Version: 4.1.0
+Name: python3-module-%modname
+Version: 4.2.1
 Release: alt1
 
-Summary: Python module for log formatting with colors
-Group: Development/Python
+Summary: Python 3 module for log formatting with colors
+Group: Development/Python3
 License: MIT
 Url: http://pypi.python.org/pypi/%modname
 Source: http://pypi.io/packages/source/c/%modname/%modname-%version.tar.gz
@@ -16,57 +15,29 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
-%{?_enable_python2:
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools}
-
 %description
 colorlog.ColoredFormatter is a formatter for use with Python's logging
 module that outputs records using terminal colors.
 
-
-%package -n python3-module-%modname
-Summary: Python3 module for log formatting with colors
-Group: Development/Python3
-
-%description -n python3-module-%modname
-colorlog.ColoredFormatter is a formatter for use with Python's logging
-module that outputs records using terminal colors.
-
 %prep
-%setup -n %modname-%version %{?_enable_python2:-a0
-cp -a %modname-%version py2build}
+%setup -n %modname-%version
 
 %build
 %python3_build
 
-%{?_enable_python2:
-pushd py2build
-%python_build
-popd}
-
 %install
 %python3_install
 
-%{?_enable_python2:
-pushd py2build
-%python_install
-popd}
-
-%{?_enable_python2:
 %files
-%python_sitelibdir_noarch/%modname/
-%python_sitelibdir_noarch/*.egg-info
-%doc README.md
-}
-
-%files -n python3-module-%modname
 %python3_sitelibdir_noarch/%modname/
 %python3_sitelibdir_noarch/*.egg-info
 %doc README.md
 
 
 %changelog
+* Mon Jul 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Sat Jan 04 2020 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 - disabled python2 build
