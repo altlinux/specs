@@ -1,5 +1,5 @@
 Name: tinyemu
-Version: 20190210
+Version: 20191221
 Release: alt1
 License: MIT
 Url: http://bellard.org/tinyemu/
@@ -53,6 +53,9 @@ install -d %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Mon Jul 27 2020 Fr. Br. George <george@altlinux.ru> 20191221-alt1
+- Autobuild version bump to 20191221
+
 * Thu Feb 28 2019 Fr. Br. George <george@altlinux.ru> 20190210-alt1
 - Autobuild version bump to 20190210
 
