@@ -1,6 +1,6 @@
 Name: inxi
-Version: 3.1.04
-Release: alt2
+Version: 3.1.05
+Release: alt1
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -52,6 +52,9 @@ install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Jul 27 2020 Leontiy Volodin <lvol@altlinux.org> 3.1.05-alt1
+- New version (3.1.05)
+
 * Wed Jul 01 2020 Leontiy Volodin <lvol@altlinux.org> 3.1.04-alt2
 - Remove glxinfo from requires
 
