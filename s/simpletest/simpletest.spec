@@ -5,7 +5,7 @@
 
 Name:     simpletest
 Version:  11
-Release:  alt3
+Release:  alt4
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -71,6 +71,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Mon Jul 27 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt4
+- Add lcc-1.25 support (-pg + msan are not compatible).
+
 * Tue Jun 30 2020 Andrew Savchenko <bircoph@altlinux.org> 11-alt3
 - Simplify compiler specific pg-args selection.
 
