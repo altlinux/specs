@@ -1,6 +1,6 @@
 %define module_name     ipt-so
 %define module_version  1.0
-%define module_release  alt5
+%define module_release  alt6
 %define flavour         std-def
 
 %setup_kernel_module %flavour
@@ -92,9 +92,9 @@ cat > config.mk <<'EOF'
   PUT_PROGS += /sbin/iptables /sbin/iptables-save
   PUT_PROGS += /sbin/modinfo /sbin/insmod
   PUT_PROGS += /sbin/ip
-  PUT_FILES += /%_lib/iptables/lib*.so
   MODULES_ADD += xt_so iptable_filter iptable_security ip_tables
 EOF
+echo PUT_FILES += /%_lib/iptables/lib*.so >> config.mk
 if [ -e /lib/modules/*/kernel/net/bpfilter/bpfilter.ko* ]; then
   # Required for iptables since v4.18
   echo MODULES_ADD += bpfilter >> config.mk
@@ -109,7 +109,7 @@ make-initrd --no-checks --config=/usr/src/config.mk --kernel=%kversion-%flavour-
 timeout 60 \
 %qemu -kernel /boot/vmlinuz* -initrd /usr/src/initramfs.*.img \
 	-m 512 -nographic -bios bios.bin -M accel=kvm:tcg \
-	-append 'console=ttyS0 panic=1' 2>&1 | tr -d \\f | tee boot.log
+	-append 'console=ttyS0 panic=-1 no_timer_check' 2>&1 | tr -d \\f | tee boot.log
 egrep -q ' BUG:|Call Trace:|Kernel panic|Oops' boot.log && exit 1
 grep -q TEST-MARKER-OF-SUCCESS boot.log || exit 1
 
