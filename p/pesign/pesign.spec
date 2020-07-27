@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: pesign
 Version: 113
-Release: alt1
+Release: alt2
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -87,6 +87,9 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Mon Jul 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 113-alt2
+- macros.pesign: remove strings duplicates
+
 * Fri Apr 24 2020 Nikolai Kostrigin <nickel@altlinux.org> 113-alt1
 - new version
   + rediff ALT patches
