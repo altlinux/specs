@@ -1,18 +1,18 @@
 %define crda_lib /lib/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2018.05.31
+%define _db_date 2020.04.29
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.14
-Release: alt3.%_db_date.qa1
-License: copyleft-next 0.3.0
+Release: alt4
+License: copyleft-next-0.3.0
 Group: Networking/Other
 
 Url: http://www.linuxwireless.org/en/developers/Regulatory/CRDA
 
-Requires: firmware-%_db = %EVR
+Requires: firmware-%_db >= %EVR
 
 Source: %name-%version.tar
 Source1: %_db.tar
@@ -74,16 +74,7 @@ cd ../%_db
 %build
 %add_optflags %optflags_shared
 export CFLAGS="%optflags -Wno-error=unused-const-variable"
-
-# Use our own signing key to generate regulatory.bin
-cd %_db
-%make_build maintainer-clean
-%make_build REGDB_PRIVKEY=key.priv.pem REGDB_PUBKEY=key.pub.pem
-
-# Build CRDA using the new key and regulatory.bin from above
-cd ../%name-%version
-cp ../%_db/key.pub.pem pubkeys
-
+cd %name-%version
 %make SBINDIR=%sbindir/ LIBDIR=%crda_lib \
 	REG_BIN=../%_db/regulatory.bin V=1
 
@@ -127,6 +118,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Mon Jul 27 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.14-alt4
+- regdb updated to 20200429
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 4.14-alt3.2018.05.31.qa1
 - NMU: applied repocop patch
 
