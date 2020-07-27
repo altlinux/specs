@@ -6,14 +6,13 @@
 
 Name: php7-%php7_extension
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: 2D graph plotting library for PHP
 License: %qpl1
 Group: System/Servers
 
 Url: http://jpgraph.net
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 #see http://jpgraph.net/download/download.php?p=1
@@ -56,8 +55,6 @@ Requires: %name = %version-%release
 Requires: %extensiondir
 Requires: fonts-ttf-dejavu
 Requires: fonts-ttf-vera
-Requires: fonts-ttf-ms
-#Requires: fonts-ttf-chinese-big5
 
 %description examples
 This package contains examples of using the JpGraph library.
@@ -189,6 +186,9 @@ find %buildroot%_sysconfdir -type f -print0 \
 %config(noreplace) %apache2_mods_start/100-%name-doc.conf
 
 %changelog
+* Mon Jul 27 2020 Anton Farygin <rider@altlinux.ru> 4.3.0-alt2
+- removed requirement for nonfree ms-ttf fonts (closes: #29430)
+
 * Mon Apr 20 2020 Paul Wolneykien <manowar@altlinux.org> 4.3.0-alt1
 - No more base-doc package.
 - Update spec for the new PHP7 version. No more Apache v1.
