@@ -1,6 +1,6 @@
 Name: gcc-common
-Version: 1.4.24
-Release: alt4
+Version: 1.4.25
+Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL-2.0-or-later
@@ -101,6 +101,11 @@ This package contains common symlinks for the GNU Ada compiler (GNAT).
 
 %prep
 %setup -cT
+%ifarch %e2k
+%add_optflags -fwhole -g0
+%else
+%add_optflags -O3 -fwhole-program
+%endif
 
 %build
 build_with()
@@ -129,9 +134,11 @@ for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gdc gfortran gnat gtreelang pr
 %endif
 	ln -s gcc "%buildroot%_bindir/$n"
 done
+%ifnarch %e2k
 for n in dump tool; do
 	ln -s gcov "%buildroot%_bindir/gcov-$n"
 done
+%endif
 for n in f77 f95 g77; do
 	ln -s gfortran "%buildroot%_bindir/$n"
 done
@@ -184,9 +191,9 @@ cpp --version
 %_bindir/gcc-nm
 %_bindir/gcc-ranlib
 %_bindir/gcov
+%ifnarch %e2k
 %_bindir/gcov-tool
 %_bindir/gcov-dump
-%ifnarch %e2k
 %_bindir/protoize
 %_bindir/unprotoize
 %endif
@@ -220,6 +227,13 @@ cpp --version
 %endif
 
 %changelog
+* Mon Jul 27 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.25-alt1
+- Optimized gcc_wrapper further.
+
+* Fri Jul 03 2020 Andrew Savchenko <bircoph@altlinux.org> 1.4.24-alt5
+- Do not install gcov-{dump,tool} on E2K, because only gcov is available.
+- Enable additional optimizations.
+
 * Tue Jun 02 2020 Andrew Savchenko <bircoph@altlinux.org> 1.4.24-alt4
 - Add %%e2k arch support.
 
