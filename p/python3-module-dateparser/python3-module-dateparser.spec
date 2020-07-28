@@ -1,24 +1,22 @@
 %define modname dateparser
-
-%def_enable python2
 # /etc/localtime required
 %def_disable check
 
-Name: python-module-%modname
-Version: 0.7.4
+Name: python3-module-%modname
+Version: 0.7.6
 Release: alt1
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/dateparser
 
 #VCS: https://github.com/scrapinghub/dateparser.git
 Source: https://github.com/scrapinghub/dateparser/archive/v%version/%modname-%version.tar.gz
 BuildArch: noarch
 
-# https://pypi.org/project/umalqurra/
-%filter_from_requires /umalqurra/d
+#grep calendars setup.py 
+#'calendars': ['convertdate', 'umalqurra', 'jdatetime', 'ruamel.yaml'],
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -26,50 +24,33 @@ BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-nose-parameterized python3-module-wheel
 BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
 BuildRequires: python3-module-sphinx-devel
-%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-coverage python3-module-parameterized}
-
-%if_enabled python2
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-nose python-module-mock
-BuildRequires: python-module-nose-parameterized python-module-wheel
-BuildRequires: python-module-dateutil python-module-tzlocal python-module-regex
-%{?_enable_check:BuildRequires: python-module-flake8 python-module-coverage}
-%py_provides %modname
-%endif
+%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-coverage python3-module-parameterized
+BuildRequires: python3-module-orderedset python3-module-convertdate python3-module-ruamel-yaml python3-module-umalqurra}
 
 %description
 Date parsing library designed to parse dates from HTML pages.
 
-%package -n python3-module-%modname
-Summary: Python parser for human readable dates
-Group: Development/Python3
-%py3_provides %modname
-
-%description -n python3-module-%modname
-Date parsing library designed to parse dates from HTML pages.
-
-%package -n python3-module-%modname-pickles
+%package pickles
 Summary: Pickles for %modname
 Group: Development/Python3
 
-%description -n python3-module-%modname-pickles
+%description pickles
 Date parsing library designed to parse dates from HTML pages.
 
 This package contains pickles for %modname.
 
-%package -n python3-module-%modname-docs
+%package docs
 Summary: Documentation for %modname
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n python3-module-%modname-docs
+%description docs
 Date parsing library designed to parse dates from HTML pages.
 
 This package contains documentation for %modname.
 
 %prep
-%setup -n %modname-%version %{?_enable_python2:-a0
-mv %modname-%version python2}
+%setup -n %modname-%version
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
@@ -77,54 +58,33 @@ ln -s ../objects.inv docs/
 %build
 %python3_build_debug
 
-%if_enabled python2
-pushd python2
-%python_build_debug
-popd
-%endif
-
 %install
 %python3_install
 
 export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
+%make -C docs pickle html SPHINXBUILD=sphinx-build-3
 
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 
-%if_enabled python2
-pushd python2
-%python_install
-popd
-%endif
-
 %check
-python3 setup.py test
-%if_enabled python2
-pushd python2
-python setup.py test
-popd
-%endif
+%__python3 setup.py test
 
-%if_enabled python2
 %files
-%doc *.rst
-%python_sitelibdir/*
-%endif
-
-%files -n python3-module-%modname
-%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
+%doc *.rst
 
-%files -n python3-module-%modname-pickles
+%files pickles
 %python3_sitelibdir/*/pickle
 
-%files -n python3-module-%modname-docs
+%files docs
 %doc docs/_build/html/*
 
 
 %changelog
+* Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
+- 0.7.6 (python3 only)
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1
 - 0.7.4
 - enabled %%check
