@@ -75,8 +75,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.7
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1913,6 +1913,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Jul 27 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.7-alt1
+- 245.7
+
 * Tue Jul 07 2020 Nikita Ermakov <arei@altlinux.org> 1:245.6-alt2
 - disable kexec-tools for riscv64
 
