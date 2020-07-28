@@ -31,7 +31,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Web browser engine
@@ -46,6 +46,9 @@ Source1: webkit2gtk.env
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
 Patch1: webkitgtk-2.28.1-alt-python3.patch
+#https://bugs.webkit.org/show_bug.cgi?id=214828
+Patch10: webkitgtk-2.28.4-up-use-gles-on-arm.patch
+
 
 %define bwrap_ver 0.3.1
 
@@ -214,6 +217,7 @@ GObject introspection devel data for the JavaScriptCore library
 %setup -n %_name-%version
 %patch -b .bwrap
 %patch1 -p1 -b .python3
+%patch10 -p1
 
 # fix libWPEBackend-fdo soname
 sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
@@ -257,6 +261,12 @@ export PYTHON=%__python3
 -DENABLE_BUBBLEWRAP_SANDBOX=OFF \
 %else
 -DBWRAP_BIN=%bwrap_bin \
+%endif
+%ifarch %arm
+-DENABLE_GLES2=ON \
+%endif
+%ifarch armh
+-DENABLE_JIT=OFF
 %endif
 %nil
 
@@ -342,6 +352,11 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Jul 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.4-alt1
+- 2.28.4
+- %%arm: enabled GLES
+- armh: disabled JIT
+
 * Thu Jul 09 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
 - 2.28.3
 
