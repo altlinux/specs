@@ -1,7 +1,7 @@
 %define rname drkonqi
 
 Name: plasma5-%rname
-Version: 5.18.5
+Version: 5.19.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -16,11 +16,11 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Mar 13 2018 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel kf5-kwallet-devel kf5-kxmlrpcclient-devel libssl-devel python3-dev qt5-x11extras-devel ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-x11extras-devel
 BuildRequires: libssl-devel
 BuildRequires: kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel
-BuildRequires: kf5-kwallet-devel kf5-kxmlrpcclient-devel kf5-kwindowsystem-devel
+BuildRequires: kf5-kwallet-devel kf5-kxmlrpcclient-devel kf5-kwindowsystem-devel kf5-syntax-highlighting-devel
 
 %description
 The KDE Crash Handler.
@@ -69,6 +69,15 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/*drkonqi.desktop
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.3-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.2-alt1
+- new version
+
 * Thu May 07 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.18.5-alt1
 - new version
 
@@ -129,20 +138,20 @@ Requires: %name-common = %version-%release
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2
 - fix version
 
-* Tue Jul 03 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+* Tue Jul 03 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2
 - update russian translation
 
-* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1
 - new version
 
-* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1
 - new version
 
-* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
 - new version
 
-* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
 - initial build

@@ -14,7 +14,7 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.18.5
+Version: 5.19.4
 Release: alt1
 %K5init altplace
 
@@ -55,7 +55,8 @@ BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-k
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kidletime-devel
-BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel
+BuildRequires: kf5-kirigami-devel
+BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-kwayland-server-devel
 
 %description
 KDE Window Manager
@@ -150,7 +151,7 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 %_K5bin/kwin*
 %_K5exec/*kwin*
-%_K5lib/libkdeinit5_*.so
+#%_K5lib/libkdeinit5_*.so
 %_K5plug/platforms/KWinQpaPlugin.so
 %_K5plug/kf5/org.kde.kidletime.platforms/*.so
 %_K5plug/kf5/org.kde.kwindowsystem.platforms/*.so
@@ -201,6 +202,12 @@ KF5 library
 
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.4-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.3-alt1
+- new version
+
 * Thu May 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt1
 - new version
 

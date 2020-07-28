@@ -1,7 +1,10 @@
 %define rname ksysguard
 
+%define sover 0
+%define libksgrdbackend libksgrdbackend%sover
+
 Name: plasma5-%rname
-Version: 5.18.5
+Version: 5.19.4
 Release: alt1
 %K5init altplace no_appdata
 
@@ -10,15 +13,19 @@ Summary: KDE Workspace 5 system monitor
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: lm_sensors
+Provides: kf5-ksysguard = %EVR
+Obsoletes: kf5-ksysguard < %EVR
+
+Requires: lm_sensors plasma5-libksysguard
 
 Source: %rname-%version.tar
 Patch1: alt-ksysguarddrc.patch
+Patch2: alt-soversion.patch
 
 # Automatically added by buildreq on Mon Apr 06 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libksysguard-devel kf5-solid-devel kf5-sonnet-devel libsensors3-devel python-module-google qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libsensors3-devel libpcap-devel libcap-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
@@ -30,9 +37,6 @@ BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmode
 BuildRequires: kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel plasma5-libksysguard-devel kf5-solid-devel kf5-sonnet-devel
-
-Provides: kf5-ksysguard = %EVR
-Obsoletes: kf5-ksysguard < %EVR
 
 %description
 KSysGuard is a program to monitor various elements of your system, or any
@@ -64,10 +68,18 @@ Requires: %name-common = %version-%release
 %description -n libkf5sysguard
 KF5 library
 
+%package -n %libksgrdbackend
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libksgrdbackend
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -77,7 +89,10 @@ KF5 library
 %K5install_move data ksysguard knsrcfiles
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+%files common -f %name.lang
+%doc COPYING* README*
+
+%files
 %dir %_K5plug/ksysguard/
 %dir %_K5plug/ksysguard/process/
 %config(noreplace) %_sysconfdir/ksysguarddrc5
@@ -90,12 +105,11 @@ KF5 library
 %_K5xmlgui/*
 %_K5xdgapp/*.desktop
 #
-%_K5plug/ksysguard/process/ksysguard_plugin_*.so
+%_K5plug/ksysguard/process/ksysguard*.so
+%_K5plug/ksysguard/ksysguard*.so
 %_K5libexecdir/ksysguard/ksgrd_network_helper
+%_K5dbus_srv/org.kde.ksystemstats.service
 
-
-#%files common -f %name.lang
-#%doc COPYING.LIB README.md
 
 #%files devel
 #%_K5inc/ksysguard_version.h
@@ -104,10 +118,17 @@ KF5 library
 #%_K5lib/cmake/ksysguard
 #%_K5archdata/mkspecs/modules/qt_ksysguard.pri
 
-#%files -n libkf5sysguard
-#%_K5lib/libksysguard.so.*
+%files -n %libksgrdbackend
+%_K5lib/libksgrdbackend.so.%sover
+%_K5lib/libksgrdbackend.so.*
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.4-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.3-alt1
+- new version
+
 * Thu May 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt1
 - new version
 
@@ -168,64 +189,64 @@ KF5 library
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.7-alt1
 - new version
 
-* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1
 - new version
 
-* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1
 - new version
 
-* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
 - new version
 
-* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
 - new version
 
-* Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1%ubt
+* Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
 - new version
 
-* Mon Feb 19 2018 Maxim Voronov <mvoronov@altlinux.org> 5.12.0-alt2%ubt
+* Mon Feb 19 2018 Maxim Voronov <mvoronov@altlinux.org> 5.12.0-alt2
 - renamed kf5-ksysguard -> plasma5-ksysguard
 
-* Wed Feb 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
+* Wed Feb 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 
-* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
+* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1
 - new version
 
-* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
+* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1
 - new version
 
-* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1
 - new version
 
-* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1
 - new version
 
-* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1
 - new version
 
-* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1
 - new version
 
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
