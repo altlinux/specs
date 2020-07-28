@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
 Name:    drgn
-Version: 0.0.5
+Version: 0.0.7
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -58,5 +58,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Tue Jul 28 2020 Vitaly Chikunov <vt@altlinux.org> 0.0.7-alt1
+- Update to v0.0.7 (2020-07-27).
+
 * Wed Jun 17 2020 Vitaly Chikunov <vt@altlinux.org> 0.0.5-alt1
 - First import of v0.0.5 (2020-05-26).
