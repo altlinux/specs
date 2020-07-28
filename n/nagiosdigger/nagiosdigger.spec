@@ -5,7 +5,7 @@
 
 Name: nagiosdigger
 Version: 0.9
-Release: alt5
+Release: alt6
 
 Url: https://www.vanheusden.com/nagiosdigger/
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -26,7 +26,7 @@ Requires: perl-DBI
 Requires: php7-jpgraph
 Conflicts: nagios < 3.0.6-alt12
 
-Requires: %name-dbi
+Requires: %name-dbi = %version-%release
 
 BuildRequires: perl-DBI perl-DBD-mysql perl-DBD-Pg perl-Config-INI
 
@@ -47,7 +47,9 @@ Group: Monitoring
 
 Requires: perl-DBD-mysql
 Requires: php7-mysqli
-Provides: %name-dbi
+Requires: %name = %version-%release
+Provides: %name-dbi = %version-%release
+Obsoletes: %name < 0.9-alt5
 
 %description mysql
 MySQL dependencies and documentation (examples) for Nagiosdigger.
@@ -59,7 +61,8 @@ Group: Monitoring
 
 Requires: perl-DBD-Pg
 Requires: php7-pgsql
-Provides: %name-dbi
+Requires: %name = %version-%release
+Provides: %name-dbi = %version-%release
 
 %description pgsql
 PostgreSQL dependencies and documentation (examples) for Nagiosdigger.
@@ -98,6 +101,11 @@ a2enextra httpd-addon.d
 %files pgsql
 
 %changelog
+* Tue Jul 28 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt6
+- Hint a 'Pg' driver name for Postgres in config.ini.
+- Fix: Make nagiosdigger-mysql obsolete nagiosdigger < 0.9-alt5
+  (helps dist-upgrade).
+
 * Wed Jul 22 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt5
 - Use a single patch due to merges.
 - Fixed typo: COLSPNA -> COLSPAN.
