@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 2.0.3.1
-Release: alt3
+Version: 2.2.1
+Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
 License: MIT
@@ -16,11 +16,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest python-module-pytz
 
 %py3_provides %oname
-%py3_requires ephem pytz
-
+%py3_requires pytz pymeeus
 
 %description
 Converts between Gregorian dates and other calendar systems. Calendars
@@ -41,11 +40,13 @@ Julian, Mayan and Persian.
 py.test-%_python3_version tests/*.py
 
 %files
-%doc *.rst *.md
 %python3_sitelibdir/*
-
+%doc *.rst *.md
 
 %changelog
+* Thu Jun 11 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.3.1-alt3
 - python2 disabled
 
