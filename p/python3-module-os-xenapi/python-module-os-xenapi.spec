@@ -4,10 +4,10 @@
 
 Name: python3-module-%oname
 Version: 0.3.4
-Release: alt2
+Release: alt3
 Summary: XenAPI library for OpenStack projects
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://www.citrix.com
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
@@ -28,7 +28,6 @@ BuildRequires: python3-module-paramiko >= 2.0.0
 
 # doc
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx >= 4.7.0
 BuildRequires: python3-module-reno >= 2.5.0
 
 %description
@@ -76,6 +75,10 @@ rm -rf %buildroot%python3_sitelibdir/*/dom0
 #%%doc README.rst doc/build/html
 
 %changelog
+* Wed Jul 29 2020 Grigory Ustinov <grenka@altlinux.org> 0.3.4-alt3
+- Fixed FRBFS.
+- Fixed license.
+
 * Sat Oct 26 2019 Grigory Ustinov <grenka@altlinux.org> 0.3.4-alt2
 - Build without python2.
 

@@ -1,11 +1,11 @@
 %define oname os-testr
 
 Name: python3-module-os-testr
-Version: 0.8.2
-Release: alt2
+Version: 2.0.0
+Release: alt1
 Summary: A testr wrapper to provide functionality for OpenStack projects
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 Packager: Lenar Shakirov <snejok@altlinux.ru>
@@ -38,8 +38,6 @@ This package contains tests for %oname.
 %package doc
 Summary: Documentation for ostestr module
 Group: Development/Documentation
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
 
 %description doc
 Documentation for ostestr module
@@ -78,6 +76,10 @@ rm -fr doc/build/html/.buildinfo
 #%%doc doc/build/html
 
 %changelog
+* Wed Jul 29 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Build new version.
+- Fix license.
+
 * Tue Oct 29 2019 Grigory Ustinov <grenka@altlinux.org> 0.8.2-alt2
 - Build without python2.
 
