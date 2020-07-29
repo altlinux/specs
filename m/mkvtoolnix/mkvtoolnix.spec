@@ -14,14 +14,13 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 47.0.0
-Release: alt2
-
+Version: 48.0.0
+Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
-
 Url: https://mkvtoolnix.download/
+
 # https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
 
@@ -30,7 +29,7 @@ Provides: mkvmerge = %EVR
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs
-BuildRequires: libcurl-devel libebml-devel >= 1.3.9 libmatroska-devel >= 1.5.2 libfmt-devel >= 5.3.0
+BuildRequires: libcurl-devel libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 libfmt-devel >= 6.1.0
 BuildRequires: docbook-style-xsl xsltproc ruby-tools
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
@@ -174,6 +173,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Wed Jul 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 48.0.0-alt1
+- Updated to upstream version 48.0.0.
+
 * Fri Jul 10 2020 Michael Shigorin <mike@altlinux.org> 47.0.0-alt2
 - e2k, riscv64: fix broken boost.m4
 
