@@ -1,9 +1,9 @@
 Name: kodi
-Version: 18.7.1
-Release: alt2
+Version: 18.8
+Release: alt1
 
 Summary: Kodi Media Center
-License: GPL
+License: GPL-2.0-or-later
 Group: Video
 Url: http://kodi.tv
 
@@ -168,6 +168,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Wed Jul 29 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.8-alt1
+- 18.8 Leia released
+
 * Tue Jul 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.7.1-alt2
 - drop unused libplist BR
 
