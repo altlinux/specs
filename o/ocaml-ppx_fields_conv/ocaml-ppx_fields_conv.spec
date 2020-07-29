@@ -2,8 +2,8 @@
 %define  modulename ppx_fields_conv
 
 Name:    ocaml-%modulename
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml records
 License: MIT
@@ -63,6 +63,9 @@ dune runtest
 %_libdir/ocaml/%{modulename}*/*.ml
 
 %changelog
+* Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - built as release (dune build -p) against incomplete dependencies
   in devel package

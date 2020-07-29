@@ -2,7 +2,7 @@
 %define  modulename ppx_variants_conv
 
 Name:    ocaml-%modulename
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml variant types
@@ -36,7 +36,7 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+dune build -p %modulename
 
 %install
 dune install --destdir=%buildroot
@@ -63,5 +63,8 @@ dune runtest
 %_libdir/ocaml/%{modulename}*/*.ml
 
 %changelog
+* Wed Sep 09 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
