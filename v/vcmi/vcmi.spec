@@ -1,22 +1,17 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: vcmi
 Version: 0.99
-Release: alt5.1
+Release: alt6.20200705
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Games/Strategy
 
 Url: http://wiki.vcmi.eu/index.php?title=Main_Page
-Source: %name-%version.tar
-
-Patch1: vcmi-boost-1.66.patch
-Patch2: vcmi-boost-1.66-2.patch
-# https://github.com/vcmi/vcmi/pull/615
-Patch3: vcmi-boost-1.66-3.patch
-Patch4: vcmi-boost-1.66-4.patch
-Patch5: vcmi-boost-1.66-5.patch
-Patch6: vcmi-boost-1.66-6.patch
-Patch7: vcmi-boost-1.66-7.patch
+Source0: %name-%version.tar
+Source1: fuzzilite-6.0.tar
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -38,7 +33,6 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libavresample)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libavfilter)
-BuildRequires: pkgconfig(fuzzylite)
 BuildRequires: pkgconfig(minizip)
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5Widgets)
@@ -82,14 +76,8 @@ VCMI - это фанатский проект с открытым исходны
 Вам нужно установить WoG перед запуском VCMI.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%setup
+tar -xf %SOURCE1 -C AI/FuzzyLite
 
 %ifarch %e2k
 # unsupported as of lcc 1.24.11
@@ -97,10 +85,11 @@ VCMI - это фанатский проект с открытым исходны
 %endif
 
 %build
-%cmake -DLIB_DIR=%_lib/%name \
+%cmake \
        -DCMAKE_INSTALL_LIBDIR=%_lib \
        -DCMAKE_SKIP_RPATH=OFF \
-       -DENABLE_SDL2=ON
+       -DENABLE_SDL2=ON \
+       -DENABLE_TEST=OFF
 
 %cmake_build
 
@@ -110,7 +99,7 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
 rm -f %buildroot%_libdir/*.a
 
 %files
-%doc README.md README.linux AUTHORS ChangeLog
+%doc README.md AUTHORS ChangeLog
 %_bindir/%{name}*
 %_datadir/%name/
 %_desktopdir/*.desktop
@@ -119,6 +108,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Wed Jul 29 2020 Anton Midyukov <antohami@altlinux.org> 0.99-alt6.20200705
+- New snapshot
+
 * Thu Jun 25 2020 Michael Shigorin <mike@altlinux.org> 0.99-alt5.1
 - Spec fixup/cleanup
 - E2K: avoid lcc-unsupported option
