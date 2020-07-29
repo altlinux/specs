@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Media Sharing Server
@@ -130,6 +130,8 @@ This package contains command line utilities for the PipeWire media server.
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
+%_udevrulesdir/90-%name-alsa.rules
+%_datadir/alsa-card-profile/
 %if_enabled systemd
 %_prefix/lib/systemd/user/pipewire.service
 %_prefix/lib/systemd/user/pipewire.socket
@@ -188,6 +190,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Wed Jul 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- updated to 0.3.8-1-gc04d57d5
+
 * Tue Jul 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - updated to 0.3.7-5-gcc0727e6
 
