@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        78.0.2
+Version:        78.1.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -443,18 +443,32 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jul 28 2020 Andrey Cherepanov <cas@altlinux.org> 78.1.0-alt1
+- New release (78.1.0).
+- Fixes:
+  + CVE-2020-15652 Potential leak of redirect targets when loading scripts in a worker
+  + CVE-2020-6514 WebRTC data channel leaks internal address to peer
+  + CVE-2020-15655 Extension APIs could be used to bypass Same-Origin Policy
+  + CVE-2020-15653 Bypassing iframe sandbox when allowing popups
+  + CVE-2020-6463 Use-after-free in ANGLE gl::Texture::onUnbindAsSamplerTexture
+  + CVE-2020-15656 Type confusion for special arguments in IonMonkey
+  + CVE-2020-15658 Overriding file type when saving to disk
+  + CVE-2020-15657 DLL hijacking due to incorrect loading path
+  + CVE-2020-15654 Custom cursor can overlay user interface
+  + CVE-2020-15659 Memory safety bugs fixed in Firefox 79 and Firefox ESR 78.1
+
 * Sat Jul 18 2020 Andrey Cherepanov <cas@altlinux.org> 78.0.2-alt1
 - New ESR version (78.0.2) (based on legion@ spec and patches).
 - Package localization files bundled (only kk,ru,uk locales are suppored).
 
 * Mon Jul 13 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.2-alt1
 - New release (78.0.2).
-- Security fixes:
+- Fixes:
   + MFSA-2020-0003: X-Frame-Options bypass using object or embed tags
 
 * Sat Jul 04 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.1-alt1
 - New release (78.0.1).
-- Security fixes:
+- Fixes:
   + CVE-2020-12415: AppCache manifest poisoning due to url encoded character processing
   + CVE-2020-12416: Use-after-free in WebRTC VideoBroadcaster
   + CVE-2020-12417: Memory corruption due to missing sign-extension for ValueTags on ARM64
