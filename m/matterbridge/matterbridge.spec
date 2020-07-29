@@ -1,7 +1,7 @@
 %global import_path github.com/42wim/matterbridge
 
 Name: matterbridge
-Version: 1.17.5
+Version: 1.18.0
 Release: alt1
 
 Summary: A simple chat bridge
@@ -20,32 +20,45 @@ Source1: %name.watch
 %description
 Bridges between a growing number of protocols.
 
+Features:
+
+* Support bridging between any protocols
+* Support multiple gateways(bridges) for your protocols
+* Message edits and deletes
+* Preserves threading when possible
+* Attachment / files handling
+* Username and avatar spoofing
+* Private groups
+* API
+
 Natively supported:
 
-* Mattermost
-* IRC
-* XMPP
-* Gitter
-* Slack
 * Discord
-* Telegram
-* Rocket.chat
-* Matrix
-* Steam
-* Twitch
-* Ssh-chat
-* WhatsApp
-* Zulip
+* Gitter
+* IRC
 * Keybase
-* msteams
+* Matrix
+* Mattermost
+* Microsoft Teams
+* Nextcloud Talk
+* Rocket.chat
+* Slack
+* Ssh-chat
+* Steam
+* Telegram
+* Twitch
+* WhatsApp
+* XMPP
+* Zulip
 
 3rd party via matterbridge API:
 
+* Discourse
+* Facebook messenger
 * Minecraft
 * Reddit
-* Facebook messenger
-* Discourse
 * Counter-Strike, half-life and more
+* MatterAMXX
 
 %prep
 %setup
@@ -87,6 +100,9 @@ popd
 %_unitdir/matterbridge.service
 
 %changelog
+* Wed Jul 29 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1
+- Updated to 1.18.0.
+
 * Mon Jun 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.17.5-alt1
 - Updated to 1.17.5.
 - Updated watch file.
