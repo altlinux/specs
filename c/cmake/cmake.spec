@@ -5,7 +5,7 @@
 %def_without check
 
 Name: cmake
-Version: 3.18.0
+Version: 3.18.1
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -296,6 +296,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.1-alt1
+- new version 3.18.1 (with rpmrb script)
+
 * Wed Jul 15 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.0-alt1
 - new version 3.18.0 (with rpmrb script)
 
