@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        78.0.2
+Version:        79.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,8 +47,10 @@ Patch007: 0007-ALT-Fix-aarch64-build.patch
 Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
-Patch011: 0011-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
+Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
 ### End Patches
+
+ExcludeArch: armh ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -58,7 +60,7 @@ BuildRequires: clang10.0
 BuildRequires: clang10.0-devel
 BuildRequires: llvm10.0-devel
 BuildRequires: lld10.0-devel
-%ifarch armh %{ix86}
+%ifarch armh
 BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
@@ -66,37 +68,49 @@ BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
-BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXi-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
-BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: zip unzip
-BuildRequires: bzlib-devel zlib-devel
-BuildRequires: libcairo-devel libpixman-devel
-BuildRequires: libGL-devel
-BuildRequires: libwireless-devel
-BuildRequires: libalsa-devel
-BuildRequires: libnotify-devel
-BuildRequires: libevent-devel
-BuildRequires: libproxy-devel
-BuildRequires: libshell
-BuildRequires: libvpx-devel
-BuildRequires: libgio-devel
-BuildRequires: libfreetype-devel fontconfig-devel
-BuildRequires: libstartup-notification-devel
-BuildRequires: libffi-devel
-BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
-BuildRequires: libopus-devel
-BuildRequires: libpulseaudio-devel
-#BuildRequires: libicu-devel
-BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
-BuildRequires: nasm
-BuildRequires: libxkbcommon-devel
-BuildRequires: libdrm-devel
+BuildRequires: nasm yasm
+BuildRequires: zip unzip
+BuildRequires: libshell
+BuildRequires: libwireless-devel
+BuildRequires: xorg-cf-files chrpath alternatives
+BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
+BuildRequires: pkgconfig(xt)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xscrnsaver)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(dri)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(libevent)
+BuildRequires: pkgconfig(libproxy-1.0)
+BuildRequires: pkgconfig(vpx)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(icu-i18n)
 
 # Python requires
 BuildRequires: /dev/shm
@@ -110,9 +124,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 BuildRequires: python3-base
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pip
-BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(pip)
+BuildRequires: python3(sqlite3)
 
 # Rust requires
 BuildRequires: /proc
@@ -154,8 +168,8 @@ cross-platform.
 %package wayland
 Summary:    Firefox Wayland launcher.
 Group:      Networking/WWW
-BuildArch:  noarch
-Requires:   %name
+
+Requires: %name >= %version-%release
 
 %description wayland
 The firefox-wayland package contains launcher and desktop file
@@ -178,7 +192,7 @@ Summary:	Firefox configuration with the paranoid privacy settings
 Group:		System/Configuration/Networking
 BuildArch:	noarch
 
-Requires: %name = %version-%release
+Requires: %name >= %version-%release
 
 %description -n firefox-config-privacy
 Settings disable:
@@ -222,9 +236,9 @@ ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 %ifnarch armh %{ix86} ppc64le
 ac_add_options --enable-linker=lld
+%endif
 %ifnarch x86_64
 ac_add_options --disable-webrtc
-%endif
 %endif
 %ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
@@ -236,8 +250,10 @@ ac_add_options --disable-rust-simd
 EOF
 
 find third_party \
-	-type f \( -name '*.so' -o -name '*.o' \) \
-	-print -delete
+	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
+	-delete
+
+rm -rf -- obj-x86_64-pc-linux-gnu
 
 
 %build
@@ -245,27 +261,6 @@ find third_party \
 CBINDGEN_HOME="$PWD/cbindgen"
 CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
 
-if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
-	mkdir -p -- "$CBINDGEN_HOME"
-
-	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
-
-	cat > "$CBINDGEN_HOME/config" <<-EOF
-		[source.crates-io]
-		replace-with = "vendored-sources"
-
-		[source.vendored-sources]
-		directory = "$CBINDGEN_HOME"
-	EOF
-
-	env CARGO_HOME="$CBINDGEN_HOME" \
-		cargo install cbindgen
-fi
-
-# compile firefox
-cd mozilla
-
-%add_optflags %optflags_shared
 %add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
@@ -290,6 +285,7 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 %ifarch armh
 export CC="gcc"
 export CXX="g++"
+export MOZ_PARALLEL_BUILD=8
 %else
 export CC="clang"
 export CXX="clang++"
@@ -298,19 +294,41 @@ export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
 %endif
+
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
-export srcdir="$PWD"
 export SHELL=/bin/sh
-export RUSTFLAGS="-Cdebuginfo=0"
-export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
-export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
-python3 ./mach python --exec-file /dev/null
+export RUST_BACKTRACE=1
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
+
+if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
+	mkdir -p -- "$CBINDGEN_HOME"
+
+	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
+
+	cat > "$CBINDGEN_HOME/config" <<-EOF
+		[source.crates-io]
+		replace-with = "vendored-sources"
+
+		[source.vendored-sources]
+		directory = "$CBINDGEN_HOME"
+	EOF
+
+	env CARGO_HOME="$CBINDGEN_HOME" \
+		cargo install cbindgen
+fi
+
+# compile firefox
+cd mozilla
+
+export srcdir="$PWD"
+#export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
+export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 
 # Fix virtualenv
+python3 ./mach python --exec-file /dev/null
 pyver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_info))')"
-
 find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
 	-mindepth 1 -maxdepth 1 \
 	-exec mv -t "objdir/_virtualenvs/init_py3/lib/$pyver/site-packages" -- '{}' '+'
@@ -394,7 +412,9 @@ export XDG_SESSION_TYPE=wayland
 
 unset DISPLAY
 
-exec %_bindir/firefox "$@"
+BIN="%_bindir/firefox"
+
+exec "$BIN" "$@"
 EOF
 
 chmod +x ./%_bindir/firefox-wayland
@@ -465,6 +485,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jul 30 2020 Alexey Gladkov <legion@altlinux.ru> 79.0-alt1
+- New release (79.0).
+- ExcludeArch armh ppc64le
+- Security fixes:
+  + CVE-2020-15652: Potential leak of redirect targets when loading scripts in a worker
+  + CVE-2020-6514: WebRTC data channel leaks internal address to peer
+  + CVE-2020-15655: Extension APIs could be used to bypass Same-Origin Policy
+  + CVE-2020-15653: Bypassing iframe sandbox when allowing popups
+  + CVE-2020-6463: Use-after-free in ANGLE gl::Texture::onUnbindAsSamplerTexture
+  + CVE-2020-15656: Type confusion for special arguments in IonMonkey
+  + CVE-2020-15658: Overriding file type when saving to disk
+  + CVE-2020-15657: DLL hijacking due to incorrect loading path
+  + CVE-2020-15654: Custom cursor can overlay user interface
+  + CVE-2020-15659: Memory safety bugs fixed in Firefox 79
+
 * Mon Jul 13 2020 Alexey Gladkov <legion@altlinux.ru> 78.0.2-alt1
 - New release (78.0.2).
 - Security fixes:
