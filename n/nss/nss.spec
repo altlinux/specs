@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.54.0
+Version:	3.55.0
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -13,8 +13,6 @@ Source2:	nss-config.in
 Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
-
-Patch00: 0001-MOZILLA-1643528-Cannot-compile-code-with-nss-headers.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -97,8 +95,6 @@ Netscape Network Security Services Utilities
 
 %prep
 %setup -q
-
-%patch00 -p2
 
 %build
 mkdir -p bin
@@ -230,6 +226,13 @@ EOF
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Thu Jul 30 2020 Alexey Gladkov <legion@altlinux.ru> 3.55.0-alt1
+- New version (3.55).
+- Security fixes:
+  + CVE-2020-6829, CVE-2020-12400: Replace P384 and P521 with new, verifiable implementations from Fiat-Crypto and ECCKiila.
+  + CVE-2020-12401: Remove unnecessary scalar padding.
+  + CVE-2020-12403: Explicitly disable multi-part ChaCha20 (which was not functioning correctly) and more strictly enforce tag length.
+
 * Mon Jun 29 2020 Alexey Gladkov <legion@altlinux.ru> 3.54.0-alt1
 - New version (3.54).
 - Merge libnss and libnss-sysinit.
