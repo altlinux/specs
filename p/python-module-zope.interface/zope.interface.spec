@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 4.7.2
+Version: 5.1.0
 Release: alt1
 
 Summary: Zope interfaces package
@@ -28,9 +28,11 @@ BuildRequires: python3-dev
 BuildRequires: python-module-tox
 BuildRequires: python-module-zope.event
 BuildRequires: python-module-coverage
+BuildRequires: python-module-zope.testing
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.event
 BuildRequires: python3-module-coverage
+BuildRequires: python3-module-zope.testing
 %endif
 
 %description
@@ -151,6 +153,9 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Tue Mar 17 2020 Grigory Ustinov <grenka@altlinux.org> 4.7.2-alt1
 - Automatically updated to 4.7.2.
 - Build with check.
