@@ -63,8 +63,8 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.8.4
-Release: alt5
+Version: 5.9.0
+Release: alt1
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -262,6 +262,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Thu Jul 30 2020 Michael Shigorin <mike@altlinux.org> 5.9.0-alt1
+- new version (watch file uupdate)
+
 * Thu Jul 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt5
 - don't package pki manpages
 
