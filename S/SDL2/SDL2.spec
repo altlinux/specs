@@ -5,7 +5,7 @@
 
 Name: SDL2
 Version: 2.0.12
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -73,6 +73,7 @@ to develop SDL applications.
 %configure \
     --enable-video-vulkan \
     --enable-video-wayland \
+    --disable-rpath \
     --disable-static
     
 %make_build
@@ -96,6 +97,9 @@ rm %buildroot%_libdir/*.a
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Thu Jul 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.12-alt3
+- Disabled rpath.
+
 * Mon Mar 16 2020 Nazarov Denis <nenderus@altlinux.org> 2.0.12-alt2
 - Restore khrplatform patch
 

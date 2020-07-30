@@ -1,26 +1,40 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: warzone2100
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
+
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
-Url: http://wz2100.net/
+
+Url: https://wz2100.net
 
 # https://github.com/Warzone2100/warzone2100.git
 Source: %name-%version.tar
 #Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
 Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
-# Regenerate it for each version by running following command on release tag:
-# ./build_tools/autorevision -t sh -o autorevision.cache > autorevision-$version.cache
+
+# Upstream now generates cache via cmake. 
+# Use following command on clean full upstream copy of repository while current release tag is checked out:
+# cmake -DOUTPUT_TYPE=sh -DOUTPUT_FILE=autorevision.cache -P build_tools/autorevision.cmake
+# ATTENTION: this must be done on pristine full clone of upstream repository, which must include all upstream tags
+# and NO downstream tags.
+# It counts tags, and resulting information may be used as identificator in multiplayer games to check if client
+# has compatible version.
+# Thus, generated file must be identical to one included in upstream source tarball, maybe with an exception of VCS_BASENAME and VCS_BRANCH values.
+# Failing to follow doing so won't lead to build failure, but may lead to inability to play multiplayer mode with other builds of game.
 Source2: autorevision-%version.cache
 
 # submodules
-Source3: %name-%version-3rdparty-sha.tar
+Source3: %name-%version-3rdparty-date.tar
+Source4: %name-%version-3rdparty-discord-rpc.tar
+Source5: %name-%version-3rdparty-EmbeddedJSONSignature.tar
+Source6: %name-%version-3rdparty-launchinfo.tar
+Source7: %name-%version-data-base-texpages.tar
+Source8: %name-%version-data-music.tar
 
 Patch1: %name-alt-unbundle-libs.patch
-Patch2: %name-alt-sdl2-workaround.patch
 
 BuildRequires: /proc
 BuildRequires: qt5-base-devel qt5-3d-devel qt5-script-devel qt5-x11extras-devel openssl-devel
@@ -32,10 +46,13 @@ BuildRequires: cmake
 BuildRequires: libminiupnpc-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: libutf8proc-devel
+BuildRequires: libre2-devel
+BuildRequires: libsodium-devel
+BuildRequires: libcurl-devel
 
 # 'zip -T' called in build process needs unzip to work...
 
-Requires: %name-gamedata = %version
+Requires: %name-gamedata = %EVR
 
 %description
 Warzone 2100 is a real-time strategy game. Although comparable to Earth 2150
@@ -54,19 +71,22 @@ BuildArch: noarch
 Game data for warzone2100.
 
 %prep
-%setup -a1 -a3
+%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8
 %patch1 -p1
-%patch2 -p1
-cp %SOURCE2 ./src/autorevision.cache
-%ifarch %e2k
-# strip UTF-8 BOM
-find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
+
+install -m644 %SOURCE2 build_tools/autorevision.cache
 
 %build
+%ifarch %e2k
+# ftbfs with lcc 1.24.11
+%add_optflags -Wno-error=type-limits -Wno-error=invalid-offsetof
+%endif
+
 %cmake \
 	-DWZ_DISTRIBUTOR="ALT Linux" \
+	-DWZ_FINDSDL2_NOCONFIG:BOOL=OFF \
 	%nil
+
 %cmake_build
 
 %install
@@ -98,6 +118,12 @@ rm -rf %buildroot%_iconsdir/warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Wed Jul 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.1-alt1
+- Updated to upstream version 3.4.1.
+
+* Mon Jul 20 2020 Michael Shigorin <mike@altlinux.org> 3.3.0-alt1.1
+- E2K: upgrade lcc ftbfs workarounds from 1.23 to 1.24
+
 * Thu Apr 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 
