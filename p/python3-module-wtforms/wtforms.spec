@@ -1,7 +1,7 @@
 %define oname wtforms
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.3.3
 Release: alt1
 
 Summary: A flexible forms validation and rendering library for python web development
@@ -77,6 +77,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Fri Jul 31 2020 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
+- New version.
+
 * Sun Apr 26 2020 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
 - New version.
 
