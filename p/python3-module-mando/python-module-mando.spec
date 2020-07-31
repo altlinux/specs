@@ -1,7 +1,7 @@
 %define  oname mando
 
 Name:    python3-module-%oname
-Version: 0.6.4
+Version: 0.7.0
 Release: alt1
 
 Summary: Python wrapper around argparse, a tool to create CLI apps
@@ -38,5 +38,9 @@ applications.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Build new version.
+- Drop python2 support.
+
 * Wed Apr 24 2019 Grigory Ustinov <grenka@altlinux.org> 0.6.4-alt1
 - Initial build for Sisyphus
