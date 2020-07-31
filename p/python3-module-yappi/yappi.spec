@@ -1,8 +1,8 @@
 %define  oname yappi
 
 Name:    python3-module-%oname
-Version: 1.2.3
-Release: alt2
+Version: 1.2.5
+Release: alt1
 
 Summary: Yet Another Python Profiler, but this time support Multithread/CPU time profiling
 
@@ -38,6 +38,9 @@ Conflicts: python3-module-%oname
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.5-alt1
+- Build new version.
+
 * Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.3-alt2
 - Porting on Python3.
 
