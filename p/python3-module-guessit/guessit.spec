@@ -3,7 +3,7 @@
 %define oname guessit
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/guessit/
 
 # https://github.com/wackou/guessit.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Patch1: %oname-3.1.0-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
@@ -132,6 +132,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - New version 3.1.0.
 - Build without python2.
