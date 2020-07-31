@@ -2,7 +2,7 @@
 
 Name:       py2pack
 Version:    0.8.4
-Release:    alt1
+Release:    alt2
 
 Summary:    Generate distribution packages from Python packages on PyPI
 License:    GPL-2.0+
@@ -13,6 +13,8 @@ Packager:   Andrey Cherepanov <cas@altlinux.org>
 BuildArch:  noarch
 
 Source:     %name-%version.tar
+Patch1:     py2pack-alt-spec-support.patch
+Patch2:     py2pack-alt-spec-default.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-jinja2 python3-module-six
@@ -21,7 +23,6 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-pbr
 
 Requires: python3-module-py2pack = %version-%release
-
 
 %description
 This script allows to generate RPM spec or DEB dsc files from Python modules.
@@ -32,6 +33,7 @@ universal tool to package Python modules.
 %package -n python3-module-py2pack
 Summary: General purpose template engine
 Group: Development/Python3
+%py3_requires pbr
 
 %description -n python3-module-py2pack
 This script allows to generate RPM spec or DEB dsc files from Python modules.
@@ -41,6 +43,8 @@ universal tool to package Python modules.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
+%patch2 -p1
 
 %build
 export PBR_VERSION=%version
@@ -54,10 +58,14 @@ export PBR_VERSION=%version
 %_bindir/%oname
 
 %files -n python3-module-py2pack
-%python3_sitelibdir_noarch/%{oname}*
-
+%python3_sitelibdir/%{oname}*
 
 %changelog
+* Fri Jul 31 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt2
+- Require python3(pbr) for correct version show.
+- Add ALT spec template (ALT #38761).
+- Use alt.spec template by default.
+
 * Fri Jul 24 2020 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt1
 - New version (ALT #38757).
 - Fix License tag according to SPDX.
