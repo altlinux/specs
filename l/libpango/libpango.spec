@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.44
+%define ver_major 1.45
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -13,11 +13,11 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.4
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
-License: %lgpl2plus
+License: LGPL-2.0
 Group: System/Libraries
 Url: http://www.pango.org/
 
@@ -34,7 +34,7 @@ Source13: pangoft2-compat.lds
 Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
-Patch: pango-1.44.3-alt-compat-version-script.patch
+Patch: pango-1.45.1-alt-compat-version-script.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -52,19 +52,19 @@ Obsoletes: gscript
 %define thai_ver 0.1.9
 %define fribidi_ver 0.19.7
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses gtk-doc
-BuildRequires: gcc-c++ 
-BuildPreReq: libfreetype-devel >= %freetype_ver
-BuildPreReq: libXft-devel >= %xft_ver
-BuildPreReq: libcairo-devel >= %cairo_ver libcairo-gobject-devel
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel
-BuildPreReq: libharfbuzz-devel >= %hb_ver
-BuildPreReq: libfribidi-devel >= %fribidi_ver
-BuildPreReq: libthai-devel >= %thai_ver}
+BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: gcc-c++
+BuildRequires: libfreetype-devel >= %freetype_ver
+BuildRequires: libXft-devel >= %xft_ver
+BuildRequires: libcairo-devel >= %cairo_ver libcairo-gobject-devel
+BuildRequires: glib2-devel >= %glib_ver libgio-devel
+BuildRequires: libharfbuzz-devel >= %hb_ver
+BuildRequires: libfribidi-devel >= %fribidi_ver
+BuildRequires: libthai-devel >= %thai_ver}
 BuildRequires: help2man /proc
-%{?_enable_fontconfig:BuildPreReq: fontconfig-devel >= %fontconfig_ver}
+%{?_enable_fontconfig:BuildRequires: fontconfig-devel >= %fontconfig_ver}
 %{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
 %{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-ttf-thai-scalable-waree}
 
 %description
@@ -132,7 +132,7 @@ the functionality of the installed Pango library.
 
 %prep
 %setup -n %_name-%version
-%patch -b .vs
+%patch -p1 -b .vs
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %build
@@ -196,6 +196,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Thu Jul 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.45.4-alt1
+- 1.45.4
+
 * Fri Oct 25 2019 Yuri N. Sedunov <aris@altlinux.org> 1.44.7-alt1
 - 1.44.7
 
