@@ -2,7 +2,7 @@
 %define  descr Python code for GeoIP2 webservice client and database reader
 
 Name:    python3-module-%oname
-Version: 3.0.0
+Version: 4.0.2
 Release: alt1
 
 Summary: %descr
@@ -49,6 +49,9 @@ rm -rf html/.{buildinfo,doctrees}
 %doc LICENSE html/
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt1
+- Automatically updated to 4.0.2.
+
 * Tue Jun 30 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Fix license.
