@@ -1,90 +1,56 @@
-# Note: mkl is a Intel Compiler thing
-%def_disable snapshot
+%define _unpackaged_files_terminate_build 1
 
-BuildRequires(pre): rpm-build-python
-%define python_noarch %python_sitelibdir_noarch
+%def_without tests
+
 %define modname scipy
-%define ver_major 1.2
+%define ver_major 1.5
+%define ver_minor 2
 
 %define numpy_version 1.15.4
 
-%def_without python3
-
-Name: python-module-%modname
-Version: %ver_major.0
-Release: alt7
-
+Name: python3-module-%modname
+Version: %ver_major.%ver_minor
+Release: alt1
 Summary: SciPy is the library of scientific codes
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://www.scipy.org/
 
-License: BSD
-Group: Development/Python
-Url: http://www.scipy.org/
-
-%setup_python_module %modname
-Requires: %python_noarch
-Requires: python-module-numpy >= %numpy_version
-
-#add_python_req_skip swig2_ext symeig vtk
-%add_python_req_skip distutils
-
-%if_disabled snapshot
-Source: https://github.com/%modname/%modname/releases/download/v%version/%modname-%version.tar.xz
-%else
 #VCS git://github.com/scipy/scipy.git
-Source: %modname-%version.tar
-%endif
+Source: %name-%version.tar
 Source1: site.cfg
-Patch1: fix-unicode-use.patch
 
 BuildRequires(pre): rpm-macros-make
-BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: gcc-c++ gcc-fortran liblapack-devel libnumpy-devel libnumpy-py3-devel python-module-Cython python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests  python3-module-numpy-testing rpm-build-python3 time vixie-cron
-
-#BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
-#BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
-#BuildRequires: libsuitesparse-devel python-module-Cython
-%if_with python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-Pygments libnumpy-py3-devel
-#BuildPreReq: python-tools-2to3 python3-module-Cython
-#BuildPreReq: boost-python3-devel
-%endif
+BuildRequires: gcc-c++ gcc-fortran liblapack-devel
+BuildRequires: python3-devel
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-html5lib python3-module-jinja2-tests
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-pybind11
 
-%description
-SciPy is the library of scientific codes built on top of NumPy.
-
-%if_with python3
-%package -n python3-module-%modname
-Summary: SciPy is the library of scientific codes (Python 3)
-Group: Development/Python3
 Requires: %python3_sitelibdir_noarch
 Requires: python3-module-numpy >= %numpy_version
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal sympy
 %add_python3_req_skip distutils
-
-%description -n python3-module-%modname
-SciPy is the library of scientific codes built on top of NumPy.
-
-%package -n python3-module-%modname-devel
-Summary: Development files of SciPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%modname = %version-%release
-Requires: python3-devel libnumpy-py3-devel
-
-%description -n python3-module-%modname-devel
-SciPy is the library of scientific codes built on top of NumPy.
-
-This package contains development files of SciPy.
-
+%if_with tests
+%add_python3_req_skip scipy.fft.tests
+%else
+%add_python3_req_skip numpy.testing
 %endif
 
+%description
+SciPy is the library of scientific codes built on top of NumPy.
+
 %package devel
-Summary: Development files of SciPy
-Group: Development/Python
-Requires: %name = %version-%release
-Requires: python-devel libnumpy-devel
+Summary: Development files of SciPy (Python 3)
+Group: Development/Python3
+Requires: %name = %EVR
+Requires: python3-devel
+Requires: libnumpy-py3-devel
 
 %description devel
 SciPy is the library of scientific codes built on top of NumPy.
@@ -92,75 +58,31 @@ SciPy is the library of scientific codes built on top of NumPy.
 This package contains development files of SciPy.
 
 %prep
-%setup -n %modname-%version
-%patch1 -p1
+%setup
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
+sed -i 's|@PYSUFF@|3|' site.cfg
 
+%if_without tests
 # Find and comment out Pytest imports, since main package should
 # not require test deps
 grep -zPqsr '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' || exit 1
 grep -zPrl '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' | xargs \
 sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^/# /}'
-
-# not used import
-grep -qs '^from numpy.testing import assert_allclose$' \
-scipy/sparse/linalg/eigen/lobpcg/lobpcg.py || exit 1
-sed -i '/^from numpy\.testing import assert_allclose$/d' \
-scipy/sparse/linalg/eigen/lobpcg/lobpcg.py
-
-# _assert_warns is utilized only in tests
-grep -qsF '_assert_warns = np.testing.assert_warns' \
-scipy/_lib/_numpy_compat.py || exit 1
-sed -i 's/\([ ]*\)\(_assert_warns = np\.testing\.assert_warns\)/\1try:\n\1\1\import numpy.testing\n\1\1\2\n\1\except ImportError:\n\1\1pass/' \
-scipy/_lib/_numpy_compat.py
-
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-sed -i 's|@PYSUFF@|3|' ../python3/site.cfg
 %endif
 
-sed -i 's|@PYSUFF@||' site.cfg
-
 mkdir -p ~/.matplotlib
-cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc \
+cp %python3_sitelibdir/matplotlib/mpl-data/matplotlibrc \
 	~/.matplotlib/
 sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 
 %build
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
-%python_build_debug build_ext build_py build_clib \
-	config_fc --fcompiler=gnu95
-
-%if_with python3
-pushd ../python3
 %python3_build_debug build_ext build_py build_clib \
 	config_fc --fcompiler=gnu95
-popd
-%endif
 
 %install
-%python_install install_lib install_headers \
-	install_data config_fc
-
-
-# headers
-pushd %modname
-for i in $(find ./ -name '*.h'); do
-    dir=$(echo $i|sed 's|\(.*\)/.*|\1|')
-    install -d %buildroot%_includedir/%modname/$dir
-    install -p -m644 $i \
-	%buildroot%_includedir/%modname/$dir
-done
-popd
-
-install -p -m644 $(find ./ -name fortranobject.h | head -n 1) \
-	%buildroot%_includedir/%modname
-
-%if_with python3
-pushd ../python3
 %python3_install install_lib install_headers \
 	install_data config_fc
 find %buildroot%python3_sitelibdir -type f -exec \
@@ -178,26 +100,18 @@ for i in $(find ./ -name '*.h'); do
 done
 popd
 
-
 install -p -m644 $(find ./ -name fortranobject.h | head -n 1) \
 	%buildroot%_includedir/%modname-py3
-popd
 pushd %buildroot%python3_sitelibdir/%modname/sparse/csgraph
 for i in $(ls *.so); do
 	ln -s %python3_sitelibdir/%modname/sparse/csgraph/$i \
 		%buildroot%python3_sitelibdir/
 done
 popd
-%endif
 
+%if_without tests
 # don't package tests and tests' data
-for i in $(find %buildroot%python_sitelibdir \
-               -name tests -type d \
-               -o -name 'conftest.*' -type f \
-               -o -name '_testutils.*' -type f \
-               -o -name 'gammainc_data.*' -type f \
-               -o -name '_mptestutils.*' -type f) \
-	 $(find %buildroot%python3_sitelibdir \
+for i in $(find %buildroot%python3_sitelibdir \
                -name tests -type d \
                -o -name 'conftest.*' -type f \
                -o -name '_testutils.*' -type f \
@@ -206,8 +120,7 @@ for i in $(find %buildroot%python_sitelibdir \
 do
 	rm -r "$i"
 done
-
-rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discrete-1.py
+%endif
 
 %find_lang %name
 
@@ -219,24 +132,15 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 #	%buildroot%python_sitelibdir/*.cpp
 
 %files -f %name.lang
-%python_sitelibdir/*
-%files devel
-%_includedir/*
-%if_with python3
-%exclude %_includedir/%modname-py3
-%endif
-
-%if_with python3
-%files -n python3-module-%modname -f %name.lang
 %python3_sitelibdir/*
 
-%files -n python3-module-%modname-devel
+%files devel
 %_includedir/%modname-py3
-%endif
 
 %changelog
-* Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt7
-- Rebuilt without python-3.
+* Fri Jul 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1
+- Updated to upstream version 1.5.2.
+- Built without python-2 support.
 
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt6
 - Fixed build requires.
