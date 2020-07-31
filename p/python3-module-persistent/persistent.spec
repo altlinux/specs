@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.5.1
-Release: alt3
+Version: 4.6.4
+Release: alt1
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-alabaster 
+BuildRequires: python3-module-alabaster
 BuildRequires: python3-module-docutils
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-objects.inv
@@ -109,6 +109,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 4.6.4-alt1
+- Automatically updated to 4.6.4.
+
 * Wed Mar 18 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.1-alt3
 - Build with check.
 
