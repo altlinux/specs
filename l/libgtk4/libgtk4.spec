@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 3.98
+%define ver_major 3.99
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -9,8 +9,8 @@
 
 %def_enable x11
 %def_disable static
-%def_disable documentation
 %def_disable man
+%def_disable gtk_doc
 %def_enable introspection
 %def_enable colord
 # wayland gdk backend
@@ -18,15 +18,15 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudprint
-# 3.98: undefined reference on gtk_popover_new_from_model
-%def_disable cloudproviders
+%def_enable cloudproviders
+%def_enable tracker3
 %def_enable vulkan
 # File box-packing.ltr.nodes does not exist
 %def_disable install_tests
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -44,7 +44,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define glib_ver 2.59.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.41.0
+%define pango_ver 1.45.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
@@ -65,7 +65,7 @@ Requires: iso-codes
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): meson rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: gcc-c++ sassc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
@@ -74,7 +74,6 @@ BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libatk-devel >= %atk_ver
 BuildRequires: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildRequires: fontconfig-devel >= %fontconfig_ver
-BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: libgraphene-devel >= %graphene_ver
@@ -86,13 +85,14 @@ BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-deve
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %endif
+%{?_enable_gtk_doc:BuildRequires: gtk-doc >= %gtk_doc_ver pandoc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel libgraphene-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
+%{?_enable_tracker3:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
-
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
@@ -191,7 +191,6 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-#subst '/Werror=return-type/d' meson.build
 
 %build
 %meson \
@@ -199,7 +198,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_wayland:-Dwayland-backend=true} \
     %{?_enable_broadway:-Dbroadway-backend=true} \
     %{?_enable_cloudproviders:-Dcloudproviders=true} \
-    %{?_enable_gtk_doc:-Ddocumentation=true} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman-pages=true} \
     %{?_enable_colord:-Dcolord=yes} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
@@ -286,29 +285,37 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_desktopdir/org.gtk.Demo4.desktop
 %_desktopdir/org.gtk.IconBrowser4.desktop
 %_desktopdir/org.gtk.WidgetFactory4.desktop
+%_desktopdir/org.gtk.PrintEditor4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
 %_bindir/gtk4-widget-factory
 %_bindir/gtk4-icon-browser
+%_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
 %_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
+%_iconsdir/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
+%_iconsdir/hicolor/scalable/apps/org.gtk.PrintEditor4*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.WidgetFactory4.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.Demo4-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
 
 %_datadir/metainfo/org.gtk.Demo4.appdata.xml
+%_datadir/metainfo/org.gtk.IconBrowser4.appdata.xml
+%_datadir/metainfo/org.gtk.PrintEditor4.appdata.xml
 %_datadir/metainfo/org.gtk.WidgetFactory4.appdata.xml
 
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
-%_man1dir/gtk4-widget-factory.1.*
-%_man1dir/gtk4-icon-browser.1.*
 %_man1dir/gtk4-demo-application.1.*
+%_man1dir/gtk4-icon-browser.1.*
+%_man1dir/gtk4-widget-factory.1.*
 %endif
 
-%if_enabled documentation
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
@@ -338,6 +345,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri Jul 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.0-alt1
+- 3.99.0
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.98.4-alt1
 - 3.98.4
 
