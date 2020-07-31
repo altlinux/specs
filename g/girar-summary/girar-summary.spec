@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: girar-summary
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: Summarize task build in a table
 License: GPL-2.0-only
@@ -32,6 +32,12 @@ install -p -m755 girar-summary-task %buildroot%_bindir
 %_bindir/girar-summary-task
 
 %changelog
+* Fri Jul 31 2020 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
+- Fix SRPMs processing.
+- Process 'build swiftly' sub-tasks as NNRs.
+- Show skipped, swiftly [skipped], and NNR sub-tasks with a dash.
+- Do not output lines w/o any builds.
+
 * Fri Jul 24 2020 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
 - Support SRPM builds.
 - Add tests.
