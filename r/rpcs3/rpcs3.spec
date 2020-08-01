@@ -15,7 +15,7 @@
 
 Name: rpcs3
 Version: 0.0.8
-Release: alt4
+Release: alt5
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -42,7 +42,7 @@ Source5: libusb-%libusb_commit.tar
 Source6: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
 Source7: xxHash-%xx_hash_version.tar
-# https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
+# https://github.com/RPCS3/llvm/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
 Source8: llvm-%llvm_commit.tar
 # https://github.com/RPCS3/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
 Source9: cereal-%cereal_version.tar
@@ -52,7 +52,8 @@ Source10: FAudio-%faudio_version.tar
 Source11: span-%span_commit.tar
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-vk-dynamic-state-range-size.patch
+Patch1: %name-alt-precompiled-headers.patch
+Patch2: %name-alt-vk-dynamic-state-range-size.patch
 
 BuildRequires: cmake
 BuildRequires: cvs
@@ -89,6 +90,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %__mv -Tf ../glslang-%glslang_version Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
@@ -147,6 +149,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Aug 01 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt5
+- Use precompiled headers
+
 * Tue Jun 23 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt4
 - Remove dirs not related to %name package
 
