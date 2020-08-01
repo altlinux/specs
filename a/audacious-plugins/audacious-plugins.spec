@@ -6,8 +6,8 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.0.4
-Release: alt2
+Version: 4.0.5
+Release: alt1
 
 Summary: Plugins for Audacious
 License: GPL
@@ -77,6 +77,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
+- new version 4.0.5 (with rpmrb script)
+
 * Fri Jun 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.4-alt2
 - fixed packaging on armh
 
