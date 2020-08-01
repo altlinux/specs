@@ -4,8 +4,8 @@
 %def_without dns_route53
 
 Name: certbot
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: A free, automated certificate authority client
 
@@ -257,6 +257,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+
 * Tue Jun 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - build without dns-route53 (AWS Route 53) plugin
 
