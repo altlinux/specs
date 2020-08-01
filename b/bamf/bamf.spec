@@ -1,9 +1,10 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.5
+%def_enable check
 
 Name: bamf
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 
 Summary: BAMF Application Matching Framework
 License: GPLv3/LGPLv3
@@ -12,14 +13,16 @@ Url: https://launchpad.net/bamf
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
 
-# ALT
-Patch0: bamf-0.5.0-alt-configure.patch
-Patch1: bamf-0.5.0-alt-disable-werror.patch
+# Debian
+Patch10: 1001_remove-former-mono-macros.patch
+Patch11: 1002_spelling-fix.patch
+Patch12: 1003_add-compile-warning-flags.patch
+Patch13: 1004_py2to3_gtester2xunit.patch
 
 BuildRequires: libgtk+3-devel gtk-doc gnome-common
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
 BuildRequires: gobject-introspection-devel vala-tools
-BuildRequires: python-module-libxml2 python-module-libxslt
+BuildRequires: python3-module-lxml
 BuildRequires: xvfb-run dbus-tools-gui
 BuildRequires: libstartup-notification-devel systemd-devel
 
@@ -103,10 +106,13 @@ GObject introspection devel data for bamf3 library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
+export PYTHON=%__python3
 %autoreconf
 %configure \
   --enable-headless-tests
@@ -148,6 +154,10 @@ GObject introspection devel data for bamf3 library.
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Sat Aug 1 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- 0.5.4
+- applied debian patchset
+
 * Mon Sep 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt3
 - rebuilt against libgtop-2.0.so.11
 
