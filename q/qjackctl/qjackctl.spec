@@ -8,7 +8,7 @@
 %def_enable jack_version
 
 Name: qjackctl
-Version: 0.6.2
+Version: 0.6.3
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -86,6 +86,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Sat Aug 01 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
