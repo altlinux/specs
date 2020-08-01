@@ -2,8 +2,8 @@
 %define major 1.34
 
 Name: mediawiki
-Version: %major.1
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -337,6 +337,10 @@ exit 0
 
 
 %changelog
+* Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.34.2-alt1
+- new version 1.34.2 (with rpmrb script)
+- CVE-2020-15005
+
 * Tue Jun 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.34.1-alt2
 - add Obsoletes: mediawiki-extensions-Scribunto (ALT bug 38653)
 
