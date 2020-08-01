@@ -1,25 +1,17 @@
 %define oname positional
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2.1
-Release: alt1
-
-%setup_python_module %oname
+Release: alt2
 
 Summary: Library to enforce positional or key-word arguments
-License: ASL 2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 
 Url: https://github.com/morganfainberg/positional
 BuildArch: noarch
 
 Source: %oname-%version.tar.gz
-
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.8
-BuildRequires: python-module-wrapt
-
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -33,66 +25,33 @@ of the google-api client.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: Library to enforce positional or key-word arguments
-Group: Development/Python3
-
-%description -n python3-module-%oname
-`positional` provides a decorator which enforces only some args may be passed
-positionally. The idea and some of the code was taken from the oauth2 client
-of the google-api client.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname.
-
-
 %prep
 %setup -n %oname-%version
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
-
-%files -n python3-module-%oname
 %doc README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
-%files -n python3-module-%oname-tests
+%files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt2
+- Drop python2 support.
+
 * Mon Dec 17 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
 - 1.2.1
 

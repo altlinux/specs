@@ -1,84 +1,72 @@
 %define oname wrapt
-%define fname python3-module-%oname
-%define descr \
-The aim of the wrapt module is to provide a transparent object proxy for \
-Python, which can be used as the basis for the construction of function \
-wrappers and decorator functions.
 
-Name: %fname
-Version: 1.11.2
+Name: python3-module-%oname
+Version: 1.12.1
 Release: alt1
-
-%if ""==""
 Summary: A Python module for decorators, wrappers and monkey patching
-Group: Development/Python3
-%else
-Summary: Documentation for %oname
-Group: Development/Documentation
-%endif
-
 License: BSD
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/wrapt/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
 # https://github.com/GrahamDumpleton/wrapt.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-tox python3-devel python3-module-tox rpm-build-python3 time python3-module-pytest
-# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
-BuildRequires: python2.7(sphinx_rtd_theme)
+BuildRequires(pre): rpm-build-python3
 
-
-%if ""!=""
-Conflicts: %fname < %EVR
-Conflicts: %fname > %EVR
-BuildArch: noarch
-%else
 %py3_provides %oname
-%endif
+
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-devel python3-module-tox rpm-build-python3 time python3-module-pytest
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
 
 %description
-%descr
+The aim of the wrapt module is to provide a transparent object proxy for
+Python, which can be used as the basis for the construction of function
+wrappers and decorator functions.
 
-%if ""!=""
-This package contains documentation for %oname.
-
-%package -n %fname-pickles
+%package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
 
-%description -n %fname-pickles
-%descr
+%description pickles
+The aim of the wrapt module is to provide a transparent object proxy for
+Python, which can be used as the basis for the construction of function
+wrappers and decorator functions.
 
 This package contains pickles for %oname.
-%endif
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+The aim of the wrapt module is to provide a transparent object proxy for
+Python, which can be used as the basis for the construction of function
+wrappers and decorator functions.
+
+This package contains documentation for %oname.
 
 %prep
 %setup
-%if ""!=""
-%prepare_sphinx .
+
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
-%endif
 
 %build
-%if ""==""
 %add_optflags -fno-strict-aliasing
-%python3_build
-%else
-%make -C docs pickle
-%make -C docs html
-%endif
+%python3_build_debug
 
 %install
-%if ""==""
 %python3_install
-%else
-mkdir -p %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
-%if ""==""
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
+
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
@@ -86,18 +74,20 @@ py.test3
 %files
 %doc README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
 
-%else
-
-%files
-%doc docs/_build/html blog
-
-%files -n %fname-pickles
+%files pickles
 %python3_sitelibdir/*/pickle
 
-%endif
+%files docs
+%doc docs/_build/html blog
 
 %changelog
+* Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt1
+- Build new version.
+- Drop specsubst scheme.
+- Drop python2 support.
+
 * Wed Jun 19 2019 Grigory Ustinov <grenka@altlinux.org> 1.11.2-alt1
 - Build new version.
 
