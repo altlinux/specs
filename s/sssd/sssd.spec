@@ -8,8 +8,8 @@
 %def_with openssl
 
 Name: sssd
-Version: 2.3.0
-Release: alt3
+Version: 2.3.1
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -357,24 +357,6 @@ Requires: libsss_simpleifp = %version-%release
 %description -n libsss_simpleifp-devel
 Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
 
-%package -n libwbclient-%name
-Summary: The SSSD libwbclient implementation
-Group: System/Libraries
-License: GPLv3+ and LGPLv3+
-Conflicts: libwbclient < 4.2.3-alt1
-
-%description -n libwbclient-%name
-The SSSD libwbclient implementation.
-
-%package -n libwbclient-%name-devel
-Summary: Development libraries for the SSSD libwbclient implementation
-Group: Development/C
-License: GPLv3+ and LGPLv3+
-Requires: libwbclient-%name = %version-%release
-
-%description -n libwbclient-%name-devel
-Development libraries for the SSSD libwbclient implementation.
-
 %package winbind-idmap
 Summary: SSSD's idmap_sss Backend for Winbind
 Group: System/Servers
@@ -487,12 +469,6 @@ sed -i -e 's:/usr/bin/python:/usr/bin/python3:' src/tools/sss_obfuscate
 
 %make install DESTDIR=%buildroot
 
-if [ ! -f %buildroot%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version]
-    then
-	echo "Expected libwbclient version not found, please check if version has changed."
-	exit -1
-fi
-
 %find_lang sssd
 
 # Prepare empty config file
@@ -518,17 +494,6 @@ find %buildroot -name "*.la" -exec rm -f {} \;
 rm -Rf %buildroot%_docdir/%name
 
 mkdir -p %buildroot%pubconfpath/krb5.include.d
-
-# Add alternatives for libwbclient
-mkdir -p %buildroot%_altdir
-printf '%_libdir/libwbclient.so.%libwbc_alternatives_version\t%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version\t20\n' > %buildroot%_altdir/libwbclient-sss
-printf '%_libdir/libwbclient.so.0\t%_libdir/%name/modules/libwbclient.so.0\t20\n' >> %buildroot%_altdir/libwbclient-sss
-
-printf '%_libdir/libwbclient.so\t%_libdir/%name/modules/libwbclient.so\t20\n' >> %buildroot%_altdir/libwbclient-sss-devel
-
-ln -s ../..%_libdir/%name/modules/libwbclient.so.%libwbc_alternatives_version %buildroot%_libdir/
-ln -s ../..%_libdir/%name/modules/libwbclient.so.0 %buildroot%_libdir/
-ln -s ../..%_libdir/%name/modules/libwbclient.so %buildroot%_libdir/
 
 # Add alternatives for idmap-plugin
 mkdir -p %buildroot/%_altdir
@@ -798,19 +763,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/libsss_simpleifp.so
 %_pkgconfigdir/sss_simpleifp.pc
 
-%files -n libwbclient-%name
-%_libdir/%name/modules/libwbclient.so.*
-%ghost %_libdir/libwbclient.so.0
-%ghost %_libdir/libwbclient.so.%libwbc_alternatives_version
-%_altdir/libwbclient-sss
-
-%files -n libwbclient-%name-devel
-%_includedir/wbclient_sssd.h
-%_libdir/%name/modules/libwbclient.so
-%ghost %_libdir/libwbclient.so
-%_pkgconfigdir/wbclient_sssd.pc
-%_altdir/libwbclient-sss-devel
-
 %files winbind-idmap
 %_libdir/samba/idmap/sss.so
 %_man8dir/idmap_sss*
@@ -838,6 +790,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/SSSDConfig/__pycache__/*.py*
 
 %changelog
+* Sat Aug 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.3.1-alt1
+- Update to 2.3.1
+- Remove derecated libwbclient-sssd
+
 * Thu Jul 23 2020 Evgeny Sinelnikov <sin@altlinux.org> 2.3.0-alt3
 - Rebuild with libldb-2.0.12
 
