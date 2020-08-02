@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47.1
-%define mono_version 5.0.0
-%define major 5.9
+%define mono_version 5.1.0
+%define major 5.12
 %define rel %nil
 
 %def_with gtk3
@@ -504,6 +504,13 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.12.1-alt1
+- new version 5.12.1 (with rpmrb script)
+- set strict require wine-mono 5.1.0
+
+* Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.10.1-alt1
+- new version 5.10.1 (with rpmrb script)
+
 * Tue May 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.9.1-alt1
 - new version 5.9.1 (with rpmrb script)
 
