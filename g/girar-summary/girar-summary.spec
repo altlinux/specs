@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: girar-summary
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: Summarize task build in a table
 License: GPL-2.0-only
@@ -32,6 +32,9 @@ install -p -m755 girar-summary-task %buildroot%_bindir
 %_bindir/girar-summary-task
 
 %changelog
+* Sun Aug 02 2020 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
+- Rename 'repo' column to 'name'.
+
 * Fri Jul 31 2020 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - Fix SRPMs processing.
 - Process 'build swiftly' sub-tasks as NNRs.
