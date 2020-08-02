@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.14.3
+Version: 4.14.4
 Release: alt1
 
 %def_enable epoxy
@@ -77,6 +77,9 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Sun Aug 02 2020 Mikhail Efremov <sem@altlinux.org> 4.14.4-alt1
+- Updated to 4.14.4.
+
 * Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 4.14.3-alt1
 - Added libXres-devel to BR.
 - Updated to 4.14.3.
