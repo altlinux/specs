@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define rdn_name im.dino.Dino
 
 Name: dino
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Modern Jabber/XMPP client
 License: GPL-3.0
@@ -89,6 +89,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_vapidir/*
 
 %changelog
+* Mon Aug 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
+- updated to v0.1.0-125-gff9a9a0
+
 * Fri Jan 31 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus
 
