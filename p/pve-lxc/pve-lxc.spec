@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 3.1.0
-Release: alt4
+Release: alt5
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -36,6 +36,7 @@ Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
 Patch22: lxc-unused-variable.patch
 Patch23: lxc-alt-remove-dependency-on-policycoreutils.patch
+Patch24: lxc-alt-selinux-compat.patch
 
 BuildRequires: docbook2X libcap-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
@@ -71,6 +72,7 @@ an applications or a system.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p2
 
 %build
 %autoreconf
@@ -116,6 +118,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon Aug 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt5
+- NMU: fixed build with new selinux.
+
 * Wed Jan 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt4
 - remove dependency on policycoreutils
 
