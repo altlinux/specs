@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -63,7 +63,6 @@ mkdir -p %buildroot%_libdir/zathura
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
-%_iconsdir/scalable/*/*
 %_iconsdir/hicolor/*/*/*
 %_datadir/metainfo/*.xml
 %_man1dir/*
@@ -71,13 +70,16 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
-%_datadir/fish/completions/*
+%_datadir/fish/vendor_completions.d/*
 
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Aug 03 2020 Mikhail Efremov <sem@altlinux.org> 0.4.6-alt1
+- Updated to 0.4.6.
+
 * Thu Jan 09 2020 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
 - Added ALT-specific note to description.
 - Used Vcs tag.
