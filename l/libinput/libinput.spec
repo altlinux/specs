@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.15.6
+Version: 1.16.0
 Release: alt1
 
 Summary: Input devices library
@@ -122,12 +122,15 @@ This package contains visual debug helper for %name.
 %_libexecdir/%name/*
 %{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
 %_man1dir/%name.1.*
+%_man1dir/%name-analyze.1*
+%_man1dir/%name-analyze-per-slot-delta.1*
 %_man1dir/%name-debug-events.1.*
 %_man1dir/%name-debug-tablet.1.*
 %_man1dir/%name-list-devices.1.*
 %_man1dir/%name-measure.1.*
 %_man1dir/%name-measure-fuzz.1.*
 %_man1dir/%name-measure-touchpad-pressure.1.*
+%_man1dir/%name-measure-touchpad-size.1*
 %_man1dir/%name-measure-touchpad-tap.1.*
 %_man1dir/%name-measure-touch-size.1.*
 %_man1dir/%name-quirks.1.*
@@ -135,8 +138,8 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-quirks-validate.1.*
 %_man1dir/%name-record.1.*
 %_man1dir/%name-replay.1.*
-
 %{?_enable_tests:%_man1dir/%name-test-suite.1.*}
+%_datadir/zsh/site-functions/_%{name}
 
 %if_enabled debug_gui
 %files tools-gui
@@ -146,6 +149,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Mon Aug 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.15.6-alt1
 - 1.15.6
 
