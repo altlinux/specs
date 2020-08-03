@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/Quamash/
 
 # https://github.com/harvimt/quamash.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -32,6 +33,7 @@ Quamash requires Python 3.4 and either PyQt4, PyQt5 or PySide.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -49,6 +51,9 @@ xvfb-run py.test3 -v
 %python3_sitelibdir/quamash/
 
 %changelog
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 0.6.1-alt2
+- Fixed FTBFS.
+
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
 - 0.5.5 -> 0.6.1.
 
