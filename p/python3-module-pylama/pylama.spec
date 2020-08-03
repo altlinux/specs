@@ -1,105 +1,62 @@
 %define oname pylama
 
-%def_with python3
+# For a while until update
+%def_without check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 6.1.1
-Release: alt3.git20141029.3
+Release: alt4.git20141029
 Summary: pylama -- Code audit tool for python
 License: LGPL
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/pylama/
 
 # https://github.com/klen/pylama.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-ipdb python-tools-pep8 pyflakes
-BuildPreReq: pylint python-module-nose git
-BuildPreReq: python2.7(pytest)
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: git
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-ipdb python3-tools-pep8 python3-pyflakes
 BuildPreReq: pylint-py3 python3-module-nose
 BuildPreReq: python3(pytest)
-%endif
 
-%py_provides %oname
-
-%description
-pylama -- Code audit tool for python.
-
-%package -n python3-module-%oname
-Summary: pylama -- Code audit tool for python
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 pylama -- Code audit tool for python.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export LC_ALL=en_US.UTF-8
-
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
 export LC_ALL=en_US.UTF-8
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
+
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
 done
 popd
-%endif
-
-%python_install
 
 %check
-export LC_ALL=en_US.UTF-8
-python setup.py test
-nosetests
-%if_with python3
-pushd ../python3
 python3 setup.py test
 nosetests3
-popd
-%endif
 
 %files
 %doc AUTHORS Changelog *.rst
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS Changelog *.rst
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt4.git20141029
+- Drop python2 support.
+
 * Tue Oct 01 2019 Stanislav Levin <slev@altlinux.org> 6.1.1-alt3.git20141029.3
 - Fixed build.
 
