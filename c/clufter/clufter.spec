@@ -2,7 +2,7 @@
 
 Name:           clufter
 Version:        0.77.2
-Release:        alt1
+Release:        alt2
 Group:          System/Base
 Summary:        Tool/library for transforming/analyzing cluster configuration formats
 License:        GPLv2+
@@ -42,7 +42,7 @@ BuildRequires:  bash-completion
 
 BuildRequires:  help2man
 
-Requires:       python3-module-setuptools
+Requires:       python3-module-setuptools python3-module-distro
 Requires:       python3-module-%name = %version-%release
 Requires:       %_bindir/nano
 BuildArch:      noarch
@@ -323,6 +323,9 @@ test -x '%_bindir/%name' && test -f "${bashcomp}" \
 %_datadir/%name/ext-plugins/lib-pcs
 
 %changelog
+* Mon Aug 03 2020 Ivan Razzhivin <underwit@altlinux.org> 0.77.2-alt2
+- fix dependency (Closes: 38759)
+
 * Thu Jul 09 2020 Ivan Razzhivin <underwit@altlinux.org> 0.77.2-alt1
 - initial build
 
