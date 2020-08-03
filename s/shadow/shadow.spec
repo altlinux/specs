@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.5
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -403,6 +403,9 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Mon Aug 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5-alt8
+- NMU: fixed build with new selinux.
+
 * Wed Nov 06 2019 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt7
 - valid_field: Check that characters are ASCII.
 - login.defs: Add SAFE_PWDB_FIELDS variable.
