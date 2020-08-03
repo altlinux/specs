@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 4.6.6
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -99,6 +99,8 @@ Requires: python3-module-PAM
 Requires: python3-module-xapps-overrides
 # Required for xapp-status applet
 Requires: xapp-sn-watcher
+# Required for cinnamon-settings info module
+Requires: python3(distro)
 
 %description data
 This package provides noarch data needed for Cinnamon to work.
@@ -199,6 +201,10 @@ install -D -p -m 0644 %SOURCE3 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Aug 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.6-alt2
+- Add python3(distro) to dependencies (closes: #38775)
+- Don't show input method module (closes: #38776)
+
 * Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.6-alt1
 - 4.6.6-1-g60f631c7
 
