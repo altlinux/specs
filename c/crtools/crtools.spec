@@ -1,6 +1,6 @@
 Name: crtools
 Version: 3.14
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -12,6 +12,7 @@ Source: criu-%version.tar
 Source1: criu.watch
 Patch1: 0001-FEDORA-aio-fix.patch
 Patch2: 0002-ALT-build-against-python3.patch
+Patch3: 0003-ALT-fix-security_context_t-deprecated.patch
 
 Provides: criu = %EVR
 ExclusiveArch: x86_64 aarch64 armh ppc64le
@@ -126,6 +127,9 @@ find %buildroot -name 'lib*.a' -delete
 %_pkgconfigdir/criu.pc
 
 %changelog
+* Mon Aug 03 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.14-alt2
+- Fixed FTBFS: fixed uses of deprecated security_context_t.
+
 * Wed Apr 29 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.14-alt1
 - Updated to 3.14.
 - Built against nftables and gnutls libraries.
