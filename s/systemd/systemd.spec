@@ -14,6 +14,7 @@
 %def_enable libcryptsetup
 %def_enable logind
 %def_enable vconsole
+%def_enable initrd
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
@@ -43,6 +44,7 @@
 %def_enable zlib
 %def_enable bzip2
 %def_enable lz4
+%def_enable zstd
 
 %def_disable smack
 %def_enable seccomp
@@ -71,11 +73,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 245
+%define ver_major 246
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
+Version: %ver_major
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -146,6 +148,7 @@ BuildRequires: libaudit-devel
 %{?_enable_zlib:BuildRequires: pkgconfig(zlib)}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_lz4:BuildRequires: pkgconfig(liblz4) >= 1.3.0}
+%{?_enable_zstd:BuildRequires: pkgconfig(libzstd) >= 1.4.0}
 BuildRequires: libkmod-devel >= 15 kmod
 %{?_enable_kexec:BuildRequires: kexec-tools}
 BuildRequires: quota
@@ -643,9 +646,11 @@ Static library for libudev.
 	%{?_enable_zlib:-Dzlib=true} \
 	%{?_enable_bzip2:-Dbzip2=true} \
 	%{?_enable_lz4:-Dlz4=true} \
+	%{?_enable_zstd:-Dzstd=true} \
 	%{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
 	%{?_enable_logind:-Dlogind=true} \
 	%{?_enable_vconsole:-Dvconsole=true} \
+	%{?_enable_initrd:-Dinitrd=true} \
 	%{?_enable_quotacheck:-Dquotacheck=true} \
 	%{?_enable_randomseed:-Drandomseed=true} \
 	%{?_enable_coredump:-Dcoredump=true} \
@@ -923,7 +928,7 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
 %meson_test
 
 %pre
-%_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
+groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 
 %post
 # Move old stuff around in /var/lib
@@ -950,7 +955,7 @@ chgrp systemd-journal /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2>
 chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_logdir/journal/ %_logdir/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
 
 # Apply ACL to the journal directory
-/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_logdir/journal/ >/dev/null 2>&1 || :
+setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_logdir/journal/ >/dev/null 2>&1 || :
 
 # remove obsolete systemd-readahead file and services symlink
 rm -f /.readahead > /dev/null 2>&1 || :
@@ -961,12 +966,13 @@ rm -f /.readahead > /dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /bin/systemctl preset-all >/dev/null 2>&1 || :
+        systemctl preset-all >/dev/null 2>&1 || :
+        systemctl --global preset-all >/dev/null 2>&1 || :
 fi
 
 %preun
 if [ $1 -eq 0 ] ; then
-        /bin/systemctl disable \
+        systemctl disable --quiet \
                 remote-fs.target \
                 getty@.service \
                 serial-getty@.service \
@@ -978,22 +984,22 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %post utils
-/sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
+systemd-machine-id-setup >/dev/null 2>&1 || :
 
 %if_enabled networkd
 %pre networkd
-%_sbindir/groupadd -r -f systemd-network >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-network -c 'systemd Network Management' \
+groupadd -r -f systemd-network >/dev/null 2>&1 ||:
+useradd -g systemd-network -c 'systemd Network Management' \
     -d /var/empty -s /dev/null -r -l -M systemd-network >/dev/null 2>&1 ||:
 
-%_sbindir/groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-resolve -c 'systemd Resolver' \
+groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
+useradd -g systemd-resolve -c 'systemd Resolver' \
     -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
 
 %post networkd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /bin/systemctl preset \
+        systemctl preset \
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
@@ -1002,7 +1008,7 @@ fi
 
 %preun networkd
 if [ $1 -eq 0 ] ; then
-        /bin/systemctl disable \
+        systemctl disable --quiet \
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
@@ -1012,22 +1018,22 @@ fi
 
 %if_enabled coredump
 %pre coredump
-%_sbindir/groupadd -r -f systemd-coredump >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-coredump -c 'systemd Core Dumper' \
+groupadd -r -f systemd-coredump >/dev/null 2>&1 ||:
+useradd -g systemd-coredump -c 'systemd Core Dumper' \
     -d /var/empty -s /dev/null -r -l -M systemd-coredump >/dev/null 2>&1 ||:
 %endif
 
 %if_enabled timesyncd
 %pre timesyncd
-%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
+groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
+useradd -g systemd-timesync -c 'systemd Time Synchronization' \
     -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
 
 
 %post timesyncd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /bin/systemctl preset \
+        systemctl preset \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
 fi
@@ -1043,18 +1049,28 @@ fi
 
 %preun timesyncd
 if [ $1 -eq 0 ] ; then
-        /bin/systemctl disable \
+        systemctl disable --quiet \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
 fi
 
 %endif
 
+%post homed
+if [ $1 -eq 1 ] ; then
+        systemctl preset systemd-homed.service >/dev/null 2>&1 || :
+fi
+
+%preun homed
+if [ $1 -eq 0 ] ; then
+        systemctl disable --quiet systemd-homed.service >/dev/null 2>&1 || :
+fi
+
 %post -n libnss-systemd
 if [ -f /etc/nsswitch.conf ] ; then
             grep -E -q '^(passwd|group):.* systemd' /etc/nsswitch.conf ||
             sed -i.rpmorig -r -e '
-                s/^(passwd|group):(.*)/\1: \2 systemd/
+                s/^(passwd|group):(.*)/\1:\2 systemd/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1070,9 +1086,29 @@ if [ "$1" = "0" ]; then
 fi
 update_chrooted all
 
+%post -n libnss-resolve
+if [ -f /etc/nsswitch.conf ] ; then
+        grep -E -q '^hosts:.* resolve' /etc/nsswitch.conf ||
+        sed -i.rpmorig -r -e '
+                s/^(hosts):(.*) files( mdns4_minimal .NOTFOUND=return.)? dns myhostname/\1:\2 resolve [!UNAVAIL=return] myhostname files\3 dns/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+fi
+update_chrooted all
+
+%postun -n libnss-resolve
+if [ "$1" = "0" ]; then
+        if [ -f /etc/nsswitch.conf ] ; then
+                sed -i.rpmorig -e '
+                        /^hosts:/ !b
+                        s/[[:blank:]]\+resolve\+[[:blank:]]*\[[^]]*\]*/      /
+                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+        fi
+fi
+update_chrooted all
+
 %post -n libnss-myhostname
 if [ -f /etc/nsswitch.conf ] ; then
-        grep -v -E -q '^hosts:.* myhostname' /etc/nsswitch.conf &&
+        grep -E -q '^hosts:.* myhostname' /etc/nsswitch.conf ||
         sed -i.rpmorig -e '
                 /^hosts:/ !b
                 /\<myhostname\>/ b
@@ -1094,22 +1130,18 @@ update_chrooted all
 
 %post -n libnss-mymachines
 if [ -f /etc/nsswitch.conf ] ; then
+        grep -E -q '^hosts:.* mymachines' /etc/nsswitch.conf ||
         sed -i.rpmorig -e '
                 /^hosts:/ !b
                 /\<mymachines\>/ b
                 s/[[:blank:]]*$/ mymachines/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 
+# Cleanup. sinse v246 nss-mymachines: drop support for UID/GID resolving
+        grep -v -E -q '^(passwd|group):.* mymachines' /etc/nsswitch.conf ||
         sed -i.rpmorig -e '
-                /^passwd:/ !b
-                /\<mymachines\>/ b
-                s/[[:blank:]]*$/ mymachines/
-                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
-
-        sed -i.rpmorig -e '
-                /^group:/ !b
-                /\<mymachines\>/ b
-                s/[[:blank:]]*$/ mymachines/
+                /^(passwd|group):/ !b
+                s/[[:blank:]]\+mymachines\>//
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1122,23 +1154,15 @@ if [ "$1" = "0" ]; then
                         s/[[:blank:]]\+mymachines\>//
                         ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 
-                sed -i.rpmorig -e '
-                        /^passwd:/ !b
-                        s/[[:blank:]]\+mymachines\>//
-                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
-
-                sed -i.rpmorig -e '
-                        /^group:/ !b
-                        s/[[:blank:]]\+mymachines\>//
-                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
         fi
 fi
+
 update_chrooted all
 
 %if_enabled microhttpd
 %pre journal-remote
-%_sbindir/groupadd -r -f systemd-journal-remote ||:
-%_sbindir/useradd -g systemd-journal-remote -c 'Journal Remote' \
+groupadd -r -f systemd-journal-remote ||:
+useradd -g systemd-journal-remote -c 'Journal Remote' \
     -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
 %post journal-remote
@@ -1165,13 +1189,13 @@ fi
 %endif
 
 %pre -n udev
-%_sbindir/groupadd -r -f cdrom >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f tape >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f dialout >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f input >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f video >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f render >/dev/null 2>&1 ||:
-%_sbindir/groupadd -r -f vmusers >/dev/null 2>&1 ||:
+groupadd -r -f cdrom >/dev/null 2>&1 ||:
+groupadd -r -f tape >/dev/null 2>&1 ||:
+groupadd -r -f dialout >/dev/null 2>&1 ||:
+groupadd -r -f input >/dev/null 2>&1 ||:
+groupadd -r -f video >/dev/null 2>&1 ||:
+groupadd -r -f render >/dev/null 2>&1 ||:
+groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %post -n udev
 %post_service udevd
@@ -1210,9 +1234,9 @@ fi
 %if_enabled efi
 %_bindir/bootctl
 %if_enabled gnuefi
-%dir /lib/systemd/boot
-%dir /lib/systemd/boot/efi
-/lib/systemd/boot/efi/*
+%dir %_prefix/lib/systemd/boot
+%dir %_prefix/lib/systemd/boot/efi
+%_prefix/lib/systemd/boot/efi/*
 %endif
 %endif
 
@@ -1221,6 +1245,7 @@ fi
 /lib/systemd/systemd-pstore
 %_man5dir/pstore.*
 %_man8dir/systemd-pstore.*
+%_tmpfilesdir/systemd-pstore.conf
 %endif
 
 %_bindir/busctl
@@ -1272,6 +1297,7 @@ fi
 /lib/systemd/systemd-volatile-root
 /lib/systemd/systemd-sysv-install
 /lib/systemd/systemd-sulogin-shell
+/lib/systemd/systemd-xdg-autostart-condition
 
 %dir /lib/environment.d
 /lib/environment.d/99-environment.conf
@@ -1305,8 +1331,6 @@ fi
 %endif
 %if_enabled homed
 %exclude %_unitdir/systemd-homed*
-%exclude %_unitdir/*/systemd-homed*
-%exclude %_unitdir/*.home1.*
 %endif
 
 %exclude %_unitdir/*udev*
@@ -1351,6 +1375,7 @@ fi
 %_man5dir/os-release*
 %_man5dir/*sleep.conf*
 %_man5dir/*system.conf*
+%_man5dir/*systemd1*
 %_man5dir/*user*
 %_man5dir/repart.d.*
 %_man5dir/systemd.automount*
@@ -1403,6 +1428,7 @@ fi
 %_man8dir/systemd-shutdown*
 %_man8dir/systemd-poweroff*
 %_man8dir/systemd-volatile-root*
+%_man8dir/systemd-xdg-autostart-generator*
 
 %exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
@@ -1500,18 +1526,18 @@ fi
 %_man8dir/pam_systemd_home.*
 
 %files homed
+%config(noreplace) %_sysconfdir/systemd/homed.conf
 /bin/homectl
 /lib/systemd/systemd-homed
 /lib/systemd/systemd-homework
 %_unitdir/systemd-homed*
-%_unitdir/*/systemd-homed*
-%_unitdir/*.home1.*
 %_datadir/dbus-1/system.d/org.freedesktop.home1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.home1.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/org.freedesktop.home1.policy
 %endif
 %_man1dir/homectl.*
+%_man5dir/*home*
 %_man8dir/systemd-homed.*
 %endif
 
@@ -1662,6 +1688,7 @@ fi
 %exclude %_man8dir/*mymachines*
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
+%_man5dir/*LogControl1*
 
 %if_enabled networkd
 %files networkd
@@ -1702,6 +1729,7 @@ fi
 %_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
+%_mandir/*/*resolve1*
 %_mandir/*/*dnssd*
 %_man1dir/networkctl.*
 %_man1dir/resolvectl.*
@@ -1737,6 +1765,7 @@ fi
 /lib/systemd/systemd-pull
 /lib/systemd/network/80-container-ve.network
 /lib/systemd/network/80-container-vz.network
+/lib/systemd/network/80-vm-vt.network
 %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %_datadir/dbus-1/system-services/org.freedesktop.import1.service
 %if_enabled polkit
@@ -1745,6 +1774,7 @@ fi
 %endif
 %_mandir/*/*nspawn*
 %_mandir/*/*machine*
+%_mandir/*/*import*
 %exclude %_man3dir/*machine*
 %_man8dir/systemd-importd.*
 %exclude %_man8dir/*mymachines.*
@@ -1913,6 +1943,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Aug 03 2020 Alexey Shabalin <shaba@altlinux.org> 1:246-alt1
+- 246
+
 * Mon Jul 27 2020 Alexey Shabalin <shaba@altlinux.org> 1:245.7-alt1
 - 245.7
 
