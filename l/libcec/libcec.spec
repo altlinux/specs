@@ -1,46 +1,62 @@
 Name: libcec
-Version: 4.0.3
+Version: 6.0.2
 Release: alt1
 
-Summary: CEC Adaptor communication shared library
-License: GPL
+Summary: CEC support shared library
+License: GPLv2
 Group: System/Libraries
 Url: http://libcec.pulse-eight.com/
 
 Source0: %name-%version-%release.tar
 
 BuildRequires: cmake gcc-c++ libcec-platform-devel liblockdev-devel libudev-devel
+BuildRequires: python3-dev rpm-build-python3 swig
 
 %package devel
-Summary: CEC Adaptor communication development library
+Summary: CEC support development library
 Group: Development/C
 Requires: %name = %version-%release
 
 %package utils
-Summary: CEC Adaptor commulication utilities
+Summary: CEC utilities
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
+%package -n python3-module-cec
+Summary: libcec python module
+Group: Development/Python
+Requires: %name = %version-%release
+
 %description
-libcec provides support for the Pulse-Eight USB-CEC adapter.
+libcec provides support for Pulse-Eight's USB-CEC adapter
+and other CEC capable hardware.
 
 %description devel
-libcec provides support for the Pulse-Eight USB-CEC adapter.
+libcec provides support for Pulse-Eight's USB-CEC adapter
+and other CEC capable hardware.
 This package contains development files of libcec.
 
 %description utils
-libcec provides support for the Pulse-Eight USB-CEC adapter.
+libcec provides support for Pulse-Eight's USB-CEC adapter
+and other CEC capable hardware.
 This package contains commandline utilities of libcec.
+
+%description -n python3-module-cec
+libcec provides support for Pulse-Eight's USB-CEC adapter
+and other CEC capable hardware.
+This package contains Python bindings for libcec.
 
 %prep
 %setup
+sed -ri '/DESTINATION/ s,lib/python,%_lib/python,' src/libcec/cmake/CheckPlatformSupport.cmake
+sed -ri '/set_target_properties.+\sPROPERTIES\sVERSION/d' src/cec*-client/CMakeLists.txt
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=%prefix
-%make_build
+%cmake -DHAVE_LINUX_API=1
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_libdir/lib*.so.*
@@ -51,10 +67,18 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_pkgconfigdir/libcec.pc
 
 %files utils
-%_bindir/cec-client*
-%_bindir/cecc-client*
+%_bindir/cec-client
+%_bindir/cecc-client
+
+%files -n python3-module-cec
+%_bindir/pyCecClient
+%python3_sitelibdir/_cec.so
+%python3_sitelibdir/cec.py
 
 %changelog
+* Tue Aug 04 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.2-alt1
+- 6.0.2 released
+
 * Tue Nov 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.3-alt1
 - 4.0.3 released
 

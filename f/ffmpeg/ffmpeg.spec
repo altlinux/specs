@@ -63,6 +63,7 @@
 %def_enable libssh
 %def_enable libtheora
 %def_enable libtwolame
+%def_enable libudev
 %def_enable libv4l2
 %def_enable libvidstab
 %def_enable libvorbis
@@ -137,7 +138,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.3.1
-Release:	alt2
+Release:	alt3
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -196,6 +197,7 @@ BuildRequires:	yasm
 %{?_enable_libspeex:BuildRequires: libspeex-devel}
 %{?_enable_libtheora:BuildRequires: libtheora-devel}
 %{?_enable_libtwolame:BuildRequires: libtwolame-devel}
+%{?_enable_libudev:BuildRequires: libudev-devel}
 %{?_enable_libv4l2:BuildRequires: libv4l-devel}
 %{?_enable_libvidstab:BuildRequires: libvidstab-devel}
 %{?_enable_libvorbis:BuildRequires: libvorbis-devel}
@@ -564,6 +566,10 @@ xz Changelog
 	--mandir=%_mandir \
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
+%ifarch armh aarch64
+	--enable-v4l2_m2m \
+	--enable-v4l2-request \
+%endif
 %ifarch mips mipsel mips64 mips64el
 	--disable-mipsdsp \
 	--disable-mipsdspr2 \
@@ -642,6 +648,7 @@ xz Changelog
 	%{subst_enable libtesseract} \
 	%{subst_enable libtheora} \
 	%{subst_enable libtwolame} \
+	%{subst_enable libudev} \
 	%{subst_enable libv4l2} \
 	%{subst_enable libvidstab} \
 	%{subst_enable libvmaf} \
@@ -846,6 +853,9 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Aug 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:4.3.1-alt3
+- enable v4l2 mem2mem and request-api on arm arches
+
 * Wed Jul 22 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:4.3.1-alt2
 - Built with support of:
   + chromaprint;
