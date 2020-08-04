@@ -25,43 +25,8 @@
 #
 # Spec file adapted for ALT Linux.
 
+%define sover 1
 %def_with systemd
-
-Name: lxc
-Version: 4.0.3
-Release: alt1
-
-Url: https://linuxcontainers.org/
-
-# https://github.com/lxc/lxc.git
-Source0: %name-%version.tar
-Source1: lxc-net.sysconfig
-Source2: lxc-user-nic.control
-Source3: lxc.watch
-
-Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
-Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
-Patch4: 0004-ALT-tune-SysVinit-scripts.patch
-Patch5: 0005-ALT-make-lxc-and-lxc-net-init-scripts-disabled-by-de.patch
-Patch6: 0006-ALT-sysvinit-don-t-start-services-at-boot-by-default.patch
-
-Summary: Linux Containers
-Group: System/Configuration/Other
-License: LGPL-2.1-or-later
-Requires: libcap gzip-utils
-%ifarch x86_64 %arm
-Requires: criu
-%endif
-Requires: iproute2 dnsmasq wget
-Obsoletes: lxc-sysvinit
-BuildRequires: libcap-devel docbook-utils glibc-kernheaders
-BuildRequires: docbook2X xsltproc
-BuildRequires: rpm-macros-alternatives
-BuildRequires: libnih-devel
-BuildRequires: libdbus-devel
-BuildRequires: libgnutls-devel
-BuildRequires: libseccomp-devel
-BuildRequires: libselinux-devel
 
 # Skip automatic dependency to optional lsb scripts
 %add_findreq_skiplist %_initdir/*
@@ -73,12 +38,88 @@ BuildRequires: libselinux-devel
 %add_findreq_skiplist %_libexecdir/lxc/lxc-apparmor-load
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
-Requires: openssl rsync
-BuildRequires: libcap libcap-devel docbook2X graphviz
+Name: lxc
+Version: 4.0.3.0.78.git8bf37e96e
+Release: alt1
 
-%{?_with_systemd:BuildRequires: systemd-devel}
+Summary: Linux Containers
+
+License: LGPL-2.1-or-later
+Group: System/Configuration/Other
+Url: https://linuxcontainers.org/
+
+VCS: https://github.com/lxc/lxc.git
+Source0: lxc-%version.tar
+Source1: lxc-net.sysconfig
+Source2: lxc-user-nic.control
+Source3: lxc.watch
+
+Patch2: 0002-FEDORA-lxc-net.service-wants-network-online.target.patch
+Patch3: 0003-ALT-Fixed-_have-macro-in-bash-completion.patch
+Patch4: 0004-ALT-tune-SysVinit-scripts.patch
+Patch5: 0005-ALT-make-lxc-and-lxc-net-init-scripts-disabled-by-de.patch
+Patch6: 0006-ALT-sysvinit-don-t-start-services-at-boot-by-default.patch
+
+Requires: lxc-core lxc-net lxc-templates
+
+# Automatically added by buildreq on Tue Aug 04 2020
+# optimized out: docbook-dtds glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-parent pkg-config python-modules python2-base python3 python3-base sh4 xml-common xsltproc
+BuildRequires: docbook2X libcap-devel libpam-devel libseccomp-devel libselinux-devel python3-dev
 
 %description
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
+
+This is meta package.
+
+%package core
+Summary: Core package for LXC
+Group: System/Configuration/Other
+Requires: rsync
+Requires: service
+%ifarch x86_64 %arm
+Requires: criu
+%endif
+Obsoletes: lxc-sysvinit
+
+%package net
+BuildArch: noarch
+Summary: Network interface for LXC with DHCP
+Group: System/Configuration/Networking
+Requires: iproute2 dnsmasq lxc-core
+
+%package templates
+BuildArch: noarch
+Summary: Templates for LXC
+Group: System/Configuration/Other
+Requires: lxc-core wget
+
+%package -n liblxc%sover
+Summary: LXC shared runtime library
+Group: System/Libraries
+Requires: lxc-runtime
+
+%package runtime
+Summary: Runtime files for LXC
+Group: System/Configuration/Other
+Provides: lxc-libs
+Obsoletes: lxc-libs < %EVR
+Requires(pre): /usr/sbin/groupadd
+
+%package -n liblxc-devel
+Summary: Development files for LXC
+Group: Development/Other
+Provides: lxc-devel
+
+%set_pam_name pam_cgfs
+%package -n %pam_name
+Summary: %summary
+Group: System/Base
+BuildRequires(pre): libpam-devel
+
+%description core
 Containers are insulated areas inside a system, which have their own namespace
 for filesystem, network, PID, IPC, CPU and memory allocation and which can be
 created using the Control Group and Namespace features included in the Linux
@@ -88,28 +129,45 @@ This package provides the lxc-* tools, which can be used to start a single
 daemon in a container, or to boot an entire "containerized" system, and to
 manage and debug your containers.
 
-%package libs
-Summary: Shared library files for %name
-Group: System/Configuration/Other
-Requires(pre): /usr/sbin/groupadd
-Requires(pre): control
+%description net
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
 
-%description libs
-The %name-libs package contains libraries for running %name applications.
+This package provides the network interface for containers with DHCP.
 
-%package devel
-Summary: development library for %name
-Group: Development/Other
+%description templates
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
 
-%description devel
-The %name-devel package contains header files and library needed for
-development of the linux containers.
+This package contains templates for LXC.
 
-%set_pam_name pam_cgfs
-%package -n %pam_name
-Summary: %summary
-Group: System/Base
-BuildRequires(pre): libpam-devel
+%description -n liblxc%sover
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
+
+This package contains runtime shared library for LXC.
+
+%description runtime
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
+
+This package contains runtime executables and data for LXC.
+
+%description -n liblxc-devel
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
+
+This package contains development files for LXC.
 
 %description -n %pam_name
 %summary
@@ -123,6 +181,7 @@ management using cgroup process tracking.
 %autopatch -p1
 
 %build
+export bashcompdir="%_datadir/bash-completion/completions"
 %autoreconf
 %configure \
 	--disable-werror \
@@ -144,32 +203,54 @@ management using cgroup process tracking.
 %makeinstall_std
 
 mkdir -p %buildroot%_localstatedir/lxc
-mkdir -p %buildroot%_cachedir/lxc
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
 install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
 
-%post
+%post core
 if [ $1 -eq 1 ]; then
-	/sbin/chkconfig --add lxc
-	/sbin/chkconfig --add lxc-net
+	/sbin/chkconfig --add lxc ||:
 fi
 
-%preun
+%preun core
 if [ $1 -eq 0 ]; then
-	/sbin/chkconfig --del lxc
-	/sbin/chkconfig --del lxc-net
+	/sbin/chkconfig --del lxc ||:
 fi
 
-%pre libs
+%post net
+if [ $1 -eq 1 ]; then
+	/sbin/chkconfig --add lxc-net ||:
+fi
+
+%preun net
+if [ $1 -eq 0 ]; then
+	/sbin/chkconfig --del lxc-net ||:
+fi
+
+%pre runtime
 groupadd -r -f vmusers ||:
 %pre_control lxc-user-nic
 
-%post libs
+%post runtime
 %post_control -s vmusers lxc-user-nic
 
 %files
+
+%files core
 %doc COPYING doc/FAQ.txt
-%_bindir/*
+
+%dir %_sysconfdir/lxc
+%dir %_sysconfdir/sysconfig/lxc
+%config(noreplace) %_sysconfdir/lxc/*
+%config(noreplace) %_sysconfdir/sysconfig/lxc*
+
+%_datadir/bash-completion/completions/lxc
+
+%_bindir/lxc-*
+%_datadir/lxc/config
+%_datadir/lxc/selinux
+
+%dir %_defaultdocdir/lxc
+%_defaultdocdir/lxc/examples
 
 %_man1dir/lxc*
 %_man5dir/lxc*
@@ -178,46 +259,57 @@ groupadd -r -f vmusers ||:
 %_mandir/ja/*
 %_mandir/ko/*
 
-%_defaultdocdir/lxc
-%_datadir/lxc
-
-%_sysconfdir/bash_completion.d/lxc
-
-%config(noreplace) %_sysconfdir/lxc/*
-%config(noreplace) %_sysconfdir/sysconfig/lxc*
-
 %_initdir/lxc
-%_initdir/lxc-net
+
 %if_with systemd
 %_unitdir/lxc.service
 %_unitdir/lxc@.service
+%endif
+
+%files net
+%attr(555,root,root) %_libexecdir/lxc/lxc-net
+
+%_initdir/lxc-net
+
+%if_with systemd
 %_unitdir/lxc-net.service
 %endif
 
-%files libs
-%doc COPYING
-%_controldir/lxc-user-nic
+%files templates
+%dir %_datadir/lxc
+%_datadir/lxc/templates
+
+%files -n liblxc%sover
+%_libdir/liblxc.so.%sover
+%_libdir/liblxc.so.%sover.*
+
+%files runtime
 %attr(4710,root,vmusers) %_libexecdir/lxc/lxc-user-nic
 %attr(555,root,root) %_libexecdir/lxc/lxc-containers
-%attr(555,root,root) %_libexecdir/lxc/lxc-net
+
 %_libexecdir/lxc/lxc-apparmor-load
 %_libexecdir/lxc/lxc-containers
 %_libexecdir/lxc/lxc-monitord
-%_libexecdir/lxc/lxc-net
 %_libexecdir/lxc/hooks
+
+%_controldir/lxc-user-nic
+%_datadir/lxc/hooks
+%_datadir/lxc/lxc.functions
 
 %_sbindir/init.lxc
 # ALT#37718
 #_sbindir/init.lxc.static
-%_libdir/*.so.1*
 %_localstatedir/lxc
 
+%dir %_datadir/lxc
+%dir %_libexecdir/lxc
+%dir %_libdir/lxc
 %dir %_libdir/lxc/rootfs
 %_libdir/lxc/rootfs/README
 
-%files devel
+%files -n liblxc-devel
 %_includedir/lxc
-%_libdir/*.so
+%_libdir/liblxc.so
 %_pkgconfigdir/lxc.pc
 
 %files -n %pam_name
@@ -225,6 +317,17 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Aug 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.3.0.78.git8bf37e96e-alt1
+- Updated to lxc-4.0.3-78-g8bf37e96e.
+- Split lxc package to lxc-core, lxc-net and lxc-templates.
+- Renamed lxc-libs to lxc-runtime.
+- Renamed lxc-devel to liblxc-devel (closes: 38778).
+- Moved shared library file to liblxc1 (closes: 38779).
+- Moved bash completion to %%_datadir/bash-completion/completion.
+- Moved %%_datadir/lxc/hooks to lxc-runtime.
+- Do not package %%_datadir/lxc/lxc-patch.py.
+- Clean up spec, drop needless build and runtime dependencies.
+
 * Tue Jun 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.3-alt1
 - Updated to 4.0.3.
 
