@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 781490de48220d7695a05c29e5a36f550a4568f5
+%global commit af0237819ab9c5997c1c0144862dc762b9d8fc25
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.8.0
+Version:	1.8.1
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -68,7 +68,7 @@ CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
-    " -a -installsuffix nocgo ./...
+    " ./...
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -123,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Aug 05 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Apr 21 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
