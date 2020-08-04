@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.14.0
-Release: alt4
+Version: 0.17.0
+Release: alt1
 
 Summary: pytest plugin to check source code with pylint
 License: MIT
@@ -21,13 +21,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-runner
 
 %if_with check
-BuildRequires: pylint
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-pylint
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-pep8
-BuildRequires: python3-module-tox
+BuildRequires: python3(pylint)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_flake8)
+BuildRequires: python3(tox)
 %endif
 
 %py3_provides %oname
@@ -42,9 +39,6 @@ pylintrc file.
 %setup
 %patch -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
 %python3_build
 
@@ -52,26 +46,19 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3\
-commands_pre =\
-    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' tox.ini
 export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+tox.py3 --sitepackages -vvr
 
 %files
 %doc *.rst pylintrc
-%python3_sitelibdir/pytest_pylint.py
+%python3_sitelibdir/pytest_pylint/
 %python3_sitelibdir/pytest_pylint-*.egg-info/
-%python3_sitelibdir/__pycache__/
-
 
 %changelog
+* Tue Aug 04 2020 Stanislav Levin <slev@altlinux.org> 0.17.0-alt1
+- 0.14.0 -> 0.17.0.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.14.0-alt4
 - python2 disabled
 

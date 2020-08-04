@@ -44,7 +44,7 @@
 
 Name: freeipa
 Version: 4.8.8
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -152,6 +152,7 @@ BuildRequires: python3-module-sss_nss_idmap
 BuildRequires: python3-module-sss-murmur
 BuildRequires: python3-module-sssdconfig >= %sssd_version
 BuildRequires: python3-module-systemd
+BuildRequires: python3-module-yaml
 BuildRequires: python3-module-yubico
 
 %endif
@@ -738,7 +739,7 @@ if [ $1 -gt 1 ] ; then
     fi
 
     if [ $restore -ge 2 ]; then
-        sed -E --in-place=.orig 's/^(HostKeyAlgorithms ssh-rsa,ssh-dss)$/# disabled by ipa-client update\n# \1/' /etc/openssh/ssh_config
+        sed -E --in-place=.orig 's/^(HostKeyAlgorithms ssh-rsa,ssh-dss)$/# disabled by ipa-client update\n# \1/' /etc/openssh/ssh_config ||:
     fi
 fi
 
@@ -1052,6 +1053,10 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Tue Aug 04 2020 Stanislav Levin <slev@altlinux.org> 4.8.8-alt2
+- Fixed FTBFS(new pylint 2.5.3).
+- Fixed group ownership of pki instance nssdb.
+
 * Tue Jun 30 2020 Stanislav Levin <slev@altlinux.org> 4.8.8-alt1
 - 4.8.6 -> 4.8.8.
 
