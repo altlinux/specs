@@ -1,5 +1,5 @@
 %global import_path github.com/containous/traefik
-%global commit fb3839e09602895615fefc3934090cb013dea4f5
+%global commit fc52d1cfba85cd48fe3055c5d82a30b6694a1e52
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name: traefik
-Version: 2.0.7
+Version: 2.2.8
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -52,7 +52,7 @@ Documentation: http://docs.traefik.io/
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
 # Vendorized go modules
-# $ GO111MODULE=on GOPROXY=direct go mod vendor -v
+# $ GO111MODULE=on go mod vendor -v
 # $ git add -f vendor
 # $ git commit -n --no-post-rewrite -m "add go vendor modules"
 
@@ -138,6 +138,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Aug 04 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.8-alt1
+- 2.2.8
+
 * Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
