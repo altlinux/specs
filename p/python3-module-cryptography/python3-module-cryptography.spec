@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -25,6 +25,7 @@ BuildRequires: python3-module-pytest >= 3.9.3
 BuildRequires: python3-module-hypothesis
 %endif
 
+%py3_requires cffi
 
 %description
 cryptography is a package which provides cryptographic recipes and primitives to Python developers.
@@ -58,6 +59,9 @@ python3 setup.py test
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 3.0-alt2
+- Added missing runtime dependency on cffi.
+
 * Tue Jul 21 2020 Vladimir Didenko <cow@altlinux.ru> 3.0-alt1
 - new version (3.0)
 - build Python 3 version as separate package
