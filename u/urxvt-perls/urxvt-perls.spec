@@ -1,7 +1,7 @@
 %define _urxvt_perl_dir %_libdir/urxvt/perl
 
 Name: urxvt-perls
-Version: 2.2.0.10.git1f4897c
+Version: 2.3.0.1.git05a3adc
 Release: alt1
 
 Summary: a small collection of perl extensions for the rxvt-unicode
@@ -32,6 +32,11 @@ install -m644 deprecated/* -Dt %buildroot%_urxvt_perl_dir
 %_urxvt_perl_dir/*
 
 %changelog
+* Tue Aug 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.0.1.git05a3adc-alt1
+- Updated to 2.3-1-g05a3adc.
+- Added a new command 'o' for visual selection that jumps the cursor to the
+  other corner of the selection.
+
 * Wed Apr 17 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.0.10.git1f4897c-alt1
 - Updated to 2.2-10-g1f4897c.
 
