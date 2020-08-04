@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gerbera
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: UPnP Media Server
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 Requires: %name-data = %EVR
 
-BuildRequires: cmake
+BuildRequires: cmake >= 3.14
 BuildRequires: gcc-c++
 BuildRequires: libupnp-devel >= 1.12.1
 BuildRequires: libfmt-devel
@@ -123,6 +123,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %config(noreplace) %_datadir/%name/js/common.js
 
 %changelog
+* Tue Aug 04 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
+- new version 1.6.0
+
 * Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
 - Initial build.
 
