@@ -1,8 +1,7 @@
 %define rname USBqemu-wheel
-%define rversion 0.9.2-0
 
 Name: pcsx2-plugin-usbqemu-wheel
-Version: %(sed 's|-|.|g' <<< %rversion)
+Version: 0.10.0
 Release: alt1
 
 Summary: PCSX2 usb plugin for wheels and increasingly more stuff
@@ -14,8 +13,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-# https://github.com/jackun/%rname/archive/%rversion/%rname-%rversion.tar.gz
-Source: %rname-%rversion.tar
+# https://github.com/jackun/%rname/archive/%version/%rname-%version.tar.gz
+Source: %rname-%version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -32,7 +31,7 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -n %rname-%rversion
+%setup -n %rname-%version
 
 %build
 %__mkdir_p %_target_platform
@@ -55,6 +54,9 @@ popd
 %_libdir/pcsx2/lib%rname-*.so
 
 %changelog
+* Tue Aug 04 2020 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
+- Version 0.10.0
+
 * Tue Jun 02 2020 Nazarov Denis <nenderus@altlinux.org> 0.9.2.0-alt1
 - Version 0.9.2-0
 
