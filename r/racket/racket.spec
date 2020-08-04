@@ -3,13 +3,15 @@
 %define sover 7.3
 Name: racket
 Version: 7.3
-Release: alt1
+Release: alt2
 
 Summary: Racket programming language
 
 License: LGPL
 Group: Development/Scheme
 Url: https://racket-lang.org/
+
+ExcludeArch: armh
 
 Source: %name-%version.tar
 Patch1: %name-alt-debuginfo.patch
@@ -192,6 +194,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/*
 
 %changelog
+* Tue Aug 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3-alt2
+- Disabled build on armh architecture.
+
 * Tue Jul 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 7.3-alt1
 - Updated to upstream version 7.3
 
