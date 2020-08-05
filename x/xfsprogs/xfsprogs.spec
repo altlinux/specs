@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.6.0
+Version: 5.7.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -10,7 +10,7 @@ Group: System/Kernel and hardware
 
 Url: http://xfs.org
 Source: %name-%version-%release.tar
-Patch: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
 
 Requires: libxfs = %version-%release
 Conflicts: xfsdump < 3.0.0-alt1
@@ -80,6 +80,7 @@ If you install libxfs-devel-static, you'll also want to install xfsprogs.
 
 %prep
 %setup
+%patch0 -p1
 sed 's|^\(hardcode_into_libs\)=.*$|\1=no|' < %_bindir/libtool-default > libtool
 install -pm755 include/install-sh install-sh
 
@@ -144,6 +145,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Wed Aug 05 2020 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
+- 5.7.0
+- hid dependency on systemd-utils (closes: #38712)
+
 * Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 5.6.0-alt1
 - 5.6.0
 
