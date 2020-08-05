@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt5_9jpp8
+Release:    alt6_9jpp8
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
@@ -27,7 +27,6 @@ BuildRequires:  java-devel
 
 BuildRequires:	gcc
 BuildRequires:	gcc-c++
-BuildRequires:	clang7.0 llvm7.0
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
@@ -89,6 +88,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Wed Aug 05 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.33.2-alt6_9jpp8
+- drop llvm buildreqs
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt5_9jpp8
 - new version
 
