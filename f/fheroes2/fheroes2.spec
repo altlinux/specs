@@ -1,13 +1,16 @@
-%define rev svn3279
+%def_with sdl2
+%define rev 20200726
 Name: fheroes2
-Version: 20161219
+Epoch: 1
+Version: 0.8
 Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
-Url: http://sourceforge.net/projects/fheroes2/
+#Url: http://sourceforge.net/projects/fheroes2/
+Url: https://github.com/ihhub/fheroes2
 
-Source: http://sourceforge.net/projects/fheroes2/files/fheroes2/%name-%version.tar
+Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
@@ -15,7 +18,12 @@ Source5: %name.cfg
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
-BuildRequires: gcc-c++ libogg-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libpng-devel
+BuildRequires: gcc-c++ libogg-devel libfreetype-devel libpng-devel
+%if_with sdl2
+BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
+%else
+BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel
+%endif
 
 %description
 Free implementation of Heroes of the Might and Magic II engine.
@@ -23,10 +31,12 @@ You need to copy files from data and maps directories from original game
 into your /usr/share/games/fheroes2/{maps,data} directories respectively
 
 %prep
-%setup -n %name
-sed -i 's/empty/simple/' Makefile
+%setup -q
 
 %build
+%if_with sdl2
+export WITH_SDL2="ON"
+%endif
 # Makefile hardwires AI resulting in non-fighting opponents
 %make_build WITH_AI=simple CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/" 
 
@@ -43,7 +53,7 @@ install -pm 644 %name.key %buildroot%_gamesdatadir/%name/
 install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 install -pm 644 %SOURCE5 %buildroot%_gamesdatadir/%name/
-install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdir/%name/
+install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_docdir/%name/
 
 %files
 %_bindir/*
@@ -54,6 +64,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Tue Aug 04 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8-alt1.20200726
+- new version
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 20161219-alt1.svn3279
 - picked up from orphaned
 - updated to the latest commit (closes: #32906)
