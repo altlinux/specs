@@ -1,72 +1,74 @@
 Name: xxhash
-Version: 0.7.4
+Version: 0.8.0
 Release: alt1
 
 Summary: Extremely fast hash algorithm
-
-#		The source for the library (xxhash.c and xxhash.h) is BSD
-#		The source for the command line tool (xxhsum.c) is GPLv2+
-License: BSD and GPLv2+
+# xxhash.c and xxhash.h are BSD-2-Clause
+# xxhsum.c is GPL-2.0-or-later
+License: BSD-2-Clause and GPL-2.0-or-later
 Group: File tools
 Url: http://www.xxhash.com/
-
-# Source-url:	https://github.com/Cyan4973/xxHash/archive/v%version/%name-%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %name-%version.tar
+Vcs: https://github.com/Cyan4973/xxHash
+# git://git.altlinux.org/gears/x/xxhash.git
+Source: %name-%version-%release.tar
 
 %description
-xxHash is an Extremely fast Hash algorithm, running at RAM speed
-limits. It successfully completes the SMHasher test suite which
-evaluates collision, dispersion and randomness qualities of hash
-functions. Code is highly portable, and hashes are identical on all
-platforms (little / big endian).
+xxHash is an Extremely fast Hash algorithm, running at RAM speed limits.
+It successfully completes the SMHasher test suite which evaluates collision,
+dispersion and randomness qualities of hash functions.  Code is highly
+portable, and hashes are identical across all platforms (little / big endian).
 
 %package -n lib%name
 Summary: Extremely fast hash algorithm - library
-License: BSD
+License: BSD-2-Clause
 Group: System/Libraries
 
 %description -n lib%name
-xxHash is an Extremely fast Hash algorithm, running at RAM speed
-limits. It successfully completes the SMHasher test suite which
-evaluates collision, dispersion and randomness qualities of hash
-functions. Code is highly portable, and hashes are identical on all
-platforms (little / big endian).
+xxHash is an Extremely fast Hash algorithm, running at RAM speed limits.
+It successfully completes the SMHasher test suite which evaluates collision,
+dispersion and randomness qualities of hash functions.  Code is highly
+portable, and hashes are identical across all platforms (little / big endian).
 
 %package -n lib%name-devel
 Summary: Extremely fast hash algorithm - development files
-License: BSD
+License: BSD-2-Clause
 Requires: lib%name = %EVR
 Group: Development/C
 
 %description -n lib%name-devel
-Development files for the xxhash library
+Development files for the xxhash library.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %build
-%make_build
+%global _optlevel 3
+%add_optflags %(getconf LFS_CFLAGS)
+%make_build libxxhash xxhsum xxh32sum xxh64sum xxh128sum xxhsum_inlinedXXH \
+	MOREFLAGS="$RPM_OPT_FLAGS"
+rm xxhsum
+mv xxhsum_inlinedXXH xxhsum
 
 %install
+export CC=false CXX=false # nothing should be compiled or linked during install
 %makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir
-rm -f %buildroot/%_libdir/libxxhash.a
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %check
+export CC=false CXX=false # nothing should be compiled or linked during check
 make check
 make test-xxhsum-c
 
 %files
 %_bindir/xxh*sum
 %_man1dir/xxh*sum.1*
-%doc LICENSE
-%doc README.md
+%doc CHANGELOG LICENSE README.md
 
 %files -n lib%name
 %_libdir/libxxhash.so.*
-%doc LICENSE
-%doc README.md
+%doc CHANGELOG LICENSE README.md
 
 %files -n lib%name-devel
 %_includedir/xxhash.h
@@ -75,6 +77,9 @@ make test-xxhsum-c
 %_pkgconfigdir/libxxhash.pc
 
 %changelog
+* Sun Aug 02 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.0-alt1
+- 0.7.4 -> 0.8.0.
+
 * Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt1
 - new version 0.7.4 (with rpmrb script)
 
