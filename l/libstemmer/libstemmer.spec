@@ -1,9 +1,6 @@
-%define svn_version 585
-
 Name: libstemmer
-Version: 0
-# to replace old libvreen from qutim package
-Release: alt2.svn%svn_version
+Version: 2.0.0
+Release: alt1
 Summary: C stemming algorithm library
 
 Group: System/Libraries
@@ -65,6 +62,9 @@ install -p -D -m 644 include/* %{buildroot}%{_includedir}/
 %_libdir/%{name}.so
 
 %changelog
+* Wed Aug 5 2020 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- New version
+
 * Wed Nov 20 2019 Vladimir Didenko <cow@altlinux.org> 0-alt2.svn585
 - Fix license name
 

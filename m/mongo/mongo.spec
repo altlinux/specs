@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.2.8
-Release: alt1
+Version: 4.4.0
+Release: alt1.1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -28,6 +28,7 @@ BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
 BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel
+BuildRequires: liblzma-devel
 
 %if_enabled valgrind
 BuildRequires: valgrind-devel
@@ -74,17 +75,19 @@ MongoDB instance.
 # CRLF -> LF
 sed -i 's/\r//' README
 
+
 %build
 %ifarch aarch64
 %define ccflags_arch_opts "-march=armv8-a+crc"
 %endif
+
 %ifarch %e2k
 %define opt_wt --wiredtiger=off
 %else
 %define opt_wt --wiredtiger=on
 %endif
 %define build_opts \\\
-       -j %__nprocs \\\
+       -j 4 \\\
        --use-system-tcmalloc \\\
        --use-system-pcre \\\
        --use-system-snappy \\\
@@ -155,22 +158,8 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 
 %files
 %doc README LICENSE-Community.txt
-
 %_bindir/mongo
-
-%_man1dir/mongo.1*
-
-# man pages for mongo-tools
-%exclude %_man1dir/bsondump.1*
-%exclude %_man1dir/mongodump.1*
-%exclude %_man1dir/mongoexport.1*
-%exclude %_man1dir/mongofiles.1*
-%exclude %_man1dir/mongoimport.1*
-%exclude %_man1dir/mongorestore.1*
-%exclude %_man1dir/mongostat.1*
-%exclude %_man1dir/mongotop.1*
-%exclude %_man1dir/mongoldap.1*
-%exclude %_man1dir/mongoreplay.1*
+%_man1dir/*
 
 %files server-mongod
 %doc README LICENSE-Community.txt
@@ -200,6 +189,13 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Aug 5 2020 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1.1
+- add missed build dependency
+- reduce build jobs count to avoid OOM
+
+* Wed Aug 5 2020 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Mon Jun 29 2020 Vladimir Didenko <cow@altlinux.org> 4.2.8-alt1
 - 4.2.8
 
