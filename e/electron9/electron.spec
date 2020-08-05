@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron9
-Version: 9.0.4
+Version: 9.1.2
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -63,6 +63,9 @@ ln -rs %buildroot%_libdir/%name/electron %buildroot/%_bindir/%name
 %endif
 
 %changelog
+* Wed Aug 05 2020 Vitaly Lipatov <lav@altlinux.ru> 9.1.2-alt1
+- new version 9.1.2 (with rpmrb script)
+
 * Sat Jun 27 2020 Vitaly Lipatov <lav@altlinux.ru> 9.0.4-alt1
 - new version (9.0.4) with rpmgs script
 - add armh (armv7l) arch
