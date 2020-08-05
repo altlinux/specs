@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
 Version:	1.13
-Release:	alt1_4
+Release:	alt2_4
 Group:		System/Libraries
 License:	MIT
 Url:		http://apps.jcns.fz-juelich.de/libcerf
@@ -22,7 +22,7 @@ Source0:	http://apps.jcns.fz-juelich.de/src/libcerf/libcerf-%{version}.tgz
 Patch1:		0001-Fix-64bit-library-location.patch
 Patch2:		0001-Fix-64bit-pkgconfig-.pc-file-location.patch
 BuildRequires:	ccmake cmake ctest
-BuildRequires:	clang7.0 llvm7.0
+BuildRequires:	clang9.0 llvm9.0
 Source44: import.info
 
 %description
@@ -86,6 +86,9 @@ export CC=clang
 
 
 %changelog
+* Wed Aug 05 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.13-alt2_4
+- llvm7 -> llvm9
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_4
 - fixed build
 
