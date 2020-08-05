@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Thu Jun 04 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.1-alt1
+- Add option to show available parameters
+
 * Fri May 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1
 - Fix check return code of playbook run.
 - Check for modules dir and superuser privileges.
