@@ -2,14 +2,13 @@
 
 Name: fontforge
 Version: 20200314
-Release: alt1
+Release: alt2
 
 Summary: FontForge -- font editor
-
 License: BSD
 Group: Publishing
-Url: http://fontforge.sourceforge.net/
 
+Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
 
@@ -78,7 +77,11 @@ FontForge development files
 
 %prep
 %setup
-%__subst "s|sphinx-build|sphinx-build-3|" cmake/packages/FindSphinx.cmake
+sed -i "s|sphinx-build|sphinx-build-3|" cmake/packages/FindSphinx.cmake
+%ifarch %e2k
+# lcc 1.24.11 doesn't do that; mcst#....
+sed -i "s|-Werror=int-conversion||" CMakeLists.txt
+%endif
 
 %build
 %cmake
@@ -118,6 +121,9 @@ FontForge development files
 
 
 %changelog
+* Tue Aug 04 2020 Michael Shigorin <mike@altlinux.org> 20200314-alt2
+- E2K: avoid lcc-unsupported option
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 20200314-alt1
 - FontForge 2020 March Release
 - new version 20200314 (with rpmrb script)
