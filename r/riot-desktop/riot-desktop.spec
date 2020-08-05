@@ -1,5 +1,5 @@
 Name: riot-desktop
-Version: 1.6.8
+Version: 1.7.2
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -30,7 +30,8 @@ BuildRequires: /proc yarn
 
 BuildRequires: riot-web = %version
 
-Requires: electron8
+Requires: electron9 >= 9.0.5
+Provides: element-desktop = %version-%release
 
 %description
 Riot (formerly known as Vector) is a Matrix web client built using the Matrix React SDK.
@@ -41,7 +42,7 @@ cp -a /var/www/html/riot-web webapp
 
 %build
 # note: configure it
-cat riot.im/release/config.json | grep -v "update_base_url" > webapp/config.json
+cat element.io/release/config.json | grep -v "update_base_url" > webapp/config.json
 # TODO: support hak and build matrix-seshat
 #yarn run hak
 
@@ -57,12 +58,13 @@ asar pack . resources/app.asar
 
 cat <<EOF >%name
 #!/bin/sh
-electron8 %_datadir/%name/resources/app.asar "\$@"
+electron9 %_datadir/%name/resources/app.asar "\$@"
 EOF
 
 %install
 install -m755 -D %name %buildroot%_bindir/%name
 ln -s riot-desktop %buildroot/%_bindir/riot
+ln -s riot-desktop %buildroot/%_bindir/element-desktop
 
 mkdir -p %buildroot%_datadir/%name/
 cp -a resources %buildroot%_datadir/%name/
@@ -80,11 +82,15 @@ install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %files
 %_bindir/riot
 %_bindir/riot-desktop
+%_bindir/element-desktop
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Aug 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2 (with rpmrb script) (ALT bug 38786)
+
 * Sat Jul 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
 - new version 1.6.8 (with rpmrb script)
 
