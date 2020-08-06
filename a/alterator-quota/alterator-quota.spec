@@ -1,5 +1,5 @@
 Name: alterator-quota
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -45,6 +45,9 @@ alterator module for managing filesystem quotas
 %_bindir/*
 
 %changelog
+* Thu Aug 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt1
+- Minor fixes for UI.
+
 * Wed Aug 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
 - If quota is disabled on selected mount point, appropriate UI elements
   are disabled now.
