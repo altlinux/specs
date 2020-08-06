@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.4.0
+Version: 1.4.0.0.52.6502
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -316,6 +316,7 @@ done
 %helperdir/pam_tally2
 %helperdir/mkhomedir_helper
 %helperdir/pam_namespace_helper
+%attr(700,root,root) %helperdir/pwhistory_helper
 %_unitdir/pam_namespace.service
 %config(noreplace) %_secdir/access.conf
 %config(noreplace) %_secdir/faillock.conf
@@ -352,6 +353,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Aug 06 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.0.0.52.6502-alt1
+- v1.4.0 -> v1.4.0-52-g650273e7.
+
 * Thu Jun 04 2020 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
 - v1.3.1-324-geec5fe0d -> v1.4.0.
 
