@@ -3,13 +3,13 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.48.1
+Version: 3.49.1
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
 Group: Networking/File transfer
 License: GPL
-Url: https://filezilla.sourceforge.net/
+Url: https://filezilla-project.org/
 # Repacked https://download.filezilla-project.org/client/%{oname}_%{version}_src.tar.bz2
 Source: %oname-%version.tar
 
@@ -27,7 +27,7 @@ of useful features and an intuitive interface
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -45,6 +45,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Thu Aug 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.49.1-alt1
+- Updated to upstream version 3.49.1.
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.48.1-alt1
 - Updated to upstream version 3.48.1.
 
