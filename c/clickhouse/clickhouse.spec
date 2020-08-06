@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 20.3.11.97
+Version: 20.3.15.133
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -16,31 +16,30 @@ Source4:  %name-%version-contrib-aws-c-event-stream.tar
 Source5:  %name-%version-contrib-aws-checksums.tar
 Source6:  %name-%version-contrib-base64.tar
 Source7:  %name-%version-contrib-grpc.tar
-Source8:  %name-%version-contrib-googletest.tar
-Source9:  %name-%version-contrib-grpc-third_party-abseil-cpp.tar
-Source10: %name-%version-contrib-grpc-third_party-benchmark.tar
-Source11: %name-%version-contrib-grpc-third_party-bloaty.tar
-Source12: %name-%version-contrib-grpc-third_party-bloaty-third_party-googletest.tar
-Source13: %name-%version-contrib-grpc-third_party-bloaty-third_party-libFuzzer.tar
-Source14: %name-%version-contrib-grpc-third_party-bloaty-third_party-re2.tar
-Source15: %name-%version-contrib-grpc-third_party-boringssl.tar
-Source16: %name-%version-contrib-grpc-third_party-boringssl-with-bazel.tar
-Source17: %name-%version-contrib-grpc-third_party-cares-cares.tar
-Source18: %name-%version-contrib-grpc-third_party-envoy-api.tar
-Source19: %name-%version-contrib-grpc-third_party-gflags.tar
-Source20: %name-%version-contrib-grpc-third_party-gflags-doc.tar
-Source21: %name-%version-contrib-grpc-third_party-googleapis.tar
-Source22: %name-%version-contrib-grpc-third_party-googletest.tar
-Source23: %name-%version-contrib-grpc-third_party-protobuf.tar
-Source24: %name-%version-contrib-grpc-third_party-protobuf-third_party-benchmark.tar
-Source25: %name-%version-contrib-grpc-third_party-protobuf-third_party-googletest.tar
-Source26: %name-%version-contrib-grpc-third_party-protoc-gen-validate.tar
-Source27: %name-%version-contrib-grpc-third_party-udpa.tar
-Source28: %name-%version-contrib-grpc-third_party-zlib.tar
-Source29: %name-%version-contrib-replxx.tar
-Source30: %name-%version-contrib-ryu.tar
-Source31: %name-%version-contrib-simdjson.tar
-Source32: %name-%version-contrib-zlib-ng.tar
+Source8:  %name-%version-contrib-grpc-third_party-abseil-cpp.tar
+Source9:  %name-%version-contrib-grpc-third_party-benchmark.tar
+Source10: %name-%version-contrib-grpc-third_party-bloaty.tar
+Source11: %name-%version-contrib-grpc-third_party-bloaty-third_party-googletest.tar
+Source12: %name-%version-contrib-grpc-third_party-bloaty-third_party-libFuzzer.tar
+Source13: %name-%version-contrib-grpc-third_party-bloaty-third_party-re2.tar
+Source14: %name-%version-contrib-grpc-third_party-boringssl.tar
+Source15: %name-%version-contrib-grpc-third_party-boringssl-with-bazel.tar
+Source16: %name-%version-contrib-grpc-third_party-cares-cares.tar
+Source17: %name-%version-contrib-grpc-third_party-envoy-api.tar
+Source18: %name-%version-contrib-grpc-third_party-gflags.tar
+Source19: %name-%version-contrib-grpc-third_party-gflags-doc.tar
+Source20: %name-%version-contrib-grpc-third_party-googleapis.tar
+Source21: %name-%version-contrib-grpc-third_party-googletest.tar
+Source22: %name-%version-contrib-grpc-third_party-protobuf.tar
+Source23: %name-%version-contrib-grpc-third_party-protobuf-third_party-benchmark.tar
+Source24: %name-%version-contrib-grpc-third_party-protobuf-third_party-googletest.tar
+Source25: %name-%version-contrib-grpc-third_party-protoc-gen-validate.tar
+Source26: %name-%version-contrib-grpc-third_party-udpa.tar
+Source27: %name-%version-contrib-grpc-third_party-zlib.tar
+Source28: %name-%version-contrib-replxx.tar
+Source29: %name-%version-contrib-ryu.tar
+Source30: %name-%version-contrib-simdjson.tar
+Source31: %name-%version-contrib-zlib-ng.tar
 
 Patch0: %name-%version-%release.patch
 
@@ -61,7 +60,8 @@ BuildRequires: libhyperscan-devel
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: libflatbuffers-devel
-# TODO: use system gtest once it's updated
+BuildRequires: libgtest-devel
+BuildRequires: libfmt-devel
 
 ExclusiveArch: aarch64 x86_64
 
@@ -104,7 +104,7 @@ Requires: %name-client = %EVR
 ClickHouse tests
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31
 %patch0 -p1
 
 %build
@@ -182,6 +182,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Thu Aug 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.15.133-alt1
+- Updated to lts upstream version 20.3.15.133.
+
 * Tue Jun 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.11.97-alt1
 - Updated to lts upstream version 20.3.11.97.
 
