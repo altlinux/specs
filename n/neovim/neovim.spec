@@ -1,10 +1,10 @@
 Name: neovim
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: heavily refactored vim fork
 
-License: ASLv2 and Vim
+License: Apache-2.0 and Vim
 Group: Editors
 Url: https://neovim.io/
 
@@ -33,7 +33,7 @@ BuildRequires: unibilium-devel
 # I am not ready to spend my time trying to fix this issue. If anyone wants
 # to fix it - start with libluv library first because it is compiled with
 # libluajit exclusively.
-ExcludeArch: aarch64
+ExcludeArch: aarch64 armh
 
 Provides: nvim = %EVR
 Requires: %name-runtime = %EVR
@@ -91,6 +91,11 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 %_datadir/nvim/runtime/*
 
 %changelog
+* Thu Aug 6 2020 Vladimir Didenko <cow@altlinux.org> 0.4.4-alt1
+- New version
+- Fix license name
+- Don't build on armh
+
 * Fri Nov 8 2019 Vladimir Didenko <cow@altlinux.org> 0.4.3-alt1
 - New version
 
