@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
@@ -31,7 +31,7 @@ An interactive Python accessibility explorer.
 
 %package -n python3-module-%name
 Summary: Python module for accerciser
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 # The macro below is resolved into an empty string but confuses build process
 #%_python_set_noarch
@@ -72,6 +72,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Thu Aug 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
+- 3.36.3
+
 * Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
