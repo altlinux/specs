@@ -1,6 +1,6 @@
 Name: scons
-Version: 3.1.1
-Release: alt2
+Version: 4.0.1
+Release: alt1
 
 Summary: an Open Source software construction tool
 Summary(ru_RU.UTF-8): Open Source средство для сборки ПО
@@ -49,30 +49,33 @@ Carpentry в августе 2000г.
 
 %prep
 %setup -n %name-src-%version
-sed -i 's|/usr/bin/env python|/usr/bin/python3|' script/*
+sed -i 's|/usr/bin/env python|/usr/bin/python3|' scripts/*
+sed -i 's|/usr/bin/env python|/usr/bin/python3|' bin/*
 
 %build
 %python3_build
 
 %install
 %python3_install \
-    --no-version-script \
-    --standard-lib \
     --install-scripts=%_bindir \
     --install-data=%_datadir
+
+# Remove dead code generating garbage dependency
+rm -fr %buildroot%python3_sitelibdir_noarch/SCons/Tool/docbook/docbook-xsl-1.76.1
 
 # Add symlink for compability with Fedora and Mageia
 ln -s scons %buildroot%_bindir/scons-3
 
 %files
-%doc LICENSE.txt CHANGES.txt README.txt RELEASE.txt
-%_man1dir/*
+%doc LICENSE CHANGES.txt README.rst RELEASE.txt
 %_bindir/*
 %python3_sitelibdir_noarch/SCons
 %python3_sitelibdir_noarch/*.egg-info
-%_mandir/man?/*
 
 %changelog
+* Thu Aug 6 2020 Vladimir Didenko <cow@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Thu Dec 5 2019 Vladimir Didenko <cow@altlinux.org> 3.1.1-alt2
 - add scons-3 symlink (closes: 37578)
 - fix license name
