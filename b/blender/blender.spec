@@ -10,7 +10,7 @@
 
 Name: blender
 Version: 2.91.0
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -191,6 +191,13 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
 %add_optflags -fPIC -funsigned-char -fno-strict-aliasing
 
+%ifarch aarch64
+# limit build jobs on aarch64
+if [ %__nprocs -gt 48 ] ; then
+	export NPROCS=48
+fi
+%endif
+
 %cmake \
 %ifnarch %{ix86} x86_64
 	-DWITH_RAYOPTIMIZATION=OFF \
@@ -276,6 +283,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Jan 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.0-alt2
+- Circumvented build issues on aarch64 caused by gcc-10 consuming more resources.
+
 * Fri Nov 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.91.0-alt1
 - Updated to upstream version 2.91.0.
 
