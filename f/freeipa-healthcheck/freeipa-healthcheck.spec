@@ -4,7 +4,7 @@
 
 Name: freeipa-healthcheck
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -36,6 +36,7 @@ identification, diagnosis and potentially repair of problems.
 Summary: FreeIPA-healthcheck python3 bindings and documentation
 License: GPLv3
 Group: Development/Python3
+Requires: python3-module-lib389 >= 1.4.1.11
 
 %description -n python3-module-%name
 This FreeIPA-healthcheck Python3 module contains the library binding for
@@ -106,5 +107,8 @@ tox.py3 --sitepackages -vv
 %python3_sitelibdir/ipaclustercheck/
 
 %changelog
+* Thu Aug 06 2020 Stanislav Levin <slev@altlinux.org> 0.6-alt2
+- Applied upstream fixes.
+
 * Wed Jul 22 2020 Stanislav Levin <slev@altlinux.org> 0.6-alt1
 - Initial build (by Ivan Alekseev <qwetwe@altlinux.org>).
