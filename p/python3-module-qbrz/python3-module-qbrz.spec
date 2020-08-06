@@ -3,7 +3,7 @@
 
 Name: python3-module-qbrz
 Version: 0.23.2
-Release: alt1.bzr20191027
+Release: alt2.bzr20200724
 
 Summary: A simple Qt cross-platform frontend for some of Bazaar commands
 License: GPLv2+
@@ -13,6 +13,8 @@ Url: https://launchpad.net/qbrz
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
 Source: qbrz-%version.tar
+
+Patch0: %name-%version-%release.patch
 
 Provides: qbrz
 
@@ -44,6 +46,7 @@ This package contains tools and test suites for testing qbrz plugin.
 
 %prep
 %setup -n qbrz-%version
+%patch0 -p1
 
 %build
 %python3_build
@@ -63,6 +66,9 @@ This package contains tools and test suites for testing qbrz plugin.
 %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 
 %changelog
+* Wed Aug 05 2020 Anatoly Kitaikin <cetus@altlinux.org> 0.23.2-alt2.bzr20200724
+- current snapshot
+
 * Sun Feb 16 2020 Anatoly Kitaikin <cetus@altlinux.org> 0.23.2-alt1.bzr20191027
 - Qt frontend for breezy
 
