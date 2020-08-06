@@ -1,6 +1,6 @@
 %define module_name	lkrg
 %define module_version	0.8.1
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-pae
 %define karch		%ix86
@@ -60,6 +60,9 @@ install p_lkrg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Aug 06 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt2
+- Rebuilt with new key.
 
 * Thu Jul 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
 - Update to 0.8.1 (bugfix preventing Oops).
