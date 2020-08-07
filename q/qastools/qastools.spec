@@ -1,5 +1,5 @@
 Name: qastools
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
@@ -88,20 +88,26 @@ done
 %_desktopdir/qasconfig.desktop
 %_iconsdir/hicolor/*/apps/qasconfig.*
 %_man1dir/qasconfig.1.*
+%_datadir/metainfo/qasconfig.appdata.xml
 
 %files -n qashctl
 %_bindir/qashctl
 %_desktopdir/qashctl.desktop
 %_iconsdir/hicolor/*/apps/qashctl.*
 %_man1dir/qashctl.1.*
+%_datadir/metainfo/qashctl.appdata.xml
 
 %files -n qasmixer
 %_bindir/qasmixer
 %_desktopdir/qasmixer.desktop
 %_iconsdir/hicolor/*/apps/qasmixer.*
 %_man1dir/qasmixer.1.*
+%_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Fri Aug 07 2020 Anton Midyukov <antohami@altlinux.org> 0.23.0-alt1
+- new version 0.23.0
+
 * Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 0.22.0-alt1
 - new version 0.22.0
 
