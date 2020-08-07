@@ -1,6 +1,6 @@
 
 Name: libseccomp
-Version: 2.4.3
+Version: 2.5.0
 Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
@@ -10,6 +10,8 @@ Url: https://github.com/seccomp/libseccomp
 #https://github.com/seccomp/libseccomp.git
 Source: %name-%version.tar
 Patch1: %name-%version.patch
+
+BuildRequires: gperf
 
 %description
 The libseccomp library provides and easy to use, platform independent,
@@ -67,6 +69,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*
 
 %changelog
+* Fri Aug 07 2020 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Fri May 08 2020 Alexey Shabalin <shaba@altlinux.org> 2.4.3-alt1
 - new version 2.4.3
 
