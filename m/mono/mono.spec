@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.20.1.19
-Release: alt5
+Release: alt6
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -55,6 +55,7 @@ Patch2: %name-alt-linking2.patch
 Patch3: %name-alt-monodoc-sourcesdir.patch
 Patch4: %name-upstream-crash-Use-safer-invalid-free-test-12864.patch
 Patch5: %name-alt-make-compat.patch
+Patch6: %name-alt-cmake-compat.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -514,6 +515,7 @@ Development files for libmono.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %if_enabled bootstrap
 mkdir -p mcs/class/lib/monolite-linux
@@ -1125,6 +1127,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt6
+- Fixed build with new cmake.
+
 * Tue Jul 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.20.1.19-alt5
 - Fixed build with new make.
 
