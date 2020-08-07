@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 13.0
-Release: alt4
+Version: 13.99.1
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -206,6 +206,8 @@ touch config.rpath
 %make_install DESTDIR=%buildroot install
 install -pm0644 -D pulseaudio.sysconfig %buildroot%_sysconfdir/sysconfig/pulseaudio
 install -pm0755 -D pulseaudio.init %buildroot%_initdir/pulseaudio
+install -pm0644 -D pulseaudio.service %buildroot%_unitdir/pulseaudio.service
+install -pm0644    pulseaudio.socket %buildroot%_unitdir
 ln -s esdcompat %buildroot%_bindir/esd
 mkdir -p %buildroot%_localstatedir/pulse
 find %buildroot%_libdir -name \*.la -delete
@@ -219,6 +221,12 @@ find %buildroot%_libdir -name \*.la -delete
 %_sbindir/groupadd -r -f pulse &> /dev/null
 %_sbindir/useradd -r -g pulse -G audio -d /run/pulse -s /dev/null \
 	-c "Pulseaudio daemon" -M -n pulse &>/dev/null ||:
+
+%post system
+%post_service pulseaudio
+
+%preun system
+%preun_service pulseaudio
 
 %set_python3_req_method strict
 
@@ -268,6 +276,8 @@ find %buildroot%_libdir -name \*.la -delete
 
 %files system
 %_initdir/pulseaudio
+%_unitdir/pulseaudio.service
+%_unitdir/pulseaudio.socket
 
 %config(noreplace) %_sysconfdir/sysconfig/pulseaudio
 %config(noreplace) %_sysconfdir/dbus-1/system.d/pulseaudio-system.conf
@@ -340,6 +350,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Fri Aug 07 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.99.1-alt1
+- updated up to v13.99.1-126-g7949ec50e
+
 * Sat Jul 25 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt4
 - disable long obsolete gconf plugin
 
