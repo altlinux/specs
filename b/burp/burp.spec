@@ -1,13 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
 Name:		burp
-Version:	2.3.30
+Version:	2.3.32
 Release:	alt1
 
 Summary:	Burp is a network-based backup and restore program
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
 Url:		https://burp.grke.org/
+Vcs:		https://github.com/grke/burp.git
 
-# https://github.com/grke/burp.git master
 Source:		%{name}-%{version}.tar
 
 BuildRequires:  libtool
@@ -81,6 +84,9 @@ install -D -p -m 0644 .gear/burp.service %{buildroot}%{_unitdir}/burp-server.ser
 %preun_service burp-server
 
 %changelog
+* Fri Aug 07 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.32-alt1
+- Update to 2.3.32 (2020-07-31).
+
 * Tue Jul 07 2020 Vitaly Chikunov <vt@altlinux.org> 2.3.30-alt1
 - Update to 2.3.30 (2020-07-03).
 
