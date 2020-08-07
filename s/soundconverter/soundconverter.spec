@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 3.0.2
-Release: alt2.20200625
+Version: 3.1.0
+Release: alt1
 
 Summary: A simple sound converter application for GNOME
 License: GPL-3.0-or-later
@@ -12,11 +12,16 @@ Group: Sound
 Url: https://github.com/kassoulet/soundconverter
 Source: %name-%version.tar
 Patch: drop-unity.patch
+# http://launchpadlibrarian.net/492275868/ru.po
+Patch1: 0001-Update-russian-translation.patch
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool
 BuildRequires: python3-devel
 BuildRequires: python3-module-pygobject3
+BuildRequires: python3-module-distutils-extra
 BuildRequires: gir(Gst) = 1.0
 BuildRequires: desktop-file-utils
 Requires: gst-plugins-ugly1.0
@@ -30,42 +35,47 @@ It reads and writes anything the GStreamer library can.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
-mkdir -p m4
-%autoreconf
-%configure
-%make_build
+%python3_build
 
 %install
-%makeinstall_std
-%find_lang %name
+%python3_install
 
-# remove unidentified locale
-rm -fr %buildroot%_datadir/locale/sr@Latn/
-
-desktop-file-install \
-	--dir %buildroot%_desktopdir \
-	%buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Audio \
 	--add-category=AudioVideoEditing \
-	%buildroot%_desktopdir/soundconverter.desktop
+	build/share/applications/%name.desktop
+
+# install locale
+mkdir -p %buildroot%_datadir/locale
+cp -a build/mo/* %buildroot%_datadir/locale
+%find_lang %name
+
+# remove unidentified locale
+rm -r %buildroot%_datadir/locale/sr@Latn/
+
+# Cleanup docdir
+rm -r %buildroot%_datadir/doc/%name
 
 %files -f %name.lang
-%doc ChangeLog COPYING README
-%doc %_man1dir/*
+%doc AUTHORS README.md
 %_bindir/%name
-%_libdir/%name
+%python3_sitelibdir/%name
+%python3_sitelibdir/*.egg-info
 %_datadir/%name
 %_datadir/metainfo/%name.appdata.xml
 %_datadir/glib-2.0/schemas/*
-%_desktopdir/*%name.desktop
-%_iconsdir/hicolor/48x48/apps/*.png
+%_pixmapsdir/*
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Aug 07 2020 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
+- New version 3.1.0
+- Update russian translation (Thanks Olesya Gerasimenko)
+
 * Thu Jun 25 2020 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt2.20200625
 - New snapshot
 - Added requires gst-plugins-base1.0
