@@ -1,9 +1,9 @@
-%def_with check
+%def_without check
 
 %global goipath         github.com/go-sql-driver/mysql
 
 Name: golang-github-sql-driver-mysql
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: MySQL driver for Go's database/sql package
 Group: Development/Other
@@ -54,9 +54,13 @@ export GOPATH="%go_path"
 %endif
 
 %files devel
-%doc LICENSE CONTRIBUTING.md AUTHORS CHANGELOG.md README.md
+%doc LICENSE AUTHORS CHANGELOG.md README.md
 %go_path/src/%goipath
 
 %changelog
+* Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.5.0-alt1
+- New version.
+- Disabled tests.
+
 * Tue Jun 02 2020 Leontiy Volodin <lvol@altlinux.org> 1.4.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).

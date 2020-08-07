@@ -3,7 +3,7 @@
 %global goipath github.com/mozillazg/go-pinyin
 
 Name: golang-github-mozillazg-go-pinyin
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 Summary: Chinese pinyin conversion tool Go version.
 Group: Development/Other
@@ -64,5 +64,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.18.0-alt1
+- New version.
+
 * Thu Jun 04 2020 Leontiy Volodin <lvol@altlinux.org> 0.17.0-alt1
 - Initial build for ALT Sisyphus.

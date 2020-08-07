@@ -3,7 +3,7 @@
 %global goipath github.com/stretchr/objx
 
 Name: golang-github-stretchr-objx
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Summary: Go package for dealing with maps, slices, json and other data
 Group: Development/Other
@@ -60,6 +60,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.0-alt1
+- New version.
+
 * Mon May 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.2.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 

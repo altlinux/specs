@@ -4,7 +4,7 @@
 %global goipath github.com/kr/pretty
 
 Name: golang-github-kr-pretty
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Pretty printing for go values
 
@@ -63,6 +63,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.2.1-alt1
+- New version.
+
 * Mon Mar 23 2020 Leontiy Volodin <lvol@altlinux.org> 0.2.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
