@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.9.7
+Version:  0.9.10
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -56,6 +56,7 @@ install -Dm 0755 scripts/nrpe/check_osec %buildroot/%_libexecdir/nagios/plugins/
 
 install -Dm 0644 conf/audit/rules.d/50-nagwad.rules %buildroot%_sysconfdir/audit/rules.d/50-nagwad.rules
 install -Dm 0644 conf/nagios/templates/50-nagwad.cfg %buildroot%_sysconfdir/nagios/templates/50-nagwad.cfg
+install -Dm 0644 conf/nagwad/audit.regexp %buildroot%_sysconfdir/nagwad/audit.regexp
 install -Dm 0644 conf/nagwad/authdata.regexp %buildroot%_sysconfdir/nagwad/authdata.regexp
 install -Dm 0644 conf/nagwad/device.regexp %buildroot%_sysconfdir/nagwad/device.regexp
 install -Dm 0644 conf/nagwad/login.regexp %buildroot%_sysconfdir/nagwad/login.regexp
@@ -70,6 +71,11 @@ mkdir -p %buildroot/var/log/nagwad
 
 %pre
 
+if [ -e %_sysconfdir/nagwad/audit/audit.regexp ]; then
+    mv -nv %_sysconfdir/nagwad/audit/audit.regexp \
+       %_sysconfdir/nagwad/audit.regexp ||:
+    rm -df %_sysconfdir/nagwad/audit ||:
+fi
 if [ -e %_sysconfdir/nagwad/authdata/authdata.regexp ]; then
     mv -nv %_sysconfdir/nagwad/authdata/authdata.regexp \
        %_sysconfdir/nagwad/authdata.regexp ||:
@@ -111,6 +117,17 @@ fi
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Fri Jul 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt1
+- Fix: Remove parentheses from the audit service description.
+
+* Fri Jul 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.9-alt1
+- Added print.regexp filter for CUPS operations.
+
+* Thu Jul 23 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.8-alt1
+- Configure audit to look for exec / open attempts to restricted
+  files.
+- Restore the "check_audit" NRPE check from v0.8-alt4.
+
 * Tue Jul 21 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.7-alt1
 - Fix/improve: Explicitly check for the signal file directory.
 - Use universal "check_nagwad" script for typical nagwad NRPE checks.
