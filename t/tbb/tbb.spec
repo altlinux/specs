@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tbb
-Version: 2020.2
+Version: 2020.3
 Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
@@ -231,6 +231,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/cmake/%{name}/README.rst
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.3-alt1
+- Updated to upstream version 2020.3.
+
 * Wed Apr 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.2-alt1
 - Updated to upstream version 2020.2.
 
