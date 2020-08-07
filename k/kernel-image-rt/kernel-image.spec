@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.132
-%define kernel_rt_release	rt59
+%define kernel_sublevel		.135
+%define kernel_rt_release	rt60
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -450,13 +450,14 @@ console=ttyS0
   qemu_opts="-M virt,gic_version=3 -cpu max"
   console=ttyAMA0
 %endif
+# no_timer_check due to https://lkml.org/lkml/2020/4/2/269
 time -p \
 timeout --foreground 600 \
 qemu-system-$qemu_arch $qemu_opts \
 	-nographic -no-reboot \
 	-kernel %buildroot/boot/vmlinuz-$KernelVer \
 	-initrd initrd.img \
-	-append "console=$console panic=-1" > boot.log &&
+	-append "console=$console panic=-1 no_timer_check" > boot.log &&
 grep -q "^Boot successful!" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -502,6 +503,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Aug 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt60
+- Update to v4.19.135-rt60 (03 Aug 2020).
+
 * Wed Jul 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.132-alt1.rt59
 - Update to v4.19.132-rt59 (14 Jul 2020).
 
