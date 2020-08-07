@@ -1,10 +1,10 @@
 %define vermajor 1
-%define verminor 6
+%define verminor 6.1
 %define version %vermajor.%verminor
 
 Name: keyutils
 Version: %version
-Release: alt2
+Release: alt1
 
 Summary: Linux Key Management Utilities
 License: GPL/LGPL
@@ -27,7 +27,7 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Development package for building linux key management utilities
 Group: Development/C
-Requires: lib%name == %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name
 This package provides a wrapper library for the key management facility system
@@ -79,6 +79,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 07 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
+- 1.6.1 released
+
 * Wed Dec 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6-alt2
 - workaround bad naming in exported include (closes: 35720)
 
