@@ -1,11 +1,11 @@
 %def_with check
 
 %global goipath         github.com/jinzhu/inflection
-%global commit          04140366298a54a039076d798123ffa108fff46c
+%global commit          970f05d9c0e1f5c179cedc3a0ad94010958733ab
 
 Name: golang-github-jinzhu-inflection
-Version: 0
-Release: alt1.git0414036
+Version: 1.0.0
+Release: alt1.git970f05d
 Summary: Pluralizes and singularizes English nouns
 Group: Development/Other
 License: MIT
@@ -56,5 +56,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Fri Aug 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1.git970f05d
+- Built from git.
+
 * Tue Jun 02 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git0414036
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
