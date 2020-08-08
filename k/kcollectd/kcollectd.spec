@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kcollectd
-Version: 0.11.0
+Version: 0.11.99
 Release: alt1
 
 Summary: collectd graphing frontend for KDE
@@ -18,9 +18,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 Patch1: %name-0.9-alt-desktop_fix.patch
-Patch2: %name-0.11.0-RRD_BASEDIR.patch
-Patch3: %name-0.11.0-license_fix.patch
-Patch4: %name-0.11.0-about_version.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
@@ -41,9 +38,6 @@ as a chart recorder.
 %patch0 -p1
 
 %patch1
-%patch2
-%patch3
-%patch4
 
 mv -f -- COPYING COPYING.GPL3.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
@@ -74,6 +68,9 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 
 %changelog
+* Sat Aug 08 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.11.99-alt1
+- New version
+
 * Tue May 19 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.11.0-alt1
 - New version
 - Build with QT5 (Closes: #37342)
