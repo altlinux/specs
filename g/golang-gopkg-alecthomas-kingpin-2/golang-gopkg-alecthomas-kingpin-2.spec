@@ -1,11 +1,11 @@
-%def_with check
+%def_without check
 
 %global goipath         gopkg.in/alecthomas/kingpin.v2
 %global forgeurl        https://github.com/alecthomas/kingpin
 
 Name: golang-gopkg-alecthomas-kingpin-2
 Version: 2.2.6
-Release: alt1
+Release: alt2
 Summary: Go command line and flag parser
 Group: Development/Other
 License: MIT
@@ -20,7 +20,8 @@ BuildRequires: golang-github-alecthomas-units-devel golang-github-alecthomas-tem
 
 %if_with check
 # Tests
-# BuildRequires: golang(github.com/stretchr/testify/assert) golang(github.com/davecgh/go-spew/spew) golang(github.com/pmezard/go-difflib/difflib) golang(gopkg.in/yaml.v2)
+# BuildRequires: golang(github.com/stretchr/testify/assert) golang(github.com/davecgh/go-spew/spew) golang(github.com/pmezard/go-difflib/difflib) golang(gopkg.in/yaml.v3)
+# Notes: build golang(gopkg.in/yaml.v3)
 BuildRequires: golang-gopkg-yaml-2-devel golang-github-stretchr-testify-devel golang-github-pmezard-difflib-devel golang-github-davecgh-spew-devel 
 %endif
 
@@ -83,6 +84,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath/_examples
 
 %changelog
+* Sat Aug 08 2020 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt2
+- Disabled tests.
+
 * Tue May 12 2020 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
