@@ -6,7 +6,7 @@
 %global goaltipaths     gopkg.in/v2/yaml
 
 Name: golang-gopkg-yaml-2
-Version: 2.2.8
+Version: 2.3.0
 Release: alt1
 Summary: Yaml support for the Go language
 Group: Development/Other
@@ -66,6 +66,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Sat Aug 08 2020 Leontiy Volodin <lvol@altlinux.org> 2.3.0-alt1
+- New version.
+
 * Mon May 18 2020 Leontiy Volodin <lvol@altlinux.org> 2.2.8-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
