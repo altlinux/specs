@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt5
+Release: alt6
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -88,7 +88,7 @@ Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 # Automatically added by buildreq on Wed Feb 13 2019
 # optimized out: ant-lib apache-commons-logging at-spi2-atk bash4 boost-devel boost-devel-headers cppunit dconf fontconfig fontconfig-devel gcc-c++ glib-networking glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gobject-introspection gobject-introspection-devel gstreamer1.0-devel hamcrest-core icu-utils java java-headless javapackages-tools javazi kf5-kconfig-devel kf5-kcoreaddons-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libat-spi2-core libatk-devel libatk-gir-devel libboost_numpy3-1.67.0 libboost_python3-1.67.0 libcairo-devel libcairo-gobject libcairo-gobject-devel libclucene-contribs-lib libclucene-core libclucene-shared libcrypt-devel libcurl-devel libe-book libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir-devel libgio-devel libglvnd-devel libgpg-error libgpg-error-devel libgraphite2-devel libgst-plugins1.0 libgtk+3-devel libharfbuzz-devel libharfbuzz-icu libicu-devel libltdl7-devel libnspr-devel libnss-devel libpango-devel libpango-gir-devel libpng-devel libpoppler-devel libpq-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-x11extras librasqal-devel librevenge-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libxcb-devel libxml2-devel libxmlsec1-devel libxmlsec1-nss libxslt-devel pentaho-libxml perl pkg-config python-base python-modules python-modules-compiler python-modules-distutils python3 python3-base python3-module-lxml qt5-base-devel raptor2-devel sac sh4 termutils wayland-devel xml-common xml-utils xorg-proto-devel xz zlib-devel
-BuildRequires: boost-filesystem-devel boost-locale-devel boost-signals-devel cppunit-devel doxygen flex fontforge fonts-ttf-liberation git-core gperf graphviz gst-plugins1.0-devel imake libGConf libabw-devel libavahi-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libe-book-devel libepoxy-devel libepubgen-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgpgme-devel libgtk+2-devel libgtk+3-gir-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmysqlclient-devel libmythes-devel libneon-devel libnumbertext-devel libodfgen-devel liborcus-devel libpagemaker-devel libpoppler-cpp-devel libqxp-devel libredland-devel libsane-devel libssl-devel libstaroffice-devel libunixODBC-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxmlsec1-nss-devel libzmf-devel mdds-devel postgresql-devel unzip xorg-cf-files xsltproc zip
+BuildRequires: boost-filesystem-devel boost-locale-devel boost-signals-devel cppunit-devel doxygen flex fontforge fonts-ttf-liberation git-core gperf graphviz gst-plugins1.0-devel imake libGConf libabw-devel libavahi-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libe-book-devel libepoxy-devel libepubgen-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgpgme-devel libgtk+2-devel libgtk+3-gir-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmysqlclient-devel libmythes-devel libneon-devel libnumbertext-devel libodfgen-devel libpagemaker-devel libpoppler-cpp-devel libqxp-devel libredland-devel libsane-devel libssl-devel libstaroffice-devel libunixODBC-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxmlsec1-nss-devel libzmf-devel mdds-devel postgresql-devel unzip xorg-cf-files xsltproc zip
 %if_with java
 BuildRequires: java-devel junit ant bsh pentaho-reporting-flow-engine 
 %endif
@@ -362,6 +362,7 @@ export CXXFLAGS="$CFLAGS"
 	--enable-release-build \
 	--with-help \
   \
+	--without-system-orcus \
 	%{subst_enable kde5} \
 	%{subst_enable qt5} \
 	--enable-gtk \
@@ -499,6 +500,9 @@ install sysui/desktop/mimetypes/*.mime %buildroot%_datadir/mime-info/
 install sysui/desktop/mimetypes/*.desktop %buildroot%_datadir/mimelnk/application/
 install sysui/desktop/mimetypes/*.applications %buildroot%_datadir/application-registry/
 
+# Install mime package bundle for LibreOffice MIME types
+install -Dm0644 workdir/CustomTarget/sysui/share/output/usr/share/mime/packages/libreoffice%hversion.xml %buildroot%_datadir/mime/packages/libreoffice%hversion.xml
+
 # Config file
 install -D libreoffice.config %buildroot%conffile
 
@@ -551,6 +555,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %exclude %lodir/share/extensions/package.txt
 
 %files mimetypes
+%_datadir/mime/packages/libreoffice%hversion.xml
 %_datadir/mime-info/*
 %_datadir/mimelnk/application/*
 %_datadir/application-registry/*
@@ -574,6 +579,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Aug 07 2020 Andrey Cherepanov <cas@altlinux.org> 6.3.0.3-alt6
+- Use bundled liborcus-0.14.
+- Install mime package bundle for LibreOffice MIME types.
+
 * Fri Jul 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.3.0.3-alt5
 - Rebuild with dconf enabled (Closes: 38752).
 
