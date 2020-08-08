@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.10
+Version: 1.11
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -93,11 +93,6 @@ install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
 %_sbindir/vm-init
 %_libexecdir/%name
 
-%pre checkinstall
-set -ex
-vm-run --verbose uname
-vm-run --verbose --overlay=ext4 uname
-
 %post
 # We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
 # so initrd is needed to preload them before mounting rootfs.
@@ -133,7 +128,16 @@ chmod a+twx /mnt
 chmod a+r /etc/login.defs
 %endif
 
+%pre checkinstall
+set -ex
+vm-run --verbose uname
+vm-run --verbose --overlay=ext4 uname
+
 %changelog
+* Sat Aug 08 2020 Vitaly Chikunov <vt@altlinux.org> 1.11-alt1
+- x86_64,i586: Try to make kernel more robust with 'no_timer_check'.
+- spec: Move checkinstall %%pre outside of %%ifarch to fix noarch check.
+
 * Thu Jul 02 2020 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
 - ppc: Use cap-ccf-assist=off for kvm-type=HV.
 
