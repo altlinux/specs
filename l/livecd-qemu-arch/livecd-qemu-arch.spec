@@ -1,5 +1,5 @@
 Name: livecd-qemu-arch
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: prepare live-builder.iso for ARM/PPC/aarch64/armh/mipsel/riscv64 QEMU
@@ -77,7 +77,7 @@ cat > %buildroot%_bindir/register-qemu-ppc64le << EOF
 modprobe binfmt_misc
 sleep 0.1
 [ -d /proc/sys/fs/binfmt_misc ] || exit 1
-echo :ppc64le:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x15\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\x00:/qemu-ppc64le:CF' > /proc/sys/fs/binfmt_misc/register
+echo ':ppc64le:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x15\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\x00:/qemu-ppc64le:' > /proc/sys/fs/binfmt_misc/register
 echo 32768 > /proc/sys/vm/mmap_min_addr
 EOF
 
@@ -171,6 +171,9 @@ EOF
 %attr(755,root,root) %_bindir/register-qemu-*
 
 %changelog
+* Thu Aug 06 2020 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
+- fix syntax error in register-qemu-ppc64le
+
 * Fri Jan 24 2020 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
 - added ppc64le support
 
