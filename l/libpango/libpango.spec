@@ -10,10 +10,10 @@
 %def_enable introspection
 %def_enable installed_tests
 %def_enable fontconfig
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -65,7 +65,8 @@ BuildRequires: help2man /proc
 %{?_enable_fontconfig:BuildRequires: fontconfig-devel >= %fontconfig_ver}
 %{?_enable_docs:BuildRequires: gtk-doc >= %gtk_doc_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
-%{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-ttf-thai-scalable-waree}
+%{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
+BuildRequires: fonts-ttf-google-droid-sans fonts-ttf-thai-scalable-waree}
 
 %description
 A library to handle unicode strings as well as complex bidirectional
@@ -147,6 +148,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %meson_install
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
@@ -196,6 +198,10 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Wed Aug 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.45.5-alt1
+- 1.45.5
+- enabled %%check
+
 * Thu Jul 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.45.4-alt1
 - 1.45.4
 
