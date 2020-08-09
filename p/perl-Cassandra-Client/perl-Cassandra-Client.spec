@@ -4,7 +4,7 @@
 %define real_name Cassandra-Client
 
 Name: perl-Cassandra-Client
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Perl interface to Cassandra's native protocol
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sat Dec 09 2017
-# optimized out: perl perl-AnyEvent perl-Data-OptList perl-EV perl-Encode perl-Module-Runtime perl-Net-SSLeay perl-PadWalker perl-Params-Util perl-Socket6 perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-devel perl-parent python-base python-modules python3 python3-base
-BuildRequires: perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Devel-Cycle perl-Devel-GlobalDestruction perl-IO-Socket-INET6 perl-Promises perl-Ref-Util perl-Ref-Util-XS perl-Sub-Current perl(AnyEvent/XSPromises.pm)
+# Automatically added by buildreq on Sun Aug 09 2020
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel perl perl-AnyEvent perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Net-SSLeay perl-PadWalker perl-Parse-CPAN-Meta perl-Socket6 perl-Sub-Exporter-Progressive perl-Sub-Uplevel perl-devel perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
+BuildRequires: perl-AnyEvent-XSPromises perl-CPAN-Meta perl-Clone perl-Compress-LZ4 perl-Compress-Snappy perl-Devel-Cycle perl-Devel-GlobalDestruction perl-EV perl-IO-Socket-INET6 perl-Ref-Util perl-Ref-Util-XS perl-Sub-Current perl-Test-Exception
 
 %description
 Perl module Cassandra::Client is a library providing access to
@@ -46,6 +46,9 @@ rm -f t/03-types.t
 %perl_vendor_autolib/Cassandra/Client*
 
 %changelog
+* Sun Aug 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.17-alt1
+- New version
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - new version
 
