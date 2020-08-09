@@ -4,7 +4,7 @@
 %define real_name HTTP-BrowserDetect
 
 Name: perl-HTTP-BrowserDetect
-Version: 3.27
+Version: 3.31
 Release: alt1
 
 Summary: determine Web browser from an HTTP user agent string
@@ -54,6 +54,9 @@ sed -e '/List::Util/ s/1\.49/1.46/' -i t/01-detect.t
 %perl_vendor_privlib/HTTP/BrowserDetect*
 
 %changelog
+* Sun Aug 09 2020 Nikolay A. Fetisov <naf@altlinux.org> 3.31-alt1
+- New version
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 3.27-alt1
 - New version
 
