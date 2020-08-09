@@ -15,7 +15,7 @@
 
 Name: lib%truename-3.14
 Version: %somajor.%sominor.%sobuild.%sotiny
-Release: alt2
+Release: alt3
 Summary: JavaScript Engine
 Group: System/Libraries
 License: BSD
@@ -151,8 +151,8 @@ Patch29: v8-powerpc-support-SConstruct.patch
 # GCC8 HAPPY FUN TIME
 Patch30: v8-3.14.5.10-gcc8.patch
 
-# ALT patchs
-Patch100: v8-3.14.5.10-scons-py3.patch
+# Python3
+Patch31: v8-314-python3.patch
 
 %description
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -203,12 +203,12 @@ Development headers and libraries for v8 3.14.
 %patch28 -p1 -b .gcc7
 %patch29 -p1 -b .ppc-harder
 %patch30 -p1 -b .gcc8
-%patch100 -p2
+%patch31 -p1 -b .python3
 
 # Do not need this lying about.
 rm -rf src/third_party/valgrind
 
-PARSED_OPT_FLAGS=`echo \'$RPM_OPT_FLAGS -fPIC -fno-strict-aliasing -Wno-unused-parameter -Wno-error=strict-overflow -Wno-unused-but-set-variable -Wno-error=cast-function-type -Wno-error=class-memaccess -fno-delete-null-pointer-checks\'| sed "s/ /',/g" | sed "s/',/', '/g"`
+PARSED_OPT_FLAGS=`echo \'$RPM_OPT_FLAGS -fPIC -fno-strict-aliasing -Wno-unused-parameter -Wno-error=strict-overflow -Wno-unused-but-set-variable -Wno-error=cast-function-type -Wno-error=class-memaccess -Wno-error=stringop-overflow= -Wno-error=array-bounds -fno-delete-null-pointer-checks\'| sed "s/ /',/g" | sed "s/',/', '/g"`
 %__subst "s|'-O3',|$PARSED_OPT_FLAGS,|g" SConstruct
 
 # clear spurious executable bits
@@ -219,7 +219,7 @@ find . \( -name \*.cc -o -name \*.h -o -name \*.py \) -a -executable \
   done
 
 %build
-mkdir -p obj/release/
+mkdir -p src/
 
 # SCons is going away, but for now build with
 # I_know_I_should_build_with_GYP=yes
@@ -250,43 +250,43 @@ export ICU_LINK_FLAGS=`pkg-config --libs-only-l icu-i18n`
 rm -rf libv8.so libv8preparser.so
 # Now, lets make it right.
 g++ %optflags -fPIC -o libv8preparser.so.%sover -shared -Wl,-soname,libv8preparser.so.%somajor \
-	obj/release/allocation.os \
-	obj/release/bignum.os \
-	obj/release/bignum-dtoa.os \
-	obj/release/cached-powers.os \
-	obj/release/diy-fp.os \
-	obj/release/dtoa.os \
-	obj/release/fast-dtoa.os \
-	obj/release/fixed-dtoa.os \
-	obj/release/preparse-data.os \
-	obj/release/preparser-api.os \
-	obj/release/preparser.os \
-	obj/release/scanner.os \
-	obj/release/strtod.os \
-	obj/release/token.os \
-	obj/release/unicode.os \
-	obj/release/utils.os
+	src/allocation.os \
+	src/bignum.os \
+	src/bignum-dtoa.os \
+	src/cached-powers.os \
+	src/diy-fp.os \
+	src/dtoa.os \
+	src/fast-dtoa.os \
+	src/fixed-dtoa.os \
+	src/preparse-data.os \
+	src/preparser-api.os \
+	src/preparser.os \
+	src/scanner.os \
+	src/strtod.os \
+	src/token.os \
+	src/unicode.os \
+	src/utils.os
 
-# "obj/release/preparser-api.os" should not be included in the libv8.so file.
-export RELEASE_BUILD_OBJS=`echo obj/release/*.os | sed 's|obj/release/preparser-api.os||g'`
+# "src/preparser-api.os" should not be included in the libv8.so file.
+export RELEASE_BUILD_OBJS=`echo src/*.os | sed 's|src/preparser-api.os||g'`
 
 %ifarch %arm
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/arm/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/arm/*.os $ICU_LINK_FLAGS
 %endif
 %ifarch %ix86
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/ia32/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/ia32/*.os $ICU_LINK_FLAGS
 %endif
 %ifarch x86_64
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/x64/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/x64/*.os $ICU_LINK_FLAGS
 %endif
 %ifarch mips
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/mips/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/mips/*.os $ICU_LINK_FLAGS
 %endif
 %ifarch mipsel
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/mipsel/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/mipsel/*.os $ICU_LINK_FLAGS
 %endif
 %ifarch ppc ppc64
-g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS obj/release/extensions/*.os obj/release/ppc/*.os $ICU_LINK_FLAGS
+g++ $RPM_OPT_FLAGS -fPIC -o libv8.so.%sover -shared -Wl,-soname,libv8.so.%somajor $RELEASE_BUILD_OBJS src/extensions/*.os src/ppc/*.os $ICU_LINK_FLAGS
 %endif
 
 # We need to do this so d8 can link against it.
@@ -344,6 +344,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Sun Aug 09 2020 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt3
+- fix build with scons
+
 * Sat Oct 19 2019 Anton Midyukov <antohami@altlinux.org> 3.14.5.10-alt2
 - fix build with scons switched to python3
 - ExclusiveArch: ix86 x86_64
