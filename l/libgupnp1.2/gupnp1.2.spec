@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name%ver_major
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -20,7 +20,7 @@ Url: http://www.gupnp.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgssdp%ver_major-devel >= %version libgio-devel >= 2.58.0
+BuildRequires: libgssdp%ver_major-devel >= 1.2.3 libgio-devel >= 2.58.0
 BuildRequires: libxml2-devel libsoup-devel >= 2.48 libuuid-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gir-devel libgssdp%ver_major-gir-devel}
@@ -92,8 +92,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
-%_bindir/gupnp-binding-tool-%api_ver
+%_bindir/%_name-binding-tool-%api_ver
 %_libdir/lib%_name-%api_ver.so.*
+%_man1dir/%_name-binding-tool*.1*
 %doc AUTHORS README ChangeLog
 
 %files devel
@@ -118,6 +119,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Aug 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3 (Add mitigations for CVE-2020-12695 (CallStranger),
   Implement UDA 2.0 April 17 2020 Addendum (Partial fix for CVE-2020-12695))
