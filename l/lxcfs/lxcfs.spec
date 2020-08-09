@@ -1,14 +1,13 @@
 Name:		lxcfs
-Version:	4.0.3
+Version:	4.0.5
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
-License:	Apache-2.0
+License:	LGPL-2.1-or-later
 URL:		https://github.com/lxc/lxcfs
 
-Packager:	Denis Pynkin <dans@altlinux.ru>
-
+VCS:		https://github.com/lxc/lxcfs.git
 Source0:	%name-%version.tar
 Source1:	lxcfs.sysvinit
 
@@ -62,6 +61,10 @@ find %buildroot -name '*.la' -delete
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Sun Aug 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.5-alt1
+- Updated to lxcfs-4.0.5.
+- Fixed license field.
+
 * Fri May 08 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.3-alt1
 - Updated to 4.0.3.
 
@@ -87,7 +90,7 @@ find %buildroot -name '*.la' -delete
 - Update
 - pam moved to lxc package
 
-* Sun Jan 24 2018 Denis Pynkin <dans@altlinux.org> 2.0.8-alt1
+* Wed Jan 24 2018 Denis Pynkin <dans@altlinux.org> 2.0.8-alt1
 - Update
 
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.7-alt2
