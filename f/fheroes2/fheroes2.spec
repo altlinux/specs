@@ -3,7 +3,7 @@
 Name: fheroes2
 Epoch: 1
 Version: 0.8
-Release: alt1.%rev
+Release: alt2.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
@@ -64,6 +64,10 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Wed Aug 05 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8-alt2.20200726
+- added check of screen size
+- sound=off by default
+
 * Tue Aug 04 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8-alt1.20200726
 - new version
 
