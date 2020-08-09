@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jna
 Version:        4.5.1
-Release:        alt1_6jpp8
+Release:        alt2_6jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -46,9 +46,6 @@ Patch4:         0005-Fix-duplicate-manifest-entry.patch
 # We don't want newly added warnings to break our build
 Patch5:         0006-Remove-Werror.patch
 
-# We manually require libffi because find-requires doesn't work
-# inside jars.
-Requires:       libffi6
 BuildRequires:  gcc
 BuildRequires:  javapackages-local
 BuildRequires:  libffi-devel
@@ -158,6 +155,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Mon Aug 03 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.1-alt2_6jpp8
+- NMU: removed invalid parasitic dependency on libffi6 (#38781).
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_6jpp8
 - new version
 
