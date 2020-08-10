@@ -178,7 +178,7 @@
 %endif
 
 Name: libvirt
-Version: 6.5.0
+Version: 6.6.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -1390,6 +1390,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Aug 10 2020 Alexey Shabalin <shaba@altlinux.org> 6.6.0-alt1
+- 6.6.0 (Fixes: CVE-2020-14339)
+
 * Fri Jul 10 2020 Alexey Shabalin <shaba@altlinux.org> 6.5.0-alt1
 - 6.5.0
 
