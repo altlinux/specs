@@ -2,10 +2,10 @@
 
 %global goipath         honnef.co/go/tools
 %global forgeurl        https://github.com/dominikh/go-tools
-%global tag             2020.1.4
+%global tag             2020.1.5
 
 Name: golang-honnef-tools
-Version: 2020.1.4
+Version: 2020.1.5
 Release: alt1
 Summary: Collection of static analysis tools for working with Go code
 
@@ -91,5 +91,8 @@ done
 %go_path/src/%goipath
 
 %changelog
+* Mon Aug 10 2020 Leontiy Volodin <lvol@altlinux.org> 2020.1.5-alt1
+- New version.
+
 * Tue May 19 2020 Leontiy Volodin <lvol@altlinux.org> 2020.1.4-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
