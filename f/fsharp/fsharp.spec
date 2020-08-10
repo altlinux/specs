@@ -2,12 +2,14 @@
 
 Name: fsharp
 Version: 10.2.1
-Release: alt1
+Release: alt2
 
 Summary:        F# compiler, core library and core tools
 License:        MIT
 Group:          Development/Other
 Url:            http://fsharp.org
+
+ExclusiveArch: x86_64 %ix86 aarch64
 
 # https://github.com/fsharp/fsharp.git
 Source: %name-%version.tar
@@ -44,7 +46,7 @@ for i in *.nupkg ; do
     name=$(basename ${i%%.nupkg})
     mkdir $name
     pushd $name
-    7z x ../$i
+    7z x ../$i ||:
     cp ../$i ./
     popd
 done
@@ -69,6 +71,9 @@ popd
 %_monodir/xbuild/Microsoft/VisualStudio/
 
 %changelog
+* Fri Aug 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.1-alt2
+- Fixed build.
+
 * Thu Oct 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 10.2.1-alt1
 - Updated to upstream version 10.2.1.
 
