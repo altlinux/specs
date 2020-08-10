@@ -1,5 +1,5 @@
 Name: libbenchmark
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: A microbenchmark support library
@@ -51,6 +51,9 @@ This package contains the header files for %name.
 %_pkgconfigdir/benchmark.pc
 
 %changelog
+* Mon Aug 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+- new version 1.5.1 (with rpmrb script)
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 - skip GoogleTest using (BENCHMARK_ENABLE_GTEST_TESTS=OFF)
