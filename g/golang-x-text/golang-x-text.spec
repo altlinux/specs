@@ -3,7 +3,7 @@
 %global goipath golang.org/x/text
 
 Name: golang-x-text
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 Summary: Go text processing support
 Group: Development/Other
@@ -67,5 +67,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Aug 10 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.3-alt1
+- New version.
+
 * Thu Apr 16 2020 Leontiy Volodin <lvol@altlinux.org> 0.3.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).

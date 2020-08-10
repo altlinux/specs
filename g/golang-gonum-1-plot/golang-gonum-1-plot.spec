@@ -2,12 +2,11 @@
 
 %global goipath         gonum.org/v1/plot
 %global forgeurl        https://github.com/gonum/plot
-%global commit          e2840ee46a6b612972d746f9fea9920d329a0605
 %global repo plot
 
 Name: golang-gonum-1-plot
-Version: 0
-Release: alt1.e2840ee
+Version: 0.7.0
+Release: alt1
 Summary: Package for plotting and visualizing data
 
 License: BSD and OFL-1.1 and MIT and Apache-2.0
@@ -68,5 +67,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Aug 10 2020 Leontiy Volodin <lvol@altlinux.org> 0.7.0-alt1
+- New version.
+
 * Wed Apr 22 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.e2840ee
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
