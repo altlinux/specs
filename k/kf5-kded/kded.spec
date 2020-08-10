@@ -1,23 +1,30 @@
 %define rname kded
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+%define service_name plasma-kded
 
 Name: kf5-%rname
-Version: 5.70.0
+Version: 5.72.0
 Release: alt1
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 central daemon of KDE work spaces
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.0 or GPL-2.0
 
 Requires: %name-common = %version-%release
+Requires(post,preun): /bin/systemctl
 
 Source: %rname-%version.tar
+Patch1: alt-systemd-service.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kinit-devel kf5-kservice-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: libsystemd-devel
 BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
@@ -51,17 +58,38 @@ Requires: %name-common = %version-%release
 %description -n libkf5ded
 KF5 library
 
-
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
-%K5build
+%K5build \
+    -DSYSTEMD_USER_UNIT_INSTALL_DIR=%_unitdir_user \
+    #
 
 %install
 %K5install
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+
+mkdir -p -m 0755 %buildroot/%_presetdir
+cat >%buildroot/%_presetdir/33-%name.preset <<__EOF__
+# Need to be enabled by default
+enable %service_name.service
+__EOF__
+
+%post
+if [ $1 = 1 ]; then
+    /bin/systemctl --user --global preset %service_name.service >/dev/null 2>&1 || :
+fi
+
+%preun
+if [ $1 = 0 ]; then
+    /bin/systemctl --user --global disable %service_name.service >/dev/null 2>&1 || :
+fi
+
+%triggerin -- %name < 5.72
+/bin/systemctl --user --global preset %service_name.service.service >/dev/null 2>&1 || :
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
@@ -75,6 +103,8 @@ KF5 library
 %_K5srvtyp/*.desktop
 #%_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
+%_unitdir_user/%service_name.service
+%_presetdir/*-%name.preset
 
 %files devel
 #%_K5inc/kded_version.h
@@ -88,6 +118,9 @@ KF5 library
 #%_K5lib/libKF5DED.so.*
 
 %changelog
+* Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
+- new version
+
 * Tue May 12 2020 Sergey V Turchin <zerg@altlinux.org> 5.70.0-alt1
 - new version
 

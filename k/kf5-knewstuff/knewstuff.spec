@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.70.0
+Version: 5.72.0
 Release: alt1
 %K5init altplace
 
@@ -23,6 +23,7 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kglobalaccel-deve
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kpackage-devel
 
 %description
 The KNewStuff library implements collaborative data sharing for
@@ -103,6 +104,9 @@ done
 
 
 %changelog
+* Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
+- new version
+
 * Tue May 12 2020 Sergey V Turchin <zerg@altlinux.org> 5.70.0-alt1
 - new version
 

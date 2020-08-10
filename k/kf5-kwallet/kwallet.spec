@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.70.0
+Version: 5.72.0
 Release: alt1
 %K5init altplace
 
@@ -104,6 +104,9 @@ cat %SOURCE1 >> po/ru/kwalletd5.po
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
+- new version
+
 * Tue May 12 2020 Sergey V Turchin <zerg@altlinux.org> 5.70.0-alt1
 - new version
 

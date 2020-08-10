@@ -3,8 +3,8 @@
 %def_with streebog
 
 Name: kf5-%rname
-Version: 5.70.1
-Release: alt2
+Version: 5.72.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -16,8 +16,7 @@ Source: %rname-%version.tar
 Source10: ru-kio5.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
-Patch3: alt-find-exe.patch
-Patch4: alt-streebog-support.patch
+Patch10: alt-streebog-support.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libcom_err-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -98,10 +97,9 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %if_with streebog
-%patch4 -p2 -b .streebog
+%patch10 -p2 -b .streebog
 %endif
 
 #msgcat --use-first po/ru/kio5.po %SOURCE10 > po/ru/kio5.po.tmp
@@ -168,6 +166,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
+- new version
+
 * Tue May 19 2020 Sergey V Turchin <zerg@altlinux.org> 5.70.1-alt2
 - fix find executables
 
