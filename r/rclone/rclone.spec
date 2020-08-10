@@ -1,9 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
 # This package is updated using
 #   gear-remotes-uscan
 
 %global import_path github.com/ncw/rclone
 Name:     rclone
-Version:  1.52.2
+Version:  1.52.3
 Release:  alt1
 
 Summary:  rsync for cloud storage
@@ -74,6 +77,9 @@ trap - EXIT
 %doc *.md
 
 %changelog
+* Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 1.52.3-alt1
+- New version 1.52.3
+
 * Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 1.52.2-alt1
 - New version 1.52.2.
 
