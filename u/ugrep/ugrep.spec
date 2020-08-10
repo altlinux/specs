@@ -16,7 +16,7 @@
 #
 
 Name: ugrep
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
@@ -24,7 +24,7 @@ License: BSD-3-Clause
 Group: File tools
 
 Url: https://github.com/Genivia/ugrep
-Source: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/<project>-%{version}.tar.gz
 Source100: ugrep.watch
 
 BuildRequires: gcc-c++
@@ -65,6 +65,9 @@ fuzzy search.
 %_datadir/%name
 
 %changelog
+* Mon Aug 10 2020 Michael Shigorin <mike@altlinux.org> 2.5.1-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 28 2020 Michael Shigorin <mike@altlinux.org> 2.5.0-alt1
 - 2.5.0
 - added debian watch file
