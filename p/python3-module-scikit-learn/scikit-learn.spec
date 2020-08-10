@@ -1,25 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname scikit-learn
 
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.19.1
-Release: alt3
+Version: 0.23.2
+Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/scikit-learn/
 
 # https://github.com/scikit-learn/scikit-learn.git
 Source: %name-%version.tar
-Patch1: %oname-%version-upstream-cython.patch
-Patch2: %oname-%version-alt-build.patch
+Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ liblapack-devel xvfb-run
+BuildRequires: libgomp-devel
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
 BuildRequires: python3-module-six python3-module-joblib python3-module-Cython python3(nose)
+BuildRequires: python3(threadpoolctl)
 
 %py3_provides sklearn
 
@@ -52,22 +55,6 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-
-# don't use bundled stuff
-rm -rf sklearn/externals
-
-find . -type f -print0 | xargs -0 sed -i \
-	-e 's:import sklearn\.externals\.:import :g' \
-	-e 's:from sklearn\.externals\.:from :g' \
-	-e 's:from sklearn\.externals ::g' \
-	-e 's:from \.\.externals\.:from :g' \
-	-e 's:from \.\.externals ::g' \
-	-e 's:from \.externals\.:from :g' \
-	-e 's:from \.externals ::g'
-
-sed -i -e "s:'externals',::" sklearn/__init__.py
-sed -i -e "/config\.add_subpackage('externals')/d" sklearn/setup.py
 
 %build
 export BLAS=openblas
@@ -100,6 +87,9 @@ xvfb-run py.test3 -vv
 %doc examples doc
 
 %changelog
+* Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.2-alt1
+- Updated to upstream version 0.23.2.
+
 * Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.19.1-alt3
 - Build for python2 disabled.
 
