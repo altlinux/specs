@@ -4,7 +4,7 @@
 %def_with check
 
 Name: apache2-%modname
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: A GSSAPI Authentication module for Apache2
@@ -70,6 +70,9 @@ echo "LoadModule auth_gssapi_module modules/mod_auth_gssapi.so" > %buildroot%apa
 %config(noreplace) %apache2_mods_available/auth_gssapi.load
 
 %changelog
+* Thu Aug 06 2020 Stanislav Levin <slev@altlinux.org> 1.6.3-alt1
+- 1.6.2 -> 1.6.3.
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 1.6.2-alt1
 - 1.6.1 -> 1.6.2.
 
