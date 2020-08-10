@@ -20,7 +20,7 @@
 
 Name:		bcc
 Version:	0.15.0
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -49,7 +49,7 @@ ExclusiveArch:	x86_64 aarch64 ppc64le
 #      self._handle = _dlopen(self._name, mode)
 #  OSError: /usr/src/tmp/bcc-buildroot/usr/lib64/libbcc.so.0: undefined symbol: _ZN4llvm19RTDyldMemoryManager16registerEHFramesEPhmm
 
-%define clang_version 9.0
+%define clang_version 10.0
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
@@ -156,7 +156,7 @@ subst '/add_subdirectory(examples)/d' CMakeLists.txt
 export CC=clang
 export CXX=clang++
 # ld cannot link libLLVM and libclang in ALT: https://bugzilla.altlinux.org/34801
-export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DREVISION_LAST=%version \
@@ -219,6 +219,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt2
+- Rebuild on clang10.
+
 * Thu Jul 02 2020 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
 - Update to bcc 0.15.0, libbpf 0.0.9.
 
