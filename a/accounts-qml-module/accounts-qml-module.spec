@@ -1,7 +1,8 @@
+%def_disable bootstrap
 
 Name: accounts-qml-module
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: QML bindings for libaccounts-qt + libsignon-qt
@@ -27,6 +28,10 @@ This package contains the developer documentation for accounts-qml-module.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.24.11: -Werror=invalid-offsetof in moc_account-service-model.cpp:29
+sed -i 's,-Werror,,' common-project-config.pri
+%endif
 
 %build
 mkdir build
@@ -35,6 +40,9 @@ pushd build
     QMF_INSTALL_ROOT=%prefix \
     PREFIX=%prefix \
     CONFIG+=release \
+%if_enabled bootstrap
+    CONFIG+=no_docs \
+%endif
     LIBDIR=%_libdir \
     ..
 %make_build
@@ -54,8 +62,13 @@ rm %buildroot/%_bindir/tst_plugin
 %_qt5_qmldir/Ubuntu/OnlineAccounts/
 
 %files doc
+%if_disabled bootstrap
 %doc %_datadir/%name/
+%endif
 
 %changelog
+* Mon Aug 10 2020 Sergey V Turchin <zerg@altlinux.org> 0.7-alt2
+- fix build for e2k; thanks mike@alt
+
 * Tue Jan 28 2020 Sergey V Turchin <zerg@altlinux.org> 0.7-alt1
 - initial build
