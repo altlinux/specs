@@ -77,7 +77,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1943,6 +1943,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Aug 10 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.1-alt1
+- 246.1
+
 * Mon Aug 03 2020 Alexey Shabalin <shaba@altlinux.org> 1:246-alt1
 - 246
 
