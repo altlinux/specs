@@ -2,7 +2,7 @@
 
 Name:		bpftrace
 Version:	0.11.0
-Release:	alt1
+Release:	alt2
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -11,7 +11,7 @@ Vcs:		https://github.com/iovisor/bpftrace.git
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
-%define clang_version 9.0
+%define clang_version 10.0
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -105,6 +105,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt2
+- Rebuild with clang10.
+
 * Fri Jul 17 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
 - Update to v0.11.0.
 
