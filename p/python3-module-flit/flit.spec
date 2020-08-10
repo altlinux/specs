@@ -2,11 +2,11 @@
 
 %define oname flit
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: Simplified packaging of Python modules
 # ./flit/logo.py  under ASL 2.0 license
 # ./flit/upload.py under PSF license
@@ -77,6 +77,9 @@ pip%{_python3_version} install -I dist/%oname-%version-*-none-any.whl --root %bu
 %_bindir/flit
 
 %changelog
+* Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2
+- Disabled bootstrapping.
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Initial build for ALT.
 
