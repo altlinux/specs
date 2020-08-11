@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.3
+Version: 2.4.2
 Release: alt1
 
 Summary: Python Abstract Syntax Tree New Generation
@@ -25,13 +25,11 @@ BuildRequires: python3-module-nose
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-numpy
-BuildRequires: python3-module-typed_ast
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-tox
 %endif
 
 BuildArch: noarch
-%py3_requires typed_ast
 
 %description
 The aim of this module is to provide a common base representation of python
@@ -57,12 +55,6 @@ partial trees by inspecting living objects.
 rm %buildroot%python3_sitelibdir/astroid/test_utils.py
 
 %check
-grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
-grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
-
-sed -i '/[[:space:]]*coverage[[:space:]]*$/d' tox.ini
-sed -i 's/ {envsitepackagesdir}\/coverage run / /' tox.ini
-
 export PIP_NO_INDEX=YES
 export PIP_NO_DEPS=YES
 export TOXENV=py%{python_version_nodots python3}
@@ -74,6 +66,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
+- 2.3.3 -> 2.4.2.
+
 * Tue Nov 12 2019 Stanislav Levin <slev@altlinux.org> 2.3.3-alt1
 - 2.3.2 -> 2.3.3.
 

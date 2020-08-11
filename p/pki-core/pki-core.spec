@@ -13,7 +13,7 @@
 
 Name: pki-core
 Version: 10.7.4
-Release: alt3
+Release: alt4
 
 Summary: Certificate System - PKI Core Components
 License: %gpl2only
@@ -719,6 +719,10 @@ fi
 %_javadir/pki/pki-console-theme.jar
 
 %changelog
+* Tue Aug 04 2020 Stanislav Levin <slev@altlinux.org> 10.7.4-alt4
+- Fixed FTBFS(new pylint 2.5.3).
+- Fixed group ownership of pki nssdb.
+
 * Fri Jul 17 2020 Stanislav Levin <slev@altlinux.org> 10.7.4-alt3
 - Removed Conflict against strongswan.
 

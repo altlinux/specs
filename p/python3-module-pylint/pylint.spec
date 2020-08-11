@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.4
+Version: 2.5.3
 Release: alt1
 
 Summary: Python code static checker
@@ -22,7 +22,7 @@ BuildRequires: python3-module-pytest-runner
 %if_with check
 BuildRequires: python3(lazy-object-proxy)
 BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-xdist)
+BuildRequires: python3(pytest_benchmark)
 BuildRequires: python3(astroid)
 BuildRequires: python3(mccabe)
 BuildRequires: python3(isort)
@@ -70,19 +70,9 @@ for i in $(ls); do
 done
 
 %check
-grep -qs '[[:space:]]*coverage[[:space:]]*$' tox.ini || exit 1
-grep -qs ' {envsitepackagesdir}/coverage run ' tox.ini || exit 1
-grep -qs 'https:' tox.ini || exit 1
-grep -qsP 'python -c \x22import os' tox.ini || exit 1
-
-sed -i -e '/[[:space:]]*coverage[[:space:]]*$/d' \
--e 's/ {envsitepackagesdir}\/coverage run / /' \
--e 's/https:.*/astroid/' \
--e '/python -c \x22import os/d' tox.ini
-
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v -- -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr -- -v
 
 %files
 %doc ChangeLog README.rst doc/
@@ -94,6 +84,9 @@ tox.py3 --sitepackages -p auto -o -v -- -v
 %python3_sitelibdir/pylint-*.egg-info/
 
 %changelog
+* Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 2.5.3-alt1
+- 2.4.4 -> 2.5.3.
+
 * Sat Nov 16 2019 Stanislav Levin <slev@altlinux.org> 2.4.4-alt1
 - 2.4.3 -> 2.4.4.
 
