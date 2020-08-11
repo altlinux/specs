@@ -1,6 +1,6 @@
 Name: supertuxkart
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt0.1.rc1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -12,14 +12,14 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: %name-%version-src.tar.gz
 #Patch: supertuxkart-0.9.3-debian-irrlicht.patch
 
+BuildRequires(pre): rpm-build-ninja
 # for aarch64 support
 BuildRequires(pre): libGLES
 # Automatically added by buildreq on Thu Jan 30 2020 (-bi)
 # optimized out: bash4 bashrc cmake-modules elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXrender-devel libcrypt-devel libglvnd-devel libharfbuzz-devel libogg-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base rpm-build-gir sh4 tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
-BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libmcpp-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler python-modules-compiler rpm-build-python3
+BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libmcpp-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler python-modules-compiler rpm-build-python3 libSDL2-devel
 # use system libraries instead build-in
 BuildRequires: libwiiuse-devel libraqm-devel
-#BuildRequires: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel libXrandr-devel ctest gcc-c++ libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs libbluez-devel glibc-devel zlib-devel libpng-devel libjpeg-devel libfreetype-devel libharfbuzz-devel libGLEW-devel libssl-devel libenet-devel libGLES-devel bzlib-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-x11-devel libmcpp-devel libsqlite3-devel
 
 Requires: %name-data >= %version
 
@@ -30,12 +30,12 @@ SuperTuxCart is a kart racing game
 %setup -n %name-%version
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_RECORDER=0 -DCHECK_ASSETS=off
-%cmake_build
+%cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DUSE_SYSTEM_ANGELSCRIPT=OFF -DBUILD_RECORDER=OFF -DCHECK_ASSETS=OFF
+%ninja_build -C BUILD
 
 %install
 #install -d %%buildroot%%_niconsdir
-%cmakeinstall_std
+%ninja_install -C BUILD
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories
@@ -49,7 +49,8 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 #doc README.md CHANGELOG.md NETWORKING.md
 %_bindir/*
 %_desktopdir/%name.desktop
-%_datadir/%name
+%dir %_datadir/%name
+%_datadir/%name/*
 %_datadir/metainfo/*
 %_pixmapsdir/*
 %_iconsdir/hicolor/48x48/apps/*
@@ -59,6 +60,10 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %exclude %_libdir/libwiiuse.a
 
 %changelog
+* Tue Aug 11 2020 Leontiy Volodin <lvol@altlinux.org> 1.2-alt0.1.rc1
+- Update to release candidate 1
+- Build with ninja instead make
+
 * Fri Jan 31 2020 Leontiy Volodin <lvol@altlinux.org> 1.1-alt2
 - Move wiiuse into separate package (ALT #37832)
 - Clean buildrequires
