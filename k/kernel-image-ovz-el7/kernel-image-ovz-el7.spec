@@ -10,7 +10,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt3.%orelease
+Release: alt4.%orelease
 Epoch: 1
 
 %define kernel_req %nil
@@ -52,9 +52,10 @@ Epoch: 1
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
 Summary: The Linux kernel with OpenVZ support
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
-Url: http://www.kernel.org/
+Url: https://src.openvz.org/
+Vcs: https://src.openvz.org/scm/ovz/vzkernel.git
 
 Source0: rh7-%version.tar
 Source1: %flavour.x86_64.config
@@ -121,6 +122,7 @@ Requires(pre): module-init-tools >= 3.1
 Requires(pre): mkinitrd >= 1:2.9.9-alt1
 AutoProv: no, %kernel_prov
 AutoReq: no, %kernel_req
+%add_verify_elf_skiplist %modules_dir/*
 
 %description
 This package contains the Linux kernel that is used to boot and run
@@ -142,7 +144,7 @@ Provides: kernel-devel-%flavour = %version-%release
 %{?base_flavour:Provides: kernel-devel-%base_flavour = %version-%release}
 Provides: kernel-devel = %version-%release
 #Obsoletes: kernel-headers-modules-%flavour = %version
-AutoProv: no
+AutoReqProv: no
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -157,8 +159,7 @@ and specify %kbuild_dir as the kernel source directory.
 %package -n firmware-kernel-%flavour
 Summary: Firmware for drivers from %name
 Group: System/Kernel and hardware
-AutoProv: no
-AutoReq: no
+AutoReqProv: no
 
 %description -n firmware-kernel-%flavour
 Firmware for drivers from %name.
@@ -187,7 +188,7 @@ Provides: kernel-headers = %version
 Provides: kernel-headers-%flavour = %version-%release
 #Obsoletes: kernel-headers-%flavour = %version
 Provides: %kheaders_dir/include
-AutoProv: no
+AutoReqProv: no
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -320,6 +321,7 @@ export CC=gcc-$GCC_VERSION
 %make_build olddefconfig
 %make_build kernelversion
 %make_build kernelrelease
+export KCFLAGS=-Wno-missing-attributes # Avoid flood of gcc9 warnings
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION modules
 
@@ -508,7 +510,7 @@ timeout 600 qemu-system-x86_64 -bios bios.bin \
 	-nographic -no-reboot -m 256M \
 	-kernel %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease \
 	-initrd initrd.img \
-	-append "console=ttyS0 panic=-1" > boot.log &&
+	-append "console=ttyS0 panic=-1 no_timer_check" > boot.log &&
 grep -q "^Boot successful" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
 	cat >&2 boot.log
@@ -521,7 +523,7 @@ grep beancounter boot.log
 /boot/*
 %dir %modules_dir
 %modules_dir/modules.alias*
-%modules_dir/modules.builtin
+%modules_dir/modules.builtin*
 %modules_dir/modules.dep*
 %modules_dir/modules.order
 %modules_dir/modules.symbols*
@@ -586,6 +588,11 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Aug 11 2020 Vitaly Chikunov <vt@altlinux.org> 1:3.10.0-alt4.1127.10.1.vz7.162.8
+- spec: Small improvements (no_timer_check, AutoReqProv, add_verify_elf_skiplist,
+  pack modules.builtin-s, disable some floody gcc9 warnings,
+  update/add License/Url/Vcs tags.)
+
 * Fri Jul 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt3.1127.10.1.vz7.162.8
 - Build rh7-3.10.0-1127.10.1.vz7.162.8
 
