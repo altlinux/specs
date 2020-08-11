@@ -1,101 +1,88 @@
 %define _unpackaged_files_terminate_build 1
 
+%define oname sympy
+
 %def_with doc
 
-Name: sympy
+Name: python-module-%oname
 Epoch: 1
-Version: 1.6.1
-Release: alt1
+Version: 1.1.1
+Release: alt2
+
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
-Group: Sciences/Mathematics
-Url: https://sympy.org/
+Group: Development/Python
+
+Url: http://sympy.org/
+# https://github.com/sympy/sympy.git
+
+Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 BuildArch: noarch
 
-# https://github.com/sympy/sympy.git
-Source: %name-%version.tar
-Patch1: %name-%version-alt-build.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-py
-BuildRequires: python3-module-mpmath
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-py python-module-setuptools
+BuildRequires: python-module-numpy python-module-mpmath
 BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
 %if_with doc
-BuildRequires(pre): python3-module-sphinx-devel
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-Pygments
-BuildRequires: python3-module-sphinx-math-dollar
-BuildRequires: python3(matplotlib) python3(matplotlib.sphinxext)
-BuildRequires: python3-module-sphinx-pickles
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-docutils
+BuildRequires: python-module-Pygments
 %endif
 
-Requires: python3-module-%name = %EVR
-
-%add_python3_req_skip py.__.test.item py.__.test.terminal.terminal
+Requires: %name-tests = %EVR
+%add_python_req_skip primetest pytest runtests
+%setup_python_module %oname
 
 %description
 SymPy is a Python library for symbolic mathematics. It aims to become a
 full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
 
-%package -n python3-module-%name
-Summary: A Python 3 module for symbolic mathematics
-Group: Development/Python3
-Requires: python3-module-%name-tests = %EVR
-%add_python3_req_skip primetest pytest runtests
-
-%description -n python3-module-%name
-SymPy is a Python library for symbolic mathematics. It aims to become a
-full-featured computer algebra system (CAS) while keeping the code as
-simple as possible in order to be comprehensible and easily extensible.
-
 This package contains python module of SymPy.
 
-%package -n python3-module-%name-tests
-Summary: Tests for SymPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%name = %EVR
-%add_python3_req_skip sympy.integrals.rubi.rubi pydy.system
-
-%description -n python3-module-%name-tests
-SymPy is a Python library for symbolic mathematics. It aims to become a
-full-featured computer algebra system (CAS) while keeping the code as
-simple as possible in order to be comprehensible and easily extensible.
-
-This package contains tests for SymPy.
-
-%package -n python3-module-%name-examples
+%package examples
 Summary: Examples for SymPy
 Group: Development/Documentation
-Requires: python3-module-%name = %EVR
+Requires: %name = %EVR
 
-%description -n python3-module-%name-examples
+%description examples
 SymPy is a Python library for symbolic mathematics. It aims to become a
 full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
 
 This package contains examples for SymPy.
 
-%package -n python3-module-%name-pickles
+%package tests
+Summary: Tests for SymPy
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+SymPy is a Python library for symbolic mathematics. It aims to become a
+full-featured computer algebra system (CAS) while keeping the code as
+simple as possible in order to be comprehensible and easily extensible.
+
+This package contains tests for SymPy.
+
+%package pickles
 Summary: Pickles for SymPy
 Group: Development/Python
-Requires: python3-module-%name = %EVR
 
-%description -n python3-module-%name-pickles
+%description pickles
 SymPy is a Python library for symbolic mathematics. It aims to become a
 full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
 
 This package contains pickles for SymPy.
 
-%package -n python3-module-%name-doc
+%package doc
 Summary: Documentation for SymPy
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n python3-module-%name-doc
+%description doc
 SymPy is a Python library for symbolic mathematics. It aims to become a
 full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
@@ -110,14 +97,14 @@ for i in $(find ./ -name tests); do
 	touch $i/__init__.py
 done
 
-sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
+sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %if_with doc
-%prepare_sphinx3 .
+%prepare_sphinx .
 %endif
 
 %build
 export LC_ALL=en_US.UTF-8
-%python3_build
+%python_build
 
 %if_with doc
 pushd doc
@@ -129,62 +116,58 @@ cp -fR doc/_build/doctrees doc/src/
 export PYTHONPATH=$PYTHONPATH:$PWD
 cp -fR doc/_build/doctrees ./
 
-%generate_pickles3 $PWD $PWD/doc/_build/html %name
+%generate_pickles $PWD $PWD/doc/_build/html %oname
 %endif
 
 %install
-%python3_install
+%python_install
+
+rm -f %buildroot%python_sitelibdir/%oname/mpmath/libmp/exec_py3.py
 
 %if_with doc
-cp -fR pickle %buildroot%python3_sitelibdir/%name/
+cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+rm -rf %buildroot%_bindir
+rm -rf %buildroot%_man1dir
+
 %check
-#python3 setup.py test -v
-#python3 bin/test -v
+#python setup.py test -v
+#python bin/test -v
 %if_with doc
-python3 bin/doctest -v ||:
+python bin/doctest -v ||:
 %endif
 
 %files
-%doc AUTHORS LICENSE README* CODE_OF_CONDUCT.md
-%_bindir/*
-%_man1dir/*
-
-%files -n python3-module-%name
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*test*
-%exclude %python3_sitelibdir/*/*/*test*
-%exclude %python3_sitelibdir/*/*/*/*test*
-%exclude %python3_sitelibdir/*/*/*/*/*test*
+%doc AUTHORS LICENSE README*
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/*test*
+%exclude %python_sitelibdir/*/*/*test*
+%exclude %python_sitelibdir/*/*/*/*test*
 %if_with doc
-%exclude %python3_sitelibdir/%name/pickle
+%exclude %python_sitelibdir/%oname/pickle
+
+%files pickles
+%dir %python_sitelibdir/%oname
+%python_sitelibdir/%oname/pickle
 %endif
 
-%files -n python3-module-%name-tests
-%python3_sitelibdir/*/*test*
-%python3_sitelibdir/*/*/*test*
-%python3_sitelibdir/*/*/*/*test*
-%python3_sitelibdir/*/*/*/*/*test*
-%if_with doc
-%exclude %python3_sitelibdir/%name/pickle
-%endif
+%files tests
+%python_sitelibdir/*/*test*
+%python_sitelibdir/*/*/*test*
+%python_sitelibdir/*/*/*/*test*
 
-%files -n python3-module-%name-examples
+%files examples
 %doc examples/*
 
 %if_with doc
-%files -n python3-module-%name-pickles
-%python3_sitelibdir/%name/pickle
-
-%files -n python3-module-%name-doc
+%files doc
 %doc doc/_build/html/*
 %endif
 
 %changelog
-* Wed Jul 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.1-alt1
-- Updated to upstream version 1.6.1.
-- Disabled build for python-2.
+* Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.1-alt2
+- Built only python-2 module.
 
 * Sat Apr 27 2019 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1.1.1
 - introduce doc knob (on by default)
