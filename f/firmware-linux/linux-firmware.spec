@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200803
+Version: 20200804
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Aug 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200804-alt1
+- upstream changes (GIT c331aa9):
+  + amdgpu: update vega20 firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update picasso firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 20.30 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 20.30 (thx Alex Deucher)
+
 * Wed Aug 05 2020 Cronbuild Service <cronbuild@altlinux.org> 20200803-alt1
 - upstream changes (GIT 9bc3789):
   + update NXP SDSD-8997 firmware image (thx Ganapathi Bhat)
