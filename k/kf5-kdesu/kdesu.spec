@@ -1,7 +1,7 @@
 %define rname kdesu
 
 Name: kf5-%rname
-Version: 5.72.0
+Version: 5.73.0
 Release: alt1
 %K5init altplace
 
@@ -70,6 +70,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%_datadir/qlogging-categories5/*.*categories
 
 %files devel
 %_K5inc/kdesu_version.h
@@ -84,6 +85,9 @@ KF5 library
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
+- new version
+
 * Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
 - new version
 

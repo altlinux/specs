@@ -1,9 +1,9 @@
 %define rname kio
 
-%def_with streebog
+%def_disable streebog
 
 Name: kf5-%rname
-Version: 5.72.0
+Version: 5.73.0
 Release: alt1
 %K5init altplace
 
@@ -98,7 +98,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 
-%if_with streebog
+%if_enabled streebog
 %patch10 -p2 -b .streebog
 %endif
 
@@ -108,7 +108,7 @@ KF5 library
 
 %build
 %K5build \
-%if_with streebog
+%if_enabled streebog
 	-DEXTRA_CRYPTO:BOOL=ON \
 %endif
 	#
@@ -166,6 +166,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
+- new version
+
 * Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
 - new version
 

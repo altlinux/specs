@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.72.0
+Version: 5.73.0
 Release: alt1
 %K5init altplace
 
@@ -96,6 +96,7 @@ done
 %_K5archdata/mkspecs/modules/qt_KNewStuff*.pri
 
 %files -n libkf5newstuff
+%_K5bin/knewstuff-dialog
 %_K5lib/libKF5NewStuff.so.*
 %_K5qml/org/kde/newstuff/
 
@@ -104,6 +105,9 @@ done
 
 
 %changelog
+* Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
+- new version
+
 * Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
 - new version
 
