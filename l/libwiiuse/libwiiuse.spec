@@ -1,6 +1,6 @@
 Name: libwiiuse
 Version: 0.15.5
-Release: alt1
+Release: alt2
 Summary: The wiiuse library is used to access and control multiple Nintendo Wiimotes
 License: GPL-3.0-or-later
 Group: System/Libraries
@@ -8,8 +8,8 @@ Url: https://github.com/rpavlik/wiiuse
 
 Source: https://github.com/rpavlik/wiiuse/archive/%version/wiiuse-%version.tar.gz
 
+BuildRequires(pre): rpm-build-ninja dos2unix
 BuildRequires: gcc-c++ cmake libbluez-devel libGL-devel libfreeglut-devel libSDL-devel
-BuildRequires: dos2unix chrpath
 
 %description
 Wiiuse is a library written in C that connects with several Nintendo
@@ -39,11 +39,11 @@ Example programs to test accessing wiiremote controllers
 dos2unix CHANGELOG.mkd README.mkd
 
 %build
-%cmake
-%cmake_build
+%cmake -GNinja
+%ninja_build -C BUILD
 
 %install
-%cmakeinstall_std
+%ninja_install -C BUILD
 # Can't use make install as it is a pathetic copy into fixed paths and won't
 # work on x86_64
 # install -Dpm 0755 BUILD/src/libwiiuse.so %%buildroot%%_libdir/libwiiuse.so.0
@@ -66,5 +66,9 @@ rm -rf %buildroot%_docdir/wiiuse
 %_bindir/wiiuseexample-sdl
 
 %changelog
+* Tue Aug 11 2020 Leontiy Volodin <lvol@altlinux.org> 0.15.5-alt2
+- Removed chrpath from BR.
+- Built with ninja instead make.
+
 * Fri Jan 31 2020 Leontiy Volodin <lvol@altlinux.org> 0.15.5-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec) (ALT #37832).
