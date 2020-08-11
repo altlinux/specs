@@ -12,11 +12,15 @@
 %endif
 
 %def_disable tests
+%ifarch x86_64 aarch64
+%def_with clang
+%else
 %def_without clang
+%endif
 
 Name: %llvm_name
-Version: 10.0.0
-Release: alt2
+Version: 10.0.1
+Release: alt1
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -358,6 +362,7 @@ ninja -C BUILD check-all || :
 %_libdir/LLVMHello.so
 %_libdir/BugpointPasses.so
 %_datadir/cmake/Modules/llvm
+%_libdir/cmake/llvm/LLVMConfigExtensions.cmake
 %exclude %_datadir/cmake/Modules/llvm/LLVMStaticExports.cmake
 
 %files devel-static
@@ -401,7 +406,6 @@ ninja -C BUILD check-all || :
 %dir %_includedir/lld
 %_includedir/lld/*
 
-
 %files doc
 %doc %_docdir/llvm
 
@@ -412,6 +416,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Aug 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 10.0.1-alt1
+- 10.0.1
+
 * Tue May  5 2020 Nikita Ermakov <arei@altlinux.org> 10.0.0-alt2
 - add riscv64 support
 
