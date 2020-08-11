@@ -2,7 +2,7 @@
 
 Name:    castxml
 Version: 0.3.4
-Release: alt1
+Release: alt2
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -46,6 +46,8 @@ export CXX=clang++
 %remove_optflags -frecord-gcc-switches
 
 %cmake \
+       -DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
+       -DCLANG_LINK_CLANG_DYLIB:BOOL=ON \
        -DCastXML_INSTALL_DOC_DIR:STRING=share/doc/%name \
        -DCastXML_INSTALL_MAN_DIR:STRING=share/man \
        -DCLANG_RESOURCE_DIR:PATH=$(clang -print-file-name=include)/.. \
@@ -82,6 +84,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.4-alt2
+- Fixed linking with dynamic clang libraries.
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.4-alt1
 - Updated to upstream release version 0.3.4.
 
