@@ -1,5 +1,5 @@
 Name: riot-web
-Version: 1.6.8
+Version: 1.7.2
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -43,6 +43,9 @@ cp -a webapp %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Wed Aug 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2 (with rpmrb script)
+
 * Sat Jul 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
 - new version 1.6.8 (with rpmrb script)
 
