@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -134,6 +134,9 @@ vm-run --verbose uname
 vm-run --verbose --overlay=ext4 uname
 
 %changelog
+* Wed Aug 12 2020 Vitaly Chikunov <vt@altlinux.org> 1.13-alt1
+- Make kernel shutdown quicker.
+
 * Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 1.12-alt1
 - Make console output non-truncated on shutdown.
 - Fix tty support for console.
