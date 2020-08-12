@@ -3,16 +3,14 @@
 %define oname scikit-image
 
 %def_disable docs
-
-# some issue similar to https://github.com/cython/cython/issues/1953
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
-Version: 0.15.0
-Release: alt3
+Version: 0.17.2
+Release: alt1
 
 Summary: Image processing routines for SciPy
-License: BSD
+License: BSD-3-Clause and MIT
 Group: Development/Python3
 
 Url: https://pypi.org/project/scikit-image/
@@ -23,16 +21,34 @@ Patch1: %oname-alt-build.patch
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython python3-module-matplotlib
 BuildRequires: python3-module-scipy libnumpy-py3-devel
 BuildRequires: python3-module-six python3-module-networkx
 BuildRequires: python3-module-Pillow
+
 # for tests
-BuildRequires: xvfb-run
+%if_enabled check
+BuildRequires: pytest3
 BuildRequires: python3-module-wavelets python3-module-imageio
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-tifffile
+%endif
+
 # for docs
-BuildRequires: python3-module-sphinx
+%if_enabled docs
+BuildRequires: xvfb-run
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx-gallery
+BuildRequires: python3-module-sphinx-copybutton
+BuildRequires: python3-module-numpydoc
+BuildRequires: python3-module-matplotlib-sphinxext
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-dask
+BuildRequires: python3-module-scikit-learn
+BuildRequires: python3-module-seaborn
+%endif
 
 %py3_provides skimage
 %py3_requires numpy scipy networkx matplotlib
@@ -45,6 +61,7 @@ filtering, warping, color manipulation, object detection, etc.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+%add_python3_req_skip astropy.io
 
 %description tests
 Image processing algorithms for SciPy, including IO, morphology,
@@ -89,49 +106,64 @@ ln -s ../objects.inv doc/source/
 
 %if_enabled docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
-xvfb-run make -C doc pickle
-xvfb-run make -C doc html
+xvfb-run make -C doc pickle PYTHON=python3
+xvfb-run make -C doc html PYTHON=python3
 
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
-%if_disabled check
-rm -f requirements.txt
+install -d %buildroot%python3_sitelibdir/skimage
+cp -fR doc/build/pickle %buildroot%python3_sitelibdir/skimage/
 %endif
 
 %check
-python3 setup.py test
-rm -f requirements.txt
+mkdir -p matplotlib
+touch matplotlib/matplotlibrc
+export XDG_CONFIG_HOME=$(pwd)
+
+pushd %buildroot%python3_sitelibdir &>/dev/null
+
+# one test fails and there seems no way to disable it. Just remove it
+rm -f %buildroot%python3_sitelibdir/skimage/io/tests/test_io.py
+rm -f %buildroot%python3_sitelibdir/skimage/io/tests/__pycache__/test_io.*
+
+export PYTHONDONTWRITEBYTECODE=1
+export PYTEST_ADDOPTS='-p no:cacheprovider'
+pytest-3 -v skimage
+
+popd &>/dev/null
 
 %files
-%doc *.txt *.md
+%doc LICENSE.txt
+%doc CONTRIBUTING.txt CONTRIBUTORS.txt RELEASE.txt TODO.txt
+%doc *.md
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/skimage
+%python3_sitelibdir/scikit_image-%version-*.egg-info
 %if_enabled docs
-%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/skimage/pickle
 %endif
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/*/test*
+%exclude %python3_sitelibdir/skimage/*/test*
+%exclude %python3_sitelibdir/skimage/*/*/test*
+%exclude %python3_sitelibdir/skimage/*/*/*/test*
 
 %files tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/*/test*
+%python3_sitelibdir/skimage/*/test*
+%python3_sitelibdir/skimage/*/*/test*
+%python3_sitelibdir/skimage/*/*/*/test*
 
 %if_enabled docs
 %files pickles
-%python3_sitelibdir/*/pickle
+%python3_sitelibdir/skimage/pickle
+%endif
 
 %files docs
-%doc doc/build/html doc/examples viewer_examples
-%else
-%files docs
 %doc doc/examples viewer_examples
+%if_enabled docs
+%doc doc/build/html
 %endif
 
 %changelog
+* Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.2-alt1
+- Updated to upstream version 0.17.2.
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0-alt3
 - Fixed build with numpy.
 

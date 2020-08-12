@@ -1,0 +1,89 @@
+%define _unpackaged_files_terminate_build 1
+
+%define oname tifffile
+
+Name: python3-module-%oname
+Version: 2020.7.24
+Release: alt1
+Summary: Read and write TIFF(r) files
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://www.lfd.uci.edu/~gohlke/
+
+BuildArch: noarch
+
+# https://github.com/cgohlke/tifffile.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: pytest3 python3-module-numpy-testing python3-module-lxml
+
+%description
+Tifffile is a Python library to
+* store numpy arrays in TIFF (Tagged Image File Format) files, and
+* read image and metadata from TIFF-like files used in bioimaging.
+
+Image and metadata can be read from TIFF, BigTIFF, OME-TIFF, STK, LSM, SGI,
+NIHImage, ImageJ, MicroManager, FluoView, ScanImage, SEQ, GEL, SVS, SCN, SIS,
+ZIF (Zoomable Image File Format), QPTIFF (QPI), NDPI, and GeoTIFF files.
+
+Numpy arrays can be written to TIFF, BigTIFF, OME-TIFF,
+and ImageJ hyperstack compatible files in multi-page, memory-mappable, tiled,
+predicted, or compressed form.
+
+A subset of the TIFF specification is supported, mainly uncompressed and
+losslessly compressed 8, 16, 32 and 64-bit integer, 16, 32 and 64-bit float,
+grayscale and multi-sample images. Specifically, reading slices of image data,
+CCITT and OJPEG compression, chroma subsampling without JPEG compression,
+color space transformations, samples with differing types,
+or IPTC and XMP metadata are not implemented.
+
+TIFF(r), the Tagged Image File Format, is a trademark and under control of
+Adobe Systems Incorporated. BigTIFF allows for files larger than 4 GB.
+STK, LSM, FluoView, SGI, SEQ, GEL, QPTIFF, NDPI, and OME-TIFF,
+are custom extensions defined by Molecular Devices (Universal Imaging Corporation),
+Carl Zeiss MicroImaging, Olympus, Silicon Graphics International,
+Media Cybernetics, Molecular Dynamics, PerkinElmer, Hamamatsu,
+and the Open Microscopy Environment consortium, respectively.
+
+%prep
+%setup
+
+%build
+%python3_build
+
+%install
+%python3_install
+
+%check
+export PYTHONDONTWRITEBYTECODE=1
+export PYTEST_ADDOPTS='-p no:cacheprovider'
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pytest-3 -v tests \
+	--deselect=tests/test_tifffile.py::test_issue_infinite_loop \
+	--deselect=tests/test_tifffile.py::test_issue_jpeg_ia \
+	--deselect=tests/test_tifffile.py::test_func_pformat_xml \
+	--deselect=tests/test_tifffile.py::test_filehandle_seekable \
+	--deselect=tests/test_tifffile.py::test_read_cfa \
+	--deselect=tests/test_tifffile.py::test_read_tiles \
+	--deselect=tests/test_tifffile.py::test_write_cfa \
+	--deselect=tests/test_tifffile.py::test_write_volume_png \
+	--deselect=tests/test_tifffile.py::test_class_omexml \
+	--deselect=tests/test_tifffile.py::test_class_omexml_modulo \
+	--deselect=tests/test_tifffile.py::test_class_omexml_attributes \
+	--deselect=tests/test_tifffile.py::test_class_omexml_multiimage \
+	--deselect=tests/test_tifffile.py::test_write_ome \
+	%nil
+
+%files
+%doc LICENSE
+%doc README.rst ACKNOWLEDGEMENTS.rst CHANGES.rst
+%_bindir/lsm2bin
+%_bindir/tifffile
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+
+%changelog
+* Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2020.7.24-alt1
+- Initial build for ALT.

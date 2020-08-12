@@ -3,10 +3,10 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt3
+Version: 1.1.1
+Release: alt1
 Summary: Wavelet Transforms in Python
-License: BSD
+License: MIT and BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/PyWavelets/
 
@@ -19,9 +19,7 @@ BuildRequires: python3-module-Cython
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy-testing
 BuildRequires: libnumpy-py3-devel
-
-# circumvent build failures due to relying on headers from libnumpy-devel
-BuildRequires: libnumpy-devel
+BuildRequires: pytest3
 
 %description
 PyWavelets is a free Open Source library for wavelet transforms in Python.
@@ -66,11 +64,24 @@ This package contains tests for %oname.
 %python3_install
 
 %check
-cd ..
-PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 --tests %name-%version/pywt/tests
+mkdir -p matplotlib
+touch matplotlib/matplotlibrc
+export XDG_CONFIG_HOME=$(pwd)
+
+pushd %buildroot%python3_sitelibdir &>/dev/null
+
+pytest-3 pywt/tests --verbose -p no:cacheprovider \
+%ifarch ppc64le
+	-k 'not test_cwt_complex and not test_cwt_method_fft'
+	# see https://github.com/PyWavelets/pywt/issues/508
+%endif
+	%nil
+
+popd &>/dev/null
 
 %files
 %doc LICENSE
+%doc LICENSES_bundled.txt
 %doc README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -79,6 +90,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 --tests %name-%version/pywt/
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1.
+
 * Wed Jun 12 2019 Stanislav Levin <slev@altlinux.org> 1.0.2-alt3
 - Added missing dep on `numpy.testing`.
 
