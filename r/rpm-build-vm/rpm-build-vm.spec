@@ -6,7 +6,7 @@
 #
 
 Name: rpm-build-vm
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: RPM helper to run in virtualised environment
@@ -134,6 +134,10 @@ vm-run --verbose uname
 vm-run --verbose --overlay=ext4 uname
 
 %changelog
+* Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 1.12-alt1
+- Make console output non-truncated on shutdown.
+- Fix tty support for console.
+
 * Sat Aug 08 2020 Vitaly Chikunov <vt@altlinux.org> 1.11-alt1
 - x86_64,i586: Try to make kernel more robust with 'no_timer_check'.
 - spec: Move checkinstall %%pre outside of %%ifarch to fix noarch check.
