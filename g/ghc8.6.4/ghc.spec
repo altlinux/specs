@@ -9,7 +9,7 @@
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt3
+Release: alt4
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -77,7 +77,7 @@ Provides: haskell(abi) = %version
 
 %ifarch armh aarch64
 BuildRequires: llvm%llvm_version
-Requires: llvm%llvm_version
+Requires: llvm >= %llvm_version
 %endif
 
 %description
@@ -270,6 +270,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Wed Aug 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt4
+- Rebuild with not fixed llvm version on armh and aarch64
+
 * Tue Apr 28 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.6.4-alt3
 - built on armh
 
