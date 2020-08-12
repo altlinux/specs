@@ -1,9 +1,9 @@
 Name: cproto
-Version: 4.7o
+Version: 4.7p
 Release: alt1
 
 Summary: Generates function prototypes and variable declarations from C code
-License: Public Domain
+License: ALT-Public-Domain
 Group: Development/Tools
 Url: https://invisible-island.net/cproto/cproto.html
 
@@ -47,6 +47,9 @@ implementing the entire C language grammar.
 %doc AUTHORS CHANGES README
 
 %changelog
+* Thu Jul 16 2020 Dmitry V. Levin <ldv@altlinux.org> 4.7p-alt1
+- 4.7o -> 4.7p.
+
 * Sat Dec 29 2018 Dmitry V. Levin <ldv@altlinux.org> 4.7o-alt1
 - 4.7l -> 4.7o.
 - Rewritten spec file.
