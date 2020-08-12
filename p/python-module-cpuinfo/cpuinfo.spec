@@ -2,8 +2,8 @@
 %define oname cpuinfo
 
 Name: python-module-%oname
-Version: 3.3.0
-Release: alt3
+Version: 7.0.0
+Release: alt1
 
 Summary: Get CPU info with pure Python 2 & 3
 License: MIT
@@ -36,12 +36,15 @@ It does not require any compilation(C/C++, assembly, et cetera) to use.
 %__python setup.py test
 
 %files
-%doc README.rst
+%doc README.md
 %exclude %_bindir/*
 %python_sitelibdir/*
 
 
 %changelog
+* Wed Aug 12 2020 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt1
+- 7.0.0
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.3.0-alt3
 - Binary file excluded (conflict with module on py3).
 
