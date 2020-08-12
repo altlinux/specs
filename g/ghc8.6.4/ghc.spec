@@ -1,15 +1,13 @@
 # llvm needs for unregisterised architectures
-%ifarch armh
-%define llvm_version 9.0
-%else
-%define llvm_version 7.0
+%ifarch armh aarch64
+%define llvm_version 10.0
 %endif
 
 %def_without bootstrap
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt4
+Release: alt5
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -270,6 +268,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Wed Aug 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt5
+- Rebuild with llvm-10.0 on armh and aarch64
+
 * Wed Aug 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt4
 - Rebuild with not fixed llvm version on armh and aarch64
 
