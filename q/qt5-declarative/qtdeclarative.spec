@@ -1,10 +1,10 @@
 
 %global qt_module qtdeclarative
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.12.9
-Release: alt2
+Version: 5.15.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -18,6 +18,7 @@ Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 Patch1: Link-with-libatomic-on-riscv32-64.patch
+Patch2: alt-remove-createSize.patch
 
 %include %SOURCE1
 %qml_req_skipall 0
@@ -120,6 +121,22 @@ Requires: libqt5-core = %_qt5_version
 %description -n libqt5-quickshapes
 %summary
 
+%package -n libqt5-qmlmodels
+Group: System/Libraries
+Summary: Qt5 - library
+Requires: %name-common = %EVR
+Requires: libqt5-core = %_qt5_version
+%description -n libqt5-qmlmodels
+%summary
+
+%package -n libqt5-qmlworkerscript
+Group: System/Libraries
+Summary: Qt5 - library
+Requires: %name-common = %EVR
+Requires: libqt5-core = %_qt5_version
+%description -n libqt5-qmlworkerscript
+%summary
+
 %package -n rpm-build-qml
 Group: Development/Other
 Summary: RPM helper macros to rebuild QML packages
@@ -134,6 +151,7 @@ mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
 %patch1 -p1
+%patch2 -p1
 
 %build
 export PATH=$PWD/bin_add:$PATH
@@ -180,6 +198,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %dir %_qt5_qmldir/QtQuick/
 %dir %_qt5_plugindir/qmltooling/
 
+
 %files doc
 %if_disabled bootstrap
 %_qt5_docdir/*
@@ -189,37 +208,36 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
 %_qt5_qmldir/builtins.qmltypes
+%_qt5_qmldir/Qt/labs/animation/
 %_qt5_qmldir/Qt/labs/folderlistmodel/
 %_qt5_qmldir/Qt/labs/qmlmodels/
 %_qt5_qmldir/Qt/labs/settings/
 %_qt5_qmldir/Qt/labs/sharedimage/
 %_qt5_qmldir/Qt/labs/wavefrontmesh/
+%_qt5_qmldir/Qt/test/qtestroot/
 %_qt5_qmldir/QtQml/*
 %_qt5_qmldir/QtQuick/LocalStorage/
 %_qt5_qmldir/QtQuick/Layouts/
 %_qt5_qmldir/QtQuick/Shapes/
-
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
-#%_qt5_plugindir/accessible/libqtaccessiblequick.so
 %_qt5_qmldir/QtQuick.2/
-#%_qt5_qmldir/QtQuick/Dialogs/
-#%_qt5_qmldir/QtQuick/PrivateWidgets/
 %_qt5_qmldir/QtQuick/Window.2/
 
 %files -n libqt5-quickparticles
 %_qt5_libdir/libQt5QuickParticles.so.*
 %_qt5_qmldir/QtQuick/Particles.2/
-
 %files -n libqt5-quicktest
 %_qt5_libdir/libQt5QuickTest.so.*
 %_qt5_qmldir/QtTest/
-
 %files -n libqt5-quickwidgets
 %_qt5_libdir/libQt5QuickWidgets.so.*
-
 %files -n libqt5-quickshapes
 %_qt5_libdir/libQt5QuickShapes.so.*
+%files -n libqt5-qmlmodels
+%_qt5_libdir/libQt5QmlModels.so.*
+%files -n libqt5-qmlworkerscript
+%_qt5_libdir/libQt5QmlWorkerScript.so.*
 
 
 %files devel
@@ -233,10 +251,11 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_qt5_headerdir/Qt*/
 %_qt5_archdatadir/mkspecs/modules/*.pr*
 %_qt5_archdatadir/mkspecs/features/*.pr*
+%_qt5_libdir/metatypes/qt5qml*.json
+%_qt5_libdir/metatypes/qt5quick*.json
 %_libdir/cmake/Qt*/
-%_pkgconfigdir/Qt?Qml.pc
+%_pkgconfigdir/Qt?Qml*.pc
 %_pkgconfigdir/Qt?Quick*.pc
-#%_pkgconfigdir/Qt?QmlDevTools.pc
 
 %files devel-static
 %_qt5_libdir/libQt?QmlDevTools.a
@@ -258,6 +277,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Thu Jul 09 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Fri Jul 03 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt2
 - build docs
 

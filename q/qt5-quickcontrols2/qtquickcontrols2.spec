@@ -4,7 +4,7 @@
 #qml_add_req_skip HelperWidgets
 
 Name: qt5-quickcontrols2
-Version: 5.12.9
+Version: 5.15.0
 Release: alt1
 
 Group: System/Libraries
@@ -132,6 +132,9 @@ Requires: %name-devel
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 

@@ -29,7 +29,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.12.9
+Version: 5.15.0
 Release: alt2
 
 Group: System/Libraries
@@ -40,31 +40,35 @@ ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
 # FC
-Patch1:  qtwebengine-everywhere-src-5.10.0-linux-pri.patch
-Patch2:  qtwebengine-everywhere-src-5.11.0-no-icudtl-dat.patch
-Patch3:  qtwebengine-opensource-src-5.12.4-fix-extractcflag.patch
+Patch1:  qtwebengine-everywhere-src-5.15.0-linux-pri.patch
+#
+Patch3:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
 Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
 Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
-Patch8: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
-Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
-Patch10: qtwebengine-everywhere-src-5.12.0-gn-bootstrap-verbose.patch
+#
+Patch9: qtwebengine-opensource-src-5.15.0-webrtc-neon-detect.patch
+Patch10: qtwebengine-everywhere-src-5.15.0-gn-bootstrap-verbose.patch
 Patch11: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
+Patch31: armv6-ffmpeg-no-thumb.patch
+Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
+Patch33: icu-v67.patch
+
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
-Patch103: qtwebengine-everywhere-src-5.12.4-chromium-add-ppc64le-support.patch
-Patch104: qtwebengine-everywhere-src-5.12.4-add-ppc64le-support.patch
+Patch103: qtwebengine-everywhere-src-5.15.0-chromium-add-ppc64le-support.patch
+Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
+#
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: git-core gperf kde5-akonadi-calendar-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-pimlibs-devel kde5-syndication-devel kf5-bluez-qt-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kplotting-devel kf5-kpty-devel kf5-kross-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kxmlrpcclient-devel kf5-libkscreen-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp-devel libvpx-devel libwebp-devel libxslt-devel ninja-build protobuf-compiler python-module-google python-module-simplejson python-modules-json python3-dev qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel ruby ruby-stdlibs yasm
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt5-webengine qt5-tools
 BuildRequires(pre): libavformat-devel
 BuildRequires: libstdc++-devel-static
@@ -145,6 +149,22 @@ Requires: qt5-quickcontrols2
 %description -n libqt5-webenginewidgets
 %summary
 
+%package -n libqt5-pdf
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt5-core = %_qt5_version
+%description -n libqt5-pdf
+%summary
+
+%package -n libqt5-pdfwidgets
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt5-core = %_qt5_version
+%description -n libqt5-pdfwidgets
+%summary
+
 %prep
 %define icu_ver %{get_version libicu-devel}
 %IF_ver_gteq %icu_ver 5.9
@@ -155,7 +175,7 @@ Requires: qt5-quickcontrols2
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch1 -p1
-%patch2 -p1
+#
 %patch3 -p1
 #patch4 -p1
 %if_enabled system_icu
@@ -165,17 +185,21 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch6 -p1
 %endif
 #%patch7 -p1
-%patch8 -p1
+#
 %patch9 -p1
-%patch10 -p1
+#%patch10 -p1
 %patch11 -p1
 #
-%patch30 -p1
+#%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
 #
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+#
 %patch105 -p1
 %patch106 -p1
 
@@ -186,10 +210,6 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 sed -i -e 's!audio_processing//!audio_processing/!g' \
   src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
   src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/utility/ooura_fft_sse2.cc
-# remove ./ from #line commands in ANGLE to avoid debugedit failure (?)
-sed -i -e 's!\./!!g' \
-  src/3rdparty/chromium/third_party/angle/src/compiler/preprocessor/Tokenizer.cpp \
-  src/3rdparty/chromium/third_party/angle/src/compiler/translator/glslang_lex.cpp
 # delete all "toolprefix = " lines from build/toolchain/linux/BUILD.gn, as we
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
 sed -i -e '/toolprefix = /d' -e 's/\${toolprefix}//g' \
@@ -202,13 +222,13 @@ sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/build/config/compiler/
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/third_party/*/BUILD.gn
 
 %if_enabled always_reducing_debuginfo
-sed -i -e 's/symbol_level=2/symbol_level=1/g' src/core/config/common.pri
+sed -i -e 's/symbol_level=2/symbol_level=1/g' src/buildtools/config/common.pri
 %endif
 %ifnarch x86_64
 # most arches run out of memory with full debuginfo, so use -g1 on non-x86_64
-sed -i -e 's/symbol_level=2/symbol_level=1/g' src/core/config/common.pri
+sed -i -e 's/symbol_level=2/symbol_level=1/g' src/buildtools/config/common.pri
 %endif
-sed -i -e 's/symbol_level=[[:digit:]]/symbol_level=0/g' src/core/config/common.pri
+sed -i -e 's/symbol_level=[[:digit:]]/symbol_level=0/g' src/buildtools/config/common.pri
 
 
 # redefine _FORTIFY_SOURCE
@@ -348,6 +368,12 @@ done
 %_qt5_libexecdir/QtWebEngineProcess
 %files -n libqt5-webenginewidgets
 %_qt5_libdir/libQt?WebEngineWidgets.so.*
+%files -n libqt5-pdf
+%_qt5_libdir/libQt?Pdf.so.*
+%_qt5_plugindir/imageformats/libqpdf.so
+%_qt5_qmldir/QtQuick/Pdf/
+%files -n libqt5-pdfwidgets
+%_qt5_libdir/libQt?PdfWidgets.so.*
 
 %files doc
 %if %qdoc_found
@@ -363,6 +389,8 @@ done
 %_qt5_headerdir/QtWebEngine/
 %_qt5_headerdir/QtWebEngineCore/
 %_qt5_headerdir/QtWebEngineWidgets/
+%_qt5_headerdir/QtPdf/
+%_qt5_headerdir/QtPdfWidgets/
 %_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.so
 %_qt5_libdir/libQt*.prl
@@ -372,6 +400,15 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Jul 29 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- build with restored ppc64le support (thanks glebfm@alt)
+
+* Wed Jul 29 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.15.0-alt0.ppc64le
+- Restored ppc64le support.
+
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt2
 - tune build for p9
 
@@ -425,53 +462,53 @@ done
 * Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt2
 - rebuild with new icu
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt4%ubt
+* Thu Sep 06 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt4
 - rebuild with new libevent
 
-* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3%ubt
+* Tue Aug 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3
 - rebuild with new Qt
 
-* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - rebuild with new icu
 
-* Tue Jun 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Tue Jun 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1%ubt
+* Mon Jun 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1
 - new version
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt3%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt3
 - rebuild with new Qt
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt2%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt2
 - rebuild with new Qt
 - sync FC patches
 
-* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1%ubt.1
+* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1.1
 - don't use old system icu
 
-* Wed Feb 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1%ubt
+* Wed Feb 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.1-alt1
 - new version
 
-* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt2%ubt
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt2
 - fix cmake dependencies
 
-* Wed Jan 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1%ubt
+* Wed Jan 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
 - new version
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1

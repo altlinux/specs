@@ -2,7 +2,7 @@
 %global qt_module qtspeech
 
 Name: qt5-speech
-Version: 5.12.9
+Version: 5.15.0
 Release: alt1
 
 Group: System/Libraries
@@ -64,9 +64,9 @@ Requires: libqt5-core = %_qt5_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 
-ln -s /usr/include config.tests/flite/flite
-ln -s /usr/include config.tests/flite_alsa/flite
-ln -s /usr/include src/plugins/tts/flite/flite
+mkdir -p config.tests/flite
+ln -s %_includedir config.tests/flite/flite
+ln -s %_includedir src/plugins/tts/flite/flite
 
 %build
 %qmake_qt5 "QMAKE_CXXFLAGS += -I/usr/include/speech-dispatcher"
@@ -105,6 +105,9 @@ ln -s /usr/include src/plugins/tts/flite/flite
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
+- new version
+
 * Mon Jun 22 2020 Sergey V Turchin <zerg@altlinux.org> 5.12.9-alt1
 - new version
 
