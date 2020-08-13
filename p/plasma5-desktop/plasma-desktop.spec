@@ -7,8 +7,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.18.5
-Release: alt2
+Version: 5.19.4
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -158,6 +158,7 @@ KF5 library
 %doc COPYING*
 %_datadir/locale/*/LC_SCRIPTS/kfontinst/
 %_K5icon/*/*/*/*.*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 #%config(noreplace) %_K5xdgconf/*
@@ -176,6 +177,7 @@ KF5 library
 %_K5qml/org/kde/plasma/activityswitcher/
 %_K5qml/org/kde/activities/settings/
 %_K5xdgapp/*
+%_K5start/*.desktop
 %_K5cfg/*
 %_K5srv/ServiceMenus/*.desktop
 %_K5srv/kded/*.desktop
@@ -222,6 +224,12 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.4-alt1
+- new version
+
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.3-alt1
+- new version
+
 * Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt2
 - support chromium-gost in favorites menu
 

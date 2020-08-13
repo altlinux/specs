@@ -1,7 +1,7 @@
 %define rname xdg-desktop-portal-kde
 
 Name: plasma5-%rname
-Version: 5.18.5
+Version: 5.19.4
 Release: alt1
 %K5init altplace
 
@@ -52,10 +52,17 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_K5libexecdir/*portal*kde*
 %_K5dbus_srv/*portal*kde*.service
 %_K5data/xdg-desktop-portal-kde/
+%_K5notif/*portal*.notifyrc
 %_datadir/xdg-desktop-portal/portals/kde.portal
 %config(noreplace) %_K5xdgconf/plasma-workspace/env/*.sh
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.4-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.3-alt1
+- new version
+
 * Thu May 07 2020 Sergey V Turchin <zerg@altlinux.org> 5.18.5-alt1
 - new version
 

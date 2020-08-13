@@ -26,8 +26,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.18.5
-Release: alt2
+Version: 5.19.4
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -78,7 +78,7 @@ Patch124: alt-filtering-widget-settings-upon-first-launch.patch
 Patch125: alt-translate-keyboard-layouts.patch
 Patch126: alt-add-using-the-altappstarter.patch
 Patch127: alt-plasma-5.17-crash.patch
-Patch128: alt-bookmarks-firefox.patch
+#
 Patch129: alt-def-krunners.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
@@ -235,11 +235,11 @@ popd
 %patch121 -p2
 %patch122 -p2
 %patch123 -p1
-%patch124 -p1
+#%patch124 -p1
 %patch125 -p1
 %patch126 -p1
 %patch127 -p2
-%patch128 -p1
+#
 %patch129 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
@@ -405,6 +405,12 @@ done
 
 
 %changelog
+* Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt1
+- new version
+
+* Tue Jul 07 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.3-alt1
+- new version
+
 * Fri May 29 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.18.5-alt2
 - update clock widget date default format
 
