@@ -1,5 +1,5 @@
 Name: liri-wayland
-Version: 0.0.20191126
+Version: 0.0.20200726
 Release: alt1
 
 Summary: Wayland client and server extensions
@@ -79,6 +79,12 @@ Group: Development/C++
 %_libdir/cmake/Liri1WaylandServer
 
 %changelog
+* Thu Aug 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200726-alt1
+- update from upstream git.5b1e3bf
+
+* Thu Apr 09 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200401-alt1
+- update from upstream git.00a598b
+
 * Tue Nov 26 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20191126-alt1
 - update from upstream git.3ec6248
 
