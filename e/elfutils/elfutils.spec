@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.180.0.2.9698
+Version: 0.180.0.22.g1549
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -174,6 +174,7 @@ cd %buildtarget
 	--enable-dependency-tracking \
 	--enable-maintainer-mode \
 	--program-prefix=eu- \
+	--disable-libdebuginfod \
 	--disable-debuginfod
 %make_build
 
@@ -269,6 +270,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jul 23 2020 Dmitry V. Levin <ldv@altlinux.org> 0.180.0.22.g1549-alt1
+- elfutils-0.180-2-g9698a399 -> elfutils-0.180-22-g15495182.
+
 * Mon Jun 15 2020 Dmitry V. Levin <ldv@altlinux.org> 0.180.0.2.9698-alt1
 - elfutils-0.179 -> elfutils-0.180-2-g9698a399.
 
