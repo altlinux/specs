@@ -5,7 +5,7 @@
 
 Name: fleet-commander-client
 Version: 0.15.0
-Release: alt2
+Release: alt3
 
 Summary: Fleet Commander Client
 License: LGPLv3+ and LGPLv2+ and MIT and BSD
@@ -113,6 +113,9 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.FleetCommanderClientAD.service
 
 %changelog
+* Thu Aug 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.0-alt3
+- Policy files access modifier fixed.
+
 * Mon Aug 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.0-alt2
 - The ability to change the policy file by an unprivileged user fixed;
 - `null` values in json policy replaced (unsupported firefox).
