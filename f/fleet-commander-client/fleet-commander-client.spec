@@ -5,7 +5,7 @@
 
 Name: fleet-commander-client
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: Fleet Commander Client
 License: LGPLv3+ and LGPLv2+ and MIT and BSD
@@ -113,6 +113,10 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.FleetCommanderClientAD.service
 
 %changelog
+* Mon Aug 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.0-alt2
+- The ability to change the policy file by an unprivileged user fixed;
+- `null` values in json policy replaced (unsupported firefox).
+
 * Thu Jun 11 2020 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
 - 0.14.0 -> 0.15.0.
 - Added compatibility against samba 4.11+ (thanks to ptrnine@).
