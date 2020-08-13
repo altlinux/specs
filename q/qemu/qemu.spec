@@ -18,6 +18,7 @@
 %def_enable alsa
 %def_enable pulseaudio
 %def_enable oss
+%def_disable jack
 %def_enable aio
 %def_enable io_uring
 %def_enable blobs
@@ -60,7 +61,6 @@
 %def_disable tcmalloc
 %def_disable jemalloc
 %def_enable replication
-%def_disable vxhs
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
@@ -71,6 +71,8 @@
 %def_enable libxml2
 %def_disable libpmem
 %def_enable libudev
+%def_enable libdaxctl
+%def_disable brlapi
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -106,10 +108,11 @@
 
 %def_enable have_kvm
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa}
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack}
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_spice:spice-app}
-%define qemu_arches aarch64 alpha arm cris hppa lm32 m68k microblaze mips moxie nios2 or1k ppc riscv rx s390x sh4 sparc tricore unicore32 x86 xtensa
+%define device_list %{?_enable_spice:display-qxl} usb-redirect usb-smartcard
+%define qemu_arches aarch64 alpha arm avr cris hppa lm32 m68k microblaze mips moxie nios2 or1k ppc riscv rx s390x sh4 sparc tricore unicore32 x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
@@ -119,7 +122,7 @@
 # }}}
 
 Name: qemu
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -172,6 +175,7 @@ BuildRequires: libpcre-devel-static
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
+%{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
@@ -191,7 +195,7 @@ BuildRequires: libuuid-devel
 %{?_enable_zstd:BuildRequires: libzstd-devel >= 1.4.0}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.3.0}
 %{?_enable_glusterfs:BuildRequires: pkgconfig(glusterfs-api)}
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.14.0 libvte3-devel >= 0.32.0}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.22.0 libvte3-devel >= 0.32.0}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel >= 3.1.18}
 %{?_enable_nettle:BuildRequires: libnettle-devel >= 2.7.1}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.5.0}
@@ -210,26 +214,31 @@ BuildRequires: libslirp-devel
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_lzfse:BuildRequires: liblzfse-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
-%{?_enable_vxhs:BuildRequires: libvxhs-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
 %{?_enable_libxml2:BuildRequires: libxml2-devel}
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?_enable_libudev:BuildRequires: libudev-devel}
+%{?_enable_libdaxctl:BuildRequires: libdaxctl-devel}
 
 %global requires_all_modules         \
 Requires: %name-block-curl = %EVR    \
 Requires: %name-block-dmg = %EVR     \
-%{?_enable_glusterfs:Requires: %name-block-gluster = %EVR} \
-%{?_enable_libiscsi:Requires: %name-block-iscsi = %EVR}    \
-%{?_enable_libnfs:Requires: %name-block-nfs = %EVR}        \
-%{?_enable_rbd:Requires: %name-block-rbd = %EVR}           \
-%{?_enable_alsa:Requires: %name-audio-alsa = %EVR}         \
-%{?_enable_oss:Requires: %name-audio-oss = %EVR}           \
-%{?_enable_pulseaudio:Requires: %name-audio-pa = %EVR}     \
-%{?_enable_sdl:Requires: %name-audio-sdl = %EVR}           \
-%{?_enable_curses:Requires: %name-ui-curses = %EVR}        \
-%{?_enable_spice:Requires: %name-ui-spice-app = %EVR}
-
+%{?_enable_glusterfs:Requires: %name-block-gluster = %EVR}  \
+%{?_enable_libiscsi:Requires: %name-block-iscsi = %EVR}     \
+%{?_enable_libnfs:Requires: %name-block-nfs = %EVR}         \
+%{?_enable_rbd:Requires: %name-block-rbd = %EVR}            \
+%{?_enable_libssh:Requires: %name-block-ssh = %EVR}         \
+%{?_enable_alsa:Requires: %name-audio-alsa = %EVR}          \
+%{?_enable_oss:Requires: %name-audio-oss = %EVR}            \
+%{?_enable_pulseaudio:Requires: %name-audio-pa = %EVR}      \
+%{?_enable_jack:Requires: %name-audio-jack = %EVR}          \
+%{?_enable_sdl:Requires: %name-audio-sdl = %EVR}            \
+%{?_enable_curses:Requires: %name-ui-curses = %EVR}         \
+%{?_enable_spice:Requires: %name-ui-spice-app = %EVR}       \
+%{?_enable_spice:Requires: %name-device-display-qxl = %EVR} \
+%{?_enable_brlapi:Requires: %name-char-baum = %EVR}         \
+Requires: %name-device-usb-redirect = %EVR                  \
+Requires: %name-device-usb-smartcard = %EVR
 
 ##%%{?_enable_gtk:Requires: %name-ui-gtk = %EVR}        \
 ##%%{?_enable_sdl:Requires: %name-ui-sdl = %EVR}
@@ -400,7 +409,7 @@ a virtfs helper.
 
 %global do_package_block() \
 %%package block-%%{1} \
-Summary: QEMU %%{1} audio driver \
+Summary: QEMU %%{1} block driver \
 Group: Emulators \
 Requires: %%name-common = %%EVR \
 %%description block-%%{1} \
@@ -433,6 +442,26 @@ This package provides the additional %%{1} UI for QEMU. \
 %%_libdir/qemu/ui-%%{1}.so
 
 %{expand:%(for i in %ui_list; do echo %%do_package_ui $i; done)}
+
+%global do_package_device() \
+%%package device-%%{1} \
+Summary: QEMU %%{1} device \
+Group: Emulators \
+Requires: %%name-common = %%EVR \
+%%description device-%%{1} \
+This package provides the additional device %%{1} for QEMU. \
+%%files device-%%{1} \
+%%_libdir/qemu/hw-%%{1}.so
+
+%{expand:%(for i in %device_list; do echo %%do_package_device $i; done)}
+
+%package char-baum
+Summary: QEMU Baum chardev driver
+Group: Emulators
+Requires: %name-common = %EVR
+
+%description char-baum
+This package provides the Baum chardev driver for QEMU.
 
 %package guest-agent
 Summary: QEMU guest agent
@@ -645,6 +674,8 @@ run_configure \
 	--disable-hvf \
 	--disable-iconv \
 	--disable-jemalloc \
+	--disable-keyring \
+	--disable-libdaxctl \
 	--disable-libiscsi \
 	--disable-libnfs \
 	--disable-libpmem \
@@ -671,6 +702,7 @@ run_configure \
 	--disable-rbd \
 	--disable-rdma \
 	--disable-replication \
+	--disable-rng-none \
 	--disable-sdl \
 	--disable-sdl-image \
 	--disable-zstd \
@@ -693,6 +725,7 @@ run_configure \
 	--disable-vhost-net \
 	--disable-vhost-scsi \
 	--disable-vhost-user \
+	--disable-vhost-vdpa \
 	--disable-vhost-vsock \
 	--disable-vhost-user-fs \
 	--disable-virglrenderer \
@@ -703,7 +736,6 @@ run_configure \
 	--disable-vnc-sasl \
 	--disable-vte \
 	--disable-vvfat \
-	--disable-vxhs \
 	--disable-whpx \
 	--disable-xen \
 	--disable-xen-pci-passthrough \
@@ -758,7 +790,7 @@ run_configure \
 	%{?_disable_blobs: --disable-blobs} \
 	%{subst_enable spice} \
 	--audio-drv-list="%audio_drv_list" \
-	--disable-brlapi \
+	%{subst_enable brlapi} \
 	--enable-curl \
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
@@ -790,7 +822,6 @@ run_configure \
 	%{subst_enable tcmalloc} \
 	%{subst_enable jemalloc} \
 	%{subst_enable replication} \
-	%{subst_enable vxhs} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
 	%{subst_enable bzip2} \
@@ -798,6 +829,7 @@ run_configure \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	%{subst_enable libpmem} \
+	%{subst_enable libdaxctl} \
 	--enable-xkbcommon \
 	--disable-xen
 
@@ -1032,7 +1064,7 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %files tools
-%_bindir/virtfs-proxy-helper
+%_libexecdir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
 %_libexecdir/vhost-user-gpu
@@ -1041,7 +1073,7 @@ fi
 %_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
 %_bindir/qemu-storage-daemon
 %if_enabled mpath
-%_bindir/qemu-pr-helper
+%_libexecdir/qemu-pr-helper
 %_unitdir/qemu-pr-helper.service
 %_unitdir/qemu-pr-helper.socket
 %endif
@@ -1049,6 +1081,11 @@ fi
 %_bindir/qemu-edid
 %_bindir/qemu-keymap
 %config(noreplace) %_sysconfdir/%name/bridge.conf
+
+%if_enabled brlapi
+%files char-baum
+%_libdir/qemu/chardev-baum.so
+%endif
 
 %files guest-agent
 %_bindir/qemu-ga
@@ -1076,6 +1113,9 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Thu Apr 30 2020 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
 - 5.0.0
 - drop bluez support
