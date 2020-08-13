@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.72.0
+Version: 5.73.0
 Release: alt1
 %K5init altplace
 
@@ -105,6 +105,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%_datadir/qlogging-categories5/*.*categories
 
 %files devel
 %_K5plug/designer/*.so
@@ -129,6 +130,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
+- new version
+
 * Thu Jul 23 2020 Sergey V Turchin <zerg@altlinux.org> 5.72.0-alt1
 - new version
 
