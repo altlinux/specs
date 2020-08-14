@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.43
+Version: 2.4.46
 Release: alt1
 Epoch: 1
 
@@ -1518,6 +1518,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Aug 14 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.46-alt1
+- 2.4.46
+
 * Mon Apr 06 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.43-alt1
 - 2.4.43 (Fixes:  CVE-2020-1927, CVE-2020-1934)
 
