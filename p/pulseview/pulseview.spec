@@ -1,6 +1,6 @@
 Name: pulseview
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -43,6 +43,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_man1dir/pulseview.1*
 
 %changelog
+* Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt2
+- fixed build with recent Qt5
+
 * Wed Jul 15 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt1
 - 0.4.2 released
 
