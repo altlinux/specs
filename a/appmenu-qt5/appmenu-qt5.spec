@@ -2,7 +2,7 @@
 %define rname appmenu-qt5
 Name: appmenu-qt5
 Version: 0.3.1
-Release: alt0.4
+Release: alt0.5
 
 Group: Graphical desktop/Other
 Summary: Global application menu to Qt
@@ -26,6 +26,8 @@ This package allows Qt to export its menus over DBus.
 %setup -qn %rname-%version
 %patch1 -p1
 
+echo "load(qt_build_config)" >>.qmake.conf
+
 %build
 %qmake_qt5
 %make_build
@@ -38,6 +40,9 @@ This package allows Qt to export its menus over DBus.
 %_qt5_plugindir/platformthemes/libappmenu-qt5.so
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.5
+- fix compile wit Qt 5.15
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.4
 - don't use ubt macro
 
@@ -46,7 +51,7 @@ This package allows Qt to export its menus over DBus.
 
 * Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.2
 
-* Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.2%ubt
+* Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.2
 
 * Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.1
 - update to 0.3.1 20170216
