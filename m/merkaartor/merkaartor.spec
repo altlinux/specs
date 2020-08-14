@@ -2,7 +2,7 @@
 
 Name: merkaartor
 Version: 0.18.4
-Release: alt1
+Release: alt2
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -12,6 +12,7 @@ Url: https://github.com/openstreetmap/merkaartor
 # https://github.com/openstreetmap/merkaartor.git
 Source: %name-%version.tar
 Patch1: %name-0.18.3-fedora-no-git-version.patch
+Patch2: %name-%version-upstream-qt5-compat.patch
 
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
@@ -27,6 +28,7 @@ editing environment for free geographical data.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # remove bundled libraries
 rm -rf 3rdparty
@@ -35,8 +37,7 @@ rm -rf 3rdparty
 %add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %add_optflags -I%_includedir/qt5/QtSolutions
 
-#lupdate-qt5 Merkaartor.pro
-lrelease-qt5 Merkaartor.pro
+lrelease-pro-qt5 Merkaartor.pro
 qmake-qt5 \
 	CONFIG+=release CONFIG+=force_debug_info \
 	PREFIX=%_prefix \
@@ -60,6 +61,9 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.4-alt2
+- Fixed build with qt-5.15.0.
+
 * Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.4-alt1
 - Updated to upstream version 0.18.4.
 
