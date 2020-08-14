@@ -39,7 +39,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 4.0.3.0.78.git8bf37e96e
+Version: 4.0.4
 Release: alt1
 
 Summary: Linux Containers
@@ -64,7 +64,7 @@ Requires: lxc-core lxc-net lxc-templates
 
 # Automatically added by buildreq on Tue Aug 04 2020
 # optimized out: docbook-dtds glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-parent pkg-config python-modules python2-base python3 python3-base sh4 xml-common xsltproc
-BuildRequires: docbook2X libcap-devel libpam-devel libseccomp-devel libselinux-devel python3-dev
+BuildRequires: docbook2X libcap-devel libcap-devel-static libpam-devel libseccomp-devel libselinux-devel python3-dev
 
 %description
 Containers are insulated areas inside a system, which have their own namespace
@@ -206,6 +206,8 @@ mkdir -p %buildroot%_localstatedir/lxc
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
 install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
 
+rm %buildroot%_datadir/lxc/lxc-patch.py
+
 %post core
 if [ $1 -eq 1 ]; then
 	/sbin/chkconfig --add lxc ||:
@@ -243,6 +245,7 @@ groupadd -r -f vmusers ||:
 %config(noreplace) %_sysconfdir/lxc/*
 %config(noreplace) %_sysconfdir/sysconfig/lxc*
 
+%dir %_datadir/bash-completion/completions
 %_datadir/bash-completion/completions/lxc
 
 %_bindir/lxc-*
@@ -256,6 +259,8 @@ groupadd -r -f vmusers ||:
 %_man5dir/lxc*
 %_man7dir/lxc*
 
+%dir %_mandir/ja
+%dir %_mandir/ko
 %_mandir/ja/*
 %_mandir/ko/*
 
@@ -297,8 +302,7 @@ groupadd -r -f vmusers ||:
 %_datadir/lxc/lxc.functions
 
 %_sbindir/init.lxc
-# ALT#37718
-#_sbindir/init.lxc.static
+%_sbindir/init.lxc.static
 %_localstatedir/lxc
 
 %dir %_datadir/lxc
@@ -317,6 +321,11 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Sun Aug 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.4-alt1
+- Updated to lxc-4.0.4.
+- lxc-core: Packed missing directories.
+- lxc-runtime: Built and packed init.lxc.static.
+
 * Tue Aug 04 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.3.0.78.git8bf37e96e-alt1
 - Updated to lxc-4.0.3-78-g8bf37e96e.
 - Split lxc package to lxc-core, lxc-net and lxc-templates.
