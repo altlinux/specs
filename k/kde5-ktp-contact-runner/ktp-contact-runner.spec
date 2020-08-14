@@ -1,8 +1,8 @@
 %define rname ktp-contact-runner
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,12 @@ KF5 library
 #%_K5lib/libktp-contact-runner.so.*
 
 %changelog
+* Thu Aug 13 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
+* Mon Apr 27 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.0-alt1
+- new version
+
 * Wed Apr 01 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - turn off krunner plugin by default
 

@@ -1,9 +1,9 @@
 %define rname kaccounts-integration
-%define sover 1
+%define sover 2
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init altplace
 
@@ -88,12 +88,15 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5lib/libkaccounts.so.%sover
 %_K5lib/libkaccounts.so.*
 %_K5plug/kcms/*accounts.so
-%_K5plug/kf5/kded/accounts.so
+%_K5plug/kf5/kded/kded_accounts.so
 %_K5qml/org/kde/kaccounts/
 %_K5srv/*_kaccounts.desktop
 %_K5data/kpackage/kcms/kcm_kaccounts/
 
 %changelog
+* Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 
