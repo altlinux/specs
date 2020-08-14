@@ -1,5 +1,5 @@
 Name: libliri
-Version: 0.0.20190924
+Version: 0.0.20200312
 Release: alt1
 
 Summary: Libraries for Liri apps
@@ -58,5 +58,8 @@ this package contains development part of %name
 %_pkgconfigdir/Liri*.pc
 
 %changelog
+* Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200312-alt1
+- updated from git.0943d3b
+
 * Mon Oct 07 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20190924-alt1
 - initial
