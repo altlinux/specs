@@ -1,6 +1,6 @@
 Name: mate-panel
-Version: 1.24.0
-Release: alt2
+Version: 1.24.1
+Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
 License: GPLv2+
@@ -85,6 +85,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.24.1-alt1
+- 1.24.1
+
 * Wed Mar 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.24.0-alt2
 - enable Wayland support
 

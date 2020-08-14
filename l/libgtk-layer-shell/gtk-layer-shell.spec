@@ -1,7 +1,7 @@
 %define rname gtk-layer-shell
 
 Name: lib%rname
-Version: 0.1.0
+Version: 0.3.0
 Release: alt1
 Summary: Library to create components for Wayland using the Layer Shell
 License: MIT
@@ -12,7 +12,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: meson gobject-introspection-devel libgtk+3-devel libgtk+3-gir-devel wayland-devel libwayland-client-devel
+BuildRequires: cmake meson gobject-introspection-devel libgtk+3-devel libgtk+3-gir-devel wayland-devel wayland-protocols libwayland-client-devel
 
 %description
 A library to write GTK applications that use Layer Shell. Layer Shell is a
@@ -42,7 +42,7 @@ Development files for %rname
 %meson_install
 
 %files
-%doc COPYING README.md
+%doc README.md
 %_libdir/*.so.*
 %_libdir/girepository-1.0/GtkLayerShell-*.typelib
 
@@ -53,6 +53,9 @@ Development files for %rname
 %_datadir/gir-1.0/GtkLayerShell-*.gir
 
 %changelog
+* Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.3.0-alt1
+- 0.3.0
+
 * Wed Mar 04 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.1.0-alt1
 - initial release
 

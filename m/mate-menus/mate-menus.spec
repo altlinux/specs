@@ -1,5 +1,5 @@
 Name: mate-menus
-Version: 1.24.0
+Version: 1.24.1
 Release: alt1
 Epoch: 1
 Summary: Displays menus for MATE Desktop
@@ -54,7 +54,7 @@ Development files for mate-menus
 %_sysconfdir/xdg/menus/mate-preferences-categories.menu
 %_sysconfdir/xdg/menus/mate-applications.menu
 %_sysconfdir/xdg/menus/mate-settings.menu
-%_datadir/mate-menus
+#_datadir/mate-menus
 %_datadir/mate/desktop-directories
 
 %files -n libmate-menus
@@ -68,6 +68,9 @@ Development files for mate-menus
 %_datadir/gir-1.0/MateMenu-2.0.gir
 
 %changelog
+* Fri Aug 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
+- 1.24.1
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
