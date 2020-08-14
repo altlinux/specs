@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -19,9 +19,6 @@ Requires: libgrantlee_templates5
 
 Source: %rname-%version.tar
 
-Patch1: %rname-alt-hide-group-menu-without-children.patch
-Patch2: %rname-alt-hide-scrollgroup-menu-without-children.patch
-Patch3: %rname-alt-hide-top-level-menu-without-children.patch
 Patch4: %rname-alt-contents-tree-synchronization.patch
 Patch5: %rname-alt-hide-links-on-contents-screen.patch
 
@@ -42,10 +39,7 @@ KDE help center.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+#%patch4 -p2
 %patch5 -p2
 
 %build
@@ -73,6 +67,9 @@ KDE help center.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Tue Jun 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 19.12.3-alt2
 - Hidden links to empty pages on contents screen.
 

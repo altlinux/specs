@@ -1,11 +1,11 @@
 %define rname kwave
 
-%define sover 19
+%define sover 20
 %define libkwavegui libkwavegui%sover
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -15,7 +15,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: KDEBUG-394358.patch
 Patch2: alt-opus-pkgconvig-wrong-version.patch
 
 # Automatically added by buildreq on Mon Apr 03 2017 (-bi)
@@ -64,7 +63,6 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch2 -p1
 
 %build
@@ -102,6 +100,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

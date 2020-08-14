@@ -1,11 +1,11 @@
 %define rname ark
 
-%define sover 19
+%define sover 20
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: Archiving/Compression
@@ -69,13 +69,13 @@ KF5 library
 
 %install
 %K5install
-mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
+#mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
 %dir %_K5plug/kf5/kfileitemaction/
-%_K5xdgmime/kerfuffle5.xml
+#%_K5xdgmime/kerfuffle5.xml
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -105,6 +105,9 @@ mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Wed Aug 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - security (fixes: CVE-2020-16116)
 

@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -74,10 +74,11 @@ KF5 library
 %files common -f %name.lang
 %doc COPYING*
 %_K5icon/*/*/actions/document-share.*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5bin/*
-%_K5plug/*.so
+%_K5plug//kf5/parts/gvpart.so
 %_K5xdgapp/*.desktop
 %_K5data/gwenview/
 %_K5data/solid/actions/gwenview*.desktop
@@ -101,6 +102,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

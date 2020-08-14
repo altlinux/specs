@@ -1,7 +1,7 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -65,6 +65,7 @@ developing applications that use %name.
 %doc COPYING*
 %_K5bin/spectacle
 %_K5conf_bin/*spectacle*
+%_K5conf_up/*spectacle*
 %_K5xdgapp/org.kde.spectacle.desktop
 %_K5icon/hicolor/*/apps/spectacle.*
 %_K5notif/spectacle.notifyrc
@@ -77,6 +78,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

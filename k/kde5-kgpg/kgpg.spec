@@ -1,8 +1,8 @@
 %define rname kgpg
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init
 
 Group: File tools
@@ -58,6 +58,9 @@ Graphical GPG frontend.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Mon Mar 23 2020 Oleg Solovyov <mcpain@altlinux.org> 19.12.3-alt2
 - remove unneeded "Details >>" button in signature check dialog
 - fix crash when revoking keys after deletion
