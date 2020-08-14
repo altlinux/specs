@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
 
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -169,16 +169,6 @@ Conflicts: LibreOffice-integrated
 Requires: %name-common = %EVR
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
-
-%package gtk2
-Summary: GTK2 Extensions for %name
-Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
-Obsoletes: LibreOffice4-gnome
-Conflicts: LibreOffice-gnome
-%description gtk2
-GTK2 extensions for %name
 
 %package gtk3
 Summary: GTK3 Extensions for %name
@@ -479,9 +469,6 @@ for l in %with_lang; do
 	cat %buildroot/gid_*_$ll | sort -u > $l.lang
 done
 
-# Create gnome plugin list
-find %buildroot%lodir -name "*_gtk[^3]*" | sed 's@^%buildroot@@' > files.gtk2
-
 # Create gtk3 plugin list
 find %buildroot%lodir -name "*_gtk3*" ! -name "*_kde5*" | sed 's@^%buildroot@@' > files.gtk3
 
@@ -492,7 +479,7 @@ find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 find %buildroot%lodir -name "*_kde5*" -o -name "libkde5*" | sed 's@^%buildroot@@' > files.kde5
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk2 files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 # Return Oxygen icon theme from LibreOffice 5.3 (see https://bugs.documentfoundation.org/show_bug.cgi?id=110353 for details)
 install -D %SOURCE400 %buildroot%lodir/share/config/images_oxygen.zip
@@ -602,8 +589,6 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_iconsdir/*/*/apps/*
 %exclude %_iconsdir/*/*/apps/libreoffice-*.*g
 
-%files gtk2 -f files.gtk2
-
 %files gtk3 -f files.gtk3
 
 %if_enabled qt5
@@ -644,6 +629,9 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Aug 14 2020 Andrey Cherepanov <cas@altlinux.org> 6.4.5.2-alt2
+- Remove deprecated package LibreOffice-still-gtk2.
+
 * Fri Aug 07 2020 Andrey Cherepanov <cas@altlinux.org> 6.4.5.2-alt1
 - New version 6.4.5.2 (Still).
 - Fixed:
