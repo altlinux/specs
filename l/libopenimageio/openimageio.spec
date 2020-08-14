@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.1.18.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -18,6 +18,8 @@ URL:            https://sites.google.com/site/openimageio/home
 
 # https://github.com/OpenImageIO/oiio.git
 Source0:        %name-%version.tar
+
+Patch2000:      openimageio-alt-e2k.patch
 
 # Images for test suite
 #Source1:        oiio-images.tar.gz
@@ -120,6 +122,9 @@ Development files for package %name
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # Remove bundled pugixml
 rm -f src/include/OpenImageIO/pugixml.hpp \
@@ -205,6 +210,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Aug 13 2020 Michael Shigorin <mike@altlinux.org> 2.1.18.1-alt1.1
+- E2K: fix build of this library's clients
+
 * Wed Aug 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.18.1-alt1
 - Updated to upstream version 2.1.18.1.
 
