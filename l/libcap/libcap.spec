@@ -1,6 +1,6 @@
 Name: libcap
 Version: 2.27.0.2.ac1e
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
@@ -22,22 +22,27 @@ BuildRequires(pre): libpam-devel
 %package utils
 Summary: Utilities for getting and setting POSIX.1e capabilities
 Group: System/Base
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %package devel
 Summary: Development environment for libcap
 Group: Development/C
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
+
+%package devel-static
+Summary: Static libcap library
+Group: Development/C
+Requires: %name-devel = %EVR
 
 %package -n %pam_name
 Summary: PAM module for enforcing inheritable capability sets
 Group: System/Base
-Provides: pam_cap = %epoch:%version-%release
+Provides: pam_cap = %EVR
 Obsoletes: pam_cap < %epoch:%version
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description
-This is a library for getting and setting POSIX.1e
+This is a shared library for getting and setting POSIX.1e
 (formerly POSIX 6) draft 15 capabilities.
 
 %description utils
@@ -49,6 +54,10 @@ The development library, header files, and documentation
 for building applications dealing with POSIX.1e
 (formerly POSIX 6) draft 15 capabilities.
 
+%description devel-static
+This is a static library for getting and setting POSIX.1e
+(formerly POSIX 6) draft 15 capabilities.
+
 %description -n %pam_name
 The purpose of this PAM module is to enforce inheritable capability sets
 for users specified in configuration file.
@@ -58,10 +67,10 @@ for users specified in configuration file.
 
 %build
 %make_build CC=%__cc CFLAGS="%optflags" \
-	lib=%_lib DEBUG= INDENT= STALIBNAME=
+	lib=%_lib DEBUG= INDENT=
 
 %install
-%makeinstall_std lib=%_lib STALIBNAME= RAISE_SETFCAP=no
+%makeinstall_std lib=%_lib RAISE_SETFCAP=no
 install -pDm600 pam_cap/capability.conf %buildroot/etc/security/capability.conf
 
 # Relocate development library from /%_lib/ to %_libdir/.
@@ -69,9 +78,13 @@ symlink="%buildroot/%_lib/libcap.so"
 soname=$(readlink "$symlink")
 rm "$symlink"
 ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so"
+mv %buildroot/%_lib/libcap.a %buildroot%_libdir/
 
 # For backwards compatibility.
 ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 /%_lib/*.so.*
@@ -89,11 +102,17 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_man3dir/*
 %doc CHANGELOG License README *.txt pgp.keys.asc doc/capability.notes progs/*.c
 
+%files devel-static
+%_libdir/*.a
+
 %files -n %pam_name
 %config(noreplace) /etc/security/capability.conf
 %_pam_modules_dir/*
 
 %changelog
+* Wed Aug 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt3
+- Build and package static library (closes: #37718).
+
 * Sun May 31 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt2
 - Fixed errno value set by cap_*_bound and cap_*_ambient functions.
 
