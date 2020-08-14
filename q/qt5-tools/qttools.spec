@@ -1,4 +1,5 @@
 
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
 %def_enable bootstrap
 %def_disable qtconfig
@@ -7,7 +8,7 @@
 
 Name: qt5-tools
 Version: 5.15.0
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -27,10 +28,9 @@ Source22: linguist.desktop
 Source23: qdbusviewer.desktop
 Source24: qtconfig.desktop
 
-# FC
-Patch1: qttools-opensource-src-5.13.2-runqttools-with-qt5-suffix.patch
 # ALT
 Patch10: alt-build-qtconfig.patch
+Patch11: alt-runqttools-with-qt5-suffix.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
@@ -159,10 +159,10 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
 %if_enabled qtconfig
 %patch10 -p1
 %endif
+%patch11 -p1
 
 %build
 # needed for documentation generation
@@ -354,6 +354,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- fix run Qt tools
+
 * Wed Jul 08 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 
