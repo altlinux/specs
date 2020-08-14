@@ -1,6 +1,6 @@
 Name: liri-shell
 Version: 0.9.0
-Release: alt6
+Release: alt7
 
 Summary: Responsive shell for the Liri desktop.
 License: GPLv3
@@ -24,6 +24,7 @@ BuildRequires: pkgconfig(Liri1PlatformHeaders)
 BuildRequires: pkgconfig(polkit-qt5-1)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: qml(QtGraphicalEffects)
@@ -54,6 +55,9 @@ BuildRequires: qt5-tools-devel
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt7
+- add explicit wayland-client buildreq
+
 * Mon Aug 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt6
 - pipewire version bump
 

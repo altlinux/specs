@@ -1,6 +1,6 @@
 Name: fluid
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Library for QtQuick apps with Material Design
 License: MPL-2.0
@@ -52,5 +52,8 @@ This package contains demo application.
 %_iconsdir/*/*/*/io.liri.Fluid.Demo.*
 
 %changelog
+* Fri Aug 14 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt2
+- updated from git.df09088
+
 * Thu Oct 03 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
 - initial
