@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 0.6.13
+Version: 0.7.1
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -18,11 +18,12 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/jonaski/strawberry/archive/%version/%name-%version.tar.gz
 
+BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
 BuildRequires: clang10.0-devel
 %endif
 BuildRequires: boost-program_options-devel ccache gcc-c++ gettext-tools glib2-devel gst-plugins1.0-devel gstreamer1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libfftw3-devel libgio-devel libgnutls-devel libgpod-devel libimobiledevice-devel libmtp-devel libplist-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libusbmuxd-devel libvlc-devel libxine2-devel qt5-phonon-devel qt5-x11extras-devel
-BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler
+BuildRequires: cmake rpm-macros-cmake extra-cmake-modules desktop-file-utils libappstream-glib qt5-tools-devel protobuf-compiler libusb-devel
 %ifnarch s390 s390x
 BuildRequires: libgpod-devel
 %endif
@@ -79,13 +80,14 @@ export AR="ar"
 %endif
 
 %cmake \
+  -GNinja \
   -DBUILD_WERROR=OFF \
   -DUSE_SYSTEM_TAGLIB=ON
 
-%cmake_build
+%ninja_build -C BUILD
 
 %install
-%cmakeinstall_std
+%ninja_install -C BUILD
 
 %check
 desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberry.desktop
@@ -103,6 +105,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Sat Aug 15 2020 Leontiy Volodin <lvol@altlinux.org> 0.7.1-alt1
+- New version (0.7.1) with rpmgs script.
+- Built with ninja instead make.
+
 * Tue Jul 14 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.13-alt1
 - New version (0.6.13) with rpmgs script.
 
