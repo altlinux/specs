@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.45.1
+Version: 1.45.2
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -16,6 +16,8 @@ Patch1: rust-gdb.patch
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
+
+ExcludeArch: armh
 
 BuildPreReq: /proc
 
@@ -279,7 +281,7 @@ rustc = "%rustc"
 python = "python3"
 submodules = false
 docs = true
-verbose = 0
+verbose = 2
 vendor = true
 extended = true
 tools = ["cargo", "rls", "clippy", "rustfmt", "analysis", "src"]
@@ -307,19 +309,17 @@ codegen-units = 0
 [llvm]
 ninja = true
 use-libcxx = false
-link-shared = true
-EOF
-
 %if_without bundled_llvm
-cat >> config.toml <<EOF
+link-shared = true
+
 [target.%rust_triple]
 llvm-config = "/usr/bin/llvm-config"
-EOF
 %endif
+EOF
 
 . ./env.sh
 
-python3 x.py build
+python3 x.py build --verbose
 python3 x.py doc
 
 
@@ -430,6 +430,10 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Tue Aug 11 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.45.2-alt1
+- New version (1.45.2).
+- ExcludeArch armh.
+
 * Mon Aug 03 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.45.1-alt1
 - New version (1.45.1).
 - Use python3.
