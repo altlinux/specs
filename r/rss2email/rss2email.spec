@@ -1,28 +1,19 @@
 Name: rss2email
-Version: 2.71
+Version: 3.12.1
 Release: alt1
-Summary: Receive RSS or Atom feeds by email
 
+Summary: Receive RSS or Atom feeds by email
+License: GPL-2.0-only or GPL-3.0-only
 Group: Networking/News
-License: GPLv2+
-Url: http://rss2email.infogami.com/
+Url: https://github.com/rss2email/rss2email
 BuildArch: noarch
 
-# http://www.allthingsrss.com/rss2email/%name-%version.tar.gz
-Source0: %name-%version.tar
-Source1: config.py.template
-Source2: r2e
-Source3: r2e.1
+# git://git.altlinux.org/gears/r/rss2email.git
+Source: %name-%version-%release.tar
 
-Patch3: 0003-Setup-the-correct-version-number-in-rss2email.py.patch
-Patch4: 0004-convert-tabs-to-spaces.patch
-Patch5: 0005-Use-a-simpler-default-email-address.patch
-Patch6: 0006-Prefer-utf8-in-CHARSET_LIST.patch
-Patch7: 0007-Fix-email-header-injection.patch
-Patch8: 0008-Fix-encoding-of-From-and-To-headers.patch
-Patch10: rss2email-rh-config-location.patch
-
-BuildRequires: python-module-feedparser python-module-html2text
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-feedparser
+BuildRequires: python3-module-html2text
 
 %description
 rss2email is a simple program which you can run in your crontab.
@@ -30,31 +21,38 @@ It watches RSS (or Atom) feeds and sends you a nicely formatted
 email message for each new item.
 
 %prep
-%setup
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch10 -p1
-sed -i 's/\r//' CHANGELOG readme.html
+%setup -n %name-%version-%release
+
+%build
+%python3_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_man1dir,%_datadir/%name}
-install -pm755 rss2email.py %buildroot%_datadir/%name/
-install -pm644 %_sourcedir/config.py.template %buildroot%_datadir/%name/
-install -pm755 %_sourcedir/r2e %buildroot%_bindir/
-install -pm644 %_sourcedir/r2e.1 %buildroot%_man1dir/
-%add_python_compile_include %_datadir/%name
+%python3_install
+install -pm755 r2e-migrate %buildroot%_bindir/
+mkdir -p %buildroot%_man1dir
+install -pm644 r2e.1 r2e-migrate.1 %buildroot%_man1dir/
+
+%check
+PATH="$PATH:%buildroot%_bindir" PYTHONPATH=%buildroot%python3_sitelibdir \
+	%__python3 ./test/test.py
+
+%define _unpackaged_files_terminate_build 1
 
 %files
-%_bindir/*
-%_datadir/%name/
-%_man1dir/*
-%doc CHANGELOG readme.html
+%_bindir/r2e
+%_bindir/r2e-migrate
+%_man1dir/r2e.1*
+%_man1dir/r2e-migrate.1*
+%python3_sitelibdir/%{name}*
+%doc AUTHORS CHANGELOG README.rst README.migrate
 
 %changelog
+* Sun Aug 16 2020 Dmitry V. Levin <ldv@altlinux.org> 3.12.1-alt1
+- 2.71 -> 3.12.1.
+- Packaged r2e-migrate to help with migration from rss2email 2.x
+  to rss2email 3.x which introduced a new, incompatible format
+  for configuration and feed data.
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.71-alt1
 - Updated to 2.71.
 - Imported patches from Debian and Fedora.
