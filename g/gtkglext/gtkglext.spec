@@ -1,6 +1,6 @@
 Name: gtkglext
 Version: 1.2.0
-Release: alt4
+Release: alt5
 
 Summary: An OpenGL extention to GTK2
 
@@ -16,8 +16,8 @@ Source: %name-%version.tar
 Patch0: gtkglext-support-pango.patch
 Patch1: gtkglext-1.2.0-newer-gtk.patch
 Patch2: gtkglext-1.2.0-alt-DSO.patch
-Patch3: gtkglext-1.2.0-alt-pangox.patch
-Patch4: gtkglext-fedora-GCC-8-fixes.patch
+Patch3: gtkglext-fedora-GCC-8-fixes.patch
+Patch4: gtkglext-1.2.0-fedora-no-pangox.patch
 
 %define gtk_ver 2.4.0
 %define gtk_doc_ver 1.1
@@ -29,7 +29,6 @@ BuildPreReq: gtk-doc >= %gtk_doc_ver
 # Automatically added by buildreq on Wed Dec 08 2010
 BuildRequires: gtk-doc imake libGLU-devel libXmu-devel libgtk+2-devel
 BuildPreReq: xorg-cf-files libGL-devel libXext-devel gcc-c++
-BuildPreReq: pkgconfig(pangox)
 
 %description
 GtkGLExt is an OpenGL extension to GTK2.
@@ -71,7 +70,7 @@ statically linked against GtkGLExt.
 %patch0 -p0
 %patch1 -p2
 %patch2 -p2
-%patch3 -p2
+%patch3 -p1
 %patch4 -p1
 
 %build
@@ -102,6 +101,10 @@ rm -rf %buildroot%_datadir/gtk-doc/html
 %endif
 
 %changelog
+* Sun Aug 16 2020 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt5
+- NMU.
+- Teared the libpangox-compat support off to fix build (closes: #38813).
+
 * Mon May 14 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt4
 - NMU: fixed build with new toolchain.
 
