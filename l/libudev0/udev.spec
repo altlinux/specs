@@ -3,17 +3,18 @@
 
 Name: libudev0
 Version: 181
-Release: alt7
+Release: alt8
+
 Summary: Shared library to access udev device information
 License: LGPLv2.1+
 Group: System/Legacy libraries
+
 Url: http://kernel.org/pub/linux/utils/kernel/hotplug/
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 Provides: libudev = %version-%release
 Obsoletes: libudev < %version-%release
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires: glib2-devel gobject-introspection-devel gperf gtk-doc pciids usbids
 BuildRequires: libacl-devel libusb-compat-devel usbutils libselinux-devel
@@ -34,7 +35,10 @@ This package provides shared library to access udev device information
 	--enable-udev_acl \
 	--enable-rule_generator \
 	--enable-introspection \
-	--with-selinux \
+	%{subst_with selinux} \
+%if_with bootstrap
+	--disable-gtk-doc \
+%endif
 	--disable-gudev \
 	--disable-introspection \
 	--sbindir=/sbin \
@@ -54,8 +58,14 @@ This package provides shared library to access udev device information
 /%_lib/libudev.so.*
 
 %changelog
+* Sun Aug 16 2020 Michael Shigorin <mike@altlinux.org> 181-alt8
+- fixed ftbfs (sys/sysmacros.h)
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 181-alt7
 - Fixed build.
+
+* Wed Feb 03 2016 Michael Shigorin <mike@altlinux.org> 181-alt6.1
+- BOOTSTRAP: define BTN_TRIGGER_HAPPY, disable selinux/gtk-doc
 
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 181-alt6
 - build to sisyphus
