@@ -1,41 +1,40 @@
 Name: genext2fs
-Version: 1.4.1
-Release: alt2
+Version: 1.5.0
+Release: alt1
 Summary: genext2fs creates a virtual ext2 file system in a single file
-License: GPL
+License: GPL-2.0
 Group: File tools
-URL: http://%name.sourceforge.net/
+URL: https://github.com/bestouff/genext2fs
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %description
 genext2fs generates an ext2 filesystem as a normal (non-root) user. It does not
 require you to mount the image file to copy files on it, nor does it require that
 you become the superuser to make device nodes.
 
-
 %prep
-%setup -q
-%patch -p1
-
+%setup
 
 %build
-./autogen.sh
+%autoreconf
 %configure
 %make_build
-
 
 %install
 %makeinstall_std
 
-
 %files
-%doc AUTHORS README TODO device_table.txt
+%doc AUTHORS README.md TODO device_table.txt
 %_bindir/*
 %_man8dir/*
 
-
 %changelog
+* Mon Aug 10 2020 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
+- 1.5.0
+- Fix License tag
+- Update URL tag
+- Cleaned up spec
+
 * Sat Aug 10 2013 Led <led@altlinux.ru> 1.4.1-alt2
 - cleaned up spec
 - updates and fixes of upstream's SCM
