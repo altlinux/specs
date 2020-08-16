@@ -7,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 Group: Publishing
 Summary: A program for printing sheet music
 License: GPLv3
@@ -15,6 +15,7 @@ Url: http://www.lilypond.org
 
 Source: %name-%version.tar
 Source1: russian-lirycs-test.ly
+Patch1: lilypond-2.20.0-fix-CVE-2020-17353.patch
 
 BuildRequires(pre): rpm-build-vim
 BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile18-devel
@@ -63,6 +64,7 @@ vim-plugin-%name provides syntax coloring, completion and compilation.
 
 %prep
 %setup
+%patch1 -p1
 subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' config.make.in
 
 %build
@@ -124,6 +126,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Sun Aug 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.20.0-alt3
+- Fixes CVE-2020-17353.
+
 * Sun Aug 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.20.0-alt2
 - Added vim-plugin-lilypond subpackage.
 
