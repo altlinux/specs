@@ -2,12 +2,12 @@
 
 Name: libleptonica
 Version: 1.73
-Release: alt2
+Release: alt3
 
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
 
-License: Leptonica license (BSD-like)
+License: BSD-2-Clause
 Group: System/Libraries
 Url: http://www.leptonica.com
 
@@ -137,6 +137,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Mon Aug 17 2020 Pavel Vasenkov <pav@altlinux.org> 1.73-alt3
+- NMU: correct license information 
+
 * Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.73-alt2
 - pack lept.pc (ALT bug #32432)
 
