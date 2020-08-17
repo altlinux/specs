@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 43dd68a58acdbf12f4809665432d0540af0cb123
+%global commit f7c1a59de1be8bac1f59da247f17e51d0bb0053c
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2020-06-22T03-12-50Z
-%define version 2020.06.22
+%global tag RELEASE.2020-08-16T18-39-38Z
+%define version 2020.08.16
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -99,6 +99,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Mon Aug 17 2020 Alexey Shabalin <shaba@altlinux.org> 2020.08.16-alt1
+- Update to RELEASE.2020-08-16T18-39-38Z
+
 * Sun Jun 28 2020 Alexey Shabalin <shaba@altlinux.org> 2020.06.22-alt1
 - Update to RELEASE.2020-06-22T03-12-50Z
 
