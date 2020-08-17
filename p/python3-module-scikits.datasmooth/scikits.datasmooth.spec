@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.61
-Release: alt3
+Release: alt4
 
 Summary: Scikits data smoothing package
 License: BSD
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-tools-2to3 python3-module-numpy
 BuildRequires: python3-module-scipy
+BuildRequires: python3-module-numpy-testing
 
 %py3_provides %oname
 %py3_requires %mname numpy scipy cvxopt
@@ -50,6 +51,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Mon Aug 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.61-alt4
+- Build requires fixed.
+
 * Mon Dec 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.61-alt3
 - build for python2 disabled
 
