@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: neomutt
-Version: 20200807
+Version: 20200814
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -77,6 +77,9 @@ make -s test
 %docdir
 
 %changelog
+* Mon Aug 17 2020 Vitaly Chikunov <vt@altlinux.org> 20200814-alt1
+- Update to 20200814.
+
 * Tue Aug 11 2020 Vitaly Chikunov <vt@altlinux.org> 20200807-alt1
 - Update to 20200807.
 
