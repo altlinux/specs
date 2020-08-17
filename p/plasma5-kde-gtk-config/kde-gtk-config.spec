@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.19.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -13,6 +13,7 @@ License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-defaults.patch
+Patch2: alt-def-font.patch
 
 # Automatically added by buildreq on Tue Apr 07 2015 (-bi)
 # optimized out: at-spi2-atk cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel kf5-attica-devel libEGL-devel libGL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xorg-xproto-devel
@@ -64,6 +65,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
+%patch2 -p1
 
 %build
 ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
@@ -89,6 +91,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_K5data/kcm-gtk-module/
 
 %changelog
+* Mon Aug 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt2
+- fix default font
+
 * Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt1
 - new version
 
