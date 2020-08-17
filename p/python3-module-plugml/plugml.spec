@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.4
-Release: alt2
+Release: alt3
 
 Summary: Easy-to-use and highly modular machine learning framework
 License: ASLv2.0
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/plugml/
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: fix-deprecated-import.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-nltk python3-module-numpy
@@ -28,6 +29,7 @@ scikit-learn with postgresql data bindings.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python3_build_debug
@@ -44,6 +46,9 @@ python3 setup.py test
 
 
 %changelog
+* Mon Aug 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.4-alt3
+- Deprecated import fixed.
+
 * Wed Nov 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.4-alt2
 - python2 disabled
 
