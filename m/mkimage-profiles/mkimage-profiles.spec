@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Aug 17 2020 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- Revert commit for support multiple kernel in iso image.
+
 * Mon Aug 17 2020 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New official maintainer antohami@ (blessed by mike@)
 - Added grub config file generator for iso images
