@@ -1,21 +1,23 @@
-%define git_ver 9300
-%define git_commit 341fdf7eb14763fd06e2eab9a4b2b8f1adf9fdbd
+%define git_ver 10597
+%define git_commit 6a9fe8e3c4a1a409e6e31d079640faa45797679c
 
-%define glslang_version 7.13.3496
+%define glslang_commit bcf6a2430e99e8fc24f9f266e99316905e6d5134
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
-%define libusb_commit 7cfa00e9d723f10167b4d71bceebf2b4b2cbd70e
-%define yaml_cpp_commit eca9cfd64899525d0a61abb0553849676a0fe511
+%define libusb_version 1.0.23
+%define yaml_cpp_commit 6a211f0bc71920beef749e6c35d7d1bcc2447715
 %define xx_hash_version 0.6.5
-%define llvm_commit 2e038bff1082175b510a2e8336edf897af9b87a3
-%define cereal_version 1.2.0
-%define faudio_version 19.10
+%define llvm_commit f5679565d34863e2f5917f6bb6d3867760862a1e
+%define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
+%define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
+%define spirv_headers_version 1.5.3
+%define spirv_tools_commit 49ca250b44c633ba7cb8897002e62781a451421c
 
 Name: rpcs3
-Version: 0.0.8
-Release: alt5
+Version: 0.0.11
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -28,40 +30,43 @@ ExclusiveArch: x86_64
 
 # https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
-# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source1: glslang-%glslang_version.tar
+# https://github.com/KhronosGroup/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
+Source1: glslang-%glslang_commit.tar
 # https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
 Source2: asmjit-%asmjit_commit.tar
 # https://github.com/zeux/pugixml/archive/%pugixml_commit/pugixml-%pugixml_commit.tar.gz
 Source3: pugixml-%pugixml_commit.tar
 # https://github.com/RPCS3/hidapi/archive/%hidapi_commit/hidapi-%hidapi_commit.tar.gz
 Source4: hidapi-%hidapi_commit.tar
-# https://github.com/libusb/libusb/archive/%libusb_commit/libusb-%libusb_commit.tar.gz
-Source5: libusb-%libusb_commit.tar
+# https://github.com/libusb/libusb/archive/v%libusb_version/libusb-%libusb_version.tar.gz
+Source5: libusb-%libusb_version.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source6: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/Cyan4973/xxHash/archive/v%xx_hash_version/xxHash-%xx_hash_version.tar.gz
 Source7: xxHash-%xx_hash_version.tar
-# https://github.com/RPCS3/llvm/archive/%llvm_commit/llvm-%llvm_commit.tar.gz
-Source8: llvm-%llvm_commit.tar
-# https://github.com/RPCS3/cereal/archive/v%cereal_version/cereal-%cereal_version.tar.gz
-Source9: cereal-%cereal_version.tar
-# https://github.com/FNA-XNA/FAudio/archive/%faudio_version/FAudio-%faudio_version.tar.gz
-Source10: FAudio-%faudio_version.tar
+# https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
+Source8: llvm-mirror-%llvm_commit.tar
+# https://github.com/RPCS3/cereal/archive/%cereal_commit/cereal-%cereal_commit.tar.gz
+Source9: cereal-%cereal_commit.tar
+# https://github.com/FNA-XNA/FAudio/archive/%faudio_commit/FAudio-%faudio_commit.tar.gz
+Source10: FAudio-%faudio_commit.tar
 # https://github.com/tcbrindle/span/archive/%span_commit/span-%span_commit.tar.gz
 Source11: span-%span_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
+Source12: SPIRV-Headers-%spirv_headers_version.tar
+# https://github.com/KhronosGroup/SPIRV-Tools/archive/%spirv_tools_commit/SPIRV-Tools-%spirv_tools_commit.tar.gz
+Source13: SPIRV-Tools-%spirv_tools_commit.tar
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-precompiled-headers.patch
-Patch2: %name-alt-vk-dynamic-state-range-size.patch
 
-BuildRequires: cmake
+BuildRequires: cmake >= 3.14.1
 BuildRequires: cvs
 BuildRequires: git-core
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
+BuildRequires: libcurl-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
 BuildRequires: libopenal-devel
@@ -76,7 +81,7 @@ BuildRequires: libxml2-devel
 BuildRequires: ocaml-findlib
 BuildRequires: python3-dev
 BuildRequires: python3-module-yaml
-BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-base-devel >= 5.14.2
 BuildRequires: subversion
 
 BuildPreReq: libswresample-devel
@@ -86,23 +91,23 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
-%__mv -Tf ../glslang-%glslang_version Vulkan/glslang
+%__mv -Tf ../glslang-%glslang_commit Vulkan/glslang
 %__mv -Tf ../asmjit-%asmjit_commit asmjit
 %__mv -Tf ../pugixml-%pugixml_commit 3rdparty/pugixml
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi
-%__mv -Tf ../libusb-%libusb_commit 3rdparty/libusb
+%__mv -Tf ../libusb-%libusb_version 3rdparty/libusb
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp
 %__mv -Tf ../xxHash-%xx_hash_version 3rdparty/xxHash
-%__mv -Tf ../llvm-%llvm_commit llvm
-%__mv -Tf ../cereal-%cereal_version 3rdparty/cereal
-%__mv -Tf ../FAudio-%faudio_version 3rdparty/FAudio
+%__mv -Tf ../llvm-mirror-%llvm_commit llvm
+%__mv -Tf ../cereal-%cereal_commit 3rdparty/cereal
+%__mv -Tf ../FAudio-%faudio_commit 3rdparty/FAudio
 %__mv -Tf ../span-%span_commit 3rdparty/span
+%__mv -Tf ../SPIRV-Headers-%spirv_headers_version Vulkan/spirv-headers
+%__mv -Tf ../SPIRV-Tools-%spirv_tools_commit Vulkan/spirv-tools
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -111,7 +116,8 @@ GIT_COMMIT=$(echo %git_commit)
 echo "// This is a generated file.
 
 #define RPCS3_GIT_VERSION \"$GIT_VERSION-${GIT_COMMIT:0:8}\"
-#define RPCS3_GIT_BRANCH \"HEAD\"
+#define RPCS3_GIT_BRANCH \"master\"
+#define RPCS3_GIT_FULL_BRANCH \"RPCS3/rpcs3/master\"
 
 // If you don't want this file to update/recompile, change to 1.
 #define RPCS3_GIT_VERSION_NO_UPDATE 1
@@ -130,7 +136,7 @@ cmake .. \
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
-	-DPYTHON_EXECUTABLE="%__python3" \
+	-DUSE_SYSTEM_CURL:BOOL=TRUE \
 	-Wno-dev
 popd
 
@@ -149,6 +155,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Aug 17 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11-alt1
+- Version 0.0.11
+
 * Sat Aug 01 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt5
 - Use precompiled headers
 
