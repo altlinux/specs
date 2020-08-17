@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        79.0
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -50,7 +50,7 @@ Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
 Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
 ### End Patches
 
-ExcludeArch: armh ppc64le
+ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -285,7 +285,7 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 %ifarch armh
 export CC="gcc"
 export CXX="g++"
-export MOZ_PARALLEL_BUILD=8
+export MOZ_PARALLEL_BUILD=24
 %else
 export CC="clang"
 export CXX="clang++"
@@ -485,6 +485,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Aug 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 79.0-alt2
+- rebuilt for armh
+
 * Thu Jul 30 2020 Alexey Gladkov <legion@altlinux.ru> 79.0-alt1
 - New release (79.0).
 - ExcludeArch armh ppc64le

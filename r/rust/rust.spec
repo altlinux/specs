@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.45.2
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -10,14 +10,17 @@ URL: http://www.rust-lang.org/
 
 # https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
 Source: %{name}c-src.tar
+Source5: https://static.rust-lang.org/dist/rust-1.44.0-armv7-unknown-linux-gnueabihf.tar.gz
 
 Patch1: rust-gdb.patch
 
+%ifarch armh
+%def_with bootstrap
+%else
 %def_without bootstrap
+%endif
 %def_without bundled_llvm
 %def_without debuginfo
-
-ExcludeArch: armh
 
 BuildPreReq: /proc
 
@@ -54,11 +57,11 @@ BuildRequires: rust rust-cargo
 %else
 
 %define r_ver 1.44.0
-Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
-Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
-Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
-Source5: https://static.rust-lang.org/dist/rust-%r_ver-armv7-unknown-linux-gnueabihf.tar.gz
-Source6: https://static.rust-lang.org/dist/rust-%r_ver-powerpc64le-unknown-linux-gnu.tar.gz
+#Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
+#Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
+#Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
+#Source5: https://static.rust-lang.org/dist/rust-%r_ver-armv7-unknown-linux-gnueabihf.tar.gz
+#Source6: https://static.rust-lang.org/dist/rust-%r_ver-powerpc64le-unknown-linux-gnu.tar.gz
 
 %ifarch %ix86
 %define r_src %SOURCE2
@@ -430,6 +433,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Mon Aug 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.45.2-alt2
+- rebuilt with bootstrap on armh
+
 * Tue Aug 11 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.45.2-alt1
 - New version (1.45.2).
 - ExcludeArch armh.
