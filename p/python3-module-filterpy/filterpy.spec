@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    1.1.0
-Release:    alt3
+Release:    alt4
 
 Summary:    Kalman filtering and optimal estimation library
 License:    MIT
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-numpydoc xvfb-run
 BuildRequires: python3-module-mock python3-module-pytest
 BuildRequires: python3-module-matplotlib python3-module-scipy
+BuildRequires: python3-module-numpy-testing
 
 
 %description
@@ -92,6 +93,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir xvfb-run py.test3 -vv
 
 
 %changelog
+* Mon Aug 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt4
+- Build requires fixed.
+
 * Fri Feb 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt3
 - Build for python2 disabled.
 
