@@ -1,10 +1,10 @@
 %define oname yarl
 
 Name: python-module-%oname
-Version: 1.3.0
+Version: 1.4.2
 Release: alt1
 Summary: Yet another URL library http://yarl.readthedocs.io
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Python
 Url: https://github.com/aio-libs/yarl
 
@@ -19,6 +19,7 @@ Group: Development/Python3
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-Cython
 
 %description -n python3-module-%oname
 The module provides handy URL class for url parsing and changing.
@@ -27,7 +28,8 @@ The module provides handy URL class for url parsing and changing.
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
+make yarl/_quoting.c
+%python3_build
 
 %install
 %python3_install
@@ -37,6 +39,9 @@ The module provides handy URL class for url parsing and changing.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 18 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
+- 1.4.2 released
+
 * Sun Apr 07 2019 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0
 - switch to git
