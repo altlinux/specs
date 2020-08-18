@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20200721
+Version: 20200818
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,6 +34,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Tue Aug 18 2020 Cronbuild Service <cronbuild@altlinux.org> 20200818-alt1
+- repocop cronbuild 20200818. At your service.
+
 * Tue Jul 21 2020 Cronbuild Service <cronbuild@altlinux.org> 20200721-alt1
 - repocop cronbuild 20200721. At your service.
 
