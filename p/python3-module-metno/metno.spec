@@ -1,5 +1,5 @@
 Name: python3-module-metno
-Version: 0.5.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Python library to talk to the met.no api
@@ -30,5 +30,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/PyMetno-%version-*-info
 
 %changelog
+* Tue Aug 18 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
+- 0.7.0 released
+
 * Mon Jan 13 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - initial
