@@ -1,6 +1,6 @@
 Name: spotifyd
 Version: 0.22.4
-Release: alt2
+Release: alt3
 
 Summary: Spotify client
 License: GPLv3
@@ -24,8 +24,8 @@ can be controlled from the official clients.
 %setup -a1
 
 %build
-CARGO_HOME=crates \
-cargo build --offline --release --features alsa_backend,dbus_mpris,pulseaudio_backend
+export CARGO_HOME=${PWD}/cargo
+cargo build --release --features alsa_backend,pulseaudio_backend
 
 %install
 install -pm0755 -D target/release/spotifyd %buildroot%_bindir/spotifyd
@@ -46,7 +46,7 @@ mkdir -p %buildroot%_cachedir/%name
 %preun_service spotifyd
 
 %files
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/spotifyd.conf
+%config(noreplace) %attr(0640,root,_spotify) %_sysconfdir/spotifyd.conf
 
 %_unitdir/spotifyd.service
 %_libexecdir/systemd/user/spotifyd.service
@@ -54,8 +54,11 @@ mkdir -p %buildroot%_cachedir/%name
 %_bindir/spotifyd
 %dir %attr(0770,root,_spotify) %_cachedir/%name
 
-
 %changelog
+* Mon Aug 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.4-alt3
+- freshen crates cache
+- built without dbus_mpris
+
 * Mon Jul 20 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.4-alt2
 - built without dbus_keyring
 
