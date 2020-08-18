@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200804
+Version: 20200817
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,15 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Aug 18 2020 Cronbuild Service <cronbuild@altlinux.org> 20200817-alt1
+- upstream changes (GIT 7a30af1):
+  + brcm: Add brcmfmac43455-sdio.raspberrypi,3-model-a-plus.txt
+    symlink (thx Peter Robinson)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0x0599_8A4F (thx Hilda Wu)
+  + i915: Add DMC firmware 2.02 for RKL (thx Jos? Roberto de Souza)
+  + i915: Add DMC firmware 2.08 for TGL (thx Jos? Roberto de Souza)
+  + i915: Add HuC firwmare v7.5.0 for TGL (thx Jos? Roberto de Souza)
+
 * Tue Aug 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200804-alt1
 - upstream changes (GIT c331aa9):
   + amdgpu: update vega20 firmware for 20.30 (thx Alex Deucher)
