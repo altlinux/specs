@@ -1,8 +1,7 @@
 %def_disable static
-%def_enable tls
 
 Name: librelp
-Version: 1.3.0
+Version: 1.6.0
 Release: alt1
 
 Summary: The RELP (reliable event logging protocol) core protocol library
@@ -12,7 +11,8 @@ Url: http://www.librelp.com/
 # https://github.com/rsyslog/librelp.git
 Source: %name-%version.tar
 
-%{?_enable_tls:BuildRequires: pkgconfig(gnutls) >= 2.0.0}
+BuildRequires: pkgconfig(gnutls) >= 2.0.0
+BuildRequires: pkgconfig(openssl)
 
 %description
 librelp is an easy to use library for the RELP protocol. RELP in turn
@@ -41,8 +41,7 @@ Static libs for building statically linked software that uses %name
 %build
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	%{subst_enable tls}
+	%{subst_enable static}
 
 %make_build
 
@@ -64,13 +63,16 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Tue Aug 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Wed Jan 02 2019 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
-* Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.17-alt1%ubt
+* Mon Sep 03 2018 Alexey Shabalin <shaba@altlinux.org> 1.2.17-alt1
 - 1.2.17
 
-* Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.15-alt1%ubt
+* Sat Apr 07 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.15-alt1
 - 1.2.15
 
 * Tue Jul 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.14-alt1
