@@ -2,14 +2,18 @@
 
 Name: ufoai
 Version: 2.5
-Release: alt4
+Release: alt5
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
 Group: Games/Strategy
-Url: http://ufoai.sf.net
+Url: https://ufoai.org/
 
 Source: %name-%version.tar
 Patch1: ufoai-DSO.patch
+Patch2: debian-bug-949301-mxml.patch
+Patch3: debian-initialize-entityString.patch
+Patch4: debian-segfault-reactionfire-mode-bug-861979.patch
+Patch5: ufoai-uforadiant-link.patch
 
 BuildRequires: gcc-c++ zlib-devel libcurl-devel libjpeg-devel libpng-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libogg-devel libvorbis-devel
 BuildRequires: libtheora-devel libgtk+2-devel libgtkglext-devel libxml2-devel libgtksourceview-devel libopenal-devel texlive-latex-extra
@@ -65,6 +69,10 @@ scripts for modelling.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p2
 
 %build
 %add_optflags -Wno-narrowing
@@ -163,6 +171,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot%_man6dir
 %_docdir/ufoai-data/ufo-manual_EN.pdf
 
 %changelog
+* Tue Aug 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt5
+- Fixed build and added patches from Debian.
+
 * Thu Dec 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt4
 - Cleaned up spec and dependencies.
 
