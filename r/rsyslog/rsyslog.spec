@@ -1,11 +1,16 @@
+# vim: set ft=spec: -*- rpm-spec -*-
+
+%define _unpackaged_files_terminate_build 1
+
 %def_enable gssapi
 %def_disable liblogging_stdlog
 %def_disable rfc3195
-%def_disable mmcount
+%def_enable mmcount
 %def_disable ksi_ls12
 %def_disable omamqp1
 %def_enable omhiredis
 %def_enable ommongodb
+%def_enable omhttp
 %def_enable omhttpfs
 %def_enable elasticsearch
 %def_enable openssl
@@ -14,9 +19,11 @@
 %def_enable libsystemd
 %def_enable mmkubernetes
 %def_enable clickhouse
+%def_enable imdocker
+%def_enable impcap
 
 Name: rsyslog
-Version: 8.1901.0
+Version: 8.2006.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -44,16 +51,19 @@ BuildRequires: libfastjson-devel >= 0.99.8
 BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
-%{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.16.0}
+%{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.19.0}
 %{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
 BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_ommongodb:BuildRequires: libmongoc-devel}
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
+%{?_enable_omhttp:BuildRequires: libcurl-devel}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
 %{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
 %{?_enable_mmkubernetes:BuildRequires: libcurl-devel}
 %{?_enable_clickhouse:BuildRequires: libcurl-devel}
+%{?_enable_imdocker:BuildRequires: libcurl-devel >= 7.40.0}
+%{?_enable_impcap:BuildRequires: libpcap-devel}
 
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
@@ -382,14 +392,19 @@ export HIREDIS_LIBS=-lhiredis
 	--disable-testbench \
 	%{subst_enable elasticsearch} \
 	%{subst_enable mmcount} \
-   	%{subst_enable libgcrypt} \
+	%{subst_enable libgcrypt} \
 	%{subst_enable openssl} \
 	%{subst_enable gnutls} \
 	%{?_enable_gssapi:--enable-gssapi-krb5} \
 	--enable-imdiag \
+	--enable-imbatchreport \
 	--enable-imfile \
+	%{subst_enable imdocker} \
+	--enable-imtuxedoulog \
+	--enable-improg \
 	--enable-imjournal \
 	--enable-impstats \
+	%{subst_enable impcap} \
 	--enable-imptcp \
 	--enable-inet \
 	--enable-klog \
@@ -405,7 +420,14 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-mmjsonparse \
 	--enable-mmnormalize \
 	--enable-mmsnmptrapd \
+	--enable-mmrm1stspace \
+	--enable-mmutf8fix \
+	--enable-mmsequence \
+	--enable-mmfields \
+	--enable-mmkubernetes \
+	--enable-mmtaghostname \
 	--enable-mysql \
+	%{subst_enable omhttp} \
 	%{subst_enable omhttpfs} \
 	%{subst_enable omamqp1} \
 	%{subst_enable omhiredis} \
@@ -432,7 +454,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-usertools \
 	--enable-generate-man-pages \
 	%{subst_enable mmkubernetes} \
-    %{subst_enable clickhouse} \
+	%{subst_enable clickhouse} \
 	%{subst_enable libsystemd} \
 	--with-systemdsystemunitdir=%_unitdir
 
@@ -528,10 +550,12 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_pgsql.conf
 %mod_dir/ompgsql.so
 
+%if_enabled ommongodb
 %files mongo
 %_bindir/logctl
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mongo.conf
 %mod_dir/ommongodb.so
+%endif
 
 %if_enabled gssapi
 %files gssapi
@@ -541,11 +565,15 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/lmgssutil.so
 %endif
 
+%if_enabled gnutls
 %files gnutls
 %mod_dir/lmnsd_gtls.so
+%endif
 
+%if_enabled openssl
 %files openssl
 %mod_dir/lmnsd_ossl.so
+%endif
 
 %files relp
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_relp.conf
@@ -582,24 +610,46 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %files mmanon
 %mod_dir/mmanon.so
 
+%if_enabled mmkubernetes
 %files mmkubernetes
 %mod_dir/mmkubernetes.so
+%endif
 
+%if_enabled elasticsearch
 %files elasticsearch
 %mod_dir/omelasticsearch.so
+%endif
 
+%if_enabled clickhouse
 %files clickhouse 
 %mod_dir/omclickhouse.so
+%endif
 
+%if_enabled omhiredis
 %files hiredis
 %mod_dir/omhiredis.so
+%endif
 
 %files extra
 %mod_dir/fmhash.so
+%mod_dir/imbatchreport.so
 %mod_dir/imdiag.so
+%if_enabled impcap
+%mod_dir/impcap.so
+%endif
+%if_enabled imdocker
+%mod_dir/imdocker.so
+%endif
 %mod_dir/imptcp.so
+%mod_dir/improg.so
 %mod_dir/impstats.so
+%mod_dir/imtuxedoulog.so
+%if_enabled omhttp
+%mod_dir/omhttp.so
+%endif
+%if_enabled omhttpfs
 %mod_dir/omhttpfs.so
+%endif
 %mod_dir/omprog.so
 %mod_dir/omtesting.so
 %mod_dir/omstdout.so
@@ -611,11 +661,19 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/pmlastmsg.so
 %mod_dir/pmsnare.so
 %mod_dir/pmpanngfw.so
+%mod_dir/mmfields.so
+%mod_dir/mmrm1stspace.so
 %mod_dir/mmexternal.so
+%mod_dir/mmsequence.so
 %mod_dir/mmsnmptrapd.so
+%mod_dir/mmtaghostname.so
+%mod_dir/mmutf8fix.so
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Aug 18 2020 Alexey Shabalin <shaba@altlinux.org> 8.2006.0-alt1
+- 8.2006.0
+
 * Tue Jan 22 2019 Alexey Shabalin <shaba@altlinux.org> 8.1901.0-alt1
 - 2019.01 Release
 - add clickhouse package
