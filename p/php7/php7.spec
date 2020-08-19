@@ -7,7 +7,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.4.8
+Version: 7.4.9
 Release: alt1
 
 %define php7_name      %name
@@ -46,7 +46,6 @@ Patch17: php7-7.4-phpize-php-config-name.patch
 Patch18: php7-7.3-alt-tests-fix.patch
 Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
-Patch22: php7-7.3.10-alt-e2k-lcc123.patch
 
 Patch70: php7-debian-Add-support-for-use-of-the-system-timezone-database.patch
 Patch71: php7-debian-Use-system-timezone.patch
@@ -178,9 +177,6 @@ in use by other PHP7-related packages.
 %patch19 -p1
 %patch20 -p1
 
-%ifarch %e2k
-%patch22 -p1
-%endif
 %patch70 -p1
 %patch71 -p1
 
@@ -447,6 +443,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Aug 19 2020 Anton Farygin <rider@altlinux.ru> 7.4.9-alt1
+- 7.4.9
+
+* Sat Jul 25 2020 Michael Shigorin <mike@altlinux.org> 7.4.8-alt2
+- E2K: drop lcc 1.23 patch (not needed with lcc 1.24)
+
 * Tue Jul 21 2020 Anton Farygin <rider@altlinux.ru> 7.4.8-alt1
 - 7.4.8
 
