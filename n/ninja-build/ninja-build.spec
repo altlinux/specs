@@ -2,8 +2,8 @@
 %def_without tests
 
 Name:           ninja-build
-Version:        1.10.0
-Release:        alt5
+Version:        1.10.1
+Release:        alt1
 
 Summary:        A small build system with a focus on speed
 Group:          Development/Tools
@@ -100,6 +100,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Wed Aug 19 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.1-alt1
+- New version.
+
 * Mon Jun 01 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt5
 - FTBFS: set correct python3 executable in shebang.
 
