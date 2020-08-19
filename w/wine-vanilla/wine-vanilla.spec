@@ -1,9 +1,19 @@
 %define gecko_version 2.47.1
 %define mono_version 5.1.0
 
+%def_with vulkan
+# vkd3d depends on vulkan
+%def_with vkd3d
+%def_with faudio
+
+# get name of package owning specific file.
+# this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
+# but these dependencies are calculated and saved at build time.
+%define get_lib_owner_pkg() %{expand:%(rpm -qf --qf '%%{NAME}' $(readlink -e %1))}
+
 Name: wine-vanilla
 Version: 5.13
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -75,6 +85,18 @@ BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
 
 BuildRequires: perl-XML-Simple
+
+%if_with vulkan
+# BuildRequires(pre) dependencies are used for runtime dependencies calculation via get_lib_owner_pkg macro.
+# Use it for vulkan because it's opened via dlopen, and thus dependency is not detected by dependency generators.
+BuildRequires(pre): libvulkan-devel
+%endif
+%if_with vkd3d
+BuildRequires: vkd3d-devel
+%endif
+%if_with faudio
+BuildRequires: libfaudio-devel
+%endif
 
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
@@ -169,6 +191,10 @@ Requires: libpng16 libjpeg libtiff5
 
 Requires: fontconfig libfreetype
 
+%if_with vulkan
+# libvulkan is needed for wine built with vulkan support, but dependency might be not detected automatically
+Requires: %{get_lib_owner_pkg %_libdir/libvulkan.so}
+%endif
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -243,7 +269,11 @@ export CC=clang
 %endif
 	--disable-tests \
         --without-mingw \
-	--without-gstreamer
+	--without-gstreamer \
+	%{subst_with vulkan} \
+	%{subst_with vkd3d} \
+	%{subst_with faudio} \
+	%nil
 
 %__make depend
 %make_build
@@ -439,6 +469,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.13-alt2
+- Rebuilt with vulkan, vkd3d and faudio support (ALT bug #38810).
+
 * Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13-alt1
 - new version 5.13
 

@@ -5,10 +5,19 @@
 %define rel %nil
 
 %def_with gtk3
+%def_with vulkan
+# vkd3d depends on vulkan
+%def_with vkd3d
+%def_with faudio
+
+# get name of package owning specific file.
+# this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
+# but these dependencies are calculated and saved at build time.
+%define get_lib_owner_pkg() %{expand:%(rpm -qf --qf '%%{NAME}' $(readlink -e %1))}
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -77,6 +86,18 @@ BuildRequires: libunixODBC-devel
 BuildRequires: libnetapi-devel libpcap-devel 
 #BuildRequires: gstreamer-devel gst-plugins-devel
 # TODO: opencl-headers (autoimports now), osmesa
+
+%if_with vulkan
+# BuildRequires(pre) dependencies are used for runtime dependencies calculation via get_lib_owner_pkg macro.
+# Use it for vulkan because it's opened via dlopen, and thus dependency is not detected by dependency generators.
+BuildRequires(pre): libvulkan-devel
+%endif
+%if_with vkd3d
+BuildRequires: vkd3d-devel
+%endif
+%if_with faudio
+BuildRequires: libfaudio-devel
+%endif
 
 # Staging part
 %if_with gtk3
@@ -209,6 +230,11 @@ Requires: libxslt
 Requires: libcairo libgtk+3
 %endif
 
+%if_with vulkan
+# libvulkan is needed for wine built with vulkan support, but dependency might be not detected automatically
+Requires: %{get_lib_owner_pkg %_libdir/libvulkan.so}
+%endif
+
 # Recommended
 #Requires: libnetapi libunixODBC2 libpcap0.8
 
@@ -306,7 +332,11 @@ export CC=clang
 	--without-capi \
 	--without-hal \
         --without-mingw \
-	--with-xattr
+	--with-xattr \
+	%{subst_with vulkan} \
+	%{subst_with vkd3d} \
+	%{subst_with faudio} \
+	%nil
 
 %__make depend
 %make_build
@@ -504,6 +534,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.12.1-alt2
+- Rebuilt with vulkan, vkd3d and faudio support (ALT bug #38810).
+
 * Thu Jul 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.12.1-alt1
 - new version 5.12.1 (with rpmrb script)
 - set strict require wine-mono 5.1.0
