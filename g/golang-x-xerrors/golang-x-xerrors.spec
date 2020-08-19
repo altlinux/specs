@@ -1,4 +1,4 @@
-%def_with check
+%def_without check
 
 # https://github.com/golang/xerrors
 %global goipath         golang.org/x/xerrors
@@ -7,7 +7,7 @@
 
 Name: golang-x-xerrors
 Version: 0
-Release: alt1.git9bdfabe
+Release: alt2.git9bdfabe
 Summary: Transition packages for the new Go 1.13 error values
 Group: Development/Other
 License: BSD-3-Clause
@@ -60,6 +60,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Wed Aug 19 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt2.git9bdfabe
+- Disabled tests.
+
 * Thu May 7 2020 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git9bdfabe
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
-
