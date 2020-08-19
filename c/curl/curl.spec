@@ -2,7 +2,7 @@
 %def_with check
 
 Name: curl
-Version: 7.71.1
+Version: 7.72.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -20,6 +20,7 @@ Requires: lib%name = %version-%release
 BuildRequires: glibc-devel-static groff-base libidn2-devel libssh2-devel libssl-devel libkrb5-devel
 BuildRequires: zlib-devel libpsl-devel libldap-devel libbrotli-devel
 %{?_with_check:BuildRequires: python3-base}
+%{?_with_check:BuildRequires: libnghttp2-tools}
 
 %{?_with_nghttp2:BuildRequires: libnghttp2-devel}
 
@@ -153,6 +154,11 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Aug 19 2020 Anton Farygin <rider@altlinux.ru> 7.72.0-alt1
+- 7.72.0
+- fixes:
+  * CVE-2020-8231: libcurl: wrong connect-only connection
+
 * Fri Jul 03 2020 Anton Farygin <rider@altlinux.ru> 7.71.1-alt1
 - 7.71.1
 - add python3 to BR for tests
