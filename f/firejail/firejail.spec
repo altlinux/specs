@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firejail
-Version: 0.9.62
+Version: 0.9.62.4
 Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
@@ -47,6 +47,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Wed Aug 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.62.4-alt1
+- Updated to upstream version 0.9.62.4 (Fixes: CVE-2020-17367, CVE-2020-17368).
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.62-alt1
 - Updated to upstream version 0.9.62.
 
