@@ -1,7 +1,7 @@
 %define rname filelight
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init altplace
 
@@ -16,8 +16,6 @@ Conflicts: filelight
 %endif
 
 Source: %rname-%version.tar
-
-Patch1: alt-filter-out-duplicate-paths.patch
 
 # Automatically added by buildreq on Wed Sep 30 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -57,7 +55,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p2
 
 %build
 %K5build
@@ -78,6 +75,9 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

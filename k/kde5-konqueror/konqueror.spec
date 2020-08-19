@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init no_appdata
 
@@ -143,7 +143,7 @@ done
 %_K5icon/*/*/apps/webengine.*
 %_K5icon/*/*/actions/babelfish.png
 %_K5icon/*/*/actions/imagegallery.png
-%_K5srvtyp/*.desktop
+#%_K5srvtyp/*.desktop
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -194,6 +194,9 @@ done
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 
