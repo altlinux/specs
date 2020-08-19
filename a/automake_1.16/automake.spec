@@ -5,7 +5,7 @@
 %define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.16.1
+Version: 1.16.2.0.24.c8f8c
 Release: alt1
 
 %define mydatadir %_datadir/%apiname
@@ -103,6 +103,12 @@ chmod -R u+rwX t
 %docdir/
 
 %changelog
+* Fri Aug 14 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.2.0.24.c8f8c-alt1
+- v1.16.2 -> v1.16.2-24-gc8f8c3d5f.
+
+* Tue Mar 17 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.2-alt1
+- v1.16.1 -> v1.16.2.
+
 * Tue Apr 09 2019 Dmitry V. Levin <ldv@altlinux.org> 1.16.1-alt1
 - v1.16 -> v1.16.1.
 
