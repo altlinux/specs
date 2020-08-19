@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmatroska
-Version: 1.6.0
+Version: 1.6.2
 Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
@@ -71,6 +71,9 @@ This package contains Matroska Development Documenation
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt1
+- Updated to upstream version 1.6.2.
+
 * Wed Jul 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1
 - Updated to upstream version 1.6.0.
 
