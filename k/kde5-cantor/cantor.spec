@@ -6,13 +6,11 @@
 
 %define cantor_sover 24
 %define libcantorlibs libcantorlibs%cantor_sover
-%define cantor_pythonbackend_sover 0
-%define libcantor_pythonbackend libcantor_pythonbackend%cantor_pythonbackend_sover
 %define cantor_config_sover 0
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -71,13 +69,6 @@ Requires: %name-common = %version-%release
 %description -n %libcantorlibs
 KF5 library
 
-%package -n %libcantor_pythonbackend
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libcantor_pythonbackend
-KF5 library
-
 %package -n %libcantor_config
 Group: System/Libraries
 Summary: KF5 library
@@ -115,6 +106,7 @@ KF5 library
 %config(noreplace) %_K5xdgconf/cantor.knsrc
 %config(noreplace) %_K5xdgconf/cantor_*.knsrc
 %_K5bin/cantor*
+%_K5lib/cantor_pythonbackend.so
 %_K5plug/libcantorpart.so
 %_K5plug/cantor/
 %_K5data/cantor/
@@ -133,14 +125,14 @@ KF5 library
 %files -n %libcantorlibs
 %_K5lib/libcantorlibs.so.%cantor_sover
 %_K5lib/libcantorlibs.so.*
-%files -n %libcantor_pythonbackend
-%_K5lib/libcantor_pythonbackend.so.%cantor_pythonbackend_sover
-%_K5lib/libcantor_pythonbackend.so.*
 %files -n %libcantor_config
 %_K5lib/libcantor_config.so.%cantor_config_sover
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Fri Mar 13 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

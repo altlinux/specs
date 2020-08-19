@@ -4,8 +4,8 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init
 
 Group: Education
@@ -136,6 +136,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Apr 02 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - disable krunner plugin by default
 
