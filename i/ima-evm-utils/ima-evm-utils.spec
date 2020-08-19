@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ima-evm-utils
-Version: 1.3
+Version: 1.3.1
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -89,7 +89,7 @@ sed 's|MANPAGE_DOCBOOK_XSL="/.*|MANPAGE_DOCBOOK_XSL="%_datadir/xml/docbook/xsl-s
 vm-run --overlay=ext4 make check
 
 %files
-%doc ChangeLog README AUTHORS COPYING examples/*.sh
+%doc NEWS README AUTHORS COPYING examples/*.sh
 %_bindir/*
 %_man1dir/*
 
@@ -101,6 +101,9 @@ vm-run --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Wed Aug 19 2020 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
+- Update to v1.3.1 (2020-08-04).
+
 * Wed Jul 22 2020 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
 - Update to v1.3 (2020-07-21).
 
