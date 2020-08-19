@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit af0237819ab9c5997c1c0144862dc762b9d8fc25
+%global commit 6a1299e8c6c81ef8fd573ed2b700217121baf04e
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.8.1
+Version:	1.8.2
 Release:	alt1
 Summary:	Distributed time-series database
 
@@ -123,6 +123,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Aug 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Wed Aug 05 2020 Alexey Shabalin <shaba@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
