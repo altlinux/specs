@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit efbcbb838b4318eaf04161bc9216c74d0155efba
+%global commit 5723d951af094204ecbc7087fd0082cbc717fd01
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -12,7 +12,7 @@
 
 
 Name:		grafana
-Version:	7.0.5
+Version:	7.1.3
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -79,7 +79,6 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 export npm_config_devdir="$PWD/node_modules/.node-gyp"
-
 %golang_prepare
 
 cd .gopath/src/%import_path
@@ -88,6 +87,9 @@ export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
 
+%ifarch %arm %ix86 %mips32 %mipsn32
+export NODE_OPTIONS=--max_old_space_size=2048
+%endif
 #npm rebuild
 #npm run build
 go run build.go build-frontend
@@ -199,6 +201,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Wed Aug 19 2020 Alexey Shabalin <shaba@altlinux.org> 7.1.3-alt1
+- 7.1.3
+
 * Sat Jul 04 2020 Alexey Shabalin <shaba@altlinux.org> 7.0.5-alt1
 - 7.0.5
 
@@ -256,29 +261,29 @@ fi
 * Mon Oct 15 2018 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
-* Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt2%ubt
+* Thu Jun 21 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt2
 - update init script and systemd unit
 - fix package files and config
 
-* Wed Jun 20 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt1%ubt
+* Wed Jun 20 2018 Alexey Shabalin <shaba@altlinux.ru> 5.1.4-alt1
 - 5.1.4
 
-* Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 4.6.3-alt1%ubt
+* Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 4.6.3-alt1
 - 4.6.3
 
-* Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.2-alt1%ubt
+* Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.2-alt1
 - 4.6.2
 
-* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.0-alt1%ubt
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.0-alt1
 - 4.6.0
 
-* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 4.5.2-alt1%ubt
+* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 4.5.2-alt1
 - 4.5.2
 
-* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt2%ubt
+* Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt2
 - fix start options for systemd and sysvinit
 
-* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt1%ubt
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt1
 - 4.4.3
 - fix pidfile path in systemd unit
 - fix run with sysv init script
