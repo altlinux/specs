@@ -1,5 +1,5 @@
 Name: vdpauinfo
-Version: 1.0
+Version: 1.3
 Summary: VDPAU acceleration information utility
 Release: alt1
 License: MIT/X Consortium
@@ -34,5 +34,8 @@ Tool to query the capabilities of a VDPAU implementation.
 
 
 %changelog
+* Wed Aug 19 2020 Alexandr Antonov <aas@altlinux.org> 1.3-alt1
+- update to current version
+
 * Wed Jan 11 2018 Alexandr Antonov <aas@altlinux.org> 1.0-alt1
 - initial build for ALT
