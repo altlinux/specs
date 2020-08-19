@@ -1,7 +1,7 @@
 %define rname libkmahjongg
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -73,6 +73,9 @@ KF5 library
 %_K5lib/libKF5KMahjongglib.so.*
 
 %changelog
+* Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Fri Mar 13 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 
