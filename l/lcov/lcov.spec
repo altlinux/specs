@@ -1,5 +1,5 @@
 Name: lcov
-Version: 1.14.0.6.4058
+Version: 1.15
 Release: alt1
 
 Summary: LTP GCOV extension code coverage tool
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 
 Requires: gcc-common perl-GD
 
-BuildRequires: perl-JSON perl-PerlIO-gzip
+BuildRequires: perl-IO-Compress perl-JSON-PP
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 %define _unpackaged_files_terminate_build 1
 
@@ -31,8 +31,6 @@ VERSION=%version
 RELEASE=%release
 FULL=%version
 EOF
-# skip broken test
-rm test/lcov_diff/Makefile
 
 %install
 %makeinstall_std PREFIX=%_prefix CFG_DIR=%_sysconfdir
@@ -47,6 +45,9 @@ make test
 %config(noreplace) %_sysconfdir/lcovrc
 
 %changelog
+* Wed Aug 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1.15-alt1
+- v1.14-6-g40580cd -> v1.15.
+
 * Fri Oct 11 2019 Dmitry V. Levin <ldv@altlinux.org> 1.14.0.6.4058-alt1
 - v1.13-16-ge675 -> v1.14-6-g40580cd.
 
@@ -83,5 +84,5 @@ make test
 - added initial rm command in install section
 * Mon Apr 7 2003 Peter Oberparleiter (Peter.Oberparleiter@de.ibm.com)
 - implemented variables for version/release
-* Fri Oct 8 2002 Peter Oberparleiter (Peter.Oberparleiter@de.ibm.com)
+* Tue Oct 8 2002 Peter Oberparleiter (Peter.Oberparleiter@de.ibm.com)
 - created initial spec file
