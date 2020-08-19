@@ -1,7 +1,7 @@
 %def_with check
 
 Name: ethtool
-Version: 5.7
+Version: 5.8
 Release: alt1
 Epoch: 1
 
@@ -64,6 +64,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Wed Aug 19 2020 Anton Farygin <rider@altlinux.ru> 1:5.8-alt1
+- 5.8
+
 * Sat Jun 27 2020 Anton Farygin <rider@altlinux.ru> 1:5.7-alt1
 - 5.7
 - enabled tests
