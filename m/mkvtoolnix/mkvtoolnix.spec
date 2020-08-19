@@ -10,11 +10,12 @@
 %def_enable qt
 %def_with flac
 %def_without tools
+%def_with dvdread
 
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 48.0.0
+Version: 49.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -33,12 +34,14 @@ BuildRequires: libcurl-devel libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 l
 BuildRequires: docbook-style-xsl xsltproc ruby-tools
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
+BuildRequires: libgtest-devel
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
 %{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel cmark-devel}
 %{?_enable_bz2:BuildRequires: bzlib-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
+%{?_with_dvdread:BuildRequires: libdvdread-devel}
 
 %description
 Matroska is a new multimedia file format aiming to become the new
@@ -109,7 +112,9 @@ sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
     %{subst_enable lzo} \
     %{subst_enable wxwidgets} \
     %{subst_enable qt} \
-    %{subst_with flac}
+    %{subst_with flac} \
+    %{subst_with dvdread} \
+    %nil
 
 rake %{?_with_tools:TOOLS=1} V=1
 
@@ -128,6 +133,10 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %find_lang --with-man mkvinfo
 
 cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
+
+%check
+rake V=1 tests:unit
+rake V=1 tests:run_unit
 
 %files -f %name.lang
 %doc COPYING
@@ -173,6 +182,11 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Wed Aug 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 49.0.0-alt1
+- Updated to upstream version 49.0.0.
+- Enabled dvdread support.
+- Enabled tests.
+
 * Wed Jul 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 48.0.0-alt1
 - Updated to upstream version 48.0.0.
 
