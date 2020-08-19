@@ -1,5 +1,5 @@
 Name: qt5ct
-Version: 0.37
+Version: 1.1
 Release: alt1
 Summary: Qt5 Configuration Tool
 License: BSD
@@ -46,6 +46,9 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Aug 19 2020 Ivan A. Melnikov <iv@altlinux.org> 1.1-alt1
+- New version
+
 * Fri Feb 01 2019 Ivan A. Melnikov <iv@altlinux.org> 0.37-alt1
 - New version
 - Make /etc/profile.d/qt5ct* executable (closes: #35769)
