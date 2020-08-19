@@ -1,5 +1,5 @@
-%define git_ver 10597
-%define git_commit 6a9fe8e3c4a1a409e6e31d079640faa45797679c
+%define git_ver 10765
+%define git_commit 2a19d0a57999a47ece9393ff4915dd997963948e
 
 %define glslang_commit bcf6a2430e99e8fc24f9f266e99316905e6d5134
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -16,7 +16,7 @@
 %define spirv_tools_commit 49ca250b44c633ba7cb8897002e62781a451421c
 
 Name: rpcs3
-Version: 0.0.11
+Version: 0.0.11.%git_ver
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -28,8 +28,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
-Source0: %name-%version.tar
+# https://github.com/RPCS3/%name/archive/%git_commit/%name-%git_commit.tar.gz
+Source0: %name-%git_commit.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
 Source1: glslang-%glslang_commit.tar
 # https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
@@ -91,7 +91,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
+%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 
 %patch0 -p1
 
@@ -155,6 +155,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Aug 19 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10765-alt1
+- Version 0.0.11.10765
+
 * Mon Aug 17 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11-alt1
 - Version 0.0.11
 
