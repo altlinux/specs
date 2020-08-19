@@ -14,8 +14,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -32,6 +32,7 @@ Obsoletes: kde4graphics-okular < %version-%release
 %endif
 
 Source: %rname-%version.tar
+Source10: alt-loading-ru.po
 Patch1: alt-chm-encoding.patch
 Patch2: alt-def-memory-level.patch
 Patch3: alt-print-truncate-title.patch
@@ -110,8 +111,18 @@ KF5 library
 %patch4 -p2
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
+tmp_file=`mktemp`
+msgcat --use-first po/ru/okular.po %SOURCE10 >"$tmp_file"
+cat "$tmp_file" >po/ru/okular.po
+rm -f "$tmp_file"
+
 %build
 %K5build \
+%if_enabled mobile
+    -DOKULAR_UI=both \
+%else
+    -DOKULAR_UI=desktop \
+%endif
     -DLIBZIP_INCLUDE_DIR=%_includedir/libzip \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
     -Ddiscount_INCLUDE_DIR=%_includedir \
@@ -191,6 +202,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Mon Jul 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 19.12.3-alt2
 - Added indicator for document loading (related to ALT bug #38664)
 

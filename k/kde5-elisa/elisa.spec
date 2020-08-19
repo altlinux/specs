@@ -4,7 +4,7 @@
 %define libelisalib libelisalib%sover
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -77,7 +77,7 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5qml/org/kde/elisa/
 %_K5xdgapp/*elisa*.desktop
 %_K5icon/*/*/apps/elisa.*
-%_datadir/qlogging-categories5/*elisa*.*categories
+%_datadir/qlogging-categories5/*.*categories
 
 #%files devel
 #%_K5inc/elisa_version.h
@@ -91,6 +91,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5lib/libelisaLib.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu Mar 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -77,10 +77,11 @@ KF5 library
 %_K5bin/kde-add-printer
 %_K5bin/kde-print-queue
 %_K5plug/*print*.so
+%_K5plug/kf5/kded/*print*.so
 %_K5xdgapp/*rint*.desktop
 %_K5data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K5qml/org/kde/plasma/printmanager/
-%_K5srv/kded/*.desktop
+#%_K5srv/kded/*.desktop
 %_K5srv/*.desktop
 %_K5notif/printmanager.notifyrc
 
@@ -89,6 +90,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Thu May 28 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - fix queue window width
 

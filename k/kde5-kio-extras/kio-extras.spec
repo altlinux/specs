@@ -1,6 +1,6 @@
 %define rname kio-extras
 
-%define molletnetwork_sover 19
+%define molletnetwork_sover 20
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
 %define kioarchive_sover 5
 %define libkioarchive libkioarchive%kioarchive_sover
@@ -8,8 +8,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 19.12.3
-Release: alt2
+Version: 20.04.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,11 +23,10 @@ Provides: kf5-kio-extras = %EVR
 Obsoletes: kf5-kio-extras < %EVR
 
 Source: %rname-%version.tar
-Patch1: CVE-2020-12755.patch
 # ALT
 Patch11: alt-smb-share.patch
-Patch12: alt-mime-rename.patch
-Patch13: alt-fix-permissions.patch
+Patch12: alt-fix-permissions.patch
+Patch13: alt-find-samba.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static ilmbase-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs samba-libs shared-mime-info xml-common xml-utils
@@ -38,6 +37,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-svg-devel
 BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
+BuildRequires: libtirpc-devel
 BuildRequires: gperf libtag-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kactivities-devel
@@ -50,6 +50,7 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-syntax-highlighting-devel kf5-kactivities-stats-devel
+BuildRequires: kde5-kdsoap-devel
 
 %description
 Additional kio-slaves.
@@ -86,7 +87,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -143,6 +143,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Tue May 12 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt2
 - don't store unasked fish:/ passwords (Fixes: CVE-2020-12755)
 
