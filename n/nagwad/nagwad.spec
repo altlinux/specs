@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.9.10
+Version:  0.9.11
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -117,6 +117,12 @@ fi
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Wed Aug 19 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.11-alt1
+- Fixed locale in nagwad messages.
+- Filter out "add_rule" events from auditd related to user and
+  group changes but react to update and remove.
+- Fixed missing while..done loop in the main process.
+
 * Fri Jul 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt1
 - Fix: Remove parentheses from the audit service description.
 
