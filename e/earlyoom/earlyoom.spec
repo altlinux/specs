@@ -5,7 +5,7 @@
 
 Name:     earlyoom
 Version:  1.6.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -16,6 +16,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source:   %name-%version.tar
 Source1:  %name.init
+
+Patch: fix-config-path.patch
 
 BuildRequires: /proc
 BuildRequires: pandoc
@@ -34,6 +36,8 @@ for it, sitting in front of an unresponsive system.
 
 %prep
 %setup
+%patch0 -p1
+
 sed -e '/systemctl/d' -i Makefile
 sed -e 's/VERSION ?= \$(shell git describe --tags --dirty 2> \/dev\/null)/VERSION = %version/' -i Makefile
 
@@ -56,6 +60,8 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %make_build test
 
 %post
+[ -f %_sysconfdir/default/%name ] &&
+  cp -f %_sysconfdir/default/%name %_sysconfdir/sysconfig/%name
 %post_service %name
 
 %preun
@@ -67,9 +73,12 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %_unitdir/%name.service
 %_initdir/%name
 %_man1dir/%name.*
-%config(noreplace) %_sysconfdir/default/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Aug 19 2020 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
+- Replace config to /etc/sysconfig/earlyoom (Closes: 38825)
+
 * Thu Jul 16 2020 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
 - new version 1.6.1
 
