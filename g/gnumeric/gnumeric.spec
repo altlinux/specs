@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.47
+Version: %ver_major.48
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -26,10 +26,10 @@ Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define gsf_ver 1.14.44
+%define gsf_ver 1.14.47
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.47
+%define goffice_ver 0.10.48
 # Provided by python_loader.so
 %{?_with_python:Provides: python%__python_version(Gnumeric)}
 
@@ -181,6 +181,9 @@ subst 's|\(@GIOVERRIDESDIR@\)|$(DESTDIR)\1|' introspection/Makefile.am
 %_pkgconfigdir/*
 
 %changelog
+* Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.12.48-alt1
+- 1.12.48
+
 * Sun May 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.12.47-alt1
 - 1.12.47
 - fixed License tag
