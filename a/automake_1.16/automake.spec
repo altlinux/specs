@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.16.2.0.24.c8f8c
-Release: alt1
+Release: alt2
 
 %define mydatadir %_datadir/%apiname
 %set_compress_method xz
@@ -103,6 +103,9 @@ chmod -R u+rwX t
 %docdir/
 
 %changelog
+* Thu Aug 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.2.0.24.c8f8c-alt2
+- Reverted automake --version from 1.16b back to 1.16.2.
+
 * Fri Aug 14 2020 Dmitry V. Levin <ldv@altlinux.org> 1.16.2.0.24.c8f8c-alt1
 - v1.16.2 -> v1.16.2-24-gc8f8c3d5f.
 
