@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.45
+%define ver_major 1.46
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -198,6 +198,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
+- 1.46.0
+
 * Wed Aug 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.45.5-alt1
 - 1.45.5
 - enabled %%check
