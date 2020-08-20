@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 20.03
+Version: 20.08
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.37
+BuildRequires: libzen-devel >= 0.4.38
 BuildRequires: libcurl-devel
 BuildRequires: libmms-devel
 BuildRequires: libtinyxml2-devel
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 20.08-alt1
+- 20.08
+
 * Fri Apr 03 2020 Yuri N. Sedunov <aris@altlinux.org> 20.03-alt1
 - 20.03
 - fixed License tag
