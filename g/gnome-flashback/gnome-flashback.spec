@@ -6,7 +6,7 @@
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -154,6 +154,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
+- 3.36.4
+
 * Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 
