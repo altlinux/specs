@@ -1,7 +1,7 @@
 %define rname ktuberling
 
 Name: kde5-%rname
-Version: 19.12.3
+Version: 20.04.3
 Release: alt1
 %K5init
 
@@ -46,6 +46,7 @@ faces you can.
 
 %files -f %name.lang
 %doc COPYING*
+%_datadir/qlogging-categories5/*.*categories
 %_K5bin/ktuberling
 %_K5data/ktuberling/
 %_K5xdgapp/org.kde.ktuberling.desktop
@@ -54,6 +55,9 @@ faces you can.
 %_K5xmlgui/ktuberling/
 
 %changelog
+* Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
+- new version
+
 * Fri Mar 13 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.3-alt1
 - new version
 
