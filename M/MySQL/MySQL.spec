@@ -12,8 +12,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.20
-Release: alt2
+Version: 8.0.21
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -53,7 +53,7 @@ Source30: mysqlrouter.conf
 Patch0: mysql-%version.patch
 
 # ALTLinux
-Patch1: mysql-8.0.20-alt-chroot.patch
+Patch1: mysql-8.0.21-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.20-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
@@ -328,7 +328,7 @@ recommend upgrading your installation to MySQL Router 8.
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_70_0
+pushd boost/boost_1_72_0
 %patch115 -p0
 %patch125 -p1
 popd
@@ -391,7 +391,7 @@ sed -i 's/ADD_SUBDIRECTORY(router)/# ADD_SUBDIRECTORY(router)/' CMakeLists.txt
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=../boost/boost_1_70_0 \
+	-DWITH_BOOST=../boost/boost_1_72_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -786,6 +786,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Aug 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.21-alt1
+- new version
+- update alt-chroot patch
+
 * Tue May 26 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.20-alt2
 - add add oracle-fix-charset-nullptr patch
   + refer to https://bugs.launchpad.net/ubuntu/+source/mysql-8.0/+bug/1877504
