@@ -1,6 +1,6 @@
 Name: libvorbis
-Version: 1.3.6
-Release: alt2
+Version: 1.3.7
+Release: alt1
 
 Summary: The Vorbis General Audio Compression Codec
 Summary(ru_RU.UTF-8): Аудиокодек Vorbis
@@ -9,14 +9,9 @@ Group: System/Libraries
 Url: http://www.xiph.org/vorbis/
 # http://downloads.xiph.org/releases/vorbis/%name-%version.tar.bz2
 Source: %name-%version.tar
-Patch1: 0001-vorbisenc-detect-if-new_template-is-NULL.patch
-Patch2: 0002-CVE-2017-14160-fix-bounds-check-on-very-low-sample-r.patch
-Patch3: 0003-Clamp-large-exponents-in-float32_unpack.patch
-Patch4: 0004-Sanity-check-number-of-channels-in-setup.patch
-Patch5: 0005-Fix-shift-by-negative-value-when-reading-blocksize.patch
-Patch11: libvorbis-1.3.2-alt-export-symbols.patch
-Patch12: libvorbis-1.3.6-alt-add-needed.patch
-Patch13: libvorbis-1.3.5-alt-configure.patch
+Patch1: libvorbis-1.3.2-alt-export-symbols.patch
+Patch2: libvorbis-1.3.7-alt-add-needed.patch
+Patch3: libvorbis-1.3.5-alt-configure.patch
 
 BuildRequires: libogg-devel
 
@@ -63,14 +58,11 @@ statically linked libvorbis-based software.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch11 -p1
-%patch12 -p2
-%patch13 -p1
 for f in m4/*.m4; do
-	[ ! -f "%_datadir/aclocal/${f##*/}" ] ||
+	if [ -f "%_datadir/aclocal/${f##*/}" ] ||
+	   [ -f "%_datadir/libtool/aclocal/${f##*/}" ]; then
 		rm -fv "$f"
+	fi
 done
 # include "config.h" first
 pattern='^[[:space:]]*#[[:space:]]*include[[:space:]]'
@@ -95,6 +87,7 @@ sort -u -o lib/libvorbis.sym{,}
 %makeinstall_std docdir=%docdir
 install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %check
 # SMP-incompatible check
@@ -119,6 +112,9 @@ make -k check
 %endif
 
 %changelog
+* Sat Jul 04 2020 Dmitry V. Levin <ldv@altlinux.org> 1.3.7-alt1
+- 1.3.6 -> 1.3.7.
+
 * Mon Jan 28 2019 Dmitry V. Levin <ldv@altlinux.org> 1.3.6-alt2
 - Backported upstream fixes (fixes: CVE-2017-14160, CVE-2018-10392, CVE-2018-10393).
 - Fixed probabilistic behaviour of %%check.
