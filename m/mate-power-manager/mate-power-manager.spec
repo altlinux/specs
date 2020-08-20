@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-power-manager
-Version: 1.24.1
+Version: 1.24.2
 Release: alt1
 Epoch: 1
 Summary: MATE power management service
@@ -56,6 +56,9 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %_man1dir/mate-power-*.1*
 
 %changelog
+* Thu Aug 20 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.2-alt1
+- 1.24.2
+
 * Mon Mar 16 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
 - 1.24.1
 
