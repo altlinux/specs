@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 4.7.3
+Version: 4.8.0
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -14,9 +14,9 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 
 %define gst_ver 1.12.5
 %define glibmm_ver 2.56
-%define gtk_ver 3.20
+%define gtk_ver 3.24
 %define calf_ver 0.90.1
-%define lsp_ver 1.1.14
+%define lsp_ver 1.1.24
 
 Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
@@ -24,7 +24,6 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: ladspa-rubberband
 Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
-Requires: lv2-mda-plugins
 %ifarch %ix86 x86_64 aarch64
 Requires: lv2-lsp-plugins >= %lsp_ver
 %endif
@@ -75,6 +74,9 @@ mkdir -p %buildroot%_sysconfdir/PulseEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Wed Jun 17 2020 Yuri N. Sedunov <aris@altlinux.org> 4.7.3-alt1
 - 4.7.3
 
