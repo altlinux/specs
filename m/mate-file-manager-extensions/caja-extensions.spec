@@ -1,8 +1,8 @@
 %define rname caja-extensions
 
 Name: mate-file-manager-extensions
-Version: 1.24.0
-Release: alt2
+Version: 1.24.1
+Release: alt1
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -167,6 +167,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Fri Aug 21 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
+- 1.24.1
+
 * Sat Mar 28 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt2
 - rebuild with gupnp 1.2
 

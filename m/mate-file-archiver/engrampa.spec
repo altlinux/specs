@@ -2,7 +2,7 @@
 %define rname engrampa
 
 Name: mate-file-archiver
-Version: 1.24.0
+Version: 1.24.1
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop file archiver
@@ -69,6 +69,9 @@ Mate-file-manager extension for mount archiver
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Fri Aug 21 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.1-alt1
+- 1.24.1
+
 * Tue Feb 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:1.24.0-alt1
 - 1.24.0
 
