@@ -7,7 +7,7 @@
 %define ver 8.2
 Name: %oname%ver
 Version: %ver.0
-Release: alt5
+Release: alt6
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -21,6 +21,7 @@ Source1: vtkm-%version.tar
 Patch1: %oname-%version-alt-build.patch
 Patch2: %oname-%version-alt-python3.8.patch
 Patch3: %oname-%version-alt-armh.patch
+Patch4: %oname-%version-alt-qt-5.15-compat.patch
 
 Requires: lib%name = %EVR
 
@@ -137,7 +138,6 @@ This package contains VTK plugin for Qt5 Designer.
 %package doc
 Summary: Documentation for The Visualization Toolkit (VTK)
 Group: Development/Documentation
-BuildArch: noarch
 
 %description doc
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -231,7 +231,6 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 %package data
 Summary: The Visualization Toolkit (VTK) data
 Group: Development/Tools
-BuildArch: noarch
 
 %description data
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -262,6 +261,7 @@ You need set environment variable VTK_DATA_ROOT=/usr/share/vtk-%ver.
 %ifarch armh
 %patch3 -p1
 %endif
+%patch4 -p1
 
 cp -rv %_datadir/vtk-%ver/.ExternalData/* ./.ExternalData/
 
@@ -470,6 +470,9 @@ cp -alL ExternalData/* %buildroot%_datadir/%oname-%ver
 %files tests -f testing.list
 
 %changelog
+* Fri Aug 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 8.2.0-alt6
+- Fixed build with new qt version and architectures.
+
 * Thu Mar 12 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2.0-alt5
 - fix packaging on armh arch
 
