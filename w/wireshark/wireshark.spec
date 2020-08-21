@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/3.2
 
 Name: wireshark
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -225,6 +225,9 @@ _EOF_
 %_pkgconfigdir/wireshark.pc
 
 %changelog
+* Fri Aug 21 2020 Anton Farygin <rider@altlinux.ru> 3.2.6-alt1
+- 3.2.6
+
 * Fri Jul 03 2020 Anton Farygin <rider@altlinux.ru> 3.2.5-alt1
 - 3.2.5
 - fixes:
