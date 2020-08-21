@@ -1,14 +1,23 @@
 Name: sg3_utils
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
-License: GPLv2+ and BSD
+License: GPL-2.0-or-later and BSD-2-Clause
 Group: System/Kernel and hardware
 Url: http://sg.danny.cz/sg/sg3_utils.html
 # http://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch: sg3_utils-alt-rescan-scsi-bus.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1683343
+# sg_turs: improper usage show
+Patch1: sg3_utils-rh-sg_turs-help.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1627657
+# sg_raw -V fail
+Patch2: sg3_utils-rh-sg_raw-version.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1760847
+# FC_TARGET_LUN attribute assigned for non FC device
+Patch3: sg3_utils-rh-fc_wwpn_id-non_FC-devices.patch
 Requires: libsgutils = %EVR
 
 %description
@@ -43,7 +52,7 @@ for developing applications.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 sed -i s/libsgutils2/libsgutils/g */Makefile.*
 sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 
@@ -69,6 +78,9 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %_libdir/*.so
 
 %changelog
+* Mon Apr 20 2020 Dmitry V. Levin <ldv@altlinux.org> 1.45-alt1
+- 1.44 -> 1.45.
+
 * Wed Sep 12 2018 Dmitry V. Levin <ldv@altlinux.org> 1.44-alt1
 - 1.42 -> 1.44.
 
