@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.2
+Version: 1.10.3
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Aug 22 2020 Michael Shigorin <mike@altlinux.org> 1.10.3-alt1
+- preinstall: skip when there is no grub
+
 * Thu Mar 05 2020 Michael Shigorin <mike@altlinux.org> 1.10.2-alt1
 - initinstall: Seek calmer, poor ol' optical drive.
 
