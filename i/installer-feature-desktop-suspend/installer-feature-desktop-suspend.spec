@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-suspend
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: Suspend/resume configuration
@@ -23,7 +23,7 @@ Conflicts: installer-ltsp-school-stage2 <= 0.4-alt4.13
 %summary
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -35,6 +35,9 @@ Conflicts: installer-ltsp-school-stage2 <= 0.4-alt4.13
 # - figure out whether lvm is suitable or detect/drop that too
 
 %changelog
+* Fri Aug 21 2020 Michael Shigorin <mike@altlinux.org> 0.6.1-alt1
+- just skip if there's no grub
+
 * Fri Mar 27 2015 Michael Shigorin <mike@altlinux.org> 0.6-alt1
 - fixed wrong swap UUID with recent blkid (closes: #30828)
 
