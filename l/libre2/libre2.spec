@@ -1,6 +1,6 @@
 %define oldname re2
 Name: libre2
-Version: 20200706
+Version: 20200801
 Release: alt1
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
@@ -61,6 +61,9 @@ make shared-test
 %_libdir/pkgconfig/%oldname.pc
 
 %changelog
+* Fri Aug 21 2020 Anton Farygin <rider@altlinux.ru> 20200801-alt1
+- new version
+
 * Thu Jul 16 2020 Anton Farygin <rider@altlinux.ru> 20200706-alt1
 - new version
 
