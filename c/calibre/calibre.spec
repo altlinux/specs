@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 4.22.0
+Version: 4.23.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -20,7 +20,7 @@ Source1: calibre-mount-helper
 Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
 
-Requires: fonts-ttf-liberation
+Requires: fonts-ttf-core
 Requires: xkeyboard-config
 
 BuildRequires(pre): rpm-build-python3
@@ -210,6 +210,10 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Aug 21 2020 Vitaly Lipatov <lav@altlinux.ru> 4.23.0-alt1
+- new version 4.23.0 (with rpmrb script)
+- replace fonts-ttf-liberation requires with fonts-ttf-core (ALT bug 38831)
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 4.22.0-alt1
 - new version 4.22.0 (with rpmrb script)
 
