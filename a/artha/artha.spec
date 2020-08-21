@@ -1,5 +1,5 @@
 Name: artha
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: Handy off-line thesaurus based on WordNet database
@@ -45,6 +45,8 @@ sed -i /DBUS_AVAILABLE/d config.h
 
 %install
 %makeinstall_std
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
 
 %files
 %_bindir/*
@@ -55,6 +57,9 @@ sed -i /DBUS_AVAILABLE/d config.h
 %doc AUTHORS NEWS
 
 %changelog
+* Mon Jul 27 2020 Dmitry V. Levin <ldv@altlinux.org> 1.0.5-alt1
+- 1.0.3 -> 1.0.5.
+
 * Sun Dec 02 2018 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
 - 1.0.2 -> 1.0.3.
 
