@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 39
+%define ver_major 41
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -33,7 +33,7 @@ Requires: fuse-sshfs /usr/bin/openssl
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: libgio-devel libdbus-devel
 
-%add_python3_path %_datadir/nautilus-python/extensions
+%add_python3_path %_datadir/gnome-shell/extensions/%domain %_datadir/nautilus-python/extensions
 # imports.gi.St.Settings.get()
 %add_typelib_req_skiplist typelib(get) typelib(Nemo)
 
@@ -65,6 +65,7 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %_datadir/nautilus-python/extensions/nautilus-gsconnect.py
 %_datadir/nautilus-python/extensions/__pycache__/*
 %_iconsdir/hicolor/*/*/*.svg
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %if_enabled webextension
 %_sysconfdir/chromium/native-messaging-hosts/org.gnome.shell.extensions.gsconnect.json
@@ -75,6 +76,9 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %doc README.md
 
 %changelog
+* Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 41-alt1
+- 41
+
 * Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 39-alt1
 - 39
 
