@@ -1,5 +1,5 @@
 Version: 1.1.2
-Release: alt1.1
+Release: alt1.2
 %setup_python_module pyxmpp
 Name: %packagename
 Summary: XMPP-IM-compliant library for jabber instant messenging
@@ -33,6 +33,14 @@ streams, handle incoming events and create outgoing stanzas (XMPP
 %prep
 %setup -n %modulename-%version
 
+# Set correct python2 executable in shebang and scripts
+subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *) \
+        $(find ./ -name '*.py')
+subst 's|#!.*python -u|#!%__python -u|' $(grep -Rl '#!.*python -u' *) \
+        $(find ./ -name '*.py')
+subst 's|python |%__python |' $(find ./ -name 'Makefile')
+
+
 %build
 %make_ext build
 %make doc
@@ -50,6 +58,9 @@ streams, handle incoming events and create outgoing stanzas (XMPP
 %doc doc/*
 
 %changelog
+* Thu Aug 13 2020 Pavel Vasenkov <pav@altlinux.org> 1.1.2-alt1.2
+- NMU: set correct python2 executable in shebang and script
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.2-alt1.1
 - Rebuild with Python-2.7
 
