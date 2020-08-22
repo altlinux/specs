@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt147
+Release: alt148
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sat Aug 22 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt148
+- debuginfo: Warn if stripped ELFs are found.
+- debuginfo: Implement %%_stripped_files_terminate_build.
+- debuginfo: Try to uncompress if debugedit failed to extract sources.
+
 * Fri Aug 21 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt147
 - debuginfo: Show warnings if .debug sections are absent.
 
