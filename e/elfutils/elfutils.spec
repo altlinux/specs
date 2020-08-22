@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.180.0.22.g1549
-Release: alt1
+Release: alt2
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -270,6 +270,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Aug 20 2020 Dmitry V. Levin <ldv@altlinux.org> 0.180.0.22.g1549-alt2
+- libdwfl: do not dlopen libdebuginfod.so in --disable-libdebuginfod mode.
+
 * Thu Jul 23 2020 Dmitry V. Levin <ldv@altlinux.org> 0.180.0.22.g1549-alt1
 - elfutils-0.180-2-g9698a399 -> elfutils-0.180-22-g15495182.
 
