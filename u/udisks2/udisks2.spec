@@ -26,7 +26,7 @@
 %endif
 
 Name: %{_name}2
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -311,7 +311,8 @@ fi
 %files module-zram
 %_libdir/%name/modules/lib%{name}_zram.so
 %_datadir/polkit-1/actions/org.freedesktop.UDisks2.zram.policy
-%_unitdir/zram-setup@.service
+%_unitdir/udisks2-zram-setup@.service
+%_udevrulesdir/90-udisks2-zram.rules
 %endif
 
 %if_enabled bcache
@@ -347,6 +348,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Sat Aug 22 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
+- 2.9.1
+
 * Thu May 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
