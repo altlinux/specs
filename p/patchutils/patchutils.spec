@@ -1,20 +1,20 @@
 Name: patchutils
-Version: 0.3.4
+Version: 0.4.2
 Release: alt1
 
 Summary: Patchutils is a small collection of programs that operate on patch files
 License: GPLv2+
 Group: Text tools
 Url: http://cyberelk.net/tim/patchutils/
-
+Vcs: https://github.com/twaugh/patchutils
 # git://git.altlinux.org/gears/p/patchutils.git
 Source: %name-%version-%release.tar
 
-Requires: patch, diffutils, mktemp >= 1:1.3.1
+Requires: patch, diffutils
 Provides: interdiff = %EVR
 Obsoletes: interdiff < %EVR
 
-BuildRequires: libzio-devel, xmlto
+BuildRequires: libzio-devel, rpm-build-python3, xmlto
 
 Summary(ru_RU.UTF-8): Набор программ для обработки патчей
 
@@ -73,15 +73,21 @@ This version contains:
 %makeinstall_std
 
 %check
-# SMP incompatible checks.
-make -k check
+%make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%filter_from_requires /subversion\|vim/d
 
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc AUTHORS BUGS NEWS* TODO
+%doc AUTHORS BUGS NEWS* TODO README patchview/README.patchview
 
 %changelog
+* Sat Aug 22 2020 Dmitry V. Levin <ldv@altlinux.org> 0.4.2-alt1
+- 0.3.4-21-g8ef3e6b -> 0.4.2-1-g708054d.
+
 * Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 0.3.4-alt1
 - v0.3.3-1-gc6325fb -> 0.3.4-21-g8ef3e6b.
 
