@@ -1,7 +1,7 @@
 Name: eric6
 Summary: Python IDE
 Version: 19.8
-Release: alt1
+Release: alt2
 
 License: GPLv3+
 Group: Development/Python3
@@ -35,6 +35,9 @@ BuildRequires: libappstream-glib
 
 # ???
 %add_python3_req_skip __builtin__
+
+# See ALT Bug 38836
+%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 
 %description
 eric6 is a full featured Python IDE.
@@ -87,6 +90,9 @@ desktop-file-validate %buildroot%_desktopdir/eric6.desktop
 %_qt5_datadir/qsci/api/*/*
 
 %changelog
+* Sat Aug 22 2020 Anton Midyukov <antohami@altlinux.org> 19.8-alt2
+- Skip python3 requires: PyQt5.QtWebKit, PyQt5.QtWebKitWidgets (Closes: 38836)
+
 * Mon Oct 28 2019 Anton Midyukov <antohami@altlinux.org> 19.8-alt1
 - new version 19.8
 
