@@ -1,12 +1,12 @@
 Name: 	 tellico
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: A collection manager for KDE
 License: GPL-2.0+
 Group:   Graphical desktop/KDE
 Url:     http://tellico-project.org/
-# VCS:	 git://anongit.kde.org/tellico
+# VCS:	 https://invent.kde.org/office/tellico.git
 
 Source:  %name-%version.tar
 ExclusiveArch: %ix86 x86_64
@@ -87,6 +87,9 @@ find %buildroot -type f -print0 |
 %_datadir/metainfo/org.kde.tellico.appdata.xml
 
 %changelog
+* Sat Aug 22 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt1
+- New version.
+
 * Mon Jun 01 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
 - New version.
 - Fix License tag according to SPDX.
