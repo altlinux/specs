@@ -1,5 +1,5 @@
 Name: lftp
-Version: 4.8.4
+Version: 4.9.2
 Release: alt1
 
 Summary: Sophisticated command line file transfer program
@@ -9,11 +9,6 @@ Url: http://lftp.yar.ru/
 
 # ftp://ftp.yars.free.net/pub/source/lftp/lftp-%version.tar.xz
 Source: lftp-%version.tar
-Source1: lftp-l.xpm
-Source2: lftp-m.xpm
-Source3: lftp-n.xpm
-Source4: lftp.desktop
-Source5: lftpget.1
 
 # http://git.altlinux.org/gears/l/lftp.git
 Patch: lftp-%version-%release.patch
@@ -22,7 +17,7 @@ Patch: lftp-%version-%release.patch
 Requires: less
 
 # Automatically added by buildreq on Thu Jan 02 2003
-BuildRequires: desktop-file-utils gcc-c++ libexpat-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
+BuildRequires: gcc-c++ libexpat-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
 
 %description
 lftp is sophisticated file transfer program with command-line
@@ -39,7 +34,7 @@ command history, and a lot more.
 %setup
 %patch -p1
 sed -i 's/curses\.h term\.h/term\.h curses\.h/' m4/terminfo.m4
-bzip2 -9k NEWS src/ChangeLog
+xz -9k NEWS src/ChangeLog
 
 %build
 %def_with openssl
@@ -58,17 +53,11 @@ export CXX=%__cxx
 %makeinstall_std MKDIR_P='mkdir -p'
 %{?_with_modules:find %buildroot%_libdir/lftp/ -type f -name \*.la -delete}
 
-install -pm644 %_sourcedir/lftpget.1 %buildroot%_man1dir/
-install -pDm644 %_sourcedir/lftp-l.xpm %buildroot%_liconsdir/lftp.xpm
-install -pDm644 %_sourcedir/lftp-m.xpm %buildroot%_miconsdir/lftp.xpm
-install -pDm644 %_sourcedir/lftp-n.xpm %buildroot%_niconsdir/lftp.xpm
-
-desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
-
 %find_lang %name
 %set_verify_elf_method strict,rpath=normal
 %add_findreq_skiplist %_datadir/lftp/convert-mozilla-cookies
 %add_findreq_skiplist %_datadir/lftp/verify-file
+%define _unpackaged_files_terminate_build 1
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/lftp.conf
@@ -77,14 +66,14 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %{?_with_modules:%_libdir/lftp}
 %_datadir/lftp
 %_mandir/man?/*
-%_desktopdir/lftp.desktop
-%_liconsdir/*.xpm
-%_miconsdir/*.xpm
-%_niconsdir/*.xpm
-%doc src/ChangeLog.bz2 F* MIRRORS NEWS.bz2
+%doc src/ChangeLog.xz F* MIRRORS NEWS.xz
 %doc AUTHORS README.* THANKS TODO BUGS
 
 %changelog
+* Thu Aug 13 2020 Dmitry V. Levin <ldv@altlinux.org> 4.9.2-alt1
+- 4.8.4 -> 4.9.2.
+- Dropped desktop file (closes: #31157).
+
 * Wed Aug 01 2018 Dmitry V. Levin <ldv@altlinux.org> 4.8.4-alt1
 - 4.8.3 -> 4.8.4.
 
