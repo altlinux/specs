@@ -1,5 +1,5 @@
 Name:     brisk-menu
-Version:  0.6.1
+Version:  0.6.2
 Release:  alt1
 
 Summary:  An efficient menu for the MATE Desktop
@@ -49,6 +49,9 @@ tar xf %SOURCE1
 %_iconsdir/hicolor/scalable/actions/brisk_system-log-out-symbolic.svg
 
 %changelog
+* Sat Aug 22 2020 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt1
+- New version.
+
 * Tue Sep 10 2019 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
 - New version.
 - Add translations from https://github.com/getsolus/brisk-menu-translations.git.
