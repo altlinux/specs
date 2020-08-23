@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tiled
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Tiled is a general purpose tile map editor
 License: GPLv2
@@ -143,6 +143,9 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %_libdir/%name/plugins/libgmx.so
 
 %changelog
+* Sun Aug 23 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Automatically updated to 1.4.2.
+
 * Sat Jun 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Automatically updated to 1.4.1.
 
