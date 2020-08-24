@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: neomutt
-Version: 20200814
+Version: 20200821
 Release: alt1
 
 %define docdir %_docdir/%name-%version
@@ -77,6 +78,9 @@ make -s test
 %docdir
 
 %changelog
+* Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 20200821-alt1
+- Update to 20200821.
+
 * Mon Aug 17 2020 Vitaly Chikunov <vt@altlinux.org> 20200814-alt1
 - Update to 20200814.
 
