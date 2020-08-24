@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.1.4.1
+Version: 4.2.0.1
 Release: alt1
 
 Summary: A boulderdash like game
@@ -54,7 +54,7 @@ This package contains levels for Rocks'N'Diamonds
 
 %build
 %define _pkgdatadir %_gamesdatadir/%name
-%make_build sdl2 OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
+%make_build OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
 
 %install
 install -pD -m755 %name %buildroot%_gamesbindir/%name
@@ -81,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Mon Aug 24 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0.1-alt1
+- Automatically updated to 4.2.0.1.
+
 * Mon Jan 20 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.4.1-alt1
 - Build new version 4.1.4.1.
 
