@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt149
+Release: alt150
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Mon Aug 24 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt150
+- Removed obsolete ldconfig, update menu, and install info macros.
+- Implemented canonicalization of symlink destinations.
+- Backported:
+  + added a warning on absolute symlinks;
+  + disabled calculation of digests for ghost files.
+
 * Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt149
 - find-debuginfo-files: Fix processing of root directory (closes: #38842).
 
