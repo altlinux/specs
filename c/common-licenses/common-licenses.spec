@@ -1,5 +1,5 @@
 Name: common-licenses
-Version: 1.10
+Version: 1.11
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -47,6 +47,10 @@ cp -dp license-exception/* %buildroot%_licensedir-exception
 %_licensedir-exception
 
 %changelog
+* Mon Aug 24 2020 Fr. Br. George <george@altlinux.ru> 1.11-alt1
+- Add licenses:
+  + Add ParaType Open Font license
+
 * Tue Mar 24 2020 Alexey Gladkov <legion@altlinux.ru> 1.10-alt1
 - Rename ALT-CyrusIMAP -> ALT-Cyrus (ALT#38223)
 - Remove licenses with exceptions from the license directory
