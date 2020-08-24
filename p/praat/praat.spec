@@ -1,9 +1,9 @@
 Name: praat
-Version: 6.0.46
-Release: alt2
+Version: 6.1.16
+Release: alt1
 
 Summary: A program for speech analysis and synthesis
-License: GPL (and others for libraries used)
+License: GPLv2
 Group: Sound
 
 Url: http://www.praat.org
@@ -12,11 +12,11 @@ Url: http://www.praat.org
 Source: v%version.tar.gz
 Patch0: %name-6.0.46-gcc8-fix.patch
 
-# Automatically added by buildreq on Sun Sep 25 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libjack-devel
-
 Requires: fonts-bitmap-75dpi
+
+# Automatically added by buildreq on Mon Aug 24 2020
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel
+BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libjack-devel libpulseaudio-devel libstdc++-devel-static
 
 %description
 According to its authors, praat is "doing phonetics by computer".
@@ -40,7 +40,7 @@ Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 %patch0 -p2
 
 %build
-cp -a makefiles/makefile.defs.linux.alsa makefile.defs
+cp -a makefiles/makefile.defs.linux.pulse makefile.defs
 %make_build
 
 %install
@@ -58,6 +58,15 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Mon Aug 24 2020 Fr. Br. George <george@altlinux.ru> 6.1.16-alt1
+- Autobuild version bump to 6.1.16
+
+* Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 6.1.08-alt1
+- Autobuild version bump to 6.1.08
+
+* Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 6.1.05-alt1
+- Autobuild version bump to 6.1.05
+
 * Wed Feb 13 2019 Pavel Moseev <mars@altlinux.org> 6.0.46-alt2
 - no return statement in the non-void function fixed (according g++8)
 
