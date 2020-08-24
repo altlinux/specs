@@ -1,9 +1,9 @@
 Name: fonts-ttf-PT
-Version: 2012.05
-Release: alt1
+Version: 2016.08
+Release: alt2
 
 Summary: ParaType TrueType font family
-License: distributable
+License: ALT-ParaType-1.3
 Group: System/Fonts/True type
 Url: http://fonts.ru/public/
 Source0: http://www.fontstock.com/public/PTSans.zip
@@ -38,6 +38,12 @@ cp %SOURCE2 %SOURCE3 .
 %doc *.pdf *.txt
 
 %changelog
+* Mon Aug 24 2020 Fr. Br. George <george@altlinux.ru> 2016.08-alt2
+- Fix license in spec
+
+* Sun Aug 21 2016 Fr. Br. George <george@altlinux.ru> 2016.08-alt1
+- Update to actual state (copyright 2014)
+
 * Sun May 06 2012 Fr. Br. George <george@altlinux.ru> 2012.05-alt1
 - Add monospace typeface
 
