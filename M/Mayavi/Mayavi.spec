@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_disable bootstrap
+%def_disable docs
 
 %define vtkver 8.2
 
@@ -8,11 +9,11 @@
 
 Name:           Mayavi
 Version:        4.7.1
-Release:        alt1
+Release:        alt2
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
-License:        BSD and EPL and LGPLv2+ and LGPLv3+
+License:        BSD and BSD-3-Clause and BSD-style and EPL-1.0 and LGPL and LGPLv2+ and LGPLv3+
 URL:            http://code.enthought.com/projects/mayavi/
 
 # https://github.com/enthought/mayavi.git
@@ -22,16 +23,20 @@ Source2:        tvtk_doc.desktop
 
 Patch1: %name-alt-reqs.patch
 Patch2: %name-alt-docs.patch
+Patch3: %name-alt-no-docs.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-setupdocs
-BuildRequires: python3-module-sphinx-devel libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-vtk%vtkver /proc
 BuildRequires: desktop-file-utils
 BuildRequires: vtk%vtkver-python3
-BuildRequires: libGL-devel libGLU-devel xvfb-run
-# TODO: remove libnumpy-devel dependency when libnumpy-py3-devel is fixed
-BuildRequires: libnumpy-devel
+BuildRequires: libGL-devel libGLU-devel
+%if_enabled docs
+BuildRequires: python3-module-setupdocs
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: xvfb-run
+%endif
 %if_disabled bootstrap
 BuildRequires: python3-module-traits python3(traits.api)
 %endif
@@ -130,16 +135,23 @@ This package contains documentation for Mayavi, scientific data
 %setup
 %patch1 -p1
 %patch2 -p1
+%if_disabled docs
+%patch3 -p1
+%endif
 
 %build
-export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
-xvfb-run --server-args="-screen 0 1024x768x24" \
-	python3 setup.py build
+%if_enabled docs
+export PYTHONPATH=$PWD
+xvfb-run \
+%endif
+python3 setup.py build
 
 %install
-export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
-xvfb-run --server-args="-screen 0 1024x768x24" \
-	python3 setup.py install --skip-build --root=%buildroot
+%if_enabled docs
+export PYTHONPATH=$PWD
+xvfb-run \
+%endif
+python3 setup.py install --skip-build --root=%buildroot
 
 install -d %buildroot%_man1dir
 install -p -m644 docs/mayavi2.man %buildroot%_man1dir/mayavi2.1
@@ -189,12 +201,19 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %python3_sitelibdir/tvtk/tests
 
 %files doc
-%doc docs/*.txt docs/pdf examples docs/build/mayavi
+%doc docs/*.txt docs/pdf examples
+%if_enabled docs
+%doc docs/build/mayavi
 %if_disabled bootstrap
 %doc docs/build/tvtk
 %endif
+%endif
 
 %changelog
+* Mon Aug 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt2
+- Spec cleanup.
+- Disabled documentation build.
+
 * Thu Jun 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt1
 - Updated to upstream version 4.7.1.
 
