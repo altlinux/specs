@@ -12,7 +12,7 @@
 
 Name: golang-deepin-go-lib
 Version: 5.5.0.1
-Release: alt1
+Release: alt2
 Summary: Go bindings for Deepin Desktop Environment development
 
 License: GPL-3.0-only and BSD-2-Clause and BSD-3-Clause
@@ -26,9 +26,10 @@ Patch: 0001-fix-format-calls.patch
 
 BuildRequires: rpm-build-golang
 BuildRequires: deepin-gir-generator dbus-tools-gui iso-codes mobile-broadband-provider-info
-#BuildRequires: golang(github.com/cryptix/wav) golang(github.com/linuxdeepin/go-x11-client) golang(golang.org/x/image/bmp) golang(golang.org/x/image/tiff) golang(golang.org/x/net/context) golang(gopkg.in/alecthomas/kingpin.v2)
+#BuildRequires: golang(github.com/cryptix/wav) golang(github.com/linuxdeepin/go-x11-client) golang(golang.org/x/image/bmp) golang(golang.org/x/image/tiff) golang(golang.org/x/net/context) golang(gopkg.in/alecthomas/kingpin.v2) golang(github.com/godbus/dbus)
 BuildRequires: libgio-devel libgtk+3-devel libgdk-pixbuf-devel libpulseaudio-devel
 BuildRequires: golang-github-cryptix-wav-devel golang-deepin-go-x11-client-devel golang-x-image-devel golang-golang-x-net-devel golang-gopkg-alecthomas-kingpin-2-devel
+Requires: golang-github-go-dbus-devel
 
 %if_with check
 # Tests
@@ -82,6 +83,9 @@ export GOPATH="%go_path"
 %go_path/src/%import_path
 
 %changelog
+* Mon Aug 24 2020 Leontiy Volodin <lvol@altlinux.org> 5.5.0.1-alt2
+- Added golang(github.com/godbus/dbus) to requires.
+
 * Tue Jul 28 2020 Leontiy Volodin <lvol@altlinux.org> 5.5.0.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 
