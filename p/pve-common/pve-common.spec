@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 6.0.4
-Release: alt3
+Version: 6.1.4
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -35,8 +35,10 @@ BuildRequires: perl(Date/Parse.pm)
 BuildRequires: perl(Net/SSLeay.pm)
 BuildRequires: perl(HTTP/Daemon.pm)
 BuildRequires: perl(CPAN/Meta/YAML.pm)
+BuildRequires: perl(Net/LDAP.pm)
 # alt regressive tests
 BuildRequires: perl(TAP/Harness.pm)
+BuildRequires: perl(Test/MockModule.pm)
 
 %description
 This package contains the base library used by other PVE components.
@@ -64,6 +66,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Jul 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.1.4-alt1
+- 6.1-4
+
 * Fri Dec 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 6.0.4-alt3
 - actualized Netmask/CIDR
 
