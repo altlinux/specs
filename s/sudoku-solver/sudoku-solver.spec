@@ -1,5 +1,5 @@
 Name:		sudoku-solver
-Version:	1.0.0
+Version:	1.0.1
 Release:	alt1
 Summary:	Sudoku solver
 Group:		Games/Other
@@ -33,6 +33,10 @@ Solver sudoku puzzles.
 %{_datadir}/applications/%{name}.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 
+
 %changelog
+* Mon Aug 24 2020 Alexander Danilov  <admsasha@altlinux.org> 1.0.1-alt1
+- release 1.0.1
+
 * Mon Jul 27 2020 Alexander Danilov  <admsasha@altlinux.org> 1.0.0-alt1
 - release 1.0.0
