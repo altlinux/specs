@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.10.3
+Version: 1.10.4
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Aug 24 2020 Anton Midyukov <antohami@altlinux.org> 1.10.4-alt1
+- preinstall: Added parameter for parsing in cmdline: cma=*
+
 * Sat Aug 22 2020 Michael Shigorin <mike@altlinux.org> 1.10.3-alt1
 - preinstall: skip when there is no grub
 
