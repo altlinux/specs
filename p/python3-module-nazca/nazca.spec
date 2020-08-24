@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Python library for data alignment
 License: LGPL
@@ -18,12 +18,7 @@ Source: %{oname}-%{version}.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six python3-module-scipy
 BuildRequires: python3-module-lxml
-# BuildRequires: python-module-setuptools python-module-lxml
-# BuildRequires: python-module-scipy python-module-scikit-learn
-# BuildRequires: python-module-dateutil python2.7(SPARQLWrapper) python2.7(nltk)
-
-# %%py_provides %oname
-# %%py_requires scipy sklearn lxml dateutil SPARQLWrapper nltk
+BuildRequires: python3-module-numpy-testing
 
 %description
 Python library for data alignment.
@@ -64,6 +59,9 @@ cp -fR examples/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/examples
 
 %changelog
+* Mon Aug 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.5-alt2
+- Build requires fixed.
+
 * Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.5-alt1
 - Version updated to 0.9.5
 - porting to python3.
