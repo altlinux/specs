@@ -2,7 +2,7 @@
 %global source_directory 1.42-stable
 
 Name: virt-v2v
-Version: 1.42.0
+Version: 1.43.1
 Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -11,6 +11,7 @@ Url: https://github.com/libguestfs/virt-v2v
 
 Source0: http://download.libguestfs.org/virt-v2v/%source_directory/%name-%version.tar.gz
 Patch1: 0001-fix-fatal-error-pcreh-No-such-file-or-directory.patch
+Patch2: add-alt-support.patch
 
 BuildRequires(pre): rpm-build-ocaml
 BuildRequires: /usr/bin/pod2man
@@ -54,6 +55,7 @@ install virtio drivers so it will run quickly.
 
 %prep
 %setup
+%patch2 -p1
 pushd common
 %patch1 -p1
 popd
@@ -84,5 +86,9 @@ rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Mon Aug 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.43.1-alt1
+- update to 1.43.1
+- Add ALT support
+
 * Sun May 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt1
 - Initial release of separate virt-v2v program, was part of libguestfs.
