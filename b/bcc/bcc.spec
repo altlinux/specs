@@ -19,12 +19,12 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.15.0
+Version:	0.16.0
 Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
-URL:		https://github.com/iovisor/bcc
+URL:		https://www.iovisor.org/technology/bcc
 Vcs:		https://github.com/iovisor/bcc.git
 # Also libbpf https://github.com/libbpf/libbpf
 # Which is a mirror of bpf-next linux tree's tools/lib/bpf
@@ -165,13 +165,13 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 	-DUSINGISYSTEM:BOOL=no \
 	-DPYTHON_CMD=python3 \
 	%{?lua_config}
-%cmake_build
+%cmake_build VERBOSE=1
 
 %install
 %set_verify_elf_method relaxed
 pathfix.py -pni %__python3 tools
 
-%cmake_install install/strip DESTDIR=%buildroot
+%cmake_install install DESTDIR=%buildroot VERBOSE=1
 
 # Cannot make noarch package because bcc exists not on all arches
 install -d %buildroot/%python3_sitelibdir
@@ -219,6 +219,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt2
+- Update to bcc v0.16.0 (2020-08-22), libbpf v0.1.0 (2020-08-18).
+- spec: Fix debuginfo packages.
+
 * Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt2
 - Rebuild on clang10.
 
