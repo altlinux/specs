@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: blender
-Version: 2.83.4
+Version: 2.83.5
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
@@ -195,6 +195,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_man1dir/*.1*
 
 %changelog
+* Mon Aug 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83.5-alt1
+- Updated to upstream version 2.83.5.
+
 * Thu Aug 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83.4-alt1
 - Updated to upstream version 2.83.4.
 
