@@ -1,5 +1,5 @@
-%define git_ver 10768
-%define git_commit b487c09d340729a0d0a82a9fb5bdd06ae11146f9
+%define git_ver 10773
+%define git_commit c5aebe456411f08d7159e6a2cdfe7f3d9e6ec9b4
 
 %define glslang_commit bcf6a2430e99e8fc24f9f266e99316905e6d5134
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -155,6 +155,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Aug 24 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10773-alt1
+- Version 0.0.11.10773
+
 * Fri Aug 21 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10768-alt1
 - Version 0.0.11.10768
 
