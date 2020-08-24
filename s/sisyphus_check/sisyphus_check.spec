@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.56
+Version: 0.8.57
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Mon Aug 24 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.57-alt1
+- 100-check-deps: disallowed self-obsoletes.
+
 * Wed Nov 20 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.56-alt1
 - 100-check-deps: add /usr/bin/python and python-base to bad_deps.
 
