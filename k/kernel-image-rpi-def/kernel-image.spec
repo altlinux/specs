@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rpi-def
-Release: alt3
+Release: alt4
 epoch:1 
 %define kernel_need_version	5.4
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -59,6 +59,9 @@ Patch0: %name-%version-%release.patch
 ExclusiveArch: armh aarch64
 
 %define make_target Image
+%ifarch %arm
+%define make_target zImage
+%endif
 
 %define image_path arch/%base_arch/boot/%make_target
 
@@ -490,6 +493,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Aug 24 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.51-alt4
+- Enable VIRTIO modules
+- Set all VIRTIO as modules for aarch64
+- CONFIG_VIRTIO_NET=m add network support in QEmu
+- Add ACPI support for aarch64
+- Change kernel format to zImage for armh
+
 * Wed Aug 05 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.51-alt3
 - Add armh
 - Add file config-armh
