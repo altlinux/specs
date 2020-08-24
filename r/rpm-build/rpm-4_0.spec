@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt148
+Release: alt149
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt149
+- find-debuginfo-files: Fix processing of root directory (closes: #38842).
+
 * Sat Aug 22 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt148
 - debuginfo: Warn if stripped ELFs are found.
 - debuginfo: Implement %%_stripped_files_terminate_build.
