@@ -5,14 +5,14 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.7.4
+Version: 2.7.6
 Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
 Summary(ru_RU.UTF-8): Avidemux -- это редактор AVI-файлов с графическим интерфейсом
 Url: http://avidemux.org/
-License: GPL
+License: GPL-2.0-only
 
 ExcludeArch: armh
 
@@ -201,6 +201,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 2.7.6-alt1
+- new version
+
 * Mon Jun 29 2020 Sergey V Turchin <zerg@altlinux.org> 2.7.4-alt1
 - new version
 - don't build on armh
