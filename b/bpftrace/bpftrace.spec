@@ -1,13 +1,24 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
 Version:	0.11.0
-Release:	alt2
+Release:	alt3
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
 URL:		https://github.com/iovisor/bpftrace
 Vcs:		https://github.com/iovisor/bpftrace.git
+# Docs:		https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
+# Docs:		https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
+# Docs:		http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
+# Docs:		http://www.brendangregg.com/ebpf.html#bpftrace
+# PR:		https://lwn.net/Articles/793749/
+# PR:		http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+
 Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
@@ -38,9 +49,6 @@ kernel dynamic tracing (kprobes), user-level dynamic tracing (uprobes), and
 tracepoints. The BPFtrace language is inspired by awk and C, and predecessor
 tracers such as DTrace and SystemTap.
 
-See http://www.brendangregg.com/ebpf.html#bpftrace
-    http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
-
 %prep
 %setup
 
@@ -63,8 +71,14 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 
 %install
 %set_verify_elf_method relaxed
-%cmake_install install/strip DESTDIR=%buildroot
+%cmake_install install DESTDIR=%buildroot
 find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
+
+# Fix man pages.
+pushd %buildroot%_man8dir
+ rename '' bpftrace- *.gz
+ rename bpftrace- '' bpftrace-bpftrace.8.gz
+popd
 
 %check
 BUILD/src/bpftrace --version	 # not requires root
@@ -105,6 +119,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Tue Aug 25 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt3
+- Rename man pages with bpftrace- prefix.
+- Rebuild with debuginfo.
+
 * Mon Aug 10 2020 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt2
 - Rebuild with clang10.
 
