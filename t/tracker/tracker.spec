@@ -20,7 +20,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -170,8 +170,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 	%{?_enable_network_manager:-Dnetwork_manager=enabled} \
 	%{?_enable_stemmer:-Dstemmer=enabled} \
 	%{?_enable_docs:-Ddocs=true} \
-	%{?_disable_functional_tests:-Dfunctional_tests=false} \
-	-Dsystemd_user_services='%_prefix/lib/systemd/user'
+	%{?_disable_functional_tests:-Dfunctional_tests=false}
 %nil
 %meson_build
 
@@ -212,6 +211,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %_man1dir/tracker-reset.*
 %_man1dir/tracker-sql.*
 %_man1dir/tracker-status.*
+%_man1dir/tracker-export.*
 
 %files devel
 %_includedir/%name-%api_ver/
@@ -242,6 +242,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %endif
 
 %changelog
+* Tue Aug 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
+- 2.3.5
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
 - 2.3.4
 
