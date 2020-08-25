@@ -1,6 +1,9 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 Name: python3-module-PySide2
 Version: 5.15.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -11,8 +14,10 @@ URL: https://wiki.qt.io/Qt_for_Python
 Source: pyside-setup-opensource-src-%version.tar
 Patch1: pyside2-link-with-python.patch
 
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): cmake
+BuildRequires: gcc-c++
 BuildRequires: clang-devel
 BuildRequires: llvm-devel
 BuildRequires: libxml2-devel
@@ -125,7 +130,11 @@ the previous versions (without the 2) refer to Qt 4.
 %patch1 -p2
 
 %build
+%_K5if_ver_gt %ubt_id M95
 export CXX=/usr/bin/clang++
+%else
+export CXX=g++
+%endif
 %cmake -DUSE_PYTHON_VERSION=3
 %cmake_build
 
@@ -180,8 +189,14 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- use g++ on p9
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
+
+* Sun May 17 2020 Andrey Cherepanov <cas@altlinux.org> 5.12.6-alt0.1.p9
+- Backport to p9 (build with g++).
 
 * Fri Mar 27 2020 Andrey Cherepanov <cas@altlinux.org> 5.12.6-alt1
 - Initial build in Sisyphus.
