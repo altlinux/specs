@@ -9,7 +9,7 @@ language.
 
 Name: python3-module-%oname
 Version: 1.5.6
-Release: alt1
+Release: alt2
 
 Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
@@ -27,8 +27,8 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
 %endif
 
-Conflicts: %name < %EVR
-Obsoletes: %name < %EVR
+Conflicts: python-module-%oname < %EVR
+Obsoletes: python-module-%oname < %EVR
 
 BuildArch: noarch
 
@@ -129,6 +129,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Aug 25 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt2
+- Fix obsoletes tag.
+
 * Thu Feb 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt1
 - Build new version.
 - Remove python2 support.
