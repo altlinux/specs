@@ -3,7 +3,7 @@
 %define libopenh264 libopenh264_%sover
 Name: openh264
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: H.264 codec library
 Group: System/Libraries
@@ -56,9 +56,11 @@ sed -i -e 's|^PREFIX=.*$|PREFIX=%{_prefix}|' Makefile
 sed -i -e 's|^LIBDIR_NAME=.*$|LIBDIR_NAME=%{_lib}|' Makefile
 sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 
-[ `grep '^SHAREDLIB_MAJORVERSION=.*$' Makefile | sed 's|.*=||'` == '6' ] \
- && sed -i 's|^SHAREDLIB_MAJORVERSION=.*$|SHAREDLIB_MAJORVERSION=%sover|' Makefile \
- ||:
+# remove conflict; see bug#38832
+if [ `grep '^SHAREDLIB_MAJORVERSION=.*$' Makefile | sed 's|.*=||'` == '6' ] ; then
+ sed -i 's|^SHAREDLIB_MAJORVERSION=.*$|SHAREDLIB_MAJORVERSION=%sover|' Makefile
+ sed -i 's|^FULL_VERSION.*:=.*$|FULL_VERSION := 2.1.0|' Makefile
+fi
 
 %build
 %make_build
@@ -80,6 +82,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %_libdir/lib*.a
 
 %changelog
+* Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt2
+- fix conflict with libopenh264
+
 * Mon Aug 24 2020 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
