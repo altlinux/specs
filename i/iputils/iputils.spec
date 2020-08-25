@@ -1,7 +1,7 @@
 Name: iputils
-%define timestamp 20190709
+%define timestamp 20200821
 Version: %timestamp
-Release: alt2
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -22,7 +22,6 @@ Requires: /var/resolv
 BuildRequires(pre): meson
 
 BuildRequires: libcap-devel
-BuildRequires: libsysfs-devel libssl-devel
 BuildRequires: libidn2-devel
 BuildRequires: docbook5-style-xsl xsltproc
 
@@ -68,7 +67,6 @@ export LDFLAGS='-pie'
 	-DNO_SETCAP_OR_SUID=true \
 	-DUSE_CAP=true \
 	-DUSE_IDN=true \
-	-DUSE_CRYPTO=openssl \
 	-DUSE_GETTEXT=false
 
 %meson_build -v
@@ -153,6 +151,11 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Tue Aug 25 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt1
+- Dropped libsysfs-devel from BR.
+- Dropped libssl-devel from BR.
+- 20190709 -> 20200821.
+
 * Wed Nov 27 2019 Mikhail Efremov <sem@altlinux.org> 20190709-alt2
 - Update License tag.
 - Fix build with -Werror.
