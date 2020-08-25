@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 Name: virtualgl
 Version: 2.6.4
-Release: alt1
+Release: alt2
 
 %define vgl_name vgl
 
 Summary: Runs remote OpenGL applications with full 3D hardware acceleration
-License: LGPL
+License: LGPLv2.1
 Group: Graphics
 
 Url: http://virtualgl.org
@@ -35,8 +35,8 @@ BuildRequires: opencl-headers
 BuildRequires: ocl-icd-devel
 BuildRequires: libxcbutil-keysyms-devel
 
-Provides: VirtualGL = %version %name = %version
-Obsoletes: VirtualGL <= %version %name < %version
+Provides: VirtualGL = %EVR %name = %EVR
+Obsoletes: VirtualGL <= %EVR
 
 %description
 With VirtualGL, the OpenGL commands and 3D data are redirected to a 3D
@@ -48,10 +48,10 @@ with compute and storage resources.
 %package devel
 Summary: VirtualGL development files
 Group: Development/Other
-Requires: %name = %version
+Requires: %name = %EVR
 BuildArch: noarch
-Provides: VirtualGL-devel = %version %name-devel = %version
-Obsoletes: VirtualGL-devel <= %version %name-devel < %version
+Provides: VirtualGL-devel = %EVR %name-devel = %EVR
+Obsoletes: VirtualGL-devel <= %EVR
 
 %description devel
 With VirtualGL, the OpenGL commands and 3D data are redirected to a 3D
@@ -145,6 +145,11 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Tue Aug 25 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.4-alt2
+- spec: remove self-obsoletes
+  + switch to strict dependencies
+  + fix license ambiguity
+
 * Mon Jun 29 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.6.4-alt1
 - new version
   + remove upstream-FTBFS-against-Mesa19.3.0-headers patch
