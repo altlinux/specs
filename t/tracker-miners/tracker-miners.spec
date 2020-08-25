@@ -1,12 +1,11 @@
 %set_verify_elf_method unresolved=relaxed
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define ver_major 2.3
 %define ver_api 2.0
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -132,8 +131,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 	%{?_enable_icon:-Dicon=true} \
 	%{?_enable_libosinfo:-Diso=enabled} \
 	%{?_enable_playlist:-Dplaylist=enabled} \
-	%{?_enable_docs:-Ddocs=true} \
-	-Dsystemd_user_services='%_userunitdir'
+	%{?_enable_docs:-Ddocs=true}
 %meson_build
 
 %install
@@ -171,6 +169,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 
 %changelog
+* Tue Aug 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
+- 2.3.4
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
 - 2.3.3
 
