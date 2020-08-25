@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.2.5
-Release: alt3
+Version: 4.4.1
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -11,10 +11,9 @@ Url: https://veyon.io/
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
 
+Requires: polkit qca-qt5-ossl
+
 Source: %name-%version.tar
-Source1: ultravnc.tar
-Source2: libvncserver.tar
-Source3: x11vnc.tar
 
 Patch1: Unbundle-some-libraries-and-fix-build-alt.patch
 Patch2: Fix-launch-of-Veyon-in-alt.patch
@@ -38,7 +37,6 @@ BuildRequires: libqca2-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXtst-devel
-Requires: polkit qca-qt5-ossl
 
 %description
 Veyon is a free and open source software 
@@ -78,7 +76,9 @@ Veyon доступен на разных языках и предоставля�
 просто установив Veyon у себя на домашнем ПК.
 
 %prep
-%setup -a1 -a2 -a3
+%setup
+rm -rf ./3rdparty
+mv .gear/3rdparty ./
 %patch1 -p1
 %patch2 -p1
 
@@ -102,6 +102,9 @@ Veyon доступен на разных языках и предоставля�
 %_datadir/%name
 
 %changelog
+* Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.1-alt1
+- New version
+
 * Tue Apr 21 2020 Pavel Moseev <mars@altlinux.org> 4.2.5-alt3
 - Fix launch of Veyon in ALT Workstation x86_64 (closes: #37950)
 
