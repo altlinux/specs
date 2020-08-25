@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.2.10
-Release: alt4
+Release: alt5
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -42,6 +42,13 @@ and respectful of the free software.
 %prep
 %setup -n %name
 
+# fix python shebangs
+find . -type f -print0 |
+    xargs -r0 sed -i 's@/usr/bin/env python@%__python@' --
+
+find . -type f -print0 |
+    xargs -r0 sed -i 's@exec python@exec %__python@' --
+
 %install
 mkdir %buildroot
 mkdir -p %buildroot%_bindir/
@@ -74,6 +81,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Tue Aug 25 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.10-alt5
+- Fix FTBFS.
+
 * Tue Oct 02 2018 Grigory Ustinov <grenka@altlinux.org> 4.2.10-alt4
 - Remove dependency on ImageMagick.
 
