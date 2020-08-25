@@ -4,7 +4,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.601
+Version: 7.0.604
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -71,6 +71,9 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Tue Aug 25 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.604-alt1
+- 7.0.604
+
 * Mon Aug 03 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.601-alt1
 - 7.0.601
 
