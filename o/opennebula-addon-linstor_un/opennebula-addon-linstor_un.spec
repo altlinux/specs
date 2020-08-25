@@ -4,7 +4,7 @@
 
 Summary: Community driven full-feature Linstor storage driver for OpenNebula
 Name: opennebula-addon-linstor_un
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 License: Apache-2.0
 Group: System/Servers
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 BuildArch: noarch
-#ExcludeArch: %arm
-Requires: jq linstor-satellite opennebula-server
+
+Requires: jq linstor-satellite opennebula-server >= 5.8
 
 %description
 Community driven full-feature Linstor storage driver for OpenNebula.
@@ -70,6 +70,9 @@ fi
 %config(noreplace) %_destination/etc/datastore/linstor_un/linstor_un.conf
 
 %changelog
+* Tue Aug 25 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Sat Jul 18 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - set LEGACY_MONITORING by default for OpenNebula 5.10- support
