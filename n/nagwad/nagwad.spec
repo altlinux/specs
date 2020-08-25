@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.9.11
+Version:  0.9.12
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -61,6 +61,7 @@ install -Dm 0644 conf/nagwad/authdata.regexp %buildroot%_sysconfdir/nagwad/authd
 install -Dm 0644 conf/nagwad/device.regexp %buildroot%_sysconfdir/nagwad/device.regexp
 install -Dm 0644 conf/nagwad/login.regexp %buildroot%_sysconfdir/nagwad/login.regexp
 install -Dm 0644 conf/nagwad/osec.regexp %buildroot%_sysconfdir/nagwad/osec.regexp
+install -Dm 0644 conf/nagwad/print.regexp %buildroot%_sysconfdir/nagwad/print.regexp
 install -Dm 0644 conf/nagios/nrpe/nagwad.cfg %buildroot%_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 install -Dm 0644 conf/nagstamon/actions/action_Lock_host.conf %buildroot%_sysconfdir/nagstamon/actions/action_Lock_host.conf
 install -Dm 0644 conf/nagstamon/actions/action_NSCA_shell.conf %buildroot%_sysconfdir/nagstamon/actions/action_NSCA_shell.conf
@@ -117,6 +118,10 @@ fi
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Mon Aug 24 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt1
+- Fixed the 'device' NRPE command.
+- Fix: Really add print.regexp.
+
 * Wed Aug 19 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.11-alt1
 - Fixed locale in nagwad messages.
 - Filter out "add_rule" events from auditd related to user and
