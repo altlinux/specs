@@ -15,7 +15,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        78.1.0
+Version:        78.2.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -49,6 +49,7 @@ Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
 Patch011: 0011-arm-tools-profiler-drop-MOZ_SIGNAL_TRAMPOLINE.patch
+Patch012: 0012-use-floats-for-audio-on-arm-too.patch
 ### End Patches
 
 BuildRequires(pre): mozilla-common-devel
@@ -102,7 +103,6 @@ BuildRequires: libdrm-devel
 # Python requires
 BuildRequires: /dev/shm
 
-BuildRequires: python2-base
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
@@ -196,6 +196,7 @@ Most likely you don't need to use this package.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
+%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -209,18 +210,17 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch armh %{ix86} ppc64le
+%ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
+%endif
 %ifnarch x86_64
 ac_add_options --disable-webrtc
-%endif
 %endif
 %ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
-%ifarch armh
+%ifarch %{ix86}
 ac_add_options --disable-av1
-ac_add_options --disable-rust-simd
 %endif
 EOF
 
@@ -262,6 +262,10 @@ export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
+%ifarch armh
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -march=armv7-a -mthumb"
+%endif
+
 # PIE, full relro
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
 
@@ -276,21 +280,17 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-%ifarch armh
-export CC="gcc"
-export CXX="g++"
-%else
+export MOZ_PARALLEL_BUILD=8
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
-%endif
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
-export RUSTFLAGS="-Cdebuginfo=0"
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
@@ -443,6 +443,15 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Aug 25 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.0-alt1
+- New release (78.2.0).
+  + CVE-2020-15663 Downgrade attack on the Mozilla Maintenance Service could have resulted in escalation of privilege
+  + CVE-2020-15664 Attacker-induced prompt for extension installation
+  + CVE-2020-15670 Memory safety bugs fixed in Firefox 80 and Firefox ESR 78.2
+
+* Fri Aug 14 2020 Andrey Cherepanov <cas@altlinux.org> 78.1.0-alt2
+- Remove python2-base from build requirements.
+
 * Tue Jul 28 2020 Andrey Cherepanov <cas@altlinux.org> 78.1.0-alt1
 - New release (78.1.0).
 - Fixes:
