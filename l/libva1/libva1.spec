@@ -6,14 +6,12 @@
 
 Name: libva1
 Version: 1.8.3
-Release: alt4
+Release: alt5
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
 Group: System/Libraries
 Url: https://github.com/01org/libva
-
-Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -66,6 +64,9 @@ libva-driver-intel
 %_libdir/*.so.*
 
 %changelog
+* Tue Aug 25 2020 Anton Farygin <rider@altlinux.ru> 1.8.3-alt5
+- removed self obsoleted
+
 * Fri Jun 29 2018 Anton Farygin <rider@altlinux.ru> 1.8.3-alt4
 - build as compat library for dependecy resolution
 - disabled devel package
