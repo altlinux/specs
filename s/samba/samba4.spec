@@ -59,8 +59,8 @@
 %endif
 
 Name:    samba
-Version: 4.11.11
-Release: alt2
+Version: 4.11.12
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1793,9 +1793,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Aug 26 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.12-alt1
+- Update to latest stable security release of the Samba 4.11
+
 * Sun Aug 02 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.11-alt2
 - Update to latest fixes from testing
-- Remove derecated libwbclient install as alternative with libwbcliet-sssd
+- Remove derecated libwbclient install as alternative with libwbclient-sssd
 - Fix pygpo double memory free stackframe in py_ads_get_gpo_list()
 
 * Tue Jul 07 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.11-alt1
