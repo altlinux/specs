@@ -2,7 +2,7 @@
 
 Name:       hedgewars
 Version:    1.0.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -18,6 +18,9 @@ Patch:      fix_non_inline_ShiftWorld.patch
 # This patch fixes hGetContents: invalid argument (invalid byte sequence) on i586 arch
 # Should be removed in next version
 Patch1:     15474.patch
+# This patch fixes build with Qt 5.15
+# Should be removed in next version
+Patch2:     15589.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -33,7 +36,7 @@ BuildRequires: ghc8.6.4-utf8-string ghc8.6.4-zlib
 BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
 BuildRequires: libffi-devel libfreeglut-devel libgmp-devel liblua5.1-compat-devel
-BuildRequires: libphysfs-devel libqt4-webkit-devel libqt5-quickshapes
+BuildRequires: libphysfs-devel libqt5-quickshapes
 BuildRequires: libswresample-devel phonon-devel qt5-tools-devel
 BuildRequires: desktop-file-utils chrpath
 %ifarch %ix86
@@ -101,6 +104,7 @@ This package contains all the data files for %name.
 %setup
 %patch -p2
 %patch1 -p1
+%patch2 -p1
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -148,6 +152,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Aug 26 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2
+- Fixed FTBFS.
+
 * Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Build new version (with video rendering on %%ix86).
 
