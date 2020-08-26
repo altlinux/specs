@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.57
+Version: 0.8.58
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Aug 26 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.58-alt1
+- 100-check-deps: changed the wording of the error diagnostics
+  introduced in the previous release.
+
 * Mon Aug 24 2020 Dmitry V. Levin <ldv@altlinux.org> 0.8.57-alt1
 - 100-check-deps: disallowed self-obsoletes.
 
