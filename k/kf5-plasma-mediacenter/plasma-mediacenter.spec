@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.7.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ License: GPLv2+ / LGPLv2+
 Requires: libqt5-multimedia kf5-baloo
 
 Source: %rname-%version.tar
+Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Wed Oct 14 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils gtk-update-icon-cache libEGL-devel libGL-devel libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel qt5-declarative-devel rpm-build-gir ruby ruby-stdlibs
@@ -57,12 +58,14 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 # hide menu item
 echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
 
 %build
-%K5build
+%K5cmake
+%K5make
 
 %install
 %K5install
@@ -92,6 +95,9 @@ echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
 %_K5lib/libplasmamediacenter.so.*
 
 %changelog
+* Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt2
+- fix compile in new environment
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 
