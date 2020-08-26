@@ -1,5 +1,5 @@
 Name: sslh
-Version: 1.20
+Version: 1.21c
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -60,6 +60,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.21c-alt1
+- new version 1.21c (with rpmrb script)
+
 * Sun Dec 23 2018 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
 - new version 1.20 (with rpmrb script)
 
