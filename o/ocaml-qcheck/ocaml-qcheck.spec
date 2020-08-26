@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.13
+Version: 0.14
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -77,6 +77,9 @@ dune runtest
 %_libdir/ocaml/%{libname}*/*/*.cmxs
 
 %changelog
+* Wed Aug 26 2020 Anton Farygin <rider@altlinux.ru> 0.14-alt1
+- 0.14
+
 * Mon Feb 17 2020 Anton Farygin <rider@altlinux.ru> 0.13-alt1
 - 0.13
 
