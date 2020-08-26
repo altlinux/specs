@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 Epoch: 1
 
@@ -38,6 +38,7 @@ Supported devices: DSO2xxx Series, DSO52xx Series, 6022BE/BL
 
 %install
 %makeinstall_std
+mv %buildroot/usr/lib %buildroot/lib
 ln -s OpenHantek %buildroot%_bindir/%name
 
 %files
@@ -47,8 +48,12 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_desktopdir/OpenHantek.desktop
 %_docdir/openhantek/
 %_iconsdir/hicolor/*x*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.1.2-alt1
+- new version 3.1.2 (with rpmrb script)
+
 * Sun Aug 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.1.1-alt1
 - new version 3.1.1 (with rpmrb script)
 
