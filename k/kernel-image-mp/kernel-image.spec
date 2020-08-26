@@ -1,5 +1,5 @@
-%define kernel_base_version	5.7
-%define kernel_sublevel        .16
+%define kernel_base_version	5.8
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -257,6 +257,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Aug 26 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.4-alt1
+- 5.8.4
+
+* Wed Aug 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.0-alt1
+- 5.8
+
 * Wed Aug 19 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.7.16-alt1
 - 5.7.16
 
