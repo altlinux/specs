@@ -1,11 +1,15 @@
 Name:		edid-decode
-Version:	20170207
-Release:	alt1.1
+Version:	20200720
+Release:	alt1
+
 Summary:	EDID decoder and conformance tester
-Source:		%name-%version.tar
-Group:		System/X11
 License:	MIT
-Url:		http://cgit.freedesktop.org/xorg/app/edid-decode/
+Group:		System/Kernel and hardware
+Url:		https://git.linuxtv.org/edid-decode.git/
+
+Source:		%name-%version.tar
+
+BuildRequires:	gcc-c++
 
 %description
 %summary
@@ -18,15 +22,15 @@ Url:		http://cgit.freedesktop.org/xorg/app/edid-decode/
 
 %install
 %makeinstall
-mkdir -p %buildroot/%_datadir
-cp -a data %buildroot/%_datadir/
 
 %files
 %_bindir/*
-%_datadir/data
 %_man1dir/edid-decode.1*
 
 %changelog
+* Wed Aug 26 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 20200720-alt1
+- updated from git.56dd103
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 20170207-alt1.1
 - NMU: added URL
 
