@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Various code metrics for Python code
@@ -66,6 +66,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Aug 26 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Wed Feb 12 2020 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Build new version.
 - Add test subpackage.
