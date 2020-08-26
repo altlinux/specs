@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.7.4
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -95,6 +95,9 @@ echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
 %_K5lib/libplasmamediacenter.so.*
 
 %changelog
+* Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt3
+- fix compile in new environment
+
 * Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt2
 - fix compile in new environment
 
