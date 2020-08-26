@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/astroid-*.egg-info/
 
 %changelog
+* Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt2
+- Fixed tests with new numpy.
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1
 - 2.3.3 -> 2.4.2.
 

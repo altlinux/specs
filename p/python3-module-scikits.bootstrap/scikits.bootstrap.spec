@@ -3,15 +3,17 @@
 
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Bootstrap confidence interval estimation routines for SciPy
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/scikits.bootstrap/
 
 # https://github.com/cgevans/scikits-bootstrap.git
 Source: %name-%version.tar
+
+Patch1: %oname-upstream-numpy-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-numpy python3-module-scipy
@@ -49,6 +51,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -59,14 +62,16 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %install
 %python3_install
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
+%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %check
 %__python3 setup.py test
 
 %files
+%doc LICENSE
 %doc *.md
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
@@ -80,6 +85,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
+- Fixed build with new numpy.
+
 * Tue Dec 17 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt1
 - version updated to 1.0.1
 - build for python2 disabled

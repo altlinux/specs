@@ -6,10 +6,10 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.25.3
+Version: 1.1.1
 Release: alt1
 Summary: Python Data Analysis Library
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 
 Url: https://pandas.pydata.org
@@ -21,8 +21,6 @@ Patch1: %oname-alt-docs.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-# TODO: remove libnumpy-devel when libnumpy-py3-devel is fixed
-BuildRequires: libnumpy-devel
 BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-numpy
 BuildRequires: python3(scipy) python3(xlrd)
 %if_enabled check
@@ -136,6 +134,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1.
+
 * Thu Jan 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.25.3-alt1
 - Updated to upstream version 0.25.3 (Closes: #37445).
 - Built python-2 subpackage separately.

@@ -7,7 +7,7 @@
 %define oname Enable
 Name: python-module-%oname
 Version: 4.8.1
-Release: alt1
+Release: alt2
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -23,6 +23,7 @@ Patch1: 2c9b2090edd03e14857f99778350daed3ccf8e5a.patch
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
 BuildRequires: libnumpy-devel libfreetype-devel
+BuildRequires: libopenblas-devel liblapack-devel
 
 %if_with python2
 BuildRequires: python-devel python-module-setuptools
@@ -256,6 +257,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %endif
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.1-alt2
+- Updated build dependencies.
+
 * Wed Feb 26 2020 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
 - Build new version for python3.8.
 

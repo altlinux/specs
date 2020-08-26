@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname seaborn
 
 Name: python3-module-seaborn
-Version: 0.9.0
+Version: 0.10.1
 Release: alt1
-
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
 URL: https://github.com/mwaskom/seaborn
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flake8 python3-module-pytest-runner
-
 
 %description
 Seaborn is a library for making attractive and informative statistical graphics in Python. It is built on top of matplotlib and tightly integrated with the PyData stack, including support for numpy and pandas data structures and statistical routines from scipy and statsmodels.
@@ -29,7 +30,6 @@ Some of the features that seaborn offers are
 - A function to plot statistical timeseries data with flexible estimation and representation of uncertainty around the estimate
 - High-level abstractions for structuring grids of plots that let you easily build complex visualizations
 
-
 %prep
 %setup
 
@@ -40,11 +40,14 @@ Some of the features that seaborn offers are
 %python3_install
 
 %files
-%python3_sitelibdir_noarch/seaborn
-%python3_sitelibdir_noarch/seaborn-%{version}*
+%python3_sitelibdir_noarch/%oname
+%python3_sitelibdir_noarch/%oname-%version-*.egg-info
 
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.1-alt1
+- Updated to upstream version 0.10.1.
+
 * Mon Jan 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt1
 - Version updated to 0.9.0
 - porting on python3.
