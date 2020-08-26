@@ -13,7 +13,7 @@
 
 Name:    freecad
 Version: 0.18.4
-Release: alt3
+Release: alt4
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -35,6 +35,11 @@ Patch2: %name-build-with-external-smesh.patch
 Patch4: %name-desktop-ru.patch
 
 Patch5: %name-%version-alt-boost-1.73.0-compat.patch
+
+Patch6: %name-%version-upstream-qt-5.15-compat-1.patch
+Patch7: %name-%version-upstream-qt-5.15-compat-2.patch
+Patch8: %name-%version-upstream-qt-5.15-compat-3.patch
+Patch9: %name-%version-upstream-qt-5.15-compat-4.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -143,6 +148,10 @@ rm -rf src/3rdParty
 #patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -230,6 +239,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.4-alt4
+- Fixed build with qt-5.15.
+
 * Wed Jun 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.4-alt3
 - Rebuilt with boost-1.73.0.
 
