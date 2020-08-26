@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.6.9
+Version: 2.6.10
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -56,9 +56,9 @@ This package contains documentation files for %name.
 %__subst "s|AM_GNU_GETTEXT_VERSION|AM_GNU_GETTEXT_VERSION(0.18.2)|g" configure.ac
 
 cat >>src/libdar/Makefile.am <<EOF
-libdar64_la_LIBADD = -lcurl
-libdar32_la_LIBADD = -lcurl
-libdar_la_LIBADD = -lcurl
+libdar64_la_LIBADD = -lcurl -lgpgme
+libdar32_la_LIBADD = -lcurl -lgpgme
+libdar_la_LIBADD = -lcurl -lgpgme
 EOF
 
 %autoreconf
@@ -98,6 +98,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.10-alt1
+- new version 2.6.10 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.9-alt1
 - new version 2.6.9 (with rpmrb script)
 
