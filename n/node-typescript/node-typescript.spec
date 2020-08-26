@@ -4,8 +4,8 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-typescript
-Version: 3.9.5
-Release: alt2
+Version: 3.9.7
+Release: alt1
 
 Summary: TypeScript is a language for application scale JavaScript development
 
@@ -58,6 +58,9 @@ ln -s %nodejs_sitelib/%node_module/bin/tsserver %buildroot%_bindir
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Wed Aug 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.9.7-alt1
+- new version 3.9.7 (with rpmrb script)
+
 * Fri Jun 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.9.5-alt2
 - drop rpm-build-nodejs from Requires
 
