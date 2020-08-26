@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.49
+Version: 5.49.1
 Release: alt1
 
 Source: %name-%version.tar
@@ -153,6 +153,9 @@ fi ||:
 
 
 %changelog
+* Wed Aug 26 2020 Paul Wolneykien <manowar@altlinux.org> 5.49.1-alt1
+- Disable auto compilation of .scm files.
+
 * Wed Mar 11 2020 Paul Wolneykien <manowar@altlinux.org> 5.49-alt1
 - Fixed file upload (closes: 38207).
 

@@ -1,5 +1,5 @@
 Name: alterator
-Version: 5.4
+Version: 5.4.1
 Release: alt2
 
 Summary: ALT Linux configurator engine
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Aug 26 2020 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt2
+- Disable auto compilation of .scm files.
+
 * Mon Dec 16 2019 Paul Wolneykien <manowar@altlinux.org> 5.4-alt2
 - Fixed failing tests: Explicitly set ru_RU.UTF-8 locale.
 
