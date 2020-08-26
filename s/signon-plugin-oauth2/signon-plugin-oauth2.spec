@@ -1,6 +1,6 @@
 Name: signon-plugin-oauth2
 Version: 0.24
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: OAuth2 plugin for the Accounts framework
@@ -10,6 +10,7 @@ License: LGPLv2
 Requires: signon-ui
 
 Source: signon-oauth2-%version.tar
+Patch1: alt-qt515.patch
 
 # Automatically added by buildreq on Thu Jul 09 2015 (-bi)
 # optimized out: elfutils kf5-attica-devel kf5-kjs-devel libqt5-core libqt5-network libqt5-xmlpatterns libsignon-plugins1 libsignon-qt51 libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-webkit-devel ruby ruby-stdlibs
@@ -30,6 +31,7 @@ Summary: Development files for %name
 
 %prep
 %setup -qn signon-oauth2-%version
+%patch1 -p1
 sed -i '/^SUBDIRS/s/tests//' signon-oauth2.pro
 sed -i '/^SUBDIRS/s/example//' signon-oauth2.pro
 %ifarch %e2k
@@ -62,6 +64,9 @@ sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth
 %_libdir/pkgconfig/signon-oauth2plugin.pc
 
 %changelog
+* Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 0.24-alt6
+- fix compile with Qt 5.15
+
 * Tue Jun 25 2019 Sergey V Turchin <zerg@altlinux.org> 0.24-alt5
 - fix minor spec cleanup
 
@@ -73,9 +78,9 @@ sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth
 - minor spec cleanup
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2
-- NMU: remove %ubt from release
+- NMU: remove ubt macro from release
 
-* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.24-alt1%ubt
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.24-alt1
 - new version
 
 * Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.22-alt1
