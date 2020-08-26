@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.71
+Version: 2.9.72
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -115,6 +115,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Aug 26 2020 Ivan Razzhivin <underwit@altlinux.org> 2.9.72-alt1
+- alterator-secsetup: fix help
+
 * Tue Aug 25 2020 Ivan Razzhivin <underwit@altlinux.org> 2.9.71-alt1
 - alterator-secsetup: fix translation
 
