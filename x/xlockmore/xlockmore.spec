@@ -1,6 +1,6 @@
 Name: xlockmore
-Version: 5.61
-Release: alt2
+Version: 5.65
+Release: alt1
 
 Summary: An X terminal locking program
 License: MIT
@@ -113,6 +113,9 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Wed Aug 26 2020 Fr. Br. George <george@altlinux.ru> 5.65-alt1
+- Autobuild version bump to 5.65
+
 * Fri Jan 10 2020 Fr. Br. George <george@altlinux.ru> 5.61-alt2
 - Hack out 'boxed' mode that loops
 
