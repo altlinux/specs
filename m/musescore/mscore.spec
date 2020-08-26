@@ -1,8 +1,8 @@
 %define rname mscore
-%define mversion 3.4
+%define mversion 3.5
 
 Name: musescore
-Version: 3.4.2
+Version: 3.5
 Release: alt1
 
 Summary: Music notation and composition software
@@ -85,13 +85,25 @@ chrpath -d %buildroot%_bindir/mscore
 %_bindir/*
 %_datadir/metainfo/org.musescore.MuseScore.appdata.xml
 %_desktopdir/mscore.desktop
+%_datadir/metainfo
 %_datadir/mscore-%mversion
 %_man1dir/*
 %_xdgmimedir/packages/musescore.xml
-%_iconsdir/hicolor/*/mimetypes/*
-%_iconsdir/hicolor/*/apps/*
+%_iconsdir/hicolor/16x16/apps/mscore.png
+%_iconsdir/hicolor/32x32/apps/mscore.png
+%_iconsdir/hicolor/48x48/apps/mscore.png
+%_iconsdir/hicolor/24x24
+%_iconsdir/hicolor/64x64
+%_iconsdir/hicolor/96x96
+%_iconsdir/hicolor/128x128
+%_iconsdir/hicolor/512x512
+%_iconsdir/hicolor/48x48/mimetypes
+%_iconsdir/hicolor/scalable
 
 %changelog
+* Wed Aug 26 2020 Grigory Ustinov <grenka@altlinux.org> 3.5-alt1
+- Automatically updated to 3.5.
+
 * Mon Feb 10 2020 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1
 - new version 3.4.2
 
