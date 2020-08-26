@@ -1,8 +1,8 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 3.5
-Release: alt3
+Version: 3.5.1
+Release: alt1
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -132,6 +132,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Aug 26 2020 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
+- 3.5.1 (fixes: CVE-2020-14367)
+
 * Wed Apr 01 2020 Anton Farygin <rider@altlinux.ru> 3.5-alt3
 - set ntp era (fixed FTBFS, thanks to glebfm for the investigation)
 
