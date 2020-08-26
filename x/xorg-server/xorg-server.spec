@@ -23,8 +23,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 1.20.8
-Release: alt3
+Version: 1.20.9
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -312,6 +312,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Aug 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.9-alt1
+- 1.20.9 (fixes: CVE-2020-14346, CVE-2020-14361, CVE-2020-1436)
+
 * Wed Jul 15 2020 Sergey V Turchin <zerg@altlinux.org> 2:1.20.8-alt3
 - autobind GPUs to the screen
 
