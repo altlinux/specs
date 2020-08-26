@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.18.1
-Release: alt7
+Release: alt8
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -174,6 +174,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.1-alt8
+- enable virtual keyboard by default
+
 * Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.1-alt7
 - don't force disable virtual keyboard
 
