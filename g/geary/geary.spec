@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: Email client
@@ -87,6 +87,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Aug 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3.1-alt1
+- 3.36.3.1
+
 * Sun May 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
