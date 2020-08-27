@@ -4,16 +4,20 @@
 %def_with bootstrap
 
 Name:       python3-module-%oname
-Version:    1.0.4
+Version:    1.0.5
 Release:    alt1
 
 Summary:    Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License:    BSD
 Group:      Development/Python3
-Url:        https://pypi.python.org/pypi/Theano
+Url:        https://pypi.org/project/Theano/
+
+BuildArch:  noarch
 
 Source:     %name-%version.tar
-BuildArch:  noarch
+
+Patch1: %oname-alt-numpy-compat.patch
+Patch2: %oname-alt-python3-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -72,18 +76,17 @@ This package contains documentation for Theano.
 
 %prep
 %setup
+%patch1 -p2
+%patch2 -p2
 
 %build
 export LC_ALL=en_US.UTF-8
 
-# alt numpy include dir name is numpy-py3
-sed -i -e 's/\(<\|"\)numpy\//&-py3/' -e 's/\/-py3/-py3\//' \
-    $(find . -type f \( -name "*.py" -o -name "*.c" -o -name "*.h" \))
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
-    $(find ./ -name '*.py')
+sed -i \
+	-e 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' \
+	-e 's|#! /usr/bin/env python$|#! /usr/bin/env python3|' \
+	-e 's|#!/usr/bin/python$|#!/usr/bin/python3|' \
+	$(find ./ -name '*.py')
 
 %python3_build_debug
 
@@ -91,8 +94,6 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 export LC_ALL=en_US.UTF-8
 
 %python3_install
-
-%filter_from_requires /python\-base/d
 
 %files
 %doc *.txt
@@ -114,8 +115,10 @@ export LC_ALL=en_US.UTF-8
 %files docs
 %doc doc/*
 
-
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1
+- Updated to upstream version 1.0.5.
+
 * Tue Oct 15 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.4-alt1
 - Version updated to 1.0.4
 - disable python2

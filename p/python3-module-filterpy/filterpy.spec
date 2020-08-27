@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname filterpy
 
 Name:       python3-module-%oname
-Version:    1.1.0
-Release:    alt4
+Version:    1.4.5
+Release:    alt1
 
 Summary:    Kalman filtering and optimal estimation library
 License:    MIT
@@ -12,7 +14,7 @@ Url:        https://pypi.python.org/pypi/filterpy/
 
 #           https://github.com/rlabbe/filterpy.git
 Source:     %name-%version.tar
-Patch1:     %oname-%version-alt-build.patch
+Patch1:     %oname-1.1.0-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-numpydoc xvfb-run
@@ -93,6 +95,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir xvfb-run py.test3 -vv
 
 
 %changelog
+* Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
+- Updated to upstream version 1.4.5.
+
 * Mon Aug 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt4
 - Build requires fixed.
 

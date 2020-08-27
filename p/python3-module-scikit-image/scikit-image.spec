@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 0.17.2
-Release: alt1
+Release: alt2
 
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
@@ -17,6 +17,10 @@ Url: https://pypi.org/project/scikit-image/
 # https://github.com/scikit-image/scikit-image.git
 Source: %name-%version.tar
 Patch1: %oname-alt-build.patch
+# https://github.com/scikit-image/scikit-image/pull/4731
+Patch2: %oname-upstream-fix-1.patch
+# TODO: try removing this test skip on next update
+Patch3: %oname-alt-numpy-test-skip.patch
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
@@ -93,6 +97,8 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %prepare_sphinx3 doc
 ln -s ../objects.inv doc/source/
@@ -124,6 +130,8 @@ pushd %buildroot%python3_sitelibdir &>/dev/null
 rm -f %buildroot%python3_sitelibdir/skimage/io/tests/test_io.py
 rm -f %buildroot%python3_sitelibdir/skimage/io/tests/__pycache__/test_io.*
 
+# TODO: remove NUMPY_TOO_FRESH export when patch3 is removed
+export NUMPY_TOO_FRESH=1
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 pytest-3 -v skimage
@@ -161,6 +169,9 @@ popd &>/dev/null
 %endif
 
 %changelog
+* Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.2-alt2
+- Fixed build with new numpy.
+
 * Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.2-alt1
 - Updated to upstream version 0.17.2.
 

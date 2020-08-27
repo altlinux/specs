@@ -1,25 +1,33 @@
-%define mname scikits
-%define oname %mname.statsmodels
+%define _unpackaged_files_terminate_build 1
 
-%def_disable check
+%define mname scikits
+%define rname statsmodels
+%define oname %mname.%rname
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 0.8.0
-Release: alt3
-
+Version: 0.11.1
+Release: alt1
 Summary: Statistical computations and models for use with SciPy
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/statsmodels/
+Url: https://pypi.org/project/statsmodels/
 
 # https://github.com/statsmodels/statsmodels.git
 Source: %name-%version.tar
 
+Patch1: %oname-alt-build.patch
+Patch2: %oname-alt-check.patch
+Patch3: %oname-alt-skipped-tests.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python3-devel
 BuildRequires: python3-module-Cython
-# BuildRequires: python3-module-Cython python3-module-ipyparallel python3-module-numexpr-tests python3-module-numpy-testing
+BuildRequires: python3-module-scipy
+# Test dependencies
+BuildRequires: python3-module-tox
+BuildRequires: python3(patsy) python3(pandas)
+BuildRequires: python3(joblib) python3(pytest-xdist)
 
 %py3_provides %oname
 %py3_requires numpy scipy pandas patsy matplotlib cvxopt
@@ -36,6 +44,7 @@ Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 %add_python3_req_skip rpy
+%add_python3_req_skip yapf.yapflib.yapf_api
 
 %description tests
 Statsmodels is a Python package that provides a complement to scipy for
@@ -46,6 +55,14 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
+	%rname/_version.py
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -54,22 +71,38 @@ This package contains tests for %oname.
 %install
 %python3_install
 
+%ifnarch armh
 %check
-xvfb-run python3 setup.py test
+# quite a few tests fail on armh. disable it for now
+export PIP_NO_INDEX=YES
+export PIP_NO_BUILD_ISOLATION=no
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -p auto -o -v
+%endif
 
 %files
+%doc LICENSE.txt
 %doc *.md *.rst README_l1.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/*/*/example*
-%exclude %python3_sitelibdir/*/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/%rname
+%python3_sitelibdir/%rname-%version-*.egg-info
+%exclude %python3_sitelibdir/%rname/*/*/*/example*
+%exclude %python3_sitelibdir/%rname/*/*/example*
+%exclude %python3_sitelibdir/%rname/*/*/*/test*
+%exclude %python3_sitelibdir/%rname/*/*/test*
+%exclude %python3_sitelibdir/%rname/*/test*
 
 %files tests
-%python3_sitelibdir/*/*/*/*/example*
-%python3_sitelibdir/*/*/*/*/test*
-%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/%rname/*/*/*/example*
+%python3_sitelibdir/%rname/*/*/example*
+%python3_sitelibdir/%rname/*/*/*/test*
+%python3_sitelibdir/%rname/*/*/test*
+%python3_sitelibdir/%rname/*/test*
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.11.1-alt1
+- Updated to upstream version 0.11.1.
+- Re-enabled tests.
+
 * Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 1:0.8.0-alt3
 - Build for python2 disabled.
 

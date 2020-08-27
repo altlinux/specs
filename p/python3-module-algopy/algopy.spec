@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.3
-Release: alt2
+Release: alt3
 
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
@@ -122,6 +122,9 @@ cp -fR documentation/sphinx/_build/pickle \
 %doc documentation/*.pdf
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt3
+- Fixed build with new numpy.
+
 * Thu Apr 02 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5.3-alt2
 - Build for python2 disabled.
 

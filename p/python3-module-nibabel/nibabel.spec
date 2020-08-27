@@ -4,8 +4,8 @@
 %def_disable docs
 
 Name: python3-module-%oname
-Version: 2.3.0
-Release: alt2
+Version: 3.1.1
+Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
 License: MIT
@@ -16,10 +16,17 @@ BuildArch: noarch
 
 # https://github.com/nipy/nibabel.git
 Source: %oname-%version.tar
-# https://github.com/yarikoptic/nitest-balls1
-Source1: nitest-balls1.tar
-# git://github.com/matthew-brett/nitest-minc2.git
-Source2: nitest-minc2.tar
+
+# git submodules
+Source1: %name-%version-nibabel-data-nipy-ecattest.tar
+Source2: %name-%version-nibabel-data-nitest-balls1.tar
+Source3: %name-%version-nibabel-data-nitest-cifti2.tar
+Source4: %name-%version-nibabel-data-nitest-dicom.tar
+Source5: %name-%version-nibabel-data-nitest-freesurfer.tar
+Source6: %name-%version-nibabel-data-nitest-minc2.tar
+Source7: %name-%version-nibabel-data-parrec_oblique.tar
+
+Patch1: %oname-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
@@ -78,12 +85,8 @@ This package contains pickles for NiBabel.
 %endif
 
 %prep
-%setup
-
-pushd nibabel-data
-tar -xf %SOURCE1
-tar -xf %SOURCE2
-popd
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
+%patch1 -p1
 
 %if_enabled docs
 sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
@@ -139,6 +142,9 @@ rm -f %buildroot%python3_sitelibdir/conf.py
 %python3_sitelibdir/%oname/*/*/test*
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
+- Updated to upstream version 3.1.1.
+
 * Wed Apr 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt2
 - Build for python2 disabled.
 

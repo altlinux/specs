@@ -1,27 +1,28 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname nitime
 
 %def_with bootstrap
 
 Name: python3-module-%oname
-Version: 0.7
-Release: alt2
-
+Version: 0.8.1
+Release: alt1
 Summary: Nitime: timeseries analysis for neuroscience data
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/nitime/
+
 BuildArch: noarch
 
+# https://github.com/nipy/nitime.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3 libnumpy-py3-devel
+BuildRequires: libnumpy-py3-devel
 
 %if_with bootstrap
 %add_python3_req_skip nitime.six.moves
 %endif
-
 
 %description
 Nitime is library of tools and algorithms for the analysis of
@@ -52,9 +53,7 @@ This package contains tests for Nitime.
 %setup
 
 ## python2 -> python3
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+sed -i 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -type f \( -name '*.py' -o -name 'build_release' \
                       -o -name 'ex2rst' -o -name 'release' \))
 ##
@@ -77,6 +76,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt1
+- Updated to upstream version 0.8.1.
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.7-alt2
 - python2 disabled
 

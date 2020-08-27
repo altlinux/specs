@@ -1,29 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname patsy
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 0.4.0
-Release: alt2
-
+Name: python3-module-%oname
+Version: 0.5.1
+Release: alt1
 Summary: A Python package for describing statistical models and for building design matrices
-License: BSD
-Group: Development/Python
+License: BSD-2-Clause and Python
+Group: Development/Python3
 Url: http://patsy.readthedocs.org/en/latest/
 
-%setup_python_module %oname
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv time
-BuildRequires: python-module-pathlib2
-%if_with python3
+# https://github.com/pydata/patsy.git
+Source: %name-%version.tar
+
+Patch1: %oname-alt-doc.patch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pathlib2
-%endif
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3(numpy) python3(matplotlib) python3(IPython)
 
 %description
 A Python package for describing statistical models and for building
@@ -32,7 +31,7 @@ design matrices. It is closely inspired by and compatible with the
 
 %package tests
 Summary: Tests for patsy
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -44,7 +43,7 @@ This package contains tests for patsy.
 
 %package pickles
 Summary: Pickles for patsy
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 A Python package for describing statistical models and for building
@@ -64,95 +63,48 @@ design matrices. It is closely inspired by and compatible with the
 
 This package contains documentation for patsy.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: A Python package for describing statistical models and for building design matrices
-Group: Development/Python3
-
-%description -n python3-module-%oname
-A Python package for describing statistical models and for building
-design matrices. It is closely inspired by and compatible with the
-'formula' mini-language used in R and S.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for patsy
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-A Python package for describing statistical models and for building
-design matrices. It is closely inspired by and compatible with the
-'formula' mini-language used in R and S.
-
-This package contains tests for patsy.
-%endif
-
 %prep
 %setup
+%patch1 -p2
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-pushd ../python3
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-#find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
-#find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %make -C doc pickle
 %make -C doc html
 
 %install
-%python_build_install
-
-%if_with python3
-pushd ../python3
 %python3_build_install
-popd
-%endif
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
-%doc *.rst TODO
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/test_*
+%doc LICENSE.txt
+%doc *.rst *.md TODO
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/%oname/test_*
+%exclude %python3_sitelibdir/%oname/__pycache__/test_*
 
 %files tests
-%python_sitelibdir/*/test_*
+%python3_sitelibdir/%oname/test_*
+%python3_sitelibdir/%oname/__pycache__/test_*
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst TODO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test_*
-%exclude %python3_sitelibdir/*/__pycache__/test_*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test_*
-%python3_sitelibdir/*/__pycache__/test_*
-%endif
-
 %changelog
+* Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt1
+- Updated to upstream version 0.5.1.
+- Disabled build for python-2.
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
 - Updated build dependencies.
 
