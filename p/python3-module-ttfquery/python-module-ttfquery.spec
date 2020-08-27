@@ -3,12 +3,12 @@
 
 Name: python3-module-%sname
 Version: 1.0.5
-Release: alt3
+Release: alt4
 
 Summary: FontTools-based package for querying system fonts
 
 Group: Development/Python3
-License: BSD-like
+License: BSD
 Url: http://ttfquery.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -22,8 +22,8 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools python3-module-fonttools
 BuildPreReq: python-tools-2to3
 
-Conflicts: %name < %EVR
-Obsoletes: %name < %EVR
+Conflicts: python-module-%sname < %EVR
+Obsoletes: python-module-%sname < %EVR
 
 %description
 TTFQuery builds on the FontTools package to allow the Python programmer
@@ -64,6 +64,9 @@ find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_sitelibdir/*egg-info/
 
 %changelog
+* Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt4
+- Fix obsoletes tag.
+
 * Fri Feb 28 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt3
 - Drop python2 support.
 
