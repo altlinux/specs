@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-rpi-def
-Release: alt4
+Release: alt1
 epoch:1 
 %define kernel_need_version	5.4
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.4
-%define kernel_sublevel .51
+%define kernel_sublevel .59
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -493,6 +493,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Mon Aug 24 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.59-alt1
+- Updated to 5.4.59 (still RPi-specific)
+
 * Mon Aug 24 2020 Dmitry Terekhin <jqt4@altlinux.org> 1:5.4.51-alt4
 - Enable VIRTIO modules
 - Set all VIRTIO as modules for aarch64
