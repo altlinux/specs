@@ -1,15 +1,15 @@
 Name: xcowsay
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: displays a cute cow and message on your desktop
 Group: Games/Other
-License: GPL
+License: GPLv3
 Url: http://www.doof.me.uk/xcowsay/
 Source: %name-%version.tar.gz
 Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Sun Jun 15 2008
-BuildRequires: libdbus-glib-devel libgtk+2-devel
+BuildRequires: libdbus-glib-devel libgtk+3-devel
 
 %description
 xcowsay displays a cute cow and message on your desktop. Inspired by the original cowsay
@@ -33,6 +33,10 @@ xcowsay displays a cute cow and message on your desktop. Inspired by the origina
 %_man6dir/xcow*
 
 %changelog
+* Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 1.5-alt1
+- Autobuild version bump to 1.5
+- Switch to gtk3
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 1.4-alt1
 - Autobuild version bump to 1.4
 
