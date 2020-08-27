@@ -1,8 +1,8 @@
 %def_enable guile
 
 Name: xbindkeys
-Version: 1.8.6
-Release: alt2
+Version: 1.8.7
+Release: alt1
 
 Summary: Binds keys or mouse buttons to shell commands under X
 License: GPLv2+
@@ -39,6 +39,9 @@ a simple configuration file, and is independant of the window manager.
 %doc AUTHORS BUGS ChangeLog README TODO xbindkeys_show*
 
 %changelog
+* Wed Aug 26 2020 Fr. Br. George <george@altlinux.ru> 1.8.7-alt1
+- Autobuild version bump to 1.8.7
+
 * Fri Nov 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.6-alt2
 - rebuilt with guile22 (closes: 35682)
 
