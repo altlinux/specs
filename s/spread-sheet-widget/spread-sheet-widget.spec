@@ -1,8 +1,8 @@
 Summary: Library for Gtk+ which provides a widget for viewing and manipulating 2 dimensional tabular data
 Name: spread-sheet-widget
-Version: 0.3
+Version: 0.6
 Release: alt1
-License: GPL v3+
+License: GPLv3+
 Group: System/Libraries
 Source0: http://alpha.gnu.org/gnu/ssw/%name-%version.tar.gz
 # Source0-md5:	9bd94714a18229eb9e9a2b79dda30e1f
@@ -65,13 +65,14 @@ install -D demo/.libs/demo %buildroot%_bindir/%name-demo
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_includedir/ssw-axis-model.h
-%_includedir/ssw-sheet-axis.h
-%_includedir/ssw-sheet.h
+%_includedir/ssw*.h
 %_pkgconfigdir/*.pc
 %_infodir/*.info*
 
 %changelog
+* Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 0.6-alt1
+- Autobuild version bump to 0.6
+
 * Wed Feb 06 2019 Fr. Br. George <george@altlinux.ru> 0.3-alt1
 - Initial build from PLD
 
