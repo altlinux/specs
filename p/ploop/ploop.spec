@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.209
+Version: 7.0.211
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -107,6 +107,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Thu Aug 27 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.211-alt1
+- 7.0.211
+- fix strncpy truncation error
+
 * Tue Aug 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.209-alt1
 - 7.0.209
 
