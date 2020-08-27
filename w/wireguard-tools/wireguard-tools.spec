@@ -2,7 +2,7 @@
 
 Name: wireguard-tools
 
-Version: 1.0.20200820
+Version: 1.0.20200827
 Release: alt1
 
 Summary: Tools for WireGuard: fast, modern, secure VPN tunnel
@@ -99,6 +99,9 @@ popd
 %doc contrib/*
 
 %changelog
+* Thu Aug 27 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200827-alt1
+- New version
+
 * Thu Aug 20 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20200820-alt1
 - New version
 
