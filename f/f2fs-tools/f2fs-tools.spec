@@ -3,7 +3,7 @@
 
 %define fsname f2fs
 Name: %fsname-tools
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
@@ -96,6 +96,9 @@ install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 
 
 %changelog
+* Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
+- Build new version.
+
 * Mon Oct 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt1
 - Build new version.
 
