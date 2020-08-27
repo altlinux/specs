@@ -1,6 +1,6 @@
 Name: 	  nagwad
 Version:  0.9.12
-Release:  alt1
+Release:  alt2
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -73,29 +73,24 @@ mkdir -p %buildroot/var/log/nagwad
 %pre
 
 if [ -e %_sysconfdir/nagwad/audit/audit.regexp ]; then
-    mv -nv %_sysconfdir/nagwad/audit/audit.regexp \
+    cp -nv %_sysconfdir/nagwad/audit/audit.regexp \
        %_sysconfdir/nagwad/audit.regexp ||:
-    rm -df %_sysconfdir/nagwad/audit ||:
 fi
 if [ -e %_sysconfdir/nagwad/authdata/authdata.regexp ]; then
-    mv -nv %_sysconfdir/nagwad/authdata/authdata.regexp \
+    cp -nv %_sysconfdir/nagwad/authdata/authdata.regexp \
        %_sysconfdir/nagwad/authdata.regexp ||:
-    rm -df %_sysconfdir/nagwad/authdata ||:
 fi
 if [ -e %_sysconfdir/nagwad/device/device.regexp ]; then
-    mv -nv %_sysconfdir/nagwad/device/device.regexp \
+    cp -nv %_sysconfdir/nagwad/device/device.regexp \
        %_sysconfdir/nagwad/device.regexp ||:
-    rm -df %_sysconfdir/nagwad/device ||:
 fi
 if [ -e %_sysconfdir/nagwad/login/login.regexp ]; then
-    mv -nv %_sysconfdir/nagwad/login/login.regexp \
+    cp -nv %_sysconfdir/nagwad/login/login.regexp \
        %_sysconfdir/nagwad/login.regexp ||:
-    rm -df %_sysconfdir/nagwad/login ||:
 fi
 if [ -e %_sysconfdir/nagwad/osec/osec.regexp ]; then
-    mv -nv %_sysconfdir/nagwad/osec/osec.regexp \
+    cp -nv %_sysconfdir/nagwad/osec/osec.regexp \
        %_sysconfdir/nagwad/osec.regexp ||:
-    rm -df %_sysconfdir/nagwad/osec ||:
 fi
 
 %files
@@ -118,6 +113,9 @@ fi
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %changelog
+* Thu Aug 27 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt2
+- Fix: Copy the old configuration files instead of moving them.
+
 * Mon Aug 24 2020 Paul Wolneykien <manowar@altlinux.org> 0.9.12-alt1
 - Fixed the 'device' NRPE command.
 - Fix: Really add print.regexp.
