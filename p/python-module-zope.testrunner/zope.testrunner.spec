@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 5.1
+Version: 5.2
 Release: alt1
 
 Summary: Zope testrunner script
@@ -131,6 +131,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 5.2-alt1
+- Automatically updated to 5.2.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 5.1-alt1
 - Build new version 5.1.
 - Fix license.
