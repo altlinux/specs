@@ -8,7 +8,7 @@
 Name:    kf5-kreport
 Summary: Framework for creation and generation of reports
 Version: 3.2.0
-Release: alt2
+Release: alt3
 Group:   Development/KDE and QT
 License: LGPLv2+
 Url:     https://community.kde.org/KReport
@@ -17,7 +17,10 @@ Url:     https://community.kde.org/KReport
 
 # git://anongit.kde.org/kreport.git
 Source: %name-%version.tar
+# FC
 Patch1: kf5-kreport-3.0.2-fedora-pkgconfig.patch
+# SuSE
+Patch10: Fix-kexi-build-with-GCC-10.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
@@ -56,6 +59,7 @@ Requires: %name-common = %EVR
 %prep
 %setup
 %patch1 -p1
+%patch10 -p1
 
 %build
 %K5build \
@@ -86,6 +90,9 @@ Requires: %name-common = %EVR
 %_K5lib/libKReport3.so.*
 
 %changelog
+* Thu Aug 27 2020 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt3
+- add fix to build kexi with new gcc
+
 * Mon Jul 08 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt2
 - Spec and build dependencies cleanup.
 
