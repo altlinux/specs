@@ -1,12 +1,11 @@
 Name: xfractint
-Version: 20.04p14
+Version: 20.04p16
 Release: alt1
 License: Freeware
 Group: Sciences/Mathematics
 Summary: The oldest fractal generator program ever
 Source: %name-%version.tar.gz
-Patch1: %name-20.04p10-patch
-Patch2: %name-20-fake_lut_palette.patch
+Patch: %name-20-fake_lut_palette.patch
 Url: http://www.fractint.org/
 
 # Automatically added by buildreq on Tue Jun 21 2011
@@ -19,8 +18,7 @@ compatible computers to run under DOS and ported to Linux.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 sed -n '/Copyright Information:/,/as the source of the code/p' fractsrc.txt > LICENSE
 
 %build
@@ -36,6 +34,9 @@ sed -n '/Copyright Information:/,/as the source of the code/p' fractsrc.txt > LI
 %_man1dir/*
 
 %changelog
+* Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 20.04p16-alt1
+- Autobuild version bump to 20.04p16
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 20.04p14-alt1
 - Autobuild version bump to 20.04p14
 
