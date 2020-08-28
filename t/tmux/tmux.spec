@@ -1,6 +1,6 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.0a
+Version: 3.1b
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
@@ -33,6 +33,9 @@ such as GNU screen.
 %_man1dir/*
 
 %changelog
+* Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 3.1b-alt1
+- Autobuild version bump to 3.1b
+
 * Sat Mar 28 2020 Fr. Br. George <george@altlinux.ru> 3.0a-alt1
 - Update to 3.0a (thanks arei@)
 
