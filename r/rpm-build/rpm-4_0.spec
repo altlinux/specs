@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt150
+Release: alt151
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -408,6 +408,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Aug 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.0.4-alt151
+- debuginfo: Do not try to use eu-elfcompress if it does not exist.
+- debuginfo: Fix adding non-existent files into debuginfo package.
+
 * Mon Aug 24 2020 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt150
 - Removed obsolete ldconfig, update menu, and install info macros.
 - Implemented canonicalization of symlink destinations.
