@@ -1,11 +1,11 @@
 Name: chess
-Version: 6.2.6
+Version: 6.2.7
 Release: alt1
 
 %define real_name gnu%name
 
 Summary: The GNU chess program
-License: %gpl2plus
+License: GPL-3.0-or-later
 Group: Games/Boards
 URL: http://www.gnu.org/software/chess/
 
@@ -57,6 +57,10 @@ install -pm644 src/book.bin %buildroot%_datadir/%real_name/
 %_infodir/%real_name.info.*
 
 %changelog
+* Fri Aug 28 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.7-alt1
+- Updated to 6.2.7.
+- Fixed license field.
+
 * Tue May 12 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.2.6-alt1
 - Updated to 6.2.6.
 
