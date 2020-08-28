@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.27.5
+Version: 1.28.1
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -149,6 +149,7 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %attr(0755,root,root) %_cups_serverbin/backend/beh
 %attr(0755,root,root) %_cups_serverbin/backend/implicitclass
 %attr(0755,root,root) %_cups_serverbin/backend/driverless
+%attr(0755,root,root) %_cups_serverbin/backend/driverless-fax
 %attr(0755,root,root) %_cups_serverbin/backend/cups-brf
 %_datadir/cups/banners
 %_datadir/cups/charsets
@@ -170,6 +171,7 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_bindir/ttfread
 %_bindir/foomatic-rip
 %_bindir/driverless
+%_bindir/driverless-fax
 %_sbindir/cups-browsed
 %_datadir/man/man*/*
 %_unitdir/*
@@ -191,6 +193,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Aug 28 2020 Anton Farygin <rider@altlinux.ru> 1.28.1-alt1
+- 1.28.1
+
 * Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 1.27.5-alt1
 - 1.27.5
 
