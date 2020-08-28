@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.4.1
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -11,12 +11,13 @@ Url: https://veyon.io/
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
 
-Requires: polkit qca-qt5-ossl
+Requires: polkit qca-qt5-ossl qt5-translations
 
 Source: %name-%version.tar
 
 Patch1: Unbundle-some-libraries-and-fix-build-alt.patch
 Patch2: Fix-launch-of-Veyon-in-alt.patch
+Patch3: alt-qt-translation.patch
 
 BuildRequires: rpm-build-kf5
 BuildRequires: extra-cmake-modules
@@ -81,6 +82,7 @@ rm -rf ./3rdparty
 mv .gear/3rdparty ./
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %cmake
@@ -102,6 +104,9 @@ mv .gear/3rdparty ./
 %_datadir/%name
 
 %changelog
+* Fri Aug 28 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.1-alt2
+- Fix load Qt translation
+
 * Tue Aug 25 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.1-alt1
 - New version
 
