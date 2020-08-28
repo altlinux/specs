@@ -1,6 +1,6 @@
 Name: kodi
-Version: 18.8
-Release: alt1
+Version: 19.0
+Release: alt0.20200726
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -35,6 +35,7 @@ BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(glu)
 BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(gtest)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libass)
@@ -70,7 +71,8 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libxslt)
 BuildRequires: pkgconfig(nettle)
 BuildRequires: pkgconfig(p11-kit-1)
-BuildRequires: pkgconfig(python2)
+BuildRequires: pkgconfig(python3)
+BuildRequires: pkgconfig(spdlog)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(tinyxml)
@@ -92,6 +94,7 @@ BuildRequires: pkgconfig(zlib)
 Summary: Kodi architecture-independent data
 Group: Video
 BuildArch: noarch
+AutoReqProv: yes,nopython
 
 %package devel
 Summary: Kodi development part
@@ -115,7 +118,7 @@ This package contains development part of Kodi.
 %ifarch armh aarch64
 %define platdefs -DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles
 %else
-%define platdefs %nil
+%define platdefs -DX11_RENDER_SYSTEM=gl
 %endif
 
 %prep
@@ -131,10 +134,10 @@ sed -i -e '/Exec=kodi/ s,=,=%_bindir/,' %buildroot%_datadir/xsessions/kodi.deskt
 install -pm0644 -D kodi.wmsession %buildroot%_sysconfdir/X11/wmsession.d/20KODI
 mkdir %buildroot%_libdir/kodi/addons
 
-%add_python_req_skip xbmc
-%add_python_req_skip xbmcgui
-%add_python_req_skip xbmcaddon
-%add_python_req_skip xbmcvfs
+%add_python3_req_skip xbmc
+%add_python3_req_skip xbmcgui
+%add_python3_req_skip xbmcaddon
+%add_python3_req_skip xbmcvfs
 
 %files
 %docdir
@@ -168,6 +171,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Mon Aug 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20200726
+- 19.0a1 Matrix
+
 * Wed Jul 29 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.8-alt1
 - 18.8 Leia released
 
