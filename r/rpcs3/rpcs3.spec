@@ -1,5 +1,5 @@
-%define git_ver 10773
-%define git_commit c5aebe456411f08d7159e6a2cdfe7f3d9e6ec9b4
+%define git_ver 10801
+%define git_commit 6952be5ce495ee4887a9b1bdcba3cd3c5e992e26
 
 %define glslang_commit bcf6a2430e99e8fc24f9f266e99316905e6d5134
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
@@ -14,6 +14,7 @@
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
 %define spirv_headers_version 1.5.3
 %define spirv_tools_commit 49ca250b44c633ba7cb8897002e62781a451421c
+%define wolfssl_commit d0749c65498672462b88fc8be5ea066cf65067f1
 
 Name: rpcs3
 Version: 0.0.11.%git_ver
@@ -56,6 +57,8 @@ Source11: span-%span_commit.tar
 Source12: SPIRV-Headers-%spirv_headers_version.tar
 # https://github.com/KhronosGroup/SPIRV-Tools/archive/%spirv_tools_commit/SPIRV-Tools-%spirv_tools_commit.tar.gz
 Source13: SPIRV-Tools-%spirv_tools_commit.tar
+# https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
+Source14: wolfssl-%wolfssl_commit.tar
 
 Patch0: %name-alt-git.patch
 
@@ -69,6 +72,7 @@ BuildRequires: libavformat-devel
 BuildRequires: libcurl-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
+BuildRequires: libflatbuffers-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
 BuildRequires: libpulseaudio-devel
@@ -91,7 +95,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
+%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
 
 %patch0 -p1
 
@@ -108,6 +112,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../span-%span_commit 3rdparty/span
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version Vulkan/spirv-headers
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_commit Vulkan/spirv-tools
+%__mv -Tf ../wolfssl-%wolfssl_commit 3rdparty/wolfssl
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -155,6 +160,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Aug 29 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10801-alt1
+- Version 0.0.11.10801
+
 * Mon Aug 24 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10773-alt1
 - Version 0.0.11.10773
 
