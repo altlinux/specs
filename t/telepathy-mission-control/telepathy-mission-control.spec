@@ -9,11 +9,11 @@
 %def_disable check
 
 Name: telepathy-mission-control
-Version: 5.16.5
+Version: 5.16.6
 Release: alt1
 
 Summary: Telepathy mission control plugin library
-License: LGPL v2.1
+License: LGPL-2.1
 Group: System/Libraries
 Url: http://mission-control.sourceforge.net/
 
@@ -27,9 +27,8 @@ BuildRequires: gtk-doc libgio-devel >= 2.46.0 libdbus-glib-devel libtelepathy-gl
 %{?_enable_nm:BuildRequires: libnm-devel}
 
 %if_enabled check
-# not ready for python3
-BuildRequires: python3-module-twisted-words python3-module-twisted-core
-BuildRequires: python3-module-dbus telepathy-logger /proc dbus-tools-gui
+BuildRequires: /proc python3-module-twisted-words python3-module-twisted-core
+BuildRequires: python3-module-dbus telepathy-logger dbus-tools-gui
 %endif
 
 %description
@@ -66,6 +65,7 @@ Development libraries and header files for %name.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-glib-1`"
 %configure \
@@ -101,6 +101,9 @@ mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 28 2020 Yuri N. Sedunov <aris@altlinux.org> 5.16.6-alt1
+- 5.16.6
+
 * Sun Oct 27 2019 Yuri N. Sedunov <aris@altlinux.org> 5.16.5-alt1
 - 5.16.5
 
