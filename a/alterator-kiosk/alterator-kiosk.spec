@@ -1,6 +1,6 @@
 Name: alterator-kiosk
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 Source1: activate-kiosk.sh
@@ -13,6 +13,7 @@ BuildArch: noarch
 
 BuildRequires: alterator
 Requires: kiosk
+Requires: kiosk-profiles = %EVR
 
 %description
 alterator module for managing kiosk mode
@@ -22,7 +23,6 @@ Summary: profiles for kiosk
 License: GPLv2+
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: alterator-kiosk = %EVR
 
 %description -n kiosk-profiles
 profiles for kiosk
@@ -54,6 +54,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_sysconfdir/alterator/kiosk/profiles/
 
 %changelog
+* Fri Aug 28 2020 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt2
+- require kiosk-profiles
+
 * Tue Aug 25 2020 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt1
 - add chromium to profiles
 - make a new package with profiles
