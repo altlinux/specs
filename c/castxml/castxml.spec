@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    castxml
-Version: 0.3.4
-Release: alt2
+Version: 0.3.6
+Release: alt1
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 License: Apache-2.0
@@ -84,6 +84,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Fri Aug 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt1
+- Updated to upstream release version 0.3.6.
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.4-alt2
 - Fixed linking with dynamic clang libraries.
 
