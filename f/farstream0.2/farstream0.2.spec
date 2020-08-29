@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _name farstream
 %define api_ver 0.2
 %define gst_api_ver 1.0
@@ -7,15 +8,20 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.9
-Release: alt1
+Version: 0.2.9.1
+Release: alt0.1
 
 Summary: A audio/video conferencing framework (0.2)
 Group: System/Libraries
 License: LGPL-2.1-or-later
-URL: http://www.freedesktop.org/wiki/Software/Farstream
+Url: http://www.freedesktop.org/wiki/Software/Farstream
 
+%if_disabled snapshot
 Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.tar.gz
+%else
+#VCS: https://gitlab.freedesktop.org/farstream/farstream.git
+Source: %_name-%version.tar
+%endif
 
 %define nice_ver 0.1.8
 %define gst_ver 1.4
@@ -144,6 +150,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.1
+- updated to 0.2.9-4-g46d7b108 (fixed build with GNU Make-4.3)
+
 * Sun Mar 15 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
 - 0.2.9
 
