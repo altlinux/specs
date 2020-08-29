@@ -2,8 +2,8 @@
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Name: %realname-unmet-holder
-Version: 79.0
-Release: alt3
+Version: 80.0
+Release: alt2
 Group: Networking/WWW
 License: GPL-3.0
 Provides: %realname = %version-%release
@@ -54,6 +54,9 @@ Most likely you don't need to use this package.
 %files -n firefox-config-privacy
 
 %changelog
+* Sat Aug 29 2020 Alexey Gladkov <legion@altlinux.ru> 80.0-alt2
+- New release (80.0).
+
 * Mon Aug 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 79.0-alt3
 - drop armh from build arches
 
