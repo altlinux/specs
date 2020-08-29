@@ -1,6 +1,6 @@
 Name:         mapsoft2
-Version:      1.1.1
-Release:      alt2
+Version:      1.2
+Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
 Group:        Sciences/Geosciences
@@ -39,6 +39,18 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/mapsoft2.css
 
 %changelog
+* Sat Aug 29 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.2-alt1
+Viewer:
+- SRTM data support (map layer, panoramic view, drowing options dialog)
+- Tile map support, improve viewer geo-reference algorythms
+- "Track drawing options" dialog
+- "Show point information" dialog
+- "Use map reference" action
+Other:
+- fix error with reading integer values from GeoJSON
+- `SU` projection: Pulkovo CS with automatic zone number
+- fix loading PNG images with depth<8
+
 * Mon Jun 22 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.1.1-alt2
 - ExcludeArch: armh (libjpeg + c++ exceptions problem)
 
