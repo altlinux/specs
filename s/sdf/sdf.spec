@@ -1,6 +1,6 @@
 Name: sdf
 Version: 2.001
-Release: alt3.1
+Release: alt4
 Epoch: 1
 
 Summary: Simple Document Format (SDF) Parser
@@ -15,6 +15,7 @@ Patch1: sdf-2.001-deb-perl_loc_and_ini_fixes.patch
 Patch2: sdf-2.001-deb-pod_man_conventions.patch
 Patch3: sdf-2.001-deb-tablepackstr_spin.patch
 Patch4: sdf-2.001-fix_brackets_for_perl5.26.patch
+Patch5:	sdf-remove-match-metachar.patch
 
 # Automatically added by buildreq on Wed Jan 10 2001
 BuildRequires: perl-devel perl-Pod-Parser
@@ -53,6 +54,7 @@ Simple Document Format (SDF) Parser.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl /bin/perl5 -- |
@@ -78,6 +80,7 @@ ln -s %_sysconfdir/%name.ini \
 %files
 %config(noreplace) %_sysconfdir/%name.ini
 %_bindir/*
+%_man1dir/*
 %perl_vendor_privlib/Pod
 %perl_vendor_privlib/%name
 
@@ -85,6 +88,9 @@ ln -s %_sysconfdir/%name.ini \
 %doc LICENSE README doc/* examples/2001/stylesheets
 
 %changelog
+* Sat Aug 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.001-alt4
+- fix for perl 5.30
+
 * Fri Mar 02 2018 Grigory Ustinov <grenka@altlinux.org> 1:2.001-alt3.1
 - Add patch for fix build with perl 5.26.
 
