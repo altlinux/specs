@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable static
 %def_enable check
 
@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: 2.5.2
-Release: alt0.1
+Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
@@ -83,6 +83,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
+- 2.5.2 release
+
 * Sat Mar 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt0.1
 - updated to 2.5.1-5-g408c71e (fixed build with gcc-9.2/c++17)
 
