@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.1.3
-Release: alt6
+Release: alt7
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -77,13 +77,15 @@ install -m0755 makeme.sh -t %buildroot%_datadir/%name/
 # but it's convenient for me to do this check also in the e2k Girar,
 # where --without check is enabled. Turn this back into %%check in future.
 %build
-# We use %%make_build to pass the usual parallelism flags etc:
-%global _make_bin ./makeme.sh
+# We don't use %%make_build to pass the usual parallelism flags
+# to avoid parallelism with possible nasty races
+# (until a good implementation is in place in our makefiles):
+%global _makeme ./makeme.sh
 
 %define simple_test \
 echo 'Simple test (to fail fast):'\
-%make_build %{?opts} TESTS=dummy_installable\
-%make_build %{?opts} clean\
+%_makeme %{?opts} TESTS=dummy_installable\
+%_makeme %{?opts} clean\
 %nil
 
 %define archcompat_test \
@@ -98,12 +100,12 @@ rpm --eval %%_arch ||:\
 \
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"\
 echo "...with a package built for the system rpm's arch ($system_arch):"\
-%make_build %{?opts} TESTS=dummy_installable minimal_arch= TESTS_TARGET="$system_arch"\
-%make_build %{?opts} clean\
+%_makeme %{?opts} TESTS=dummy_installable minimal_arch= TESTS_TARGET="$system_arch"\
+%_makeme %{?opts} clean\
 \
 default_arch="$(rpmbuild --eval %%_arch ||:)"\
 echo "...with a package built for the machine's default arch ($default_arch):"\
-%make_build %{?opts} TESTS=dummy_installable minimal_arch= ||\
+%_makeme %{?opts} TESTS=dummy_installable minimal_arch= ||\
     case "$default_arch" in\
         arm*)\
             echo 'ARM arch detection is not ideal in rpm-build;'\
@@ -113,15 +115,15 @@ echo "...with a package built for the machine's default arch ($default_arch):"\
             false\
             ;;\
     esac\
-%make_build %{?opts} clean\
+%_makeme %{?opts} clean\
 %nil
 
 %define all_tests \
 echo 'Main tests:'\
-%make_build %{?opts}\
+%_makeme %{?opts}\
 echo 'Now test also with "Epoch: 0" instead of no Epoch:'\
-%make_build %{?opts} clean\
-%make_build %{?opts} minimal_epoch=0\
+%_makeme %{?opts} clean\
+%_makeme %{?opts} minimal_epoch=0\
 %nil
 
 %simple_test
@@ -131,37 +133,35 @@ echo 'Now test also with "Epoch: 0" instead of no Epoch:'\
 %files
 %_datadir/%name
 
+# Set this value for all scritplets that follow:
+%global _makeme %_datadir/%name/makeme.sh
+
 %files checkinstall
 
 %pre checkinstall -p %_sbindir/sh-safely
-# Avoid parallelism with possible nasty races
-# (until a good implementation is in place):
-export NPROCS=1
-%global _make_bin %_datadir/%name/makeme.sh
+set -x
 %simple_test
 %all_tests
 
 %files archcompat-checkinstall
 
 %pre archcompat-checkinstall -p %_sbindir/sh-safely
-# Avoid parallelism with possible nasty races
-# (until a good implementation is in place):
-export NPROCS=1
-%global _make_bin %_datadir/%name/makeme.sh
+set -x
 %archcompat_test
 %simple_test
 
 %files archcompat-with-proc-checkinstall
 
 %pre archcompat-with-proc-checkinstall -p %_sbindir/sh-safely
-# Avoid parallelism with possible nasty races
-# (until a good implementation is in place):
-export NPROCS=1
-%global _make_bin %_datadir/%name/makeme.sh
+set -x
 %archcompat_test
 %simple_test
 
 %changelog
+* Sat Aug 29 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt7
+- Removed the buildtime nprocs value from the *-checkinstall package scriptlets:
+  it would make no sense at runtime.
+
 * Fri Jul  3 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt6
 - Run additionally a test with a package built for system rpm's ARCH
   (i.e., with rpmbuild --target set to it).
