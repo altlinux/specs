@@ -5,17 +5,17 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.26
-%define nss_version   3.54.0
-%define rust_version  1.42.0
-%define cargo_version 1.42.0
+%define nspr_version  4.27
+%define nss_version   3.55.0
+%define rust_version  1.45.0
+%define cargo_version 1.45.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        79.0
-Release:        alt2
+Version:        80.0
+Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -48,6 +48,7 @@ Patch008: 0008-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch009: 0009-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
 Patch010: 0010-arm-js-src-wasm-add-struct-user_vfp-definition.patch
 Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
+Patch012: 0012-use-floats-for-audio-on-arm-too.patch
 ### End Patches
 
 ExcludeArch: ppc64le
@@ -60,10 +61,6 @@ BuildRequires: clang10.0
 BuildRequires: clang10.0-devel
 BuildRequires: llvm10.0-devel
 BuildRequires: lld10.0-devel
-%ifarch armh
-BuildRequires: gcc
-BuildRequires: gcc-c++
-%endif
 BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
@@ -221,6 +218,7 @@ Most likely you don't need to use this package.
 %patch009 -p1
 %patch010 -p1
 %patch011 -p1
+%patch012 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -234,7 +232,7 @@ cp -f %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch armh %{ix86} ppc64le
+%ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %endif
 %ifnarch x86_64
@@ -243,9 +241,8 @@ ac_add_options --disable-webrtc
 %ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
-%ifarch armh
+%ifarch %{ix86}
 ac_add_options --disable-av1
-ac_add_options --disable-rust-simd
 %endif
 EOF
 
@@ -267,6 +264,9 @@ export MOZ_BUILD_APP=browser
 export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
+%ifarch armh
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -march=armv7-a -mthumb"
+%endif
 
 # PIE, full relro
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
@@ -282,18 +282,13 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-%ifarch armh
-export CC="gcc"
-export CXX="g++"
-export MOZ_PARALLEL_BUILD=24
-%else
+export MOZ_PARALLEL_BUILD=8
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
-%endif
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export SHELL=/bin/sh
@@ -485,6 +480,20 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Aug 27 2020 Alexey Gladkov <legion@altlinux.ru> 80.0-alt1
+- New release (80.0).
+- Security fixes:
+  + CVE-2020-15663: Downgrade attack on the Mozilla Maintenance Service could have resulted in escalation of privilege
+  + CVE-2020-15664: Attacker-induced prompt for extension installation
+  + CVE-2020-12401: Timing-attack on ECDSA signature generation
+  + CVE-2020-6829: P-384 and P-521 vulnerable to an electro-magnetic side channel attack on signature generation
+  + CVE-2020-12400: P-384 and P-521 vulnerable to a side channel attack on modular inversion
+  + CVE-2020-15665: Address bar not reset when choosing to stay on a page after the beforeunload dialog is shown
+  + CVE-2020-15666: MediaError message property leaks cross-origin response status
+  + CVE-2020-15667: Heap overflow when processing an update file
+  + CVE-2020-15668: Data Race when reading certificate information
+  + CVE-2020-15670: Memory safety bugs fixed in Firefox 80 and Firefox ESR 78.2
+
 * Mon Aug 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 79.0-alt2
 - rebuilt for armh
 
