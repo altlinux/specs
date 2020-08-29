@@ -1,5 +1,7 @@
+%def_enable check
+
 Name: nasm
-Version: 2.15.04
+Version: 2.15.05
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
@@ -7,7 +9,7 @@ License: BSD-2-Clause
 Group: Development/Other
 Url: http://www.nasm.us/
 
-#VCS: https://repo.or.cz/nasm.git
+#VCS: https://github.com/netwide-assembler/nasm.git
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
 
 BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
@@ -15,6 +17,7 @@ BuildRequires: texinfo
 BuildRequires: perl-Font-TTF perl-Sort-Versions
 # some fonts required, see doc/psfonts.ph
 BuildRequires: fonts-otf-adobe-source-code-pro fonts-otf-adobe-source-sans-pro fonts-ttf-liberation
+%{?_enable_check:BuildRequires: python3}
 
 %package doc
 Summary: Extensive documentation for NASM
@@ -54,6 +57,9 @@ gzip -9f *.txt *.ps || true
 cd html
 ln -sf nasmdoc0.html index.html
 
+%check
+python3 travis/nasm-t.py run
+
 %files
 %doc CHANGES AUTHORS README* doc/internal.doc
 %_bindir/nasm
@@ -79,6 +85,10 @@ ln -sf nasmdoc0.html index.html
 %_man1dir/rdx*
 
 %changelog
+* Sat Aug 29 2020 Yuri N. Sedunov <aris@altlinux.org> 2.15.05-alt1
+- 2.15.05
+- enabled %%check
+
 * Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.15.04-alt1
 - 2.15.04
 
