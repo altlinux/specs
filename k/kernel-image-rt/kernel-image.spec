@@ -2,7 +2,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
 %define kernel_sublevel		.135
-%define kernel_rt_release	rt60
+%define kernel_rt_release	rt61
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -274,7 +274,7 @@ install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 %endif
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
-make modules_install INSTALL_MOD_PATH=%buildroot
+%make_build modules_install INSTALL_MOD_PATH=%buildroot
 
 %ifarch aarch64
 mkdir -p %buildroot/lib/devicetree/$KernelVer
@@ -379,7 +379,7 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
 
 # Provide kernel headers for userspace
-make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
+%make_build headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
 
 find %buildroot%kheaders_dir -name ..install.cmd -delete
 
@@ -503,6 +503,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Aug 29 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt61
+- Update to v4.19.135-rt61 (28 Aug 2020).
+
 * Fri Aug 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt60
 - Update to v4.19.135-rt60 (03 Aug 2020).
 
