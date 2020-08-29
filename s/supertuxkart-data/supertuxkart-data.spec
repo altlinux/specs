@@ -1,6 +1,6 @@
 Name: supertuxkart-data
 Version: 1.2
-Release: alt0.1.rc1
+Release: alt1
 
 License: GPL-3.0-or-later and CC-BY-SA-3.0 and CC-BY-SA-4.0
 Url: http://supertuxkart.sourceforge.net
@@ -50,6 +50,9 @@ rm -rf %buildroot%_datadir/supertuxkart/data/karts/sara_the_wizard
 %_datadir/supertuxkart/data
 
 %changelog
+* Sat Aug 29 2020 Leontiy Volodin <lvol@altlinux.org> 1.2-alt1
+- 1.2
+
 * Tue Aug 11 2020 Leontiy Volodin <lvol@altlinux.org> 1.2-alt0.1.rc1
 - Update to release candidate 1
 
