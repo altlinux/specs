@@ -1,6 +1,6 @@
 Name: supertuxkart
 Version: 1.2
-Release: alt0.1.rc1
+Release: alt1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -53,13 +53,22 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_datadir/%name/*
 %_datadir/metainfo/*
 %_pixmapsdir/*
+%_iconsdir/hicolor/16x16/apps/*
+%_iconsdir/hicolor/32x32/apps/*
 %_iconsdir/hicolor/48x48/apps/*
+%_iconsdir/hicolor/64x64/apps/*
 %_iconsdir/hicolor/128x128/apps/*
+%_iconsdir/hicolor/256x256/apps/*
+%_iconsdir/hicolor/512x512/apps/*
+%_iconsdir/hicolor/1024x1024/apps/*
 # built in separate libwiiuse-devel
 %exclude %_includedir/wiiuse.h
 %exclude %_libdir/libwiiuse.a
 
 %changelog
+* Sat Aug 29 2020 Leontiy Volodin <lvol@altlinux.org> 1.2-alt1
+- 1.2
+
 * Tue Aug 11 2020 Leontiy Volodin <lvol@altlinux.org> 1.2-alt0.1.rc1
 - Update to release candidate 1
 - Build with ninja instead make
