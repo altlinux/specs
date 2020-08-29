@@ -20,7 +20,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt23
+Release: alt24
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -575,6 +575,15 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sat Aug 29 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt24
+  [Restored some patches from 4.0.4-alt94]
+- rpmrc.c: recognize new Intel CPUs (Dmitry V. Levin)
+- rpmrc.c: classify SSE2-capable Intel CPUs as "pentium4" (Alexey Tourbin)
+  [Restored a patch from 4.0.4-alt98.26]
+- rpmrc.c (is_pentiumN): Added models with nonzero extended model
+  (Dmitry V. Levin; reported by Alexander Sharapov).
+  (Closes: #38708)
+
 * Fri Jul 03 2020 Ivan Zakharyaschev <imz@altlinux.org> 4.13.0.1-alt23
 - Fixed a bug in ARM hardfloat detection (armv?h* archs), introduced
   in 4.13.0.1-alt22, which would prevent normal installation of armh
