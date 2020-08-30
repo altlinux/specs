@@ -1,5 +1,5 @@
 Name:     kiwix-lib
-Version:  9.3.1
+Version:  9.4.0
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
@@ -59,6 +59,9 @@ Group: Development/C++
 %_libdir/pkgconfig/kiwix.pc
 
 %changelog
+* Sun Aug 30 2020 Andrey Cherepanov <cas@altlinux.org> 9.4.0-alt1
+- New version.
+
 * Sat Jul 18 2020 Andrey Cherepanov <cas@altlinux.org> 9.3.1-alt1
 - New version.
 
