@@ -1,21 +1,21 @@
 %def_enable docs
 
 Name: editorconfig
-Version: 0.12.3
-Release: alt1.1
+Version: 0.12.4
+Release: alt1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
-License: BSD-like
+License: BSD-2-Clause
 Url: https://%name.org
 
 %define srcname %name-core-c
 #VCS: https://github.com/%name/%srcname
-Source: %url/archive/v%version/%srcname-%version.tar.gz
+Source: https://github.com/%name/%srcname/archive/v%version/%srcname-%version.tar.gz
 
 Requires: lib%name = %EVR
 
-BuildRequires(pre): cmake
+BuildRequires(pre): cmake >= 3.5.1
 BuildRequires: gcc-c++ libpcre2-devel
 %{?_enable_docs:BuildRequires: doxygen}
 
@@ -57,6 +57,7 @@ This package contains files needed for development EditorConfig plugins.
 %setup -n %srcname-%version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake %{?_disable_docs:-DBUILD_DOCUMENTATION=OFF}
 
 %install
@@ -82,6 +83,10 @@ This package contains files needed for development EditorConfig plugins.
 %{?_enable_docs:%_man3dir/%{name}*}
 
 %changelog
+* Sun Aug 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
+- 0.12.4
+- fixed License tag
+
 * Thu Jun 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt1.1
 - fixed build if "docs" disabled
 
