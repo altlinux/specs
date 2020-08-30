@@ -1,20 +1,16 @@
 %define modname tablib
 
-Name:		python-module-%modname
+Name:		python3-module-%modname
 Version:	0.12.1
-Release:	alt1
+Release:	alt2
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
-Group:		Development/Python
+Group:		Development/Python3
 License:	MIT
 URL:		http://github.com/kennethreitz/tablib
 Source0:	%name-%version.tar
 
 BuildArch:	noarch
-
-BuildRequires: python-module-chardet python-module-docutils time
-BuildRequires: python-module-hacking python-module-html5lib
-BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-yaml
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-html5lib python3-module-pbr python3-module-yaml
@@ -32,56 +28,30 @@ Output formats supported:
  - TSV (Sets)
  - CSV (Sets)
 
-%package -n python3-module-%modname
-Summary:        Format agnostic tabular data library (XLS, JSON, YAML, CSV)
-Group:            Development/Python3
-
 %add_python3_req_skip UserDict
 %add_python3_req_skip odf
-
-%description -n python3-module-%modname
-Tablib is a format-agnostic tabular dataset library, written in Python.
-
-Output formats supported:
-
- - Excel (Sets + Books)
- - JSON (Sets + Books)
- - YAML (Sets + Books)
- - HTML (Sets)
- - TSV (Sets)
- - CSV (Sets)
 
 %prep
 %setup
 pushd tablib/packages/dbfpy/
 sed -i '/print.*/ s/$/)/' dbfnew.py | sed 's/print/print(/' > dbfnew.py
 popd
-cp -fR . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %files
-%doc README.rst AUTHORS LICENSE
-%python_sitelibdir/*
-
-%files -n python3-module-%modname
 %doc README.rst AUTHORS LICENSE
 %python3_sitelibdir/*
 
 
 %changelog
+* Sun Aug 30 2020 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt2
+- Transfer on python3.
+
 * Fri May 18 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.1-alt1
 - updated version to 0.12.1
 
