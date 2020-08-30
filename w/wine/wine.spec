@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47.1
 %define mono_version 5.1.0
-%define major 5.12
+%define major 5.16
 %define rel %nil
 
 %def_with gtk3
@@ -17,7 +17,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -534,6 +534,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt1
+- new version 5.16.1 (with rpmrb script)
+
 * Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.12.1-alt2
 - Rebuilt with vulkan, vkd3d and faudio support (ALT bug #38810).
 
