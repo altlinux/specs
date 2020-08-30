@@ -7,7 +7,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38184
+%define svnrev 38193
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -215,8 +215,8 @@
 %def_enable nls
 %def_without htmldocs
 %def_with tools
-%define default_vo %{subst_o xv}%{subst_o sdl}%{subst_o gl2}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}null
-%define default_ao %{subst_o alsa}%{subst_o oss}%{subst_o openal}%{subst_o sdl}%{subst_o pulse}%{subst_o nas}null
+%define default_vo %{subst_o xv}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}
+%define default_ao %{subst_o sdl}%{subst_o alsa}%{subst_o oss}%{subst_o openal}%{subst_o pulse}%{subst_o nas}
 
 # ARM
 #%%def_disable armv5te
@@ -298,7 +298,7 @@
 
 Name: %lname
 Version: 1.4
-Release: alt3.38184.1
+Release: alt4.38193.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1122,6 +1122,15 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sun Aug 30 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt4.38193.1
+- Updated to SVN snapshot (revision 38193).
+- Make a fixed video system for multiple files default in the system config.
+- Drop trailing null driver in the video and audio drivers list in the system
+  config.
+- Removed SDL (buggy/outdated) and gl2 from video drivers list in the system
+  config.
+- Make SDL driver first in the audio drivers list in the system config.
+
 * Tue Apr 21 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4-alt3.38184.1
 - Updated to SVN snapshot (revision 38184).
 
