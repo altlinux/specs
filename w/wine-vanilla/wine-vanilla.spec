@@ -12,8 +12,8 @@
 %define get_lib_owner_pkg() %{expand:%(rpm -qf --qf '%%{NAME}' $(readlink -e %1))}
 
 Name: wine-vanilla
-Version: 5.13
-Release: alt2
+Version: 5.16
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -469,6 +469,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt1
+- new version 5.16
+
 * Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.13-alt2
 - Rebuilt with vulkan, vkd3d and faudio support (ALT bug #38810).
 
