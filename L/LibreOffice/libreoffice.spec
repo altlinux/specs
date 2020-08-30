@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -445,7 +445,7 @@ find %buildroot%lodir -name "*_gtk3*" ! -name "*_kde5*" | sed 's@^%buildroot@@' 
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
 # Create kde5 plugin list
-find %buildroot%lodir -name "*_kde5*" -o -name "libkde5*" | sed 's@^%buildroot@@' > files.kde5
+find %buildroot%lodir -name "*_kde5*" -o -name "libkde5*" -o -name "*kf5*" | sed 's@^%buildroot@@' > files.kde5
 
 # Generate base filelist by removing files from  separated packages
 { cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
@@ -524,7 +524,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %files qt5 -f files.qt5
 %endif
 
-%if_enabled kde5
+%if_enabled kf5
 %files kde5 -f files.kde5
 %endif
 
@@ -557,6 +557,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Aug 30 2020 Fr. Br. George <george@altlinux.ru> 7.0.0.3-alt2
+- Avoid qt5 dependency build
+
 * Wed Aug 26 2020 Fr. Br. George <george@altlinux.ru> 7.0.0.3-alt1
 - Update to 7.0.0.3
 - Drop GTK2 and KDE4 support
