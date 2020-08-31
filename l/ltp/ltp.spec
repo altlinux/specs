@@ -1,16 +1,29 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: ltp
 Version: 20200515
-Release: alt1
+Release: alt2
 
 Summary: Linux Test Project
 License: GPL-2.0-only
 Group: Development/Tools
 Url: http://linux-test-project.github.io/
-# Git: https://github.com/linux-test-project/ltp
+Vcs: https://github.com/linux-test-project/ltp.git
+
 Source: %name-%version.tar
+BuildRequires: libacl-devel
+BuildRequires: libaio-devel
+BuildRequires: libcap-devel
+BuildRequires: libkeyutils-devel
+BuildRequires: libmm-devel
+%ifnarch armh
+BuildRequires: libnuma-devel
+%endif
+BuildRequires: libselinux-devel
+BuildRequires: libssl-devel
+BuildRequires: libxfs-devel
 
 # No reqs at all, becasue there is tons of garbage.
 AutoReq: off
@@ -30,13 +43,18 @@ Testing Linux, one syscall at a time.
 %prep
 %setup
 
+%add_optflags -Werror=implicit-function-declaration -fno-common
+%add_optflags -Wno-unused-parameter -Wno-unused-result -Wno-old-style-declaration
 %build
 %autoreconf
-./configure --prefix=/usr/lib/ltp
-%make_build -s
+%configure \
+	--prefix=/usr/lib/ltp \
+	--with-open-posix-testsuite \
+	--with-realtime-testsuite
+%make_build --output-sync=none
 
 %install
-%makeinstall_std -s
+%makeinstall_std -j%__nprocs --output-sync=none
 find %buildroot/usr/lib/ltp -perm /g+w | xargs chmod g-w
 
 # EZ-Lanucher.
@@ -46,10 +64,6 @@ cat > %buildroot/%_bindir/runltp <<-EOF
 	exec /usr/lib/ltp/runltp "\$@"
 EOF
 chmod a+x %buildroot/%_bindir/runltp
-
-# Make man manable.
-mkdir -p %buildroot/usr/share
-mv %buildroot/usr/lib/ltp/share/man %buildroot/usr/share/man
 
 %check
 PATH=%buildroot/usr/lib/ltp/testcases/bin:$PATH
@@ -62,10 +76,14 @@ uname04
 %doc COPYING README.*
 /usr/lib/ltp
 %_bindir/runltp
+%_bindir/execltp
 %_man1dir/*.1.*
 %_man3dir/*.3.*
 
 %changelog
+* Mon Aug 31 2020 Vitaly Chikunov <vt@altlinux.org> 20200515-alt2
+- Enable Open Posix Testsuite, Realtime Testsuite, and more LTP tests.
+
 * Sun May 17 2020 Vitaly Chikunov <vt@altlinux.org> 20200515-alt1
 - Update to 20200515.
 
