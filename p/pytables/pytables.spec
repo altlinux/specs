@@ -21,7 +21,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.6.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -34,8 +34,6 @@ Url: http://www.pytables.org/
 Source: %name-%version.tar
 
 Requires: python3-module-%oname = %EVR
-Conflicts: %name < 1:3.6.1
-Obsoletes: %name < 1:3.6.1
 
 BuildRequires: libnumpy-devel
 BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
@@ -156,6 +154,9 @@ cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Mon Aug 31 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt2
+- Remove mistaken obsoletes tag.
+
 * Tue Feb 25 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt1
 - Build new version for python3.8.
 - Build without python2 support.
