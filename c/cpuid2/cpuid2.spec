@@ -1,5 +1,5 @@
 Name: cpuid2
-Version: 20180419
+Version: 20200427
 Release: alt1
 
 Summary: dumps CPUID information about the CPU(s)
@@ -10,6 +10,8 @@ Url: http://www.etallen.com/cpuid.html
 Source: http://www.etallen.com/cpuid/cpuid-%version.src.tar.gz
 
 BuildRequires:  perl-podlators perl-autodie
+
+ExclusiveArch: %ix86 x86_64
 
 %description
 cpuid dumps detailed information about the CPU(s) gathered from the CPUID
@@ -29,6 +31,9 @@ instruction, and also determines the exact model of CPU(s).
 %_man1dir/*
 
 %changelog
+* Mon Aug 31 2020 Ilya Mashkin <oddity@altlinux.ru> 20200427-alt1
+- new version
+
 * Tue Apr 24 2018 Ilya Mashkin <oddity@altlinux.ru> 20180419-alt1
 - new version
 
