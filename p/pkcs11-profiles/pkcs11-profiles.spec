@@ -17,8 +17,8 @@
 %endif
 
 Name: pkcs11-profiles
-Version: 0.1.9
-Release: alt2
+Version: 0.1.10
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -36,6 +36,7 @@ Summary: Control scripts for profile-based PAM PKCS11 configuration
 License: GPLv3+
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: pam_pkcs11 >= 0.6.11-alt1
 
 %description common
 Control scripts for profile-based PAM PKCS11 configuration.
@@ -45,7 +46,7 @@ Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt9
+Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: librtpkcs11ecp >= 1.5.3.0-alt4
 
 %description rutokenecp
@@ -56,7 +57,7 @@ Summary: ESMART PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt9
+Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: pam_pkcs11-isbc
 Requires: isbc-pkcs11
 
@@ -68,7 +69,7 @@ Summary: JaCarta PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt9
+Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: libjcpkcs11
 
 %description jacarta
@@ -79,7 +80,7 @@ Summary: PKCS#11 Kit Proxy module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt17
+Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: libp11-kit >= 0.23.8
 
 %description p11-kit-proxy
@@ -90,7 +91,7 @@ Summary: "Zastava" PAM PKCS#11 profile and configuration files
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt18
+Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: %name-messages-zastava = %version-%release
 BuildArch: noarch
 
@@ -169,6 +170,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Mon Aug 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt1
+- Use "ask_pin_later" instead of "ask_pin" (requires pam_pkcs11 >= 0.6.11).
+
 * Mon Jul 01 2019 Michael Shigorin <mike@altlinux.org> 0.1.9-alt2
 - Enable rutokenecp on platforms supported by 1.9.12.0 release.
 - Disable isbc on e2k: the binaries are underlinked and don't pass

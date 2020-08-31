@@ -4,7 +4,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.11
-Release: alt2
+Release: alt3
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -186,6 +186,9 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Thu Sep 03 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt3
+- Fixed OpenSSL-related compilation warnings.
+
 * Thu Sep 03 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt2
 - Added support for GOST-2012.
 
