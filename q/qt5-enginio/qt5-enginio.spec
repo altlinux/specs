@@ -4,7 +4,7 @@
 Name: qt5-enginio
 Summary: Qt5 - Enginio component
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 # See LICENSE.GPL LICENSE.LGPL LGPL_EXCEPTION.txt, for details
 # See also http://doc.qt.io/qt-5/licensing.html
@@ -13,6 +13,7 @@ Group: System/Libraries
 Url: http://www.qt.io
 
 Source: %name-%version.tar
+Patch: qt5-qtenginio_linkedlist.patch
 
 Requires: %name-common = %EVR
 
@@ -53,6 +54,7 @@ This package contains documentation for Qt5 %qt_module
 
 %prep
 %setup
+%patch -p1
 
 %build
 %qmake_qt5
@@ -103,5 +105,8 @@ popd
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Aug 31 2020 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt2
+- Fix build with qt5 5.15
+
 * Sun Aug 25 2019 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
 - initial build for ALT Sisyphus
