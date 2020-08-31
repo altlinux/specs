@@ -2,18 +2,17 @@
 
 Version: 2.8.5
 Release: alt1
-%setup_python_module %oname
 
-Summary: psycopg2 is a PostgreSQL database adapter for Python
-Name: %packagename
+Summary: psycopg2 is a PostgreSQL database adapter for Python3
+Name: python3-module-%oname
 # https://github.com/psycopg/psycopg2.git
-Source0: psycopg2.tar
+Source0: %oname-%version.tar
 License: GPL
-Group: Development/Python
+Group: Development/Python3
 URL: http://www.psycopg.org/psycopg/
-BuildRequires: postgresql-devel python-devel
 
-Requires: python-modules-json
+BuildRequires(pre): rpm-build-python3
+BuildRequires: postgresql-devel python3-devel
 
 %description
 psycopg is a PostgreSQL database adapter for the Python programming
@@ -32,19 +31,20 @@ Documenation and example files for the psycopg2 python PostgreSQL
 database adapter.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
+%python3_build
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python3_install
 
-%files -f INSTALLED_FILES
-%dir %python_sitelibdir/psycopg2
+%files
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 
 %files doc
 %doc AUTHORS INSTALL README* doc
@@ -52,7 +52,7 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %changelog
 * Mon Aug 31 2020 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt1
 - Build new version.
-- Transfer python3 support in separate package.
+- Transfer on python3.
 
 * Mon Jun 17 2019 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt1
 - Build new version.
