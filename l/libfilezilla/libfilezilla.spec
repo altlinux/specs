@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfilezilla
-Version: 0.23.0
+Version: 0.24.1
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -80,6 +80,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Aug 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.1-alt1
+- Updated to upstream version 0.24.1.
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.23.0-alt1
 - Updated to upstream version 0.23.0.
 
