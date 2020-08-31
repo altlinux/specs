@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.0
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -59,6 +59,7 @@ Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
+Patch1004: alt-timezone.patch
 #
 Patch1005: alt-hidpi_scale_at_192.patch
 Patch1006: e2k-qt-5.15.patch
@@ -384,6 +385,7 @@ EGL integration library for the Qt%major toolkit
 #%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
+%patch1004 -p1 -b .timezone
 #
 #%patch1005 -p1 -b .hidpi-scale
 %ifarch %e2k
@@ -823,6 +825,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Aug 31 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- fix read timezone from /etc/sysconfig/clock if localtime not symlink
+
 * Thu Jul 09 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 
