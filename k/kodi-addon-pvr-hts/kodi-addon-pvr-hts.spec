@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-hts
-Version: 18.0
-Release: alt2
+Version: 19.0
+Release: alt1
 
 Summary: PVR TVheadend addon for Kodi
 License: GPL
@@ -30,6 +30,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.hts
 
 %changelog
+* Mon Aug 31 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt1
+- updated for kodi 19.0 Matrix
+
 * Tue Aug 06 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt2
 - updated for Leia up to 4.4.18
 
