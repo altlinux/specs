@@ -1,12 +1,13 @@
 Name:		uget
-Version:	2.2.1
-Release:	alt2
+Version:	2.2.3
+Release:	alt1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:		Networking/File transfer
 License:	LGPLv2+
 URL:		http://ugetdm.com/
-Source0:	http://downloads.sourceforge.net/urlget/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/urlget/%{name}-%{version}-1.tar.gz
+Patch0:		uget-2.2.3-gcc10-fno-common.patch
 
 
 # Automatically added by buildreq on Wed Jun 09 2010
@@ -23,6 +24,8 @@ Uget is the successor of urlgfe, which was called URLget before.
 
 %prep
 %setup -q
+%patch0 -p1 -b .gcc10
+
 #patch1 -p2
 touch NEWS
 find . | xargs touch
@@ -53,6 +56,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 31 2020 Ilya Mashkin <oddity@altlinux.ru> 2.2.3-alt1
+- 2.2.3
+
 * Thu Oct 04 2018 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt2
 - rebuild
 
