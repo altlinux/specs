@@ -12,12 +12,12 @@
 %define fakebrand xalt
 
 %define major 9
-%define minor 0
-%define bugfix 7
+%define minor 1
+%define bugfix 0
 %define altversion %major.%minor
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -188,7 +188,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 Slideshow for %ProductName installer
 
 %package indexhtml
-BuildArch: noarch
+#BuildArch: noarch
 Summary: %name -- ALT html welcome page
 License: distributable
 Group: System/Base
@@ -434,6 +434,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Aug 31 2020 Sergey V Turchin <zerg at altlinux dot org> 9.1.0-alt1
+- new version
+
+* Mon Aug 10 2020 Sergey V Turchin <zerg at altlinux dot org> 9.1.0-alt0.1
+- bump version
+
 * Thu Apr 16 2020 Sergey V Turchin <zerg at altlinux dot org> 9.0.7-alt2
 - require beesu instead of gksu
 
