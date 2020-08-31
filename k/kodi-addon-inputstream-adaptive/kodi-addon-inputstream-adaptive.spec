@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 18.0
-Release: alt3
+Version: 19.0
+Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPL
@@ -21,7 +21,8 @@ BuildRequires: libexpat-devel
 %setup
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
+cmake . -DCMAKE_CXX_FLAGS='%optflags -Wno-error=return-type' \
+	-DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %make_build
 
 %install
@@ -32,6 +33,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Aug 31 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt1
+- updated for kodi 19.0 Matrix
+
 * Mon Aug 05 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 18.0-alt3
 - updated for Leia
 
