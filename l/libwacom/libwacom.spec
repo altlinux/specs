@@ -1,8 +1,8 @@
-%define ver_major 1.4
+%define ver_major 1.5
 %def_disable docs
 
 Name: libwacom
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -93,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Aug 31 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+
 * Tue Jun 30 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
