@@ -20,7 +20,7 @@
 
 Name: %llvm_name
 Version: 10.0.1
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 
 Group: Development/C
@@ -45,6 +45,7 @@ Patch11: CMake-CheckAtomic.cmake-catch-false-positives-in-RIS.patch
 Patch12: Support-Check-for-atomics64-when-deciding-if-latomic.patch
 Patch13: dsymutil-Explicitly-link-against-libatomic-when-nece.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
+Patch15: llvm-upstream-D85007.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -227,6 +228,7 @@ mv compiler-rt-%version.src projects/compiler-rt
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p2
 
 %build
 %cmake -G Ninja \
@@ -416,6 +418,9 @@ ninja -C BUILD check-all || :
 %doc %_docdir/lld
 
 %changelog
+* Wed Aug 12 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 10.0.1-alt2
+- Applied upstream patch which should fix ppc64le-specific issue.
+
 * Tue Aug 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 10.0.1-alt1
 - 10.0.1
 
