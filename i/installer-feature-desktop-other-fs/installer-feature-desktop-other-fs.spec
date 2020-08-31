@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: Mount existing filesystems too
@@ -9,6 +9,7 @@ Group: System/Configuration/Other
 Url: http://wiki.sisyphus.ru/devel/installer/features
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
+
 BuildArch: noarch
 
 %description
@@ -20,7 +21,6 @@ License: GPL
 Group: System/Configuration/Other
 Provides: installer-feature-other-fs
 Conflicts: installer-ltsp-school-stage2
-#Requires: installer-scripts-remount-stage2 >= 0.4-alt1
 
 %description stage2
 %summary
@@ -35,6 +35,9 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Mon Aug 31 2020 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
+- E2K: exclude /mnt/hdc1 (thx vas.expert)
+
 * Mon Dec 05 2016 Michael Shigorin <mike@altlinux.org> 0.7.5-alt1
 - exclude /boot/efi (closes: #32698)
 
