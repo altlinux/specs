@@ -11,7 +11,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define _localstatedir %{_var}
 Name:			springlobby
 Version:		0.267
-Release:		alt1_5
+Release:		alt2_5
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -45,6 +45,7 @@ Requires:		springrts
 ExclusiveArch:	%{ix86} x86_64
 Source44: import.info
 Patch33: springlobby-0.195-alt-linkage.patch
+Patch34: springlobby-0.267-alt-curl-compat.patch
 
 %description
 SpringLobby is a free cross-platform lobby client for the Spring RTS project.
@@ -53,6 +54,7 @@ SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 %setup -q
 %patch0 -p1
 #patch33 -p1
+%patch34 -p2
 
 
 %build
@@ -84,6 +86,9 @@ desktop-file-install	\
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.267-alt2_5
+- NMU: rebuilt with boost-1.74.0.
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.267-alt1_5
 - new version
 
