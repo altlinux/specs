@@ -9,8 +9,8 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %define _localstatedir %{_var}
 %global cpan_version 6.54
 Name:           perl-Coro
-Version:        6.55
-Release:        alt2_1
+Version:        6.57
+Release:        alt1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -155,6 +155,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 2:6.57-alt1
+- automated CPAN update
+
 * Wed Jul 31 2019 Igor Vlasenko <viy@altlinux.ru> 2:6.55-alt2_1
 - automated CPAN update
 
