@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200819
+Version: 20200901
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Sep 01 2020 Cronbuild Service <cronbuild@altlinux.org> 20200901-alt1
+- upstream changes (GIT d5f9eea):
+  + wl18xx: update firmware file 8.9.0.0.83 (thx Raz Bouganim)
+  + mt7615: update firmware to 20200814 version (thx Shayne Chen)
+
 * Wed Aug 26 2020 Cronbuild Service <cronbuild@altlinux.org> 20200819-alt1
 - upstream changes (GIT 74bd44f):
   + amdgpu: add navi12 firmware from 20.30 (thx Alex Deucher)
