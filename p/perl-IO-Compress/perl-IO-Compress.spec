@@ -1,8 +1,8 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.093
+Version: 2.096
 Release: alt1
 
 Summary: Read and write compressed data
@@ -61,6 +61,9 @@ export TEST_SKIP_VERSION_CHECK=1
 
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.096-alt1
+- automated CPAN update
+
 * Wed Dec 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.093-alt1
 - automated CPAN update
 
