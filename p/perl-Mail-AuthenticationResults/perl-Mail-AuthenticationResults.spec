@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Pod/Coverage/Trust
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.20200331.1
+Version: 1.20200824.1
 Release: alt1
 Summary: Object Oriented Authentication-Results header class
 Group: Development/Perl
@@ -43,6 +43,9 @@ Object Oriented Authentication-Results email headers
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.20200824.1-alt1
+- automated CPAN update
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 1.20200331.1-alt1
 - automated CPAN update
 
