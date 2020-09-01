@@ -6,14 +6,14 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IO/File.pm) perl(IO/Handle.pm) p
 %define upstream_version 0.64
 
 Name:		perl-%{upstream_name}
-Version:	0.65
+Version:	0.66
 Release:	alt1
 
 Summary:	Multiplex output to multiple output handles 
 License:	GPL
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/%{upstream_name}
-Source0:	http://search.cpan.org/CPAN/authors/id/T/TL/TLOWERY/%{upstream_name}-%{upstream_version}.tar.bz2
+Source0:	http://www.cpan.org/authors/id/N/NE/NEILB/%{upstream_name}-%{version}.tar.gz
 
 
 BuildArch:	noarch
@@ -40,7 +40,7 @@ writes any data read to the output handles given as the remaining arguments to
 the constructor.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -60,6 +60,9 @@ the constructor.
 
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
 - automated CPAN update
 
