@@ -3,12 +3,12 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4.6
-Release: alt1
+Release: alt2
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/snuggs
 
 # https://github.com/mapbox/snuggs.git
@@ -19,10 +19,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(hypothesis)
-BuildRequires: python2.7(numpy)
-BuildRequires: python2.7(pyparsing)
-BuildRequires: python2.7(pytest)
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pyparsing)
@@ -32,52 +28,29 @@ BuildRequires: python3(pytest)
 %description
 Snuggs are s-expressions for Numpy.
 
-%package -n python3-module-%oname
-Summary: Snuggs are s-expressions for Numpy
-Group: Development/Python3
-
-%description -n python3-module-%oname
-Snuggs are s-expressions for Numpy.
-
 %prep
 %setup
 %patch -p1
 
-cp -a . ../python3
-
 %build
-%python_build_debug
-
-pushd ../python3
 %python3_build_debug
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
-py.test -vv
-pushd ../python3
 py.test3 -vv
-popd
 
 %files
-%doc *.txt *.rst
-%python_sitelibdir/%oname-%version-py%_python_version.egg-info/
-%python_sitelibdir/%oname/__init__.py
-%python_sitelibdir/%oname/__init__.py[oc]
-
-%files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/%oname/__init__.py
 %python3_sitelibdir/%oname/__pycache__/__init__.cpython-*.py*
 
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.6-alt2
+- Drop python2 support.
+
 * Wed Aug 14 2019 Stanislav Levin <slev@altlinux.org> 1.4.6-alt1
 - 1.4.1 -> 1.4.6.
 
