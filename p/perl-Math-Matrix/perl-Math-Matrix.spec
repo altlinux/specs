@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(overload.pm) perl-podlators
@@ -6,13 +7,13 @@ BuildRequires: perl(Config.pm) perl(overload.pm) perl-podlators
 %define upstream_version 0.8
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_5
+Version:    0.91
+Release:    alt1
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
 Group:      Development/Perl
-Source0:     http://www.cpan.org/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:     http://www.cpan.org/authors/id/P/PJ/PJACKLAM/%{upstream_name}-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/%{upstream_name}
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -24,7 +25,7 @@ Source44: import.info
 The following methods are available: concat, transpose, etc.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -37,10 +38,13 @@ make test
 %makeinstall_std
 
 %files
-%doc META.yml  README
+%doc META.yml README Changes README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_5
 - update by mgaimport
 
