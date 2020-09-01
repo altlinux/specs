@@ -1,7 +1,7 @@
-%define git_ver 10801
-%define git_commit 6952be5ce495ee4887a9b1bdcba3cd3c5e992e26
+%define git_ver 10811
+%define git_commit a86a3d2fee6b0bd6f3a5e872aedea9188ea94f61
 
-%define glslang_commit bcf6a2430e99e8fc24f9f266e99316905e6d5134
+%define glslang_commit 3ee5f2f1d3316e228916788b300d786bb574d337
 %define asmjit_commit fc251c914e77cd079e58982cdab00a47539d7fc5
 %define pugixml_commit 8bf806c035373bd0723a85c0820cfd5c804bf6cd
 %define hidapi_commit 9220f5e77c27b8b3717b277ec8d3121deeb50242
@@ -12,12 +12,12 @@
 %define cereal_commit 60c69df968d1c72c998cd5f23ba34e2e3718a84b
 %define faudio_commit 9c7d2d1430c9dbe4e67c871dfe003b331f165412
 %define span_commit 9d7559aabdebf569cab3480a7ea2a87948c0ae47
-%define spirv_headers_version 1.5.3
-%define spirv_tools_commit 49ca250b44c633ba7cb8897002e62781a451421c
+%define spirv_headers_version 1.5.3.reservations1
+%define spirv_tools_version 2020.4
 %define wolfssl_commit d0749c65498672462b88fc8be5ea066cf65067f1
 
 Name: rpcs3
-Version: 0.0.11.%git_ver
+Version: 0.0.12
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -29,8 +29,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://github.com/RPCS3/%name/archive/%git_commit/%name-%git_commit.tar.gz
-Source0: %name-%git_commit.tar
+# https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
 Source1: glslang-%glslang_commit.tar
 # https://github.com/asmjit/asmjit/archive/%asmjit_commit/asmjit-%asmjit_commit.tar.gz
@@ -55,8 +55,8 @@ Source10: FAudio-%faudio_commit.tar
 Source11: span-%span_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
 Source12: SPIRV-Headers-%spirv_headers_version.tar
-# https://github.com/KhronosGroup/SPIRV-Tools/archive/%spirv_tools_commit/SPIRV-Tools-%spirv_tools_commit.tar.gz
-Source13: SPIRV-Tools-%spirv_tools_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
+Source13: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/RipleyTom/wolfssl/archive/%wolfssl_commit/wolfssl-%wolfssl_commit.tar.gz
 Source14: wolfssl-%wolfssl_commit.tar
 
@@ -95,7 +95,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -n %name-%git_commit -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
 
 %patch0 -p1
 
@@ -111,7 +111,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../FAudio-%faudio_commit 3rdparty/FAudio
 %__mv -Tf ../span-%span_commit 3rdparty/span
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_version Vulkan/spirv-headers
-%__mv -Tf ../SPIRV-Tools-%spirv_tools_commit Vulkan/spirv-tools
+%__mv -Tf ../SPIRV-Tools-%spirv_tools_version Vulkan/spirv-tools
 %__mv -Tf ../wolfssl-%wolfssl_commit 3rdparty/wolfssl
 
 #Generate Version Strings
@@ -160,6 +160,9 @@ popd
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Sep 01 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.12-alt1
+- Version 0.0.12
+
 * Sat Aug 29 2020 Nazarov Denis <nenderus@altlinux.org> 0.0.11.10801-alt1
 - Version 0.0.11.10801
 
