@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.025
+Version: 0.026
 Release: alt1
 Summary: Alternative but compatible interface to modules that export symbols.
 Group: Development/Perl
@@ -33,10 +33,13 @@ other variables.
 %perl_vendor_install
 
 %files
-%doc README.md LICENSE README Changes
+%doc README.md README Changes
 %perl_vendor_privlib/I*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- automated CPAN update
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1
 - automated CPAN update
 
