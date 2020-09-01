@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module DateTime-Format-Builder
 
 Name: perl-%module
-Version: 0.82
+Version: 0.83
 Release: alt1
 Epoch: 1
 
@@ -10,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-Builder-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ BuildRequires: perl-Class-Factory-Util perl-DateTime-Format-Mail perl-DateTime-F
 DateTime::Format::Builder - create DateTime parser classes and objects.
 
 %prep
-%setup -q -n DateTime-Format-Builder-%{version}
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +31,13 @@ DateTime::Format::Builder - create DateTime parser classes and objects.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING.md README.md Changes CODE_OF_CONDUCT.md LICENSE examples
+%doc CONTRIBUTING.md README.md Changes examples
 %perl_vendor_privlib/DateTime/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.83-alt1
+- automated CPAN update
+
 * Mon Mar 04 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.82-alt1
 - automated CPAN update
 
