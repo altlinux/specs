@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Locale
 Name: perl-%dist
-Version: 1.26
+Version: 1.28
 Release: alt1
 
 Summary: Localization support for DateTime.pm
@@ -18,7 +18,7 @@ BuildArch: noarch
 %add_findprov_skiplist */DateTime/Locale/[a-qs-z]*.pm
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-List-MoreUtils perl-Module-Build perl-Params-Validate perl-Test-Output perl(Dist/CheckConflicts.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Test/Warnings.pm) perl(CPAN/Meta/Check.pm) perl(namespace/autoclean.pm) perl(Params/ValidationCompiler.pm) perl(Specio/Declare.pm) perl(File/ShareDir/Install.pm) perl(Test/File/ShareDir/Dist.pm) perl(IPC/System/Simple.pm)
+BuildRequires: perl-List-MoreUtils perl-Module-Build perl-Params-Validate perl-Test-Output perl(Dist/CheckConflicts.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Test/Warnings.pm) perl(CPAN/Meta/Check.pm) perl(namespace/autoclean.pm) perl(Params/ValidationCompiler.pm) perl(Specio/Declare.pm) perl(File/ShareDir/Install.pm) perl(Test/File/ShareDir/Dist.pm) perl(IPC/System/Simple.pm) perl(Test2/Require/Module.pm) perl(Test2/V0.pm) perl(Test2/Plugin/NoWarnings.pm)
 
 %description
 DateTime::Locale is primarily a factory for the various locale
@@ -40,6 +40,9 @@ on available locales.
 %perl_vendor_privlib/auto/share/dist/DateTime-Locale
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Sat Jul 04 2020 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
