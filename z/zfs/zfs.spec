@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.8.4
-Release: alt2
+Release: alt3
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
@@ -195,6 +195,10 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Sep 01 2020 Anton Farygin <rider@altlinux.ru> 0.8.4-alt3
+- apply patches (up to 222e0ea399cbb6d5748e12a09610d8f1b37f16a0)
+  from zfs-0.8.5-staging branch
+
 * Thu Jun 18 2020 Anton Farygin <rider@altlinux.ru> 0.8.4-alt2
 - zfs-utils: added conflict with fuze-zfs package
 
