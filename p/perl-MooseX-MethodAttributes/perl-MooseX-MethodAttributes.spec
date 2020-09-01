@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-MethodAttributes
 Name: perl-%dist
-Version: 0.31
-Release: alt1.1
+Version: 0.32
+Release: alt1
 
 Summary: code attribute introspection
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-MethodAttributes-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,14 +19,14 @@ BuildArch: noarch
 %add_findreq_skiplist */MooseX/MethodAttributes.pm
 
 # Automatically added by buildreq on Sun Jan 16 2011
-BuildRequires: perl-MooseX-Types perl-Test-Exception perl-namespace-autoclean perl(Test/CheckDeps.pm) perl(Module/Build/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(MooseX.pm) perl(Class/MOP/Package.pm)
+BuildRequires: perl-MooseX-Types perl-Test-Exception perl-namespace-autoclean perl(Test/CheckDeps.pm) perl(Module/Build/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(MooseX.pm) perl(Class/MOP/Package.pm) perl(Test/Needs.pm)
 
 %description
 This module allows code attributes of methods to be introspected using
 Moose meta method objects.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +35,13 @@ Moose meta method objects.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1.1
 - rebuild to restore role requires
 
