@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Hash-Merge
 Name: perl-%dist
-Version: 0.301
+Version: 0.302
 Release: alt1
 
 Summary: Merges arbitrarily deep hashes into a single hash
@@ -39,6 +39,9 @@ hashes, or recursive references, are not handled well by this method.>
 %perl_vendor_privlib/Hash*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.302-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.301-alt1
 - automated CPAN update
 
