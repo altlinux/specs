@@ -1,28 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Parser
 Name: perl-%dist
-Version: 3.72
-Release: alt1.2
+Version: 3.75
+Release: alt1
 
 Summary: Parsing and extracting information from HTML documents
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Parser-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CA/CAPOEIRAB/%{dist}-%{version}.tar.gz
 
 # avoid circular dependency on perl-libwww
 %add_findreq_skiplist */HTML/HeadParser.pm
 
 # Automatically added by buildreq on Tue Oct 25 2011
-BuildRequires: perl-HTML-Tagset perl-Test-Pod perl-URI perl-threads
+BuildRequires: perl-HTML-Tagset perl-Test-Pod perl-URI perl-threads perl(HTTP/Headers.pm)
 
 %description
 This is a collection of perl modules that parse and extract
 information from HTML documents.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %ifdef __buildreqs
 # avoid build dependency on perl-libwww
@@ -41,6 +41,9 @@ mv t/headparser-http.t t/headparser-http.t.orig
 %perl_vendor_autolib/HTML
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 3.75-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.72-alt1.2
 - rebuild with new perl 5.28.1
 
