@@ -1,13 +1,11 @@
 %define oname lingua
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.13
-Release: alt2
+Release: alt3
 Summary: Translation toolset
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/lingua/
 
 # https://github.com/wichert/lingua.git
@@ -15,31 +13,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-polib python-module-chameleon.core
-BuildPreReq: python-module-mock
-BuildRequires: python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-polib python3-module-chameleon.core
 BuildPreReq: python3-module-mock
 BuildRequires: python3-module-pytest
-%endif
 
-%py_provides %oname
+Conflicts: python-module-lingua < %EVR
+Obsoletes: python-module-lingua < %EVR
 
-%description
-Lingua is a package with tools to extract translateable texts from your
-code, and to check existing translations. It replaces the use of the
-xgettext command from gettext, or pybabel from Babel.
-
-%package -n python3-module-%oname
-Summary: Translation toolset
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 Lingua is a package with tools to extract translateable texts from your
 code, and to check existing translations. It replaces the use of the
 xgettext command from gettext, or pybabel from Babel.
@@ -50,57 +35,24 @@ xgettext command from gettext, or pybabel from Babel.
 grep -qsF '[pytest]' setup.cfg || exit 1
 sed -i 's/\[pytest\]/[tool:pytest]/g' setup.cfg
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc *.rst docs/examples
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst docs/examples
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 4.13-alt3
+- Transfer on python3.
+
 * Thu May 30 2019 Stanislav Levin <slev@altlinux.org> 4.13-alt2
 - Fixed Pytest4.x compatibility error.
 

@@ -1,13 +1,11 @@
 %define modname mako
 
-%def_with python3
-
-Name: python-module-%modname
+Name: python3-module-%modname
 Version: 1.0.9
-Release: alt1
+Release: alt2
 Summary: template library written in Python
 
-Group: Development/Python
+Group: Development/Python3
 License: MIT
 Url: http://www.makotemplates.org
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -16,20 +14,14 @@ Packager: Vladimir Lettiev <crux@altlinux.ru>
 Source: %name-%version.tar
 
 # Fix #23203
-Requires: python-module-beaker
+Requires: python3-module-beaker
+
+Conflicts: python-module-mako < %EVR
+Obsoletes: python-module-mako < %EVR
 
 BuildArch: noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
-#BuildRequires: python-module-setuptools python-module-markupsafe
-%if_with python3
-#BuildRequires: /usr/bin/2to3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-markupsafe
-%endif
+BuildRequires:  python3-module-setuptools rpm-build-python3 time
 
 %description
 Mako is a template library written in Python. It provides a familiar,
@@ -42,63 +34,25 @@ inheritance to produce one of the most straightforward and flexible
 models available, while also maintaining close ties to Python calling
 and scoping semantics.
 
-%if_with python3
-%package -n python3-module-%modname
-Summary: template library written in Python 3
-Group: Development/Python3
-Requires: python3-module-beaker
-
-%description -n python3-module-%modname
-Mako is a template library written in Python. It provides a familiar,
-non-XML syntax which compiles into Python modules for maximum
-performance. Mako's syntax and API borrows from the best ideas of many
-others, including Django templates, Cheetah, Myghty, and Genshi.
-Conceptually, Mako is an embedded Python (i.e. Python Server Page)
-language, which refines the familiar ideas of componentized layout and
-inheritance to produce one of the most straightforward and flexible
-models available, while also maintaining close ties to Python calling
-and scoping semantics.
-%endif
-
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
-%endif
-%python_install
 
 %files
+%doc CHANGES LICENSE README*
 %_bindir/mako-render
-%python_sitelibdir/mako
-%python_sitelibdir/Mako-%version-*
-%doc CHANGES LICENSE README*
-
-%if_with python3
-%files -n python3-module-%modname
-%doc CHANGES LICENSE README*
-%_bindir/mako-render3
 %python3_sitelibdir/mako
 %python3_sitelibdir/Mako-%version-*
-%endif
 
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt2
+- Transfer on python3.
+
 * Fri Apr 26 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
 - 1.0.9
 

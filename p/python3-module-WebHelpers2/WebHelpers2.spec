@@ -1,14 +1,13 @@
 %define oname WebHelpers2
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.0
-Release: alt2.git20150117.1.1
+Release: alt3.git20150117
 Summary: Functions for web apps: generating HTML tags, showing results a pageful at a time, etc.
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/WebHelpers2/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -16,21 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-markupsafe python-module-six
-BuildPreReq: python-module-tox python-module-wheel
-BuildPreReq: python-module-unidecode
-BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-markupsafe python3-module-six
-BuildPreReq: python3-module-tox python3-module-wheel
-BuildPreReq: python3-module-unidecode
-%endif
+BuildPreReq: python3-module-tox python3-module-wheel pylons_sphinx_theme
+BuildPreReq: python3-module-unidecode python3-module-sphinx
 
-%py_provides webhelpers2
-Provides: python-module-webhelpers2 = %EVR
+%py3_provides webhelpers2
+Provides: python3-module-webhelpers2 = %EVR
 
 %description
 WebHelpers2 is the successor to the widely-used WebHelpers utilities. It
@@ -39,7 +32,7 @@ numbers, do basic statistics, work with collections, and more.
 
 %package tests
 Summary: Tests for %oname
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
@@ -49,32 +42,9 @@ numbers, do basic statistics, work with collections, and more.
 
 This package contains tests for %oname.
 
-%package -n python3-module-%oname
-Summary: Functions for web apps: generating HTML tags, showing results a pageful at a time, etc.
-Group: Development/Python3
-%py3_provides webhelpers2
-Provides: python3-module-webhelpers2 = %EVR
-
-%description -n python3-module-%oname
-WebHelpers2 is the successor to the widely-used WebHelpers utilities. It
-contains convenience functions to make HTML tags, process text, format
-numbers, do basic statistics, work with collections, and more.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-WebHelpers2 is the successor to the widely-used WebHelpers utilities. It
-contains convenience functions to make HTML tags, process text, format
-numbers, do basic statistics, work with collections, and more.
-
-This package contains tests for %oname.
-
 %package pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 WebHelpers2 is the successor to the widely-used WebHelpers utilities. It
@@ -98,74 +68,44 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+install -d %buildroot%python3_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-rm -fR build
-python setup.py test
-%if_with python3
-pushd ../python3
-rm -fR build
 python3 setup.py test
-popd
-%endif
 
 %files
 %doc CHANGELOG README.*
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/pickle
+%exclude %python3_sitelibdir/*/tests
 
 %files tests
-%python_sitelibdir/*/tests
+%python3_sitelibdir/*/tests
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python3_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGELOG README.*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%endif
-
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 2.0-alt3.git20150117
+- Transfer on python3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0-alt2.git20150117.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
