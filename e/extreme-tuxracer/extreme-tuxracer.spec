@@ -2,17 +2,16 @@
 
 Name: extreme-tuxracer
 Version: 0.7.5
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
 Group: Games/Arcade
-License: GPL
+License: GPL-2.0
 Url: https://sourceforge.net/projects/extremetuxracer/
 
 Source: https://downloads.sourceforge.net/extremetuxracer/etr-%version.tar.xz
 
-Obsoletes: %name <= 0.35
 Requires: %name-data = %EVR
 
 BuildRequires: libappstream-glib-devel
@@ -71,6 +70,9 @@ EOF
 %_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1:0.7.5-alt4
+- Fix license.
+
 * Sun Feb 24 2019 Nazarov Denis <nenderus@altlinux.org> 1:0.7.5-alt3
 - Rebuilt with new SFML
 
