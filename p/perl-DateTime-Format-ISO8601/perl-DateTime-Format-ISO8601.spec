@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module DateTime-Format-ISO8601
 
 Name: perl-%module
-Version: 0.08
+Version: 0.14
 Release: alt1
 
 Summary: Perl module that parses ISO8601 formats
@@ -9,18 +10,18 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/J/JH/JHOBLITT/DateTime-Format-ISO8601-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Mar 25 2012
-BuildRequires: perl-DateTime-Format-Builder perl-File-Find-Rule perl-Module-Build perl-Test-Distribution perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-DateTime-Format-Builder perl-File-Find-Rule perl-Module-Build perl-Test-Distribution perl-Test-Pod perl-Test-Pod-Coverage perl(Test2/V0.pm)
 
 %description
 Perl module that parses almost all ISO8601 date and time formats.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,9 +30,13 @@ Perl module that parses almost all ISO8601 date and time formats.
 %perl_vendor_install
 
 %files
+%doc CODE_OF_CONDUCT.md LICENSE Todo Changes CONTRIBUTING.md README.md
 %perl_vendor_privlib/DateTime/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 0.08-alt1
 - 0.08
 
