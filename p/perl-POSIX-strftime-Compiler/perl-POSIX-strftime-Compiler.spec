@@ -1,27 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Carp.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(POSIX.pm) perl(Test/More.pm) perl(Time/Local.pm) perl(Time/TZOffset.pm) perl(base.pm)
+BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Carp.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(POSIX.pm) perl(Test/More.pm) perl(Time/Local.pm) perl(Time/TZOffset.pm) perl(base.pm) perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
-%define module_version 0.42
 %define module_name POSIX-strftime-Compiler
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.42
+Version: 0.44
 Release: alt1
 Summary: GNU C library compatible strftime for loggers and servers
 Group: Development/Perl
 License: perl
 URL: https://github.com/kazeburo/POSIX-strftime-Compiler
 
-Source: http://www.cpan.org/authors/id/K/KA/KAZEBURO/POSIX-strftime-Compiler-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KAZEBURO/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README.md Changes LICENSE
+%doc README.md Changes
 %perl_vendor_privlib/P*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
