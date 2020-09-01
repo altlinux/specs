@@ -1,17 +1,19 @@
 %define _name apsw
 %define rel r1
-%define sqlite_ver 3.32.2
+%define sqlite_ver 3.33.0
 %def_with python2
 
 Name: python-module-%_name
-Version: 3.32.2
+Version: 3.33.0
 Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
-License: zlib/libpng License
+#doc/_sources/copyright.rst.txt
+License: Zlib
 Group: Development/Python
-Url: http://rogerbinns.github.io/apsw
+Url: https://rogerbinns.github.io/apsw
 
+Vcs: https://rogerbinns.github.io/apsw.git
 Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_name-%version-%rel.zip
 
 BuildRequires: libsqlite3-devel >= %sqlite_ver unzip
@@ -77,6 +79,9 @@ popd
 
 
 %changelog
+* Tue Sep 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.33.0-alt1.r1
+- 3.33.0
+
 * Thu Jun 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt1.r1
 - 3.32.2
 
