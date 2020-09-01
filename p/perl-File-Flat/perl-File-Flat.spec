@@ -6,8 +6,8 @@
 %define _enable_test 1
 
 Name: perl-File-Flat
-Version: 1.05
-Release: alt1.1
+Version: 1.07
+Release: alt1
 
 Summary: File::Flat - Implements a flat filesystem
 
@@ -46,6 +46,9 @@ file, no matter where it is.
 %perl_vendor_privlib/File/
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
