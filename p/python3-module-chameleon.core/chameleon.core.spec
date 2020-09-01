@@ -1,49 +1,30 @@
 %define oname chameleon
 
-Name: python-module-%oname.core
-Version: 3.1
-Release: alt1.2
+Name: python3-module-%oname.core
+Version: 3.8.1
+Release: alt1
 
 Summary: Chameleon Template Compiler
 License: BSD
-Group: Development/Python
+Group: Development/Python3
 Url: http://chameleon.repoze.org/
 # https://github.com/malthe/chameleon.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-alabaster python-module-docutils
-BuildRequires: python-module-setuptools time
-BuildRequires: python-module-html5lib python-module-objects.inv
+BuildRequires: time
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
-
+BuildPreReq: python3-module-sphinx
 
 %description
 Attribute language template compiler.
 
-%package -n python3-module-%oname.core
-Summary: Chameleon Template Compiler (Python 3)
-Group: Development/Python3
-
-%description -n python3-module-%oname.core
-Attribute language template compiler.
-
-%package -n python3-module-%oname.core-tests
-Summary: Tests for Chameleon Template Compiler (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname.core = %version-%release
-
-%description -n python3-module-%oname.core-tests
-Attribute language template compiler.
-
-This package contains tests for Chameleon Template Compiler.
-
 %package tests
 Summary: Tests for Chameleon Template Compiler
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
 %description tests
@@ -72,64 +53,40 @@ This package contains documentation for Chameleon Template Compiler.
 %prep
 %setup
 
-rm -rf ../python3
-cp -a . ../python3
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
-%python_build
-
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
-popd
-
-%make pickle
-%make html
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
-cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make SPHINXBUILD="sphinx-build-3" pickle
+%make SPHINXBUILD="sphinx-build-3" html
+cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python setup.py test
-
-pushd ../python3
 python3 setup.py test
-popd
 
 %files
 %doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/pickle
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files tests
-%python_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/tests
 
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc _build/html/*
 
-%files -n python3-module-%oname.core
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-
-%files -n python3-module-%oname.core-tests
-%python3_sitelibdir/%oname/tests
-
-
 %changelog
+* Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
+- Build new version.
+- Drop python2 support.
+
 * Thu May 24 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.1-alt1.2
 - rebuild with python3.6
 
