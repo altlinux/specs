@@ -1,6 +1,6 @@
 Name: drbd9
 Version: 9.0.24
-Release: alt1
+Release: alt2
 %define githash 6e91f89e4016d01512db171d98b3424204d254dc
 
 Summary: The Linux kernel code for DRBD9.
@@ -57,6 +57,9 @@ tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 %doc README.md COPYING
 
 %changelog
+* Tue Sep 01 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.24-alt2
+- Build for kernel 5.8.
+
 * Thu Jul 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.0.24-alt1
 - 9.0.24
 
