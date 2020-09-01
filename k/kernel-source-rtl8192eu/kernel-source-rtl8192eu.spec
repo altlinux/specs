@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8192eu
 Version: 5.2.19.1
-Release: alt3
+Release: alt4
 
 Summary: Realtek rtl8192eu official Linux driver
 License: MIT
@@ -15,7 +15,7 @@ BuildPreReq: rpm-build-kernel
 
 %description
 This driver is based on the (latest) official Realtek v5.2.19.1 driver
-with fixes and improvements to support the latest kernels (up to 5.6).
+with fixes and improvements to support the latest kernels (up to 5.8).
 
 %prep
 %setup -q -c
@@ -28,6 +28,10 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Sep 01 2020 Dmitry Terekhin <jqt4@altlinux.org> 5.2.19.1-alt4
+- Add kernel 5.8(+) support frame management/sha256 offloading
+- Provide aarch64 support
+
 * Thu Apr 16 2020 Dmitry Terekhin <jqt4@altlinux.org> 5.2.19.1-alt3
 - Fixed kernel 5.6(+) (mcc) proc_ops support
 - Add kernel 5.6(+) proc_ops support
