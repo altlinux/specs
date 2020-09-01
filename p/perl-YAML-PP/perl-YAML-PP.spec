@@ -7,7 +7,7 @@ BuildRequires: perl(strict.pm) perl(warnings.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.023
+Version: 0.024
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
@@ -41,13 +41,16 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc README CONTRIBUTING.md Changes examples
+%doc CONTRIBUTING.md Changes examples README.md
 %perl_vendor_privlib/Y*
 
 %files scripts
 %_bindir/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1
 - automated CPAN update
 
