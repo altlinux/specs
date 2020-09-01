@@ -18,7 +18,7 @@ BuildRequires: perl(autodie.pm) perl-podlators
 %bcond_without perl_Alien_Base_ModuleBuild_enables_ssl
 
 Name:           perl-Alien-Base-ModuleBuild
-Version:        1.14
+Version:        1.15
 Release:        alt1
 Summary:        Perl framework for building Alien:: modules and their libraries
 License:        GPL+ or Artistic
@@ -161,6 +161,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
