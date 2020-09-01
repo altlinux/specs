@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without python3
-%def_without check
+%def_with check
 
 %define oname dateutil
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.8.1
 Release: alt2
 
@@ -19,29 +18,21 @@ BuildArch: noarch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%add_python_req_skip _winreg winreg
+%add_python3_req_skip _winreg winreg
 
 # Source-url: %__pypi_url python-dateutil
 Source: %name-%version.tar
 
 Patch1: %oname-2.7.3-alt-tests.patch
 
-BuildRequires: python-devel python-modules-encodings
-BuildRequires: python-module-setuptools python-module-six
 BuildRequires: pytz-zoneinfo
-BuildRequires: python2.7(setuptools_scm)
-%if_with check
-BuildRequires: python2.7(pytest) python2.7(hypothesis) python2.7(freezegun)
-BuildRequires: python-module-pytest-cov
-%endif
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest) python3(hypothesis) python3(freezegun)
 BuildRequires: python3-module-pytest-cov
-%endif
 %endif
 
 BuildRequires(pre): rpm-build-intro
@@ -58,84 +49,34 @@ datetime module, available in Python 2.3+. Allows:
 - parsing of RFC strings,
 - peneric parsing of dates in almost any string format.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Extensions to the standard datetime module
-Group: Development/Python3
-Requires: pytz-zoneinfo
-%add_python3_req_skip _winreg winreg
-
-%description -n python3-module-%oname
-The dateutil module provides powerful extensions to the standard
-datetime module, available in Python 2.3+. Allows:
-- computing of relative deltas (next month, next year, next monday,
-  last week of month, etc),
-- computing of dates based on very flexible recurrence rules, using a
-  superset of the [WWW] iCalendar specification,
-- parsing of RFC strings,
-- peneric parsing of dates in almost any string format.
-%endif
-
 %prep
 %setup
 %patch1 -p1
 # FIXME: Make sure a unicode string can be passed to TZ (GH #802)
 %__subst "s|test_gettz_badzone_unicode|disabled_test_gettz_badzone_unicode|" dateutil/test/test_tz.py
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if_with check
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-py.test
-
-%if_with python3
-pushd ../python3
 py.test3
-popd
-%endif
 %endif
 
 %files
 %doc LICENSE NEWS README*
-%python_sitelibdir/*egg-info/
-%python_sitelibdir/dateutil
-
-%if_with python3
-%files -n python3-module-%oname
-%doc LICENSE NEWS README*
 %python3_sitelibdir/*egg-info/
 %python3_sitelibdir/dateutil
-%endif
 
 %changelog
 * Tue Sep 01 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
-- build python2 only module without tests
+- build standalone python3 module
 
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
 - new version (2.8.1) with rpmgs script (ALT bug 37303)
