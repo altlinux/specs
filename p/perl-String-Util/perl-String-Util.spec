@@ -1,20 +1,19 @@
-%define module_version 1.26
+%define _unpackaged_files_terminate_build 1
 %define module_name String-Util
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(Module/Build.pm) perl(Number/Misc.pm) perl(Test/Toolbox.pm) perl(base.pm) perl(overload.pm)
+BuildRequires: perl(Encode.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(Module/Build.pm) perl(Number/Misc.pm) perl(Test/Toolbox.pm) perl(base.pm) perl(overload.pm) perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.26
-Release: alt2
+Version: 1.31
+Release: alt1
 Summary: String::Util -- String processing utilities
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MI/MIKO/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BA/BAKERSCOT/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -23,7 +22,7 @@ strings.
 
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +31,13 @@ strings.
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE
+%doc README Changes docs
 %perl_vendor_privlib/S*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Sun Jul 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.26-alt2
 - to Sisyphus as perl-Finance-Quote dep
 
