@@ -1,5 +1,5 @@
 %define module_name lkrg
-%define module_version 0.8.1
+%define module_version 0.8.1+git20200827.6f700b5
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -11,8 +11,7 @@ License: GPL-2.0
 Group: Development/Kernel
 Url:  https://www.openwall.com/lkrg/
 
-VCS: https://bitbucket.org/Adam_pi3/lkrg-main.git
-# repacked https://www.openwall.com/lkrg/lkrg-%version.tar.gz
+VCS: https://github.com/openwall/lkrg.git
 Source: %module_name-%version.tar
 
 ExclusiveArch: i586 x86_64 aarch64
@@ -43,6 +42,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %module_name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Sep 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20200827.6f700b5-alt1
+- Updated to 6f700b5b08b5a0fbc5fa41e1ba1908923a29eca9.
+
 * Thu Jul 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1-alt1
 - Update to 0.8.1 (bugfix release preventing Oops).
 
