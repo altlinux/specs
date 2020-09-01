@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Catalyst-Devel
 Name: perl-%dist
-Version: 1.40
+Version: 1.41
 Release: alt1
 
 Summary: Catalyst Development Tools
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Catalyst-Devel/
-Source0: http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +43,9 @@ Catalyst::Runtime.
 %perl_vendor_privlib/auto/share/dist/%dist/*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
+- automated CPAN update
+
 * Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
