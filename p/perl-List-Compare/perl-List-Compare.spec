@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist List-Compare
 Name: perl-%dist
-Version: 0.53
+Version: 0.55
 Release: alt1
 
 Summary: Compare elements of two or more lists
@@ -9,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JK/JKEENAN/List-Compare-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JK/JKEENAN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 28 2010
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Capture/Tiny.pm)
 
 %description
 List::Compare is a simple, object-oriented implementation of very
@@ -22,7 +22,7 @@ common Perl code used to determine interesting relationships between
 two lists at a time.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ two lists at a time.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README FAQ
 %perl_vendor_privlib/List*
 
 %changelog
+* Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
 - automated CPAN update
 
