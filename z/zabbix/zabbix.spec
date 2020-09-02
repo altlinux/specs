@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		4db30afc70
+%define svnrev		146855bff3
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 
 
 Name: zabbix
-Version: 4.4.10
+Version: 5.0.3
 Release: alt1
 Epoch: 1
 
@@ -30,7 +30,7 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-%{?_enable_java:BuildRequires(pre): java-devel-default}
+#%%{?_enable_java:BuildRequires(pre): java-devel-default}
 BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
@@ -391,7 +391,7 @@ find conf -type f -print0 | xargs -0 sed -i \
 
 %install
 # Generate *.mo files
-for pofile in `find frontends/php/locale -type f -name '*.po'`
+for pofile in `find ui/locale -type f -name '*.po'`
 do
     msgfmt --use-fuzzy -c -o ${pofile%%po}mo $pofile
 done
@@ -419,8 +419,8 @@ install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%n
 install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.conf
 
 # frontends
-mv frontends/php/locale/*.sh .
-cp -r frontends %buildroot%webserver_webappsdir/%name/
+mv ui/locale/*.sh .
+cp -r ui %buildroot%webserver_webappsdir/%name/
 
 # apache2 config
 install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
@@ -632,6 +632,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Sep 02 2020 Alexei Takaseev <taf@altlinux.org> 1:5.0.3-alt1
+- 5.0.3
+
 * Fri Jul 03 2020 Alexei Takaseev <taf@altlinux.org> 1:4.4.10-alt1
 - 4.4.10
 
