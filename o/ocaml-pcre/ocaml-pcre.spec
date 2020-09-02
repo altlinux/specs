@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-pcre
-Version: 7.4.3
+Version: 7.4.6
 Release: alt1
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
@@ -60,6 +60,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/pcre/*.mli
 
 %changelog
+* Wed Sep 02 2020 Anton Farygin <rider@altlinux.ru> 7.4.6-alt1
+- 7.4.6
+
 * Fri Nov 01 2019 Anton Farygin <rider@altlinux.ru> 7.4.3-alt1
 - 7.4.3
 
