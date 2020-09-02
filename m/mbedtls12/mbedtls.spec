@@ -4,7 +4,7 @@
 %define so_x509_version 0
 
 Name: %pkgname%so_tls_version
-Version: 2.16.7
+Version: 2.16.8
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -99,6 +99,9 @@ popd
 %_libdir/libmbedx509.so.*
 
 %changelog
+* Wed Sep 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.8-alt1
+- Version 2.16.8
+
 * Thu Jul 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.16.7-alt1
 - Version 2.16.7
 - Build as legacy library
