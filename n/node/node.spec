@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.6
+%define npmver 6.14.8
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.7
+%define major 14.9
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -23,7 +23,7 @@
 %define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.38.1
+%global libuv_abi 1.39.0
 %def_with systemuv
 
 %global libicu_abi 6.5
@@ -367,6 +367,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 14.9.0-alt1
+- new version 14.9.0 (with rpmrb script)
+- libuv >= 1.39.0
+- npm >= 6.14.8
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 14.7.0-alt1
 - new version 14.7.0 (with rpmrb script)
 - npm >= 6.14.7
