@@ -11,8 +11,8 @@
 %define threads pthreads
 
 Name: libxerces-c
-Version: 3.2.2
-Release: alt1.qa1
+Version: 3.2.3
+Release: alt1
 
 Summary: Xerces-C++ validating XML parser
 
@@ -129,6 +129,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/*
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- new version 3.2.3 (with rpmrb script)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1.qa1
 - NMU: applied repocop patch
 
