@@ -1,5 +1,5 @@
 Name: libgcroots
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 License: MIT
@@ -55,6 +55,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_libdir/pkgconfig/gcroots.pc
 
 %changelog
+* Wed Sep 02 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Thu Apr 25 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 - Updated upstream Url.
