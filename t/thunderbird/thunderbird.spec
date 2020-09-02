@@ -1,4 +1,4 @@
-%def_with	enigmail
+%def_without	enigmail
 %def_without	google_calendar
 %def_with	bundled_cbindgen
 %def_enable     mach_build
@@ -13,7 +13,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	78.1.1
+Version:	78.2.1
 Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
@@ -625,6 +625,15 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Sep 02 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.1-alt1
+- New version (78.2.1).
+- Fixes:
+  + CVE-2020-15663 Downgrade attack on the Mozilla Maintenance Service could have resulted in escalation of privilege
+  + CVE-2020-15664 Attacker-induced prompt for extension installation
+  + CVE-2020-15670 Memory safety bugs fixed in Thunderbird 78.2
+- Build without thunderbird-enigmail because this extension is not compatible
+  with Thunderbird 78.x.
+
 * Tue Aug 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 78.1.1-alt1
 - Updated to upstream version 78.1.1 (thx to cas@ and sbolshakov@).
 - Fixes:
