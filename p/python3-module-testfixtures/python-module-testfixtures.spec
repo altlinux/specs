@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 6.10.0
-Release: alt2
+Version: 6.14.1
+Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
@@ -39,12 +39,16 @@ BuildRequires: python3-module-zope.component
 Source:  %modulename-%version.tar
 #VCS:    https://github.com/Simplistix/testfixtures
 
+# Should be removed with update
+Patch: 9684e9816c39377f5cc08819dee711b2255fb2d3.patch
+
 %description
 TestFixtures is a collection of helpers and mock objects that are useful
 when writing unit tests or doc tests.
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 
 %if_with docs
 %prepare_sphinx3 .
@@ -77,6 +81,9 @@ PYTHONPATH=$(pwd) py.test3 testfixtures/tests
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Sep 02 2020 Grigory Ustinov <grenka@altlinux.org> 6.14.1-alt1
+- Automatically updated to 6.14.1.
+
 * Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt2
 - Build without python2.
 - Build with docs.
