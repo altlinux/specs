@@ -1,5 +1,5 @@
 Name: ddgr
-Version: 1.8.1
+Version: 1.9
 Release: alt1
 
 Summary: DuckDuckGo from the terminal
@@ -63,6 +63,9 @@ make test
 %_datadir/zsh/site-functions/_ddgr
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
+- new version 1.9 (with rpmrb script)
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
 - new version 1.8.1 (with rpmrb script)
 
