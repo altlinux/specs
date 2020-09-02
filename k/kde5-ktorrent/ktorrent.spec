@@ -7,12 +7,12 @@
 
 Name: kde5-%rname
 Version: 5.2.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
-License:   GPL
+License:   GPL-2.0-or-later
 URL:       http://ktorrent.org
 
 Provides: ktorrent = %version-%release
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 # ALT
 Patch10: alt-defaults.patch
 Patch11: alt-short-date.patch
+Patch12: alt-find-taglib.patch
 
 # Automatically added by buildreq on Tue Apr 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgcrypt-devel libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel qt5-webkit-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -54,6 +55,7 @@ KTorrent library
 %setup -q -n %rname-%version
 %patch10 -p1 -b .defaults
 %patch11 -p1
+%patch12 -p1
 
 sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
@@ -85,6 +87,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Wed Sep 02 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt2
+- fix find taglib
+
 * Fri Jul 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
 - new version
 
