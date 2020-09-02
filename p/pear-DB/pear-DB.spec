@@ -1,7 +1,7 @@
 %define pear_name DB
 
 Name: pear-DB
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Summary: Database Abstraction Layer
@@ -80,6 +80,9 @@ DB is compatible with both PHP 4 and PHP 5.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- new version 1.10.0 (with rpmrb script)
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
 - new version 1.9.2 (with rpmrb script)
 
