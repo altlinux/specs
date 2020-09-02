@@ -1,16 +1,14 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.14
-Release: alt7
+Version: 4.15
+Release: alt1
 Summary: Set of Xfce4 Desktop installers.
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-URL: http://www.xfce.org
+URL: https://www.xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 A set of virtual packages for Xfce4 Desktop installation.
@@ -75,12 +73,12 @@ of Xfce4 Desktop.
 %define commonreqs \
 Requires: xfwm4-themes \
 Requires: xfce4-dict \
-Requires: orage \
 Requires: xfce4-screenshooter \
 Requires: xarchiver \
 Requires: ristretto \
 Requires: mousepad \
 Requires: parole \
+Requires: catfish \
 Requires: xfce4-panel-profiles \
 # Panel plugins \
 Requires: xfce4-battery-plugin \
@@ -93,12 +91,8 @@ Requires: xfce4-diskperf-plugin \
 Requires: xfce4-eyes-plugin \
 Requires: xfce4-fsguard-plugin \
 Requires: xfce4-genmon-plugin \
-Requires: xfce4-hardware-monitor-plugin \
-Requires: xfce4-kbdleds-plugin \
-Requires: xfce4-mailwatch-plugin \
 Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
-Requires: xfce4-notes-plugin \
 Requires: xfce4-places-plugin \
 Requires: xfce4-sensors-plugin \
 Requires: xfce4-smartbookmark-plugin \
@@ -106,7 +100,6 @@ Requires: xfce4-stopwatch-plugin \
 Requires: xfce4-systemload-plugin \
 Requires: xfce4-time-out-plugin \
 Requires: xfce4-timer-plugin \
-Requires: xfce4-verve-plugin \
 Requires: xfce4-weather-plugin \
 Requires: xfce4-whiskermenu-plugin \
 Requires: xfce4-xkb-plugin
@@ -166,6 +159,17 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Tue Sep 08 2020 Mikhail Efremov <sem@altlinux.org> 4.15-alt1
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- full,regular: Drop xfce4-verve-plugin.
+- full,regular: Drop xfce4-notes-plugin.
+- full,regular: Drop xfce4-mailwatch-plugin.
+- full,regular: Drop xfce4-kbdleds-plugin.
+- full,regular: Drop xfce4-hardware-monitor-plugin.
+- full,regular: Drop orage.
+- full,regular: Add catfish.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 4.14-alt7
 - full,regular: Add xfce4-stopwatch-plugin.
 

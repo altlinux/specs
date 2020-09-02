@@ -1,9 +1,10 @@
 %define _name garcon
 
 %def_without builtin_menu
+%def_enable introspection
 
 Name: lib%_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -12,7 +13,7 @@ Group: System/Libraries
 URL: https://xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/xfce/garcon
+Vcs: https://gitlab.xfce.org/xfce/garcon.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -22,6 +23,7 @@ BuildRequires: glib2-devel >= 2.14
 BuildRequires: libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: intltool
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel libxfce4ui-gtk3-gir-devel}
 
 Obsoletes: libxfce4menu
 Requires: xfce-freedesktop-menu
@@ -43,6 +45,26 @@ Requires: %name = %version-%release
 %description devel
 This package contains libraries and header files for
 developing applications that use %name.
+
+%if_enabled introspection
+%package gir
+Summary: GObject introspection data for %name
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description gir
+GObject introspection data for %name.
+
+%package gir-devel
+Summary: GObject introspection devel data for %name
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
+
+%description gir-devel
+GObject introspection devel data for %name.
+%endif
 
 %package devel-doc
 Summary: Development files for %name
@@ -72,6 +94,26 @@ Requires: libxfce4ui-gtk3-devel
 
 %description gtk3-devel
 %summary
+
+%if_enabled introspection
+%package gtk3-gir
+Summary: GObject introspection data for %name-gtk3
+Group: System/Libraries
+Requires: %name-gtk3 = %EVR
+
+%description gtk3-gir
+GObject introspection data for %name-gtk3.
+
+%package gtk3-gir-devel
+Summary: GObject introspection devel data for %name-gtk3
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gtk3-gir = %EVR
+Requires: %name-gtk3-devel = %EVR
+
+%description gtk3-gir-devel
+GObject introspection devel data for %name-gtk3.
+%endif
 
 %package freedesktop-menu
 Summary: xfce menu shipped by default with %name
@@ -103,7 +145,7 @@ BuildArch: noarch
 %xfce4reconf
 %configure \
     --disable-static \
-	--disable-gtk2 \
+	%{subst_enable introspection} \
     --enable-gtk-doc \
 	--enable-debug=minimum
 %make_build
@@ -118,7 +160,7 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %find_lang %_name
 
 %files -f %_name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %_libdir/%name-1.so.*
 
 %if_with builtin_menu
@@ -141,6 +183,14 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/%name-1.so
 %_libdir/pkgconfig/%_name-1.pc
 
+%if_enabled introspection
+%files gir
+%_libdir/girepository-1.0/Garcon-*.typelib
+
+%files gir-devel
+%_datadir/gir-1.0/Garcon-*.gir
+%endif
+
 %files devel-doc
 %doc HACKING STATUS TODO
 %doc %_datadir/gtk-doc/html/%_name
@@ -153,7 +203,21 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/%name-gtk3-1.so
 %_libdir/pkgconfig/%_name-gtk3-1.pc
 
+%if_enabled introspection
+%files gtk3-gir
+%_libdir/girepository-1.0/GarconGtk-*.typelib
+
+%files gtk3-gir-devel
+%_datadir/gir-1.0/GarconGtk-*.gir
+%endif
+
+
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
+- Enabled GObject introspection support.
+- Updated Vcs tag.
+- Updated to 0.7.1.
+
 * Sun Apr 05 2020 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
 - Dropped gtk2 packages.
 - Added Vcs tag.

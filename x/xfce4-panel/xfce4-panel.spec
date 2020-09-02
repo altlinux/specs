@@ -1,9 +1,9 @@
-%define xfce_ver 4.13
+%define xfce_ver 4.15
 %def_enable introspection
 %def_enable vala
 
 Name: xfce4-panel
-Version: 4.14.4
+Version: 4.15.4
 Release: alt1
 
 Summary: Panel for Xfce
@@ -12,7 +12,7 @@ License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://www.xfce.org/
 
-Vcs: git://git.xfce.org/xfce/xfce4-panel
+Vcs: https://gitlab.xfce.org/xfce/xfce4-panel.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
@@ -21,16 +21,14 @@ BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel >= %xfce_ver libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel
 BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libdbusmenu-gtk3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
-Requires: libxfce4panel = %version-%release
 Requires: xfce4-common
 
 Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 
-%define libxfce4panel_name_gtk2 libxfce4panel-1.0
 %define libxfce4panel_name_gtk3 libxfce4panel-2.0
 %define wrapper_name_gtk3 wrapper-2.0
 
@@ -42,33 +40,12 @@ Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 %description -l ru_RU.UTF-8
 Данный пакет содержит в себе панель для окружения рабочего стола Xfce.
 
-%package -n libxfce4panel
-Summary: Library for Xfce panel (GTK+2)
-License: LGPLv2.1+
-Group: Development/C
-
-%description -n libxfce4panel
-This package contains library for Xfce panel plugins
-(GTK+2 variant).
-
-%package -n libxfce4panel-devel
-Summary: Development files to build Xfce panel plugins (GTK+2)
-License: LGPLv2.1+
-Group: Development/C
-Requires: libxfce4panel = %version-%release
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel < 4.8.0
-
-%description -n libxfce4panel-devel
-This package contains files to develop plugins for Xfce panel
-(GTK+2 variant).
-
 %package -n libxfce4panel-devel-doc
 Summary: Documentation files to build Xfce panel plugins
 Group: Development/Documentation
-Requires: libxfce4panel-devel = %version-%release
 Provides: %name-devel-doc = %version-%release
 Obsoletes: %name-devel-doc < 4.8.0
+Conflicts: libxfce4panel-gtk3-devel < %version-%release
 BuildArch: noarch
 
 %description -n libxfce4panel-devel-doc
@@ -139,7 +116,6 @@ Vala bindings for libxfce4panel-gtk3.
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 	--enable-gtk-doc \
-	--enable-gtk2 \
 	--enable-debug=minimum
 %make_build
 
@@ -157,14 +133,6 @@ Vala bindings for libxfce4panel-gtk3.
 %_datadir/xfce4/panel/
 %_desktopdir/*.desktop
 %exclude %_libdir/xfce4/panel/plugins/*.la
-
-%files -n libxfce4panel
-%_libdir/%libxfce4panel_name_gtk2.so.*
-
-%files -n libxfce4panel-devel
-%_libdir/pkgconfig/%libxfce4panel_name_gtk2.pc
-%_libdir/%libxfce4panel_name_gtk2.so
-%_includedir/xfce4/%libxfce4panel_name_gtk2/
 
 %files -n libxfce4panel-devel-doc
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
@@ -192,6 +160,11 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.4-alt1
+- Dropped GTK+2 support.
+- Updated Vcs tag.
+- Updated to 4.15.4.
+
 * Tue Apr 28 2020 Mikhail Efremov <sem@altlinux.org> 4.14.4-alt1
 - Dropped bogus patch.
 - Updated to 4.14.4.

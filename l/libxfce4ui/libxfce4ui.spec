@@ -2,51 +2,40 @@
 %def_enable vala
 
 Name: libxfce4ui
-Version: 4.14.1
+Version: 4.15.3
 Release: alt1
 
-Summary: Various GTK+2 widgets for Xfce
-Summary (ru_RU.UTF-8): Набор виджетов GTK+2 для Xfce
-License: %lgpl2plus
+Summary: Various GTK widgets for Xfce
+Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
+License: LGPLv2+
 Group: Graphical desktop/XFce
 Url: https://www.xfce.org/
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/libxfce4ui
+Vcs: https://gitlab.xfce.org/xfce/libxfce4ui.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: gtk-doc intltool libSM-devel libgladeui-devel libstartup-notification-devel libxfce4util-devel libxfconf-devel xorg-cf-files
+BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel libxfconf-devel xorg-cf-files
 BuildRequires: libgtk+3-devel
+BuildRequires: libgladeui2.0-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
 Requires: %name-common = %version-%release
 
-%define libxfce4kbd_name_gtk2 libxfce4kbd-private-2
-%define libxfce4ui_name_gtk2 %name-1
 %define libxfce4kbd_name_gtk3 libxfce4kbd-private-3
 %define libxfce4ui_name_gtk3 %name-2
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-Various GTK+2 widgets for Xfce.
+Various GTK widgets for Xfce.
 
 %description -l ru_RU.UTF-8
-Набор виджетов GTK+2 для Xfce.
-
-%package devel
-Summary: Development files for %name (GTK+2)
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-Development files for the %name library (GTK+2 variant).
+Набор виджетов GTK для Xfce.
 
 %package devel-doc
 Summary: Development documentation for %name
@@ -58,12 +47,12 @@ Conflicts: %name-devel < %version-%release
 This package contains development documentation for %name.
 
 %package common
-Summary: Common files for both variants of %name
+Summary: Common files for %name
 Group: Graphical desktop/XFce
 BuildArch: noarch
 
 %description common
-This package contains the common files for both variants of %name.
+This package contains the common files for %name.
 
 %package gtk3
 Summary: Various GTK+3 widgets for Xfce
@@ -85,7 +74,7 @@ Development files for the %name library (GTK+3 variant).
 %package gtk3-gir
 Summary: GObject introspection data for %name-gtk3
 Group: System/Libraries
-Requires: %name = %EVR
+Requires: %name-gtk3 = %EVR
 
 %description gtk3-gir
 GObject introspection data for %name-gtk3.
@@ -132,7 +121,7 @@ This package contains the 'About Xfce' dialog.
 	--enable-maintainer-mode \
 	--enable-gtk-doc \
 	--enable-startup-notification \
-	--enable-gladeui \
+	--enable-gladeui2 \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 	--enable-debug=minimum
@@ -141,22 +130,6 @@ This package contains the 'About Xfce' dialog.
 %install
 %makeinstall_std
 %find_lang %name
-
-%files
-%_libdir/%libxfce4kbd_name_gtk2.so.*
-%_libdir/%libxfce4ui_name_gtk2.so.*
-
-%files devel
-%_includedir/xfce4/%libxfce4kbd_name_gtk2
-%_includedir/xfce4/%libxfce4ui_name_gtk2
-%_pkgconfigdir/%libxfce4kbd_name_gtk2.pc
-%_pkgconfigdir/%libxfce4ui_name_gtk2.pc
-%_libdir/%libxfce4kbd_name_gtk2.so
-%_libdir/%libxfce4ui_name_gtk2.so
-%_datadir/glade3/catalogs/*.xml
-%_datadir/glade3/pixmaps/*/*/*/*
-%_libdir/glade3/modules/*.so
-%exclude %_libdir/glade3/modules/*.la
 
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%name
@@ -177,6 +150,11 @@ This package contains the 'About Xfce' dialog.
 %_pkgconfigdir/%libxfce4ui_name_gtk3.pc
 %_libdir/%libxfce4kbd_name_gtk3.so
 %_libdir/%libxfce4ui_name_gtk3.so
+%_datadir/glade/catalogs/*.xml
+%_datadir/glade/pixmaps/*/*/*/*
+%_libdir/glade/modules/*.so
+
+%exclude %_libdir/glade/modules/*.la
 
 %if_enabled introspection
 %files gtk3-gir
@@ -196,6 +174,14 @@ This package contains the 'About Xfce' dialog.
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
+- Fixed gtk3-gir requires.
+- Enabled libgladeui2.0 support.
+- Dropped GTK+2 support.
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.3.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 4.14.1-alt1
 - Updated to 4.14.1.
 

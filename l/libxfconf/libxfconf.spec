@@ -1,12 +1,11 @@
 %define _name xfconf
 
-%def_without perl
 %def_enable introspection
 %def_enable vala
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.14.3
+Version: 4.15.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -26,9 +25,6 @@ Requires: xfce4-common
 Requires: dbus-tools-gui
 BuildPreReq: rpm-build-xfce4 libxfce4util-devel xfce4-dev-tools
 BuildRequires: libgio-devel libdbus-devel
-%if_with perl
-BuildPreReq: rpm-build-perl perl-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Glib-devel
-%endif
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: gtk-doc intltool
@@ -62,17 +58,6 @@ especially those hanging around in our IRC channel. Instead of having to guide n
 users through several dialogs and windows, it is now possible to have every control
 over your Xfce desktop at your fingertips. You can view or change any setting stored
 in xfconf with xfconf-query.
-
-%if_with perl
-%package -n perl-%_name
-Summary:        Perl modules for xfconf
-Group:          Development/Perl
-Requires:       %name = %version-%release
-
-%description -n perl-%_name
-This package includes the perl modules and files you will need to
-interact with xfconf using perl.
-%endif
 
 %if_enabled introspection
 %package gir
@@ -117,12 +102,6 @@ Vala bindings for %name.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-%if_with perl
-	--with-perl-options=INSTALLDIRS="vendor" \
-	--enable-perl-bindings \
-%else
-	--disable-perl-bindings \
-%endif
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 %if_enabled gsetings
@@ -160,12 +139,7 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %_bindir/*
 %_libdir/xfce4/xfconf/
 %_datadir/dbus-1/services/*.service
-
-%if_with perl
-%files -n perl-%_name
-%perl_vendor_autolib/Xfce4*
-%perl_vendor_archlib/Xfce4*
-%endif
+%_datadir/bash-completion/completions/*
 
 %if_enabled introspection
 %files gir
@@ -181,6 +155,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Completely drop perl support from spec.
+- Updated to 4.15.0.
+
 * Wed May 06 2020 Mikhail Efremov <sem@altlinux.org> 4.14.3-alt1
 - Updated to 4.14.3.
 

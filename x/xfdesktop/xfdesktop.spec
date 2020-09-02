@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.14.2
+Version: 4.15.0
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -9,7 +9,7 @@ Group: Graphical desktop/XFce
 Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/xfce/xfdesktop
+Vcs: https://gitlab.xfce.org/xfce/xfdesktop.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -52,17 +52,19 @@ Requires: exo-utils
 %find_lang %name
 
 %files -f %name.lang
-%doc README NEWS AUTHORS doc/README.*
+%doc README.md NEWS AUTHORS doc/README.*
 %_bindir/*
 %_desktopdir/*
-%_liconsdir/*
-%_niconsdir/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 %_mandir/man?/*
 %_datadir/backgrounds/xfce
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Updated Vcs tag.
+- Updated to 4.15.0.
+
 * Mon Jan 13 2020 Mikhail Efremov <sem@altlinux.org> 4.14.2-alt1
 - Use Vcs rpm tag.
 - Don't use rpm-build-licenses.

@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.14.2
+Version: 4.15.0
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -9,7 +9,7 @@ Group: Graphical desktop/XFce
 Url: https://www.xfce.org/
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/xfce/xfce4-session
+Vcs: https://gitlab.xfce.org/xfce/xfce4-session.git
 Source: %name-%version.tar
 Source1: xfce.wmsession
 
@@ -19,7 +19,6 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfconf-devel libxfce4ui-gtk3-devel
 # gdk-pixbuf-csource needed in maintainer mode
 BuildRequires: libgdk-pixbuf-devel
-BuildRequires: exo-csource
 BuildRequires: libpolkit-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck3-devel xorg-cf-files
@@ -78,6 +77,10 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Update Vcs tag.
+- Updated to 4.15.0.
+
 * Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 4.14.2-alt1
 - Added conflict for broken xfce4-screensaver.
 - Updated to 4.14.2.
