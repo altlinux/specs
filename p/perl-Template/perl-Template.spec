@@ -4,7 +4,7 @@
 %define dist Template-Toolkit
 Name: perl-Template
 Version: 3.009
-Release: alt1
+Release: alt2
 
 Summary: Perl Template Toolkit
 License: GPLv2+ or Artistic-2.0
@@ -30,8 +30,8 @@ LaTeX, and so on.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
-%if_with altbugzilla
 %patch2 -p1
+%if_with altbugzilla
 %patch4 -p1
 %endif
 
@@ -71,6 +71,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 3.009-alt2
+- restored patch2
+
 * Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 3.009-alt1
 - new version
 - mcpain@'s alt bugzilla patches made optional (closes: #38635)
