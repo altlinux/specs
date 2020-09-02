@@ -1,5 +1,5 @@
 Name: libjasper
-Version: 2.0.16
+Version: 2.0.19
 Release: alt1
 
 Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
@@ -79,6 +79,9 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %doc %_docdir/JasPer/
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.19-alt1
+- new version 2.0.19 (with rpmrb script)
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.16-alt1
 - new version 2.0.16 (switched to github tarball)
 
