@@ -1,7 +1,9 @@
+# altfork: https://bugzilla.altlinux.org/show_bug.cgi?id=38635
+%def_without altbugzilla
 %define _unpackaged_files_terminate_build 1
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 3.008
+Version: 3.009
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -28,8 +30,10 @@ LaTeX, and so on.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
+%if_with altbugzilla
 %patch2 -p1
 %patch4 -p1
+%endif
 
 %build
 %perl_vendor_build TT_XS_ENABLE=y TT_XS_DEFAULT=y TT_ACCEPT=y \
@@ -67,6 +71,10 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 3.009-alt1
+- new version
+- mcpain@'s alt bugzilla patches made optional (closes: #38635)
+
 * Mon Apr 06 2020 Igor Vlasenko <viy@altlinux.ru> 3.008-alt1
 - new version
 
