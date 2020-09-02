@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.4.1
-Release: alt2
+Version: 4.4.2
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -104,6 +104,9 @@ mv .gear/3rdparty ./
 %_datadir/%name
 
 %changelog
+* Wed Sep 02 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.2-alt1
+- new version
+
 * Fri Aug 28 2020 Sergey V Turchin <zerg@altlinux.org> 4.4.1-alt2
 - Fix load Qt translation
 
