@@ -1,6 +1,6 @@
 Name: libbsd
-Version: 0.9.1
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
 License: BSD and ISC and Copyright only and Public Domain
@@ -61,6 +61,9 @@ rm %buildroot/%_man3dir/setproctitle*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
+- new version 0.10.0 (with rpmrb script)
+
 * Sat Jul 13 2019 Michael Shigorin <mike@altlinux.org> 0.9.1-alt2
 - E2K: initial architecture support (patch proposed upstream)
 - minor spec cleanup
