@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.36
 %define plugins_ver 13
@@ -9,7 +9,7 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
-%ifarch  %ix86  x86_64
+%ifnarch armh
 %def_enable fwupd
 %else
 %def_disable  fwupd
@@ -35,7 +35,7 @@
 
 Name: gnome-software
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -174,6 +174,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Sep 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
+- updated to 3.36.1-9-gf044085f
+- disabled fwupd support on armh only
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 
