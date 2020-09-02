@@ -1,5 +1,5 @@
 Name: npm
-Version: 6.14.7
+Version: 6.14.8
 Release: alt1
 
 Summary: A package manager for node
@@ -74,6 +74,9 @@ rm -rf %buildroot%nodejs_sitelib/%name/node_modules/request/node_modules/node-uu
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.8-alt1
+- new version 6.14.8 (with rpmrb script)
+
 * Sat Aug 01 2020 Vitaly Lipatov <lav@altlinux.ru> 6.14.7-alt1
 - new version 6.14.7 (with rpmrb script)
 
