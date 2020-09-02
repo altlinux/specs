@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 20.3.15.133
+Version: 20.3.17.173
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -110,6 +110,8 @@ ClickHouse tests
 %build
 if [ %__nprocs -gt 8 ] ; then
 	export NPROCS=8
+else
+	export NPROCS=%__nprocs
 fi
 
 %cmake \
@@ -122,6 +124,8 @@ fi
 	-DCLICKHOUSE_SPLIT_BINARY=0 \
 	-DENABLE_JEMALLOC=0 \
 	-DUSE_INTERNAL_REPLXX:BOOL=ON \
+	-DPARALLEL_COMPILE_JOBS=$NPROCS \
+	-DPARALLEL_LINK_JOBS=$NPROCS \
 	%nil
 
 %cmake_build VERBOSE=1
@@ -182,6 +186,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Wed Sep 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.17.173-alt1
+- Updated to lts upstream version 20.3.17.173.
+
 * Thu Aug 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.15.133-alt1
 - Updated to lts upstream version 20.3.15.133.
 
