@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.23.0
+Version: 2.24.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -109,6 +109,7 @@ cmake .. \
 %endif
 	-DUSE_PKCS11_HELPER_LIBRARY:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DPython3_EXECUTABLE:PATH=%__python3 \
 	-Wno-dev
 
 popd
@@ -152,6 +153,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Wed Sep 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.24.0-alt1
+- Version 2.24.0
+
 * Thu Jul 02 2020 Nazarov Denis <nenderus@altlinux.org> 2.23.0-alt1
 - Version 2.23.0
 
