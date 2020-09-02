@@ -1,13 +1,15 @@
 %define oname gnocchiclient
 
+%def_without docs
+
 Name: python3-module-%oname
-Version: 7.0.5
+Version: 7.0.7
 Release: alt1
 
 Summary: Python client library for Gnocchi
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
@@ -42,6 +44,7 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for OpenStack Gnocchi API Client
 Group: Development/Documentation
@@ -49,15 +52,10 @@ Group: Development/Documentation
 %description doc
 Gnocchi is a multi-tenant timeseries, metrics and resources database.
 This package contains auto-generated documentation.
+%endif
 
 %prep
 %setup -n %oname-%version
-
-# Remove bundled egg-info
-rm -rf gnocchiclient.egg-info
-
-# Let RPM handle the requirements
-rm -f {,test-}requirements.txt
 
 %build
 %python3_build
@@ -65,13 +63,16 @@ rm -f {,test-}requirements.txt
 %install
 %python3_install
 
-export PATH=$PATH:%{buildroot}%{_bindir}
-export PYTHONPATH=.
-export LANG=en_US.utf8
-python3 setup.py build_sphinx
+%if_with docs
+export PYTHONPATH="$PWD"
 
-# Fix hidden-file-or-dir warnings
-rm -rf doc/build/html/.doctrees doc/build/html/.buildinfo
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %files
 %doc README.rst
@@ -83,10 +84,17 @@ rm -rf doc/build/html/.doctrees doc/build/html/.buildinfo
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
-%doc doc/build/html
+%doc LICENSE html
+%endif
 
 %changelog
+* Wed Sep 02 2020 Grigory Ustinov <grenka@altlinux.org> 7.0.7-alt1
+- Build new version.
+- Build without docs.
+- Fix license.
+
 * Mon Oct 21 2019 Grigory Ustinov <grenka@altlinux.org> 7.0.5-alt1
 - Build new version without python2.
 - Enable docs.
