@@ -1,9 +1,9 @@
 %def_with sdl2
-%define rev 20200726
+%define rev 20200902
 Name: fheroes2
 Epoch: 1
-Version: 0.8
-Release: alt2.%rev
+Version: 0.8.5
+Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
@@ -14,7 +14,6 @@ Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
-Source5: %name.cfg
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -38,7 +37,7 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 export WITH_SDL2="ON"
 %endif
 # Makefile hardwires AI resulting in non-fighting opponents
-%make_build WITH_AI=simple CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/" 
+%make_build WITH_AI=simple CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
 
 %install
 # let's create directory structure...
@@ -48,11 +47,9 @@ mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir,%_docdir/%name,%_gamesdata
 install -pm755 %name %buildroot%_bindir/%name.bin
 install -pm755 %SOURCE2 %buildroot%_bindir/%name
 mv files/ %buildroot%_gamesdatadir/%name/
-install -pm 644 %name.cfg %buildroot%_gamesdatadir/%name/
 install -pm 644 %name.key %buildroot%_gamesdatadir/%name/
 install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
-install -pm 644 %SOURCE5 %buildroot%_gamesdatadir/%name/
 install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_docdir/%name/
 
 %files
@@ -64,6 +61,9 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8.5-alt1.20200902
+- new version
+
 * Wed Aug 05 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8-alt2.20200726
 - added check of screen size
 - sound=off by default
