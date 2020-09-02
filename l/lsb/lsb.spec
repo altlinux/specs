@@ -17,6 +17,10 @@
 %define lsb_arch aarch64
 %define lib_suffix ()(64bit)
 %endif
+%ifarch armh
+%define lsb_arch armh
+%define lib_suffix %nil
+%endif
 %ifarch mipsel
 %define lsb_arch mipsel
 %define lib_suffix %nil
@@ -24,7 +28,7 @@
 
 Name: lsb
 Version: 4.0
-Release: alt11
+Release: alt12
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -43,7 +47,7 @@ Source12: remove_initd
 # XXX:
 Source21: lsbinstall
 
-ExclusiveArch: %ix86 x86_64 %e2k aarch64 mipsel
+ExclusiveArch: %ix86 x86_64 %e2k aarch64 armh mipsel
 
 Requires: lsb-core = %version
 Requires: lsb-cxx = %version
@@ -686,6 +690,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Wed Sep 02 2020 Anton Midyukov <antohami@altlinux.org> 4.0-alt12
+- added armh
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0-alt11
 - remove obsoleted packager line
 - use __python instead of /usr/bin/python2
