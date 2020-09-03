@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4.6
-Release: alt2
+Version: 1.4.7
+Release: alt1
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
 Group: Development/Python3
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/snuggs
 
 # https://github.com/mapbox/snuggs.git
 Source: %name-%version.tar
-Patch: snuggs-1.4.6-Skip-some-broken-assertions.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -30,7 +29,6 @@ Snuggs are s-expressions for Numpy.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %python3_build_debug
@@ -48,6 +46,9 @@ py.test3 -vv
 %python3_sitelibdir/%oname/__pycache__/__init__.cpython-*.py*
 
 %changelog
+* Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt1
+- Automatically updated to 1.4.7.
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.6-alt2
 - Drop python2 support.
 
