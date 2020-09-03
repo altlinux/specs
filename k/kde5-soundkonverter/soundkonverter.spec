@@ -20,7 +20,7 @@
 %define tname soundkonverter
 Name: kde5-soundkonverter
 Version: 3.0.1
-Release: alt4
+Release: alt5
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: A frontend to various audio converters
@@ -36,6 +36,7 @@ Patch1: alt-mp3gain1.4.patch
 Patch2: alt-lib-sover.patch
 Patch3: alt-mp2-range.patch
 Patch4: alt-load-translations.patch
+Patch5: alt-find-taglib.patch
 
 %if_enabled obsolete_kde4
 Provides: kde4-soundkonverter = %version-%release
@@ -94,6 +95,7 @@ Requires: %name-common = %version-%release
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 rm -f cmake/modules/FindTaglib.cmake
 
@@ -130,6 +132,9 @@ popd
 %_K5lib/libsoundkonvertercore.so.*
 
 %changelog
+* Thu Sep 03 2020 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt5
+- fix find taglib
+
 * Wed Dec 18 2019 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt4
 - don't require mp3gain
 
