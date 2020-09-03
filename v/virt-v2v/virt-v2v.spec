@@ -3,7 +3,7 @@
 
 Name: virt-v2v
 Version: 1.43.1
-Release: alt1
+Release: alt2
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
 License: GPLv2+
@@ -86,6 +86,9 @@ rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Thu Sep 03 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.43.1-alt2
+- Refactor (after discussions with upstream) ALT support
+
 * Mon Aug 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.43.1-alt1
 - update to 1.43.1
 - Add ALT support
