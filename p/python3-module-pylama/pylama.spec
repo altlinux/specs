@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 6.1.1
-Release: alt4.git20141029
+Version: 7.7.1
+Release: alt1
 Summary: pylama -- Code audit tool for python
 License: LGPL
 Group: Development/Python3
@@ -54,6 +54,9 @@ nosetests3
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 7.7.1-alt1
+- Automatically updated to 7.7.1.
+
 * Sat Aug 01 2020 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt4.git20141029
 - Drop python2 support.
 
