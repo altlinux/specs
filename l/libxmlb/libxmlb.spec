@@ -1,9 +1,9 @@
 %global glib2_version 2.58.1
 %define soversion 2
 Summary: Library for querying compressed XML metadata
-Name: libxmlb%soversion
+Name: libxmlb
 Version: 0.2.0
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: https://github.com/hughsie/libxmlb
@@ -30,10 +30,29 @@ This allows an application to mmap the binary XML file, do an XPath query and
 return some strings without actually parsing the entire document. This is all
 done using (almost) zero allocations and no actual copying of the binary data.
 
+%package -n libxmlb%soversion
+Summary: Library for querying compressed XML metadata
+Group: System/Libraries
+Requires: %name-common = %EVR
+Obsoletes: libxmlb1 <= 0.1.15-alt1
+
+%description -n libxmlb%soversion
+XML is slow to parse and strings inside the document cannot be memory mapped as
+they do not have a trailing NUL char. The libxmlb library takes XML source, and
+converts it to a structured binary representation with a deduplicated string
+table -- where the strings have the NULs included.
+
+%package common
+Summary: Common files for %name. 
+Group: System/Libraries
+
+%description common
+Common files for %name.
+
 %package -n libxmlb-devel
 Summary: Development package for %name
 Group: Development/C
-Requires: %name = %EVR
+Requires: %name%soversion = %EVR
 
 %description -n libxmlb-devel
 Files for development with %name.
@@ -54,14 +73,16 @@ Files for development with %name.
 %install
 %meson_install
 
-%files
+%files common
 %doc README.md LICENSE
 %_libexecdir/xb-tool
 %dir %_libdir/girepository-1.0
 %_libdir/girepository-1.0/*.typelib
+
+%files -n libxmlb%soversion
 %_libdir/libxmlb.so.%{soversion}*
 
-%files -n libxmlb-devel
+%files devel
 %dir %_datadir/gir-1.0
 %_datadir/gir-1.0/*.gir
 %dir %_datadir/gtk-doc
@@ -72,6 +93,10 @@ Files for development with %name.
 %_libdir/pkgconfig/xmlb.pc
 
 %changelog
+* Thu Sep 03 2020 Anton Farygin <rider@altlinux.ru> 0.2.0-alt2
+- move common files to %name-common package (closes: #38873)
+- rename source package to libxmlb
+
 * Wed Sep 02 2020 Anton Farygin <rider@altlinux.ru> 0.2.0-alt1
 - 0.2.0
 
