@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -101,9 +101,9 @@ the functionality of the installed %name.
 %meson \
 	%{?_disable_gnome:-Dgnome=false} \
 	%{?_disable_goa-Dgoa=false} \
-	%{?_disable_gtk_doc:-Dgtk_doc=false} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	%{?_disable_vala:-Dvapi=false} \
-	%{?_disable_installed_tests:-Dinstalled_tests=false}
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
 %meson_build
 
 %install
@@ -145,6 +145,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.17.13-alt1
+- 0.17.13
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.17.12-alt1
 - 0.17.12
 
