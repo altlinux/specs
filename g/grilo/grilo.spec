@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: grilo
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Content discovery framework
@@ -18,7 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: gnome-common intltool >= 0.40.0
-BuildRequires: libgio-devel >= 2.44
+BuildRequires: libgio-devel >= 2.58
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
@@ -151,6 +151,9 @@ mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_majo
 %endif
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- 0.3.13
+
 * Fri Feb 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - 0.3.12
 

@@ -5,10 +5,12 @@
 %define gupnp_api_ver 1.2
 
 %def_enable lua_factory
+%def_enable tracker
+%def_disable tracker3
 
 Name: grilo-plugins
-Version: %ver_major.11
-Release: alt2
+Version: %ver_major.12
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -22,6 +24,7 @@ Source: %name-%version.tar
 %endif
 
 %define tracker_ver 2.3.0
+%define tracker3_ver 2.99.2
 
 Requires: grilo-tools >= %version
 Requires: tracker >= %tracker_ver
@@ -30,7 +33,7 @@ BuildRequires(pre): meson
 BuildRequires: gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.44
-BuildRequires: libgrilo-devel >= %ver_major.12
+BuildRequires: libgrilo-devel >= %ver_major.13
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp%gupnp_api_ver-devel >= 0.13
 BuildRequires: libgssdp%gupnp_api_ver-devel
@@ -41,11 +44,13 @@ BuildRequires: libgom-devel >= 0.3.2
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
-BuildRequires: tracker-devel >= %tracker_ver
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0) >= %tracker_ver}
+%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver}
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
-BuildRequires: libdmapsharing-devel >= 2.9.12
+BuildRequires: pkgconfig(libdmapsharing-3.0) >= 2.9.12
+#BuildRequires: pkgconfig(libdmapsharing-4.0) >= 3.9.9
 BuildRequires: libjson-glib-devel
 BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
@@ -88,7 +93,10 @@ This package contains the pkg-config file for Grilo plugins package.
 %setup
 
 %build
-%meson %{?_enable_lua_factory:-Denable-lua-factory=yes}
+%meson %{?_enable_lua_factory:-Denable-lua-factory=yes} \
+%{?_disable_tracker:-Dtracker=no} \
+%{?_disable_tracker3:-Dtracker3=no}
+%nil
 %meson_build
 
 %install
@@ -118,7 +126,8 @@ This package contains the pkg-config file for Grilo plugins package.
 %_libdir/grilo-%ver_major/libgrlshoutcast.so
 %_libdir/grilo-%ver_major/libgrlthetvdb.so
 %_libdir/grilo-%ver_major/libgrltmdb.so
-%_libdir/grilo-%ver_major/libgrltracker.so
+%{?_enable_tracker:%_libdir/grilo-%ver_major/libgrltracker.so}
+%{?_enable_tracker3:%_libdir/grilo-%ver_major/libgrltracker3.so}
 %_libdir/grilo-%ver_major/libgrlvimeo.so
 %_libdir/grilo-%ver_major/libgrlyoutube.so
 %if_enabled lua_factory
@@ -132,6 +141,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
+- 0.3.12
+
 * Tue Apr 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt2
 - fixed buildreqs
 
