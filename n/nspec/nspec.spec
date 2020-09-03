@@ -1,9 +1,9 @@
 Name: nspec
-Version: 16.5639
+Version: 16.5755
 Release: alt1
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
-License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2020
+License: BSD 4-clause, 2008-2020, Nano Scan Technologies Ltd.
 Group: Sciences/Other
 URL: http://www.nanoscantech.ru/en/
 Packager: Alexei Mezin <alexvm@altlinux.org>
@@ -118,6 +118,9 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %_libdir/nspec/*
 
 %changelog
+* Thu Sep 03 2020 Alexei Mezin <alexvm@altlinux.org> 16.5755-alt1
+- New version
+
 * Thu Jan 02 2020 Alexei Mezin <alexvm@altlinux.org> 16.5639-alt1
 - New version with new user interface 
 - Build with Qt5
