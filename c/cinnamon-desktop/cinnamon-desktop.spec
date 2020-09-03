@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.4-alt1
+- 4.6.4
+
 * Thu Jul 2 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt2
 - apply upstream fix for flickering screen on external monitors
 

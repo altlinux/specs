@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 4.6.2
-Release: alt3
+Version: 4.6.3
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -202,6 +202,9 @@ sed -i 's,-Werror=maybe-uninitialized,,' cogl/configure.ac
 
 
 %changelog
+* Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Tue Jun 23 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt3
 - Disable -Werror=maybe-uninitialized for cogl build to fix
   e2k build (previous solution didn't work)
