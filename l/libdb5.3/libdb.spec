@@ -8,7 +8,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt2
+Release: alt3
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -89,6 +89,7 @@ Group: Databases
 Requires: %name = %EVR
 Conflicts: db4.7-utils db4.8-utils db6.1-utils
 Conflicts: pks-db
+Conflicts: db1-utils
 
 %description -n db%{__soversion}-utils
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that
@@ -208,6 +209,7 @@ for building programs which use the Berkeley DB in SQL.
 Summary: Development files for using the Berkeley DB with sql
 Group: Development/Other
 Requires: %name-sql = %EVR
+Conflicts: libdb6.1_sql-devel
 
 %description sql-devel
 The Berkeley Database (Berkeley DB) is a programmatic toolkit that
@@ -408,6 +410,9 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Thu Sep 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.28-alt3
+- Updated conflicts.
+
 * Wed Sep 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.28-alt2
 - Updated conflicts.
 
