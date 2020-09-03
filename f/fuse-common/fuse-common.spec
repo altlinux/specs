@@ -1,6 +1,6 @@
 Name: fuse-common
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ fi
 %_udevrulesdir/*
 
 %changelog
+* Mon Aug 31 2020 Rustem Bapin <rbapin@altlinux.org> 1.1.0-alt2
+- fix double help
+
 * Sun Feb 03 2019 Rustem Bapin <rbapin@altlinux.org> 1.1.0-alt1
 - fuserumount moved back to fuse package
 - add support control both fuse and fuse3
