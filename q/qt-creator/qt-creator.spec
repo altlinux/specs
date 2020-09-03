@@ -7,7 +7,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.12.4
+Version: 4.13.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -53,6 +53,7 @@ BuildRequires: clang%llvm_version-devel-static
 BuildRequires: clang%llvm_version
 BuildRequires: lld%llvm_version
 %endif
+BuildRequires: libsystemd-devel
 
 Requires: qt5-quickcontrols
 # Add Qt5 build environment to build Qt project
@@ -120,7 +121,10 @@ export LLVM_INSTALL_DIR="%_prefix"
 %remove_optflags -frecord-gcc-switches
 %endif
 
-%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib CONFIG+="disable_external_rpath" QMAKE_STRIP= \
+%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib \
+	CONFIG+="disable_external_rpath" \
+	QMAKE_STRIP= \
+	CONFIG+="journald" \
 %if_with ClangCodeModel
 	-spec linux-clang \
 	QMAKE_LFLAGS+="-fuse-ld=lld" \
@@ -155,6 +159,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Sep 03 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt1
+- New version.
+- Enable journald support.
+
 * Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 4.12.4-alt1
 - New version.
 
