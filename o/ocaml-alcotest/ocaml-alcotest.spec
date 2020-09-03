@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname alcotest
 Name: ocaml-%libname
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
@@ -88,6 +88,9 @@ dune runtest
 %_libdir/ocaml/%libname/engine/*.cmxs
 
 %changelog
+* Wed Sep 02 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+
 * Wed Aug 26 2020 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
