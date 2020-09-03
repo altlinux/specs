@@ -1,6 +1,6 @@
 Summary: eudev - an userspace implementation of devfs
 Name: eudev
-Version: 3.2.6
+Version: 3.2.9
 Release: alt1
 
 Url: https://github.com/gentoo/eudev
@@ -96,13 +96,13 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/eudev/hwdb.d
 
 cat >>%buildroot/%_sysconfdir/eudev/udev.conf <<EOF
-# Whether to mount a tmpfs filesystem to \$udev_root
-udev_tmpfs="1"
-
 # tmpfs options. Note that size shouldn't be less than several
 # megabytes due to insane format of current udev database
-# (in /dev/.udevdb)
-tmpfs_options="size=5m"
+# (in /run/eudev)
+runfs_options="size=5m"
+
+# tmpfs options for /dev
+udevfs_options="size=5m"
 EOF
 
 # Create ghost files
@@ -154,5 +154,12 @@ rm -rf -- \
 %_pkgconfigdir/libudev.pc
 
 %changelog
+* Wed Sep 02 2020 Alexey Gladkov <legion@altlinux.ru> 3.2.9-alt1
+- New version (3.2.9).
+
+* Tue Jan 15 2019 Alexey Gladkov <legion@altlinux.ru> 3.2.7-alt1
+- New version (3.2.7).
+- Rewrite init-script.
+
 * Fri Sep 28 2018 Alexey Gladkov <legion@altlinux.ru> 3.2.6-alt1
 - initial build for ALTLinux
