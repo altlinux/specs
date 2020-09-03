@@ -1,8 +1,10 @@
 # vim: set ft=spec: -*- rpm -spec -*-
 
+%define _unpackaged_files_terminate_build 1
+
 Name: pam_pkcs11
-Version: 0.6.10
-Release: alt6
+Version: 0.6.11
+Release: alt2
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -10,10 +12,8 @@ License: LGPL
 Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-cumulative.patch
-Patch1: pam_pkcs11-0.6.9-build-with-LibreSSL.patch
-Patch2: pam_pkcs11-0.6.9-elvis-gost-support.patch
-Patch3: pam_pkcs11-0.6.10-build-with-openssl11.patch
+Patch0: %name-%version-alt-cumulative.patch
+#Patch1: pam_pkcs11-0.6.9-build-with-LibreSSL.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -77,10 +77,8 @@ This package contains ISBC (ESMART) low-level modules for pam_pkcs11
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 #patch1 -p1
-%patch2 -p2
-%patch3 -p2
 
 # fixup configs
 sed -i -e '
@@ -108,8 +106,39 @@ cd doc
 %install
 %makeinstall_std docdir=%_datadir/doc/%name-%version
 
-
 mkdir -p %buildroot%_sysconfdir/security/%name/{cacerts,crls}
+
+# Install the example configs in /etc
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/pam_pkcs11.conf.example \
+        %buildroot%_sysconfdir/security/%name/pam_pkcs11.conf
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/pkcs11_eventmgr.conf.example \
+        %buildroot%_sysconfdir/security/%name/pkcs11_eventmgr.conf
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/card_eventmgr.conf.example \
+        %buildroot%_sysconfdir/security/%name/card_eventmgr.conf
+
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/digest_mapping.example \
+        %buildroot%_sysconfdir/security/%name/digest_mapping
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/mail_mapping.example \
+        %buildroot%_sysconfdir/security/%name/mail_mapping
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/subject_mapping.example \
+        %buildroot%_sysconfdir/security/%name/subject_mapping
+
+install -D -m0644 \
+        %buildroot%_datadir/doc/%name-%version/pam.d_ignore_no_card.example \
+        %buildroot%_sysconfdir/pam.d/system-auth-pkcs11_strict
+
+# Make additional "use_first_pass" config (needed by control system-auth):
+sed -e 's/pam_pkcs11\.so/pam_pkcs11.so use_first_pass/g' \
+    -e '/^account/ d' \
+    -e '/^session/ d' \
+    %buildroot%_sysconfdir/pam.d/system-auth-pkcs11_strict \
+    >%buildroot%_sysconfdir/pam.d/system-auth-use_first_pass-pkcs11_strict
 
 # Cleanup .la files
 rm %buildroot/%_lib/*/*.la
@@ -122,12 +151,6 @@ rm %buildroot/%_lib/*/*.la
           %_sysconfdir/security/%name/openssl.cnf.rpmold
 
 %files -f %name.lang
-%doc AUTHORS README
-%doc doc/pam_pkcs11.html
-%doc doc/mappers_api.html
-%doc doc/README.autologin
-%doc doc/README.mappers
-%doc etc/pam.d_login.example
 %dir %_sysconfdir/security/%name
 %dir %_sysconfdir/security/%name/cacerts
 %dir %_sysconfdir/security/%name/crls
@@ -149,21 +172,28 @@ rm %buildroot/%_lib/*/*.la
 %_man8dir/pam_pkcs11.8*
 %config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
+%_datadir/doc/%name-%version/*.example
 
 %files pcsc
-%doc doc/README.eventmgr
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
 %_mandir/man1/card_eventmgr.1*
 
 %files ldap
-%doc doc/README.ldap_mapper
 /%_lib/%name/ldap_mapper.so
 
 %files isbc
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Thu Sep 03 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt2
+- Added support for GOST-2012.
+
+* Mon Aug 31 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.11-alt1
+- Fresh up to v0.6.11.
+- Refactor the patches.
+- Transform the 'ask_pin' option into 'ask_pin_later'.
+
 * Tue Mar 12 2019 Oleg Solovyov <mcpain@altlinux.org> 0.6.10-alt6
 - rebuild with openssl 1.1
 
