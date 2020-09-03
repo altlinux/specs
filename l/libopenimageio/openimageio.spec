@@ -9,7 +9,7 @@
 
 Name:           lib%oname
 Version:        2.1.18.1
-Release:        alt1.1
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -95,6 +95,7 @@ Python bindings for %oname.
 Summary:        Command line utilities for %oname
 Group:          Other
 Requires:       lib%oname%soname = %EVR
+Conflicts:      libxforms-demos
 
 %description -n %oname-utils
 Command-line tools to manipulate and get information on images using the
@@ -210,6 +211,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Thu Sep 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.18.1-alt2
+- Updated conflicts (Closes: #38878).
+
 * Thu Aug 13 2020 Michael Shigorin <mike@altlinux.org> 2.1.18.1-alt1.1
 - E2K: fix build of this library's clients
 
