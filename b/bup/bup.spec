@@ -1,5 +1,5 @@
 Name:     bup
-Version:  0.30.1
+Version:  0.31
 Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
@@ -8,13 +8,14 @@ Summary:  Very efficient backup system based on the git packfile format
 # - lib/bup/bupsplit.h: BSD License (two clause),
 # - lib/bup/options.py: BSD License (two clause),
 # - definition of relpath() function in wvtest.py: Python License
-License:  LGPLv2 and BSD and Python
+License:  LGPL-2.0 and BSD-2-Clause and Python
 Group:    Archiving/Backup
 URL:      https://bup.github.io/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64
+#ExclusiveArch: %ix86 x86_64
+%add_findreq_skiplist %_libexecdir/%name/cmd/bup*
 
 Source:   %name-%version.tar
 # VCS:    https://github.com/bup/bup
@@ -57,7 +58,7 @@ virtual machine images). Some of its features are:
   that way, or even export it over Samba.
 
 %package web
-License: LGPLv2
+License: LGPL-2.0
 Summary: Web server for browsing through bup repositories
 Group:   Archiving/Backup
 Requires: %name = %version-%release
@@ -86,9 +87,8 @@ popd
 
 %install
 %makeinstall_std PREFIX=%_prefix
-mkdir -p %buildroot%python_sitelibdir
-mv %buildroot%_libexecdir/bup/bup %buildroot%python_sitelibdir
-
+rm -f %buildroot%_bindir/%name
+ln -s ../lib/bup/cmd/bup %buildroot%_bindir/%name
 install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 
 %check
@@ -105,7 +105,6 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %doc %_defaultdocdir/%name/
 %_bindir/%name
 %_libexecdir/%name/
-%python_sitelibdir/bup
 %_man1dir/%{name}*
 %exclude %_libexecdir/%name/cmd/bup-web
 %exclude %_libexecdir/%name/web/
@@ -118,6 +117,9 @@ install -Dm0644 %SOURCE1 %buildroot%_unitdir/bup-web.service
 %_man1dir/bup-web.1*
 
 %changelog
+* Sun Aug 23 2020 Andrey Cherepanov <cas@altlinux.org> 0.31-alt1
+- New version.
+
 * Mon May 25 2020 Andrey Cherepanov <cas@altlinux.org> 0.30.1-alt1
 - New version.
 
