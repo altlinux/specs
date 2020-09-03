@@ -1,8 +1,8 @@
 %def_with kde4
 
 Name: gwyddion
-Version: 2.55
-Release: alt2
+Version: 2.56
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -24,6 +24,8 @@ BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
 
 BuildPreReq: perl-podlators libpng-devel
+
+BuildRequires: /proc 
 
 %{?_with_kde4:BuildRequires: kde4libs-devel}
 
@@ -246,6 +248,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Thu Sep 03 2020 Alexei Mezin <alexvm@altlinux.org> 2.56-alt1
+- new version
+
 * Mon Jun 01 2020 Alexei Mezin <alexvm@altlinux.org> 2.55-alt2
 - Drop Ruby support
 
