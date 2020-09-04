@@ -18,11 +18,12 @@
 %def_enable broadway
 %def_enable cloudprint
 %def_disable cloudproviders
+%def_disable tracker3
 %def_enable installed_tests
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -91,6 +92,7 @@ BuildRequires: libfribidi-devel >= %fribidi_ver
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
+%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0)}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
@@ -268,6 +270,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_broadway:--enable-broadway-backend} \
     %{?_enable_installed_tests:--enable-installed-tests} \
     %{subst_enable cloudprint} \
+    %{?_enable_tracker3:--enable-tracker3=yes} \
     %{?_enable_debug:--enable-debug=yes}
 %make_build
 
@@ -461,6 +464,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.23-alt1
+- 3.24.23
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.22-alt1
 - 3.24.22
 
