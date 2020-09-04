@@ -1,7 +1,7 @@
 %define  modulename straight-plugin
 
 Name:    python3-module-%modulename
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: A simple plugin loading facility
@@ -39,5 +39,8 @@ functionality and customization to your projects with their own plugins.
 %python3_sitelibdir/*.pth
 
 %changelog
+* Fri Sep 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- New version (ALT #38870).
+
 * Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
 - Initial build for Sisyphus
