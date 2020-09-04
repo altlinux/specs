@@ -1,7 +1,7 @@
 %define oname pyroute2
 
 Name: python3-module-%oname
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 
 Summary: Python Netlink library
@@ -66,6 +66,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.13-alt1
+- Automatically updated to 0.5.13.
+
 * Thu May 28 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.12-alt1
 - Build new version 0.5.12.
 
