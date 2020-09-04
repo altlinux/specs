@@ -1,22 +1,20 @@
 %define oname asn1crypto
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4.0
 Release: alt1
 
 Summary: Python ASN.1 parser
 
 License: %mit
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/asn1crypto
 Packager: Vladimir Didenko <cow@altlinux.org>
 Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
-BuildPreReq: rpm-build-python python-module-setuptools
-
-%setup_python_module %oname
+BuildPreReq: rpm-build-python3 python3-module-setuptools
 
 %description
 Fast ASN.1 parser and serializer with definitions for private keys, public keys,
@@ -24,19 +22,18 @@ certificates, CRL, OCSP, CMS, PKCS#3, PKCS#7, PKCS#8, PKCS#12, PKCS#5, X.509
 and TSP.
 
 
-
 %prep
 %setup -n %oname-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-*
 
 %changelog
 * Fri Sep 4 2020 Vladimir Didenko <cow@altlinux.ru> 1.4.0-alt1
