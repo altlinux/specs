@@ -2,7 +2,7 @@
 
 Name: merkaartor
 Version: 0.18.4
-Release: alt2
+Release: alt3
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -37,7 +37,7 @@ rm -rf 3rdparty
 %add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %add_optflags -I%_includedir/qt5/QtSolutions
 
-lrelease-pro-qt5 Merkaartor.pro
+lrelease-qt5 Merkaartor.pro
 qmake-qt5 \
 	CONFIG+=release CONFIG+=force_debug_info \
 	PREFIX=%_prefix \
@@ -61,6 +61,9 @@ qmake-qt5 \
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Fri Sep 04 2020 Sergey V Turchin <zerg@altlinux.org> 0.18.4-alt3
+- Fixed build with qt < 5.15.0.
+
 * Fri Aug 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.4-alt2
 - Fixed build with qt-5.15.0.
 
