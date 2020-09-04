@@ -1,12 +1,12 @@
 Name: xsnow
-Version: 2.0.15
+Version: 3.0.7
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
-License: GPL
+License: GPLv3+
 Group: Toys
 
-Url: https://www.ratrabbit.nl/ratrabbit/content/xsnow/introduction
+Url: https://www.ratrabbit.nl/ratrabbit/content/sw/xsnow/introduction
 Source0: xsnow-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
@@ -15,7 +15,7 @@ Summary(ru_RU.UTF8):  Немножко новогоднего настроени
 # Automatically added by buildreq on Wed Jan 01 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base python3-dev sh4 xorg-proto-devel
 ###BuildRequires: i586-libxcb libXpm-devel libXt-devel libdb4-devel libdbus-devel libgtk+3-devel libxml2-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
-BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++
 
 ###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
@@ -31,6 +31,7 @@ Xsnow добавляет анимированные снежинки и Сант
 %setup
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -45,6 +46,9 @@ Xsnow добавляет анимированные снежинки и Сант
 %_desktopdir/*
 
 %changelog
+* Fri Sep 04 2020 Alexei Mezin <alexvm@altlinux.org> 3.0.7-alt1
+- New version
+
 * Wed Jan 01 2020 Alexei Mezin <alexvm@altlinux.org> 2.0.15-alt1
 - New version
 
