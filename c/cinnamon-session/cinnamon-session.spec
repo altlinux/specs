@@ -5,7 +5,7 @@
 %def_disable wmsession
 
 Name: %{_name}-session
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 License: GPLv2+
@@ -49,7 +49,7 @@ BuildPreReq: intltool >= 0.35.0
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libupower-devel >= %upower_ver
-BuildRequires: libpangox-compat-devel librsvg-devel libjson-glib-devel
+BuildRequires: libpango-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: xorg-xtrans-devel
@@ -119,6 +119,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Sep 3 2020 Vladimir Didenko <cow@altlinux.org> 4.6.2-alt1
+- 4.6.2
+
 * Wed May 27 2020 Vladimir Didenko <cow@altlinux.org> 4.6.1-alt1
 - 4.6.1
 
