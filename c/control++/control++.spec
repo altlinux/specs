@@ -5,7 +5,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 Summary: System configuration tool
@@ -87,6 +87,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Aug 04 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.2-alt1
+- Polished tests.
+
 * Sun Nov 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.20.1-alt1
 - Corrected flow of printing procedures;
 - Tests for a black/white lists mode settings.
