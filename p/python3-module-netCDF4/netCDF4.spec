@@ -1,14 +1,13 @@
 %define oname netCDF4
 
-%def_with python3
 %def_disable check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.2.9
-Release: alt3
+Release: alt4
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/netCDF4/
 
 # https://github.com/Unidata/netcdf4-python.git
@@ -17,19 +16,16 @@ Source1: setup.cfg
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires: libnetcdf-devel zlib-devel libjpeg-devel libcurl-devel
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-Cython libnumpy-devel
-BuildRequires: python-module-epydoc
-BuildRequires: python-module-html5lib python-module-notebook python-module-numpy-testing python-module-pytest
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-notebook python3-module-numpy-testing
-%endif
 
-%py_provides %oname
+Conflicts: python-module-%oname
+Obsoletes: python-module-%oname
+
+%py3_provides %oname
 
 %description
 netCDF version 4 has many features not found in earlier versions of the
@@ -70,27 +66,6 @@ containing compound types) are not supported.
 
 This package contains documentation for %oname.
 
-%package -n python3-module-%oname
-Summary: Python/numpy interface to netCDF library (versions 3 and 4)
-Group: Development/Python3
-%py3_provides %oname
-
-%description -n python3-module-%oname
-netCDF version 4 has many features not found in earlier versions of the
-library and is implemented on top of HDF5. This module can read and
-write files in both the new netCDF 4 and the old netCDF 3 format, and
-can create files that are readable by HDF5 clients. The API modelled
-after Scientific.IO.NetCDF, and should be familiar to users of that
-module.
-
-Most new features of netCDF 4 are implemented, such as multiple
-unlimited dimensions, groups and zlib data compression. All the new
-numeric data types (such as 64 bit and unsigned integer types) are
-implemented. Compound and variable length (vlen) data types are
-supported, but the enum and opaque data types are not. Mixtures of
-compound and vlen data types (compound types containing vlens, and vlens
-containing compound types) are not supported.
-
 %prep
 %setup
 %patch1 -p1
@@ -102,74 +77,37 @@ rm -f *.c netCDF4.c netcdftime/.c
 sed -i "s|'lib'|'lib64'|g" setup.py
 %endif
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
 
-%python_install
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-chmod +x create_docs.sh
-cd docs
-../create_docs.sh
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+#chmod +x create_docs.sh
+#cd docs
+#../create_docs.sh
 
 %check
-python setup.py test
-pushd test
-export PYTHONPATH=%buildroot%python_sitelibdir
-python run_all.py
-popd
-%if_with python3
-pushd ../python3
 python3 setup.py test
 pushd test
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 run_all.py
 popd
-popd
-%endif
 
 %files
 %doc Changelog *.md
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
-%doc docs/html examples
-
-%if_with python3
-%files -n python3-module-%oname
-%doc Changelog *.md
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
+#doc docs/html examples
 
 %changelog
+* Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.9-alt4
+- Drop python2 support.
+
 * Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 1.2.9-alt3
 - Rebuild for python3.7.
 
