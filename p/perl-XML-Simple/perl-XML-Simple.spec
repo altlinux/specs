@@ -2,7 +2,7 @@
 %define dist XML-Simple
 Name: perl-%dist
 Version: 2.25
-Release: alt1
+Release: alt2
 
 Summary: Easy API to read/write XML
 Group: Development/Perl
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/G/GR/GRANTM/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Tie-IxHash perl-XML-Parser perl-XML-SAX perl-devel
+BuildRequires: perl-Tie-IxHash perl-XML-Parser perl-XML-SAX perl-devel perl-XML-SAX-ExpatXS
 
 %description
 The XML::Simple module provides a simple API layer on top of an underlying
@@ -37,6 +37,9 @@ XML parsing module (either XML::Parser or one of the SAX2 parser modules).
 %doc	%perl_vendor_privlib/XML/Simple/*.pod
 
 %changelog
+* Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.25-alt2
+- add BR: perl-XML-SAX-ExpatXS
+
 * Mon Mar 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1
 - automated CPAN update
 
