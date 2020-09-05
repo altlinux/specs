@@ -13,7 +13,7 @@
 %brp_strip_none %_bindir/*
 
 Name:    etcd
-Version: 3.4.9
+Version: 3.4.13
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
@@ -83,7 +83,7 @@ sed \
 install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%name/%name.conf
 
 # remove unused files
-rm -rf -- %buildroot/%_libdir
+rm -rf -- %buildroot/%go_root
 
 %pre
 groupadd -r -f %etcd_group
@@ -106,6 +106,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Sat Sep 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.13-alt1
+- 3.4.13
+
 * Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.9-alt1
 - 3.4.9.
 
