@@ -4,7 +4,7 @@
 
 Name: neomutt
 Version: 20200821
-Release: alt1
+Release: alt2
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
@@ -78,6 +78,9 @@ make -s test
 %docdir
 
 %changelog
+* Sat Sep 05 2020 Vitaly Chikunov <vt@altlinux.org> 20200821-alt2
+- Fix alias parsing (closes: 38891).
+
 * Mon Aug 24 2020 Vitaly Chikunov <vt@altlinux.org> 20200821-alt1
 - Update to 20200821.
 
