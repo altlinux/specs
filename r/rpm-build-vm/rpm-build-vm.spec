@@ -1,16 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
-#
-# spec file to build rpm-build-vm
-#
 # Copyright (C) 2019 Vitaly Chikunov <vt@altlinux.org>
-#
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.14
+Version: 1.15
 Release: alt1
 
-Summary: RPM helper to run in virtualised environment
-License: GPL-2.0
+Summary: RPM helper to run tests in virtualised environment
+License: GPL-2.0-only
 Group: Development/Other
 
 Source: %name-%version.tar
@@ -18,8 +16,39 @@ Source: %name-%version.tar
 %define supported_arches %ix86 x86_64 ppc64le aarch64 armh
 
 %ifarch %supported_arches
-# = QEMU supported arches =
+# We need static libs to build initramfs /init binary:
+#   klibc-devel        - cannot call arbitrary syscall.
+#   musl-devel         - does not cover all arches.
+#   glibc-devel-static - binaries are bigger.
+BuildRequires: klibc-devel
+
+# Try to load un-def kernel this way to avoid "forbidden dependencies"
+# from sisyphus_check.
+Requires: kernel >= 5.7
+
+Requires: %name-run = %EVR
+%endif
+
+%ifarch %supported_arches
+%description
+RPM helper to run QEMU inside hasher. This is mainly intended
+for %%check section to test software under better emulated root
+than fakeroot.
+
+This is similar to multiple vm scripts, virtme, vido, and eudyptula-boot.
+%else
+%description
+This package is a stub instead of RPM helper to run QEMU inside hasher
+on supported architectures (this one (%_arch) is unsupported).
+%endif
+
+%package run
+Summary: vm-run virtualized runner
+Group: Development/Other
+
 # Other arches will get a stub which will always return success
+%ifarch %supported_arches
+Requires: mount
 
 # /proc is required for qemu 9p to work, otherwise you'll get
 # confusing ENOENT when creating a file. This is because
@@ -27,14 +56,6 @@ Source: %name-%version.tar
 # over `/proc/self/fd/%%d'.
 Requires: /proc
 Requires: /dev/kvm
-
-# Try to load un-def kernel this way to avoid "forbidden dependencies"
-# from sisyphus_check
-Requires: kernel > 5.0
-
-Requires: make-initrd
-Requires: mount
-%endif
 
 %ifarch %ix86 x86_64
 Requires: qemu-system-x86-core
@@ -46,17 +67,23 @@ Requires: qemu-system-ppc-core
 Requires: qemu-system-aarch64-core
 %endif
 %ifarch armh
+# No KVM support in the kernel for this arch.
 Requires: qemu-system-arm-core
 %endif
 
-%description
+%endif
+
+%ifarch %supported_arches
+%description run
 RPM helper to run QEMU inside hasher. This is mainly intended
 for %%check section to test software under better emulated root
 than fakeroot.
 
 This is similar to multiple vm scripts, virtme, vido, and eudyptula-boot.
-%ifnarch %supported_arches
 
+This package is vm-run scripts only (without requirement on the kernel).
+%else
+%description run
 This package is a stub instead of RPM helper to run QEMU inside hasher
 on supported architectures (this one (%_arch) is unsupported).
 %endif
@@ -73,46 +100,43 @@ Run checkinstall tests for vm-run.
 %prep
 %setup
 
+%ifarch %supported_arches
+%build
+[ -x /usr/bin/musl-gcc ] && export CC=musl-gcc
+[ -x /usr/bin/klcc     ] && export CC=klcc
+CFLAGS="%optflags" make
+%endif
+
 %install
 %ifnarch %supported_arches
 install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 %else
 install -D -p -m 0755 vm-run      %buildroot%_bindir/vm-run
-install -D -p -m 0755 vm-init     %buildroot%_sbindir/vm-init
-install -D -p -m 0755 initrd-init %buildroot%_libexecdir/%name/sbin/init-bin
-install -D -p -m 0755 config.mk   %buildroot%_libexecdir/%name/config.mk
+install -D -p -m 0755 vm-init     %buildroot%_libexecdir/vm-run/vm-init
+install -D -p -m 0755 initrd-init %buildroot%_libexecdir/vm-run/initrd-init
+install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 %endif
 
-%pre
+%pre run
 # Only allow to install inside of hasher.
 [ -d /.host -a -d /.in -a -d /.out ]
 
+%files
+
 %files checkinstall
 
-%files
+%files run
 %_bindir/vm-run
 
 %ifarch %supported_arches
-%_sbindir/vm-init
-%_libexecdir/%name
+%_libexecdir/vm-run
+%_rpmlibdir/vm-run.filetrigger
 
 %post
-# We don't have 9pnet_virtio and virtio_pci modules built-in in the kernel,
-# so initrd is needed to preload them before mounting rootfs.
-
-ls /boot/vmlinuz-* | while read KERN; do
-	KVER=${KERN#/boot/vmlinuz-}
-	echo "Generating initrd for $KERN"
-	make-initrd --no-checks --config=%_libexecdir/%name/config.mk --kernel=$KVER
-done
-rm -rf /tmp/make-initrd.*
-
 # Fix permissions to boot the installed kernel
-(
-  find /boot -type f,d -print0
-  find /lib/modules -type f,d -print0
-) | xargs -0r chmod a+rX
+find /boot /lib/modules -type f,d \! -perm -444 -print0 | xargs -0r chmod a+rX
 
+%post run
 # Required in case of --udevd option to vm-run
 mkdir -p /run/udev
 chmod a+twx /run/udev
@@ -121,17 +145,19 @@ chmod a+twx /run/udev
 mkdir -p /run/dbus
 chmod a+twx /run/dbus
 
-# u&mount should to be readable
+# u&mount should to be readable to use inside vm
 control mount unprivileged
 
 # For --overlay=
 chmod a+twx /mnt
 
-# Allow user creation
+# Allow user creation (for openssh)
 chmod a+r /etc/login.defs
 
 %ifarch armh
-# Workaround to KVM not working on armh
+# Workaround to KVM not working on armh: signal to scripts that we don't have
+# kvm. This will work on normal build, but will be cleared on hsh-shell, that
+# will not produce failure though, just more warnings from qemu.
 chmod go-rwx /dev/kvm
 %endif
 %endif
@@ -142,6 +168,10 @@ vm-run --verbose uname
 vm-run --verbose --overlay=ext4 uname
 
 %changelog
+* Sat Sep 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.15-alt1
+- Split into two packages, with kernel dependence and without it.
+- Remove dependence on make-initrd by generating own initramfs.
+
 * Mon Aug 17 2020 Vitaly Chikunov <vt@altlinux.org> 1.14-alt1
 - armh: Enable tcg support.
 

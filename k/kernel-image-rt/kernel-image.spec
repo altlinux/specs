@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.135
-%define kernel_rt_release	rt61
+%define kernel_sublevel		.142
+%define kernel_rt_release	rt63
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -71,14 +71,6 @@ ExclusiveArch: x86_64
 %define arch_dir x86
 %endif
 
-%define qemu_pkg %_arch
-%ifarch %ix86 x86_64
-%define qemu_pkg x86
-%endif
-%ifarch ppc64le
-%define qemu_pkg ppc
-%endif
-
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
@@ -96,7 +88,7 @@ BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static /dev/kvm}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.15}}
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -409,61 +401,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %add_verify_elf_skiplist %modules_dir/*
 
 %check
-KernelVer=%kversion-%flavour-%krelease
-mkdir -p test
-cd test
-cat > init.c <<__EOF__
-#include <unistd.h>
-#include <stdio.h>
-#include <err.h>
-#include <sys/mount.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/reboot.h>
-int main()
-{
-	if (mkdir("/sys", 0666))
-		warn("mkdir /sys");
-	else if (mount("sysfs", "/sys", "sysfs", 0, NULL))
-		warn("mount /sys");
-	else if (access("/sys/kernel/realtime", R_OK))
-		warn("access /sys/kernel/realtime");
-	else
-		puts("Boot successful!");
-	reboot(RB_POWER_OFF);
-}
-__EOF__
-gcc -static -o init init.c
-echo init | cpio -H newc -o | gzip -9n > initrd.img
-qemu_arch=%_arch
-qemu_opts="-M accel=kvm:tcg -bios bios.bin"
-console=ttyS0
-%ifarch %ix86
-  qemu_arch=i386
-%endif
-%ifarch ppc64le
-  qemu_arch=ppc64
-  qemu_opts="-cpu power8,compat=power7"
-  console=hvc0
-%endif
-%ifarch aarch64
-  qemu_opts="-M virt,gic_version=3 -cpu max"
-  console=ttyAMA0
-%endif
-# no_timer_check due to https://lkml.org/lkml/2020/4/2/269
-time -p \
-timeout --foreground 600 \
-qemu-system-$qemu_arch $qemu_opts \
-	-nographic -no-reboot \
-	-kernel %buildroot/boot/vmlinuz-$KernelVer \
-	-initrd initrd.img \
-	-append "console=$console panic=-1 no_timer_check" > boot.log &&
-grep -q "^Boot successful!" boot.log &&
-grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
-	cat >&2 boot.log
-	echo >&2 'Marker not found'
-	exit 1
-}
+vm-run cat /sys/kernel/realtime
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
@@ -503,6 +441,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Sep 06 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.142-alt1.rt63
+- Update to v4.19.142-rt63 (03 Sep 2020).
+
 * Sat Aug 29 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt61
 - Update to v4.19.135-rt61 (28 Aug 2020).
 
