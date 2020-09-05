@@ -5,13 +5,13 @@
 %def_disable aspell
 %def_enable hunspell
 %def_disable perl
-%def_enable system_minisat
+%def_disable system_minisat
 
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
 Version: 5.8.0
-Release: alt1
+Release: alt2
 
 Summary: The link grammar parsing system for Unix
 License: BSD-3-Clause and LGPL-2.1
@@ -100,6 +100,9 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Sat Sep 05 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt2
+- rebuilt with bundled minisat
+
 * Thu Mar 19 2020 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
 - 5.8.0
 - fixed License tag
