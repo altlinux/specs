@@ -7,7 +7,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -18,6 +18,10 @@ Url: https://telegram.org/
 
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
+
+# [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
+# aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
+ExcludeArch: armh ppc64le aarch64
 
 # Check https://github.com/EasyCoding/tgbuild for patches
 
@@ -80,6 +84,15 @@ BuildRequires: libopenal-devel >= 1.17.2
 # used by qt imageformats: libwebp-devel
 BuildRequires: libva-devel libdrm-devel
 
+# Telegram fork of OWT
+BuildRequires: libowt-tg-devel
+BuildRequires: libvpx-devel
+BuildRequires: libjpeg-devel
+#BuildRequires: libopenh264-devel
+# obsoleted in the repo
+#BuildRequires: libyuv-devel
+
+# legacy tgvoip
 BuildRequires: libtgvoip-devel >= 2.4.4-alt5
 BuildRequires: libopus-devel
 
@@ -91,7 +104,7 @@ BuildRequires: libqrcodegen-cpp-devel
 BuildRequires: libmicrosoft-gsl-devel >= 1:3.0.1
 BuildRequires: libvariant-devel
 BuildRequires: libexpected-devel
-BuildRequires: librange-v3-devel >= 0.10.0
+BuildRequires: librange-v3-devel >= 0.11.0
 
 BuildRequires: libdbusmenu-qt5-devel
 
@@ -138,6 +151,7 @@ or business messaging needs.
 
 %prep
 %setup
+%__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 
 rm -rf Telegram/ThirdParty/variant \
 	Telegram/ThirdParty/GSL \
@@ -166,15 +180,18 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
-    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=ON \
+    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
+    -DDESKTOP_APP_WEBRTC_LOCATION=/usr/src/libowt-tg \
+    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_FORCE_GTK_FILE_DIALOG:BOOL=ON \
     %nil
-#    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
-# check later: -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON
+
+# Can't use, see https://github.com/telegramdesktop/tdesktop/issues/8483
+#    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=TRUE \
 
 %make_build
 
@@ -206,6 +223,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Aug 23 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- new version 2.3.1 (with rpmrb script)
+- enable WebRTC integration (libtgvoip is legacy now)
+- temp. disable armh (due tg_owt failed build)
+- temp. disable ppc64le, aarch64 (tg_owt is not ready for them yet)
+
 * Thu Aug 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 - build with bundled libtgvoip
