@@ -1,8 +1,8 @@
 %define pear_name File_Fstab
 
 Name: pear-File_Fstab
-Version: 2.0.2
-Release: alt3
+Version: 2.0.3
+Release: alt1
 
 Summary: Read and write fstab files
 
@@ -47,11 +47,13 @@ class for that format.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/File
-%pear_dir/docs
+%pear_dir/File/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version 2.0.3 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
