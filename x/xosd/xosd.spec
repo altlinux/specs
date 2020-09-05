@@ -1,10 +1,10 @@
 %def_without xmms
 Name: xosd
 Version: 2.2.14
-Release: alt7
+Release: alt10
 
 Summary: X On Screen Display, displays XMMS status information
-License: GPL
+License: GPLv2
 Group: Sound
 Url: http://sourceforge.net/projects/libxosd/
 Packager: Evgenii Terechkov <evg@altlinux.ru>
@@ -42,13 +42,11 @@ Summary: X On Screen Display utilities
 Requires: lib%name = %version-%release
 Requires: xmms
 Provides: xmms-xosd = %version-%release
-Obsoletes: xmms-xosd
 
 %package -n %name-utils
 Group: Graphics
 Summary: X On Screen Display, displays any information using libxosd
 Requires: lib%name = %version-%release
-Obsoletes: %name-utils
 
 %description -n lib%name
 This package contains the shared library of xosd, it is requires by programs
@@ -125,6 +123,15 @@ rm -rf %buildroot%_datadir/%name/
 %_man1dir/osd_cat.1*
 
 %changelog
+* Sat Sep  5 2020 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt10
+- Drop more self-obsoletes
+
+* Sat Sep  5 2020 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt9
+- Drop nonsense Obsoletes: to itself tag
+
+* Sat Sep  5 2020 Terechkov Evgenii <evg@altlinux.org> 2.2.14-alt8
+- Fix FTBFS (License: tag in spec)
+
 * Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.14-alt7
 - build without xmms-xosd subpackage need obsoleted gdk-pixbuf-devel
 
