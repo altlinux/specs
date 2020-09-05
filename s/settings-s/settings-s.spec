@@ -1,6 +1,6 @@
 Name:     settings-s
-Version:  0.2
-Release:  alt4
+Version:  0.3
+Release:  alt1
 
 Summary:  settings for custom distro
 License:  GPLv2
@@ -28,40 +28,48 @@ Integrity check setup only
 %setup
 
 %install
-mkdir -p %buildroot/usr/share/install2/postinstall.d/
+mkdir -p %buildroot%_datadir/install2/postinstall.d
 mkdir -p %buildroot/sbin
-mkdir -p %buildroot/lib/systemd/system
-mkdir -p %buildroot/etc/firsttime.d/
+mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot/%_sysconfdir/firsttime.d
 mkdir -p %buildroot/lib/systemd/system-preset
 
-install -Dm 0700 65-integalert.sh %buildroot/etc/firsttime.d/
-install -Dm 0600 65-integrity.preset %buildroot/lib/systemd/system-preset/
-install -Dm 0700 65-integalert.sh %buildroot/etc/firsttime.d/
-install -Dm 0700 65-settings.sh  %buildroot/usr/share/install2/postinstall.d/
-install -Dm 0644 integalert.service %buildroot/lib/systemd/system/
-install -Dm 0700 integalert %buildroot/sbin
+install -Dm 0755 65-integalert.sh %buildroot/%_sysconfdir/firsttime.d/
+install -Dm 0644 65-integrity.preset %buildroot/lib/systemd/system-preset/
+install -Dm 0755 65-settings.sh  %buildroot%_datadir/install2/postinstall.d/
+install -Dm 0644 integalert.service %buildroot%_unitdir/
+install -Dm 0700 integalert %buildroot/sbin/
 
 
+%post -n integ
+if [ $1 -ge 2 ]; then
+    if systemctl -q is-enabled integalert.service; then
+        systemctl daemon-reload
+        systemctl -q preset integalert.service
+    fi
+fi
 
 %files
-/usr/share/install2/postinstall.d/65-settings.sh
+%_datadir/install2/postinstall.d/65-settings.sh
 
 %files -n integ
-/etc/firsttime.d/65-integalert.sh
-/lib/systemd/system/integalert.service
+%_sysconfdir/firsttime.d/65-integalert.sh
+%_unitdir/integalert.service
 /lib/systemd/system-preset/65-integrity.preset
 /sbin/integalert
 
-%post
-
-%post -n integ
-if [ "$(systemctl is-enabled integalert)" == "enabled" ] ;
- then
-    systemctl disable integalert
-    systemctl enable integalert
- fi
 
 %changelog
+* Sat Sep 05 2020 Alexey Shabalin <shaba@altlinux.org> 0.3-alt1
+- update systemd unit
+- not requires plymouth
+- improve failure output
+- direct execute osec for check integrity in integalert
+
+* Mon Oct 28 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt5
+- reenable service (to switch from required to wanted from sysinit)
+only when it is an upgrade, not on initial install.
+
 * Fri Oct 11 2019 Denis Medvedev <nbr@altlinux.org> 0.2-alt4
 - force systemd reconfigure dependencies, fix archiving of osec messages
 
