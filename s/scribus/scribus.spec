@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.6
-Release: alt1.git742765f
+Release: alt2.gitc9ebe68
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -168,6 +168,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sat Sep 05 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6-alt2.gitc9ebe68
+- build git c9ebe68847e7157dea75248a54cc5c8ec414da11
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.6-alt1.git742765f
 - build git 742765feb112c0ae570b5f34054254c51aafdda7
 
