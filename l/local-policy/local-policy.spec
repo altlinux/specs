@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: ALT Local policies
@@ -39,6 +39,9 @@ do
                 "%buildroot%_sysconfdir/control.d/facilities/$i"
 done
 
+install -pD -m755 "controls/functions-local-policy" \
+        "%buildroot%_sysconfdir/control.d/"
+
 mkdir -p "%buildroot%_datadir/%name"
 cp -r policies/* "%buildroot%_datadir/%name"
 mkdir -p "%buildroot%_sysconfdir/%name"
@@ -49,10 +52,15 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %files
 %dir %_sysconfdir/%name
 %_sysconfdir/control.d/facilities/*
+%_sysconfdir/control.d/functions-local-policy
 %dir %_datadir/%name
 %_datadir/%name/*
 
 %changelog
+* Sun Sep 06 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.3-alt1
+- Fixed controls in case appropriate configs are missing
+- Add check default sssd-ad options and create it if not exists
+
 * Sat Jul 04 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.2-alt1
 - Add sssd-ad-gpo-access-control control
 
