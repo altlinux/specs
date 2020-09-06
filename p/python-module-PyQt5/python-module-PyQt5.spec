@@ -7,17 +7,13 @@
 %def_with python2
 %def_with python3
 
-%if_with python3
-%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
-%endif
-
 # Note: check Qt subst below
 %define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 
 Name: python-module-%oname
 Version: 5.13.1
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for Qt 5
 
@@ -37,6 +33,8 @@ Patch3: alt-drop-sip-key.patch
 BuildRequires(pre): rpm-build-intro
 
 %if_with python2
+BuildRequires(pre):python-module-sip-devel
+
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 
 %setup_python_module %oname
@@ -52,12 +50,17 @@ BuildRequires: pkgconfig(dbus-python)
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
 #BuildPreReq: %py_package_dependencies dbus-devel
 
-BuildRequires(pre):python-module-sip-devel
+BuildRequires:python-module-sip-devel
 %endif
 
 %if_with python3
 # %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
-BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1 python3-module-sip-devel
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
+
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+
+BuildRequires(pre): python3-module-sip
+BuildRequires: python3-module-sip-devel
 BuildRequires: python3-module-dbus
 %endif
 
@@ -101,6 +104,7 @@ BuildRequires: pkgconfig(Qt5X11Extras)
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
 code generator for Qt Designer.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python bindings for Qt
 Group: Development/Python3
@@ -121,6 +125,7 @@ Requires: python3-module-%oname = %EVR
 %description -n python3-module-%oname-devel
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
 code generator for Qt Designer.
+%endif
 
 %if_with python2
 %package devel
@@ -176,9 +181,6 @@ QMAKE_CXXFLAGS += %optflags %optflags_shared
 E_O_F
 done
 
-# add missing Qt versions to list of supported
-sed -i "s|Qt_5_12_4|Qt_5_12_4 Qt_%qtver|" sip/QtCore/QtCoremod.sip
-
 %if_with python3
 rm -rf ../python3
 cp -R . ../python3
@@ -196,6 +198,8 @@ echo 'yes' | python2 configure.py \
 	-q %_qt5_qmake \
 	-d %python_sitelibdir \
 	-a --confirm-license \
+	--no-designer-plugin \
+	--no-qml-plugin \
 	--qsci-api \
 	--qsci-api-destdir=%_qt5_datadir/qsci \
 	--sip=%_bindir/sip \
@@ -230,24 +234,23 @@ popd
 %endif
 
 %install
+%if_with python2
+%makeinstall_std INSTALL_ROOT=%buildroot
+rm -r %buildroot%python_sitelibdir/%oname/uic/port_v3
+pushd %buildroot%_bindir
+find . -mindepth 1 -maxdepth 1 -print0 | while read -r -d '' i; do
+	mv -- "$i" "$i".py2
+done
+popd
+%endif
+
 %if_with python3
 pushd ../python3
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -r %buildroot%python3_sitelibdir/%oname/uic/port_v2
 popd
-%if_with python2
-pushd %buildroot%_bindir
-find . -mindepth 1 -maxdepth 1 -print0 | while read -r -d '' i; do
-	mv -- "$i" "$i".py3
-done
-popd
-%endif
 %endif
 
-%if_with python2
-%makeinstall_std INSTALL_ROOT=%buildroot
-rm -r %buildroot%python_sitelibdir/%oname/uic/port_v3
-%endif
 
 # TODO: see remove_repo_info macro from a new rpm-build-intro
 # There is a file in the package named .DS_Store or .DS_Store.gz,
@@ -256,18 +259,12 @@ rm -r %buildroot%python_sitelibdir/%oname/uic/port_v3
 # included by copying complete directories from the source tarball.
 find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
-##wait ##
-#install -d %buildroot/usr/share/sip/PyQt5/Qsci \
-#	PyQt-x11-gpl/sip/QtGui
-
 %if_with python2
 %files
-%_bindir/pylupdate5
-%_bindir/pyrcc5
-%_bindir/pyuic5
+%_bindir/pylupdate5.py2
+%_bindir/pyrcc5.py2
+%_bindir/pyuic5.py2
 %python_sitelibdir/*
-%_qt5_plugindir/*
-
 
 %files devel
 %dir %_datadir/sip
@@ -285,24 +282,24 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 
 %if_with python3
 %files -n python3-module-%oname
-%if_with python2
-%_bindir/pylupdate5.py3
-%_bindir/pyrcc5.py3
-%_bindir/pyuic5.py3
-%else
 %_bindir/pylupdate5
 %_bindir/pyrcc5
 %_bindir/pyuic5
-%endif
 %python3_sitelibdir/*
+%_qt5_plugindir/*
 
 %files -n python3-module-%oname-devel
-%_datadir/sip3
-%dir %_qt5_datadir
-%_qt5_datadir/qsci3
+%_datadir/sip3/
+%dir %_qt5_datadir/
+%_qt5_datadir/qsci3/
 %endif
 
 %changelog
+* Sun Sep 06 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt3
+- fix build with Qt 5.15
+- fix python3 disable
+- build designer and qml plugins for python3 only
+
 * Thu Feb 06 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt2
 - add support to disable python2 module
 - add buildrequire python2-base
