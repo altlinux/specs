@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.27.5
+Version: 1.27.6
 Release: alt1
 
 Summary: A personal full text search package
@@ -155,6 +155,9 @@ rm -f %buildroot%_datadir/%name/filters/xdg-open
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Sun Sep 06 2020 Michael Shigorin <mike@altlinux.org> 1.27.6-alt1
+- new version (watch file uupdate)
+
 * Wed Aug 19 2020 Michael Shigorin <mike@altlinux.org> 1.27.5-alt1
 - new version (watch file uupdate)
 
