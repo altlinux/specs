@@ -2,19 +2,19 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 %def_enable zart
 
-%define gmic_git_ver 2.9.1
+%define gmic_git_ver 2.9.2
 # https://github.com/c-koi/zart
 # no tags
-%define zart_ver d3a2931
+%define zart_ver 9705abe
 # https://github.com/c-koi/gmic-qt
 # v.2.6.2
-%define gmic_qt_ver v.2.9.1-1-gd40db0f
+%define gmic_qt_ver v.2.9.2
 # https://github.com/dtschump/gmic-community.git
 # 1.6.3.2-1245-g44ad9cb
-%define gmic_comm_ver 1.6.3.2-1815-ge03c6a1
+%define gmic_comm_ver 1.6.3.2-2039-gb917037
 
 Name: gmic
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -25,7 +25,7 @@ Url: http://gmic.sourceforge.net/
 %if_disabled snapshot
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
 %else
-# VCS: https://github.com/dtschump/gmic.git
+Vcs: https://github.com/dtschump/gmic.git
 Source: %name-%version.tar
 %endif
 Source1: zart-%zart_ver.tar
@@ -149,7 +149,8 @@ popd
 
 %if_enabled zart
 pushd zart
-%makeinstall_std
+#%%makeinstall_std
+%make INSTALL_ROOT=%buildroot install
 popd
 %endif
 
@@ -157,12 +158,15 @@ popd
 
 %files -f %name.lang
 %_bindir/%name
-%_man1dir/%name.1.*
+%_man1dir/%name.1*
 %_datadir/bash-completion/completions/%name
 %doc README COPYING
 
 %files qt
 %_bindir/%{name}_qt
+%_desktopdir/gmic_qt.desktop
+%_iconsdir/hicolor/*x*/apps/gmic_qt.png
+%_iconsdir/hicolor/scalable/apps/gmic_qt.svg
 %doc %name-qt/README*
 
 %files -n lib%name
@@ -179,6 +183,9 @@ popd
 %if_enabled zart
 %files zart
 %_bindir/zart
+%_desktopdir/zart.desktop
+%_iconsdir/hicolor/*x*/apps/zart.png
+%_iconsdir/hicolor/scalable/apps/zart.svg
 %doc zart/README* zart/Licence_CeCILL_V2*
 %endif
 
@@ -186,6 +193,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sat Sep 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Tue Jun 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
 - 2.9.1
 
