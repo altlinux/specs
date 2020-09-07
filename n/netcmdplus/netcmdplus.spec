@@ -1,6 +1,6 @@
 Name: netcmdplus
 Version: 0.1.1
-Release: alt2
+Release: alt3
 
 Summary: Extended samba-tool (netcmd) version
 License: GPLv3+
@@ -16,7 +16,6 @@ BuildPreReq: rpm-build-python3
 BuildRequires: /usr/bin/2to3
 
 Conflicts: %name < %EVR
-Obsoletes: %name < %EVR
 
 %description
 netcmdplus extends samba-tool "user" and "group" commands with additional operations.
@@ -53,6 +52,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' bin/samba-tool-plus
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Sep 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt3
+- Fix: Remove self-obsoletes.
+
 * Thu Jan 23 2020 Grigory Ustinov <grenka@altlinux.org> 0.1.1-alt2
 - Transfer to python3.
 
