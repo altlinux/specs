@@ -1,10 +1,10 @@
 %define oname pycrypto
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt5.a1.git20140620
+Release: alt6.a1.git20140620
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt6.a1.git20140620
+- Disabled build of python-3 module.
+
 * Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 2.7-alt5.a1.git20140620
 - Fixed FTBFS.
 

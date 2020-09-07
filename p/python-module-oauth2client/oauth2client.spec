@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.1.3
-Release: alt1
+Release: alt2
 Summary: OAuth 2.0 client library
 License: Apache Software License
 Group: Development/Python
@@ -15,6 +15,7 @@ Url: https://pypi.python.org/pypi/oauth2client/
 
 # https://github.com/google/oauth2client.git
 Source: %name-%version.tar
+Patch1: %oname-%version-gentoo-py38.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools 
@@ -140,6 +141,9 @@ Utilities for making it easier to use OAuth 2.0 on Google Compute Engine.
 
 %if_with python3
 cp -fR . ../python3
+pushd ../python3
+%patch1 -p1
+popd
 %endif
 
 %prepare_sphinx .
@@ -222,6 +226,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt2
+- Added fixes for python-3.8.
+
 * Thu Sep 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt1
 - Updated to upstream version 4.1.3.
 
