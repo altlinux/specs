@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define _vpath_builddir %_target_platform
 
 # like subst_with, but replacing '_' with '-'
 %define subst_with_dash() %{expand:%%(echo '%%{subst_with %1}' | sed 's/_/-/g')}
@@ -80,6 +79,7 @@
 %def_without numactl
 %endif
 %def_with selinux
+%define selinux_mount "/sys/fs/selinux"
 
 # A few optional bits
 %def_without netcf
@@ -87,12 +87,12 @@
 %def_without hal
 %def_with yajl
 %def_with sanlock
-%if_enabled lxc
+%if_with lxc
 %def_with fuse
 %else
 %def_without fuse
 %endif
-%def_with pm_utils
+%def_without pm_utils
 
 %else  #server_drivers
 %def_without libvirtd
@@ -127,7 +127,7 @@
 %def_with yajl
 %def_without sanlock
 %def_without fuse
-%def_with pm_utils
+%def_without pm_utils
 %endif #server_drivers
 
 %if_with  qemu
@@ -143,7 +143,7 @@
 %def_with polkit
 %def_with capng
 %def_with firewalld
-%def_without firewalld_zone
+%def_with firewalld_zone
 
 %if_with qemu || lxc
 %def_with nwfilter
@@ -166,19 +166,20 @@
 # Non-server/HV driver defaults which are always enabled
 %def_with sasl
 %def_with libssh
+%def_with libssh2
 
 %def_without wireshark
-%def_without bash_completion
+%def_with bash_completion
 
 # nss plugin depends on network
 %if_with network
-%def_with nss_plugin
+%def_with nss
 %else
-%def_without nss_plugin
+%def_without nss
 %endif
 
 Name: libvirt
-Version: 6.6.0
+Version: 6.7.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -187,10 +188,13 @@ Url: https://libvirt.org/
 Source0: %name-%version.tar
 Source2: keycodemapdb-%name-%version.tar
 
+Source10: libvirt.dm-mod.modules
 Source11: libvirtd.init
 Source12: virtlockd.init
 Source13: virtlogd.init
 Source14: libvirt-guests.init
+Source21: libvirtd.tmpfiles
+Source22: libvirt.filetrigger
 
 Patch1: %name-%version.patch
 
@@ -203,6 +207,7 @@ Patch1: %name-%version.patch
 Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
 
+BuildRequires(pre): meson >= 0.54.0
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: udev libudev-devel >= 219 libpciaccess-devel}
@@ -215,6 +220,7 @@ Requires: %name-libs = %EVR
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
+%{?_with_libssh2:BuildRequires: pkgconfig(libssh2) >= 1.3}
 %{?_with_dbus:BuildRequires: libdbus-devel >= 1.0.0 dbus}
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
@@ -691,6 +697,8 @@ Requires: gettext
 # For virConnectGetSysinfo
 Requires: dmidecode
 Requires: gnutls-utils
+Provides: bash-completion-%name = %EVR
+Obsoletes: bash-completion-%name < 6.7.0-alt1
 # Needed for probing the power management features of the host.
 Conflicts: %name < 0.9.11
 
@@ -715,15 +723,6 @@ Requires: %name-libs = %EVR
 
 %description admin
 The client side utilities to control the libvirt daemon.
-
-%package -n bash-completion-%name
-Summary: Bash completion for %name utils
-Group: Shells
-BuildArch: noarch
-Requires: bash-completion
-
-%description -n bash-completion-%name
-Bash completion for %name.
 
 %package -n wireshark-plugin-%name
 Summary: Wireshark dissector plugin for libvirt RPC transactions
@@ -766,7 +765,7 @@ Requires: %name-daemon = %EVR
 Includes the Sanlock lock manager plugin for the QEMU
 driver
 
-%if_with nss_plugin
+%if_with nss
 %package -n nss-%name
 Summary: Libvirt plugin for Name Service Switch
 Group: System/Libraries
@@ -782,79 +781,69 @@ mkdir -p src/keycodemapdb
 tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 
 %patch1 -p1
-# disable virnetsockettest test
-sed -i 's/virnetsockettest //' tests/Makefile.am
-# disable vircgrouptest test
-sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
-%autoreconf
-%define _configure_script ../configure
-mkdir %_vpath_builddir
-pushd %_vpath_builddir
-%configure \
-		--enable-dependency-tracking \
-		--with-runstatedir=%_runtimedir \
-		--disable-static \
-		--with-packager-version="%release" \
-		--with-init-script=systemd \
-		--with-qemu-user=%qemu_user \
-		--with-qemu-group=%qemu_group \
-		--with-sysctl=check \
-		--with-remote-default-mode=legacy \
-		%{subst_with libvirtd} \
-		%{subst_with qemu} \
-		%{subst_with openvz} \
-		%{subst_with lxc} \
-		%{subst_with_dash login_shell} \
-		%{subst_with vbox} \
-		%{subst_with libxl} \
-		%{subst_with vmware} \
-		%{subst_with esx} \
-		%{subst_with hyperv} \
-		%{subst_with network} \
-		%{subst_with_dash storage_fs} \
-		%{subst_with_dash storage_lvm} \
-		%{subst_with_dash storage_iscsi} \
-		%{subst_with_dash storage_iscsi_direct} \
-		%{subst_with_dash storage_scsi} \
-		%{subst_with_dash storage_disk} \
-		%{subst_with_dash storage_rbd} \
-		%{subst_with_dash storage_mpath} \
-		%{subst_with_dash storage_gluster} \
-		%{subst_with_dash storage_zfs} \
-		%{subst_with_dash storage_vstorage} \
-		%{subst_with_dash storage_sheepdog} \
-		%{subst_with numactl} \
-		%{subst_with selinux} \
-		%{subst_with netcf} \
-		%{subst_with udev} \
-		%{subst_with hal} \
-		%{subst_with yajl} \
-		%{subst_with sanlock} \
-		%{subst_with fuse} \
-		%{subst_with dbus} \
-		%{subst_with_dash pm_utils} \
-		%{subst_with polkit} \
-		%{subst_with firewalld} \
-		%{subst_with_dash firewalld_zone} \
-		%{subst_with capng} \
-		%{subst_with libpcap} \
-		%{subst_with macvtap} \
-		%{subst_with audit} \
-		%{subst_with_dash driver_modules} \
-		%{subst_with dtrace} \
-		%{subst_with_dash bash_completion} \
-		%{subst_with_dash nss_plugin} \
-		%{subst_with sasl}
+%meson \
+		-Drootprefix='/' \
+		-Drunstatedir=%_runtimedir \
+		-Dpackager_version="%release" \
+		-Dinit_script=systemd \
+		-Dqemu_user=%qemu_user \
+		-Dqemu_group=%qemu_group \
+		-Dremote_default_mode=legacy \
+		%{?_with_libvirtd:-Ddriver_libvirtd=enabled} \
+		%{?_with_qemu:-Ddriver_qemu=enabled} \
+		%{?_with_openvz:-Ddriver_openvz=enabled} \
+		%{?_with_lxc:-Ddriver_lxc=enabled} \
+		%{?_with_login_shell:-Dlogin_shell=enabled} \
+		%{?_without_vbox:-Ddriver_vbox=disabled} \
+		%{?_with_libxl:-Ddriver_libxl=enabled} \
+		%{?_without_vmware:-Ddriver_vmware=disabled} \
+		%{?_with_esx:-Ddriver_esx=enabled} \
+		%{?_with_hyperv:-Ddriver_hyperv=enabled} \
+		%{?_with_network:-Ddriver_network=enabled} \
+		%{?_with_storage_fs:-Dstorage_fs=enabled} \
+		%{?_with_storage_lvm:-Dstorage_lvm=enabled} \
+		%{?_with_storage_iscsi:-Dstorage_iscsi=enabled} \
+		%{?_with_storage_iscsi_direct:-Dstorage_iscsi_direct=enabled} \
+		%{?_with_storage_scsi:-Dstorage_scsi=enabled} \
+		%{?_with_storage_disk:-Dstorage_disk=enabled} \
+		%{?_with_storage_rbd:-Dstorage_rbd=enabled} \
+		%{?_with_storage_mpath:-Dstorage_mpath=enabled} \
+		%{?_with_storage_gluster:-Dstorage_gluster=enabled} \
+		%{?_with_storage_zfs:-Dstorage_zfs=enabled} \
+		%{?_with_storage_vstorage:-Dstorage_vstorage=enabled} \
+		%{?_with_storage_sheepdog:-Dstorage_sheepdog=enabled} \
+		%{?_with_numactl:-Dnumactl=enabled} \
+		%{?_with_selinux:-Dselinux=enabled} \
+		-Dselinux_mount=%selinux_mount \
+		%{?_with_netcf:-Dnetcf=enabled} \
+		%{?_with_udev:-Dudev=enabled} \
+		%{?_with_hal:-Dhal=enabled} \
+		%{?_with_yajl:-Dyajl=enabled} \
+		%{?_with_sanlock:-Dsanlock=enabled} \
+		%{?_with_fuse:-Dfuse=enabled} \
+		%{?_with_dbus:-Ddbus=enabled} \
+		%{?_with_pm_utils:-Dpm_utils=enabled} \
+		%{?_with_polkit:-Dpolkit=enabled} \
+		%{?_with_firewalld:-Dfirewalld=enabled} \
+		%{?_without_firewalld_zone:-Dfirewalld_zone=disabled} \
+		%{?_with_capng:-Dcapng=enabled} \
+		%{?_with_libpcap:-Dlibpcap=enabled} \
+		%{?_with_libssh:-Dlibssh=enabled} \
+		%{?_with_libssh2:-Dlibssh2=enabled} \
+		%{?_with_macvtap:-Dmacvtap=enabled} \
+		%{?_with_audit:-Daudit=enabled} \
+		%{?_with_dtrace:-Ddtrace=enabled} \
+		%{?_with_bash_completion:-Dbash_completion=enabled} \
+		%{?_with_nss:-Dnss=enabled} \
+		%{?_with_sasl:-Dsasl=enabled} \
+		-Dexpensive_tests=enabled
 
-%make_build
-popd
+%meson_build
 
 %install
-pushd %_vpath_builddir
-%makeinstall_std
-popd
+%meson_install
 
 # Install sysv init scripts
 %if_with libvirtd
@@ -905,7 +894,7 @@ rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
 %endif
 
-%if_with nss_plugin
+%if_with nss
 # Relocate nss library from %_libdir/libnss_libvirt.so.* to /%_lib/libnss_libvirt.so.* .
 mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/libnss_libvirt.so.* %buildroot/%_lib/
@@ -915,16 +904,9 @@ ln -sf ../../%_lib/libnss_libvirt_guest.so.2 %buildroot%_libdir/libnss_libvirt_g
 %endif
 
 %if_with libvirtd
-# filetrigger that restart libvirtd after install any plugin
-cat <<EOF > filetrigger
-#!/bin/sh -e
-
-dir=%_libdir/libvirt/
-grep -qs '^'\$dir'' && /sbin/service libvirtd condrestart ||:
-EOF
-install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
-
-install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
+install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/modules-load.d/libvirt-dm-mod.conf
+install -pD -m644 %SOURCE21 %buildroot/lib/tmpfiles.d/libvirtd.conf
+install -pD -m755 %SOURCE22 %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %find_lang %name
@@ -937,9 +919,7 @@ rm -rf %buildroot%_man7dir
 %endif
 
 %check
-pushd %_vpath_builddir
-%make_build check VIR_TEST_DEBUG=1 ||:
-popd
+VIR_TEST_DEBUG=1 %meson_test
 
 %pre login-shell
 %_sbindir/groupadd -r -f virtlogin
@@ -1004,6 +984,9 @@ fi
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
 %_man1dir/virt-host-validate.*
+%if_with bash_completion
+%_datadir/bash-completion/completions/*
+%endif
 
 %config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
 %_initdir/libvirt-guests
@@ -1124,6 +1107,9 @@ fi
 %_sbindir/virtnetworkd
 %_libdir/%name/connection-driver/libvirt_driver_network.so
 %_libexecdir/libvirt_leaseshelper
+%if_with firewalld_zone
+%_prefix/lib/firewalld/zones/libvirt.xml
+%endif
 %endif
 
 %if_with udev
@@ -1169,6 +1155,7 @@ fi
 %files daemon-driver-storage
 
 %files daemon-driver-storage-core
+%config(noreplace) %_sysconfdir/modules-load.d/libvirt-dm-mod.conf
 %config(noreplace) %_sysconfdir/sysconfig/virtstoraged
 %config(noreplace) %_sysconfdir/libvirt/virtstoraged.conf
 %_datadir/augeas/lenses/virtstoraged.aug
@@ -1357,12 +1344,7 @@ fi
 %_bindir/virt-admin
 %_man1dir/virt-admin.1*
 
-%if_with bash_completion
-%files -n bash-completion-%name
-%_datadir/bash-completion/completions/*
-%endif
-
-%if_with nss_plugin
+%if_with nss
 %files  -n nss-%name
 /%_lib/libnss_libvirt.so.*
 /%_lib/libnss_libvirt_guest.so.*
@@ -1390,6 +1372,14 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Sep 07 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.0-alt1
+- 6.7.0
+- build with firewalld_zone
+- build with libssh2
+- package bash completion to libvirt-client
+- build without pm-utils (not used if build with dbus and systemd)
+- add dm-mod kernel module to autoload
+
 * Mon Aug 10 2020 Alexey Shabalin <shaba@altlinux.org> 6.6.0-alt1
 - 6.6.0 (Fixes: CVE-2020-14339)
 
