@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    yq
-Version: 2.10.1
+Version: 2.11.0
 Release: alt1
 
 Summary: Command-line YAML and XML processor
@@ -41,6 +41,9 @@ wrapper for YAML and XML documents.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Sep 07 2020 Ivan A. Melnikov <iv@altlinux.org> 2.11.0-alt1
+- 2.11.0
+
 * Tue May 12 2020 Ivan A. Melnikov <iv@altlinux.org> 2.10.1-alt1
 - 2.10.1
 
