@@ -5,19 +5,22 @@
 %def_with python3
 %def_with python3qt5
 
-Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define oname qscintilla2
 %define suff 15
 Name: %oname
-Version: 2.11.4
+Version: 2.11.5
 Release: alt1
+
+Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
+
 License: GPLv3
 Group: Development/KDE and QT
+Url: https://riverbankcomputing.com/software/qscintilla
 
+# Source-url: https://www.riverbankcomputing.com/static/Downloads/QScintilla/%version/QScintilla-%version.zip
 Source: QScintilla-%version.tar
 Patch1: %name-%version-alt-build.patch
 
-Url: https://riverbankcomputing.com/software/qscintilla
 
 %define libname lib%{oname}-%{suff}
 
@@ -25,6 +28,7 @@ BuildRequires(pre): python-module-sip-devel
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 BuildRequires: gcc-c++
 %if_with qt4
+BuildRequires(pre): rpm-macros-qt4
 BuildRequires: libqt4-devel
 %endif
 %if_with python
@@ -42,6 +46,7 @@ BuildRequires: python3-devel python3-module-sip-devel
 BuildRequires: python3-module-PyQt4-devel
 %endif
 %endif
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
 %if_with python3qt5
 BuildRequires: python3-module-PyQt5-devel
@@ -574,6 +579,10 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.5-alt1
+- new version 2.11.5 (with rpmrb script)
+- fix order of fields
+
 * Fri Feb 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.4-alt1
 - Updated to upstream version 2.11.4.
 
