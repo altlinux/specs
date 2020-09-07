@@ -5,12 +5,12 @@
 %def_without python3
 
 %ifnarch %ix86 x86_64
-%def_disable check
+%def_without check
 %endif
 
 Name: python-module-%oname
 Version: 3.66.30
-Release: alt2
+Release: alt3
 Summary: A library for property based testing
 License: MPLv2
 Group: Development/Python
@@ -20,20 +20,25 @@ BuildArch: noarch
 
 # https://github.com/HypothesisWorks/hypothesis-python.git
 Source: %name-%version.tar
+Patch0: 0001-Disable-coverage.patch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+%endif
+
+%if_with check
 BuildRequires: python-module-enum34 python-module-numpy python-module-flaky python-module-pytz python-module-django
 BuildRequires: python-module-django-tests python-module-fake-factory python-modules-sqlite3
 BuildRequires: python2.7(mock) python2.7(coverage) python2.7(dateutil)
 #BuildRequires: python2.7(pandas)
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-numpy python3-module-flaky python3-module-pytz python3-module-django
 BuildRequires: python3-module-django-tests python3-module-fake-factory python3-modules-sqlite3
 BuildRequires: python3(mock) python3(coverage) python3(pandas) python3(dateutil)
+%endif
+
 %endif
 
 %py_requires coverage
@@ -60,6 +65,7 @@ in your code with less work.
 
 %prep
 %setup
+%autopatch -p1
 
 %if_with python3
 cp -a . ../python3
@@ -111,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 3.66.30-alt3
+- Fixed FTBFS.
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.66.30-alt2
 - build python2 module only
 - build without pandas using
