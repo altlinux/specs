@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.13.1
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for Qt WebEngine 5
 
@@ -53,7 +53,7 @@ Python bindings for the Qt WebEngine C++ class library.
 
 %prep
 %setup
-%__subst "s|QtWebEngine_5_12_4|QtWebEngine_5_12_4 QtWebEngine_%webenginever|" sip/*/*.sip
+#__subst "s|QtWebEngine_5_12_4|QtWebEngine_5_12_4 QtWebEngine_%webenginever|" sip/*/*.sip
 
 subst "s|/lib'$|/%_lib'|g" configure.py
 find . -type f -name \*.pro -o -name '*.pro-in' -print0 |while read -r -d '' f; do
@@ -102,6 +102,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %_qt5_datadir/qsci/api/python/*
 
 %changelog
+* Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt3
+- fix build with Qt 5.15
+
 * Thu Jan 23 2020 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt2
 - rebuild with QtWebEngine 5.12.6 (ALT bug 37911)
 
