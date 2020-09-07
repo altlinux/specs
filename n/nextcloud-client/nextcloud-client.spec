@@ -1,6 +1,6 @@
 Name: nextcloud-client
-Version: 2.6.4
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -25,6 +25,7 @@ BuildRequires: kde-common-devel rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
 BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: qt5-quickcontrols2-devel
 
 %description
 The Nextcloud Desktop Client is a tool to synchronize files from Nextcloud Server with your computer.
@@ -83,6 +84,9 @@ ln -s nextcloud/libocsync.so.%version libocsync.so.0; cd ../..
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Mon Sep 07 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.0.1-alt1
+- new version (ALT#38849)
+
 * Mon Apr 20 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.4-alt2
 - fixed kde5 build
 
