@@ -1,6 +1,6 @@
 Summary: A reverse engineering framework
 Name: radare2
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 License: LGPL-3.0-or-later
 Group: Development/Tools
@@ -74,6 +74,9 @@ ln -s radare2 %buildroot/usr/bin/r2
 %_datadir/zsh
 
 %changelog
+* Mon Sep 07 2020 Nikita Ermakov <arei@altlinux.org> 4.5.1-alt1
+- Update to 4.5.1
+
 * Fri Jul 24 2020 Nikita Ermakov <arei@altlinux.org> 4.5.0-alt1
 - Update to 4.5.0
 
