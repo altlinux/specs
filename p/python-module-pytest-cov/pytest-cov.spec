@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python-module-%oname
-Version: 2.8.1
+Version: 2.10.1
 Release: alt1
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
@@ -20,11 +20,6 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: /dev/shm
-BuildRequires: python2.7(coverage)
-BuildRequires: python2.7(fields)
-BuildRequires: python2.7(process_tests)
-BuildRequires: python2.7(pytest-xdist)
-BuildRequires: python2.7(virtualenv)
 BuildRequires: python3(coverage)
 BuildRequires: python3(fields)
 BuildRequires: python3(process_tests)
@@ -86,7 +81,6 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
 -e '/^setenv[ ]*=$/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
 tox.ini
 
@@ -96,11 +90,10 @@ sed -i '/\x27hunter\x27,$/d' setup.py
 sed -i 's/==/>=/g' tox.ini setup.py
 
 export PIP_NO_INDEX=YES
-export PYTHONPATH_PY2=%_libdir/python%_python_version/site-packages
 export PYTHONPATH_PY3=%_libdir/python3/site-packages
-export TOX_TESTENV_PASSENV='PYTHONPATH_PY2 PYTHONPATH_PY3'
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -rv
+export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -vvr
 
 %files
 %doc README.rst CHANGELOG.rst
@@ -115,6 +108,9 @@ tox.py3 --sitepackages -p auto -o -rv
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 2.10.1-alt1
+- 2.8.1 -> 2.10.1.
+
 * Tue Oct 08 2019 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
 - 2.7.1 -> 2.8.1.
 
