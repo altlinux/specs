@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -43,32 +43,26 @@
 %endif
 
 %define ver_maj 1
-%define ver_min 74
+%define ver_min 73
 %define ver_rel 0
 
-%define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
+%define namesuff %{ver_maj}_%{ver_min}_%ver_rel
 
-%define _unpackaged_files_terminate_build 1
-
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4
 
 Summary: Boost libraries
-License: BSL-1.0
+License: Boost Software License
 Group: Development/C++
 Url: https://www.boost.org
 
 Source: boost-%version.tar
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=828856
-# https://bugzilla.redhat.com/show_bug.cgi?id=828857
-# https://svn.boost.org/trac/boost/ticket/6701
-Patch15: boost-1.58.0-fedora-pool.patch
-
-# https://svn.boost.org/trac/boost/ticket/9038
-Patch51: boost-1.58.0-fedora-pool-test_linking.patch
+Patch15: boost-1.36.0-alt-test-include-fix.patch
+Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
+Patch30: boost-1.63.0-alt-python-paths.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
 Patch65: boost-1.73.0-fedora-build-optflags.patch
@@ -79,10 +73,25 @@ Patch82: boost-1.66.0-fedora-no-rpath.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1541035
 Patch83: boost-1.73.0-fedora-b2-build-flags.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1818723
+Patch86: boost-1.69-fedora-format-allocator.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1832639
+Patch87: boost-1.69.0-fedora-test-cxx20.patch
+
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-Patch1000: boost-1.63.0-alt-python-paths.patch
+# https://github.com/ned14/outcome/issues/223
+Patch89: boost-1.73.0-fedora-outcome-assert.patch
+
+# https://github.com/boostorg/beast/pull/1927
+Patch90: boost-1.73.0-fedora-beast-coroutines.patch
+
+# https://github.com/boostorg/geometry/issues/721
+Patch91: boost-1.73-fedora-geometry-issue721.patch
+
+Patch1000: boost-1.73.0-upstream-disable-version-symlinks.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1305,13 +1314,22 @@ applications. This package contains python module.
 %prep
 
 %setup -n boost-%version
-%patch15 -p0
-%patch51 -p1
-%patch65 -p2
+%patch15 -p2
+%patch28 -p3
+%patch30 -p1
+%patch65 -p1
 %patch82 -p1
 %patch83 -p1
+%patch86 -p1
+%patch87 -p2
 %patch88 -p1
+%patch89 -p1
+%patch90 -p1
+%patch91 -p1
+
+pushd tools/boost_install
 %patch1000 -p1
+popd
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1978,8 +1996,8 @@ done
 
 
 %changelog
-* Fri Aug 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.74.0-alt1
-- Updated to upstream version 1.74.0.
+* Mon Aug 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.73.0-alt4
+- Built boost-1.73.0 legacy libraries package.
 
 * Tue Jun 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.73.0-alt3
 - Applied upstream patch for disabling versioned symlinks.
