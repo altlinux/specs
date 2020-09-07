@@ -29,7 +29,7 @@
 
 Name:           chromium
 Version:        85.0.4183.83
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -75,10 +75,9 @@ Patch018: 0018-ALT-Add-missing-header-on-aarch64.patch
 Patch019: 0019-GENTOO-Clang-allows-detection-of-these-builtins.patch
 Patch020: 0020-FEDORA-vtable-symbol-undefined.patch
 Patch021: 0021-FEDORA-remove-noexcept.patch
-Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch023: 0023-GENTOO-Chromium-compiled-with-system-ffmpeg-4.3.patch
-Patch024: 0024-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch025: 0025-IWYU-int8_t-used-in-nearby-share-encrypted-metadata-.patch
+Patch022: 0022-GENTOO-Chromium-compiled-with-system-ffmpeg-4.3.patch
+Patch023: 0023-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch024: 0024-IWYU-int8_t-used-in-nearby-share-encrypted-metadata-.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -230,7 +229,6 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -301,7 +299,7 @@ gn_arg optimize_webui=false
 gn_arg use_system_freetype=false
 gn_arg use_system_harfbuzz=false
 gn_arg link_pulseaudio=true
-gn_arg ffmpeg_branding=\"ChromeOS\"
+gn_arg ffmpeg_branding=\"Chrome\"
 gn_arg proprietary_codecs=true
 gn_arg enable_hangout_services_extension=true
 gn_arg fieldtrial_testing_like_official_build=true
@@ -495,6 +493,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Sep 07 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt2
+- Drop third party VAAPI patch.
+
 * Mon Aug 31 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt1
 - New version (85.0.4183.83).
 - Security fixes:
