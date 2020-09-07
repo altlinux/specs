@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define mname setuptools
 
-%def_with check
+%def_without check
 
 Name: python-module-%mname
 Epoch: 1
 Version: 42.0.0
-Release: alt2
+Release: alt3
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -26,6 +26,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python %py_dependencies distutils
+BuildRequires: python2.7(json)
 
 %if_with check
 BuildRequires: /dev/shm
@@ -147,6 +148,9 @@ tox --sitepackages -v
 %doc docs/*.txt
 
 %changelog
+* Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 1:42.0.0-alt3
+- Disabled testing.
+
 * Mon Feb 03 2020 Stanislav Levin <slev@altlinux.org> 1:42.0.0-alt2
 - Moved Python3 subpackage out to its own package.
 
