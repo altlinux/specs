@@ -1,27 +1,31 @@
 Name:      pptp-client
-Version:   1.8.0
+Version:   1.10.0
 Release:   alt1
 
 Summary:   Point-to-Point Tunneling Protocol (PPTP) Client
-License:   GPL
-Url:       http://pptpclient.sourceforge.net
 
+License:   GPLv2+
 Group:     Networking/Other
-
-Obsoletes: pptp-client <= 1.2.0 pptp-client-fe <= 1.2.0 pptp-client-fe-Tk <= 1.2.0
+Url:       http://pptpclient.sourceforge.net
 
 Packager:  Evgeny V. Shishkov <shev@altlinux.org>
 
-Source0:   pptp-%version.tar.gz
+# Source0-url: http://prdownloads.sf.net/pptpclient/pptp/pptp-%version/pptp-%version.tar.gz
+Source0:   %name-%version.tar
+
 Source1:   pptp.tmpfiles
+
 Patch0:    pptp-1.7.2-pptpsetup-mppe.patch
 Patch1:    pptp-1.8.0-makefile.patch
 
-PreReq: ppp etcnet
+Requires: ppp >= 2.4.2
+Requires: etcnet
 
 BuildRequires: perl-Pod-Parser
 
 Conflicts: pptp-adsl net-scripts
+
+Obsoletes: pptp-client-fe <= 1.2.0 pptp-client-fe-Tk <= 1.2.0
 
 %description
 Client for the proprietary Microsoft Point-to-Point Tunneling
@@ -35,10 +39,9 @@ by employers and some cable and ADSL service providers.
 и у провайдеров домашних сетей и ADSL сервисов.
 
 %prep
+%setup
 
-%setup -n pptp-%version
-
-%patch0 -p1
+#patch0 -p1
 %patch1 -p1
 
 %build
@@ -50,7 +53,7 @@ install -d -m 750 %buildroot%_var/run/pptp
 install -Dpm 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
 
 %files
-%doc AUTHORS COPYING DEVELOPERS INSTALL NEWS README TODO USING
+%doc AUTHORS COPYING DEVELOPERS NEWS README TODO USING
 %doc ChangeLog Documentation/DESIGN.PPTP PROTOCOL-SECURITY
 %attr(555,root,root) %_sbindir/pptp
 %attr(555,root,root) %_sbindir/pptpsetup
@@ -61,6 +64,10 @@ install -Dpm 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
 %attr(644,root,root)  /lib/tmpfiles.d/%name.conf
 
 %changelog
+* Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- build new version
+- cleanup spec
+
 * Sat Jan 04 2014 Evgeny V Shishkov <shev@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
