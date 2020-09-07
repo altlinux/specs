@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 5.7.0
+Version: 5.8.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -134,6 +134,7 @@ rm -rf %buildroot%_datadir/doc/%name
 %_includedir/xfs/xfs_da_format.h
 %_includedir/xfs/xfs_format.h
 %_includedir/xfs/xfs_log_format.h
+%_includedir/xfs/xfs_fs_compat.h
 %_includedir/xfs/xfs_types.h
 %_includedir/xfs/xqm.h
 %_man2dir/*
@@ -145,6 +146,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Mon Sep 07 2020 Anton Farygin <rider@altlinux.ru> 5.8.0-alt1
+- 5.8.0
+
 * Wed Aug 05 2020 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
 - 5.7.0
 - hid dependency on systemd-utils (closes: #38712)
