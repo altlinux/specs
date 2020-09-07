@@ -1,9 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
+%define _libexecdir %_prefix/libexec
+
 %def_enable x11
+%def_enable xkbregistry
 %def_enable check
 
 Name: libxkbcommon
-Version: 0.10.0
+Version: 1.0.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -14,16 +17,19 @@ Url: http://www.xkbcommon.org
 %if_disabled snapshot
 Source: %url/download/%name-%version.tar.xz
 %else
+Vcs: https://github.com/xkbcommon/libxkbcommon.git
 Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): meson
 BuildRequires: bison flex
-BuildRequires: xkeyboard-config-devel
+BuildRequires: xkeyboard-config-devel >= 2.29
 %{?_enable_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb) >= 1.10}
 BuildRequires: doxygen
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
+%{?_enable_xkbregistry:BuildRequires: libxml2-devel}
+%{?_enable_check:BuildRequires: python3-module-pytest %{?_enable_x11:xvfb-run}}
 
 %description
 %name is the X.Org library for compiling XKB maps into formats usable by
@@ -32,7 +38,7 @@ the X Server or other display servers.
 %package devel
 Summary: X.Org X11 XKB parsing development package
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 X.Org X11 XKB parsing development package
@@ -40,7 +46,7 @@ X.Org X11 XKB parsing development package
 %package x11
 Summary: X.Org X11 XKB keymap creation library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description x11
 %name-x11 is the X.Org library for creating keymaps by querying the X
@@ -55,13 +61,23 @@ Requires: %name-devel = %version-%release
 %description x11-devel
 X.Org X11 XKB keymap creation library development package
 
+%package tools
+Summary: Tools from %name package
+Group: Development/Tools
+Requires: %name = %EVR
+
+%description tools
+This package provides xkbcli -- tool to interact with XKB keymaps.
+
 %prep
 %setup
 
 %build
 %meson \
 	-Ddefault_library=shared \
-	%{?_disable_x11:-Ddisable-x11}
+	%{?_disable_x11:-Denable-x11=false} \
+	%{?_disable_xkbregistry:-Denable-xkbregistry=false}
+%nil
 %meson_build
 
 %install
@@ -69,11 +85,12 @@ X.Org X11 XKB keymap creation library development package
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%{?_enable_x11:xvfb-run} %meson_test
 
 %files
 %doc LICENSE NEWS README*
 %_libdir/libxkbcommon.so.*
+%{?_enable_xkbregistry:%_libdir/libxkbregistry.so.*}
 
 %files devel
 %_libdir/libxkbcommon.so
@@ -84,6 +101,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/xkbcommon/xkbcommon-keysyms.h
 %_includedir/xkbcommon/xkbcommon-names.h
 %_pkgconfigdir/xkbcommon.pc
+%{?_enable_xkbregistry:%_libdir/libxkbregistry.so
+%_includedir/xkbcommon/xkbregistry.h
+%_pkgconfigdir/xkbregistry.pc}
+
 %doc %_datadir/doc/%name/
 
 %if_enabled x11
@@ -96,7 +117,19 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/xkbcommon-x11.pc
 %endif
 
+%files tools
+%_bindir/xkbcli
+%dir %_libexecdir/xkbcommon
+%_libexecdir/xkbcommon/xkbcli-*
+%_man1dir/xkbcli*
+
+
 %changelog
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- updated to 1.0.0-5-g534e54f
+- new -tools subpackage
+- updated BR
+
 * Mon Jan 20 2020 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
