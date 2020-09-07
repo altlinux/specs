@@ -6,18 +6,22 @@
 
 # NEON support is by default disabled on ARMs
 # building with --with=neon will enable auto detection
+%ifarch %arm
+%def_without neon
+%else
 %def_with neon
+%endif
 
 %ifarch %arm aarch64
 %if ! %{with neon}
-%global have_neon -DHAVE_ARM_NEON_H=0
+%global have_neon -DNEON_SIMD_ENABLE:BOOL=OFF
 %endif
 %endif
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 3.15.0.0
-Release: alt3
+Release: alt4
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -197,6 +201,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt4
+- Rebuilt without neon on armh.
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.15.0.0-alt3
 - Rebuilt with boost-1.73.0.
 
