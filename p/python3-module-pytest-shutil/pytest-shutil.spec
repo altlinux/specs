@@ -3,9 +3,9 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -17,12 +17,6 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(contextlib2)
-BuildRequires: python2.7(execnet)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(path.py)
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(termcolor)
 BuildRequires: python3(contextlib2)
 BuildRequires: python3(execnet)
 BuildRequires: python3(mock)
@@ -31,23 +25,7 @@ BuildRequires: python3(termcolor)
 BuildRequires: python3(tox)
 %endif
 
-%py_requires contextlib2
-%py_requires path.py
-%py_requires termcolor
-
 %description
-This library is a goodie-bag of Unix shell and environment management tools for
-automated tests. A summary of the available functions is below, look at the
-source for the full listing.
-
-%package -n python3-module-%oname
-Summary: A goodie-bag of unix shell and environment tools for py.test
-Group: Development/Python3
-%py3_requires contextlib2
-%py3_requires path
-%py3_requires termcolor
-
-%description -n python3-module-%oname
 This library is a goodie-bag of Unix shell and environment management tools for
 automated tests. A summary of the available functions is below, look at the
 source for the full listing.
@@ -59,24 +37,14 @@ source for the full listing.
 sed -i -e 's:setuptools-git:setuptools:g' \
 	common_setup.py
 
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 ptrn="'path.py',"
 { grep -s -l "$ptrn" setup.py | xargs \
     sed -i -e "s/\(^[[:space:]]*\)$ptrn[[:space:]]*$/\1'path',/"; } || exit 1
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-
-%python_install
 
 %check
 cat > tox.ini <<EOF
@@ -87,20 +55,18 @@ EOF
 # HOME env variable is used for testing
 export TOX_TESTENV_PASSENV='HOME'
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -vvr
 
 %files
-%doc CHANGES.md README.md
-%python_sitelibdir/pytest_shutil/
-%python_sitelibdir/pytest_shutil-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%oname
 %doc CHANGES.md README.md
 %python3_sitelibdir/pytest_shutil/
 %python3_sitelibdir/pytest_shutil-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt3
+- Stopped build Python2 package.
+
 * Mon May 04 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
 - Fixed FTBFS.
 
