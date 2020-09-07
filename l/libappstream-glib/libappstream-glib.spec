@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -23,9 +23,9 @@ Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
 
-%define glib_ver 2.46
+%define glib_ver 2.58
 %define soup_ver 2.52
-%define json_glib_ver 1.1.1
+%define json_glib_ver 1.1.2
 
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
@@ -162,6 +162,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.18-alt1
+- 0.7.18
+
 * Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.17-alt1
 - 0.7.17
 
