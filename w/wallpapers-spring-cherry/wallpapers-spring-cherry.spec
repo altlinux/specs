@@ -3,7 +3,7 @@
 
 Name: wallpapers-%wname
 Version: 20090517
-Release: alt2
+Release: alt3
 
 Summary: Blooming spring cherry trees for screen backgrounds
 Summary(ru_RU.UTF-8): Цветущие весенние вишни для обоев на рабочий стол
@@ -15,7 +15,6 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 BuildArch: noarch
 Provides: %name = %version-%release
-Obsoletes: %name < %version-%release
 
 BuildPreReq: rpm-build-licenses >= 1.0.1-alt1
 
@@ -33,7 +32,6 @@ Summary(ru_RU.UTF-8): Цветущие весенние вишни для обо
 License: %ccbysa30
 Group: Graphics
 Provides: %name-standard-screen = %version-%release
-Obsoletes: %name-standard-screen < %version-%release
 
 %description standard-screen
 Photo images of blooming spring cherry trees for screen backgrounds.
@@ -49,7 +47,6 @@ Summary(ru_RU.UTF-8): Цветущие весенние вишни для обо
 License: %ccbysa30
 Group: Graphics
 Provides: %name-widescreen = %version-%release
-Obsoletes: %name-widescreen < %version-%release
 
 %description widescreen
 Photo images of blooming spring cherry trees for screen backgrounds.
@@ -76,5 +73,8 @@ install -m 0644 1920x1200/*.jpg %buildroot%photos_dir/%wname/1920x1200
 %photos_dir/%wname/1920x1200/*.jpg
 
 %changelog
+* Mon Sep 07 2020 Paul Wolneykien <manowar@altlinux.org> 20090517-alt3
+- Fix: Remove self-obsoletes.
+
 * Thu May 21 2009 Paul Wolneykien <manowar@altlinux.ru> 20090517-alt2
 - Initial build for ALT Linux.
