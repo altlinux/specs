@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
@@ -10,7 +10,7 @@ Group: Development/C++
 License: Apache-2.0 and MIT
 Url: http://daniel.haxx.se/blog/2015/09/30/libbrotli-is-brotli-in-lib-form/
 
-# Source-url: https://github.com/google/brotli/archive/v%version.tar.gz
+# Source-url: https://github.com/google/brotli/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -95,7 +95,7 @@ applications that want to make use of libcerror.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake_insource -DCMAKE_BUILD_TYPE="Release"
 %make_build
 
@@ -129,6 +129,9 @@ rm -f %buildroot%_libdir/*.a
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Wed Oct 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 
