@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-benchmark
 
-%def_with docs
 %def_with check
 
-Name: python-module-%oname
-Version: 3.2.2
-Release: alt5
+Name: python3-module-%oname
+Version: 3.2.3
+Release: alt1
 Summary: pytest fixture for benchmarking code
-License: BSD
-Group: Development/Python
+License: BSD-2-Clause
+Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/pytest-benchmark/
 
@@ -18,12 +17,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-objects.inv
-BuildRequires: python-module-sphinx_py3doc_enhanced_theme
-%endif
 
 %if_with check
 BuildRequires: git-core
@@ -37,46 +30,14 @@ BuildRequires: python3(pygal)
 BuildRequires: python3(pytest-xdist)
 %endif
 
-%py_requires cpuinfo
+%py3_requires cpuinfo
 
 %description
 A pytest fixture for benchmarking code.
 
-%package -n python3-module-%oname
-Summary: pytest fixture for benchmarking code
-Group: Development/Python3
-%py3_requires cpuinfo
-
-%description -n python3-module-%oname
-A pytest fixture for benchmarking code.
-
-%if_with docs
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-A pytest fixture for benchmarking code.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-A pytest fixture for benchmarking code.
-
-This package contains documentation for %oname.
-%endif
-
 %prep
 %setup
 %patch -p1
-
-grep -qsF ' seconds ======*' tests/test_benchmark.py || exit 1
-sed -i 's/\( seconds\)\( =====*\)/\2/g' tests/test_benchmark.py
 
 # unpin or remove unpackaged testing deps
 grep -qsF 'pytest-instafail' tox.ini || exit 1
@@ -92,43 +53,15 @@ sed -i \
 -e 's/==/>=/g' \
 tox.ini
 
-rm -rf ../python3
-cp -fR . ../python3
-
-%if_with docs
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-%endif
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i ${i}.py3
 done
-popd
-
-%python_install
-
-%if_with docs
-export PYTHONPATH="$(pwd)"/src
-pushd docs
-sphinx-build -b pickle -d _build/doctrees . _build/pickle
-sphinx-build -b html -d _build/doctrees . _build/html
-popd
-
-install -d %buildroot%python_sitelibdir/%oname
-cp -a docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
 
 %check
 sed -i -e '/^\[testenv\]$/a whitelist_externals =\
@@ -146,27 +79,15 @@ tox.py3 --sitepackages -rv
 
 %files
 %doc README.rst CHANGELOG.rst
-%_bindir/py.test-benchmark
-%_bindir/pytest-benchmark
-%python_sitelibdir/pytest_benchmark/
-%python_sitelibdir/pytest_benchmark-*.egg-info/
-
-%files -n python3-module-%oname
-%doc README.rst CHANGELOG.rst
 %_bindir/py.test-benchmark.py3
 %_bindir/pytest-benchmark.py3
 %python3_sitelibdir/pytest_benchmark/
 %python3_sitelibdir/pytest_benchmark-*.egg-info/
 
-%if_with docs
-%files pickles
-%python_sitelibdir/pytest-benchmark/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
-
 %changelog
+* Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 3.2.3-alt1
+- 3.2.2 -> 3.2.3.
+
 * Tue Dec 17 2019 Stanislav Levin <slev@altlinux.org> 3.2.2-alt5
 - Fixed testing against Pytest 5.3.2.
 
