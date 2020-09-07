@@ -3,7 +3,7 @@
 %global goipath github.com/linuxdeepin/go-dbus-factory
 
 Name: golang-github-linuxdeepin-dbus-factory
-Version: 1.8.0.9
+Version: 1.8.0.18
 Release: alt1
 Summary: Go DBus factory for Deepin Desktop Environment
 
@@ -17,8 +17,7 @@ Source: %url/archive/%version/go-dbus-factory-%version.tar.gz
 BuildRequires(pre): rpm-build-golang
 # BuildRequires: golang(pkg.deepin.io/lib/dbus1) golang(pkg.deepin.io/lib/dbusutil) golang(pkg.deepin.io/lib/dbusutil/proxy)
 # BuildRequires: golang(golang.org/x/net/context) golang(pkg.deepin.io/gir/gio-2.0) golang(pkg.deepin.io/gir/glib-2.0) glib2-devel libgio-devel libgtk+3-devel
-# BuildRequires: deepin-gir-generator golang-golang-x-net-devel golang-deepin-go-lib-devel glib2-devel libgio-devel libgtk+3-devel
-BuildRequires: golang-deepin-go-lib-devel golang-golang-x-net-devel
+BuildRequires: deepin-gir-generator golang-golang-x-net-devel golang-deepin-go-lib-devel glib2-devel libgio-devel libgtk+3-devel golang-github-go-dbus-devel
 
 %description
 Go DBus factory for Deepin Desktop Environment.
@@ -68,6 +67,9 @@ export GOPATH="%go_path"
 %exclude %go_path/src/%goipath/_tool
 
 %changelog
+* Mon Sep 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.18-alt1
+- New version (1.8.0.18) with rpmgs script.
+
 * Mon Aug 24 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.9-alt1
 - New version (1.8.0.9) with rpmgs script.
 
