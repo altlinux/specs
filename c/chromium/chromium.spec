@@ -28,7 +28,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        84.0.4147.105
+Version:        85.0.4183.83
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -63,30 +63,22 @@ Patch006: 0006-DEBIAN-disable-third-party-cookies-by-default.patch
 Patch007: 0007-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch008: 0008-ALT-fix-shrank-by-one-character.patch
 Patch009: 0009-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
-Patch010: 0010-FEDORA-path-max.patch
-Patch011: 0011-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
-Patch012: 0012-ALT-Fix-last-commit-position-issue.patch
-Patch013: 0013-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch014: 0014-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch015: 0015-FEDORA-Fix-gcc-round.patch
-Patch016: 0016-FEDORA-Fix-memcpy.patch
-Patch017: 0017-ALT-openh264-always-pic-on-x86.patch
-Patch018: 0018-ALT-allow-to-override-clang-through-env-variables.patch
-Patch019: 0019-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch020: 0020-ALT-Add-missing-header-on-aarch64.patch
-Patch021: 0021-GENTOO-Clang-allows-detection-of-these-builtins.patch
-Patch022: 0022-FEDORA-vtable-symbol-undefined.patch
-Patch023: 0023-FEDORA-remove-noexcept.patch
-Patch024: 0024-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch025: 0025-IWYU-add-a-bunch-of-missing-cstring-includes.patch
-Patch026: 0026-ListContainerHelper-Include-cstring-for-memcpy.patch
-Patch027: 0027-Make-blink-AXObject-AncestorsIterator-STL-compatible.patch
-Patch028: 0028-libstdc-std-vector-must-have-non-const-value_type.patch
-Patch029: 0029-GCC-fix-DCHECK_EQ-in-NGInlineNode-SegmentScriptRuns.patch
-Patch030: 0030-GENTOO-Chromium-compiled-with-system-ffmpeg-4.3.patch
-Patch031: 0031-Avoid-calling-DeleteForCurrentDocument-from-destruct.patch
-Patch032: 0032-Remove-NotifyError-calls-and-just-send-a-normal-mess.patch
-Patch033: 0033-Force-mp3-files-to-have-a-start-time-of-zero.patch
+Patch010: 0010-ALT-Fix-last-commit-position-issue.patch
+Patch011: 0011-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch012: 0012-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch013: 0013-FEDORA-Fix-gcc-round.patch
+Patch014: 0014-FEDORA-Fix-memcpy.patch
+Patch015: 0015-ALT-openh264-always-pic-on-x86.patch
+Patch016: 0016-ALT-allow-to-override-clang-through-env-variables.patch
+Patch017: 0017-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch018: 0018-ALT-Add-missing-header-on-aarch64.patch
+Patch019: 0019-GENTOO-Clang-allows-detection-of-these-builtins.patch
+Patch020: 0020-FEDORA-vtable-symbol-undefined.patch
+Patch021: 0021-FEDORA-remove-noexcept.patch
+Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch023: 0023-GENTOO-Chromium-compiled-with-system-ffmpeg-4.3.patch
+Patch024: 0024-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch025: 0025-IWYU-int8_t-used-in-nearby-share-encrypted-metadata-.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -239,14 +231,6 @@ tar -xf %SOURCE1
 %patch023 -p1
 %patch024 -p1
 %patch025 -p1
-%patch026 -p1
-%patch027 -p1
-%patch028 -p1
-%patch029 -p1
-%patch030 -p1
-%patch031 -p1
-%patch032 -p1
-%patch033 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -327,6 +311,7 @@ gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
 gn_arg closure_compile=false
+gn_arg enable_js_type_check=false
 
 # Remove debug
 gn_arg is_debug=false
@@ -510,6 +495,24 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Aug 31 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt1
+- New version (85.0.4183.83).
+- Security fixes:
+  - CVE-2020-6558: Insufficient policy enforcement in iOS.
+  - CVE-2020-6559: Use after free in presentation API.
+  - CVE-2020-6560: Insufficient policy enforcement in autofill.
+  - CVE-2020-6561: Inappropriate implementation in Content Security Policy.
+  - CVE-2020-6562: Insufficient policy enforcement in Blink.
+  - CVE-2020-6563: Insufficient policy enforcement in intent handling.
+  - CVE-2020-6564: Incorrect security UI in permissions.
+  - CVE-2020-6565: Incorrect security UI in Omnibox.
+  - CVE-2020-6566: Insufficient policy enforcement in media.
+  - CVE-2020-6567: Insufficient validation of untrusted input in command line handling.
+  - CVE-2020-6568: Insufficient policy enforcement in intent handling.
+  - CVE-2020-6569: Integer overflow in WebUSB.
+  - CVE-2020-6570: Side-channel information leakage in WebRTC.
+  - CVE-2020-6571: Incorrect security UI in Omnibox.
+
 * Tue Jul 28 2020 Alexey Gladkov <legion@altlinux.ru> 84.0.4147.105-alt1
 - New version (84.0.4147.105).
 - Security fixes:
