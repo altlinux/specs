@@ -1,7 +1,7 @@
 %define  modulename bitarray
 
 Name:    python3-module-%modulename
-Version: 1.0.1
+Version: 1.5.3
 Release: alt1
 
 Summary: efficient arrays of booleans for Python
@@ -38,9 +38,12 @@ this module useful.
 
 %files
 %python3_sitelibdir/*
-%doc AUTHORS README.rst
+%doc AUTHORS LICENSE README.md
 
 %changelog
+* Tue Sep 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Fri Aug 09 2019 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1-alt1
 - 1.0.1-alt1
 
