@@ -2,7 +2,7 @@
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Name: %realname-unmet-holder
-Version: 80.0
+Version: 80.0.1
 Release: alt2
 Group: Networking/WWW
 License: GPL-3.0
@@ -54,6 +54,9 @@ Most likely you don't need to use this package.
 %files -n firefox-config-privacy
 
 %changelog
+* Tue Sep 08 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.1-alt2
+- New release (80.0.1).
+
 * Sat Aug 29 2020 Alexey Gladkov <legion@altlinux.ru> 80.0-alt2
 - New release (80.0).
 

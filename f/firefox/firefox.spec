@@ -5,16 +5,16 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.27
-%define nss_version   3.55.0
-%define rust_version  1.45.0
-%define cargo_version 1.45.0
+%define nspr_version  4.28
+%define nss_version   3.56.0
+%define rust_version  1.46.0
+%define cargo_version 1.46.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        80.0
+Version:        80.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -480,6 +480,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Sep 08 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.1-alt1
+- New release (80.0.1).
+
 * Thu Aug 27 2020 Alexey Gladkov <legion@altlinux.ru> 80.0-alt1
 - New release (80.0).
 - Security fixes:
