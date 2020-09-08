@@ -1,6 +1,6 @@
 Name: ocaml-lablgl
 Version: 1.06
-Release: alt1
+Release: alt2
 Summary: OpenGL library for OCaml
 License: BSD-style
 Group: Development/ML
@@ -14,7 +14,7 @@ Obsoletes: %name-runtime < %version-%release
 Provides: lablGL = %version-%release
 Obsoletes: lablGL
 
-BuildRequires: ocaml-labltk libXext-devel libXmu-devel libGLUT-devel tcl-togl-devel ocaml-camlp5
+BuildRequires: ocaml-labltk-devel libXext-devel libXmu-devel libGLUT-devel tcl-togl-devel ocaml-camlp5
 BuildRequires: libXxf86vm-devel
 BuildRequires(pre): rpm-build-tcl
 
@@ -110,6 +110,9 @@ install -p -m644 META %buildroot%_libdir/ocaml/lablGL/META
 %exclude %_libdir/ocaml/lablGL/togl.ml
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.06-alt2
+- ocaml-labltk have been renamed to ocaml-labltk-devel
+
 * Fri Aug 16 2019 Anton Farygin <rider@altlinux.ru> 1.06-alt1
 - 1.06
 

@@ -2,7 +2,7 @@
 
 Name: ocaml-%pkgname
 Version: 8.06.8
-Release: alt1
+Release: alt2
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -11,11 +11,9 @@ License: LGPLv2+ with exceptions
 
 Url: https://forge.ocamlcore.org/projects/labltk/
 Source: %name-%version.tar
-
 Conflicts: labltk
-
-Requires: ocaml
-Requires: %name-runtime = %version-%release
+Obsoletes: %name-runtime < %EVR
+Provides: %name-runtime = %EVR
 BuildRequires: ocaml
 BuildRequires: tcl-devel, tk-devel
 
@@ -24,25 +22,26 @@ Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
 
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to develop OCaml programs using LablTk.
+contains files needed to run bytecode OCaml programs using LablTk.
 
-%package runtime
+%package devel
 Summary: Tk toolkit bindings for OCaml
 Group: Development/ML
-Requires: ocaml-runtime
+Requires: %name = %EVR 
 Conflicts: labltk-runtime
 
-%description runtime
+%description devel
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
 
 LablTk gives OCaml program access to Tcl/Tk GUI widgets. This package
-contains files needed to run bytecode OCaml programs using LablTk.
+contains files needed to develop OCaml programs using LablTk.
+
 
 %package -n ocaml-ocamlbrowser
 Summary: OCaml interface browser
 Group: Development/ML
-Requires: %name-runtime
+Requires: %name = %EVR
 Conflicts: ocamlbrowser
 
 %description -n ocaml-ocamlbrowser
@@ -71,15 +70,16 @@ make install \
     INSTALLDIR=%buildroot%_libdir/ocaml/labltk \
     STUBLIBDIR=%buildroot%_libdir/ocaml/stublibs
 
-%files
+%files devel
 %doc Changes README.mlTk
 %_bindir/labltk
 %_libdir/ocaml/labltk
 %exclude %_libdir/ocaml/labltk/*.cmi
 %exclude %_libdir/ocaml/labltk/*.cma
 %exclude %_libdir/ocaml/labltk/*.cmo
+%exclude %_libdir/ocaml/labltk/*.cmx
 
-%files runtime
+%files 
 %_libdir/ocaml/stublibs/dlllabltk.so
 %_libdir/ocaml/labltk/*.cmi
 %_libdir/ocaml/labltk/*.cma
@@ -89,6 +89,10 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 8.06.8-alt2
+- added devel package
+- runtime part have been moved to main package
+
 * Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 8.06.8-alt1
 - 8.06.8
 

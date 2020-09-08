@@ -1,19 +1,18 @@
 %define _name findlib
 Name: ocaml-%_name
 Version: 1.8.1
-Release: alt2
-
+Release: alt3
 Summary: A module packaging tool for OCaml
 License: Distributable
 Group: Development/ML
-Url: http://www.ocaml-programming.de/packages/documentation/findlib/
+Url: http://projects.camlcity.org/projects/findlib.html
 
 Source: %_name-%version.tar
 Patch1: findlib-1.6.2-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
 Patch3: findlib-1.6.2-alt-install-doc.patch
 
-BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk >= 8.06.2 libtinfo-devel ocaml-ocamldoc
+BuildRequires: rpm-build-ocaml >= 1.2 ocaml-labltk-devel >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel
 
 %package -n ocaml-ocamlfind-mini
@@ -142,6 +141,9 @@ EOF
 
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.8.1-alt3
+- ocaml-labltk have been renamed to ocaml-labltk-devel
+
 * Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 1.8.1-alt2
 - removed BR: starting with ocaml 4.10 ocaml-graphics is built from
   a separate package
