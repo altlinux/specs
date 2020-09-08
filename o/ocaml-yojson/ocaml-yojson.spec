@@ -3,7 +3,7 @@
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -56,13 +56,13 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/*.a
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
 
 %files devel
 %doc README.md Changes examples
 %_libdir/ocaml/*/dune-package
 %_libdir/ocaml/*/opam
+%_libdir/ocaml/*/*.cmxa
 %_libdir/ocaml/*/*.cmt
 %_libdir/ocaml/*/*.cmti
 %_libdir/ocaml/*/*.cmx
@@ -70,6 +70,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/*/*.ml
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt3
+- cmxa have been moved to devel package
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt2
 - built with dune-2.x
 
