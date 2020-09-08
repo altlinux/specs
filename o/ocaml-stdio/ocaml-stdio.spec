@@ -2,7 +2,7 @@
 %define oname stdio
 Name: ocaml-%oname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: Standard IO library for OCaml
 License: Apache-2.0
 Group: Development/ML
@@ -12,7 +12,7 @@ BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: dune >= 1.8
 BuildRequires: opam
-BuildRequires: ocaml-base  >= 0.13
+BuildRequires: ocaml-base  >= 0.14
 
 %description
 Stdio implements simple input/output functionalities for OCaml.
@@ -48,20 +48,23 @@ dune runtest
 %_libdir/ocaml/%oname/META
 %_libdir/ocaml/%oname/*.cmi
 %_libdir/ocaml/%oname/*.cma
-%_libdir/ocaml/%oname/*.a
-%_libdir/ocaml/%oname/*.cmxa
 %_libdir/ocaml/%oname/*.cmxs
 
 %files devel
 %_libdir/ocaml/%oname/opam
 %_libdir/ocaml/%oname/*.cmt
 %_libdir/ocaml/%oname/*.cmti
+%_libdir/ocaml/%oname/*.a
+%_libdir/ocaml/%oname/*.cmxa
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.ml
 %_libdir/ocaml/%oname/*.mli
 %_libdir/ocaml/%oname/dune-package
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- devel parts moved to the ocaml-stdio-devel package
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
