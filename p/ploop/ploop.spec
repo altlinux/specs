@@ -2,7 +2,7 @@
 %define _scriptdir %_libexecdir/%name
 
 Name: ploop
-Version: 7.0.211
+Version: 7.0.214
 Release: alt1
 Group: System/Base
 License: GPLv2
@@ -36,7 +36,7 @@ Parallels loopback (ploop) block device API library
 Summary: Static ploop library
 Group: Development/C
 License: LGPLv2.1
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 Static version of ploop library
@@ -45,7 +45,7 @@ Static version of ploop library
 Summary: Headers for development with ploop library
 Group: Development/C
 License: GPLv2 or LGPLv2.1
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Headers of ploop library
@@ -53,14 +53,14 @@ Headers of ploop library
 %package -n python3-module-%name
 Summary: Python bindings for %name
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Provides: python3(libploopapi)
 
 %description -n python3-module-%name
 python3-module-%name contains Python bindings for %name.
 
 %prep
-%setup
+%setup -q
 %patch1 -p1
 
 %build
@@ -107,6 +107,10 @@ make \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.214-alt1
+- 7.0.214
+- minor spec cleanup
+
 * Thu Aug 27 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.211-alt1
 - 7.0.211
 - fix strncpy truncation error
