@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -24,9 +24,9 @@ BuildRequires: klibc-devel
 
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
-Requires: kernel >= 5.7
+Requires(pre): kernel >= 5.7
 
-Requires: %name-run = %EVR
+Requires(pre): %name-run = %EVR
 %endif
 
 %ifarch %supported_arches
@@ -92,7 +92,7 @@ on supported architectures (this one (%_arch) is unsupported).
 Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
-PreReq: %name = %EVR
+Requires(pre): %name = %EVR
 
 %description checkinstall
 Run checkinstall tests for vm-run.
@@ -164,10 +164,13 @@ chmod go-rwx /dev/kvm
 
 %pre checkinstall
 set -ex
-vm-run --verbose uname
-vm-run --verbose --overlay=ext4 uname
+vm-run --verbose uname -a
+vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Tue Sep 08 2020 Vitaly Chikunov <vt@altlinux.org> 1.16-alt1
+- Fix checkinstall.
+
 * Sat Sep 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.15-alt1
 - Split into two packages, with kernel dependence and without it.
 - Remove dependence on make-initrd by generating own initramfs.
