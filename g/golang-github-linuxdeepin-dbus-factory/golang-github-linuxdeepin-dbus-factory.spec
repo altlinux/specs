@@ -4,7 +4,7 @@
 
 Name: golang-github-linuxdeepin-dbus-factory
 Version: 1.8.0.18
-Release: alt1
+Release: alt2
 Summary: Go DBus factory for Deepin Desktop Environment
 
 License: GPL-3.0-only
@@ -36,21 +36,10 @@ Go DBus factory for Deepin Desktop Environment.
 rm -rf debian
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%goipath"
-export GOPATH="%go_path"
-
-%golang_prepare
-
-cd .build/src/%goipath
-for cmd in _tool/* ; do
-%golang_build $cmd ||:
-done
+%make_build
 
 %install
-export BUILDDIR="$PWD/.build"
-export GOPATH="%go_path"
-%golang_install
+%makeinstall_std GOPATH="%go_path"
 
 %if_with check
 %check
@@ -58,15 +47,18 @@ export GOPATH="%go_path"
 %gotest
 %endif
 
-%files
-%doc CHANGELOG.md README.md LICENSE
-%_bindir/*
+# %%files
+# %%_bindir/*
 
 %files devel
+%doc CHANGELOG.md README.md LICENSE
 %go_path/src/%goipath
-%exclude %go_path/src/%goipath/_tool
+#%%exclude %%go_path/src/%%goipath/_tool
 
 %changelog
+* Tue Sep 08 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.18-alt2
+- Built with make.
+
 * Mon Sep 07 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0.18-alt1
 - New version (1.8.0.18) with rpmgs script.
 
