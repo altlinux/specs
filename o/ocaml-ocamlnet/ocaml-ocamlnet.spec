@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml-ocamlnet
-Version: 4.1.7
+Version: 4.1.8
 Release: alt1
 Summary: Network protocols for OCaml
 License: BSD
@@ -16,7 +16,7 @@ BuildRequires: ocaml >= 4.04
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-lablgtk-devel
-BuildRequires: ocaml-labltk
+BuildRequires: ocaml-labltk-devel
 BuildRequires: ocaml-pcre-devel
 BuildRequires: ocaml-zip-devel
 BuildRequires: libgnutls-devel libnettle-devel
@@ -191,6 +191,9 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 4.1.8-alt1
+- 4.1.8
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 4.1.7-alt1
 - 4.1.7
 
