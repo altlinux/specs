@@ -21,7 +21,7 @@
 
 Name:		lib%{oname}
 Version:	0.1.12
-Release:	alt1_15.1
+Release:	alt1_18
 
 Summary:	C Prototyping Tools
 Group:		Development/C
@@ -89,11 +89,9 @@ developing applications that use %{name}.
 %patch0 -p1
 %patch1 -p1
 
+
 # for autoreconf
 mkdir -p m4
-
-# fix build on aarch64
-cp -af /usr/share/gnu-config/config.{guess,sub} .
 
 %build
 autoreconf -vfi
@@ -146,6 +144,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.12-alt1_18
+- update by mgaimport
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.1.12-alt1_15.1
 - NMU: Rebuild with new openssl 1.1.0.
 
