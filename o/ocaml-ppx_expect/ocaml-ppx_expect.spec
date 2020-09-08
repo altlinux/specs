@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-%ocamlmod
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: a cram like framework for OCaml
 Group: Development/ML
 License: MIT
@@ -62,15 +62,28 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%{ocamlmod}*
 %_libdir/ocaml/stublibs/*test_collector*.so
 %exclude %_libdir/ocaml/%ocamlmod/*.a
+%exclude %_libdir/ocaml/%ocamlmod/*.cmx
 %exclude %_libdir/ocaml/%ocamlmod/*.cmxa
 %exclude %_libdir/ocaml/%ocamlmod/*.mli
+%exclude %_libdir/ocaml/%ocamlmod/*/*.a
+%exclude %_libdir/ocaml/%ocamlmod/*/*.cmx
+%exclude %_libdir/ocaml/%ocamlmod/*/*.cmxa
+%exclude %_libdir/ocaml/%ocamlmod/*/*.mli
 
 %files devel
 %doc README.org CHANGES.md
 %_libdir/ocaml/%ocamlmod/*.a
 %_libdir/ocaml/%ocamlmod/*.cmxa
+%_libdir/ocaml/%ocamlmod/*.cmx
 %_libdir/ocaml/%ocamlmod/*.mli
+%_libdir/ocaml/%ocamlmod/*/*.a
+%_libdir/ocaml/%ocamlmod/*/*.cmx
+%_libdir/ocaml/%ocamlmod/*/*.cmxa
+%_libdir/ocaml/%ocamlmod/*/*.mli
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- devel parts have been moved from the main package
+
 * Fri Sep 04 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - first build for ALT
