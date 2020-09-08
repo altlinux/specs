@@ -2,10 +2,11 @@
 %define pkg_version %(echo %version | sed 's/\\./,/g')
 
 %def_with python3
+%def_with pyqt5
 
 Name: python-module-%oname
 Version: 4.19.19
-Release: alt3
+Release: alt4
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -129,12 +130,14 @@ python2 ../configure.py --debug -d %python_sitelibdir \
 %make_build
 popd
 
+%if_with pyqt5
 mkdir python-PyQt5
 pushd python-PyQt5
 python2 ../configure.py --debug -d %python_sitelibdir \
 	--sip-module=PyQt5.sip
 %make_build
 popd
+%endif
 
 # docs build
 #python build.py doc
@@ -181,7 +184,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 %makeinstall_std -C python
 %makeinstall_std -C python-PyQt4
+%if_with pyqt5
 %makeinstall_std -C python-PyQt5
+%endif
 
 %files
 %_bindir/sip
@@ -190,14 +195,18 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %exclude %python_sitelibdir/sipconfig.*
 %exclude %python_sitelibdir/sipdistutils.*
 %exclude %python_sitelibdir/PyQt4*
+%if_with pyqt5
 %exclude %python_sitelibdir/PyQt5*
+%endif
 %doc README NEWS LICENSE*
 
 %files -n python-module-PyQt4-%oname
 %python_sitelibdir/PyQt4*
 
+%if_with pyqt5
 %files -n python-module-PyQt5-%oname
 %python_sitelibdir/PyQt5*
+%endif
 
 %files devel
 %python_includedir/*
@@ -233,6 +242,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Sun Sep 06 2020 Vitaly Lipatov <lav@altlinux.ru> 4.19.19-alt4
+- add pyqt5 disable possibility
+
 * Sat Feb 08 2020 Anton Midyukov <antohami@altlinux.org> 4.19.19-alt3
 - fix PATH to sip3 (it was broken in 4.19.13-alt1)
 
