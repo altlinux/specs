@@ -1,17 +1,17 @@
 %define _name gstreamer
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_disable debug
 %def_disable libunwind
 %def_disable libdw
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -26,17 +26,18 @@ Provides: %_name = %version-%release
 Requires(pre): libcap-utils
 Requires: lib%name = %version-%release
 
-%define glib_ver 2.40.0
+%define glib_ver 2.44.0
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc libcheck-devel libxml2-devel
+BuildRequires: flex gcc-c++ ghostscript-utils libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libgsl-devel libgmp-devel
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: bash-completion
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc}
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -167,19 +168,30 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_girdir/GstController-%api_ver.gir
 %_girdir/GstNet-%api_ver.gir
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files utils
-%_bindir/*
+%_bindir/gst-inspect-%api_ver
+%_bindir/gst-launch-%api_ver
+%_bindir/gst-stats-%api_ver
+%_bindir/gst-tester-%api_ver
+%_bindir/gst-typefind-%api_ver
 %_man1dir/*
 # bash-completions
 %_libexecdir/%_name-%api_ver/gst-completion-helper
 %_datadir/bash-completion/completions/gst-inspect-%api_ver
 %_datadir/bash-completion/completions/gst-launch-%api_ver
 %_datadir/bash-completion/helpers/gst
+%_libexecdir/%_name-%api_ver/gst-hotdoc-plugins-scanner
+%_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

@@ -1,14 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
 %def_enable wayland
-%def_enable gtk_doc
+%def_disable doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -23,18 +23,20 @@ Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 Source: %name/%name-%version.tar
 %endif
 
-%define glib_ver 2.28
+%define glib_ver 2.44
 %define gst_ver %version
 %define va_ver 1.1
 
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): meson
+BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildRequires: libva-devel >= %va_ver
 BuildRequires: libdrm-devel libudev-devel
 BuildRequires: libGL-devel libXrandr-devel libXrender-devel
-BuildRequires: gtk-doc
-%{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel libwayland-server-devel}
+BuildRequires: libEGL-devel
+%{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel libwayland-server-devel wayland-protocols}
+%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 
 %description
 A collection of plugins and helper libraries to use VA-API video
@@ -58,29 +60,28 @@ GStreamer applications.
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable wayland}
-
-%make_build
+%meson \
+	%{?_disable_doc:-Ddoc=disabled} \
+	%{?_enable_wayland:-Dwith_wayland=yes}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_libdir/gstreamer-%gst_api_ver/*.so
 %doc AUTHORS NEWS README
 
-%exclude %_libdir/gstreamer-%gst_api_ver/*.la
-
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 %endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

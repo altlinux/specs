@@ -1,54 +1,59 @@
+%def_disable snapshot
+
 %define _name gstvalidate
-%define ver_major 1.16
+%define ver_major 1.18
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
-%def_enable python3
+%def_disable gtk_doc
 
-Name: gst-validate
-Version: %ver_major.2
+Name: gst-devtools
+Version: %ver_major.0
 Release: alt1
 
-Summary: GStreamer Validate Tools and Library
+Summary: GStreamer development and validation tools
 Group: System/Libraries
 License: GPLv2+ and LGPLv2+
 Url: http://cgit.freedesktop.org/gstreamer/gst-devtools/
 
+%if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
+%else
+Vcs: https://gitlab.freedesktop.org/gstreamer/gst-devtools.git
+Source: %name-%version.tar
+%endif
 
 %define gst_ver %version
+
+Obsoletes: gst-validate < 1.17.1
+Provides: gst-validate = %EVR
 
 Requires: lib%name = %version-%release
 Requires: gst-plugins-base%gst_api_ver
 
-%if_enabled python3
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_path %_libdir/%name-launcher/python
-%endif
+%add_python3_path %_libdir/gst-validate-launcher/python
 
-BuildRequires(pre): rpm-build-gir
+
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
 BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
-BuildRequires: libjson-glib-devel
-BuildRequires: gtk-doc
-%if_enabled python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
+BuildRequires: libjson-glib-devel python3-devel
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 
 %description
-The goal of GstValidate is to be able to detect when elements are not
-behaving as expected and report it to the user so he knows how things are
-supposed to work inside a GstPipeline. In the end, fixing issues found by
-the tool will ensure that all elements behave all together in the
-expected way.
+GStreamer development and validation tools including GstValidate, a
+testing framework aiming at providing GStreamer developers tools that
+check the GstElements they write behave the way they are supposed to.
 
 %package -n lib%name
 Summary: GStreamer Validate library
 License: LGPLv2+
 Group: System/Libraries
+Obsoletes: libgst-validate < 1.17.1
+Provides: libgst-validate = %EVR
 
 %description -n lib%name
 GStreamer Validate library.
@@ -57,7 +62,9 @@ GStreamer Validate library.
 Summary: Development files for %name
 License: LGPLv2+
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+Obsoletes: libgst-validate-devel < 1.17.1
+Provides: libgst-validate-devel = %EVR
 
 %description -n lib%name-devel
 This package provides libraries and header files for developing
@@ -68,6 +75,8 @@ Summary: Gst Validate development documentation
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: lib%name-devel < %version
+Obsoletes: libgst-validate-devel-doc < 1.17.1
+Provides: libgst-validate-devel-doc = %EVR
 
 %description -n lib%name-devel-doc
 This package contains documentation necessary to develop applications
@@ -76,7 +85,9 @@ that use Gst Validate library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gst Validate
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+Obsoletes: libgst-validate-gir < 1.17.1
+Provides: libgst-validate-gir = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Gst Validate library.
@@ -85,59 +96,47 @@ GObject introspection data for the Gst Validate library.
 Summary: GObject introspection devel data for the Gst Validate
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
+Obsoletes: libgst-validate-gir-devel < 1.17.1
+Provides: libgst-validate-gir-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Gst Validate library.
-
 
 %prep
 %setup
 
 %build
-%autoreconf
-%configure --enable-gtk-doc \
-	--disable-sphinx-doc \
-	%{?_enable_python3:PYTHON=%__python3}
-
-%make_build
+%meson %{?_disable_gtk_doc:-Dgtk_doc=disabled}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files
-%_bindir/%name-launcher
+%_bindir/gst-validate-launcher
 %_bindir/gst-validate-%api_ver
 %_bindir/gst-validate-media-check-%api_ver
 %_bindir/gst-validate-transcoding-%api_ver
-%_bindir/%name-images-check-%api_ver
-%_libdir/%name-launcher/
+%_bindir/gst-validate-images-check-%api_ver
+%_libdir/gst-validate-launcher/
 %_libdir/gstreamer-%gst_api_ver/lib%{_name}tracer.so
 %_datadir/gstreamer-%gst_api_ver/validate/
 
-%exclude %_libdir/gstreamer-%gst_api_ver/*.la
-
 %files -n lib%name -f %name.lang
 %_libdir/lib%_name-%api_ver.so.*
-#%_libdir/lib%{_name}_preload-%api_ver.so.*
 %_libdir/lib%_name-default-overrides-%api_ver.so.*
-%_libdir/lib%{_name}video-%api_ver.so.*
 %dir %_libdir/gstreamer-%gst_api_ver/validate/
 %_libdir/gstreamer-%gst_api_ver/validate/*.so
-%exclude %_libdir/gstreamer-%gst_api_ver/validate/*.la
-%doc ChangeLog README
+%doc ChangeLog NEWS RELEASE
 
 %files -n lib%name-devel
 %_includedir/gstreamer-%gst_api_ver/gst/validate/
-%_includedir/gstreamer-%gst_api_ver/lib/validate/
 %_libdir/lib%_name-%api_ver.so
-#%_libdir/lib%{_name}_preload-%api_ver.so
 %_libdir/lib%_name-default-overrides-%api_ver.so
-%_libdir/lib%{_name}video-%api_ver.so
-%_pkgconfigdir/%name-%api_ver.pc
+%_pkgconfigdir/gst-validate-%api_ver.pc
 
 %files -n lib%name-gir
 %_typelibdir/GstValidate-%api_ver.typelib
@@ -145,11 +144,16 @@ GObject introspection devel data for the Gst Validate library.
 %files -n lib%name-gir-devel
 %_girdir/GstValidate-%api_ver.gir
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
+%endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0, renamed to gst-devtools, ported to Meson build system
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

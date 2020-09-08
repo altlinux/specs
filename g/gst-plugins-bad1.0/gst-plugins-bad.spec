@@ -27,7 +27,7 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.16
+%define ver_major 1.18
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -35,8 +35,8 @@
 %def_disable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -49,24 +49,22 @@ Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.
 Source: %_name-bad-%version.tar
 %endif
 
-Patch1: %_name-bad-alt-opencv4-compat.patch
-# dc57fb7095b5041e4f3a4cae2bafd56369e10212
-Patch2: %_name-bad-1.17.1-up-vulkan-Drop-use-of-VK_RESULT_BEGIN_RANGE.patch
+Provides: %_name-bad = %EVR
 
-Provides: %_name-bad = %version-%release
+Obsoletes: gst-transcoder < 1.17
+Provides: gst-transcoder = %EVR
 
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gst-plugins%api_ver-devel >= %version gst-plugins%api_ver-gir-devel
-BuildRequires: bzlib-devel gcc-c++ gtk-doc libSDL-devel libX11-devel
+BuildRequires: bzlib-devel gcc-c++ libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
 BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmms-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
 BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel libssl-devel libmodplug-devel
 BuildRequires: libcelt-devel libxvid-devel
-BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
 %{?_enable_timidity:BuildRequires: libtimidity-devel timidity-instruments}
 %{?_enable_libkate:BuildRequires: libkate-devel libtiger-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel}
@@ -82,6 +80,7 @@ BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
+#BuildRequires: pkgconfig(wpe-webkit-1.0) pkgconfig(wpebackend-fdo-1.0)
 BuildRequires: liborc-test-devel
 %{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
@@ -93,6 +92,8 @@ BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel
 %{?_enable_liblilv:BuildRequires: liblilv-devel}
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_check: BuildRequires: /proc %_bindir/gst-tester-%api_ver}
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -106,8 +107,10 @@ on the other factors.
 %package devel
 Summary: Development files for GStreamer Bad Plug-ins
 Group: Development/C
-Provides: %_name-bad-devel = %version-%release
-Requires: %name = %version-%release
+Provides: %_name-bad-devel = %EVR
+Requires: %name = %EVR
+Obsoletes: gst-transcoder-devel < 1.17
+Provides: gst-transcoder-devel = %EVR
 
 %description devel
 This package contains the libraries, headers and other files necessary
@@ -117,15 +120,15 @@ to develop GStreamer Bad Plug-ins.
 Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
-Provides: %_name-bad-doc = %version-%release
+Provides: %_name-bad-doc = %EVR
+Obsoletes: gst-transcoder-devel-doc < 1.17
+Provides: gst-transcoder-devel-doc = %EVR
 
 %description doc
 This package contains documentation for GStreamer Bad Plug-ins.
 
 %prep
 %setup -n %_name-bad-%version
-%patch1 -p2
-%patch2 -p1
 
 %build
 %meson \
@@ -142,19 +145,29 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %files -f %_name-bad-%api_ver.lang
 %doc AUTHORS NEWS README RELEASE
+%_bindir/gst-transcoder-%api_ver
 %_libdir/*.so.*
 %dir %_gst_libdir
 %_gst_libdir/*.so
+%_typelibdir/GstBadAudio-%api_ver.typelib
+%_typelibdir/GstCodecs-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_typelibdir/GstPlayer-%api_ver.typelib
+%_typelibdir/GstTranscoder-%api_ver.typelib
 %_typelibdir/GstWebRTC-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
-%if_enabled opencv
-#%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
-#%_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
-%endif
+%_datadir/gstreamer-%api_ver/encoding-profiles/device/dvd.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/avi.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/flv.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/mkv.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/mp3.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/mp4.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/oga.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ogv.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/webm.gep
+%_datadir/gstreamer-%api_ver/encoding-profiles/online-services/youtube.gep
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
@@ -164,6 +177,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstMpegts-%api_ver.gir
 %_girdir/GstPlayer-%api_ver.gir
 %_girdir/GstWebRTC-%api_ver.gir
+%_girdir/GstBadAudio-%api_ver.gir
+%_girdir/GstCodecs-%api_ver.gir
+%_girdir/GstTranscoder-%api_ver.gir
 
 %if_enabled gtk_doc
 %files doc
@@ -172,6 +188,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+- obsoletes/provides: gst-transcoder
+
 * Sun Jun 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt3
 - fixed build against newest Vulkan
 
