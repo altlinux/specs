@@ -1,6 +1,6 @@
 Name: tutka
 Version: 1.1.3
-Release: alt2
+Release: alt3
 
 Summary: tracker style MIDI sequencer
 License: %gpl2plus
@@ -49,6 +49,9 @@ qmake-qt5
 %_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Tue Sep 08 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt3
+- Fixed segfault. [thx to zerg@] (Closes: #38894).
+
 * Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt2
 - Fixed FTBFS.
 
