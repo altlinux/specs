@@ -1,14 +1,12 @@
 %define oname msgpack
 
-%def_with python3
-
-Name: python-module-%oname
-Version: 0.6.1
+Name: python3-module-%oname
+Version: 1.0.0
 Release: alt1
 
-Summary: A Python MessagePack (de)serializer
+Summary: A Python 3 MessagePack (de)serializer
 
-Group: Development/Python
+Group: Development/Python3
 License: ASL 2.0
 URL: https://pypi.org/project/msgpack/
 
@@ -17,69 +15,34 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 
-BuildRequires: python-module-Cython
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-Cython
 
 %description
 MessagePack is a binary-based efficient data interchange format that is
 focused on high performance. It is like JSON, but very fast and small.
 This is a Python (de)serializer for MessagePack.
 
-%if_with python3
-%package -n python3-module-%oname
-Group: Development/Python3
-Summary: A Python3 MessagePack (de)serializer
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-Cython
-
-%description -n python3-module-%oname
-MessagePack is a binary-based efficient data interchange format that is
-focused on high performance. It is like JSON, but very fast and small.
-This is a Python3 (de)serializer for MessagePack.
-%endif
-
 %prep
 %setup
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
+%python3_build_debug
 
 %install
-%python_install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
-
-%check
-%if_with python3
-pushd ../python3
-popd
-%endif
 
 %files
 %doc COPYING
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info
-
-%if_with python3
-%files -n python3-module-%oname
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
-%endif
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+- build python3 package
+
 * Fri Mar 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version (0.6.1) with rpmgs script
 - package name on PyPI was changed to msgpack from 0.5
