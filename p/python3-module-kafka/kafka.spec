@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname kafka
 
-%def_with docs
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 1.4.6
-Release: alt1
+Release: alt2
 Summary: Pure Python client for Apache Kafka
-License: ASLv2.0
-Group: Development/Python
+License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.org/project/kafka-python/
 
 # https://github.com/dpkp/kafka-python.git
@@ -18,20 +17,9 @@ Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-%if_with docs
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python2.7(sphinx)
-BuildRequires: python2.7(sphinx_rtd_theme)
-%endif
 
 %if_with check
 BuildRequires: liblz4
-BuildRequires: python2.7(crc32c)
-BuildRequires: python2.7(lz4)
-BuildRequires: python2.7(pytest-mock)
-BuildRequires: python2.7(snappy)
-BuildRequires: python2.7(selectors34)
-BuildRequires: python2.7(xxhash)
 BuildRequires: python3(crc32c)
 BuildRequires: python3(lz4)
 BuildRequires: python3(mock)
@@ -41,46 +29,7 @@ BuildRequires: python3(tox)
 BuildRequires: python3(xxhash)
 %endif
 
-%py_requires enum34 selectors34
-
 %description
-This module provides low-level protocol support for Apache Kafka as well
-as high-level consumer and producer classes. Request batching is
-supported by the protocol as well as broker-aware request routing. Gzip
-and Snappy compression is also supported for message sets.
-
-%if_with docs
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-This module provides low-level protocol support for Apache Kafka as well
-as high-level consumer and producer classes. Request batching is
-supported by the protocol as well as broker-aware request routing. Gzip
-and Snappy compression is also supported for message sets.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This module provides low-level protocol support for Apache Kafka as well
-as high-level consumer and producer classes. Request batching is
-supported by the protocol as well as broker-aware request routing. Gzip
-and Snappy compression is also supported for message sets.
-
-This package contains documentation for %oname.
-%endif
-
-%package -n python3-module-%oname
-Summary: Pure Python client for Apache Kafka
-Group: Development/Python3
-
-%description -n python3-module-%oname
 This module provides low-level protocol support for Apache Kafka as well
 as high-level consumer and producer classes. Request batching is
 supported by the protocol as well as broker-aware request routing. Gzip
@@ -112,34 +61,11 @@ exit 1; }
 grep -qsF 'pytest<4.0' tox.ini || exit 1
 sed -i 's/pytest<4\.0/pytest/g' tox.ini
 
-%if_with docs
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-%endif
-
-cp -fR . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
-
-%if_with docs
-export PYTHONPATH="$(pwd)"/build/lib
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
 
 # since we are packaging example.py as doc
 sed -i '1{/#!/d}' example.py
@@ -153,8 +79,7 @@ commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
 -e '/setenv =$/a\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' \
+    py3: _PYTEST_BIN=%_bindir\/py.test3' \
 tox.ini
 export PIP_NO_INDEX=YES
 
@@ -166,29 +91,18 @@ export PIP_NO_INDEX=YES
 #  * '1' means 'force', but will be eventually discontinued.
 export CRC32C_SW_MODE=auto
 export TOX_TESTENV_PASSENV='CRC32C_SW_MODE'
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-%_bindir/tox.py3 --sitepackages -p auto -o -v -- -ra
+export TOXENV=py3
+%_bindir/tox.py3 --sitepackages -vvr -- -ra
 
 %files
-%doc *.md example.py
-%python_sitelibdir/kafka/
-%python_sitelibdir/kafka_python-%version-py%_python_version.egg-info/
-%if_with docs
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
-
-%files -n python3-module-%oname
 %doc *.md example.py
 %python3_sitelibdir/kafka/
 %python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.4.6-alt2
+- Stopped Python2 package build.
+
 * Mon Sep 02 2019 Ivan A. Melnikov <iv@altlinux.org> 1.4.6-alt1
 - 1.4.6
 - Fixed build on mipsel.
