@@ -180,7 +180,7 @@
 
 Name: libvirt
 Version: 6.7.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -194,7 +194,6 @@ Source12: virtlockd.init
 Source13: virtlogd.init
 Source14: libvirt-guests.init
 Source21: libvirtd.tmpfiles
-Source22: libvirt.filetrigger
 
 Patch1: %name-%version.patch
 
@@ -905,8 +904,16 @@ ln -sf ../../%_lib/libnss_libvirt_guest.so.2 %buildroot%_libdir/libnss_libvirt_g
 
 %if_with libvirtd
 install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/modules-load.d/libvirt-dm-mod.conf
+# filetrigger that restart libvirtd after install any plugin
+cat <<EOF > filetrigger
+#!/bin/sh -e
+
+dir=%_libdir/libvirt/
+grep -qs '^'\$dir'' && /sbin/service libvirtd condrestart ||:
+EOF
+install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+
 install -pD -m644 %SOURCE21 %buildroot/lib/tmpfiles.d/libvirtd.conf
-install -pD -m755 %SOURCE22 %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %find_lang %name
@@ -1372,6 +1379,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Sep 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.0-alt2
+- fix rpm filetrigger
+
 * Mon Sep 07 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.0-alt1
 - 6.7.0
 - build with firewalld_zone
