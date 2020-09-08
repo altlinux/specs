@@ -1,30 +1,33 @@
 %set_verify_elf_method textrel=relaxed
 %define module sqlite3
 Name: ocaml-%module
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: OCaml library for accessing SQLite3 databases
 License: MIT
 Group: Development/ML
-Url: http://www.ocaml.info/home/ocaml_sources.html
-Source: http://www.ocaml.info/ocaml_sources/%name-%version.tar
+Url: https://mmottl.github.io/sqlite3-ocaml/
+# https://github.com/mmottl/sqlite3-ocaml
+Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib libsqlite3-devel ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-stdio ocaml-configurator
-Provides:	ocaml4-%module
-Obsoletes:	ocaml4-%module
-
-
+BuildRequires: libsqlite3-devel ocaml-ocamldoc ocaml-dune-devel opam ocaml-base ocaml-stdio ocaml-configurator
+Provides: ocaml4-%module
+Obsoletes: ocaml4-%module
+Obsoletes: ocaml-%module-runtime < %EVR
 BuildPreReq: rpm-build-ocaml >= 1.1.1-alt2
+
 %description
 SQLite 3 database library wrapper for OCaml.
 
-%package runtime
-Summary: OCaml library for accessing SQLite3 databases
+%package devel
+Summary: Development files for %name 
 Group: Development/ML
+Requires: %name = %EVR
 
-%description runtime
-Runtime part of OCaml library for accessing SQLite3 databases
+%description devel
+The %name-devel package contains libraries and signature files for
+developing applications that use %name.
 
 %prep
 %setup -q 
@@ -38,12 +41,29 @@ dune install --destdir=%buildroot
 
 %files
 %doc LICENSE.md CHANGES.md README.md TODO.md
-%_libdir/ocaml/%module
-
-%files runtime
 %_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/%module
+%exclude %_libdir/ocaml/%module/*.cmx
+%exclude %_libdir/ocaml/%module/*.cmt*
+%exclude %_libdir/ocaml/%module/*.ml
+%exclude %_libdir/ocaml/%module/*.mli
+%exclude %_libdir/ocaml/%module/*.cmxa
+%exclude %_libdir/ocaml/%module/*.a
+
+%files devel
+%_libdir/ocaml/%module/*.cmx
+%_libdir/ocaml/%module/*.cmt*
+%_libdir/ocaml/%module/*.ml
+%_libdir/ocaml/%module/*.mli
+%_libdir/ocaml/%module/*.cmxa
+%_libdir/ocaml/%module/*.a
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 5.0.2-alt1
+- 5.0.2
+- added devel package
+- runtime package merged to %name
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1
 - 5.0.1
 
