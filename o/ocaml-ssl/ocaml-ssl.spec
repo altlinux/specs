@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-ssl
 Version: 0.5.9
-Release: alt2
+Release: alt3
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with exemptions
 Group: Development/ML
@@ -41,15 +41,20 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/ssl
 %exclude %_libdir/ocaml/ssl/*.a
 %exclude %_libdir/ocaml/ssl/*.cmxa
+%exclude %_libdir/ocaml/ssl/*.cmx
 %exclude %_libdir/ocaml/ssl/*.mli
 %_libdir/ocaml/stublibs/*.so
 
 %files devel
 %_libdir/ocaml/ssl/*.a
+%_libdir/ocaml/ssl/*.cmx
 %_libdir/ocaml/ssl/*.cmxa
 %_libdir/ocaml/ssl/*.mli
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.5.9-alt3
+- cmx moved to the devel package
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 0.5.9-alt2
 - fix for build with dune-2.x
 
