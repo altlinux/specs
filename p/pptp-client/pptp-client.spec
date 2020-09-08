@@ -1,6 +1,6 @@
 Name:      pptp-client
 Version:   1.10.0
-Release:   alt1
+Release:   alt2
 
 Summary:   Point-to-Point Tunneling Protocol (PPTP) Client
 
@@ -19,7 +19,8 @@ Patch0:    pptp-1.7.2-pptpsetup-mppe.patch
 Patch1:    pptp-1.8.0-makefile.patch
 
 Requires: ppp >= 2.4.2
-Requires: etcnet
+# ALT #31450
+#Requires: etcnet
 
 BuildRequires: perl-Pod-Parser
 
@@ -64,6 +65,9 @@ install -Dpm 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
 %attr(644,root,root)  /lib/tmpfiles.d/%name.conf
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt2
+- drop etcnet require (ALT #31450)
+
 * Mon Sep 07 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
 - build new version
 - cleanup spec
