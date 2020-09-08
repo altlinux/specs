@@ -1,6 +1,6 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Binary-based efficient object serialization library
@@ -14,6 +14,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/msgpack/msgpack-c/releases/download/cpp-%version/%oname-%version.tar.gz
 Source: %name-%version.tar
 Patch: msgpack-3.2.0-alt-fix-vrefbuffer-use-on-ppc64le.patch
+
+# test 21 - object_with_zone (Failed)
+ExcludeArch: armh
 
 BuildRequires: cmake zlib-devel
 BuildRequires: gcc-c++ >= 4.8
@@ -46,7 +49,7 @@ Libraries and header files for %name
 subst "s|/lib|/%_lib|g" CMakeLists.txt
 
 %build
-%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=ON -DMSGPACK_CXX11=ON
 %make_build
 
 %check
@@ -68,6 +71,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack/
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
+- new version 3.3.0 (with rpmrb script)
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1 (with rpmrb script)
 

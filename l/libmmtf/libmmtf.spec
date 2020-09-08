@@ -2,7 +2,7 @@
 
 Name: libmmtf
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: The pure C++ implementation of the MMTF API, decoder and encoder
 
@@ -14,6 +14,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/rcsb/mmtf-cpp/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+ExcludeArch: armh
 
 %if_with doc
 BuildRequires: doxygen
@@ -70,6 +72,9 @@ make test
 %_includedir/mmtf.hpp
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
+- ExcludeArch: armh (due libmsgpack)
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
