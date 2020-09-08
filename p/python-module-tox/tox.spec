@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.15.0
-Release: alt1
+Release: alt2
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -135,6 +135,9 @@ popd
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt2
+- Unpinned pytest-mock.
+
 * Tue May 12 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
 - 3.14.2 -> 3.15.0.
 
