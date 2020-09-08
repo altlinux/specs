@@ -2,7 +2,7 @@
 %define        pkgname chef
 
 Name:          gem-%pkgname
-Version:       16.2.89
+Version:       16.5.32
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Networking/Other
@@ -141,6 +141,7 @@ Documentation files for %gemname-bin gem.
 
 %prep
 %setup
+rm -rf $(find -name "*.py")
 
 %build
 %ruby_build --ignore=standalone_cookbook,omnibus,kitchen-tests,win32-eventlog
@@ -207,6 +208,10 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.5.32-alt1
+- ^ 16.2.89 -> 16.5.32
+- ! build
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 16.2.89-alt1
 - ^ 15.2.19 -> 16.2.89
 - + chef-utils gem package

@@ -2,19 +2,21 @@
 %define        pkgname strings-ansi
 
 Name:          gem-%pkgname
-Version:       0.1.0
-Release:       alt1.1
+Version:       0.2.0
+Release:       alt1
 Summary:       Handle ANSI escape codes in strings
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/piotrmurach/strings-ansi
-%vcs           https://github.com/piotrmurach/strings-ansi.git
+Vcs:           https://github.com/piotrmurach/strings-ansi.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -57,6 +59,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.0-alt1
+- ^ 0.1.0 -> 0.2.0
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.0-alt1.1
 - ! spec according to changelog rules
 

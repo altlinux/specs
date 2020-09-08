@@ -2,19 +2,21 @@
 %define        pkgname tty-screen
 
 Name:          gem-%pkgname
-Version:       0.7.0
-Release:       alt1.1
+Version:       0.8.1
+Release:       alt1
 Summary:       Terminal screen detection - cross platform, major ruby interpreters
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ttytoolkit.org
-%vcs           https://github.com/piotrmurach/tty-screen.git
+Vcs:           https://github.com/piotrmurach/tty-screen.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Terminal screen size detection which works on Linux, OS X and Windows/Cygwin
@@ -59,6 +61,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.1-alt1
+- ^ 0.7.0 -> 0.8.1
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.0-alt1.1
 - ! spec according to changelog rules
 
