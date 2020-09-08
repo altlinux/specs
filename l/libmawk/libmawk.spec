@@ -4,16 +4,17 @@
 %define name libmawk
 %define major   1
 %define libname lib%{name}%{major}
-%define devname lib%{name}-devel 
+%define devname lib%{name}-devel
 
 Name:           libmawk
 Version:        1.0.2
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Embed awk scripting language in any application written in C
 Group:          System/Libraries
 License:        GPLv2
 URL:            http://repo.hu/projects/libmawk
 Source0:        http://repo.hu/projects/libmawk/releases/%{name}-%{version}.tar.gz
+Patch0:        libmawk-fix-common.patch
 
 BuildRequires:  gcc
 Source44: import.info
@@ -52,9 +53,11 @@ HTML documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
+export CFLAGS="%{optflags} -fcommon"
 ./"configure" --prefix=%{_prefix} --symbols
 %make_build
 
@@ -82,6 +85,9 @@ HTML documentation for %{name}.
 
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3
+- update by mgaimport
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
 - update by mgaimport
 
