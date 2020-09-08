@@ -3,7 +3,7 @@
 %define libname tyxml
 Name:           ocaml-%libname
 Version:        4.4.0
-Release:        alt1
+Release:        alt2
 Summary:        TyXML is a library for building statically correct HTML5 and SVG documents
 License:        LGPL2.1 with exeptions
 Group:          Development/ML
@@ -52,10 +52,14 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %exclude %_libdir/ocaml/%libname/*.cmx
 %exclude %_libdir/ocaml/%libname/*.mli
 %_libdir/ocaml/%libname-ppx
+%exclude %_libdir/ocaml/%libname/functor/*.a
+%exclude %_libdir/ocaml/%libname/functor/*.cmxa
+%exclude %_libdir/ocaml/%libname/functor/*.cmx
 %exclude %_libdir/ocaml/%libname-ppx/*.a
 %exclude %_libdir/ocaml/%libname-ppx/*.cmxa
 %exclude %_libdir/ocaml/%libname-ppx/*.cmx
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.a
+%exclude %_libdir/ocaml/%libname-ppx/internal/*.cmx
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.cmxa
 %exclude %_libdir/ocaml/%libname-ppx/internal/*.mli
 %_libdir/ocaml/%libname-jsx
@@ -73,10 +77,14 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.mli
+%_libdir/ocaml/%libname/functor/*.a
+%_libdir/ocaml/%libname/functor/*.cmxa
+%_libdir/ocaml/%libname/functor/*.cmx
 %_libdir/ocaml/%libname-ppx/*.a
 %_libdir/ocaml/%libname-ppx/*.cmxa
 %_libdir/ocaml/%libname-ppx/*.cmx
 %_libdir/ocaml/%libname-ppx/internal/*.a
+%_libdir/ocaml/%libname-ppx/internal/*.cmx
 %_libdir/ocaml/%libname-ppx/internal/*.cmxa
 %_libdir/ocaml/%libname-ppx/internal/*.mli
 %_libdir/ocaml/%libname-jsx/*.a
@@ -87,6 +95,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname-syntax/*.cmx
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt2
+- devel parts moved to the ocaml-tyxml-devel package
+
 * Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1
 - 4.4.0
 
