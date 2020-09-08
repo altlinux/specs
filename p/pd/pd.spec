@@ -5,7 +5,8 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 %define rver	0.42-6
 %define ver	%(echo %rver|tr '-' '.')
-%define rel	10
+%define rel	12
+%global _legacy_common_support 1
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
@@ -63,10 +64,6 @@ Development files for Pure Data.
 sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
 
-%ifarch %e2k
-sed -i 's,-O6,-O%_optlevel,' src/configure*
-%endif
-
 %build
 pushd src
 autoconf
@@ -78,7 +75,7 @@ export CPPFLAGS="%{optflags}"
 	--enable-portaudio \
 	--enable-portmidi
 
-%make LDFLAGS=""
+%make_build LDFLAGS=""
 popd
 
 %install
@@ -94,7 +91,7 @@ install bin/pd.tk %{buildroot}/%{_bindir}
 
 install src/*.h %{buildroot}/%{_includedir}/%{name}
 cp -pr doc/ %{buildroot}%{_datadir}/%{name}
-#%%__cp -pr extra %%{buildroot}/%%{_libdir}/%%{name}/pd
+#%cp -pr extra %%{buildroot}/%%{_libdir}/%%{name}/pd
 
 install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
@@ -109,6 +106,9 @@ install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.42.6-alt3_12
+- update by mgaimport
+
 * Fri Oct 04 2019 Michael Shigorin <mike@altlinux.org> 0.42.6-alt3_10
 - E2K: avoid superfluous optimization level
 
