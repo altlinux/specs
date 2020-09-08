@@ -2,7 +2,7 @@
 %define oname sexplib
 Name: ocaml-%oname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 BuildRequires: dune >= 2.0
 BuildRequires: ocaml
 BuildRequires: ocaml-num
-BuildRequires: ocaml-parsexp-devel >= 0.13.0
+BuildRequires: ocaml-parsexp-devel >= 0.14.0
 
 %description
 This library contains functionality for parsing and pretty-printing
@@ -57,12 +57,10 @@ rm -rf %buildroot/usr/share/doc
 %_libdir/ocaml/sexplib/*.a
 %_libdir/ocaml/sexplib/*.cmi
 %_libdir/ocaml/sexplib/*.cma
-%_libdir/ocaml/sexplib/*.cmxa
 %_libdir/ocaml/sexplib/*.cmxs
 %_libdir/ocaml/sexplib/*/*.a
 %_libdir/ocaml/sexplib/*/*.cmi
 %_libdir/ocaml/sexplib/*/*.cma
-%_libdir/ocaml/sexplib/*/*.cmxa
 %_libdir/ocaml/sexplib/*/*.cmxs
 
 %files devel
@@ -71,16 +69,21 @@ rm -rf %buildroot/usr/share/doc
 %_libdir/ocaml/sexplib/*.cmt
 %_libdir/ocaml/sexplib/*.cmti
 %_libdir/ocaml/sexplib/*.cmx
+%_libdir/ocaml/sexplib/*.cmxa
 %_libdir/ocaml/sexplib/*.mli
 %_libdir/ocaml/sexplib/*.ml
 %_libdir/ocaml/sexplib/dune-package
 %_libdir/ocaml/sexplib/*/*.cmt
 %_libdir/ocaml/sexplib/*/*.cmti
 %_libdir/ocaml/sexplib/*/*.cmx
+%_libdir/ocaml/sexplib/*/*.cmxa
 %_libdir/ocaml/sexplib/*/*.mli
 %_libdir/ocaml/sexplib/*/*.ml
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- cmxa moved to the devel package
+
 * Wed Jun 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
