@@ -1,9 +1,9 @@
-%def_with python3
+%def_without python3
 
 %define oname h2
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt3
+Release: alt4
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt4
+- build python2 module only
+
 * Thu Aug 08 2019 Stanislav Levin <slev@altlinux.org> 3.0.1-alt3
 - Fixed testing against Pytest 5.
 
