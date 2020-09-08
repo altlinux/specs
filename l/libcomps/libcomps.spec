@@ -10,7 +10,7 @@ BuildRequires: gcc-c++ python-devel rpm-build-python
 %define libname_devel lib%{shortname}-devel
 
 Name:           libcomps
-Version:        0.1.14
+Version:        0.1.15
 Release:        alt1_2
 Summary:        Comps XML file manipulation library
 
@@ -23,8 +23,6 @@ BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(check)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  ccmake cmake ctest
-Patch0:         gcc10.patch
-Patch1:         remove-unused-global-variable-missing-extern.patch
 
 
 # prevent provides from nonstandard paths:
@@ -86,8 +84,6 @@ Python3 bindings for libcomps library.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0 -p1
-%patch1 -p1
 
 
 # Fix build with sphinx 1.8.3
@@ -96,8 +92,8 @@ sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/do
 %build
 %{mageia_cmake} -DPYTHON_DESIRED:STRING=3 -DSPHINX_EXECUTABLE="%{_bindir}/sphinx-build-3" ./libcomps/
 %mageia_cmake_build
-%mageia_cmake_build docs
-%mageia_cmake_build pydocs
+make docs -C %{_vpath_builddir}
+make pydocs -C %{_vpath_builddir}
 
 %check
 make test -C %{_vpath_builddir}
@@ -128,6 +124,9 @@ make test -C %{_vpath_builddir}
 
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.15-alt1_2
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt1_2
 - new version
 
