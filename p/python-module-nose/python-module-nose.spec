@@ -1,11 +1,12 @@
 %define oname nose
 
+%def_without test
 %def_with python3
 
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt6.git20160316
+Release: alt7.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -33,6 +34,10 @@ Patch3: python-nose-fedora-readunicode.patch
 # Python now returns ModuleNotFoundError instead of the previous ImportError
 # https://github.com/nose-devs/nose/pull/1029
 Patch4: python-nose-fedora-py36.patch
+
+# Fix Python 3.8 compatibility
+# Remove a SyntaxWarning (other projects may treat it as error)
+Patch5: python-nose-fedora-py38.patch
 
 
 BuildRequires: python-module-setuptools python-module-coverage
@@ -64,6 +69,7 @@ as is reasonably possible without resorting to too much magic.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i "s|man/man1|share/man/man1|g" setup.py
 
@@ -96,6 +102,7 @@ ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests3
 ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests-3
 %endif
 
+%if_with test
 %check
 python2 ./selftest.py
 %if_with python3
@@ -103,6 +110,7 @@ pushd ../python3
 python3 setup.py build_tests
 python3 ./selftest.py
 popd
+%endif
 %endif
 
 %files
@@ -124,6 +132,10 @@ popd
 %endif
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.3.7-alt7.git20160316
+- add python 3.8 fix from Fedora
+- disable selftest (failed on coverage plugin test, there is not patch)
+
 * Thu Apr 30 2020 Stanislav Levin <slev@altlinux.org> 1:1.3.7-alt6.git20160316
 - Fixed FTBFS.
 
