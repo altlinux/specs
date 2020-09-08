@@ -2,7 +2,7 @@
 %define libname parsexp
 Name: ocaml-%libname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
@@ -64,7 +64,6 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmxs
 
 %files devel
@@ -73,9 +72,13 @@ dune runtest
 %_libdir/ocaml/%libname/*.cmt
 %_libdir/ocaml/%libname/*.cmti
 %_libdir/ocaml/%libname/*.cmx
+%_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- cmxa have been moved to devel package
+
 * Wed Jun 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
