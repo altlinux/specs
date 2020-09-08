@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt3
+Release: alt4
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -24,6 +24,10 @@ BuildRequires: python3(path)
 BuildRequires: python3(termcolor)
 BuildRequires: python3(tox)
 %endif
+
+%py3_requires contextlib2
+%py3_requires path
+%py3_requires termcolor
 
 %description
 This library is a goodie-bag of Unix shell and environment management tools for
@@ -64,6 +68,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_shutil-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt4
+- Added accidentally removed runtime requirements.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt3
 - Stopped build Python2 package.
 
