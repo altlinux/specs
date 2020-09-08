@@ -7,8 +7,8 @@ It currently only provides a few functions: \
  * timelib.strtotime
 
 Name: %fname
-Version: 0.2.4
-Release: alt4
+Version: 0.2.5
+Release: alt1
 
 Summary: Parse english textual date descriptions
 Group: Development/Python3
@@ -36,6 +36,10 @@ BuildPreReq: python3-devel python3-module-setuptools python3-module-Cython
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 08 2020 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt1
+- Build new version.
+- Drop python2 support.
+
 * Fri Jun 08 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt4
 - Build with Cython (Closes: #34719).
 
