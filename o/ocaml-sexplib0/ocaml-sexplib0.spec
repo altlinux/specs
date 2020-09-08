@@ -2,7 +2,7 @@
 %define oname sexplib0
 Name: ocaml-%oname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
 Group: Development/ML
@@ -53,19 +53,22 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/sexplib0/*.a
 %_libdir/ocaml/sexplib0/*.cmi
 %_libdir/ocaml/sexplib0/*.cma
-%_libdir/ocaml/sexplib0/*.cmxa
 %_libdir/ocaml/sexplib0/*.cmxs
 
 %files devel
 %_libdir/ocaml/sexplib0/opam
 %_libdir/ocaml/sexplib0/dune-package
 %_libdir/ocaml/sexplib0/*.cmt
+%_libdir/ocaml/sexplib0/*.cmxa
 %_libdir/ocaml/sexplib0/*.cmti
 %_libdir/ocaml/sexplib0/*.cmx
 %_libdir/ocaml/sexplib0/*.mli
 %_libdir/ocaml/sexplib0/*.ml
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- cmxa moved to the devel package
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
