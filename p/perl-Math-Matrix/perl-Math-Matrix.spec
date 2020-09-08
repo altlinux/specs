@@ -1,23 +1,27 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(overload.pm) perl-podlators
+BuildRequires: perl(Math/Complex.pm) perl(Module/Signature.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Math-Matrix
-%define upstream_version 0.8
+%define upstream_version 0.91
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.91
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
 Group:      Development/Perl
-Source0:     http://www.cpan.org/authors/id/P/PJ/PJACKLAM/%{upstream_name}-%{version}.tar.gz
-Url:        http://search.cpan.org/dist/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
+Url:        https://metacpan.org/release/%{upstream_name}
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl-CPAN perl-Digest-SHA perl-Encode perl-Encode-devel perl-JSON-PP perl-Module-CoreList perl-Pod-Checker perl-Pod-Parser perl-Pod-Usage perl-devel
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl-devel
 BuildArch:  noarch
 Source44: import.info
 
@@ -25,11 +29,11 @@ Source44: import.info
 The following methods are available: concat, transpose, etc.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-%make
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %check
 make test
@@ -38,10 +42,13 @@ make test
 %makeinstall_std
 
 %files
-%doc META.yml README Changes README.md
+%doc Changes META.json META.yml  README SIGNATURE
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_1
+- update by mgaimport
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
 - automated CPAN update
 
