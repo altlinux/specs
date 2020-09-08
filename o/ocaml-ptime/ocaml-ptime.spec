@@ -2,7 +2,7 @@
 %define libname ptime
 Name: ocaml-%libname
 Version: 0.8.5
-Release: alt1
+Release: alt2
 Summary: POSIX time for OCaml
 License: ISC
 Group: Development/ML
@@ -48,6 +48,10 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %exclude %_libdir/ocaml/%libname/*.cmxa
 %exclude %_libdir/ocaml/%libname/*.cmx
 %exclude %_libdir/ocaml/%libname/*.mli
+%exclude %_libdir/ocaml/%libname/*/*.a
+%exclude %_libdir/ocaml/%libname/*/*.cmxa
+%exclude %_libdir/ocaml/%libname/*/*.cmx
+%exclude %_libdir/ocaml/%libname/*/*.mli
 %_libdir/ocaml/stublibs/*.so
 
 %files devel
@@ -55,8 +59,15 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.cmxa
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.mli
+%_libdir/ocaml/%libname/*/*.a
+%_libdir/ocaml/%libname/*/*.cmxa
+%_libdir/ocaml/%libname/*/*.cmx
+%_libdir/ocaml/%libname/*/*.mli
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.8.5-alt2
+- move devel parts to the ocaml-ptime-devel package
+
 * Sat May 11 2019 Anton Farygin <rider@altlinux.ru> 0.8.5-alt1
 - 0.8.5
 
