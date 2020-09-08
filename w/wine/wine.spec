@@ -1,14 +1,18 @@
-%def_enable static
+%def_disable static
 %define gecko_version 2.47.1
 %define mono_version 5.1.0
 %define major 5.16
 %define rel %nil
 
 %def_with gtk3
+
+# rpm-build-info gives _distro_version
+%if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
 %def_with vkd3d
 %def_with faudio
+%endif
 
 # get name of package owning specific file.
 # this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
@@ -17,7 +21,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -70,7 +74,7 @@ BuildRequires: gcc
 %endif
 
 # General dependencies
-BuildRequires: rpm-build-intro >= 1.0
+BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
@@ -534,6 +538,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt2
+- build vulkan only for p9 and Sisyphus
+
 * Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt1
 - new version 5.16.1 (with rpmrb script)
 
