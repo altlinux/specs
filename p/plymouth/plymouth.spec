@@ -7,8 +7,8 @@
 %define _localstatedir %_var
 
 Name: plymouth
-Version: 0.9.4
-Release: alt4
+Version: 0.9.5
+Release: alt1
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -24,6 +24,7 @@ Patch: %name-%version-%release.patch
 Requires(post): plymouth-scripts
 Requires: lib%name = %EVR
 
+BuildRequires: /proc
 BuildRequires: pkgconfig(libpng) >= 1.2.16
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(pangocairo) >= 1.21.0
@@ -328,7 +329,6 @@ fi
 %define theme_scripts() \
 %post -n %name-theme-%{1} \
 if [ -x %_sbindir/plymouth-set-default-theme ]; then \
-  export LIB=%_lib \
   if [ $1 -eq 1 ]; then \
       %{_sbindir}/plymouth-set-default-theme %{1} \
   else \
@@ -340,7 +340,6 @@ if [ -x %_sbindir/plymouth-set-default-theme ]; then \
 fi \
 \
 %postun -n %name-theme-%{1} \
-export LIB=%_lib \
 if [ $1 -eq 0 -a -x %_sbindir/plymouth-set-default-theme ]; then \
     if [ "$(%_sbindir/plymouth-set-default-theme)" == "%{1}" ]; then \
         %_sbindir/plymouth-set-default-theme --reset \
@@ -458,6 +457,10 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Sep 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.5-alt1
+- 0.9.5
+- cleanup plymouth-start.service.
+
 * Fri May 01 2020 Alexey Shabalin <shaba@altlinux.org> 1:0.9.4-alt4
 - Add RemainAfterExit=yes to plymouth's systemd service files.
 - Fix type plymouth-start.service.
