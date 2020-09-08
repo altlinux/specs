@@ -7,7 +7,7 @@
 %define develname	lib%{name}-devel
 
 Name:		spglib
-Version:	1.15.1
+Version:	1.16.0
 Release:	alt1_1
 Summary:	C library for finding and handling crystal symmetries
 License:	BSD
@@ -75,6 +75,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- update by mgaimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.15.1-alt1_1
 - update by mgaimport
 
