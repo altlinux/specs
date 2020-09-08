@@ -5,7 +5,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: System configuration tool
@@ -87,7 +87,10 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
-* Fri Aug 04 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.2-alt1
+* Tue Sep 08 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.3-alt1
+- Modified testing procedures that reduce traces of them been running.
+
+* Fri Sep 04 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.2-alt1
 - Polished tests.
 
 * Sun Nov 24 2019 Alexey Appolonov <alexey@altlinux.org> 0.20.1-alt1
