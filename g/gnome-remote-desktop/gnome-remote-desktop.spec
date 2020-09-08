@@ -2,20 +2,21 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
+%define ver_major 0.1
 
 Name: gnome-remote-desktop
-Version: 0.1.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: GNOME Remote Desktop
 Group: Networking/Remote access
 License: GPLv2+
-Url: https://gitlab.gnome.org/jadahl/gnome-remote-desktop
+Url: https://gitlab.gnome.org/GNOME/gnome-remote-desktop
 
 %if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-# VCS: https://gitlab.gnome.org/jadahl/gnome-remote-desktop.git
+Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
 Source: %name-%version.tar
 %endif
 
@@ -31,6 +32,7 @@ BuildRequires: libgio-devel libvncserver-devel >= %vnc_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: libsecret-devel libnotify-devel
+BuildRequires: libcairo-devel libfreerdp-devel
 
 %description
 Remote desktop daemon for GNOME using pipewire.
@@ -53,6 +55,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
+- 0.1.9
+
 * Sun Mar 29 2020 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
 - 0.1.8
 
