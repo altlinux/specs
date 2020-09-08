@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.13
+Version: 2.1.14
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -128,6 +128,11 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.1.14-alt1
+- remove_repo_info: add .DS_Store removing
+- install.sh: get arch info from distr_vendor (adds support for non x86 arches)
+- install.sh: add _distro_name, _distro_version
+
 * Thu May 02 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.13-alt1
 - NPROCS: divide by 4 only if we have more than 42G
 
