@@ -1,17 +1,18 @@
 Name: google-drive-ocamlfuse
 Version: 0.7.22
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 Summary: FUSE filesystem for Google Drive
 Url: http://gdfuse.forge.ocamlcore.org
 Group: Networking/Remote access
+# https://github.com/astrada/google-drive-ocamlfuse
 Source: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamlbuild
 BuildRequires: dune opam
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlfuse-devel
 BuildRequires: ocaml-gapi-devel >= 0.4.1-alt1
-BuildRequires: ocaml-sqlite3 
+BuildRequires: ocaml-sqlite3-devel
 BuildRequires: ocaml-cryptokit-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-camlidl-devel >= 1.06-alt1
@@ -54,6 +55,9 @@ dune install --destdir=%buildroot --libdir=%_libdir/ocaml
 %_bindir/%name
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.7.22-alt2
+- BR: ocaml-sqlite3-devel
+
 * Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 0.7.22-alt1
 - 0.7.22
 
