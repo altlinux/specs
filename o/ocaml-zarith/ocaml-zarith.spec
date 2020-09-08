@@ -7,7 +7,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.9.1
-Release: alt1
+Release: alt2
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -83,6 +83,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %ocamlsitelib/%pkgname
 %exclude %ocamlsitelib/%pkgname/*.mli
 %exclude %ocamlsitelib/%pkgname/*.h
+%exclude %ocamlsitelib/%pkgname/*.a
+%exclude %ocamlsitelib/%pkgname/*.cmx
+%exclude %ocamlsitelib/%pkgname/*.cmxa
 %ocamlstublib/*.so
 %ocamlstublib/*.so.owner
 
@@ -90,8 +93,14 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %doc README.md html
 %ocamlsitelib/%pkgname/*.mli
 %ocamlsitelib/%pkgname/*.h
+%ocamlsitelib/%pkgname/*.a
+%ocamlsitelib/%pkgname/*.cmx
+%ocamlsitelib/%pkgname/*.cmxa
 
 %changelog
+* Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.9.1-alt2
+- devel parts moved to the ocaml-zarith-devel package
+
 * Tue Sep 03 2019 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
 - 1.9.1
 
