@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.11
-Release: alt1
+Release: alt2
 Summary: Filesystem abstraction layer
 License: MIT
 Group: Development/Python3
@@ -42,8 +42,6 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-appdirs
 BuildRequires: python3-module-pyftpdlib-tests
 %endif
-
-%py3_requires backports.os
 
 %description
 PyFilesystem is an abstraction layer for filesystems. In the same way
@@ -129,6 +127,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.11-alt2
+- Removed backports.os dependency since it's not needed for python-3.
+
 * Thu Feb 27 2020 Grigory Ustinov <grenka@altlinux.org> 2.4.11-alt1
 - Build new version.
 - Build without python2 support.

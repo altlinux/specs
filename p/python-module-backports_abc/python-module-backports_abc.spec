@@ -1,10 +1,10 @@
 %define oname backports_abc
-%def_with python3
+%def_without python3
 
 Summary: ABC-Backports
 Name: python-module-%oname
 Version: 0.5
-Release: alt2
+Release: alt3
 Url: https://github.com/cython/backports_abc
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -72,6 +72,9 @@ popd
 
 
 %changelog
+* Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt3
+- Disable python3
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 0.5-alt2
 - Enable python3
 
