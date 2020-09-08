@@ -8,7 +8,7 @@
 
 Name:    qt-creator
 Version: 4.13.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -159,9 +159,15 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Sep 08 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt2
+- Add changelog entry from p9 branch.
+
 * Thu Sep 03 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt1
 - New version.
 - Enable journald support.
+
+* Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 4.12.4-alt0.1.p9
+- Backport new version to p9 branch.
 
 * Thu Jul 09 2020 Andrey Cherepanov <cas@altlinux.org> 4.12.4-alt1
 - New version.
