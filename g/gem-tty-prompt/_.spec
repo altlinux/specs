@@ -2,13 +2,13 @@
 %define        pkgname tty-prompt
 
 Name:          gem-%pkgname
-Version:       0.19.0
-Release:       alt1.1
+Version:       0.22.0.1
+Release:       alt0.1
 Summary:       A beautiful and powerful interactive command line prompt
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ttytoolkit.org/
-%vcs           https://github.com/piotrmurach/tty-prompt.git
+Vcs:           https://github.com/piotrmurach/tty-prompt.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -40,7 +41,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -58,6 +59,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.22.0.1-alt0.1
+- ^ 0.19.0 -> 0.22.0.1
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.19.0-alt1.1
 - ! spec according to changelog rules
 

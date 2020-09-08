@@ -2,13 +2,13 @@
 %define        pkgname tty-reader
 
 Name:          gem-%pkgname
-Version:       0.6.0
-Release:       alt1.1
+Version:       0.8.0
+Release:       alt1
 Summary:       A set of methods for processing keyboard input in character, line and multiline modes
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ttytoolkit.org/
-%vcs           https://github.com/piotrmurach/tty-reader.git
+Vcs:           https://github.com/piotrmurach/tty-reader.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -58,6 +59,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
+- ^ 0.6.0 -> 0.8.0
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt1.1
 - ! spec according to changelog rules
 

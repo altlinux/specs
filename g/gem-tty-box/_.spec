@@ -2,13 +2,13 @@
 %define        pkgname tty-box
 
 Name:          gem-%pkgname
-Version:       0.4.0
-Release:       alt1.1
+Version:       0.6.0
+Release:       alt1
 Summary:       Draw various frames and boxes in your terminal window
 License:       MIT
 Group:         Development/Ruby
 Url:           http://ttytoolkit.org
-%vcs           https://github.com/piotrmurach/tty-box.git
+Vcs:           https://github.com/piotrmurach/tty-box.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -58,6 +59,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt1
+- ^ 0.4.0 -> 0.6.0
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.4.0-alt1.1
 - ! spec according to changelog rules
 

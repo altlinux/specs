@@ -2,13 +2,13 @@
 %define        pkgname pastel
 
 Name:          gem-%pkgname
-Version:       0.7.3
-Release:       alt1.1
+Version:       0.8.0
+Release:       alt1
 Summary:       Terminal strings styling with intuitive and clean API
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ttytoolkit.org/
-%vcs           https://github.com/piotrmurach/pastel.git
+Vcs:           https://github.com/piotrmurach/pastel.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -16,6 +16,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 %summary.
@@ -56,6 +57,10 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
+- ^ 0.7.3 -> 0.8.0
+- ! spec
+
 * Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.3-alt1.1
 - ! spec according to changelog rules
 

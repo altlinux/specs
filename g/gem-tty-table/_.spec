@@ -1,14 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname strings
+%define        pkgname tty-table
 
 Name:          gem-%pkgname
-Version:       0.2.0
-Release:       alt1
-Summary:       A set of useful functions for transforming strings
+Version:       0.11.0.1
+Release:       alt0.1
+Summary:       A flexible and intuitive table generator
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/piotrmurach/strings
-Vcs:           https://github.com/piotrmurach/strings.git
+Url:           https://ttytoolkit.org/
+Vcs:           https://github.com/piotrmurach/tty-table.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -19,8 +19,7 @@ BuildRequires(pre): rpm-build-ruby
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
-The Strings is a set of useful functions such as fold, truncate, wrap, and many
-more for transforming strings.
+%summary.
 
 
 %package       doc
@@ -40,7 +39,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build
+%ruby_build --use=%gemname --version-replace=%version
 
 %install
 %ruby_install
@@ -58,13 +57,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 0.2.0-alt1
-- ^ 0.1.6 -> 0.2.0
-- ! spec
-
-* Wed Sep 11 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.6-alt1
-- ^ 0.1.5 -> 0.1.6
-- ! spec according to changelog rules
-
-* Thu Aug 08 2019 Pavel Skrylev <majioa@altlinux.org> 0.1.5-alt1
+* Tue Sep 8 2020 Pavel Skrylev <majioa@altlinux.org> 0.11.0.1-alt0.1
 - + packaged gem with usage Ruby Policy 2.0

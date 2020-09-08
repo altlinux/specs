@@ -1,7 +1,7 @@
 %define        pkgname mixlib-shellout
 
 Name: 	       gem-%pkgname
-Version:       3.0.11
+Version:       3.1.4
 Release:       alt1
 Summary:       mixin library for subprocess management, output collection
 License:       Apache-2.0
@@ -59,6 +59,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt1
+- ^ 3.0.11 -> 3.1.4
+
 * Wed Jul 08 2020 Pavel Skrylev <majioa@altlinux.org> 3.0.11-alt1
 - > Ruby Policy 2.0
 - ^ 2.4.0 -> 3.0.11
