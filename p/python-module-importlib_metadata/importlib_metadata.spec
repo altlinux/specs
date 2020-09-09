@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname importlib_metadata
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
 Group: Development/Python
@@ -78,6 +78,9 @@ tox --sitepackages -vv
 %python_sitelibdir/importlib_metadata/
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt3
+- Disabled testing.
+
 * Thu Feb 13 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
 - Moved Python3 subpackage out to its own package.
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.2
-Release: alt1
+Release: alt2
 
 Summary: Zope testrunner script
 License: ZPL-2.1
@@ -21,10 +21,6 @@ BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-zope.interface
-BuildRequires: python-module-zope.testing
-BuildRequires: python-module-six
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.interface
@@ -104,8 +100,6 @@ mv %buildroot{%python_sitelibdir_noarch/*,%python_sitelibdir}
 %check
 
 export PIP_INDEX_URL=http://host.invalid./
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
 pushd ../python3
 tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 popd
@@ -131,6 +125,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 5.2-alt2
+- Disabled testing against Python2.
+
 * Thu Aug 27 2020 Grigory Ustinov <grenka@altlinux.org> 5.2-alt1
 - Automatically updated to 5.2.
 

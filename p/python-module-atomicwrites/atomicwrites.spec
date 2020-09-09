@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Python Atomic file writes on POSIX
 License: MIT
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python-module-tox
 BuildRequires: python3-module-tox
 %endif
 
@@ -63,14 +62,13 @@ sed -i '/\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}-test,py%{python_version_nodots python3}-test
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}-test
+tox.py3 --sitepackages -vvr
 
 %files
 %doc LICENSE README.rst
@@ -83,6 +81,9 @@ tox.py3 --sitepackages -p auto -o -v
 %python3_sitelibdir/atomicwrites-*.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.3.0-alt3
+- Disabled tests against Python2.
+
 * Tue Aug 06 2019 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
 - Fixed testing against Pytest 5.
 

@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 3.15.0
-Release: alt2
+Release: alt3
 
 Summary: virtualenv-based automation of test activities
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/tox-dev/tox.git
 Url: https://pypi.python.org/pypi/tox/
 
@@ -18,7 +18,6 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python-module-setuptools_scm
 BuildRequires: python3-module-setuptools_scm
 
 %if_with check
@@ -38,25 +37,10 @@ BuildRequires: python3(filelock)
 %endif
 
 BuildArch: noarch
-%py_requires virtualenv
 
-%description
-Tox as is a generic virtualenv management and test command line tool you
-can use for:
-
-* checking your package installs correctly with different Python
-  versions and interpreters
-* running your tests in each of the environments, configuring your test
-  tool of choice
-* acting as a frontend to Continuous Integration servers, greatly
-  reducing boilerplate and merging CI and shell-based testing.
-
-%package -n python3-module-%oname
-Summary: virtualenv-based automation of test activities
-Group: Development/Python3
 %py3_requires virtualenv
 
-%description -n python3-module-%oname
+%description
 Tox as is a generic virtualenv management and test command line tool you
 can use for:
 
@@ -75,34 +59,24 @@ can use for:
 grep -qsF 'psutil >= 5.6.1' setup.cfg || exit 1
 sed -i 's/psutil >= 5.6.1, < 6;/psutil;/g' setup.cfg
 
-cp -a . ../python3
-
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-pushd ../python3
 %python3_install
-popd
+
 pushd %buildroot%_bindir
 for i in $(ls); do
         mv $i $i.py3
 done
 popd
 
-%python_install
-
 %check
-pushd ../python3
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
@@ -110,7 +84,7 @@ export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
 PIP_NO_BUILD_ISOLATION TOX_LIMITED_SHEBANG'
 export TOX_LIMITED_SHEBANG=1
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-export TOXENV=py%{python_version_nodots python3}
+export TOXENV=py3
 
 sed -i '/\[testenv\][[:space:]]*$/a whitelist_externals =\
     \/bin\/cp\
@@ -119,22 +93,18 @@ commands_pre =\
     \/bin\/cp %_bindir\/py.test3 \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 
-%buildroot%_bindir/tox.py3 --sitepackages -p auto -o -rv -- -m "not internet"
-popd
+%buildroot%_bindir/tox.py3 --sitepackages -vvr -- -m "not internet"
 
 %files
-%_bindir/tox
-%_bindir/tox-quickstart
-%python_sitelibdir/tox/
-%python_sitelibdir/tox-*.egg-info/
-
-%files -n python3-module-%oname
 %_bindir/tox.py3
 %_bindir/tox-quickstart.py3
 %python3_sitelibdir/tox/
 %python3_sitelibdir/tox-*.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt3
+- Stopped Python2 package build.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 3.15.0-alt2
 - Unpinned pytest-mock.
 

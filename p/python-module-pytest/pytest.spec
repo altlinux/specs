@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 4.6.6
-Release: alt1
+Release: alt2
 
 Summary: Python test framework
 License: MIT
@@ -69,6 +69,7 @@ scales to support complex functional testing for applications and libraries.
 %setup
 %patch -p1
 
+%if_with check
 # adjust timeouts for testing on aarch64/beehive
 grep -qs 'child\.expect(.*)' \
 testing/{test_pdb.py,test_terminal.py,test_unittest.py} || exit 1
@@ -83,6 +84,7 @@ sed -i -e '/child\.expect(.*)/s/)[[:space:]]*$/, timeout=60)/g;' \
 -e '/testdir\.spawn_pytest([[:space:]]*$/{$!N;s/\n\([[:space:]]*\)\(.*\)/\n\1\2,\n\1expect_timeout=30,/g}' \
 -e 's/\([[:space:]]*\)child\.sendline(\x22p .*)$/&\n\1import time; time.sleep(child.delaybeforesend)/g' \
 testing/{test_pdb.py,test_terminal.py,test_unittest.py}
+%endif
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -114,6 +116,9 @@ tox --sitepackages -p auto -o -v
 %_bindir/pytest
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 4.6.6-alt2
+- Disabled testing.
+
 * Fri Nov 15 2019 Stanislav Levin <slev@altlinux.org> 4.6.6-alt1
 - 4.6.5 -> 4.6.6.
 

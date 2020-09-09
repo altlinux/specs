@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 16.7.9
-Release: alt1
+Release: alt2
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -19,14 +19,6 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(coverage)
-BuildRequires: python2.7(json)
-BuildRequires: python2.7(mock)
-BuildRequires: python2.7(nose)
-BuildRequires: python2.7(pip)
-BuildRequires: python2.7(pytest_timeout)
-BuildRequires: python2.7(pytest-xdist)
-BuildRequires: python3(coverage)
 BuildRequires: python3(nose)
 BuildRequires: python3(pip)
 BuildRequires: python3(pytest_timeout)
@@ -108,22 +100,11 @@ popd
 grep -qsF 'pytest >= 4.0.0, <5' setup.cfg || exit 1
 sed -i 's/pytest >= 4.0.0, <5/pytest/g' setup.cfg
 
-sed -i -e '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_COV_BIN:} \{envbindir\}\/coverage\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/coverage' \
--e '/^setenv[ ]*=.*$/a\
-    py%{python_version_nodots python}: _COV_BIN=%_bindir\/coverage\
-    py%{python_version_nodots python3}: _COV_BIN=%_bindir\/coverage3' \
-tox.ini
-
 export PIP_NO_INDEX=YES
 export PIP_FIND_LINKS=`pwd`/build/lib/virtualenv_support
 export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS'
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -vr
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -vvr
 
 %files
 %doc docs/* *.txt *.rst
@@ -142,6 +123,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/__pycache__/virtualenv.*
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 16.7.9-alt2
+- Disabled testing against Python2.
+
 * Fri Feb 07 2020 Stanislav Levin <slev@altlinux.org> 16.7.9-alt1
 - 16.7.7 -> 16.7.9.
 

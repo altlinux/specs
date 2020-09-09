@@ -3,7 +3,7 @@
 
 Name:           python-module-%oname
 Version:        1.5
-Release:        alt1
+Release:        alt2
 Summary:        Backport of functools.lru_cache from Python 3.3 as published at ActiveState.
 Group:          Development/Python
 License:        Apache-2.0
@@ -13,8 +13,6 @@ URL:            https://pypi.python.org/pypi/backports.functools_lru_cache
 Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python2.7(pytest)
-BuildRequires: python2.7(tox)
 %py_requires backports
 %py_provides backports.functools_lru_cache
 
@@ -26,8 +24,6 @@ Backport of functools.lru_cache from Python 3.3 as published at ActiveState.
 # remove extra dep
 grep -qsF 'collective.checkdocs' setup.py || exit 1
 sed -i '/collective\.checkdocs/d' setup.py
-# don't check docs
-sed -i '/python setup\.py checkdocs/d' tox.ini
 
 # don't use scm to determine version, just substitute it
 sed -i \
@@ -47,22 +43,14 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 rm -f %buildroot%python_sitelibdir/backports/__init__.py*
 
-%check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    cp %_bindir\/py.test \{envbindir\}\/py.test\
-    sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python}
-tox --sitepackages -p auto -o -v
-
 %files
 %doc README.rst
 %python_sitelibdir/*
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.5-alt2
+- Disabled tests against Python2.
+
 * Sun Jun 09 2019 Stanislav Levin <slev@altlinux.org> 1.5-alt1
 - 1.4 -> 1.5.
 
