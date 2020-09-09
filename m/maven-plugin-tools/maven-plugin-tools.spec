@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           maven-plugin-tools
 Version:        3.5.1
-Release:        alt1_7jpp8
+Release:        alt2_7jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -67,7 +67,7 @@ Plugins in a variety of languages.
 %package -n maven-plugin-annotations
 Group: Development/Java
 Summary:        Maven Plugin Java 5 Annotations
-Obsoletes:      maven-plugin-annotations < 0:%{version}-%{release}
+#Obsoletes:      maven-plugin-annotations < 0:%{version}-%{release}
 
 %description -n maven-plugin-annotations
 This package contains Java 5 annotations to use in Mojos.
@@ -92,8 +92,8 @@ This package provides Java 5 annotation tools for use with Apache Maven.
 %package ant
 Group: Development/Java
 Summary:        Maven Plugin Tool for Ant
-Obsoletes:      maven-shared-plugin-tools-ant < 0:%{version}-%{release}
-Provides:       maven-shared-plugin-tools-ant = 0:%{version}-%{release}
+#Obsoletes:      maven-shared-plugin-tools-ant < 0:%{version}-%{release}
+#Provides:       maven-shared-plugin-tools-ant = 0:%{version}-%{release}
 
 %description ant
 Descriptor extractor for plugins written in Ant.
@@ -101,8 +101,8 @@ Descriptor extractor for plugins written in Ant.
 %package api
 Group: Development/Java
 Summary:        Maven Plugin Tools APIs
-Obsoletes:      maven-shared-plugin-tools-api < 0:%{version}-%{release}
-Provides:       maven-shared-plugin-tools-api = 0:%{version}-%{release}
+#Obsoletes:      maven-shared-plugin-tools-api < 0:%{version}-%{release}
+#Provides:       maven-shared-plugin-tools-api = 0:%{version}-%{release}
 
 %description api
 The Maven Plugin Tools API provides an API to extract information from
@@ -111,8 +111,8 @@ and generate documentation for Maven Plugins.
 %package beanshell
 Group: Development/Java
 Summary:        Maven Plugin Tool for Beanshell
-Obsoletes:      maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
-Provides:       maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
+#Obsoletes:      maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
+#Provides:       maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
 
 %description beanshell
 Descriptor extractor for plugins written in Beanshell.
@@ -128,8 +128,8 @@ The Maven Plugin Tools Generators provides content generation
 %package java
 Group: Development/Java
 Summary:        Maven Plugin Tool for Java
-Obsoletes:      maven-shared-plugin-tools-java < 0:%{version}-%{release}
-Provides:       maven-shared-plugin-tools-java = 0:%{version}-%{release}
+#Obsoletes:      maven-shared-plugin-tools-java < 0:%{version}-%{release}
+#Provides:       maven-shared-plugin-tools-java = 0:%{version}-%{release}
 
 %description java
 Descriptor extractor for plugins written in Java.
@@ -151,8 +151,8 @@ Java API documentation for %{name} is contained in
 %package model
 Group: Development/Java
 Summary:        Maven Plugin Metadata Model
-Obsoletes:      maven-shared-plugin-tools-model < 0:%{version}-%{release}
-Provides:       maven-shared-plugin-tools-model = 0:%{version}-%{release}
+#Obsoletes:      maven-shared-plugin-tools-model < 0:%{version}-%{release}
+#Provides:       maven-shared-plugin-tools-model = 0:%{version}-%{release}
 
 %description model
 The Maven Plugin Metadata Model provides an API to play with the Metadata
@@ -293,6 +293,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt2_7jpp8
+- fixed build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.5.1-alt1_7jpp8
 - fc update
 
