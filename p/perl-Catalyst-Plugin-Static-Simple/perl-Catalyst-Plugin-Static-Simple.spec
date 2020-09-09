@@ -13,7 +13,7 @@
 
 Name: perl-Catalyst-Plugin-Static-Simple
 Version: 0.36
-Release: alt1
+Release: alt2
 
 Summary: %m_name - Make serving static pages painless
 
@@ -28,7 +28,7 @@ Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{module}-%{version}.tar.gz
 
 BuildPreReq: perl-version
 # Automatically added by buildreq on Tue Apr 20 2010 (-bi)
-BuildRequires: perl-Catalyst-Devel perl-MIME-Types
+BuildRequires: perl-Catalyst-Devel perl-MIME-Types perl(MooseX/Types/Moose.pm)
 
 %description
 The Static::Simple plugin is designed to make serving static
@@ -49,6 +49,9 @@ without requiring a single line of code from you.
 %doc Changes
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2
+- fixed build
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - automated CPAN update
 
