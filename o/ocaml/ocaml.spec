@@ -9,7 +9,7 @@
 
 Name: ocaml
 Version: 4.10.0
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: LGPLv2.1 with exceptions
@@ -32,6 +32,8 @@ Provides: ocaml4
 
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
+
+BuildRequires: binutils-devel
 
 Requires: %name-runtime = %EVR
 
@@ -152,6 +154,9 @@ install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Wed Sep 09 2020 Anton Farygin <rider@altlinux.ru> 4.10.0-alt2
+- built with binutils-devel to add cmxs support to ocamlobjinfo
+
 * Sat Feb 22 2020 Anton Farygin <rider@altlinux.ru> 4.10.0-alt1
 - 4.10.0 release
 - removed ocaml-graphics subpackage (available from separate package
