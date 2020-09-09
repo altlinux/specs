@@ -5,7 +5,7 @@
 # https://github.com/containers/buildah
 %global provider_prefix %provider.%provider_tld/%project/%repo
 %global import_path     %provider_prefix
-%global commit          368c41b8ed0458eac6a30b43b223d4d7db781c07
+%global commit          295b825cdc0795f7e60349b901880e40e9850f5a
 %global shortcommit    %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -17,7 +17,7 @@
 
 Name: buildah
 # Bump version in buildah.go too
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -58,24 +58,27 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export VERSION=%version
-export COMMIT=%commit
+export GIT_COMMIT=%commit
 export BRANCH=altlinux
+export GOMD2MAN=go-md2man
 
 %golang_prepare
 pushd .gopath/src/%import_path
-%golang_build cmd/%name
+#%%golang_build cmd/%name
+%make_build all PREFIX=%_prefix
 popd
-
-GOMD2MAN=go-md2man %make -C docs
 
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
 
-%golang_install
-rm -rf -- %buildroot%_datadir
+pushd .gopath/src/%import_path
+#%%golang_install
+# rm -rf -- %buildroot%_datadir
+%make DESTDIR=%buildroot PREFIX=%prefix install
 %make DESTDIR=%buildroot PREFIX=%prefix install.completions
 %make DESTDIR=%buildroot PREFIX=%prefix -C docs install
+popd
 
 %files
 %doc LICENSE
@@ -85,6 +88,9 @@ rm -rf -- %buildroot%_datadir
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
+- new version 1.16.0
+
 * Thu Jun 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.15.0-alt1
 - new version 1.15.0
 
