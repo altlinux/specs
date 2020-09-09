@@ -1,11 +1,10 @@
 %define oname pylama
 
-# For a while until update
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
 Version: 7.7.1
-Release: alt1
+Release: alt2
 Summary: pylama -- Code audit tool for python
 License: LGPL
 Group: Development/Python3
@@ -17,10 +16,13 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: git
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-ipdb python3-tools-pep8 python3-pyflakes
-BuildPreReq: pylint-py3 python3-module-nose
-BuildPreReq: python3(pytest)
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-ipdb python3-tools-pep8 python3-pyflakes
+BuildRequires: pylint-py3 python3-module-nose
+BuildRequires: python3(pytest) python3-module-pydocstyle
+
+Conflicts: python-module-pylama < %EVR
+Obsoletes: python-module-pylama < %EVR
 
 %py3_provides %oname
 
@@ -38,11 +40,8 @@ export LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 %python3_install
 
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
+# don't install tests in such directory please
+rm -rf %buildroot%python3_sitelibdir/tests
 
 %check
 python3 setup.py test
@@ -51,9 +50,14 @@ nosetests3
 %files
 %doc AUTHORS Changelog *.rst
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 7.7.1-alt2
+- Fixed installation (Closes: #38890).
+- Build with check.
+
 * Fri Sep 04 2020 Grigory Ustinov <grenka@altlinux.org> 7.7.1-alt1
 - Automatically updated to 7.7.1.
 
