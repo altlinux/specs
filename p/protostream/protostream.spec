@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             protostream
 Version:          3.0.4
-Release:          alt1_7jpp8
+Release:          alt2_7jpp8
 Summary:          Infinispan ProtoStream
 License:          ASL 2.0 and BSD
 Url:              http://infinispan.org/
@@ -40,7 +40,7 @@ BuildRequires:    mvn(org.jboss.logging:jboss-logging)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
 BuildRequires:    mvn(org.jboss.marshalling:jboss-marshalling)
 BuildRequires:    mvn(org.jboss.marshalling:jboss-marshalling-river)
-BuildRequires:    libprotobuf17 protobuf-compiler
+BuildRequires:    protobuf-compiler
 Source44: import.info
 BuildArch: noarch
 
@@ -108,6 +108,9 @@ rm core/src/test/java/org/infinispan/protostream/impl/parser/impl/DescriptorsTes
 %doc --no-dereference LICENSE PROTOPARSER_LICENSE.txt
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_7jpp8
+- fixed build
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1_7jpp8
 - new version
 
