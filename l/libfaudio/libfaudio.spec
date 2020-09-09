@@ -5,18 +5,18 @@
 %def_disable static
 
 Name: libfaudio
-Version: 20.03
+Version: 20.09
 Release: alt0.1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
-License: BSD-like
+License: Zlib
 Group: System/Libraries
 Url: https://github.com/FNA-XNA/FAudio
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libSDL2-devel libavcodec-devel libavutil-devel libswresample-devel
+BuildRequires: libSDL2-devel
 BuildRequires: gcc-c++ cmake chrpath
 
 Packager: L.A. Kostis <lakostis@altlinux.ru>
@@ -79,9 +79,12 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Wed Sep 09 2020 L.A. Kostis <lakostis@altlinux.ru> 20.09-alt0.1
+- 20.09.
+- Update license tag.
+
 * Sun Mar 15 2020 L.A. Kostis <lakostis@altlinux.ru> 20.03-alt0.1
 - 20.03.
 
 * Mon Sep 30 2019 L.A. Kostis <lakostis@altlinux.ru> 19.09-alt0.1.g65b787f
 - Initial build for ALTLinux.
-
