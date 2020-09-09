@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-Ogg-Vorbis-Header-PurePerl
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: An object-oriented interface to Ogg Vorbis
@@ -54,6 +54,9 @@ supports only read operations).
 %perl_vendor_privlib/Ogg*
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
