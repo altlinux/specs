@@ -7,13 +7,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.05
-Release: alt1
+Release: alt2
 Summary: return across multiple call levels
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/M/MA/MAUKE/%{module_name}-%{version}.tar.gz
+Patch0:         Return-MultiLevel-0.05-Test-Fatal-0.016.patch
 BuildArch: noarch
 
 %description
@@ -21,6 +22,10 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{module_name}-%{version}
+
+# Fix compatibility with Test::Fatal ≥ 0.016
+# https://github.com/mauke/Return-MultiLevel/pull/1
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +38,9 @@ BuildArch: noarch
 %perl_vendor_privlib/R*
 
 %changelog
+* Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
+- fixed build
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
