@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gst-plugins
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -11,7 +11,7 @@
 # https://gitlab.freedesktop.org/gstreamer/gst-plugins-base/issues/564
 %def_disable gtk_doc
 %else
-%def_enable gtk_doc
+%def_disable gtk_doc
 %endif
 %def_disable debug
 %def_disable libunwind
@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -46,17 +46,18 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 %define opus_ver 0.9.4
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel gtk-doc
+BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel
 BuildRequires: gstreamer%api_ver-devel >= %version libgstreamer%api_ver-gir-devel
 BuildRequires: libgudev-devel libglvnd-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
-BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
+#BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
 BuildRequires: gobject-introspection-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
 
 %description
@@ -161,8 +162,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_typelibdir/GstAllocators-1.0.typelib
 %_typelibdir/GstApp-%api_ver.typelib
 %_typelibdir/GstAudio-%api_ver.typelib
-%_typelibdir/GstPbutils-%api_ver.typelib
 %_typelibdir/GstGL-%api_ver.typelib
+%_typelibdir/GstGLEGL-%api_ver.typelib
+%_typelibdir/GstGLWayland-%api_ver.typelib
+%_typelibdir/GstGLX11-%api_ver.typelib
+%_typelibdir/GstPbutils-%api_ver.typelib
 %_typelibdir/GstRtp-%api_ver.typelib
 %_typelibdir/GstRtsp-%api_ver.typelib
 %_typelibdir/GstSdp-%api_ver.typelib
@@ -189,6 +193,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/GstApp-%api_ver.gir
 %_girdir/GstAudio-%api_ver.gir
 %_girdir/GstGL-%api_ver.gir
+%_girdir/GstGLEGL-%api_ver.gir
+%_girdir/GstGLWayland-%api_ver.gir
+%_girdir/GstGLX11-%api_ver.gir
 %_girdir/GstPbutils-%api_ver.gir
 %_girdir/GstRtp-%api_ver.gir
 %_girdir/GstRtsp-%api_ver.gir
@@ -198,6 +205,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

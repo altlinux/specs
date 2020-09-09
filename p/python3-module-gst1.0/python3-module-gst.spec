@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gst-python
-%define ver_major 1.16
+%define ver_major 1.18
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
@@ -11,17 +11,16 @@
 %def_enable valgrind
 %endif
 
-Name: python-module-gst%gst_api_ver
-Version: %ver_major.2
-Release: alt4
+Name: python3-module-gst%gst_api_ver
+Version: %ver_major.0
+Release: alt1
 
-Summary: GStreamer overrides for PyGobject
-Group: Development/Python
+Summary: GStreamer overrides for PyGobject3
+Group: Development/Python3
 License: LGPL-2.0-or-later
 Url: http://gstreamer.freedesktop.org/
 
 Provides: %_name = %version-%release
-Provides: python-module-gst = %version-%release
 
 %if_disabled snapshot
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
@@ -29,25 +28,25 @@ Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): meson rpm-build-python rpm-build-gir rpm-macros-valgrind
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
 BuildRequires: orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
-BuildRequires: python-devel python-modules-distutils python-module-pygobject3-devel
-BuildRequires: python-modules-compiler python-module-pytest
+BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
 %if_enabled valgrind
 BuildRequires: valgrind-tool-devel
 %endif
-%{?_enable_check:BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver}
+%{?_enable_check:BuildRequires: /proc gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver}
 
 %description
-This package provides GStreamer overrides for PyGobject.
+This package provides GStreamer overrides for PyGobject3.
+
 
 %prep
 %setup -n %_name-%version
 
 %build
-%meson -Dpython=python2 \
+%meson \
     -Dlibpython-dir=%_libdir \
-    -Dpygi-overrides-dir=%python_sitelibdir/gi/overrides
+    -Dpygi-overrides-dir=%python3_sitelibdir/gi/overrides
 %meson_build
 
 %install
@@ -57,15 +56,13 @@ This package provides GStreamer overrides for PyGobject.
 %meson_test
 
 %files
-%python_sitelibdir/gi/overrides/*
-# gstreamer plugin
-%exclude %_gst_libdir/libgstpython.*
-%doc AUTHORS NEWS
+%_libdir/gstreamer-%gst_api_ver/libgstpython.so
+%python3_sitelibdir/gi/overrides/*
+%doc AUTHORS RELEASE NEWS
 
 %changelog
-* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt4
-- removed python3 subpackage
-- rebuilt with gstreamer-1.18.0
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0 (python3 only)
 
 * Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt3
 - fixed build against python-3.8 with Meson build system (ALT#38178)

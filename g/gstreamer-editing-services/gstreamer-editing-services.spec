@@ -1,12 +1,13 @@
 %define _name ges
-%define ver_major 1.16
+%define new_name gst-editing-services
+%define ver_major 1.18
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
-%def_enable python3
+%def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -14,31 +15,27 @@ Group: System/Libraries
 License: GPLv2+ and LGPLv2+
 Url: http://cgit.freedesktop.org/gstreamer/gst-editing-services/
 
-Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
+Source: http://gstreamer.freedesktop.org/src/%new_name/%new_name-%version.tar.xz
 
 %define gst_ver %version
 
-Requires: lib%_name = %version-%release
+Requires: lib%_name = %EVR
 Requires: gst-validate >= %gst_ver
 
-%if_enabled python3
+Provides: %new_name = %EVR
+
 # use python3
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/gst-validate-launcher/python
-%endif
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
+BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gcc-c++ flex gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver-devel
-BuildRequires: libgst-validate-devel libxml2-devel
+BuildRequires: libgst-devtools-devel libxml2-devel
 BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
-BuildRequires: python-module-pygobject3-devel
-BuildRequires: gtk-doc
-%if_enabled python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-pygobject3-devel
-%endif
+%{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 
 %description
 This is a high-level library for facilitating the creation of audio/video
@@ -57,7 +54,7 @@ the creation of audio/video non-linear editors.
 Summary: Development files for %name
 License: LGPLv2+
 Group: Development/C
-Requires: lib%_name = %version-%release
+Requires: lib%_name = %EVR
 
 %description -n lib%_name-devel
 This package provides libraries and header files for developing
@@ -76,7 +73,7 @@ that use GStreamer Editing Services library.
 %package -n lib%_name-gir
 Summary: GObject introspection data for the GES
 Group: System/Libraries
-Requires: lib%_name = %version-%release
+Requires: lib%_name = %EVR
 
 %description -n lib%_name-gir
 GObject introspection data for the GStreamer Editing Services library.
@@ -85,40 +82,36 @@ GObject introspection data for the GStreamer Editing Services library.
 Summary: GObject introspection devel data for the GES
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%_name-gir = %version-%release
-Requires: lib%_name-devel = %version-%release
+Requires: lib%_name-gir = %EVR
+Requires: lib%_name-devel = %EVR
 
 %description -n lib%_name-gir-devel
 GObject introspection devel data for the GStreamer Editing Services
 library.
 
-
 %prep
-%setup
+%setup -n %new_name-%version
 
 %build
-%autoreconf
-%configure --enable-gtk-doc \
-	%{?_enable_python3:PYTHON=python3}
-%make_build
+%meson %{?_enable_doc:-Ddoc=disabled}
+%meson_build
 
 %install
-%makeinstall_std pyexecdir=%python3_sitelibdir
+%meson_install
 
 %files
 %_bindir/%_name-launch-%api_ver
 %_datadir/gstreamer-%gst_api_ver/validate/scenarios/*.scenario
 %_libdir/gstreamer-%gst_api_ver/libgstges.so
 %_libdir/gstreamer-%gst_api_ver/libgstnle.so
-%_datadir/bash-completion/completions/%_name-launch-%api_ver
+#%_datadir/bash-completion/completions/%_name-launch-%api_ver
 %_man1dir/%_name-launch-*
 # gi overrides
-%python3_sitelibdir/%name/
+%python3_sitelibdir/gi/overrides/*
 %doc ChangeLog README RELEASE NEWS AUTHORS
 
 # for tests only?
 %exclude %_libdir/gst-validate-launcher/python/*
-%exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 %files -n lib%_name
 %_libdir/lib%_name-%api_ver.so.*
@@ -134,10 +127,15 @@ library.
 %files -n lib%_name-gir-devel
 %_girdir/GES-%api_ver.gir
 
+%if_enabled gtk_doc
 %files -n lib%_name-devel-doc
 %_datadir/gtk-doc/html/%_name-%api_ver/
+%endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0 (ported to Meson build system)
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

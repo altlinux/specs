@@ -1,9 +1,9 @@
-%define ver_major 1.16
+%define ver_major 1.18
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
 # was 11.4 for libav fork
-%define libav_ver 4.0.2
+%define libav_ver 4.3
 
 %ifarch %ix86 x86_64
 %def_enable mmx
@@ -11,6 +11,7 @@
 %def_disable mmx
 %endif
 
+%def_disable doc
 %def_with system_libav
 
 %if_without system_libav
@@ -55,18 +56,21 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
-License: GPL
+License: LGPL-2.1
 Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ orc
 BuildRequires: gst-plugins%gst_api_ver-devel >= %version
-BuildRequires: orc liborc-test-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
+BuildRequires: liborc-test-devel zlib-devel bzlib-devel liblzma-devel
+%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 %if_with system_libav
 BuildRequires: libavformat-devel >= %libav_ver
 BuildRequires: libswscale-devel libavresample-devel libavfilter-devel
@@ -75,9 +79,6 @@ BuildRequires: glibc-devel-static
 BuildRequires: libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires: libalsa-devel
 BuildRequires: libbluray-devel libass-devel
-%if_with doc
-BuildRequires: perl-podlators texi2html
-%endif
 %ifarch %ix86 x86_64
 BuildRequires: yasm
 %endif
@@ -130,25 +131,26 @@ plug-in.
 %setup
 
 %build
-%autoreconf
-%configure \
-    --disable-static \
-    %{?_with_system_libav:--with-system-libav}
 
-%make_build
+%meson %{?_disable_doc:-Ddoc=disabled}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_gst_libdir/*.so
-%exclude %_gst_libdir/*.la
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README* RELEASE
 
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
+%endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0 (ported to Meson build system)
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

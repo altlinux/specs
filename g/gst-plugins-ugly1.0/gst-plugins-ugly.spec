@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -32,10 +32,11 @@ Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.ta
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= %version
-BuildRequires: gtk-doc liba52-devel libcdio-devel libid3tag-devel
+BuildRequires: liba52-devel libcdio-devel libid3tag-devel
 BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
-BuildRequires: python-module-PyXML python-modules-encodings python-modules-distutils
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_check:BuildRequires: /proc gstreamer%api_ver-utils}
 
 %description
 GStreamer Ugly Plug-ins is a set of plug-ins that have good quality
@@ -85,6 +86,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

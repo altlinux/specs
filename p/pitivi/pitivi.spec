@@ -1,16 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 0.999
+%define ver_major 1.90
 %define api_ver 1.0
 %define gst_api_ver 1.0
-# gst-transcoder version
-%define gst_ver 1.14.1
+%define gst_ver 1.17.90
 %define gtk_ver 3.20
 %define gi_ver 1.32
 
+%define xdg_name org.pitivi.Pitivi
+
 Name: pitivi
-Version: %ver_major
-Release: alt2
+Version: %ver_major.0.1
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -24,8 +25,6 @@ Source: %name-%version.tar
 %endif
 Patch: pitivi-0.999-py38.patch
 
-Requires: gst-transcoder = %gst_ver-%release
-
 # use python3
 AutoReqProv: nopython
 %define __python %nil
@@ -36,7 +35,7 @@ AutoReqProv: nopython
 
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
-Requires: gst-validate
+Requires: gst-devtools
 Requires: gst-libav >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
@@ -44,55 +43,27 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: git meson gtk-doc python3-module-nose2
-BuildRequires: intltool yelp-tools rpm-build-gir libappstream-glib-devel libcairo-devel
+BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
+BuildRequires: desktop-file-utils gtk-doc python3-module-nose2
+BuildRequires: yelp-tools libappstream-glib-devel libcairo-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
-BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
-BuildRequires: gst-validate libgtk+3-gir-devel
+BuildRequires: gst-devtools libgtk+3-gir-devel
 
 %description
 Pitivi is a video editor built upon the GStreamer Editing Services.
 It aims to be an intuitive and flexible application that can appeal to
 newbies and professionals alike.
 
-%package -n gst-transcoder
-Version: %gst_ver
-Summary: GStreamer Transcoding library
-Group: System/Libraries
-
-%description -n gst-transcoder
-This package provides GStreamer Transcoding library, tool and
-GStreamer plugin.
-
-%package -n gst-transcoder-devel
-Version: %gst_ver
-Summary: Development files for GStreamer Transcoder
-Group: Development/C
-Requires: gst-transcoder = %gst_ver-%release
-
-%description -n gst-transcoder-devel
-This package provides development files for GStreamer Transcoder.
-
-%package -n gst-transcoder-devel-doc
-Version: %gst_ver
-Summary: Development documentation for GStreamer Transcoder
-Group: Development/Documentation
-Conflicts: gst-transcoder-devel < %gst_ver
-
-%description -n gst-transcoder-devel-doc
-This package provides development documentation for GStreamer Transcoder.
-
-
 %prep
 %setup
 %patch -p1
 
 %build
-%meson --wrap-mode=default
+%meson
 %meson_build
 
 %install
@@ -104,29 +75,18 @@ This package provides development documentation for GStreamer Transcoder.
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name/
-%_datadir/gstreamer-%gst_api_ver/encoding-profiles/
-%_desktopdir/*.desktop
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/appdata/*.appdata.xml
-%_datadir/mime/packages/*-mime.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/mime/packages/%xdg_name-mime.xml
 
-%files -n gst-transcoder
-%_bindir/gst-transcoder-%api_ver
-%_libdir/libgsttranscoder-%api_ver.so.0
-%_typelibdir/GstTranscoder-%api_ver.typelib
-%_libdir/gstreamer-%gst_api_ver/libgsttranscode.so
-%doc AUTHORS NEWS
-
-%files -n gst-transcoder-devel
-%_libdir/libgsttranscoder-%api_ver.so
-%_pkgconfigdir/gst-transcoder-%api_ver.pc
-%_includedir/gstreamer-%api_ver/gst/transcoder/
-%_girdir/GstTranscoder-%api_ver.gir
-
-%files -n gst-transcoder-devel-doc
-%_datadir/gtk-doc/html/gstreamer-transcoder/
 
 %changelog
+* Wed Sep 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.90.0.1-alt1
+- updated to 0.98-1210-g5cfb4060 from master branch
+- removed gst-transcoder* subpackages, GstTranscoder is a part of gst-plugins-bad-1.18
+- updated BR
+
 * Wed Feb 26 2020 Grigory Ustinov <grenka@altlinux.org> 0.999-alt2
 - Fix build with python3.8.
 

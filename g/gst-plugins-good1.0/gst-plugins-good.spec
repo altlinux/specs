@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -33,10 +33,9 @@ Provides: %_name-good = %version-%release
 
 BuildRequires(pre): meson
 BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %version
-BuildRequires: gtk-doc libSM-devel libXdamage-devel libXext-devel libXfixes-devel
+BuildRequires: libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
-BuildRequires: python-module-PyXML python-modules-email python-modules-encodings python-modules-distutils
 BuildRequires: liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 BuildRequires: libmpg123-devel liblame-devel libtwolame-devel
@@ -45,8 +44,9 @@ BuildRequires: liborc-test-devel
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
-%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
-%{?_enable_check:BuildRequires: /proc gstreamer%api_ver}
+%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
+%{?_enable_gtk_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
+%{?_enable_check:BuildRequires: /proc gstreamer%api_ver %_bindir/gst-tester-%api_ver}
 
 %description
 GStreamer Good Plug-ins is is a set of plug-ins that the developers consider
@@ -109,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

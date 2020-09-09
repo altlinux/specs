@@ -1,34 +1,36 @@
 %define _name gst-rtsp-server
-%define ver_major 1.16
+%define ver_major 1.18
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
-%def_enable gtk_doc
+%def_disable doc
 %def_enable introspection
 %def_with tests_package
+%{?_with_test_package:%def_enable examples}
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
 Group: System/Libraries
 License: LGPLv2+
-Url: http://gstreamer.freedesktop.org/modules/%_name-server.html
+Url: https://gstreamer.freedesktop.org/modules/%_name-server.html
 
-Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
+Source: https://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 
-%define glib_ver 2.32.0
+%define glib_ver 2.44.0
 %define gst_ver %version
 
 Requires: gst-plugins-base%api_ver >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver
 
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: gstreamer%api_ver-devel >= %gst_ver
-BuildPreReq: gst-plugins%api_ver-devel >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver-devel
-BuildRequires: gtk-doc
-BuildRequires: gobject-introspection-devel gst-plugins%api_ver-gir-devel
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: gstreamer%api_ver-devel >= %gst_ver
+BuildRequires: gst-plugins%api_ver-devel >= %gst_ver gst-plugins-good%api_ver gst-plugins-bad%api_ver-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel gst-plugins%api_ver-gir-devel}
 BuildRequires: libcgroup-devel
+%{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 
 %description
 A GStreamer-based RTSP server library.
@@ -81,46 +83,47 @@ the functionality of the GStreamer-based RTSP server library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
 
-%make_build
+%meson \
+	%{?_disable_introspection:-Dintrospection=disabled} \
+	%{?_disable_doc:-Ddoc=disabled} \
+	%{?_enable_examples:-Dexamples=enabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %if_with tests_package
 mkdir -p %buildroot%_bindir
-pushd examples/.libs
-for f in test-*; do
-    install -pm755 $f %buildroot%_bindir/gst-rtsp-$f
-done
+pushd %{_target_platform}/examples
+for f in test-* ; do
+[ -f $f ] && install -pm755 $f %buildroot%_bindir/gst-rtsp-$f; done
 popd
 %endif
 
 %files
 %_libdir/libgstrtspserver-%api_ver.so.*
 %_libdir/gstreamer-%gst_api_ver/libgstrtspclientsink.so
-%doc README TODO NEWS
-
-%exclude %_libdir/gstreamer-%gst_api_ver/*.la
+%doc README TODO NEWS RELEASE
 
 %files devel
 %_includedir/gstreamer-%api_ver/gst/*
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
+%if_enabled doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name-%api_ver/
+%endif
 
+%if_enabled introspection
 %files gir
 %_typelibdir/GstRtspServer-%api_ver.typelib
 
 %files gir-devel
 %_girdir/GstRtspServer-%api_ver.gir
+%endif
 
 %if_with tests_package
 %files tests
@@ -128,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0 (ported to Meson build system)
+
 * Wed Dec 04 2019 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
