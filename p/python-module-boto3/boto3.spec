@@ -5,34 +5,34 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.29
+Version: 1.14.56
 Release: alt1
 Summary: The AWS SDK for Python
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python
+Url: https://pypi.org/project/boto3/
+
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/boto3/
 
 # https://github.com/boto/boto3.git
 Source: %name-%version.tar
 Patch1: %oname-alt-docs.patch
+Patch2: %oname-alt-unvendor.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel python-module-setuptools python-module-unittest2 python-module-mock
 BuildRequires: python-module-botocore python-module-html5lib python-module-nose python-module-pbr
-BuildRequires: python-module-futures
 BuildRequires: python-module-alabaster python-module-guzzle_sphinx_theme python-module-objects.inv
 BuildRequires: python2.7(s3transfer)
+BuildRequires: python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2 python3-module-mock
 BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-sphinx
 BuildRequires: python3(s3transfer)
+BuildRequires: python3(six)
 %endif
-
-%py_provides %oname
-%py_requires concurrent.futures
 
 %description
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -46,7 +46,6 @@ pull requests on this repository. Thanks!
 %package -n python3-module-%oname
 Summary: The AWS SDK for Python
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -71,7 +70,6 @@ This package contains pickles for %oname.
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
-BuildArch: noarch
 
 %description docs
 Boto is the Amazon Web Services (AWS) Software Development Kit (SDK) for
@@ -83,6 +81,7 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -116,33 +115,44 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
+# skip tests depending on network
 rm -rf tests/integration
 nosetests
+
 %if_with python3
 pushd ../python3
+# skip tests depending on network
 rm -rf tests/integration
+
 nosetests3
 popd
 %endif
 
 %files
+%doc LICENSE
 %doc *.rst
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
+%doc LICENSE
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.56-alt1
+- Updated to upstream version 1.14.56.
+
 * Wed May 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.29-alt1
 - Updated to upstream version 1.7.29.
 

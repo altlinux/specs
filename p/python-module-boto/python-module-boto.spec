@@ -1,27 +1,40 @@
-%define pkgname boto
+%define _unpackaged_files_terminate_build 1
+
 %def_with python3
 
+%define oname boto
+
 Summary: A simple lightweight interface to Amazon Web Services
-Name: python-module-%{pkgname}
-Version: 2.38.0
-Release: alt2
+Name: python-module-%oname
+Version: 2.49.0
+Release: alt1
 License: MIT
 Group: Development/Python
 Url: https://github.com/boto/boto
 
+BuildArch: noarch
+
+# https://github.com/boto/boto.git
 Source: %name-%version.tar
-Patch0: python-boto.vendored.six-remove.patch
-Patch1: %name-%version-fedora-test.patch
+Patch1: python-boto.vendored.six-remove.patch
+Patch2: boto-python3.8-compat.patch
 
 BuildRequires: python-devel
 BuildRequires: python-module-nose
 BuildRequires: python-module-mock
 BuildRequires: python-module-httpretty
 BuildRequires: python-module-requests
-BuildArch: noarch
 
-%add_findreq_skiplist %python_sitelibdir/%{pkgname}/mashups/order.py
-%add_findreq_skiplist %python3_sitelibdir/%{pkgname}/mashups/order.py
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-httpretty
+BuildRequires: python3-module-requests
+%endif
+
+%add_findreq_skiplist %python_sitelibdir/%oname/mashups/order.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/mashups/order.py
 
 %description
 Boto is a Python package that provides interfaces to Amazon Web Services.
@@ -30,36 +43,30 @@ the REST API's provided by those services and EC2 (Elastic Compute Cloud)
 via the Query API. The goal of boto is to provide a very simple, easy to
 use, lightweight wrapper around the Amazon services.
 
-
 %if_with python3
-%package -n python3-module-%{pkgname}
-Summary:        A simple lightweight interface to Amazon Web Services
-Group:		Development/Python
-BuildArch:      noarch
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-nose
-BuildRequires:  python3-module-mock
-BuildRequires:  python3-module-httpretty
-BuildRequires:  python3-module-requests
-BuildRequires:  python-tools-2to3
+%package -n python3-module-%oname
+Summary: A simple lightweight interface to Amazon Web Services
+Group: Development/Python3
+%add_python3_req_skip Queue StringIO httplib urlparse
 
-%description -n python3-module-%{pkgname}
+%description -n python3-module-%oname
 Boto is a Python package that provides interfaces to Amazon Web Services.
 It supports S3 (Simple Storage Service), SQS (Simple Queue Service) via
 the REST API's provided by those services and EC2 (Elastic Compute Cloud)
 via the Query API. The goal of boto is to provide a very simple, easy to
 use, lightweight wrapper around the Amazon services.
-
 %endif
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+pushd ../python3
+%patch2 -p1
+popd
 %endif
 
 %build
@@ -67,7 +74,6 @@ cp -a . ../python3
 
 %if_with python3
 pushd ../python3
-2to3 --write --nobackups .
 %python3_build
 popd
 %endif
@@ -77,9 +83,9 @@ popd
 pushd ../python3
 %python3_install
 popd
-%endif
 
 rm -fv %buildroot/usr/bin/*
+%endif
 
 %python_install
 
@@ -114,14 +120,19 @@ popd
 %{_bindir}/s3put
 %{_bindir}/sdbadmin
 %{_bindir}/taskadmin
-%{python_sitelibdir}/boto*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 
 %if_with python3
 %files -n python3-module-boto
-%{python3_sitelibdir}/boto*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.49.0-alt1
+- Updated to upstream version 2.49.0.
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.38.0-alt2
 - Fixed build.
 
