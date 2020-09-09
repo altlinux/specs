@@ -25,7 +25,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -63,7 +63,7 @@ BuildRequires: mvn(org.apache.zookeeper:zookeeper)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
-BuildRequires: libprotobuf17 protobuf-compiler
+BuildRequires: protobuf-compiler
 
 %if %{with test}
 BuildRequires: mvn(commons-codec:commons-codec)
@@ -366,6 +366,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt2_7jpp8
+- fixed build
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_7jpp8
 - new version
 
