@@ -7,14 +7,18 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1_15
+Release:        alt1_19
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Module-Manifest-Skip
 Source0:        https://cpan.metacpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
+# Adapt to changes in Moo-2.004000, bug #1826148,
+# <https://github.com/ingydotnet/module-manifest-skip-pm/issues/7>
+Patch0:         Module-Manifest-Skip-0.23-Adapt-to-changes-in-Moo-2.004000.patch
 BuildArch:      noarch
-BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/ShareDir/Install.pm)
 BuildRequires:  perl(strict.pm)
@@ -52,24 +56,29 @@ possible.
 
 %prep
 %setup -q -n Module-Manifest-Skip-%{version}
+%patch0 -p1
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor
-%make_build
+perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+%{makeinstall_std}
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
+unset RELEASE_TESTING
 make test
 
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc --no-dereference LICENSE
+%doc Changes CONTRIBUTING README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_19
+- fixed build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_15
 - update to new release by fcimport
 
