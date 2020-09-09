@@ -1,10 +1,14 @@
+%def_disable static
 %define gecko_version 2.47.1
 %define mono_version 5.1.0
 
+# rpm-build-info gives _distro_version
+%if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
 %def_with vkd3d
 %def_with faudio
+%endif
 
 # get name of package owning specific file.
 # this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
@@ -13,7 +17,7 @@
 
 Name: wine-vanilla
 Version: 5.16
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -57,7 +61,7 @@ BuildRequires: gcc
 
 
 # General dependencies
-BuildRequires: rpm-build-intro >= 1.0
+BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
@@ -464,11 +468,17 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_man1dir/winemaker.*
 
 
+%if_enabled static
 %files -n lib%name-devel-static
 %_libdir/wine/lib*.a
 %exclude %_libdir/wine/libwinecrt0.a
+%endif
 
 %changelog
+* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt2
+- build vulkan only for p9 and Sisyphus
+- disable static package
+
 * Sun Aug 30 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt1
 - new version 5.16
 
