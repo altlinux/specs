@@ -1,8 +1,10 @@
 %define oname cryptography
 
+%def_disable test
+
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -50,7 +52,7 @@ digests and key derivation functions.
 
 %if_enabled test
 %check
-python3 setup.py test
+py.test3
 %endif
 
 
@@ -59,6 +61,9 @@ python3 setup.py test
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Sep 9 2020 Vladimir Didenko <cow@altlinux.ru> 3.1-alt1
+- new version (3.1)
+
 * Mon Aug 03 2020 Stanislav Levin <slev@altlinux.org> 3.0-alt2
 - Added missing runtime dependency on cffi.
 
