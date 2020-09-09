@@ -1,5 +1,5 @@
 Name:		capnproto
-Version:	0.6.1
+Version:	0.8.0
 Release:	alt1
 Summary:	A data interchange format and capability-based RPC system
 License:	MIT
@@ -65,10 +65,12 @@ subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 %_includedir/*
 %_libdir/*.a
 %_libdir/pkgconfig/*.pc
-# not created if cmake is not used
-#%_libdir/cmake/CapnProto/
+%_libdir/cmake/CapnProto/
 
 %changelog
+* Thu Jan 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1
+- Updated to upstream version 0.8.0.
+
 * Thu Jun 14 2018 Vitaly Chikunov <vt@altlinux.ru> 0.6.1-alt1
 - Initial build of capnproto for ALT.
 
