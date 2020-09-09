@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ qt5-base-devel qt5-declarative-devel qt5-script-devel qt5
 Name: lcd-image-converter
 # NOTE: run .gear/update-revision.h.sh after git pull!
 # NOTE: timestamp is from last git commit
-Version: 2.1.0.20190317
+Version: 2.1.0.20200816
 Release: alt1
 Summary: Tool to create bitmaps and fonts for embedded applications
 Group: Other
@@ -77,6 +77,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.1.0.20200816-alt1
+- git update
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0.20190317-alt1
 - initial import by package builder
 
