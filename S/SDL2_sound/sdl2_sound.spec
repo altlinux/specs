@@ -1,4 +1,3 @@
-BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: /usr/bin/doxygen gcc-c++
@@ -21,7 +20,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 
 Name:           SDL2_sound
 Version:        1.0.4
-Release:        alt1_%{rel}.%{hgrev}
+Release:        alt2_%{rel}.%{hgrev}
 Summary:        An abstract SDL2 sound-file decoder
 License:        zlib
 Group:          System/Libraries
@@ -39,7 +38,6 @@ BuildRequires:  pkgconfig(speex)
 BuildRequires:  pkgconfig(physfs)
 
 Conflicts:      libSDL_sound < 1.0.4
-Obsoletes:      SDL2_sound < 1.0.4-0.hg653.2
 Source44: import.info
 
 %description
@@ -68,10 +66,6 @@ Obsoletes:      %{_lib}SDL2_sound1 < 1.0.4-0.hg653.2
 Summary:        Development files for SDL2_sound applications
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
-Provides:       SDL2_sound-devel = %{version}-%{release}
-Provides:       lib%{oldname}-devel = %{version}-%{release}
-Provides:       %{oldname}-devel = %{version}-%{release}
-Obsoletes:      %{_lib}SDL2_sound-devel < 1.0.4-0.hg653.2
 
 
 %description -n %{develname}
@@ -106,10 +100,6 @@ export CFLAGS="%{optflags} -lm"
 
 %install
 %mageia_cmake_install
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
-done
 
 %files
 %doc LICENSE.txt docs/CREDITS.txt
@@ -128,6 +118,9 @@ done
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_5.hg653
+- fixed build
+
 * Fri Mar 27 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5.hg653
 - Sisyphus build
 
