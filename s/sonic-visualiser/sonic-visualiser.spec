@@ -1,5 +1,5 @@
 Name: sonic-visualiser
-Version: 3.3
+Version: 4.2
 Release: alt1
 
 Summary: Application for viewing and analysing the contents of music audio files
@@ -39,6 +39,11 @@ file.
 %setup
 %patch0 -p2
 %patch1 -p2
+
+# disable fileio tests om ppc64le
+%ifarch ppc64le
+sed -i '/[[:space:]]sub_test_svcore_data_fileio[[:space:]]/d' sonic-visualiser.pro
+%endif
 
 %build
 %autoreconf
@@ -81,6 +86,9 @@ install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/app
 %_datadir/mimelnk/application/x-sonicvisualiser*
 
 %changelog
+* Wed Sep 09 2020 Sergey V Turchin <zerg@altlinux.org> 4.2-alt1
+- New version.
+
 * Wed May 22 2019 Grigory Ustinov <grenka@altlinux.org> 3.3-alt1
 - Build new version.
 
