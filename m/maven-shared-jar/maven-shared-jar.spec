@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           maven-shared-jar
 Version:        1.2
-Release:        alt1_7jpp8
+Release:        alt2_7jpp8
 # Maven-shared defines maven-shared-jar version as 1.1
 Epoch:          1
 Summary:        Maven JAR Utilities
@@ -30,8 +30,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-digest)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
-Obsoletes:      maven-shared-jar < %{epoch}:%{version}-%{release} 
-Provides:       maven-shared-jar = %{epoch}:%{version}-%{release}
+#Obsoletes:      maven-shared-jar < %{epoch}:%{version}-%{release} 
+#Provides:       maven-shared-jar = %{epoch}:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -69,6 +69,9 @@ find -type f -iname '*.jar' -delete
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt2_7jpp8
+- fixed build
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_7jpp8
 - fc update & java 8 build
 
