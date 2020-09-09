@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.232
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -127,6 +127,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Wed Sep 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.232-alt2
+- add vzubc utility from vzctl 4.11.1
+
 * Fri Sep 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.232-alt1
 - 7.0.232
 
