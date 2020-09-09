@@ -9,7 +9,7 @@
 Summary:	Rio Karma tools
 Name:		libkarma
 Version:	0.1.2
-Release:	alt1_9
+Release:	alt1_12
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://www.freakysoft.de/html/libkarma/
@@ -38,8 +38,8 @@ Rio Karma access library.
 Summary:	Rio Karma development files
 Group:		Development/C
 Requires:	%libname = %version
-Provides:	%name-devel = %version-%release
-Obsoletes:	%name-devel < %version-%release
+Provides:	karma-devel = %version-%release
+Obsoletes:	karma-devel < %version-%release
 Obsoletes:	%{_lib}karma0-devel < %version-%release
 
 %description -n	%develname
@@ -67,7 +67,7 @@ make PREFIX=$RPM_BUILD_ROOT/%_prefix
 mkdir -p $RPM_BUILD_ROOT
 make install PREFIX=$RPM_BUILD_ROOT/%_prefix CHOWNPROG=/bin/true CHGRPPROG=/bin/true
 perl -pi -e "s^%buildroot^^" %buildroot%_prefix/lib/pkgconfig/karma-sharp.pc
-%if %_lib != lib
+%if "%_lib" != "lib"
 mv %buildroot%_prefix/lib %buildroot%_libdir
 perl -pi -e "s^/lib^/%_lib^" %buildroot%_libdir/pkgconfig/karma-sharp.pc
 %endif
@@ -112,6 +112,9 @@ install -m 644 %SOURCE4 %buildroot%_libdir/karma-sharp/karma-sharp.dll.config
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_12
+- fixed build
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_9
 - new version
 
