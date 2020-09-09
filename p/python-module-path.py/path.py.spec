@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname path.py
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 11.5.0
-Release: alt2
+Release: alt3
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -87,6 +87,9 @@ export TOXENV=py%{python_version_nodots python}
 %python_sitelibdir/path.py-%version-py%_python_version.egg-info/
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 11.5.0-alt3
+- Disabled testing.
+
 * Mon Apr 22 2019 Stanislav Levin <slev@altlinux.org> 11.5.0-alt2
 - Moved Python3 package out.
 

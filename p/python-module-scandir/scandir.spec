@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname scandir
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: A better directory iterator and faster os.walk() for Python
 License: BSD
@@ -51,6 +51,9 @@ tox --sitepackages -e py%{python_version_nodots python} -v
 %python_sitelibdir/scandir-*.egg-info/
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 1.10.0-alt2
+- Disabled testing.
+
 * Sun Mar 17 2019 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
 - 1.9.0 -> 1.10.0.
 

@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/epydoc /usr/bin/gem /usr/bin/go /usr/bin/mvn /usr/bin/php /usr/bin/php-config /usr/bin/rspec /usr/bin/ruby /usr/bin/sphinx-build /usr/bin/swig /usr/bin/tox /usr/bin/valgrind /usr/sbin/saslpasswd2 gcc-c++ java-devel-default libruby-devel libsasl2-devel perl(ExtUtils/MakeMaker.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Switch.pm) perl(overload.pm) perl-devel python-devel rpm-build-java rpm-build-python rpm-build-ruby swig
+BuildRequires: /usr/bin/doxygen /usr/bin/epydoc /usr/bin/gem /usr/bin/go /usr/bin/mvn /usr/bin/php /usr/bin/php-config /usr/bin/rspec /usr/bin/ruby /usr/bin/sphinx-build /usr/bin/swig /usr/bin/valgrind /usr/sbin/saslpasswd2 gcc-c++ java-devel-default libruby-devel libsasl2-devel perl(ExtUtils/MakeMaker.pm) perl(Pod/Usage.pm) perl(Scalar/Util.pm) perl(Switch.pm) perl(overload.pm) perl-devel python-devel rpm-build-java rpm-build-python rpm-build-ruby swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-1.8-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          qpid-proton-java
 Version:       0.12.2
-Release:       alt3_5jpp8
+Release:       alt4_5jpp8
 Summary:       Java libraries for Qpid Proton
 License:       ASL 2.0
 URL:           http://qpid.apache.org/proton/
@@ -73,6 +73,9 @@ rm contrib/proton-hawtdispatch/src/test/java/org/apache/qpid/proton/hawtdispatch
 %doc --no-dereference proton-j/LICENSE
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 0.12.2-alt4_5jpp8
+- Dropped dependency on python-tox.
+
 * Mon Jul 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt3_5jpp8
  -build with mockito1
 

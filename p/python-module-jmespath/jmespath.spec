@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-sphinx python-module-guzzle_sphinx_theme
-BuildRequires: python-module-nose python-module-setuptools python-module-tox
+BuildRequires: python-module-nose python-module-setuptools
 BuildRequires: python-module-hypothesis
 
 %description
@@ -64,6 +64,9 @@ PYTHONPATH=$(pwd) py.test ||:
 %doc docs/_build/html/*
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 0.9.5-alt2
+- Dropped dependency on python-tox.
+
 * Tue Mar 24 2020 Alexey Shabalin <shaba@altlinux.org> 0.9.5-alt1
 - new version 0.9.5
 - build python2 only

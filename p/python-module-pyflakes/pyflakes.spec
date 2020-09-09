@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pyflakes
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt2
+Release: alt3
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
@@ -68,6 +68,9 @@ tox --sitepackages -p auto -o -v
 
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 2.1.1-alt3
+- Disabled testing.
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.1.1-alt2
 - Rebuild with new setuptools
 - python3 support removed (built separately).

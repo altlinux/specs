@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pluggy
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
 Version: 0.13.0
-Release: alt2
+Release: alt3
 
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
@@ -75,6 +75,9 @@ tox --sitepackages -p auto -o -v -r
 
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 0.13.0-alt3
+- Disabled testing.
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.13.0-alt2
 - python3 support removed (built separately).
 

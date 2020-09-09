@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -25,10 +25,6 @@ BuildRequires: python-devel
 BuildRequires: python3-dev
 
 %if_with check
-BuildRequires: python-module-tox
-BuildRequires: python-module-zope.event
-BuildRequires: python-module-coverage
-BuildRequires: python-module-zope.testing
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.event
 BuildRequires: python3-module-coverage
@@ -111,11 +107,6 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PIP_INDEX_URL=http://host.invalid./
-# copy necessary exec deps
-tox --sitepackages -e py%{python_version_nodots python} --notest
-cp -f %_bindir/coverage .tox/py%{python_version_nodots python}/bin/
-tox --sitepackages -e py%{python_version_nodots python} -v -- -v
-
 pushd ../python3
 # copy necessary exec deps
 tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
@@ -153,6 +144,9 @@ popd
 %python3_sitelibdir/zope/interface/common/tests
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 5.1.0-alt2
+- Disabled testing against Python2.
+
 * Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 

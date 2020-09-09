@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
-Version: 0.10.0
-Release: alt4
+Name: python3-module-%oname
+Version: 0.10.1
+Release: alt1
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/uiri/toml.git
 Url: https://pypi.org/project/toml/
 
@@ -19,25 +19,15 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(pytest_cov)
-BuildRequires: python3(pytest_cov)
+BuildRequires: golang-github-burntsushi-toml-test
+BuildRequires: python3(numpy)
 BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
+%py3_requires numpy
 
 %description
-TOML aims to be a minimal configuration file format that's easy to read due to
-obvious semantics. TOML is designed to map unambiguously to a hash table. TOML
-should be easy to parse into data structures in a wide variety of languages.
-This package loads toml file into python dictionary and dump dictionary into
-toml file.
-
-%package -n python3-module-%oname
-Summary: A Python3 library for parsing and creating TOML.
-Group: Development/Python3
-
-%description -n python3-module-%oname
 TOML aims to be a minimal configuration file format that's easy to read due to
 obvious semantics. TOML is designed to map unambiguously to a hash table. TOML
 should be easy to parse into data structures in a wide variety of languages.
@@ -47,46 +37,36 @@ toml file.
 %prep
 %setup
 %patch -p1
-rm -rf ../python3
-cp -a . ../python3
 
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-pushd ../python3
 %python3_install
-popd
-
-%python_install
 
 %check
+ln -s %_datadir/toml-test toml-test
 sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
+    py3: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
-%python_sitelibdir/toml/
-%python_sitelibdir/toml-*.egg-info/
-
-%files -n python3-module-%oname
 %python3_sitelibdir/toml/
 %python3_sitelibdir/toml-*.egg-info/
 
 %changelog
+* Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.10.0 -> 0.10.1.
+- Built Python3 module from its own src package.
+
 * Mon Apr 27 2020 Stanislav Levin <slev@altlinux.org> 0.10.0-alt4
 - Applied upstream fix.
 

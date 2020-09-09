@@ -12,13 +12,17 @@ a minimal and fast API targetting the following uses: \
 
 %if "-docs"!=""
 %def_without check
-%else
+%endif
+
+%if ""=="3"
 %def_with check
+%else
+%def_without check
 %endif
 
 Name: %fname-docs
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 %if "-docs"==""
 Summary: Rapid multi-Python deployment
@@ -151,6 +155,9 @@ TOXENV=py%{python_version_nodots python} tox --sitepackages -rv
 %endif
 
 %changelog
+* Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
+- Disabled testing against Python2.
+
 * Wed Aug 21 2019 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.1 -> 1.7.0.
 
