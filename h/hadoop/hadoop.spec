@@ -26,7 +26,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:   hadoop
 Version: 2.7.6
-Release: alt4_5jpp8
+Release: alt5_5jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -184,7 +184,7 @@ BuildRequires: objectweb-asm
 BuildRequires: objenesis >= 1.2
 BuildRequires: libssl-devel
 BuildRequires: paranamer
-BuildRequires: libprotobuf17 protobuf-compiler
+BuildRequires: protobuf-compiler
 BuildRequires: protobuf-java
 BuildRequires: relaxngDatatype
 BuildRequires: servlet3
@@ -1146,6 +1146,9 @@ fi
 # %%attr(6010,root,yarn) %%{_bindir}/container-executor
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt5_5jpp8
+- fixed build
+
 * Thu Mar 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt4_5jpp8
 - fixed build
 
