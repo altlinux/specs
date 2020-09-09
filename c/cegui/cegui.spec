@@ -7,12 +7,14 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake glib2-devel 
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt5_14
+Release:        alt6_14
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 License:        MIT
 URL:            http://www.cegui.org.uk
 Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Patch0:         cegui-0.8.4-lua53.patch
+
+ExcludeArch: %arm
 
 BuildRequires:  gcc-c++
 %ifnarch %e2k
@@ -75,7 +77,6 @@ Development files for cegui
 Group: Documentation
 Summary:        API documentation for cegui
 Requires:       cegui = %{version}-%{release}
-BuildArch:      noarch
 
 %description devel-doc
 API and Falagard skinning documentation for cegui
@@ -265,6 +266,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
 
 %changelog
+* Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt6_14
+- Rebuilt with new boost.
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.8.7-alt5_14
 - E2K: fix deps without devil
 
