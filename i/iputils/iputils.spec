@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20200821
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+ and Rdisc
@@ -12,6 +12,11 @@ Source0: %name-%version.tar
 Source1: ping.control
 Source2: ninfod.init
 Patch: %name-%version-%release.patch
+
+# Patches from upstream git.
+# Drop them when new version will be released.
+Patch100: common-fix-infinite-loop-when-getrandom-fails.patch
+Patch101: ping-fix-dead-loop-problem.patch
 
 Conflicts: netkit-base
 
@@ -51,6 +56,8 @@ Queries.
 %prep
 %setup
 %patch -p1
+%patch100 -p1
+%patch101 -p1
 
 %build
 %add_optflags -fno-strict-aliasing -Wstrict-prototypes -Werror
@@ -151,6 +158,11 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Wed Sep 09 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt2
+- Patches from upstream:
+    + common: fix infinite loop when getrandom fails;
+    + ping: fix dead loop problem.
+
 * Tue Aug 25 2020 Mikhail Efremov <sem@altlinux.org> 20200821-alt1
 - Dropped libsysfs-devel from BR.
 - Dropped libssl-devel from BR.
