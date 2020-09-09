@@ -16,7 +16,7 @@
 %def_with gtkmm3
 
 %global majorversion    11.1
-%global minorversion    0
+%global minorversion    5
 %global toolsbuild      16036546
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
@@ -291,6 +291,9 @@ fi
 
 
 %changelog
+* Tue Sep 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 11.1.5-alt1
+- 11.1.5
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 11.1.0-alt1
 - 11.1.0
 - build for aarch64
