@@ -14,14 +14,9 @@
 %def_with faudio
 %endif
 
-# get name of package owning specific file.
-# this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
-# but these dependencies are calculated and saved at build time.
-%define get_lib_owner_pkg() %{expand:%(rpm -qf --qf '%%{NAME}' $(readlink -e %1))}
-
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -52,9 +47,11 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # try build wine64 only on ALT
 %if %_vendor == "alt"
 %ifarch x86_64 aarch64
-	%def_with build64
+    %def_with build64
+    %define winearch wine64
 %else
     %def_without build64
+    %define winearch wine32
     # skip -fPIC checking (-fnoPIC need in new wine to skip DECLSPEC_HOTPATCH)
     %add_verify_elf_skiplist %_libdir/wine/*.so
     # TODO: use -fPIC for libwine.so.1
@@ -62,6 +59,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 %endif
 %else
    %def_without build64
+   %define winearch wine32
 %endif
 
 # for wine-staging gitapply.sh script
@@ -92,9 +90,7 @@ BuildRequires: libnetapi-devel libpcap-devel
 # TODO: opencl-headers (autoimports now), osmesa
 
 %if_with vulkan
-# BuildRequires(pre) dependencies are used for runtime dependencies calculation via get_lib_owner_pkg macro.
-# Use it for vulkan because it's opened via dlopen, and thus dependency is not detected by dependency generators.
-BuildRequires(pre): libvulkan-devel
+BuildRequires: libvulkan-devel
 %endif
 %if_with vkd3d
 BuildRequires: vkd3d-devel
@@ -149,12 +145,13 @@ Conflicts: wine-vanilla wine-etersoft
 Requires: cabextract
 
 # Provides/Obsoletes Fedora packages
-%define common_provobs wine-core wine-filesystem wine-common wine-desktop wine-systemd wine-sysvinit
+%define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
 %define base_provobs wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-pulseaudio wine-wow wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-opencl wine-pulseaudio wine-twain
 %define fonts_provobs wine-fonts wine-arial-fonts wine-courier-fonts wine-fixedsys-fonts wine-marlett-fonts wine-ms-sans-serif-fonts wine-small-fonts wine-symbol-fonts wine-system-fonts wine-tahoma-fonts wine-times-new-roman-fonts wine-wingdings-fonts
 #Provides: %common_provobs %base_provobs %fonts_provobs
 Obsoletes: %common_provobs %base_provobs %fonts_provobs
 
+#BuildRequires(pre): rpm-macros-wine
 
 #=========================================================================
 
@@ -235,8 +232,7 @@ Requires: libcairo libgtk+3
 %endif
 
 %if_with vulkan
-# libvulkan is needed for wine built with vulkan support, but dependency might be not detected automatically
-Requires: %{get_lib_owner_pkg %_libdir/libvulkan.so}
+Requires: libvulkan1
 %endif
 
 # Recommended
@@ -348,6 +344,9 @@ export CC=clang
 
 %install
 %makeinstall_std
+
+install tools/wineapploader %buildroot%_bindir/wineapploader
+
 # unpack desktop files
 cd %buildroot%_desktopdir/
 tar xvf %SOURCE3
@@ -385,6 +384,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_bindir/wine64
 %_bindir/wine64-preloader
 %endif
+%_bindir/wineapploader
 
 %_bindir/regsvr32
 %_bindir/winecfg
@@ -502,7 +502,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/wined3d.dll.so
 
 %files -n lib%name-devel
-%doc LICENSE LICENSE.OLD
+%doc LICENSE
 %_bindir/function_grep.pl
 %_bindir/winebuild
 %_bindir/wmc
@@ -538,6 +538,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt3
+- just require libvulkan1 as all other libs
+- backport small fixes from future biarch build
+
 * Tue Sep 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt2
 - build vulkan only for p9 and Sisyphus
 
