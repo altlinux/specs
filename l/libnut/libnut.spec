@@ -7,7 +7,7 @@
 Name:		libnut
 %define	svnrev	675
 Version:	0.0.%{svnrev}
-Release:	alt1_9
+Release:	alt1_10
 Url:		http://wiki.multimedia.cx/index.php?title=NUT
 License:	MIT
 Group:		System/Libraries
@@ -50,10 +50,8 @@ encoded media frames.
 Group:		Development/C
 Summary:	Development files for NUT Multimedia Container Library
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
 # package was not libified a long long time ago and an obsolete was forgotten
 # at the time, causing file conflicts on upgrade (Anssi 03/2012):
-Obsoletes:	libnut-devel < 0-0.275
 
 %description -n	%{devname}
 This package contains development files for the NUT Multimedia Container
@@ -103,6 +101,9 @@ encoded media frames.
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.675-alt1_10
+- fixed build
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.675-alt1_9
 - new version
 
