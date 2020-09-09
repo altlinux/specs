@@ -2,18 +2,17 @@
 
 %def_disable debug
 %def_disable static
-%def_without python2
 
 %define upname libtorrent-rasterbar
 %define soname 10
 
 Name: libtorrent-rasterbar
 Epoch: 3
-Version: 1.2.8
+Version: 1.2.10
 Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
-License: BSD
+License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
 Url: https://www.rasterbar.com/products/libtorrent/
 
@@ -28,10 +27,6 @@ BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
 BuildRequires: python3-devel boost-python3-devel
 BuildRequires: libGeoIP-devel
-
-%if_with python2
-BuildRequires: python-devel boost-python-devel
-%endif
 
 %description
 libTorrent is designed to avoid redundant copying and storing of data
@@ -109,19 +104,6 @@ The libtorrent-devel package contains static libraries needed
 to develop applications using libTorrent.
 %endif
 
-%if_with python2
-%package -n python-module-%upname
-Summary: libTorrent python bindings
-Group: Development/Python
-Requires: %name%soname = %EVR
-Provides: python-module-libtorrent-rasterbar7 = %EVR
-Conflicts: python-module-libtorrent-rasterbar7 < %EVR
-
-%description -n python-module-%upname
-The python-module-libtorrent-rasterbar contains
-python bindings to libTorrent.
-%endif
-
 %package -n python3-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python3
@@ -137,35 +119,10 @@ python-3 bindings to libTorrent.
 mkdir -p build-aux
 touch build-aux/config.rpath
 
-%if_with python2
-cp -r . ../build-python2
-%endif
-
 %build
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
+%add_optflags -std=c++14
 %ifarch %mips32
 export LIBS=-latomic
-%endif
-
-%if_with python2
-pushd ../build-python2
-
-export PYTHON=%_bindir/python2
-
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{subst_enable debug} \
-	--with-boost-libdir=%_libdir \
-	--enable-python-binding \
-	--with-boost-python=boost_python%{python_version_nodots python2} \
-	%nil
-
-%make_build V=1
-popd
 %endif
 
 export PYTHON=%_bindir/python3
@@ -179,15 +136,13 @@ export PYTHON=%_bindir/python3
 	--with-boost-python=boost_python%{python_version_nodots python3} \
 	%nil
 
+# git rid of c++11
+sed s/-std=c++11//g < bindings/python/compile_cmd > bindings/python/compile_cmd.new || exit 1
+mv -f bindings/python/compile_cmd.new bindings/python/compile_cmd
+
 %make_build V=1
 
 %install
-%if_with python2
-pushd ../build-python2/bindings/python
-%python_install
-popd
-%endif
-
 %makeinstall_std
 
 rm -f %buildroot%_libdir/*.la
@@ -212,17 +167,16 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.a
 %endif
 
-%if_with python2
-%files -n python-module-%upname
-%python_sitelibdir/libtorrent.so
-%python_sitelibdir/*.egg-info
-%endif
-
 %files -n python3-module-%upname
 %python3_sitelibdir/libtorrent*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.10-alt1
+- Updated to upstream version 1.2.10.
+- Updated license tag.
+- Removed python-2 build switch.
+
 * Mon Aug 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3:1.2.8-alt1
 - Updated to upstream version 1.2.8.
 
