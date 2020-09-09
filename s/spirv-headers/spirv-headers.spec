@@ -4,7 +4,7 @@
 
 Name: spirv-headers
 Version: 1.5.3
-Release: alt0.1
+Release: alt0.2
 
 Summary: machine-readable files for the SPIR-V Registry
 Group: Development/C++
@@ -44,6 +44,9 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/cmake/SPIRV-Headers/*
 
 %changelog
+* Tue Sep 08 2020 L.A. Kostis <lakostis@altlinux.ru> 1.5.3-alt0.2
+- Update to 1.5.3.reservations1.
+
 * Thu Jun 04 2020 L.A. Kostis <lakostis@altlinux.ru> 1.5.3-alt0.1
 - Updated to 1.5.3.
 - Added cmake files.
