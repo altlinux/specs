@@ -2,7 +2,7 @@
 
 Name:     python3-module-%oname
 Version:  3.9.8
-Release:  alt1
+Release:  alt2
 
 Summary:  A self-contained cryptographic library for Python
 
@@ -22,10 +22,11 @@ Source:   %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 Conflicts: python3-module-Crypto < %EVR
-Conflicts: python3-module-pyrypto < %EVR
+Conflicts: python3-module-pycrypto < %EVR
 Obsoletes: python3-module-Crypto < %EVR
-Obsoletes: python3-module-pyrypto < %EVR
+Obsoletes: python3-module-pycrypto < %EVR
 Provides: python3-module-Crypto = %EVR
+Provides: python3-module-pycrypto = %EVR
 %py3_provides Crypto
 
 %description
@@ -66,6 +67,9 @@ python3 setup.py test
 %python3_sitelibdir/*/SelfTest
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.9.8-alt2
+- NMU: fixed conflicts and obsoletes, updated provides.
+
 * Thu Jun 25 2020 Grigory Ustinov <grenka@altlinux.org> 3.9.8-alt1
 - Automatically updated to 3.9.8.
 

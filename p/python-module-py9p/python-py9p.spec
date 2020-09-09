@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define modname py9p
 
 Name: python-module-%modname
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Summary: Pure Python implementation of 9P protocol (Plan9)
 License: MIT
@@ -11,10 +13,6 @@ URL: https://github.com/svinota/py9p
 BuildArch: noarch
 
 Source: py9p-%version.tar
-
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools
-BuildRequires: python-devel
 
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-devel
@@ -47,7 +45,6 @@ Summary: Plan9 filesystem client for FUSE
 License: MIT
 Group: Development/Python
 URL: https://github.com/svinota/py9p
-Requires: %name = %version-%release
 
 %description -n fuse9p
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
@@ -61,7 +58,6 @@ Summary: Plan9 filesystem server
 License: MIT
 Group: Development/Python
 URL: https://github.com/svinota/py9p
-Requires: %name = %version-%release
 
 %description -n 9pfs
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
@@ -73,28 +69,12 @@ This package contains simple 9p2000 file server.
 %prep
 %setup -n py9p-%{version}
 
-rm -rf ../python3
-cp -fR . ../python3
-
 %build
 make force-version
-%python_build
-
-pushd ../python3
-make force-version
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
-
-%files
-%doc README* LICENSE
-%{python_sitelibdir}/py9p*
 
 %files -n python3-module-%modname
 %doc README* LICENSE
@@ -111,6 +91,10 @@ popd
 %_man1dir/9pfs.*
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.9-alt2
+- Fixed compatibility with pycryptodome.
+- Disabled build of python-2 module.
+
 * Fri Mar 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.9-alt1
 - Version 1.0.9
 
