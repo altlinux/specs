@@ -7,7 +7,7 @@
 Summary:        Implementation of DLNA (Digital Living Network Alliance)
 Name:           libdlna
 Version:        0.2.4
-Release:        alt2_10
+Release:        alt2_12
 License:        LGPLv2+
 Group:          System/Libraries
 Url:            http://libdlna.geexbox.org/
@@ -36,8 +36,8 @@ Dynamic libraries from %name.
 Summary:        Header files and static libraries from %name
 Group:          Development/C
 Requires:       %{libname} >= %{version}
-Provides:       %{name}-devel = %{version}-%{release}
-Obsoletes:      %name-devel < %{version}-%{release}
+Provides:       dlna-devel = %{version}-%{release}
+Obsoletes:      dlna-devel < %{version}-%{release}
 
 %description -n %{develname}
 Libraries and includes files for developing programs based on %name.
@@ -46,6 +46,7 @@ Libraries and includes files for developing programs based on %name.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+
 
 %build
 
@@ -69,6 +70,9 @@ make
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt2_12
+- fixed build
+
 * Mon Jun 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt2_10
 - rebuild with ffmpeg
 
