@@ -8,7 +8,7 @@ Epoch: 1
 Summary:	Music Player Daemon Library
 Name:		libmpd
 Version:	11.8.17
-Release:	alt1_9
+Release:	alt1_11
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://sarine.nl/libmpd
@@ -31,8 +31,8 @@ It's wraps around libmpdclient and provides a higher level api.
 %package -n %{develname}
 Summary:	Header files for developing programs with libmpd
 Requires:	%{libname} = %{?epoch:%epoch:}%{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%{name}-devel < %{version}-%{release}
+Provides:	mpd-devel = %{version}-%{release}
+Obsoletes:	mpd-devel < %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{develname}
@@ -69,6 +69,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:11.8.17-alt1_11
+- fixed build
+
 * Thu Jun 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:11.8.17-alt1_9
 - update by mgaimport
 
