@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/perl gcc-c++ imake libXpm-devel libXt-devel libglvnd-dev
 %define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_23
+Release:        alt1_24
 Summary:        A generic image manipulation library
 
 License:        LGPLv2+
@@ -34,7 +34,6 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXext-devel
 BuildRequires:  gawk
 Source44: import.info
-#Patch33: libAfterImage-1.20-alt-fix-linkage.patch
 
 %description
 libAfterImage is a generic image manipulation library. It was initially
@@ -56,7 +55,6 @@ Group: Development/Other
 Summary:        Files needed for software development with %{name}
 Requires:       %{name} = %{version}-%{release}
 #               Package split (apps split out from devel)
-Obsoletes:      %{name}-devel < 1.20-21
 
 %description devel
 The %{name}-devel package contains the files needed for development with
@@ -86,7 +84,6 @@ rm libungif/*
 rm zlib/*
 
 sed /zlib/d -i .depend
-#patch33 -p1
 # copies
 rm -rf libjpeg/ libpng/ libungif/ zlib/
 sed -i -e '/zlib\/zlib\.h/d' .depend
@@ -120,6 +117,9 @@ cp %{SOURCE1} COPYING
 %{_bindir}/as*
 
 %changelog
+* Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_24
+- fixed build
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_23
 - update
 
