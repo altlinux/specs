@@ -5,7 +5,7 @@
 %define oname cmd2
 
 Name: python3-module-%oname
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -119,6 +119,9 @@ pytest3 -v
 %endif
 
 %changelog
+* Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.9-alt1
+- Automatically updated to 1.3.9.
+
 * Sun Aug 30 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
 - Automatically updated to 1.3.8.
 
