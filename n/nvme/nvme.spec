@@ -1,10 +1,10 @@
-%define git 9c0660a
+%define git %nil
 
 Name: nvme
-Version: 1.5
-Release: alt1.g%git
+Version: 1.11.2
+Release: alt1
 Summary: Core nvme tools
-License: GPL
+License: GPL-2
 Group: System/Configuration/Hardware
 Url: https://github.com/linux-nvme/nvme-cli/
 Source: nvme-%version.tar
@@ -20,22 +20,27 @@ cli rpm installs core management tools with minimal dependencies.
 %setup
 
 %build
-subst 's,$(NVME_VERSION),%version-g%{git},' Makefile
+# subst 's,$(NVME_VERSION),%%version-g%%{git},' Makefile
 CFLAGS="%optflags" \
 %make_build
 
 %install
-%make install DESTDIR=%buildroot PREFIX=/usr
-mkdir -p %buildroot%_sysconfdir/{bash_completion.d,%name}
-mv %buildroot%_datadir/bash_completion.d/nvme %buildroot%_sysconfdir/bash_completion.d/
+%make install \
+   DESTDIR=%buildroot \
+   UDEVRULESDIR=%_udevrulesdir \
+   SYSTEMDDIR=/lib/systemd \
+   PREFIX=/usr
 touch %buildroot%_sysconfdir/%name/{hostnqn,hostid}
 
 %files
 %doc *.md LICENSE
 %_sbindir/nvme
 %_man1dir/nvme*.1*
-%_sysconfdir/bash_completion.d/nvme
+%_datadir/bash-completion/completions/*
+%_udevrulesdir/*
+%_unitdir/*
 %dir %_sysconfdir/%name
+%_sysconfdir/%name/*.conf
 %ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %_sysconfdir/%name/host*
 
 %post
@@ -45,6 +50,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Wed Sep 09 2020 L.A. Kostis <lakostis@altlinux.ru> 1.11.2-alt1
+- 1.11.2.
+
 * Fri May 11 2018 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt1.g9c0660a
 - GIT 9c0660a.
 
