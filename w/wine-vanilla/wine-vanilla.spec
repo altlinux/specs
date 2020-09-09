@@ -10,14 +10,9 @@
 %def_with faudio
 %endif
 
-# get name of package owning specific file.
-# this macro is used to add runtime dependencies on non-devel packages containing specific libraries,
-# but these dependencies are calculated and saved at build time.
-%define get_lib_owner_pkg() %{expand:%(rpm -qf --qf '%%{NAME}' $(readlink -e %1))}
-
 Name: wine-vanilla
 Version: 5.16
-Release: alt2
+Release: alt3
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -40,9 +35,11 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # try build wine64 only on ALT
 %if %_vendor == "alt"
 %ifarch x86_64 aarch64
-	%def_with build64
+    %def_with build64
+    %define winearch wine64
 %else
     %def_without build64
+    %define winearch wine32
     # skip -fPIC checking (-fnoPIC need in new wine to skip DECLSPEC_HOTPATCH)
     %add_verify_elf_skiplist %_libdir/wine/*.so
     # TODO: use -fPIC for libwine.so.1
@@ -50,6 +47,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 %endif
 %else
    %def_without build64
+   %define winearch wine32
 %endif
 
 %ifarch aarch64
@@ -76,6 +74,15 @@ BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 
+%if_with vulkan
+BuildRequires: libvulkan-devel
+%endif
+%if_with vkd3d
+BuildRequires: vkd3d-devel
+%endif
+%if_with faudio
+BuildRequires: libfaudio-devel
+%endif
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev libdbus-devel
 
@@ -89,18 +96,6 @@ BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
 
 BuildRequires: perl-XML-Simple
-
-%if_with vulkan
-# BuildRequires(pre) dependencies are used for runtime dependencies calculation via get_lib_owner_pkg macro.
-# Use it for vulkan because it's opened via dlopen, and thus dependency is not detected by dependency generators.
-BuildRequires(pre): libvulkan-devel
-%endif
-%if_with vkd3d
-BuildRequires: vkd3d-devel
-%endif
-%if_with faudio
-BuildRequires: libfaudio-devel
-%endif
 
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
@@ -117,9 +112,10 @@ BuildRequires: desktop-file-utils
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
-Requires: lib%name = %version-%release
-Conflicts: wine
-#Provides: wine = %version-%release
+Requires: lib%name = %EVR
+
+Conflicts: wine wine-etersoft
+
 
 Requires: cabextract
 
@@ -137,7 +133,8 @@ Unixes. Wine does not require MS Windows, but it can use native system
 Summary: WinAPI test for Wine
 Summary(ru_RU.UTF-8): Тест WinAPI для Wine
 Group: Emulators
-Requires: %name = %version-%release
+Requires: %name = %EVR
+Conflicts: wine-test
 
 %description test
 WinAPI test for Wine (unneeded for usual work).
@@ -149,9 +146,9 @@ Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
 # due ExclusiveArch
 #BuildArch: noarch
-Requires: %name = %version-%release
-Requires: %name-programs = %version-%release
-Requires: lib%name-gl = %version-%release
+Requires: %name = %EVR
+Requires: %name-programs = %EVR
+Requires: lib%name-gl = %EVR
 
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
@@ -165,9 +162,11 @@ Wine meta package. Use it for install all wine subpackages.
 %package programs
 Summary: Wine programs
 Group: Emulators
+Requires: %name = %EVR
 # due ExclusiveArch
 #BuildArch: noarch
-Requires: %name = %version-%release
+
+Conflicts: wine-programs
 
 %description programs
 Wine GUI programs:
@@ -190,15 +189,15 @@ Requires: libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
 Requires: libpng16 libjpeg libtiff5
 
+%if_with vulkan
+Requires: libvulkan1
+%endif
+
 # Recommended
 #Requires: libnetapi libunixODBC2 libpcap0.8
 
 Requires: fontconfig libfreetype
 
-%if_with vulkan
-# libvulkan is needed for wine built with vulkan support, but dependency might be not detected automatically
-Requires: %{get_lib_owner_pkg %_libdir/libvulkan.so}
-%endif
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -211,7 +210,7 @@ linked with Wine.
 %package -n lib%name-gl
 Summary: DirectX/OpenGL support libraries for Wine
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-gl
 
 Requires: libGL
@@ -222,7 +221,7 @@ This package contains the libraries for DirectX/OpenGL support in Wine.
 %package -n lib%name-twain
 Summary: Twain support library for Wine
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-twain
 
 %description -n lib%name-twain
@@ -232,10 +231,10 @@ This package contains the library for Twain support.
 %package -n lib%name-devel
 Summary: Headers for lib%name-devel
 Group: Development/C
-Requires: lib%name = %version-%release
-Obsoletes: wine-devel
+Requires: lib%name = %EVR
 #Provides: wine-devel
 Conflicts: libwine-devel
+# Is it needed?
 Provides: libwine-devel = %version-%release
 
 %description -n lib%name-devel
@@ -250,7 +249,7 @@ lib%name-devel содержит файлы для разработки прог�
 %package -n lib%name-devel-static
 Summary: Static libraries for lib%name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: libwine-devel-static
 
 %description -n lib%name-devel-static
@@ -285,11 +284,15 @@ export CC=clang
 
 %install
 %makeinstall_std
+
+install tools/wineapploader %buildroot%_bindir/wineapploader
+
 # unpack desktop files
 cd %buildroot%_desktopdir/
 tar xvf %SOURCE2
 mkdir -p %buildroot%_datadir/desktop-directories/
 mv *.directory %buildroot%_datadir/desktop-directories/
+
 # unpack icons files
 mkdir -p %buildroot%_iconsdir/
 cd %buildroot%_iconsdir/
@@ -321,6 +324,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_bindir/wine64
 %_bindir/wine64-preloader
 %endif
+%_bindir/wineapploader
 
 %_bindir/regsvr32
 %_bindir/winecfg
@@ -438,7 +442,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_libdir/wine/wined3d.dll.so
 
 %files -n lib%name-devel
-%doc LICENSE LICENSE.OLD
+%doc LICENSE
 %_bindir/function_grep.pl
 %_bindir/winebuild
 %_bindir/wmc
@@ -467,7 +471,6 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_man1dir/winecpp.*
 %_man1dir/winemaker.*
 
-
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/wine/lib*.a
@@ -475,6 +478,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt3
+- just require libvulkan1 as all other libs
+- backport small fixes from future biarch build
+- sync Requires/Conflicts with wine staging package
+
 * Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt2
 - build vulkan only for p9 and Sisyphus
 - disable static package
