@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: SSH2 protocol for python
@@ -64,6 +64,9 @@ tox.py3 --sitepackages -vv -r -- -v -ra
 %python3_sitelibdir/paramiko-*.egg-info/
 
 %changelog
+* Thu Sep 10 2020 Stanislav Levin <slev@altlinux.org> 2.7.2-alt1
+- 2.7.1 -> 2.7.2.
+
 * Mon Jul 06 2020 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1
 - 2.6.0 -> 2.7.1.
 
