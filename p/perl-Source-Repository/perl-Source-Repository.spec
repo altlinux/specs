@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.407
+Version: 0.408
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.408-alt1
+- use ALTLinux::RepoList 0.006
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.407-alt1
 - use ALTLinux::RepoList
 
