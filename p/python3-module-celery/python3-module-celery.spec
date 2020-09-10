@@ -5,18 +5,19 @@
 %add_python3_req_skip celery.utils.nodenames
 %add_python3_req_skip celery.utils.time
 
-%def_with python3
 %def_without s3
 # wait for new botocore, pytest
 %def_disable check
+# AttributeError: module 'sphinx.ext.autodoc' has no attribute 'AutoDirective'
+%def_without doc
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 4.3.0
-Release: alt2
+Release: alt3
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD License
 URL: https://github.com/celery/celery
 
@@ -32,47 +33,37 @@ Patch11: 0007-Set-shell-in-su-invocation.patch
 Patch12: privacy.patch
 
 BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-build-python3
 BuildRequires: dvipng
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
+BuildRequires: python3(Crypto)
+BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3(requests)
+BuildRequires: python3(case) python3(eventlet) python3(billiard)
+BuildRequires: python3(redis)
+
+%if_with doc
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3(sphinx_celery)
+BuildRequires: python3-module-sphinx
+%endif
+
+%py3_use kombu = 4.4.0
+%py3_use billiard >= 3.6.0
+
+%if_enabled check
 # /proc is required for some tests
 BuildRequires: /proc
-BuildRequires: python-module-setuptools
-%if_enabled check
-BuildRequires: python3-module-botocore >= 1.10.29
-BuildRequires: python3-module-botocore < 1.11.0
-BuildRequires: python-module-mock
-BuildRequires: python-module-pytest >= 4.3.1
-BuildRequires: python-module-pytest < 4.4.0
-%if_with s3
-BuildRequires: python-module-moto >= 1.3.7
-%endif
-%endif
-%py_use kombu = 4.4.0
-%py_use billiard >= 3.6.0
-BuildRequires: python-module-alabaster python-module-objects.inv python2.7(sphinx_celery)
-BuildRequires: python-module-html5lib python-module-nose python-module-pbr
-BuildRequires: python-module-sphinxcontrib-issuetracker python-module-unittest2
-BuildRequires: python2.7(case) python2.7(eventlet)
-BuildRequires: python2.7(redis)
-BuildRequires(pre): rpm-macros-sphinx
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-%if_enabled check
 BuildRequires: python3-module-botocore >= 1.10.29
 BuildRequires: python3-module-botocore < 1.11.0
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest >= 4.3.1
 BuildRequires: python3-module-pytest < 4.4.0
+BuildRequires: python3-module-unittest2
 %if_with s3
 BuildRequires: python3-module-moto >= 1.3.7
 %endif
-%endif
-BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
-BuildRequires: python3-module-pycrypto
-BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3-module-unittest2 python3(requests)
-BuildRequires: python3(case) python3(eventlet) python3(billiard)
-BuildRequires: python3(redis)
 %endif
 
 %description
@@ -106,26 +97,6 @@ Celery is used in production systems to process millions of tasks a day.
 
 This package contains documentation for %oname.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
-Group: Development/Python3
-%py3_use kombu = 4.4.0
-%py3_use billiard >= 3.6.0
-
-%description -n python3-module-%oname
-Celery is an open source asynchronous task queue/job queue based on
-distributed message passing.  It is focused on real-time operation,
-but supports scheduling as well.
-
-The execution units, called tasks, are executed concurrently on one or
-more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.  Tasks can
-execute asynchronously (in the background) or synchronously
-(wait until ready).
-
-Celery is used in production systems to process millions of tasks a day.
-%endif
-
 %prep
 %setup
 #patch1 -p1
@@ -136,76 +107,43 @@ Celery is used in production systems to process millions of tasks a day.
 # disable moto using (needed for S3 tests)
 subst "s|moto==.*||" requirements/test.txt
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
 # skip using moto
 rm -fv celery/t/unit/backends/test_s3.py
 
-%python_build
-
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
+%python3_build_debug
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
 
-%python_install
-
+# FIXME: hack
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs html
+%if_with doc
+%make -C docs html SPHINXBUILD=sphinx-build-3
+%endif
 
 %check
 rm -f t/unit/contrib/test_sphinx.py
-python setup.py test
-
-%if_with python3
-pushd ../python3
-rm -f t/unit/contrib/test_sphinx.py
-python3 setup.py test
-popd
-%endif
+%python3_test
 
 %files
 %doc Changelog *.txt *.rst TODO
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/celery*
+%python3_sitelibdir/celery*
 
+%if_with doc
 %files docs
 %doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc Changelog *.txt *.rst TODO
-%_bindir/*.py3
-%python3_sitelibdir/celery*
 %endif
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt3
+- build standalone python3 module
+- temp. disable doc ()
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt2
 - update requires
 

@@ -4,14 +4,15 @@
 
 # TODO: fix list issue
 %def_disable test
-%def_with python3
+# ModuleNotFoundError: No module named 'sphinx_celery'
+%def_without doc
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Epoch: 1
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
-Group: Development/Python
+Group: Development/Python3
 License: BSD License
 Summary: Kombu is an AMQP messaging framework for Python
 
@@ -24,22 +25,18 @@ Source: %name-%version.tar
 # Patches from Debian
 Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
 
-BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-anyjson python-module-boto python-module-django
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python2.7(sphinx_celery)
-BuildRequires: python-module-pylibrabbitmq python-module-pymongo
-BuildRequires: python-module-amqp >= 1:1.4.9
-BuildRequires: python2.7(case) python2.7(unittest2) python2.7(mock) python2.7(pytest) python2.7(Pyro4) python2.7(serpent)
-BuildRequires: python2.7(pytest_cov) python2.7(redis) python2.7(msgpack) python2.7(boto3) python2.7(pycurl)
-BuildRequires: python-module-tox
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+#BuildRequires: python3-module-docutils python3(sphinx_celery)
+
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-amqp >= 1:1.4.9
 BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest) python3(Pyro4) python3(serpent)
 BuildRequires: python3(pytest_cov) python3(redis) python3(msgpack) python3(boto3) python3(pycurl)
 BuildRequires: python3-module-tox
+
+%if_with doc
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
 %endif
 
 %description
@@ -51,22 +48,6 @@ One of the most popular implementations of AMQP is `RabbitMQ`_.
 The aim of `Kombu` is to make messaging in Python as easy as possible by
 providing an idiomatic high-level interface for the AMQP protocol, and also
 provide proven and tested solutions to common messaging problems.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Kombu is an AMQP messaging framework for Python
-Group: Development/Python3
-
-%description -n python3-module-%oname
-AMQP is the Advanced Message Queuing Protocol, an open standard protocol
-for message orientation, queuing, routing, reliability and security.
-
-One of the most popular implementations of AMQP is `RabbitMQ`_.
-
-The aim of `Kombu` is to make messaging in Python as easy as possible by
-providing an idiomatic high-level interface for the AMQP protocol, and also
-provide proven and tested solutions to common messaging problems.
-%endif
 
 %package docs
 Summary: Documentation for %oname
@@ -92,63 +73,39 @@ This package contains documentation for %oname.
 # drop cosmetic only module
 subst "s|pytest-sugar||" requirements/test.txt 
 
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
+%python3_build_debug
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs html
+%if_with doc
+%make -C docs html SPHINXBUILD=sphinx-build-3
+%endif
 
 %if_enabled test
 %check
-python setup.py test
-
-%if_with python3
-pushd ../python3
 python3 setup.py test
-popd
-%endif
 %endif
 
 %files
 %doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
-%python_sitelibdir/kombu*
+%python3_sitelibdir/kombu*
 
+%if_with doc
 %files docs
 %doc docs/_build/html/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
-%python3_sitelibdir/kombu*
 %endif
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt2
+- build standalone python3 module
+- temp. disable doc
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1:4.4.0-alt1
 - new version 4.4.0 (with rpmrb script)
 - switch to build from tarball
