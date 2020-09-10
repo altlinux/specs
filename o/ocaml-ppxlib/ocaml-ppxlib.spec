@@ -2,7 +2,7 @@
 %define libname ppxlib
 Name: ocaml-%libname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -39,7 +39,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-make
+dune build -p %libname
 
 %install
 dune install --destdir=%buildroot
@@ -80,6 +80,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt2
+- fixed depends in devel package
+
 * Fri Apr 24 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt1
 - 0.13.0
 
