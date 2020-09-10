@@ -1,6 +1,6 @@
 Name: conmon
-Version: 2.0.18
-Release: alt2
+Version: 2.0.21
+Release: alt1
 # due to typo in version :(
 Epoch: 1
 
@@ -11,7 +11,9 @@ Group: System/Configuration/Other
 Url: https://github.com/containers/conmon
 Source: %name-%version.tar
 
-BuildRequires: glib2-devel glibc-devel
+BuildRequires: glibc-devel
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(libsystemd)
 
 %description
 %summary.
@@ -30,6 +32,9 @@ BuildRequires: glib2-devel glibc-devel
 %_bindir/conmon
 
 %changelog
+* Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 1:2.0.21-alt1
+- new version 2.0.21
+
 * Thu Jul 09 2020 Michael Shigorin <mike@altlinux.org> 1:2.0.18-alt2
 - E2K: ftbfs workaround (might be the new glib2)
 - i586: LFS fix (thx aris@ either)
