@@ -2,7 +2,7 @@
 
 Name: nlohmann-json
 Version: 3.8.0
-Release: alt2
+Release: alt3
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -44,6 +44,9 @@ This package contains the single header C++ file and CMake dependency files.
 %setup -a1
 rm -rf test/cmake_fetch_content
 sed -i -e '/add_subdirectory(cmake_fetch_content)/ d' test/CMakeLists.txt
+%ifarch %mips
+sed -i -e '/unit-unicode.cpp/ d' test/CMakeLists.txt
+%endif
 
 %build
 %cmake
@@ -61,6 +64,9 @@ ln -sf ../json_test_data-2.0.0 BUILD/json_test_data
 %_libdir/cmake/nlohmann_json
 
 %changelog
+* Thu Sep 10 2020 Ivan A. Melnikov <iv@altlinux.org> 3.8.0-alt3
+- Skip test-unicode on mips*, as it timeouts.
+
 * Fri Jul 03 2020 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt2
 - Added the test data bundle.
 - Fix: Run the tests with CMake.
