@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-migrate-parsetree
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Summary: Convert OCaml parsetrees between different major versions
 Group: Development/ML
 License: LGPLv2+ with exceptions
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 BuildRequires: ocaml
 BuildRequires: dune
 BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-ppx_derivers
+BuildRequires: ocaml-ppx_derivers-devel
 
 %description
 This library converts between parsetrees of different OCaml versions.
@@ -31,7 +31,7 @@ files for developing applications that use %name.
 %setup
 
 %build
-dune build @install
+dune build -p %name --verbose
 
 %install
 dune install --destdir=%buildroot 
@@ -65,6 +65,11 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/*/driver-main/*.ml
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.7.3-alt2
+- built in verbose mode
+- fixed requires in devel package (by change BR from
+  ocaml-ppx_derivers to ocaml-ppx_derivers-devel)
+
 * Tue Jun 30 2020 Anton Farygin <rider@altlinux.ru> 1.7.3-alt1
 - 1.7.3
 
