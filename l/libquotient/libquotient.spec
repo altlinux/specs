@@ -1,7 +1,7 @@
-%define oname qmatrixclient
+%define oname Quotient
 
 Name: libquotient
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
 Summary: A Qt5 library to write cross-platfrom clients for Matrix
@@ -27,7 +27,7 @@ BuildRequires: cmake gcc-c++ libstdc++-devel
 BuildRequires: qt5-base-devel libqt5-gui libqt5-network qt5-multimedia-devel
 
 Provides: libqmatrixclient = %version
-Conflicts: libqmatrixclient < %version
+Obsoletes: libqmatrixclient < %version
 
 %description
 libQuotient is a Qt5-based library to make IM clients for the Matrix protocol.
@@ -39,36 +39,40 @@ Group: Development/Other
 Requires: %name = %EVR
 
 Provides: libqmatrixclient-devel = %version
-Conflicts: libqmatrixclient-devel < %version
+Obsoletes: libqmatrixclient-devel < %version
 
 %description devel
 Header files for %EVR.
 
 %prep
 %setup
-%__subst "s|add_library(QMatrixClient|add_library(QMatrixClient SHARED|" CMakeLists.txt
+%__subst "s|add_library(\${PROJECT_NAME} \${lib_SRCS} \${api_SRCS})|add_library(\${PROJECT_NAME} SHARED \${lib_SRCS} \${api_SRCS})|" CMakeLists.txt
 
 %build
-%cmake_insource -DCMAKE_INSTALL_INCLUDEDIR=include/qmatrixclient \
-                -DQMATRIXCLIENT_INSTALL_EXAMPLE=OFF
+%cmake_insource
 %make_build
 
 %install
 %makeinstall_std
-rm -rfv %buildroot%_bindir/qmc-example
+rm -rf %buildroot/usr/share/ndk-modules/
 
 %files
 %doc README.md CONTRIBUTING.md
-%_libdir/lib*.so.*
+%_libdir/lib%oname.so.*
 
 %files devel
-%_libdir/lib*.so
+%_bindir/quotest
+%_libdir/lib%oname.so
 %_includedir/%oname/
-%_libdir/cmake/QMatrixClient/
-%_pkgconfigdir/QMatrixClient.pc
-#_bindir/qmc-example
+%_libdir/cmake/%oname/
+%_pkgconfigdir/%oname.pc
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1 (with rpmrb script)
+- library, includes and conf files changed to Quotient
+- replace Conflicts with Obsoletes (thanks, zerg@)
+
 * Thu Jun 13 2019 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - new version 0.5.2 (with rpmrb script)
 - rename libmatrixclient to libquotient (as upstream)
