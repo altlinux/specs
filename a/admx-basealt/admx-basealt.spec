@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -29,6 +29,13 @@ cp -r ru-RU/ en-US/ BaseALT*.admx %buildroot%_destdir/
 %_destdir
 
 %changelog
+* Wed Sep 09 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt1
+- Add sshd-permit-root-login control
+- Fix in basealtcontrol ADML
+- Fix tcb_chkpwd_restricted to root
+- Fix duplicate naming (Accounts service)
+- NTP Applier switch added
+
 * Wed Jul 01 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt1
 - Update admx according to gpupdate-0.7.0 release
 
