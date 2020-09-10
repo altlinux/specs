@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.1.3
-Release: alt2
+Release: alt3
 Summary: OAuth 2.0 client library
 License: Apache Software License
 Group: Development/Python
@@ -200,8 +200,8 @@ popd
 %files flask
 %python_sitelibdir/oauth2client/contrib/flask*
 
-%files -n python-module-django-%oname
-%python_sitelibdir/oauth2client/contrib/django*
+#files -n python-module-django-%oname
+#python_sitelibdir/oauth2client/contrib/django*
 
 %files gce
 %python_sitelibdir/oauth2client/contrib/gce*
@@ -226,6 +226,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt3
+- Stopped packaging python-module-django-oauth2client.
+
 * Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.3-alt2
 - Added fixes for python-3.8.
 
