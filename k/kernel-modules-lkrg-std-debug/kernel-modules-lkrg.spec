@@ -2,10 +2,10 @@
 %define module_version	0.8.1+git20200827.6f700b5
 %define module_release	alt2
 
-%define flavour		std-pae
-%define karch		%ix86
+%define flavour		std-debug
+%define karch		%ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-pae
+BuildRequires(pre): kernel-headers-modules-std-debug
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
