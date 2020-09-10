@@ -1,6 +1,6 @@
 Name: quaternion
-Version: 0.0.9.4c
-Release: alt1
+Version: 0.0.9.5
+Release: alt0.1.git6166373
 
 Summary: A Qt5-based IM client for Matrix
 
@@ -9,6 +9,7 @@ Group: Networking/Instant messaging
 Url: https://github.com/quotient-im/Quaternion
 
 # Source-url: https://github.com/quotient-im/Quaternion/archive/%version.tar.gz
+# Source-url: https://github.com/quotient-im/Quaternion/archive/master.zip
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-qt5 rpm-macros-cmake
@@ -52,6 +53,10 @@ This file contains general information about application usage and settings.
 %_datadir/metainfo/com.github.quaternion.appdata.xml
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.0.9.5-alt0.1.git6166373
+- new version (0.0.9.5) with rpmgs script
+- build from git 6166373
+
 * Thu Jun 13 2019 Vitaly Lipatov <lav@altlinux.ru> 0.0.9.4c-alt1
 - new version 0.0.9.4c (with rpmrb script)
 - build with libquotient-devel (renamed from libqmatrixclient-devel)
