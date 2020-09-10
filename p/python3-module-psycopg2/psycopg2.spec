@@ -1,13 +1,13 @@
 %define oname psycopg2
 
-Version: 2.8.5
+Version: 2.8.6
 Release: alt1
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python3
 Name: python3-module-%oname
 # https://github.com/psycopg/psycopg2.git
 Source0: %oname-%version.tar
-License: GPL
+License: LGPLv3+
 Group: Development/Python3
 URL: http://www.psycopg.org/psycopg/
 
@@ -50,6 +50,9 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %doc AUTHORS INSTALL README* doc
 
 %changelog
+* Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 2.8.6-alt1
+- Build new version.
+
 * Mon Aug 31 2020 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt1
 - Build new version.
 - Transfer on python3.
