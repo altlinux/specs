@@ -2,7 +2,7 @@
 %define oname base
 Name: ocaml-%oname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
 Group: Development/ML
@@ -54,13 +54,9 @@ dune runtest
 %_libdir/ocaml/%oname/META
 %_libdir/ocaml/%oname/*.cmi
 %_libdir/ocaml/%oname/*.cma
-%_libdir/ocaml/%oname/*.a
-%_libdir/ocaml/%oname/*.cmxa
 %_libdir/ocaml/%oname/*.cmxs
 %_libdir/ocaml/%oname/*/*.cmi
 %_libdir/ocaml/%oname/*/*.cma
-%_libdir/ocaml/%oname/*/*.a
-%_libdir/ocaml/%oname/*/*.cmxa
 %_libdir/ocaml/%oname/*/*.cmxs
 %_libdir/ocaml/stublibs/dllbase_stubs.so
 %_libdir/ocaml/stublibs/dllbase_internalhash_types_stubs.so
@@ -71,6 +67,8 @@ dune runtest
 %_libdir/ocaml/%oname/opam
 %_libdir/ocaml/%oname/dune-package
 %_libdir/ocaml/%oname/*.cmt
+%_libdir/ocaml/%oname/*.a
+%_libdir/ocaml/%oname/*.cmxa
 %_libdir/ocaml/%oname/*.cmti
 %_libdir/ocaml/%oname/*.cmx
 %_libdir/ocaml/%oname/*.ml
@@ -78,11 +76,16 @@ dune runtest
 %_libdir/ocaml/%oname/*/*.cmt
 %_libdir/ocaml/%oname/*/*.cmti
 %_libdir/ocaml/%oname/*/*.cmx
+%_libdir/ocaml/%oname/*/*.a
+%_libdir/ocaml/%oname/*/*.cmxa
 %_libdir/ocaml/%oname/*/*.ml
 %_libdir/ocaml/%oname/*/*.mli
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- devel parts moved to ocaml-base-devel package
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
