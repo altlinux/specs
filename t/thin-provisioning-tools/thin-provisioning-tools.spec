@@ -1,7 +1,7 @@
 
 Summary: A suite of tools for manipulating the metadata of the dm-thin device-mapper target.
 Name: thin-provisioning-tools
-Version: 0.8.5
+Version: 0.9.0
 Release: alt1
 License: GPLv3+
 Group: System/Base
@@ -43,6 +43,9 @@ echo %version > VERSION
 %_sbindir/*
 
 %changelog
+* Thu Sep 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Mon Jul 08 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.5-alt1
 - 0.8.5
 
