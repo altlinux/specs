@@ -2,15 +2,13 @@
 
 %define oname traitsui
 
-%def_with python3
-%def_without python2
-%def_enable bootstrap
+%def_disable bootstrap
 
-Name: python-module-%oname
-Version: 6.1.1
-Release: alt2
+Name: python3-module-%oname
+Version: 7.0.1
+Release: alt1
 Summary: A set of user interface tools designed to complement Traits
-Group: Development/Python
+Group: Development/Python3
 License: BSD, EPL and LGPL
 URL: https://docs.enthought.com/traitsui
 BuildArch: noarch
@@ -20,32 +18,16 @@ Source: %oname-%version.tar
 
 Patch1: %oname-alt-docs.patch
 
-%if_with python2
-BuildRequires: python-module-setuptools python-devel
-%endif
-
-%if_disabled bootstrap
-BuildRequires(pre): python-module-sphinx-devel
-BuildRequires: python-module-setupdocs
-BuildRequires: python-module-traits
-%endif
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs
+
+%if_disabled bootstrap
+BuildRequires(pre): python3-module-sphinx-devel
+BuildRequires: python3-module-setupdocs
+BuildRequires: python3-module-traits
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 
-%description
-TraitsUI is a set of user interface tools designed to complement Traits.
-In the simplest case, it can automatically generate a user interface for
-editing a Traits-based object, with no additional coding on the part of
-the programmer-user. In more sophisticated uses, it can implement a
-Model-View-Controller (MVC) design pattern for Traits-based objects.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: A set of user interface tools designed to complement Traits (Python 3)
-Group: Development/Python3
 # skip wx requirements
 %add_python3_req_skip pyface.ui.wx.grid.api
 %add_python3_req_skip pyface.ui.wx.grid.trait_grid_cell_adapter
@@ -57,33 +39,20 @@ Group: Development/Python3
 %add_python3_req_skip wx.grid wx.html wx.lib.masked wx.lib.mixins.listctrl
 %add_python3_req_skip wx.lib.scrolledpanel wx.stc wx.wizard
 
-%description -n python3-module-%oname
+# skip pickle requirements
+%add_python3_req_skip matplotlib.backends.backend_wx matplotlib.backends.backend_wxagg
+
+%description
 TraitsUI is a set of user interface tools designed to complement Traits.
 In the simplest case, it can automatically generate a user interface for
 editing a Traits-based object, with no additional coding on the part of
 the programmer-user. In more sophisticated uses, it can implement a
 Model-View-Controller (MVC) design pattern for Traits-based objects.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for TraitsUI (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-TraitsUI is a set of user interface tools designed to complement Traits.
-In the simplest case, it can automatically generate a user interface for
-editing a Traits-based object, with no additional coding on the part of
-the programmer-user. In more sophisticated uses, it can implement a
-Model-View-Controller (MVC) design pattern for Traits-based objects.
-
-This package contains tests for TraitsUI.
-%endif
 
 %package tests
-Summary: Tests for TraitsUI
-Group: Development/Python
+Summary: Tests for TraitsUI (Python 3)
+Group: Development/Python3
 Requires: %name = %EVR
-Conflicts: %name < %EVR
 
 %description tests
 TraitsUI is a set of user interface tools designed to complement Traits.
@@ -109,7 +78,7 @@ This package contains documentation for TraitsUI.
 
 %package pickles
 Summary: Pickles for TraitsUI
-Group: Development/Python
+Group: Development/Python3
 AutoReq: nopython
 
 %description pickles
@@ -125,26 +94,13 @@ This package contains pickles for TraitsUI.
 %setup
 %patch1 -p1
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %if_disabled bootstrap
-%prepare_sphinx docs
+%prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
 %endif
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %if_disabled bootstrap
 %make -C docs html
@@ -152,57 +108,41 @@ popd
 %endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %if_disabled bootstrap
 # pickles
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%if_with python2
 %files
-%doc *.txt *.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/tests
+%doc image_LICENSE*.txt LICENSE.txt
+%doc *.rst
+%doc CHANGES.txt TODO.txt
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/*/tests
 %if_disabled bootstrap
-%exclude %python_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/%oname/pickle
 %endif
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/tests
-%endif
+%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/*/tests
 
 %if_disabled bootstrap
 %files docs
 %doc docs/build/html docs/*.txt docs/*.ppt docs/*.pdf
 
 %files pickles
-%python_sitelibdir/%oname/pickle
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.1-alt1
+- Updated to upstream version 7.0.1.
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt2
 - NMU: build without python2
 

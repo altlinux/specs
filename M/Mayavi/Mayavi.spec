@@ -8,8 +8,8 @@
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.7.1
-Release:        alt2
+Version:        4.7.2
+Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -210,6 +210,9 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Mon Sep 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.2-alt1
+- Updated to upstream version 4.7.2.
+
 * Mon Aug 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt2
 - Spec cleanup.
 - Disabled documentation build.

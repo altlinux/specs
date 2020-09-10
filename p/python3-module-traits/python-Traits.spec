@@ -2,38 +2,30 @@
 
 %define oname traits
 
-%def_with python3
-%def_without python2
-
-Name:           python-module-%oname
-Version:        5.1.2
-Release:        alt2
-Summary:        Explicitly typed attributes for Python
-
-Group:          Development/Python
+Name: python3-module-%oname
+Version: 6.1.1
+Release: alt1
+Summary: Explicitly typed attributes for Python 3
+Group: Development/Python3
 # Images have different licenses. For image license breakdown check
 # image_LICENSE.txt file. Except enthought/traits/ui/editors_gen.py
 # which is GPLv2+ all remaining source or image files are in BSD
 # 3-clause license. Confirmed from upstream.
-License:        BSD and EPL and LGPLv2 and GPLv2+
-URL:            https://docs.enthought.com/traits/
+License: BSD and EPL and LGPLv2 and GPLv2+
+URL: https://docs.enthought.com/traits/
 
 # https://github.com/enthought/traits.git
-Source: Traits-%version.tar
+Source: %name-%version.tar
 
 Patch1: %oname-alt-docs.patch
 
-%if_with python2
-BuildRequires(pre): python-module-sphinx-devel
-BuildRequires: python-module-setuptools libnumpy-devel python-devel
-BuildRequires: python-module-Pygments
-%endif
-
-%if_with python3
+BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildRequires: libnumpy-py3-devel
-%endif
+BuildRequires: python3-module-Pygments
+BuildRequires: python3-module-sphinx-pickles
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 The traits package developed by Enthought provides a special type
@@ -50,35 +42,14 @@ attributes, traits also have several additional characteristics:
   modification of a trait's value can be automatically constructed
   using the trait's definition.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Explicitly typed attributes for Python 3
-Group: Development/Python3
-
-%description -n python3-module-%oname
-The traits package developed by Enthought provides a special type
-definition called a trait. Although they can be used as normal Python object 
-attributes, traits also have several additional characteristics: 
-
-* Initialization: A trait can be assigned a default value.
-* Validation: A trait attribute's type can be explicitly declared.
-* Delegation: The value of a trait attribute can be contained either
-  in another object.
-* Notification: Setting the value of a trait attribute can trigger
-  notification of other parts of the program.
-* Visualization: User interfaces that permit the interactive
-  modification of a trait's value can be automatically constructed
-  using the trait's definition.
-
-%package -n python3-module-%oname-tests
+%package tests
 Summary: Tests for Traits, explicitly typed attributes for Python 3
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 
-%description -n python3-module-%oname-tests
+%description tests
 The traits package developed by Enthought provides a special type
 definition called a trait. This package contains tests for it.
-%endif
 
 %package doc
 Summary: Documentation for Traits, explicitly typed attributes for Python
@@ -92,111 +63,62 @@ documentation for it.
 
 %package pickles
 Summary: Pickles for Traits, explicitly typed attributes for Python
-Group: Development/Python
+Group: Development/Python3
 
 %description pickles
 The traits package developed by Enthought provides a special type
 definition called a trait. This package contains pickles for it.
 
-%package tests
-Summary: Tests for Traits, explicitly typed attributes for Python
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-The traits package developed by Enthought provides a special type
-definition called a trait. This package contains tests for it.
-
 %prep
-%setup -n Traits-%version
+%setup
 %patch1 -p1
 
 # file not utf-8
 iconv -f iso8859-1 -t utf-8 < image_LICENSE_Eclipse.txt > image_LICENSE_Eclipse.txt.conv && \
 	mv -f image_LICENSE_Eclipse.txt.conv image_LICENSE_Eclipse.txt
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
-%if_with python2
-%prepare_sphinx .
-%endif
+%prepare_sphinx3 docs
 
 %build
 %add_optflags -fno-strict-aliasing
-
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
-%if_with python2
 # pickles
-install -d %buildroot%python_sitelibdir/%oname
-export PYTHONPATH=%buildroot%python_sitelibdir
-%generate_pickles docs/source docs/source %oname
-sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
-cp -fR pickle %buildroot%python_sitelibdir/%oname/
-%endif
+install -d %buildroot%python3_sitelibdir/%oname
+export PYTHONPATH=%buildroot%python3_sitelibdir
+make -C docs html
+%generate_pickles3 docs/source docs/source %oname
+cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 
-%if_with python2
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc README.rst CHANGES.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/testing
-%exclude %python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/*/tests
+%exclude %python3_sitelibdir/%oname/testing
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/testing
+%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/*/tests
+%python3_sitelibdir/%oname/testing
 
 %files doc
-%doc examples html
-%doc docs/*.txt
+%doc examples
+%doc docs/build/html
 
 %files pickles
-%dir %python_sitelibdir/%oname
-%python_sitelibdir/%oname/pickle
-%endif
-
-%if_with python3
-%files -n python3-module-%oname
-%doc image_LICENSE*.txt LICENSE.txt
-%doc README.rst CHANGES.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/testing
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/testing
-%endif
+%python3_sitelibdir/%oname/pickle
 
 %changelog
+* Wed Sep 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
+- Updated to upstream version 6.1.1.
+
 * Sun Feb 02 2020 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt2
 - NMU: build without python2
 
