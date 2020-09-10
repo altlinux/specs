@@ -1,8 +1,8 @@
 %define _name etr
 
 Name: extreme-tuxracer
-Version: 0.7.5
-Release: alt4
+Version: 0.8.0
+Release: alt1
 Epoch: 1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -70,6 +70,9 @@ EOF
 %_datadir/appdata/etr.appdata.xml
 
 %changelog
+* Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 1:0.8.0-alt1
+- Build new version.
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 1:0.7.5-alt4
 - Fix license.
 
