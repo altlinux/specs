@@ -34,11 +34,11 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.3
+%define sover 4.4
 Name: lib%bname
 Epoch: 1
-Version: 4.3.0
-Release: alt2
+Version: 4.4.0
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -57,6 +57,7 @@ Source3: %bname-xfeatures2d-vgg-%version.tar
 
 Patch1: %name-%version-alt-python-paths.patch
 Patch2: %name-%version-alt-linking.patch
+Patch3: %name-%version-upstream-jasper-compat.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -267,6 +268,7 @@ This package contains %Name examples.
 pushd ../%bname-contrib-%version >/dev/null
 %patch2 -p1
 popd >/dev/null
+%patch3 -p1
 
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
@@ -359,6 +361,9 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 %_datadir/%Name/quality
 
 %changelog
+* Thu Sep 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.4.0-alt1
+- Updated to upstream version 4.4.0.
+
 * Thu Jul 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.3.0-alt2
 - Disabled any requires for examples subpackage (by Vitaly Lipatov)
 - Updated build switches.
