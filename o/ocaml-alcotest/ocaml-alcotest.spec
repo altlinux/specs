@@ -2,7 +2,7 @@
 %define libname alcotest
 Name: ocaml-%libname
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
 License: ISC
@@ -13,6 +13,7 @@ BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: opam
+BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-lwt-devel
@@ -46,7 +47,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build -p %libname
+dune build -p %libname --verbose
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
@@ -88,6 +89,9 @@ dune runtest
 %_libdir/ocaml/%libname/engine/*.cmxs
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
+- FTBFS: added ocaml-uutf-devel to BuildRequires
+
 * Wed Sep 02 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
