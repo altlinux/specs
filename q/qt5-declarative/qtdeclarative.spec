@@ -3,7 +3,7 @@
 %def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.15.0
+Version: 5.15.1
 Release: alt1
 
 Group: System/Libraries
@@ -277,6 +277,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Thu Jul 09 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 

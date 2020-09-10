@@ -7,8 +7,8 @@
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.0
-Release: alt2
+Version: 5.15.1
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -354,6 +354,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - fix run Qt tools
 

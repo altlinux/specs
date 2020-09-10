@@ -34,8 +34,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.0
-Release: alt2
+Version: 5.15.1
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -53,7 +53,6 @@ Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch3: qtbase-use-wayland-on-gnome.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
-Patch101: 0001-Do-not-multithread-if-already-in-a-global-threadpool.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -379,7 +378,6 @@ EGL integration library for the Qt%major toolkit
 %patch3 -p1
 #
 %patch100 -p1
-%patch101 -p1
 #
 %patch1000 -p1 -b .ibase
 #%patch1001 -p1 -b .lcd
@@ -557,7 +555,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.0
+Version: 5.15.1
 __EOF__
 
 # rpm macros
@@ -825,6 +823,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Mon Aug 31 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - fix read timezone from /etc/sysconfig/clock if localtime not symlink
 
