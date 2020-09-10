@@ -2,18 +2,20 @@
 %define libname uri
 Name: ocaml-%libname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: An RFC3986 URI/URL parsing library for OCaml
 Group: Development/ML
 License: BSD
 Url: https://github.com/ocaml-ppx/ppx_derivers
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
 BuildRequires: opam
 BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-ppxlib-devel
+BuildRequires: ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-stringext-devel
@@ -34,11 +36,11 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-# disable build sexp extension
-rm -rf lib_test lib_sexp uri-sexp.opam
-dune build @install
+sed -si 's,oUnit,ounit2,' lib_test/dune
+dune build --release @install
 
 %install
 dune install --destdir=%buildroot
@@ -52,31 +54,25 @@ dune runtest
 %files
 %doc README.md
 %dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/*
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.cmt*
-%exclude %_libdir/ocaml/%libname/*.ml
-%exclude %_libdir/ocaml/%libname/*.mli
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmxs
-%exclude %_libdir/ocaml/%libname/*/*.cmx
-%exclude %_libdir/ocaml/%libname/*/*.cmt*
-%exclude %_libdir/ocaml/%libname/*/*.ml
-%exclude %_libdir/ocaml/%libname/*/*.mli
-%exclude %_libdir/ocaml/%libname/*/*.a
-%exclude %_libdir/ocaml/%libname/*/*.cmxa
-%exclude %_libdir/ocaml/%libname/*/*.cmxs
-
+%dir %_libdir/ocaml/%libname-sexp
+%dir %_libdir/ocaml/%libname/services
+%dir %_libdir/ocaml/%libname/services_full
+%_libdir/ocaml/%{libname}*/META
+%_libdir/ocaml/%{libname}*/*.cmi
+%_libdir/ocaml/%{libname}*/*.cma
+%_libdir/ocaml/%libname/*/*.cmi
+%_libdir/ocaml/%libname/*/*.cma
 
 %files devel
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%_libdir/ocaml/%{libname}*/opam
+%_libdir/ocaml/%{libname}*/dune-package
+%_libdir/ocaml/%{libname}*/*.cmx
+%_libdir/ocaml/%{libname}*/*.cmt*
+%_libdir/ocaml/%{libname}*/*.ml
+%_libdir/ocaml/%{libname}*/*.mli
+%_libdir/ocaml/%{libname}*/*.a
+%_libdir/ocaml/%{libname}*/*.cmxa
+%_libdir/ocaml/%{libname}*/*.cmxs
 %_libdir/ocaml/%libname/*/*.cmx
 %_libdir/ocaml/%libname/*/*.cmt*
 %_libdir/ocaml/%libname/*/*.ml
@@ -86,6 +82,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 3.1.0-alt2
+- enabled sexp variant
+
 * Sat Feb 01 2020 Anton Farygin <rider@altlinux.ru> 3.1.0-alt1
 - 3.1.0
 
