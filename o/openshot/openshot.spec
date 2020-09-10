@@ -4,7 +4,7 @@
 
 Name: openshot
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -15,11 +15,14 @@ Url: http://www.openshotvideo.com/
 #Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-qt-%version.tar.gz
 Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%name-qt-%version.tar.gz
 %else
-# VCS: https://github.com/OpenShot/openshot-qt.git
+Vcs: https://github.com/OpenShot/openshot-qt.git
 Source: %name-%version.tar.gz
 %endif
 
 BuildArch: noarch
+
+# blender > 2.80 doesn't support 32-bit
+ExcludeArch: i586 armh
 
 Requires: python3-module-%name >= 0.2.5
 Requires: blender inkscape xdg-utils
@@ -65,6 +68,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt2
+- rebuilt for 64-bit platforms only (ALT #38916)
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
