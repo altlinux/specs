@@ -1,5 +1,5 @@
 %define kernel_base_version	5.8
-%define kernel_sublevel        .4
+%define kernel_sublevel        .8
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -176,38 +176,40 @@ KbuildFiles="
 	Makefile
 	Module.symvers
 	arch/%base_arch/Makefile
-	scripts/pnmtologo
-	scripts/mod/modpost
+	scripts/Kbuild.include
+	scripts/Makefile
+	scripts/Makefile.*
+	scripts/basic/fixdep
+	scripts/basic/hash
+	scripts/bin2c
+	scripts/checkconfig.pl
+	scripts/checkincludes.pl
+	scripts/checkversion.pl
+	scripts/conmakehash
+	scripts/depmod.sh
+	scripts/extract-ikconfig
+	scripts/gcc-goto.sh
+	scripts/gcc-plugins/*.so
+	scripts/gcc-version.sh
+	scripts/genksyms/genksyms
+	scripts/kallsyms
+	scripts/kconfig/conf
+	scripts/ld-version.sh
+	scripts/link-vmlinux.sh
+	scripts/makelst
+	scripts/mkcompile_h
 	scripts/mkmakefile
 	scripts/mkversion
 	scripts/mod/mk_elfconfig
-	scripts/kconfig/conf
-	scripts/mkcompile_h
-	scripts/makelst
-	scripts/Makefile.modpost
-	scripts/Makefile.modinst
-	scripts/Makefile.lib
-	scripts/Makefile.host
-	scripts/Makefile.clean
-	scripts/Makefile.build
-	scripts/Makefile.extrawarn
-	scripts/Makefile
-	scripts/Kbuild.include
-	scripts/kallsyms
-	scripts/genksyms/genksyms
-	scripts/basic/fixdep
-	scripts/basic/hash
-	scripts/extract-ikconfig
-	scripts/conmakehash
-	scripts/checkversion.pl
-	scripts/checkincludes.pl
-	scripts/checkconfig.pl
-	scripts/bin2c
-	scripts/recordmcount.pl
-	scripts/gcc-version.sh
-	scripts/gcc-goto.sh
+	scripts/mod/modpost
 	scripts/module-common.lds
-	scripts/depmod.sh
+	scripts/pnmtologo
+	scripts/recordmcount
+	scripts/recordmcount.c
+	scripts/recordmcount.h
+	scripts/recordmcount.pl
+	scripts/subarch.include
+	tools/objtool/objtool
 	.config
 	.kernelrelease
 	gcc_version.inc
@@ -234,6 +236,7 @@ rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 
 %set_verify_elf_method none
+%add_debuginfo_skiplist /boot %modules_dir
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
@@ -257,6 +260,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Thu Sep 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.8-alt1
+- 5.8.8
+
 * Wed Aug 26 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.4-alt1
 - 5.8.4
 
