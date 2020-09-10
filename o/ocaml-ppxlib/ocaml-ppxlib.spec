@@ -2,7 +2,7 @@
 %define libname ppxlib
 Name: ocaml-%libname
 Version: 0.13.0
-Release: alt2
+Release: alt3
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -12,6 +12,7 @@ Patch0: %name-%version-%release.patch
 BuildRequires: ocaml-findlib-devel dune opam  cinaps ocaml-result-devel
 BuildRequires: ocaml-re-devel ocaml-compiler-libs-devel ocaml-ppx_derivers-devel
 BuildRequires: ocaml-sexplib0-devel ocaml-migrate-parsetree-devel ocaml-stdio-devel
+BuildRequires: ocaml-base-devel
 
 %description
 A comprehensive toolbox for ppx development. It features:
@@ -29,6 +30,7 @@ A comprehensive toolbox for ppx development. It features:
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %version-%release
+Requires: ocaml-result-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -39,7 +41,7 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build -p %libname
+dune build -p %libname --verbose
 
 %install
 dune install --destdir=%buildroot
@@ -80,6 +82,10 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt3
+- added ocaml-result-devel to devel package requires
+- added ocaml-base-devel to buildrequires
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt2
 - fixed depends in devel package
 
