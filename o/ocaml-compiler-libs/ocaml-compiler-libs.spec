@@ -2,7 +2,7 @@
 %define libname ocaml-compiler-libs
 Name: %libname
 Version: 0.12.1
-Release: alt1
+Release: alt2
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
 Group: Development/ML
@@ -27,7 +27,7 @@ developing applications that use %name.
 %setup
 
 %build
-make
+dune build -p %libname
 
 %install
 dune install --destdir=%buildroot
@@ -55,6 +55,9 @@ dune install --destdir=%buildroot
 %_libdir/ocaml/%libname/dune-package
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.12.1-alt2
+- built using --release option
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 0.12.1-alt1
 - 0.12.1
 
