@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname hacking
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.2.0
 Release: alt1
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
@@ -18,7 +18,7 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-jinja2-tests python3-module-mock
 BuildRequires: python3-module-setuptools python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
-BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe
+BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe python3-module-stestr
 
 %py3_provides %oname
 %py3_requires mccabe flake8
@@ -59,6 +59,10 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Build new version.
+- Build with check.
+
 * Thu Jun 04 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 - Fix license.
