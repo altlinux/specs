@@ -2,7 +2,7 @@
 
 Name: xpra
 Version: 4.0.3
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 
@@ -32,7 +32,7 @@ BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-de
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static
 %else
-BuildRequires: libavformat-devel libavcodec-devel libswscale-devel 
+BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
 %endif
 
 
@@ -50,11 +50,23 @@ BuildRequires: /usr/bin/uglifyjs
 BuildRequires: xorg-server brotli
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
-BuildPreReq: python3-module-Cython >= 0.20
+BuildRequires: python3-module-Cython >= 0.20
 
 AutoReq: yes, nomingw
+# server is not a python package
+AutoProv: yes, nopython3
 
-%add_python3_req_skip win32security pyopencl xpra.platform.win32.common xpra.net.mdns
+# why they are required?
+%add_python3_req_skip xpra.codecs.argb.argb xpra.codecs.xor.cyxor
+%add_python3_req_skip xpra.rectangle xpra.server.cystats xpra.server.window.motion
+%add_python3_req_skip xpra.x11.bindings.core_bindings xpra.x11.bindings.display_source
+%add_python3_req_skip xpra.x11.bindings.keyboard_bindings xpra.x11.bindings.randr_bindings
+%add_python3_req_skip xpra.x11.bindings.window_bindings xpra.x11.bindings.ximage
+
+# disabled during build
+%add_python3_req_skip xpra.net.mdns
+
+%add_python3_req_skip win32security pyopencl xpra.platform.win32.common
 
 # prefer dbus notification
 %add_python3_req_skip pynotify
@@ -118,7 +130,7 @@ find xpra -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/us
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
-%python3_build --without-mdns
+%python3_build_debug --without-mdns %_smp_mflags
 
 %install
 %python3_install --without-mdns
@@ -166,6 +178,10 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 /etc/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt2
+- disable provide xpra python modules
+- enable SMP build
+
 * Fri Aug 21 2020 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
 - new version 4.0.3 (with rpmrb script)
 
