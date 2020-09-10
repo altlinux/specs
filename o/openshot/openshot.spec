@@ -4,7 +4,7 @@
 
 Name: openshot
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -18,8 +18,6 @@ Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%name-qt-%vers
 Vcs: https://github.com/OpenShot/openshot-qt.git
 Source: %name-%version.tar.gz
 %endif
-
-BuildArch: noarch
 
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
@@ -50,15 +48,15 @@ Xbox, and many more common formats.
 %python3_build
 
 %install
-%python3_install
+%python3_install --install-lib=%python3_sitelibdir
 
 #%find_lang --with-qt %name OpenShot
 #-f OpenShot.lang
 
 %files
 %_bindir/*
-%python3_sitelibdir_noarch/%{name}_qt/
-%python3_sitelibdir_noarch/*.egg-info/
+%python3_sitelibdir/%{name}_qt/
+%python3_sitelibdir/*.egg-info/
 %_pixmapsdir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/%{name}-qt.*
@@ -68,6 +66,9 @@ Xbox, and many more common formats.
 
 
 %changelog
+* Thu Sep 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt3
+- NMU: package is no longer noarch (ALT #38916)
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt2
 - rebuilt for 64-bit platforms only (ALT #38916)
 

@@ -1,13 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with docs
+
+%ifarch x86_64
+%def_with embree
+%else
+%def_without embree
+%endif
+
 Name: blender
-Version: 2.83.5
+Version: 2.90.0
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
 URL: https://www.blender.org
+
+# Blender doesn't officially support 32-bit build since 2.80. See also:
+# https://developer.blender.org/T67184
+ExclusiveArch: x86_64 aarch64 ppc64le
 
 # git://git.blender.org/blender.git
 Source: %name-%version.tar
@@ -30,7 +42,9 @@ Patch23: blender-2.77-alt-usertempdir.patch
 Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
 Patch26: blender-2.82-alt-link-fix.patch
-Patch27: blender-2.83.1-alt-remove-python2-dependency.patch
+Patch27: blender-2.90.0-alt-embree-components.patch
+Patch28: blender-2.90.0-alt-doc.patch
+Patch29: blender-2.90-alt-non-x86_64-linking.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel
@@ -53,6 +67,19 @@ BuildRequires: tbb-devel
 BuildRequires: libfreetype-devel
 # Remove following dependency when libopenjpeg2.0-devel is fixed
 BuildRequires: openjpeg-tools2.0
+BuildRequires: alembic-devel
+BuildRequires: openvdb-devel libblosc-devel
+BuildRequires: llvm-devel
+BuildRequires: libgomp-devel
+
+%if_with embree
+BuildRequires: embree-devel
+%endif
+
+%if_with docs
+BuildRequires: /usr/bin/doxygen
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
+%endif
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -60,6 +87,7 @@ BuildRequires: openjpeg-tools2.0
 %add_python3_req_skip _cycles
 %add_python3_req_skip _freestyle
 %add_python3_req_skip bgl
+%add_python3_req_skip blend
 %add_python3_req_skip blf
 %add_python3_req_skip idprop.types
 %add_python3_req_skip gpu
@@ -85,8 +113,6 @@ BuildRequires: openjpeg-tools2.0
 %py3_provides bpy.app.handlers
 %py3_provides bpy.app
 
-Requires: libopenCOLLADA >= 0-alt3
-
 Obsoletes: %name-i18n
 
 %description
@@ -104,6 +130,30 @@ scripting, rendering, compositing, post-production and game creation
 клавиш, большое количество легко доступных расширений, написанных
 на языке Python.
 
+%package doc
+Summary: Documentation for Blender
+Group: Documentation
+Requires: %name = %EVR
+
+%description doc
+Fully integrated creation suite, offering a broad range of essential
+tools for the creation of 3D content, including modeling, uv-mapping,
+texturing, rigging, skinning, animation, particle and other simulation,
+scripting, rendering, compositing, post-production and game creation.
+
+This package contains documentation for Blender.
+
+%description doc -l ru_RU.UTF-8
+Полностью интегрированный пакет разработки, предлагающий широкий
+выбор инструментов необходимых для создания 3D-графики. Включает
+средства моделирования, анимации, рендеринга, постобработки видео,
+а также создания интерактивных игр. Пакет имеет такие функции,
+как динамика твердых тел, жидкостей и мягких тел, систему горячих
+клавиш, большое количество легко доступных расширений, написанных
+на языке Python.
+
+Данный пакет содержит документацию для Blender.
+
 %prep
 %setup -a 1 -a 2 -a 3 -a 4
 
@@ -119,6 +169,8 @@ scripting, rendering, compositing, post-production and game creation
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
+%patch28 -p1
+%patch29 -p1
 
 %ifnarch %ix86 x86_64
 sed -i 's,-fuse-ld=gold,,' build_files/cmake/platform/platform_unix.cmake
@@ -147,6 +199,7 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 	-DWITH_CPU_SSE=OFF \
 %endif
 	-DBUILD_SHARED_LIBS=OFF \
+	-DWITH_ALEMBIC:BOOL=ON \
 	-DWITH_FFTW3=ON \
 	-DWITH_JACK=ON \
 	-DWITH_CODEC_SNDFILE=ON \
@@ -156,12 +209,21 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 	-DWITH_CODEC_FFMPEG=ON \
 	-DWITH_CXX_GUARDEDALLOC=OFF \
 	-DWITH_INSTALL_PORTABLE=OFF \
+	-DWITH_LLVM=ON \
 	-DWITH_PYTHON_SAFETY=ON \
-	-DWITH_OPENMP=OFF \
+	-DWITH_OPENMP=ON \
 	-DWITH_OPENCOLLADA=ON \
 	-DWITH_CYCLES=ON \
+%if_with embree
+	-DEMBREE_ROOT_DIR=%_prefix \
+	-DWITH_CYCLES_EMBREE:BOOL=ON \
+%else
+	-DWITH_CYCLES_EMBREE:BOOL=OFF \
+%endif
 	-DWITH_OPENCOLORIO=ON \
 	-DWITH_OPENIMAGEIO=ON \
+	-DWITH_OPENVDB:BOOL=ON \
+	-DWITH_OPENVDB_BLOSC:BOOL=ON \
 	-DWITH_SYSTEM_GLEW=ON \
 	-DWITH_SYSTEM_LZO=ON \
 	-DWITH_SYSTEM_EIGEN3:BOOL=ON \
@@ -177,6 +239,21 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 	%nil
 
 %cmake_build
+
+%if_with docs
+pushd doc/doxygen
+doxygen -u Doxyfile
+doxygen
+popd
+
+BLENDER_SYSTEM_SCRIPTS="$(pwd)/release/scripts" \
+BLENDER_SYSTEM_DATAFILES="$(pwd)/release/datafiles" \
+"$(pwd)/BUILD/bin/blender" --background --python doc/python_api/sphinx_doc_gen.py -noaudio
+
+pushd doc/python_api
+sphinx-build sphinx-in BPY_API
+popd
+%endif
 
 %install
 %cmakeinstall_std
@@ -194,7 +271,19 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %_defaultdocdir/%name/
 %_man1dir/*.1*
 
+%if_with docs
+%files doc
+%doc doc/doxygen/html
+%doc doc/python_api/BPY_API
+%endif
+
 %changelog
+* Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.90.0-alt1
+- Updated to upstream version 2.90.0.
+- Enabled dependencies: embree, openmp, llvm, openvdb, alembic.
+- Built documentation.
+- Disabled build for 32bit architectures.
+
 * Mon Aug 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.83.5-alt1
 - Updated to upstream version 2.83.5.
 
