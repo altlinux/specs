@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -218,6 +218,21 @@ fi
 %endif
 
 %changelog
+* Thu Sep 10 2020 Alexey Gladkov <legion@altlinux.ru> 2.10.0-alt1
+- New feature:
+  + Add lkrg feature to preload lkrg module (thx Vladimir D. Seleznev)
+- Feature fsck:
+  + Show more friendly message
+  + Do not check swap
+- Feature network:
+  + Fix synchronization service
+  + Fix generation network config from cmdline
+- Feature pipeline:
+  + Show an error if the previous step is used which did not exist
+  + Run handlers as separate programs
+- Feature guestfs:
+  + Add file utility (thx Mikhail Gordeev)
+
 * Mon Jul 27 2020 Alexey Gladkov <legion@altlinux.ru> 2.9.0-alt1
 - Feature changes:
   + guestfs: Add mke2fs utility
