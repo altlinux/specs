@@ -16,15 +16,13 @@
 
 Name: perl-Net-Server-Mail
 Version: 0.28
-Release: alt1
+Release: alt2
 
 Summary: Class to easily create a mail server
 
 License: LGPL
 Group: Development/Perl
 Url: http://search.cpan.org/~guimard/Net-Server-Mail/
-
-Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 #Source: http://cpan.org/modules/by-module/Net/%m_distro-%version.tar.gz
@@ -43,7 +41,7 @@ to your programs.
 %prep
 %setup -q -n %{module}-%{version}
 # not adapted to ssl 1.1b
-[ %version = 0.27 ] && rm t/starttls.t
+[ %version = 0.28 ] && rm t/starttls.t
 
 %build
 %perl_vendor_build
@@ -56,6 +54,9 @@ to your programs.
 %doc Changes README*
 
 %changelog
+* Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2
+- fixed build
+
 * Wed Jun 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
