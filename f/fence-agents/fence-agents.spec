@@ -1,11 +1,12 @@
 %add_python3_req_skip XenAPI
 %add_python3_req_skip __main__
+%add_python3_req_skip redfish
 %add_python3_path %_datadir/fence
 %allow_python3_import_path %_datadir/fence
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.5.2
+Version: 4.6.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -86,7 +87,7 @@ Summary: Fence agent for Amazon AWS
 Requires: fence-agents-common = %version-%release
 BuildArch: noarch
 Group: System/Base
-Obsoletes: fence-agents
+Obsoletes: fence-agents < %EVR
 
 %description aws
 Fence agent for Amazon AWS instances.
@@ -98,7 +99,7 @@ Requires: fence-agents-common = %version-%release
 Requires: python3-module-libcloud
 BuildArch: noarch
 Group: System/Base
-Obsoletes: fence-agents
+Obsoletes: fence-agents < %EVR
 
 %description azure-arm
 Fence agent for Azure Resource Manager instances.
@@ -226,7 +227,7 @@ Summary: Pseudo fence agent to affect other agents based on ping-heuristics
 Requires: fence-agents-common = %version-%release
 BuildArch: noarch
 Group: System/Base
-Obsoletes: fence-agents
+Obsoletes: fence-agents < %EVR
 
 %description heuristics-ping
 Fence pseudo agent used to affect other agents based on
@@ -261,6 +262,17 @@ Requires: fence-agents-common = %version-%release
 
 %description ibmblade
 The fence-agents-ibmblade package contains a fence agent for IBM BladeCenter devices that are accessed via the SNMP protocol.
+
+%package ibmz
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for IBM z LPARs
+Requires: python3-module-requests
+Requires: fence-agents-common = %version-%release
+
+%description ibmz
+Fence agent for IBM z LPARs that are accessed via the HMC
+Web Services REST API.
 
 %package ifmib
 BuildArch: noarch
@@ -401,6 +413,16 @@ Requires: fence-agents-common = %version-%release
 %description netio
 The fence-agents-netio package contains a fence agent for Koukaam NETIO devices that are accessed via telnet or SSH.
 
+%package openstack
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for OpenStack's Nova service
+Requires: python3-module-requests
+Requires: fence-agents-common = %version-%release
+
+%description openstack
+Fence agent for OpenStack's Nova service.
+
 %package ovh
 BuildArch: noarch
 Group: System/Base
@@ -516,6 +538,15 @@ Requires: fence-agents-common = %version-%release
 %description scsi
 The fence-agents-scsi package contains fence agent for SCSI persisent reservations.
 
+%package skalar
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for Skala-R virtualization platform
+Requires: fence-agents-common = %version-%release
+
+%description skalar
+The fence-agents-skalar package contains fence agent for Skala-R virtualization platform.
+
 %package vbox
 BuildArch: noarch
 Group: System/Base
@@ -551,7 +582,7 @@ Summary: Fence agent for VMWare with REST API
 Requires: fence-agents-common = %version-%release
 BuildArch: noarch
 Group: System/Base
-Obsoletes: fence-agents
+Obsoletes: fence-agents < %EVR
 
 %description vmware-rest
 Fence agent for VMWare with REST API.
@@ -571,7 +602,7 @@ Summary: Fence agent for VMWare vCloud Director
 Requires: fence-agents-common = %version-%release
 BuildArch: noarch
 Group: System/Base
-Obsoletes: fence-agents
+Obsoletes: fence-agents < %EVR
 
 %description vmware-vcloud
 Fence agent for VMWare vCloud Director.
@@ -623,6 +654,7 @@ rm  %buildroot%_sbindir/fence_aliyun
 rm  %buildroot%_man8dir/fence_aliyun.8*
 ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check
 ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardreboot
+xz  %buildroot%_man8dir/*.8
 
 %files common
 %_defaultdocdir/%name
@@ -734,6 +766,10 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_sbindir/fence_ibmblade
 %_man8dir/fence_ibmblade.8*
 
+%files ibmz
+%_sbindir/fence_ibmz
+%_man8dir/fence_ibmz.8*
+
 %files ifmib
 %_sbindir/fence_ifmib
 %_man8dir/fence_ifmib.8*
@@ -810,6 +846,10 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_sbindir/fence_netio
 %_man8dir/fence_netio.8*
 
+%files openstack
+%_sbindir/fence_openstack
+%_man8dir/fence_openstack.8*
+
 %files ovh
 %_sbindir/fence_ovh
 %_man8dir/fence_ovh.8*
@@ -859,6 +899,10 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_datadir/cluster/fence_scsi_check*
 %_man8dir/fence_scsi.8*
 
+%files skalar
+%_sbindir/fence_skalar
+%_man8dir/fence_skalar.8*
+
 %files vbox
 %_sbindir/fence_vbox
 %_man8dir/fence_vbox.8*
@@ -896,6 +940,9 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Thu Sep 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Thu Apr 09 2020 Andrew A. Vasilyev <andy@altlinux.org> 4.5.2-alt1
 - 4.5.2
 
