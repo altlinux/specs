@@ -3,7 +3,7 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Generation of accessor and iteration functions for ocaml records
 License: MIT
@@ -14,7 +14,7 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires: dune ocaml-fieldslib-devel ocaml-ppxlib-devel
 BuildRequires: ocaml-compiler-libs-devel ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-result-devel ocaml-base-devel
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
@@ -36,7 +36,7 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+dune build -p %modulename
 
 %install
 dune install --destdir=%buildroot
@@ -63,5 +63,9 @@ dune runtest
 %_libdir/ocaml/%{modulename}*/*.ml
 
 %changelog
+* Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- built as release (dune build -p) against incomplete dependencies
+  in devel package
+
 * Thu Jul 30 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
