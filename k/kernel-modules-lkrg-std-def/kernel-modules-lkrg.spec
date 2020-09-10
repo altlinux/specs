@@ -1,14 +1,14 @@
 %define module_name	lkrg
 %define module_version	0.8.1+git20200827.6f700b5
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
-%define karch		%ix86 x86_64
+%define karch		%ix86 x86_64 aarch64 armh
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
 Summary: Linux Kernel Runtime Guard module
 Name: kernel-modules-%module_name-%flavour
@@ -48,18 +48,32 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
+echo "enable lkrg.service" > lkrg.preset
 
 %install
-install -d %buildroot%module_dir
-install p_lkrg.ko %buildroot%module_dir
+install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
+install -D -p -m0644 scripts/bootup/systemd/lkrg.service %buildroot%_unitdir/lkrg.service
+install -D -p -m0644 lkrg.preset %buildroot%_presetdir/30-lkrg.preset
+
+%post
+%post_service lkrg
+
+%preun
+%preun_service lkrg
 
 %files
-%defattr(644,root,root,755)
-%module_dir
+%module_dir/p_lkrg.ko
+%_unitdir/lkrg.service
+%_presetdir/30-lkrg.preset
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Sep 09 2020 Vitaly Chikunov <vt@altlinux.org>  0.8.1+git20200827.6f700b5-alt2
+- Add aarch64, armh arches to build.
+- Change module install dir to a generic misc/ dir.
+- Add systemd unit (enabled by default).
 
 * Tue Sep 01 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.8.1+git20200827.6f700b5-alt1
 - Updated to 6f700b5b08b5a0fbc5fa41e1ba1908923a29eca9.
