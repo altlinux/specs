@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Summary: Library implementing the Brotli compression algorithm
 Group: Development/C++
@@ -93,6 +93,7 @@ applications that want to make use of libcerror.
 
 %prep
 %setup
+sed  -i "s|\-R\${libdir} ||" scripts/*.pc.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -129,6 +130,9 @@ rm -f %buildroot%_libdir/*.a
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt2
+- fixed pc-files (ALT #38913)
+
 * Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
 - 1.0.9
 
