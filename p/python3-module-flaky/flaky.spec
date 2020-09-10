@@ -1,8 +1,8 @@
 %define oname flaky
 
 Name: python3-module-%oname
-Version: 3.6.1
-Release: alt2
+Version: 3.7.0
+Release: alt1
 Summary: Plugin for nose or py.test that automatically reruns flaky tests
 License: Apache-2.0
 Group: Development/Python3
@@ -36,6 +36,9 @@ those tests or marking them to @skip, they can be automatically retried.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.6.1-alt2
 - Drop python2 support.
 
