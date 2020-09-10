@@ -10,8 +10,8 @@
 %def_enable http
 
 Name: fio
-Version: 3.17
-Release: alt1.1
+Version: 3.23
+Release: alt1
 
 Summary: IO testing tool
 License: GPLv2
@@ -31,6 +31,8 @@ BuildRequires: python3-module-sphinx
 %{?_enable_gfapi:BuildRequires: libglusterfs-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel}
 %{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
+
+Conflicts: python3-module-fiona
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -103,6 +105,9 @@ find tools -type f | xargs subst "s|/usr/bin/python2.7|%__python3|"
 %_bindir/gfio
 
 %changelog
+* Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 3.23-alt1
+- new version 3.23 (with rpmrb script)
+
 * Wed Feb 05 2020 Vitaly Lipatov <lav@altlinux.ru> 3.17-alt1.1
 - NMU: real drop python2 deps
 
