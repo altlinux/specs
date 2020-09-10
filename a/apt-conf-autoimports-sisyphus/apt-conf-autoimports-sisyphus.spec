@@ -3,7 +3,7 @@ Name: apt-conf-autoimports-sisyphus
 Summary(ru_RU.UTF-8): Настройки для использования пакетов из репозитория Autoimports/%{destbranch}
 Summary: Autoimports repository for %{destbranch}
 Version: 1.0
-Release: alt6
+Release: alt7
 
 # branches conflicts with Sisyphus
 Conflicts: apt-conf-autoimports-p7
@@ -46,7 +46,7 @@ Autoimports возложена на пользователей.
 
 Open Source модель подразумевает ваше личное участие в создании вашего
 дистрибутива. Помогите сделать репозиторий качественнее и надежнее
-для вех пользователей!
+для всех пользователей!
 
 %install
 mkdir -p %buildroot%_sysconfdir/apt/{sources,vendors}.list.d
@@ -82,6 +82,9 @@ echo "APT::Cache-Limit $(( (2*64 + 32) * 1024 * 1024 ));" > %buildroot%_sysconfd
 %config %_sysconfdir/apt/apt.conf.d/50-autoimports-cache-limit.conf
 
 %changelog
+* Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt7
+- fixed misprint (closes: #36779)
+
 * Thu May 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6
 - added conflicts for p9
 
