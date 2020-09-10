@@ -1,6 +1,6 @@
 Name: prosody
-Version: 0.11.5
-Release: alt3
+Version: 0.11.6
+Release: alt1
 
 Summary: Modern XMPP communication server
 
@@ -66,6 +66,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.11.6-alt1
+- Automatically updated to 0.11.6.
+
 * Mon Jul 13 2020 Grigory Ustinov <grenka@altlinux.org> 0.11.5-alt3
 - Add possibility of including additional config files (Closes: #38692).
 
