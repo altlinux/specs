@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	5.7
-%define kernel_sublevel .19
+%define kernel_base_version	5.8
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -359,9 +359,8 @@ Group: System/Kernel and hardware
 BuildArch: noarch
 
 %description -n kernel-doc-%base_flavour
-This package contains documentation files for ALT Linux kernel packages:
- * kernel-image-%base_flavour-up-%kversion-%krelease
- * kernel-image-%base_flavour-smp-%kversion-%krelease
+This package contains documentation files for ALT Linux
+kernel-image-%base_flavour-* kernel packages.
 
 The documentation files contained in this package may be different
 from the similar files in upstream kernel distributions, because some
@@ -428,7 +427,7 @@ echo "Kernel built $KernelVer"
 
 %if_enabled docs
 # psdocs, pdfdocs don't work yet
-%make_build htmldocs
+%make_build SPHINXOPTS="-j %__nprocs" htmldocs
 %endif
 
 %install
@@ -443,8 +442,7 @@ install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 %endif
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
-make modules_install INSTALL_MOD_PATH=%buildroot
-find %buildroot -name '*.ko' | xargs gzip
+%make_build modules_install INSTALL_MOD_PATH=%buildroot
 
 %ifarch aarch64 %arm
 mkdir -p %buildroot/lib/devicetree/$KernelVer
@@ -550,7 +548,7 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
 
 # Provide kernel headers for userspace
-make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
+%make_build headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
 
 #provide symlink to autoconf.h for back compat
 pushd %buildroot%old_kbuild_dir/include/linux
@@ -610,7 +608,7 @@ qemu_arch=arm
 qemu_opts="-machine virt"
 console=ttyAMA0
 %endif
-timeout --foreground 600 qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console="$console" -initrd initrd.img > boot.log &&
+timeout --foreground 600 qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img > boot.log &&
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -703,11 +701,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Thu Sep 10 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.8.8-alt1
+- v5.8.8
+
 * Thu Aug 27 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.7.19-alt1
 - v5.7.19
 
-* Mon Aug 24 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.7.17-alt1
-- v5.7.17  (Fixes: CVE-2019-19448, CVE-2019-19770, CVE-2020-14331)
+* Fri Aug 07 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.8.0-alt1
+- v5.8
 
 * Fri Aug 07 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.7.14-alt1
 - v5.7.14
