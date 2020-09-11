@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20200911.4
+Version: 20200911.4.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -55,6 +55,9 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4.1-alt1
+- Reintroduced logging unknown fields, controlled by configuration and disabled by default.
+
 * Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4-alt1
 - Disabled logging unknown fields. Monitoring of "unknown_field" column
   might be required to detect new fields.
