@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: GPT applier
@@ -107,6 +107,10 @@ rm -f %_cachedir/%name/registry.sqlite
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Sep 11 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.8.1-alt1
+- Workaround for control names with special symbols
+- Improved logging on Kerberos errors
+
 * Fri Sep 04 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.8.0-alt1
 - Improve gpo applier logging
 - Add new configuration file /etc/gpupdate/gpupdate.ini
