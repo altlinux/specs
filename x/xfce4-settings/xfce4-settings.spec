@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.14.3
+Version: 4.15.2
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -9,7 +9,7 @@ Url: https://www.xfce.org/
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/xfce/xfce4-settings
+Vcs: https://gitlab.xfce.org/xfce/xfce4-settings.git
 Source: %name-%version.tar
 Source1: xfce4-fixkeyboard
 Patch: %name-%version-%release.patch
@@ -21,8 +21,11 @@ BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
 
 Requires: libgarcon-settings-manager-menu
+Requires: xfce4-common
 
 Obsoletes: xfce4-mcs-manager xfce4-mcs-plugins
+
+Conflicts: libexo-common < 4.15.2-alt1
 
 %define _unpackaged_files_terminate_build 1
 
@@ -67,10 +70,18 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 %_sysconfdir/xdg/menus/xfce-settings-manager.menu
+%config(noreplace) %_sysconfdir/xdg/xfce4/helpers.rc
+%exclude %_datadir/xfce4/helpers/debian-*.desktop
+%_datadir/xfce4/*
+
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
+- Updated Vcs tag.
+- Updated to 4.15.2.
+
 * Mon Apr 13 2020 Mikhail Efremov <sem@altlinux.org> 4.14.3-alt1
 - Added Vcs tag.
 - Updated to 4.14.3.

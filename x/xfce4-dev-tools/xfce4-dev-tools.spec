@@ -1,20 +1,19 @@
 Name: xfce4-dev-tools
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
-License: %gpl2plus
+License: GPLv2+
 Url: https://www.xfce.org/
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
-# Upstream: git://git.xfce.org/xfce/xfce4-dev-tools
+Vcs: https://gitlab.xfce.org/xfce/xfce4-dev-tools.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 BuildRequires: glib2-devel
+BuildRequires: xsltproc docbook-style-xsl
 
 Requires: intltool >= 0.50.0
 Requires: xfce4-common
@@ -33,10 +32,9 @@ Development tools for Xfce
 %patch -p1
 
 %build
-sed  -e "s/@REVISION@//g" \
-	   > configure.ac < configure.ac.in
 %autoreconf
-%configure
+%configure \
+	--enable-maintainer-mode
 %make_build
 
 %install
@@ -44,12 +42,21 @@ sed  -e "s/@REVISION@//g" \
 
 %find_lang %name
 
+%check
+make check
+
 %files -f %name.lang
-%doc AUTHORS HACKING README NEWS
-%_bindir/xdt-*
-%_datadir/xfce4/dev-tools
+%doc AUTHORS HACKING README.md NEWS
+%_bindir/*
+%_datadir/aclocal/*
+%_man1dir/*
 
 %changelog
+* Tue Sep 01 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.0.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 4.14.0-alt1
 - Updated to 4.14.0.
 

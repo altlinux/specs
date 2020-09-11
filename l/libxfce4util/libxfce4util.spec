@@ -2,21 +2,19 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.14.0
+Version: 4.15.3
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
-License: %lgpl2plus
+License: LGPLv2+
 Group: Graphical desktop/XFce
 Url: https://www.xfce.org/
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/libxfce4util
+Vcs: https://gitlab.xfce.org/xfce/libxfce4util.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 # Automatically added by buildreq on Wed Jan 13 2010
@@ -117,6 +115,11 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.3-alt1
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.3.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 4.14.0-alt1
 - Updated to 4.14.0.
 

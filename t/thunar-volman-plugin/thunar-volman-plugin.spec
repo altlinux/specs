@@ -1,20 +1,18 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 0.9.5
+Version: 4.15.0
 Release: alt1
 
 Summary: Thunar volume manager plugin
 Summary (ru): Дополнение Thunar для управления подключенными устройствами
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/thunar-plugins/thunar-volman
+Url: https://docs.xfce.org/xfce/thunar/thunar-volman
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/thunar-volman
+Vcs: https://gitlab.xfce.org/xfce/thunar-volman.git
 Source: %base-%version.tar
 Patch: %base-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
@@ -69,6 +67,12 @@ gnome-volume-manager - менеджер управления томами для
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Sep 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.0-alt1
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 4.15.0.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 0.9.5-alt1
 - Updated to 0.9.5.
 

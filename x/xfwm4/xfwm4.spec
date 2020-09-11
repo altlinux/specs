@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.14.5
+Version: 4.15.1
 Release: alt1
 
 %def_enable epoxy
@@ -71,12 +71,15 @@ Xfce.
 %_datadir/%name
 %_desktopdir/*
 %_liconsdir/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/apps/*
 %_iconsdir/hicolor/*/actions/*
 %_datadir/themes/*
 %_libdir/xfce4/*
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.1-alt1
+- Updated to 4.15.1.
+
 * Wed Aug 12 2020 Mikhail Efremov <sem@altlinux.org> 4.14.5-alt1
 - Updated to 4.14.5.
 

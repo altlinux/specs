@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.12.11
+Version: 4.15.2
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -11,17 +11,16 @@ Group: System/Libraries
 Url: https://www.xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: git://git.xfce.org/xfce/exo
+Vcs: https://gitlab.xfce.org/xfce/exo.git
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4  xfce4-dev-tools > 4.9 libxfce4util-devel libxfce4ui-devel
+BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel
 BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
-BuildRequires: libICE-devel glib2-devel >= 2.27 libgtk+2-devel
+BuildRequires: libICE-devel glib2-devel >= 2.27
 BuildRequires: gtk-doc intltool perl-URI time
 
 Requires: %name-common = %version-%release
-Requires: libgtk+2-common
 # There is no longer python bindings for exo.
 Conflicts: python-module-exo < 0.7.0
 
@@ -52,25 +51,6 @@ Group: Graphical desktop/XFce
 %description -n %_name-utils
 This package conteins utility files for %name.
 
-%package -n %_name-csource
-Summary: C code generation utility for arbitrary data
-Group: Development/C
-
-%description -n %_name-csource
-This package contains %_name-csource utility.
-It is a small utility that generates C code containing arbitrary data,
-useful for compiling texts or other data directly into programs.
-
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %name = %version-%release  libxfce4util-devel > 4.5
-Requires: %_name-csource = %version-%release
-
-%description devel
-This package contains development files required for packaging
-%name-based software.
-
 %package gtk3
 Summary: Extension library to Xfce (GTK+3 version)
 Group: System/Libraries
@@ -86,7 +66,6 @@ This is a GTK+3 version.
 Summary: Development files for %name-gtk3
 Group: Development/C
 Requires: %name-gtk3 = %version-%release
-Requires: %_name-csource = %version-%release
 
 %description gtk3-devel
 This package contains development files required for packaging
@@ -96,8 +75,8 @@ This is a GTK+3 version.
 %package devel-doc
 Summary: Documentation files for %name
 Group: Development/Documentation
-Requires: %name-devel = %version-%release
 BuildArch: noarch
+Conflicts: %name-gtk3-devel < %version-%release
 
 %description devel-doc
 This package contains documentation files required for packaging
@@ -115,7 +94,6 @@ This package contains documentation files required for packaging
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	--enable-gtk2 \
 	--enable-gtk-doc \
 	--enable-debug=minimum
 
@@ -125,38 +103,19 @@ export NPROCS=1
 
 %install
 %makeinstall_std
-%find_lang %_name-1
+%find_lang %_name-2
 
 %check
 make check
 
-%files
-%_libdir/%name-1.so.*
-
-%files common -f %_name-1.lang
-%doc AUTHORS NEWS TODO README
-%config(noreplace) %_sysconfdir/xdg/xfce4/helpers.rc
-%_datadir/xfce4/*
-%exclude %_datadir/xfce4/helpers/debian-*.desktop
-%_desktopdir/*
+%files common -f %_name-2.lang
+%doc AUTHORS NEWS README
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name/
 
 %files -n %_name-utils
 %_bindir/*
-%exclude %_bindir/exo-csource
-%_libdir/xfce4/*
 %_man1dir/*
-%exclude %_man1dir/exo-csource.1.*
-
-%files -n %_name-csource
-%_bindir/exo-csource
-%_man1dir/exo-csource.1.*
-
-%files devel
-%_includedir/%_name-1/
-%_libdir/%name-1.so
-%_pkgconfigdir/%_name-1.pc
 
 %files gtk3
 %_libdir/%name-2.so.*
@@ -170,6 +129,12 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Wed Sep 02 2020 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
+- Dropped exo-csource subpackage.
+- Dropped GTK+2 support.
+- Updated Vcs tag.
+- Updated to 4.15.2.
+
 * Thu Dec 19 2019 Mikhail Efremov <sem@altlinux.org> 0.12.11-alt1
 - Don't use rpm-build-licenses.
 - Updated to 0.12.11.

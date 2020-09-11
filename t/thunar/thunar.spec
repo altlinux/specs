@@ -1,12 +1,12 @@
 Name: thunar
-Version: 1.8.15
+Version: 4.15.2
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
 Group: Graphical desktop/XFce
 License: GPLv2+ and LGPLv2+
-Url: https://xfce.org
+Url: https://docs.xfce.org/xfce/thunar/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/thunar.git
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 BuildPreReq: xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel >= 4.8 libxfconf-devel >= 4.8 libexo-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: gtk-doc intltool libSM-devel libexif-devel libgamin-devel libpcre-devel time
+BuildRequires: libpango-devel
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
 
@@ -26,6 +27,7 @@ BuildRequires: desktop-file-utils
 Requires: lib%name = %version-%release
 Requires: eject
 Requires: exo-utils
+Requires: xfconf-utils
 
 Obsoletes: Thunar < 1.3.1
 Provides: Thunar = %version-%release
@@ -101,12 +103,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 make check
 
 %files -f thunar.lang
-%doc README NEWS AUTHORS
+%doc README.md NEWS AUTHORS
 %config(noreplace) %_sysconfdir/xdg/Thunar/
 %_bindir/*
 %_desktopdir/*
 %_man1dir/*
-%_pixmapsdir/*
 %_datadir/dbus-1/services/*
 %_datadir/polkit-1/actions/org.xfce.thunar.policy
 %_datadir/metainfo/org.xfce.thunar.appdata.xml
@@ -135,6 +136,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Sep 03 2020 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
+- Updated url.
+- Updated to 4.15.2.
+
 * Mon May 25 2020 Mikhail Efremov <sem@altlinux.org> 1.8.15-alt1
 - Updated Vcs tag.
 - Updated to 1.8.15.
