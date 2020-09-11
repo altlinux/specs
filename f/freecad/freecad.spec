@@ -13,7 +13,7 @@
 
 Name:    freecad
 Version: 0.18.4
-Release: alt4
+Release: alt5
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -99,7 +99,7 @@ Requires: libEGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
 
-%py_requires pivy
+%py_requires pivy matplotlib.backends.backend_qt4
 %py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 %py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
 %py_provides ImageGui PartDesignGui _PartDesign
@@ -239,6 +239,9 @@ rm -rf %buildroot%_prefix/Ext
 %ldir/doc
 
 %changelog
+* Fri Sep 11 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.18.4-alt5
+- Require python-module-matplotlib-qt4 for workbench (ALT #38925).
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.18.4-alt4
 - Fixed build with qt-5.15.
 
