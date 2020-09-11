@@ -3,10 +3,11 @@
 
 %def_disable dnstap
 %def_enable maxminddb
+%def_enable xdp
 %def_disable documentation
 
 Name: knot
-Version: 2.9.5
+Version: 3.0.0
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -26,7 +27,9 @@ BuildRequires: pkgconfig(libedit)
 # Optional dependencies
 BuildRequires: pkgconfig(libcap-ng)
 BuildRequires: pkgconfig(libidn2)
+BuildRequires: pkgconfig(libnghttp2)
 %{?_enable_maxminddb:BuildRequires: pkgconfig(libmaxminddb)}
+%{?_enable_xdp:BuildRequires: pkgconfig(libbpf) >= 0.0.6}
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build-3}
@@ -154,26 +157,32 @@ find %buildroot -type f -name "*.la" -delete -print
 %preun_service %name
 
 %files
-%doc COPYING NEWS README samples
+%doc COPYING NEWS README.md samples
 %dir %attr(750,root,%name) %_sysconfdir/%name
 %config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.conf
 %dir %attr(775,root,%name) %_sharedstatedir/%name
 %dir %attr(770,root,%name) %_sharedstatedir/%name/keys
 %_unitdir/%name.service
 %_tmpfilesdir/%name.conf
-%_bindir/kzonecheck
+%_bindir/kzone*
 %_sbindir/*
-%_man1dir/kzonecheck.*
+%_man1dir/kzone*
 %_man5dir/*
 %_man8dir/*
+%exclude %_sbindir/kxdpgun
+%exclude %_man8dir/kxdpgun.*
 
 %files utils
-%_bindir/kdig
-%_bindir/khost
-%_bindir/knsec3hash
-%_bindir/knsupdate
+%_bindir/*
+%if_enabled xdp
+%_sbindir/kxdpgun
+%_man8dir/kxdpgun.*
+%endif
 %_man1dir/*
-%exclude %_man1dir/kzonecheck.*
+%_bindir/kzonecheck
+%_bindir/kzonesign
+%exclude %_bindir/kzone*
+%exclude %_man1dir/kzone*
 
 %files devel
 %_includedir/*
@@ -195,6 +204,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %endif
 
 %changelog
+* Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- new version 3.0.0
+
 * Sun May 31 2020 Alexey Shabalin <shaba@altlinux.org> 2.9.5-alt1
 - new version 2.9.5
 
