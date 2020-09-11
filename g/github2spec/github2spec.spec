@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.11
+Version:  1.4.12
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Sep 12 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.12-alt1
+- Fix open-uri warning
+
 * Thu Jul 09 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.11-alt1
 - Proxy empty branch options to gnespec
 - Add ocaml support
