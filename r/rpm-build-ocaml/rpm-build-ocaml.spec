@@ -1,10 +1,10 @@
 Name: rpm-build-ocaml
-Version: 1.3
+Version: 1.4
 Release: alt1
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild OCaml packages
-License: Public domain
+License: GPL-2.0-or-later
 Group: Development/ML
 
 Source: scripts-%version.tar
@@ -12,7 +12,6 @@ Source: scripts-%version.tar
 # for proper dependencies
 BuildPreReq: rpm-build >= 4.0.4-alt81
 
-Conflicts: ocaml4-runtime
 Requires: %_bindir/ocamlrun
 Requires: %_rpmlibdir/ocaml-reqprov
 Obsoletes: rpm-build-ocaml4
@@ -35,6 +34,11 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Fri Sep 11 2020 Anton Farygin <rider@altlinux.ru> 1.4-alt1
+- %%ocamldir renamed to %%_ocamldir
+- added %%dune_build, %%dune_install and %%dune_check
+- removed conflict with ocaml4-runtime
+
 * Tue May 16 2017 Anton Farygin <rider@altlinux.ru> 1.3-alt1
 - added %%add_ocaml_req_skip macros
 - added %%ocamldir
