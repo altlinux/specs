@@ -1,7 +1,7 @@
 %define soversion 0
 
 Name: gamemode
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 
 Summary: Optimise Linux system performance on demand 
@@ -60,19 +60,22 @@ Development files for GameMode
 %install
 %meson_install
 %__install -Dp -m0644 example/%name.ini %buildroot%_datadir/%name/%name.ini
+%__rm -f %buildroot%_libdir/lib%{name}auto.a
 
 %files
 %doc LICENSE.txt README.md
 %_bindir/%{name}d
 %_bindir/%{name}run
+%_bindir/%{name}-simulate-game
 %dir %_datadir/%name
 %_datadir/%name/%name.ini
 %_datadir/dbus-1/services/com.feralinteractive.GameMode.service
+%_datadir/metainfo/io.github.feralinteractive.%name.metainfo.xml
 %_datadir/polkit-1/actions/com.feralinteractive.GameMode.policy
 %_libexecdir/cpugovctl
 %_libexecdir/gpuclockctl
 %_libexecdir/systemd/user/gamemoded.service
-%_man8dir/%{name}d.8*
+%_mandir/*
 
 %files -n lib%name%soversion
 %_libdir/lib%name.so.*
@@ -81,11 +84,14 @@ Development files for GameMode
 %files -n lib%name-devel
 %_includedir/%{name}_client.h
 %_pkgconfigdir/%name.pc
-%_pkgconfigdir/%name-auto.pc
+%_pkgconfigdir/lib%{name}auto.pc
 %_libdir/lib%name.so
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Fri Sep 11 2020 Nazarov Denis <nenderus@altlinux.org> 1.6-alt1
+- Version 1.6
+
 * Wed Mar 04 2020 Nazarov Denis <nenderus@altlinux.org> 1.5.1-alt1
 - Version 1.5.1
 - Use shared inih library
