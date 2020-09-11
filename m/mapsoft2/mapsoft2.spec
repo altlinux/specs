@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.2
+Version:      1.3
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -36,9 +36,19 @@ export SKIP_IMG_DIFFS=1
 %_bindir/ms2*
 %_mandir/man1/ms2*
 %_mandir/man5/mapsoft2*
+%dir %_datadir/mapsoft2
 %_datadir/mapsoft2/mapsoft2.css
 
 %changelog
+* Fri Sep 11 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.3-alt1
+- viewer: fix a few problems with tiled maps, rescaling and bounding box setting;
+  faster srtm layers.
+- geodata rendering: fix border rendering, modify options for border setting.
+  Allow rendering of tile sets.
+- image/colors: fix color handling, add options for loading/saving colormaps.
+- mapdb rendering: change reference, border, scale settings.
+- spec: add /home/sla/mapsoft2ir %_datadir/mapsoft2 to files section
+
 * Sat Aug 29 2020 Vladislav Zavjalov <slazav@altlinux.org> 1.2-alt1
 Viewer:
 - SRTM data support (map layer, panoramic view, drowing options dialog)
