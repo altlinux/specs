@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.15
+Version: 1.15.2
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -336,6 +336,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Sep 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.15.2-alt1
+- New version (1.15.2). (Fixes: CVE-2020-24553)
+
 * Tue Aug 18 2020 Alexey Shabalin <shaba@altlinux.org> 1.15-alt1
 - New version (1.15).
 - Set a standard go_root as /usr/lib/golang, regardless of arch
