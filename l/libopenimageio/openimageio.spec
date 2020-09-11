@@ -5,24 +5,24 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.1
+%define soname 2.2
 
 Name:           lib%oname
-Version:        2.1.18.1
-Release:        alt2
+Version:        2.2.6.1
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            https://sites.google.com/site/openimageio/home
 
 # https://github.com/OpenImageIO/oiio.git
 Source0:        %name-%version.tar
 
-Patch2000:      openimageio-alt-e2k.patch
-
 # Images for test suite
 #Source1:        oiio-images.tar.gz
+
+Patch1: %oname-upstream-pull-2896.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -46,6 +46,7 @@ BuildRequires:  libsquish-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  freetype2-devel
 BuildRequires:  libfmt-devel
+BuildRequires:  openvdb-devel
 %ifnarch %e2k
 BuildRequires:  libdcmtk-devel
 BuildRequires:  libopencv-devel
@@ -123,24 +124,14 @@ Development files for package %name
 
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
+%patch1 -p1
 
 # Remove bundled pugixml
-rm -f src/include/OpenImageIO/pugixml.hpp \
-      src/include/OpenImageIO/pugiconfig.hpp \
-      src/libutil/OpenImageIO/pugixml.cpp
-
-# Remove bundled tbb
-rm -rf src/include/tbb
+rm -fr src/include/OpenImageIO/detail/pugixml/
 
 # Install test images
 #rm -rf ../oiio-images && mkdir ../oiio-images && pushd ../oiio-images
 #tar --strip-components=1 -xzf #{SOURCE1}
-
-# Try disabling old CMP
-sed -i "s/SET CMP0046 OLD/SET CMP0046 NEW/" CMakeLists.txt
 
 %ifarch armh
 sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
@@ -159,7 +150,6 @@ sed -ri '/Qt5_FOUND AND OPENGL_FOUND/ s,iv_enabled,FALSE,' src/iv/CMakeLists.txt
 	-DINSTALL_FONTS:BOOL=FALSE \
 	-DUSE_EXTERNAL_PUGIXML:BOOL=TRUE \
 	-DSTOP_ON_WARNING:BOOL=FALSE \
-	-DUSE_CPP:STRING=14 \
 	-DJPEG_INCLUDE_DIR=%_includedir \
 	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
 	-DOpenGL_GL_PREFERENCE=GLVND \
@@ -181,7 +171,7 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 
 %files -n lib%oname%soname
 %doc CHANGES.md README.md
-%doc LICENSE.md LICENSE-THIRD-PARTY.md
+%doc LICENSE.md THIRD-PARTY.md
 %_libdir/libOpenImageIO.so.%{soname}
 %_libdir/libOpenImageIO.so.%{soname}.*
 %_libdir/libOpenImageIO_Util.so.%{soname}
@@ -211,6 +201,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.6.1-alt1
+- Updated to upstream version 2.2.6.1.
+
 * Thu Sep 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.18.1-alt2
 - Updated conflicts (Closes: #38878).
 
