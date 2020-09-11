@@ -8,8 +8,8 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20200207.3
-Release: alt2
+Version: 20200911.4
+Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -48,13 +48,20 @@ popd
 
 %files
 %config(noreplace) %_sysconfdir/audisp/auditd-clickhouse-datatypes.json
-%config(noreplace) %_sysconfdir/audisp/auditd-clickhouse.conf
+%config(noreplace) %attr(600,root,root) %_sysconfdir/audisp/auditd-clickhouse.conf
 %config(noreplace) %_sysconfdir/audisp/plugins.d/auditd-plugin-clickhouse.conf
 %config(noreplace) %_sysconfdir/logrotate.d/auditd-plugin-clickhouse-logrotate.conf
 %_prefix/libexec/auditd-plugin-clickhouse
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4-alt1
+- Disabled logging unknown fields. Monitoring of "unknown_field" column
+  might be required to detect new fields.
+- Added new fields.
+- Implemented experimental automatic migration to new table. It's disabled by default.
+- Updated config file permissions.
+
 * Mon Jun 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200207.3-alt2
 - Updated supported architectures.
 
