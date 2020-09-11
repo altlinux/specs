@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -40,7 +40,7 @@ BuildRequires: python3(numpydoc) python3(matplotlib.sphinxext) python3(matplotli
 %add_python3_req_skip feather
 %add_python3_req_skip pyarrow
 %py3_requires pytz dateutil numpy sqlalchemy numexpr
-%py3_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
+%py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt httplib2
 %py3_requires oauth2client apiclient gflags tables statsmodels
 
 %description
@@ -134,6 +134,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Tue Sep 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
+- Updated runtime dependencies.
+
 * Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
 - Updated to upstream version 1.1.1.
 
