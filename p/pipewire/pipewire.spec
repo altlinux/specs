@@ -8,6 +8,8 @@
 
 %def_enable gstreamer
 %def_enable systemd
+#system service: not recommended and disabled by default
+%def_disable systemd_system_service
 %def_enable vulkan
 %ifarch %e2k
 %def_disable examples
@@ -19,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.9
+Version: %ver_major.11
 Release: alt1
 
 Summary: Media Sharing Server
@@ -107,6 +109,7 @@ This package contains command line utilities for the PipeWire media server.
 	%{?_enable_gstreamer:-Dgstreamer=true} \
 	%{?_disable_vulkan:-Dvulkan=false} \
 	%{?_disable_systemd:-Dsystemd=false} \
+	%{?_enable_systemd_system_service:-Dsystemd-system-service=true} \
 	%{?_disable_examples:-Dexamples=false}
 %nil
 %meson_build
@@ -135,6 +138,11 @@ This package contains command line utilities for the PipeWire media server.
 %if_enabled systemd
 %_prefix/lib/systemd/user/pipewire.service
 %_prefix/lib/systemd/user/pipewire.socket
+
+%{?_enable_systemd_system_service:
+%_unitdir/%name.service
+%_unitdir/%name.socket}
+
 %endif
 %_datadir/alsa/alsa.conf.d/50-pipewire.conf
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
@@ -190,6 +198,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- updated to 0.3.11-1-gc979f181
+
 * Tue Aug 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt1
 - updated to 0.3.9-7-g92901379
 
