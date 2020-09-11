@@ -1,16 +1,14 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-users
-Version: 10.11
+Version: 10.12
 Release: alt1
-
-Source: %name-%version.tar
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Summary: alterator module for system users administration
 License: GPL
 Group: System/Configuration/Other
+
+Url: http://altlinux.org/alterator
+Source: %name-%version.tar
+Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
 BuildPreReq: alterator >= 4.10-alt5
@@ -24,6 +22,8 @@ Conflicts: alterator-lookout < 2.1-alt1
 
 Provides: alterator-backend-local_users = %version
 Obsoletes: alterator-backend-local_users
+
+%define _altdata_dir %_datadir/alterator
 
 %description
 alterator module for system users administration
@@ -43,6 +43,9 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 10.12-alt1
+- don't mess up multiseat autologin
+
 * Wed Mar 06 2019 Andrey Cherepanov <cas@altlinux.org> 10.11-alt1
 - Add support of kiosk profile.
 
