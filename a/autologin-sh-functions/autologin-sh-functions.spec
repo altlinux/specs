@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.2.7
+Version: 0.2.9
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -25,7 +25,15 @@ install -pDm644 %name %buildroot%_bindir/%name
 %doc README
 %_bindir/*
 
+# TODO: multiseat support (see autologin-sh-functions/TODO)?
+
 %changelog
+* Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 0.2.9-alt1
+- do not break install-time multiseat group autologin setup
+
+* Sun Aug 23 2020 Michael Shigorin <mike@altlinux.org> 0.2.8-alt1
+- restrict lightdm autologin to seat0
+
 * Tue Jun 04 2019 Anton Midyukov <antohami@altlinux.org> 0.2.7-alt1
 - Fix detect default sessions for lightdm
 
