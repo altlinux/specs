@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: ALT Local policies
@@ -57,6 +57,9 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt1
+- Add winbind service enabled by default on server and workstation
+
 * Sun Sep 06 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.3-alt1
 - Fixed controls in case appropriate configs are missing
 - Add check default sssd-ad options and create it if not exists
