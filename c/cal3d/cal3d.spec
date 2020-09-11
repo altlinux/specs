@@ -13,14 +13,15 @@ BuildRequires: /usr/bin/blender gcc-c++
 Summary:	A skeletal based character animation library
 Name:		cal3d
 Version:	0.11.0
-Release:	alt4_18
+Release:	alt5_18
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://gna.org/projects/cal3d/
 Source0:	http://download.gna.org/cal3d/sources/%{name}-%{version}.tar.bz2
 Patch0:		cal3d-0.11.0-gcc43.patch
 Patch1:		cal3d-0.11.0-gcc7.patch
-%ifnarch %arm %mips %e2k riscv64
+ExclusiveArch:	x86_64 aarch64 ppc64le %e2k
+%ifarch x86_64 aarch64 ppc64le
 BuildRequires:  valgrind
 %endif
 BuildRequires:	doxygen
@@ -87,6 +88,9 @@ autoreconf -fi
 
 
 %changelog
+* Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 0.11.0-alt5_18
+- ExclusiveArch: 64-bit ones (following blender)
+
 * Sat Oct 05 2019 Michael Shigorin <mike@altlinux.org> 0.11.0-alt4_18
 - avoid valgrind on more arches
   + proper ALT way is through rpm-macros-valgrind though
