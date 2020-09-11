@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: polkit
-Version: 0.117
+Version: 0.118
 Release: alt1
 
 Summary: PolicyKit Authorization Framework
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
 BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs68-devel pkgconfig(systemd)
+BuildRequires: libmozjs78-devel pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui python3-module-dbusmock}
 
 %description
@@ -142,6 +142,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.118-alt1
+- 0.118 (ported to mozjs78)
+
 * Sun Aug 02 2020 Yuri N. Sedunov <aris@altlinux.org> 0.117-alt1
 - updated to 0.117-2-gb6110c4
 - enabled %%check
