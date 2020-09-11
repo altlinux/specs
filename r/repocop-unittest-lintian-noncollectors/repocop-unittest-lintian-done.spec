@@ -3,7 +3,7 @@
 
 Name: repocop-unittest-lintian-noncollectors
 Version: 0.16.%lintianver
-Release: alt7
+Release: alt8
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
@@ -57,6 +57,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Fri Sep 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.1.23.48-alt8
+- bugfix release
+
 * Thu Sep 10 2020 Igor Vlasenko <viy@altlinux.ru> 0.16.1.23.48-alt7
 - removed known false positives in aspell-package-not-arch-all
 - (closes: #38840)
