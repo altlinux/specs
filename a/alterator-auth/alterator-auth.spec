@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.43.8
-Release: alt1
+Release: alt2
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
 
@@ -64,6 +64,7 @@ Requires: libnss-role
 Requires: alterator-datetime
 Requires: sssd-dbus
 Requires: alterator-roles-common
+Requires: samba-winbind-clients
 
 Provides:  task-auth-ad = %EVR
 Obsoletes: task-auth-ad < %EVR
@@ -167,6 +168,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.8-alt2
+- Add requires samba-winbind-clients to task-auth-ad-sssd metapackage
+
 * Thu Sep 10 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.8-alt1
 - Improve gpupdate enable/disable process
 
