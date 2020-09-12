@@ -24,7 +24,7 @@
 
 Name: libgtk+3
 Version: %ver_major.23
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -464,6 +464,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.23-alt2
+- temporarily disabled tracker3 support for GNOME-3.38 to avoid
+  conflict with tracker-2.0 applications (gnome-{books,documents})
+
 * Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.24.23-alt1
 - 3.24.23
 

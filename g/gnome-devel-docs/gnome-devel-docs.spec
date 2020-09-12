@@ -1,7 +1,7 @@
-%define ver_major 3.32
+%define ver_major 3.38
 
 Name: gnome-devel-docs
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -12,16 +12,15 @@ Url: ftp://ftp.gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
+AutoReqProv: no
 
 Obsoletes: gnome-users-guide
 Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-BuildPreReq: yelp-tools
-BuildRequires: intltool xml-utils xsltproc
-#BuildPreReq: rpm-build-gir
+BuildRequires(pre): rpm-build-gnome rpm-build-licenses
+BuildRequires: yelp-tools
 
 %description
 This package contains documents which are targeted for GNOME developers.
@@ -33,6 +32,7 @@ Guide and the Handbook of Writing Software Documentation.
 Summary: GNOME Developer Platform demos
 Group: Development/GNOME and GTK+
 Requires: %name = %version-%release
+AutoReqProv: no
 
 %description -n gnome-devel-demos
 This package is a part of %name and provides demos for GNOME developpers
@@ -58,6 +58,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.1-alt1
 - 3.32.1
 

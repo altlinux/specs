@@ -2,7 +2,7 @@
 %def_enable eds
 
 Name: almanah
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Diary editor for GNOME
@@ -48,6 +48,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README* AUTHORS NEWS
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
+- 0.12.2
+
 * Mon Oct 07 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0 (ported to Meson build system)
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Geary
 # Elementary OS-specific
 %def_disable contractor
@@ -8,7 +8,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.3.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Email client
@@ -22,7 +22,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define vala_ver 0.26
+%define glib_ver 2.64
+%define vala_ver 0.48.6
 %define gtk_ver 3.24.7
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
@@ -35,7 +36,7 @@ Requires: dconf gnome-keyring gcr
 BuildRequires(pre): meson
 BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: iso-codes-devel libgmime3.0-devel >= %gmime_ver
@@ -47,7 +48,9 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
 BuildRequires: libfolks-devel  libfolks-vala libenchant2-devel
-BuildRequires: libytnef-devel libdbus-devel libgspell-devel libhandy-devel
+BuildRequires: libytnef-devel libdbus-devel libgspell-devel
+BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: libgsound-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
 
@@ -84,9 +87,12 @@ Geary's development.
 %_iconsdir/hicolor/scalable/actions/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
-%doc AUTHORS NEWS README THANKS
+%doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0.1-alt1
+- 3.38.0.1
+
 * Thu Aug 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3.1-alt1
 - 3.36.3.1
 

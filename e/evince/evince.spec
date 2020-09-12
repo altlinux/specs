@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3
 %define so_ver 4
 
@@ -17,7 +17,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -38,7 +38,7 @@ Requires: dconf
 %{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
 %define poppler_ver 0.24.0
-%define gtk_ver 3.16.0
+%define gtk_ver 3.22
 %define spectre_ver 0.2.0
 
 BuildRequires(pre): meson
@@ -213,6 +213,9 @@ via the Evince.
 
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.7-alt1
 - 3.36.7
 

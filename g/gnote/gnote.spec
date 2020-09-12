@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -82,6 +82,9 @@ and consumes fewer resources.
 %exclude %_libdir/%name/*/*/*.la
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Jun 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

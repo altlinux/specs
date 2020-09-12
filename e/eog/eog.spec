@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
@@ -10,7 +10,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -38,7 +38,7 @@ BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.22
-BuildPreReq: libgio-devel >= 2.42.0
+BuildPreReq: libgio-devel >= 2.54
 BuildPreReq: libgnome-desktop3-devel >= 3.0
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
@@ -46,10 +46,11 @@ BuildPreReq: libexempi-devel >= 1.99.5
 BuildPreReq: libexif-devel >= 0.6.14
 %{?_enable_color_management:BuildPreReq: liblcms2-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-BuildPreReq: libjpeg-devel librsvg-devel
+BuildPreReq: libjpeg-devel librsvg-devel >= 2.44
 BuildPreReq: libpeas-devel >= 0.7.4
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
+BuildRequires: libportal-devel >= 0.3
 
 %description
 This is the Eye of GNOME, an image viewer program. It is meant to be
@@ -166,6 +167,9 @@ the functionality of the EOG GUI.
 
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

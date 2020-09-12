@@ -1,37 +1,36 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 4.4
-%define api_ver 4
+%define ver_major 5.0
+%define api_ver 5
 
-%def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 # display required
 %def_disable check
-%def_enable installed_tests
+%def_disable installed_tests
 
 Name: lib%_name
 Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
-License: %lgpl2plus
+License: LGPL-3.0-or-later
 Group: System/Libraries
 Url:  https://wiki.gnome.org/Projects/Tepl
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.52
+%define glib_ver 2.64
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.22
-%define gtksource_ver 3.99.7
-%define amtk_ver 5.0.0
+%define gtksource_ver 4.0
+%define amtk_ver 5.0
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
-BuildRequires: libamtk-devel >= %amtk_ver
+BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview4-gir-devel libamtk-gir-devel}
 
@@ -61,15 +60,6 @@ text editors and IDEs. Tepl is the acronym for "TK+ Text Editor
 Framework"
 
 This package contains development documentation for Tepl.
-
-%package devel-static
-Summary: Stuff for developing with Tepl
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-This package contains the necessary components to develop statically
-linked software for Tepl, GTK+ Text Editor Framework
 
 %package gir
 Summary: GObject introspection data for the Tepl library
@@ -102,20 +92,18 @@ the functionality of the installed Tepl library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure %{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	%{?_enable_installed_tests:--enable-installed-tests}
-
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --output=%_name.lang %_name %{_name}-%api_ver
 
 %check
-%make check
+%meson_test
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
@@ -127,12 +115,9 @@ the functionality of the installed Tepl library.
 %_pkgconfigdir/%_name-%api_ver.pc
 #%_vapidir/*
 
+%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%{api_ver}.0/
-
-%if_enabled static
-%files devel-static
-%_libdir/%name-%api_ver.a
+%_datadir/gtk-doc/html/%_name-%api_ver/
 %endif
 
 %if_enabled introspection
@@ -151,6 +136,12 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
+* Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 4.99.4-alt1
+- 4.99.4
+
 * Thu Mar 05 2020 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 

@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -21,14 +21,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.44
+%define glib_ver 2.58
 %define gtk_ver 3.24
 %define vala_ver 0.17.2
-%define tp_glib_ver 0.17.5
-%define folks_ver 0.13.1
-%define eds_ver 3.33.2
+%define tp_glib_ver 0.22.0
+%define folks_ver 0.14
+%define eds_ver 3.34
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
+%define handy_ver 1.0
 
 BuildRequires(pre): meson
 BuildRequires: yelp-tools docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
@@ -38,7 +39,7 @@ BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-ser
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel
-BuildRequires: libhandy-devel
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 # for build from git
 BuildRequires: libfolks-vala
@@ -72,6 +73,9 @@ BuildRequires: libfolks-vala
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38-alt1
+- 3.38
+
 * Fri Jun 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -88,6 +88,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

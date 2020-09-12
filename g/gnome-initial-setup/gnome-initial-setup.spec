@@ -1,15 +1,16 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 %def_disable software_sources
 %def_enable cheese
+%def_enable systemd
 
 Name: gnome-initial-setup
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -26,13 +27,18 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %define secret_ver 0.18.8
 %define geoclue_ver 2.4.3
 %define packagekit_ver 1.1.4
+%define gsds_ver 3.37.1
 
-Requires: gnome-shell >= %ver_major gdm dconf geoclue2 >= %geoclue_ver
-Requires: ibus gnome-keyring gnome-getting-started-docs
+Requires: gnome-shell >= 3.37.92 gdm dconf geoclue2 >= %geoclue_ver
+Requires: gsettings-desktop-schemas >= %gsds_ver
+Requires: ibus gnome-keyring
+Requires: gnome-getting-started-docs
+#Requires: gnome-tour
 
 BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libnm-devel >= %nm_ver libnma-devel >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel librest-devel
@@ -44,7 +50,6 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver libgeocode-glib-devel
 BuildRequires: libwebkit2gtk-devel
-BuildRequires: libnm-devel libnma-devel
 %{?_enable_cheese:BuildRequires: libcheese-devel}
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
 
@@ -58,7 +63,9 @@ you through configuring it. It is integrated with gdm.
 
 %build
 %meson \
-	%{?_enable_software_sources:-Dsoftware-sources=enabled}
+	%{?_enable_software_sources:-Dsoftware-sources=enabled} \
+	%{?_disable_systemd:-Dsystemd=false}
+%nil
 %meson_build
 
 %install
@@ -86,9 +93,12 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_userunitdir/*
 %attr(1770, %name, %name) %dir %_localstatedir/lib/%name
 %attr(1777, root, %name) %dir %_localstatedir/run/%name
-%doc README NEWS
+%doc README* NEWS
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

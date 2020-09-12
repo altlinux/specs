@@ -1,17 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.36
-%define panel_api_ver 6.0
+%define ver_major 3.37
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
-%def_disable mini_commander
+%def_enable mini_commander
 %def_enable battstat
 %def_enable command
 %def_enable timer
+%def_disable tracker
 
 Name: gnome-applets
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -36,33 +36,64 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
 %define libwnck_ver 2.9.3
-%define system_tools_backends_ver 1.1.3
 %define libnotify_ver 0.7.1
 %define icon_theme_ver 3.14
 %define libgweather_ver 3.17.1
-%define nm_ver 0.7
 
-Requires: %name-charpick = %EVR
-Requires: %name-drivemount = %EVR
-Requires: %name-stickynotes = %EVR
-Requires: %name-geyes = %EVR
-Requires: %name-gweather = %EVR
-Requires: %name-multiload = %EVR
-Requires: %name-accessx-status = %EVR
-Requires: %name-netspeed = %EVR
-Requires: %name-brightness = %EVR
-Requires: %name-inhibit = %EVR
-Requires: %name-tracker-search-bar = %EVR
-Requires: %name-window-buttons = %EVR
-Requires: %name-window-title = %EVR
-%{?_enable_frequency_selector:Requires: %name-cpufreq = %EVR}
-%{?_enable_mini_commander:Requires: %name-mini-commander = %EVR}
-%{?_enable_battstat:Requires: %name-battstat = %EVR}
-%{?_enable_command:Requires: %name-command = %EVR}
-%{?_enable_timer:Requires: %name-timer = %EVR}
+Requires: gnome-panel >= %gnome_panel_ver
+Requires: gvfs
+%{?_enable tracker:Requires: tracker}
+
+Obsoletes: %name-common < 3.37
+Provides: %name-common = %EVR
+Obsoletes: %name-charpick < 3.37
+Provides: %name-charpick = %EVR
+Obsoletes: %name-drivemount < 3.37
+Provides: %name-drivemount = %EVR
+Obsoletes: %name-stickynotes < 3.37
+Provides: %name-stickynotes = %EVR
+Obsoletes: %name-geyes < 3.37
+Provides: %name-geyes = %EVR
+Obsoletes: %name-gweather < 3.37
+Provides: %name-gweather = %EVR
+Obsoletes: %name-multiload < 3.37
+Provides: %name-multiload = %EVR
+Obsoletes: %name-accessx-status < 3.37
+Provides: %name-accessx-status = %EVR
+Obsoletes: %name-netspeed < 3.37
+Provides: %name-netspeed = %EVR
+Obsoletes: %name-brightness < 3.37
+Provides: %name-brightness = %EVR
+Obsoletes: %name-inhibit < 3.37
+Provides: %name-inhibit = %EVR
+Obsoletes: %name-window-buttons < 3.37
+Provides: %name-window-buttons = %EVR
+Obsoletes: %name-window-title < 3.37
+Provides: %name-window-title = %EVR
+Obsoletes: %name-cpufreq-usermode < 3.37
+Provides: %name-cpufreq-usermode = %EVR
+%{?_enable tracker:
+Obsoletes: %name-tracker-search-bar < 3.37
+Provides: %name-tracker-search-bar = %EVR}
+%{?_enable_frequency_selector:
+Obsoletes: %name-cpufreq < 3.37
+Provides: %name-cpufreq = %EVR}
+%{?_enable_mini_commander:
+Obsoletes: %name-mini-commander < 3.37
+Provides: %name-mini-commander = %EVR}
+%{?_enable_battstat:
+Obsoletes: %name-battstat < 3.37
+Provides: %name-battstat = %EVR}
+%{?_enable_command:
+Obsoletes: %name-command < 3.37
+Provides: %name-command = %EVR}
+%{?_enable_timer:
+Obsoletes: %name-timer < 3.37
+Provides: %name-timer = %EVR}
 
 # From configure.ac
 BuildRequires: autoconf-archive
+#BuildRequires: intltool >= 0.35
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -73,7 +104,6 @@ BuildRequires: libxklavier-devel >= %libxklavier_ver
 BuildRequires: libwnck3-devel >= %libwnck_ver
 BuildRequires: libnotify-devel >= %libnotify_ver
 BuildRequires: icon-theme-adwaita >= %icon_theme_ver
-BuildRequires: intltool >= 0.35
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: libgucharmap-devel >= 2.33.2
 BuildRequires: libgweather-devel >= %libgweather_ver
@@ -81,12 +111,9 @@ BuildRequires: rpm-build-gnome icon-theme-adwaita
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: libxml2-devel libdbus-devel
 BuildRequires: libpolkit-devel xorg-cf-files yelp-tools
-BuildRequires: tracker-devel libupower-devel
+%{?_enable_battstat:BuildRequires: libupower-devel}
+%{?_enable tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
-
-%if_enabled battstat
-BuildRequires: libapm-devel
-%endif
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -119,232 +146,8 @@ view a web page or search for a man/info page etc.
 multiload_applet contains 5 applets: CPU Load Applet, Load Average
 Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
 
-%package common
-Summary: Common files for GNOME panel applets
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-
-# since 2.9
-Obsoletes: %name-cdplayer
-Obsoletes: %name-wireless
-Obsoletes: %name-mailcheck
-Obsoletes: %name-gkb
-# Just to make sure applets don't get installed without the panel itself
-# (an implicit dependency on libgnome-panel is not enough).
-Requires: gnome-panel >= %gnome_panel_ver
-
-%description common
-This package contains common files needed to run GNOME panel applets.
-
-%package accessx-status
-Summary: Accessibility Keyboard Status Applet for the GNOME panel
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description accessx-status
-This applet shows the status of the keyboard accessibility features,
-including the current state of the keyboard, if those features are in
-use.
-
-%if_enabled battstat
-%package battstat
-Summary: Laptop Power Subsystem Applet for the GNOME panel
-Group: Monitoring
-Requires(pre): %name-common = %EVR
-
-%description battstat
-battstat-applet is a utility that displays the status of the power
-managment subsystem on laptops. It queries the APM BIOS and displays
-remaining battery charge percentage in a graphical window.
-%endif
-
-%package cpufreq
-Summary: GNOME CPUFreq Applet
-Group: Monitoring
-Requires(pre): %name-common = %EVR
-
-%description cpufreq
-GNOME CPUFreq Applet is a CPU Frequency Scaling Monitor for GNOME Panel.
-
-%package cpufreq-usermode
-Summary: Local authority configuration for GNOME CPUFreq Applet
-Group: Monitoring
-BuildArch: noarch
-Requires: %name-cpufreq = %EVR
-Requires: polkit-pkla-compat
-
-%description cpufreq-usermode
-GNOME CPUFreq Applet is a CPU Frequency Scaling Monitor for GNOME Panel.
-
-Install this package to allow users from group "wheel" to change CPUs
-frequency via applet.
-
-%package charpick
-Summary: Character Picker Applet for the GNOME panel
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description charpick
-charpick_applet allows you to easily write many characters which are not
-available on standard keyboards such as accented  characters,  certain
-mathematical  symbols and punctuation, and some other special symbols.
-
-%package drivemount
-Summary: Drive Mount Applet for the GNOME panel.
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description drivemount
-drivemount_applet allows to quickly and easily mount and unmount various
-types of drives and file systems on computer.
-
-%package geyes
-Summary: gEyes Applet for the GNOME panel
-Group: Toys
-Requires(pre): %name-common = %EVR
-
-%description geyes
-geyes_applet is a pair of eyes which follow mouse pointer around the screen.
-
-%package gweather
-Summary: Weather Applet for the GNOME panel
-Group: Toys
-Requires(pre): %name-common = %EVR
-
-%description gweather
-gweather displays the current temperature and weather conditions in
-numeric and iconified form inside the applet.
-
-%package mini-commander
-Summary: Mini-Commander Applet for the GNOME panel
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description mini-commander
-mini_commander_applet adds a command line to your Panel. It features
-command completion, command history, changeable macros and an optional
-built-in clock. Because of the changeable macros you can use it for many
-different tasks. You can simply start a program (or a short macro) or
-view a web page or search for a man/info page etc.
-
-%package multiload
-Summary: Multiload (cpu, load average, memory, net, swap) applet for the GNOME panel
-Group: Monitoring
-Requires(pre): %name-common = %EVR
-Requires: gnome-system-monitor
-
-%description multiload
-multiload_applet contains 5 applets: CPU Load Applet, Load Average
-Applet, Memory Load Applet, Net Load Applet and Swap Load Applet.
-
-%package stickynotes
-Summary: Stickynotes applet for the GNOME panel
-Group: Office
-Requires(pre): %name-common = %EVR
-Requires: libwnck3 >= %libwnck_ver
-
-%description stickynotes
-stickynotes_applet enables to create, view, and manage sticky-notes on
-Gnome Desktop.
-
-%package trash
-Summary: GNOME Trash Applet
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-Requires: gvfs
-
-%description trash
-This package provides a GNOME Trash Applet. You can drag items from
-Nautilus onto this applet to move them to your trash folder.
-
-%package windowpicker
-Summary: Window Picker for the GNOME panel
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description windowpicker
-This package provides a GNOME Window Picker Applet to switch between open
-windows.
-
-%package netspeed
-Summary: Applet that shows traffic on a network device
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description netspeed
-netspeed_applet is a little GNOME applet that shows the traffic on a
-specified network device.
-
-%package brightness
-Summary: Applet that allows to adjust laptop panel brightness
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description brightness
-This package provides brightness_applet for gnome-panel that allows user
-to adjust laptop panel brightness.
-
-%package inhibit
-Summary: Applet that allows to inhibit automatic power saving
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description inhibit
-This package provides inhibit_applet for gnome-panel that allows user
-to inhibit automatic power saving.
-
-%package tracker-search-bar
-Summary: Applet that allows to search with tracker
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-Requires: tracker
-
-%description tracker-search-bar
-This package provides tracker-search-bar applet for gnome-panel that allows user
-to search data quickly using Tracker.
-
-%package command
-Summary: Applet that shows the output of a command
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description command
-This package provides command-applet for gnome-panel that allows user
-to show the output of a command.
-
-%package timer
-Summary: Applet that starts a timer
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description timer
-This package provides timer-applet for gnome-panel that allows user
-to start a timer and receive a notification when it is finished.
-
-%package window-buttons
-Summary: Window Buttons applet
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description window-buttons
-This package provides window-buttons-applet for gnome-panel.
-
-%package window-title
-Summary: Window Title applet
-Group: Graphical desktop/GNOME
-Requires(pre): %name-common = %EVR
-
-%description window-title
-This package provides window-title-applet for gnome-panel that display
-window title.
-
-
-%define gnome_appletsdir %_libdir/%name
-%define _libexecdir %gnome_appletsdir
-
 %prep
 %setup
-%patch1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -358,174 +161,48 @@ window title.
 
 %install
 %makeinstall_std _sklocalstatedir=%buildroot%_sklocalstatedir
-
 install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
+%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit %{?_enable tracker:tracker-search-bar} window-buttons window-title
+%find_lang --with-gnome --output=%name.lang %name %applets
 
-%define applets accessx-status battstat char-palette cpufreq-applet command-line drivemount gweather geyes stickynotes_applet multiload trashapplet netspeed_applet windowpicker brightness inhibit tracker-search-bar window-buttons window-title
-%find_lang --with-gnome %name-3.0 %applets
-
-%files
-
-%files common -f %name-3.0.lang
+%files -f %name.lang
 %doc AUTHORS NEWS README
-%dir %_datadir/%name
-%dir %_datadir/%name/builder
-%dir %_datadir/%name/ui
+%_libdir/gnome-panel/modules/org.gnome.gnome-applets.so
+%_datadir/%name
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
+%_iconsdir/hicolor/*x*/*/*.png
+%_iconsdir/hicolor/scalable/*/*.svg
+%_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
+%_datadir/glib-2.0/schemas/%xdg_name.charpick.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.cpufreq.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gweather.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.multiload.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.netspeed.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.stickynotes.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.window-buttons.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.window-picker-applet.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
+%_datadir/polkit-1/actions/org.gnome.cpufreqselector.policy
+%_sysconfdir/dbus-1/system.d/org.gnome.CPUFreqSelector.conf
+%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
+%config %_datadir/glib-2.0/schemas/%xdg_name.geyes.gschema.xml
+%{?_enable_battstat:%_datadir/glib-2.0/schemas/%xdg_name.battstat.gschema.xml}
+%{?_enable_command:%_datadir/glib-2.0/schemas/%xdg_name.command.gschema.xml}
+%{?_enable_mini_commander:%_datadir/glib-2.0/schemas/%xdg_name.mini-commander.gschema.xml}
+%{?_enable_timer:%_datadir/glib-2.0/schemas/%xdg_name.timer.gschema.xml}
 
-%files accessx-status -f accessx-status.lang
-%gnome_appletsdir/libaccessx-status-applet.so
-%_datadir/%name/ui/accessx-status-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.AccessxStatusApplet.panel-applet
-%_datadir/%name/accessx-status-applet/
-%_iconsdir/hicolor/48x48/apps/ax-applet.png
-
-%if_enabled battstat
-%files battstat -f battstat.lang
-%gnome_appletsdir/libbattery-status-applet.so
-%_datadir/%name/builder/battstat_applet.ui
-%_datadir/%name/ui/battstat-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.BattstatApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.battstat.gschema.xml
-%config %_sysconfdir/sound/events/battstat_applet.soundlist
-%endif
-
-%files cpufreq -f cpufreq-applet.lang
 %if_enabled frequency_selector
 %attr(4711,root,root) %_bindir/cpufreq-selector
 %endif
-%gnome_appletsdir/libcpu-frequency-applet.so
-%_datadir/%name/cpufreq-applet/
-%_datadir/%name/ui/cpufreq-applet-menu.xml
-%_datadir/%name/builder/cpufreq-preferences.ui
-%_datadir/gnome-panel/applets/org.gnome.applets.CPUFreqApplet.panel-applet
-%_datadir/polkit-1/actions/org.gnome.cpufreqselector.policy
-%_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
-%_iconsdir/hicolor/*/apps/gnome-cpu-frequency-applet.png
-%_iconsdir/hicolor/scalable/apps/gnome-cpu-frequency-applet.svg
-%config %_sysconfdir/dbus-1/system.d/org.gnome.CPUFreqSelector.conf
-%_datadir/glib-2.0/schemas/%xdg_name.cpufreq.enums.xml
-%_datadir/glib-2.0/schemas/%xdg_name.cpufreq.gschema.xml
 
-%files cpufreq-usermode
-%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
-
-%files charpick -f char-palette.lang
-%gnome_appletsdir/libcharacter-picker-applet.so
-%_datadir/%name/ui/charpick-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.CharpickerApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.charpick.gschema.xml
-
-%files drivemount -f drivemount.lang
-%gnome_appletsdir/libdrive-mount-applet.so
-%_datadir/%name/ui/drivemount-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.DriveMountApplet.panel-applet
-
-%files geyes -f geyes.lang
-%gnome_appletsdir/libgeyes-applet.so
-%_datadir/%name/ui/geyes-applet-menu.xml
-%_datadir/%name/geyes/
-%_datadir/gnome-panel/applets/org.gnome.applets.GeyesApplet.panel-applet
-%_iconsdir/hicolor/*/apps/gnome-eyes-applet.png
-%_iconsdir/hicolor/scalable/apps/gnome-eyes-applet.svg
-%config %_datadir/glib-2.0/schemas/%xdg_name.geyes.gschema.xml
-
-%files gweather -f gweather.lang
-%gnome_appletsdir/libgweather-applet.so
-%_datadir/%name/ui/gweather-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.GWeatherApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.gweather.gschema.xml
-
-%if_enabled mini_commander
-%files mini-commander -f command-line.lang
-%gnome_appletsdir/libcommand-applet.so
-%_datadir/%name/builder/mini-commander.ui
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.MiniCommanderApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.MiniCommanderAppletFactory.service
-%_liconsdir/gnome-mini-commander.png
-%endif
-
-%files multiload -f multiload.lang
-%gnome_appletsdir/libmultiload-applet.so
-%_datadir/%name/ui/multiload-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.MultiLoadApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.multiload.gschema.xml
-
-%files stickynotes -f stickynotes_applet.lang
-%gnome_appletsdir/libsticky-notes-applet.so
-%_datadir/gnome-panel/applets/org.gnome.applets.StickyNotesApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.stickynotes.gschema.xml
-%_iconsdir/hicolor/*/apps/gnome-sticky-notes-applet.png
-%_datadir/%name/icons/hicolor/*/apps/stickynotes-*.png
-%_iconsdir/hicolor/scalable/apps/gnome-sticky-notes-applet.svg
-
-%files trash -f trashapplet.lang
-%gnome_appletsdir/libtrash-applet.so
-%_datadir/gnome-panel/applets/org.gnome.applets.TrashApplet.panel-applet
-
-%files windowpicker -f windowpicker.lang
-%gnome_appletsdir/libwindow-picker-applet.so
-%_datadir/glib-2.0/schemas/%xdg_name.window-picker-applet.gschema.xml
-%_datadir/gnome-panel/applets/org.gnome.applets.WindowPicker.panel-applet
-
-%files netspeed -f netspeed_applet.lang
-%gnome_appletsdir/libnet-speed-applet.so
-%_datadir/glib-2.0/schemas/%xdg_name.netspeed.gschema.xml
-%_datadir/gnome-panel/applets/org.gnome.panel.Netspeed.panel-applet
-%_datadir/%name/ui/netspeed-*.xml
-%_iconsdir/hicolor/*x*/*/netspeed*.png
-%_iconsdir/hicolor/scalable/*/netspeed*.svg
-
-%files brightness -f brightness.lang
-%_libdir/%name/libbrightness-applet.so
-%_datadir/%name/icons/hicolor/*/*/gpm-brightness*
-%_datadir/%name/ui/brightness-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.BrightnessApplet.panel-applet
-%_iconsdir/hicolor/*/*/gnome-brightness*
-
-%files inhibit -f inhibit.lang
-%_libdir/%name/libinhibit-applet.so
-%_datadir/%name/icons/hicolor/*/*/gpm-inhibit*
-%_datadir/%name/icons/hicolor/*/*/gpm-uninhibit*
-%_datadir/%name/ui/inhibit-applet-menu.xml
-%_datadir/gnome-panel/applets/org.gnome.InhibitApplet.panel-applet
-%_iconsdir/hicolor/*/*/gnome-inhibit*
-
-%files tracker-search-bar -f tracker-search-bar.lang
-%_libdir/%name/libtracker-search-bar-applet.so
-%_datadir/gnome-panel/applets/org.gnome.panel.SearchBar.panel-applet
-
-%if_enabled command
-%files command
-%gnome_appletsdir/libcommand-applet.so
-%_datadir/gnome-panel/applets/org.gnome.applets.CommandApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.command.gschema.xml
-%endif
-
-%if_enabled timer
-%files timer
-%gnome_appletsdir/libtimer-applet.so
-%_datadir/gnome-panel/applets/org.gnome.applets.TimerApplet.panel-applet
-%_datadir/glib-2.0/schemas/%xdg_name.timer.gschema.xml
-%endif
-
-%files window-buttons
-%gnome_appletsdir/libwindow-buttons-applet.so
-%_datadir/%name/window-buttons-applet/
-%_datadir/gnome-panel/applets/org.gnome.panel.WindowButtonsApplet.panel-applet
-%_datadir/%name/builder/windowbuttons.ui
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-buttons.gschema.xml
-%_iconsdir/hicolor/*/apps/windowbuttons-applet.png
-
-%files window-title
-%gnome_appletsdir/libwindow-title-applet.so
-%_datadir/gnome-panel/applets/org.gnome.panel.WindowTitleApplet.panel-applet
-%_datadir/%name/builder/windowtitle.ui
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
-%_iconsdir/hicolor/*/apps/windowtitle-applet.png
-
-%exclude %gnome_appletsdir/*.la
+%exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.2-alt1
+- updated to 3.37.2-12-g28254e22d
+- removed all subpackages
+- disabled traker-2.0 based tracker-search-bar
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

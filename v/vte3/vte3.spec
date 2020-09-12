@@ -4,17 +4,18 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define _name vte
-%define ver_major 0.60
+%define ver_major 0.62
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
+%def_enable sixel
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL-2.0
@@ -129,7 +130,9 @@ GObject introspection devel data for the %name library
 %build
 %meson \
 	%{?_disable introspection:-Dgir=false} \
-	%{?_enable_gtk_doc:-Ddocs=true}
+	%{?_enable_gtk_doc:-Ddocs=true} \
+	%{?_enable_sixel:-Dsixel=true}
+%nil
 %meson_build
 
 %install
@@ -138,7 +141,7 @@ GObject introspection devel data for the %name library
 chmod 755 %buildroot%_sysconfdir/profile.d/vte.sh
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS NEWS README.md %buildroot%pkgdocdir/
+install -p -m644 AUTHORS README.md %buildroot%pkgdocdir/
 install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 
 # Remove unpackaged files
@@ -156,7 +159,7 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n lib%name -f %name.lang
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
-%pkgdocdir/NEWS
+#%pkgdocdir/NEWS
 %pkgdocdir/README.md
 %_libdir/*.so.*
 %_sysconfdir/profile.d/vte.*sh
@@ -191,6 +194,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.62.0-alt1
+- 0.62.0
+
 * Sat May 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.60.3-alt1
 - 0.60.3
 

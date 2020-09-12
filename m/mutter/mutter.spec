@@ -3,8 +3,8 @@
 
 %def_disable snapshot
 
-%define ver_major 3.36
-%define api_ver 6
+%define ver_major 3.38
+%define api_ver 7
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
@@ -15,7 +15,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -53,10 +53,12 @@ Source: %name-%version.tar
 %define wayland_protocols_ver 1.19
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
-%define gsds_ver 3.33.0
+%define gsds_ver 3.37.2
 %define gudev_ver 232
 %define pipewire_ver 0.3
-%define sysprof_ver 3.35.3
+%define sysprof_ver 3.37
+%define json_glib_ver 0.12.0
+%define graphene_ver 1.9.3
 
 Requires: lib%name = %EVR
 Requires: zenity
@@ -69,6 +71,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel
 BuildRequires: libXdamage-devel libXtst-devel libXi-devel >= %Xi_ver
@@ -83,8 +86,8 @@ BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver
 BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel
 BuildRequires: libwacom-devel
 BuildRequires: gnome-settings-daemon-devel
-BuildRequires: sysprof-devel >= %sysprof_ver
-BuildRequires: libgraphene-gir-devel
+BuildRequires: pkgconfig(sysprof-capture-4)
+BuildRequires: libgraphene-gir-devel >= %graphene_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
@@ -185,9 +188,7 @@ the functionality of the installed Mutter.
 %dir %pkglibdir
 %pkglibdir/lib%name-clutter-%api_ver.so.*
 %pkglibdir/lib%name-cogl-pango-%api_ver.so.*
-%pkglibdir/lib%name-cogl-path-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
-#%pkglibdir/lib%name-cogl-gles2-%api_ver.so.*
 
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
@@ -217,6 +218,9 @@ the functionality of the installed Mutter.
 
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.38.0-alt1
+- 3.38.0
+
 * Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 1:3.36.6-alt1
 - 3.36.6
 

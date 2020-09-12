@@ -1,12 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.38
+%define ver_major 0.40
+%define api_ver 2.6
 %def_enable external_plugin
 %def_enable mpris_plugin
-%def_enable tracker_plugin
+%def_disable tracker_plugin
+%def_enable tracker3_plugin
 %def_enable lms_plugin
-%def_with ui
+%def_enable gtk 
 %define media_engine gstreamer
 
 %if %media_engine == gstreamer
@@ -20,7 +22,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -48,25 +50,26 @@ Source: %name-%version.tar
 %define gst_tag_ver 1.12
 %define gst_app_ver 1.12
 %define gst_audio_ver 1.12
-%define gio_ver 2.44
+%define gst_ges_ver 1.16
+%define gio_ver 2.56
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.44.0
 %define gtk_ver 3.22
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
-%define tracker_ver 1.99.0
+%define tracker_ver 3.0
 
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
+Requires: gstreamer-editing-services
 Requires: gst-libav
-Requires: tracker
 Requires: lsdvd
 
-BuildRequires: autoconf-archive gtk-doc valadoc
+BuildRequires(pre): meson rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gssdp-1.2) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.2) >= %gupnp_ver
@@ -80,20 +83,23 @@ BuildRequires: pkgconfig(libxml-2.0) >= %libxml_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(libmediaart-2.0) >= %mediaart_ver
+BuildRequires: libunistring-devel
 %if %media_engine == gstreamer
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= %gst_pbu_ver
 BuildRequires: pkgconfig(gstreamer-app-1.0) >= %gst_app_ver
 BuildRequires: pkgconfig(gstreamer-audio-1.0) >= %gst_audio_ver
+BuildRequires: pkgconfig(gst-editing-services-%gst_api_ver) >= %gst_ges_ver
 BuildRequires: pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: gir(Gst) = 1.0
 %endif
-BuildRequires: tracker-devel >= %tracker_ver
+%{?_enable_api_docs:BuildRequires: gtk-doc valadoc}
+%{?_enable_tracker3_plugin:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver}
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
 BuildRequires: vapi(gupnp-1.2) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
 BuildRequires: gir(GUPnP) = 1.2 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
-%{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
+%{?_enable_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 %{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: pkgconfig(systemd)
@@ -106,7 +112,7 @@ in Vala language. The project was previously known as gupnp-media-server.
 %package devel
 Summary: Development package for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Files for development with %name.
@@ -126,10 +132,10 @@ This package contains documentation needed to develop applications using Rygel
 libraries.
 
 %package tracker
-Summary: Tracker plugin for %name
+Summary: Tracker3 plugin for %name
 Group: System/Servers
-Requires: %name = %version-%release
-Requires: tracker
+Requires: %name = %EVR
+Requires: tracker3
 
 %description tracker
 A plugin for rygel to use tracker to locate media on the local machine.
@@ -137,7 +143,7 @@ A plugin for rygel to use tracker to locate media on the local machine.
 %package lms
 Summary: Lightweight media scanner plugin for %name
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: lightmediascanner
 
 %description lms
@@ -146,7 +152,7 @@ A plugin for rygel to use LMS to locate media on the local machine.
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name
@@ -155,34 +161,26 @@ GObject introspection data for the %name
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name
 
 %prep
 %setup
-echo %version > .tarball-version
 
 %build
-# gettext 0.19.7 required
-#gettextize -q -f
-%autoreconf
-%configure \
-	%{subst_enable vala} \
-	%{subst_with ui} \
-	%{?_enable_tracker_plugin:--enable-tracker-plugin} \
-	%{?_enable_media_export_plugin:--enable-media-export-plugin} \
-	%{?_enable_external_plugin:--enable-external-plugin} \
-	%{?_enable_mpris_plugin:--enable-mpris-plugin} \
-	%{subst_enable playbin_plugin} \
-	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin} \
-	%{?_enable_lms_plugin:--enable-lms-plugin}
-%make_build
+%meson \
+%{?_enable_api_docs:-Dapi-docs=true} \
+-Dplugins="['external', 'gst-launch', 'lms', 'media-export', 'mpris', 'playbin', 'ruih', 'tracker3']"
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
+# fix *.gir
+sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -191,14 +189,14 @@ echo %version > .tarball-version
 %_bindir/%name-preferences
 %_libexecdir/%name/
 %_libdir/lib%name-*.so.*
-%_libdir/%name-*/
+%_libdir/%name-%api_ver/
 
-%exclude %_libdir/%name-*/plugins/lib%name-tracker.so
-%exclude %_libdir/%name-*/plugins/tracker.plugin
+%exclude %_libdir/%name-%api_ver/plugins/lib%name-tracker3.so
+%exclude %_libdir/%name-%api_ver/plugins/tracker3.plugin
 
 %if_enabled lms_plugin
-%exclude %_libdir/%name-*/plugins/librygel-lms.so
-%exclude %_libdir/%name-*/plugins/lms.plugin
+%exclude %_libdir/%name-%api_ver/plugins/librygel-lms.so
+%exclude %_libdir/%name-%api_ver/plugins/lms.plugin
 %endif
 
 %_datadir/%name
@@ -208,17 +206,16 @@ echo %version > .tarball-version
 %_datadir/dbus-1/services/*.service
 %_man1dir/*
 %_man5dir/*
-%exclude %_libdir/%name-*/*/*.la
-%doc AUTHORS TODO NEWS
+%doc AUTHORS TODO NEWS README*
 
 %files tracker
-%_libdir/%name-*/plugins/librygel-tracker.so
-%_libdir/%name-*/plugins/tracker.plugin
+%_libdir/%name-%api_ver/plugins/librygel-tracker3.so
+%_libdir/%name-%api_ver/plugins/tracker3.plugin
 
 %if_enabled lms_plugin
 %files lms
-%_libdir/%name-*/plugins/librygel-lms.so
-%_libdir/%name-*/plugins/lms.plugin
+%_libdir/%name-%api_ver/plugins/librygel-lms.so
+%_libdir/%name-%api_ver/plugins/lms.plugin
 %endif
 
 %files devel
@@ -227,8 +224,10 @@ echo %version > .tarball-version
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
 
+%if_enabled api-docs
 %files devel-doc
 %_datadir/gtk-doc/html/lib%name-*/
+%endif
 
 %files gir
 %_typelibdir/*.typelib
@@ -237,6 +236,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
+- 0.40.0 (ported to Meson build system)
+
 * Fri Jul 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.38.4-alt1
 - 0.38.4
 

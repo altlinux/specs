@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.44
+%define ver_major 1.46
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -32,8 +32,8 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: LGPL-2.0-or-later
@@ -49,7 +49,6 @@ Source: %name-%version.tar
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
 Patch1: gvfs-1.19.90-alt-1-logind-state.patch
-Patch10: gvfs-1.45.3-up-libplist-2.0.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -58,7 +57,7 @@ Patch10: gvfs-1.45.3-up-libplist-2.0.patch
 Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
-%define glib_ver 2.57.2
+%define glib_ver 2.66.0
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
@@ -296,7 +295,6 @@ The %name-tests package provides programms for testing GVFS.
 %prep
 %setup
 #%%patch1 -p2 -b .logind-state
-%patch10 -p1 -b .plist
 
 %build
 %meson \
@@ -536,6 +534,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
+- 1.46.0
+
 * Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.44.1-alt2
 - rebuilt against libimobiledevece-1.3/libplist-2.2.0
 

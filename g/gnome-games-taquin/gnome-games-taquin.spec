@@ -3,11 +3,11 @@
 %define _name org.gnome.taquin
 %define __name gnome-taquin
 %define xdg_name org.gnome.Taquin
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-taquin
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome tiles game
@@ -54,6 +54,9 @@ Move tiles so that they reach their places.
 %doc AUTHORS NEWS COPYING*
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Mon Jul 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

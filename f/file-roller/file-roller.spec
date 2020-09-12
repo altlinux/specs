@@ -2,7 +2,7 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 3.36
+%define ver_major 3.38
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -10,7 +10,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -125,6 +125,9 @@ rm -f data/%xdg_name.desktop{,.in}
 
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Aug 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

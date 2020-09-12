@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define plugins_ver 13
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
@@ -9,22 +9,21 @@
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
-%ifnarch armh
-%def_enable fwupd
+%ifarch armh
+%def_disable fwupd
 %else
-%def_disable  fwupd
+%def_enable fwupd
 %endif
 %def_enable flatpak
 %def_disable limba
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
-%def_disable shell_extensions
 # dropped since 3.27.90
 %def_disable rpm
 %def_disable rpm_ostree
 %def_disable external_appstream
-%def_disable malcontent
+%def_enable malcontent
 %ifarch %valgrind_arches
 %def_enable valgrind
 %else
@@ -34,8 +33,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -64,6 +63,7 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
+%{?_enable_malcontent:Requires: malcontent}
 
 BuildRequires(pre): meson rpm-build-xdg rpm-macros-valgrind
 BuildRequires: libgio-devel >= %glib_ver
@@ -75,6 +75,7 @@ BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
+BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gspell:BuildRequires: libgspell-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
@@ -126,7 +127,6 @@ GNOME Software.
 	%{?_enable_ostree:-Dostree=true} \
 	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
-	%{?_disable_shell_extensions:-Dshell_extensions=false} \
 	%{?_disable_valgrind:-Dvalgrind=false} \
 	%{?_disable_tests:-Dtests=false} \
 	%{?_disable_external_appstream:-Dexternal_appstream=false} \
@@ -169,11 +169,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
+%_libdir/libgnomesoftware.a
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Wed Sep 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
 - updated to 3.36.1-9-gf044085f
 - disabled fwupd support on armh only

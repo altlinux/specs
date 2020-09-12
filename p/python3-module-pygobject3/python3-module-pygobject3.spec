@@ -1,19 +1,19 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
 %def_disable devel_doc
-%def_disable tests
-%def_enable check
+%def_enable tests
+%def_disable check
 
-Name: python-module-%{_name}3
-Version: %ver_major.1
-Release: alt2
+Name: python3-module-%{_name}3
+Version: %ver_major.0
+Release: alt1
 
-Summary: Python bindings for GObject
+Summary: Python3 bindings for GObject
 Group: Development/Python
 License: LGPL-2.1
 Url: http://www.pygtk.org/
@@ -25,11 +25,8 @@ Source: %_name-%version.tar
 %endif
 Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 
-%setup_python_module pygobject3
+%add_findprov_lib_path %python3_sitelibdir/gi
 
-%add_findprov_lib_path %python_sitelibdir/gi
-
-Requires: typelib(GdkX11) = %gtk_api_ver
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
 
@@ -37,12 +34,12 @@ Requires: typelib(GdkX11) = %gtk_api_ver
 %define gi_ver 1.46.0
 %define pycairo_ver 1.11.1
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python
+BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings python-module-pytest
-%{?_enable_pycairo:BuildRequires: python-module-pycairo-devel >= %pycairo_ver libcairo-gobject-devel}
 BuildRequires: gobject-introspection-devel >= %gi_ver
+BuildRequires: python3-devel python3-module-pytest 
+%{?_enable_pycairo:BuildRequires: python3-module-pycairo-devel libcairo-gobject-devel}
 %{?_enable_check:BuildRequires: xvfb-run dbus-tools-gui libgtk+3-gir-devel glibc-i18ndata}
 
 %description
@@ -59,8 +56,8 @@ as a Python API without the need for intermediate Python glue.
 
 %package pygtkcompat
 Summary: PyGTK compatibility layer for PyGObject
-Group: Development/Python
-Requires: %name = %version-%release
+Group: Development/Python3
+Requires: %name = %EVR
 
 %description pygtkcompat
 PyGTK compatibility layer.
@@ -71,15 +68,22 @@ behaved PyGTK application mostly unmodified on top of PyGI.
 
 %package devel
 Summary: Development files for %name
-Group: Development/Python
-Requires: %name = %version-%release
-Obsoletes: %name-common-devel < 3.37
-Provides: %name-common-devel = %EVR
-Conflicts: python3-module-pygobject3-devel > 3.37
+Group: Development/Python3
+Requires: %name = %EVR
+Obsoletes: python-module-pygobject3-common-devel < 3.37
+Provides: python-module-pygobject3-common-devel = %EVR
 
 %description devel
 Development files for %name.
 
+%package devel-doc
+Summary: Development documentation for %_name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-common-devel < %version-%release
+
+%description devel-doc
+Development documentation for %_name.
 
 %prep
 %setup -n %_name-%version
@@ -87,9 +91,8 @@ Development files for %name.
 
 %build
 %meson \
-	%{?_disable_pycairo:-Dpycairo=false} \
-	%{?_disable_tests:-Dtests=false} \
-	-Dpython=%__python
+	%{?_disable_pycairo:-Dpycairo=disabled} \
+	%{?_disable_tests:-Dtests=false}
 %nil
 %meson_build
 
@@ -100,21 +103,27 @@ Development files for %name.
 xvfb-run %meson_test
 
 %files
-%python_sitelibdir/gi/
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/gi/pygtkcompat.py*
+%python3_sitelibdir/gi/
+%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/gi/pygtkcompat.py*
 
 %files pygtkcompat
-%python_sitelibdir/pygtkcompat/
-%python_sitelibdir/gi/pygtkcompat.py*
+%python3_sitelibdir/pygtkcompat/
+%python3_sitelibdir/gi/pygtkcompat.py*
 
 %files devel
 %_includedir/%_name-%api_ver/
 %_pkgconfigdir/%_name-%api_ver.pc
+%doc README* NEWS examples
+
+%if_enabled devel_doc
+%files devel-doc
+%_datadir/gtk-doc/html/%_name/
+%endif
 
 %changelog
-* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt2
-- separate python2 package (since 3.38 python2 is no longer supported)
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0 (python3 only)
 - removed common-devel subpackage
 
 * Wed May 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1

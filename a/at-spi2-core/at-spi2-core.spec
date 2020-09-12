@@ -1,4 +1,4 @@
-%define ver_major 2.36
+%define ver_major 2.38
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -22,7 +22,7 @@ Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
 BuildRequires(pre): meson
-BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
+BuildRequires: libgio-devel >= 2.36.0 libdbus-devel >= 1.5
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
@@ -134,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
 * Sat Sep 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 

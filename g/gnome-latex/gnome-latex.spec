@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
@@ -25,8 +25,8 @@ Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.22
 %define gtksource_ver 3.99.7
-%define tepl_ver 4.2.0
-%define amtk_ver 5.0.0
+%define tepl_ver 5.0.0
+%define amtk_ver 5.1.1
 %define vala_ver 0.46.5
 
 BuildRequires: vala-tools >= %vala_ver
@@ -34,7 +34,7 @@ BuildRequires: autoconf-archive libappstream-glib-devel yelp-tools intltool
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview4-devel >= %gtksource_ver
-BuildRequires: libtepl-devel >= %tepl_ver
+BuildRequires: pkgconfig(tepl-5) >= %tepl_ver
 BuildRequires: libamtk-devel >= %amtk_ver
 BuildRequires: libgspell-devel libgee0.8-devel
 BuildRequires: gsettings-desktop-schemas-devel
@@ -86,8 +86,7 @@ This package contains documentation for %name.
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/icons/hicolor/*/apps/%{name}*.svg
+%_datadir/icons/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS README NEWS HACKING
@@ -98,6 +97,12 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
+* Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.2-alt1
+- 3.37.2
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

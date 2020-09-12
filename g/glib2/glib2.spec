@@ -1,10 +1,10 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.64
+%define ver_major 2.66
 %define api_ver 2.0
 %define pcre_ver 8.31
-%define gtk_doc_ver 1.32
+%define gtk_doc_ver 1.32.1
 %define gio_module_dir %_libdir/gio/modules
 
 %set_verify_elf_method strict
@@ -22,7 +22,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -438,6 +438,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
+- 2.66.0
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 2.64.5-alt1
 - 2.64.5
 

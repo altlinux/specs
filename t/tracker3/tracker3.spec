@@ -1,9 +1,10 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 2.99
+%define ver_major 3.0
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
 %define gst_api_ver 1.0
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
@@ -23,7 +24,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -131,6 +132,7 @@ GObject introspection devel data for the Tracker library
 Summary: Tests for Tracker search tool
 Group: Development/Other
 Requires: %name = %EVR
+Provides: tracker-sandbox %name-sandbox
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -139,7 +141,7 @@ the functionality of the installed Tracker.
 %prep
 %setup -n %_name-%version
 #fixed install_rpath for tracker, tracker-store binaries
-sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.build
+sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %build
 %meson \
@@ -165,23 +167,21 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %_datadir/%name/stop-words/
 %_datadir/%name/ontologies/
 %_datadir/bash-completion/completions/%name
-%if 0
-%_man1dir/tracker-info.*
-%_man1dir/tracker-search.*
-%_man1dir/tracker-sparql.*
-%_man1dir/tracker-tag.*
-%_man1dir/tracker-daemon.*
-%_man1dir/tracker-index.*
-%_man1dir/tracker-reset.*
-%_man1dir/tracker-sql.*
-%_man1dir/tracker-status.*
+%_userunitdir/%_name-xdg-portal-%api_ver_major.service
+%_datadir/dbus-1/services/org.freedesktop.portal.Tracker.service
+%if_enabled man
+%_man1dir/%_name-xdg-portal*
+%_man1dir/%name-endpoint.*
+%_man1dir/%name-export.*
+%_man1dir/%name-import.*
+%_man1dir/%name-sparql.*
+%_man1dir/%name-sql.*
 %endif
-
 %doc AUTHORS NEWS README*
 
 %files -n lib%name
 %_libdir/*.so.*
-%_libdir/%_name-%api_ver/*.so
+#%_libdir/%_name-%api_ver/*.so
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -208,6 +208,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %endif
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.5-alt1
+- 2.99.5
+
 * Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.2-alt1
 - 2.99.2
 

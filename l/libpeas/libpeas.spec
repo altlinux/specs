@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.26
+%define ver_major 1.28
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -220,6 +220,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 

@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -29,10 +29,10 @@ Requires: gnome-shell >= %version
 # const {
 #     Atk, Clutter, Gio, GLib, GMenu, GObject, Gtk, Meta, Shell, St
 # } = imports.gi;
-%{?_enable_classic_mode:Requires: typelib(GMenu)}
+%{?_enable_classic_mode:Requires: typelib(GMenu) = 3.0}
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: libgjs-devel libmozjs60-tools sassc
+BuildRequires: libgjs-devel libmozjs78-tools sassc
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -53,13 +53,12 @@ See %_docdir/%name-%version/README for more information.
 
 %install
 %meson_install
-
 %find_lang %name
 
 %files -f %name.lang
 # Classic mode
 %if_enabled classic_mode
-%_datadir/gnome-session/sessions/gnome-classic.session
+#%_datadir/gnome-session/sessions/gnome-classic.session
 %_datadir/xsessions/gnome-classic.desktop
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/gnome-shell/theme/calendar-today.svg
@@ -92,6 +91,8 @@ See %_docdir/%name-%version/README for more information.
 # user theme loading
 %dir %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/prefs.js
+%_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/util.js
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.user-theme.gschema.xml
@@ -162,6 +163,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

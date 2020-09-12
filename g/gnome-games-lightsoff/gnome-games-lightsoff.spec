@@ -2,7 +2,7 @@
 
 %define _name lightsoff
 %define xdg_name org.gnome.LightsOff
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -53,6 +53,9 @@ and its non-diagonal neighbors.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

@@ -1,9 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Games
+%define _libexecdir %_prefix/libexec
 
 Name: gnome-games
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple game launcher for GNOME
@@ -28,11 +29,11 @@ BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(librsvg-2.0) >= 2.44
 BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(manette-0.2) >= 0.2.3
-BuildRequires: pkgconfig(retro-gtk-0.14) >= 0.18.0
+BuildRequires: pkgconfig(manette-0.2) >= 0.2.5
+BuildRequires: pkgconfig(retro-gtk-1) >= 1.0.0
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tracker-sparql-2.0)
-BuildRequires: libhandy-devel >= 0.0.8
+BuildRequires: pkgconfig(libhandy-1) >= 1.0.0
 
 %description
 Games is a GNOME3 application to browse your video games library and to
@@ -59,12 +60,16 @@ This package provides files needed to develop plugins for GNOME Games.
 
 %files -f %name.lang
 %_bindir/%name
+%_libexecdir/%name-search-provider
 %dir %_libdir/%name
 %_libdir/%name/plugins/
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.SearchProvider.service
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 #%files devel
@@ -73,6 +78,9 @@ This package provides files needed to develop plugins for GNOME Games.
 
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Mar 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

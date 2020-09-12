@@ -1,10 +1,10 @@
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -16,9 +16,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.39.3
-%define gjs_ver 1.51.90
-%define tracker_ver 2.0
+%define glib_ver 2.44
+%define gjs_ver 1.52
 %define geocode_ver 3.20.0
 %define geoclue_ver 2.4.0
 %define champlain_ver 0.12.19
@@ -52,7 +51,7 @@ Requires: typelib(Soup)
 Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gir
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
@@ -90,6 +89,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

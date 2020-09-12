@@ -1,16 +1,16 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name amtk
-%define ver_major 5.0
+%define ver_major 5.2
 %define api_ver 5
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Actions, Menus and Toolbars Kit for GTK+ applications
@@ -82,7 +82,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Amtk library.
 
-
 %prep
 %setup -n %_name-%version
 
@@ -110,8 +109,10 @@ GObject introspection devel data for the Amtk library.
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/%_name-%{api_ver}.0/
+%endif
 
 %if_enabled static
 %files devel-static
@@ -127,6 +128,9 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Sat Jan 25 2020 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
 - 5.0.2
 

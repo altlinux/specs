@@ -1,8 +1,9 @@
-%define ver_major 0.18
-%define api_ver 0.14
+%define ver_major 1.0
+%define api_ver 1
+%define _libexecdir %_prefix/libexec
 
 Name: retro-gtk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Toolkit to write Gtk+3-based frontends to libretro
@@ -12,16 +13,19 @@ Url: https://git.gnome.org/browse/%name
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define glib_ver 2.50
+%define gtk_ver 3.22
+
 BuildRequires(pre): meson >= 0.50
-BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(epoxy)
-BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libpulse-simple)
+BuildRequires: pkgconfig(samplerate)
 BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-
 
 %description
 %name is a toolkit allowing to easily write GTK+3 based Libretro
@@ -80,6 +84,7 @@ GObject introspection devel data for the %name library.
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
+%_libexecdir/retro-runner
 %doc README* AUTHORS NEWS
 
 %files -n lib%name-devel
@@ -100,6 +105,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sun Jan 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - 0.18.1
 

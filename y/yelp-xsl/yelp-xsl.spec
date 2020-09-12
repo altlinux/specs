@@ -1,11 +1,11 @@
-%define ver_major 3.36
+%define ver_major 3.38
 
 Name: yelp-xsl
 Version: %ver_major.0
 Release: alt1
 
 Summary: XSLT stylesheets for the Yelp, GNOME help browser
-License: %gpl2plus
+License: GPL-2.0 and LGPL-2.1 and MIT
 Group: Graphical desktop/GNOME
 Url: http://yelp.io
 
@@ -13,7 +13,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome
 BuildRequires: libxml2-devel libxslt-devel itstool xsltproc xmllint
 BuildRequires: python3-module-mallard-ducktype
 
@@ -40,9 +40,13 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %files -f %name.lang
 %_datadir/%name
 %_datadir/pkgconfig/yelp-xsl.pc
-%doc AUTHORS README NEWS
+%doc AUTHORS README NEWS COPYING
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+- fixed License tag
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

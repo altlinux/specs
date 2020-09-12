@@ -2,11 +2,11 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name iagno
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Reversi
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Othello (Reversi) board game
@@ -47,15 +47,16 @@ Othello.
 %attr(-,root,games) %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
-%_iconsdir/hicolor/*x*/apps/%xdg_name.png
-#%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_man6dir/%_name.*
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Jul 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

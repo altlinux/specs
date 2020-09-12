@@ -1,11 +1,11 @@
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.60.2
+%define vte_ver 0.62.0
 
 Provides: xvt
 
@@ -27,7 +27,7 @@ Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: rpm-build-gnome gnome-common intltool
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libvte3-devel >= %vte_ver
@@ -92,6 +92,7 @@ EOF
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
+%_man1dir/%name.1*
 %_altdir/%name
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS
@@ -104,6 +105,9 @@ EOF
 %endif
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

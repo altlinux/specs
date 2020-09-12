@@ -1,14 +1,15 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name json-glib
-%define ver_major 1.4
+%define ver_major 1.6
 %define api_ver 1.0
-%def_disable docs
+%def_enable gtk_doc
+%def_enable man
 %def_enable introspection
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -18,14 +19,19 @@ Url: https://wiki.gnome.org/Projects/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.46.0
+# https://gitlab.gnome.org/GNOME/json-glib/-/issues/33
+# --default-symver breaks set-versioned dependencies, revert it
+Patch: json-glib-1.6.0-up-ef7fb78a5370a5e36272e3bbe91e1864b766a565.patch
+
+%define glib_ver 2.54
 %define gi_ver 0.10.5
 
 BuildRequires(pre): meson
 BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_docs:BuildRequires: gtk-doc xsltproc docbook-dtds docbook-style-xsl}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 %description
 JSON-GLib implements a full JSON parser using GLib and GObject. Use
@@ -60,6 +66,16 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the JSON-GLib library
 
+%package devel-doc
+Summary: Development package for JSON-GLib
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: lib%name < %version
+
+%description devel-doc
+This package contains developer documentation for the JSON-GLib library.
+
+
 %package tests
 Summary: Tests for the %_name package
 Group: Development/Other
@@ -72,10 +88,12 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
+%patch -p1 -R
 
 %build
 %meson %{?_disable introspection:-Ddisable-introspection=true} \
-	%{?_enable_docs:-Denable-docs=true}
+	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+	%{?_enable_man:-Dman=true}
 
 %meson_build
 
@@ -93,8 +111,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/%_name-validate
 %_libdir/*.so.*
 %if_enabled man
-%{?_enable_docs:%_man1dir/%_name-format.1.*}
-%{?_enable_docs:%_man1dir/%_name-validate.1.*}
+%_man1dir/%_name-format.1.*
+%_man1dir/%_name-validate.1.*
 %endif
 %doc NEWS README.md
 
@@ -114,11 +132,20 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_girdir/Json-%api_ver.gir
 %endif
 
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/%_name
+%endif
+
 %files tests
 %_libexecdir/installed-tests/%_name-%api_ver/
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+- new devel-doc subpackage
+
 * Tue Sep 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 

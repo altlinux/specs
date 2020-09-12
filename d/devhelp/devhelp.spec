@@ -1,9 +1,9 @@
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -16,15 +16,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %add_python3_path %_libdir/gedit/plugins
 
 %define gtk_ver 3.22.0
+%define webkit_ver 2.26
+%define glib_ver 2.64
+%define amtk_ver 5.0
 
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
 BuildRequires: gtk-doc yelp-tools libappstream-glib-devel
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
-BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.24
-BuildRequires: pkgconfig(gio-2.0) >= 2.60
-BuildRequires: pkgconfig(amtk-5)
+BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
+BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver
+BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
+BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: zlib-devel
 # since 3.23.x
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
@@ -114,7 +117,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -138,6 +141,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

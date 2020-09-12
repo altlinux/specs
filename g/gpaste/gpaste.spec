@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -28,8 +28,8 @@ Requires: lib%name = %version-%release
 %define gtk_ver 3.24.0
 %define gi_ver 1.58.0
 %define vala_ver 0.42
-%define mutter_ver 3.32.0
-%define gjs_ver 1.5
+%define mutter_ver 3.38.0
+%define gjs_ver 1.54
 
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver
@@ -162,6 +162,9 @@ subst 's/1\.15/1.14/' configure.ac
 
 
 %changelog
+* Wed Sep 16 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

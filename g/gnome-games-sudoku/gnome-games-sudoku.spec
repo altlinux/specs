@@ -3,7 +3,7 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -50,10 +50,14 @@ in popularity.
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_man6dir/%__name.*
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Mar 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

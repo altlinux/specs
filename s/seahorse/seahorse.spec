@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.37
 %define xdg_name org.gnome.seahorse
 
 %def_disable debug
@@ -32,6 +32,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
+%define glib_ver 2.58
+%define gtk_ver 3.22
+%define soup_ver 2.34
+%define secret_ver 0.16
+%define avahi_ver 0.6
+%define gcr_ver 3.12
+%define gpgme_ver 1.7
+%define handy_ver 0.0.12
+
 Requires: dconf
 Requires: gnupg2 gcr
 Requires: pinentry-x11
@@ -41,18 +50,18 @@ Requires: pinentry-x11
 BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: gtk-doc desktop-file-utils
-BuildRequires: gcc-c++ libgtk+3-devel >= 3.22.0
-BuildRequires: libhandy-devel >= 0.0.12
+BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-0.0) >= %handy_ver
 BuildRequires: gnupg2
-BuildRequires: libgpgme-devel >= 1.0.0
+BuildRequires: libgpgme-devel >= %gpgme_ver
 BuildRequires: libgpg-error-devel
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(pwquality)
 %{?_enable_ldap:BuildRequires: libldap-devel}
-%{?_enable_hkp:BuildRequires: libsoup-devel >= 2.4}
-%{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= 0.16}
-%{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= 3.11.91 gcr-libs-vala}
-%{?_enable_sharing:BuildRequires: libavahi-glib-devel >= 0.6 libavahi-devel }
+%{?_enable_hkp:BuildRequires: libsoup-devel >= %soup_ver}
+%{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= %secret_ver}
+%{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala}
+%{?_enable_sharing:BuildRequires: libavahi-glib-devel >= %avahi_ver libavahi-devel }
 %{?_enable_ssh:BuildRequires: openssh openssh-clients}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
@@ -96,6 +105,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Sun Aug 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.2-alt1
+- 3.37.2
+
 * Sat Jun 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - updated to 3.36.2-1-ge5bac093
 

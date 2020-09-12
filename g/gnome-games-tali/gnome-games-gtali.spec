@@ -2,11 +2,11 @@
 
 %define _name tali
 %define xdg_name org.gnome.Tali
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -21,12 +21,13 @@ Obsoletes: gnome-games-gtali
 Provides:  gnome-games-gtali = %version-%release
 
 %define glib_ver 2.32.0
-%define gtk_ver 3.4.0
+%define gtk_ver 3.16.0
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools yelp-tools desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: libgnome-games-support-devel
 
 %description
 Gnome Tali is a sort of poker with dice and less money. You roll five
@@ -54,6 +55,9 @@ include any or all of your dice.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

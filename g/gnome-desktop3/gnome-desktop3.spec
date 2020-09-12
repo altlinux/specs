@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -16,7 +16,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -187,6 +187,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Wed Jul 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 

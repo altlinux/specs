@@ -2,17 +2,18 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 2.0
 
 %def_disable debug
 %def_with cheese
 %def_with bluetooth
 %def_without snap
+%def_with malcontent
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -20,7 +21,6 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
-# par example: git-archive-all.sh --format tar --prefix gnome-control-center-3.2.2/ gnome-control-center-3.2.2.tar
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
@@ -31,8 +31,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib_ver 2.54.0
 %define desktop_ver 3.30.1
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.33.0
-%define nm_ver 1.2
+%define gsds_ver 3.37.1
+# nm_client_get_permissions_state()
+%define nm_ver 1.24
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
 %define sett_daemon_ver 3.33.90
@@ -47,6 +48,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define grilo_ver 0.3.0
 %define polkit_ver 0.103
 %define snapd_ver 1.49
+%define malcontent_ver 0.7.0
 
 Requires: %name-data = %version-%release
 
@@ -92,8 +94,9 @@ BuildRequires: libudisks2-devel
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 %{?_with_snap:BuildRequires: lisnapd-glib-devel >= %snapd_ver}
+%{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 BuildRequires: libgudev-devel libgsound-devel
-BuildRequires: libhandy-devel
+BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: libepoxy-devel
 
 %description
@@ -133,6 +136,7 @@ you'll want to install this package.
 %meson \
     %{?_with_cheese:-Dcheese=true} \
     %{?_with_snap:-Dsnap=true} \
+    %{?_with_malcontent:-Dmalcontent=true} \
     %{?_enable_doc:-Ddocumentation=true}
 %nil
 %meson_build
@@ -177,6 +181,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Jul 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.4-alt1
 - 3.36.4
 
