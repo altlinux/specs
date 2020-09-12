@@ -2,7 +2,7 @@
 
 Name: local-policy
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: ALT Local policies
 License: GPLv2+
@@ -12,6 +12,7 @@ Url: http://git.altlinux.org/people/sin/packages/local-policy.git
 BuildArch: noarch
 
 Requires: control
+Requires: control-sshd-permit-root-login
 
 Source0: %name-%version.tar
 
@@ -57,6 +58,9 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt2
+- Add requires to control with OpenSSH server PermitRootLogin configuration
+
 * Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt1
 - Add winbind service enabled by default on server and workstation
 
