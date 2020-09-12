@@ -11,8 +11,8 @@
 %endif
 
 Name: wine-vanilla
-Version: 5.16
-Release: alt3
+Version: 5.17
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -271,7 +271,8 @@ export CC=clang
 	--enable-win64 \
 %endif
 	--disable-tests \
-        --without-mingw \
+	%{subst_enable static} \
+	--without-mingw \
 	--without-gstreamer \
 	%{subst_with vulkan} \
 	%{subst_with vkd3d} \
@@ -303,6 +304,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 # Do not pack dangerous association for run windows executables
 rm -f %buildroot%_desktopdir/wine.desktop
+
+%if_enabled static
+rm -fv %buildroot%_libdir/wine/*.a
+%endif
 
 %files
 %doc ANNOUNCE AUTHORS LICENSE README
@@ -478,6 +483,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Sat Sep 12 2020 Vitaly Lipatov <lav@altlinux.ru> 5.17-alt1
+- new version 5.17
+- drop static libs if disabled
+
 * Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 5.16-alt3
 - just require libvulkan1 as all other libs
 - backport small fixes from future biarch build
