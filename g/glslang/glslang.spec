@@ -3,7 +3,7 @@
 
 Name: glslang
 Version: 8.13.3743
-Release: alt1
+Release: alt1.1
 
 Summary: OpenGL and OpenGL ES shader front end and validator
 Group: Development/C++
@@ -18,7 +18,7 @@ Patch1: %{name}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel = 2020.3
+BuildRequires: python3-devel libspirv-tools-devel >= 2020.3
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -79,6 +79,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Sat Sep 12 2020 L.A. Kostis <lakostis@altlinux.ru> 8.13.3743-alt1.1
+- Fix dependencies.
+
 * Thu Jun 04 2020 L.A. Kostis <lakostis@altlinux.ru> 8.13.3743-alt1
 - stable release April 27, 2020 (8.13.3743).
 - update -alt patches.
