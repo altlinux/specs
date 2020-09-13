@@ -2,19 +2,17 @@
 
 Name: xfce4-calculator-plugin
 Version: 0.7.0
-Release: alt1
+Release: alt2.g44a68de
 
 Summary: A calculator plugin for the Xfce panel
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://goodies.xfce.org/projects/panel-plugins/%name
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# git://git.xfce.org/panel-plugins/xfce4-calculator-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-calculator-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
@@ -27,6 +25,8 @@ Simple command line based calculator for the Xfce panel
 %prep
 %setup
 %patch -p1
+# Don't use git tag in version.
+%xfce4_drop_gitvtag calculator_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -50,6 +50,11 @@ make check
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt2.g44a68de
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Upstream git snapshot.
+
 * Mon Feb 25 2019 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
 - Updated to 0.7.0.
 
