@@ -1,20 +1,20 @@
 Name: xfce4-clipman-plugin
 Version: 1.6.1
-Release: alt1
+Release: alt2.g2fc75f2
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
 License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/%name
-Vcs: git://git.xfce.org/panel-plugins/xfce4-clipman-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-clipman-plugin.git
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libexo-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: xorg-proto-devel libXtst-devel
 BuildRequires: libqrencode-devel
 BuildRequires: intltool rpm-build-xdg
@@ -69,11 +69,16 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %_desktopdir/*
 %_xdgconfigdir/xfce4/panel/*
 %_xdgconfigdir/autostart/*
-%_datadir/appdata/*
+%_datadir/metainfo/*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt2.g2fc75f2
+- Dropped libexo-devel from BR.
+- Updated Vcs tag.
+- Upstream git snapshot.
+
 * Sun Apr 05 2020 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt1
 - Updated to 1.6.1.
 
