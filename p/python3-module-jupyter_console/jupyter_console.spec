@@ -1,28 +1,30 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname jupyter_console
 
-%def_without docs
+%def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.0
-Release: alt2
-
+Version: 6.2.0
+Release: alt1
 Summary: Jupyter Terminal Console
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/jupyter_console
+Url: https://pypi.org/project/jupyter-console/
+
 BuildArch: noarch
 
 # https://github.com/jupyter/jupyter_console.git
-# Source-url: https://pypi.io/packages/source/j/%oname/%oname-%version.tar.gz
-Source: %name-%version.tar
-Patch1: %oname-5.2.0-alt-docs.patch
+Source: %oname-%version.tar
+
+Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/pts
 %if_with docs
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinxcontrib_github_alt
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 BuildRequires: python3-module-vine >= 1.3.0
 BuildRequires: python3-module-jupyter_client ipython3
@@ -34,7 +36,6 @@ BuildRequires: python3(pathlib2) python3(PIL)
 
 %py3_provides %oname
 %py3_requires jupyter_client IPython ipykernel
-
 
 %description
 A terminal-based console frontend for Jupter kernels. This code is based
@@ -52,14 +53,10 @@ on the single-process IPython terminal.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -n %oname-%version
 %patch1 -p1
 
-%if_with docs
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-%endif
-
-sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
+sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -type f \( -name '*.py' -o -name 'jupyter-console' \))
 
 %build
@@ -74,9 +71,7 @@ export PYTHONPATH=$PWD
 %endif
 
 %check
-%if 0
 JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %oname
-%endif
 
 %files
 %doc *.md
@@ -84,14 +79,19 @@ JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %
 %doc docs/_build/html
 %endif
 %_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
-
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt1
+- Updated to upstream version 6.2.0.
+- Enabled build of documentation.
+- Enabled tests.
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt2
 - build for python2 disabled
 

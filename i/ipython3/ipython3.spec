@@ -2,45 +2,41 @@
 
 %define oname ipython
 
-%def_with doc
+%def_without doc
 
-Name: ipython
-Version: 5.5.0
-Release: alt5
-
-%setup_python_module IPython
-
-Summary: An enhanced interactive Python shell
-License: BSD
-Group: Development/Python
-
+Name: ipython3
+Version: 7.18.1
+Release: alt1
+Summary: An enhanced interactive Python 3 shell
+License: BSD-3-Clause
+Group: Development/Python3
 Url: https://ipython.org
+
 BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt-docs.patch
 
-%add_findreq_skiplist %python_sitelibdir/IPython/utils/eventful.py
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-zmq
-BuildRequires: python-module-tornado python-modules-sqlite3
-BuildRequires: python-module-jsonschema python-module-traitlets
-BuildRequires: python-module-pexpect python-module-pickleshare
-BuildRequires: python-module-simplegeneric python-module-ipykernel
-BuildRequires: python-module-ipyparallel
-BuildRequires: python2.7(pathlib2)
-BuildRequires: python2.7(prompt_toolkit)
-BuildRequires: python2.7(nose.tools)
-BuildRequires: python-module-testpath
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(prompt_toolkit)
+BuildRequires: python3(backcall)
+
 %if_with doc
-BuildRequires: python-module-sphinx-devel python-module-matplotlib-sphinxext python-module-numpydoc
-BuildRequires: python2.7(sphinx_rtd_theme) graphviz
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext python3-module-numpydoc
+BuildRequires: python3(sphinx_rtd_theme) graphviz
 %endif
 
-Requires: python-module-%oname
+%add_python3_req_skip __main__
+%add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
+%add_python3_req_skip msvcrt wx gtk compiler OpenGL oct2py rpy2
+%add_python3_req_skip System clr
+
+Requires: python3-module-%oname = %EVR
 
 %description
 IPython provides a replacement for the interactive Python interpreter with
@@ -64,7 +60,7 @@ Main features:
 
 %package doc
 Summary: IPython documentation
-Group: Development/Python
+Group: Development/Python3
 
 %description doc
 IPython provides a replacement for the interactive Python interpreter with
@@ -74,7 +70,7 @@ This package contains IPython documentation (html and PDF formats).
 
 %package examples
 Summary: IPython examples
-Group: Development/Python
+Group: Development/Python3
 
 %description examples
 IPython provides a replacement for the interactive Python interpreter with
@@ -82,58 +78,54 @@ extra functionality.
 
 This package contains examples for IPython.
 
-%package -n python-module-%oname
-Summary: An enhanced interactive Python shell
-Group: Development/Python
+%package -n python3-module-%oname
+Summary: An enhanced interactive Python 3 shell
+Group: Development/Python3
 
-%add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
-%py_requires jsonschema traitlets pexpect simplegeneric ipykernel
-%py_requires ipyparallel
-%py_requires pathlib2
-
-%description -n python-module-%oname
+%description -n python3-module-%oname
 IPython provides a replacement for the interactive Python interpreter with
 extra functionality.
 
-This package contains modules for Python-2.
+This package contains modules for Python-3.
 
-%package -n python-module-%oname-tests
-Summary: An enhanced interactive Python shell
-Group: Development/Python
+%package -n python3-module-%oname-tests
+Summary: An enhanced interactive Python 3 shell
+Group: Development/Python3
 
-%description -n python-module-%oname-tests
+%description -n python3-module-%oname-tests
 IPython provides a replacement for the interactive Python interpreter with
 extra functionality.
 
-This package contains tests for Python-2.
+This package contains tests for Python-3.
 
 %prep
 %setup
 %patch1 -p1
 
 %if_with doc
-%prepare_sphinx docs
+%prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
 %endif
 
 %build
-%python_build
+export LANG="en_US.UTF-8"
+%python3_build
 
 %install
-%python_install
-rm %buildroot%_bindir/iptest
+export LANG="en_US.UTF-8"
+%python3_install
 
 %if_with doc
 install -d %buildroot%_docdir/%name
 cp docs/source/*.txt %buildroot%_docdir/%name/
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs html PYTHON=python
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make -C docs html
 cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %files
-%doc COPYING.rst
+%doc COPYING.rst LICENSE
 %doc README.rst
 %_bindir/*
 %_man1dir/*
@@ -142,20 +134,19 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %_docdir/%name/*.txt
 %endif
 
-%files -n python-module-%oname
-%python_sitelibdir/IPython/
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/IPython/*/tests
+%files -n python3-module-%oname
+%python3_sitelibdir/IPython
+%python3_sitelibdir/%oname-%version-py*.egg-info
+%exclude %python3_sitelibdir/IPython/*/tests
 
-%files -n python-module-%oname-tests
-%python_sitelibdir/IPython/*/tests
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/IPython/*/tests
 
 %if_with doc
 %files doc
 %_docdir/%name
 %exclude %_docdir/%name/*.txt
 %exclude %_docdir/%name/examples
-#_docdir/%name/manual/
 
 %files examples
 %dir %_docdir/%name
@@ -163,8 +154,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
-* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt5
-- Rebuilt without python-3.
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt1
+- Updated to upstream version 7.18.1.
+- Disabled build for python-2.
 - Moved python modules into separate packages.
 
 * Thu Feb 06 2020 Stanislav Levin <slev@altlinux.org> 5.5.0-alt4

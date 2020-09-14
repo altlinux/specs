@@ -3,10 +3,14 @@
 
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
+%add_findreq_skiplist  %python3_sitelibdir/gns3server/utils/asyncio/embed_shell.py
+%add_findprov_skiplist %python3_sitelibdir/gns3server/utils/asyncio/embed_shell.py
+%add_findreq_skiplist  %python3_sitelibdir/gns3server/utils/asyncio/input_stream.py
+%add_findprov_skiplist %python3_sitelibdir/gns3server/utils/asyncio/input_stream.py
 
 Name: gns3-server
 Version: 2.2.11
-Release: alt1
+Release: alt2
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -61,6 +65,9 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.11-alt2
+- Updated provides and requires due to prompt_toolkit update.
+
 * Fri Jul 10 2020 Anton Midyukov <antohami@altlinux.org> 2.2.11-alt1
 - new version 2.2.11
 

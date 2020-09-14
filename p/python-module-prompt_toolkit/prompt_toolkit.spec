@@ -1,10 +1,10 @@
 %define oname prompt_toolkit
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 1.0.14
-Release: alt1.1
+Release: alt2
 Summary: Library for building powerful interactive command lines in Python
 License: BSD
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.14-alt2
+- Rebuilt without python-3.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.14-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

@@ -1,10 +1,10 @@
 %define oname ipython_genutils
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.1.2
+Release: alt2
 Summary: Vestigial utilities from IPython
 License: BSD
 Group: Development/Python
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt2
+- Rebuilt without python-3.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.1.0-alt1.1.2
 - (NMU) rebuild with python3.6
 

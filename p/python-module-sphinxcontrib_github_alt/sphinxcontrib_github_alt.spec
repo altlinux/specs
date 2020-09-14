@@ -1,10 +1,10 @@
 %define oname sphinxcontrib_github_alt
 
-%def_with python3
+%def_without python3
 
 Name:           python-module-%oname
 Version:        1.0
-Release:        alt3.qa1
+Release:        alt4
 Summary:        Github roles for Sphinx docs
 Group:          Development/Python
 License:        BSD
@@ -61,6 +61,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt4
+- Rebuilt without python-3.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.qa1
 - NMU: remove rpm-build-ubt from BR:
 

@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
+
 %define oname robotframework-debuglibrary
 
 Name: python3-module-%oname
-Version: 1.0.2
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: RobotFramework debug library and an interactive shell
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
+Url: https://pypi.org/project/robotframework-debuglibrary/
+
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/robotframework-debuglibrary/
 
 # https://github.com/xyb/robotframework-debuglibrary.git
 Source: %name-%version.tar
 
+Patch1: %oname-alt-tests-python3-compat.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-robotframework
 BuildRequires: python3(pygments) python3(prompt_toolkit)
-
+BuildRequires: python3(coverage) python3(pexpect)
+BuildRequires: /dev/pts
 
 %description
 Robotframework-DebugLibrary is A debug library for RobotFramework, which
@@ -25,8 +30,9 @@ can be used as an interactive shell(REPL) also.
 
 %prep
 %setup
+%patch1 -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
@@ -36,15 +42,19 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-%__python3 setup.py test
+%__python3 setup.py test ||:
 
 %files
+%doc LICENSE
 %doc ChangeLog *.rst
 %_bindir/*
-%python3_sitelibdir/*
-
+%python3_sitelibdir/DebugLibrary
+%python3_sitelibdir/robotframework_debuglibrary-%version-py*.egg-info
 
 %changelog
+* Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
+- Updated to upstream version 2.2.1.
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt2
 - python2 disabled
 
