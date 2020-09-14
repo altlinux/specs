@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        78.2.0
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -443,6 +443,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Sep 14 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.0-alt2
+- Allow sideloading app and system unsigned addons.
+
 * Tue Aug 25 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.0-alt1
 - New release (78.2.0).
   + CVE-2020-15663 Downgrade attack on the Mozilla Maintenance Service could have resulted in escalation of privilege
