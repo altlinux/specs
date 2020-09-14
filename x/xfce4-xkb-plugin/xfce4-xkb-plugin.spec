@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
 Version: 0.8.1
-Release: alt2
+Release: alt3.g6026349
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -9,13 +9,13 @@ Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/xfce4-xkb-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/panel-plugins/xfce4-xkb-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-xkb-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libgarcon-devel
-BuildRequires: libSM-devel librsvg-devel libwnck3-devel libxklavier-devel perl-XML-Parser xorg-cf-files intltool
+BuildRequires: libSM-devel librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files
 
 Requires: xfce4-panel
 
@@ -63,6 +63,11 @@ XFce panel.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Sun Sep 13 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt3.g6026349
+- Fixed BR.
+- Updated Vcs tag.
+- Upstream git snapshot.
+
 * Wed Mar 25 2020 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt2
 - Add Vcs tag.
 - Update Url.
