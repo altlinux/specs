@@ -1,6 +1,6 @@
 Name:         xfig
-Version:      3.2.7a
-Release:      alt2
+Version:      3.2.7b
+Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -8,13 +8,19 @@ URL:          https://sourceforge.net/projects/mcj/
 License:      Freeware
 
 Packager:     Vladislav Zavjalov <slazav@altlinux.org>
-Source:       %name-%version.tar.gz
+Source0:       %name-%version.tar
+Source1:      xfig16.png
+Source2:      xfig32.png
+Source3:      xfig48.png
+Source4:      xfig.sh
+Source5:      xfig.alt.desktop
 
-Requires:     transfig >= 3.2.5 fonts-type1-urw
+Requires:     transfig = %version fonts-type1-urw
 
 BuildPreReq:  libXpm-devel libXt-devel libXmu-devel libXaw-devel
 BuildPreReq:  libpng-devel libjpeg-devel libXi-devel libXp-devel
 BuildPreReq:  libXaw3d-devel >= 1.5e
+BuildRequires: transfig = %version
 
 %description
 Xfig is an X Window System tool for creating basic vector graphics,
@@ -51,11 +57,11 @@ XFig documentation
 
 %install
 %makeinstall_std
-install -D -m 755 xfig.sh      %buildroot/%_bindir/xfig.sh
-install -D -m 644 xfig48.png   %buildroot/%_liconsdir/xfig.png
-install -D -m 644 xfig32.png   %buildroot/%_niconsdir/xfig.png
-install -D -m 644 xfig16.png   %buildroot/%_miconsdir/xfig.png
-install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
+install -D -m 644 %SOURCE1 %buildroot/%_miconsdir/xfig.png
+install -D -m 644 %SOURCE2 %buildroot/%_niconsdir/xfig.png
+install -D -m 644 %SOURCE3 %buildroot/%_liconsdir/xfig.png
+install -D -m 755 %SOURCE4 %buildroot/%_bindir/xfig.sh
+install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 
 %files
 %_bindir/xfig
@@ -77,6 +83,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sat Sep 12 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7b-alt1
+- 3.2.7b
+
 * Mon Jul 23 2018 Vladislav Zavjalov <slazav@altlinux.org> 3.2.7a-alt2
 - fix Repocop warnings (add desktop additional category, use compressed man)
 
