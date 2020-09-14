@@ -1,7 +1,7 @@
 %define oname readthedocs-sphinx-ext
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 2.1.1
 Release: alt1
 
 Summary: This holds code specific for Read the Docs and Sphinx
@@ -38,8 +38,10 @@ Tooling for a better Read the Docs Sphinx build experience.
 %doc *.rst
 %python3_sitelibdir/*
 
-
 %changelog
+* Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.1-alt1
 - Version updated to 1.0.1
 - porting on python3.
