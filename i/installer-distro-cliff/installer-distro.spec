@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
-Version: 8.1
-Release: alt5
+Version: 8.2
+Release: alt1
 
 License: GPL
 Group: System/Configuration/Other
@@ -75,6 +75,10 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Mon Sep 14 2020 Paul Wolneykien <manowar@altlinux.org> 8.2-alt1
+- Moved postinstall.d/90-integrity-init.sh to the settings-s package.
+- Added initinstall script to pre-select password check-box in grub.
+
 * Tue Sep 08 2020 Denis Medvedev <nbr@altlinux.org> 8.1-alt5
 - Packet is made arch, not requiring alterator-grub on armh
 and e2k
