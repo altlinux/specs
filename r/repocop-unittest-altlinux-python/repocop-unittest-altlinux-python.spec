@@ -2,7 +2,7 @@
 %define install_all_tests 1
 
 Name: repocop-unittest-altlinux-python
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -60,6 +60,9 @@ install -pD -m 755 repocop-helper-altlinux-python-python2-in-spec \
 %endif
 
 %changelog
+* Mon Sep 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- updated altlinux-python-python2-in-spec
+
 * Sat Jul 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - fixes in altlinux-python-python2-in-spec patchgenerator
 
