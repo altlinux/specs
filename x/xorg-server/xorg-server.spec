@@ -24,7 +24,7 @@
 
 Name: xorg-server
 Version: 1.20.9
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -312,6 +312,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Sep 14 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.9-alt2
+- revert 249a12c5, 74b7427c, 5c96eb5f (closes: #38854)
+
 * Tue Aug 25 2020 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.9-alt1
 - 1.20.9 (fixes: CVE-2020-14346, CVE-2020-14361, CVE-2020-1436)
 
