@@ -1,14 +1,12 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plantuml
-Version:        8033
-Release:        alt1_7jpp8
+Version:        1.2019.1
+Release:        alt1_6jpp8
+Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
@@ -19,6 +17,9 @@ BuildArch:      noarch
 
 BuildRequires:  ant
 BuildRequires:  javapackages-local
+# Explicit requires for javapackages-tools since plantuml script
+# uses /usr/share/java-utils/java-functions
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
@@ -52,11 +53,11 @@ touch -r README.orig README
 rm README.orig
 
 %build
-
 ant
 
 # build javadoc
-%javadoc -encoding UTF-8 -Xdoclint:none -classpath %{name}.jar -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
+export CLASSPATH=$(build-classpath ant):plantuml.jar
+%javadoc -source 1.8 -encoding UTF-8 -Xdoclint:none -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
 
 %install
 # Set jar location
@@ -80,6 +81,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference COPYING
 
 %changelog
+* Sun Sep 13 2020 Igor Vlasenko <viy@altlinux.ru> 2:1.2019.1-alt1_6jpp8
+- new version (closes: #38927)
+
 * Mon Apr 16 2018 Igor Vlasenko <viy@altlinux.ru> 8033-alt1_7jpp8
 - java update
 
