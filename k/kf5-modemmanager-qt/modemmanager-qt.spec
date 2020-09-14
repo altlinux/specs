@@ -1,7 +1,7 @@
 %define rname modemmanager-qt
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -57,7 +57,7 @@ KF5 library
 %find_lang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -71,6 +71,9 @@ KF5 library
 %_K5lib/libKF5ModemManagerQt.so.*
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

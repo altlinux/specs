@@ -1,7 +1,7 @@
 %define rname oxygen-icons5
 
 Name: kf5-oxygen-icons
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init no_altplace
 
@@ -79,9 +79,13 @@ if [ -z "`find %buildroot/%_iconsdir -name package-installed-updated.\*`" ] ; th
 fi
 
 %files -n icon-theme-oxygen
+%doc COPYING*
 %_iconsdir/oxygen*/
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %def_enable python3
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 %if_disabled python3
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 #BuildRequires: cmake graphviz python-devel python-module-google rpm-build-gir ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5
 %if_enabled python3
-BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-python3 python3-module-setuptools
 %else
 BuildRequires: rpm-build-python
 %endif
@@ -108,6 +108,9 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

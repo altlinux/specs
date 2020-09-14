@@ -1,7 +1,7 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -71,7 +71,7 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 #%_K5bin/solid-power
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -86,6 +86,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 
