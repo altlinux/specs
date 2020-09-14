@@ -1,8 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
+
 Name: python3-module-pathspec
-Version: 0.5.9
+Version: 0.8.0
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
-License: MPLv2.0
+License: MPL-2.0-no-copyleft-exception
 Group: Development/Python
 Url: https://github.com/cpburnz/python-path-specification
 
@@ -10,13 +14,11 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-#BuildPreReq: rpm-build-python3
-#BuildPreReq: python3-module-distribute
-#BuildPreReq: python-module-epydoc
+BuildRequires: rpm-build-python3
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-module-PyStemmer python-module-Pygments python-module-cssselect python-module-docutils python-module-pytz python-module-setuptools python-module-snowballstemmer python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
-BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-sphinx
+%if_with check
+BuildRequires: python3(tox)
+%endif
 
 %description
 pathspec is a utility library for pattern matching of file paths. So
@@ -29,15 +31,29 @@ gitignore files.
 
 %build
 %python3_build
-%make_build doc
 
 %install
 %python3_install
+# don't package tests
+rm -r %buildroot%python3_sitelibdir/pathspec/tests/
+
+%check
+cat > tox.ini <<EOF
+[testenv]
+commands =
+    {envpython} -m unittest discover -vv pathspec/tests {posargs}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr
 
 %files
 %python3_sitelibdir/*
 %doc *.rst
 
 %changelog
+* Mon Sep 14 2020 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.5.9 -> 0.8.0.
+
 * Wed Sep 25 2019 Terechkov Evgenii <evg@altlinux.org> 0.5.9-alt1
 - Initial build for ALT Linux Sisyphus
