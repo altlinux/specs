@@ -50,7 +50,7 @@
 
 Name: mariadb
 Version: 10.4.14
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -499,6 +499,9 @@ export LDFLAGS
 	%{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
 	%{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
 	%{?_without_server:-DWITHOUT_SERVER=ON} \
+%if "%_lib" == "lib64"
+	-DCMAKE_SIZEOF_VOID_P=8 \
+%endif
 	-DINSTALL_PLUGINDIR=%plugindir \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 	-DMYSQL_SERVER_SUFFIX="-%release"
@@ -597,6 +600,17 @@ popd
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
 ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
+# move pkgconfig file to arch dep path
+#mv %buildroot%_datadir/pkgconfig/mariadb.pc %buildroot%_pkgconfigdir/
+# NB: still a problem for cmake on %%e2k as of 10.4.14, do not remove
+# (gave up on figuring out what was the particular crap that
+# generated broken libmariadb/cmake/install.cmake) // mike@
+mkdir -p %buildroot%_pkgconfigdir
+%if "%_lib" == "lib64"
+    if [ -f %buildroot%_prefix/lib/pkgconfig/libmariadb.pc ]; then
+        mv %buildroot%_prefix/lib/pkgconfig/libmariadb.pc %buildroot%_pkgconfigdir/
+    fi
+%endif
 
 # Populate chroot with data to some extent.
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
@@ -1001,6 +1015,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 12 2020 Michael Shigorin <mike@altlinux.org> 10.4.14-alt1.1
+- E2K: install pkgconfig file properly (lib64)
+
 * Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 10.4.14-alt1
 - 10.4.14
 
