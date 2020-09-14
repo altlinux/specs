@@ -1,20 +1,19 @@
 Name: xfce4-sensors-plugin
 Version: 1.3.92
-Release: alt1
+Release: alt2.g2aff2bd
 
 Summary: Sensors plugin for Xfce Desktop
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-sensors-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-sensors-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
 %ifarch %ix86 x86_64
-%def_enable xnvctrl
+%def_disable xnvctrl
 %else
 %def_disable xnvctrl
 %endif
@@ -24,7 +23,7 @@ BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: hddtemp intltool libsensors3-devel libnotify-devel
 %{?_enable_xnvctrl:BuildRequires: nvidia-settings-devel}
 
-Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
+Requires: xfce4-panel >= 4.11 hddtemp lm_sensors3
 
 %define _unpackaged_files_terminate_build 1
 
@@ -34,6 +33,8 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %prep
 %setup
 %patch -p1
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_sensors_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -69,6 +70,13 @@ Requires: xfce4-panel >= 4.8 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Sep 14 2020 Mikhail Efremov <sem@altlinux.org> 1.3.92-alt2.g2aff2bd
+- Disabled xnvctrl support.
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Upstream git snapshot.
+
 * Wed Jan 16 2019 Mikhail Efremov <sem@altlinux.org> 1.3.92-alt1
 - Updated to 1.3.92.
 
