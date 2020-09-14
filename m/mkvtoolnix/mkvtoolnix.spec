@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 49.0.0
+Version: 50.0.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -35,6 +35,7 @@ BuildRequires: docbook-style-xsl xsltproc ruby-tools
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
 BuildRequires: libgtest-devel
+BuildRequires: libpcre2-devel
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
 %{?_enable_qt:BuildRequires: qt5-base-devel qt5-multimedia-devel cmark-devel}
@@ -182,6 +183,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 50.0.0-alt1
+- Updated to upstream version 50.0.0.
+
 * Wed Aug 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 49.0.0-alt1
 - Updated to upstream version 49.0.0.
 - Enabled dvdread support.
