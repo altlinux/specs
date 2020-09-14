@@ -1,18 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%def_enable docs
 
 Name: xenomai
 Version: 3.1
-Release: alt1
-Source0: %name-%version.tar
-Summary: Real-Time Framework for Linux (Cobalt) (%version)
+Release: alt2
+Summary: Real-Time Framework for Linux
 License: GPL-2.0+ and LGPL-2.0+ and LGPL-2.1 and MIT
 Group: System/Kernel and hardware
 Url: http://www.xenomai.org
 Vcs: https://gitlab.denx.de/Xenomai/xenomai.git
-ExclusiveArch: x86_64
 
+Source0: %name-%version.tar
+ExclusiveArch: x86_64
+BuildRequires: banner
 BuildRequires: libiniparser-devel
-#BuildRequires: doxygen asciidoc asciidoc-a2x w3m
+%if_enabled docs
+BuildRequires: doxygen asciidoc asciidoc-a2x w3m
+%endif
 
 %description
 Xenomai is a Free Software project in which engineers from a wide
@@ -28,114 +35,372 @@ cannot meet the requirements with respect to response time
 constraints, Xenomai can also supplement it for delivering stringent
 real-time guarantees based on an original dual kernel approach.
 
-%package -n libxenomai1
-Summary: Xenomai (Cobalt) system libraries (v%version)
+This package only contains top level wrapers (xeno and xeno-config),
+you will need to install appropriate Cobalt or Mercury packages
+to work.
+
+%package cobalt
+Summary: Real-Time Framework for Linux (Cobalt core)
+Group: System/Kernel and hardware
+Provides: xenomai-runtime
+
+%description cobalt
+This package contains tools for dual kernel version of Xenomai
+(codenamed Cobalt).
+For these tools to work install kernel-image-xenomai package.
+
+%package mercury
+Summary: Real-Time Framework for Linux (Mercury core)
+Group: System/Kernel and hardware
+
+%description mercury
+This package contains tools for native Linux kernel version of Xenomai
+(called Mercury).
+ It's recommended to install kernel-image-rt kernel.
+
+%package -n libcobalt
+Summary: Xenomai (Cobalt core) system libraries (v%version)
+Group: System/Libraries
+Provides: libxenomai1
+
+%description -n libcobalt
+System libraries for dual kernel Xenomai (Cobalt core).
+
+%package -n libmercury
+Summary: Xenomai (Mercury core) system libraries (v%version)
 Group: System/Libraries
 
-%description -n libxenomai1
-System libraries for Xenomai (Cobalt)
+%description -n libmercury
+System libraries for native kernel Xenomai (Mercury core).
 
-%package -n libxenomai-devel
-Summary: Xenomai development headers (v%version)
+%package devel-common
+Summary: Common Xenomai development files (v%version)
 Group: Development/C
-Requires: libxenomai1 = %EVR
+Requires: xenomai = %EVR
 AutoReqProv: nocpp
 
-%description -n libxenomai-devel
-Header files for Xenomai Libraries
+%description devel-common
+Common development files (such as headers) for both Xenomai cores.
 
-%package -n libxenomai-devel-static
+%package -n libcobalt-devel
+Summary: Xenomai Cobalt development libraries (v%version)
+Group: Development/C
+Requires: xenomai-devel-common = %EVR
+Requires: libcobalt = %EVR
+Provides: libxenomai-dev
+
+%description -n libcobalt-devel
+Development libraries for dual kernel Xenomai (Cobalt core).
+
+%package -n libmercury-devel
+Summary: Xenomai Mercury development libraries (v%version)
+Group: Development/C
+Requires: xenomai-devel-common = %EVR
+Requires: libmercury = %EVR
+
+%description -n libmercury-devel
+Development libraries for native kernel Xenomai (Mercury core).
+
+%package -n libcobalt-devel-static
 Summary: Xenomai static libraries (Cobalt) (v%version)
 Group: Development/C
-Requires: libxenomai-devel = %EVR
+Requires: libcobalt-devel = %EVR
 
-%description -n libxenomai-devel-static
+%description -n libcobalt-devel-static
 Static libraries for Xenomai (Cobalt)
 
-%package -n xenomai-kernel-source
-Summary: Xenomai (Cobalt) patch for Linux kernel (v%version)
+%package -n libmercury-devel-static
+Summary: Xenomai static libraries (Mercury) (v%version)
+Group: Development/C
+Requires: libmercury-devel = %EVR
+
+%description -n libmercury-devel-static
+Static libraries for Xenomai (Mercury)
+
+%package kernel-source
+Summary: Xenomai (Cobalt) patch for I-pipe kernel (v%version)
 Group: Development/Kernel
 BuildArch: noarch
 AutoReqProv: no
 
-%description -n xenomai-kernel-source
-This package is used only internally to build Xenomai kernel.
+%description kernel-source
+This package is used only internally to build Xenomai dual kernel (Cobalt).
+
+Cobalt supplements the native Linux kernel in dual kernel configurations.
+
+It deals with all time-critical activities, such as handling interrupts, and
+scheduling real-time threads. The Cobalt kernel has higher priority over all
+the native kernel activities.
+
+Cobalt provides an implementation of the POSIX and RTDM interfaces based on
+a set of generic RTOS building blocks.
+
+%package doc
+Summary: Xenomai documentation
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+This package contains Xenomai documentation and code examples.
+
+%package checkinstall
+Summary: checkinstall tests for Xenomai
+Group: Development/Other
+Requires(pre): libcobalt-devel = %EVR
+Requires(pre): libcobalt-devel-static = %EVR
+Requires(pre): libmercury-devel = %EVR
+Requires(pre): libmercury-devel-static = %EVR
+Requires(pre): xenomai-doc = %EVR
+Requires(pre): gcc
+
+%description checkinstall
+Run checkinstall tests for xenomai -devel packages.
 
 %prep
 %setup
+# Do not git "update" the docs.
+sed -Ei 's/gitdoc[[:space:]]?//' doc/Makefile.am
+sed -i 's/mountkernfs/$local_fs/' debian/libxenomai1.xenomai.init
 
+%define _configure_script ../configure
 %build
 %autoreconf
 export CFLAGS=-fno-omit-frame-pointer
-%configure \
-	--with-core=cobalt \
-	--includedir=/usr/include/xenomai \
-	--with-testdir=%_libdir/xenomai/testsuite \
-	--enable-smp \
-	--enable-lazy-setsched \
-	--enable-debug=symbols \
-	--enable-dlopen-libs \
+# --enable-smp is enabled by default on Cobalt, not on Mercury.
 
-%make_build -s
+banner cobalt
+mkdir COBALT
+pushd COBALT
+%configure \
+        --with-core=cobalt \
+              --bindir=%_libexecdir/xenomai/cobalt/bin \
+             --sbindir=%_libexecdir/xenomai/cobalt/sbin \
+        --with-testdir=%_libexecdir/xenomai/cobalt/testsuite \
+        --with-demodir=%_libexecdir/xenomai/cobalt/demo \
+          --includedir=%_includedir/xenomai \
+        --enable-silent-rules \
+        --enable-lazy-setsched \
+        --enable-debug=symbols \
+        --enable-dlopen-libs \
+        %nil
+%make_build --no-print-directory
+popd
+
+banner mercury
+mkdir MERCURY
+pushd MERCURY
+%configure \
+        --with-core=mercury \
+              --bindir=%_libexecdir/xenomai/mercury/bin \
+             --sbindir=%_libexecdir/xenomai/mercury/sbin \
+        --with-testdir=%_libexecdir/xenomai/mercury/testsuite \
+        --with-demodir=%_libexecdir/xenomai/mercury/demo \
+          --includedir=%_includedir/xenomai \
+        --enable-smp \
+        --enable-silent-rules \
+        --enable-debug=symbols \
+        --enable-dlopen-libs \
+%if_enabled docs
+        --enable-doc-build \
+%endif
+        --enable-fortify \
+        %nil
+# Note: make install will rebuild docs due to some bug.
+%make_build --no-print-directory
+popd
 
 %install
-%makeinstall_std -s SUDO=false
-rm -rf %buildroot/usr/src/debug
-rm -rf %buildroot/usr/lib/debug
-rm -rf %buildroot/usr/demo
+banner install
+%makeinstall_std --no-print-directory -C COBALT  SUDO=false
+mv %buildroot%_includedir/xenomai/xeno_config.h %buildroot%_includedir/xenomai/cobalt/
+
+%makeinstall_std --no-print-directory -C MERCURY SUDO=false
+mv %buildroot%_includedir/xenomai/xeno_config.h %buildroot%_includedir/xenomai/mercury/
+
+# Install kernel sources.
 mkdir -p %buildroot/usr/src/xenomai-kernel-source/config
-cp -Ra	scripts	\
-	include	\
-	kernel	%buildroot/usr/src/xenomai-kernel-source/
+cp -Ra  scripts \
+        include \
+        kernel  %buildroot/usr/src/xenomai-kernel-source/
 cp config/version-{code,label} \
-		%buildroot/usr/src/xenomai-kernel-source/config/
-mv %buildroot/usr/sbin/version %buildroot/usr/sbin/xeno-version
+                %buildroot/usr/src/xenomai-kernel-source/config/
+
+# udev rules for Xenomai kernel.
 mkdir -p %buildroot/etc/udev/rules.d
 for f in kernel/cobalt/udev/*.rules; do
   cp $f %buildroot/etc/udev/rules.d/
 done
 
 # Only .so is required for dlopen test
-rm -f %_libdir/xenomai/testsuite/*.a
+rm %buildroot%_libexecdir/xenomai/cobalt/testsuite/*.a
 
-# smokey should be non-stripped at all, stripping just
-# debug is not enough.
-%brp_strip_none %_libdir/xenomai/testsuite/smokey
+# Handmade wrapper for backward compatibility.
+mkdir -p %buildroot/%_bindir
+cp -a .gear/xeno-wrapper %buildroot/%_bindir/xeno
+ln -s xeno %buildroot/%_bindir/xeno-config
 
-%pre
+mkdir -p %buildroot%_datadir/doc/xenomai
+cp -a README %buildroot%_datadir/doc/xenomai/README
+
+# Not requird.
+rm %buildroot%_libexecdir/xenomai/mercury/bin/wrap-link.sh
+
+# allowed_group setter.
+install -D -p -m755 debian/libxenomai1.xenomai.init %buildroot%_initrddir/xenomai
+
+# Some code examples to try.
+cp -a demo %buildroot%_datadir/doc/xenomai/
+find %buildroot%_datadir/doc/xenomai -name 'Makefile.*' -delete
+
+%check
+! test -e %buildroot/%_includedir/xenomai/xeno_config.h
+grep '#define CONFIG_XENO_COBALT 1'  %buildroot%_includedir/xenomai/cobalt/xeno_config.h
+grep '#define CONFIG_XENO_MERCURY 1' %buildroot%_includedir/xenomai/mercury/xeno_config.h
+%buildroot%_libexecdir/xenomai/cobalt/sbin/version
+%buildroot%_libexecdir/xenomai/mercury/sbin/version
+
+%pre cobalt
+# For udev rtdm.rules and allowed_group.
 %_sbindir/groupadd -r -f xenomai 2> /dev/null ||:
 
+%pre checkinstall
+set -ex
+OLDPATH=$PATH
+
+# Build POSIX examples using Cobalt core.
+PATH=/usr/lib/xenomai/cobalt/bin:$OLDPATH
+cd /usr/share/doc/xenomai/demo/posix/cobalt
+for skin in vxworks psos alchemy rtdm smokey posix cobalt; do
+    for i in *.c; do
+        gcc $i `xeno-config --$skin --cflags --ldflags`
+        [ $skin = posix -o $skin = rtdm ] ||
+        ldd a.out | grep lib$skin.so
+        ldd a.out | grep libcobalt.so
+        [ $skin = rtdm -o $skin = posix -o $skin = cobalt ] ||
+        ldd a.out | grep libcopperplate.so
+        gcc $i `xeno-config --$skin --cflags --ldflags` -static
+    done
+done
+
+# Use Mercury core.
+PATH=/usr/lib/xenomai/mercury/bin:$OLDPATH
+for skin in vxworks psos alchemy rtdm smokey posix; do
+    for i in *.c; do
+        gcc $i `xeno-config --$skin --cflags --ldflags`
+        [ $skin = posix -o $skin = rtdm ] ||
+        ldd a.out | grep lib$skin
+        ldd a.out | grep libmercury.so
+        [ $skin = rtdm -o $skin = posix -o $skin = cobalt ] ||
+        ldd a.out | grep libcopperplate_mercury.so
+        gcc $i `xeno-config --$skin --cflags --ldflags` -static
+    done
+done
+
+# Build cyclictest with Mercury core.
+cd /usr/share/doc/xenomai/demo/posix/cyclictest
+gcc *.c `xeno-config --posix --cflags --ldflags` -pthread -lrt -DVERSION_STRING=1.0
+ldd a.out | grep libmercury.so
+gcc *.c `xeno-config --posix --cflags --ldflags` -pthread -lrt -DVERSION_STRING=1.0 -static
+
+# Build Alchemy demo.
+PATH=$OLDPATH
+cd /usr/share/doc/xenomai/demo/alchemy
+gcc altency.c `/usr/lib/xenomai/mercury/bin/xeno-config --alchemy --cflags --ldflags` -lm
+cd cobalt
+gcc cross-link.c `/usr/lib/xenomai/mercury/bin/xeno-config --alchemy --cflags --ldflags`
+ldd a.out | grep mercury
+gcc cross-link.c `/usr/lib/xenomai/cobalt/bin/xeno-config  --alchemy --cflags --ldflags`
+ldd a.out | grep cobalt
+find /usr/share/doc/xenomai/demo -name a.out -delete
+
 %files
-%doc README
+# Common non-devel (tools) package.
+# Wrappers that can guide user to install other packages.
+%_bindir/xeno
+%_bindir/xeno-config
+%if_enabled docs
+%_man1dir/xeno.1*
+%endif
+
+%files cobalt
+%exclude %_libexecdir/xenomai/cobalt/bin/xeno-config
+%exclude %_libexecdir/xenomai/cobalt/bin/wrap-link.sh
+%dir %_libexecdir/xenomai
+%_libexecdir/xenomai/cobalt
 /etc/*.conf
 /etc/udev/rules.d/*.rules
-%_bindir/*
-%exclude %_bindir/xeno-config
-%exclude %_bindir/wrap-link.sh
-%_sbindir/*
-%dir %_libdir/xenomai
-%_libdir/xenomai/testsuite
+%_initrddir/xenomai
+%if_enabled docs
+%exclude %_man1dir/xeno.1*
+%exclude %_man1dir/xeno-config.1*
+%_man1dir/*.1*
+%endif
 
-%files -n libxenomai1
+%files mercury
+%exclude %_libexecdir/xenomai/mercury/bin/xeno-config
+%dir %_libexecdir/xenomai
+%_libexecdir/xenomai/mercury
+
+%files -n libcobalt
+%exclude %_libdir/*mercury*
 %_libdir/lib*.so.*
 
-%files -n libxenomai-devel
-%_includedir/xenomai
-%_libdir/*.so
-%_bindir/xeno-config
-%_bindir/wrap-link.sh
-%_libdir/*.wrappers
+%files -n libmercury
+%_libdir/lib*mercury*.so.*
+
+%files devel-common
+# Common -devel package.
+# For bootstrap.o & bootstrap-pic.o
+%_libdir/xenomai
 %_libdir/dynlist.ld
-%dir %_libdir/xenomai
-%_libdir/xenomai/*.o
+%exclude %_includedir/xenomai/cobalt
+%exclude %_includedir/xenomai/mercury
+%_includedir/xenomai
+%dir %_libexecdir/xenomai
+%if_enabled docs
+%_man1dir/xeno-config.1*
+%endif
 
-%files -n libxenomai-devel-static
-%_libdir/lib*.a*
+%files -n libcobalt-devel
+%dir %_libexecdir/xenomai/cobalt
+%dir %_libexecdir/xenomai/cobalt/bin
+%_libexecdir/xenomai/cobalt/bin/xeno-config
+%_libexecdir/xenomai/cobalt/bin/wrap-link.sh
+%exclude %_libdir/*mercury*.so
+%_libdir/lib*.so
+%_libdir/cobalt.wrappers
+%_libdir/modechk.wrappers
+%_includedir/xenomai/cobalt
 
-%files -n xenomai-kernel-source
+%files -n libmercury-devel
+%dir %_libexecdir/xenomai/mercury
+%dir %_libexecdir/xenomai/mercury/bin
+%_libexecdir/xenomai/mercury/bin/xeno-config
+%_libdir/lib*mercury*.so
+%_includedir/xenomai/mercury
+
+%files -n libcobalt-devel-static
+%exclude %_libdir/*mercury*.a
+%_libdir/lib*.a
+
+%files -n libmercury-devel-static
+%_libdir/lib*mercury*.a
+
+%files kernel-source
 %_usrsrc/xenomai-kernel-source
 
+%files doc
+# README, demo, pdf, html
+%_datadir/doc/xenomai
+
+%files checkinstall
+
 %changelog
+* Mon Sep 14 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt2
+- Multi-library (Cobalt and Mercury) package.
+- Package docs (with demo, pdf, html).
+- Add checkinstall tests.
+
 * Sun Apr 19 2020 Vitaly Chikunov <vt@altlinux.org> 3.1-alt1
 - Update to v3.1 (ABI r17).
 
@@ -159,5 +424,5 @@ rm -f %_libdir/xenomai/testsuite/*.a
 - 2.4.8
 
 * Mon May 18 2009 Michail Yakushin <silicium@altlinux.ru> 2.4.7-alt1
-- intial build for ALT
+- Initial build for ALT.
 
