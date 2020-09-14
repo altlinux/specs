@@ -2,7 +2,7 @@
 %global qt_module qtquicktimeline
 
 Name: qt5-quicktimeline
-Version: 5.15.0
+Version: 5.15.1
 Release: alt1
 
 Group: System/Libraries
@@ -84,5 +84,8 @@ Requires: libqt5-core = %_qt5_version
 #%_qt5_examplesdir/*
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Tue Aug 18 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - initial build

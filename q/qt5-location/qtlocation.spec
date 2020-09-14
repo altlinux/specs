@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.15.0
+Version: 5.15.1
 Release: alt1
 
 Group: System/Libraries
@@ -157,6 +157,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Fri Jul 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 

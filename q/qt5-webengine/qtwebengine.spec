@@ -29,8 +29,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.0
-Release: alt2
+Version: 5.15.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -72,6 +72,7 @@ Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt5-webengine qt5-tools
 BuildRequires(pre): libavformat-devel
 BuildRequires: libstdc++-devel-static
+BuildRequires: libxkbcommon-devel
 %if %is_ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel
 %endif
@@ -193,7 +194,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #%patch30 -p1
 %patch31 -p1
 %patch32 -p1
-%patch33 -p1
+#%patch33 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -266,6 +267,8 @@ ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
 %endif
 NUM_PROCS="%__nprocs"
 cat /proc/meminfo | grep ^Mem
+cat /sys/fs/cgroup/user.slice/user-${UID}.slice/memory.max ||:
+cat /sys/fs/cgroup/user.slice/user-${UID}.slice/memory.high ||:
 ulimit -a | grep mem
 MEM_PER_PROC=10000000
 MAX_MEM=`grep ^MemTotal: /proc/meminfo | sed -e 's|^\(.*\)[[:space:]].*|\1|' -e 's|.*[[:space:]]||'`
@@ -297,7 +300,7 @@ pushd %_target_platform
     QMAKE_LFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-overheads" \
     CONFIG+="release force_debug_info link_pulseaudio system-opus system-webp %qt_ffmpeg_type proprietary-codecs" \
     WEBENGINE_CONFIG+=" enable_hevc_demuxing use_spellchecker use_proprietary_codecs" \
-    QMAKE_EXTRA_ARGS+="-webengine-kerberos -webengine-proprietary-codecs" \
+    QMAKE_EXTRA_ARGS+="-webengine-kerberos -webengine-proprietary-codecs -webengine-printing-and-pdf" \
 %if_enabled system_icu
     CONFIG+="system-icu" \
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
@@ -400,6 +403,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
+- new version
+
 * Wed Jul 29 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
 - build with restored ppc64le support (thanks glebfm@alt)
 
