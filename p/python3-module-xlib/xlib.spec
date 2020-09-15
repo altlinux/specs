@@ -2,25 +2,26 @@
 
 %def_without check
 
-Name: python-module-%oname
-Version: 0.26
-Release: alt2
+Name: python3-module-%oname
+Version: 0.27
+Release: alt1
 
 Summary: Python X Library
 
-Group: Development/Python
+Group: Development/Python3
 License: LGPL
 Url: https://github.com/python-xlib/python-xlib
 
 Source: %name-%version.tar
 
 BuildRequires: /usr/bin/texi2html
-BuildRequires: python-devel python-module-setuptools python-module-setuptools_scm
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools python3-module-setuptools_scm
 
 %if_with check
-BuildRequires: python-module-six
-BuildRequires: python2.7(mock)
-BuildRequires: python-module-pytest
+BuildRequires: python3-module-six
+BuildRequires: python3(mock)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -44,32 +45,33 @@ This package contains documentation and examples for Python X Library.
 %setup
 
 %build
-%python_build
+%python3_build
 
 pushd doc/html
 %make SRCS=$PWD/../src TOPSRC=$PWD/../src/python-xlib.texi
 popd
 
 %install
-%python_install
+%python3_install
 
 # hack for x86_64 build
 test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 
 %check
-python setup.py test
-py.test -vv
+python3 setup.py test
+py.test3 -vv
 
 %files
 %doc README.rst LICENSE TODO
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %files docs
 %doc examples doc/html/*.html
 
 %changelog
-* Tue Sep 15 2020 Grigory Ustinov <grenka@altlinux.org> 0.26-alt2
-- Drop python3 support.
+* Tue Sep 15 2020 Grigory Ustinov <grenka@altlinux.org> 0.27-alt1
+- Automatically updated to 0.27.
+- Drop python2 support.
 
 * Thu Dec 19 2019 Grigory Ustinov <grenka@altlinux.org> 0.26-alt1
 - Build new version 0.26.
