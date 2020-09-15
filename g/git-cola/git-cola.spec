@@ -1,6 +1,6 @@
 Name: git-cola
-Version: 3.6
-Release: alt2
+Version: 3.8
+Release: alt1
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -32,7 +32,8 @@ and caffeine-inspired features.
 
 # fix python shebangs
 sed -i 's|/usr/bin/env python|%__python3|' $(find ./ -name '*.py')
-sed -i 's|/usr/bin/env python|%__python3|' share/git-cola/bin/git-xbase
+sed -i 's|/usr/bin/env python|%__python3|' bin/git-cola bin/git-cola-sequence-editor bin/git-dag contrib/travis-build
+sed -i 's|python|%__python3|' setup.cfg
 
 %prepare_sphinx3 share/doc/%name
 
@@ -42,19 +43,25 @@ sed -i 's|/usr/bin/env python|%__python3|' share/git-cola/bin/git-xbase
 %install
 %python3_install
 %find_lang %name
+# because executable script is not executable
+chmod +x %buildroot%python3_sitelibdir/cola/widgets/spellcheck.py
+chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
 
 %files -f %name.lang
 %doc COPYING COPYRIGHT README.md
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/git-cola
-%_datadir/appdata/git-cola.appdata.xml
-%_datadir/appdata/git-dag.appdata.xml
+%_datadir/metainfo/git-cola.appdata.xml
+%_datadir/metainfo/git-dag.appdata.xml
 %_docdir/git-cola
 #_man1dir/*
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 15 2020 Leontiy Volodin <lvol@altlinux.org> 3.8-alt1
+- New version 3.8.
+
 * Fri Feb 07 2020 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt2
 - NMU: build truly python3
 
