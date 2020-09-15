@@ -1,20 +1,23 @@
 %define        pkgname hiera
 
-Name: 	       ruby-%pkgname
+Name:          gem-%pkgname
 Version:       3.6.0
-Release:       alt0.1
+Release:       alt1
 Summary:       A simple pluggable Hierarchical Database
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://projects.puppetlabs.com/projects/hiera/
-%vcs           https://github.com/puppetlabs/hiera.git
-Packager:      Andrey Cherepanov <cas@altlinux.org>
+Vcs:           https://github.com/puppetlabs/hiera.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
-%add_findreq_skiplist *.erb
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-%gemname < %EVR
+Provides:      ruby-%gemname = %EVR
 
 %description
 A simple pluggable Hierarchical Database.
@@ -81,10 +84,15 @@ Documentation files for %gemname gem.
 %files         doc
 %ruby_gemdocdir
 
+
 %changelog
+* Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt1
+- ^ 3.6.0pre -> 3.6.0
+- ! spec tags
+
 * Fri Jul 12 2019 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt0.1
-- Bump to 2.6.0 pre
-- Fix spec
+- ^ 3.5.0 -> 3.6.0 pre
+- ! spec
 
 * Fri Feb 22 2019 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
 - Bump to 3.5.0;

@@ -1,18 +1,23 @@
 %define        pkgname rubytree
 
-Name:          %pkgname
+Name:          gem-%pkgname
 Version:       1.0.1
 Release:       alt1
 Summary:       Simple implementation of the generic Tree data structure
 Group:         Development/Ruby
 License:       MIT
 Url:           http://rubytree.anupamsg.me/
-%vcs           https://github.com/evolve75/RubyTree.git
+Vcs:           https://github.com/evolve75/RubyTree.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(structured_warnings)
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     %gemname < %EVR
+Provides:      %gemname = %EVR
 
 %description
 Rubytree is a simple implementation of the generic Tree data structure.
@@ -20,7 +25,7 @@ This implementation is node-centric, where the individual nodes on the
 tree are the primary objects and drive the structure.
 
 
-%package       -n gem-%pkgname-doc
+%package       doc
 Summary:       Documentation files for %gemname gem
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
@@ -28,10 +33,10 @@ BuildArch:     noarch
 Provides:      %pkgname-doc
 Obsoletes:     %pkgname-doc
 
-%description   -n gem-%pkgname-doc
+%description   doc
 Documentation files for %gemname gem.
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
+%description   doc -l ru_RU.UTF8
 Файлы сведений для самоцвета %gemname.
 
 
@@ -39,7 +44,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --join=lib:bin
+%ruby_build
 
 %install
 %ruby_install
@@ -52,16 +57,17 @@ Documentation files for %gemname gem.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n gem-%pkgname-doc
+%files         doc
 %ruby_gemdocdir
 
 
 %changelog
-* Tue Sep 08 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
-- New version.
+* Tue Sep 08 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
+- ^ 1.0.0 -> 1.0.1
+- ! spec tags
 
 * Thu Jul 18 2019 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt2
-- Use Ruby Policy 2.0
+- > Ruby Policy 2.0
 
 * Tue Oct 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - New version.

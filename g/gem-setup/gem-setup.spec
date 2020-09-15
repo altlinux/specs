@@ -2,12 +2,12 @@
 
 Name:          gem-%pkgname
 Version:       5.999.4
-Release:       alt3
+Release:       alt4
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
 Url:           https://github.com/rubyworks/setup
-Vcs:           https://github.com/majioa/setup.git
+# Vcs:           https://github.com/majioa/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -61,14 +61,18 @@ Documentation files for %gemname gem.
 %prep
 %setup
 %patch -p1
+sed "/version/i \$:.unshift('/usr/src/RPM/BUILD/gem-setup-5.999.4/lib')" -i bin/setup.rb
 
 %build
+export PATH=$PATH:$(pwd)/bin
 %__setup_rb build --use=setup --alias=setup-rb
 
 %install
+export PATH=$PATH:$(pwd)/bin
 %__setup_rb install --install_prefix=%buildroot
 
 %check
+export PATH=$PATH:$(pwd)/bin
 %__setup_rb test
 
 %files
@@ -85,6 +89,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt4
+- + using gut ls-files when no git app
+
 * Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 5.999.4-alt3
 - ! gemfile dep export in one line when dep name is the same
 - ! spec syntax

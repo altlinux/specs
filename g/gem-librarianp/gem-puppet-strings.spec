@@ -1,18 +1,21 @@
 %define        pkgname librarianp
 
 Name:          gem-%pkgname
-Version:       0.6.4
+Version:       1.0.0
 Release:       alt1
 Summary:       A Framework for Bundlers. Fork to support librarian-puppet
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/voxpupuli/librarian
-%vcs           https://github.com/voxpupuli/librarian.git
+Vcs:           https://github.com/voxpupuli/librarian.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 
 %description
 Librarian is a framework for writing bundlers, which are tools that resolve,
@@ -30,11 +33,15 @@ for Ruby gems that many modern Rails applications use.
 
 %package       doc
 Summary:       Documentation files for %gemname gem
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
 Group:         Development/Documentation
 BuildArch:     noarch
 
 %description   doc
 Documentation files for %gemname gem.
+
+%description   doc -l ru_RU.UTF8
+Файлы сведений для самоцвета %gemname.
 
 
 %prep
@@ -57,5 +64,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Wed Sep 16 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
+- ^ 0.6.4 -> 1.0.0
+- ! spec
+
 * Thu Jun 21 2019 Pavel Skrylev <majioa@altlinux.org> 0.6.4-alt1
 - Initial build for Sisyphus, packaged as a gem with usage Ruby Policy 2.0.
