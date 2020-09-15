@@ -3,7 +3,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -85,7 +85,7 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc COPYING* README.md
 %dir %_K5xdgconf/colors/
 %_K5i18n/countries/
 %_K5i18n/currency/
@@ -126,6 +126,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

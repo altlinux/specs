@@ -1,7 +1,7 @@
 %define rname kglobalaccel
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -75,7 +75,7 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 %dir %_K5data/kglobalaccel/
 
@@ -100,6 +100,9 @@ mkdir -p %buildroot/%_K5data/kglobalaccel/
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

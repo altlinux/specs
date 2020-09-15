@@ -1,7 +1,7 @@
 %define rname kdeclarative
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -26,7 +26,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-de
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-kpackage-devel
+BuildRequires: kf5-kpackage-devel kf5-knotifications-devel
 
 %description
 KDeclarative provides integration of QML and KDE work spaces.
@@ -84,7 +84,7 @@ KF5 library
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 
 %files
 %_K5bin/*
@@ -106,6 +106,9 @@ KF5 library
 %_K5lib/libKF5QuickAddons.so.*
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

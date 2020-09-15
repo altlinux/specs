@@ -1,7 +1,7 @@
 %define rname kquickcharts
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -67,7 +67,7 @@ Requires: %name-common = %version-%release
 %K5find_qtlang %name --all-name
 
 %files -f %name.lang
-%doc COPYING* README.md
+%doc LICENSES/* README.md
 %_K5qml/org/kde/quickcharts/
 
 %files devel
@@ -77,6 +77,9 @@ Requires: %name-common = %version-%release
 #%_K5lib/libkquickcharts.so.*
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

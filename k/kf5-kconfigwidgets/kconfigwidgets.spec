@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 %K5init altplace
 
@@ -114,7 +114,7 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 
 
 %files common -f %name.lang
-%doc COPYING.LIB README.md
+%doc LICENSES/* README.md
 %dir %_K5data/kconfigwidgets/
 %_datadir/qlogging-categories5/*.*categories
 %_K5i18n/*/kf5_entry.desktop
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 

@@ -10,7 +10,7 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.73.0
+Version: 5.74.0
 Release: alt1
 
 Group: Development/Other
@@ -69,13 +69,16 @@ fi
 
 %files
 %_datadir/ECM
-%doc README.rst COPYING-CMAKE-SCRIPTS
+%doc README.rst LICENSES/* README.md
 %if_enabled doc
 %doc %_docdir/ECM
 %doc %_man7dir/*
 %endif
 
 %changelog
+* Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
+- new version
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.73.0-alt1
 - new version
 
