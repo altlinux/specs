@@ -2,7 +2,7 @@
 
 Name: translate-toolkit
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Tools and API for translation and localization engineering.
 
@@ -82,6 +82,9 @@ install -d %buildroot%_man1dir
 install -pm 644 docs/_build/man/*.gz %buildroot%_man1dir
 rm -fr %buildroot%python3_sitelibdir/%modname/docs/
 
+# mercurial is an optional dependency. Code could work without it
+%filter_from_requires /mercurial/d
+
 %files
 %doc docs/{features,history,license}.rst
 %{_bindir}/*
@@ -95,6 +98,9 @@ rm -fr %buildroot%python3_sitelibdir/%modname/docs/
 %doc docs/_build/html
 
 %changelog
+* Tue Sep 15 2020 Vladimir Didenko <cow@altlinux.ru> 3.0.0-alt2
+- Don't require mercurial (closes: #38939)
+
 * Tue Jun 23 2020 Vladimir Didenko <cow@altlinux.ru> 3.0.0-alt1
 - New version
 
