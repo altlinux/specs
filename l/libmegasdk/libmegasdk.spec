@@ -1,5 +1,5 @@
 Name: libmegasdk
-Version: 3.6.8
+Version: 3.7.3b
 Release: alt1
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
@@ -130,6 +130,9 @@ cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 %_bindir/megasimplesync
 
 %changelog
+* Tue Sep 15 2020 Vitaly Lipatov <lav@altlinux.ru> 3.7.3b-alt1
+- new version 3.7.3b (with rpmrb script)
+
 * Sun Mar 08 2020 Vitaly Lipatov <lav@altlinux.ru> 3.6.8-alt1
 - new version 3.6.8
 

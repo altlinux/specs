@@ -1,5 +1,5 @@
 Name: megasync
-Version: 4.3.1.0
+Version: 4.3.3.0
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -25,11 +25,11 @@ BuildRequires: cmake
 
 BuildRequires: zlib-devel
 
-BuildRequires: libmegasdk-devel >= 3.6 libmegasdk-devel-qt5
+BuildRequires: libmegasdk-devel >= 3.7 libmegasdk-devel-qt5
 
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: fontconfig glib2-devel glibc-devel-static libGL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libdc1394-22 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-sql libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libsodium-devel libstdc++-devel libswscale-devel libvpx-devel libwayland-client libwayland-server python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-svg-devel
+BuildRequires: gcc-c++ qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-svg-devel qt5-x11extras-devel
 
 # instead of internal fonts OpenSans, SourceSansPro
 Requires: fonts-ttf-open-sans fonts-otf-adobe-source-sans-pro
@@ -84,6 +84,9 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Sep 15 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.3.0-alt1
+- new version 4.3.3.0 (with rpmrb script)
+
 * Sun Mar 29 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.1.0-alt1
 - new version 4.3.1.0 (with rpmrb script)
 
