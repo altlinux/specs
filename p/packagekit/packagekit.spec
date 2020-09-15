@@ -2,7 +2,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.0
+Version:   1.2.1
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -252,6 +252,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
+- Updated to upstream version 1.2.1.
+
 * Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
 - Updated to upstream version 1.2.0.
 
