@@ -1,8 +1,8 @@
 %define pypi_name pecan
 
 Name: python3-module-%pypi_name
-Version: 1.3.3
-Release: alt2
+Version: 1.4.0
+Release: alt1
 Summary: A lean WSGI object-dispatching web framework
 Group: Development/Python3
 
@@ -67,6 +67,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Tue Sep 15 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Build new version.
+
 * Tue Jul 28 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt2
 - Drop python2 support.
 
