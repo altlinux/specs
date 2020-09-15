@@ -3,7 +3,7 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: OCaml record fields as first class values
 License: MIT
@@ -14,8 +14,7 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires: dune ocaml-base-devel
 Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
-
+BuildPreReq: rpm-build-ocaml >= 1.4
 Source:  %modulename-%version.tar
 
 %description
@@ -34,30 +33,21 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
+%files -f ocaml-files.runtime
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Sat Sep 12 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- built with rpm-build-ocaml-1.4 to resolve requirements in cohttp devel package
+
 * Thu Jul 30 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
