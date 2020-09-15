@@ -1,6 +1,6 @@
 Name: openbabel
 Version: 2.4.1
-Release: alt6
+Release: alt7
 
 Summary: Chemistry software file format converter
 License: GPL
@@ -16,7 +16,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: cmake-modules fontconfig libcloog-isl4 libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server pkg-config python-base zlib-devel
-BuildRequires: cmake eigen3 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
+BuildRequires: cmake eigen3 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel xml-utils
+BuildRequires: rpm-build-python3 python3-devel
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
 Summary(uk_UA.UTF-8): Конвертор біохімічних форматів даних
@@ -46,9 +47,9 @@ Summary: Development tools for programs which will use the lib%name library
 Group: Development/C++
 Requires: lib%name = %version-%release
 
-%package -n python-module-%name
-Summary: Python bindings for Open Babel
-Group: Development/Python
+%package -n python3-module-%name
+Summary: Python 3 bindings for Open Babel
+Group: Development/Python3
 Requires: lib%name = %version-%release
 
 %if_enabled static
@@ -72,7 +73,7 @@ If you are going to develop programs which will use this library
 you should install lib%name-devel.  You'll also need to have the
 lib%name package installed.
 
-%description -n python-module-%name
+%description -n python3-module-%name
 Python bindings for Open Babel.
 
 %prep
@@ -80,7 +81,6 @@ Python bindings for Open Babel.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
 %add_optflags -I%_includedir/eigen3
@@ -88,7 +88,12 @@ echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 # see also mcst#3675; there *is* -fPIC there
 %add_optflags -Wl,--no-warn-shared-textrel
 %endif
-%cmake_insource
+%cmake_insource \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DBUILD_GUI:BOOL=ON \
+    -DPYTHON_BINDINGS:BOOL=ON \
+    -DPYTHON_EXECUTABLE=%__python3
+
 %make_build VERBOSE=1
 
 %install
@@ -119,8 +124,8 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %_pkgconfigdir/*.pc
 %_libdir/cmake/openbabel2
 
-%files -n python-module-%name
-%python_sitelibdir/*
+%files -n python3-module-%name
+%python3_sitelibdir/*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -131,6 +136,9 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 # - consider building with external libinchi and fedora patches
 
 %changelog
+* Sat Sep 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt7
+- build python 3 subpackage instead of python 2 one
+
 * Sun Sep 22 2019 Michael Shigorin <mike@altlinux.org> 2.4.1-alt6
 - E2K: link-time workaround for mcst#3675
 - minor spec cleanup
