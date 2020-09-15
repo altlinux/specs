@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.2
-Release: alt3
+Release: alt4
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -143,6 +143,7 @@ Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
+Conflicts: altlinux-release-sisyphus altlinux-release-p9
 
 %description release
 %distro_name release file.
@@ -347,6 +348,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
+- conflicts on altlinux-release-{sisyphus,p9} added
+
 * Fri Sep  4 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt3
 - mate-settings resurrected
 - obsoletes fixed
