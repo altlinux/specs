@@ -35,7 +35,7 @@
 %define ds_version 1.4.1.6
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
-%define pki_version 10.7.3
+%define pki_version 10.9.2
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
 %define slapi_nis_version 0.56.3
@@ -43,8 +43,8 @@
 %define openldap_version 2.4.47-alt2
 
 Name: freeipa
-Version: 4.8.8
-Release: alt2
+Version: 4.8.9
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -174,7 +174,6 @@ Requires: %name-client = %EVR
 Requires: acl
 Requires: gssproxy >= %gssproxy_version
 Requires: sssd-dbus >= %sssd_version
-Requires: selinux-policy-alt
 Requires: pki-ca >= %pki_version
 Requires: pki-kra >= %pki_version
 Requires: certmonger >= %certmonger_version
@@ -201,8 +200,6 @@ Requires: python3-module-gssapi
 Requires: python3-module-systemd
 Requires: slapi-nis >= %slapi_nis_version
 
-# upgrade path from monolithic -server to -server + -server-dns
-Obsoletes: %name-server <= 4.2.0
 # Versions of nss-pam-ldapd < 0.8.4 require a mapping from uniqueMember to
 # member.
 Conflicts: nss-ldapd < 0.8.4
@@ -270,9 +267,6 @@ Requires: bind >= %bind_version
 Requires: bind-utils >= %bind_version
 Requires: opendnssec
 
-# upgrade path from monolithic -server to -server + -server-dns
-Obsoletes: %name-server <= 4.2.0
-
 %description server-dns
 IPA integrated DNS server with support for automatic DNSSEC signing.
 Integrated DNS server is BIND 9. OpenDNSSEC provides key management.
@@ -314,7 +308,6 @@ Requires: certmonger >= %certmonger_version
 Requires: nss-utils
 Requires: bind-utils
 Requires: oddjob-mkhomedir
-Requires: policycoreutils
 Requires: python3-module-gssapi
 Requires: python3-module-ipaclient = %EVR
 Requires: python3-module-ldap >= %python_ldap_version
@@ -850,7 +843,6 @@ fi
 %attr(755,root,root) %plugin_dir/libipa_uuid.so
 %attr(755,root,root) %plugin_dir/libipa_modrdn.so
 %attr(755,root,root) %plugin_dir/libipa_lockout.so
-%attr(755,root,root) %plugin_dir/libipa_cldap.so
 %attr(755,root,root) %plugin_dir/libipa_dns.so
 %attr(755,root,root) %plugin_dir/libipa_range_check.so
 %attr(755,root,root) %plugin_dir/libipa_otp_counter.so
@@ -902,6 +894,7 @@ fi
 %_datadir/ipa/kdcproxy.wsgi
 %_datadir/ipa/ipaca*.ini
 %_datadir/ipa/*.ldif
+%exclude %_datadir/ipa/ipa-cldap-conf.ldif
 %_datadir/ipa/*.uldif
 %_datadir/ipa/*.template
 %_datadir/ipa/advise/
@@ -965,6 +958,8 @@ fi
 %_sbindir/ipa-adtrust-install
 %_datadir/ipa/smb.conf.empty
 %attr(755,root,root) %_libdir/samba/pdb/ipasam.so
+%attr(755,root,root) %plugin_dir/libipa_cldap.so
+%_datadir/ipa/ipa-cldap-conf.ldif
 %_man1dir/ipa-adtrust-install.1*
 %_sysconfdir/dbus-1/system.d/oddjob-ipa-trust.conf
 %_sysconfdir/oddjobd.conf.d/oddjobd-ipa-trust.conf
@@ -1010,7 +1005,8 @@ fi
 %attr(644,root,root) %_unitdir/ipa-epn.service
 %attr(644,root,root) %_unitdir/ipa-epn.timer
 %dir %attr(0755,root,root) %_sysconfdir/ipa/epn
-%attr(644,root,root) %_sysconfdir/ipa/epn/expire_msg.template
+%attr(600,root,root) %config(noreplace) %_sysconfdir/ipa/epn.conf
+%attr(644,root,root) %config(noreplace) %_sysconfdir/ipa/epn/expire_msg.template
 
 %files client-automount
 %_sbindir/ipa-client-automount
@@ -1053,6 +1049,10 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Fri Aug 21 2020 Stanislav Levin <slev@altlinux.org> 4.8.9-alt1
+- 4.8.8 -> 4.8.9.
+- Made SELinux optional (closes: #38788).
+
 * Tue Aug 04 2020 Stanislav Levin <slev@altlinux.org> 4.8.8-alt2
 - Fixed FTBFS(new pylint 2.5.3).
 - Fixed group ownership of pki instance nssdb.
