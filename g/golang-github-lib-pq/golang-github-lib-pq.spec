@@ -3,7 +3,7 @@
 %global goipath         github.com/lib/pq
 
 Name: golang-github-lib-pq
-Version: 1.3.0
+Version: 1.8.0
 Release: alt1
 Summary: Pure Go postgres driver for database/sql
 Group: Development/Other
@@ -61,9 +61,12 @@ export GOPATH="%go_path"
 %endif
 
 %files devel
-%doc LICENSE.md example CONTRIBUTING.md README.md TESTS.md certs-README
+%doc LICENSE.md example README.md TESTS.md
 %go_path/src/%goipath
 
 %changelog
+* Tue Sep 15 2020 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Tue Jun 02 2020 Leontiy Volodin <lvol@altlinux.org> 1.3.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
