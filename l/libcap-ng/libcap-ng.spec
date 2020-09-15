@@ -1,5 +1,5 @@
 Name: libcap-ng
-Version: 0.7.10
+Version: 0.7.11
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -100,6 +100,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 15 2020 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
+- 0.7.11
+
 * Thu Oct 03 2019 Anton Farygin <rider@altlinux.ru> 0.7.10-alt1
 - new version
 - removed python-2 support
