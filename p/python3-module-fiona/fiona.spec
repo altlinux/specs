@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 1.8.13
+Version: 1.8.17
 Release: alt1
 Summary: Fiona reads and writes spatial data files
 License: BSD
@@ -111,6 +111,9 @@ python3 setup.py test
 %doc docs/_build/html docs/*.txt
 
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.17-alt1
+- Automatically updated to 1.8.17.
+
 * Thu Mar 19 2020 Grigory Ustinov <grenka@altlinux.org> 1.8.13-alt1
 - Build new version.
 - Add conflict on python-module-fiona (Closes: #37383).
