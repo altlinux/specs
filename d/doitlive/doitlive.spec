@@ -1,6 +1,6 @@
 Name:    doitlive
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: Because sometimes you need to do it live
 License: MIT
@@ -11,6 +11,9 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
+
+%add_findreq_skiplist  %python3_sitelibdir/%name/ipython.py
+%add_findprov_skiplist %python3_sitelibdir/%name/ipython.py
 
 BuildArch: noarch
 
@@ -34,6 +37,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3-alt2
+- Updated provides and requires due to prompt_toolkit update.
+
 * Thu Mar 01 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.3-alt1
 - new version 3.0.3
 

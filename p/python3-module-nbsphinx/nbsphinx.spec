@@ -1,22 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname nbsphinx
 
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.2.15
-Release: alt2
+Version: 0.7.1
+Release: alt1
 Summary: Jupyter Notebook Tools for Sphinx
-
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
 Url: http://nbsphinx.rtfd.io/
+
+BuildArch: noarch
 
 # https://github.com/spatialaudio/nbsphinx.git
 Source: %name-%version.tar
 
-# https://github.com/spatialaudio/nbsphinx/issues/24
-Patch0: %oname-fedora-ipython-console-highlighting.patch
+# Fedora patch
+Patch0: 0001-Allow-errors-and-add-a-note-in-one-doc-notebook.patch
 Patch1: %oname-%version-alt-docversion.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -78,6 +80,9 @@ rm -rf html/{.doctrees,.buildinfo,conf.py}
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1
+- Updated to upstream version 0.7.1.
+
 * Thu Apr 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.15-alt2
 - Build for python2 disabled.
 

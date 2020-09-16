@@ -1,13 +1,12 @@
-# %%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 %define oname ptpython
 
 Name: %{oname}3
-Version: 0.41
-Release: alt3
-
+Version: 3.0.5
+Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/ptpython/
 
@@ -15,10 +14,10 @@ BuildArch: noarch
 
 # https://github.com/jonathanslenders/ptpython.git
 Source: %name-%version.tar
-Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-prompt_toolkit
+BuildRequires: python3(pygments)
 
 %py3_requires  IPython jedi
 
@@ -28,7 +27,6 @@ library.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %python3_build_debug
@@ -41,11 +39,16 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 tests/run_tests.py -v
 
 %files
+%doc LICENSE
 %doc CHANGELOG *.rst
-%_bindir/*3
-%python3_sitelibdir/*
+%_bindir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Tue Sep 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.5-alt1
+- Updated to upstream version 3.0.5.
+
 * Wed Apr 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.41-alt3
 - Build for python2 disabled.
 

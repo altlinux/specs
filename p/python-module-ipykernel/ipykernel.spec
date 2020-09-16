@@ -1,12 +1,12 @@
 %define oname ipykernel
 
-%def_with python3
+%def_without python3
 #def_disable check
 %def_with bootstrap
 
 Name: python-module-%oname
 Version: 4.6.1
-Release: alt4
+Release: alt5
 Summary: IPython Kernel for Jupyter
 License: BSD
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.1-alt5
+- Rebuilt without python-3.
+
 * Wed Jan 30 2019 Stanislav Levin <slev@altlinux.org> 4.6.1-alt4
 - Fixed testing (applied upstream patches for support for tornado5,
   closes: #35981).

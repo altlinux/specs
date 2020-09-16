@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname jupyter_core
 
-%def_with python3
+%def_without python3
 %def_enable check
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt2
+Release: alt3
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
@@ -138,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt3
+- Disabled build for python-3.
+
 * Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
 - Updated build dependencies.
 
