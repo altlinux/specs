@@ -2,7 +2,7 @@
 %define sover %somver.3.2
 Name: spai
 Version: 3.2
-Release: alt7
+Release: alt8
 Summary: SParse Approximate Inverse Preconditioner
 License: GPL v2
 Group: Sciences/Mathematics
@@ -55,8 +55,6 @@ Summary: Development files of SPAI
 Group: Development/Other
 Requires: %name = %version-%release
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 Given a sparse matrix A the SPAI Algorithm computes a sparse approximate inverse
@@ -133,6 +131,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 3.2-alt8
+- Fixed FTBFS.
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt7
 - Built with OpenBLAS instead of GotoBLAS2
 
