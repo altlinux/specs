@@ -1,9 +1,7 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
 %define sover 1
 Name: metis
 Version: 5.1.0
-#Release: alt1
+Release: alt2
 Summary: Family of Multilevel Partitioning Algorithms
 License: GPL
 Group: Sciences/Mathematics
@@ -35,8 +33,6 @@ This package contains shared library of METIS.
 Summary: Development files of METIS
 Group: Development/C
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 METIS is a software package for partitioning unstructured graphs,
@@ -132,6 +128,9 @@ rm -fR %_libexecdir/metis
 %_datadir/%name
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt2
+- Fixed FTBFS.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.1.0-alt1.1
 - (AUTO) subst_x86_64.
 
