@@ -1,8 +1,8 @@
 Name: sispmctl
 Version: 4.8
-Release: alt1
+Release: alt2
 
-Summary: GEMBIRD Silver Shield PM Control
+Summary: Gembird Silver Shield PM USB PDU control
 License: GPLv2+
 Group: System/Kernel and hardware
 
@@ -21,6 +21,8 @@ enabling the use of the GEMBIRD (m)SiS-PM device family
 (or a Revolt Power Switch) under Linux.
 
 Add users who need to control the device to _sispm group.
+
+See also egctl package for Gembird's LAN/WLAN PDU support.
 
 %prep
 %setup
@@ -53,10 +55,13 @@ rm -rf %buildroot%_defaultdocdir/%name
 # - darktemplar@ for explaining me a silly lapse with the shared library
 
 %changelog
+* Wed Sep 16 2020 Michael Shigorin <mike@altlinux.org> 4.8-alt2
+- refer to egctl for *LAN devices
+- fix %%changelog
+
 * Sat Sep 12 2020 Michael Shigorin <mike@altlinux.org> 4.8-alt1
 - new version (watch file uupdate)
 - %%autoreconf to get rid of rpath
-- shared library subpackage
 
 * Mon Apr 13 2020 Michael Shigorin <mike@altlinux.org> 4.7-alt1
 - new version (watch file uupdate)
