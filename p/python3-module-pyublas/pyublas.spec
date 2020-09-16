@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname pyublas
 
 %def_without docs
 
 Name: python3-module-%oname
 Version: 2017.1
-Release: alt1
+Release: alt2
 
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
@@ -13,6 +15,8 @@ Url: http://mathema.tician.de/software/pyublas
 
 # http://git.tiker.net/trees/pyublas.git
 Source: %name-%version.tar
+
+Patch1: %oname-%version-alt-armh-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ boost-python3-devel libnumpy-py3-devel
@@ -60,6 +64,7 @@ This package contains pickles for PyUblas.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's|#!.*python|&3|' configure.py
 sed -i 's|sphinx-build|&-3|' doc/Makefile
@@ -105,6 +110,9 @@ rm -fR %_includedir/pyublas
 %python3_sitelibdir/pyublas/include
 
 %changelog
+* Wed Sep 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.1-alt2
+- Fixed build for armh.
+
 * Thu Mar 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 2017.1-alt1
 - Version updated to 2017.1
 - build for python2 disabled.
