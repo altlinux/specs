@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 0.9.0
-Release: alt2
+Version: 0.10.2
+Release: alt1
 Summary: Image IO for fable
 License: MIT
 Group: Development/Python3
@@ -71,6 +71,9 @@ python3 setup.py test
 %python3_sitelibdir/%oname/test
 
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
+- Automatically updated to 0.10.2.
+
 * Thu Apr 11 2019 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt2
 - Rebuild for python3.7.
 
