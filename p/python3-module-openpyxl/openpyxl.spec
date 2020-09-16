@@ -1,34 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define oname openpyxl
-%def_with python3
 
-Name:    python-module-%oname
+Name:    python3-module-%oname
 Version: 2.6.2
-Release: alt1
+Release: alt2
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
-Group:   Development/Python
+Group:   Development/Python3
 Url:     http://openpyxl.readthedocs.io
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 #https://bitbucket.org/openpyxl/openpyxl/get/2.6.1.tar.gz
-Source0: %{oname}-%{version}.tar.gz
-
+Source0: %oname-%version.tar.gz
 
 BuildArch: noarch
 
-%py_requires jdcal json et_xmlfile
+%py3_requires jdcal et_xmlfile
+%py3_provides %oname
 
-BuildRequires: python-module-jdcal
-BuildRequires: python-module-setuptools
-BuildRequires: python-modules-json
-BuildRequires: python-module-memory_profiler
-BuildRequires: python-module-et_xmlfile
-BuildRequires: python-module-numpy
-BuildRequires: python-module-pandas
-BuildRequires: python-module-Pillow
-
-%if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-test
 BuildRequires: python3-module-jdcal
@@ -38,9 +27,6 @@ BuildRequires: python3-module-et_xmlfile
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-pandas
 BuildRequires: python3-module-Pillow
-%endif
-
-%py_provides %oname
 
 %description
 openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
@@ -48,62 +34,26 @@ openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
 It was born from lack of existing library to read/write natively from
 Python the Office Open XML format.
 
-%package -n python3-module-%oname
-Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
-Group: Development/Python3
-%py3_provides %oname
-%py3_requires jdcal et_xmlfile
-
-%description -n python3-module-%oname
-openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
-
-It was born from lack of existing library to read/write natively from
-Python the Office Open XML format.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%setup -n %{oname}-%{version}
 
 %build
-%python_build
-
-%if_with python3
-pushd ../python3
 %python3_build
-popd
-%endif
 
 %install
-%python_install
-
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-%endif
 
 %check
-py.test
-%if_with python3
-pushd ../python3
 py.test3
-popd
-%endif
 
 %files
 %doc *.rst
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt2
+- Drop python2 support.
+
 * Mon Aug 26 2019 Georgy A Bystrenin <gkot@altlinux.org> 2.6.2-alt1
 - New version 2.6.2
 - Add test
