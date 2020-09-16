@@ -4,7 +4,7 @@
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.9
+%define major 14.11
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -99,6 +99,11 @@ BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 BuildRequires: libcares-devel >= 1.11.0
 
 BuildRequires: curl
+
+%if_without npm
+Requires: npm >= %npmver
+%endif
+
 Provides: nodejs(engine) = %version
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
@@ -109,7 +114,7 @@ Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
 Provides: nodejs(napi) = %{napi}
 
-Provides: bundled(llhttp) = 2.0.4
+Provides: bundled(llhttp) = 2.1.2
 
 # /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
 %ifarch %ix86
@@ -367,6 +372,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Sep 16 2020 Vitaly Lipatov <lav@altlinux.ru> 14.11.0-alt1
+- new version 14.11.0 (with rpmrb script)
+- CVE-2020-8251: Denial of Service by resource exhaustion CWE-400 due to unfinished HTTP/1.1 requests (Critical)
+- CVE-2020-8201: HTTP Request Smuggling due to CR-to-Hyphen conversion (High)
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 14.9.0-alt1
 - new version 14.9.0 (with rpmrb script)
 - libuv >= 1.39.0
