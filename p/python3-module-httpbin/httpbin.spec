@@ -1,11 +1,11 @@
 %define oname httpbin
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: HTTP Request and Response Service
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/httpbin/
 # https://github.com/postmanlabs/httpbin
 BuildArch: noarch
@@ -14,25 +14,13 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-pytest
-BuildPreReq: python3-module-flask-common
 BuildPreReq: python3-module-flask
 BuildPreReq: python3-module-six
 BuildPreReq: python3-module-werkzeug
 
-%description
-Testing an HTTP Library can become difficult sometimes. PostBin.org is
-fantastic for testing POST requests, but not much else. This exists to
-cover all kinds of HTTP scenarios. Additional endpoints are being
-considered.
-
-All endpoint responses are JSON-encoded.
-
-%package -n python3-module-%oname
-Summary: HTTP Request and Response Service
-Group: Development/Python3
 %py3_provides %oname
 
-%description -n python3-module-%oname
+%description
 Testing an HTTP Library can become difficult sometimes. PostBin.org is
 fantastic for testing POST requests, but not much else. This exists to
 cover all kinds of HTTP scenarios. Additional endpoints are being
@@ -49,12 +37,15 @@ All endpoint responses are JSON-encoded.
 %install
 %python3_install
 
-%files -n python3-module-%oname
+%files
 %doc AUTHORS *.md LICENSE
 %python3_sitelibdir/*
 
-
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt2
+- Fixed FTBFS.
+- Fixed packaging.
+
 * Tue Oct 01 2019 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
 - 0.7.0
 - built without python-2.7 support
