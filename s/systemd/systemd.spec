@@ -2,6 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
+%add_findreq_skiplist %_prefix/lib/kernel/install.d/*
 %add_findreq_skiplist %_unitdir/local.service
 %add_findreq_skiplist %_unitdir/rc-local.service
 %add_findreq_skiplist %_unitdir/quotaon.service
@@ -77,7 +78,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1478,9 +1479,13 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %_defaultdocdir/%name-%version
 %_logdir/README
 # may be need adapt for ALTLinux?
-%exclude /usr/lib/kernel
-%exclude %_bindir/kernel-install
-%exclude %_man8dir/kernel-install.*
+%_bindir/kernel-install
+%_man8dir/kernel-install.*
+%dir %_sysconfdir/kernel
+%dir %_sysconfdir/kernel/install.d
+%dir %_prefix/lib/kernel
+%dir %_prefix/lib/kernel/install.d
+%_prefix/lib/kernel/install.d/*
 
 %files -n libsystemd
 /%_lib/libsystemd.so.*
@@ -1943,6 +1948,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Wed Sep 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.5-alt1
+- 246.5
+
 * Tue Sep 08 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.4-alt1
 - 246.4
 
