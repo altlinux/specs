@@ -1,11 +1,14 @@
 Name: python-module-PySide2
 Version: 5.15.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python
 License: BSD-3-Clause and GPL-2.0 and GPL-3.0 and LGPL-3.0
 URL: https://wiki.qt.io/Qt_for_Python
+
+%filter_from_requires /python-base/d
+%filter_from_requires /^python2.7(signature_bootstrap)/d
 
 # Download from https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-$version-src/
 Source: pyside-setup-everywhere-src-%version.tar
@@ -44,8 +47,6 @@ BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-scxml
 BuildRequires: qt5-declarative-devel
-
-%filter_from_requires /^python2.7(signature_bootstrap)/d
 
 %description
 PySide2 is the official Python module from the Qt for Python project,
@@ -177,6 +178,9 @@ done
 %python_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Wed Sep 16 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt2
+- update requires
+
 * Tue Aug 11 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.0-alt1
 - new version
 
