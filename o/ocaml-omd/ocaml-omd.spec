@@ -2,7 +2,7 @@
 %define libname omd
 Name: ocaml-%libname
 Version: 1.3.1
-Release: alt2
+Release: alt3
 Summary: OMD: extensible Markdown library and tool in OCaml
 Group: Development/ML
 License: ISC
@@ -42,7 +42,7 @@ ocaml setup.ml -build
 
 %install
 export DESTDIR=$RPM_BUILD_ROOT
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%ocamldir
+export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%_ocamldir
 mkdir -p $OCAMLFIND_DESTDIR
 ocaml setup.ml -install
 
@@ -54,17 +54,21 @@ ocaml setup.ml -install
 %_libdir/ocaml/%libname/*.cmi
 %_libdir/ocaml/%libname/*.cma
 %_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/*.annot
 
 %files devel
 %_libdir/ocaml/%libname/*.cmt
 %_libdir/ocaml/%libname/*.cmti
+%_libdir/ocaml/%libname/*.cmxa
+%_libdir/ocaml/%libname/*.cmxs
 %_libdir/ocaml/%libname/*.cmx
 %_libdir/ocaml/%libname/*.ml*
 
 %changelog
+* Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 1.3.1-alt3
+- adaptation for rpm-build-ocaml-1.4
+- devel parts moved to devel package
+
 * Fri Aug 02 2019 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2
 - rebuilt with ocaml-4.08
 
