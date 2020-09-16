@@ -1,5 +1,5 @@
 Name: eiskaltdcpp
-Version: 2.2.10.0.689.git0a574792
+Version: 2.2.10.0.691.git57ccdeb
 Release: alt1
 
 Summary: EiskaltDC++ - Direct Connect client
@@ -172,6 +172,9 @@ command line interface for XML-RPC Daemon
 %_datadir/%name/cli
 
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.10.0.691.git57ccdeb-alt1
+- Build from last commit (Closes: #36782).
+
 * Thu Jul 02 2020 Grigory Ustinov <grenka@altlinux.org> 2.2.10.0.689.git0a574792-alt1
 - Build from last commit.
 
