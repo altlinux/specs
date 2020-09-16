@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 Summary: etcd3 gateway Python Client
 
@@ -86,6 +86,9 @@ py.test-3
 %doc etcd3gw/examples
 
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.2.6-alt1
+- Build new version.
+
 * Thu May 21 2020 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt1
 - Build new version.
 - Enable check.
