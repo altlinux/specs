@@ -13,7 +13,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc2.8.c27fe12f
+Release: alt0.rc3
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -29,6 +29,8 @@ Source5: ntirpc-1.5.zip
 # Patch: %name-%version.patch
 
 Conflicts: moosefs
+
+ExcludeArch: armh
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): unzip
@@ -408,6 +410,9 @@ popd
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Wed Sep 16 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc3
+- 3.13.0-rc3
+
 * Wed Apr 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc2.8.c27fe12f
 - update to c27fe12fd0ec2dc5613d98cdc78423a6b788973e from upstream
 - changed python2 to python3
