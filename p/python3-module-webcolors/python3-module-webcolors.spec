@@ -1,8 +1,8 @@
 %define  modulename webcolors
 
 Name:    python3-module-%modulename
-Version: 1.10
-Release: alt2
+Version: 1.11.1
+Release: alt1
 
 Summary: Library for working with HTML/CSS color formats in Python
 
@@ -37,6 +37,9 @@ Source:  %modulename-%version.tar
 %doc *.rst
 
 %changelog
+* Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 1.11.1-alt1
+- Automatically updated to 1.11.1.
+
 * Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10-alt2
 - Porting on Python3.
 
