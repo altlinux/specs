@@ -3,7 +3,7 @@
 %define rname chaco2
 Name: chaco
 Version: 2.2
-Release: alt7
+Release: alt8
 Summary: Matrix Orders, Colorings, and Partitionings
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -72,8 +72,6 @@ This package contains a Chaco shared library.
 Summary: Chaco graphs partitioning development library
 Group: Development/C
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 Chaco contains a wide variety of algorithms and options, many of which were
@@ -88,8 +86,6 @@ This package contains a Chaco development library.
 %package -n lib%name-devel-static
 Summary: Chaco graphs partitioning static library
 Group: Development/C
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
 
 %description -n lib%name-devel-static
 Chaco contains a wide variety of algorithms and options, many of which were
@@ -157,6 +153,9 @@ popd
 #_libdir/*.a
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.2-alt8
+- Fixed FTBFS.
+
 * Tue Nov 29 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt7
 - Renamed libchaco.so -> libchaco2.so
 - Disabled devel-static package
