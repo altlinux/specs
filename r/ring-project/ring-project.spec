@@ -29,7 +29,7 @@
 
 Name: ring-project
 Version: 20190814
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -44,6 +44,7 @@ Source: %name-%version.tar
 Patch1: alt-fix-linking.patch
 Patch2: alt-pcre-include.patch
 Patch3: alt-armh.patch
+Patch4: alt-upnp-drop-obsolete-init.patch
 
 BuildRequires(pre): rpm-build-ubt
 %IF_ver_gteq %ubt_id M90
@@ -147,6 +148,7 @@ developing applications that use %name.
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 # don't build internal vpx
 rm -rf daemon/contrib/src/vpx
@@ -293,6 +295,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir/
 #%_libdir/libring.a
 
 %changelog
+* Wed Sep 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 20190814-alt2
+- rebuilt with libupnp-1.14
+
 * Fri Aug 16 2019 Sergey V Turchin <zerg@altlinux.org> 20190814-alt1
 - new version
 

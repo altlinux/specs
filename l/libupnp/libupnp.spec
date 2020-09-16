@@ -1,16 +1,16 @@
-%define soname_upnp 16
+%define soname_upnp 17
 %define soname_ixml 11
 
 Name: libupnp
-Version: 1.12.1
+Version: 1.14.0
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
 Group: System/Libraries
 Url: http://pupnp.sourceforge.net/
-# git-vcs: https://github.com/pupnp/pupnp.git
-Source: %name-%version.tar
+
+Source: %name-%version-%release.tar
 
 %define desc \
 The Linux SDK for UPnP Devices (libupnp) provides developers with an API \
@@ -70,6 +70,9 @@ applications using libupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.14.0-alt1
+- 1.14.0 released
+
 * Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
 - 1.12.1 released
 

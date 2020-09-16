@@ -1,22 +1,21 @@
-Name: libupnp6
-Version: 1.6.25
+Name: libupnp16
+Version: 1.12.1
 Release: alt2
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
-Group: System/Legacy libraries
-Url: http://upnp.sourceforge.net/
+Group: System/Libraries
+Url: http://pupnp.sourceforge.net/
+# git-vcs: https://github.com/pupnp/pupnp.git
+Source: %name-%version.tar
 
-Source: %name-%version-%release.tar
-
-Requires: libixml2 = %version-%release
-
-%description
-The Linux SDK for UPnP Devices (libupnp) provides developers with an API
-and open source code for building control points, devices, and bridges that
-are compliant with Version 1.0 of the Universal Plug and Play Device
+%define desc \
+The Linux SDK for UPnP Devices (libupnp) provides developers with an API \
+and open source code for building control points, devices, and bridges that \
+are compliant with Version 1.0 of the Universal Plug and Play Device \
 Architecture Specification.
 
+%description %desc
 UPnP is an architecture that enables discovery, event notification, and
 control of devices on a network, independent of operating system, programming
 language, or physical network connection. UPnP is based on common Internet
@@ -24,39 +23,29 @@ standards and specifications such as TCP/IP, HTTP, and XML. For detailed
 information about UPnP, including the UPnP Device Architecture Specification,
 please visit the UPnP Forum web site.
 
-%package -n libixml2
-Summary: Complementary library for Linux SDK for UPnP Devices
-Group: System/Legacy libraries
-Conflicts: libupnp < 1.6.7
-
-%description -n libixml2
-The Linux SDK for UPnP Devices (libupnp) provides developers with an API
-and open source code for building control points, devices, and bridges that
-are compliant with Version 1.0 of the Universal Plug and Play Device
-Architecture Specification.
-
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --enable-ipv6 --disable-static
+%configure --enable-ipv6 --enable-reuseaddr --disable-static
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 
-%files -n libixml2
-%_libdir/libixml.so.*
-
 %files
-%doc ChangeLog LICENSE NEWS TODO README.md
-%_libdir/libthreadutil.so.*
 %_libdir/libupnp.so.*
 
 %changelog
-* Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.25-alt2
+* Wed Sep 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.1-alt2
 - rebuilt as legacy shared lib
+
+* Sun May 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- 1.12.1 released
+
+* Tue Dec 24 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.10.1-alt1
+- 1.10.1 released
 
 * Mon Jul 23 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.25-alt1
 - 1.6.25 released
