@@ -1,6 +1,6 @@
 Name: icfs
 Version: 1.4
-Release: alt10
+Release: alt11
 Summary: An Incomplete Cholesky Factorization with Limited Memory
 License: BSD
 Group: Sciences/Mathematics
@@ -37,8 +37,6 @@ This package contains shared library of ICFS.
 Summary: Development files of ICFS
 Group: Development/Other
 Requires: libgfortran-devel lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 ICFS  is an incomplete Cholesky factorization for the solution of large-scale
@@ -95,6 +93,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.4-alt11
+- Fixed FTBFS.
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt10
 - Built with OpenBLAS instead of GotoBLAS2
 
