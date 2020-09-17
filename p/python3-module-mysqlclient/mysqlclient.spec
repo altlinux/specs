@@ -3,13 +3,13 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 1.4.6
+Version: 2.0.0
 Release: alt1
 
 Summary: Python interface to MySQL
 Group: Development/Python3
 
-License: GPL
+License: GPL-2.0
 Url: https://pypi.python.org/pypi/mysqlclient/
 # https://github.com/PyMySQL/mysqlclient-python.git
 Source: %name-%version.tar
@@ -81,6 +81,9 @@ python3 setup.py test
 %doc doc/_build/html/*
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Tue Jan 07 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.6-alt1
 - Build new version 1.4.6.
 
