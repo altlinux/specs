@@ -6,7 +6,7 @@
 
 Name: ipython3
 Version: 7.18.1
-Release: alt1
+Release: alt2
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -37,6 +37,8 @@ BuildRequires: python3(sphinx_rtd_theme) graphviz
 %add_python3_req_skip System clr
 
 Requires: python3-module-%oname = %EVR
+
+Conflicts: ipython
 
 %description
 IPython provides a replacement for the interactive Python interpreter with
@@ -154,6 +156,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt2
+- Added conflict to ipython.
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 7.18.1-alt1
 - Updated to upstream version 7.18.1.
 - Disabled build for python-2.
