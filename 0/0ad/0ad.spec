@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.23b
-Release: alt4
+Release: alt5
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -11,6 +11,8 @@ Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
 Patch0: mozjs38-jit-none.patch
 Patch1: 0ad-ppc64le.patch
+
+ExcludeArch: %arm
 
 BuildRequires: gcc-c++ python cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
@@ -90,6 +92,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt5
+- Explicitly disabled build for armh and rebuilt with new boost libraries.
+
 * Fri Apr 03 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.0.23b-alt4
 - Fixed build with python2 and rebuilt with new boost libraries.
 
