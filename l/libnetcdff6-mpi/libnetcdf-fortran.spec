@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -10,7 +12,7 @@
 
 Name: %sname%sover-mpi
 Version: %major.4.4
-Release: alt1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 
@@ -20,10 +22,8 @@ Url: http://www.unidata.ucar.edu/software/netcdf/
 
 Requires(post,preun): alternatives
 Requires: libhdf5-8-mpi libnetcdf11-mpi
-Provides: %sname-mpi = %version-%release
-Provides: %sname%sover-mpi = %version-%release
-Conflicts: %sname%sover-mpi < %version-%release
-Obsoletes: %sname%sover-mpi < %version-%release
+Provides: %sname-mpi = %EVR
+Provides: %sname%sover-mpi = %EVR
 %ifarch x86_64
 Provides: %sname.so.%sover()(64bit)
 %else
@@ -92,7 +92,7 @@ Summary: Development tools for the NetCDF library in Fortran
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF на Фортране
 Group: Development/Other
 Requires(post,preun): alternatives
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libnetcdf-mpi-devel
 Conflicts: %sname-devel < 4.0.1-alt6
 
@@ -194,6 +194,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt2
+- Updated conflicts and obsoletes.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt1
 - Updated to upstream version 4.4.4.
 - Changed sover to 6.
