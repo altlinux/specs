@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -13,7 +13,7 @@ Group: Development/Python3
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
 # http://git.altlinux.org/people/alexey/packages/?p=python3-module-ax.git
-Source: %{name}-%{version}.tar
+Source: %{pyname}.tar
 
 BuildArch: noarch
 
@@ -25,9 +25,11 @@ Python module with various helpfull features initially developed for
 cve-manager project but potentially reusable elsewhere.
 
 %prep
-%setup
+%setup -n %{pyname}
 
 %build
+make testing
+
 %install
 mkdir -p %{buildroot}%{thislibdir}
 mkdir -p %{buildroot}%{thisdocdir}
@@ -43,6 +45,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Sep 17 2020 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
+- Modified 'CompareLVersions' function that provides a more sophisticated way
+  of comparing versions that have symbolic part at the right.
+
 * Wed Sep 02 2020 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
 - Modified 'CompareLVersions' function that gives an ability to check which
   of the two versions was recognized as symbolic (or neither, or both).
