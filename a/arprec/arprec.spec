@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define somver 0
 %define sover %somver.0.0
+
 Name: arprec
 Version: 2.2.19
-Release: alt1
+Release: alt2
 Summary: C++/Fortran-90 arbitrary precision package
 License: BSD
 Group: Sciences/Mathematics
@@ -53,9 +56,7 @@ This package contains static libraries and headers of ARPREC.
 Summary: Development files of ARPREC
 Group: Development/Other
 Requires: libqd-devel
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package supports a flexible, arbitrarily high level of numeric precision --
@@ -206,6 +207,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/math*
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.19-alt2
+- Updated conflicts and obsoletes.
+
 * Tue Nov 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.19-alt1
 - Updated to upstream version 2.2.19.
 
