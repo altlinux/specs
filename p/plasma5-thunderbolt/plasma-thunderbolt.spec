@@ -4,7 +4,7 @@
 %define libkbolt libkbolt%sover
 
 Name: plasma5-thunderbolt
-Version: 5.19.4
+Version: 5.19.5
 Release: alt1
 %K5init altplace
 
@@ -90,6 +90,9 @@ Requires: %name-common
 %_K5lib/libkbolt.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt1
+- new version
+
 * Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.4-alt1
 - new version
 

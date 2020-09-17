@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.19.4
+Version: 5.19.5
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -283,6 +283,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
+- new version
+
 * Tue Jul 28 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt1
 - new version
 
