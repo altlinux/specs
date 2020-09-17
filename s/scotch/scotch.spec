@@ -4,7 +4,7 @@
 %define sover 0
 Name: scotch
 Version: 5.1.12b
-Release: alt3.svn20110910
+Release: alt4.svn20110910
 Summary: Package and libraries for sequential and parallel graph partitioning
 License: CeCILL-C
 Group: Sciences/Mathematics
@@ -42,8 +42,6 @@ This package contains shared libraries of Scotch.
 Summary: Development files of Scotch
 Group: Development/Other
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 Scotch is a software package and libraries for sequential and parallel graph
@@ -55,8 +53,6 @@ This package contains development files of Scotch.
 %package -n lib%name-devel-static
 Summary: Static libraries of Scotch
 Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
 
 %description -n lib%name-devel-static
 Scotch is a software package and libraries for sequential and parallel graph
@@ -214,6 +210,9 @@ popd
 %_datadir/%name/tgt
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.12b-alt4.svn20110910
+- Fixed FTBFS.
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.12b-alt3.svn20110910
 - Rebuilt with OpenMPI 1.6
 
