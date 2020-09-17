@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-%define cholmod_ver 3.0.13
-%define umfpack_ver 5.7.8
+
+%define cholmod_ver 3.0.14
+%define umfpack_ver 5.7.9
 
 Name: libsuitesparse
-Version: 5.4.0
+Version: 5.8.1
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
-License: LGPL, GPL
+License: LGPL and GPL
 Group: Sciences/Mathematics
 Url: http://faculty.cse.tamu.edu/davis/suitesparse.html
 
@@ -18,6 +19,9 @@ Source2: umfpack.pc
 Patch1: SuiteSparse-%version-alt.patch
 
 BuildRequires: libmetis-devel gcc-c++ libtbb-devel
+BuildRequires: libblas-devel
+BuildRequires: libgmp-devel
+BuildRequires: libmpfr-devel
 
 # Automatically added by buildreq on Sun Sep 14 2008
 BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
@@ -28,8 +32,6 @@ BuildRequires: cmake
 Summary: Development files of SuiteSparse
 Group: Development/Other
 Requires: %name = %EVR
-Conflicts: %name-devel < %EVR
-Obsoletes: %name-devel < %EVR
 Conflicts: libumfpack-devel UFconfig
 
 %package devel-static
@@ -94,7 +96,6 @@ sed -i "s|@VERSION@|%umfpack_ver|" umfpack.pc
 
 # Remove rpath due to "RPATH contains illegal entry" error
 sed -i 's/ -Wl,-rpath=$(INSTALL_LIB)//' SuiteSparse_config/SuiteSparse_config.mk
-sed -i 's/ -Wl,-rpath=$(INSTALL_LIB)//' Mongoose/SuiteSparse_config/SuiteSparse_config.mk
 pushd GraphBLAS
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_INSTALL_INCLUDEDIR=%_includedir
 popd
@@ -165,9 +166,6 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_includedir/*
 %_pkgconfigdir/*
 
-#files devel-static
-#_libdir/*.a
-
 %files devel-doc
 %_docdir/%name-%version
 
@@ -178,6 +176,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_bindir/mongoose
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8.1-alt1
+- Updated to upstream version 5.8.1.
+
 * Tue Jun 04 2019 Slava Aseev <ptrnine@altlinux.org> 5.4.0-alt1
 - Updated to stable upstream version 5.4.0.
 
