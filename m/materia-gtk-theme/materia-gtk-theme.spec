@@ -1,9 +1,9 @@
 Name:     materia-gtk-theme
-Version:  20200320
+Version:  20200916
 Release:  alt1
 
 Summary:  A Material Design theme for GNOME/GTK based desktop environments
-License:  GPLv2
+License:  GPL-2.0
 Group:    Other
 Url:      https://github.com/nana-4/materia-theme
 
@@ -13,6 +13,7 @@ Source:   materia-theme-%version.tar
 
 BuildArch: noarch
 
+BuildRequires: sassc
 Requires: libgtk-engine-murrine
 
 %description
@@ -30,6 +31,10 @@ install -d %buildroot%_datadir/themes
 %_datadir/themes/Materia*
 
 %changelog
+* Thu Sep 17 2020 Andrey Cherepanov <cas@altlinux.org> 20200916-alt1
+- New version.
+- Fix License tag according to SPDX.
+
 * Sat Apr 04 2020 Andrey Cherepanov <cas@altlinux.org> 20200320-alt1
 - New version.
 
