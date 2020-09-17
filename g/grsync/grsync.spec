@@ -1,6 +1,6 @@
 Name: grsync
-Version: 1.2.6
-Release: alt2
+Version: 1.2.8
+Release: alt1
 
 Summary: Grsync is a GUI for rsync
 License: GPLv2
@@ -56,6 +56,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.8-alt1
+- Build new version.
+
 * Thu Jul 19 2018 Grigory Ustinov <grenka@altlinux.org> 1.2.6-alt2
 - Fixed FTBFS (Add missing rpm-build-xdg).
 
