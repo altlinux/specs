@@ -3,23 +3,18 @@
 
 Name:    ocaml-%modulename
 Version: 1.2.2
-Release: alt1
-
+Release: alt2
 Summary: ocamldoc comment syntax parser
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/ocaml-doc/octavius
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires: dune
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
 %description
-%summary
+Octavius is a library to parse the ocamldoc comment syntax.
 
 %package devel
 Summary: Development files for %name
@@ -34,30 +29,25 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md
 %dir %_libdir/ocaml/%modulename
 %_bindir/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 17 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
+- removed rpm-build-ocaml dependency for runtime package
+- migrated to rpm-build-ocaml 1.4
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.2-alt1
 - Initial build for Sisyphus
