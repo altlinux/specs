@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -10,7 +12,7 @@
 
 Name: %sname-%sover-mpi
 Version: %major.2
-Release: alt4
+Release: alt5
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
@@ -21,10 +23,8 @@ Url: http://www.unidata.ucar.edu/software/netcdf/
 Requires(post,preun): alternatives
 Requires: libhdf5-8-mpi libnetcdf11-mpi
 Conflicts: %sname < 4.0.1-alt6
-Provides: %sname-mpi = %version-%release
-Provides: %sname-%sover-mpi = %version-%release
-Conflicts: %sname-%sover-mpi < %version-%release
-Obsoletes: %sname-%sover-mpi < %version-%release
+Provides: %sname-mpi = %EVR
+Provides: %sname-%sover-mpi = %EVR
 %ifarch x86_64
 Provides: %sname.so.%sover()(64bit)
 %else
@@ -93,7 +93,7 @@ Summary: Development tools for the NetCDF v3 library in C++
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF v3 на C++
 Group: Development/C++
 Requires(post,preun): alternatives
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libnetcdf-mpi-devel
 
 %description -n %sname-mpi-devel
@@ -183,6 +183,9 @@ popd
 %_infodir/*
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2-alt5
+- Updated conflicts and obsoletes.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2-alt4
 - Rebuilt with libnetcdf11.
 
