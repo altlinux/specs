@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %define origname scalapack
@@ -8,16 +10,15 @@
 %define sover %somver.8.0
 Name: lib%origname
 Version: 1.8.0
-Release: alt19
+Release: alt20
 Summary: Scalable LAPACK library
 License: LGPL
 Group: Sciences/Mathematics
 Url: http://www.netlib.org/scalapack/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %origname-%version.tar.gz
+Source: %origname-%version.tar
 Source1: SLmake.inc
-Source2: manpages.tar.gz
+Source2: manpages.tar
 
 BuildPreReq: liblapack-devel gcc-fortran
 BuildPreReq: %mpiimpl-devel
@@ -72,11 +73,9 @@ Requires: libblacs-devel %mpiimpl-devel
 %if_disabled bootstrap
 Requires: libarpack-devel
 %endif
-Requires: %name = %version-%release
-Conflicts: %name < %version-%release
-Obsoletes: %name < %version-%release
-Conflicts: %name-devel < %version-%release
-Obsoletes: %name-devel < %version-%release
+Requires: %name = %EVR
+Conflicts: %name < %EVR
+Obsoletes: %name < %EVR
 
 %description devel
 Development files of ScaLAPACK.
@@ -84,9 +83,9 @@ Development files of ScaLAPACK.
 %package devel-static
 Summary: Static library of ScaLAPACK
 Group: Development/Other
-Requires: %name-devel = %version-%release
-Conflicts: %name < %version-%release
-Conflicts: %name-devel < %version-%release
+Requires: %name-devel = %EVR
+Conflicts: %name < %EVR
+Conflicts: %name-devel < %EVR
 
 %description devel-static
 Static library of ScaLAPACK.
@@ -102,7 +101,7 @@ Tests for PBLAS.
 Summary: Test data for PBLAS
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: pblas-tests = %version-%release
+Requires: pblas-tests = %EVR
 
 %description -n pblas-tests-data
 Test data for PBLAS.
@@ -118,7 +117,7 @@ PBLAS timing.
 Summary: Data for PBLAS timing
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: pblas-timing = %version-%release
+Requires: pblas-timing = %EVR
 
 %description -n pblas-timing-data
 Data for PBLAS timing.
@@ -127,7 +126,7 @@ Data for PBLAS timing.
 Summary: Headers for PBLAS
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n pblas-devel
 Headers for PBLAS.
@@ -143,7 +142,7 @@ Tests for ScaLAPACK redist.
 Summary: Test data for ScaLAPACK redist
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: %origname-redist = %version-%release
+Requires: %origname-redist = %EVR
 
 %description -n %origname-redist-data
 Test data for ScaLAPACK redist.
@@ -159,7 +158,7 @@ Tests for ScaLAPACK.
 Summary: Test data for ScaLAPACK
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: %origname-tests = %version-%release
+Requires: %origname-tests = %EVR
 
 %description -n %origname-tests-data
 Test data for ScaLAPACK.
@@ -175,7 +174,7 @@ Example for ScaLAPACK.
 Summary: Example data for ScaLAPACK
 Group: Sciences/Mathematics
 BuildArch: noarch
-Requires: %origname-example = %version-%release
+Requires: %origname-example = %EVR
 
 %description -n %origname-example-data
 Example data for ScaLAPACK.
@@ -198,16 +197,15 @@ All in one ScaLAPACK shared libraries.
 %package full-devel
 Summary: All in one ScaLAPACK development files
 Group: Development/Other
-Requires: %name-full = %version-%release
+Requires: %name-full = %EVR
 
 %description full-devel
 All in one ScaLAPACK development files.
 
 
 %prep
-%setup
+%setup -a2
 install -p -m644 %SOURCE1 ./
-tar -xzvf %SOURCE2
 
 %build
 mpi-selector --set %mpiimpl
@@ -320,6 +318,8 @@ popd
 rmdir tmp
 popd
 
+rm %buildroot%_libdir/*.a
+
 %files
 %doc README
 %_libdir/*.so.*
@@ -393,6 +393,9 @@ popd
 #_includedir/%origname
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt20
+- Updated conflicts and obsoletes.
+
 * Mon Jul 08 2019 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt19
 - build without arpack
 
