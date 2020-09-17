@@ -3,7 +3,7 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Compile-time configuration for Jane Street libraries
 License: MIT
@@ -16,8 +16,8 @@ BuildRequires: dune ocaml-ppx_assert-devel ocaml-result-devel
 BuildRequires: ocaml-ppxlib-devel ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-ppx_compare-devel ocaml-ppx_here-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-compiler-libs-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: ocaml-stdio-devel
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
@@ -37,32 +37,24 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
+%files -f ocaml-files.runtime
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.ml
+%files devel -f ocaml-files.devel
 %_libdir/ocaml/%{modulename}*/*.h
 %_libdir/ocaml/%{modulename}*/rt-flags
 
 %changelog
+* Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- migrated to rpm-build-ocaml-1.4
+- added ocaml-stdio-devel to BuildRequires
+
 * Thu Jul 30 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
