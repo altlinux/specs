@@ -8,7 +8,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.15
-Release: alt2
+Release: alt3
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -20,8 +20,11 @@ ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-Source1: aarch64-io.h
 Patch1: fix-dir-path.patch
+Patch2: linuxcnc-upstream-accommodate-systems-without-io.h.patch
+Patch3: linuxcnc-upstream-fix-undefined-symbols-1.patch
+Patch4: linuxcnc-upstream-fix-undefined-symbols-2.patch
+Patch5: linuxcnc-upstream-fix-undefined-symbols-3.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -138,14 +141,14 @@ Spanish documementation for %name
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 sed -i 's|lib/tcltk/linuxcnc|%_lib/tcl/linuxcnc|' lib/python/rs274/options.py
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
 sed -i 's|LDFLAGS := |LDFLAGS := -ltirpc |' src/Makefile
-%ifarch aarch64
-mkdir -p src/rtapi/sys
-cp %SOURCE1 src/rtapi/sys/io.h
-%endif
 
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
@@ -285,6 +288,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.15-alt3
+- Fixed build on armh and rebuilt with new boost.
+
 * Thu Mar 12 2020 Anton Midyukov <antohami@altlinux.org> 2.7.15-alt2
 - Fixed tcl dir again
 
