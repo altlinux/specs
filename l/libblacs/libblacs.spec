@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %define origname blacs
@@ -7,14 +9,14 @@ Name: lib%origname
 %define somver 1
 %define sover %somver.1
 Version: 1.1
-Release: alt14
+Release: alt15
 Summary: Basic Linear Algebra Communication Subprograms
 License: LGPL
 Group: Sciences/Mathematics
 Url: http://www.netlib.org/blacs/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.netlib.org/blacs/mpiblacs.tar.gz
+# Source: http://www.netlib.org/blacs/mpiblacs.tar.gz
+Source: mpiblacs.tar
 # patch: http://www.netlib.org/blacs/mpiblacs-patch03.tgz
 Source1: Bmake.inc
 
@@ -35,7 +37,7 @@ communication layer of ScaLAPACK.
 %package devel-debug
 Summary: Debug version of BLACS
 Group: Sciences/Mathematics
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-debug
 Debug version of BLACS.
@@ -43,7 +45,7 @@ Debug version of BLACS.
 %package -n %origname-tests
 Summary: Testing executables for BLACS
 Group: Sciences/Mathematics
-Requires: %origname-tests-data = %version-%release
+Requires: %origname-tests-data = %EVR
 
 %description -n %origname-tests
 Testing executables for BLACS.
@@ -59,9 +61,7 @@ Testing data files for blacs-tests.
 %package devel
 Summary: Developer files for BLACS
 Group: Development/Other
-Requires: %name = %version-%release
-Conflicts: %name-devel < %version-%release
-Obsoletes: %name-devel < %version-%release
+Requires: %name = %EVR
 
 %description devel
 Developer files for BLACS.
@@ -69,8 +69,8 @@ Developer files for BLACS.
 %package devel-static
 Summary: Static libraries of BLACS
 Group: Development/Other
-Requires: %name-devel = %version-%release
-Conflicts: %name-devel < %version-%release
+Requires: %name-devel = %EVR
+Conflicts: %name-devel < %EVR
 
 %description devel-static
 Static libraries of BLACS.
@@ -175,6 +175,9 @@ popd
 %exclude %_libdir/*-1.a
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt15
+- Updated conflicts and obsoletes.
+
 * Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt14
 - Rebuilt with new mpi and toolchain
 
