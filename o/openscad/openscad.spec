@@ -1,6 +1,6 @@
 Name: openscad
 Version: 2019.05
-Release: alt5
+Release: alt6
 Summary: The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -65,7 +65,7 @@ Summary: OpenSCAD Parametric CAD Library
 License: LGPLv2+ and LGPLv2 and LGPLv3+ and (GPLv3 or LGPLv2) and (GPLv3+ or LGPLv2) and (CC-BY-SA or LGPLv2+) and (CC-BY-SA or LGPLv2) and CC-BY and BSD and MIT and Public Domain
 Url: https://www.github.com/openscad/MCAD
 Requires: %name = %version-%release
-BuildArch: noarch
+#BuildArch: noarch
 
 %description MCAD
 This library contains components commonly used in designing and moching up
@@ -141,6 +141,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt6
+- Rebuilt with boost-1.74.0.
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2019.05-alt5
 - Rebuilt with boost-1.73.0.
 
