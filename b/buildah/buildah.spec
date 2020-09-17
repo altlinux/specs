@@ -5,7 +5,7 @@
 # https://github.com/containers/buildah
 %global provider_prefix %provider.%provider_tld/%project/%repo
 %global import_path     %provider_prefix
-%global commit          295b825cdc0795f7e60349b901880e40e9850f5a
+%global commit          0e6d94679ebddd0f2461078cfaee6ea564672684
 %global shortcommit    %(c=%commit; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -17,7 +17,7 @@
 
 Name: buildah
 # Bump version in buildah.go too
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -88,6 +88,10 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Sep 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
+- new version 1.16.1
+- Add(): fix handling of relative paths with no ContextDir
+
 * Wed Sep 09 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
 - new version 1.16.0
 
