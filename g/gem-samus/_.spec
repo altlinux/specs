@@ -1,14 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname hrx
+%define        pkgname samus
 
 Name:          gem-%pkgname
-Version:       1.0.0.1
-Release:       alt0.1
-Summary:       A Ruby implementation of the HRX format
-License:       Apache-2.0
+Version:       3.0.9
+Release:       alt1
+Summary:       Samus helps you release Open Source Software
+License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/google/hrx-ruby
-Vcs:           https://github.com/google/hrx-ruby.git
+Url:           https://github.com/lsegal/samus
+Vcs:           https://github.com/lsegal/samus.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -17,10 +17,9 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%gem_replace_version thor ~> 1.0
 
 %description
-%summary. This gem is a parser and serializer for the HRX format.
+%summary.
 
 
 %package       -n %pkgname
@@ -53,7 +52,7 @@ Documentation files for %gemname gem.
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -74,10 +73,5 @@ Documentation files for %gemname gem.
 
 
 %changelog
-* Wed Sep 16 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0.1-alt0.1
-- ^ 1.0.0 -> 1.0.0.1pre
-- * relicensing
-- ! deps
-
-* Tue Feb 18 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
-- added (+) packaged gem with usage Ruby Policy 2.0
+* Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 3.0.9-alt1
+- + packaged gem with usage Ruby Policy 2.0

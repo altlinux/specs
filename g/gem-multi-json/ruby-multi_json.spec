@@ -2,7 +2,7 @@
 %define        gemname multi_json
 
 Name: 	       gem-%pkgname
-Version:       1.14.1
+Version:       1.15.0
 Release:       alt1
 Summary:       A common interface to multiple JSON libraries
 License:       MIT
@@ -64,6 +64,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 16 2020 Pavel Skrylev <majioa@altlinux.org> 1.15.0-alt1
+- ^ 1.14.1 -> 1.15.0
+
 * Mon Apr 13 2020 Pavel Skrylev <majioa@altlinux.org> 1.14.1-alt1
 - > Ruby Policy 2.0
 - ^ 1.13.1 -> 1.14.1

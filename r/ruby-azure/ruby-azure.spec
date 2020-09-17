@@ -2,12 +2,12 @@
 
 Name: 	       ruby-%pkgname
 Version:       0.7.10
-Release:       alt3
+Release:       alt3.1
 Summary:       Microsoft Azure Client Library for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/azure/azure-sdk-for-ruby
-%vcs           https://github.com/Azure/azure-sdk-for-ruby.git
+Vcs:           https://github.com/Azure/azure-sdk-for-ruby.git#asm
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 Source:        %name-%version.tar
@@ -15,6 +15,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%gem_replace_version thor ~> 1.0
 
 %description
 Official Ruby client library to consume Microsoft Azure services.
@@ -56,6 +57,9 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Sep 16 2020 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt3.1
+- ! spec
+
 * Fri Jul 19 2019 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt3
 - Use Ruby Policy 2.0
 

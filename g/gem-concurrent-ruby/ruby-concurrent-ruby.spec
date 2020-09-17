@@ -1,5 +1,5 @@
 %define        pkgname concurrent-ruby
-%define        core_version   1.1.6
+%define        core_version   1.1.7
 %define        edge_version   0.6.0
 
 Name:          gem-%pkgname
@@ -144,6 +144,9 @@ install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurre
 %ruby_includedir/concurrent-ruby-ext
 
 %changelog
+* Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.7-alt2
+- ^ 1.1.6 -> 1.1.7
+
 * Tue May 12 2020 Pavel Skrylev <majioa@altlinux.org> 1.1.6-alt2
 - + java part
 
