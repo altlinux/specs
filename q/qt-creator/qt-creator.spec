@@ -7,8 +7,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 4.13.0
-Release: alt3
+Version: 4.13.1
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -24,7 +24,6 @@ Source2: perfparser.tar
 
 Patch0:  %name-%version-%release.patch
 Patch1:  0001-Link-against-libclang-cpp.so.patch
-Patch2:  0001-Update-Russian-translation.patch
 
 Requires: %name-data = %EVR
 Provides: qtcreator = %EVR
@@ -100,7 +99,6 @@ sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %ifarch %e2k
 # strip UTF-8 BOM, lcc 1.23 won't ignore it yet
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
@@ -161,6 +159,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Sep 17 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.1-alt1
+- New version.
+
 * Mon Sep 14 2020 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt3
 - Update Russian translations from upstream.
 
