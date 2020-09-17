@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.5
+Version:        0.4.6
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,16 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Wed Sep 16 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.6-alt1
+- Added p9-kworkstation release (closes: 38804).
+- Fixed "Delete downloaded image?" button showing for local
+  images (closes: 38803).
+- Improved asset update process
+  + Only need to edit app.qrc now.
+  + Match assets dir structure with getalt's.
+  + Add assets/UPDATING.md with instructions.
+- Fixed "Board is unknown" messages.
+
 * Fri May 22 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.5-alt1
 - Fixed searching releases in Russian (closes: 38478)
 
