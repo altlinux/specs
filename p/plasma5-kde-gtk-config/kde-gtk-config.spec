@@ -1,8 +1,8 @@
 %define rname kde-gtk-config
 
 Name: plasma5-%rname
-Version: 5.19.4
-Release: alt2
+Version: 5.19.5
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -91,6 +91,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_K5data/kcm-gtk-module/
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
+- new version
+
 * Mon Aug 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.4-alt2
 - fix default font
 
