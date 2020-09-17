@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -87,7 +87,7 @@ Requires: %name-common = %version-%release
 %_K5bin/akregatorstorageexporter
 %_K5plug/akregator_*.so
 %_K5plug/akregatorpart.so
-%_K5plug/kontact_akregatorplugin.so
+%_K5plug/kontact5/kontact_akregatorplugin.so
 %_K5xdgapp/org.kde.akregator.desktop
 %_K5data/akregator/
 %_K5cfg/*akregator*.kcfg
@@ -116,6 +116,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

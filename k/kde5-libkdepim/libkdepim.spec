@@ -5,7 +5,7 @@
 %define libkf5libkdepimakonadi libkf5libkdepimakonadi%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -20,17 +20,17 @@ Source: %rname-%version.tar
 # optimized out: boost-devel-headers cmake cmake-modules elfutils gcc-c++ kde5-akonadi-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libical-devel libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-tools-devel rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules kde5-akonadi-search-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kldap-devel kde5-kmime-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libldap-devel libsasl2-devel python-module-google python3-dev qt5-quick1-devel qt5-tools-devel-static rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-quick1-devel qt5-tools-devel-static
+BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-tools-devel-static
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: kde5-akonadi-search-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kldap-devel kde5-kmime-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel
+BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcmutils-devel
 
 %description
 %summary.
@@ -80,7 +80,7 @@ KF5 library
 #%doc COPYING*
 #%config(noreplace) %_K5xdgconf/*.*categories
 %_datadir/qlogging-categories5/*.*categories
-%_K5data/kdepimwidgets/
+#%_K5data/kdepimwidgets/
 
 %files devel
 %_K5plug/designer/*.so
@@ -96,14 +96,17 @@ KF5 library
 %files -n %libkf5libkdepim
 %_K5lib/libKF5Libkdepim.so.%sover
 %_K5lib/libKF5Libkdepim.so.*
-%_K5plug/kcm_ldap.so
-%_K5srv/kcmldap.desktop
+#%_K5plug/kcm_ldap.so
+#%_K5srv/kcmldap.desktop
 
-%files -n %libkf5libkdepimakonadi
-%_K5lib/libKF5LibkdepimAkonadi.so.%sover
-%_K5lib/libKF5LibkdepimAkonadi.so.*
+#%files -n %libkf5libkdepimakonadi
+#%_K5lib/libKF5LibkdepimAkonadi.so.%sover
+#%_K5lib/libKF5LibkdepimAkonadi.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

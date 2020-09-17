@@ -14,7 +14,7 @@
 %define libdkimverifyconfigure libdkimverifyconfigure%sover
 
 Name: kde5-pim-addons
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -261,6 +261,9 @@ Requires: %name-common
 %_K5lib/libdkimverifyconfigure.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

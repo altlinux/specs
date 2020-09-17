@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -102,12 +102,9 @@ Requires: %name-common = %version-%release
 %_K5plug/kcm_apptsummary.so
 %_K5plug/kcm_todosummary.so
 %_K5plug/kcm_sdsummary.so
-%_K5plug/kontact_journalplugin.so
-%_K5plug/kontact_todoplugin.so
-%_K5plug/kontact_specialdatesplugin.so
+%_K5plug/kontact5/kontact_*.so
 %_K5start/org.kde.korgac.desktop
-%_K5xdgapp/korganizer-import.desktop
-%_K5xdgapp/org.kde.korganizer.desktop
+%_K5xdgapp/*korganizer*.desktop
 %_K5data/korgac/
 %_K5data/korganizer/
 %_K5data/kontact/ksettingsdialog/*
@@ -128,7 +125,7 @@ Requires: %name-common = %version-%release
 %_K5icon/*/*/apps/korganizer.*
 %_K5icon/*/*/apps/korg-*.*
 %_K5icon/*/*/apps/quickview.*
-%_K5dbus_srv/*korganizer*.service
+%_K5dbus_srv/*korga*.service
 
 #%files devel
 #%_K5inc/korganizer_version.h
@@ -148,6 +145,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

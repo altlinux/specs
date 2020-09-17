@@ -3,9 +3,10 @@
 %define sover 5
 %define libkpimkdav libkpimkdav%sover
 
-Name: kde5-%rname
-Version: 20.04.3
+Name: kf5-%rname
+Version: 5.74.0
 Release: alt1
+Epoch: 1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -30,12 +31,16 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Provides: kde5-kdav-common = %EVR
+Obsoletes: kde5-kdav-common < %EVR
 %description common
 %name common package
 
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Provides: kde5-kdav-devel = %EVR
+Obsoletes: kde5-kdav-devel < %EVR
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -59,7 +64,7 @@ Requires: %name-common = %version-%release
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -75,6 +80,10 @@ Requires: %name-common = %version-%release
 %_K5lib/libKF5DAV.so.*
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.74.0-alt1
+- new version
+- moved from applications
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
