@@ -1,12 +1,12 @@
 Name:    libmaxminddb
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: C library for the MaxMind DB file format
 
 # original libmaxminddb code is Apache Licence 2.0
 # src/maxminddb-compat-util.h is BSD
-License: ASLv2 and BSD
+License: Apache-2.0 and BSD
 Url:     https://maxmind.github.io/libmaxminddb
 Group:   Other
 
@@ -60,6 +60,9 @@ LD_PRELOAD=%{buildroot}%{_libdir}/libmaxminddb.so make check
 %_man3dir/*
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
+- Build new version.
+
 * Mon Dec 09 2019 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt2
 - Build with check (Closes: 37582).
 
