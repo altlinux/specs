@@ -5,7 +5,7 @@
 %define sover %somver.4.0
 Name: blzpack
 Version: 04.00
-Release: alt10
+Release: alt11
 Summary: Block LancZos PACKage
 License: BSD
 Group: Sciences/Mathematics
@@ -59,8 +59,6 @@ This package contains shared library of BLZPACK.
 Summary: Development library of BLZPACK
 Group: Development/Other
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 BLZPACK (for Block LancZos PACKage) is a set of subprograms written
@@ -188,6 +186,9 @@ popd
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 04.00-alt11
+- Fixed FTBFS.
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt10
 - Built with OpenBLAS instead of GotoBLAS2
 
