@@ -3,7 +3,7 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Base set of ppx rewriters
 License: MIT
@@ -18,8 +18,7 @@ BuildRequires: ocaml-base-devel ocaml-ppxlib-devel ocaml-result-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-ppx_compare-devel
 BuildRequires: ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
 BuildRequires: ocaml-octavius-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.4
 
 Source:  %modulename-%version.tar
 
@@ -30,6 +29,13 @@ Source:  %modulename-%version.tar
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+Requires: ocaml-ppxlib-devel
+Requires: ocaml-ppx_cold-devel
+Requires: ocaml-ppx_sexp_conv-devel
+Requires: ocaml-ppx_compare-devel
+Requires: ocaml-ppx_enumerate-devel
+Requires: ocaml-ppx_hash-devel
+Requires: ocaml-ppx_js_style-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -39,32 +45,23 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %_bindir/ppx-base
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}*/*.exe
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 17 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- added requires to devel subpackage from dune file
+- migrated to rpm-build-ocaml 1.4
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
