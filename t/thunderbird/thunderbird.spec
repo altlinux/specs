@@ -13,7 +13,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	78.2.1
+Version:	78.2.2
 Release:	alt1
 License:	MPL-2.0
 Group:		Networking/Mail
@@ -625,6 +625,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Sep 17 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.2-alt1
+- New version (78.2.2).
+
 * Wed Sep 02 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.1-alt1
 - New version (78.2.1).
 - Fixes:
