@@ -12,10 +12,9 @@
 %def_without lttng
 %endif
 %def_without cephfs_java
-%def_without check
+%def_disable check
 %def_without ceph_test_package
 %def_with python3
-%def_without python2
 %def_with system_boost
 %def_without system_lua
 %def_with system_rocksdb
@@ -42,7 +41,7 @@
 %endif
 
 Name: ceph
-Version: 14.2.11
+Version: 15.2.5
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -76,7 +75,9 @@ Source27: zstd.tar
 Source28: c-ares.tar
 Source29: dmclock.tar
 Source30: seastar.tar
-Source31: seastar-fmt.tar
+Source31: fmt.tar
+Source32: spawn.tar
+Source33: rook-client-python.tar
 
 Patch: %name-%version.patch
 BuildRequires(pre): rpm-build-python3
@@ -88,6 +89,7 @@ BuildRequires: boost-asio-devel boost-devel-headers >= 1.67.0 boost-program_opti
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel
 %endif
 BuildRequires: gcc-c++ libaio-devel libblkid-devel libcurl-devel libexpat-devel libcap-ng-devel
+BuildRequires: libstdc++-devel-static
 BuildRequires: libfuse-devel libkeyutils-devel
 BuildRequires: libldap-devel libleveldb-devel libnss-devel
 #BuildRequires: libkrb5-devel
@@ -101,12 +103,13 @@ BuildRequires: libxml2-devel
 BuildRequires: libuuid-devel
 BuildRequires: libncurses-devel
 BuildRequires: liboath-devel
+BuildRequires: libfmt-devel >= 5.2.1
 BuildRequires: jq gperf
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel >= 2.4}
 %{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel libbabeltrace-ctf-devel}
 %{?_with_cephfs_java:BuildRequires: java-devel}
 %{?_with_selinux:BuildRequires: checkpolicy selinux-policy-devel}
-%{?_with_check:BuildRequires: socat ctest}
+%{?_enable_check:BuildRequires: socat ctest}
 BuildRequires: libsystemd-devel
 %{?_with_system_rocksdb:BuildRequires: librocksdb-devel}
 %{?_with_system_lua:BuildRequires: liblua5-devel >= 5.3  liblua5-devel-static >= 5.3}
@@ -132,27 +135,14 @@ BuildRequires: systemtap-sdt-devel
 BuildRequires: yaml-cpp-devel
 %endif
 
-%if_with python2
-BuildRequires(pre): rpm-build-python
-%{?_with_system_boost:BuildRequires: boost-python-devel}
-BuildRequires: python-module-Cython python-module-OpenSSL python-devel python-module-setuptools
-BuildRequires: python-module-backports.ssl_match_hostname python-module-enum34
-BuildRequires: python-module-prettytable python-module-routes python-module-bcrypt
-BuildRequires: python-module-html5lib python-module-pyasn1 python-module-virtualenv
-BuildRequires: python-sphinx-objects.inv python-module-sphinx
-BuildRequires: libxmlsec1-devel
-%{?_with_check:BuildRequires: python-module-cherrypy python-module-jwt python-module-werkzeug python-module-pecan python-module-six python-module-tox}
-%endif
-
 %if_with python3
-BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
 %{?_with_system_boost:BuildRequires: boost-python3-devel}
 BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt
 BuildRequires: python3-module-html5lib python3-module-pyasn1 python3-module-virtualenv
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
-%{?_with_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-six python3-module-tox}
+%{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-six python3-module-tox}
 %endif
 
 
@@ -186,30 +176,31 @@ Requires: python3-module-ceph-argparse = %EVR
 Common utilities to mount and interact with a ceph storage cluster.
 Comprised of files that are common to Ceph clients and servers.
 
+%package -n cephadm
+Summary: Utility to bootstrap Ceph clusters
+Group: System/Base
+#Requires: podman
+Requires: lvm2
+%description -n cephadm
+Utility to bootstrap a Ceph cluster and manage Ceph daemons deployed
+with systemd and podman.
 
-%package -n python-module-ceph_volume
-Summary: Python utility libraries for Ceph CLI
-Group: Development/Python
+%package -n python3-module-ceph-common
+Summary:	Python 3 utility libraries for Ceph
+Group: Development/Python3
 BuildArch: noarch
-%description -n python-module-ceph_volume
-%summary
+%description -n python3-module-ceph-common
+This package contains data structures, classes and functions used by Ceph.
+It also contains utilities used for the cephadm orchestrator.
 
 %package -n python3-module-ceph_volume
 Summary: Python3 utility libraries for Ceph CLI
 Group: Development/Python3
 BuildArch: noarch
+Requires: python3-module-ceph-common = %EVR
+
 %description -n python3-module-ceph_volume
 %summary
-
-%package -n python-module-ceph-argparse
-Summary: Python utility libraries for Ceph CLI
-Group: Development/Python
-BuildArch: noarch
-%description -n python-module-ceph-argparse
-This package contains types and routines for Python used by the Ceph CLI as
-well as the RESTful interface. These have to do with querying the daemons for
-command-description information, validating user command input against those
-descriptions, and submitting the command to the appropriate daemon.
 
 %package -n python3-module-ceph-argparse
 Summary: Python 3 utility libraries for Ceph CLI
@@ -244,6 +235,7 @@ of cluster membership, configuration, and state.
 Summary: Ceph Manager Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
+Requires: ceph-mgr-modules-core = %EVR
 AutoProv: no
 
 %if_with python3
@@ -253,42 +245,28 @@ AutoProv: no
 %py3_provides orchestrator
 %endif
 
-%if_with python2
-%py_provides ceph_module
-%py_provides mgr_module
-%py_provides mgr_util
-%py_provides orchestrator
-%endif
-
 %description mgr
 ceph-mgr enables python modules that provide services (such as the REST
 module derived from Calamari) and expose CLI hooks.  ceph-mgr gathers
 the cluster maps, the daemon metadata, and performance counters, and
 exposes all these to the python modules.
 
-%package mgr-ansible
-Summary: Ansible module for Ceph Manager Daemon
-Group: Monitoring
-Requires: ceph-mgr = %EVR
-AutoProv: no
-%description mgr-ansible
-%summary.
+%package mgr-modules-core
+Summary: Ceph Manager modules which are always enabled
+Group: System/Base
+Conflicts: ceph-mgr < 15.2.5-alt1
+%description mgr-modules-core
+ceph-mgr-modules-core provides a set of modules which are always
+enabled by ceph-mgr.
 
 %package mgr-dashboard
 Summary: Dashboard module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
 Requires: ceph-mgr-restful = %EVR
+Requires: ceph-grafana-dashboards = %EVR
 AutoProv: no
 %description mgr-dashboard
-%summary.
-
-%package mgr-deepsea
-Summary: Deepsea module for Ceph Manager Daemon
-Group: Monitoring
-Requires: ceph-mgr = %EVR
-AutoProv: no
-%description mgr-deepsea
 %summary.
 
 %package mgr-insights
@@ -305,9 +283,6 @@ Group: Monitoring
 Requires: ceph-mgr = %EVR
 %if_with python3
 Requires: python3-module-influxdb
-%endif
-%if_with python2
-Requires: python-module-influxdb
 %endif
 AutoProv: no
 %description mgr-influx
@@ -338,49 +313,50 @@ AutoProv: no
 %summary.
 
 %package mgr-diskprediction-local
-Summary: diskprediction_local module for Ceph Manager Daemon
+Summary: Ceph Manager module for predicting disk failures
 Group: Monitoring
 Requires: ceph-mgr = %EVR
 AutoProv: no
 %description mgr-diskprediction-local
-ceph-mgr-diskprediction-local is a ceph-mgr plugin that tries to predict
+ceph-mgr-diskprediction-local is a ceph-mgr module that tries to predict
 disk failures using local algorithms and machine-learning databases.
 
 %package mgr-diskprediction-cloud
-Summary: diskprediction_cloud module for Ceph Manager Daemon
+Summary: Ceph Manager module for cloud-based disk failure prediction
 Group: Monitoring
 Requires: ceph-mgr = %EVR
 AutoReqProv: no
 %description mgr-diskprediction-cloud
-ceph-mgr-diskprediction-cloud is a ceph-mgr plugin that tries to predict
+ceph-mgr-diskprediction-cloud is a ceph-mgr module that tries to predict
 disk failures using services in the Google cloud.
 
 %package mgr-rook
-Summary: Rook module for Ceph Manager Daemon
-Group: Monitoring
+Summary: Ceph Manager module for Rook-based orchestration
+Group: System/Configuration/Other
 Requires: ceph-mgr = %EVR
 AutoProv: no
 %description mgr-rook
-ceph-mgr-rook is a ceph-mgr plugin for orchestration functions using
+ceph-mgr-rook is a ceph-mgr module for orchestration functions using
 a Rook backend.
 
 %package mgr-k8sevents
-Summary: Ceph Manager plugin to orchestrate ceph-events to kubernetes' events API
-Group: Monitoring
+Summary: Ceph Manager module to orchestrate ceph-events to kubernetes' events API
+Group: System/Configuration/Other
 Requires: ceph-mgr = %EVR
 AutoProv: no
 %description mgr-k8sevents
-ceph-mgr-k8sevents is a ceph-mgr plugin that sends every ceph-events
+ceph-mgr-k8sevents is a ceph-mgr module that sends every ceph-events
 to kubernetes' events API
 
-%package mgr-ssh
-Summary: Ssh module for Ceph Manager Daemon
-Group: Monitoring
+%package mgr-cephadm
+Summary: Ceph Manager module for cephadm-based orchestration
+Group: System/Configuration/Other
 Requires: ceph-mgr = %EVR
+Requires: openssh-clients
 AutoProv: no
-%description mgr-ssh
-ceph-mgr-ssh is a ceph-mgr module for orchestration functions using
-direct SSH connections for management operations.
+%description mgr-cephadm
+ceph-mgr-cephadm is a ceph-mgr module for orchestration functions using
+the integrated cephadm deployment tool management operations.
 
 %package mgr-zabbix
 Summary: Zabbix module for Ceph Manager Daemon
@@ -435,6 +411,13 @@ storage system.  This package provides a REST gateway to the
 object store that aims to implement a superset of Amazon's S3
 service as well as the OpenStack Object Storage ("Swift") API.
 
+%package immutable-object-cache
+Summary: Ceph daemon for immutable object cache
+Group: System/Base
+Requires: librados2 = %EVR
+%description -n ceph-immutable-object-cache
+Daemon for immutable object cache.
+
 %package resource-agents
 Summary: OCF-compliant resource agents for Ceph daemons
 Group: System/Configuration/Other
@@ -450,6 +433,7 @@ Summary: Ceph Object Storage Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
 Requires: sudo
+Requires: lvm2
 Requires: /usr/sbin/smartctl
 Requires: /usr/sbin/nvme
 Requires: python3-module-ceph_volume = %EVR
@@ -478,15 +462,6 @@ Obsoletes: librados2-devel < %EVR
 This package contains libraries and headers needed to develop programs
 that use RADOS object store.
 
-%package -n python-module-rados
-Summary: Python libraries for the RADOS object store
-Group: Development/Python
-Requires: librados2 = %EVR
-Conflicts: python-module-ceph < %EVR
-%description -n python-module-rados
-This package contains Python libraries for interacting with Cephs RADOS
-object store.
-
 %package -n python3-module-rados
 Summary: Python3 libraries for the RADOS object store
 Group: Development/Python3
@@ -514,16 +489,6 @@ Obsoletes: librgw2-devel < %EVR
 %description -n librgw-devel
 This package contains libraries and headers needed to develop programs
 that use RADOS gateway client library.
-
-%package -n python-module-rgw
-Summary: Python 2 libraries for the RADOS gateway
-Group: Development/Python
-Requires: librgw2 = %EVR
-Requires: python-module-rados = %EVR
-Conflicts: python-module-ceph < %EVR
-%description -n python-module-rgw
-This package contains Python 2 libraries for interacting with Cephs RADOS
-gateway.
 
 %package -n python3-module-rgw
 Summary: Python3 libraries for the RADOS gateway
@@ -578,16 +543,6 @@ Obsoletes: librbd1-devel < %EVR
 This package contains libraries and headers needed to develop programs
 that use RADOS block device.
 
-%package -n python-module-rbd
-Summary: Python libraries for the RADOS block device
-Group: Development/Python
-Requires: librbd1 = %EVR
-Requires: python-module-rados = %EVR
-Conflicts: python-module-ceph < %EVR
-%description -n python-module-rbd
-This package contains Python libraries for interacting with Cephs RADOS
-block device.
-
 %package -n python3-module-rbd
 Summary: Python3 libraries for the RADOS block device
 Group: Development/Python3
@@ -619,15 +574,6 @@ Obsoletes: libcephfs2-devel < %EVR
 %description -n libcephfs-devel
 This package contains libraries and headers needed to develop programs
 that use Cephs distributed file system.
-
-%package -n python-module-cephfs
-Summary: Python libraries for Ceph distributed file system
-Group: Development/Python
-Requires: libcephfs2 = %EVR
-Conflicts: python-module-ceph < %EVR
-%description -n python-module-cephfs
-This package contains Python libraries for interacting with Cephs distributed
-file system.
 
 %package -n python3-module-cephfs
 Summary: Python3 libraries for Ceph distributed file system
@@ -702,18 +648,6 @@ Requires: libcephfs-devel = %EVR
 This package contains libraries and headers needed to develop programs
 that use Ceph.
 
-%package -n python-module-ceph
-Summary: Python libraries for the Ceph distributed filesystem
-Group: Development/Python
-Requires: python-module-rados = %EVR
-Requires: python-module-rbd = %EVR
-Requires: python-module-cephfs = %EVR
-Requires: python-module-rgw = %EVR
-
-%description -n python-module-ceph
-This package contains Python libraries for interacting with Cephs RADOS
-object storage.
-
 %package -n python3-module-ceph
 Summary: Python3 libraries for the Ceph distributed filesystem
 Group: Development/Python
@@ -721,6 +655,8 @@ Requires: python3-module-rados = %EVR
 Requires: python3-module-rbd = %EVR
 Requires: python3-module-cephfs = %EVR
 Requires: python3-module-rgw = %EVR
+Requires: python3-module-ceph-argparse = %EVR
+Requires: python3-module-ceph-common = %EVR
 
 %description -n python3-module-ceph
 This package contains Python3 libraries for interacting with Cephs RADOS
@@ -737,6 +673,14 @@ Ceph clusters. The dashboards require a Prometheus server setup
 collecting data from Ceph Manager "prometheus" module and Prometheus
 project "node_exporter" module. The dashboards are designed to be
 integrated with the Ceph Manager Dashboard web UI.
+
+%package prometheus-alerts
+Summary: Prometheus alerts for a Ceph deplyoment
+BuildArch: noarch
+Group: Monitoring
+
+%description prometheus-alerts
+This package provides Ceph's default alerts for Prometheus.
 
 %prep
 %setup
@@ -772,7 +716,9 @@ tar -xf %SOURCE26 -C src/xxHash
 tar -xf %SOURCE28 -C src/c-ares
 tar -xf %SOURCE29 -C src/dmclock
 tar -xf %SOURCE30 -C src/seastar
-tar -xf %SOURCE31 -C src/seastar/fmt
+tar -xf %SOURCE31 -C src/fmt
+tar -xf %SOURCE32 -C src/spawn
+tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 
 %patch -p1
 
@@ -805,6 +751,8 @@ cmake .. \
     -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
     -DCMAKE_C_FLAGS:STRING='%optflags' \
     -DCMAKE_CXX_FLAGS:STRING='%optflags' \
+    -DWITH_REENTRANT_STRSIGNAL=ON \
+    -DWITH_THREAD_SAFE_RES_QUERY=ON \
 %if_with system_boost
     -DWITH_SYSTEM_BOOST=ON \
 %else
@@ -816,14 +764,7 @@ cmake .. \
     -DWITH_SYSTEMD=ON \
     -DWITH_LZ4=ON \
 %if_with python3
-    -DWITH_PYTHON3=ON \
-%endif
-%if_with python2
-    -DWITH_PYTHON2=ON \
-    -DMGR_PYTHON_VERSION=2 \
-%else
-    -DWITH_PYTHON2=OFF \
-    -DMGR_PYTHON_VERSION=3 \
+    -DWITH_PYTHON3=3 \
 %endif
 %if_without mgr_dashboard
     -DWITH_MGR_DASHBOARD_FRONTEND=OFF \
@@ -915,7 +856,6 @@ find %buildroot -type f -name "*.a" -exec rm -f {} ';'
 install -m 0644 -D src/etc-rbdmap %buildroot%_sysconfdir/ceph/rbdmap
 install -m 0644 -D etc/sysconfig/ceph %buildroot%_sysconfdir/sysconfig/ceph
 install -m 0644 -D etc/sysctl/90-ceph-osd.conf %buildroot%_sysctldir/90-ceph-osd.conf
-
 install -m 0644 -D systemd/ceph.tmpfiles.d %buildroot%_tmpfilesdir/ceph-common.conf
 install -m 0644 -D systemd/50-ceph.preset %buildroot/lib/systemd/system-preset/50-ceph.preset
 mv %buildroot%_libexecdir/systemd/system/* %buildroot/%_unitdir/
@@ -929,8 +869,17 @@ mv %buildroot%_sbindir/mount.ceph %buildroot/sbin/mount.ceph
 # udev rules
 install -m 0644 -D udev/50-rbd.rules %buildroot%_udevrulesdir/50-rbd.rules
 
+# cephadm
+install -m 0755 src/cephadm/cephadm %buildroot%_sbindir/cephadm
+mkdir -p %buildroot%_localstatedir/cephadm/.ssh
+touch %buildroot%_localstatedir/cephadm/.ssh/authorized_keys
+
 # sudoers.d
 install -m 0600 -D sudoers.d/ceph-osd-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-osd-smartctl
+install -m 0600 -D sudoers.d/cephadm %buildroot%_sysconfdir/sudoers.d/cephadm
+
+# prometheus alerts
+install -m 644 -D monitoring/prometheus/alerts/ceph_default_alerts.yml %{buildroot}/etc/prometheus/ceph/ceph_default_alerts.yml
 
 #set up placeholder directories
 mkdir -p %buildroot%_sysconfdir/ceph
@@ -957,30 +906,23 @@ mkdir -p %buildroot%_localstatedir/ceph/bootstrap-rbd-mirror
 rm -rf %buildroot%_docdir/ceph
 
 rm -rf %buildroot%_datadir/ceph/mgr/hello
-rm -rf %buildroot%_datadir/ceph/mgr/osd_perf_query
-rm -f %buildroot%_datadir/ceph/mgr/orchestrator_cli/{run-tox.sh,tox.ini}
-rm -f %buildroot%_datadir/ceph/mgr/orchestrator_cli/test_orchestrator.py
+
 rm -rf %buildroot%_datadir/ceph/mgr/test_orchestrator
-rm -f %buildroot%_datadir/ceph/mgr/ansible/{run-tox.sh,tox.ini}
-rm -rf %buildroot%_datadir/ceph/mgr/ansible/tests
 rm -rf %buildroot%_datadir/ceph/mgr/dashboard/tests
 rm -f %buildroot%_datadir/ceph/mgr/dashboard/tox.ini
 rm -f %buildroot%_datadir/ceph/mgr/dashboard/*.sh
 rm -f %buildroot%_datadir/ceph/mgr/insights/{run-tox.sh,tox.ini}
 rm -rf %buildroot%_datadir/ceph/mgr/insights/tests
-rm -f %buildroot%_datadir/ceph/mgr/ssh/{Vagrantfile,ceph.repo}
 rm -rf %buildroot%python3_sitelibdir_noarch/cephfs_shell-*.egg-info
 
-%if_with check
 %check
 # run in-tree unittests
 cd build
 ctest %{?_smp_mflags}
-%endif
 
 %pre common
-%_sbindir/groupadd -r -f ceph 2>/dev/null ||:
-%_sbindir/useradd  -r -g ceph -s /sbin/nologin -c "Ceph daemons" -d %_localstatedir/ceph ceph 2>/dev/null ||:
+groupadd -r -f ceph 2>/dev/null ||:
+useradd  -r -g ceph -s /sbin/nologin -c "Ceph daemons" -d %_localstatedir/ceph ceph 2>/dev/null ||:
 
 %post common
 systemd-tmpfiles --create %_tmpfilesdir/ceph-common.conf
@@ -1087,6 +1029,24 @@ if [ "$1" -eq 0 ]; then
         systemctl stop ceph-radosgw@\*.service ceph-radosgw.target ||:
 fi
 
+%post immutable-object-cache
+systemctl daemon-reload ||:
+if [ "$1" -eq 1 ]; then
+        systemctl -q preset ceph-immutable-object-cache@\*.service ceph-immutable-object-cache.target ||:
+else
+        systemctl try-restart ceph-immutable-object-cache.target ||:
+fi
+
+%preun immutable-object-cache
+if [ "$1" -eq 0 ]; then
+        systemctl --no-reload -q ceph-immutable-object-cache@\*.service ceph-immutable-object-cache.target ||:
+        systemctl stop ceph-immutable-object-cache@\*.service ceph-immutable-object-cache.target ||:
+fi
+
+%pre -n cephadm
+groupadd -r -f cephadm 2>/dev/null ||:
+useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstatedir/cephadm cephadm 2>/dev/null ||:
+
 
 %files
 
@@ -1189,6 +1149,14 @@ fi
 %attr(3770,root,ceph) %dir %_logdir/ceph
 %attr(0750,ceph,ceph) %dir %_localstatedir/ceph
 
+%files -n cephadm
+%_sbindir/cephadm
+%_man8dir/cephadm.8*
+%config(noreplace) %_sysconfdir/sudoers.d/cephadm
+%attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm
+%attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm/.ssh
+%attr(0600,cephadm,cephadm) %_localstatedir/cephadm/.ssh/authorized_keys
+
 %files mds
 %_bindir/ceph-mds
 %_mandir/man8/ceph-mds.8*
@@ -1206,18 +1174,24 @@ fi
 
 %files mgr
 %_bindir/ceph-mgr
-%dir %_datadir/ceph/mgr
 %_datadir/ceph/mgr/__pycache__
+%_datadir/ceph/mgr/mgr_module.*
+%_datadir/ceph/mgr/mgr_util.*
+%_unitdir/ceph-mgr@.service
+%_unitdir/ceph-mgr.target
+%attr(750,ceph,ceph) %dir %_localstatedir/ceph/mgr
+
+%files mgr-modules-core
+%dir %_datadir/ceph/mgr
 %_datadir/ceph/mgr/alerts
 %_datadir/ceph/mgr/balancer
 %_datadir/ceph/mgr/crash
 %_datadir/ceph/mgr/devicehealth
 %_datadir/ceph/mgr/iostat
 %_datadir/ceph/mgr/localpool
-%_datadir/ceph/mgr/mgr_module.*
-%_datadir/ceph/mgr/mgr_util.*
-%_datadir/ceph/mgr/orchestrator_cli
-%_datadir/ceph/mgr/orchestrator.*
+%_datadir/ceph/mgr/orchestrator
+%_datadir/ceph/mgr/osd_perf_query
+%_datadir/ceph/mgr/osd_support
 %_datadir/ceph/mgr/pg_autoscaler
 %_datadir/ceph/mgr/progress
 %_datadir/ceph/mgr/rbd_support
@@ -1225,18 +1199,9 @@ fi
 %_datadir/ceph/mgr/status
 %_datadir/ceph/mgr/telemetry
 %_datadir/ceph/mgr/volumes
-%_unitdir/ceph-mgr@.service
-%_unitdir/ceph-mgr.target
-%attr(750,ceph,ceph) %dir %_localstatedir/ceph/mgr
-
-%files mgr-ansible
-%_datadir/ceph/mgr/ansible
 
 %files mgr-dashboard
 %_datadir/ceph/mgr/dashboard
-
-%files mgr-deepsea
-%_datadir/ceph/mgr/deepsea
 
 %files mgr-diskprediction-local
 %_datadir/ceph/mgr/diskprediction_local
@@ -1262,8 +1227,8 @@ fi
 %files mgr-k8sevents
 %_datadir/ceph/mgr/k8sevents
 
-%files mgr-ssh
-%_datadir/ceph/mgr/ssh
+%files mgr-cephadm
+%_datadir/ceph/mgr/cephadm
 
 %files mgr-telegraf
 %_datadir/ceph/mgr/telegraf
@@ -1307,6 +1272,12 @@ fi
 %_unitdir/ceph-radosgw@.service
 %_unitdir/ceph-radosgw.target
 
+%files immutable-object-cache
+%_bindir/ceph-immutable-object-cache
+%_man8dir/ceph-immutable-object-cache.8*
+%_unitdir/ceph-immutable-object-cache@.service
+%_unitdir/ceph-immutable-object-cache.target
+
 %files osd
 %_bindir/ceph-clsinfo
 %_bindir/ceph-bluestore-tool
@@ -1326,7 +1297,7 @@ fi
 %_unitdir/ceph-volume@.service
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/osd
 %_sysctldir/90-ceph-osd.conf
-%_sysconfdir/sudoers.d/ceph-osd-smartctl
+%config(noreplace) %_sysconfdir/sudoers.d/ceph-osd-smartctl
 
 %if_with ocf
 %files resource-agents
@@ -1334,6 +1305,7 @@ fi
 %endif
 
 %files -n librados2
+%dir %_sysconfdir/ceph
 %_libdir/librados.so.*
 %dir %_libdir/ceph
 %_libdir/ceph/libceph-common.so.*
@@ -1386,6 +1358,7 @@ fi
 %endif
 
 %files -n librgw2
+%_libdir/libradosgw.so.*
 %_libdir/librgw.so.*
 %_libdir/librgw_admin_user.so.*
 %if_with lttng
@@ -1397,6 +1370,7 @@ fi
 %_includedir/rados/librgw.h
 %_includedir/rados/rgw_file.h
 %_includedir/rados/librgw_admin_user.h
+%_libdir/libradosgw.so
 %_libdir/librgw.so
 %_libdir/librgw_admin_user.so
 %if_with lttng
@@ -1405,6 +1379,7 @@ fi
 %endif
 
 %files -n libcephfs2
+%dir %_sysconfdir/ceph
 %_libdir/libcephfs.so.*
 
 %files -n libcephfs-devel
@@ -1441,7 +1416,7 @@ fi
 %_bindir/ceph_xattr_bench
 %_bindir/ceph-coverage
 %_bindir/ceph-debugpack
-%_bindir/cephdeduptool
+%_bindir/ceph-dedup-tool
 #_bindir/dmclock-tests
 #_bindir/dmclock-data-struct-tests
 %_mandir/man8/ceph-debugpack.8*
@@ -1464,47 +1439,24 @@ fi
 %if_with grafana
 %files -n grafana-dashboards-ceph
 %dir %_sysconfdir/grafana/dashboards/ceph-dashboard
-%config %_sysconfdir/grafana/dashboards/ceph-dashboard/*
+%config(noreplace) %_sysconfdir/grafana/dashboards/ceph-dashboard/*
 %doc monitoring/grafana/dashboards/README
 %doc monitoring/grafana/README.md
 %endif
 
+%files prometheus-alerts
+%dir %_sysconfdir/prometheus/ceph
+%config(noreplace) %_sysconfdir/prometheus/ceph/ceph_default_alerts.yml
+
 %files devel
-
-%if_with python2
-%files -n python-module-ceph
-
-%files -n python-module-ceph_volume
-%dir %python_sitelibdir_noarch/ceph_volume
-%python_sitelibdir_noarch/ceph_volume/*
-%python_sitelibdir_noarch/ceph_volume-*
-
-%files -n python-module-ceph-argparse
-%python_sitelibdir_noarch/ceph_argparse.py*
-%python_sitelibdir_noarch/ceph_daemon.py*
-
-%files -n python-module-rados
-%python_sitelibdir/rados.so
-%python_sitelibdir/rados-*.egg-info
-
-%files -n python-module-rbd
-%python_sitelibdir/rbd.so
-%python_sitelibdir/rbd-*.egg-info
-
-%files -n python-module-rgw
-%python_sitelibdir/rgw.so
-%python_sitelibdir/rgw-*.egg-info
-
-%files -n python-module-cephfs
-%python_sitelibdir/cephfs.so
-%python_sitelibdir/cephfs-*.egg-info
-%python_sitelibdir_noarch/ceph_volume_client.py*
-
-%endif
 
 %if_with python3
 
 %files -n python3-module-ceph
+
+%files -n python3-module-ceph-common
+%python3_sitelibdir_noarch/ceph
+%python3_sitelibdir_noarch/ceph-*.egg-info
 
 %files -n python3-module-ceph_volume
 %python3_sitelibdir_noarch/ceph_volume
@@ -1542,6 +1494,18 @@ fi
 %endif
 
 %changelog
+* Thu Sep 17 2020 Alexey Shabalin <shaba@altlinux.org> 15.2.5-alt1
+- 15.2.5
+- drop python2 support
+- build with -DWITH_REENTRANT_STRSIGNAL=ON
+- build with -DWITH_THREAD_SAFE_RES_QUERY=ON
+- add ceoh-cephadm and ceph-mgr-cephadm packages
+- add ceph-immutable-object-cache package
+- add ceph-prometheus-alerts with alert config for prometheus
+- drop ceph-ssh, ceph-mgr-ansible, ceph-mgr-deepsea packages
+- move basic mgr modules from ceph-mgr to ceph-mgr-modules-core
+- add python3-module-ceph-common package
+
 * Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 14.2.11-alt1
 - 14.2.11
 
