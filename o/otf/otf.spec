@@ -5,7 +5,7 @@ License: BSD
 Group: Development/Tools
 Summary: Tools and library for support the Open Trace Format (OTF)
 Version: 1.2.18
-Release: alt5
+Release: alt6
 Url: http://www.paratools.com/otf/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -45,8 +45,6 @@ This package contains static development files for OTF.
 Summary: Development files for Open Trace Format (OTF)
 Group: Development/C++
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
 
 %description -n lib%name-devel
 The Open Trace Format (OTF) is a new trace definition and representation for use
@@ -58,8 +56,6 @@ This package contains development files for OTF.
 %package -n lib%name-devel-static
 Summary: Static library for Open Trace Format (OTF)
 Group: Development/C++
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
 
 %description -n lib%name-devel-static
 The Open Trace Format (OTF) is a new trace definition and representation for use
@@ -140,6 +136,9 @@ popd
 %_docdir/%name-api
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 1.2.18-alt6
+- Fixed FTBFS.
+
 * Wed Feb 09 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt5
 - Rebuilt for debuginfo
 
