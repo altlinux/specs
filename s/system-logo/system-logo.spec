@@ -1,5 +1,5 @@
 Name: system-logo
-Version: 10.1
+Version: 10.2
 Release: alt1
 
 Summary: Generic System Logo
@@ -37,6 +37,9 @@ ln -s /dev/null %buildroot/%_sysconfdir/system-logo.png
 %_sysconfdir/alternatives/packages.d/%name
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 10.2-alt1
+- update logo sample
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 10.1-alt1
 - move alternative symlink to /etc/
 - provide logo sample
