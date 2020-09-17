@@ -1,57 +1,57 @@
-%define ver_major 0.4
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
+%define ver_major 0.5
+%define rdn_name info.olasagasti.revelation
 
 Name: revelation
-Version: %ver_major.14
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
-Summary: Keyring management program for the GNOME Desktop
-License: %gpl2plus
+Summary: Password manager for the GNOME 3 desktop
+License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://revelation.olasagasti.info/
-#Url: http://oss.codepoet.no/%name
 
-#VCS: https://github.com/mikelolasagasti/revelation.git
-#Source: %name.tar
-Source: ftp://oss.codepoet.no/%name/%name-%version.tar.bz2
-Patch: %name-0.4.12-alt1-configure.patch
+%if_disabled snapshot
+Source: https://github.com/mikelolasagasti/%name/archive/%name-%version/%name-%version.tar.gz
+%else
+Vcs: https://github.com/mikelolasagasti/revelation.git
+Source: %name-%version.tar
+%endif
 
-%define GConf_ver 2.10.0
-Requires(pre): GConf >= %GConf_ver
+BuildArch: noarch
 
-BuildRequires: rpm-build-gnome rpm-build-licenses
-BuildRequires: shared-mime-info intltool desktop-file-utils
-BuildRequires: cracklib-devel cracklib-utils
-BuildRequires: GConf libGConf-devel
-BuildPreReq: python-module-pygtk-devel >= 2.8.0
-BuildPreReq: python-module-pygnome-devel >= 2.10.0
-BuildRequires: python-module-dbus-devel
+%define python_ver 3.7
+%define gtk_ver 3.22
 
-BuildRequires: python-module-Crypto
-BuildRequires: python-module-cracklib
-BuildRequires: python-module-pygnome-gconf
+Requires: dconf
+Requires: libgtk+3-gir >= %gtk_ver
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: shared-mime-info desktop-file-utils libappstream-glib-devel
+BuildRequires: libgtk+3-gir-devel >= %gtk_ver
+BuildRequires: python3-module-pygobject3-devel
+BuildRequires: python3-module-pycryptodomex
+BuildRequires: python3-module-pwquality
 
 %description
-This a keyring management program for the GNOME Desktop.
+Revelation is a password manager for the GNOME desktop. It stores all
+your accounts and passwords in a single, secure place, and gives you
+access to it through a user-friendly graphical interface.
 
 %prep
-%setup -n %name-%version
-%patch -p1
-sed -i 's|\(/usr/bin/python\)|\12|
-         s|\(/usr/bin/\)env \(python\)|\1\22|' src/%name.py src/*/*.py
+%setup
 
 %build
 %autoreconf
 %configure \
-		--disable-schemas-install \
+		--disable-schemas-compile \
 		--disable-desktop-update \
 		--disable-mime-update
-
 %make_build
 
 %install
 %makeinstall_std
-
 %find_lang --with-gnome %name
 
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -59,37 +59,23 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Settings \
 	--add-category=X-PersonalSettings \
 	--add-category=GTK \
-	%buildroot%_desktopdir/revelation.desktop
-
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
+	%buildroot%_desktopdir/%rdn_name.desktop
 
 %files -f %name.lang
 %_bindir/%name
-%dir %python_sitelibdir/%name
-%python_sitelibdir/%name/*.py
-%python_sitelibdir/%name/*.pyc
-%python_sitelibdir/%name/*.pyo
-%dir %python_sitelibdir/%name/bundle
-%dir %python_sitelibdir/%name/datahandler
-%python_sitelibdir/%name/*/*.py
-%python_sitelibdir/%name/*/*.pyc
-%python_sitelibdir/%name/*/*.pyo
-%_desktopdir/%name.desktop
+%_desktopdir/%rdn_name.desktop
+%python3_sitelibdir/%name/
 %_datadir/mime/packages/revelation.xml
 %_datadir/%name
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/*x*/apps/%name-locked.png
-%_iconsdir/hicolor/*x*/mimetypes/gnome-mime-application-x-%name.png
-%_iconsdir//hicolor/scalable/apps/revelation.svg
-%config %gconf_schemasdir/%name.schemas
+%_iconsdir/hicolor/*x*/*/*.png
+%_iconsdir//hicolor/scalable/*/*.svg
+%_datadir/glib-2.0/schemas/org.revelation.gschema.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Thu Sep 17 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3 (ported to PyGobject3/GTK3 and PyCryptodome)
+
 * Thu Feb 06 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.14-alt1.1
 - add explicit python2 in all shebangs
 
