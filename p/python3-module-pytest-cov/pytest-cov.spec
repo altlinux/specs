@@ -3,13 +3,13 @@
 
 %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 2.10.1
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/pytest-cov.git
 Url: https://pypi.org/project/pytest-cov/
 
@@ -37,18 +37,6 @@ coverage of subprocesses.
 All features offered by the coverage package should be available, either
 through pytest-cov or through coverage's config file.
 
-%package -n python3-module-%oname
-Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
-Group: Development/Python3
-
-%description -n python3-module-%oname
-This plugin produces coverage reports. It supports centralised testing
-and distributed testing in both load and each modes. It also supports
-coverage of subprocesses.
-
-All features offered by the coverage package should be available, either
-through pytest-cov or through coverage's config file.
-
 %prep
 %setup
 %patch -p1
@@ -56,22 +44,11 @@ through pytest-cov or through coverage's config file.
 grep -qsF 'time.sleep(1)' tests/test_pytest_cov.py || exit 1
 sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-
-pushd ../python3
 %python3_install
-popd
 
 %check
 sed -i -e '/^\[testenv\]$/a whitelist_externals =\
@@ -97,17 +74,14 @@ tox.py3 --sitepackages -vvr
 
 %files
 %doc README.rst CHANGELOG.rst
-%python_sitelibdir/pytest-cov.pth
-%python_sitelibdir/pytest_cov/
-%python_sitelibdir/pytest_cov-*.egg-info/
-
-%files -n python3-module-%oname
-%doc README.rst CHANGELOG.rst
 %python3_sitelibdir/pytest-cov.pth
 %python3_sitelibdir/pytest_cov/
 %python3_sitelibdir/pytest_cov-*.egg-info/
 
 %changelog
+* Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.10.1-alt2
+- Drop python2 support.
+
 * Mon Sep 07 2020 Stanislav Levin <slev@altlinux.org> 2.10.1-alt1
 - 2.8.1 -> 2.10.1.
 
