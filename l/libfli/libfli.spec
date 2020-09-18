@@ -1,18 +1,16 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libfli
 Version: 1.7
-Release: alt2_21
+Release: alt2_29
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
 
-Group: Development/Other
 # Code and LICENSE.LIB have different versions of the BSD license
 # https://sourceforge.net/tracker2/?func=detail&aid=2568511&group_id=90275&atid=593019
 License: BSD
@@ -21,6 +19,8 @@ URL: http://indi.sourceforge.net/index.php
 Source0: http://downloads.sourceforge.net/indi/%{name}%{majorver}_%{version}.tar.gz
 Patch0: libfli-suffix.patch
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires: ctest cmake 
 Source44: import.info
 Patch33: libfli1_1.7-alt-link-libm.patch
@@ -30,8 +30,8 @@ Finger Lakes Instrument library is used by applications to control FLI
 line of CCDs and Filter wheels
 
 %package devel
-Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/Other
+Summary: Libraries, includes, etc. used to develop an application with %{name}
 Requires: %{name} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
@@ -43,13 +43,15 @@ These are the header files needed to develop a %{name} application
 
 %build
 %{fedora_cmake}
-make VERBOSE=1 %{?_smp_mflags}
+%fedora_cmake_build 
 
 %install
-make install DESTDIR=%{buildroot}
+%fedora_cmake_install
+
+
 
 %files
-%doc LICENSE.BSD
+%doc --no-dereference LICENSE.BSD
 %{_libdir}/*.so.*
 
 %files devel
@@ -57,6 +59,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_29
+- update
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_21
 - update to new release by fcimport
 
