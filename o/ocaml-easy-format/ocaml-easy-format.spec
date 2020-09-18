@@ -1,9 +1,9 @@
 #ERROR: ./usr/lib/ocaml/easy-format/easy_format.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
-
-Name: ocaml-easy-format
+%define ocamlmod easy-format
+Name: ocaml-%ocamlmod
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: High-level and functional interface to the Format module
 License: BSD
 Group: Development/ML
@@ -49,26 +49,24 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-make
+%dune_build -p %ocamlmod
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-make check
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE
-%_libdir/ocaml/easy-format
-%exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc LICENSE README.md CHANGES.md
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.mli
 
 %changelog
+* Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.3.2-alt2
+- migrated to rpm-build-ocaml 1.4
+
 * Mon Aug 05 2019 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 - added patch from suse to fix build with dune-2.x and ocaml 4.08

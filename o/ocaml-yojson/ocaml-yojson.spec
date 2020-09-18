@@ -1,9 +1,11 @@
 # ./usr/lib/ocaml/yojson/yojson.cmxs: TEXTREL entry found: 0x00000000
 %set_verify_elf_method textrel=relaxed
+%def_with check
+
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
 Version: 1.7.0
-Release: alt3
+Release: alt4
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
 License: BSD
@@ -17,6 +19,10 @@ BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-easy-format-devel
 BuildRequires: opam dune
+
+%if_with check
+BuildRequires: ocaml-alcotest-devel
+%endif
 
 %description
 Yojson is an optimized parsing and printing library for the JSON
@@ -43,33 +49,25 @@ developing applications that use %name.
 %setup
 
 %build
-make all
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc LICENSE.md
-%dir %_libdir/ocaml/%libname/
 %_bindir/ydump
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.cmxs
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc README.md Changes examples
-%_libdir/ocaml/*/dune-package
-%_libdir/ocaml/*/opam
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmt
-%_libdir/ocaml/*/*.cmti
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.mli
-%_libdir/ocaml/*/*.ml
 
 %changelog
+* Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt4
+- migrated to rpm-build-ocaml 1.4
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.7.0-alt3
 - cmxa have been moved to devel package
 
