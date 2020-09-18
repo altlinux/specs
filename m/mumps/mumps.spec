@@ -8,7 +8,7 @@
 %define sover %somver.10.0
 Name: mumps
 Version: 4.10.0
-Release: alt10
+Release: alt11
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: Free
 Group: Sciences/Mathematics
@@ -71,8 +71,6 @@ Summary: Development files of MUMPS
 Group: Development/Other
 Requires: lib%name-headers = %EVR
 Requires: lib%name = %EVR
-Conflicts: lib%name-devel < %EVR
-Obsoletes: lib%name-devel < %EVR
 
 %description -n lib%name-devel
 MUMPS solves a sparse system of linear equations A x = b
@@ -293,6 +291,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10.0-alt11
+- Updated conflicts and obsoletes.
+
 * Fri Jul 05 2019 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt10
 - build without arpack
 
