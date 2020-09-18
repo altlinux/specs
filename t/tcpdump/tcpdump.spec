@@ -1,6 +1,6 @@
 Name: tcpdump
 Version: 4.9.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network traffic monitoring tool
@@ -44,7 +44,7 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 
 %post
 /usr/sbin/groupadd -r -f tcpdump
-/usr/sbin/useradd -r -g tcpdump -d /dev/null -s /dev/null -n tcpdump >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r -g tcpdump -d /dev/null -s /dev/null -N tcpdump >/dev/null 2>&1 ||:
 
 %files
 %_sbindir/*
@@ -53,6 +53,9 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 %doc CHANGES CREDITS LICENSE README
 
 %changelog
+* Fri Sep 18 2020 Nikita Ermakov <arei@altlinux.org> 1:4.9.3-alt2
+- Use -N option with useradd instead of compat -n option.
+
 * Thu Oct 17 2019 Nikita Ermakov <arei@altlinux.org> 1:4.9.3-alt1
 - Updated to 4.9.3.
 - Do not compress CHANGES.
