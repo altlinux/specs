@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 20.3.17.173
+Version: 20.3.18.10
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -62,6 +62,9 @@ BuildRequires: libcurl-devel
 BuildRequires: libflatbuffers-devel
 BuildRequires: libgtest-devel
 BuildRequires: libfmt-devel
+%ifnarch aarch64
+BuildRequires: libunwind-devel
+%endif
 
 ExclusiveArch: aarch64 x86_64
 
@@ -120,7 +123,11 @@ fi
 	-DCMAKE_VERBOSE_MAKEFILE=0 \
 	-DUNBUNDLED=1 \
 	-DUSE_STATIC_LIBRARIES=1 \
-	-DUSE_UNWIND=0 \
+%ifnarch aarch64
+	-DUSE_UNWIND:BOOL=yes \
+%else
+	-DUSE_UNWIND:BOOL=no \
+%endif
 	-DCLICKHOUSE_SPLIT_BINARY=0 \
 	-DENABLE_JEMALLOC=0 \
 	-DUSE_INTERNAL_REPLXX:BOOL=ON \
@@ -186,6 +193,10 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.18.10-alt1
+- Updated to lts upstream version 20.3.18.10.
+- Enabled libunwind dependency.
+
 * Wed Sep 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.17.173-alt1
 - Updated to lts upstream version 20.3.17.173.
 
