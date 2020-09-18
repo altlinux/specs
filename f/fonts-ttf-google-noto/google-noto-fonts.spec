@@ -23,7 +23,7 @@ in Unicode.\
 
 Name:           fonts-ttf-google-noto
 Version:        20181223
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Hinted and Non Hinted OpenType fonts for Unicode scripts
 License:        OFL
 URL:            https://github.com/googlei18n/noto-fonts/
@@ -139,7 +139,6 @@ Summary:	Kufi Arabic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-kufi-arabic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-kufi-arabic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-kufi-arabic
 %common_desc
@@ -157,7 +156,6 @@ Summary:	Music font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-music = 20161022-alt1_4
-Obsoletes:	%{_fontname}-music-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-music
 %common_desc
@@ -175,7 +173,6 @@ Summary:	Naskh Arabic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-naskh-arabic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-naskh-arabic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-naskh-arabic
 %common_desc
@@ -193,7 +190,6 @@ Summary:	Naskh Arabic UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-naskh-arabic-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-naskh-arabic-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-naskh-arabic-ui
 %common_desc
@@ -211,7 +207,6 @@ Summary:	Sans font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans
 %common_desc
@@ -229,8 +224,6 @@ Summary:	Sans Display font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-display = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-display-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-sans-ui < %EVR
 
 %description -n fonts-ttf-google-noto-sans-display
 %common_desc
@@ -248,7 +241,6 @@ Summary:	Sans Adlam font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-adlam = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-adlam-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-adlam
 %common_desc
@@ -266,7 +258,6 @@ Summary:	Sans Adlam Unjoined font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-adlam-unjoined = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-adlam-unjoined-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-adlam-unjoined
 %common_desc
@@ -284,7 +275,6 @@ Summary:	Sans Anatolian Hieroglyphs font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-anatolian-hieroglyphs = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-anatolian-hieroglyphs-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-anatolian-hieroglyphs
 %common_desc
@@ -302,7 +292,6 @@ Summary:	Sans Arabic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-arabic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-arabic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-arabic
 %common_desc
@@ -320,7 +309,6 @@ Summary:	Sans Arabic UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-arabic-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-arabic-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-arabic-ui
 %common_desc
@@ -338,7 +326,6 @@ Summary:	Sans Armenian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-armenian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-armenian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-armenian
 %common_desc
@@ -356,7 +343,6 @@ Summary:	Sans Avestan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-avestan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-avestan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-avestan
 %common_desc
@@ -374,7 +360,6 @@ Summary:	Sans Bamum font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-bamum = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bamum-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bamum
 %common_desc
@@ -392,7 +377,6 @@ Summary:	Sans Bassa Vah font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-bassa-vah = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bassa-vah-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bassa-vah
 %common_desc
@@ -410,7 +394,6 @@ Summary:	Sans Batak font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-batak = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-batak-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-batak
 %common_desc
@@ -428,7 +411,6 @@ Summary:	Sans Bengali font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-bengali = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bengali-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali
 %common_desc
@@ -446,7 +428,6 @@ Summary:	Sans Bengali UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-bengali-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bengali-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali-ui
 %common_desc
@@ -464,7 +445,6 @@ Summary:	Sans Bhaiksuki font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-bhaiksuki = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bhaiksuki-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bhaiksuki
 %common_desc
@@ -482,7 +462,6 @@ Summary:	Sans Brahmi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-brahmi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-brahmi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-brahmi
 %common_desc
@@ -500,7 +479,6 @@ Summary:	Sans Buginese font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-buginese = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-buginese-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-buginese
 %common_desc
@@ -518,7 +496,6 @@ Summary:	Sans Buhid font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-buhid = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-buhid-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-buhid
 %common_desc
@@ -536,7 +513,6 @@ Summary:	Sans Canadian Aboriginal font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-canadian-aboriginal = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-canadian-aboriginal-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-canadian-aboriginal
 %common_desc
@@ -554,7 +530,6 @@ Summary:	Sans Caucasian Albanian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-caucasian-albanian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-caucasian-albanian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-caucasian-albanian
 %common_desc
@@ -572,7 +547,6 @@ Summary:	Sans Carian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-carian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-carian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-carian
 %common_desc
@@ -590,7 +564,6 @@ Summary:	Sans Chakma font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-chakma = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-chakma-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-chakma
 %common_desc
@@ -608,7 +581,6 @@ Summary:	Sans Cham font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-cham = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cham-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cham
 %common_desc
@@ -626,7 +598,6 @@ Summary:	Sans Cherokee font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-cherokee = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cherokee-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cherokee
 %common_desc
@@ -644,7 +615,6 @@ Summary:	Sans Coptic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-coptic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-coptic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-coptic
 %common_desc
@@ -662,7 +632,6 @@ Summary:	Sans Cuneiform font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-cuneiform = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cuneiform-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cuneiform
 %common_desc
@@ -680,7 +649,6 @@ Summary:	Sans Cypriot font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-cypriot = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cypriot-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cypriot
 %common_desc
@@ -698,7 +666,6 @@ Summary:	Sans Deseret font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-deseret = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-deseret-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-deseret
 %common_desc
@@ -716,7 +683,6 @@ Summary:	Sans Devanagari font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-devanagari = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-devanagari-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari
 %common_desc
@@ -734,7 +700,6 @@ Summary:	Sans Devanagari UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-devanagari-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-devanagari-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari-ui
 %common_desc
@@ -752,7 +717,6 @@ Summary:	Sans Duployan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-duployan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-duployan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-duployan
 %common_desc
@@ -770,7 +734,6 @@ Summary:	Sans Egyptian Hieroglyphs font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-egyptian-hieroglyphs = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-egyptian-hieroglyphs-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-egyptian-hieroglyphs
 %common_desc
@@ -788,7 +751,6 @@ Summary:	Sans Elbasan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-elbasan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-elbasan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-elbasan
 %common_desc
@@ -806,7 +768,6 @@ Summary:	Sans Ethiopic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-ethiopic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-ethiopic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-ethiopic
 %common_desc
@@ -824,7 +785,6 @@ Summary:	Sans Georgian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-georgian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-georgian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-georgian
 %common_desc
@@ -842,7 +802,6 @@ Summary:	Sans Glagolitic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-glagolitic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-glagolitic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-glagolitic
 %common_desc
@@ -860,7 +819,6 @@ Summary:	Sans Gothic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-gothic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-gothic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gothic
 %common_desc
@@ -878,7 +836,6 @@ Summary:	Sans Grantha font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-grantha = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-grantha-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-grantha
 %common_desc
@@ -896,7 +853,6 @@ Summary:	Sans Gujarati font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-gujarati = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-gujarati-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gujarati
 %common_desc
@@ -914,7 +870,6 @@ Summary:	Sans Gujarati UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-gujarati-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-gujarati-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gujarati-ui
 %common_desc
@@ -932,7 +887,6 @@ Summary:	Sans Gurmukhi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-gurmukhi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-gurmukhi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gurmukhi
 %common_desc
@@ -950,7 +904,6 @@ Summary:	Sans Gurmukhi UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-gurmukhi-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-gurmukhi-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gurmukhi-ui
 %common_desc
@@ -968,8 +921,6 @@ Summary:	Sans Hanunoo font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-hanunno = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-hanunoo-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-sans-hanunno < %EVR
 
 %description -n fonts-ttf-google-noto-sans-hanunno
 %common_desc
@@ -987,7 +938,6 @@ Summary:	Sans Hatran font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-hatran = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-hatran-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-hatran
 %common_desc
@@ -1005,7 +955,6 @@ Summary:	Sans Hebrew font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-hebrew = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-hebrew-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-hebrew
 %common_desc
@@ -1023,7 +972,6 @@ Summary:	Sans Imperial Aramaic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-imperial-aramaic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-imperial-aramaic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-imperial-aramaic
 %common_desc
@@ -1041,7 +989,6 @@ Summary:	Sans Inscriptional Pahlavi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-inscriptional-pahlavi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-inscriptional-pahlavi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-inscriptional-pahlavi
 %common_desc
@@ -1059,7 +1006,6 @@ Summary:	Sans Inscriptional Parthian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-inscriptional-parthian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-inscriptional-parthian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-inscriptional-parthian
 %common_desc
@@ -1077,7 +1023,6 @@ Summary:	Sans Javanese font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-javanese = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-javanese-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-javanese
 %common_desc
@@ -1095,7 +1040,6 @@ Summary:	Sans Kaithi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-kaithi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kaithi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kaithi
 %common_desc
@@ -1113,7 +1057,6 @@ Summary:	Sans Kannada font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-kannada = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kannada-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada
 %common_desc
@@ -1131,7 +1074,6 @@ Summary:	Sans Kannada UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-kannada-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kannada-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada-ui
 %common_desc
@@ -1149,7 +1091,6 @@ Summary:	Sans Kayah Li font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-kayah-li = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kayah-li-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kayah-li
 %common_desc
@@ -1167,7 +1108,6 @@ Summary:	Sans Kharoshthi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-kharoshthi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kharoshthi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kharoshthi
 %common_desc
@@ -1185,7 +1125,6 @@ Summary:	Sans Khmer font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-khmer = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khmer-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer
 %common_desc
@@ -1203,7 +1142,6 @@ Summary:	Sans Khmer UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-khmer-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khmer-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer-ui
 %common_desc
@@ -1221,7 +1159,6 @@ Summary:	Sans Khojki font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-khojki = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khojki-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khojki
 %common_desc
@@ -1239,7 +1176,6 @@ Summary:	Sans Khudawadi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-khudawadi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khudawadi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khudawadi
 %common_desc
@@ -1257,7 +1193,6 @@ Summary:	Sans Lao font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lao = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lao-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao
 %common_desc
@@ -1275,7 +1210,6 @@ Summary:	Sans Lao UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lao-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lao-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao-ui
 %common_desc
@@ -1293,7 +1227,6 @@ Summary:	Sans Lepcha font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lepcha = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lepcha-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lepcha
 %common_desc
@@ -1311,7 +1244,6 @@ Summary:	Sans Limbu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-limbu = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-limbu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-limbu
 %common_desc
@@ -1329,7 +1261,6 @@ Summary:	Sans Linear A font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-linear-a = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-linear-a-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-linear-a
 %common_desc
@@ -1347,8 +1278,6 @@ Summary:	Sans Linear B font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-linearb = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-linear-b-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-sans-linearb < %EVR
 
 %description -n fonts-ttf-google-noto-sans-linearb
 %common_desc
@@ -1366,7 +1295,6 @@ Summary:	Sans Lisu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lisu = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lisu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lisu
 %common_desc
@@ -1384,7 +1312,6 @@ Summary:	Sans Lycian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lycian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lycian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lycian
 %common_desc
@@ -1402,7 +1329,6 @@ Summary:	Sans Lydian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-lydian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lydian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lydian
 %common_desc
@@ -1420,7 +1346,6 @@ Summary:	Sans Mahajani font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mahajani = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mahajani-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mahajani
 %common_desc
@@ -1438,7 +1363,6 @@ Summary:	Sans Malayalam font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-malayalam = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-malayalam-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam
 %common_desc
@@ -1456,7 +1380,6 @@ Summary:	Sans Malayalam UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-malayalam-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-malayalam-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam-ui
 %common_desc
@@ -1474,7 +1397,6 @@ Summary:	Sans Mandaic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mandaic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mandaic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mandaic
 %common_desc
@@ -1492,7 +1414,6 @@ Summary:	Sans Manichaean font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-manichaean = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-manichaean-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-manichaean
 %common_desc
@@ -1510,7 +1431,6 @@ Summary:	Sans Marchen font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-marchen = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-marchen-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-marchen
 %common_desc
@@ -1528,7 +1448,6 @@ Summary:	Sans Math font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-math-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-math-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-math
 %common_desc
@@ -1546,8 +1465,6 @@ Summary:	Sans Meetei Mayek font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-meeteimayek = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-meetei-mayek-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-sans-meeteimayek < %EVR
 
 %description -n fonts-ttf-google-noto-sans-meeteimayek
 %common_desc
@@ -1565,7 +1482,6 @@ Summary:	Sans Mende Kikakui font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mende-kikakui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mende-kikakui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mende-kikakui
 %common_desc
@@ -1583,7 +1499,6 @@ Summary:	Sans Meroitic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-meroitic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-meroitic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-meroitic
 %common_desc
@@ -1601,7 +1516,6 @@ Summary:	Sans Miao font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-miao = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-miao-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-miao
 %common_desc
@@ -1619,7 +1533,6 @@ Summary:	Sans Modi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-modi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-modi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-modi
 %common_desc
@@ -1637,7 +1550,6 @@ Summary:	Sans Mongolian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mongolian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mongolian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mongolian
 %common_desc
@@ -1655,7 +1567,6 @@ Summary:	Sans Mro font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mro = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mro-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mro
 %common_desc
@@ -1673,7 +1584,6 @@ Summary:	Sans Multani font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-multani = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-multani-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-multani
 %common_desc
@@ -1691,7 +1601,6 @@ Summary:	Sans Myanmar font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-myanmar = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-myanmar-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar
 %common_desc
@@ -1709,7 +1618,6 @@ Summary:	Sans Myanmar UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-myanmar-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-myanmar-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar-ui
 %common_desc
@@ -1727,7 +1635,6 @@ Summary:	Sans Nabataean font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-nabataean = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-nabataean-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-nabataean
 %common_desc
@@ -1745,7 +1652,6 @@ Summary:	Sans New Tai Lue font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-new-tai-lue = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-new-tai-lue-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-new-tai-lue
 %common_desc
@@ -1763,7 +1669,6 @@ Summary:	Sans Newa font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-newa = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-newa-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-newa
 %common_desc
@@ -1781,7 +1686,6 @@ Summary:	Sans NKo font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-nko = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-nko-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-nko
 %common_desc
@@ -1799,7 +1703,6 @@ Summary:	Sans Ogham font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-ogham = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-ogham-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-ogham
 %common_desc
@@ -1817,7 +1720,6 @@ Summary:	Sans Ol Chiki font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-ol-chiki = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-ol-chiki-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-ol-chiki
 %common_desc
@@ -1835,7 +1737,6 @@ Summary:	Sans Old Hungarian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-hungarian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-hungarian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-hungarian
 %common_desc
@@ -1853,7 +1754,6 @@ Summary:	Sans Old Italic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-italic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-italic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-italic
 %common_desc
@@ -1871,7 +1771,6 @@ Summary:	Sans Old North Arabian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-north-arabian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-north-arabian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-north-arabian
 %common_desc
@@ -1889,7 +1788,6 @@ Summary:	Sans Old Permic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-permic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-permic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-permic
 %common_desc
@@ -1907,7 +1805,6 @@ Summary:	Sans Old Persian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-persian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-persian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-persian
 %common_desc
@@ -1925,7 +1822,6 @@ Summary:	Sans Old South Arabian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-south-arabian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-south-arabian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-south-arabian
 %common_desc
@@ -1943,7 +1839,6 @@ Summary:	Sans Old Turkic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-old-turkic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-old-turkic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-old-turkic
 %common_desc
@@ -1961,7 +1856,6 @@ Summary:	Sans Osage font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-osage = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-osage-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-osage
 %common_desc
@@ -1979,7 +1873,6 @@ Summary:	Sans Osmanya font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-osmanya = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-osmanya-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-osmanya
 %common_desc
@@ -1997,7 +1890,6 @@ Summary:	Sans Pahawh Hmong font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-pahawh-hmong = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-pahawh-hmong-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-pahawh-hmong
 %common_desc
@@ -2015,7 +1907,6 @@ Summary:	Sans Palmyrene font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-palmyrene = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-palmyrene-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-palmyrene
 %common_desc
@@ -2033,7 +1924,6 @@ Summary:	Sans Pau Cin Hau font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-pau-cin-hau = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-pau-cin-hau-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-pau-cin-hau
 %common_desc
@@ -2051,7 +1941,6 @@ Summary:	Sans Phags Pa font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-phags-pa = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-phags-pa-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-phags-pa
 %common_desc
@@ -2069,7 +1958,6 @@ Summary:	Sans Phoenician font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-phoenician = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-phoenician-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-phoenician
 %common_desc
@@ -2087,7 +1975,6 @@ Summary:	Sans Psalter Pahlavi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-psalter-pahlavi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-psalter-pahlavi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-psalter-pahlavi
 %common_desc
@@ -2105,7 +1992,6 @@ Summary:	Sans Rejang font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-rejang = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-rejang-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-rejang
 %common_desc
@@ -2123,7 +2009,6 @@ Summary:	Sans Runic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-runic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-runic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-runic
 %common_desc
@@ -2141,7 +2026,6 @@ Summary:	Sans Samaritan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-samaritan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-samaritan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-samaritan
 %common_desc
@@ -2159,7 +2043,6 @@ Summary:	Sans Saurashtra font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-saurashtra = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-saurashtra-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-saurashtra
 %common_desc
@@ -2177,7 +2060,6 @@ Summary:	Sans Sharada font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-sharada = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sharada-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sharada
 %common_desc
@@ -2195,7 +2077,6 @@ Summary:	Sans Shavian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-shavian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-shavian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-shavian
 %common_desc
@@ -2213,7 +2094,6 @@ Summary:	Sans Sinhala font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-sinhala = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sinhala-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sinhala
 %common_desc
@@ -2231,7 +2111,6 @@ Summary:	Sans Sinhala UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-sinhala-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sinhala-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sinhala-ui
 %common_desc
@@ -2249,7 +2128,6 @@ Summary:	Sans Sora Sompeng font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-sora-sompeng = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sora-sompeng-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sora-sompeng
 %common_desc
@@ -2267,7 +2145,6 @@ Summary:	Sans Sundanese font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-sundanese = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sundanese-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sundanese
 %common_desc
@@ -2285,7 +2162,6 @@ Summary:	Sans Syloti Nagri font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-syloti-nagri = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-syloti-nagri-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-syloti-nagri
 %common_desc
@@ -2303,7 +2179,6 @@ Summary:	Sans Symbols font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-symbols = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-symbols-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-symbols
 %common_desc
@@ -2321,7 +2196,6 @@ Summary:	Sans Symbols2 font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-symbols2 = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-symbols2-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-symbols2
 %common_desc
@@ -2339,7 +2213,6 @@ Summary:	Sans Syriac font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-syriac = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-syriac-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-syriac
 %common_desc
@@ -2357,7 +2230,6 @@ Summary:	Sans Syriac Eastern font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-syriac-eastern = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-syriac-eastern-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-syriac-eastern
 %common_desc
@@ -2375,7 +2247,6 @@ Summary:	Sans Syriac Estrangela font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-syriac-estrangela = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-syriac-estrangela-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-syriac-estrangela
 %common_desc
@@ -2393,7 +2264,6 @@ Summary:	Sans Syriac Western font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-syriac-western = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-syriac-western-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-syriac-western
 %common_desc
@@ -2411,7 +2281,6 @@ Summary:	Sans Tagalog font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tagalog = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tagalog-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tagalog
 %common_desc
@@ -2429,7 +2298,6 @@ Summary:	Sans Tagbanwa font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tagbanwa = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tagbanwa-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tagbanwa
 %common_desc
@@ -2447,7 +2315,6 @@ Summary:	Sans Takri font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-takri = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-takri-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-takri
 %common_desc
@@ -2465,7 +2332,6 @@ Summary:	Sans Tai Le font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tai-le = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tai-le-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tai-le
 %common_desc
@@ -2483,7 +2349,6 @@ Summary:	Sans Tai Tham font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tai-tham = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tai-tham-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tai-tham
 %common_desc
@@ -2501,7 +2366,6 @@ Summary:	Sans Tai Viet font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tai-viet = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tai-viet-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tai-viet
 %common_desc
@@ -2519,7 +2383,6 @@ Summary:	Sans Tamil font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tamil = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tamil-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil
 %common_desc
@@ -2537,7 +2400,6 @@ Summary:	Sans Tamil UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tamil-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tamil-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil-ui
 %common_desc
@@ -2555,7 +2417,6 @@ Summary:	Sans Telugu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-telugu = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-telugu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-telugu
 %common_desc
@@ -2573,7 +2434,6 @@ Summary:	Sans Telugu UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-telugu-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-telugu-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-telugu-ui
 %common_desc
@@ -2591,7 +2451,6 @@ Summary:	Sans Thaana font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-thaana = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thaana-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thaana
 %common_desc
@@ -2609,7 +2468,6 @@ Summary:	Sans Thai font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-thai = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thai-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai
 %common_desc
@@ -2627,7 +2485,6 @@ Summary:	Sans Thai UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-thai-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thai-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai-ui
 %common_desc
@@ -2645,7 +2502,6 @@ Summary:	Sans Tifinagh font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tifinagh = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tifinagh-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tifinagh
 %common_desc
@@ -2663,7 +2519,6 @@ Summary:	Sans Tirhuta font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tirhuta = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tirhuta-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tirhuta
 %common_desc
@@ -2681,7 +2536,6 @@ Summary:	Sans Ugaritic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-ugaritic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-ugaritic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-ugaritic
 %common_desc
@@ -2699,7 +2553,6 @@ Summary:	Sans Vai font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-vai = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-vai-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-vai
 %common_desc
@@ -2717,7 +2570,6 @@ Summary:	Sans Warang Citi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-warang-citi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-warang-citi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-warang-citi
 %common_desc
@@ -2735,7 +2587,6 @@ Summary:	Sans Yi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-yi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-yi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-yi
 %common_desc
@@ -2753,7 +2604,6 @@ Summary:	Serif font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif
 %common_desc
@@ -2771,7 +2621,6 @@ Summary:	Serif Ahom font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-ahom = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-ahom-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-ahom
 %common_desc
@@ -2789,7 +2638,6 @@ Summary:	Serif Armenian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-armenian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-armenian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-armenian
 %common_desc
@@ -2807,8 +2655,6 @@ Summary:	Serif Balinese font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-balinese = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-balinese-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-sans-balinese < %EVR
 
 %description -n fonts-ttf-google-noto-serif-balinese
 %common_desc
@@ -2826,7 +2672,6 @@ Summary:	Serif Display font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-display = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-display-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-display
 %common_desc
@@ -2844,7 +2689,6 @@ Summary:	Serif Ethiopic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-ethiopic = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-ethiopic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-ethiopic
 %common_desc
@@ -2862,7 +2706,6 @@ Summary:	Serif Georgian font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-georgian = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-georgian-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-georgian
 %common_desc
@@ -2880,7 +2723,6 @@ Summary:	Serif Hebrew font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-hebrew = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-hebrew-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-hebrew
 %common_desc
@@ -2898,7 +2740,6 @@ Summary:	Serif Khmer font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-khmer = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-khmer-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-khmer
 %common_desc
@@ -2916,7 +2757,6 @@ Summary:	Serif Lao font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-lao = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-lao-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-lao
 %common_desc
@@ -2934,7 +2774,6 @@ Summary:	Serif Myanmar font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-myanmar = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-myanmar-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-myanmar
 %common_desc
@@ -2952,7 +2791,6 @@ Summary:	Serif Tamil Slanted font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-tamil-slanted = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tamil-slanted-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tamil-slanted
 %common_desc
@@ -2970,7 +2808,6 @@ Summary:	Serif Thai font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-thai = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-thai-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-thai
 %common_desc
@@ -2988,7 +2825,6 @@ Summary:	Sans Oriya font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-oriya = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-oriya-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-oriya
 %common_desc
@@ -3006,7 +2842,6 @@ Summary:	Sans Oriya UI font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-oriya-ui = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-oriya-ui-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-oriya-ui
 %common_desc
@@ -3024,7 +2859,6 @@ Summary:	Sans Tibetan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-tibetan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tibetan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tibetan
 %common_desc
@@ -3042,7 +2876,6 @@ Summary:	Nastaliq Urdu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-nastaliq-urdu = 20161022-alt1_4
-Obsoletes:	%{_fontname}-nastaliq-urdu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-nastaliq-urdu
 %common_desc
@@ -3060,8 +2893,6 @@ Summary:	Sans Mono font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-mono = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mono-fonts = 20161022-alt1_4
-Obsoletes:	fonts-ttf-%{_fontname}-mono < %EVR
 
 %description -n fonts-ttf-google-noto-sans-mono
 %common_desc
@@ -3079,7 +2910,6 @@ Summary:	Serif Bengali font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-bengali = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-bengali-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-bengali
 %common_desc
@@ -3097,7 +2927,6 @@ Summary:	Serif Devanagari font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-devanagari = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-devanagari-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-devanagari
 %common_desc
@@ -3115,7 +2944,6 @@ Summary:	Serif Gujarati font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-gujarati = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-gujarati-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-gujarati
 %common_desc
@@ -3133,7 +2961,6 @@ Summary:	Serif Gurmukhi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-gurmukhi = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-gurmukhi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-gurmukhi
 %common_desc
@@ -3151,7 +2978,6 @@ Summary:	Serif Kannada font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-kannada = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-kannada-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-kannada
 %common_desc
@@ -3169,7 +2995,6 @@ Summary:	Serif Malayalam font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-malayalam = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-malayalam-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-malayalam
 %common_desc
@@ -3187,7 +3012,6 @@ Summary:	Serif Sinhala font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-sinhala = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-sinhala-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-sinhala
 %common_desc
@@ -3205,7 +3029,6 @@ Summary:	Serif Tamil font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-tamil = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tamil-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tamil
 %common_desc
@@ -3223,7 +3046,6 @@ Summary:	Serif Telugu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-telugu = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-telugu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-telugu
 %common_desc
@@ -3241,7 +3063,6 @@ Summary:	Serif Tibetan font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-serif-tibetan = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tibetan-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tibetan
 %common_desc
@@ -3259,7 +3080,6 @@ Summary:	Sans variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-vf
 %common_desc
@@ -3277,7 +3097,6 @@ Summary:	Sans Arabic variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-arabic-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-arabic-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-arabic-vf
 %common_desc
@@ -3295,7 +3114,6 @@ Summary:	Sans Arabic UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-arabic-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-arabic-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-arabic-ui-vf
 %common_desc
@@ -3313,7 +3131,6 @@ Summary:	Sans Armenian variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-armenian-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-armenian-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-armenian-vf
 %common_desc
@@ -3331,7 +3148,6 @@ Summary:	Sans Bengali variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-bengali-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bengali-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali-vf
 %common_desc
@@ -3349,7 +3165,6 @@ Summary:	Sans Bengali UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-bengali-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-bengali-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali-ui-vf
 %common_desc
@@ -3367,7 +3182,6 @@ Summary:	Sans Canadian Aboriginal variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-canadian-aboriginal-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-canadian-aboriginal-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-canadian-aboriginal-vf
 %common_desc
@@ -3385,7 +3199,6 @@ Summary:	Sans Cham variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-cham-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cham-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cham-vf
 %common_desc
@@ -3403,7 +3216,6 @@ Summary:	Sans Cherokee variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-cherokee-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-cherokee-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-cherokee-vf
 %common_desc
@@ -3421,7 +3233,6 @@ Summary:	Sans Devanagari variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-devanagari-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-devanagari-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari-vf
 %common_desc
@@ -3439,7 +3250,6 @@ Summary:	Sans Devanagari UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-devanagari-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-devanagari-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari-ui-vf
 %common_desc
@@ -3457,7 +3267,6 @@ Summary:	Sans Display variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-display-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-display-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-display-vf
 %common_desc
@@ -3475,7 +3284,6 @@ Summary:	Sans Ethiopic variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-ethiopic-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-ethiopic-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-ethiopic-vf
 %common_desc
@@ -3493,7 +3301,6 @@ Summary:	Sans Georgian variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-georgian-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-georgian-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-georgian-vf
 %common_desc
@@ -3511,7 +3318,6 @@ Summary:	Sans Hebrew variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-hebrew-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-hebrew-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-hebrew-vf
 %common_desc
@@ -3529,7 +3335,6 @@ Summary:	Sans Kannada variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-kannada-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kannada-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada-vf
 %common_desc
@@ -3547,7 +3352,6 @@ Summary:	Sans Kannada UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-kannada-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-kannada-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada-ui-vf
 %common_desc
@@ -3565,7 +3369,6 @@ Summary:	Sans Khmer variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-khmer-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khmer-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer-vf
 %common_desc
@@ -3583,7 +3386,6 @@ Summary:	Sans Khmer UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-khmer-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-khmer-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer-ui-vf
 %common_desc
@@ -3601,7 +3403,6 @@ Summary:	Sans Lao variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-lao-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lao-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao-vf
 %common_desc
@@ -3619,7 +3420,6 @@ Summary:	Sans Lao UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-lao-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-lao-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao-ui-vf
 %common_desc
@@ -3637,7 +3437,6 @@ Summary:	Sans Malayalam variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-malayalam-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-malayalam-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam-vf
 %common_desc
@@ -3655,7 +3454,6 @@ Summary:	Sans Malayalam UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-malayalam-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-malayalam-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam-ui-vf
 %common_desc
@@ -3673,7 +3471,6 @@ Summary:	Sans Mono variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-mono-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-mono-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-mono-vf
 %common_desc
@@ -3691,7 +3488,6 @@ Summary:	Sans Myanmar variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-myanmar-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-myanmar-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar-vf
 %common_desc
@@ -3709,7 +3505,6 @@ Summary:	Sans Myanmar UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-myanmar-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-myanmar-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar-ui-vf
 %common_desc
@@ -3727,7 +3522,6 @@ Summary:	Sans Sinhala variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-sinhala-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-sinhala-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-sinhala-vf
 %common_desc
@@ -3745,7 +3539,6 @@ Summary:	Sans Symbols variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-symbols-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-symbols-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-symbols-vf
 %common_desc
@@ -3763,7 +3556,6 @@ Summary:	Sans Tamil variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-tamil-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tamil-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil-vf
 %common_desc
@@ -3781,7 +3573,6 @@ Summary:	Sans Tamil UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-tamil-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-tamil-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil-ui-vf
 %common_desc
@@ -3799,7 +3590,6 @@ Summary:	Sans Thaana variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	fonts-ttf-google-noto-sans-thaana-vf = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thaana-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thaana-vf
 %common_desc
@@ -3817,7 +3607,6 @@ Summary:	Sans Thai variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-thai-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thai-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai-vf
 %common_desc
@@ -3835,7 +3624,6 @@ Summary:	Sans Thai UI variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-sans-thai-ui-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-sans-thai-ui-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai-ui-vf
 %common_desc
@@ -3853,7 +3641,6 @@ Summary:	Serif variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-vf
 %common_desc
@@ -3871,7 +3658,6 @@ Summary:	Serif Armenian variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-armenian-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-armenian-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-armenian-vf
 %common_desc
@@ -3889,7 +3675,6 @@ Summary:	Serif Display variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-display-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-display-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-display-vf
 %common_desc
@@ -3907,7 +3692,6 @@ Summary:	Serif Ethiopic variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-ethiopic-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-ethiopic-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-ethiopic-vf
 %common_desc
@@ -3925,7 +3709,6 @@ Summary:	Serif Georgian variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-georgian-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-georgian-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-georgian-vf
 %common_desc
@@ -3943,7 +3726,6 @@ Summary:	Serif Gujarati variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-gujarati-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-gujarati-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-gujarati-vf
 %common_desc
@@ -3961,7 +3743,6 @@ Summary:	Serif Gurmukhi variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-gurmukhi-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-gurmukhi-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-gurmukhi-vf
 %common_desc
@@ -3979,7 +3760,6 @@ Summary:	Serif Hebrew variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-hebrew-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-hebrew-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-hebrew-vf
 %common_desc
@@ -3997,7 +3777,6 @@ Summary:	Serif Kannada variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-kannada-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-kannada-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-kannada-vf
 %common_desc
@@ -4015,7 +3794,6 @@ Summary:	Serif Khmer variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-khmer-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-khmer-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-khmer-vf
 %common_desc
@@ -4033,7 +3811,6 @@ Summary:	Serif Lao variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-lao-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-lao-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-lao-vf
 %common_desc
@@ -4051,7 +3828,6 @@ Summary:	Serif Myanmar variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-myanmar-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-myanmar-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-myanmar-vf
 %common_desc
@@ -4069,7 +3845,6 @@ Summary:	Serif Sinhala variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-sinhala-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-sinhala-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-sinhala-vf
 %common_desc
@@ -4087,7 +3862,6 @@ Summary:	Serif Tamil variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-tamil-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tamil-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tamil-vf
 %common_desc
@@ -4105,7 +3879,6 @@ Summary:	Serif Tamil Slanted variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-tamil-slanted-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tamil-slanted-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tamil-slanted-vf
 %common_desc
@@ -4123,7 +3896,6 @@ Summary:	Serif Thai variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-thai-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-thai-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-thai-vf
 %common_desc
@@ -4141,7 +3913,6 @@ Summary:	Serif Tibetan variable font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{_fontname}-common = %EVR
 Conflicts:	%{_fontname}-serif-tibetan-vf-fonts = 20161022-alt1_4
-Obsoletes:	%{_fontname}-serif-tibetan-vf-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif-tibetan-vf
 %common_desc
@@ -4437,6 +4208,9 @@ done
 
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 20181223-alt1_2
+- fixed build
+
 * Thu Feb 07 2019 Igor Vlasenko <viy@altlinux.ru> 20181223-alt1_1
 - new version
 
