@@ -4,8 +4,8 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.616
-Release: alt1
+Version: 7.0.619
+Release: alt2
 License: LGPLv2.1
 Group: System/Libraries
 Url: https://openvz.org/
@@ -19,7 +19,7 @@ ExclusiveArch: x86_64
 Requires: libvzevent >= 7.0.0
 Requires: libploop >= 7.0.199
 Requires: cgroup
-Requires: crtools >= 2.8.0.15
+Requires: crtools-ovz >= 3.12.5.40
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
 BuildRequires: libvzevent-devel >= 5.0.0
 BuildRequires: libploop-devel >= 7.0.199
@@ -71,6 +71,19 @@ OpenVZ Containers API development library
 %_includedir/vzctl
 
 %changelog
+* Wed Sep 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.619-alt2
+- change criu to criu-ovz in scripts
+
+* Thu Sep 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.619-alt1
+- 7.0.619
+
+* Fri Sep 18 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.618-alt1
+- 7.0.618
+
+* Mon Sep 14 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.617-alt1
+- 7.0.617
+- R: crtools-ovz
+
 * Thu Sep 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.616-alt1
 - 7.0.616
 
