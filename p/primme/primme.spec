@@ -1,11 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
 %define sover %somver.1.1
+
 Name: primme
 Version: 1.1
-Release: alt13
+Release: alt14
 Summary: PReconditioned Iterative MultiMethod Eigensolver
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -40,9 +43,7 @@ This package contains shared libraries of PRIMME.
 %package -n lib%name-devel
 Summary: Development files of PRIMME
 Group: Development/Other
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 PRIMME finds a number of eigenvalues and their corresponding eigenvectors of a 
@@ -106,6 +107,8 @@ for i in libprimme libdprimme libzprimme; do
 done
 popd
 
+rm -f %buildroot%_libdir/*.a
+
 %files
 %doc COPYING.txt readme.txt doc.pdf
 %dir %_libdir/%name-%version
@@ -123,6 +126,9 @@ popd
 %doc DTEST ZTEST
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt14
+- Updated conflicts and obsoletes.
+
 * Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt13
 - Fixed build.
 
