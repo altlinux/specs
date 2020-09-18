@@ -2,11 +2,12 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: swig
 # END SourceDeps(oneline)
+BuildRequires(pre): rpm-macros-environment-modules
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           4ti2
 Version:        1.6.9
-Release:        alt1_4
+Release:        alt1_7
 Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
 %global relver %(tr . _ <<< %{version})
@@ -39,7 +40,7 @@ A software package for algebraic, geometric and combinatorial problems
 on linear spaces.
 
 This package uses Environment Modules.  Prior to invoking the binaries,
-you must run "module load 4ti2-%{_arch}" to modify your PATH.
+you must run "module load 4ti2-%%{_arch}" to modify your PATH.
 
 %package devel
 Group: System/Libraries
@@ -139,6 +140,9 @@ make check
 %{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_7
+- fixed build
+
 * Fri Dec 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_4
 - update to new release by fcimport
 
