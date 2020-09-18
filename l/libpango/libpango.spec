@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -138,7 +138,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %build
 %meson \
-    %{?_enable_fontconfig:-Duse_fontconfig=true} \
+    %{?_enable_fontconfig:-Duse_fontconfig=enabled} \
     %{?_enable_introspection:-Dintrospection=true} \
     %{?_enable_docs:-Dgtk_doc=true} \
     %{?_enable_installed_tests:-Dinstall-tests=true}
@@ -198,6 +198,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.46.2-alt1
+- 1.46.2
+
 * Thu Aug 20 2020 Yuri N. Sedunov <aris@altlinux.org> 1.46.1-alt1
 - 1.46.1
 
