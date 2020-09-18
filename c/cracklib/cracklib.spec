@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable python2
+%def_disable python
+%def_disable python2
 
 Name: cracklib
 Version: 2.9.7
-Release: alt3
+Release: alt4
 
 Summary: A password-checking library.
 License: LGPL-2.1-or-later
@@ -14,10 +15,10 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 
 Requires: %name-utils = %version-%release
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: libX11-devel libICE-devel
 BuildRequires: zlib-devel
+%{?_enable_python:BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel}
 %{?_enable_python2:BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel}
 
@@ -85,9 +86,12 @@ mv %name-%version py2build
 %autopatch -p1}
 
 %build
+%if_enabled python
 export PYTHON=python3
 export am_cv_python_version=%__python3_version%_python3_abiflags
 %add_optflags `pkg-config --cflags python3`
+%endif
+
 %autoreconf
 %configure \
 	--disable-static
@@ -108,9 +112,11 @@ popd
 %install
 %makeinstall_std
 
+%if_enabled python
 %if "%_libsuff" == "64"
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %if_enabled python2
@@ -136,7 +142,7 @@ _EOF_
 
 install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
-%find_lang cracklib
+%find_lang %name
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -151,9 +157,11 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %files utils
 %_sbindir/*
 
+%if_enabled python
 %files -n python3-module-%name
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.la
+%endif
 
 %if_enabled python2
 %files -n python-module-%name
@@ -163,6 +171,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 
 %changelog
+* Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt4
+- disabled useless python* modules
+
 * Wed Mar 04 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt3
 - small spec tweaks for build with Python-3.8
 
