@@ -1,8 +1,8 @@
 %define modulename txacme
 
 Name: python3-module-txacme
-Version: 0.9.2
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 Summary: ACME protocol implementation for Twisted
 
@@ -41,6 +41,9 @@ rm -rfv %buildroot%python3_sitelibdir/txacme/test/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3 (with rpmrb script)
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt2
 - drop tests from the package
 
