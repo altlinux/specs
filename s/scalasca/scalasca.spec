@@ -5,23 +5,19 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 2.3.1
-%define cubever 3.4.2.%over
+%define over 2.5
 %define somver 0
 %define sover %somver.%over
 
 Name: scalasca
 Version: %over
-Release: alt3
+Release: alt1
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
 Url: http://www.scalasca.org/
 
 Source: %name-%version.tar
-Source1: Makefile.shared
-Source2: status.m4
-Patch1: %name-%version-alt-linking.patch
 
 Requires: papi
 Requires: scorep libscorep-devel
@@ -35,7 +31,7 @@ BuildRequires(pre): %mpiimpl-devel
 BuildRequires: libgomp-devel libpapi-devel
 BuildRequires: doxygen binutils-devel
 BuildRequires: texlive-latex-base ghostscript-utils chrpath
-BuildRequires: libotf2-devel opari2-devel libcube-devel
+BuildRequires: libotf2-devel opari2-devel libcube-devel libcubegui-devel
 BuildRequires: graphviz flex libgomp-devel
 
 %description
@@ -123,9 +119,6 @@ This package contains development files of SCALASCA.
 
 %prep
 %setup
-%patch1 -p2
-# configure.ac uses some macros not provided by autoconf, just copy file with them from previous scalasca version
-cp %SOURCE2 vendor/common/build-config/m4/status.m4
 
 %build
 mpi-selector --set %mpiimpl
@@ -140,7 +133,7 @@ export CXX="mpicxx -g"
 	--prefix=%prefix \
 	--with-papi=%prefix \
 	--with-otf2 \
-	--with-cube \
+	--with-cubew \
 	--with-mpi=openmpi \
 	--with-pdt=%prefix \
 	--enable-all-mpi-wrappers \
@@ -183,6 +176,7 @@ done
 %doc ChangeLog COPYING OPEN_ISSUES README
 %_bindir/*
 %_datadir/%name
+%_man1dir/*
 
 %files doc
 %doc doc/*.pdf
@@ -199,6 +193,9 @@ done
 %_includedir/*
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt1
+- Updated to upstream version 2.5.
+
 * Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt3
 - Updated conflicts and obsoletes.
 

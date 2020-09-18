@@ -1,26 +1,36 @@
-#set_verify_elf_method unresolved=relaxed
+%define _unpackaged_files_terminate_build 1
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: scorep
-Version: 3.1
-Release: alt2
+Version: 6.0
+Release: alt1
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
 Group: Development/Tools
 Url: http://www.vi-hps.org/projects/score-p/
 
 Source: %name-%version.tar
-Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): %mpiimpl-devel
-BuildRequires: libotf2-devel opari2-devel libcube-devel
+BuildRequires: libotf2-devel opari2-devel libcube-devel libcubegui-devel
 BuildRequires: libbfd-devel uncrustify doxygen libpapi-devel flex
 BuildRequires: libcube-devel graphviz texlive-base-bin
 BuildRequires: lockfile-progs binutils-devel otf2 libgomp-devel
+BuildRequires: chrpath
 
 %description
+The Score-P (Scalable Performance Measurement Infrastructure for
+Parallel Codes) measurement infrastructure is a highly scalable and
+easy-to-use tool suite for profiling, event trace recording, and
+online analysis of HPC applications.
+
+%package -n lib%name
+Summary: Development files of Score-P
+Group: System/Libraries
+
+%description -n lib%name
 The Score-P (Scalable Performance Measurement Infrastructure for
 Parallel Codes) measurement infrastructure is a highly scalable and
 easy-to-use tool suite for profiling, event trace recording, and
@@ -54,51 +64,50 @@ This package contains documentation for Score-P.
 
 %prep
 %setup
-%patch1 -p2
+
+# remove some vendored sources
+rm -rf vendor/{cubelib,cubew,opari2,otf2}
 
 %build
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-#autoreconf
+%autoreconf
 %configure \
 	--with-mpi=openmpi \
 	--with-otf2 \
 	--with-opari2 \
-	--with-cube \
-	--disable-openmp \
-	--with-libbfd=yes
+	--with-cubew \
+	--with-cubelib \
+	%nil
 
-pushd build-backend
-%make_build V=1 libscorep_adapter_utils.la
-%make_build V=1 libscorep_mutex_mockup.la
-%make_build V=1 libscorep_adapter_compiler_mgmt.la
-%make_build V=1 libscorep_measurement.la
-#make_build V=1 libscorep_adapter_pomp_omp_mgmt_mockup.la
-%make_build V=1 libscorep_online_access_mockup.la
-%make_build V=1 libscorep_mutex_mockup.la
-popd
-pushd build-mpi
-%make_build V=1 libscorep_online_access_mpp_mpi.la
-popd
-
-%make V=1 TOPDIR=$PWD
+%make_build V=1
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%makeinstall_std TOPDIR=$PWD
+%makeinstall_std
+
+chrpath -d %buildroot%_bindir/scorep-score
+
+# remove unneeded stuff
+find %buildroot -type f -name libtool -print -delete
 
 %files
-%doc AUTHORS ChangeLog COPYING THANKS README
+%doc COPYING
+%doc AUTHORS ChangeLog THANKS README OPEN_ISSUES
 %_bindir/*
 %exclude %_bindir/scorep-config
 %_datadir/%name
 
+%files -n lib%name
+%_libdir/*.so.*
+
 %files -n lib%name-devel
 %_bindir/scorep-config
 %_includedir/*
+%_libdir/*.so
 %_libdir/*.a
 %_libdir/scorep/*.o
 
@@ -106,6 +115,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Mon Sep 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0-alt1
+- Updated to upstream version 6.0.
+
 * Wed Aug 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt2
 - Updated build dependencies.
 
