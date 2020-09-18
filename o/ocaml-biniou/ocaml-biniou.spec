@@ -1,8 +1,9 @@
 %set_verify_elf_method textrel=relaxed
+%define ocamlmod biniou
 
-Name: ocaml-biniou
+Name: ocaml-%ocamlmod
 Version: 1.2.1
-Release: alt2
+Release: alt3
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD
@@ -29,7 +30,7 @@ routine visualization of biniou data files.
 
 %package devel
 Summary: Development files for %name
-Requires: %name%{?_isa} = %version-%release
+Requires: %name = %EVR
 Group: Development/ML
 
 %description devel
@@ -38,32 +39,31 @@ developing applications that use %name.
 
 %prep
 %setup
+
 %build
-make all
+%dune_build -p %ocamlmod
+
 
 %install
-dune install --destdir=%buildroot
+%dune_install
+
+%check
+%dune_check
 
 # avoid potential future name conflict
 mv %buildroot%_bindir/{,ocaml-}bdump
 
-%files
+%files -f ocaml-files.runtime
 %doc LICENSE
-%_libdir/ocaml/biniou
-%exclude %_libdir/ocaml/*/*.a
-%exclude %_libdir/ocaml/*/*.cmxa
-%exclude %_libdir/ocaml/*/*.cmx
-%exclude %_libdir/ocaml/*/*.mli
 
-%files devel
-%doc LICENSE README.md CHANGES.md
+%files devel -f ocaml-files.devel
+%doc README.md CHANGES.md
 %_bindir/ocaml-bdump
-%_libdir/ocaml/*/*.a
-%_libdir/ocaml/*/*.cmxa
-%_libdir/ocaml/*/*.cmx
-%_libdir/ocaml/*/*.mli
 
 %changelog
+* Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 1.2.1-alt3
+- migrated to rpm-build-ocaml 1.4
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
 - built with dune-2.x
 
