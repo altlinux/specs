@@ -1,6 +1,6 @@
 Name: system-logo
 Version: 10.2
-Release: alt1
+Release: alt2
 
 Summary: Generic System Logo
 License: GPL-3.0-or-later
@@ -8,6 +8,7 @@ Group: System/Configuration/Other
 Url: http://altlinux.org/
 
 Requires(post,preun): alternatives >= 0.2
+Conflicts: branding-alt-education-bootsplash <= 9.1-alt1
 
 Source: %name-%version.tar
 
@@ -37,6 +38,9 @@ ln -s /dev/null %buildroot/%_sysconfdir/system-logo.png
 %_sysconfdir/alternatives/packages.d/%name
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 10.2-alt2
+- fix conflicts
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 10.2-alt1
 - update logo sample
 
