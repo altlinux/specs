@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.19.0
+Version: 1.19.3
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use jsonschema >= 2.5.1
 %py3_use frozendict >= 1
 %py3_use unpaddedbase64 >= 1.1.0
-%py3_use canonicaljson >= 1.1.3
+%py3_use canonicaljson >= 1.2.0
 %py3_use signedjson >= 1.1.0
 %py3_use pynacl >= 1.2.1
 %py3_use idna >= 2.5
@@ -37,11 +37,11 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use yaml >= 3.11
 %py3_use pyasn1 >= 0.1.9
 %py3_use pyasn1-modules >= 0.0.7
-%py3_use daemonize >= 2.3.1
+#py3_use daemonize >= 2.3.1
 %py3_use bcrypt >= 3.1.0
 %py3_use Pillow >= 4.3.0
 %py3_use sortedcontainers >= 1.4.4
-%py3_use psutil >= 2.0.0
+#py3_use psutil >= 2.0.0
 %py3_use pymacaroons-pynacl >= 0.13.0
 %py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
@@ -49,9 +49,9 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 # prometheus_client 0.4.0 changed the format of counter metrics
 # (cf https://github.com/matrix-org/synapse/issues/4001)
 %py3_use prometheus_client >= 0.0.18
-%py3_use prometheus_client < 0.8.0
-# we use attr.s(slots), which arrived in 16.0.0
-%py3_use attrs >= 17.4.0
+%py3_use prometheus_client < 0.9.0
+# we use attr.validators.deep_iterable, which arrived in 19.1.0
+%py3_use attrs >= 19.1.0
 %py3_use netaddr >= 0.7.18
 
 # Conditional
@@ -70,7 +70,8 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 
 # enable logging to systemd's journal
 %py3_use systemd >= 231
-
+# redis
+%py3_use txredisapi >= 1.4.7
 
 
 # for /usr/lib/matrix-synapse/sync_room_to_group.pl
@@ -150,6 +151,10 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 1.19.3-alt1
+- new version 1.19.3 (with rpmrb script)
+- update requirements (ALT bug 38962)
+
 * Sun Aug 23 2020 Vitaly Lipatov <lav@altlinux.ru> 1.19.0-alt1
 - new version 1.19.0 (with rpmrb script)
 
