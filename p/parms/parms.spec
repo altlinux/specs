@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -5,13 +7,13 @@
 %define sover %somver.2.0
 Name: parms
 Version: 3.2
-Release: alt9
+Release: alt10
 Summary: parallel Algebraic Recursive Multilevel Solvers 
 License: MIT
 Group: Sciences/Mathematics
 Url: http://www-users.cs.umn.edu/~saad/software/pARMS/
 
-Source: pARMS_%version.tar.gz
+Source: pARMS_%version.tar
 
 BuildPreReq: liblapack-devel libmetis-devel
 BuildPreReq: %mpiimpl-devel
@@ -57,9 +59,7 @@ This package contains shared library of pARMS.
 %package -n lib%name-devel
 Summary: Development files of pARMS
 Group: Development/Other
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 pARMS is a library of parallel solvers for distributed sparse linear systems of
@@ -153,6 +153,8 @@ ln -s lib%name.so.%sover lib%name.so.%somver
 ln -s lib%name.so.%somver lib%name.so
 popd
 
+rm -f %buildroot%_libdir/*.a
+
 %files
 %doc COPYRIGHT LGPL README
 %_bindir/*
@@ -169,6 +171,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt10
+- Updated conflicts and obsoletes.
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt9
 - Fixed build.
 
