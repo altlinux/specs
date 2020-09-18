@@ -1,7 +1,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 4.6.0
-Release: alt1
+Release: alt2
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
@@ -9,6 +9,7 @@ URL: https://gmsh.info/
 Source: %name-%version.tar
 
 Requires: getdp
+Requires: lib%name = %EVR
 
 # Can't build with libopenblas, use libatlas.
 # Libatlas exists only for following architectures:
@@ -34,32 +35,57 @@ The specification of any input to these modules is done either interactively
 using the graphical user interface or in ASCII text files using Gmsh's own
 scripting language.
 
+
+%package -n lib%name
+Summary: Shared library for Gmsh
+Group: Sciences/Mathematics
+%description -n lib%name
+This package contains lib%name shared library.
+
+
+%package -n lib%name-devel
+Summary: Shared library for Gmsh
+Group: Sciences/Mathematics
+%description -n lib%name-devel
+This package contains development files for lib%name.
+
+
+%package -n python-module-%name
+Summary: Python interface for lib%name
+Group: Sciences/Mathematics
+BuildArch: noarch
+%description -n python-module-%name
+This package contains python interface for lib%name.
+
+
 %package demos
 Summary: Tutorial and demo files for Gmsh
-Group: Graphics
+Group: Sciences/Mathematics
 BuildArch: noarch
-
 %description demos
-Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
-and post-processor. Its design goal is to provide a simple meshing tool for
-academic problems with parametric input and advanced visualization capabilities.
-
-Gmsh is built around four modules: geometry, mesh, solver and post-processing.
-The specification of any input to these modules is done either interactively
-using the graphical user interface or in ASCII text files using Gmsh's own
-scripting language.
-
-This package contains tutorial and demo files for Gmsh.
+This package contains tutorial and demo files for %name.
 
 %prep
 %setup
 
 %build
-%cmake_insource -DCMAKE_BUILD_TYPE=Release
+# Dynamic library and private API is needed for
+# compiling getdb
+%cmake_insource\
+   -DCMAKE_BUILD_TYPE=Release\
+   -DENABLE_BUILD_DYNAMIC=1\
+   -DENABLE_PRIVATE_API=1
+
 %make_build VERBOSE=1
 
 %install
 %makeinstall_std
+
+mkdir -p %buildroot%python_sitelibdir_noarch
+mv %buildroot%_libdir/*.py %buildroot%python_sitelibdir_noarch
+mv %buildroot%_bindir/*.py %buildroot%python_sitelibdir_noarch
+
+rm -f %buildroot%_libdir/*.jl
 
 %files
 %_bindir/%name
@@ -67,11 +93,26 @@ This package contains tutorial and demo files for Gmsh.
 %dir %_docdir/%name
 %doc %_docdir/%name/*.txt
 
+%files -n lib%name
+%_libdir/lib%name.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_libdir/lib%name.so
+
+%files -n python-module-%name
+%python_sitelibdir_noarch/*
+
 %files demos
 %_docdir/%name/demos
 %_docdir/%name/tutorial
 
+
 %changelog
+* Fri Sep 18 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.6.0-alt2
+- Enable libgmsh shared library, private API (for building getdp)
+  and python-module-gmsh
+
 * Fri Sep 18 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.6.0-alt1
 - Version 4.6.0, return the package to Altlinux.
 - Cleanup spec, build in the default upstream configuration.
