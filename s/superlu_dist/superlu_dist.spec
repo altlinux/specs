@@ -6,9 +6,10 @@
 %define over 2.4
 %define somver 2
 %define sover %somver.5
+
 Name: superlu_dist
 Version: 3.3
-Release: alt3
+Release: alt4
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
@@ -65,8 +66,6 @@ This package contains shared library of SuperLU_DIST.
 Summary: Development files of SuperLU_DIST
 Group: Development/C
 Requires: lib%name = %EVR
-Conflicts: lib%name-devel < %EVR
-Obsoletes: lib%name-devel < %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -222,6 +221,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt4
+- Updated conflicts and obsoletes.
+
 * Thu Dec 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt3
 - Rebuild and spec cleanup.
 
