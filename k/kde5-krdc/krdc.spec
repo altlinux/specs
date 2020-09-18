@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -67,7 +67,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data krdc 
+%K5install_move data krdc
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -76,7 +76,7 @@ KF5 library
 %files
 %_K5bin/krdc
 %_K5plug/krdc/
-%_K5data/krdc/
+#%_K5data/krdc/
 %_K5xdgapp/org.kde.krdc.desktop
 %_K5cfg/krdc.kcfg
 %_K5srv/krdc_*.desktop
@@ -95,6 +95,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

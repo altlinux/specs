@@ -5,7 +5,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -32,7 +32,7 @@ BuildRequires: libxapian-devel desktop-file-utils
 BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel kde5-baloo-widgets-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel
@@ -87,7 +87,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data kglobalaccel
+%K5install_move data kglobalaccel knsrcfiles
 %find_lang %name --with-kde --all-name
 
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
@@ -108,7 +108,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-%config(noreplace) %_K5xdgconf/*
+#%config(noreplace) %_K5xdgconf/*
 %_K5bin/*
 %_K5lib/libkdeinit5_dolphin.so
 %_K5plug/*dolphin*.so
@@ -117,6 +117,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5data/kglobalaccel/*dolphin*
+%_K5data/knsrcfiles/*
 %_K5dbus_srv/org.kde.dolphin.FileManager1.service
 
 %files devel
@@ -133,6 +134,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

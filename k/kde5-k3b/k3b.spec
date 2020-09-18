@@ -23,7 +23,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -31,7 +31,7 @@ Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
 Summary(ru_RU.UTF-8): Программа записи CD (Полный набор)
 URL: http://www.k3b.org/
-License: GPLv2
+License: GPL-2.0-or-later
 
 Provides: k3b = %version-%release
 Requires: %req_all
@@ -79,7 +79,6 @@ K3b - это мощная графическая оболочка для про�
 %package mini
 Summary: The CD Creator
 Summary(ru_RU.UTF-8): Программа записи CD
-License: GPL
 Group: Archiving/Cd burning
 Requires: %req_mini
 %description mini
@@ -97,7 +96,6 @@ K3b - это мощная графическая оболочка для про�
 %package devel
 Summary: The CD Kreator (Development package.)
 Summary(ru_RU.UTF-8): Программа записи CD (Пакет разработчика.)
-License: GPL
 Group: Development/KDE and QT
 %description devel
 K3b is a GUI frontend to the cd recording programs. 
@@ -187,6 +185,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

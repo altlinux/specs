@@ -4,7 +4,7 @@
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace
 
@@ -16,7 +16,6 @@ License: GPLv2+ / LGPLv2+
 Requires: unrar p7zip unzip zip
 
 Source: %rname-%version.tar
-Patch0: CVE-2020-16116.patch
 Patch1: alt-clizip-priority.patch
 
 # Automatically added by buildreq on Wed Aug 05 2015 (-bi)
@@ -61,7 +60,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -105,6 +103,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
