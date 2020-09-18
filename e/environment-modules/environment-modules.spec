@@ -7,8 +7,8 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        4.4.1
-Release:        alt1_2
+Version:        4.5.3
+Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
 License:        GPLv2+
@@ -59,6 +59,16 @@ a user's environment via modulefiles.
 This package provides Environment Modules compatibility version (3.2).
 
 
+
+%package -n rpm-macros-%name
+Summary: Set of RPM macros for packaging %name modules
+Group: Development/Other
+BuildArch: noarch
+
+%description -n rpm-macros-%name
+Set of RPM macros for packaging %name modules.
+Install this package if you want to create RPM packages that use GNAT.
+
 %prep
 %setup -q -n modules-%{version}
 
@@ -70,18 +80,19 @@ This package provides Environment Modules compatibility version (3.2).
            --etcdir=%{_sysconfdir}/%{name} \
            --bindir=%{_datadir}/Modules/bin \
            --libexecdir=%{_libdir}/Modules/libexec \
-           --docdir=%{_docdir}/%{name} \
+           --docdir=%{_docdir}/%{name}-%version \
            --vimdatadir=%{vimdatadir} \
            --enable-dotmodulespath \
            --disable-set-shell-startup \
+           --with-python=/usr/bin/python3 \
            --with-initconf-in=etcdir \
            --with-modulepath=%{_datadir}/Modules/modulefiles:%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles \
-           --with-quarantine-vars=LD_LIBRARY_PATH
+           --with-quarantine-vars='LD_LIBRARY_PATH LD_PRELOAD'
 %make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 mkdir -p %{buildroot}%{_sysconfdir}/modulefiles
 mkdir -p %{buildroot}%{_datadir}/modulefiles
@@ -108,12 +119,9 @@ mv {doc/build/,}MIGRATING.txt
 mv {doc/build/,}CONTRIBUTING.txt
 mv {doc/build/,}diff_v3_v4.txt
 mv {doc/,}example.txt
-rm -f %{buildroot}%{_docdir}/%{name}/{COPYING.GPLv2,ChangeLog-compat,INSTALL.txt,NEWS-compat}
+rm -f %{buildroot}%{_docdir}/%{name}/{COPYING.GPLv2,ChangeLog-compat,INSTALL{,-win}.txt,NEWS-compat}
 
-cp -p contrib/scripts/createmodule.sh %{buildroot}%{_datadir}/Modules/bin
-cp -p contrib/scripts/createmodule.py %{buildroot}%{_datadir}/Modules/bin
-sed -i -e 1s,/usr/bin/python,/usr/bin/python3, \
-    %{buildroot}%{_datadir}/Modules/bin/createmodule.py
+cp -p script/createmodule.sh %{buildroot}%{_datadir}/Modules/bin
 
 install -Dpm 644 contrib/rpm/macros.%{name} %{buildroot}/%{_rpmmacrosdir}/%{name}
 for rpm404_ghost in %{_sysconfdir}/profile.d/modules.csh %{_sysconfdir}/profile.d/modules.sh %{_bindir}/modulecmd %{_mandir}/man1/module.1.gz %{_mandir}/man4/modulefile.4.gz
@@ -140,7 +148,7 @@ EOF
 [ ! -L %{_mandir}/man4/modulefile.4.gz ] && rm -f %{_mandir}/man4/modulefile.4.gz
 [ ! -L %{_sysconfdir}/profile.d/modules.sh ] &&  rm -f %{_sysconfdir}/profile.d/modules.sh
 [ ! -L %{_sysconfdir}/profile.d/modules.csh ] &&  rm -f %{_sysconfdir}/profile.d/modules.csh
-[ ! -L %{buildroot}%{_bindir}/modulecmd ] &&  rm -f %{_bindir}/modulecmd
+[ ! -L %{_bindir}/modulecmd ] &&  rm -f %{_bindir}/modulecmd
 
 # Migration from version 3.x to 4
 if [ "$(readlink /etc/alternatives/modules.sh)" = '%{_datadir}/Modules/init/modules.sh' ]; then
@@ -168,9 +176,9 @@ fi
 %config(noreplace) %{_sysconfdir}/%{name}/siteconfig.tcl
 %{_datadir}/Modules/modulefiles
 %{_datadir}/modulefiles
+%{_mandir}/man1/ml.1*
 %{_mandir}/man1/module-c.1*
 %{_mandir}/man4/modulefile-c.4*
-#%{_rpmmacrosdir}/%{name}
 %{vimdatadir}/ftdetect/modulefile.vim
 %{vimdatadir}/ftplugin/modulefile.vim
 %{vimdatadir}/syntax/modulefile.vim
@@ -182,8 +190,15 @@ fi
 %{_mandir}/man1/module-compat.1*
 %{_mandir}/man4/modulefile-compat.4*
 
+%files -n rpm-macros-%name
+%_rpmmacrosdir/%name
+
+
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1_1
+- new version
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_2
 - new version
 
