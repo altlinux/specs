@@ -5,7 +5,7 @@
 
 Name: parmetis
 Version: 4.0.3
-Release: alt2
+Release: alt3
 Summary: Parallel Graph Partitioning and Fill-reducing Matrix Ordering
 License: Free for non-commertial
 Group: Sciences/Mathematics
@@ -49,8 +49,6 @@ This package contains shared libraries of ParMETIS.
 Summary: Development files of ParMETIS
 Group: Development/C
 Requires: lib%name = %EVR
-Conflicts: lib%name-devel < %EVR
-Obsoletes: lib%name-devel < %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -180,6 +178,9 @@ rm -rf %buildroot%_libdir/*.a
 %_datadir/%name
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt3
+- Updated conflicts and obsoletes.
+
 * Wed Dec 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt2
 - Spec cleanup and rebuild with new toolchain.
 
