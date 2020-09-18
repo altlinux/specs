@@ -2,9 +2,11 @@
 
 %define oname patsy
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: A Python package for describing statistical models and for building design matrices
 License: BSD-2-Clause and Python
 Group: Development/Python3
@@ -18,11 +20,14 @@ Source: %name-%version.tar
 Patch1: %oname-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pathlib2
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(numpy) python3(matplotlib) python3(IPython)
+BuildRequires: python3(pandas)
+%endif
 
 %description
 A Python package for describing statistical models and for building
@@ -41,6 +46,7 @@ design matrices. It is closely inspired by and compatible with the
 
 This package contains tests for patsy.
 
+%if_with docs
 %package pickles
 Summary: Pickles for patsy
 Group: Development/Python3
@@ -62,31 +68,41 @@ design matrices. It is closely inspired by and compatible with the
 'formula' mini-language used in R and S.
 
 This package contains documentation for patsy.
+%endif
 
 %prep
 %setup
+
+%if_with docs
 %patch1 -p2
 
 %prepare_sphinx3 .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 %python3_build_debug
 
+%if_with docs
 %make -C doc pickle
 %make -C doc html
+%endif
 
 %install
 %python3_build_install
 
+%if_with docs
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %files
 %doc LICENSE.txt
 %doc *.rst *.md TODO
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version-*.egg-info
+%if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
+%endif
 %exclude %python3_sitelibdir/%oname/test_*
 %exclude %python3_sitelibdir/%oname/__pycache__/test_*
 
@@ -94,13 +110,18 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/test_*
 %python3_sitelibdir/%oname/__pycache__/test_*
 
+%if_with docs
 %files pickles
 %python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/_build/html/*
+%endif
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt2
+- Fixed build.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt1
 - Updated to upstream version 0.5.1.
 - Disabled build for python-2.
