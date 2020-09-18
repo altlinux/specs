@@ -9,9 +9,10 @@
 %define cubever 3.4.2.%over
 %define somver 0
 %define sover %somver.%over
+
 Name: scalasca
 Version: %over
-Release: alt2
+Release: alt3
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -31,7 +32,7 @@ Conflicts: kojak < 2.2p1_%over-%release
 Obsoletes: kojak < 2.2p1_%over-%release
 
 BuildRequires(pre): %mpiimpl-devel
-BuildRequires: libgomp-devel libqt4-devel libpapi-devel
+BuildRequires: libgomp-devel libpapi-devel
 BuildRequires: doxygen binutils-devel
 BuildRequires: texlive-latex-base ghostscript-utils chrpath
 BuildRequires: libotf2-devel opari2-devel libcube-devel
@@ -102,9 +103,7 @@ Conflicts: libkojak-devel < 2.2p1_%over-%release
 Obsoletes: libkojak-devel < 2.2p1_%over-%release
 Conflicts: kojak < 2.2p1_%over-%release
 Obsoletes: kojak < 2.2p1_%over-%release
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The KOJAK project (Kit for Objective Judgement And Knowledge-based
@@ -132,7 +131,6 @@ cp %SOURCE2 vendor/common/build-config/m4/status.m4
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
-export PATH=$PATH:%_qt4dir/bin
 export MPIDIR=%mpidir
 
 export CC="mpicc -g"
@@ -145,11 +143,11 @@ export CXX="mpicxx -g"
 	--with-cube \
 	--with-mpi=openmpi \
 	--with-pdt=%prefix \
-	--with-qmake=%_qt4dir/bin/qmake \
 	--enable-all-mpi-wrappers \
 	--with-binutils=%prefix \
 	--enable-shared \
-	--enable-static=no
+	--enable-static=no \
+	%nil
 
 export TOPDIR=$PWD
 %make
@@ -201,6 +199,9 @@ done
 %_includedir/*
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt3
+- Updated conflicts and obsoletes.
+
 * Fri Jul 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt2
 - Updated build dependencies.
 
