@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.74.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-update-scripts-path.patch
+Patch2: alt-kconfig-notify-via-dbus.patch
 
 # Automatically added by buildreq on Wed Dec 24 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
@@ -99,6 +100,7 @@ Sip files for python3-module-%rname
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p2
 
 %build
 NPROCS=1 %K5build
@@ -119,6 +121,8 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K5bin/kreadconfig5
 %_bindir/kwriteconfig5
 %_K5bin/kwriteconfig5
+%_K5bin/kconf_watcher
+%_K5bin/kconf_apply
 
 %files devel
 %_K5exec/kconfig_compiler_kf5
@@ -150,6 +154,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.74.0-alt2
+- Implemented notification on every configuration file change via DBUS
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 
