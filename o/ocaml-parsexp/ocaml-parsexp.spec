@@ -2,7 +2,7 @@
 %define libname parsexp
 Name: ocaml-%libname
 Version: 0.14.0
-Release: alt2
+Release: alt3
 Summary: S-expression parsing library for ocaml
 Group: Development/ML
 License: Apache-2.0
@@ -11,9 +11,9 @@ Source0: %name-%version.tar
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib 
-BuildRequires: ocaml-sexplib0-devel >= 0.12.0
-BuildRequires: ocaml-base-devel >= 0.12.0
-BuildRequires: opam
+BuildRequires: ocaml-sexplib0-devel >= 0.14.0
+BuildRequires: ocaml-base-devel >= 0.14.0
+BuildRequires: rpm-build-ocaml >= 1.4
 
 %description
 This library provides generic parsers for parsing S-expressions from strings or
@@ -39,6 +39,7 @@ It provides three different class of parsers:
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+Requires: ocaml-base-devel >= 0.14.0
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -48,34 +49,25 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %libname 
+%dune_build -p %libname 
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install 
 rm -rf %buildroot/usr/share/doc
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.org CHANGES.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxs
 
-%files devel
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/*.cmt
-%_libdir/ocaml/%libname/*.cmti
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.ml*
+%files devel -f ocaml-files.devel
 
 %changelog
+* Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
+- mirated to rpm-build-ocaml 1.4
+- added ocaml-base-devel dependency to devel package
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - cmxa have been moved to devel package
 
