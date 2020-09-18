@@ -1,6 +1,7 @@
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %_prefix/lib/systemd/user
+%define _sysusersdir %_prefix/lib/sysusers.d
 
 %define xdg_name org.freedesktop.Flatpak
 %define api_ver 1.0
@@ -9,11 +10,12 @@
 %def_disable p2p
 %def_enable docs
 %def_with system_dbus_proxy
+%def_enable systemd
 # cannot run bwrap in hasher
 %def_disable check
 
 Name: flatpak
-Version: 1.6.4
+Version: 1.8.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -29,6 +31,7 @@ Source: %name-%version.tar
 %define flatpak_group %name
 %define flatpak_user %name
 
+%define glib_ver 2.44
 %define ostree_ver 2018.9
 %define bwrap_ver 0.4.1
 %define libarchive_ver 2.8.0
@@ -43,7 +46,7 @@ Requires: dconf
 Requires: fuse
 
 BuildRequires: gtk-doc gobject-introspection-devel
-BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libarchive) >= %libarchive_ver
 BuildRequires: pkgconfig(libsoup-2.4)
@@ -54,7 +57,6 @@ BuildRequires: pkgconfig(appstream-glib)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(xau)
 BuildRequires: pkgconfig(dbus-1)
-BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(dconf)
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
@@ -64,6 +66,7 @@ BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
 BuildRequires: bubblewrap >= %bwrap_ver
 %{?_with_system_dbus_proxy:BuildRequires: xdg-dbus-proxy}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
@@ -97,14 +100,15 @@ This package contains the pkg-config file and development headers for %name.
 %setup
 
 %build
-# workaround for collision with new copy_file_range glibc function. remove it when it's no longer needed.
-#%%add_optflags -DHAVE_DECL_COPY_FILE_RANGE
-# User namespace support is sufficient.
 %configure --with-priv-mode=none \
            --with-system-bubblewrap \
            %{?_enable_docs:--enable-docbook-docs} \
+           %{subst_enable systemd} \
+           %if_enabled systemd
            --with-systemdsystemunitdir=%_unitdir \
            --with-systemduserunitdir=%_userunitdir \
+           --with-sysusersdir=%_sysusersdir \
+           %endif
            %{?_with_system_dbus_proxy:DBUS_PROXY=%_bindir/xdg-dbus-proxy}
 %nil
 %make_build
@@ -118,7 +122,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 %pre
 %_sbindir/groupadd -r -f %flatpak_group 2>/dev/null ||:
-%_sbindir/useradd -r -n -g %flatpak_group -d / \
+%_sbindir/useradd -r -N -g %flatpak_group -d / \
 	-s /sbin/nologin -c "User for flatpak system helper" %flatpak_user 2>/dev/null ||:
 
 %post
@@ -135,8 +139,6 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_datadir/bash-completion
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/system-services/%xdg_name.SystemHelper.service
-# Co-own directory.
-%_datadir/gdm/env.d
 %_datadir/%name
 %_datadir/polkit-1/actions/%xdg_name.policy
 %_datadir/polkit-1/rules.d/%xdg_name.rules
@@ -146,21 +148,29 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_libexecdir/%name-system-helper
 %_libexecdir/%name-validate-icon
 %_libexecdir/revokefs-fuse
+%_libexecdir/%name-oci-authenticator
 %dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
+%_sysconfdir/profile.d/%name.sh
 %_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Flatpak.service
-%_sysconfdir/profile.d/%name.sh
+%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
+%_datadir/dbus-1/services/org.flatpak.Authenticator.Oci.service
+
+%if_enabled systemd
 %_unitdir/%name-system-helper.service
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
+%_sysusersdir/%name.conf
 %_prefix/lib/systemd/user-environment-generators/60-%name
-%_prefix/lib/systemd/user/flatpak-oci-authenticator.service
-%_libexecdir/%name-oci-authenticator
-%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
-%_datadir/dbus-1/services/org.flatpak.Authenticator.Oci.service
+%_userunitdir/%name-oci-authenticator.service
+%endif
+
 %_man5dir/*
+%_datadir/fish/vendor_completions.d/%name.fish
+%_datadir/zsh/site-functions/_%name
+
 %doc NEWS README.md
 %{?_enable_docs:%doc %_docdir/%name/}
 
@@ -178,6 +188,15 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
+* Sat Jul 04 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
+* Thu Jun 25 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon Jun 22 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 

@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: ostree
-Version: 2019.6
+Version: 2020.3
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -123,6 +123,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/gtk-doc/html/ostree/
 
 %changelog
+* Thu Jun 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2020.3-alt1
+- 2020.3
+
 * Mon Dec 16 2019 Yuri N. Sedunov <aris@altlinux.org> 2019.6-alt1
 - 2019.6
 
