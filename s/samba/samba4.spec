@@ -59,7 +59,7 @@
 %endif
 
 Name:    samba
-Version: 4.11.12
+Version: 4.11.13
 Release: alt1
 
 Group:   System/Servers
@@ -1793,6 +1793,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Sep 19 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.13-alt1
+- Update to latest stable security release of the Samba 4.11
+- Security fixes:
+  + CVE-2020-1472: Unauthenticated domain takeover via netlogon ("ZeroLogon")
+    https://www.samba.org/samba/security/CVE-2020-1472.html
+
 * Wed Aug 26 2020 Evgeny Sinelikov <sin@altlinux.org> 4.11.12-alt1
 - Update to latest stable security release of the Samba 4.11
 
