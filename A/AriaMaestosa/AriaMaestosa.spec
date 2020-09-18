@@ -2,7 +2,7 @@
 
 Name: AriaMaestosa
 Version: 1.4.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Aria Maestosa is an opensource (GPL) midi tracker/editor
 License: GPLv2 with exceptions (look at license.txt)
@@ -25,10 +25,10 @@ interface offering keyboard, guitar, drum and controller views.
 %setup -n %srcname-%version
 
 %build
-python scons/scons.py prefix=/usr destdir=%buildroot
+python2 scons/scons.py prefix=/usr destdir=%buildroot
 
 %install
-python scons/scons.py install prefix=%buildroot/usr
+python2 scons/scons.py install prefix=%buildroot/usr
 %find_lang aria_maestosa
 
 %files -f aria_maestosa.lang
@@ -37,6 +37,9 @@ python scons/scons.py install prefix=%buildroot/usr
 %_datadir/Aria
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1.qa1
+- NMU: do not use /usr/bin/python
+
 * Fri Dec 28 2012 Alex Karpov <karpov@altlinux.ru> 1.4.6-alt1
 - new version
 
