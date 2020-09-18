@@ -1,3 +1,4 @@
+%def_without qt
 %define _pseudouser_user     _pcp
 %define _pseudouser_group    _pcp
 %define _pseudouser_home     %_sharedstatedir/pcp
@@ -14,8 +15,8 @@
 %define _logconfdir %_sharedstatedir/pcp/config/pmlogconf
 
 Name: pcp
-Version: 5.0.2
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 Summary: System-level performance monitoring and performance management
 License: GPLv2+ and LGPLv2+ and CC-BY-SA-3.0
 Group: Monitoring
@@ -27,7 +28,6 @@ Patch0: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: flex
-BuildRequires: gcc-c++
 
 BuildRequires: libavahi-devel
 BuildRequires: liblzma-devel
@@ -37,6 +37,9 @@ BuildRequires: librpm-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
 BuildRequires: libsystemd-devel
+%if_with qt5
+BuildRequires: qt5-base-devel qt5-svg-devel gcc-c++
+%endif
 
 BuildRequires: perl-devel
 BuildRequires: python3-devel
@@ -59,6 +62,10 @@ BuildRequires: postfix
 BuildRequires: man-db
 
 Requires: libpcopilot = %EVR
+
+# PCP discovery service now provided by pmfind
+Obsoletes: pcp-manager-debuginfo < 5.2.0
+Obsoletes: pcp-manager < 5.2.0
 
 %description
 Performance Co-Pilot (PCP) provides a framework and services to support
@@ -107,21 +114,6 @@ Requires: libpcopilot-devel = %EVR
 
 %description devel
 Performance Co-Pilot (PCP) documentation and tools for development.
-
-# pcp-manager
-%package manager
-License: GPLv2+
-Group: Monitoring
-Summary: Performance Co-Pilot (PCP) manager daemon
-Requires: pcp = %EVR
-
-%description manager
-An optional daemon (pmmgr) that manages a collection of pmlogger and
-pmie daemons, for a set of discovered local and remote hosts running
-the performance metrics collection daemon (pmcd).  It ensures these
-daemons are running when appropriate, and manages their log rotation
-needs.  It is an alternative to the cron-based pmlogger/pmie service
-scripts.
 
 # perl-PCP-common.
 %package -n perl-PCP-common
@@ -237,8 +229,6 @@ Summary: Performance Co-Pilot (PCP) Zeroconf Package
 This package contains configuration tweaks and files to increase metrics
 gathering frequency, several extended pmlogger configurations, as well as
 automated pmie diagnosis, alerting and self-healing for the localhost.
-A cron script also writes daily performance summary reports similar to
-those written by sysstat.
 
 # python3-module-pcp. This is the PCP library bindings for python3.
 %package -n python3-module-pcp
@@ -250,6 +240,20 @@ Summary: Performance Co-Pilot (PCP) Python3 bindings and documentation
 This python PCP module contains the language bindings for
 Performance Metric API (PMAPI) monitor tools and Performance
 Metric Domain Agent (PMDA) collector tools written in Python3.
+
+%if_with qt
+# pcp-gui package for Qt tools
+%package gui
+License: GPLv2+ and LGPLv2+ and LGPLv2+ with exceptions
+Summary: Visualization tools for the Performance Co-Pilot toolkit
+URL: https://pcp.io
+
+%description gui
+Visualization tools for the Performance Co-Pilot toolkit.
+The pcp-gui package primarily includes visualization tools for
+monitoring systems using live and archived Performance Co-Pilot
+(PCP) sources.
+%endif
 
 # pcp-doc package
 %package doc
@@ -323,6 +327,13 @@ sed -i \
 src/include/pcopilot/config.h.in
 
 %configure \
+%if_with qt
+	--with-qt=yes \
+	--with-qt3d=yes \
+%else
+	--with-qt=no \
+	--with-qt3d=no \
+%endif
 	--with-rcdir=%_initddir \
 	--with-rundir=/run/pcp \
 	--with-python3=yes \
@@ -355,7 +366,7 @@ chrpath -d \
     %buildroot%perl_vendor_autolib/PCP/MMV/MMV.so \
     %buildroot%perl_vendor_autolib/PCP/PMDA/PMDA.so
 
-mv %buildroot%_sharedstatedir/pcp/pmdas/activemq/*.pm \
+install -m 644 src/pmdas/activemq/Queue.pm \
     %buildroot%perl_vendorarch/PCP/
 PCP_GUI='pmchart|pmconfirm|pmdumptext|pmmessage|pmquery|pmsnap|pmtime'
 
@@ -383,9 +394,6 @@ getent group %_pseudouser_group >/dev/null || groupadd -r %_pseudouser_group
 getent passwd %_pseudouser_user >/dev/null || \
   useradd -c "Performance Co-Pilot" -g %_pseudouser_group -d %_pseudouser_home -M -r -s /sbin/nologin %_pseudouser_user
 
-%post manager
-%post_service pmmgr
-
 %post zeroconf
 # increase default pmlogger recording frequency
 sed -i 's/^\#\ PMLOGGER_INTERVAL.*/PMLOGGER_INTERVAL=10/g' \
@@ -394,6 +402,7 @@ sed -i 's/^\#\ PMLOGGER_INTERVAL.*/PMLOGGER_INTERVAL=10/g' \
 %post_service pmcd
 %post_service pmlogger
 %post_service pmie
+%post_service pmfind
 
 %post
 PCP_LOG_DIR=%_logsdir
@@ -433,15 +442,18 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_bindir/pmie
 %_bindir/pmie2col
 %_bindir/pmieconf
+%_bindir/pmiectl
 %_bindir/pminfo
 %_bindir/pmjson
 %_bindir/pmlc
 %_bindir/pmlogcheck
 %_bindir/pmlogconf
+%_bindir/pmlogctl
 %_bindir/pmlogextract
 %_bindir/pmlogger
 %_bindir/pmloglabel
 %_bindir/pmlogmv
+%_bindir/pmlogpaste
 %_bindir/pmlogsize
 %_bindir/pmlogsummary
 %_bindir/pmprobe
@@ -455,6 +467,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %dir %_libexecdir/pcp/bin
 %_libexecdir/pcp/bin/chkhelp
 %_libexecdir/pcp/bin/discover
+%_libexecdir/pcp/bin/find-filter
 %_libexecdir/pcp/bin/install-sh
 %_libexecdir/pcp/bin/mkaf
 %_libexecdir/pcp/bin/newhelp
@@ -465,15 +478,17 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/bin/pmcd_wait
 %_libexecdir/pcp/bin/pmconfig
 %_libexecdir/pcp/bin/pmcpp
+%_libexecdir/pcp/bin/pmfind_check
 %_libexecdir/pcp/bin/pmgetopt
 %_libexecdir/pcp/bin/pmhostname
 %_libexecdir/pcp/bin/pmie_check
 %_libexecdir/pcp/bin/pmie_daily
+%_libexecdir/pcp/bin/pmie_dump_stats
 %_libexecdir/pcp/bin/pmie_email
 %_libexecdir/pcp/bin/pmiestatus
 %_libexecdir/pcp/bin/pmlock
 %_libexecdir/pcp/bin/pmlogconf
-%_libexecdir/pcp/bin/pmlogconf-setup
+#%_libexecdir/pcp/bin/pmlogconf-setup
 %_libexecdir/pcp/bin/pmlogextract
 %_libexecdir/pcp/bin/pmlogger
 %_libexecdir/pcp/bin/pmlogger_check
@@ -493,6 +508,399 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/bin/pmsleep
 %_libexecdir/pcp/bin/pmwtf
 %_libexecdir/pcp/bin/telnet-probe
+# todo: move to subpackages
+%dir %_libexecdir/pcp/lib
+%dir %_libexecdir/pcp/pmdas
+%_libexecdir/pcp/pmdas/activemq
+%_libexecdir/pcp/pmdas/apache
+%_libexecdir/pcp/pmdas/bash
+%_libexecdir/pcp/pmdas/bind2
+%_libexecdir/pcp/pmdas/bonding
+%_libexecdir/pcp/pmdas/cifs
+%_libexecdir/pcp/pmdas/cisco
+%_libexecdir/pcp/pmdas/dbping
+%_libexecdir/pcp/pmdas/dm
+%_libexecdir/pcp/pmdas/docker
+%_libexecdir/pcp/pmdas/ds389
+%_libexecdir/pcp/pmdas/ds389log
+%_libexecdir/pcp/pmdas/elasticsearch
+%_libexecdir/pcp/pmdas/gfs2
+%_libexecdir/pcp/pmdas/gluster
+%_libexecdir/pcp/pmdas/gluster
+%_libexecdir/pcp/pmdas/gpfs
+%_libexecdir/pcp/pmdas/gpsd
+%_libexecdir/pcp/pmdas/haproxy
+%_libexecdir/pcp/pmdas/jbd2
+%_libexecdir/pcp/pmdas/jbd2
+%_libexecdir/pcp/pmdas/kvm
+%_libexecdir/pcp/pmdas/kvm
+%_libexecdir/pcp/pmdas/linux
+%_libexecdir/pcp/pmdas/lmsensors
+%_libexecdir/pcp/pmdas/logger
+%_libexecdir/pcp/pmdas/lustre
+%_libexecdir/pcp/pmdas/lustrecomm
+%_libexecdir/pcp/pmdas/mailq
+%_libexecdir/pcp/pmdas/memcache
+%_libexecdir/pcp/pmdas/mic
+%_libexecdir/pcp/pmdas/mmv
+%_libexecdir/pcp/pmdas/mounts
+%_libexecdir/pcp/pmdas/mssql
+%_libexecdir/pcp/pmdas/named
+%_libexecdir/pcp/pmdas/netcheck
+%_libexecdir/pcp/pmdas/netfilter
+%_libexecdir/pcp/pmdas/news
+%_libexecdir/pcp/pmdas/nfsclient
+%_libexecdir/pcp/pmdas/nginx
+%_libexecdir/pcp/pmdas/nvidia
+%_libexecdir/pcp/pmdas/openvswitch
+%_libexecdir/pcp/pmdas/oracle
+%_libexecdir/pcp/pmdas/pdns
+%_libexecdir/pcp/pmdas/pipe
+%_libexecdir/pcp/pmdas/pmcd
+%_libexecdir/pcp/pmdas/postfix
+%_libexecdir/pcp/pmdas/proc
+%_libexecdir/pcp/pmdas/rabbitmq
+%_libexecdir/pcp/pmdas/redis
+%_libexecdir/pcp/pmdas/roomtemp
+%_libexecdir/pcp/pmdas/root
+%_libexecdir/pcp/pmdas/rpm
+%_libexecdir/pcp/pmdas/rsyslog
+%_libexecdir/pcp/pmdas/samba
+%_libexecdir/pcp/pmdas/sample
+%_libexecdir/pcp/pmdas/sendmail
+%_libexecdir/pcp/pmdas/shping
+%_libexecdir/pcp/pmdas/simple
+%_libexecdir/pcp/pmdas/slurm
+%_libexecdir/pcp/pmdas/smart
+%_libexecdir/pcp/pmdas/summary
+%_libexecdir/pcp/pmdas/systemd
+%_libexecdir/pcp/pmdas/trace
+%_libexecdir/pcp/pmdas/trivial
+%_libexecdir/pcp/pmdas/txmon
+%_libexecdir/pcp/pmdas/unbound
+%_libexecdir/pcp/pmdas/weblog
+%_libexecdir/pcp/pmdas/weblog
+%_libexecdir/pcp/pmdas/xfs
+%_libexecdir/pcp/pmdas/zimbra
+%_libexecdir/pcp/pmdas/zswap
+%_libexecdir/pcp/pmns
+%_libexecdir/pcp/lib/bashproc.sh
+%_libexecdir/pcp/lib/pmdaproc.sh
+%_libexecdir/pcp/lib/rc-proc.sh
+%_libexecdir/pcp/lib/rc-proc.sh.minimal
+%_libexecdir/pcp/lib/utilproc.sh
+%dir %_confdir/bind2
+%config(noreplace) %_confdir/bind2/bind2.conf
+%dir %_confdir/derived
+%config(noreplace) %_confdir/derived/cpu-util.conf
+%config(noreplace) %_confdir/derived/iostat.conf
+%config(noreplace) %_confdir/derived/mssql.conf
+%config(noreplace) %_confdir/derived/proc.conf
+%dir %_confdir/haproxy
+%config(noreplace) %_confdir/haproxy/haproxy.conf
+%dir %_confdir/linux
+%config(noreplace) %_confdir/linux/samplebandwidth.conf
+%dir %_confdir/lustre
+%config(noreplace) %_confdir/lustre/lustre.conf
+%dir %_confdir/mounts
+%config(noreplace) %_confdir/mounts/mounts.conf
+%dir %_confdir/mssql
+%config(noreplace) %_confdir/mssql/mssql.conf
+%dir %_confdir/netcheck
+%config(noreplace) %_confdir/netcheck/netcheck.conf
+%dir %_confdir/nginx
+%config(noreplace) %_confdir/nginx/nginx.conf
+%dir %_confdir/oracle
+%config(noreplace) %_confdir/oracle/sample.conf
+%dir %_confdir/pipe
+%config(noreplace) %_confdir/pipe/sample.conf
+%dir %_confdir/pmafm
+%config(noreplace) %_confdir/pmafm/pcp
+%config(noreplace) %_confdir/pmafm/pcp-gui
+%dir %_confdir/pmchart
+%config(noreplace) %_confdir/pmchart/Apache
+%config(noreplace) %_confdir/pmchart/Cisco
+%config(noreplace) %_confdir/pmchart/Sample
+%config(noreplace) %_confdir/pmchart/Sendmail
+%config(noreplace) %_confdir/pmchart/Web.Alarms
+%config(noreplace) %_confdir/pmchart/Web.Allservers
+%config(noreplace) %_confdir/pmchart/Web.Perserver.Bytes
+%config(noreplace) %_confdir/pmchart/Web.Perserver.Requests
+%config(noreplace) %_confdir/pmchart/Web.Requests
+%config(noreplace) %_confdir/pmchart/Web.Volume
+%config(noreplace) %_confdir/pmchart/shping.CPUTime
+%config(noreplace) %_confdir/pmchart/shping.RealTime
+%dir %_confdir/pmie
+%dir %_confdir/pmie/class.d
+%config(noreplace) %_confdir/pmie/class.d/pmfind
+%dir %_confdir/pmieconf
+%dir %_confdir/pmieconf/cisco
+%config(noreplace) %_confdir/pmieconf/cisco/in_util
+%config(noreplace) %_confdir/pmieconf/cisco/out_util
+%dir %_confdir/pmieconf/cpu
+%config(noreplace) %_confdir/pmieconf/cpu/context_switch
+%config(noreplace) %_confdir/pmieconf/cpu/load_average
+%config(noreplace) %_confdir/pmieconf/cpu/low_util
+%config(noreplace) %_confdir/pmieconf/cpu/system
+%config(noreplace) %_confdir/pmieconf/cpu/util
+%dir %_confdir/pmieconf/dm
+%config(noreplace) %_confdir/pmieconf/dm/data_high_util
+%config(noreplace) %_confdir/pmieconf/dm/metadata_high_util
+%dir %_confdir/pmieconf/entropy
+%config(noreplace) %_confdir/pmieconf/entropy/available
+%dir %_confdir/pmieconf/filesys
+%config(noreplace) %_confdir/pmieconf/filesys/filling
+%dir %_confdir/pmieconf/global
+%config(noreplace) %_confdir/pmieconf/global/parameters
+%config(noreplace) %_confdir/pmieconf/global/pcp_actions
+%dir %_confdir/pmieconf/memory
+%config(noreplace) %_confdir/pmieconf/memory/exhausted
+%config(noreplace) %_confdir/pmieconf/memory/swap_low
+%dir %_confdir/pmieconf/network
+%config(noreplace) %_confdir/pmieconf/network/tcplistenoverflows
+%config(noreplace) %_confdir/pmieconf/network/tcpqfulldocookies
+%config(noreplace) %_confdir/pmieconf/network/tcpqfulldrops
+%dir %_confdir/pmieconf/percpu
+%config(noreplace) %_confdir/pmieconf/percpu/many_util
+%config(noreplace) %_confdir/pmieconf/percpu/some_util
+%config(noreplace) %_confdir/pmieconf/percpu/system
+%dir %_confdir/pmieconf/pernetif
+%config(noreplace) %_confdir/pmieconf/pernetif/collisions
+%config(noreplace) %_confdir/pmieconf/pernetif/errors
+%config(noreplace) %_confdir/pmieconf/pernetif/packets
+%config(noreplace) %_confdir/pmieconf/pernetif/util
+%dir %_confdir/pmieconf/primary
+%config(noreplace) %_confdir/pmieconf/primary/pmda_status
+%dir %_confdir/pmieconf/shping
+%config(noreplace) %_confdir/pmieconf/shping/response
+%config(noreplace) %_confdir/pmieconf/shping/status
+%dir %_confdir/pmieconf/zeroconf
+%config(noreplace) %_confdir/pmieconf/zeroconf/all_threads
+%dir %_confdir/pmlogconf
+%dir %_confdir/pmlogconf/apache
+%config(noreplace) %_confdir/pmlogconf/apache/processes
+%config(noreplace) %_confdir/pmlogconf/apache/summary
+%config(noreplace) %_confdir/pmlogconf/apache/uptime
+%dir %_confdir/pmlogconf/cpu
+%config(noreplace) %_confdir/pmlogconf/cpu/percpu
+%config(noreplace) %_confdir/pmlogconf/cpu/summary
+%dir %_confdir/pmlogconf/disk
+%config(noreplace) %_confdir/pmlogconf/disk/percontroller
+%config(noreplace) %_confdir/pmlogconf/disk/perdisk
+%config(noreplace) %_confdir/pmlogconf/disk/perpartition
+%config(noreplace) %_confdir/pmlogconf/disk/summary
+%dir %_confdir/pmlogconf/elasticsearch
+%config(noreplace) %_confdir/pmlogconf/elasticsearch/summary
+%dir %_confdir/pmlogconf/filesystem
+%config(noreplace) %_confdir/pmlogconf/filesystem/all
+%config(noreplace) %_confdir/pmlogconf/filesystem/rpc-server
+%config(noreplace) %_confdir/pmlogconf/filesystem/summary
+%config(noreplace) %_confdir/pmlogconf/filesystem/xfs-all
+%config(noreplace) %_confdir/pmlogconf/filesystem/xfs-io-linux
+%dir %_confdir/pmlogconf/gfs2
+%config(noreplace) %_confdir/pmlogconf/gfs2/gfs2-all
+%config(noreplace) %_confdir/pmlogconf/gfs2/gfs2-base
+%dir %_confdir/pmlogconf/kernel
+%config(noreplace) %_confdir/pmlogconf/kernel/bufcache-activity
+%config(noreplace) %_confdir/pmlogconf/kernel/bufcache-all
+%config(noreplace) %_confdir/pmlogconf/kernel/inode-cache
+%config(noreplace) %_confdir/pmlogconf/kernel/interrupts-irix
+%config(noreplace) %_confdir/pmlogconf/kernel/load
+%config(noreplace) %_confdir/pmlogconf/kernel/memory-irix
+%config(noreplace) %_confdir/pmlogconf/kernel/memory-linux
+%config(noreplace) %_confdir/pmlogconf/kernel/queues-irix
+%config(noreplace) %_confdir/pmlogconf/kernel/read-write-data
+%config(noreplace) %_confdir/pmlogconf/kernel/summary-linux
+%config(noreplace) %_confdir/pmlogconf/kernel/summary-windows
+%config(noreplace) %_confdir/pmlogconf/kernel/syscalls-irix
+%config(noreplace) %_confdir/pmlogconf/kernel/syscalls-linux
+%config(noreplace) %_confdir/pmlogconf/kernel/syscalls-percpu-irix
+%config(noreplace) %_confdir/pmlogconf/kernel/vnodes
+%dir %_confdir/pmlogconf/kvm
+%config(noreplace) %_confdir/pmlogconf/kvm/kvm
+%dir %_confdir/pmlogconf/libvirt
+%config(noreplace) %_confdir/pmlogconf/libvirt/libvirt
+%dir %_confdir/pmlogconf/mailq
+%config(noreplace) %_confdir/pmlogconf/mailq/summary
+%dir %_confdir/pmlogconf/memcache
+%config(noreplace) %_confdir/pmlogconf/memcache/summary
+%dir %_confdir/pmlogconf/memory
+%config(noreplace) %_confdir/pmlogconf/memory/buddyinfo
+%config(noreplace) %_confdir/pmlogconf/memory/ksminfo
+%config(noreplace) %_confdir/pmlogconf/memory/meminfo
+%config(noreplace) %_confdir/pmlogconf/memory/proc-linux
+%config(noreplace) %_confdir/pmlogconf/memory/slabinfo
+%config(noreplace) %_confdir/pmlogconf/memory/swap-activity
+%config(noreplace) %_confdir/pmlogconf/memory/swap-all
+%config(noreplace) %_confdir/pmlogconf/memory/swap-config
+%config(noreplace) %_confdir/pmlogconf/memory/tlb-irix
+%config(noreplace) %_confdir/pmlogconf/memory/vmstat
+%config(noreplace) %_confdir/pmlogconf/memory/zoneinfo
+%dir %_confdir/pmlogconf/mmv
+%config(noreplace) %_confdir/pmlogconf/mmv/summary
+%dir %_confdir/pmlogconf/mssql
+%config(noreplace) %_confdir/pmlogconf/mssql/summary
+%dir %_confdir/pmlogconf/netcheck
+%config(noreplace) %_confdir/pmlogconf/netcheck/summary
+%dir %_confdir/pmlogconf/netfilter
+%config(noreplace) %_confdir/pmlogconf/netfilter/config
+%config(noreplace) %_confdir/pmlogconf/netfilter/summary
+%dir %_confdir/pmlogconf/networking
+%config(noreplace) %_confdir/pmlogconf/networking/icmp6
+%config(noreplace) %_confdir/pmlogconf/networking/interface-all
+%config(noreplace) %_confdir/pmlogconf/networking/interface-summary
+%config(noreplace) %_confdir/pmlogconf/networking/ip6
+%config(noreplace) %_confdir/pmlogconf/networking/mbufs
+%config(noreplace) %_confdir/pmlogconf/networking/multicast
+%config(noreplace) %_confdir/pmlogconf/networking/nfs2-client
+%config(noreplace) %_confdir/pmlogconf/networking/nfs2-server
+%config(noreplace) %_confdir/pmlogconf/networking/nfs3-client
+%config(noreplace) %_confdir/pmlogconf/networking/nfs3-server
+%config(noreplace) %_confdir/pmlogconf/networking/nfs4-client
+%config(noreplace) %_confdir/pmlogconf/networking/nfs4-server
+%config(noreplace) %_confdir/pmlogconf/networking/other-protocols
+%config(noreplace) %_confdir/pmlogconf/networking/rpc
+%config(noreplace) %_confdir/pmlogconf/networking/socket-irix
+%config(noreplace) %_confdir/pmlogconf/networking/socket-linux
+%config(noreplace) %_confdir/pmlogconf/networking/softnet
+%config(noreplace) %_confdir/pmlogconf/networking/streams
+%config(noreplace) %_confdir/pmlogconf/networking/tcp-activity-irix
+%config(noreplace) %_confdir/pmlogconf/networking/tcp-activity-linux
+%config(noreplace) %_confdir/pmlogconf/networking/tcp-all
+%config(noreplace) %_confdir/pmlogconf/networking/udp-all
+%config(noreplace) %_confdir/pmlogconf/networking/udp-packets-irix
+%config(noreplace) %_confdir/pmlogconf/networking/udp-packets-linux
+%config(noreplace) %_confdir/pmlogconf/networking/udp6
+%dir %_confdir/pmlogconf/nginx
+%config(noreplace) %_confdir/pmlogconf/nginx/summary
+%dir %_confdir/pmlogconf/openvswitch
+%config(noreplace) %_confdir/pmlogconf/openvswitch/summary
+%dir %_confdir/pmlogconf/oracle
+%config(noreplace) %_confdir/pmlogconf/oracle/summary
+%dir %_confdir/pmlogconf/platform
+%config(noreplace) %_confdir/pmlogconf/platform/hinv
+%config(noreplace) %_confdir/pmlogconf/platform/linux
+%dir %_confdir/pmlogconf/rabbitmq
+%config(noreplace) %_confdir/pmlogconf/rabbitmq/summary
+%dir %_confdir/pmlogconf/sgi
+%config(noreplace) %_confdir/pmlogconf/sgi/cpu-evctr
+%config(noreplace) %_confdir/pmlogconf/sgi/craylink
+%config(noreplace) %_confdir/pmlogconf/sgi/efs
+%config(noreplace) %_confdir/pmlogconf/sgi/hub
+%config(noreplace) %_confdir/pmlogconf/sgi/kaio
+%config(noreplace) %_confdir/pmlogconf/sgi/node-memory
+%config(noreplace) %_confdir/pmlogconf/sgi/numa
+%config(noreplace) %_confdir/pmlogconf/sgi/numa-summary
+%config(noreplace) %_confdir/pmlogconf/sgi/xbow
+%config(noreplace) %_confdir/pmlogconf/sgi/xlv-activity
+%config(noreplace) %_confdir/pmlogconf/sgi/xlv-stripe-io
+%config(noreplace) %_confdir/pmlogconf/sgi/xvm-all
+%config(noreplace) %_confdir/pmlogconf/sgi/xvm-ops
+%config(noreplace) %_confdir/pmlogconf/sgi/xvm-stats
+%dir %_confdir/pmlogconf/shping
+%config(noreplace) %_confdir/pmlogconf/shping/summary
+%dir %_confdir/pmlogconf/sqlserver
+%config(noreplace) %_confdir/pmlogconf/sqlserver/summary
+%dir %_confdir/pmlogconf/statsd
+%config(noreplace) %_confdir/pmlogconf/statsd/statsd
+%dir %_confdir/pmlogconf/storage
+%config(noreplace) %_confdir/pmlogconf/storage/vdo
+%config(noreplace) %_confdir/pmlogconf/storage/vdo-summary
+%dir %_confdir/pmlogconf/tools
+%config(noreplace) %_confdir/pmlogconf/tools/atop
+%config(noreplace) %_confdir/pmlogconf/tools/atop-gpustats
+%config(noreplace) %_confdir/pmlogconf/tools/atop-hotproc
+%config(noreplace) %_confdir/pmlogconf/tools/atop-httpstats
+%config(noreplace) %_confdir/pmlogconf/tools/atop-infiniband
+%config(noreplace) %_confdir/pmlogconf/tools/atop-nfsclient
+%config(noreplace) %_confdir/pmlogconf/tools/atop-perfevent
+%config(noreplace) %_confdir/pmlogconf/tools/atop-proc
+%config(noreplace) %_confdir/pmlogconf/tools/atop-summary
+%config(noreplace) %_confdir/pmlogconf/tools/collectl
+%config(noreplace) %_confdir/pmlogconf/tools/collectl-interrupts
+%config(noreplace) %_confdir/pmlogconf/tools/collectl-summary
+%config(noreplace) %_confdir/pmlogconf/tools/dmcache
+%config(noreplace) %_confdir/pmlogconf/tools/dstat
+%config(noreplace) %_confdir/pmlogconf/tools/dstat-summary
+%config(noreplace) %_confdir/pmlogconf/tools/free
+%config(noreplace) %_confdir/pmlogconf/tools/free-summary
+%config(noreplace) %_confdir/pmlogconf/tools/hotproc
+%config(noreplace) %_confdir/pmlogconf/tools/iostat
+%config(noreplace) %_confdir/pmlogconf/tools/ip
+%config(noreplace) %_confdir/pmlogconf/tools/ipcs
+%config(noreplace) %_confdir/pmlogconf/tools/mpstat
+%config(noreplace) %_confdir/pmlogconf/tools/mpstat-interrupts
+%config(noreplace) %_confdir/pmlogconf/tools/mpstat-summary
+%config(noreplace) %_confdir/pmlogconf/tools/numastat
+%config(noreplace) %_confdir/pmlogconf/tools/pcp-summary
+%config(noreplace) %_confdir/pmlogconf/tools/pidstat
+%config(noreplace) %_confdir/pmlogconf/tools/pidstat-summary
+%config(noreplace) %_confdir/pmlogconf/tools/pmclient
+%config(noreplace) %_confdir/pmlogconf/tools/pmclient-summary
+%config(noreplace) %_confdir/pmlogconf/tools/pmieconf
+%config(noreplace) %_confdir/pmlogconf/tools/pmstat
+%config(noreplace) %_confdir/pmlogconf/tools/sar
+%config(noreplace) %_confdir/pmlogconf/tools/sar-summary
+%config(noreplace) %_confdir/pmlogconf/tools/tapestat
+%config(noreplace) %_confdir/pmlogconf/tools/uptime
+%config(noreplace) %_confdir/pmlogconf/tools/vector
+%config(noreplace) %_confdir/pmlogconf/tools/vector-summary
+%config(noreplace) %_confdir/pmlogconf/tools/vmstat
+%config(noreplace) %_confdir/pmlogconf/tools/vmstat-summary
+%dir  %_confdir/pmlogconf/v1.0
+%config(noreplace) %_confdir/pmlogconf/v1.0/C2
+%config(noreplace) %_confdir/pmlogconf/v1.0/C3
+%config(noreplace) %_confdir/pmlogconf/v1.0/D3
+%config(noreplace) %_confdir/pmlogconf/v1.0/K0
+%config(noreplace) %_confdir/pmlogconf/v1.0/S0
+%config(noreplace) %_confdir/pmlogconf/v1.0/S1
+%dir %_confdir/pmlogconf/zeroconf
+%config(noreplace) %_confdir/pmlogconf/zeroconf/atop-proc
+%config(noreplace) %_confdir/pmlogconf/zeroconf/interrupts
+%config(noreplace) %_confdir/pmlogconf/zeroconf/nfsclient
+%config(noreplace) %_confdir/pmlogconf/zeroconf/numastat
+%config(noreplace) %_confdir/pmlogconf/zeroconf/pidstat
+%config(noreplace) %_confdir/pmlogconf/zeroconf/pidstat-summary
+%config(noreplace) %_confdir/pmlogconf/zeroconf/tapestat
+%config(noreplace) %_confdir/pmlogconf/zeroconf/xfs-perdev
+%dir %_confdir/pmlogconf/zimbra
+%config(noreplace) %_confdir/pmlogconf/zimbra/all
+%dir %_confdir/pmlogger
+%dir %_confdir/pmlogger/class.d
+%config(noreplace) %_confdir/pmlogger/class.d/pmfind
+%config(noreplace) %_confdir/pmlogger/config.pmstat
+%dir %_confdir/pmlogrewrite
+%config(noreplace) %_confdir/pmlogrewrite/cgroup_units.conf
+%config(noreplace) %_confdir/pmlogrewrite/jbd2_kernel_ulong.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_disk_all_fixups.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_kernel_fixups.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_kernel_ulong.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_proc_fs_nfsd_fixups.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_proc_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_proc_net_snmp_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_proc_net_tcp_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_xfs_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/nfsclient_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/pmcd_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/proc_discrete_strings.conf
+%config(noreplace) %_confdir/pmlogrewrite/proc_jiffies.conf
+%config(noreplace) %_confdir/pmlogrewrite/proc_kernel_ulong.conf
+%config(noreplace) %_confdir/pmlogrewrite/proc_kernel_ulong_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/proc_scheduler.conf
+%config(noreplace) %_confdir/pmlogrewrite/rpm_migrate.conf
+%dir %_confdir/proc
+%config(noreplace) %_confdir/proc/samplehotproc.conf
+%dir %_confdir/rabbitmq
+%config(noreplace) %_confdir/rabbitmq/rabbitmq.conf
+%dir %_confdir/redis
+%config(noreplace) %_confdir/redis/redis.conf
+%dir %_confdir/shping
+%config(noreplace) %_confdir/shping/sample.conf
+%dir %_confdir/simple
+%config(noreplace) %_confdir/simple/simple.conf
+%dir %_confdir/summary
+%config(noreplace) %_confdir/summary/expr.pmie
+# end todo
 %_logconfdir/statsd
 %_logconfdir/apache
 %_logconfdir/cpu
@@ -519,6 +927,10 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_logconfdir/tools
 %_logconfdir/v1.0
 %_logconfdir/zimbra
+%_logconfdir/mssql
+%_logconfdir/netcheck
+%_logconfdir/openvswitch
+%_logconfdir/rabbitmq
 
 %dir %_confdir
 %dir %_pmdasdir
@@ -555,6 +967,8 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_unitdir/pmcd.service
 %_unitdir/pmlogger.service
 %_unitdir/pmie.service
+%_unitdir/pmfind.service
+%_unitdir/pmfind.timer
 %_unitdir/pmproxy.service
 %_unitdir/pmlogger_check.service
 %_unitdir/pmlogger_check.timer
@@ -572,6 +986,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_sysconfdir/sysconfig/pmlogger
 %config(noreplace) %_sysconfdir/sysconfig/pmproxy
 %config(noreplace) %_sysconfdir/sysconfig/pmcd
+%config(noreplace) %_sysconfdir/sysconfig/pmfind
 %config %_sysconfdir/pcp.env
 %dir %_confdir/labels
 %dir %_confdir/pmcd
@@ -597,7 +1012,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_sharedstatedir/pcp/config/pmafm
 %exclude %_sharedstatedir/pcp/config/pmafm/pcp-gui
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_sharedstatedir/pcp/config/pmie
-%_sharedstatedir/pcp/config/pmie/*
+#%_sharedstatedir/pcp/config/pmie/*
 %_sharedstatedir/pcp/config/pmieconf
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_sharedstatedir/pcp/config/pmlogger
 %_sharedstatedir/pcp/config/pmlogger/*
@@ -687,13 +1102,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_pmdasdir/trivial
 %_pmdasdir/txmon
 
-%files manager
-%_initddir/pmmgr
-%_unitdir/pmmgr.service
-%_libexecdir/pcp/bin/pmmgr
-%attr(0775,%_pseudouser_user,%_pseudouser_group) %_logsdir/pmmgr
-%config(missingok,noreplace) %_confdir/pmmgr
-
 %files import-tools
 %_bindir/sar2pcp
 %_bindir/iostat2pcp
@@ -756,6 +1164,8 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_pmdasdir/mailq
 %_pmdasdir/mounts
 %_pmdasdir/nvidia
+%_pmdasdir/openvswitch
+%_pmdasdir/rabbitmq
 %_pmdasdir/roomtemp
 %_pmdasdir/rpm
 %_pmdasdir/sendmail
@@ -821,6 +1231,11 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/demos/tutorials/*.tar.gz
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.0-alt1
+- NMU: fixed build by updating to 5.2.0
+- (closes: #38912)
+- TODO: properly divide newly packaged files to subpackages.
+
 * Thu Apr 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1.1
 - NMU: re-sign pkg - hack around alt bug 38332
 
