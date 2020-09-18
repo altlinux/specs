@@ -1,9 +1,9 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.156
+Version: 0.157
 Release: alt1
-License: GPL
+License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -20,17 +20,21 @@ Requires: rpm-macros-kde-common-devel
 
 %prep
 %setup
-%patch -p1
+%patch -p0
+
 %install
 install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
 for ext in cmake kde4 kf5 qt4 perl systemd; do
-    install -D -m644 macros.$ext -p %buildroot%_rpmmacrosdir/%module-$ext
+    install -D -m644 alt/macros.$ext -p %buildroot%_rpmmacrosdir/%module-$ext
 done
 
 %files
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.157-alt1
+- cmake updated
+
 * Sat Feb 16 2019 Igor Vlasenko <viy@altlinux.ru> 0.156-alt1
 - added build_ldflags
 
