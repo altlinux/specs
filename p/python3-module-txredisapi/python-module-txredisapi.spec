@@ -2,15 +2,18 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.2
-Release: alt2
+Version: 1.4.7
+Release: alt1
 
 Summary: Twisted client protocol for redis
+
 License: Apache
 Group: Development/Python3
-URL: https://github.com/fiorix/txredisapi.git
+URL: https://github.com/fiorix/txredisapi
+
 BuildArch: noarch
 
+# Source0-git: https://github.com/IlyaSkriblovsky/txredisapi.git
 Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -42,6 +45,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.7-alt1
+- new version 1.4.7 (with rpmrb script)
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1:1.2-alt2
 - python2 disabled
 
