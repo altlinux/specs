@@ -26,10 +26,13 @@
 %global libuv_abi 1.39.0
 %def_with systemuv
 
-%global libicu_abi 6.5
+%global libicu_abi 6.7
+# rpm-build-info gives _distro_version
+%if %_vendor == "alt" && (%_distro_version == "Sisyphus")
 %def_with systemicu
 # TODO: node has to use icu:: for ICU names
 #add_optflags -DU_USING_ICU_NAMESPACE=1
+%endif
 
 %global libnghttp2_abi 1.41.0
 %def_with systemnghttp2
@@ -47,7 +50,7 @@
 
 Name: node
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -63,7 +66,7 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 
 BuildRequires(pre): rpm-macros-nodejs
-BuildRequires(pre): rpm-build-intro >= 2.1.5
+BuildRequires(pre): rpm-build-intro >= 2.1.14
 
 BuildRequires: python3-devel gcc-c++ zlib-devel
 
@@ -372,6 +375,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 14.11.0-alt2
+- set libicu >= 6.7 (missed since 14.6.0), use packaged icu only on Sisyphus
+
 * Wed Sep 16 2020 Vitaly Lipatov <lav@altlinux.ru> 14.11.0-alt1
 - new version 14.11.0 (with rpmrb script)
 - CVE-2020-8251: Denial of Service by resource exhaustion CWE-400 due to unfinished HTTP/1.1 requests (Critical)
