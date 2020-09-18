@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.3.6
+Version: 0.4.4.5
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -145,6 +145,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Fri Sep 18 2020 Vladimir Didenko <cow@altlinux.ru> 0.4.4.5-alt1
+- new version
+
 * Thu Jul 9 2020 Vladimir Didenko <cow@altlinux.ru> 0.4.3.6-alt1
 - new version (fixes CVE-2020-15572)
 
