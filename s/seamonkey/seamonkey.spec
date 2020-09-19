@@ -19,7 +19,7 @@
 
 Name: 	 seamonkey
 Version: 2.53.3
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -55,7 +55,7 @@ Patch9:		mozilla-js-makefile.patch
 Patch10:	firefox-32-baseline-disable.patch
 Patch11:        seamonkey-2.53.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
 Patch12:        seamonkey-2.53.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
-
+Patch13: 	seamonkey-rust-1.45.patch
 
 Requires(pre,postun): urw-fonts
 
@@ -193,6 +193,7 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %endif
 %patch11 -p1
 %patch12 -p1
+%patch13 -p0
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -442,6 +443,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sat Sep 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.3-alt2
+- Fix build with Rust 1.45 (see https://bugzilla.mozilla.org/show_bug.cgi?id=1617782).
+
 * Mon Jul 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:2.53.3-alt1
 - New version.
 
