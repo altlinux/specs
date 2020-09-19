@@ -18,7 +18,7 @@
 Name: buildah
 # Bump version in buildah.go too
 Version: 1.16.1
-Release: alt1
+Release: alt2
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -38,6 +38,7 @@ BuildRequires: glib2-devel
 Requires: runc >= 1.0.0
 Requires: containers-common
 Requires: slirp4netns >= 0.3
+Requires: tzdata
 
 %description
 The buildah package provides a command line tool which can be used to
@@ -88,6 +89,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Sep 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt2
+- add tzdata to Requires
+
 * Thu Sep 17 2020 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
 - new version 1.16.1
 - Add(): fix handling of relative paths with no ContextDir
