@@ -1,8 +1,8 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.13.0
-Release: alt2
+Version: 1.14.0
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -113,6 +113,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Sat Sep 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Mon Jul 20 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt2
 - disable cross build
 
