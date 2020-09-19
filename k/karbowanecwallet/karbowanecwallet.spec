@@ -1,7 +1,7 @@
 Name:		karbowanecwallet
-Version:	1.4.6
-Release:	alt3
-Summary:	Karbowanec KRB wallet
+Version:	1.4.7
+Release:	alt2
+Summary:	Karbowanec (Karbo) KRB wallet
 Url:		https://karbo.io/
 Group:		Office
 License:	MIT
@@ -12,9 +12,9 @@ Source2:	karbowanec.png
 Patch0:		%name-1.4.4-alt_lang_dir.patch
 Patch1:		%name-g++8.patch
 
-BuildRequires: boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel qt5-tools-devel git-core libssl-devel
-BuildRequires: /usr/bin/convert
-ExclusiveArch: x86_64
+BuildRequires:	boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel qt5-tools-devel git-core libssl-devel
+BuildRequires:	/usr/bin/convert
+ExclusiveArch: x86_64 armh aarch64
 
 %description
   Karbowanec (Karbo) is Ukrainian decentralized, privacy oriented peer-to-peer
@@ -59,6 +59,12 @@ convert -resize 16x16 %SOURCE2 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Sat Sep 19 2020 Motsyo Gennadi <drool@altlinux.ru> 1.4.7-alt2
+- ExclusiveArch x86_64 armh aarch64
+
+* Sat Sep 19 2020 Motsyo Gennadi <drool@altlinux.ru> 1.4.7-alt1
+- 1.4.7
+
 * Mon Aug 24 2020 Motsyo Gennadi <drool@altlinux.ru> 1.4.6-alt3
 - cleanup spec for build...
 
