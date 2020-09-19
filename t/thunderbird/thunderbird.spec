@@ -1,8 +1,8 @@
-%def_without	enigmail
-%def_without	google_calendar
-%def_with	bundled_cbindgen
-%def_enable     mach_build
-%define 	r_name thunderbird
+%def_without enigmail
+%def_without google_calendar
+%def_with    bundled_cbindgen
+%def_enable  mach_build
+%define r_name thunderbird
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 32
 %endif
@@ -11,42 +11,53 @@
 %define gdata_version     2.6
 %define llvm_version      10.0
 
-Summary:	Thunderbird is Mozilla's e-mail client
-Name:		thunderbird
-Version:	78.2.2
-Release:	alt1
-License:	MPL-2.0
-Group:		Networking/Mail
-URL:		https://www.thunderbird.net
+Name: 	 thunderbird
+Version: 78.2.2
+Release: alt2
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Summary: Thunderbird is Mozilla's e-mail client
+License: MPL-2.0
+Group: 	 Networking/Mail
+URL: 	 https://www.thunderbird.net
 
-Source0:	%name-%version.tar
-Source1:	enigmail-source.tar
-Source2:	rpm-build.tar
-Source3:	thunderbird.desktop
-Source4:	thunderbird-mozconfig
-Source5:	thunderbird-default-prefs.js
-Source6:        l10n.tar
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+Source0: %name-%version.tar
+Source1: enigmail-source.tar
+Source2: rpm-build.tar
+Source3: thunderbird.desktop
+Source4: thunderbird-mozconfig
+Source5: thunderbird-default-prefs.js
+Source6: l10n.tar
 # Get $HOME/.cargo after run cargo install cbindgen (without bin/cbindgen)
-Source7:	cbindgen-vendor.tar
-Source8:        thunderbird-wayland.desktop
+Source7: cbindgen-vendor.tar
+Source8: thunderbird-wayland.desktop
 
-Patch11:	thunderbird-alt-allow-send-in-windows-1251.patch
-Patch12:	alt-use-vorbis-on-arm-too.patch
+Patch11: thunderbird-alt-allow-send-in-windows-1251.patch
+Patch12: alt-use-vorbis-on-arm-too.patch
 
-Patch21:        mozilla-1353817.patch
-Patch23:        build-aarch64-skia.patch
-Patch25:        Bug-1238661---fix-mozillaSignalTrampoline-to-work-.patch
-Patch29:        thunderbird-60.7.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch30:        thunderbird-68.2.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch31: 	mozilla-1512162.patch
+Patch21: mozilla-1353817.patch
+Patch23: build-aarch64-skia.patch
+Patch25: Bug-1238661---fix-mozillaSignalTrampoline-to-work-.patch
+Patch29: thunderbird-60.7.2-alt-ppc64le-disable-broken-getProcessorLineSize-code.patch
+Patch30: thunderbird-68.2.2-alt-ppc64le-fix-clang-error-invalid-memory-operand.patch
+Patch31:  mozilla-1512162.patch
 # https://salsa.debian.org/mozilla-team/thunderbird/-/blob/debian/experimental/debian/patches/porting-armhf/Bug-1526653-Include-struct-definitions-for-user_vfp-and-u.patch
-Patch32:	Bug-1526653-Include-struct-definitions-for-user_vfp-and-u.patch
+Patch32: Bug-1526653-Include-struct-definitions-for-user_vfp-and-u.patch
+Patch33: Don-t-auto-disable-extensions-in-system-directories.patch
+Patch34: Set-javascript.options.showInConsole.patch
+Patch35: Allow-.js-preference-files-to-set-locked-prefs-with-lockP.patch
+Patch36: Bug-1556197-amend-Bug-1544631-for-fixing-mips32.patch
+Patch37: Bug-1664607-Don-t-try-to-load-what-s-new-page-when-built-.patch
+Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
+Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
+Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
+Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
 
-Patch40:        enigmail-use-juniorModeForceOff.patch
-Patch42:	enigmail-gost.patch
-Patch43:        enigmail-disable-pEpAutoDownload.patch
+
+Patch50: enigmail-use-juniorModeForceOff.patch
+Patch52: enigmail-gost.patch
+Patch53: enigmail-disable-pEpAutoDownload.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -109,45 +120,45 @@ BuildRequires: python3-module-pip
 BuildRequires: python3-modules-sqlite3
 
 # Mozilla requires
-BuildRequires:	libnspr-devel
-BuildRequires:	libnss-devel
-BuildRequires:	libnss-devel-static
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
+BuildRequires: libnss-devel-static
 
-Provides:	mailclient
-Obsoletes:	thunderbird-calendar
-Obsoletes:	thunderbird-calendar-timezones
+Provides: mailclient
+Obsoletes: thunderbird-calendar
+Obsoletes: thunderbird-calendar-timezones
 
-Provides:	thunderbird-gnome-support = %EVR
-Obsoletes:	thunderbird-gnome-support
+Provides: thunderbird-gnome-support = %EVR
+Obsoletes: thunderbird-gnome-support
 
-Requires:	hunspell-en
-Requires:	browser-plugins-npapi
+Requires: hunspell-en
+Requires: browser-plugins-npapi
 
-Provides:	%name-esr = %EVR
-Obsoletes:	%name-esr < %EVR
-Provides: 	%name-lightning = %EVR
-Obsoletes:	%name-lightning < %EVR
-Provides: 	%name-lightning-ru = %EVR
-Obsoletes:	%name-lightning-ru < %EVR
-Provides: 	%name-esr-lightning = %EVR
-Obsoletes:	%name-esr-lightning < %EVR
-Provides: 	%name-esr-lightning-ru = %EVR
-Obsoletes:	%name-esr-lightning-ru < %EVR
-Provides: 	%name-ru = %EVR
-Obsoletes:	%name-ru < %EVR
+Provides: %name-esr = %EVR
+Obsoletes: %name-esr < %EVR
+Provides:  %name-lightning = %EVR
+Obsoletes: %name-lightning < %EVR
+Provides:  %name-lightning-ru = %EVR
+Obsoletes: %name-lightning-ru < %EVR
+Provides:  %name-esr-lightning = %EVR
+Obsoletes: %name-esr-lightning < %EVR
+Provides:  %name-esr-lightning-ru = %EVR
+Obsoletes: %name-esr-lightning-ru < %EVR
+Provides:  %name-ru = %EVR
+Obsoletes: %name-ru < %EVR
 
 # Protection against fraudulent DigiNotar certificates
-Requires:	libnss >= 3.13.1-alt1
+Requires: libnss >= 3.13.1-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
-%define tbird_cid                    \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
-%define tbird_prefix                 %_libdir/%r_name
-%define tbird_datadir                %_datadir/%r_name
-%define tbird_idldir                 %_datadir/idl/%r_name
-%define tbird_includedir             %_includedir/%r_name
-%define tbird_develdir               %tbird_prefix-devel
+%define tbird_cid             \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
+%define tbird_prefix          %_libdir/%r_name
+%define tbird_datadir         %_datadir/%r_name
+%define tbird_idldir          %_datadir/idl/%r_name
+%define tbird_includedir      %_includedir/%r_name
+%define tbird_develdir        %tbird_prefix-devel
 
 %description
 Thunderbird is Mozilla's next generation e-mail client.
@@ -204,26 +215,25 @@ Allows bidirectional access to Google Calendar
 %endif
 
 %package devel
-Summary:	Thunderbird development kit.
-Group:		Development/C++
-Requires:	%name = %version-%release
+Summary: Thunderbird development kit.
+Group: Development/C++
+Requires: %name = %version-%release
 
-Requires:	python-base
-AutoReq:	yes, nopython
-Provides:  	%name-esr-devel = %version-%release
-Obsoletes:	%name-esr-devel < %version-%release
-
+Requires: python-base
+AutoReq: yes, nopython
+Provides: %name-esr-devel = %version-%release
+Obsoletes: %name-esr-devel < %version-%release
 
 %description devel
 Thunderbird development kit.
 
 %package -n rpm-build-%name
-Summary: 	RPM helper macros to rebuild thunderbird packages
-Group:		Development/Other
-BuildArch:	noarch
+Summary:  RPM helper macros to rebuild thunderbird packages
+Group: Development/Other
+BuildArch: noarch
 
-Requires:	mozilla-common-devel
-Requires:	rpm-build-mozilla.org
+Requires: mozilla-common-devel
+Requires: rpm-build-mozilla.org
 
 %description -n rpm-build-%name
 These helper macros provide possibility to rebuild
@@ -234,9 +244,9 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 
 %if_with enigmail
 tar -xf %SOURCE1
-%patch40 -p1
-%patch42 -p1
-%patch43 -p1
+%patch50 -p1
+%patch52 -p1
+%patch53 -p1
 # Fix <br> in translations
 subst 's|<html:br/>|<html:br></html:br>|g' enigmail/lang/*/enigmail.dtd
 %endif
@@ -257,6 +267,15 @@ tar -xf %SOURCE6
 %ifarch %arm
 %patch32 -p1
 %endif
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -299,20 +318,20 @@ CBINDGEN_HOME="$PWD/cbindgen"
 CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
 
 if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
-        mkdir -p -- "$CBINDGEN_HOME"
+ mkdir -p -- "$CBINDGEN_HOME"
 
-        tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE7
+ tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE7
 
-        cat > "$CBINDGEN_HOME/config" <<-EOF
-                [source.crates-io]
-                replace-with = "vendored-sources"
+ cat > "$CBINDGEN_HOME/config" <<-EOF
+         [source.crates-io]
+         replace-with = "vendored-sources"
 
-                [source.vendored-sources]
-                directory = "$CBINDGEN_HOME"
+         [source.vendored-sources]
+         directory = "$CBINDGEN_HOME"
 EOF
 
-        env CARGO_HOME="$CBINDGEN_HOME" \
-                cargo install cbindgen
+ env CARGO_HOME="$CBINDGEN_HOME" \
+         cargo install cbindgen
 fi
 %endif
 
@@ -331,8 +350,8 @@ export MOZ_BUILD_APP=mail
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
 MOZ_OPT_FLAGS=$(echo "%optflags -g0 -fpermissive" | \
-                      sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g' \
-                      -e 's/-frecord-gcc-switches/-grecord-gcc-switches/')
+               sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g' \
+               -e 's/-frecord-gcc-switches/-grecord-gcc-switches/')
 # Disable null pointer gcc6 optimization - workaround for
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1278795
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-schedule-insns2"
@@ -399,8 +418,8 @@ python_ver="$(python3 -c 'import sys; print("python{}.{}".format(*sys.version_in
 python_sitedir="objdir/_virtualenvs/init_py3/lib/$python_ver/site-packages"
 
 if [ -z "$(find "$python_sitedir" -type f -name '*.pth' -print -quit)" ]; then
-       rm -rf -- "$python_sitedir"
-       cp -ar objdir/_virtualenvs/init_py3/lib/python3/site-packages "$python_sitedir/"
+rm -rf -- "$python_sitedir"
+cp -ar objdir/_virtualenvs/init_py3/lib/python3/site-packages "$python_sitedir/"
 fi
 
 ./mach configure
@@ -412,9 +431,9 @@ fi
 make -f client.mk \
 	STRIP="/bin/true" \
 	mozappdir=%buildroot%tbird_prefix \
-        OBJDIR=objdir \
-        TOPSRCDIR=$srcdir \
-        MOZ_PARALLEL_BUILD=$NPROCS
+	OBJDIR=objdir \
+	TOPSRCDIR=$srcdir \
+	MOZ_PARALLEL_BUILD=$NPROCS
 	MACH=1 \
 	build
 %endif
@@ -519,7 +538,7 @@ for s in 16 22 24 32 48 64 128 256; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/thunderbird.png
 done
 install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
-               %buildroot%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
+        %buildroot%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 # main startup script
 cat>%buildroot/%_bindir/thunderbird<<-EOF
@@ -625,6 +644,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sat Sep 19 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.2-alt2
+- Fix show folders and messages by patches from Debian (ALT #38964).
+
 * Thu Sep 17 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.2-alt1
 - New version (78.2.2).
 
