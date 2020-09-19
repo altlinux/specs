@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppxlib
 Name: ocaml-%libname
-Version: 0.13.0
-Release: alt3
+Version: 0.15.0
+Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
 Group: Development/ML
@@ -82,6 +82,9 @@ dune runtest
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Wed Sep 15 2020 Anton Farygin <rider@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+ 
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.13.0-alt3
 - added ocaml-result-devel to devel package requires
 - added ocaml-base-devel to buildrequires

@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
-Version: 0.14.0
-Release: alt2
+Version: 0.14.1
+Release: alt1
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
 Group: Development/ML
@@ -66,6 +66,9 @@ dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*/*.cmxs
 
 %changelog
+* Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - built as release (dune build -p) against incomplete dependencies
   in devel package

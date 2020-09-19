@@ -2,47 +2,41 @@
 %def_with check
 Name: js_of_ocaml
 Version: 3.7.0
-Release: alt1
+Release: alt2
 Summary: A compiler of OCaml byte-code to Javascript
 License: LGPLv2 with exceptions
 Group: Development/ML
 Url: http://ocsigen.org/js_of_ocaml/
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: rpm-build-ocaml >= 1.4
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-graphics
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-lwt-devel >= 2.4.4
 BuildRequires: ocaml-menhir
-BuildRequires: ocaml-num-devel
-BuildRequires: ocaml-biniou-devel
 BuildRequires: ocaml-tyxml-devel
-BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-reactiveData-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-ppxlib-devel
-BuildRequires: ocaml-ppx_here-devel
-BuildRequires: ocaml-ppx_inline_test-devel
-BuildRequires: ocaml-ppx_expect-devel
-BuildRequires: ocaml-ppx_tools-devel
-BuildRequires: ocaml-ppx_sexp_conv-devel
-BuildRequires: ocaml-compiler-libs-devel
 BuildRequires: ocaml-fieldslib-devel
-BuildRequires: ocaml-cohttp-devel
-BuildRequires: ocaml-jane-street-headers-devel
 BuildRequires: dune
 BuildRequires: nodejs
 BuildRequires: libX11-devel
 BuildRequires: ocaml-ocamldoc
 %if_with check
+BuildRequires: ocaml-num-devel
+BuildRequires: ocaml-ppx_here-devel
 BuildRequires: ocaml-ppx_hash-devel
+BuildRequires: ocaml-ppx_inline_test-devel
 BuildRequires: ocaml-ppx_compare-devel
 BuildRequires: ocaml-time_now-devel 
+BuildRequires: ocaml-ppx_sexp_conv-devel 
+BuildRequires: ocaml-ppx_expect-devel 
 BuildRequires: ocaml-ppx_enumerate-devel
 %endif
 Requires: ocaml-%name = %version-%release
@@ -81,6 +75,7 @@ files for developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build --release @install
@@ -109,6 +104,9 @@ files for developing applications that use %name.
 %_libdir/ocaml/js_of_ocaml-ppx/ppx_js
 
 %changelog
+* Sat Sep 19 2020 Anton Farygin <rider@altlinux.ru> 3.7.0-alt2
+- optimized build dependencies
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 
