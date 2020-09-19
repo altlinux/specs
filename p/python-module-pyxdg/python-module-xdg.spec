@@ -4,19 +4,22 @@
 
 Name: python-module-%modname
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: Implementations of freedesktop.org standards in Python
 License: LGPLv2
 Group: Development/Python
 Url: http://freedesktop.org/Software/pyxdg
+Packager: Python Development Team <python@packages.altlinux.org>
 
-#VCS: https://gitlab.freedesktop.org/xdg/pyxdg.git
-# https://github.com/takluyver/pyxdg.git
+# https://gitlab.freedesktop.org/xdg/pyxdg.git
+Vcs: https://github.com/takluyver/pyxdg.git
 Source: %modname-%version.tar
 Patch: %modname-0.26-alt-TryExec-test-py3.patch
 Patch1: %modname-0.26-alt-TryExec-test-py2.patch
-Packager: Python Development Team <python@packages.altlinux.org>
+#https://github.com/takluyver/pyxdg/pull/12
+#https://patch-diff.githubusercontent.com/raw/takluyver/pyxdg/pull/12.patch
+Patch2: %modname-0.26-up-python-3.8.4-compatibility.patch
 
 BuildArch: noarch
 
@@ -48,6 +51,7 @@ pushd py2build
 %patch1 -p1
 popd}
 %patch -p1
+%patch2 -p1
 
 %build
 %python3_build
@@ -82,6 +86,10 @@ popd}
 
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt2
+- fixed compatibility with python >= 3.8.4
+  (see https://github.com/takluyver/pyxdg/pull/12)
+
 * Thu Jul 23 2020 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
 - updated to rel-0.26-2-g7ad4b32
 - made python2 build optional
