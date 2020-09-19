@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define rdn_name io.github.pragha-music-player
 
@@ -9,7 +9,7 @@
 
 Name: pragha
 Version: 1.3.99.1
-Release: alt1
+Release: alt2
 
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
@@ -30,8 +30,8 @@ Patch: pragha-1.3.3-alt-configure.patch
 Requires: gst-plugins-base1.0
 Requires: gst-plugins-good1.0
 
-BuildRequires: libcddb-devel libcdio-devel libcdio-paranoia-devel libclastfm-devel
-BuildRequires: libexo-devel libglyr-devel
+BuildRequires: libcddb-devel libcdio-devel libcdio-paranoia-devel
+BuildRequires: libclastfm-devel libglyr-devel
 BuildRequires: libkeybinder-devel libnotify-devel libtag-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libpeas-devel libtotem-pl-parser-devel
@@ -53,7 +53,7 @@ light, and simultaneously complete without obstructing the daily work.
 subst 's/%name.appdata/%rdn_name.metainfo/' data/Makefile.am
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64 
+%add_optflags %(getconf LFS_CFLAGS)
 NOCONFIGURE=1 xdt-autogen
 %configure \
 	%{subst_enable libxfce4ui} \
@@ -81,6 +81,10 @@ NOCONFIGURE=1 xdt-autogen
 %exclude %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.99.1-alt2
+- v1.3.99.1-5-g870c62ba
+- fixed buildreqs
+
 * Fri Aug 16 2019 Yuri N. Sedunov <aris@altlinux.org> 1.3.99.1-alt1
 - 1.3.99.1
 
