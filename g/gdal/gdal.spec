@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.0.4
-Release: alt1.1
+Release: alt1.2
 Group: Sciences/Geosciences
 
 License: MIT
@@ -27,7 +27,7 @@ Patch7: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
 
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-genshi python-module-xlwt python-modules-ctypes swig
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel swig
 
 BuildRequires: chrpath libnetcdf-devel
 BuildRequires: libproj-devel
@@ -116,8 +116,11 @@ Perl modules for GDAL/OGR.
 %patch6 -p2
 %patch7 -p0
 
-
 %build
+# hack! remove!
+#add_optflags -fpermissive
+CXXFLAGS="$CXXFLAGS -fpermissive" ; export CXXFLAGS ;
+# end hack
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
 %ifarch %e2k
 # lcc 1.23 can't do those __builtin_functions (mcst#3588)
@@ -151,7 +154,7 @@ Perl modules for GDAL/OGR.
 	%{subst_with mysql} \
 	%{subst_with pg} \
 	%{subst_with sqlite} \
-	--with-python \
+	%{subst_with python} \
 	--with-pythonlib=%python_libdir \
 	%{subst_with perl} \
 	--without-php \
@@ -161,7 +164,7 @@ Perl modules for GDAL/OGR.
 	--with-xerces-lib=%_libdir\
 	--without-pcraster        \
 	--with-threads \
-	--with-netcdf=%prefix \
+	--without-netcdf \
 %ifnarch x86_64
 	--with-avx=no \
 	--with-sse=no \
@@ -236,8 +239,10 @@ sed -i 's|__bool__ = __nonzero__||' \
 %files -n %libname
 %_libdir/*.so.*
 
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/*
+%endif
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
@@ -251,6 +256,11 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1.2
+- NMU: fixed build (build w/o python2) (closes: #38911)
+- TODO: remove -fpermissive quick hack
+- TODO: build --with-netcdf
+
 * Thu Apr 16 2020 Michael Shigorin <mike@altlinux.org> 3.0.4-alt1.1
 - E2K: fix build with lcc 1.23
 
