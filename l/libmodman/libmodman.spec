@@ -1,21 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Group: System/Libraries
-%add_optflags %optflags_shared
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libmodman
 Version:        2.0.1
-Release:        alt2_16
+Release:        alt2_23
 Summary:        A simple library for managing C++ modules (plug-ins)
 
 License:        LGPLv2+
 URL:            http://code.google.com/p/libmodman/
 Source0:        http://libmodman.googlecode.com/files/%{name}-%{version}.tar.gz
 
-BuildRequires:  gcc-c++-common
+BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  zlib-devel
 Source44: import.info
@@ -37,17 +35,19 @@ developing applications that use %{name}.
 
 
 %build
-%{fedora_cmake}
-%make_build
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build
 
 %check
-make test
+%fedora_v2_ctest
 
 %install
-%makeinstall_std
+%fedora_v2_cmake_install
+
+
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS
 %{_libdir}/libmodman.so.*
 
@@ -60,6 +60,9 @@ make test
 %{_datadir}/cmake/Modules/Findlibmodman.cmake
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_23
+- regenerated to fix build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_16
 - update to new release by fcimport
 
