@@ -1,9 +1,9 @@
-%define daterev 20200510
-%define gitsnapshot 430ce20f8db711cff7dafcd6cadbce2ff6514e1f
+%define daterev 20200730
+%define gitsnapshot baf5bf29fa68c908e7033e58465562d22ec97a07
 
 Name: openttd
-Version: 1.10.2
-Release: alt2
+Version: 1.10.3
+Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
@@ -92,6 +92,9 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
+* Sat Sep 19 2020 Anton Farygin <rider@altlinux.ru> 1.10.3-alt1
+- 1.10.3
+
 * Wed Jun 24 2020 Michael Shigorin <mike@altlinux.org> 1.10.2-alt2
 - E2K: avoid lcc-unsupported option
 - minor spec cleanup (according to ALT specfile conventions)
