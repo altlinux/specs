@@ -1,9 +1,8 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
@@ -12,7 +11,7 @@ Group: System/Libraries
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_7
+Release:	alt1_15
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -62,24 +61,19 @@ Requires: libechonest-qt5 = %{version}-%{release}
 
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
-%{fedora_cmake} .. \
+%global _vpath_builddir %{_target_platform}
+%{fedora_v2_cmake} .. \
   -DBUILD_WITH_QT4:BOOL=ON \
   -DECHONEST_BUILD_TESTS:BOOL=%{?tests:ON}%{!?tests:OFF}
 
-%make_build
-popd
+%fedora_v2_cmake_build
 
 %if 0%{?qt5}
-mkdir %{_target_platform}-qt5
-pushd %{_target_platform}-qt5
-%{fedora_cmake} .. \
+%global _vpath_builddir %{_target_platform}-qt5
+%{fedora_v2_cmake} .. \
   -DBUILD_WITH_QT4:BOOL=OFF \
   -DECHONEST_BUILD_TESTS:BOOL=%{?tests:ON}%{!?tests:OFF} 
-
-%make_build
-popd
+%fedora_v2_cmake_build
 %endif
 
 
@@ -102,6 +96,8 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 %endif
 
 
+
+
 %files
 %doc AUTHORS COPYING README TODO
 %{_libdir}/libechonest.so.2.3*
@@ -112,6 +108,8 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 %{_libdir}/pkgconfig/libechonest.pc
 
 %if 0%{?qt5}
+
+
 %files -n libechonest-qt5
 %doc AUTHORS COPYING README TODO
 %{_libdir}/libechonest5.so.2.3*
@@ -124,6 +122,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_15
+- regenerated to fix build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_7
 - update to new release by fcimport
 
