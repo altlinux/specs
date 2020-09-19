@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 %define _localstatedir %{_var}
 Name: libfli
 Version: 1.7
-Release: alt2_29
+Release: alt3_29
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
@@ -42,11 +42,11 @@ These are the header files needed to develop a %{name} application
 %patch33 -p1
 
 %build
-%{fedora_cmake}
-%fedora_cmake_build 
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build 
 
 %install
-%fedora_cmake_install
+%fedora_v2_cmake_install
 
 
 
@@ -59,6 +59,9 @@ These are the header files needed to develop a %{name} application
 %{_libdir}/*.so
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_29
+- migrated to new fc cmake macros
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_29
 - update
 
