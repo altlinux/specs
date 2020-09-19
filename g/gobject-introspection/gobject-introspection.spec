@@ -7,7 +7,7 @@
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -27,6 +27,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%name/giscanner
+#https://bugzilla.altlinux.org/38965
+# python3(pkgconfig) provided by giscanner/pkgconfig.py
+%filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 
 %define glib_ver 2.64.0
@@ -139,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.1-alt2
+- filtered "python3(pkgconfig)" from provides (ALT #38965)
+
 * Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.1-alt1
 - 1.64.1
 
