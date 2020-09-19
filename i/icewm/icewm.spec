@@ -2,8 +2,8 @@
 %define realname icewm
 
 Name: %realname
-Version: 1.7.0
-Release: alt1
+Version: 1.8.3
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -53,6 +53,9 @@ Recommends: iftop, mutt
 %prep
 %setup -n %name
 %patch0 -p1
+%ifarch armh
+sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
+%endif
 
 %build
 %cmake	-DPREFIX=%_prefix \
@@ -120,6 +123,18 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %doc AUTHORS NEWS README.ALT README.md BUILD/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sat Sep 19 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.8.3-alt2
+- fixed build on armh, thanks to sbolshakov@
+
+* Sat Sep 19 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.8.3-alt1
+- 1.8.3
+
+* Sat Sep 12 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.8.2-alt1
+- 1.8.2
+
+* Sun Sep 06 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.8.1-alt1
+- 1.8.1
+
 * Sat Jul 18 2020 Dmitriy Khanzhin <jinn@altlinux.org> 3:1.7.0-alt1
 - 1.7.0
 
