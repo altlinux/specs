@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: Media Sharing Server
@@ -32,7 +32,7 @@ Url: https://pipewire.org/
 %if_disabled snapshot
 Source: http://freedesktop.org/software/%name/releases/%name-%version.tar.gz
 %else
-# VCS: https://github.com/PipeWire/pipewire.git
+Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 
@@ -58,7 +58,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
 %{?_enable_man:BuildRequires: xmltoman}
-%{?_enable_check:BuildRequires: /proc}
+%{?_enable_check:BuildRequires: /proc gcc-c++}
 
 %description
 PipeWire is a multimedia server for Linux and other Unix like operating
@@ -122,7 +122,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -n -g %name -d / \
+%_sbindir/useradd -r -N -g %name -d / \
 	-s /dev/null -c "PipeWire System Daemon" %name 2>/dev/null ||:
 
 %files
@@ -198,6 +198,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
+- updated to 0.3.12-4-g99b3f4a6
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
 - updated to 0.3.11-1-gc979f181
 
