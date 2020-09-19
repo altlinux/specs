@@ -1,16 +1,15 @@
+Group: Development/C
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
-Group: Development/C
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorver 3 
 
 Name: libapogee
 Version: 3.2
-Release: alt1_3
+Release: alt1_7
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+ and MPLv2.0
@@ -22,7 +21,7 @@ Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-generate-tarball.sh
 
 BuildRequires:  gcc-c++
-BuildRequires: boost-complete ctest cmake libusb-compat-devel libcurl-devel libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: boost-complete ctest cmake libusb-compat-devel libcurl-devel libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 Source44: import.info
 
 %description
@@ -41,11 +40,11 @@ sed -i 's|/etc/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
 sed -i 's|DESTINATION lib|DESTINATION lib${LIB_SUFFIX}|g' CMakeLists.txt
 
 %build
-%{fedora_cmake}
-make VERBOSE=1 %{?_smp_mflags}
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build
 
 %install
-make install DESTDIR=%{buildroot}
+%fedora_v2_cmake_install
 
 
 
@@ -61,6 +60,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_7
+- regenerated to fix build
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_3
 - update to new release by fcimport
 
