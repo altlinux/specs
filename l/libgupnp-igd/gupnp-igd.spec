@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gupnp-igd
-%define ver_major 0.2
+%define ver_major 1.2
 %define api_ver 1.0
 %define gupnp_api_ver 1.2
 %def_disable static
@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
-Release: alt4
+Version: %ver_major.0
+Release: alt1
 
 Summary: A library to handle UPnP IGD port mapping
 Group: System/Libraries
@@ -100,7 +100,7 @@ GObject introspection devel data for the gUPnP-IGD library
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%meson_test -v
 
 %files
 %_libdir/*.so.*
@@ -124,6 +124,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon Mar 30 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt4
 - updated to 0.2.5-21-g230402e (ported to Meson build system,
   removed python bindings)
