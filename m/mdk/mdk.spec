@@ -1,6 +1,6 @@
 Name: mdk
-Version: 1.2.9
-Release: alt1.1
+Version: 1.2.10
+Release: alt1
 
 Summary: GNU MIX Development Kit
 Summary(ru_RU.UTF-8): Комплект разработки для MIX
@@ -81,6 +81,9 @@ rm -f %buildroot%_infodir/dir
 %_emacslispdir/*
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.10-alt1
+- new version 1.2.10 (with rpmrb script)
+
 * Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt1.1
 - autorebuild with libreadline7
 
