@@ -1,9 +1,9 @@
 Name: clip-doc
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: CLIP compiler documentation
-Summary(ru_RU.KOI8-R): Документация к компилятору CLIP
+Summary(ru_RU.UTF-8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п╨ п╨п╬п╪п©п╦п╩я▐я┌п╬я─я┐ CLIP
 
 License: GPL
 Group: Development/Other
@@ -19,34 +19,34 @@ BuildArch: noarch
 %description
 This package includes the clip compiler documentation
 
-%description -l ru_RU.KOI8-R
-Данный пакет содержит документацию по компилятору clip
+%description -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п©п╬ п╨п╬п╪п©п╦п╩я▐я┌п╬я─я┐ clip
 
 ###################################################################################
 %package ru
-Summary: XBASE/Clipper compatible program compiler - documentation in english
-Summary(ru_RU.KOI8-R): Документация на русском для компилятора CLIP
+Summary: XBASE/Clipper compatible program compiler - documentation in russian
+Summary(ru_RU.UTF-8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п╫п╟ я─я┐я│я│п╨п╬п╪ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я┌п╬я─п╟ CLIP
 Group: Development/Other
-Requires: clip >= 1.1.14-alt2
+#Requires: clip >= 1.1.14-alt2
 
 %description ru
-This package includes the clip compiler documentation
+This package includes the clip compiler documentation in russian language.
 
-%description ru -l ru_RU.KOI8-R
-Данный пакет содержит документацию к компилятору clip
+%description ru -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╨ п╨п╬п╪п©п╦п╩я▐я┌п╬я─я┐ clip п╫п╟ я─я┐я│я│п╨п╬п╪ я▐п╥я▀п╨п╣.
 
 ###################################################################################
 %package en
 Summary: XBASE/Clipper compatible program compiler - documentation in english
-Summary(ru_RU.KOI8-R): Документация на английском для компилятора CLIP
+Summary(ru_RU.UTF-8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п╫п╟ п╟п╫пЁп╩п╦п╧я│п╨п╬п╪ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я┌п╬я─п╟ CLIP
 Group: Development/Other
-Requires: clip >= 1.1.14-alt2
+#Requires: clip >= 1.1.14-alt2
 
 %description en
-This package includes the clip compiler documentation in english language
+This package includes the clip compiler documentation in english language.
 
-%description en -l ru_RU.KOI8-R
-Данный пакет содержит документацию к компилятору clip на английском языке
+%description en -l ru_RU.UTF-8
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╨ п╨п╬п╪п©п╦п╩я▐я┌п╬я─я┐ clip п╫п╟ п╟п╫пЁп╩п╦п╧я│п╨п╬п╪ я▐п╥я▀п╨п╣.
 
 %prep
 tar xfj %SOURCE0
@@ -66,6 +66,11 @@ cp -rf html/en $DOCDIR
 
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- fix cli-doc-ru summary (ALT bug 38619)
+- change charset for descriptions (KOI8-R -> UTF-8)
+- drop clip requires
+
 * Sat Nov 18 2006 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version (1.2.0)
 
