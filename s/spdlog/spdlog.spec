@@ -1,6 +1,6 @@
 Name: spdlog
-Version: 1.5.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: Super fast C++ logging library
 
@@ -44,7 +44,8 @@ applications that use %name.
 
 %build
 %cmake -DSPDLOG_BUILD_SHARED=ON \
-       -DSPDLOG_FMT_EXTERNAL=ON
+       -DSPDLOG_FMT_EXTERNAL=ON \
+       -DSPDLOG_BUILD_TESTS=ON
 %cmake_build
 
 %install
@@ -68,6 +69,9 @@ export LD_LIBRARY_PATH=$(pwd)/BUILD
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Thu Jan 30 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - patch tweakme.h to use external libfmt for the library clients (ALT bug 37969)
 
