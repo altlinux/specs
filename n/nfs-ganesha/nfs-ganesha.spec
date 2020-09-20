@@ -70,7 +70,7 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 2.7.3
+Version: 3.3
 Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
@@ -96,11 +96,13 @@ BuildRequires: libcap-devel
 BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
 %if_with ceph
-BuildRequires: librados2-devel
+BuildRequires: librados2-devel >= 0.61
 %endif
 %if_with system_ntirpc
-BuildRequires: libntirpc-devel >= 1.7.0
+BuildRequires: libntirpc-devel = 3.3
 %endif
+BuildRequires: libuserspace-rcu-devel
+
 Requires: dbus
 Requires: nfs-utils
 %if_with nfsidmap
@@ -342,6 +344,7 @@ cd src && %cmake_insource -DCMAKE_BUILD_TYPE=Debug		\
 	-DUSE_FSAL_PT=%use_fsal_pt			\
 	-DUSE_FSAL_GLUSTER=%use_fsal_gluster		\
 	-DUSE_SYSTEM_NTIRPC=%use_system_ntirpc	\
+	-DNTIRPC_PREFIX=%prefix \
 	-DUSE_9P_RDMA=%use_rdma			\
 	-DUSE_FSAL_LUSTRE_UP=%use_lustre_up		\
 	-DUSE_LTTNG=%use_lttng			\
@@ -425,12 +428,15 @@ rm -f %buildroot%_bindir/ganesha-rados-grace
 %files
 %doc src/LICENSE.txt
 %_bindir/ganesha.nfsd
+# TODO: move to libganesha?
+%_libdir/libganesha_nfsd.so.%version
+#%_libdir/libganesha_nfsd.so
 %if_without system_ntirpc
-%_libdir/libntirpc.so.1.3.0
-%_libdir/libntirpc.so.1.3
-%_libdir/libntirpc.so
-%_pkgconfigdir/libntirpc.pc
-%_includedir/ntirpc/
+%_libdir/libntirpc.so.*.*.*
+%_libdir/libntirpc.so.*.*
+#%_libdir/libntirpc.so
+#%_pkgconfigdir/libntirpc.pc
+#%_includedir/ntirpc/
 %endif
 %config %_sysconfdir/dbus-1/system.d/org.ganesha.nfsd.conf
 %config(noreplace) %_sysconfdir/sysconfig/ganesha
@@ -550,6 +556,9 @@ rm -f %buildroot%_bindir/ganesha-rados-grace
 %endif
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3 (with rpmrb script)
+
 * Thu May 30 2019 Vitaly Lipatov <lav@altlinux.ru> 2.7.3-alt1
 - new version 2.7.3 (with rpmrb script)
 
