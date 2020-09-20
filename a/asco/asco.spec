@@ -1,14 +1,14 @@
 Name: asco
 Version: 0.4.10
-Release: alt1
+Release: alt2
 
 Summary: A SPICE Circuit Optimizer
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://asco.sourceforge.net/
-License: GPL
-Group: Video
+License: GPLv2
+Group: Engineering
 
 # Source-url: http://downloads.sourceforge.net/project/asco/asco/%version/ASCO-%version.tar.gz
 Source: %name-%version.tar
@@ -24,7 +24,7 @@ SPICE simulators using a high-performance parallel differential evolution
 (TM), HSPICE (R), LTspice (TM), Spectre (R) and Qucs exist.
 
 %prep
-%setup -q
+%setup
 #%patch
 
 %build
@@ -39,6 +39,9 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt2
+- change group to Engineering (ALT bug 16233)
+
 * Wed Aug 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt1
 - new version 0.4.10 (with rpmrb script)
 
