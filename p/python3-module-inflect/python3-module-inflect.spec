@@ -1,7 +1,7 @@
 %define  modulename inflect
 
 Name:    python3-module-%modulename
-Version: 2.1.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Correctly generate plurals, singular nouns, ordinals, indefinite articles; convert numbers to words
@@ -11,6 +11,7 @@ URL:     https://github.com/jazzband/inflect
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools_scm
+BuildRequires: python3(toml)
 
 BuildArch: noarch
 
@@ -35,5 +36,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0 (with rpmrb script)
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - initial build for ALT Sisyphus
