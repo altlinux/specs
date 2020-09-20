@@ -1,7 +1,7 @@
 %define  modulename jaraco.itertools
 
 Name:    python3-module-%modulename
-Version: 4.4.2
+Version: 5.0.0
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -42,5 +42,8 @@ rm -f %buildroot%python3_sitelibdir/jaraco/__init__*
 %python3_sitelibdir/%modulename-*.egg-info/
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Thu May 09 2019 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
 - initial build for ALT Sisyphus
