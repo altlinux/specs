@@ -1,6 +1,6 @@
 Name: docbook2X
 Version: 0.8.8
-Release: alt1.1
+Release: alt2
 
 Summary: Convert docbook into man and Texinfo
 
@@ -36,6 +36,8 @@ cp doc/*.html html
 
 %install
 %makeinstall_std
+ln -s db2x_docbook2texi %buildroot/%_bindir/docbook2x-texi
+ln -s db2x_docbook2man  %buildroot/%_bindir/docbook2x-man
 rm -rf %buildroot%_docdir/
 rm -f %buildroot%_infodir/dir
 find %buildroot -type f -name .packlist -exec rm -f {} ';'
@@ -45,6 +47,8 @@ find %buildroot -type d -depth -exec rmdir {} 2>/dev/null ';'
 
 %files
 %doc README THANKS AUTHORS html/
+%_bindir/docbook2x-man
+%_bindir/docbook2x-texi
 %_bindir/db2x_manxml
 %_bindir/db2x_texixml
 %_bindir/db2x_xsltproc
@@ -58,6 +62,9 @@ find %buildroot -type d -depth -exec rmdir {} 2>/dev/null ';'
 %_infodir/docbook2*
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.8-alt2
+- add docbook2x-man and ocbook2x-texi command (ALT bug 30077)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.8-alt1.1
 - NMU: added BR: texinfo
 
