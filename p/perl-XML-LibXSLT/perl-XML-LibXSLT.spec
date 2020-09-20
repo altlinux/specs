@@ -2,7 +2,7 @@
 %define dist XML-LibXSLT
 Name: perl-%dist
 Version: 1.99
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the Gnome libxslt library
 License: GPL or Artistic
@@ -25,7 +25,7 @@ practically all of XSLT 1.0 being supported in version 0.9 of libxslt.
 # disable dependency on perl libs like gdbm
 sed -i- '/Config{libs}/d' Makefile.PL
 
-%ifarch %ix86
+%ifarch %ix86 armh
 [ %version = 1.99 ] && rm t/10functions.t
 %endif
 
@@ -41,6 +41,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Sun Sep 20 2020 Igor Vlasenko <viy@altlinux.ru> 1.99-alt2
+- fixed build
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.99-alt1
 - automated CPAN update
 
