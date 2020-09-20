@@ -2,8 +2,8 @@
 %define bash_completion /etc/bash_completion.d/
 
 Name: python3-module-%oname
-Version: 0.11.1
-Release: alt1.2
+Version: 0.13
+Release: alt1
 
 Summary: PyBugz - Python Interface to Bugzilla
 
@@ -15,15 +15,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# Source-git: https://github.com/williamh/pybugz
+# Source-url: https://github.com/williamh/pybugz/archive/%version.tar.gz
 Source: %name-%version.tar
 
-# manually removed: python3-module-zope ruby ruby-stdlibs
-# Automatically added by buildreq on Tue Oct 13 2015
-# optimized out: python3-base
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3
 
-BuildPreReq: rpm-build-python3
+Conflicts: python-module-%oname
 
 %description
 PyBugz is a python and command line interface to Bugzilla.
@@ -48,11 +46,18 @@ install -m644 contrib/bash-completion %buildroot%bash_completion/
 %doc README
 %_bindir/bugz
 %_man1dir/*
+%_man5dir/*
+%_datadir/pybugz.d/
 %bash_completion/*
 %python3_sitelibdir/bugz/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt1
+- new version (0.13) with rpmgs script
+- build from release tarball
+- add conflicts to python-module-pybugz (ALT bug 36918)
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.11.1-alt1.2
 - (NMU) rebuild with python3.6
 
