@@ -2,8 +2,8 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: python-module-%oname
-Version: 7.43.0.2
-Release: alt2
+Version: 7.43.0.6
+Release: alt1
 
 Summary: Python bindings to libcurl
 License: LGPL
@@ -17,6 +17,9 @@ Source: %oname-%version.tar
 BuildRequires(pre): rpm-build-python
 BuildRequires: libcurl-devel libssl-devel
 
+BuildRequires(pre): libcurl
+%define libcurlver %(rpm -q --qf '%%{VERSION}' libcurl)
+Requires: libcurl >= %libcurlver
 
 %description
 This module provides the Python bindings to libcurl.
@@ -39,6 +42,10 @@ This module provides the Python bindings to libcurl.
 
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt1
+- new version 7.43.0.6 (with rpmrb script)
+- require libcurl not older than was at building time (ALT bug 25431)
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 7.43.0.2-alt2
 - python3 support removed (built separately)
 

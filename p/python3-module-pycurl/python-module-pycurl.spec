@@ -1,9 +1,9 @@
 %define oname pycurl
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
-Name: python3-module-%oname
-Version: 7.43.0.2
-Release: alt3
+Name: python3-module-pycurl
+Version: 7.43.0.6
+Release: alt1
 
 Summary: Python bindings to libcurl
 License: LGPL
@@ -12,17 +12,20 @@ Url: http://pycurl.io/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pycurl/pycurl/archive/REL_%oversion.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libcurl-devel libssl-devel
-Requires: libcurl >= 7.69.1
+
+BuildRequires(pre): libcurl
+%define libcurlver %(rpm -q --qf '%%{VERSION}' libcurl)
+Requires: libcurl >= %libcurlver
 
 %description
 This module provides the Python bindings to libcurl.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -39,6 +42,10 @@ This module provides the Python bindings to libcurl.
 
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt1
+- new version 7.43.0.6 (with rpmrb script)
+- require libcurl not older than was at building time (ALT bug 25431)
+
 * Wed Mar 18 2020 Pavel Skrylev <majioa@altlinux.org> 7.43.0.2-alt3
 - fixed (!) inconsistency error to in libcurl versions 7.65.0 and 7.68.0 (fixes #38235)
 
