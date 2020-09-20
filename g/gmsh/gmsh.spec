@@ -1,19 +1,14 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 4.6.0
-Release: alt2
+Release: alt3
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
 
 Source: %name-%version.tar
 
-Requires: getdp
 Requires: lib%name = %EVR
-
-# Can't build with libopenblas, use libatlas.
-# Libatlas exists only for following architectures:
-ExclusiveArch: %ix86 amd64 x86_64
 
 BuildPreReq: rpm-macros-cmake rpm-build-python
 BuildRequires: cmake gcc-c++ gcc-fortran
@@ -23,7 +18,7 @@ BuildRequires: libXcursor-devel libXinerama-devel
 BuildRequires: libXext-devel libXfixes-devel libXrender-devel
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libjpeg-devel zlib-devel libpng-devel
-BuildRequires: libatlas-devel liblapack-devel OCE-devel
+BuildRequires: libopenblas-devel liblapack-devel OCE-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -69,12 +64,14 @@ This package contains tutorial and demo files for %name.
 %setup
 
 %build
-# Dynamic library and private API is needed for
-# compiling getdb
+# 1. Dynamic library and private API is needed for compiling getdb
+# 2. In Altlinux autodetection does not work correctly for
+#    libopenblas + liblapack, BLAS_LAPACK_LIBRARIES should be set.
 %cmake_insource\
    -DCMAKE_BUILD_TYPE=Release\
    -DENABLE_BUILD_DYNAMIC=1\
-   -DENABLE_PRIVATE_API=1
+   -DENABLE_PRIVATE_API=1\
+   -DBLAS_LAPACK_LIBRARIES="-lopenblas -llapack"
 
 %make_build VERBOSE=1
 
@@ -109,6 +106,10 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Sun Sep 20 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.6.0-alt3
+- use libopenblas + liblapack instead of libatlas, remove ExclusiveArch
+- remove Requires: getdp (gmsh can be used without it)
+
 * Fri Sep 18 2020 Vladislav Zavjalov <slazav@altlinux.org> 4.6.0-alt2
 - Enable libgmsh shared library, private API (for building getdp)
   and python-module-gmsh
