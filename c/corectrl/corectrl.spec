@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Core control application
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake extra-cmake-modules
 BuildRequires: kf5-kauth-devel kf5-kcoreaddons-devel kf5-karchive-devel
-BuildRequires: qt5-declarative-devel qt5-charts-devel qt5-tools-devel
+BuildRequires: qt5-declarative-devel qt5-charts-devel qt5-tools-devel qt5-svg-devel
 BuildRequires: libbotan-devel
 BuildRequires: libdrm-devel
 
@@ -50,6 +50,9 @@ It aims to be flexible, comfortable and accessible to regular users.
 /usr/share/dbus-1/system.d/*
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
