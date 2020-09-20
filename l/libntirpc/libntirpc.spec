@@ -1,5 +1,6 @@
+%define major 3
 Name: libntirpc
-Version: 1.7.3
+Version: %major.3
 Release: alt1
 
 Summary: New Transport Independent RPC Library
@@ -17,6 +18,7 @@ BuildRequires: cmake
 BuildRequires: libjemalloc-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libnsl2-devel
+BuildRequires: libuserspace-rcu-devel
 
 # libtirpc has /etc/netconfig, most machines probably have it anyway
 # for NFS client
@@ -55,10 +57,11 @@ Development headers and auxiliary files for developing with %name.
 %makeinstall_std -C BUILD
 
 rm -f %buildroot%_includedir/ntirpc/misc/winpthreads.h
-ln -s %name.so.%version %buildroot%_libdir/%name.so.1
+ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
 
 %files
-%_libdir/libntirpc.so.*
+%_libdir/libntirpc.so.%major
+%_libdir/libntirpc.so.%version
 %doc COPYING
 %doc NEWS README
 
@@ -68,6 +71,16 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.1
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3 (with rpmrb script)
+
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt1
+- new version 3.2 (with rpmrb script)
+
+* Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+- add BR: libuserspace-rcu-devel
+
 * Fri May 17 2019 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
 - new version 1.7.3 (with rpmrb script)
 
