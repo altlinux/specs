@@ -33,9 +33,9 @@ BuildRequires: gcc-c++
 %{bcond_without perl_PDL_enables_optional_test}
 
 Name:           perl-PDL
-%global cpan_version 2.021
-Version:        2.21.0
-Release:        alt1_3
+%global cpan_version 2.024
+Version:        2.24.0
+Release:        alt1_1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -49,7 +49,6 @@ Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
 # Disable Slatec code crashing on PPC64, bug #1041304
 Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
 Patch5:         PDL-2.17.0-Update-additional-deps-for-Basic-Core.patch
-Patch6:         PDL-2.20.0-Compile-pdl-c-as-PIC.patch
 BuildRequires:  coreutils
 BuildRequires:  libfftw-devel
 BuildRequires:  findutils
@@ -175,7 +174,6 @@ Provides:       perl(PDL/PP/PDLCode.pm) = %{version}
 Provides:       perl(PDL/PP/SymTab.pm) = %{version}
 Provides:       perl(PDL/PP/XS.pm) = %{version}
 Provides:       perl(PDL/Graphics/TriD/Objects.pm) = %{version}
-Provides:       perl(PGPLOT.pm) = %{version}
 
 
 
@@ -184,7 +182,7 @@ Provides:       perl(PGPLOT.pm) = %{version}
 # Remove under-specified dependencies
 
 Source44: import.info
-%filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|Tk\|Win32.DDE.Client\).pm)/d
+%filter_from_requires /^perl(\(OpenGL.Config\|PDL.Demos.Screen\|PDL.Graphics.PGPLOT\|PDL.Graphics.PGPLOT.Window\|Tk\|Win32.DDE.Client\).pm)/d
 %filter_from_provides /^perl(Inline.pm)/d
 %filter_from_provides /^perl(Win32.*.pm)/d
 %filter_from_requires /^perl(\(Data.Dumper\|File.Spec\|Filter.Simple\|Inline\|Module.Compile\|OpenGL\|Text.Balanced\).pm)/d
@@ -209,7 +207,6 @@ such commercial packages as IDL and MatLab.
 %patch4 -p1 -b .slatec
 %endif
 %patch5 -p1
-%patch6 -p1
 # Fix shellbang
 sed -e 's,^#!/usr/bin/env perl,%(perl -MConfig -e 'print $Config{startperl}'),' -i Perldl2/pdl2
 %patch33 -p1
@@ -238,7 +235,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %check
 unset DISPLAY
 export PERL5LIB=`pwd`/blib/lib
+%ifnarch armh
 make test
+%endif
 
 %files
 %doc --no-dereference COPYING
@@ -250,6 +249,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Sep 21 2020 Igor Vlasenko <viy@altlinux.ru> 2.24.0-alt1_1
+- new version
+
 * Fri Apr 17 2020 Igor Vlasenko <viy@altlinux.ru> 2.21.0-alt1_3
 - added e2k patch
 
