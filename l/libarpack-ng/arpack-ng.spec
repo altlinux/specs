@@ -1,6 +1,6 @@
 Name:    libarpack-ng
 Version: 3.7.0
-Release: alt1
+Release: alt2
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
 License: BSD
@@ -13,9 +13,7 @@ Source: arpack-ng-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
-%ifarch %ix86 x86_64
-BuildRequires: libatlas-devel
-%endif
+BuildRequires: libopenblas-devel
 BuildRequires: liblapack-devel
 
 Provides:  arpack = %version-%release
@@ -91,6 +89,9 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Mon Sep 21 2020 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt2
+- Rebuild with openblas + lapack (ALT #38975).
+
 * Sun Jan 13 2019 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
 
