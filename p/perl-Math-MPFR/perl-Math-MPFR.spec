@@ -4,13 +4,13 @@
 BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
-%ifnarch %e2k aarch64
+%ifnarch %e2k %arm
 BuildRequires: perl(Math/Decimal64.pm)
 %endif
-ExcludeArch: aarch64
+ExcludeArch: aarch64 %arm ppc64le
 
 Name: perl-%module_name
-Version: 4.12
+Version: 4.14
 Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
@@ -44,6 +44,10 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Sep 21 2020 Igor Vlasenko <viy@altlinux.ru> 4.14-alt1
+- updated exlusive arch
+- automated CPAN update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.12-alt1
 - automated CPAN update
 
