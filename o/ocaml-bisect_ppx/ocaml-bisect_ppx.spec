@@ -2,17 +2,17 @@
 %define libname bisect_ppx
 Name: ocaml-%libname
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: Code coverage for OCaml
 Group: Development/ML
-License: MPL2
+License: MPL-2.0
 Url: https://github.com/aantron/bisect_ppx
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml >= 4.07.1
 BuildRequires: ocaml-findlib-devel
-BuildRequires: opam dune
+BuildRequires: dune
 BuildRequires: ocaml-ppx_tools_versioned-devel
 BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-result-devel
@@ -39,41 +39,22 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%make_build
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md LICENSE
 %_bindir/bisect-ppx-report
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%{libname}*/META
-%_libdir/ocaml/%{libname}*/ppx.exe
-%_libdir/ocaml/%{libname}*/opam
-%_libdir/ocaml/%{libname}*/*.cmi
-%_libdir/ocaml/%{libname}*/*.cma
-%dir %_libdir/ocaml/%libname/runtime
-%_libdir/ocaml/%libname/runtime/*.cmi
-%_libdir/ocaml/%libname/runtime/*.cma
 
 
-%files devel
-%_libdir/ocaml/%{libname}*/*.ml*
-%_libdir/ocaml/%{libname}*/*.cmx
-%_libdir/ocaml/%{libname}*/*.cmt*
-%_libdir/ocaml/%{libname}*/dune-package
-%_libdir/ocaml/%{libname}*/*.a
-%_libdir/ocaml/%{libname}*/*.cmxa
-%_libdir/ocaml/%{libname}*/*.cmxs
-%_libdir/ocaml/%libname/runtime/*.ml*
-%_libdir/ocaml/%libname/runtime/*.a
-%_libdir/ocaml/%libname/runtime/*.cmxa
-%_libdir/ocaml/%libname/runtime/*.cmx
-%_libdir/ocaml/%libname/runtime/*.cmt*
-%_libdir/ocaml/%libname/runtime/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt2
+- migrated to rpm-build-ocaml 1.4
+
 * Fri Jan 31 2020 Anton Farygin <rider@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
