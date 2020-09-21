@@ -1,18 +1,27 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: cube
-License: BSD
+Version: 4.5
+Release: alt1
+License: BSD-3-Clause
 Group: Development/Tools
 Summary: Performance report explorer for Scalasca and Score-P
-Version: 4.3.5
-Release: alt1
 Url: http://www.scalasca.org/software/cube-4.x/download.html
 
-Source: %name-%version.tar
-Source2: status.m4
-Patch1: %name-%version-fedora-nocheck.patch
-Patch2: %name-%version-alt-linking.patch
+Source: cubelib-%version.tar
+Source1: cubew-%version.tar
+Source2: cubegui-%version.tar
 
-BuildRequires: gcc-c++ libqt4-devel zlib-devel uncrustify doxygen
-BuildRequires: libdbus-devel flex graphviz texlive-base-bin menu chrpath
+Patch1: cube-fedora-no-version-check.patch
+Patch2: cube-alt-linking.patch
+
+BuildRequires: gcc-c++ zlib-devel uncrustify doxygen
+BuildRequires: libdbus-devel flex graphviz texlive-base-bin
+BuildRequires: chrpath
+BuildRequires: qt5-base-devel
+%ifnarch %e2k
+BuildRequires: qt5-webengine-devel
+%endif
 
 Requires: lib%name = %EVR
 
@@ -62,6 +71,37 @@ Cube can display multi-dimensional Cartesian process topologies.
 
 This package contains development files of Cube.
 
+%package -n lib%{name}gui
+Summary: Shared libraries of Cube
+Group: System/Libraries
+
+%description -n lib%{name}gui
+Cube, which is used as performance report explorer for Scalasca and
+Score-P, is a generic tool for displaying a multi-dimensional
+performance space consisting of the dimensions (i) performance metric,
+(ii) call path, and (iii) system resource. Each dimension can be
+represented as a tree, where non-leaf nodes of the tree can be collapsed
+or expanded to achieve the desired level of granularity. In addition,
+Cube can display multi-dimensional Cartesian process topologies.
+
+This package contains shared libraries of Cube.
+
+%package -n lib%{name}gui-devel
+Summary: Development files of Cube
+Group: Development/C++
+Requires: lib%{name}gui = %EVR
+
+%description -n lib%{name}gui-devel
+Cube, which is used as performance report explorer for Scalasca and
+Score-P, is a generic tool for displaying a multi-dimensional
+performance space consisting of the dimensions (i) performance metric,
+(ii) call path, and (iii) system resource. Each dimension can be
+represented as a tree, where non-leaf nodes of the tree can be collapsed
+or expanded to achieve the desired level of granularity. In addition,
+Cube can display multi-dimensional Cartesian process topologies.
+
+This package contains development files of Cube.
+
 %package docs
 Summary: Documentation for Cube
 Group: Documentation
@@ -79,37 +119,101 @@ Cube can display multi-dimensional Cartesian process topologies.
 This package contains documentation for Cube.
 
 %prep
-%setup
+%setup -n cubelib-%version -b1 -b2
+
+pushd ../cubegui-%version
 %patch1 -p1
 %patch2 -p2
+popd
 
-# configure.ac uses some macros not provided by autoconf, just copy file with them from previous cube version
-cp %SOURCE2 vendor/common/build-config/m4/status.m4
+pushd ..
+# Fiddle for cubelib not being installed when building cubegui
+cat <<END >cubelib-config
+#!/bin/sh
+case \$1 in
+--cppflags|--cflags) printf '%%s\n' -I$(pwd)/cubelib-%version/inst%_includedir/cubelib ;;
+--ldflags)  printf '%%s\n' -L$(pwd)/cubelib-%version/inst%_libdir ;;
+--libs) printf '%%s\n' '-lcube4 -lz' ;;
+--interface-version) printf '%%s\n' 9:0:2 ;;
+esac
+END
+chmod +x cubelib-config
+popd
 
 %build
-%add_optflags -I%_includedir/dbus-1.0 -L%buildroot%_libexecdir
+export CC=gcc
+export CXX=g++
+
+%define unhardcode \
+  sed -i -e 's/HARDCODE_INTO_LIBS"]="1"/HARDCODE_INTO_LIBS"]="0"/' \\\
+         -e "s/hardcode_into_libs='yes'/hardcode_into_libs='no'/"
+
+pushd ../cubew-%version
 %autoreconf
-%configure \
-	--with-backend-compression=full \
-	--with-compression=full \
-	--with-frontend-compression=full
 pushd build-backend
-%make_build libcube4.la
-%make_build libcube4w.la
+%autoreconf
 popd
-export TOPDIR=$PWD
+pushd build-frontend
+%autoreconf
+popd
+%configure \
+	--enable-shared \
+	--disable-static \
+	--disable-silent-rules \
+	%nil
+
+%unhardcode build-backend/config.status
+%make_build
+popd
+
+%autoreconf
+pushd build-frontend
+%autoreconf
+popd
+%configure \
+	--enable-shared \
+	--disable-static \
+	--disable-silent-rules \
+	%nil
+
+%unhardcode build-frontend/config.status
 %make_build
 
-%install
-install -d %buildroot%_libdir
-cp -P $(find ./ -name 'libcube4.so*') %buildroot/%_libdir/
-cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libdir/
-%makeinstall_std
+# Collect it for use by cubegui
+make install DESTDIR=$(pwd)/inst
+# Wrong paths in .la cause trouble
+rm inst%_libdir/*.la
 
-# remove RPATH
-for i in %buildroot%_bindir/* %buildroot%_libdir/*.so* %buildroot%_libdir/cube-plugins/*.so* ; do
-	chrpath -d $i ||:
-done
+pushd ../cubegui-%version
+# Kludge: For some reason the Qt dependencies are found as .so paths
+# and libtool re-orders them with libcube4gui after what it
+# should link against, and linking fails.
+export LIBS="$LIBS -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Concurrent -lQt5Core"
+%ifnarch %e2k
+export LIBS="$LIBS -lQt5WebEngineWidgets"
+%endif
+
+%autoreconf
+pushd build-frontend
+%autoreconf
+popd
+%configure \
+	--disable-static \
+	--disable-silent-rules \
+	--with-platform=linux \
+	--with-cubelib=$(pwd)/.. \
+	%nil
+
+%unhardcode build-frontend/config.status
+%make_build
+popd
+
+%install
+%makeinstall_std -C ../cubew-%version
+%makeinstall_std
+%makeinstall_std -C ../cubegui-%version
+
+chrpath -d -k %buildroot%_bindir/* %buildroot%_libdir/{,cube-plugins/}*.so  || :
 
 # remove unpackaged files
 find %buildroot -name '*.la' -delete
@@ -117,23 +221,44 @@ find %buildroot -name '*.a' -delete
 
 %files
 %_bindir/*
-%exclude %_bindir/cube-config*
-%_datadir/cube
-%_datadir/icons/*
+%exclude %_bindir/cube_server
+%exclude %_bindir/cube*-config
+%_libdir/libgraphwidgetcommon-plugin.so.*
+%_libdir/cube-plugins
+%_datadir/cubegui
+%_datadir/icons/cubegui
 
 %files -n lib%name
+%_bindir/cube_server
 %_libdir/*.so.*
-%_libdir/cube-plugins/*.so*
+%exclude %_libdir/lib%{name}4gui*.so.*
+%exclude %_libdir/libgraphwidgetcommon-plugin.so.*
+%_datadir/cubelib
+%_datadir/cubew
 
 %files -n lib%name-devel
-%_includedir/*
+%_bindir/cubelib-config
+%_bindir/cubew-config
+%_includedir/cubelib
+%_includedir/cubew
 %_libdir/*.so
-%_bindir/cube-config*
+%exclude %_libdir/lib%{name}4gui*.so
+
+%files -n lib%{name}gui
+%_libdir/lib%{name}4gui*.so.*
+
+%files -n lib%{name}gui-devel
+%_bindir/cubegui-config
+%_includedir/cubegui
+%_libdir/lib%{name}4gui*.so
 
 %files docs
 %_docdir/*
 
 %changelog
+* Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5-alt1
+- Updated to upstream version 4.5.
+
 * Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.5-alt1
 - Updated to upstream version 4.3.5.
 
