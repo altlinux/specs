@@ -78,7 +78,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -1486,6 +1486,7 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 %dir %_prefix/lib/kernel
 %dir %_prefix/lib/kernel/install.d
 %_prefix/lib/kernel/install.d/*
+%exclude %_prefix/lib/kernel/install.d/50-depmod.install
 
 %files -n libsystemd
 /%_lib/libsystemd.so.*
@@ -1948,6 +1949,9 @@ groupadd -r -f vmusers >/dev/null 2>&1 ||:
 /lib/udev/hwdb.d
 
 %changelog
+* Mon Sep 21 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.6-alt1
+- 246.6
+
 * Wed Sep 16 2020 Alexey Shabalin <shaba@altlinux.org> 1:246.5-alt1
 - 246.5
 
