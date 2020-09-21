@@ -3,9 +3,9 @@
 
 Name: systemd-boot-trigger
 Version: 1.0
-Release: alt1
+Release: alt2
 
-Summary: Filetrigger for systmed-boot
+Summary: Filetrigger for systemd-boot
 License: GPL-2.0-only
 Group: System/Base
 Url: http://git.altlinux.org/
@@ -28,5 +28,8 @@ install -p -m755 -D filetrigger %buildroot%_rpmlibdir/systemd-boot.filetrigger
 %_rpmlibdir/systemd-boot.filetrigger
 
 %changelog
+* Mon Sep 21 2020 Vitaly Chikunov <vt@altlinux.org> 1.0-alt2
+- Autocreate esp/machine_id dir.
+
 * Sat Sep 19 2020 Vitaly Chikunov <vt@altlinux.org> 1.0-alt1
 - Initial version.
