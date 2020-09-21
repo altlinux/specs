@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define oname   topkg
 Name: ocaml-topkg
-Version: 1.0.1
-Release: alt2
+Version: 1.0.3
+Release: alt1
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
@@ -55,20 +55,23 @@ rm -rf %buildroot%prefix/doc/%oname
 %doc README.md CHANGES.md LICENSE.md
 %dir %_libdir/ocaml/topkg
 %_libdir/ocaml/topkg/META
-%_libdir/ocaml/topkg/opam
 %_libdir/ocaml/topkg/*.cmi
 %_libdir/ocaml/topkg/*.cma
-%_libdir/ocaml/topkg/*.cmxs
 
 %files devel
 %doc doc/ test/
+%_libdir/ocaml/topkg/opam
 %_libdir/ocaml/topkg/*.a
 %_libdir/ocaml/topkg/*.cmx
 %_libdir/ocaml/topkg/*.cmxa
+%_libdir/ocaml/topkg/*.cmxs
 %_libdir/ocaml/topkg/*.mli
 %_libdir/ocaml/topkg/*.cmti
 
 %changelog
+* Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
 * Thu Jan 30 2020 Anton Farygin <rider@altlinux.ru> 1.0.1-alt2
 - drop package 'result' require from META
 
