@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.18
-Release: alt2
+Version: 1.3.19
+Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -27,6 +27,7 @@ BuildRequires: perl-libintl
 %{?_enable_python:BuildPreReq:rpm-build-python3}
 BuildRequires: libreadline-devel
 BuildRequires: libxml2-devel
+BuildRequires: gperf
 
 %description
 Hive files are the undocumented binary blobs that Windows uses to
@@ -231,6 +232,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.3.19-alt1
+- 1.3.19
+
 * Wed Mar 11 2020 Anton Farygin <rider@altlinux.ru> 1.3.18-alt2
 - removed python2 support
 
