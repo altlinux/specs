@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _optlevel s
 %def_disable wxgtk
 %def_enable qt
@@ -6,23 +8,23 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.94
-Release: alt5
+Version: 3.00
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
 License: GPLv2 + MIT
 Url: http://www.transmissionbt.com/
 
-Provides: %rname = %version-%release
+Provides: %rname = %EVR
 
 Obsoletes: %name-benc2php
 Obsoletes: %name-proxy
 
-Requires: %name-gui = %version-%release
-Requires: %name-cli = %version-%release
-Requires: %name-remote = %version-%release
-Requires: %name-daemon = %version-%release
+Requires: %name-gui = %EVR
+Requires: %name-cli = %EVR
+Requires: %name-remote = %EVR
+Requires: %name-daemon = %EVR
 
 Requires(post,postun): desktop-file-utils
 
@@ -31,11 +33,16 @@ Patch0: %name-%version-alt.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
+Source4: %name-%version-third-party-dht.tar
+Source5: %name-%version-third-party-libutp.tar
 
 BuildPreReq: desktop-file-utils
 
 BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
 BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt openssl-devel
+BuildRequires: libb64-devel
+BuildRequires: libnatpmp-devel
+BuildRequires: libminiupnpc-devel
 %if "%(rpmvercmp '%{get_version glibc-core}' '2.9')" >= "0"
 BuildRequires: libgio-devel
 %endif
@@ -63,16 +70,16 @@ Common files for %name
 %package gui-common
 Group: Networking/File transfer
 Summary: Common files for %name
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description gui-common
 Common files for %name
 
 %package gtk
 Group: Networking/File transfer
 Summary: Graphical BitTorrent client
-Provides: %name-gui = %version-%release
-Requires: %name-common = %version-%release
-Requires: %name-gui-common = %version-%release
+Provides: %name-gui = %EVR
+Requires: %name-common = %EVR
+Requires: %name-gui-common = %EVR
 %description gtk
 GTK-based graphical BitTorrent client
 
@@ -80,9 +87,9 @@ GTK-based graphical BitTorrent client
 %package qt
 Group: Networking/File transfer
 Summary: Graphical BitTorrent client
-Provides: %name-gui = %version-%release
-Requires: %name-common = %version-%release
-Requires: %name-gui-common = %version-%release
+Provides: %name-gui = %EVR
+Requires: %name-common = %EVR
+Requires: %name-gui-common = %EVR
 %description qt
 Qt-based graphical BitTorrent client
 %endif
@@ -91,9 +98,9 @@ Qt-based graphical BitTorrent client
 %package wxgtk
 Group: Networking/File transfer
 Summary: Graphical BitTorrent client
-Provides: %name-gui = %version-%release
-Requires: %name-common = %version-%release
-Requires: %name-gui-common = %version-%release
+Provides: %name-gui = %EVR
+Requires: %name-common = %EVR
+Requires: %name-gui-common = %EVR
 %description wxgtk
 WxGTK-based graphical BitTorrent client
 %endif
@@ -101,29 +108,27 @@ WxGTK-based graphical BitTorrent client
 %package cli
 Group: Networking/File transfer
 Summary: Command line BitTorrent client
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description cli
 Command line BitTorrent client
 
 %package remote
 Group: Networking/Remote access
 Summary: Command line remote interface to %name-daemon
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description remote
 Command line remote interface to %name-daemon
 
 %package daemon
 Group: Networking/File transfer
 Summary: Daemonised BitTorrent client
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 %description daemon
 Daemonised BitTorrent client
 
 %prep
-%setup -q
+%setup -a4 -a5
 %patch0 -p1
-sed -i "s|\(^CONFIG.*\+=.*[[:space:]]\)debug\([[:space:]].*$\)|\1release\2|" qt/qtr.pro
-sed -i "s|^LIBS.*\+=.*libevent\.a$|LIBS += -levent|" qt/qtr.pro
 rm -f m4/glib-gettext.m4
 
 
@@ -138,11 +143,18 @@ rm -f m4/glib-gettext.m4
     %{subst_enable wx} \
     --enable-libnotify \
     --enable-libcanberra \
-    --enable-gtk
+    --enable-gtk \
+    --enable-external-b64 \
+    --enable-external-natpmp \
+    --enable-cli \
+    %nil
 
 %if_enabled qt
 pushd qt
-qmake-qt5 "QMAKE_CXXFLAGS+=%optflags -std=c++11"
+qmake-qt5 \
+	"QMAKE_CXXFLAGS+=%optflags -std=c++11" \
+	"CONFIG+=nostrip" \
+	%nil
 popd
 %endif
 
@@ -225,14 +237,15 @@ fi
 %_datadir/applications/%name.desktop
 
 %files gtk -f %name-gtk.lang
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-gtk
 %_altdir/%name-gtk
 %_man1dir/%name-gtk.1*
+%_datadir/appdata/transmission-gtk.appdata.xml
 
 %if_enabled qt
 %files qt
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-qt
 %_altdir/%name-qt
 %_datadir/qt5/translations/%{name}_*.qm
@@ -241,27 +254,29 @@ fi
 
 %if_enabled wxgtk
 %files wxgtk
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/Xmission
 %_altdir/%name-wxgtk
 %endif
 
 %files cli
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-create
 %_man1dir/%name-create.*
 %_bindir/%name-edit
 %_man1dir/%name-edit.*
 %_bindir/%name-show
 %_man1dir/%name-show.*
+%_bindir/transmission-cli
+%_man1dir/transmission-cli.*
 
 %files remote
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-remote
 %_man1dir/%name-remote.*
 
 %files daemon
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-daemon
 %_man1dir/%name-daemon.*
 %systemd_unitdir/transmission-daemon.service
@@ -274,6 +289,11 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Sep 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.00-alt1
+- Updated to upstream version 3.00.
+- Enabled cli client.
+- Packaged debuginfo for transmission-qt.
+
 * Sun Mar 10 2019 Michael Shigorin <mike@altlinux.org> 2.94-alt5
 - fix build on e2k with lcc
 
