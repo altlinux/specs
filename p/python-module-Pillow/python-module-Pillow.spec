@@ -1,10 +1,10 @@
 %define __python2 %_bindir/python2
 %define oname Pillow
 
-%def_with python3
+%def_without python3
 # bootstrap building docs (pillow is required by docutils, docutils are
 #  required by sphinx; pillow build-requires sphinx)
-%def_with docs
+%def_without docs
 %def_enable check
 
 %global py2_libbuilddir %(python -c 'import sys; import sysconfig; print("lib.{p}-{v[0]}.{v[1]}".format(p=sysconfig.get_platform(), v=sys.version_info))')
@@ -12,7 +12,7 @@
 
 Name: python-module-%oname
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python image processing library
 
@@ -214,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2.0-alt2
+- rebuilt without python3
+
 * Mon Oct 07 2019 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt1
 - new version 6.2.0 (with rpmrb script)
 
