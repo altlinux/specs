@@ -2,7 +2,7 @@
 
 Name: perl-JavaScript-V8
 Version: 0.09
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
@@ -15,7 +15,8 @@ Patch: perl-JavaScript-V8-0.070-alt-test32.patch
 
 BuildRequires: libv8-devel = %{v8abi}
 BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp perl(ExtUtils/CppGuess.pm) perl(Test/Number/Delta.pm)
-ExcludeArch: aarch64
+# same as libv8
+ExclusiveArch: %{ix86} x86_64
 
 %description
 %summary
@@ -38,6 +39,9 @@ rm t/interrupt.t
 %doc Changes README*
 
 %changelog
+* Mon Sep 21 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt2
+- synchronized exclusive arch to libv8
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.09-alt1
 - new version 0.09
 - rebased .gear over 0.09
