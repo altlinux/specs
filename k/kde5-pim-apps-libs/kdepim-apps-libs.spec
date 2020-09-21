@@ -1,7 +1,6 @@
 %define rname kdepim-apps-libs
 
 %define sover 5
-%define libkf5composereditorng libkf5composereditorng%sover
 %define libkf5followupreminder libkf5followupreminder%sover
 %define libkf5kaddressbookgrantlee libkf5kaddressbookgrantlee%sover
 %define libkf5kdepimdbusinterfaces libkf5kdepimdbusinterfaces%sover
@@ -9,7 +8,7 @@
 %define libkf5kaddressbookimportexport libkf5kaddressbookimportexport%sover
 
 Name: kde5-pim-apps-libs
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -32,7 +31,7 @@ BuildRequires: kde5-kpimtextedit-devel kde5-libkleo-devel kde5-pimcommon-devel
 BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
@@ -55,13 +54,6 @@ Summary: Development files for %name
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
-%package -n %libkf5composereditorng
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkf5composereditorng
-KF5 library
 
 %package -n %libkf5followupreminder
 Group: System/Libraries
@@ -123,27 +115,27 @@ KF5 library
 %_K5lib/cmake/KF*/
 %_K5archdata/mkspecs/modules/qt_*.pri
 
-#%files -n %libkf5composereditorng
-#%_K5lib/libKF5ComposerEditorNG.so.%sover
-#%_K5lib/libKF5ComposerEditorNG.so.*
-%files -n %libkf5followupreminder
-%_K5lib/libKF5FollowupReminder.so.%sover
-%_K5lib/libKF5FollowupReminder.so.*
+#%files -n %libkf5followupreminder
+#%_K5lib/libKF5FollowupReminder.so.%sover
+#%_K5lib/libKF5FollowupReminder.so.*
 %files -n %libkf5kaddressbookgrantlee
 %_K5lib/libKF5KaddressbookGrantlee.so.%sover
 %_K5lib/libKF5KaddressbookGrantlee.so.*
-%files -n %libkf5kdepimdbusinterfaces
-%_K5lib/libKF5KdepimDBusInterfaces.so.%sover
-%_K5lib/libKF5KdepimDBusInterfaces.so.*
-%files -n %libkf5sendlater
-%_K5lib/libKF5SendLater.so.%sover
-%_K5lib/libKF5SendLater.so.*
+#%files -n %libkf5kdepimdbusinterfaces
+#%_K5lib/libKF5KdepimDBusInterfaces.so.%sover
+#%_K5lib/libKF5KdepimDBusInterfaces.so.*
+#%files -n %libkf5sendlater
+#%_K5lib/libKF5SendLater.so.%sover
+#%_K5lib/libKF5SendLater.so.*
 %files -n %libkf5kaddressbookimportexport
 %_K5lib/libKF5KaddressbookImportExport.so.*
 %_K5lib/libKF5KaddressbookImportExport.so.%sover
 
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

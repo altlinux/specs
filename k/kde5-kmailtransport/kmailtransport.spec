@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace
 
@@ -73,7 +73,7 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 #%config(noreplace) %_K5xdgconf/*.*categories
 %_datadir/qlogging-categories5/*.*categories
 %_K5cfg/*.kcfg
@@ -99,6 +99,9 @@ KF5 library
 %_K5lib/libKF5MailTransportAkonadi.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

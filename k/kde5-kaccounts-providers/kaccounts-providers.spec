@@ -1,7 +1,7 @@
 %define rname kaccounts-providers
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace
 
@@ -57,6 +57,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kldap
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace
 
@@ -20,6 +20,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: kde5-kmbox-devel kde5-kmime-devel
 BuildRequires: kf5-kcompletion-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kio-devel kf5-kdoctools kf5-kdoctools-devel-static
+BuildRequires: kf5-kwallet-devel
 
 %description
 %summary.
@@ -75,6 +76,9 @@ KF5 library
 %_K5plug/kf5/kio/ldap.so
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

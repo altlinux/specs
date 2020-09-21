@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 1.3.0
+Version: 20.08.1
 Release: alt1
 %K5init altplace appdata
 
@@ -20,16 +20,17 @@ Source10: kio5_gdrive_ru.po
 
 BuildRequires(pre): rpm-build-kf5
 
-# Automatically added by buildreq on Mon Nov 07 2016 (-bi)
-# optimized out: cmake cmake-modules elfutils gcc-c++ kde5-kcalcore-devel kde5-kcontacts-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libical-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-libkgapi-devel libqtkeychain-qt5-devel python-module-google python3-dev rpm-build-ruby
-BuildRequires: extra-cmake-modules gettext-tools
+# Automatically added by buildreq on Fri Sep 18 2020 (-bi)
+# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcalcore-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcontacts-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libaccounts-glib libaccounts-qt51 libcairo-gobject libdbusmenu-qt52 libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-texttospeech libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml librabbitmq-c libsasl2-3 libsignon-qt51 libssl-devel libstdc++-devel libx265-192 libxcbutil-keysyms perl perl-Encode perl-XML-Parser perl-parent pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-devel rpm-build-python3 sh4 xml-common xml-utils
+#BuildRequires: accounts-qt5-devel appstream extra-cmake-modules intltool kde5-kaccounts-integration-devel kde5-libkgapi-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel python-modules-compiler python3-module-mpl_toolkits qt5-svg-devel qt5-wayland-devel qt5-webengine-devel signon-devel
+BuildRequires: extra-cmake-modules gettext-tools qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 %if_enabled qtkeychain
 BuildRequires: libqtkeychain-qt5-devel
 %else
 BuildRequires: intltool signon-devel accounts-qt5-devel kde5-kaccounts-integration-devel
 %endif
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel kf5-libkgapi-devel
+BuildRequires: kf5-kdoctools-devel-static kf5-kio-devel kf5-libkgapi-devel
+BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel
 
 %description
 Now you are ready to use the slave. Either click on "Google Drive File Manager"
@@ -65,6 +66,9 @@ rm -f "$tmp_file"
 %endif
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Mon Apr 27 2020 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - new version
 

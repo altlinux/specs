@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -78,8 +78,8 @@ Requires: %name-common = %version-%release
 #%dir %_K5lib/akonadi5/contact/editorpageplugins/
 #%_K5lib/akonadi5/contact/editorpageplugins/cryptopageplugin.so
 %_K5plug/*kaddressbook*.so
-%_K5xdgapp/kaddressbook-importer.desktop
-%_K5xdgapp/org.kde.kaddressbook.desktop
+%_K5plug/kontact5/*kaddressbook*.so
+%_K5xdgapp/*kaddressbook*.desktop
 %_K5conf_up/*kaddressbook*
 %_K5data/kaddressbook/
 #%_K5xmlgui/kaddressbook/
@@ -108,6 +108,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkaddressbookprivate.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

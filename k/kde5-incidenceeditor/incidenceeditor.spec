@@ -4,7 +4,7 @@
 %define libkf5incidenceeditor libkf5incidenceeditor%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -20,10 +20,12 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kdgantt2-devel kde5-kidentitymanagement-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-pim-apps-libs-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libldap-devel libsasl2-devel python-module-google python3-dev rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires: boost-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-kcalcore-devel kde5-kcalutils-devel
 BuildRequires: kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kldap-devel kde5-kmailtransport-devel
 BuildRequires: kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-pim-apps-libs-devel
-BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
+BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
+BuildRequires: kde5-pimcommon-devel kde5-kimap-devel
 BuildRequires: kf5-kdiagram-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
@@ -85,6 +87,9 @@ KF5 library
 %_K5lib/libKF5IncidenceEditor.so.*
 
 %changelog
+* Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Tue Jul 21 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
