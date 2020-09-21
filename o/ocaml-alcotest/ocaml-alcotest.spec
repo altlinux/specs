@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 %define libname alcotest
 Name: ocaml-%libname
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
 License: ISC
@@ -11,14 +11,9 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune >= 1.8
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: opam
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-re-devel
-BuildRequires: ocaml-lwt-devel
-BuildRequires: ocaml-logs-devel
-BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-uuidm-devel
 BuildRequires: ocaml-fmt-devel
@@ -47,48 +42,26 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-dune build -p %libname --verbose
+%dune_build -p %libname
 
 %install
-opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml %libname.install
+%dune_install %libname
 rm -rf %buildroot/usr/doc
 
-# Makes *.cmxs executable such that they will be stripped.
-find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
 
 %check
-dune runtest
+%dune_check -p %libname
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/META
-%dir %_libdir/ocaml/%libname/engine
-%_libdir/ocaml/%libname/engine/*.cmi
-%_libdir/ocaml/%libname/engine/*.cma
-%_libdir/ocaml/%libname/engine/*.a
 
-%files devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.cmt
-%_libdir/ocaml/%libname/*.cmti
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.ml*
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
-%_libdir/ocaml/%libname/engine/*.cmt
-%_libdir/ocaml/%libname/engine/*.cmti
-%_libdir/ocaml/%libname/engine/*.cmx
-%_libdir/ocaml/%libname/engine/*.ml*
-%_libdir/ocaml/%libname/engine/*.cmxa
-%_libdir/ocaml/%libname/engine/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Mon Sep 21 2020 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+- cleaned up build requires
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
 - FTBFS: added ocaml-uutf-devel to BuildRequires
 
