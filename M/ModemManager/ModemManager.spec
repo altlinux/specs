@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.14.0
+Version: 1.14.2
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -233,6 +233,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 22 2020 Mikhail Efremov <sem@altlinux.org> 1.14.2-alt1
+- Updated to 1.14.2.
+
 * Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 1.14.0-alt1
 - Added autoconf-archive to BR.
 - Updated to 1.14.0.
