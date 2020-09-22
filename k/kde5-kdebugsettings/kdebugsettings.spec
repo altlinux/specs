@@ -4,7 +4,7 @@
 %define libkdebugsettings libkdebugsettings%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -73,6 +73,9 @@ KF5 library
 %_K5lib/libkdebugsettings.so.%sover
 
 %changelog
+* Tue Sep 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
