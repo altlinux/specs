@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 3.2p2
-Release: alt1
+Release: alt2
 
 Summary: 1-Wire Virtual File System
 License: GPLv2
@@ -14,6 +14,8 @@ Source: %name-%version.tar.gz
 Patch0: owfs-tcl-req.patch
 Patch1: owfs-initscript.patch
 Patch2: owfs-0002-include-sys-sysmacros.h-for-major.patch
+Patch3: owfs-3.2p2-alt-systemd-fix-broken-paths.patch
+
 
 BuildRequires: chrpath
 BuildRequires: service
@@ -173,6 +175,7 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
 
 %build
@@ -338,6 +341,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Tue Sep 22 2020 Igor Vlasenko <viy@altlinux.ru> 3.2p2-alt2
+- NMU: fixed broken paths in systemd files
+
 * Mon Dec 02 2019 Grigory Milev <week@altlinux.ru> 3.2p2-alt1
 - New version
 - Add patch from RedHat: libow.so: undefined reference to 'major'
