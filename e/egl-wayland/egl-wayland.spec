@@ -3,13 +3,13 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%sover
 
 Name: egl-wayland
-Version: 1.1.4
-Release: alt3
+Version: 1.1.5
+Release: alt1
 Epoch: 1
 
 Group: System/Libraries
 Summary: Wayland EGL External Platform library
-Url: https://github.com/NVIDIA/%name
+Url: https://github.com/NVIDIA/egl-wayland
 License: MIT
 
 Source0: %name-%version.tar
@@ -66,6 +66,9 @@ install -pm 0644 %SOURCE1 %buildroot/%_datadir/egl/egl_external_platform.d/
 %_datadir/wayland-eglstream/
 
 %changelog
+* Tue Sep 22 2020 Sergey V Turchin <zerg@altlinux.org> 1:1.1.5-alt1
+- new version
+
 * Tue Nov 26 2019 Sergey V Turchin <zerg@altlinux.org> 1:1.1.4-alt3
 - upstream tag 1.1.4 updated
 
