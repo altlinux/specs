@@ -1,5 +1,5 @@
 Name: bonnie++
-Version: 1.98
+Version: 2.00a
 Release: alt1
 
 Summary: A program for benchmarking hard drives and filesystems
@@ -43,6 +43,9 @@ ln -s ../sbin/%name %buildroot/%_bindir/
 %doc copyright.txt credits.txt readme.html
 
 %changelog
+* Tue Sep 22 2020 Michael Shigorin <mike@altlinux.org> 2.00a-alt1
+- new version (watch file uupdate)
+
 * Thu Jan 24 2019 Michael Shigorin <mike@altlinux.org> 1.98-alt1
 - new version (watch file uupdate)
 
