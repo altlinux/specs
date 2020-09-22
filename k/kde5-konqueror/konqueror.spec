@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -97,7 +97,7 @@ KF5 library
 #    cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
 #    rm -rf %buildroot/%_K5data/konqueror/
 #fi
-%K5install_move data akregator doc dolphinpart fsview kcmcss kcontrol khtml kwebkitpart templates konqueror webenginepart
+%K5install_move data akregator doc dolphinpart fsview kcmcss kcontrol khtml kwebkitpart templates konqueror webenginepart konqsidebartng
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -159,7 +159,8 @@ done
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/parts/*.so
 %_K5start/*.desktop
-%_K5data/fsview/
+#%_K5data/fsview/
+%_K5data/konqsidebartng/
 %_K5data/kbookmark/
 %_K5data/konqueror/
 %_K5data/khtml/
@@ -189,11 +190,14 @@ done
 %files -n %libkonquerorprivate
 %_K5lib/libkonquerorprivate.so.%konquerorprivate_sover
 %_K5lib/libkonquerorprivate.so.*
-#%files -n %libkonqsidebarplugin
-#%_K5lib/libkonqsidebarplugin.so.%konqsidebarplugin_sover
-#%_K5lib/libkonqsidebarplugin.so.*
+%files -n %libkonqsidebarplugin
+%_K5lib/libkonqsidebarplugin.so.%konqsidebarplugin_sover
+%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Tue Sep 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
