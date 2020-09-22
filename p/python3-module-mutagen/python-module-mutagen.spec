@@ -1,5 +1,5 @@
 Name: python3-module-mutagen
-Version: 1.44.0
+Version: 1.45.1
 Release: alt1
 
 Summary: Python module to handle audio metadata
@@ -53,6 +53,9 @@ python3 setup.py test
 %_man1dir/*
 
 %changelog
+* Tue Sep 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.45.1-alt1
+- 1.45.1 released
+
 * Tue Jul 07 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.44.0-alt1
 - 1.44.0 released
 
