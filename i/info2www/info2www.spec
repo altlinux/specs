@@ -1,6 +1,6 @@
 Name:		info2www
 Version:	1.2.2.9
-Release:	alt1
+Release:	alt2
 Summary:	CGI gateway between GNU Info Nodes and the WWW
 # See Makefile for real source!
 Source:		%name-%version.tar
@@ -10,6 +10,7 @@ URL:		http://packages.debian.org/source/sid/info2www
 License:	public domain
 Group:		Networking/WWW
 Packager: Fr. Br. George <george@altlinux.ru>
+BuildArch:	noarch
 
 # Automatically added by buildreq on Sun Aug 23 2009
 BuildRequires: ImageMagick-tools
@@ -27,6 +28,9 @@ hyperlinks to other Info Nodes that your WWW browser can use.
 cp %SOURCE1 %name
 # TODO patch a manual
 
+# for perl 5.30+; remove deprecated syntax
+sed -i 's,\\\[,0,' %name
+
 %build
 for N in *.gif; do convert $N ${N%%.*}.png; done
 rm *.gif
@@ -43,6 +47,9 @@ install -D debian/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Tue Sep 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.2.9-alt2
+- NMU: fixed syntax for perl 5.30+
+
 * Sun Aug 23 2009 Fr. Br. George <george@altlinux.ru> 1.2.2.9-alt1
 - Initial build from scratch
 
