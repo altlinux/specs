@@ -1,19 +1,8 @@
-#define git_hash .git173782d7331e
-%define git_hash %nil
+%define git_hash .g2d8c6343e
+#define git_hash %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
-
-%def_without libnm_glib
-
-%if_with libnm_glib
-%define nm_glib_sover 4
-%define libnm_glib libnm-glib%nm_glib_sover
-%define nm_glib_vpn_sover 1
-%define libnm_glib_vpn libnm-glib-vpn%nm_glib_vpn_sover
-%define nm_util_sover 2
-%define libnm_util libnm-util%nm_util_sover
-%endif
 
 %define ppp_version %((%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 %define wpa_supplicant_version 0.7.3-alt3
@@ -26,6 +15,7 @@
 %def_enable nmtui
 %def_enable bluez5dun
 %def_enable vala
+%def_enable nmcloudsetup
 %ifnarch %e2k %mips
 %def_enable ovs
 %else
@@ -58,16 +48,16 @@
 %endif
 
 %define _name %name-daemon
-%define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 %define nmlibdir %_prefix/lib/NetworkManager
+%define dispatcherdir %nmlibdir/dispatcher.d
 %define nmplugindir %_libdir/%name/%version-%release
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.18.8
+Version: 1.26.3
 Release: alt1%git_hash
-License: GPLv2+ and LGPLv2+
+License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
 Url: http://www.gnome.org/projects/NetworkManager/
@@ -86,7 +76,7 @@ Patch: %name-%version-%release.patch
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python-module-dbus}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-pygobject3 python3-module-dbus}}
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 ppp-devel
@@ -118,6 +108,10 @@ Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 Requires: %name-ppp = %version-%release
+
+# Drop busctl from Requires:
+# it from NetworkManager.service and pulls systemd.
+%filter_from_requires /^\/usr\/bin\/busctl/d
 
 %description
 NetworkManager is a system service that manages network interfaces and
@@ -205,6 +199,19 @@ Requires: %_name = %version-%release
 %description team
 This package contains NetworkManager support for team devices.
 
+%if_enabled nmcloudsetup
+%package cloud-setup
+License: LGPLv2.1+
+Summary: Automatically configure NetworkManager in cloud
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+
+%description cloud-setup
+Installs a nm-cloud-setup tool that can automatically configure
+NetworkManager in cloud setups. Currently only EC2 is supported.
+This tool is still experimental.
+%endif
+
 %package wifi
 License: GPLv2+
 Summary: Wifi plugin for NetworkManager
@@ -244,22 +251,8 @@ Requires: %_name = %version-%release
 %description tui
 %summary
 
-%if_with libnm_glib
-%package devel
-License: LGPLv2+
-Summary: Libraries and headers for adding NetworkManager support to applications
-Group: Development/Other
-Requires: libdbus-glib >= %libdbus_glib_version
-Requires: libdbus-devel >= %dbus_version
-Requires: pkgconfig
-
-%description devel
-This package contains various headers accessing some NetworkManager
-functionality from applications.
-%endif
-
 %package -n libnm
-License: LGPLv2+
+License: LGPLv2.1+
 Summary: Library for adding NetworkManager support to applications
 Group: System/Libraries
 
@@ -267,54 +260,8 @@ Group: System/Libraries
 This package contains the libraries that make it easier to use some
 NetworkManager functionality from applications.
 
-%if_with libnm_glib
-%package -n %libnm_glib
-License: LGPLv2+
-Summary: Library for adding NetworkManager support to applications that use glib
-Group: System/Libraries
-Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.10.0
-
-%description -n %libnm_glib
-This package contains the library that applications can use to query
-connection status via NetworkManager.
-
-%package -n %libnm_glib_vpn
-License: LGPLv2+
-Summary: Library for creating VPN connections via NetworkManager
-Group: System/Libraries
-Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.10.0
-
-%description -n %libnm_glib_vpn
-This package contains the library that applications can use for creating
-VPN connections via NetworkManager.
-
-%package -n %libnm_util
-License: LGPLv2+
-Summary: A convenience library to ease the access to NetworkManager.
-Group: System/Libraries
-Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib < 0.9.10.0
-
-%description -n %libnm_util
-This package contains a convenience library to ease the access to
-NetworkManager.
-
-%package glib-devel
-License: LGPLv2+
-Summary: Header files for adding NetworkManager support to applications that use glib.
-Group: Development/GNOME and GTK+
-Requires: libnm-glib-devel libnm-glib-vpn-devel libnm-util-devel
-BuildArch: noarch
-
-%description glib-devel
-Virtual package for backward compatibility.
-Deprecated and will be removed soon.
-%endif
-
 %package -n libnm-devel
-License: LGPLv2+
+License: LGPLv2.1+
 Summary: Header files for adding NetworkManager support to applications.
 Group: Development/C
 Requires: glib2-devel
@@ -326,52 +273,6 @@ Requires: libnm = %version-%release
 This package contains the header and pkg-config files for development
 applications using NetworkManager functionality.
 
-%if_with libnm_glib
-%package -n libnm-glib-devel
-License: LGPLv2+
-Summary: Header files for adding NetworkManager support to applications that use glib.
-Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: libnm-util-devel = %version-%release
-Requires: glib2-devel
-Requires: pkgconfig
-Requires: libdbus-glib-devel >= %libdbus_glib_version
-Requires: %libnm_glib = %version-%release
-
-%description -n libnm-glib-devel
-This package contains the header and pkg-config files for development
-applications that can to query connection status via NetworkManager.
-
-%package -n libnm-glib-vpn-devel
-License: LGPLv2+
-Summary: Header files for %libnm_glib_vpn
-Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: libnm-glib-devel = %version-%release
-Requires: glib2-devel
-Requires: pkgconfig
-Requires: libdbus-glib-devel >= %libdbus_glib_version
-Requires: %libnm_glib_vpn = %version-%release
-
-%description -n libnm-glib-vpn-devel
-This package contains the header and pkg-config files for development
-applications that can to create VPN connections via NetworkManager.
-
-%package -n libnm-util-devel
-License: LGPLv2+
-Summary: Header files for %libnm_util
-Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: %libnm_util = %version-%release
-Requires: glib2-devel
-Requires: pkgconfig
-Requires: libdbus-glib-devel >= %libdbus_glib_version
-
-%description -n libnm-util-devel
-This package contains the header and pkg-config files
-for %libnm_util.
-%endif
-
 %package -n libnm-devel-doc
 License: GFDL-1.1+
 Summary: Development documentation for %name
@@ -381,26 +282,8 @@ BuildArch: noarch
 %description -n libnm-devel-doc
 This package contains development documentation for %name.
 
-%if_with libnm_glib
-%package devel-doc
-License: GFDL-1.1+
-Summary: Development documentation for %name
-Group: Development/Documentation
-Obsoletes: NetworkManager-glib-devel-doc < 0.9.10.0
-Provides: NetworkManager-glib-devel-doc = %version-%release
-BuildArch: noarch
-Requires: libnm-devel-doc = %version-%release
-
-# No comments
-Obsoletes: %name-%name-devel-doc < %version-%release
-
-%description devel-doc
-This package contains development documentation for %name.
-Includes libnm-util and libnm-glib development documentation.
-%endif
-
 %package -n libnm-gir
-License: LGPLv2+
+License: LGPLv2.1+
 Summary: GObject introspection data for the NetworkManager (libnm)
 Group: System/Libraries
 Requires: libnm = %version-%release
@@ -409,7 +292,7 @@ Requires: libnm = %version-%release
 GObject introspection data for the NetworkManager (libnm).
 
 %package -n libnm-gir-devel
-License: LGPLv2+
+License: LGPLv2.1+
 Summary: GObject introspection devel data for the NetworkManager (libnm)
 Group: System/Libraries
 BuildArch: noarch
@@ -417,30 +300,6 @@ Requires: libnm-gir = %version-%release
 
 %description -n libnm-gir-devel
 GObject introspection devel data for the NetworkManager (libnm).
-
-%if_with libnm_glib
-%package glib-gir
-License: LGPLv2+
-Summary: GObject introspection data for the NetworkManager
-Group: System/Libraries
-Requires: %libnm_glib %libnm_glib_vpn %libnm_util
-
-%description glib-gir
-GObject introspection data for the NetworkManager.
-
-%package glib-gir-devel
-License: LGPLv2+
-Summary: GObject introspection devel data for the NetworkManager
-Group: System/Libraries
-BuildArch: noarch
-Requires: %name-glib-gir = %version-%release
-Requires: libnm-glib-devel = %version-%release
-Requires: libnm-glib-vpn-devel = %version-%release
-Requires: libnm-util-devel = %version-%release
-
-%description glib-gir-devel
-GObject introspection devel data for the NetworkManager.
-%endif
 
 %prep
 %setup
@@ -480,12 +339,10 @@ export LDFLAGS=-pie
 %endif
 	--with-udev-dir=/lib/udev \
 	--enable-polkit=yes \
-	--enable-polkit-agent \
 	--enable-modify-system=no \
 	--enable-etcnet-alt \
 	--disable-ifcfg-rh \
 	--disable-ifupdown \
-	--enable-config-plugin-ibft \
 	--with-config-plugins-default='etcnet-alt' \
 	--with-modem-manager-1 \
 	%{subst_enable teamdctl} \
@@ -503,6 +360,11 @@ export LDFLAGS=-pie
 	--enable-introspection=auto \
 	%{subst_enable lto} \
 	%{subst_enable vala} \
+%if_enabled nmcloudsetup
+	--with-nm-cloud-setup=yes \
+%else
+	--with-nm-cloud-setup=no \
+%endif
 	--with-libaudit=yes-disabled-by-default \
 	--with-ofono=no \
 %if_enabled teamdctl
@@ -511,17 +373,13 @@ export LDFLAGS=-pie
 	--disable-json-validation \
 %endif
 	--with-libpsl=yes \
+	--enable-firewalld-zone \
 %if_enabled sanitizers
 	--with-address-sanitizer=yes \
 	--enable-undefined-sanitizer \
 %else
 	--without-address-sanitizer \
 	--disable-undefined-sanitizer \
-%endif
-%if_with libnm_glib
-	--with-libnm-glib \
-%else
-	--without-libnm-glib \
 %endif
 	--with-iwd=%iwd_support \
 	--with-dist-version=%version-%release \
@@ -553,6 +411,8 @@ install -m 0755 %SOURCE5 %buildroot%dispatcherdir/
 install -m 0755 %SOURCE7 %buildroot%dispatcherdir/
 install -m 0755 %SOURCE8 %buildroot%dispatcherdir/
 install -Dm0644 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%name
+
+mkdir -p %buildroot%_sysconfdir/NetworkManager/dispatcher.d/pre-{up,down,no-wait}.d
 
 # Create pre-down.d/pre-up.d directories and
 # symlink scripts if needed
@@ -621,6 +481,20 @@ if sd_booted && "$SYSTEMCTL" -q is-enabled %name.service; then
 	"$SYSTEMCTL" enable -q %name-dispatcher.service
 fi
 
+%if_enabled nmcloudsetup
+%post cloud-setup
+if sd_booted; then
+%post_service nm-cloud-setup.service
+%post_service nm-cloud-setup.timer
+fi
+
+%preun cloud-setup
+if sd_booted; then
+%preun_service nm-cloud-setup.service
+%preun_service nm-cloud-setup.timer
+fi
+%endif
+
 %files
 
 %files -f %name.lang daemon
@@ -639,6 +513,7 @@ fi
 %dir %nmplugindir/
 %nmplugindir/libnm-settings-plugin-*.so
 %_libexecdir/NetworkManager/nm-*
+%exclude %_libexecdir/NetworkManager/nm-cloud-setup
 %_sbindir/*
 %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/NetworkManager/%name.conf
@@ -650,6 +525,7 @@ fi
 %dir %nmlibdir/conf.d/
 %config %nmlibdir/conf.d/31-mac-addr-change.conf
 %dir %_var/lib/NetworkManager
+%_sysconfdir/NetworkManager/dispatcher.d/
 %dispatcherdir/
 %ghost %config(noreplace) %_var/log/NetworkManager
 %ghost %config(noreplace) %_var/lib/NetworkManager/NetworkManager.state
@@ -661,6 +537,10 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+%exclude %dispatcherdir/90-nm-cloud-setup.sh
+%exclude %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
+%_usr/lib/firewalld/zones/*.xml
+
 %if_enabled ovs
 %{?_enable_systemd:%dir %_unitdir/NetworkManager.service.d/}
 %endif
@@ -701,38 +581,21 @@ fi
 %_man1dir/nmtui*
 %endif
 
+%if_enabled nmcloudsetup
+%files cloud-setup
+%_libexecdir/NetworkManager/nm-cloud-setup
+%{?_enable_systemd:/lib/systemd/system/nm-cloud-setup.service}
+%{?_enable_systemd:/lib/systemd/system/nm-cloud-setup.timer}
+%dispatcherdir/90-nm-cloud-setup.sh
+%dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
+%endif
+
 %files ppp
 %_libdir/pppd/%ppp_version/nm-pppd-plugin.so
 %nmplugindir/libnm-ppp-plugin.so
 
-%if_with libnm_glib
-%files devel
-%dir %_includedir/%name
-%_includedir/%name/%name.h
-%_includedir/%name/NetworkManagerVPN.h
-%_includedir/%name/nm-version-macros.h
-%_includedir/%name/nm-version.h
-%_pkgconfigdir/%name.pc
-%endif
-
 %files -n libnm
 %_libdir/libnm.so.*
-
-%if_with libnm_glib
-%files -n %libnm_glib
-%_libdir/libnm-glib.so.%nm_glib_sover
-%_libdir/libnm-glib.so.%nm_glib_sover.*
-
-%files -n %libnm_glib_vpn
-%_libdir/libnm-glib-vpn.so.%nm_glib_vpn_sover
-%_libdir/libnm-glib-vpn.so.%nm_glib_vpn_sover.*
-
-%files -n %libnm_util
-%_libdir/libnm-util.so.%nm_util_sover
-%_libdir/libnm-util.so.%nm_util_sover.*
-
-%files glib-devel
-%endif
 
 %files -n libnm-devel
 %_includedir/libnm
@@ -741,37 +604,9 @@ fi
 %{?_enable_vala:%_vapidir/libnm.*}
 %_datadir/dbus-1/interfaces/*.xml
 
-%if_with libnm_glib
-%files -n libnm-glib-devel
-%_includedir/libnm-glib
-%exclude %_includedir/libnm-glib/nm-vpn-*.h
-%_pkgconfigdir/libnm-glib.pc
-%_libdir/libnm-glib.so
-%{?_enable_vala:%_vapidir/libnm-glib.*}
-
-%files -n libnm-glib-vpn-devel
-%_includedir/libnm-glib/nm-vpn-*.h
-%_pkgconfigdir/libnm-glib-vpn.pc
-%_libdir/libnm-glib-vpn.so
-
-%files -n libnm-util-devel
-%_includedir/%name/nm-setting*.h
-%_includedir/%name/nm-connection.h
-%_includedir/%name/nm-utils*.h
-%_pkgconfigdir/libnm-util.pc
-%_libdir/libnm-util.so
-%{?_enable_vala:%_vapidir/libnm-util.*}
-%endif
-
 %files -n libnm-devel-doc
 %doc %_datadir/gtk-doc/html/libnm
 %doc %_datadir/gtk-doc/html/%name
-
-%if_with libnm_glib
-%files devel-doc
-%doc %_datadir/gtk-doc/html/libnm-glib
-%doc %_datadir/gtk-doc/html/libnm-util
-%endif
 
 %if_enabled introspection
 %files -n libnm-gir
@@ -779,22 +614,43 @@ fi
 
 %files -n libnm-gir-devel
 %_datadir/gir-1.0/NM-1.0.gir
-
-%if_with libnm_glib
-%files glib-gir
-%_libdir/girepository-1.0/NMClient-1.0.typelib
-%_libdir/girepository-1.0/NetworkManager-1.0.typelib
-
-%files glib-gir-devel
-%_datadir/gir-1.0/NMClient-1.0.gir
-%_datadir/gir-1.0/NetworkManager-1.0.gir
-%endif
 %endif
 
 %exclude %nmplugindir/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Sep 22 2020 Mikhail Efremov <sem@altlinux.org> 1.26.3-alt1.g2d8c6343e
+- Fix /usr/lib/NetworkManager/ packaging.
+- n-dhcp4: Initialize variable.
+- tests: Workaround for 32bit arches.
+- Upstream git snapshot (nm-1-26 branch).
+
+* Fri Sep 18 2020 Mikhail Efremov <sem@altlinux.org> 1.26.2-alt1
+- etcnet-alt: Update copyright year.
+- etcnet-alt: Use long include guards.
+- etcnet-alt: SPDX header conversion.
+- Updated BR.
+- Updated to 1.26.2 (closes: #38860).
+
+* Fri Sep 18 2020 Mikhail Efremov <sem@altlinux.org> 1.26.0-alt1
+- Fix License tag.
+- etcnet-alt: Update copytight year.
+- Drop unused configure option.
+- Exlicitly enable firewalld zone.
+- Use %%nmlibdir macro.
+- Move dispatcher scripts to /usr/lib/NetworkManager/.
+- Add cloud-setup subpackage.
+- systemd: Drop duplicate string in NetworkManager.service.
+- Drop busctl from Requires.
+- etcnet-alt: Rework plugin according to upstream changes.
+- etcnet-alt: don't implement plugin as singleton.
+- etcnet-alt: Don't use parent's initialize() method.
+- Drop ibft plugin.
+- Remove libnm-glib-* subpackages from spec.
+- etcnet-alt: Drop monitor files.
+- Updated to 1.26.0.
+
 * Wed Jun 10 2020 Mikhail Efremov <sem@altlinux.org> 1.18.8-alt1
 - Fixed build with libnss-3.53.0.
 - Updated to 1.18.8.

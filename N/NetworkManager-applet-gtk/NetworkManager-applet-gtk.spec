@@ -1,6 +1,6 @@
-%define nm_version 1.4.1-alt1.git20160914
-#define git_date .git20180106
-%define git_date %nil
+%define nm_version 1.20.0
+%define git_hash .gab06222e
+#define git_hash %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -15,8 +15,8 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.18.0
-Release: alt1%git_date
+Version: 1.19.0
+Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -24,11 +24,6 @@ Url: https://wiki.gnome.org/Projects/NetworkManager
 Vcs: https://gitlab.gnome.org/GNOME/network-manager-applet.git
 Source: nm-applet-%version.tar
 Patch: nm-applet-%version-%release.patch
-# Method 'disabled' was added in NM-1.20
-# We are have NM-1.18 still, so revert this
-# change for now. This patch reverts commit
-# 31c0d3c6b8db22ba464024be7e7cbe31da983a29
-Patch1: remove-disable-method.patch
 
 BuildRequires(pre): meson
 
@@ -59,7 +54,6 @@ NetworkManager, including a panel applet for wireless networks.
 %prep
 %setup -n nm-applet-%version
 %patch -p1
-%patch1 -p1
 %build
 %meson \
     --libexecdir==%_libexecdir/NetworkManager \
@@ -105,6 +99,10 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Sat Sep 19 2020 Mikhail Efremov <sem@altlinux.org> 1.19.0-alt1.gab06222e
+- Add 'disabled' IPv6 method again.
+- Upstream git snapshot.
+
 * Fri Jul 03 2020 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt1
 - Updated to 1.18.0.
 
