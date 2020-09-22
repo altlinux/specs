@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.4
-%define kernel_sublevel .65
+%define kernel_sublevel .66
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -428,7 +428,7 @@ echo "Kernel built $KernelVer"
 
 %if_enabled docs
 # psdocs, pdfdocs don't work yet
-%make_build SPHINXOPTS="-j %__nprocs" htmldocs
+%make_build SPHINXOPTS="-j $([ %__nprocs -ge 8 ] && echo 8 || echo %__nprocs)" htmldocs
 %endif
 
 %install
@@ -704,6 +704,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Tue Sep 22 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.66-alt1
+- v5.4.66
+
 * Wed Sep 16 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.65-alt1
 - v5.4.65
 
