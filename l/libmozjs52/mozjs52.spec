@@ -20,7 +20,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.9.0
-Release: alt2
+Release: alt3
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -159,7 +159,7 @@ unset PYTHON
 %if_enabled big_endian
 echo "Generate big endian version of config/external/icu/data/icud58l.dat"
 pushd ../..
-  ./mach python intl/icu_sources_data.py .
+  ./mach python2 intl/icu_sources_data.py .
   ls -l config/external/icu/data
   rm -f config/external/icu/data/icudt*l.dat
 popd
@@ -209,6 +209,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Tue Sep 22 2020 Vladimir Didenko <cow@altlinux.org> 52.9.0-alt3
+- use python2 in build command instead of just python
+
 * Wed May 13 2020 Vladimir Didenko <cow@altlinux.org> 52.9.0-alt2
 - fix build
 
