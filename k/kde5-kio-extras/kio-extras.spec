@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init altplace
 
@@ -41,7 +41,6 @@ BuildRequires: libtirpc-devel
 BuildRequires: gperf libtag-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kactivities-devel
-BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel
@@ -143,6 +142,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 

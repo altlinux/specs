@@ -1,7 +1,7 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -42,6 +42,9 @@ Video thumbnail generator for KDE.
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Fri Aug 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
