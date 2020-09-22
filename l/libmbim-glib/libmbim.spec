@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.24.0
+Version: 1.24.2
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -136,6 +136,9 @@ make check
 
 
 %changelog
+* Tue Sep 22 2020 Mikhail Efremov <sem@altlinux.org> 1.24.2-alt1
+- Updated to 1.24.2.
+
 * Mon Jul 27 2020 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
 - Enabled gobject-introspection support.
 - Updated to 1.24.0.
