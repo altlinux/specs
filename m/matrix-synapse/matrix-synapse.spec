@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.19.3
+Version: 1.20.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use jsonschema >= 2.5.1
 %py3_use frozendict >= 1
 %py3_use unpaddedbase64 >= 1.1.0
-%py3_use canonicaljson >= 1.2.0
+%py3_use canonicaljson >= 1.3.0
 %py3_use signedjson >= 1.1.0
 %py3_use pynacl >= 1.2.1
 %py3_use idna >= 2.5
@@ -67,6 +67,9 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use lxml >= 3.5.0
 # "test"
 %py3_use mock >= 2.0
+
+# oidc
+%py3_use  authlib >= 0.14.0
 
 # enable logging to systemd's journal
 %py3_use systemd >= 231
@@ -151,6 +154,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.20.0-alt1
+- new version 1.20.0 (with rpmrb script)
+
 * Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 1.19.3-alt1
 - new version 1.19.3 (with rpmrb script)
 - update requirements (ALT bug 38962)

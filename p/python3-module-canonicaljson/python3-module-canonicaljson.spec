@@ -2,8 +2,8 @@
 
 %define modulename canonicaljson
 Name: python3-module-canonicaljson
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Canonical JSONs
 
@@ -49,6 +49,9 @@ Features:
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
 - add missed undetectable simplejson requires
 
