@@ -1,6 +1,6 @@
 Name: zabbix-preinstall
 Version: 2.2.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: One-time initialization for Zabbix server
 License: GPL
@@ -34,6 +34,9 @@ cp -a zabbix-*.sh %buildroot%_sbindir
 # - support other DB/frontend types?
 
 %changelog
+* Tue Sep 22 2020 Pavel Vasenkov <pav@altlinux.org> 2.2.2-alt2.2
+- Set database path (closes: #37465)
+
 * Tue Mar 05 2019 Alexei Takaseev <taf@altlinux.org> 2.2.2-alt2.1
 - Change Req: zabbix-phpfrontend-apache2-mod_php5 to zabbix-phpfrontend-apache2-mod_php7
 
