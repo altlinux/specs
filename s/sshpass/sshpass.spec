@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: sshpass
-Version: 1.05
+Version: 1.06
 Release: alt1
 URL: http://sourceforge.net/projects/sshpass/
 
@@ -22,6 +24,7 @@ authentiaction instead.
 %setup 
 
 %build
+%autoreconf
 %configure
 
 %make_build
@@ -35,5 +38,8 @@ authentiaction instead.
 %doc AUTHORS COPYING NEWS README
 
 %changelog
+* Tue Sep 22 2020 Stanislav Levin <slev@altlinux.org> 1.06-alt1
+- 1.05 -> 1.06.
+
 * Wed Apr 18 2012 Andriy Stepanov <stanv@altlinux.ru> 1.05-alt1
 - Forward to ALT Linux Sisyphus
