@@ -1,12 +1,12 @@
 %define			src qmdnsengine
 
 Name:			lib%src
-Version:		0.1.0
+Version:		0.2.0
 Release:		alt1
 Summary:		Library for multicast DNS as per RFC 676
 Group:			System/Libraries
 License:		MIT
-Url:			https://github.com/nitroshare/%name
+Url:			https://github.com/nitroshare/%src
 Source0:		%src-%version.tar.gz
 
 # Automatically added by buildreq on Sun Sep 20 2020 (-bi)
@@ -14,12 +14,22 @@ Source0:		%src-%version.tar.gz
 BuildRequires: cmake doxygen libssl-devel python3-dev qt5-base-devel
 
 %description
-Simple set of classes for developing HTTP server applications in Qt.
+This library provides an implementation of multicast DNS as per [RFC 6762]
+
+%package -n %{name}1
+Summary:		Library for multicast DNS as per RFC 676
+Group:			System/Libraries
+
+Provides:		%name
+Obsoletes:		%name < 0.2.0
+
+%description -n %{name}1
+This library provides an implementation of multicast DNS as per [RFC 6762]
 
 %package devel
 Summary:		Development files for %name
 Group:			Development/C++
-Requires:		%name = %version-%release
+Requires:		%{name}1 = %version-%release
 
 %description devel
 Library for multicast DNS as per RFC 676.
@@ -42,7 +52,7 @@ cd ../doc && cmake ./. && doxygen Doxyfile
 cd build
 %make_install DESTDIR=%buildroot install
 
-%files
+%files -n %{name}1
 %doc LICENSE.txt examples/ doc/html/
 %_libdir/lib*.so.*
 
@@ -54,5 +64,9 @@ cd build
 #%_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 22 2020 Motsyo Gennadi <drool@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+- build according to shared libs policy
+
 * Sun Sep 20 2020 Motsyo Gennadi <drool@altlinux.ru> 0.1.0-alt1
 - initial build
