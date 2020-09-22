@@ -1,6 +1,6 @@
 Name: python3-module-Pillow
 Version: 7.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python Imaging Library
 License: MIT
@@ -36,12 +36,17 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %check
 PYTHONPATH=%buildroot%python3_sitelibdir python3 selftest.py
 
+%add_python3_req_skip tkinter
+
 %files
 %doc *.rst docs/COPYING LICENSE *.md
 %python3_sitelibdir/PIL
 %python3_sitelibdir/Pillow-%version-*-info
 
 %changelog
+* Tue Sep 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2.0-alt2
+- avoid tkinter dependency
+
 * Mon Sep 21 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2.0-alt1
 - 7.2.0 released
 
