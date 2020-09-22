@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.48
+%define ver_major 2.50
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -34,7 +34,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define cairo_ver 1.15.12
 %define vala_ver 0.18
 %define freetype_ver 2.9
-%define rust_ver 1.39
+%define rust_ver 1.40
 
 # From configure.ac
 BuildRequires: libgtk+3-devel >= %gtk3_ver
@@ -190,6 +190,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.50.0-alt1
+- 2.50.0
+
 * Fri Jul 03 2020 Yuri N. Sedunov <aris@altlinux.org> 1:2.48.8-alt1
 - 2.48.8
 

@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 4.6
+%define ver_major 4.8
 %define api_ver 4
 
 %def_disable static
@@ -14,7 +14,7 @@
 %endif
 
 Name: lib%{_name}4
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -24,7 +24,7 @@ Url: https://wiki.gnome.org/Projects/GtkSourceView
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-%define gtk_ver 3.22.0
+%define gtk_ver 3.24.0
 %define libxml2_ver 2.6.0
 %define gspell_ver 1.8.0
 %define fribidi_ver 0.19.7
@@ -156,6 +156,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
 - 4.6.1
 

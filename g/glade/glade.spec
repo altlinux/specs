@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 2.0
 %define xdg_name org.gnome.Glade
+%def_enable gtk_doc
 %def_enable python
+%def_enable gjs
 %def_enable gladeui
 %def_enable webkit2gtk
 %def_enable check
@@ -26,17 +28,21 @@ Source: %name-%version.tar
 
 Requires: libgladeui%api_ver = %version-%release
 
-%define gtk_ver 3.22
+%define gtk_ver 3.24
+%define gjs_ver 1.64
+%define webkit_ver 2.28
 
-BuildRequires: rpm-build-gnome gnome-common
-BuildRequires: gtk-doc yelp-tools intltool libappstream-glib-devel
+BuildRequires(pre): meson rpm-build-gnome
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %if_enabled python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel
 %endif
-%{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gjs:BuildRequires: libgjs-devel >= %gjs_ver}
+%{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel >= %webkit_ver}
 %{?_enable_check:BuildRequires: xvfb-run icon-theme-hicolor gnome-icon-theme xmllint}
 
 %description
@@ -96,27 +102,21 @@ GObject introspection devel data for the GladeUI library.
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-export PYTHON=%__python3
-%autoreconf
-%configure \
-	--enable-gtk-doc \
-	%{subst_enable python} \
-	%{subst_enable gladeui} \
-	%{subst_enable webkit2gtk} \
-	PYTHON=%__python3 \
-%ifarch %e2k
-	--enable-compile-warnings=no
-%endif
-
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_python:-Dpython=disabled} \
+	%{?_disable_gjs:-Dgjs=disabled} \
+	%{?_enable_gladeui:-Dgladeui=true} \
+	%{?_disable_webkit2gtk:-Dwebkit2gtk=disabled}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome %name
 
 %check
-xvfb-run %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -127,7 +127,7 @@ xvfb-run %make check
 %_man1dir/glade.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS COPYING NEWS TODO
-#%doc README*
+%doc README*
 
 %files -n libgladeui%api_ver
 %dir %_libdir/%name
@@ -136,6 +136,7 @@ xvfb-run %make check
 %{?_enable_python:%_libdir/%name/modules/libgladepython.so}
 %{?_enable_gladeui:%_libdir/%name/modules/libgladeglade.so}
 %{?_enable_webkit2gtk:%_libdir/%name/modules/libgladewebkit2gtk.so}
+%{?_enable_gjs:%_libdir/%name/modules/libgladegjs.so}
 %_libdir/*.so.*
 %dir %_datadir/%name
 %dir %_datadir/%name/catalogs
@@ -143,15 +144,16 @@ xvfb-run %make check
 %_datadir/%name/catalogs/glade-catalog.dtd
 %_datadir/%name/pixmaps
 
-%exclude %_libdir/%name/modules/*.la
-
 %files -n libgladeui%api_ver-devel
 %_includedir/libgladeui-%api_ver/
 %_libdir/*.so
 %_pkgconfigdir/gladeui-%api_ver.pc
+%_datadir/gettext/its/glade-catalog.*
 
+%if_enabled gtk_doc
 %files -n libgladeui%api_ver-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files -n libgladeui%api_ver-gir
 %_typelibdir/Gladeui-%api_ver.typelib
@@ -160,6 +162,9 @@ xvfb-run %make check
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Thu May 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

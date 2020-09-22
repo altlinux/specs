@@ -4,7 +4,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -18,7 +18,7 @@
 %def_disable suspend_then_hibernate
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -36,11 +36,11 @@ Source: %name-%version.tar
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.34.2
 %define notify_ver 0.7.3
-%define pulse_ver 0.9.15
-%define gsds_ver 3.36.0
+%define pulse_ver 2.0
+%define gsds_ver 3.38.0
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
-%define upower_ver 0.9.1
+%define upower_ver 0.99.8
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define geocode_ver 3.10.0
@@ -48,6 +48,7 @@ Source: %name-%version.tar
 %define gweather_ver 3.9.5
 %define nm_ver 1.0
 %define lcms_ver 2.2
+%define polkit_ver 0.114
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
@@ -58,6 +59,8 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
 Requires: iio-sensor-proxy
 Requires: udev-rules-rfkill-uaccess
+Requires: polkit >= %polkit_ver
+Requires: upower >= %upower_ver
 
 BuildRequires(pre): meson pkgconfig(systemd)
 BuildRequires: glib2-devel >= %glib_ver
@@ -67,7 +70,7 @@ BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildRequires: libnotify-devel >= %notify_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
-BuildRequires: libdbus-devel libpolkit1-devel
+BuildRequires: libdbus-devel libpolkit1-devel >= %polkit_ver
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
@@ -133,7 +136,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-color
 %_libexecdir/gsd-datetime
-%_libexecdir/gsd-dummy
 %_libexecdir/gsd-housekeeping
 %_libexecdir/gsd-keyboard
 %_libexecdir/gsd-media-keys
@@ -147,7 +149,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-sound
 %_libexecdir/gsd-usb-protection
 %_libexecdir/gsd-wacom
-%_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
 %_libexecdir/gsd-wwan
 %_libexecdir/gsd-xsettings
@@ -192,6 +193,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Thu Apr 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

@@ -1,9 +1,9 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.0
 %define _name wpebackend-fdo
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -16,7 +16,7 @@ Source: %url/releases/download/%version/%_name-%version.tar.xz
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libgio-devel libEGL-devel
-BuildRequires: libwpe-devel >= %ver_major
+BuildRequires: libwpe-devel >= %ver_major libepoxy-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-egl-devel
 
 %description
@@ -51,6 +51,9 @@ This package provides files for developing applications that use %name.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Tue Jun 02 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

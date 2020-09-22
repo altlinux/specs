@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.28
+%define ver_major 2.30
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -18,8 +18,10 @@
 
 %def_disable gtkdoc
 %def_enable gold
+%def_disable ninja
 %def_enable x11
 %def_enable wayland
+%def_enable systemd
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -31,7 +33,7 @@
 %define smp %__nprocs
 
 Name: libwebkitgtk4
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -45,15 +47,14 @@ Source1: webkit2gtk.env
 # https://gitlab.kitware.com/cmake/cmake/issues/18044
 Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 # python->python3
-Patch1: webkitgtk-2.28.1-alt-python3.patch
-#https://bugs.webkit.org/show_bug.cgi?id=214828
-Patch10: webkitgtk-2.28.4-up-use-gles-on-arm.patch
-
+Patch1: webkitgtk-2.29.91-alt-python3.patch
+Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 
 %define bwrap_ver 0.3.1
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
-BuildRequires: /proc gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
+BuildRequires: /proc gcc-c++ cmake ninja-build
+BuildRequires: ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
@@ -89,6 +90,8 @@ BuildRequires: libupower-devel
 # since 2.25.x
 BuildRequires: libwpebackend-fdo-devel
 %{?_enable_bubblewrap_sandbox:BuildRequires: bubblewrap >= %bwrap_ver xdg-dbus-proxy libseccomp-devel}
+# since 2.29.x 
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 
 %description
 WebKit is an open source web browser engine.
@@ -217,7 +220,9 @@ GObject introspection devel data for the JavaScriptCore library
 %setup -n %_name-%version
 %patch -b .bwrap
 %patch1 -p1 -b .python3
-%patch10 -p1
+%ifarch aarch64
+%patch2 -b .arm64
+%endif
 
 # fix libWPEBackend-fdo soname
 sed -i 's/\(libWPEBackend-fdo-1.0.so\)/\1.%wpebackend_fdo_sover/' \
@@ -240,7 +245,7 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 %add_optflags -msse2 -mfpmath=sse
 %endif
 
-%ifarch x86_64
+%ifarch x86_64 armh
 n=%smp
 [  "$n"  -lt  16  ]  ||  n=16
 %if_disabled gigacage
@@ -249,6 +254,7 @@ export GIGACAGE_ENABLED=0
 %endif
 export PYTHON=%__python3
 %cmake \
+%{?_enable_ninja:-GNinja} \
 -DPORT=GTK \
 -DPYTHON_EXECUTABLE=%__python3 \
 -DCMAKE_BUILD_TYPE=Release \
@@ -266,8 +272,13 @@ export PYTHON=%__python3
 -DENABLE_GLES2=ON \
 %endif
 %ifarch armh
--DENABLE_JIT=OFF
+-DENABLE_JIT=OFF \
+-DENABLE_C_LOOP=ON \
+-DENABLE_SAMPLING_PROFILER=OFF \
+-DUSE_SYSTEM_MALLOC=ON \
 %endif
+-DUSER_AGENT_BRANDING:STRING="ALTLinux" \
+%{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF}
 %nil
 
 #-DENABLE_TOUCH_EVENTS:BOOL=ON \
@@ -281,7 +292,7 @@ export PYTHON=%__python3
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
-%ifarch x86_64
+%ifarch x86_64 armh
 %make -j $n -C BUILD
 %else
 %cmake_build
@@ -300,7 +311,7 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
-%pkglibexecdir/WebKitPluginProcess
+#%pkglibexecdir/WebKitPluginProcess
 %pkglibexecdir/WebKitWebProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
@@ -352,6 +363,12 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.1-alt1
+- 2.30.1
+
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
+- 2.30.0
+
 * Tue Jul 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.28.4-alt1
 - 2.28.4
 - %%arm: enabled GLES

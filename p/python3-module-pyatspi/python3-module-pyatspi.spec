@@ -4,12 +4,12 @@
 %def_enable tests
 %def_disable check
 
-Name: python-module-%_name
+Name: python3-module-%_name
 Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for at-spi library
-Group: Development/Python
+Group: Development/Python3
 License: LGPL-2.0
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
@@ -19,10 +19,10 @@ BuildArch: noarch
 
 %define pygobject_ver 3.9.90
 
-BuildRequires(pre): rpm-build-python rpm-build-gir
-BuildRequires: python-devel python-module-pygobject3-devel >= %pygobject_ver
-BuildRequires: libX11-devel libICE-devel libSM-devel
-%{?_enable_tests:BuildRequires: python-module-dbus-gobject python-module-dbus-devel
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
+BuildRequires:  libX11-devel libICE-devel libSM-devel
+%{?_enable_tests:BuildRequires: python3-module-dbus-gobject python3-module-dbus-devel
 BuildRequires: libat-spi2-core-devel libgtk+3-devel libxml2-devel}
 %{?_enable_check:BuildRequires: /proc dbus typelib(Atspi) = 2.0 typelib(Gtk) = 3.0}
 
@@ -36,15 +36,15 @@ This version of at-spi is a major break from previous versions.
 It has been completely rewritten to use D-Bus rather than
 ORBIT / CORBA for its transport protocol.
 
-This package includes a python client library for at-spi.
+This package includes a Python 3 client library for at-spi.
 
 %prep
 %setup -n %_name-%version
 
 %build
-export PYTHON=%__python
+export PYTHON=%__python3
 %autoreconf
-%configure --with-python=%__python \
+%configure --with-python=%__python3 \
 	%{subst_enable tests}
 %nil
 %make_build
@@ -56,7 +56,7 @@ export PYTHON=%__python
 %make check
 
 %files
-%python_sitelibdir/%_name/
+%python3_sitelibdir/%_name/
 %doc AUTHORS README NEWS
 
 

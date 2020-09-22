@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libwpe
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 
 Summary: General-purpose library for the WPE-flavored port of WebKit
@@ -47,6 +47,9 @@ use %name.
 %_pkgconfigdir/wpe-%api_ver.pc
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon Mar 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

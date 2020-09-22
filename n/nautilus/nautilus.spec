@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 %define libxml2_ver 2.4.7
 %define gexiv2_ver 0.10
 %define gir_ver 0.10.2
-%define tracker_ver 2.0
+%define tracker_ver 2.99.2
 %define autoar_ver 0.2.1
 
 Requires(post): libcap-utils
@@ -46,7 +46,7 @@ Requires: common-licenses
 Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
-%{?_enable_tracker:Requires: tracker}
+%{?_enable_tracker:Requires: tracker-miners3}
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
@@ -63,7 +63,7 @@ BuildRequires: libX11-devel
 BuildRequires: libseccomp-devel
 BuildRequires: pkgconfig(gstreamer-tag-1.0)
 %{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
-%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_check:
@@ -154,11 +154,18 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
+%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Extract.service
+%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Files.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
+%dir %_datadir/%name
+%dir %_datadir/%name/ontology
+%_datadir/%name/ontology/%name.description
+%_datadir/%name/ontology/%name.ontology
+%_datadir/tracker3/domain-ontologies/%xdg_name.domain.rule
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
@@ -191,6 +198,12 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
+* Fri Sep 04 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.92-alt1
+- 3.37.92
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

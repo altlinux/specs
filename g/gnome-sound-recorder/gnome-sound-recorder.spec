@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.34
+%define ver_major 3.38
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
@@ -20,9 +20,9 @@ Obsoletes: gnome-media-common
 Obsoletes: gnome-media-grecord
 Provides:  gnome-media-grecord = %version-%release
 
-%define glib_ver 2.31.10
-%define gtk_ver 3.10.8
-%define gjs_ver 1.48
+%define glib_ver 2.44
+%define gtk_ver 3.14
+%define gjs_ver 1.54
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
@@ -38,15 +38,19 @@ Requires: typelib(GstAudio)
 Requires: typelib(GstPbutils)
 Requires: typelib(Gtk)
 Requires: typelib(Pango)
+Requires: typelib(Handy) = 1
 # explicitly required to avoid installation old version
 Requires: libgst-plugins%gst_api_ver-gir
 
 BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk+3-gir-devel yelp-tools
+BuildRequires: pkgconfig(gstreamer-player-%gst_api_ver)
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gstreamer%gst_api_ver-utils gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
+BuildRequires: gobject-introspection-devel pkgconfig(libhandy-1)
+
 
 %description
 The GNOME application for record and play sound files.
@@ -60,7 +64,7 @@ The GNOME application for record and play sound files.
 
 %install
 %meson_install
-%find_lang --with-gnome --output=%name.lang %name
+%find_lang --with-gnome --output=%name.lang %xdg_name
 
 %files -f %name.lang
 %_bindir/%name
@@ -68,11 +72,14 @@ The GNOME application for record and play sound files.
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README*
 
 
 %changelog
+* Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Sep 21 2019 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt1
 - 3.34.0
 

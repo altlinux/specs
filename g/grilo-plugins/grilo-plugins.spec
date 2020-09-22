@@ -5,12 +5,12 @@
 %define gupnp_api_ver 1.2
 
 %def_enable lua_factory
-%def_enable tracker
-%def_disable tracker3
+%def_disable tracker
+%def_enable tracker3
 
 Name: grilo-plugins
 Version: %ver_major.12
-Release: alt1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -45,7 +45,7 @@ BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0) >= %tracker_ver}
-%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver}
+%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver tracker3-tests}
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
@@ -141,6 +141,9 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt2
+- rebuilt with tracker3 support for gnome-3.38
+
 * Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - 0.3.12
 

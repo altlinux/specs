@@ -1,15 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.37
 %define api_ver 3.0
 %define applet_api_ver 6.0
+%define xdg_name org.gnome.gnome-panel
 %def_disable static
 %def_enable gtk_doc
 %def_disable introspection
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -143,7 +144,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -161,13 +162,15 @@ GObject introspection devel data for the GNOME Panel shared library.
 %files -f %name.lang
 %_bindir/gnome-panel
 %dir %gnome_appletsdir
-%gnome_appletsdir/clock.so
-%gnome_appletsdir/fish.so
-%gnome_appletsdir/notification-area.so
-%gnome_appletsdir/status-notifier.so
-%gnome_appletsdir/wncklet.so
-%gnome_appletsdir/separator.so
-%gnome_appletsdir/menu.so
+%gnome_appletsdir/%xdg_name.action-button.so
+%gnome_appletsdir/%xdg_name.clock.so
+%gnome_appletsdir/%xdg_name.fish.so
+%gnome_appletsdir/%xdg_name.launcher.so
+%gnome_appletsdir/%xdg_name.menu.so
+%gnome_appletsdir/%xdg_name.notification-area.so
+%gnome_appletsdir/%xdg_name.separator.so
+%gnome_appletsdir/%xdg_name.status-notifier.so
+%gnome_appletsdir/%xdg_name.wncklet.so
 %dir %_datadir/%name
 %_datadir/%name/*
 %_desktopdir/%name.desktop
@@ -206,6 +209,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Mon Aug 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.37.1-alt1
+- 3.37.1-20-gfa2bd4fd5
+
 * Sat Jul 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

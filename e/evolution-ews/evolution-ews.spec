@@ -1,9 +1,9 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Group: Networking/Mail
@@ -16,11 +16,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define ver_base 3.28
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.36.5
-%define eds_ver 3.36.5
+%define evolution_ver 3.38.0
+%define eds_ver 3.38.0
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
+%define json_glib_ver 1.0.4
 
 Requires: evolution >= %evolution_ver
 Requires: evolution-data-server >= %eds_ver
@@ -35,6 +36,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsqlite3-devel libical-devel
+BuildRequires: pkgconfig(json-glib-1.0) >= %json_glib_ver
 
 %description
 This package allows Evolution to interact with Microsoft Exchange servers,
@@ -75,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Aug 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.5-alt1
 - 3.36.5
 

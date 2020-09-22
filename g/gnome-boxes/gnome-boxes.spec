@@ -3,13 +3,13 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Boxes
 %def_disable ovirt
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 %define glib_ver 2.50.0
 %define gtk_ver 3.22.20
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 2.0.0
+%define libvirt_glib_ver 3.0.0
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
 %define spice_gtk_ver 0.32
@@ -38,8 +38,18 @@ Source: %name-%version.tar
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
 %define libarchive_ver 3.0.0
+%define vte_ver 0.40.2
+%define webkit_ver 2.26
 
-Requires: gnome-keyring
+Requires: gnome-keyring dconf
+
+# Need libvirtd and an hypervisor to do anything useful
+Requires: libvirt-daemon
+Requires: qemu-kvm
+
+# Needed for unattended installations
+Requires: fuseiso
+Requires: mtools
 
 BuildRequires(pre): meson
 BuildRequires: yelp-tools libappstream-glib-devel
@@ -54,28 +64,19 @@ BuildRequires: libvirt-gobject-devel >= %libvirt_glib_ver
 BuildRequires: libvirt-gconfig-devel >= %libvirt_glib_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libusb-devel >= %libusb_ver
-BuildRequires: libspice-gtk3-devel >= %spice_gtk_ver
+BuildRequires: pkgconfig(spice-client-gtk-3.0) >= %spice_gtk_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: libosinfo-devel >= %osinfo_ver
-BuildRequires: tracker-devel >= %tracker_ver
+BuildRequires: pkgconfig(tracker-sparql-2.0) >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libfreerdp-devel
-BuildRequires: libvte3-devel
-
-# Need libvirtd and an hypervisor to do anything useful
-Requires: libvirt-daemon
-Requires: qemu-kvm
-
-# Needed for unattended installations
-Requires: fuseiso
-Requires: mtools
-
-# gnome-boxes uses a dark theme
-Requires: gnome-icon-theme
+BuildRequires: libvte3-devel >= %vte_ver
+BuildRequires: pkgconfig(gtksourceview-4)
+BuildRequires: pkgconfig(libhandy-0.0)
 
 %description
 gnome-boxes lets you easily create, setup, access, and use:
@@ -116,6 +117,7 @@ the functionality of the Boxes.
 %_datadir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
+%_datadir/osinfo/os/gnome.org/gnome-nightly.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
@@ -131,6 +133,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Aug 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.6-alt1
 - 3.36.6
 

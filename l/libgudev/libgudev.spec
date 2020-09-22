@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gudev
-%define ver_major 233
+%define ver_major 234
 %define api_ver 1.0
 
 %def_disable static
@@ -126,6 +126,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1:234-alt1
+- 234
+
 * Sat Aug 03 2019 Yuri N. Sedunov <aris@altlinux.org> 1:233-alt1
 - 233
 

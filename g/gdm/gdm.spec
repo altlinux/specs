@@ -1,10 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
+%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
 %define default_pam_config redhat
 # Initial virtual terminal to use
@@ -13,7 +14,6 @@
 %def_disable static
 %def_disable debug
 %def_enable ipv6
-%def_with xinerama
 %def_with xdmcp
 %def_with selinux
 %def_with libaudit
@@ -25,11 +25,11 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
-License: GPLv2+
+License: GPL-2.0
 URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 
@@ -53,7 +53,6 @@ Source15: gdm-fingerprint.pam
 
 Patch2: gdm-3.19.4-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
-Patch11: gdm-3.8.0-alt-lfs.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
@@ -76,17 +75,17 @@ Requires: %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
-Requires: gnome-session >= 3.33.92
+Requires: gnome-session >= %ver_major
 Requires: gnome-session-wayland
 Requires: /bin/dbus-run-session
 
-BuildRequires(pre): rpm-build-gnome rpm-build-gir rpm-macros-pam0
+BuildRequires(pre): meson rpm-build-gnome rpm-build-gir rpm-macros-pam0
 BuildRequires: gcc-c++ desktop-file-utils gnome-common yelp-tools
 BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libaccountsservice-devel >= %accountsservice_ver
-BuildRequires: dconf libsystemd-devel libpam-devel
+BuildRequires: dconf pkgconfig(systemd) libpam-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
@@ -171,48 +170,40 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
-%patch2 -p1 -b .Xsession
+# fix typo
+sed -i 's|XSession\.in|Xsession\.in|' data/meson.build
+
+%patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
-%patch11 -p1 -b .lfs
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
 %build
-[ ! -d m4 ] && mkdir m4
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	--disable-schemas-compile \
-	%{subst_enable ipv6} \
-	%{subst_enable debug} \
-	--with-sysconfsubdir=X11/gdm \
-	%{subst_with xinerama} \
-	%{subst_with xdmcp} \
-	--with-pam-prefix=%_sysconfdir \
-	--with-default-pam-config=%default_pam_config \
-	%{subst_with libaudit} \
-	%{subst_with plymouth} \
-	--with-default-path="/bin:/usr/bin:/usr/local/bin" \
-	--with-initial-vt=%vt_nr \
-	--with-dmconfdir=%_sysconfdir/X11/sessions \
-	--disable-dependency-tracking \
-	%{?_enable_wayland:--enable-wayland-support} \
-	%{?_enable_xsession:--enable-gdm-xsession} \
-	--with-pam-mod-dir=%_pam_modules_dir \
-	%{?_disable_user_display_server:--disable-user-display-server}
-
-%ifarch aarch64
-%make
-%else
-%make_build
-%endif
+%meson \
+	%{?_enable ipv6:-Dipv6=true} \
+	-Dinitial-vt='%vt_nr' \
+	-Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
+	-Dsysconfsubdir='X11/gdm' \
+	-Dpam-prefix='%_sysconfdir' \
+	-Dpam-mod-dir='%_pam_modules_dir' \
+	-Ddefault-pam-config='%default_pam_config' \
+	-Ddmconfdir='%_sysconfdir/X11/sessions' \
+	-Dudev-dir='%_udevrulesdir' \
+	%{?_without_xdmcp:-Dxdmcp=disabled} \
+	%{?_without_libaudit:-Dlibaudit=disabled} \
+	%{?_without plymouth:-Dplymouth=disabled} \
+	%{?_disable_wayland:-Dwayland-support=false} \
+	%{?_enable_xsession:-Dgdm-xsession=true} \
+	%{?_disable_user_display_server:-Duser-display-server=false}
+%nil
+%meson_build
 
 %install
 mkdir -p %buildroot%_sysconfdir/X11/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 
-%makeinstall_std
+%meson_install
 rm -f %buildroot%_sysconfdir/pam.d/gdm
 
 # env.d directories
@@ -220,9 +211,6 @@ mkdir -p %buildroot{%_sysconfdir/X11,%_datadir}/gdm/env.d
 
 # install external hook for update_wms
 install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
-
-find %buildroot -name '*.a' -delete
-find %buildroot -name '*.la' -delete
 
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
@@ -234,7 +222,8 @@ install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/def
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
 %check
-dbus-run-session %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+dbus-run-session %meson_test
 
 %pre
 %pre_control gdm_xdmcp
@@ -253,8 +242,9 @@ dbus-run-session %make check
 %_libexecdir/gdm-x-session
 %_libexecdir/gdm-disable-wayland
 %_pam_modules_dir/pam_gdm.so
-%doc AUTHORS NEWS README*
 %_unitdir/gdm.service
+%_userunitdir/gnome-session@gnome-login.target.d/session.conf
+%doc AUTHORS NEWS README*
 
 %files data -f %name.lang
 #%config %_sysconfdir/pam.d/gdm
@@ -279,12 +269,12 @@ dbus-run-session %make check
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/gnome-session/sessions/gnome-login.session
 %_datadir/dconf/profile/%name
-%dir %_localstatedir/log/gdm
-%attr(775, gdm, gdm) %dir %_localstatedir/cache/gdm
+#%dir %_localstatedir/log/gdm
+#%attr(775, gdm, gdm) %dir %_localstatedir/cache/gdm
 %attr(1770, gdm, gdm) %dir %_localstatedir/lib/gdm
-%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
-%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
-%attr(1777, root, gdm) %dir %_localstatedir/run/gdm
+#%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
+#%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
+#%attr(1777, root, gdm) %dir %_localstatedir/run/gdm
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config/pulse
 %attr(0600, gdm, gdm) %_localstatedir/lib/gdm/.config/pulse/default.pa
@@ -313,6 +303,9 @@ dbus-run-session %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0 (ported to Meson build system)
+
 * Tue Jul 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

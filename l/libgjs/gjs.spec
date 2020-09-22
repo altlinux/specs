@@ -1,17 +1,17 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.64
+%define ver_major 1.66
 %define _name gjs
 %define api_ver 1.0
-%define mozjs_ver_major 68
-%define mozjs_ver 68.4.2
+%define mozjs_ver_major 78
+%define mozjs_ver 78.0.1
 
 %def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -37,8 +37,9 @@ BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
-BuildRequires: valgrind
-%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui}
+BuildRequires: valgrind pkgconfig(sysprof-capture-4)
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
+BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0 typelib(Gtk) = 4.0}
 
 %description
 Gjs allows using GNOME libraries from Javascript. It's based on the
@@ -47,7 +48,7 @@ framework.
 
 %package devel
 Summary: Development package for %name
-Group: Development/C
+Group: Development/C++
 Requires: %name = %version-%release
 Requires: /proc
 
@@ -101,13 +102,16 @@ xvfb-run %meson_test
 %add_typelib_req_skiplist typelib(GIMarshallingTests) typelib(Regress) typelib(WarnLib)
 
 %files tests
-%_libexecdir/%_name/installed-tests/
+%_libexecdir/installed-tests/%_name
 %_datadir/installed-tests/%_name/
 %_datadir/glib-2.0/schemas/org.gnome.GjsTest.gschema.xml
 %endif
 
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 1.66.0-alt1
+- 1.66.0
+
 * Tue Jul 07 2020 Yuri N. Sedunov <aris@altlinux.org> 1.64.4-alt1
 - 1.64.4
 

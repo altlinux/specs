@@ -3,11 +3,11 @@
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -29,7 +29,7 @@ BuildRequires: vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgsound-devel libgnome-games-support-devel
+BuildRequires: libgsound-devel libgnome-games-support-devel >= 1.8.0
 
 %description
 GNOME Robots is a development of the original Gnome Robots game which
@@ -54,10 +54,14 @@ systems.
 %_datadir/%__name
 %_iconsdir/hicolor/*/*/*.*
 %_man6dir/%__name.*
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Mar 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
 - 3.36.1
 

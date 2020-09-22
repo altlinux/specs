@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.70
+%define ver_major 2.72
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -233,6 +233,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 2.72.0-alt1
+- 2.72.0
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.70.0-alt1
 - 2.70.0
 

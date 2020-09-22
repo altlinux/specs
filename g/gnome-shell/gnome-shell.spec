@@ -3,15 +3,15 @@
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define xdg_name org.gnome.Shell
-%define ver_major 3.36
+%define ver_major 3.38
 %define gst_api_ver 1.0
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -34,7 +34,7 @@ AutoReqProv: nopython
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.56.0
+%define gjs_ver 1.65.0
 %define mutter_ver %version
 %define gtk_ver 3.16.0
 %define gio_ver 2.56.0
@@ -75,13 +75,15 @@ Requires: polari
 Requires: ibus ibus-gtk3
 # for zipped extensions
 Requires: unzip
+# synce 3.38 
+Requires: malcontent
+Requires: pipewire
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(AccountsService)
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
 Requires: typelib(Clutter)
-Requires: typelib(Cogl)
 Requires: typelib(Gcr)
 Requires: typelib(GDesktopEnums)
 Requires: typelib(Gdk)
@@ -94,10 +96,12 @@ Requires: typelib(GnomeBluetooth)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
+Requires: typelib(Gst)
 Requires: typelib(Gtk)
 Requires: typelib(Gvc)
 Requires: typelib(GWeather)
 Requires: typelib(IBus)
+Requires: typelib(Malcontent)
 Requires: typelib(Meta)
 Requires: typelib(NM)
 Requires: typelib(NMA)
@@ -106,6 +110,7 @@ Requires: typelib(Polkit)
 Requires: typelib(PolkitAgent)
 Requires: typelib(Rsvg)
 Requires: typelib(Shell)
+Requires: typelib(Shew)
 Requires: typelib(Soup)
 Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
@@ -137,7 +142,7 @@ BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth
 BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
-BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel
+BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel pkgconfig(libpipewire-0.3)
 BuildRequires: libXfixes-devel
 BuildRequires: mutter >= %mutter_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
@@ -186,7 +191,7 @@ GNOME Shell.
 %setup
 %patch3 -b .shells
 # set full path to gsettings
-sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.service
+sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
 
 # fix rpath
 #subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
@@ -248,15 +253,16 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %_datadir/dbus-1/services/%xdg_name.Notifications.service
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
+%_datadir/dbus-1/services/%xdg_name.Screencast.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
-%_userunitdir/%name-x11.target
-%_userunitdir/%name-wayland.target
-%_userunitdir/%name-x11.service
-%_userunitdir/%name-wayland.service
-%_userunitdir/%name-disable-extensions.service
+%_userunitdir/%xdg_name-disable-extensions.service
+%_userunitdir/%xdg_name.target
+%_userunitdir/%{xdg_name}@wayland.service
+%_userunitdir/%{xdg_name}@x11.service
+
 %_man1dir/*
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/org.gnome.Extensions.metainfo.xml
@@ -269,6 +275,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/gnome-shell-disable-extensions.serv
 %endif
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Sep 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.6-alt1
 - 3.36.6
 

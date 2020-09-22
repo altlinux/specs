@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %def_enable python
 # removed since 3.36
 %def_disable zeitgeist
@@ -8,7 +8,7 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define gtksourceview_ver 4.0.2
-%define gedit_ver 3.36.0
-%define peas_ver 1.14
+%define gedit_ver 3.38.0
+%define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
 
@@ -91,6 +91,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Mar 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

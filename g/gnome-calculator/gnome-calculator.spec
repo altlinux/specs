@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 2
 # GTK interface library
 %define gci_api_ver 1
@@ -195,6 +195,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Mar 08 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 - new libgci subpackages

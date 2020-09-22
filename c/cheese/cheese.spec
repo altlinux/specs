@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.34
+%define ver_major 3.38
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -14,7 +14,7 @@
 
 Name: cheese
 Version: %ver_major.0
-Release: alt2.1
+Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -46,7 +46,7 @@ Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-build-gir
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
@@ -170,6 +170,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Mar 24 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2.1
 - fixed typo in meson options
 

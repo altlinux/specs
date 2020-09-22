@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_with mkpdf
 %def_enable check
 
 Name: gtk-doc
-Version: 1.32
-Release: alt1
+Version: 1.32.1
+Release: alt0.1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -30,6 +30,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.
 %else
 Source: %name-%version.tar
 %endif
+#https://gitlab.gnome.org/GNOME/gtk-doc/-/merge_requests/58
+Patch: gtk-doc-1.31-up-mr58.patch
 
 BuildArch: noarch
 
@@ -77,12 +79,12 @@ used by GTK+, GLib and GNOME.
 
 %prep
 %setup
+%patch -p1
 # make cmake files arch-independent
 subst 's/libdir/datadir/' buildsystems/cmake/Makefile.am
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
-
 
 %build
 %autoreconf
@@ -147,6 +149,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu Aug 27 2020 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt0.1
+- updated to GTK_DOC_1_32-52-gb209222
+
 * Thu Aug 15 2019 Yuri N. Sedunov <aris@altlinux.org> 1.32-alt1
 - 1.32
 

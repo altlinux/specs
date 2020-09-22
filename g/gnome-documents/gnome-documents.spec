@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define xdg_name org.gnome.Documents
 %define ver_major 3.34
@@ -7,7 +7,7 @@
 
 Name: gnome-documents
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -24,7 +24,8 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.20.0
 %define evince_ver 3.13.3
-%define tracker_ver 1.99
+%define tracker_ver 2.0
+%define tracker_api_ver 2.0
 %define goa_ver 3.2.0
 %define gdata_ver 0.17.2
 %define soup_ver 2.41.3
@@ -51,8 +52,8 @@ Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(LOKDocView)
 Requires: typelib(Pango)
-Requires: typelib(Tracker) = 2.0
-Requires: typelib(TrackerControl)
+Requires: typelib(Tracker) = %tracker_api_ver
+Requires: typelib(TrackerControl) = %tracker_api_ver
 Requires: typelib(WebKit2)
 Requires: typelib(Zpj)
 
@@ -128,7 +129,6 @@ GObject introspection devel data for the %name library.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
 
 %files
@@ -158,6 +158,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
+- updated to 3.34.0-19-g4ad13cf1
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - rebuilt against libgnome-desktop-so.19
 

@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Screenshot
 
 Name: gnome-screenshot
@@ -19,6 +19,7 @@ BuildRequires(pre): meson rpm-build-gnome
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel
+BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: libappstream-glib-devel
 
 %description
@@ -39,7 +40,6 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -47,6 +47,9 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %doc NEWS README*
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Tue Mar 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

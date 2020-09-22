@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.34
+%define ver_major 2.38
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-atk
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.32
-%define core_ver 2.34.0
+%define core_ver 2.38.0
 %define atk_ver 2.34.0
 
 Requires: at-spi2-core >= %core_ver
@@ -84,6 +84,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
 - 2.34.2
 

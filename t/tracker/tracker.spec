@@ -13,6 +13,7 @@
 %def_enable stemmer
 %def_disable docs
 %def_enable functional_tests
+%def_disable autostart
 
 # Unicode support library? (unistring|icu)
 %define unicode_support icu
@@ -20,7 +21,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -181,7 +182,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README*
 %doc src/libtracker-common/COPYING.LIB
-%config(noreplace) %_sysconfdir/xdg/autostart/*
+%{?_enable_autostart:%config(noreplace) %_sysconfdir/xdg/autostart/*}
 %_datadir/glib-2.0/schemas/*
 %dir %_libdir/%name-%api_ver
 %_libexecdir/tracker-store
@@ -242,6 +243,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/tracker*/meson.b
 %endif
 
 %changelog
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.6-alt1
+- 2.3.6
+
 * Tue Aug 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
 - 2.3.5
 

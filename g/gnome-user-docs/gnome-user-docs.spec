@@ -1,7 +1,7 @@
-%define ver_major 3.36
+%define ver_major 3.38
 
 Name: gnome-user-docs
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -12,16 +12,17 @@ Url: ftp://ftp.gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
+AutoReqProv: no
 
 Obsoletes: gnome-users-guide
 Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-%define yelp_ver 3.18.0
+%define yelp_ver 3.38.0
 
 BuildRequires: rpm-build-gnome rpm-build-licenses
-BuildRequires: intltool yelp-tools >= %yelp_ver itstool xml-utils xsltproc xmllint
+BuildRequires: yelp-tools >= %yelp_ver
 
 %description
 This package contains general GNOME user documentation which is not
@@ -35,14 +36,16 @@ directly associated with any particular GNOME application or package.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-
+%makeinstall_std
 %find_lang --with-gnome --output=%name.lang gnome-help system-admin-guide
 
 %files -f %name.lang
 %doc README NEWS
 
 %changelog
+* Sun Sep 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Sep 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.6-alt1
 - 3.36.6
 

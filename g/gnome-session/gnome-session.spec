@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
@@ -11,7 +11,7 @@
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -142,6 +142,11 @@ export PATH=$PATH:/sbin
 %_man1dir/%name.*}
 %doc AUTHORS NEWS README
 
+%dir %_userunitdir/gnome-launched-.scope.d
+%_userunitdir/gnome-launched-.scope.d/override.conf
+%_userunitdir/gnome-session-x11-services-ready.target
+%dir %_userunitdir/gnome-session@gnome.target.d
+%_userunitdir/gnome-session@gnome.target.d/gnome.session.conf
 %_userunitdir/%name-failed.service
 %_userunitdir/%name-failed.target
 %_userunitdir/%name-initialized.target
@@ -174,6 +179,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Mon Jul 13 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1.1
 - spec: improved build knobs
 

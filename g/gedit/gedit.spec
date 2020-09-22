@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -11,7 +11,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -40,7 +40,7 @@ AutoReqProv: nopython
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
-%define tepl_ver 4.4
+%define tepl_ver 5.0
 %define gtksourceview_ver 4.0.3
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
@@ -59,7 +59,7 @@ BuildRequires: gtk-doc >= 1.0
 BuildRequires: iso-codes-devel >= 0.35
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libtepl-devel >= %tepl_ver
+BuildRequires: pkgconfig(tepl-5) >= %tepl_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
 BuildRequires: libgspell-devel >= %gspell_ver
@@ -181,8 +181,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %pkglibdir/lib%{name}*.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
-%{?_enable_plugins:%python3_sitelibdir/gi/overrides/Gedit.py*}
-%{?_enable_plugins:%python3_sitelibdir/gi/overrides/__pycache__/}
+%{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/Gedit.py*}
+%{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/__pycache__/}
 
 %files data -f %name.lang
 %pkgdatadir/
@@ -193,7 +193,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc README* AUTHORS NEWS
+%doc README* NEWS
 
 %exclude %pkgdatadir/gir-1.0/
 
@@ -216,6 +216,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Apr 26 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 

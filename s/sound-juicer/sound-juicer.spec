@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.24
+%define ver_major 3.38
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.SoundJuicer
 
@@ -10,7 +10,7 @@ Release: alt1
 
 Summary: Clean and lean CD ripper
 Group: Sound
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/SoundJuicer
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
@@ -18,16 +18,22 @@ Requires: iso-codes
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: gcc-c++ gnome-common
+%define glib_ver 2.50
+%define gtk_ver 3.22
+%define musicbrainz_ver 5.1.0
+%define diskid_ver 0.4.0
+
+BuildRequires(pre): meson
+BuildRequires: gcc-c++
 BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
-BuildRequires: libgio-devel >= 2.32
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libbrasero-devel >= 3.0.0
-BuildRequires: libgtk+3-devel >= 3.22.0
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
-BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
-BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
-BuildRequires: libmusicbrainz5-devel >= 5.1.0 libdiscid-devel >= 0.4.0 iso-codes-devel
+BuildRequires: gst-plugins%gst_api_ver-devel %_bindir/gst-inspect-%gst_api_ver
+BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
+BuildRequires: libmusicbrainz5-devel >= %musicbrainz_ver libdiscid-devel >= %diskid_ver iso-codes-devel
 
 %description
 GStreamer-based CD ripping tool. Saves audio CDs to audio formats,
@@ -37,12 +43,11 @@ supported by GStreamer.
 %setup
 
 %build
-%configure \
-	--disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -60,10 +65,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_man1dir/%name.1.*
-%_datadir/appdata/%xdg_name.appdata.xml
-%doc AUTHORS README NEWS
+%_datadir/metainfo/%xdg_name.metainfo.xml
+%doc AUTHORS README* NEWS
+
+%exclude %_prefix/doc/%name/
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0 (ported to Mesin build system)
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

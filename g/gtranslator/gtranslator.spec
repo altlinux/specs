@@ -1,8 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
+
+%def_disable gtk_doc
 
 Name: gtranslator
 Version: %ver_major.0
@@ -64,7 +66,7 @@ This package contains documentation needed to develop %name plugins.
 %setup
 
 %build
-%meson -Dgtk_doc=true
+%meson %{?_enable_gtk_doc:-Dgtk_doc=true}
 %meson_build
 
 %install
@@ -84,9 +86,12 @@ This package contains documentation needed to develop %name plugins.
 
 %files devel
 %_includedir/gtr-marshal.h
-%_datadir/gtk-doc/html/%name/
+%{?_enable_gtk_doc:%_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Mar 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 

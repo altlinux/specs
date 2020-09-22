@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.36
-%define api_ver 3
+%define ver_major 3.38
+%define api_ver 4
 %define xdg_name org.gnome.Sysprof%api_ver
 %define _libexecdir %_prefix/libexec
 
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.62.0
+%define glib_ver 2.56.0
 %define gtk_ver 3.22.0
 %define systemd_ver 222
 %define dazzle_ver 3.30.0
@@ -70,22 +70,23 @@ developing applications that use GtkGHex library.
 %files -f %name.lang
 %_bindir/%name-cli
 %_bindir/%name
-%_datadir/applications/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.sysprof%{api_ver}.gschema.xml
+%_datadir/applications/org.gnome.Sysprof3.desktop
+%_datadir/glib-2.0/schemas/org.gnome.sysprof3.gschema.xml
 %_iconsdir/hicolor/*/*/*
 %_libdir/lib%name-%api_ver.so
 %_libdir/lib%name-ui-%api_ver.so
 %_libdir/lib%name-memory-%api_ver.so
+%_libdir/lib%name-speedtrack-%api_ver.so
 
 %if_with sysprofd
 %_libexecdir/sysprofd
-%_unitdir/sysprof%{api_ver}.service
 %_unitdir/sysprof2.service
-%_datadir/dbus-1/system-services/%xdg_name.service
+%_unitdir/sysprof3.service
 %_datadir/dbus-1/system-services/org.gnome.Sysprof2.service
-%_datadir/dbus-1/system.d/%xdg_name.conf
+%_datadir/dbus-1/system-services/org.gnome.Sysprof3.service
 %_datadir/dbus-1/system.d/org.gnome.Sysprof2.conf
-%_datadir/polkit-1/actions/org.gnome.sysprof%{api_ver}.policy
+%_datadir/dbus-1/system.d/org.gnome.Sysprof3.conf
+%_datadir/polkit-1/actions/org.gnome.sysprof3.policy
 
 %_datadir/dbus-1/interfaces/org.gnome.Sysprof2.xml
 %_datadir/dbus-1/interfaces/org.gnome.Sysprof3.Profiler.xml
@@ -93,7 +94,7 @@ developing applications that use GtkGHex library.
 %endif
 
 %_datadir/mime/packages/%name-mime.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/org.gnome.Sysprof3.appdata.xml
 %doc AUTHORS NEWS README*
 
 %files devel
@@ -104,6 +105,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sat Mar 07 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0-2-g6f167d7
 

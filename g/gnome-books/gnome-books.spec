@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 3.34
@@ -5,14 +6,18 @@
 
 Name: gnome-books
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: An e-book manager application for GNOME
 License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Books
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -22,7 +27,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define soup_ver 2.41.3
 %define webkit_ver 2.6.0
 %define evince_ver 3.13.3
-%define tracker_ver 0.17.3
+%define tracker_api_ver 2.0
+%define tracker_ver 2.0
 
 Conflicts: gnome-documents < 3.31
 Requires: libgjs >= %gjs_ver
@@ -42,8 +48,8 @@ Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(Pango)
-Requires: typelib(Tracker)
-Requires: typelib(TrackerControl)
+Requires: typelib(Tracker) = %tracker_api_ver
+Requires: typelib(TrackerControl) = %tracker_api_ver
 Requires: typelib(WebKit2)
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-gir
@@ -93,6 +99,9 @@ A simple application to access, organize and read your e-books on GNOME.
 
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
+- updated to 3.34.0-33-g50e83629
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt2
 - rebuilt against libgnome-desktop-so.19
 

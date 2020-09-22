@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 3.38
 %define xdg_name org.gnome.Totem
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
@@ -10,7 +10,8 @@
 %define gst_ver 1.4.2
 %define gst_plugins_ver 1.2.4
 %define gtk_ver 3.16.0
-%define grilo_ver 0.2.12
+%define grilo_ver 0.3.13
+%define grilo_plugins_ver 0.3.12
 %define glib_ver 2.36.0
 %define clutter_ver 1.17.3
 %define clutter_gtk_ver 1.5.5
@@ -31,7 +32,6 @@
 %def_enable gtk_doc
 # in 3.31.91 nautilus properties page moved to nautilus module
 %def_disable nautilus
-%def_disable tracker
 %def_enable python
 %def_disable coherence_upnp
 %def_disable jamendo
@@ -41,8 +41,8 @@
 
 
 Name: totem
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -73,7 +73,7 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 Requires: iso-codes
-Requires: grilo-plugins
+Requires: grilo-plugins >= %grilo_plugins_ver
 
 # use python3
 AutoReqProv: nopython
@@ -109,7 +109,6 @@ BuildRequires: python3-devel python3-module-pygobject3-devel pylint-py3
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
 BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
-%{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
@@ -194,15 +193,6 @@ Requires: zeitgeist
 
 %description plugins-zeitgeist
 A plugin sending events to Zeitgeist
-
-%package plugins-tracker
-Summary: Tracker-based video search plugin for Totem
-Group: Video
-Requires: %name = %version-%release
-
-%description plugins-tracker
-A plugin to allow searching local videos, based on their tags, metadata,
-or filenames, as indexing by the Tracker indexer.
 
 %package plugins-jamendo
 Summary: Plugin for jamendo.com music collection
@@ -365,11 +355,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_libdir/%name/plugins/zeitgeist-dp/
 %endif
 
-%if_enabled tracker
-%files plugins-tracker
-%_libdir/%name/plugins/tracker/
-%endif
-
 %if_enabled jamendo
 %files plugins-jamendo
 %_libdir/%name/plugins/jamendo/
@@ -402,6 +387,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt3
 - rebuilt against libgnome-desktop-so.19
 

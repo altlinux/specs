@@ -1,14 +1,14 @@
 %set_verify_elf_method unresolved=relaxed
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _name tracker-miners
-%define ver_major 2.99
+%define ver_major 3.0
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
 %define xdg_name org.freedesktop.Tracker%api_ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -44,6 +44,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %def_enable icon
 %def_enable libosinfo
 %def_enable playlist
+%def_enable network_manager
 %def_enable docs
 %def_enable man
 
@@ -93,6 +94,7 @@ BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
 %{?_enable_libcue:BuildRequires: libcue-devel}
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
+%{?_enable_network_manager:BuildRequires: libnm-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 
 %description
@@ -152,6 +154,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %_libexecdir/tracker-extract-%api_ver_major
 %_libexecdir/tracker-miner-fs-%api_ver_major
 %_libexecdir/tracker-writeback-%api_ver_major
+%_libexecdir/tracker-miner-fs-control-%api_ver_major
 %_libexecdir/tracker%api_ver_major/
 %{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
 %{?_enable_man:
@@ -164,15 +167,26 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %_prefix/lib/systemd/user/tracker-miner-rss*.service
 %_prefix/lib/systemd/user/tracker-writeback*.service
 %{?_enable_man:
-#%_man1dir/tracker-extract.*
-#%_man1dir/tracker-writeback.*
+%_man1dir/tracker-miner-fs-*.*
+%_man1dir/tracker-miner-rss-*.*
+%_man1dir/tracker-writeback-*.*
+%_man1dir/tracker%api_ver_major-daemon.1.*
+%_man1dir/tracker%api_ver_major-extract.1.*
+%_man1dir/tracker%api_ver_major-index.1.*
+%_man1dir/tracker%api_ver_major-info.1.*
+%_man1dir/tracker%api_ver_major-reset.1.*
+%_man1dir/tracker%api_ver_major-search.1.*
+%_man1dir/tracker%api_ver_major-status.1.*
+%_man1dir/tracker%api_ver_major-tag.1.*
 }
 
 %_datadir/dbus-1/services/%xdg_name.Miner.Extract.service
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.service
 %_datadir/dbus-1/services/%xdg_name.Miner.RSS.service
 %_datadir/dbus-1/services/%xdg_name.Writeback.service
+%_datadir/dbus-1/services/%xdg_name.Miner.Files.Control.service
 %_datadir/dbus-1/interfaces/%xdg_name.Miner.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Miner.Files.Index.xml
 
 %_datadir/glib-2.0/schemas/%xdg_name.Extract.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.Miner.Files.gschema.xml
@@ -182,6 +196,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.5-alt1
+- 2.99.5
+
 * Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.99.2-alt1
 - 2.99.2
 

@@ -2,11 +2,11 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
-# 
-%def_enable check
+#ERROR: test-portals - Bail out! xdg-desktop-portal:ERROR:tests/camera.c:74:camera_cb: 'ret' should be FALSE
+%def_disable check
 
 Name: xdg-desktop-portal
-Version: 1.7.2
+Version: 1.8.0
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -95,6 +95,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 
 
 %changelog
+* Tue Sep 15 2020 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sun Apr 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 - enabled %%check

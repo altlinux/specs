@@ -1,16 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
-License: LGPLv3+
+License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Bijiben
 
@@ -20,22 +20,24 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.28
-%define gtk_ver 3.11.4
-%define tracker_ver 0.18
+%define glib_ver 2.54
+%define gtk_ver 3.20
+%define tracker_api_ver 3.0
+%define tracker_ver 2.99
 %define eds_ver 3.34.0
+%define webkit_ver 2.26
 
-Requires: dconf tracker >= %tracker_ver
+Requires: dconf tracker-miners3 >= %tracker_ver
 
 BuildRequires(pre): meson rpm-build-xdg
 BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: tracker-devel >= %tracker_ver
-BuildRequires: libxml2-devel libwebkit2gtk-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
+BuildRequires: libxml2-devel libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
-BuildRequires: libhandy-devel
+BuildRequires: pkgconfig(libhandy-0.0)
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
@@ -69,11 +71,13 @@ desktop integration.
 %_datadir/dbus-1/services/%xdg_name.SearchProvider.service
 %_xdgmimedir/packages/%xdg_name.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* AUTHORS NEWS
 
 %changelog
+* Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

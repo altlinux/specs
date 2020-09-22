@@ -21,12 +21,13 @@
 %def_enable cloudproviders
 %def_enable tracker3
 %def_enable vulkan
+%def_enable tests
 # File box-packing.ltr.nodes does not exist
 %def_disable install_tests
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -41,7 +42,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.59.0
+%define glib_ver 2.65.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
 %define pango_ver 1.45.0
@@ -57,6 +58,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define epoxy_ver 1.4
 %define graphene_ver 1.9.1
 %define cloudproviders_ver 0.2.5
+%define rsvg_ver 2.46.0
 
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
@@ -78,8 +80,9 @@ BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: libgraphene-devel >= %graphene_ver
 BuildRequires: iso-codes-devel
-BuildRequires: libfribidi-devel at-spi2-atk-devel
+BuildRequires: libfribidi-devel
 BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
+
 %if_enabled x11
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
@@ -95,6 +98,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
+%{?_enable_tests:BuildRequires: librsvg-devel >= %rsvg_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
 # since 3.94.0 for media backend
 BuildRequires: pkgconfig(gstreamer-player-1.0)
@@ -197,12 +201,13 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_x11:-Dx11-backend=true} \
     %{?_enable_wayland:-Dwayland-backend=true} \
     %{?_enable_broadway:-Dbroadway-backend=true} \
-    %{?_enable_cloudproviders:-Dcloudproviders=true} \
+    %{?_enable_cloudproviders:-Dcloudproviders=enabled} \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman-pages=true} \
-    %{?_enable_colord:-Dcolord=yes} \
+    %{?_enable_colord:-Dcolord=enabled} \
+    %{?_disable_tests:-Dbuild-tests=false} \
     %{?_enable_install_tests:-Dinstall-tests=true} \
-    %{?_enable_vulkan:-Dvulkan=yes}
+    %{?_disable_vulkan:-Dvulkan=disabled}
 #    %{?_enable_cloudprint:-Dcloudprint-print-backend=yes} \
 %meson_build
 
@@ -293,12 +298,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
 %_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
-%_iconsdir/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor*.svg
+#%_iconsdir/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.PrintEditor4*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.WidgetFactory4.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.Demo4-symbolic.svg
-%_iconsdir/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg
+#%_iconsdir/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
@@ -345,6 +350,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Sep 03 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.1-alt1
+- 3.99.1
+
 * Fri Jul 31 2020 Yuri N. Sedunov <aris@altlinux.org> 3.99.0-alt1
 - 3.99.0
 

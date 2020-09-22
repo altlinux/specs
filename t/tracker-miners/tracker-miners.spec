@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -43,6 +43,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %def_enable libosinfo
 %def_enable playlist
 %def_enable docs
+%def_disable autostart
 
 %define libxml2_ver 2.6
 %define poppler_ver 0.16.0
@@ -131,7 +132,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 	%{?_enable_icon:-Dicon=true} \
 	%{?_enable_libosinfo:-Diso=enabled} \
 	%{?_enable_playlist:-Dplaylist=enabled} \
-	%{?_enable_docs:-Ddocs=true}
+	%{?_enable_docs:-Ddocs=true} \
+	%{?_enable_autostart:-Dautostart=true}
+%nil
 %meson_build
 
 %install
@@ -139,9 +142,11 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 %find_lang %name
 
 %files -f %name.lang
+%if_enabled autostart
 %_xdgconfigdir/autostart/tracker-extract.desktop
 %_xdgconfigdir/autostart/tracker-miner-fs.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss.desktop
+%endif
 %_libdir/%name-%ver_api/
 %_libexecdir/tracker-extract
 %_libexecdir/tracker-miner-fs
@@ -169,6 +174,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 
 %changelog
+* Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
+- 2.3.5
+
 * Tue Aug 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
 - 2.3.4
 

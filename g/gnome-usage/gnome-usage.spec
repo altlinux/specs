@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
-%define ver_major 3.32
+%define ver_major 3.38
 
 Name: gnome-usage
 Version: %ver_major.0
@@ -23,15 +23,18 @@ Source: %name-%version.tar
 %define dazzle_ver 3.30.0
 %define gtop_ver 2.34.0
 %define accountsservice_ver 0.6.40
+%define handy_ver 1.0.0
 
 Requires: accountsservice >= %accountsservice_ver
 
 BuildRequires(pre): meson rpm-build-gnome
 BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdazzle-devel >= %dazzle_ver
 BuildRequires: libgtop-devel >= %gtop_ver
+BuildRequires: pkgconfig(tracker-sparql-3.0)
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
 %description
 Gnome Usage is a graphical tool to view system resources, like memory and
@@ -58,6 +61,9 @@ disk space.
 %doc README* NEWS
 
 %changelog
+* Sat Sep 12 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Wed Mar 20 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

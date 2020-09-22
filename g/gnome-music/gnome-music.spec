@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 
 Name: gnome-music
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -24,17 +24,18 @@ AutoReqProv: nopython
 %define __python %nil
 %add_typelib_req_skiplist typelib(Gd) typelib(Gfm)
 
-%define tracker_ver 2.0
-%define gtk_ver 3.20.0
-%define grilo_ver 0.3.6
+%define tracker_ver 3.0
+%define gtk_ver 3.24.7
+%define grilo_ver 0.3.13
 %define python_ver 3.3
 %define mediaart_ver 1.9
-%define pygobject_ver 3.29.1
+%define pygobject_ver 3.36.1
 %define pycairo_ver 1.14.0
 %define goa_ver 3.35.90
 
-Requires: tracker >= %tracker_ver
-Requires: grilo-plugins
+Requires: tracker-miners3 >= %tracker_ver typelib(Tracker) = 3.0
+Requires: grilo-tools >= %grilo_ver grilo-plugins
+Requires: gst-plugins-base%gst_api_ver
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
@@ -44,8 +45,6 @@ Requires: typelib(Dazzle)
 
 %add_python3_req_skip gi.repository.Dazzle gi.repository.Gd
 
-Requires: gst-plugins-base%gst_api_ver grilo-tools >= %grilo_ver tracker >= %tracker_ver
-
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
 BuildRequires: %_bindir/git
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
@@ -54,7 +53,7 @@ BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
 BuildRequires: libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: python3-devel >= %python_ver
-BuildRequires: pkgconfig(tracker-sparql-2.0)
+BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 
@@ -85,6 +84,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Sep 14 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Sun Sep 06 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.5-alt1
 - 3.36.5
 
