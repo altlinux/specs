@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 20.07.0
+Version: 20.09.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -41,7 +41,7 @@ wxMaxima provides 2d formated display of maxima output.
 %prep
 %setup
 bzcat %SOURCE5 >locales/wxMaxima/ru.po
-%patch -p1
+#patch -p1
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -name '*.cpp' -o -name '*.h' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
@@ -52,11 +52,11 @@ find -type f -name '*.cpp' -o -name '*.h' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%cmake_insource -GNinja
-%ninja_build
+%cmake -GNinja
+%ninja_build -C BUILD
 
 %install
-%ninja_install
+%ninja_install -C BUILD
 # icons
 install -pD -m644 data/wxmaxima-16.xpm %buildroot%_miconsdir/%name.xpm
 install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
@@ -82,6 +82,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_pixmapsdir/*%name.png
 
 %changelog
+* Sun Sep 13 2020 Andrey Cherepanov <cas@altlinux.org> 20.09.0-alt1
+- New version.
+
 * Tue Jul 28 2020 Andrey Cherepanov <cas@altlinux.org> 20.07.0-alt1
 - New version.
 - Complete Russian translations (thanks Olesya Gerasimenko).
