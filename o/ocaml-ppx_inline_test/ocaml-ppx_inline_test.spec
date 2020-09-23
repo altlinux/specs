@@ -2,7 +2,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-%ocamlmod
 Version: 0.14.1
-Release: alt1
+Release: alt2
 Summary: Syntax extension for writing in-line tests in ocaml code
 Group: Development/ML
 License: MIT
@@ -34,7 +34,7 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build @install
+%dune_build --release @install
 
 %install
 %dune_install
@@ -50,6 +50,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt2
+- build as release
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 - cleanup spec
