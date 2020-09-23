@@ -6,8 +6,8 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.0.10
-Release: alt1.1
+Version: 1.0.11
+Release: alt1
 Epoch:1
 
 Summary: Tool to build flatpaks from source
@@ -78,6 +78,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Sun Jul 05 2020 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.11-alt1
+- 1.0.11
+
 * Sat Apr 11 2020 Yuri N. Sedunov <aris@altlinux.org> 1:1.0.10-alt1.1
 - improved "docs" knob
 
