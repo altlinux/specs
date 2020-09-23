@@ -1,12 +1,12 @@
 %define policy_name alt
-%define date 20190808
+%define date 20200904
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-alt
-Version: 0.0.50
-Release: alt4
+Version: 0.0.51
+Release: alt1
 License: Distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -117,7 +117,7 @@ for i in $modules; do
 done
 
 # Always install new policy
-semodule -n -s %policy_name -b %policy_data/base.pp
+semodule -n -s %policy_name -i %policy_data/base.pp
 
 # Always install all modules
 echo -e "\tActivate modules for '%policy_name' policy:"
@@ -183,6 +183,7 @@ fi
 exit 0 # End of %%preun section
 
 %files
+%doc usr/share/doc/selinux-policy-alt/commit-id
 %config(noreplace) %_sysconfdir/selinux/config
 %dir %policy_conf
 %dir %policy_conf/contexts
@@ -229,6 +230,8 @@ exit 0 # End of %%preun section
 %_unitdir/selinux-autorelabel-mark.service
 %_unitdir/selinux-autorelabel.service
 %_unitdir/sysinit.target.wants/selinux-autorelabel.service
+%dir %_unitdir/systemd-modules-load.service.d
+%_unitdir/systemd-modules-load.service.d/*.conf
 
 # Files that are auto created at installation step.
 # Let's take care of them.
@@ -266,6 +269,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/allow_smb.pp
 
 %changelog
+* Fri Sep 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.51-alt1
+- Update policy for current Sisyphus
+
 * Thu Apr 16 2020 Anton Farygin <rider@altlinux.ru> 0.0.50-alt4
 - FTBFS: change License tag to Distributable
 
