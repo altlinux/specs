@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 20.08.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Archiving/Compression
@@ -24,7 +24,7 @@ Patch1: alt-clizip-priority.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: bzlib-devel libarchive-devel liblzma-devel zlib-devel
-#BuildRequires: libzip-devel # wrong filenames decodings
+BuildRequires: libzip-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -103,6 +103,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt2
+- build with libzip
+
 * Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 
