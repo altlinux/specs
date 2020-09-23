@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.14
+Version: 0.9.15
 Release: alt1
 
 Summary: Permanently install Live system
@@ -63,6 +63,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Sat Sep 19 2020 Michael Shigorin <mike@altlinux.org> 0.9.15-alt1
+- fix e2k kernel detection/installation
+
 * Wed Mar 18 2020 Anton Midyukov <antohami@altlinux.org> 0.9.14-alt1
 - Restore all kernels
 
