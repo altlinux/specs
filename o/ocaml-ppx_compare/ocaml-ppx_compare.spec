@@ -1,22 +1,16 @@
 %set_verify_elf_method textrel=relaxed
 %define  modulename ppx_compare
+%def_without check
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
-
+Release: alt2
 Summary: Generation of comparison functions from types
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_compare
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-base-devel ocaml-ppxlib-devel ocaml-result-devel
-BuildRequires: ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
-
+BuildRequires: dune ocaml-base-devel ocaml-ppxlib-devel
+BuildPreReq: rpm-build-ocaml >= 1.4
 Source:  %modulename-%version.tar
 
 %description
@@ -35,48 +29,22 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
-%dir %_libdir/ocaml/%modulename/expander
-%_libdir/ocaml/%{modulename}/expander/*.cma
-%_libdir/ocaml/%{modulename}/expander/*.cmi
-%_libdir/ocaml/%{modulename}/expander/*.cmxs
-%dir %_libdir/ocaml/%modulename/runtime-lib
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cma
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmi
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}/expander/*.a
-%_libdir/ocaml/%{modulename}/expander/*.cmt*
-%_libdir/ocaml/%{modulename}/expander/*.cmxa
-%_libdir/ocaml/%{modulename}/expander/*.cmx
-%_libdir/ocaml/%{modulename}/expander/*.mli
-%_libdir/ocaml/%{modulename}/expander/*.ml
-%_libdir/ocaml/%{modulename}/runtime-lib/*.a
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmt*
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmxa
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmx
-%_libdir/ocaml/%{modulename}/runtime-lib/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- migrated to rpm-build-ocaml 1.4
+
 * Wed Jul 29 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
