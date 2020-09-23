@@ -2,15 +2,15 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.34
+%define ver_major 3.38
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.4
+%define tracker_api_ver 2.0
 
-# dogtail with python3 required
 %def_disable check
 
 Name: gnome-photos
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -24,12 +24,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.44
+%define glib_ver 2.58
 %define gtk_ver 3.22.16
 %define tracker_ver 1.99.1
 %define gdata_ver 0.15.2
 %define gegl_ver 0.4.2
-%define grilo_ver 0.3
+%define grilo_ver 0.3.5
 %define png_ver 1.6
 %define gfbgraph_ver 0.2.4
 %define dazzle_ver 3.28
@@ -41,7 +41,7 @@ BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: tracker-devel >= %tracker_ver
+BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libgegl-devel >= %gegl_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
@@ -54,7 +54,7 @@ BuildRequires: libgeocode-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libdazzle-devel > %dazzle_ver
 BuildRequires: libdbus-devel
-%{?_enable_check:BuildRequires: dogtail}
+%{?_enable_check:BuildRequires: dbus dogtail3}
 
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
@@ -89,10 +89,19 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/org.gnome.Photos.Tracker1.Miner.Extract.service
+%_datadir/dbus-1/services/org.gnome.Photos.Tracker1.Miner.Files.service
+%_datadir/dbus-1/services/org.gnome.Photos.Tracker1.service
+%_datadir/tracker/domain-ontologies/org.gnome.Photos.rule
+%_datadir/tracker/miners/org.gnome.Photos.Tracker1.Miner.Extract.service
+%_datadir/tracker/miners/org.gnome.Photos.Tracker1.Miner.Files.service
 %config %_datadir/glib-2.0/schemas/org.gnome.photos.gschema.xml
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Wed Sep 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Fri May 29 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
