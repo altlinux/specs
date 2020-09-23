@@ -15,8 +15,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        78.2.0
-Release:        alt2
+Version:        78.3.0
+Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -443,11 +443,20 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Sep 23 2020 Andrey Cherepanov <cas@altlinux.org> 78.3.0-alt1
+- New release (78.3.0).
+- Fixes:
+  + CVE-2020-15677 Download origin spoofing via redirect
+  + CVE-2020-15676 XSS when pasting attacker-controlled data into a contenteditable element
+  + CVE-2020-15678 When recursing through layers while scrolling, an iterator may have become invalid, resulting in a potential use-after-free
+  + CVE-2020-15673 Memory safety bugs fixed in Firefox 81 and Firefox ESR 78.3
+
 * Mon Sep 14 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.0-alt2
 - Allow sideloading app and system unsigned addons.
 
 * Tue Aug 25 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.0-alt1
 - New release (78.2.0).
+- Fixes:
   + CVE-2020-15663 Downgrade attack on the Mozilla Maintenance Service could have resulted in escalation of privilege
   + CVE-2020-15664 Attacker-induced prompt for extension installation
   + CVE-2020-15670 Memory safety bugs fixed in Firefox 80 and Firefox ESR 78.2
