@@ -1,4 +1,4 @@
-# 7.0.0.3
+# 7.0.1.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -23,13 +23,13 @@
 
 Name: LibreOffice
 %define hversion 7.0
-%define urelease 0.3
+%define urelease 1.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -39,6 +39,7 @@ Requires: %name-integrated = %EVR
 Requires: %name-common = %EVR
 Requires: %name-mimetypes = %EVR
 Requires: %name-extensions = %EVR
+Requires: libreoffice-languagetool
 
 Provides: %name-full = %EVR
 Provides: libreoffice = %EVR
@@ -68,7 +69,9 @@ Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-fix-detecting-qrcodegen.patch
 Patch5: FC-0001-Pass-fno-lto-unconditionally.patch
 Patch6: FC-0001-rhbz-1870501-crash-on-reexport-of-odg.patch
-Patch7: FC-0001-disable-libe-book-support.patch
+Patch7: FC-0001-CppunitTest_sw_htmlexport-The-actual-PNG-data-does-n.patch
+Patch8: FC-0001-rhbz-1875377-if-sort-order-is-equivalent-keep-order-.patch
+Patch9: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -262,7 +265,9 @@ echo Direct build
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-#patch7 -p1
+%patch7 -p1
+%patch8 -p1
+#patch9 -p1
 
 ## Long-term FC patches applying
 
@@ -349,7 +354,7 @@ export CXXFLAGS="$CFLAGS"
 	--enable-ext-numbertext \
 	--enable-ext-wiki-publisher \
 	--enable-ext-ct2n \
-	--enable-ext-languagetool \
+	--disable-ext-languagetool \
   \
 	--enable-release-build \
 	--with-help \
@@ -557,6 +562,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Sep 23 2020 Fr. Br. George <george@altlinux.ru> 7.0.1.2-alt1
+- Update to 7.0.1.2
+
 * Sun Aug 30 2020 Fr. Br. George <george@altlinux.ru> 7.0.0.3-alt2
 - Avoid qt5 dependency build
 
