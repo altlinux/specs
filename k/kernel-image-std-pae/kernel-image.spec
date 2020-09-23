@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	5.4
-%define kernel_sublevel .66
+%define kernel_sublevel .67
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -704,8 +704,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Wed Sep 23 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.67-alt1
+- v5.4.67
+
 * Tue Sep 22 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.66-alt1
 - v5.4.66
+
+* Fri Sep 18 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.65-alt2
+- baikal-m drivers and configuration from asheplyakov@ merged
 
 * Wed Sep 16 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.65-alt1
 - v5.4.65
