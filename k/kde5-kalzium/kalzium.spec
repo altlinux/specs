@@ -7,7 +7,7 @@
 %define libscience libscience%sover
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.1
 Release: alt1
 %K5init
 
@@ -101,6 +101,9 @@ KF5 library
 %_K5lib/libscience.so.*
 
 %changelog
+* Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
