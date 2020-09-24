@@ -1,117 +1,66 @@
+%define _unpackaged_files_terminate_build 1
 %define oname evelink
 
-%def_with python3
+# %def_with check
 
-Name: python-module-%oname
+Name: python3-module-%oname
 Version: 0.7.5
-Release: alt1.2
+Release: alt2
 Summary: Python Bindings for the EVE Online API
 License: MIT
-Group: Development/Python
-BuildArch: noarch
+Group: Development/Python3
+# Source-git: https://github.com/eve-val/evelink.git
 Url: https://pypi.python.org/pypi/EVELink/
 
-# https://github.com/eve-val/evelink.git
 Source: %name-%version.tar
 Patch0: evelink-async-fix.patch
 
-BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-z4r-coveralls python-module-mock
-BuildRequires: python-module-nose
-BuildRequires: python-modules-wsgiref python-modules-sqlite3
-BuildRequires: python3-module-html5lib
-%if_with python3
 BuildRequires(pre): rpm-build-python3
+
+#%if_with check
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-z4r-coveralls python3-module-mock
 BuildRequires: python3-module-nose
 BuildRequires: python3-modules-sqlite3
-%endif
+BuildRequires: python3-module-html5lib
+#%endif
 
-%py_provides %oname
+%py3_provides %oname
 
-%add_findreq_skiplist %python_sitelibdir/%oname/appengine/*
-%add_findprov_skiplist %python_sitelibdir/%oname/appengine/*
-%if_with python3
 %add_findreq_skiplist %python3_sitelibdir/%oname/appengine/*
 %add_findprov_skiplist %python3_sitelibdir/%oname/appengine/*
-%endif
+%add_python3_req_skip evelink.thirdparty.six.moves six.moves.configparser
+
+BuildArch: noarch
 
 %description
 EVELink provides a means to access the EVE XML API from Python.
-
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python Bindings for the EVE Online API
-Group: Development/Python3
-%py3_provides %oname
-%add_python3_req_skip evelink.thirdparty.six.moves six.moves.configparser
-
-%description -n python3-module-%oname
-EVELink provides a means to access the EVE XML API from Python.
-%endif
 
 %prep
 %setup
 %patch0 -p1
 
-# Set correct python2 executable in shebang and scripts
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *) \
-    $(find ./ -name '*.py')
-
-%if_with python3
-cp -fR . ../python3
-%endif
-
 %build
-%python_build_debug
-
-%if_with python3
-pushd ../python3
 %python3_build_debug
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
-done
-popd
-%endif
-
-%python_install
+rm -f %buildroot/usr/LICENSE
+rm -f %buildroot/usr/README.md
 
 %check
-python setup.py build_ext -i
-nosetests -v
-%if_with python3
-pushd ../python3
 python3 setup.py build_ext -i
 nosetests3 -v
-popd
-%endif
 
 %files
 %doc *.md
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.md
-%_bindir/*.py3
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Thu Sep 24 2020 Pavel Vasenkov <pav@altlinux.org> 0.7.5-alt2
+- Drop python2 support.
+
 * Thu Apr 30 2020 Pavel Vasenkov <pav@altlinux.org> 0.7.5-alt1.2
 - (NMU) fixed:
   * rename variable with reserved name
