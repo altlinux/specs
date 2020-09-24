@@ -1,5 +1,5 @@
 Name:	 newsboat
-Version: 2.20.1.0.308.git49794d07
+Version: 2.21
 Release: alt1
 
 Summary: an RSS/Atom feed reader for the text console
@@ -10,6 +10,7 @@ Url:	 https://github.com/newsboat/newsboat
 
 VCS:	 https://github.com/newsboat/newsboat
 Source:  newsboat-%version.tar
+# cargo vendor
 Source1: vendor.tar
 Source2: newsboat.watch
 
@@ -80,6 +81,9 @@ cargo test
 %_iconsdir/hicolor/scalable/apps/newsboat.svg
 
 %changelog
+* Thu Sep 24 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.21-alt1
+- Updated to 2.21.
+
 * Fri Aug 14 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.20.1.0.308.git49794d07-alt1
 - Initial build for ALT Sisyphus.
 
