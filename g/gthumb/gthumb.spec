@@ -15,7 +15,7 @@
 %def_enable gstreamer
 
 Name: gthumb
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Sep 20 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sun Apr 19 2020 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

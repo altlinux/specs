@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_with nautilus
 
 Name: font-manager
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -18,9 +18,9 @@ Group: Graphical desktop/GNOME
 Url: http://fontmanager.github.io/
 
 %if_disabled snapshot
-Source: https://github.com/FontManager/master/releases/download/%version/%name-%version.tar.bz2
+Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/FontManager/master.git
+Vcs: https://github.com/FontManager/font-manager.git
 Source: %name-%version.tar
 %endif
 Patch: font-manager-0.7.5-alt-build.patch
@@ -89,6 +89,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Mon Sep 21 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
+- 0.7.9
+
 * Fri Jul 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
 - updated to 0.7.8-1-ge750377
 
