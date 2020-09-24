@@ -7,7 +7,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 Group: Publishing
 Summary: A program for printing sheet music
 License: GPLv3
@@ -126,8 +126,11 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Thu Sep 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.20.0-alt4
+- Fixed changelog according to vulnerability policy.
+
 * Sun Aug 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.20.0-alt3
-- Fixes CVE-2020-17353.
+- Applied CVE fix (Fixes: CVE-2020-17353).
 
 * Sun Aug 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.20.0-alt2
 - Added vim-plugin-lilypond subpackage.
