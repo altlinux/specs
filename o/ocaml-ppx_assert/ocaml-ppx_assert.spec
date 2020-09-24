@@ -1,24 +1,18 @@
 %set_verify_elf_method textrel=relaxed
 %define  modulename ppx_assert
+%def_with check
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt1
-
+Release: alt2
 Summary: Assert-like extension nodes that raise useful errors on failure
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_assert
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-ppxlib-devel ocaml-ppx_cold-devel ocaml-result-devel
+BuildRequires: dune ocaml-ppxlib-devel ocaml-ppx_cold-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-ppx_compare-devel
-BuildRequires: ocaml-compiler-libs-devel ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-ppx_here-devel
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
-
+BuildPreReq: rpm-build-ocaml >= 1.4
 Source:  %modulename-%version.tar
 
 %description
@@ -37,43 +31,23 @@ developing applications that use %name.
 %setup -n %modulename-%version
 
 %build
-dune build
+%dune_build -p %modulename
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
-%dir %_libdir/ocaml/%modulename/runtime-lib
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cma
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmi
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
-%_libdir/ocaml/%{modulename}*/*.exe
-%_libdir/ocaml/%{modulename}/runtime-lib/*.a
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmt*
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmxa
-%_libdir/ocaml/%{modulename}/runtime-lib/*.cmx
-%_libdir/ocaml/%{modulename}/runtime-lib/*.ml
-%_libdir/ocaml/%{modulename}/runtime-lib/*.mli
+%files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
+- migrated to rpm-build-ocaml 1.4
+- cleaned up specfile
+
 * Thu Jul 30 2020 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus
