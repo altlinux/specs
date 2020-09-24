@@ -9,7 +9,7 @@
 %endif
 
 Name: blender
-Version: 2.90.0
+Version: 2.90.1
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
@@ -41,7 +41,7 @@ Patch22: blender-2.77-alt-enable-localization.patch
 Patch23: blender-2.77-alt-usertempdir.patch
 Patch24: blender-2.80-alt-include-deduplication-check-skip.patch
 Patch25: blender-2.80-alt-use-system-glog.patch
-Patch26: blender-2.82-alt-link-fix.patch
+Patch26: blender-2.83.1-alt-remove-python2-dependency.patch
 Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-2.90.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
@@ -278,6 +278,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Sep 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.90.1-alt1
+- Updated to upstream version 2.90.1.
+
 * Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.90.0-alt1
 - Updated to upstream version 2.90.0.
 - Enabled dependencies: embree, openmp, llvm, openvdb, alembic.
