@@ -1,11 +1,11 @@
 %def_with sdl2
-%define rev 20200902
+%define rev 20200904
 Name: fheroes2
-Epoch: 1
-Version: 0.8.5
+Epoch: 2
+Version: 0.8.1
 Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
-License: GPL
+License: GPLv2+
 Group: Games/Strategy
 #Url: http://sourceforge.net/projects/fheroes2/
 Url: https://github.com/ihhub/fheroes2
@@ -61,6 +61,9 @@ install -pm 644 {CONTRIBUTING.md,changelog.txt,LICENSE,README.md} %buildroot%_do
 
 
 %changelog
+* Thu Sep 24 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.8.1-alt1.20200904
+- upstream re-released as 0.8.1
+
 * Wed Sep 02 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.8.5-alt1.20200902
 - new version
 
