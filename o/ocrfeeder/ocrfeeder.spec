@@ -4,7 +4,7 @@
 
 Name: ocrfeeder
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
@@ -18,6 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: ocrfeeder-0.8.3-alt-configure.patch
 
 Requires: python3-module-%name = %EVR
 Requires: unpaper
@@ -27,11 +28,10 @@ Requires: tesseract tesseract-langpack-en tesseract-langpack-ru
 #Requires: ocrad
 #Requires: cuneiform
 
-
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool yelp-tools
 BuildRequires: python3-devel python3-module-pygobject3-devel
-BuildRequires: libgtk+3-gir libgoocanvas2-gir
+BuildRequires: typelib(Gtk) = 3.0 typelib(GooCanvas) = 2.0
 BuildRequires: python3-module-enchant python3-module-Pillow
 BuildRequires: python3-module-Reportlab python3-module-odf
 BuildRequires: python3-module-sane
@@ -46,6 +46,7 @@ over the latter. It generates multiple formats being its main one ODT.
 Summary: Supplemental module for OCRFeeder
 Group: Development/Python3
 BuildArch: noarch
+Requires: typelib(Gtk) = 3.0
 
 %description -n python3-module-%name
 %summary
@@ -54,8 +55,10 @@ This package provides supplemental module for %name.
 
 %prep
 %setup
+%patch -b .python
 
 %build
+export PYTHON=%__python3
 %autoreconf
 %configure PYTHON=%__python3
 %make_build
@@ -79,6 +82,9 @@ This package provides supplemental module for %name.
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Thu Sep 24 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt2
+- configure.ac: improved gi modules test
+
 * Thu Apr 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - updated to 0.8.3-8-g38c995d (ported to Python3 & PyGI)
 - required tesseract as default engine
