@@ -1,6 +1,6 @@
 Name: prosody
 Version: 0.11.6
-Release: alt1
+Release: alt2
 
 Summary: Modern XMPP communication server
 
@@ -18,6 +18,7 @@ Source2: prosody.service
 Source3: prosody.init
 Source4: prosody.tmpfiles
 Source10: autobuild.watch
+Source11: upstream-signing-key.asc
 
 Patch1: prosody-0.11.5-alt-user.patch
 
@@ -66,6 +67,10 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Thu Sep 24 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.11.6-alt2
+- Fixed buggy SysVinit script.
+- Updated watch file, packed upstream signing key to sourcerpm.
+
 * Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.11.6-alt1
 - Automatically updated to 0.11.6.
 
