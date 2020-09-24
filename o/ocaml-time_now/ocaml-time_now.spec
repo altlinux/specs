@@ -3,7 +3,7 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt3
+Release: alt4
 Summary: Reports the current time
 License: MIT
 Group:   Development/ML
@@ -22,10 +22,10 @@ Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
 Requires: ocaml-jane-street-headers-devel
-Requires: ocaml-ppx_sexp_conv
-Requires: ocaml-ppx_compare
-Requires: ocaml-ppx_enumerate
-Requires: ocaml-ppx_hash
+Requires: ocaml-ppx_sexp_conv-devel
+Requires: ocaml-ppx_compare-devel
+Requires: ocaml-ppx_enumerate-devel
+Requires: ocaml-ppx_hash-devel
 %description devel
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
@@ -48,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 23 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt4
+- changed runtime to devel requires for devel package
+
 * Fri Sep 18 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
 - added runtime requires from dune-package
 
