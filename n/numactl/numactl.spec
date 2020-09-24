@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: numactl
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: Simple NUMA policy support
@@ -61,6 +61,7 @@ developing applications that use %name.
 %files
 %doc README.md
 %_bindir/*
+%_man2dir/*
 %_man8dir/*
 
 %files -n libnuma
@@ -78,6 +79,9 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Thu Sep 24 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.0.14-alt1
+- 2.0.14
+
 * Wed May 13 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.13-alt1
 - new version
 - update home url
