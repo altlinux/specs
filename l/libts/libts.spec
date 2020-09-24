@@ -1,9 +1,10 @@
 %define oname tslib
 %define plugindir %_libdir/libts-1.0
+%define sover 0
 
 Name: libts
-Version: 1.0
-Release: alt1.qa1
+Version: 1.22
+Release: alt1
 
 Summary: tslib - touchscreen access library
 
@@ -14,10 +15,8 @@ Group: System/Libraries
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://download.berlios.de/tslib/%oname-%version.tar
-Patch: tslib-glibc2.8.patch
 
-# Automatically added by buildreq on Sun Jan 10 2010
-BuildRequires: gcc-c++ glibc-devel
+BuildRequires: gcc-c++ glibc-devel libSDL2-devel
 
 %description
 Hardware independent touchscreen access library.
@@ -35,11 +34,10 @@ Development files (headers etc.) for %name.
 %__subst 's,^# module_raw input$,module_raw input,' etc/ts.conf
 # For quick verification during building:
 grep "module_raw input" etc/ts.conf
-%patch0 -p1
 
 %build
 ./autogen.sh
-%configure --with-plugindir=%plugindir
+%configure --with-plugindir=%plugindir --with-sdl2
 %make_build
 
 %install
@@ -50,7 +48,8 @@ rm -f %buildroot%plugindir/*.la
 %doc README AUTHORS ChangeLog
 %config(noreplace) %_sysconfdir/ts.conf
 %_bindir/ts_*
-%_libdir/*.so.*
+%_libdir/lib*.so.%sover
+%_libdir/lib*.so.*
 %dir %plugindir
 %plugindir/*.so
 
@@ -60,6 +59,9 @@ rm -f %buildroot%plugindir/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt1
+- new version
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
