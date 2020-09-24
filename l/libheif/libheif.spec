@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel
+BuildRequires: gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel libaom-devel
 
 %description
 HEIF is a new image file format employing HEVC (h.265) image coding for the
@@ -51,6 +51,9 @@ Development libraries for %name
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Sep 24 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Mon Aug 31 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
