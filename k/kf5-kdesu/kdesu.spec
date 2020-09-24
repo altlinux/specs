@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.74.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-fix-su-to-different-non-root-user.patch
 Patch2: alt-export-vars.patch
+Patch3: alt-properly-parse-escaped-double-quotes.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -57,6 +58,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 
 %build
 %K5build \
@@ -85,6 +87,9 @@ KF5 library
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Thu Sep 24 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.74.0-alt2
+- Fixed parsing double-quoted commands.
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 
