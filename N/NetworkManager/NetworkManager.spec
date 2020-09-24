@@ -56,7 +56,7 @@
 
 Name: NetworkManager
 Version: 1.26.3
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -620,6 +620,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Sep 24 2020 Mikhail Efremov <sem@altlinux.org> 1.26.3-alt2.g2d8c6343e
+- etcnet-alt: Move 'load connection' message to debug level.
+- etcnet-alt: Fix identation.
+- etcnet-alt: Unload connections when reload.
+- etcnet-alt: Fix autoconnect connection property (closes: #38982).
+
 * Tue Sep 22 2020 Mikhail Efremov <sem@altlinux.org> 1.26.3-alt1.g2d8c6343e
 - Fix /usr/lib/NetworkManager/ packaging.
 - n-dhcp4: Initialize variable.
