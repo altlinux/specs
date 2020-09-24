@@ -1,11 +1,11 @@
 %define oname ephem
 
-%def_with python3
+%def_without python3
 %def_disable check
 
 Name: python-module-%oname
 Version: 3.7.6.0
-Release: alt1.git20141124.1.1.1
+Release: alt1.git20141124.1.1.1.1
 Summary: Compute positions of the planets and stars
 License: LGPL
 Group: Development/Python
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 24 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.6.0-alt1.git20141124.1.1.1.1
+- rebuilt without python3
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.6.0-alt1.git20141124.1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
