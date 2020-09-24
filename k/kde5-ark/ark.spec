@@ -3,9 +3,11 @@
 %define sover 20
 %define libkerfuffle libkerfuffle%sover
 
+%def_disable libzip
+
 Name: kde5-%rname
 Version: 20.08.1
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Archiving/Compression
@@ -24,7 +26,9 @@ Patch1: alt-clizip-priority.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: bzlib-devel libarchive-devel liblzma-devel zlib-devel
+%if_enabled libzip
 BuildRequires: libzip-devel
+%endif
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -57,10 +61,13 @@ Requires: %name-common = %version-%release
 %description -n %libkerfuffle
 KF5 library
 
-
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+
+%if_disabled libzip
+sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
+%endif
 
 %build
 %K5build
@@ -103,6 +110,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Thu Sep 24 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt3
+- build without libzip again to fix filename encoding
+
 * Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt2
 - build with libzip
 
