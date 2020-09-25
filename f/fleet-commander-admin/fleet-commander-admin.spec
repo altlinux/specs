@@ -6,7 +6,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt3
+Release: alt4
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -44,7 +44,10 @@ BuildRequires: samba-common
 %add_python3_path %_datadir/fleet-commander-admin/python/
 %add_python3_compile_exclude %_datadir/fleet-commander-admin/python/
 
-Requires: cockpit
+Requires: cockpit-bridge
+Requires: cockpit-dashboard
+Requires: cockpit-shell
+Requires: cockpit-ws
 Requires: python3-module-freeipa-desktop-profile-client
 Requires: realmd
 Requires: samba-common
@@ -172,6 +175,9 @@ ln -s %_datadir/spice-html5/src \
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Fri Sep 25 2020 Stanislav Levin <slev@altlinux.org> 0.15.1-alt4
+- Removed redundant cockpit-* dependencies (thanks to ptrnine@).
+
 * Fri Aug 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.1-alt3
 - FC-logger: ScreenSaverInhibitor improved (thanks to ptrnine@).
 
