@@ -1,39 +1,41 @@
 %def_without tests
 
-Name:           retext
-Version:        7.1.0
-Release:        alt2
-License:        GPLv3+
-Summary:        Text editor for Markdown and reStructuredText
-Summary(de):    Texteditor für Markdown und reStructuredText
-Group:          Editors
-URL: 		https://github.com/retext-project/retext
+Name:    retext
+Version: 7.1.0
+Release: alt3
+License: GPL-3.0+
+Summary: Text editor for Markdown and reStructuredText
+Summary(de): Texteditor für Markdown und reStructuredText
+Group:   Editors
+URL:     https://github.com/retext-project/retext
 
-Source0:        %name-%version.tar
-Source1:        %name.1
+Source0: %name-%version.tar
+Source1: %name.1
+Source2: locale_retext_ru.ts
 
-BuildArch:      noarch
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): python3-devel python3-module-setuptools /dev/pts
-BuildRequires:  python3-module-markups
-BuildRequires:  python3-module-docutils
-BuildRequires:  python3-module-enchant
-BuildRequires:  python3-module-markdown
-BuildRequires:  libpng-devel
-BuildRequires:  librsvg-devel
-BuildRequires:  librsvg-utils
-BuildRequires:  ImageMagick-tools
-BuildRequires:  qt5-tools-devel
-BuildRequires:  python-module-PyQt5-devel
-
-Requires: python3-module-Pygments
+BuildRequires(pre): python3-devel
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: python3-module-setuptools
+BuildRequires: /dev/pts
+BuildRequires: python3-module-markups
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-enchant
+BuildRequires: python3-module-markdown
+BuildRequires: libpng-devel
+BuildRequires: librsvg-devel
+BuildRequires: librsvg-utils
+BuildRequires: ImageMagick-tools
+BuildRequires: qt5-tools-devel
+BuildRequires: python-module-PyQt5-devel
 
 %if_with tests
 BuildRequires:  libappstream-glib
 %endif
 
-%py3_requires docutils enchant markdown sip mdx_math
+%py3_requires docutils enchant markdown sip mdx_math chardet pygments
 %add_python3_req_skip FakeVim PyQt5.QtWebEngineWidgets
 
 %description
@@ -45,9 +47,11 @@ ReText ist ein einfacher, aber leistungsfähiger Texteditor
 für Markdown und reStructuredText.
 
 %prep
-%setup -q
+%setup
+cp %SOURCE2 locale/retext_ru.ts
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %python3_build_debug
 
 %install
@@ -65,22 +69,18 @@ done
 install -p -m 0644 retext.svg %buildroot/%_datadir/icons/hicolor/scalable/apps
 popd
 
-install -Dm 0644 data/*.desktop %buildroot%_desktopdir/%name.desktop
-
-mv %buildroot%_datadir/{metainfo,appdata}
-
 %find_lang retext --with-man
 
 %check
 %if_with tests
-appstream-util validate-relax --nonet %buildroot%_datadir/appdata/*.appdata.xml ||:
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml ||:
 python3 setup.py test
 %endif
 
 %files -f retext.lang
 %doc changelog.md configuration.md README.md LICENSE_GPL
 %_bindir/%name
-%_datadir/appdata/*.appdata.xml
+%_datadir/metainfo/*.appdata.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_datadir/%name/
@@ -89,6 +89,13 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri Sep 25 2020 Andrey Cherepanov <cas@altlinux.org> 7.1.0-alt3
+- Complete Russian translation (thanks Maria Shikunova).
+- Remove desktop file duplicate.
+- Move appdata file to %_datadir/metainfo directory.
+- Fix build localization files.
+- Add runtime module requirements.
+
 * Tue Sep 15 2020 Andrey Cherepanov <cas@altlinux.org> 7.1.0-alt2
 - Requires python3-module-Pygments.
 
