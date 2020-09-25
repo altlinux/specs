@@ -1,14 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%add_verify_elf_skiplist %modules_dir/*
+
 %define flavour			xenomai
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1
-%define ipipe_version		4.19.124-cip27-x86-12
+%define ipipe_version		4.19.140-cip33-x86-14
 %define kernel_base_version	4.19
-%define kernel_sublevel		.124
+%define kernel_sublevel		.140
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip27
-%define kernel_ipipe_release	13
+%define kernel_cip_release	cip33
+%define kernel_ipipe_release	14
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
@@ -25,9 +29,6 @@ Release: alt1.%kernel_cip_release.%kernel_ipipe_release
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
 
-# Not for Xenomai
-%def_disable docs
-
 #Remove oss
 %def_disable oss
 ## Don't edit below this line ##################################
@@ -37,7 +38,6 @@ Release: alt1.%kernel_cip_release.%kernel_ipipe_release
 
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
-%define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
 %brp_strip_none /boot/*
 
@@ -50,14 +50,6 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 Patch0: %name-%version-%release.patch
 
 ExclusiveArch: x86_64
-
-%define qemu_pkg %_arch
-%ifarch %ix86 x86_64
- %define qemu_pkg x86
-%endif
-%ifarch ppc64le
- %define qemu_pkg ppc
-%endif
 
 ExclusiveOS: Linux
 
@@ -74,19 +66,7 @@ BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core glibc-devel-static}}
-
-%if_enabled docs
-BuildRequires: python-module-sphinx perl-Pod-Usage 
-%endif
-
-%if_enabled ccache
-BuildRequires: ccache
-%endif
-
-%ifdef use_ccache
-BuildRequires: ccache
-%endif
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run}}
 
 Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
@@ -292,23 +272,39 @@ scripts/config -m IPMI_HANDLER
 scripts/config -m IPMI_SSIF
 scripts/config -m IPMI_WATCHDOG
 
-# Additional options
+# For livecd
 scripts/config -e CONFIG_USER_NS
 scripts/config -e CONFIG_SQUASHFS -e CONFIG_SQUASHFS_XZ
-scripts/config -e CONFIG_SCSI_VIRTIO -e CONFIG_SCSI_LOWLEVEL -e CONFIG_VIRTIO_PCI \
+# For qemu & vm-run
+scripts/config -e CONFIG_SCSI_VIRTIO -e CONFIG_SCSI_LOWLEVEL -m CONFIG_VIRTIO_PCI \
 	       -e CONFIG_VIRTIO_BLK -e CONFIG_VIRTIO_NET -e CONFIG_VIRTIO_CONSOLE \
-	       -e CONFIG_HW_RANDOM_VIRTIO -e CONFIG_VIRTIO_BALLOON
-%ifarch %ix86 x86_64
-scripts/config -e CONFIG_KGDB -e CONFIG_KGDB_KDB -e CONFIG_LKDTM
-%endif
+	       -e CONFIG_HW_RANDOM_VIRTIO -e CONFIG_VIRTIO_BALLOON \
+	       -m CONFIG_NET_9P -m CONFIG_NET_9P_VIRTIO -m CONFIG_9P_FS \
+	       -e CONFIG_CONFIGFS_FS
 
-# Disable what is recommended in https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
+scripts/config -e CONFIG_DEBUG_INFO
+
+# Disable what is recommended in
+# https://gitlab.denx.de/Xenomai/xenomai/wikis/Configuring_For_X86_Based_Dual_Kernels
 scripts/config -d CONFIG_CPU_FREQ
 scripts/config -d CONFIG_CPU_IDLE
 scripts/config -d CONFIG_APM
 scripts/config -d CONFIG_ACPI_PROCESSOR -d X86_INTEL_PSTATE -d SCHED_MC_PRIO
 scripts/config -d CONFIG_INTEL_IDLE
 scripts/config -d CONFIG_INPUT_PCSPKR
+
+scripts/config -m NLS_CODEPAGE_866
+scripts/config -e I2C_CHARDEV
+scripts/config -m DRM
+scripts/config -m DRM_AMDGPU
+scripts/config -e X86_AMD_PLATFORM_DEVICE
+scripts/config -m PINCTRL_AMD
+scripts/config -e GPIOLIB
+scripts/config -e GPIO_ACPI
+scripts/config -e GPIOLIB_IRQCHIP
+scripts/config -e GPIO_SYSFS
+scripts/config -d CONFIG_SERIAL_8250_EXAR
+scripts/config -d CONFIG_GPIO_EXAR
 
 %make_build olddefconfig
 egrep 'IPIPE|XENO' .config
@@ -324,13 +320,6 @@ grep -w -e ^CONFIG_CPU_FREQ \
 %make_build bzImage
 %make_build modules
 
-echo "Kernel built $KernelVer"
-
-%if_enabled docs
-# psdocs, pdfdocs don't work yet
-%make_build htmldocs
-%endif
-
 %install
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
@@ -341,12 +330,14 @@ install -Dp -m644 arch/%base_arch/boot/bzImage \
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot
-find %buildroot -name '*.ko' | xargs gzip
 
-# TODO: Fix this cargo cult
+#
+# Install kernel-headers-modules
+#
 mkdir -p %buildroot%kbuild_dir/arch/x86
-cp -a include %buildroot%kbuild_dir/include
-cp -a arch/x86/include %buildroot%kbuild_dir/arch/x86
+cp -a include			   %buildroot%kbuild_dir/include
+cp -a arch/x86/include		   %buildroot%kbuild_dir/arch/x86
+cp -a arch/x86/xenomai/include/asm %buildroot%kbuild_dir/include/xenomai/asm
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
@@ -356,18 +347,13 @@ install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/scsi.h \
-	%buildroot%kbuild_dir/drivers/scsi/
-cp -a drivers/md/dm*.h \
-	%buildroot%kbuild_dir/drivers/md/
-cp -a drivers/usb/core/*.h \
-	%buildroot%kbuild_dir/drivers/usb/core/
-cp -a lib/hexdump.c %buildroot%kbuild_dir/lib/
-cp -a kernel/workqueue.c %buildroot%kbuild_dir/kernel/
-cp -a net/mac80211/ieee80211_i.h \
-	%buildroot%kbuild_dir/net/mac80211/
-cp -a net/mac80211/sta_info.h \
-	%buildroot%kbuild_dir/net/mac80211/
+cp -a drivers/scsi/scsi.h	 %buildroot%kbuild_dir/drivers/scsi/
+cp -a drivers/md/dm*.h		 %buildroot%kbuild_dir/drivers/md/
+cp -a drivers/usb/core/*.h	 %buildroot%kbuild_dir/drivers/usb/core/
+cp -a lib/hexdump.c		 %buildroot%kbuild_dir/lib/
+cp -a kernel/workqueue.c	 %buildroot%kbuild_dir/kernel/
+cp -a net/mac80211/ieee80211_i.h %buildroot%kbuild_dir/net/mac80211/
+cp -a net/mac80211/sta_info.h	 %buildroot%kbuild_dir/net/mac80211/
 
 # Install files required for building external modules (in addition to headers)
 KbuildFiles="
@@ -431,115 +417,54 @@ done
 rm -f %buildroot%modules_dir/{build,source}
 ln -s %kbuild_dir %buildroot%modules_dir/build
 
-# Provide kbuild directory with old name (without %%krelease)
-ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
-
 # Provide kernel headers for userspace
 make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
 
 find %buildroot%kheaders_dir -name ..install.cmd -delete
 
 #provide symlink to autoconf.h for back compat
-pushd %buildroot%old_kbuild_dir/include/linux
+pushd %buildroot%kbuild_dir/include/linux
 ln -s ../generated/autoconf.h
 ln -s ../generated/utsrelease.h
 ln -s ../generated/uapi/linux/version.h
 popd
 
-# remove *.bin files
-rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
-touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
+# For external modules.
+mkdir -p %buildroot%modules_dir/extra
 
 %check
-KernelVer=%kversion-%flavour-%krelease
-mkdir -p test
-cd test
-cat > init.c <<__EOF__
-#include <unistd.h>
-#include <stdio.h>
-#include <err.h>
-#include <sys/mount.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/reboot.h>
-int main()
-{
-        if (mkdir("/proc", 0666))
-                warn("mkdir /proc");
-        else if (mount("proc", "/proc", "proc", 0, NULL))
-                warn("mount /proc");
-        else if (access("/proc/ipipe/version", R_OK))
-                warn("access /proc/ipipe/version");
-        else if (access("/proc/xenomai/version", R_OK))
-                warn("access /proc/xenomai/version");
-        else
-                puts("Boot successful!");
-        reboot(RB_POWER_OFF);
-}
-__EOF__
-gcc -static -o init init.c
-echo init | cpio -H newc -o | gzip -9n > initrd.img
-QEMU=qemu-system-%_arch
-QEMU_OPTS="-nographic -no-reboot -m 256M"
-CONSOLE=ttyS0
-%ifarch x86_64
- QEMU_OPTS+=" -bios bios.bin"
-%endif
-%ifarch %ix86
- QEMU=qemu-system-i386
- QEMU_OPTS+=" -bios bios.bin"
-%endif
-%ifarch aarch64
- QEMU=qemu-system-aarch64
- QEMU_OPTS+=" -machine virt -cpu max"
- CONSOLE=ttyAMA0
-%endif
-%ifarch ppc64le
- QEMU=qemu-system-ppc64
- QEMU_OPTS+="-cpu power8,compat=power7"
- CONSOLE=hvc0
-%endif
-time -p \
-timeout --foreground 600 \
-$QEMU \
-	$QEMU_OPTS \
-        -kernel %buildroot/boot/vmlinuz-$KernelVer \
-        -initrd initrd.img \
-        -append "console=$CONSOLE panic=-1" > boot.log &&
-grep -q "^Boot successful!" boot.log &&
-grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
-        cat >&2 boot.log
-        echo >&2 'Marker not found'
-        exit 1
-}
-grep -i -e I-pipe -e Xenomai boot.log
-grep -q "head domain Xenomai registered" boot.log
-grep -q "Cobalt v[0-9.]\+" boot.log
-! grep -q "init failed" boot.log
+vm-run "set -x
+  head /proc/ipipe/version /proc/xenomai/version
+  dmesg | grep -i -e 'I-pipe' -e 'Xenomai'
+  dmesg | grep 'head domain Xenomai registered'
+  dmesg | grep 'Cobalt v[0-9.]'
+  ! dmesg | grep 'init failed'
+  set +x"
 
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-%dir %modules_dir/
-%defattr(0600,root,root,0700)
-%modules_dir/*
+%dir %modules_dir
 %exclude %modules_dir/build
-%ghost %modules_dir/modules.alias.bin
-%ghost %modules_dir/modules.dep.bin
-%ghost %modules_dir/modules.symbols.bin
-%ghost %modules_dir/modules.builtin.bin
+%ghost %modules_dir/modules.*
+%modules_dir/kernel
+%modules_dir/extra
 
 %files -n kernel-headers-%flavour
 %kheaders_dir
 
 %files -n kernel-headers-modules-%flavour
 %kbuild_dir
-%old_kbuild_dir
-%dir %modules_dir/
+%dir %modules_dir
 %modules_dir/build
 
 %changelog
+* Thu Sep 24 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.140-alt1.cip33.14
+- Update to ipipe-core-4.19.140-cip33-x86-14 (2020-09-11).
+- Config changes.
+- spec: Use vm-run to boot test.
+
 * Mon Jun 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.124-alt1.cip27.13
 - Update to ipipe-core-4.19.124-cip27-x86-13.
 
