@@ -9,13 +9,10 @@
 
 Name:    auditd-plugin-clickhouse
 Version: 20200911.4.1
-Release: alt1
+Release: alt2
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
-
-# dependency clickhouse-cpp currently doesn't build for 32bit systems
-ExcludeArch: %ix86 armh
 
 Source: %name-%version.tar
 
@@ -55,6 +52,9 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4.1-alt2
+- Updated supported architectures.
+
 * Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20200911.4.1-alt1
 - Reintroduced logging unknown fields, controlled by configuration and disabled by default.
 

@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libt1ha
-Version: 2.0.1
-Release: alt2
+Version: 2.1.3
+Release: alt1
 
 Summary: Fast Positive Hash
 License: Zlib
@@ -9,6 +11,8 @@ Group: System/Libraries
 URL: https://github.com/leo-yuriev/t1ha
 Source: t1ha-%version.tar
 Patch: t1ha-%version-%release.patch
+
+BuildRequires: gcc-c++
 
 %package devel
 Summary: Fast Positive Hash
@@ -24,6 +28,10 @@ t1ha provides a set of fast non-cryptographic hash functions.
 %patch -p1
 
 %build
+%ifarch %arm
+# don't allow unaligned memory access on armh
+%add_optflags -DT1HA_SYS_UNALIGNED_ACCESS=0
+%endif
 # build libt1ha_pic.a
 make libt1ha.a CFLAGS_LIB='%optflags -O3 -DNDEBUG -g0 -ffunction-sections -fpic'
 mv libt1ha{,_pic}.a
@@ -49,6 +57,9 @@ install -m644 libt1ha{,_pic}.a %buildroot%_libdir
 %_libdir/libt1ha*.a
 
 %changelog
+* Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.3-alt1
+- Updated to upstream version 2.1.3.
+
 * Fri Mar 30 2018 Alexey Tourbin <at@altlinux.ru> 2.0.1-alt2
 - t1ha.h: push hidden visibility for all symbols in libt1ha{,_pic}.a
 
