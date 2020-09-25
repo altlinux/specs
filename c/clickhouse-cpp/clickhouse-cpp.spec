@@ -1,15 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse-cpp
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
 Url: https://github.com/artpaul/clickhouse-cpp
-
-# currently doesn't build for 32bit systems
-ExcludeArch: %ix86 armh
 
 # https://github.com/artpaul/clickhouse-cpp.git
 Source: %name-%version.tar
@@ -79,7 +76,7 @@ This package contains development files.
 %patch1 -p1
 
 # ensure 3rd-party bundled libraries are not used
-rm -rf contrib
+rm -rf contrib/{cityhash,gtest,lz4}
 
 %build
 %cmake
@@ -95,9 +92,13 @@ rm -rf contrib
 
 %files -n lib%name-devel
 %_includedir/%name
+%_includedir/absl
 %_libdir/*.so
 
 %changelog
+* Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
+- Updated to upstream release version 1.2.1.
+
 * Mon Jun 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
 - Updated to upstream release version 1.2.0.
 
