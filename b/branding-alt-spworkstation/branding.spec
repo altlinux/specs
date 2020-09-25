@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.2
-Release: alt4
+Release: alt5
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -348,6 +348,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt5
+- licenses replaced from c8.1
+
 * Tue Sep 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
 - conflicts on altlinux-release-{sisyphus,p9} added
 
