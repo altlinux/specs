@@ -1,6 +1,6 @@
 Name: vifm
-Version: 0.10.1
-Release: alt2
+Version: 0.11
+Release: alt1
 
 Summary: Two pane file manager with vi-like keybindings
 License: GPLv2
@@ -9,9 +9,7 @@ Url: http://vifm.sourceforge.net/
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Jul 21 2005
-BuildRequires: gcc-c++ libncursesw-devel libstdc++-devel libtinfo-devel samba-common
-BuildRequires: groff
+BuildRequires: gcc-c++ libncursesw-devel groff
 
 %description
 Vifm is a ncurses based file manager with vi like keybindings,
@@ -21,32 +19,32 @@ to learn a new set of commands.
 
 %prep
 %setup
-# fix python shebang
-# absolutely dont care what happens in this file. It's for OS X
-sed -i "s:\(\/usr\/bin\/\)env python:\1python3:" data/vifm-media-osx
 
 %build
 %autoreconf
-%configure
+%configure \
+    --enable-werror
 %make_build
-# TODO: package with -Werror flag
-#%%make_build CFLAGS="$CFLAGS -Werror"
 
 %install
 %makeinstall_std
 
 %files
 %doc AUTHORS BUGS COPYING ChangeLog FAQ NEWS README TODO
-%exclude /usr/share/doc/vifm
+%exclude /usr/share/doc/%name
 %_bindir/*
-%_datadir/vifm
-%_datadir/zsh/site-functions/_vifm
-%_datadir/bash-completion/completions/vifm
+%_datadir/%name
+%_datadir/zsh/site-functions/_%name
+%_datadir/bash-completion/completions/%name
+%_sysconfdir/%name/colors/Default-256.%name
 %_man1dir/*
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 25 2020 Grigory Ustinov <grenka@altlinux.org> 0.11-alt1
+- Build new version.
+
 * Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt2
 - Fix python shebang.
 
