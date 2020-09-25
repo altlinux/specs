@@ -1,20 +1,20 @@
 %define module RPM-Specfile-Multispec
 
 Name: debian2spec
-Version: 1.07
-Release: alt3
+Version: 1.08
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: converter of debian source directory to RPM specfile format
 Group: Development/Other
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Url: http://search.cpan.org/dist/RPM-Specfile-Multispec
 
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Specfile
+BuildRequires: perl-devel perl-RPM-Specfile perl(Pod/Usage.pm)
 
 %description -n debian2spec
 debian2spec utility creates a initial RPM spec file for the source RPM package
@@ -41,12 +41,16 @@ from the debian control directory using RPM-Specfile-Multispec ---
 %files
 %doc README Changes
 %_bindir/*
+%_man1dir/*
 
 %files -n perl-%module
 %perl_vendor_privlib/R*
 #perl_vendor_man3dir/*
 
 %changelog
+* Fri Sep 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- new version
+
 * Sun Nov 21 2010 Igor Vlasenko <viy@altlinux.ru> 1.07-alt3
 - rebuild w/new perl
 
