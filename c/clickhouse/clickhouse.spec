@@ -1,5 +1,5 @@
 Name: clickhouse
-Version: 20.3.18.10
+Version: 20.3.19.4
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -42,6 +42,7 @@ Source30: %name-%version-contrib-simdjson.tar
 Source31: %name-%version-contrib-zlib-ng.tar
 
 Patch0: %name-%version-%release.patch
+Patch1: %name-base64-ppc64le.patch
 
 BuildRequires: cmake, libicu-devel, libreadline-devel, python3, gperf, tzdata,  cctz-devel
 BuildRequires: rpm-macros-cmake, liblz4-devel, /proc, libzstd-devel, libmariadb-devel
@@ -65,8 +66,11 @@ BuildRequires: libfmt-devel
 %ifnarch aarch64
 BuildRequires: libunwind-devel
 %endif
+%ifnarch ppc64le
+BuildRequires: libcpuid-devel
+%endif
 
-ExclusiveArch: aarch64 x86_64
+ExclusiveArch: aarch64 x86_64 ppc64le
 
 %description
 ClickHouse is an open-source column-oriented database management system that
@@ -109,6 +113,12 @@ ClickHouse tests
 %prep
 %setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31
 %patch0 -p1
+
+pushd contrib/base64
+%patch1 -p1
+popd
+
+rm -rf contrib/libcpuid
 
 %build
 if [ %__nprocs -gt 8 ] ; then
@@ -193,6 +203,9 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/server-test.xml
 
 %changelog
+* Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.19.4-alt1
+- Updated to lts upstream version 20.3.19.4.
+
 * Fri Sep 18 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20.3.18.10-alt1
 - Updated to lts upstream version 20.3.18.10.
 - Enabled libunwind dependency.
