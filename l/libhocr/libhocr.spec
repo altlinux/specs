@@ -1,46 +1,36 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/swig gcc-c++ python-devel swig
 # END SourceDeps(oneline)
-BuildRequires: chrpath
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libhocr
-%define version 0.10.17
+%define version 0.10.18
 # Override default upstream location [/usr/share/doc/libhocr]
 %global	hocrdocdir	%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}
 
-# sitelib for noarch packages, sitearch for others (remove the unneeded one)
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%define major	0
+%define libname	libhocr%{major}
+%define devname	libhocr-devel
 
 Name:		libhocr
-Version:	0.10.17
-Release:	alt4_30
+Version:	0.10.18
+Release:	alt1_10
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
 License:	GPLv3+
-URL:		http://sourceforge.net/projects/hocr.berlios
-Source0:	http://sourceforge.net/projects/hocr.berlios/files/%{name}-%{version}.tar.bz2
-# Sent upstream (private mail, the project has no mailing list)
-Patch0:		libhocr-missing-incl.patch
-# Fix fedora bugs #574259, #577657, #574631
-# Sent upstream (private mail, the project has no mailing list)
-Patch1:		libhocr-no-scanner.patch
-# On Fedora-20: packages compiled with '-Werror=format-security' by default.
-# Upstream isn't responsive for years, so we maintain our own patches.
-Patch2:		format-security.patch
-
-BuildRequires:	libfftw3-devel, libhspell-devel libtiff-devel libtiffxx-devel
-BuildRequires:	desktop-file-utils
-BuildRequires:	swig, python-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools
-# Fix #925761
-# Upstream use very old autoconf, breaks aarm64 builds
-# So we use autoreconf
-BuildRequires:	autoconf, automake, libtool
+URL:		http://hocr.berlios.de
+Source0:	http://download.berlios.de/hocr/%{name}-%{version}.tar.bz2
+Patch1:		libhocr-fix-automake.patch
+Patch2:		libhocr-0.10.18-linking.patch
+BuildRequires:	libfftw3-devel
+BuildRequires:	libhspell-devel
+BuildRequires:	libtiff-devel libtiffxx-devel
+BuildRequires:	gtk2-devel
+BuildRequires:	glib2-devel libgio-devel
+Obsoletes:	%{name}-gtk < 0.10.18-9
+Obsoletes:	%{name}-python < 0.10.18-9
 Source44: import.info
 
 %description
@@ -49,99 +39,61 @@ document images, improve the image, analyzes the page layout, recognizes
 the characters and outputs the text. The output texts are now editable
 text, ready for your blog, word processor or any other use.
 
-
-%package        devel
+%package -n %{devname}
 Summary:	Development files for %{name}
-Group:		Development/Other
-Requires:	%{name} = %{version}-%{release}
-Requires:	gtk-builder-convert gtk-demo
-# We ship *.pc files (requires the -devel of contained libs)
-Requires:	pkgconfig
+Group:		System/Libraries
+Requires:	libhocr = %{version}-%{release}
 
-%description    devel
+%description -n %{devname}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-
-%package        gtk
-Summary:	GTK+ application for %{name}
-Group:		Text tools
-Requires:	%{name} = %{version}-%{release}
-Requires:	python(hocr) = %{version}-%{release}
-# We use gtktextbuffer which uses gtkspell which have a runtime
-# check of the spellcheck backends... so here it is:
-Requires:	hspell libhspell
-
-%description    gtk
-The %{name}-gtk package contains a GUI application that uses %{name}.
-
-%package        -n python-module-libhocr
-Summary:	Python bindings for %{name}
+%package -n %{libname}
+Summary:	A Hebrew optical character recognition library
 Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
-Provides:	python(hocr) = %{version}-%{release}
+Conflicts:	%{name} < 0.10.18-2
+Conflicts: libhocr < 0.10.18
+Obsoletes: libhocr < 0.10.18
 
-%description    -n python-module-libhocr
-The %{name}-python package contains python binding for %{name}.
-
+%description -n %{libname}
+LibHocr is a GNU Hebrew optical character recognition library. It scans
+document images, improve the image, analyzes the page layout, recognizes
+the characters and outputs the text. The output texts are now editable
+text, ready for your blog, word processor or any other use.
 
 %prep
 %setup -q
-%patch0
-%patch1
-%patch2
+%patch1 -p1
+%patch2 -p1
 
-# Fix #925761 -- update configure for aarm64
-autoreconf --install --force
 
 %build
+autoreconf -vfi
 export CFLAGS="%optflags -Werror-implicit-function-declaration"
-%configure #--disable-static
-make # %{?_smp_mflags}
-
-find . -name '*.desktop' | while read file; do
-	/usr/bin/desktop-file-validate "$file"
-done
-
+%configure \
+	--disable-static \
+	--disable-hocr-gtk \
+	--disable-python
+make
 
 %install
-
-# We must preserve timestamps so we don't cause
-# problems for multilib architectures. Use install -p
-# Ref: https://fedoraproject.org/wiki/PackagingDrafts/MultilibTricks#Timestamps
-make install	\
-	DESTDIR=%{buildroot}		\
-	INSTALL="install -p"	\
+%makeinstall_std \
 	hocrdocdir=%{hocrdocdir}	\
 	examples_binding_dir=%{hocrdocdir}/examples/bindings
 
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
-
-# Remove static libs per Fedora packaging policy
-find %{buildroot} -name '*.a' -exec rm -f {} ';'
-
+# we don't want these
+find %{buildroot} -name '*.la' -delete
 rm -f %{buildroot}/%{hocrdocdir}/NEWS		# Empty, not usefull.
 rm -f %{buildroot}/%{hocrdocdir}/INSTALL	# Not needed anymore ;-)
 
-desktop-file-install \
-	--add-category="Graphics"		\
-	--delete-original			\
-	--dir=%{buildroot}%{_datadir}/applications	\
-	%{buildroot}/%{_datadir}/applications/hocr-gtk.desktop	\
-	%{buildroot}/%{_datadir}/applications/sane-pygtk.desktop
-
-
-%find_lang hocr-gtk
-%find_lang sane-pygtk
-
-cat hocr-gtk.lang sane-pygtk.lang > %{name}.lang
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
+# "fix" icons
+%if 0
+for i in 48 128; do
+	install -Dpm644 ./examples/hocr-gtk/hocr1-${i}.png \
+		%{buildroot}%{_iconsdir}/hicolor/${i}x${i}/apps/hocr.png
 done
-
-sed -i 1s,python,python2, %buildroot%{python_sitelibdir_noarch}/*.py \
-  %buildroot%{_bindir}/hocr-gtk %buildroot%{_bindir}/sane-pygtk
+rm -rf %{buildroot}%{_datadir}/pixmaps/
+%endif
 
 %files
 %doc %dir %{hocrdocdir}
@@ -150,36 +102,25 @@ sed -i 1s,python,python2, %buildroot%{python_sitelibdir_noarch}/*.py \
 %doc %{hocrdocdir}/ChangeLog
 %doc %{hocrdocdir}/HACKING
 %doc %{hocrdocdir}/README
-
-%{_libdir}/*.so.*
 %{_bindir}/hocr
 %{_mandir}/man1/*.1*
 
-%files devel
-%doc %{_mandir}/man3/*.3*
-%{_includedir}/*
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
+%files -n %{libname}
+%{_libdir}/%{name}*.so.%{major}
+%{_libdir}/%{name}*.so.%{major}.*
+
+%files -n %{devname}
 %doc %{hocrdocdir}/examples
-
-%files gtk -f %{name}.lang
-%{_bindir}/hocr-gtk
-%{_bindir}/sane-pygtk
-%{_datadir}/applications/*.desktop
-%{_datadir}/hocr-gtk
-%{_datadir}/pixmaps/hocr1-128.png
-%{_datadir}/pixmaps/hocr1-48.png
-%{_datadir}/sane-pygtk
-
-%files -n python-module-libhocr
-# For noarch packages: sitelib
-%{python_sitelibdir_noarch}/*.py*
-
-# For arch-specific packages: sitearch
-%{python_sitelibdir}/_hocr.so
+%doc %{_mandir}/man3/*.3*
+%{_includedir}/%{name}/
+%{_libdir}/%{name}*.so
+%{_libdir}/pkgconfig/%{name}*.pc
 
 
 %changelog
+* Fri Sep 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.18-alt1_10
+- new version
+
 * Sun Jan 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt4_30
 - fixed build
 
