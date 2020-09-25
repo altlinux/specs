@@ -1,23 +1,21 @@
 Name: xiphos
-Version: 4.1.0
-Release: alt4
+Version: 4.2.1
+Release: alt1
 Summary: Bible Study Software
 Url: http://xiphos.org/
 Group: Text tools
-License: GPL2
+License: GPL-2.0
 Source: https://github.com/crosswire/xiphos/releases/download/%version/%name-%version.tar.gz
 Source44: %name.watch
 
 Requires: sword yelp
 Provides: gnomesword
 Obsoletes: gnomesword
-BuildRequires: biblesync-devel >= 1.2.0
-BuildRequires: libsword-devel >= 1.8.0
 
-# Automatically added by buildreq on Fri Sep 15 2017
-# optimized out: at-spi2-atk biblesync docbook-dtds fontconfig glib2-devel gnome-doc-utils-xslt libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins1.0 libgtk+3-devel libharfbuzz-icu libicu-devel libjavascriptcoregtk3-devel libpango-devel libsoup-devel libstdc++-devel libuuid-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxml2-devel perl perl-Encode pkg-config python-base python-module-libxml2 python-modules python-modules-compiler python-modules-ctypes python-modules-encodings python-modules-logging xml-common xorg-xproto-devel xsltproc
-BuildRequires: biblesync-devel gcc-c++ gnome-doc-utils intltool libGConf-devel libdbus-glib-devel libgsf-devel libsword-devel libwebkitgtk3-devel python-modules-logging time
-BuildRequires: python-modules-multiprocessing
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: biblesync-devel cmake desktop-file-utils gcc-c++ intltool libGConf
+BuildRequires: libappstream-glib libdbus-glib-devel libminizip-devel
+BuildRequires: libsword-devel libwebkitgtk3-devel libxml2-devel yelp-tools
 
 %description
 Xiphos (formerly known as GnomeSword) is a Bible study application for GNOME,
@@ -28,32 +26,36 @@ commentaries, dictionaries, and other texts using your computer.
 
 %prep
 %setup
-rm -rf src/biblesync
 
 %build
-%add_optflags -fpermissive
-./waf configure \
-	--prefix=%prefix \
-	--enable-webkit-editor \
-	--gtk=3 || tail build/config.log
-
-./waf build
+export CXXFLAGS="$CXXFLAGS `pkg-config --cflags dbus-glib-1`"
+%cmake -DWEBKIT1=ON \
+       -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+       ..
+pushd BUILD
+%make_build
+popd
 
 %install
-./waf install --destdir=%buildroot
+pushd BUILD
+%makeinstall_std
+popd
 
-mv %buildroot%_docdir/xiphos/ doc-install
-%find_lang %name --with-gnome
-
-%files -f %name.lang
-%doc doc-install/*
+%files
 %_bindir/*
 %_datadir/appdata/%name.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
+%_datadir/help
+%_datadir/doc/%name
+%_datadir/locale/*/LC_MESSAGES/%name.mo
+%_man1dir/%{name}*
 
 %changelog
+* Sat Jul 04 2020 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
+- Build new version.
+
 * Fri Nov 30 2018 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt4
 - Fixed FTBFS (Add BR on python-modules-multiprocessing).
 
