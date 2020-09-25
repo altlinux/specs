@@ -6,7 +6,7 @@
 %def_without doc
 
 Name: python-module-%oname
-Version: 5.2
+Version: 5.3
 Release: alt1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
@@ -138,16 +138,14 @@ tox.py3 --sitepackages -v
 
 %files
 %doc CHANGES.rst README.rst
+%_bindir/coverage
+%_bindir/coverage2
+%_bindir/coverage-%_python_version
 %python_sitelibdir/%oname
 %python_sitelibdir/*.egg-info
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
-%endif
-%_bindir/coverage
-%_bindir/coverage2
-%_bindir/coverage-%_python_version
 
-%if_with doc
 %files doc
 %_docdir/%name
 
@@ -163,6 +161,9 @@ tox.py3 --sitepackages -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 25 2020 Grigory Ustinov <grenka@altlinux.org> 5.3-alt1
+- 5.2 -> 5.3.
+
 * Mon Jul 06 2020 Grigory Ustinov <grenka@altlinux.org> 5.2-alt1
 - 5.0.4 -> 5.2 (Closes: #38318).
 - Build without docs.
