@@ -1,35 +1,33 @@
-%filter_from_requires /^python2.7.haru/d
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^python2.7.haru/d
 BuildRequires: python-modules-encodings
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag0 RELEASE_2_3_0
+%global gittag0 RELEASE_2_3_0RC3
 
 Name:           libharu
 Version:        2.3.0
-Release:        alt2_3
+Release:        alt2_12
 Summary:        C library for generating PDF files
 License:        zlib with acknowledgement
 URL:            http://libharu.org
-Source0:        https://github.com/libharu/${name}/archive/%{gittag0}/%{name}-%{version}.tar.gz
+# not available. rebuilt from ZIP in this package
+Source0:        https://github.com/libharu/${name}/archive/%{gittag0}/%{name}-%{version}-rc3.tar.gz
 Patch0:         libharu-RELEASE_2_3_0_cmake.patch
+Patch1:         libharu-2.3.0-triangleshading.patch
+Patch2:         libharu-2.3.0-smallnumber.patch
 
-# Based on patches from Gentoo
-Patch10: libharu-2.3.0-1-Included-necessary-char-widths-in-generated-PDF.patch
-Patch11: libharu-2.3.0-2-Avoid-issue-with-libtiff-duplicate-symbols.patch
-Patch12: libharu-2.3.0-3-cmake-fixes.patch
-Patch13: libharu-2.3.0-4-Add-support-for-free-form-triangle-Shading-objects.patch
-
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  ctest cmake
 BuildRequires:  libpng-devel
 BuildRequires:  zlib-devel
 Source44: import.info
+Patch33: libharu-2.3.0-1-Included-necessary-char-widths-in-generated-PDF.patch
+Patch34: libharu-2.3.0-2-Avoid-issue-with-libtiff-duplicate-symbols.patch
 
 %description
 libHaru is a library for generating PDF files. 
@@ -48,33 +46,36 @@ developing applications that use %{name}.
 %setup -qn %{name}-%{gittag0}
 # fix cmake build
 %patch0 -p1 -b .cmake
-
-%patch10 -p1
-%patch11 -p1
-%patch12 -p2
-%patch13 -p1
+# github #157 pull request
+%patch1 -p1 -b .triangleshading
+# github #187 pull request
+%patch2 -p1 -b .smallnumber
+%patch33 -p1
+%patch34 -p1
 
 %build
-mkdir -p %{_target_platform}
-pushd %{_target_platform}
-%{fedora_cmake} -DLIBHPDF_STATIC=NO ..
-popd
+%{fedora_v2_cmake} -DLIBHPDF_STATIC=NO
 
-%make_build -C %{_target_platform}
+%fedora_v2_cmake_build
 
 %install
-make install/fast -C %{_target_platform}  DESTDIR=%{buildroot}
+%fedora_v2_cmake_install
+
+
 
 %files
 %doc README
 %{_libdir}/libhpdf.so.*
-%_defaultdocdir/%{name}
+%{_datadir}/%{name}
 
 %files devel
 %{_includedir}/*
 %{_libdir}/libhpdf.so
 
 %changelog
+* Fri Sep 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt2_12
+- fixed build
+
 * Wed Sep 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2_3
 - Applied patches from Gentoo.
 
