@@ -6,7 +6,7 @@
 
 Name: cmake
 Version: 3.18.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -22,6 +22,7 @@ Source1: %name.macros
 Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
 Patch1: alt-fallback-modules-dir.patch
+Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
@@ -142,6 +143,7 @@ Set of RPM macros for packaging applications that use cmake.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 # force _libdir due strange libdir detection
 #__subst 's|LIBDIR_DEFAULT "lib"|LIBDIR_DEFAULT "%_lib"|' Modules/GNUInstallDirs.cmake
 
@@ -296,6 +298,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Sep 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt2
+- add aarch64 dir support in FindJNI.cmake (ALT bug 38992)
+
 * Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt1
 - new version 3.18.3 (with rpmrb script)
 
