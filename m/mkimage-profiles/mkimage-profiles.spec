@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,23 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Sep 25 2020 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
+- education: added commits skipped when rebase was done
+- wireless: added rtl8812au driver
+- partially added commits from the kworkstation
+- added e2k patches (mike@)
+- tar2fs: set UUID in extlinux.conf, if exist
+- vm.mk: simplified conditions for choosing a bootloader depending on arch
+- added a couple of commits (obirvalger@)
+- added commits for mipsel support (iv@)
+- added the ability to override fonts (needed kworkstation)
+- added target use/live/no-cleanup which is needed to disable cleanup
+  documentation and rpmdb; is needed for live kworkstation without
+  livecd-install
+- fixed adding empty variable in "use/efi"
+- don't cleanup dri modules from install2 (needed for support glamore)
+- metadata/lib/50-metadata.mk: space-prefixed strings handling fixed (boyarsh@)
+
 * Tue Sep 01 2020 Anton Midyukov <antohami@altlinux.org> 1.4.2-alt1
 - x11: Added missing xorg-dri-armsoc for armh
 - oem: Added rootfs-installer-features
