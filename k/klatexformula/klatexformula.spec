@@ -1,6 +1,6 @@
 Name: klatexformula
-Version: 4.0.0
-Release: alt4
+Version: 4.1.0
+Release: alt1
 
 Summary: Generating images from LaTeX equations
 License: GPLv2
@@ -9,6 +9,7 @@ Group: Publishing
 Url: http://klatexformula.sourceforge.net/
 Source: %name-%version.tar.gz
 Patch: klatexformula-4.0.0-alt-qt-5.11.patch
+Patch1: klatexformula-4.1.0-alt-qt-5.15.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -33,6 +34,7 @@ TODO: make shared version of %name-devel.
 %prep
 %setup
 %patch -p2
+%patch1 -p1
 
 %build
 %ifarch %e2k
@@ -40,7 +42,7 @@ TODO: make shared version of %name-devel.
 %add_optflags -std=c++11
 %endif
 %cmake	\
-	-D KLF_LIBKLFBACKEND_AUTO_STATIC=False \
+	-DKLF_LIBKLFBACKEND_AUTO_STATIC=False \
 	..
 
 %cmake_build all doc
@@ -67,6 +69,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt1
+- new version
+
 * Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 4.0.0-alt4
 - E2K: explicit -std=c++11
 
