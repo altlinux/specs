@@ -12,8 +12,8 @@
 %define llvm_version      10.0
 
 Name: 	 thunderbird
-Version: 78.2.2
-Release: alt2
+Version: 78.3.0
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -48,7 +48,6 @@ Patch33: Don-t-auto-disable-extensions-in-system-directories.patch
 Patch34: Set-javascript.options.showInConsole.patch
 Patch35: Allow-.js-preference-files-to-set-locked-prefs-with-lockP.patch
 Patch36: Bug-1556197-amend-Bug-1544631-for-fixing-mips32.patch
-Patch37: Bug-1664607-Don-t-try-to-load-what-s-new-page-when-built-.patch
 Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
 Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
 Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
@@ -271,7 +270,6 @@ tar -xf %SOURCE6
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
-%patch37 -p1
 %patch38 -p1
 %patch39 -p1
 %patch40 -p1
@@ -644,6 +642,14 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Sep 25 2020 Andrey Cherepanov <cas@altlinux.org> 78.3.0-alt1
+- New version (78.3.0).
+- Fixes:
+  + CVE-2020-15677 Download origin spoofing via redirect
+  + CVE-2020-15676 XSS when pasting attacker-controlled data into a contenteditable element
+  + CVE-2020-15678 When recursing through layers while scrolling, an iterator may have become invalid, resulting in a potential use-after-free
+  + CVE-2020-15673 Memory safety bugs fixed in Thunderbird 78.3
+
 * Sat Sep 19 2020 Andrey Cherepanov <cas@altlinux.org> 78.2.2-alt2
 - Fix show folders and messages by patches from Debian (ALT #38964).
 
