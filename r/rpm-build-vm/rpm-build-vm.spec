@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -168,6 +168,9 @@ vm-run --verbose uname -a
 vm-run --verbose --overlay=ext4 uname -a
 
 %changelog
+* Fri Sep 25 2020 Vitaly Chikunov <vt@altlinux.org> 1.17-alt1
+- Skip copying non-existent modules into initramfs.
+
 * Tue Sep 08 2020 Vitaly Chikunov <vt@altlinux.org> 1.16-alt1
 - Fix checkinstall.
 
