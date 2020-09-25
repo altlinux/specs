@@ -8,7 +8,7 @@
 
 Name: plasma5-desktop
 Version: 5.19.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -199,7 +199,6 @@ KF5 library
 %_K5data/plasma/services/*
 %_K5data/plasma/desktoptheme/default/icons/*
 %_K5data/kcontrol/
-%_K5data/kcmmouse/
 %_K5data/kdisplay/
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kfontinst/
@@ -224,6 +223,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt2
+- fix defalut multimedia players chooser
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt1
 - new version
 
