@@ -15,7 +15,7 @@
 
 Name: plasma5-%rname
 Version: 5.19.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -202,6 +202,9 @@ KF5 library
 
 
 %changelog
+* Fri Sep 25 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt2
+- fix default window title buttons
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 5.19.5-alt1
 - new version
 
