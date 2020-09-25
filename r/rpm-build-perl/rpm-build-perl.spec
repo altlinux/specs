@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt19
+Release: alt20
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPLv2+
@@ -15,7 +15,7 @@ Source: %name-%version.tar.gz
 BuildRequires: perl-Encode-JP perl-Encode-KR perl-Filter perl-Try-Tiny perl-devel
 
 # for .perl.req to work with ExtUtils::Makefile
-# Unparsable version '0.1.9' for prerequisite Pod::Weaver::Plugin::Include treated as 0.1 (CPAN::Meta::Requirements not available) at Makefile.PL line 58.      
+# Unparsable version '0.1.9' for prerequisite Pod::Weaver::Plugin::Include treated as 0.1 (CPAN::Meta::Requirements not available) at Makefile.PL line 58.
 Requires: perl(CPAN/Meta/Requirements.pm)
 
 %if_with bootstrap
@@ -79,6 +79,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Thu Apr 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.84-alt20
+- migrated to libdb4.8
+
 * Tue Apr 21 2020 Dmitry V. Levin <ldv@altlinux.org> 0.84-alt19
 - B/PerlReq.pm: added arybase.pm to @Skip list.
 

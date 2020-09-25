@@ -17,7 +17,7 @@
 
 Name: openldap
 Version: %_sover.48
-Release: alt3
+Release: alt3.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -115,7 +115,7 @@ BuildRequires: libopenslp-devel
 %endif
 
 # Automatically added by buildreq on Tue Oct 18 2011 (-bi)
-BuildRequires: chrooted groff-base libdb4-devel libltdl-devel libssl-devel shtool
+BuildRequires: chrooted groff-base libdb4.8-devel libltdl-devel libssl-devel shtool
 
 %package -n libldap
 Summary: OpenLDAP libraries
@@ -690,6 +690,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 2.4.48-alt3.1
+- rebuild with new perl 5.30.2 and libdb4.8
+
 * Mon Oct 07 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.48-alt3
 - sasl fix fixed
 
