@@ -18,25 +18,22 @@
 
 
 Name: dpdk
-Version: 18.11.9
+Version: 19.11.3
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
-Source: %name-%version.tar
-
-Patch0: dpdk-16.11-move-to-libdir.patch
-Patch1: dpdk-18.02-aarch64-link-fix.patch
-Patch4: dpdk-18.11.9-fix-redefinition.patch
-Patch5: dpdk-18.08-fix-build-on-ppc64le.patch
-
-# fedora patches
-Patch102: dpdk-rte-ether-align.patch
-
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
 
-Provides: lib%{name} = %EVR
+Source: %name-%version.tar
 
+Patch0: dpdk-16.11-move-to-libdir.patch
+Patch4: dpdk-19.11.3-fix-redefinition.patch
+
+# fedora patches
+Patch100: app-pie.patch
+
+Provides: lib%{name} = %EVR
 
 #
 # The DPDK is designed to optimize througput of network traffic using, among
@@ -132,11 +129,9 @@ as L2 and L3 forwarding.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p2
 %patch4 -p1
-%patch5 -p2
 
-%patch102 -p1
+#%patch100 -p1
 
 %build
 # set up a method for modifying the resulting .config file
@@ -184,22 +179,25 @@ setconf CONFIG_RTE_APP_EVENTDEV n
 
 setconf CONFIG_RTE_LIBRTE_NFP_PMD y
 
+%if_with mlnx
+setconf CONFIG_RTE_LIBRTE_MLX4_PMD y
+setconf CONFIG_RTE_LIBRTE_MLX5_PMD y
+%endif
+
 %ifarch aarch64
 setconf CONFIG_RTE_LIBRTE_DPAA_BUS n
 setconf CONFIG_RTE_LIBRTE_DPAA_MEMPOOL n
 setconf CONFIG_RTE_LIBRTE_DPAA_PMD n
+setconf CONFIG_RTE_LIBRTE_PFE_PMD n
+setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR n
+setconf CONFIG_RTE_LIBRTE_PMD_CAAM_JR_BE n
 %endif
 
 %if_with shared
 setconf CONFIG_RTE_BUILD_SHARED_LIB y
 %endif
 
-%if_with mlnx
-setconf CONFIG_RTE_LIBRTE_MLX4_PMD y
-setconf CONFIG_RTE_LIBRTE_MLX5_PMD y
-%endif
-
-%make_build V=1 O=%target
+%make_build V=1 O=%target -Wimplicit-fallthrough=0
 %if_with doc
 %make_build V=1 O=%target doc-api-html doc-guides-html %{?with_pdfdoc: guides-pdf}
 %endif
@@ -235,7 +233,13 @@ done
 
 # Replace /usr/bin/env python with /usr/bin/python3
 find %buildroot%sdkdir/ -name "*.py" -exec \
+  sed -i -e 's|#!\s*/usr/bin/env python3|#!/usr/bin/python3|' {} +
+
+find %buildroot%sdkdir/ -name "*.py" -exec \
   sed -i -e 's|#!\s*/usr/bin/env python|#!/usr/bin/python3|' {} +
+
+find %buildroot%sdkdir/ -name "*.py" -exec \
+  sed -i -e 's|#!\s*/usr/bin/python33|#!/usr/bin/python3|' {} +
 
 # Create a driver directory with symlinks to all pmds
 mkdir -p %buildroot/%pmddir
@@ -314,6 +318,16 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 %endif
 
 %changelog
+* Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 19.11.3-alt1
+- Update to LTS release 19.11.3
+- Fixes:
+  + vhost: check log mmap offset and size overflow (CVE-2020-10722)
+  + vhost: fix translated address not checked (CVE-2020-10723)
+  + vhost/crypto: validate keys lengths (CVE-2020-10724)
+  + vhost: fix potential memory space leak (CVE-2020-10725)
+  + vhost: fix potential fd leak (CVE-2020-10726)
+  + vhost: fix vring index check (CVE-2020-10726)
+
 * Thu Aug 13 2020 Alexey Shabalin <shaba@altlinux.org> 18.11.9-alt1
 - Update to LTS release 18.11.9
 
@@ -342,10 +356,10 @@ sed -i -e 's:-%machine_tmpl-:-%machine-:g' %buildroot/%_sysconfdir/profile.d/dpd
 - 18.08
 - build with Mellanox nic support
 
-* Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 18.02.1-alt1%ubt
+* Fri Jun 01 2018 Anton Farygin <rider@altlinux.ru> 18.02.1-alt1
 - 18.02.1
 
-* Wed Apr 26 2017 Alexey Shabalin <shaba@altlinux.ru> 16.11.1-alt1%ubt
+* Wed Apr 26 2017 Alexey Shabalin <shaba@altlinux.ru> 16.11.1-alt1
 - 16.11.1
 
 * Thu Dec 08 2016 Lenar Shakirov <snejok@altlinux.ru> 16.11-alt1
