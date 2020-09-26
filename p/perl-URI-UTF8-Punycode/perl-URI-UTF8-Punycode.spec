@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.05
-Release: alt2.2
+Release: alt3
 Summary: Punycode conversion of UTF-8 string.
 Group: Development/Perl
 License: gpl
@@ -24,6 +24,7 @@ Patch: URI-UTF8-Punycode-1.05-perl5.26-add_test_dynamic.patch
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %{?epoch:%epoch:}%version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -50,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 1.05-alt3
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2.2
 - rebuild with new perl 5.28.1
 
