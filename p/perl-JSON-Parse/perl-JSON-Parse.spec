@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.57
-Release: alt1
+Release: alt2
 Summary: Read JSON into a Perl variable
 Group: Development/Perl
 License: perl
@@ -39,6 +39,7 @@ the Handling of Unicode entry elsewhere in this document.
 Summary: %module_name scripts
 Group: Development/Perl
 Requires: %name = %{?epoch:%epoch:}%version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %module_name
@@ -60,6 +61,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.57-alt2
+- fixed warning: scripts should be .noarch
+
 * Thu Jul 23 2020 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1
 - automated CPAN update
 
