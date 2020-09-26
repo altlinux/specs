@@ -2,7 +2,7 @@
 %define dist Unicode-Map
 Name: perl-%dist
 Version: 0.112
-Release: alt7.1
+Release: alt8
 
 Summary: Maps charsets from and to utf16 unicode
 License: GPL or Artistic
@@ -26,6 +26,7 @@ Group: Development/Perl
 Requires: %name = %EVR
 Conflicts: %name < 0.112-alt7
 BuildRequires: perl(HTTP/Status.pm) perl(LWP/Simple.pm)
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -77,6 +78,9 @@ perl -Mblib -MUnicode::Map -e 'Unicode::Map->new("KOI8-R") or die "KOI8-R broken
 %_man1dir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.112-alt8
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.112-alt7.1
 - rebuild with new perl 5.28.1
 
