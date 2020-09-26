@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -44,6 +44,9 @@ py.test-%_python3_version tests/*.py
 %doc *.rst *.md
 
 %changelog
+* Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Thu Jun 11 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 

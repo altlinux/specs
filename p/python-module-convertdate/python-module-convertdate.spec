@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-pytest python-module-pytz
 
 %py_provides %modname
-%py_requires pytz
+%py_requires pytz pymeeus
 
 %description
 Converts between Gregorian dates and other calendar systems. Calendars
@@ -46,6 +46,9 @@ py.test-%_python_version tests/*.py
 
 
 %changelog
+* Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Tue May 12 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 

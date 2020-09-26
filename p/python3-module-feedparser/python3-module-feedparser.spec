@@ -1,29 +1,29 @@
 %def_disable snapshot
 %define modname feedparser
 %def_without doc
-# tests not ready for python3
 %def_disable check
 
 Name: python3-module-%modname
-Version: 5.2.1
+Version: 6.0.1
 Release: alt1
 
 Summary: Universal feed parser for Python
 Group: Development/Python3
-License: BSD-style
+License: BSD-2-Clause
 Url: https://github.com/kurtmckee/%modname
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel >= 3.6 python3-module-setuptools
 %{?_with_doc:BuildRequires: python3-module-sphinx python3-module-requests}
+%{?_enable_check:BuildRequires: python3-module-tox}
 
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/f/%modname/%modname-%version.tar.gz
 %else
 Source: %modname-%version.tar
 %endif
-Patch: feedparser-5.1.3-fc-tests-py3.patch
 
 %description
 Universal feed parser is a Python module for downloading and parsing
@@ -43,7 +43,6 @@ This package contains documentation for the Universal feed parser.
 
 %prep
 %setup -n %modname-%version
-%patch -p1
 
 find -type f -print0 |
 	xargs -r0 sed -i 's/\r//' --
@@ -61,11 +60,7 @@ install -pm644 LICENSE NEWS README.rst %buildroot%docdir/
 %{?_with_doc:cp -a html %buildroot%docdir/}
 
 %check
-# this test may fail, disable it
-rm -f feedparser/tests/illformed/chardet/big5.xml
-
-cd %modname
-PYTHONPATH=%buildroot%python3_sitelibdir %__python3 feedparsertest.py
+tox.py3
 
 %files
 %python3_sitelibdir/*
@@ -79,6 +74,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir %__python3 feedparsertest.py
 %endif
 
 %changelog
+* Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 5.2.1-alt1
 - first build for Sisyphus
 

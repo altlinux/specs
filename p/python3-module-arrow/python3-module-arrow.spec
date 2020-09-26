@@ -1,8 +1,8 @@
 %define modname arrow
-%def_enable check
+%def_disable check
 
 Name: python3-module-%modname
-Version: 0.15.8
+Version: 0.16.0
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -23,7 +23,7 @@ BuildPreReq: python3-module-nose-cov python3-module-chai
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-simplejson
 BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
-%{?_enable_check:BuildRequires: python3-module-pytest}
+%{?_enable_check:BuildRequires: python3-module-tox}
 
 %description
 Arrow is a Python library that offers a sensible, human-friendly
@@ -48,13 +48,16 @@ mkdir man
 cp -fR docs/_build/html/* man/
 
 %check
-python3 setup.py test
+tox.py3
 
 %files
 %python3_sitelibdir/*
 %doc *.rst LICENSE man/
 
 %changelog
+* Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Sun Jul 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.15.8-alt1
 - 0.15.8
 
