@@ -4,7 +4,7 @@ Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.72
-Release: alt2
+Release: alt3
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -36,6 +36,7 @@ concurrently.
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %{?epoch:%epoch:}%version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -61,6 +62,9 @@ scripts for %name
 
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt3
+- fixed warning: scripts should be .noarch
+
 * Fri Apr 24 2020 Igor Vlasenko <viy@altlinux.ru> 2:4.72-alt2
 - added explicit BR: on libdb{perl}-devel
 
