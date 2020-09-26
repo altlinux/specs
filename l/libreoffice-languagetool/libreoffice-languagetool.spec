@@ -1,20 +1,20 @@
-%define ext_dir  %{_libdir}/libreoffice/share/extensions/
+%define ext_dir  %{_libdir}/LibreOffice/share/extensions/
 %define ext_name languagetool
 
 Name:       libreoffice-languagetool
-Version:    2.0
+Version:    5.1
 Release:    alt1
 
 Summary:    LibreOffice/OpenOffice.org extension for proofreading
-License:    LGPL
+License:    LGPL-2.1
 Group:      Office
 URL:        http://www.languagetool.org
 
-Packager:   Andrey Cherepanov <cas@altlinux.org>
-
+# XXX actually, .oxt
 Source0:    LanguageTool-%version.zip
 
 BuildRequires: unzip
+AutoReq: yes, noperl
 
 %description
 LanguageTool is an Open Source proofreading software for English,
@@ -36,5 +36,11 @@ unzip %SOURCE0 -d %buildroot%ext_dir/%ext_name
 %ext_dir/%ext_name
 
 %changelog
+* Sat Sep 26 2020 Fr. Br. George <george@altlinux.ru> 5.1-alt1
+- New version 5.1
+
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1
+- New version 2.1
+
 * Tue Mar 05 2013 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
 - Initial build in Sisyphus (ALT #22138)
