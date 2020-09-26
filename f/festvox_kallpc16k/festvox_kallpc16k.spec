@@ -1,13 +1,13 @@
 %define voice kallpc16k
 %define voicepath english/kal_diphone
 %define version	1.95
-%define release	alt1
+%define release	alt2
 
 Name:		festvox_%{voice}
 Version:	%{version}
 Release:	%{release}
 Group:		Sound
-Copyright:	X11-style
+License:	MIT
 URL:		http://www.cstr.ed.ac.uk/projects/festival.html
 Packager:	Igor Vlasenko <viy@altlinux.org>
 Summary:	Festival voice: American English male speaker (KAL, 16KHz sampling)
@@ -15,7 +15,7 @@ Requires:	festival, festlex_POSLEX, festlex_CMU
 Provides:	festvox
 BuildArch:	noarch
 
-Source0:	http://www.cstr.ed.ac.uk/downloads/festival/1.95/festvox_%{voice}.tar.bz2
+Source0:	http://festvox.org/packed/festival/2.5/voices/festvox_kallpc16k.tar
 
 %description
 American English male speaker (KAL) using residual excited LPC diphone database
@@ -39,5 +39,8 @@ install -m 644 festival/lib/voices/%{voicepath}/group/* $VOICE_DIR/%{voicepath}/
 %{_datadir}/festival/*
 
 %changelog
+* Sat Sep 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.95-alt2
+- fixed license
+
 * Tue Sep 26 2006 Igor Vlasenko <viy@altlinux.ru> 1.95-alt1
 - initial release for Sisyphus
