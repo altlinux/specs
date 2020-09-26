@@ -36,7 +36,7 @@
 %def_disable sqlite3
 
 Name: uim
-Version: 1.8.8.0.33.git3be53b4
+Version: 1.8.8.0.49.git49d1515ce
 Release: alt1
 
 Summary: useful input method
@@ -626,6 +626,10 @@ fi
 %endif
 
 %changelog
+* Sat Sep 26 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.49.git49d1515ce-alt1
+- Updated UIM to 1.8.8-49-g49d1515ce.
+- Updated SigScheme to 0.9.1-2-gccf1f92d6.
+
 * Tue Apr 14 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.33.git3be53b4-alt1
 - Updated UIM to 1.8.8-33-g3be53b423.
 - Updated SigScheme to 0.9.0-4-gfbd7fc82b.
