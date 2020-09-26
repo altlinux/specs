@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define dist Net-Libdnet
 Name: perl-%dist
 Version: 0.99
-Release: alt1.1
+Release: alt2
 
 Summary: Binding for Dug Song's libdnet
 License: BSD
@@ -27,6 +27,7 @@ the functionality provided by libpcap.
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -52,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.99-alt2
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1.1
 - rebuild with new perl 5.28.1
 
