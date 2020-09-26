@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define dist Text-Bidi
 Name: perl-%dist
 Version: 2.15
-Release: alt1.1
+Release: alt2
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
 License: GPL or Artistic
@@ -26,6 +26,7 @@ written languages.
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -51,6 +52,9 @@ scripts for %name
 
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 2.15-alt2
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1.1
 - rebuild with new perl 5.28.1
 
