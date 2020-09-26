@@ -4,7 +4,7 @@
 
 Name: python3-module-%modname
 Version: 0.7.6
-Release: alt1
+Release: alt2
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
@@ -21,7 +21,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
-BuildRequires: python3-module-nose-parameterized python3-module-wheel
+BuildRequires: python3-module-parameterized python3-module-wheel
 BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
 BuildRequires: python3-module-sphinx-devel
 %{?_enable_check:BuildRequires: python3-module-flake8 python3-module-coverage python3-module-parameterized
@@ -82,6 +82,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 
 
 %changelog
+* Sat Sep 26 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt2
+- fixed BRs
+
 * Sat Jun 27 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
 - 0.7.6 (python3 only)
 
