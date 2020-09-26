@@ -1,13 +1,13 @@
 %define voice rablpc16k
 %define voicepath english/rab_diphone
 %define version	1.95
-%define release	alt2
+%define release	alt3
 
 Name:		festvox_%{voice}
 Version:	%{version}
 Release:	%{release}
 Group:		Sound
-Copyright:	X11-style
+License:	MIT
 URL:		http://www.cstr.ed.ac.uk/projects/festival.html
 Packager:	Igor Vlasenko <viy@altlinux.org>
 Summary:	Festival voice: British English RP male speaker (16KHz sampling)
@@ -17,7 +17,7 @@ BuildArch:	noarch
 # useless and too slow on large data files
 AutoReqProv:	no
 
-Source0:	http://www.cstr.ed.ac.uk/downloads/festival/1.95/festvox_%{voice}.tar.bz2
+Source0:	http://www.cstr.ed.ac.uk/downloads/festival/2.5/festvox_%{voice}.tar.bz2
 
 %description
 British English RP male speaker using residual excited LPC diphone database
@@ -41,6 +41,9 @@ install -m 644 festival/lib/voices/%{voicepath}/group/* $VOICE_DIR/%{voicepath}/
 %{_datadir}/festival/*
 
 %changelog
+* Sat Sep 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.95-alt3
+- fixed license
+
 * Wed Oct 18 2006 Igor Vlasenko <viy@altlinux.ru> 1.95-alt2
 - fixed dependency on OALD
 
