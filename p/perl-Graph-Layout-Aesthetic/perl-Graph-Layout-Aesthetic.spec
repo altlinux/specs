@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators unzip
 
 Name: perl-%module_name
 Version: 0.12
-Release: alt1.gitcf5e428.2
+Release: alt2
 Summary: A module for laying out graphs
 Group: Development/Perl
 License: perl
@@ -37,6 +37,7 @@ The package also comes with a simple commandline tool gloss.pl
 Summary: %module_name scripts
 Group: Development/Perl
 Requires: %name = %{?epoch:%epoch:}%version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %module_name
@@ -59,6 +60,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.gitcf5e428.2
 - rebuild with new perl 5.28.1
 
