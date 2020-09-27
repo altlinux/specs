@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -72,15 +72,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
 %files
-%_libdir/*.so.*
+%_libdir/libsigc-%api_ver.so.*
 %dir %docdir
 %docdir/[ANR]*
 
 %files devel
-%_libdir/*.so
-%_libdir/sigc*
-%_includedir/*
-%_pkgconfigdir/*
+%_libdir/libsigc-%api_ver.so
+%_libdir/sigc++-%api_ver/
+%_includedir/sigc++-%api_ver/
+%_pkgconfigdir/sigc++-%api_ver.pc
 
 %files doc
 %docdir
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Sep 27 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
+- 3.0.4
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 - fixed License tag
