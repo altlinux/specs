@@ -16,7 +16,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.73
-Release: alt1.1
+Release: alt2
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
 License: perl
@@ -54,6 +54,7 @@ your program.
 Summary: %module_name scripts
 Group: Development/Perl
 Requires: %{?epoch:%epoch:}%name = %version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %module_name
@@ -82,6 +83,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.73-alt2
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1.1
 - rebuild with new perl 5.28.1
 
