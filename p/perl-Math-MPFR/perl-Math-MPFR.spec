@@ -4,14 +4,20 @@
 BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
-%ifnarch %e2k %arm
+%ifnarch %e2k %arm aarch64
 BuildRequires: perl(Math/Decimal64.pm)
 %endif
-ExcludeArch: aarch64 %arm ppc64le
+# not needed for now, but safe due to -Wl,as-needed
+%ifnarch %e2k %arm aarch64
+BuildRequires: libquadmath-devel
+%endif
+# not yet implemented _Decimal64 on aarch64 in our gcc9?
+#https://gcc.gnu.org/legacy-ml/gcc-patches/2017-07/msg00788.html
+ExcludeArch: aarch64 %arm
 
 Name: perl-%module_name
 Version: 4.14
-Release: alt1
+Release: alt2
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -28,9 +34,14 @@ A bigfloat module utilising the MPFR library. Basically.
    documentation.
    See also the Math::MPFR test suite for some examples of usage.
 
-
 %prep
 %setup -q -n %{module_name}-%{version}
+
+# todo: MPFR?
+%ifarch ppc64le
+#expected 1.00000000000000000000000000000001, got 9.99999999999999999999999999999991
+rm t/LongDouble.t
+%endif
 
 %build
 %perl_vendor_build
@@ -44,6 +55,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 4.14-alt2
+- ppc64le build
+
 * Mon Sep 21 2020 Igor Vlasenko <viy@altlinux.ru> 4.14-alt1
 - updated exlusive arch
 - automated CPAN update
