@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        80.0.1
+Version:        81.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -51,7 +51,7 @@ Patch011: 0011-Bug-1640982-Set-CARGO_PROFILE_RELEASE_LTO-true-when-.patch
 Patch012: 0012-use-floats-for-audio-on-arm-too.patch
 ### End Patches
 
-ExcludeArch: ppc64le
+#ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -320,6 +320,7 @@ cd mozilla
 export srcdir="$PWD"
 #export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
+export MACH_USE_SYSTEM_PYTHON=1
 
 # Fix virtualenv
 python3 ./mach python --exec-file /dev/null
@@ -331,7 +332,7 @@ find objdir/_virtualenvs/init_py3/lib/python3/site-packages \
 python3 ./mach build
 
 while read -r loc; do
-	./mach build chrome-$loc
+	python3 ./mach build chrome-$loc
 done < %SOURCE10
 
 make -C objdir/browser/installer multilocale.txt
@@ -480,6 +481,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sun Sep 27 2020 Alexey Gladkov <legion@altlinux.ru> 81.0-alt1
+- New release (81.0).
+- Build on all architectures.
+- Security fixes:
+  + CVE-2020-15675: Use-After-Free in WebGL
+  + CVE-2020-15677: Download origin spoofing via redirect
+  + CVE-2020-15676: XSS when pasting attacker-controlled data into a contenteditable element
+  + CVE-2020-15678: When recursing through layers while scrolling, an iterator may have become invalid, resulting in a potential use-after-free scenario
+  + CVE-2020-15673: Memory safety bugs fixed in Firefox 81 and Firefox ESR 78.3
+  + CVE-2020-15674: Memory safety bugs fixed in Firefox 81
+
 * Tue Sep 08 2020 Alexey Gladkov <legion@altlinux.ru> 80.0.1-alt1
 - New release (80.0.1).
 
