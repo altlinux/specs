@@ -4,7 +4,7 @@ BuildRequires: perl-podlators
 
 Name: perl-%module
 Version: 0.06
-Release: alt4.1
+Release: alt5
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -25,6 +25,7 @@ Perl interface to the GooCanvas.
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -57,6 +58,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.06-alt5
+- fixed warning: scripts should be .noarch
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4.1
 - rebuild with new perl 5.28.1
 
