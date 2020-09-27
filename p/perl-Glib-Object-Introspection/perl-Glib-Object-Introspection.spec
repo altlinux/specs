@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
 Version: 0.048
-Release: alt1
+Release: alt2
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -20,6 +20,7 @@ BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel per
 Summary: %name scripts
 Group: Development/Perl
 Requires: %name = %{?epoch:%epoch:}%version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %name
@@ -44,6 +45,9 @@ export LANG=ru_RU.UTF-8
 %_bindir/perli11ndoc
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2
+- fixed warning: scripts should be .noarch
+
 * Wed Dec 11 2019 Igor Vlasenko <viy@altlinux.ru> 0.048-alt1
 - new version
 
