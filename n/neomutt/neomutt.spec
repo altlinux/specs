@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: neomutt
-Version: 20200821
-Release: alt2
+Version: 20200925
+Release: alt1
 
 %define docdir %_docdir/%name-%version
 %undefine _configure_gettext
@@ -78,6 +78,9 @@ make -s test
 %docdir
 
 %changelog
+* Sun Sep 27 2020 Vitaly Chikunov <vt@altlinux.org> 20200925-alt1
+- Update to 20200925.
+
 * Sat Sep 05 2020 Vitaly Chikunov <vt@altlinux.org> 20200821-alt2
 - Fix alias parsing (closes: 38891).
 
