@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 4.23
-Release: alt1
+Release: alt2
 Summary: JSON::XS for Cpanel, fast and correct serialising, also for 5.6.2
 Group: Development/Perl
 License: perl
@@ -34,6 +34,7 @@ values and vice versa.
 Summary: %module_name scripts
 Group: Development/Perl
 Requires: %{?epoch:%epoch:}%name = %version-%release
+BuildArch: noarch
 
 %description scripts
 scripts for %module_name
@@ -58,6 +59,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 4.23-alt2
+- fixed warning: scripts should be .noarch
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.23-alt1
 - automated CPAN update
 
