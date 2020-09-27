@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: git-extras
-Version: 6.0.0
-Release: alt2
+Version: 6.1.0
+Release: alt1
 
 Summary: Little git extras
 License: MIT
@@ -49,6 +49,9 @@ install -D etc/git-extras-completion.zsh \
 %_datadir/zsh/Completion/Unix/_git-extras
 
 %changelog
+* Sun Sep 27 2020 Vitaly Chikunov <vt@altlinux.org> 6.1.0-alt1
+- Update to 6.1.0 (2020-09-26).
+
 * Sun Jul 05 2020 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt2
 - Fix git brv.
 
