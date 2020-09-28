@@ -1,7 +1,7 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.21
+Version: 0.220
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2Array
 %_man1dir/*
 
 %changelog
+* Mon Sep 28 2020 Igor Vlasenko <viy@altlinux.ru> 0.220-alt1
+- new version
+
 * Tue Sep 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - new version
 
