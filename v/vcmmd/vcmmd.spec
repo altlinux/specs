@@ -2,7 +2,7 @@
 
 Name:    vcmmd
 Version: 8.0.1
-Release: alt3
+Release: alt4
 
 Summary: Virtuozzo containers memory management daemon
 License: LGPL-2.1
@@ -56,12 +56,14 @@ popd
 %python3_sitelibdir/*
 %_unitdir/%name.service
 %_sysconfdir/vz/vcmmd.d/
-%_sysconfdir/libvirt/hooks/qemu.d/vcmmd_hook
 %config(noreplace) %_sysconfdir/dbus-1/system.d/com.virtuozzo.vcmmd.conf
 %config(noreplace) %_sysconfdir/vz/*.conf
 %config(noreplace) %_sysconfdir/logrotate.d/*
 
 %changelog
+* Mon Sep 28 2020 Andrew A. Vasilyev <andy@altlinux.org> 8.0.1-alt4
+- merge dist-vz7-u15 branch
+
 * Mon Aug 10 2020 Andrew A. Vasilyev <andy@altlinux.org> 8.0.1-alt3
 - reduce difference with upstream branch dist-vz7-u15
 - add %%check in spec file
