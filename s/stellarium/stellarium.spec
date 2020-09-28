@@ -1,5 +1,5 @@
 Name: stellarium
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: Astronomical Sky Simulator
@@ -71,6 +71,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %dir %_datadir/metainfo
 
 %changelog
+* Mon Sep 28 2020 Grigory Ustinov <grenka@altlinux.org> 0.20.3-alt1
+- Build new version.
+
 * Thu Jun 25 2020 Grigory Ustinov <grenka@altlinux.org> 0.20.2-alt1
 - Build new version.
 
