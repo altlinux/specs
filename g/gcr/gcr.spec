@@ -1,10 +1,10 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.36
+%define ver_major 3.38
 %def_enable introspection
 %def_enable gtk_doc
-%def_disable check
+%def_enable check
 
 Name: gcr
 Version: %ver_major.0
@@ -31,7 +31,8 @@ Conflicts: gnome-keyring < 3.3.0
 %define vala_ver 0.18.1
 %define gcrypt_ver 1.4.5
 
-BuildRequires: gnome-common gtk-doc python3 glib2-devel >= %glib_ver
+BuildRequires(pre): meson rpm-build-gir
+BuildRequires: gtk-doc python3 glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -111,19 +112,19 @@ This package contains development documentation for GCR libraries.
 %setup
 
 %build
-%autoreconf
-%configure --disable-update-mime \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+%{?_disable_introspection:-Dintrospection=false} \
+%{?_disable_gtk_doc:-Dgtk_doc=false}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %check
-xvfb-run %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+xvfb-run %meson_test
 
 %files -f %name.lang
 %_bindir/gcr-viewer
@@ -143,7 +144,6 @@ xvfb-run %make check
 
 %files libs
 %_libdir/libgck-1.so.*
-%_libdir/libgcr-3.so.*
 %_libdir/libgcr-base-3.so.*
 %_libdir/libgcr-ui-3.so.*
 
@@ -151,18 +151,17 @@ xvfb-run %make check
 %_includedir/gck-1
 %_includedir/gcr-3
 %_libdir/libgck-1.so
-%_libdir/libgcr-3.so
 %_libdir/libgcr-base-3.so
 %_libdir/libgcr-ui-3.so
-%_libdir/pkgconfig/gck-1.pc
-%_libdir/pkgconfig/gcr-3.pc
-%_libdir/pkgconfig/gcr-base-3.pc
-%_libdir/pkgconfig/gcr-ui-3.pc
+%_pkgconfigdir/gck-1.pc
+%_pkgconfigdir/gcr-3.pc
+%_pkgconfigdir/gcr-base-3.pc
+%_pkgconfigdir/gcr-ui-3.pc
 
 %if_enabled gtk_doc
 %files libs-devel-doc
-%_datadir/gtk-doc/html/gck
-%_datadir/gtk-doc/html/gcr-3
+%_datadir/gtk-doc/html/gck/
+%_datadir/gtk-doc/html/gcr/
 %endif
 
 %if_enabled introspection
@@ -188,6 +187,9 @@ xvfb-run %make check
 
 
 %changelog
+* Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0 (ported to Meson build system)
+
 * Wed Mar 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
