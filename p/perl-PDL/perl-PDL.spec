@@ -35,7 +35,7 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.024
 Version:        2.24.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        The Perl Data Language
 License:        GPL+ or Artistic
 Url:            http://pdl.perl.org/
@@ -50,7 +50,7 @@ Patch3:         PDL-2.6.0.90-Compile-Slatec-code-as-PIC.patch
 Patch4:         PDL-2.14.0-Disable-PDL-Slatec.patch
 Patch5:         PDL-2.17.0-Update-additional-deps-for-Basic-Core.patch
 BuildRequires:  coreutils
-BuildRequires:  libfftw-devel
+#BuildRequires:  libfftw3-devel
 BuildRequires:  findutils
 BuildRequires:  libfreeglut-devel
 BuildRequires:  gcc-c++
@@ -249,6 +249,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Mon Sep 28 2020 Igor Vlasenko <viy@altlinux.ru> 2.24.0-alt2_1
+- manually removed BuildRequires:  libfftw3-devel
+
 * Mon Sep 21 2020 Igor Vlasenko <viy@altlinux.ru> 2.24.0-alt1_1
 - new version
 
