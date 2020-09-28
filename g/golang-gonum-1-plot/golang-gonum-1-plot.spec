@@ -5,7 +5,7 @@
 %global repo plot
 
 Name: golang-gonum-1-plot
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Package for plotting and visualizing data
 
@@ -67,6 +67,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Sep 28 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.0-alt1
+- New version.
+
 * Mon Aug 10 2020 Leontiy Volodin <lvol@altlinux.org> 0.7.0-alt1
 - New version.
 
