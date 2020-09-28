@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.74.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -166,6 +166,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Sep 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt2
+- fix checksum widgets layout
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 
