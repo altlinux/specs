@@ -1,13 +1,13 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 # Use ICU
 %def_with icu
 
 %define prog_name            postgresql
-%define postgresql_major     12
-%define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_major     13
+%define postgresql_minor     0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -330,11 +330,14 @@ cp -a COPYRIGHT README README.git \
 %find_lang pltcl-%postgresql_major
 %find_lang postgres-%postgresql_major
 %find_lang psql-%postgresql_major
+%find_lang pg_verifybackup-%postgresql_major
+
 
 cat psql-%postgresql_major.lang \
     pg_dump-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
+    pg_verifybackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
     pg_test_timing-%postgresql_major.lang > main.lang
 
@@ -438,6 +441,7 @@ fi
 %_bindir/reindexdb
 %_bindir/vacuumdb
 %_bindir/pg_basebackup
+%_bindir/pg_verifybackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
 %_bindir/pg_isready
@@ -458,6 +462,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verifybackup.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -546,11 +551,6 @@ fi
 %_libdir/pgsql/hstore_plperl.so
 %_datadir/%PGSQL/extension/hstore_plperl*.sql
 %_datadir/%PGSQL/extension/hstore_plperl*.control
-%_libdir/pgsql/hstore_plpython2.so
-%_datadir/%PGSQL/extension/hstore_plpython2u-*.sql
-%_datadir/%PGSQL/extension/hstore_plpythonu-*.sql
-%_datadir/%PGSQL/extension/hstore_plpython2u.control
-%_datadir/%PGSQL/extension/hstore_plpythonu.control
 %_libdir/pgsql/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
@@ -564,22 +564,12 @@ fi
 %_datadir/%PGSQL/extension/jsonb_plperl.control
 %_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
 %_datadir/%PGSQL/extension/jsonb_plperlu.control
-%_libdir/pgsql/jsonb_plpython2.so
-%_datadir/%PGSQL/extension/jsonb_plpython2u-*.sql
-%_datadir/%PGSQL/extension/jsonb_plpython2u.control
-%_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
-%_datadir/%PGSQL/extension/jsonb_plpythonu.control
 %_libdir/pgsql/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
 %_libdir/pgsql/ltree.so
 %_datadir/%PGSQL/extension/ltree-*.sql
 %_datadir/%PGSQL/extension/ltree.control
-%_libdir/pgsql/ltree_plpython2.so
-%_datadir/%PGSQL/extension/ltree_plpython2u-*.sql
-%_datadir/%PGSQL/extension/ltree_plpython2u.control
-%_datadir/%PGSQL/extension/ltree_plpythonu-*.sql
-%_datadir/%PGSQL/extension/ltree_plpythonu.control
 %_libdir/pgsql/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
@@ -697,8 +687,6 @@ fi
 %dir %_datadir/%PGSQL/tsearch_data
 %_datadir/%PGSQL/tsearch_data/*
 %_datadir/%PGSQL/postgres.bki
-%_datadir/%PGSQL/postgres.description
-%_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
@@ -727,6 +715,11 @@ fi
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
 %_datadir/%PGSQL/extension/plperlu.control
+%_libdir/pgsql/bool_plperl.so
+%_datadir/%PGSQL/extension/bool_plperl-*.sql
+%_datadir/%PGSQL/extension/bool_plperl.control
+%_datadir/%PGSQL/extension/bool_plperlu-*.sql
+%_datadir/%PGSQL/extension/bool_plperlu.control
 
 %files -f plpython-%postgresql_major.lang python
 %dir %docdir
@@ -736,6 +729,21 @@ fi
 %_datadir/%PGSQL/extension/plpython2u.control
 %_datadir/%PGSQL/extension/plpythonu-*.sql
 %_datadir/%PGSQL/extension/plpythonu.control
+%_libdir/pgsql/hstore_plpython2.so
+%_datadir/%PGSQL/extension/hstore_plpython2u-*.sql
+%_datadir/%PGSQL/extension/hstore_plpythonu-*.sql
+%_datadir/%PGSQL/extension/hstore_plpython2u.control
+%_datadir/%PGSQL/extension/hstore_plpythonu.control
+%_libdir/pgsql/jsonb_plpython2.so
+%_datadir/%PGSQL/extension/jsonb_plpython2u-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpython2u.control
+%_datadir/%PGSQL/extension/jsonb_plpythonu-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpythonu.control
+%_libdir/pgsql/ltree_plpython2.so
+%_datadir/%PGSQL/extension/ltree_plpython2u-*.sql
+%_datadir/%PGSQL/extension/ltree_plpython2u.control
+%_datadir/%PGSQL/extension/ltree_plpythonu-*.sql
+%_datadir/%PGSQL/extension/ltree_plpythonu.control
 
 %if_with devel
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
@@ -779,8 +787,8 @@ fi
 %endif
 
 %changelog
-* Mon Sep 28 2020 Alexei Takaseev <taf@altlinux.org> 12.4-alt2
-- Disable -devel
+* Wed Sep 23 2020 Alexei Takaseev <taf@altlinux.org> 13.0-alt1
+- 13.0
 
 * Wed Aug 12 2020 Alexei Takaseev <taf@altlinux.org> 12.4-alt1
 - 12.4 (Fixes CVE-2020-14349, CVE-2020-14350)
