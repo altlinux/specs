@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Media Sharing Server
@@ -129,6 +129,7 @@ This package contains command line utilities for the PipeWire media server.
 %_bindir/%name
 %_bindir/pw-jack
 %_bindir/pw-pulse
+
 %{?_enable_examples:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
@@ -184,8 +185,11 @@ This package contains command line utilities for the PipeWire media server.
 %_bindir/pw-play
 %_bindir/pw-profiler
 %_bindir/pw-record
+%_bindir/pw-reserve
 %_bindir/spa-inspect
 %_bindir/spa-monitor
+%_bindir/spa-resample
+%_bindir/spa-acp-tool
 %if_enabled man
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
@@ -198,6 +202,9 @@ This package contains command line utilities for the PipeWire media server.
 
 
 %changelog
+* Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- updated to 0.3.13-1-g81ca70af
+
 * Sat Sep 19 2020 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - updated to 0.3.12-4-g99b3f4a6
 
