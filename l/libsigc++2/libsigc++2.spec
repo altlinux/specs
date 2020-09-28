@@ -2,11 +2,12 @@
 %def_enable check
 
 %define _name libsigc++
+%define api_ver 2.0
 %define ver_major 2.10
 %def_enable docs
 
 Name: %{_name}2
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -17,13 +18,14 @@ Url: https://libsigcplusplus.github.io/libsigcplusplus/
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
-#VCS: https://github.com/libsigcplusplus/libsigcplusplus.git
+Vcs: https://github.com/libsigcplusplus/libsigcplusplus.git
 Source: %_name-%version.tar
 %endif
 
 Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
-# Automatically added by buildreq on Fri Nov 19 2010
+
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ mm-common
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
@@ -58,34 +60,34 @@ This package provides API documentation of libsigc++ library.
 %setup -n %_name-%version
 
 %build
-%if_enabled snapshot
-mm-common-prepare -f
-%autoreconf
-%endif
-%configure --disable-static \
-    %{?_disable_docs:--disable-documentation}
+%{?_enable_snapshot:mm-common-prepare -f}
+%meson \
+    %{?_enable_docs:-Dbuild-documentation=true} \
+    %{?_enable_snapshot:-Dmaintainer-mode=true
+    -Dbuild-documentation=true}
 %nil
-%make_build DOCBOOK_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/html/chunk.xsl
+%meson_build
 
 %install
-%makeinstall_std
-%define docdir %_docdir/libsigc++-2.0
+%meson_install
+%define docdir %_docdir/%_name-%api_ver
 %{?_disable_docs:mkdir -p %buildroot%docdir}
 install -pm644 AUTHORS NEWS README %buildroot%docdir/
 
 %check
-%make_build -k check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
-%_libdir/*.so.*
+%_libdir/libsigc-%api_ver.so.*
 %dir %docdir
 %docdir/[ANR]*
 
 %files devel
-%_libdir/*.so
-%_libdir/sigc*
-%_includedir/*
-%_pkgconfigdir/*
+%_libdir/libsigc-%api_ver.so
+%_libdir/sigc++-%api_ver/
+%_includedir/sigc++-%api_ver
+%_pkgconfigdir/sigc++-%api_ver.pc
 
 %files doc
 %docdir
@@ -94,6 +96,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 
 
 %changelog
+* Sun Sep 27 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.4-alt1
+- 2.10.4 (ported to Meson build system)
+
 * Wed Mar 25 2020 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
 - 2.10.3
 - made documentation build optional
