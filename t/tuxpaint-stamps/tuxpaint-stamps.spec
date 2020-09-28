@@ -1,18 +1,17 @@
 Name: tuxpaint-stamps
-Version: 2009.06.28
-Release: alt2
+Version: 2020.05.29
+Release: alt1
 
 Summary: This is a collection of 'rubber stamp' images for Tux Paint
 Summary(ru_RU.UTF8): Колекция изображений 'штампов' для программы Tux Paint
-License: GPL
+License: GPL-2.0
 Group: Graphics
 
-Url: http://www.newbreedsoftware.com/tuxpaint/
+Url: http://www.tuxpaint.org
 Source: %name-%version.tar.gz
-Patch: %name-%version.patch
 
 BuildRequires: gettext-tools
-Requires: tuxpaint >= 0.9.15
+Requires: tuxpaint
 
 BuildArch: noarch
 
@@ -25,8 +24,7 @@ Tux Paint - A simple drawing program for children.
 "Tux Paint" является детской программой для рисования.
 
 %prep
-%setup -q
-%patch -p0
+%setup
 
 %build
 # Compile locales by hand.
@@ -38,7 +36,8 @@ pushd po
 popd
 
 %install
-%__make DATA_PREFIX=%buildroot/%_datadir/tuxpaint/ install-all
+install -d %buildroot%_datadir/tuxpaint/stamps
+make install-all PREFIX=%buildroot%_prefix
 
 # Install locales by hand.
 pushd po
@@ -46,16 +45,20 @@ pushd po
         install -pD -m644 "$f" "$RPM_BUILD_ROOT%_datadir/locale/${f%.mo}/LC_MESSAGES/%name.mo"
     done
 popd
-%find_lang --with-gnome %name
+
+# License is bad on this file, Creative Commons Sampling Plus 1.0 is non-free.
+rm -rf %buildroot%_datadir/tuxpaint/stamps/vehicles/emergency/firetruck.ogg
+
+%find_lang %name
 
 %files -f %name.lang
-# docs files
-%doc docs/*
-
-# data files
+%doc docs/*.txt
 %_datadir/tuxpaint/stamps/*
 
 %changelog
+* Mon Sep 28 2020 Grigory Ustinov <grenka@altlinux.org> 2020.05.29-alt1
+- Build new version (Closes: #38961).
+
 * Tue Oct 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2009.06.28-alt2
 - Fix build
 
