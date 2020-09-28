@@ -1,6 +1,8 @@
 %set_verify_elf_method textrel=relaxed
+%def_without check
+
 Name: dune
-Version: 2.6.1
+Version: 2.7.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -11,10 +13,30 @@ Provides: ocaml-dune = %EVR
 
 BuildRequires: ocaml >= 4.08.0
 BuildRequires: ocaml-findlib-devel
+BuildRequires: ocaml-csexp-devel
 BuildRequires: opam
 
-# Required by tests.
-#BuildRequires: ocaml-menhir
+%if_with check
+BuildRequires: ocaml-csexp-devel
+BuildRequires: ocaml-ppx_expect-devel
+BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-time_now-devel
+BuildRequires: gcc-c++
+BuildRequires: ocaml-ppxlib-devel ocaml-migrate-parsetree-devel ocaml-compiler-libs-devel
+BuildRequires: utop-devel
+BuildRequires: libev-devel
+BuildRequires: ocaml-lwt-devel
+BuildRequires: ocaml-lambda-term-devel
+BuildRequires: ocaml-ppx_hash-devel
+BuildRequires: ocaml-ppx_enumerate-devel
+BuildRequires: ocaml-jane-street-headers-devel
+BuildRequires: ocaml-ppx_sexp_conv-devel
+BuildRequires: ocaml-ppx_compare-devel
+BuildRequires: ocaml-ppx_inline_test-devel
+BuildRequires: ocaml-re-devel
+BuildRequires: cinaps
+%endif
+
 
 %description
 Dune is a build system designed for OCaml/Reason projects only. It focuses
@@ -30,6 +52,7 @@ productive.
 %package -n ocaml-dune-devel
 Group: Development/ML
 Summary: Development files for %name
+Requires: ocaml-result-devel
 %description -n ocaml-dune-devel
 Dune is a build system designed for OCaml/Reason projects only. It focuses
 on providing the user with a consistent experience and takes care of most of
@@ -44,10 +67,13 @@ description of your project and Dune will do the rest.
 sed -i '/^(name/a (version %version)' dune-project
 ./configure --libdir=%_libdir/ocaml --mandir=%_mandir
 %make_build release
-./dune.exe build @install
+./dune.exe build --release @install
 
 %install
 ./dune.exe install --destdir=%buildroot
+
+%check
+./dune.exe runtest
 
 %files
 %doc README.md CHANGES.md
@@ -99,10 +125,7 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune*/*.cmi
 %_libdir/ocaml/dune-configurator/.private
 %_libdir/ocaml/dune-private-libs/*/*.cma
-%_libdir/ocaml/dune-private-libs/*/*.cmxa
 %_libdir/ocaml/dune-private-libs/*/*.cmi
-%_libdir/ocaml/dune*/*.cmxs
-%_libdir/ocaml/dune-private-libs/*/*.cmxs
 %_libdir/ocaml/stublibs/dllstdune_stubs.so
 
 %files -n ocaml-dune-devel
@@ -114,17 +137,24 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune*/*.mli
 %_libdir/ocaml/dune-private-libs/*/*.cmt
 %_libdir/ocaml/dune-private-libs/*/*.cmti
+%_libdir/ocaml/dune-private-libs/*/*.cmxa
+%_libdir/ocaml/dune-private-libs/*/*.cmxs
 %_libdir/ocaml/dune-private-libs/*/*.ml
 %_libdir/ocaml/dune-private-libs/*/*.mli
 %_libdir/ocaml/dune*/*.a
 %_libdir/ocaml/dune*/*.cmx
+%_libdir/ocaml/dune*/*.cmxs
 %_libdir/ocaml/dune*/*.cmxa
 %_libdir/ocaml/dune-private-libs/*/*.a
 %_libdir/ocaml/dune-private-libs/*/*.cmx
 
-
-
 %changelog
+* Thu Sep 03 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
+- 2.7.1
+
+* Thu Aug 06 2020 Anton Farygin <rider@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+
 * Mon Jul 06 2020 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
