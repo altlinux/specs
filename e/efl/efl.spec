@@ -22,11 +22,10 @@
 
 %def_enable wayland
 
-# aarch64 with luajit-2.1-alt6: PANIC: unprotected error in call to Lua API (bad light userdata pointer)
-%ifarch aarch64
-%def_disable elua
-%else
+%ifarch %luajit_arches
 %def_enable elua
+%else
+%def_disable elua
 %endif
 
 %ifnarch %e2k
@@ -35,7 +34,7 @@
 %endif
 
 Name: efl
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -55,7 +54,7 @@ Patch1: efl-1.19.1-luajitfix.patch
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: LibreOffice
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-luajit
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
@@ -240,6 +239,9 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_enable_drm:-Ddrm=true} \
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_disable_avahi:-Davahi=false} \
+%ifarch %e2k
+	-Dlua-interpreter=lua \
+%endif
 	-Dmount-path=/bin/mount \
 	-Dumount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
@@ -417,6 +419,9 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Mon Sep 28 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.4-alt1
+- 1.24.4
+
 * Wed Jun 17 2020 Yuri N. Sedunov <aris@altlinux.org> 1.24.3-alt1
 - 1.24.3
 
