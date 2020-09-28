@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200901
+Version: 20200915
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Mon Sep 28 2020 Cronbuild Service <cronbuild@altlinux.org> 20200915-alt1
+- upstream changes (GIT 00a84c5):
+  + Update AMD SEV firmware (thx John Allen)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.1310 (thx Petr Machata)
+  + mediatek: update MT7915 firmware to 20200819 (thx Ryder Lee)
+  + brcm: Fix a stale symlink for RPi3 model b+ (thx Takashi Iwai)
+  + qcom: Add updated a5xx and a6xx microcode (thx Jordan Crouse)
+
 * Tue Sep 01 2020 Cronbuild Service <cronbuild@altlinux.org> 20200901-alt1
 - upstream changes (GIT d5f9eea):
   + wl18xx: update firmware file 8.9.0.0.83 (thx Raz Bouganim)
