@@ -6,7 +6,7 @@
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
 Version: 2.8.3
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 BuildRequires(pre): lsb-release
 
-%filter_from_requires /\(debconf\|python\|dpkg\|lsb\|systemd\|module-init-tools\)/d
+%filter_from_requires /\(debconf\|python\|dpkg\|lsb\|systemd\|module-init-tools\|\/etc\/sysconfig\/kernel\)/d
 
 %description
 The framework for the Dynamic Kernel Module Support (DKMS) method
@@ -121,5 +121,8 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Tue Sep 29 2020 Vitaly Chikunov <vt@altlinux.org> 2.8.3-alt2
+- spec: Remove dependence on /etc/sysconfig/kernel.
+
 * Wed Sep 02 2020 Vitaly Chikunov <vt@altlinux.org> 2.8.3-alt1
 - First import to ALT.
