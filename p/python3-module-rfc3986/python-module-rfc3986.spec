@@ -3,12 +3,12 @@
 
 %def_with check
 
-Name: python-module-%pypi_name
-Version: 1.3.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 1.4.0
+Release: alt1
 Summary: Validating URI References per RFC 3986
-Group: Development/Python
-License: ASL 2.0
+Group: Development/Python3
+License: Apache-2.0
 Url: https://pypi.python.org/pypi/rfc3986
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -18,70 +18,50 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-BuildRequires: python2.7(idna)
-BuildRequires: python2.7(pytest_cov)
 BuildRequires: python3(idna)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
 %endif
 
-%py_requires idna
-
 %description
 A Python implementation of RFC 3986 including validation and authority parsing.
 
-%package -n python3-module-%pypi_name
-Summary: Validating URI References per RFC 3986
-Group: Development/Python3
 %py3_requires idna
-
-%description -n python3-module-%pypi_name
-A Python implementation of RFC 3986 including validation and authority parsing.
 
 %prep
 %setup
 %patch -p1
 
-rm -rf ../python3
-cp -a . ../python3
-
 %build
-%python_build
-pushd ../python3
 %python3_build
-popd
 
 %install
-%python_install
-pushd ../python3
 %python3_install
-popd
 
 %check
 sed -i '/^\[testenv\]$/a whitelist_externals =\
     \/bin\/cp\
     \/bin\/sed\
 setenv =\
-    py%{python_version_nodots python}: _PYTEST_BIN=%_bindir\/py.test\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
     \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
     \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
 
 export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
+export TOXENV=py%{python_version_nodots python3}
+tox.py3 --sitepackages -vvr
 
 %files
 %doc README.rst LICENSE
-%python_sitelibdir/rfc3986/
-%python_sitelibdir/rfc3986-%version-py%_python_version.egg-info/
-
-%files -n python3-module-%pypi_name
 %python3_sitelibdir/rfc3986/
 %python3_sitelibdir/rfc3986-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 29 2020 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.1 -> 1.4.0.
+- Stopped Python2 package build.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 1.3.1-alt2
 - Fixed testing against Pytest 5.
 
