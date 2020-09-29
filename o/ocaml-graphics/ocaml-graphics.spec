@@ -2,13 +2,13 @@
 %define libname graphics
 Name: ocaml-%libname
 Version: 5.1.0
-Release: alt1
+Release: alt2
 Summary: The OCaml graphics library
 License: LGPLv2.1 with exceptions
 Group: Development/ML
 Url: https://github.com/ocaml/graphics
 Source0: %name-%version.tar
-BuildRequires: ocaml dune libX11-devel
+BuildRequires: ocaml ocaml-dune-devel libX11-devel
 
 %description
 The graphics library provides a set of portable drawing primitives. Drawing
@@ -28,31 +28,23 @@ developing applications that use %name.
 %setup
 
 %build
-dune build @install
+%dune_build --release @install
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md LICENSE CHANGES.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/stublibs/dllgraphics_stubs.so
-%_libdir/ocaml/%libname/META
-%_libdir/ocaml/%libname/*.cmi
-%_libdir/ocaml/%libname/*.cma
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
 
-%files devel
-%_libdir/ocaml/%libname/opam
-%_libdir/ocaml/%libname/dune-package
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 5.1.0-alt2
+- migrated to rpm-build-ocaml 1.4
+
 * Fri Feb 28 2020 Anton Farygin <rider@altlinux.ru> 5.1.0-alt1
 - first build for ALT
 
