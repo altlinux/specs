@@ -4,7 +4,7 @@
 %def_with check
 Name: python3-module-%oname
 Version: 1.0.4
-Release: alt1
+Release: alt2
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python3
@@ -12,6 +12,8 @@ Url: https://pypi.org/project/lmoments3/
 
 # https://github.com/OpenHydrology/lmoments3.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -31,11 +33,15 @@ frequently used in Extreme Value Analyses.
 
 %prep
 %setup
+%patch -p1
+
 # workaround for versioneer
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-grep -qs '^[ ]*git_refnames[ ]*=[ ]*""[ ]*$' "$vers_f" || exit 1
-sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*""[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
+if [ "$(grep -cF 'git_refnames = " (tag: v%version, upstream/master)"' $vers_f)" -eq 0 ]; then
+    grep -qs '^[ ]*git_refnames[ ]*=[ ]*""[ ]*$' "$vers_f" || exit 1
+    sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*""[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
+fi
 
 %build
 %python3_build_debug
@@ -52,6 +58,9 @@ nosetests3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 29 2020 Stanislav Levin <slev@altlinux.org> 1.0.4-alt2
+- Fixed FTBFS.
+
 * Thu Oct 03 2019 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
 - 1.0.2 -> 1.0.4.
 - Fixed testing.
