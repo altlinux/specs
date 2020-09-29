@@ -1,10 +1,11 @@
 # TODO: use system sqlite
 
+%def_enable static
 # Enable or disable clang compiler...
 %def_with clang
 
 Name: tdlib
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
@@ -22,12 +23,13 @@ Source: %name-%version.tar
 
 Patch: %name-system-crypto.patch
 
-BuildRequires(pre): rpm-macros-ninja-build
+#BuildRequires(pre): rpm-macros-ninja-build
+#BuildRequires: ninja-build
+
 BuildRequires: gperftools-devel
-BuildRequires: libssl-devel
-BuildRequires: ninja-build
-BuildRequires: gcc-c++
 BuildRequires: gperf
+BuildRequires: libssl-devel
+BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: cmake
 
@@ -56,29 +58,24 @@ Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
 
-%package static
+%package devel-static
 Summary: Static libraries for %name
 Group: Development/C++
-Requires: %name = %EVR
 Requires: %name-devel = %EVR
 
 %description devel
 %summary.
 
-%description static
+%description devel-static
 %summary.
 
 %prep
 %setup
 %patch -p1
 
-# Adding missing SOVERSION for shared libraries...
-echo "set_property(TARGET tdclient PROPERTY SOVERSION \${TDLib_VERSION})" >> CMakeLists.txt
-echo "set_property(TARGET tdjson PROPERTY SOVERSION \${TDLib_VERSION})" >> CMakeLists.txt
-
-# Patching LIBDIR path...
-sed -e 's@DESTINATION lib@DESTINATION %_lib@g' -e 's@lib/@%_lib/@g' -i CMakeLists.txt
-%__subst 's@DESTINATION lib@DESTINATION %_lib@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
+%if_with packaged_sqlite
+rm -rfv sqlite/
+%endif
 
 %build
 %if_with clang
@@ -86,15 +83,15 @@ export CC=clang
 export CXX=clang++
 %endif
 
-%cmake -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release
-
-%ninja_build -C BUILD
+%cmake -DCMAKE_INSTALL_LIBDIR=%_lib
+%cmake_build
 
 %install
-%ninja_install -C BUILD
-# disable static
+%cmakeinstall_std
+
+%if_disabled static
 rm -fv %buildroot%_libdir/*.a
+%endif
 
 #check
 # inet only
@@ -110,10 +107,17 @@ rm -fv %buildroot%_libdir/*.a
 %_libdir/libtd*.so
 %_libdir/cmake/Td
 
-#%files static
-#%_libdir/libtd*.a
+%if_enabled static
+%files devel-static
+%_libdir/libtd*.a
+%endif
 
 %changelog
+* Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0 (with rpmrb script)
+- cleanup spec, enable static subpackage
+- build with make instead of ninja
+
 * Tue Oct 29 2019 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0 (with rpmrb script)
 
