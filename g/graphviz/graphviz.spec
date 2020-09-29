@@ -18,7 +18,7 @@
 
 Name: graphviz
 Version: 2.41.2
-Release: alt3
+Release: alt4
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -182,6 +182,10 @@ for N in tclpkg/gv/demo/*lua; do
 	sed -i 's@#!/usr/bin/lua@#!/usr/bin/env lua@' $N
 done
 
+%ifarch %e2k
+# 2.41 got hardwired arch list for libsuffix there :-/
+sed -i 's,sparc64,& | e2k,' configure.ac
+%endif
 
 %build
 ./autogen.sh NOCONFIG
@@ -247,7 +251,7 @@ cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-
 # argh, #21967
 if [ ! -d %buildroot%gvtcldir ]; then
 	mkdir -p "$(dirname %buildroot%gvtcldir)"
-	mv %buildroot{%_libdir/%name/tcl,%gvtcldir}
+	mv %buildroot{%_libdir/%name/tcl,%gvtcldir} ||:
 fi
 %endif
 
@@ -367,6 +371,10 @@ rm -f %buildroot%_man3dir/*.1
 # - enable/fix/test language bindings
 
 %changelog
+* Tue Sep 29 2020 Michael Shigorin <mike@altlinux.org> 2.41.2-alt4
+- E2K: hardwired arch list workaround for libsuffix
+  (patch proposed upstream)
+
 * Thu Mar 19 2020 Nikita Ermakov <arei@altlinux.org> 2.41.2-alt3
 - Add riscv64 support.
 
