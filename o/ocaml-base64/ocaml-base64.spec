@@ -3,14 +3,14 @@
 
 Name:    ocaml-%modulename
 Version: 3.4.0
-Release: alt1
+Release: alt2
 Summary: Base64 encoding for OCaml
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/mirage/ocaml-base64
 Source:  %name-%version.tar
 
-BuildRequires: dune 
+BuildRequires: ocaml-dune-devel
 BuildRequires: ocaml-bos-devel
 BuildRequires: ocaml-rresult-devel
 BuildRequires: ocaml-alcotest-devel
@@ -72,5 +72,8 @@ dune runtest
 %_libdir/ocaml/%{modulename}*/*/*.ml
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 3.4.0-alt2
+- fixed build with dune 2.7
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 3.4.0-alt1
 - first build for ALT
