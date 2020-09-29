@@ -2,12 +2,11 @@
 %set_verify_elf_method textrel=relaxed
 
 %global pkgname zarith
-%define ocamlsitelib %_libdir/ocaml
-%define ocamlstublib %_libdir/ocaml/stublibs/
+%define ocamlstublib %_ocamldir/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.9.1
-Release: alt2
+Version: 1.10
+Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
 # The license has a static linking exception
@@ -75,29 +74,32 @@ make doc
 
 %install
 mkdir -p %buildroot%ocamlstublib
-mkdir -p %buildroot%ocamlsitelib
+mkdir -p %buildroot%_ocamldir
 make install INSTALLDIR=%buildroot%_libdir/ocaml
 
 %files
 %doc Changes
-%ocamlsitelib/%pkgname
-%exclude %ocamlsitelib/%pkgname/*.mli
-%exclude %ocamlsitelib/%pkgname/*.h
-%exclude %ocamlsitelib/%pkgname/*.a
-%exclude %ocamlsitelib/%pkgname/*.cmx
-%exclude %ocamlsitelib/%pkgname/*.cmxa
+%_ocamldir/%pkgname
+%exclude %_ocamldir/%pkgname/*.mli
+%exclude %_ocamldir/%pkgname/*.h
+%exclude %_ocamldir/%pkgname/*.a
+%exclude %_ocamldir/%pkgname/*.cmx
+%exclude %_ocamldir/%pkgname/*.cmxa
 %ocamlstublib/*.so
 %ocamlstublib/*.so.owner
 
 %files devel
 %doc README.md html
-%ocamlsitelib/%pkgname/*.mli
-%ocamlsitelib/%pkgname/*.h
-%ocamlsitelib/%pkgname/*.a
-%ocamlsitelib/%pkgname/*.cmx
-%ocamlsitelib/%pkgname/*.cmxa
+%_ocamldir/%pkgname/*.mli
+%_ocamldir/%pkgname/*.h
+%_ocamldir/%pkgname/*.a
+%_ocamldir/%pkgname/*.cmx
+%_ocamldir/%pkgname/*.cmxa
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 1.10-alt1
+- 1.10
+
 * Tue Sep 08 2020 Anton Farygin <rider@altlinux.ru> 1.9.1-alt2
 - devel parts moved to the ocaml-zarith-devel package
 
