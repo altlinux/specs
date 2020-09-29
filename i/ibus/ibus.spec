@@ -6,7 +6,6 @@
 %def_enable python
 %def_disable python2
 %def_enable dconf
-%def_disable gconf
 %def_enable wayland
 %def_enable appindicator
 %def_enable emoji_dict
@@ -19,8 +18,8 @@
 %def_disable installed_tests
 
 Name: ibus
-Version: 1.5.22
-Release: alt2
+Version: 1.5.23
+Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPL-2.1 and Unicode
@@ -42,8 +41,7 @@ Requires: lib%name = %EVR
 Requires: lib%name-gir = %EVR
 Requires: %name-dicts = %EVR
 
-%{?_enable_gconf:Requires(post,preun):GConf}
-%{?_enable_dconf:Requires(pre): dconf}
+Requires(pre): dconf
 
 %if_enabled python
 BuildRequires(pre): rpm-build-python3
@@ -65,13 +63,8 @@ BuildRequires: libnotify-devel
 %{?_enable_unicode_dict:BuildRequires: unicode-ucd}
 %{?_enable_python:BuildRequires: python3-devel python3-module-dbus-devel python3-module-pygobject3-devel}
 %{?_enable_python2:BuildRequires: python-devel python-modules-compiler python-module-dbus-devel python-module-pygobject3-devel}
-%{?_enable_gconf:BuildRequires: libGConf-devel}
-# required if autoreconf used
-BuildRequires: libGConf-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
-# gsettings-schema-convert
-BuildRequires: GConf
 # since 1.5.14
 %{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel unicode-emoji unicode-ucd gir(Gtk) = 3.0}
 %{?_enable_appindicator:BuildRequires: qt5-base-devel}
@@ -207,8 +200,6 @@ the functionality of the installed Intelligent Input Bus.
     %endif
     %{subst_enable dconf} \
     %{?_enable_dconf:--disable-schemas-compile} \
-    %{subst_enable gconf} \
-    %{?_enable_gconf:--disable-schemas-install} \
     %{subst_enable wayland} \
     --enable-surrounding-text \
     --enable-introspection \
@@ -231,16 +222,6 @@ install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
 %check
 xvfb-run %make check
 
-%if_enabled gconf
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-%endif
-
 %files -f %{name}10.lang
 %dir %_datadir/%name/
 %_bindir/%name
@@ -261,11 +242,6 @@ fi
 %_libexecdir/%name-extension-gtk3
 %_libexecdir/%name-ui-emojier
 %_man7dir/%name-emoji.7*
-%endif
-
-%if_enabled gconf
-%_libexecdir/%name-gconf
-%_sysconfdir/gconf/schemas/ibus.schemas
 %endif
 
 %if_enabled dconf
@@ -343,6 +319,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 29 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.23-alt1
+- 1.5.23
+
 * Tue Apr 21 2020 Yuri N. Sedunov <aris@altlinux.org> 1.5.22-alt2
 - moved dictionaries to separate -dicts subpackage (ALT #38372)
 
