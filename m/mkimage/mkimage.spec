@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.33
+Version: 0.2.34
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,10 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Sep 29 2020 Alexey Gladkov <legion@altlinux.ru> 0.2.34-alt1
+- mki-copy-efiboot-chrooted: fix label variable visibility scope (thx Nikolai Kostrigin)
+- mki-copy-efiboot-chrooted: remove extra slash in bootloader path (thx Nikolai Kostrigin)
+
 * Mon Aug 31 2020 Alexey Gladkov <legion@altlinux.ru> 0.2.33-alt1
 - tools.mk.in: added forgotten variable (mike@)
 
