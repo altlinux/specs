@@ -4,12 +4,12 @@
 
 Name:    ocaml-%modulename
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: Ocaml binding to Cairo, a 2D Vector Graphics Library
 License: LGPL-3.0-only
 Group:   Development/ML
 URL:     https://github.com/Chris00/ocaml-cairo
-BuildRequires: dune 
+BuildRequires: ocaml-dune-devel
 BuildRequires: ocaml-base-devel
 BuildRequires: libcairo-devel
 BuildRequires: libfreetype-devel
@@ -48,6 +48,9 @@ developing applications that use %name.
 %_ocamldir/%modulename/*.h
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.6.1-alt2
+- fixed build with dune 2.7
+
 * Fri Sep 25 2020 Anton Farygin <rider@altlinux.ru> 0.6.1-alt1
 - first build for ALT
 
