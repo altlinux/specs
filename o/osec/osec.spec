@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osec
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Lightweight file permission checker
@@ -113,6 +113,14 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Tue Sep 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt1
+- New version (1.3.1);
+- Cronjob changes:
+  + Add config parameter to disallow database changes (ALT#38903).
+  + Summarize more types of changes in the report (ALT#38771).
+- Fixed extra space in the reported string.
+- contrib: Add systemd-specific files.
+
 * Mon Jun 15 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.0-alt1
 - New version (1.3.0);
 - Database creation is more error tolerant (ALT#38408, ALT#33207):
