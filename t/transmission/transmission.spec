@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _optlevel s
-%def_disable wxgtk
 %def_enable qt
 
 %define rname Transmission
@@ -9,7 +8,7 @@
 
 Name: transmission
 Version: 3.00
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -29,7 +28,8 @@ Requires: %name-daemon = %EVR
 Requires(post,postun): desktop-file-utils
 
 Source: http://download.m0k.org/%name/files/%name-%version.tar
-Patch0: %name-%version-alt.patch
+Patch1: %name-alt-desktop.patch
+Patch2: %name-alt-extra-doc-disable.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
@@ -38,7 +38,10 @@ Source5: %name-%version-third-party-libutp.tar
 
 BuildPreReq: desktop-file-utils
 
-BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: gcc-c++ glibc-devel libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
 BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt openssl-devel
 BuildRequires: libb64-devel
 BuildRequires: libnatpmp-devel
@@ -47,11 +50,7 @@ BuildRequires: libminiupnpc-devel
 BuildRequires: libgio-devel
 %endif
 %if_enabled qt
-BuildRequires: qt5-base-devel qt5-tools
-%endif
-
-%if_enabled wxgtk
-BuildRequires: wxGTK2u-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 %endif
 
 %description
@@ -94,17 +93,6 @@ Requires: %name-gui-common = %EVR
 Qt-based graphical BitTorrent client
 %endif
 
-%if_enabled wxgtk
-%package wxgtk
-Group: Networking/File transfer
-Summary: Graphical BitTorrent client
-Provides: %name-gui = %EVR
-Requires: %name-common = %EVR
-Requires: %name-gui-common = %EVR
-%description wxgtk
-WxGTK-based graphical BitTorrent client
-%endif
-
 %package cli
 Group: Networking/File transfer
 Summary: Command line BitTorrent client
@@ -128,64 +116,29 @@ Daemonised BitTorrent client
 
 %prep
 %setup -a4 -a5
-%patch0 -p1
-rm -f m4/glib-gettext.m4
-
-
-%if "%(rpmvercmp '%{get_version glib2}' '2.48.0')" >= "0"
-rm -f m4/glib-gettext.m4
-%endif
+%patch1 -p1
+%patch2 -p1
 
 %build
-./autogen.sh
-%configure \
-    --verbose \
-    %{subst_enable wx} \
-    --enable-libnotify \
-    --enable-libcanberra \
-    --enable-gtk \
-    --enable-external-b64 \
-    --enable-external-natpmp \
-    --enable-cli \
-    %nil
-
+%cmake \
+	-DENABLE_GTK:BOOL=YES \
 %if_enabled qt
-pushd qt
-qmake-qt5 \
-	"QMAKE_CXXFLAGS+=%optflags -std=c++11" \
-	"CONFIG+=nostrip" \
+	-DENABLE_QT:BOOL=YES \
+%endif
+	-DENABLE_CLI:BOOL=YES \
+	-DUSE_SYSTEM_EVENT2:BOOL=YES \
+	-DUSE_SYSTEM_MINIUPNPC:BOOL=YES \
+	-DUSE_SYSTEM_NATPMP:BOOL=YES \
+	-DUSE_SYSTEM_B64:BOOL=YES \
 	%nil
-popd
-%endif
 
-%make_build
-
-%if_enabled qt
-pushd qt
-%make_build
-for f in translations/*.ts; do lrelease-qt5 $f; done
-popd
-%endif
-
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
-
-%if_enabled qt
-%make install INSTALL_ROOT=%buildroot/%prefix -C qt
-%endif
-
-mv %buildroot/%_desktopdir/transmission-gtk.desktop \
-    %buildroot/%_desktopdir/transmission.desktop
+%cmakeinstall_std
 
 # made alternatives entries
 mkdir -p %buildroot/%_altdir
-
-%if_enabled wxgtk
-cat >%buildroot/%_altdir/%name-wxgtk <<__EOF__
-%_bindir/%name %_bindir/Xmission 10
-__EOF__
-%endif
 
 cat >%buildroot/%_altdir/%name-gtk <<__EOF__
 %_bindir/%name %_bindir/%name-gtk 30
@@ -195,9 +148,6 @@ __EOF__
 cat >%buildroot/%_altdir/%name-qt <<__EOF__
 %_bindir/%name %_bindir/%name-qt 20
 __EOF__
-# install translations
-mkdir -p %buildroot/%_datadir/qt5/translations/
-for f in qt/translations/*.qm; do install -m 0644 $f %buildroot/%_datadir/qt5/translations/; done
 %endif
 
 %find_lang %name-gtk
@@ -209,7 +159,7 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%dname
 install -pD -m644 %SOURCE3 %buildroot%systemd_unitdir/transmission-daemon.service
 
 mkdir -p %buildroot/%_sysconfdir/transmission-daemon/
-daemon/transmission-daemon -d 2> %buildroot/%_sysconfdir/transmission-daemon/settings.json
+BUILD/daemon/transmission-daemon -d 2> %buildroot/%_sysconfdir/transmission-daemon/settings.json
 sed -i 's,/usr/src/,/var/lib/transmission-daemon/,' %buildroot/%_sysconfdir/transmission-daemon/settings.json
 
 mkdir -p %buildroot/%_sysconfdir/sysconfig/
@@ -217,6 +167,11 @@ echo "TRANSMISSION_OPTIONS=\"-e %_logdir/%dname/%dname.log -g %_localstatedir/%d
 
 mkdir -p %buildroot/%_logdir/%dname
 mkdir -p %buildroot/%_localstatedir/%dname
+
+%check
+pushd BUILD
+ctest
+popd
 
 %pre daemon
 /usr/sbin/groupadd -r -f _%dname
@@ -233,7 +188,6 @@ fi
 
 %files gui-common
 %_iconsdir/hicolor/*/*/*
-%_datadir/pixmaps/*
 %_datadir/applications/%name.desktop
 
 %files gtk -f %name-gtk.lang
@@ -248,15 +202,8 @@ fi
 %doc AUTHORS COPYING NEWS.md README.md ChangeLog
 %_bindir/%name-qt
 %_altdir/%name-qt
-%_datadir/qt5/translations/%{name}_*.qm
+%_datadir/%name/translations/%{name}_*.qm
 %_man1dir/%name-qt.1*
-%endif
-
-%if_enabled wxgtk
-%files wxgtk
-%doc AUTHORS COPYING NEWS.md README.md ChangeLog
-%_bindir/Xmission
-%_altdir/%name-wxgtk
 %endif
 
 %files cli
@@ -289,6 +236,11 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Sep 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.00-alt2
+- Switched to cmake build system.
+- Removed wxGTK from spec.
+- Enabled tests.
+
 * Mon Sep 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.00-alt1
 - Updated to upstream version 3.00.
 - Enabled cli client.
