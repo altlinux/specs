@@ -1,16 +1,15 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qtest
 Name: ocaml-%libname
-Version: 2.11
+Version: 2.11.1
 Release: alt1
 Summary: Inline (Unit) Tests for OCaml
 License: GPLv3
 Group: Development/ML
 Url: https://github.com/c-cube/ocaml-containers/
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
-BuildRequires: ocaml-findlib-devel dune opam  ocaml-result-devel
-BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc 
+BuildRequires:  dune 
+BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-base-devel 
 
 %description
 qtest extracts inline unit tests written using a special syntax in comments.
@@ -29,37 +28,26 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-sed -i 's/oUnit/ounit2/' src/dune
-make
+%dune_build -p %libname
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.adoc HOWTO.adoc
-%dir %_libdir/ocaml/%libname
 %_bindir/qtest
-%_libdir/ocaml/%libname/*
-%exclude %_libdir/ocaml/%libname/*/*.cmx
-%exclude %_libdir/ocaml/%libname/*/*.cmt*
-%exclude %_libdir/ocaml/%libname/*/*.ml
-%exclude %_libdir/ocaml/%libname/*/*.a
-%exclude %_libdir/ocaml/%libname/*/*.cmxa
-%exclude %_libdir/ocaml/%libname/*/*.cmxs
 
-
-%files devel
-%_libdir/ocaml/%libname/*/*.cmx
-%_libdir/ocaml/%libname/*/*.cmt*
-%_libdir/ocaml/%libname/*/*.ml
-%_libdir/ocaml/%libname/*/*.a
-%_libdir/ocaml/%libname/*/*.cmxa
-%_libdir/ocaml/%libname/*/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
+- 2.11.1
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 2.11-alt1
 - 2.11
 

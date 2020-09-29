@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
@@ -11,8 +11,6 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
-BuildRequires: opam
 BuildRequires: ocaml-ounit
 BuildRequires: ocaml-alcotest-devel
 
@@ -35,48 +33,24 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-sed -i 's/oUnit/ounit2/' src/ounit/dune
-make
+%dune_build --release @install
 
 %install
-dune install --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
+%dune_install
 rm -rf %buildroot/usr/doc
 
-# Makes *.cmxs executable such that they will be stripped.
-find %buildroot -name '*.cmxs' -exec chmod 0755 {} \;
-
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.adoc
-%dir %_libdir/ocaml/%{libname}*
-%dir %_libdir/ocaml/%{libname}-core/runner
-%_libdir/ocaml/%{libname}*/META
-%_libdir/ocaml/%{libname}*/*.cmi
-%_libdir/ocaml/%{libname}*/*.cma
-%_libdir/ocaml/%{libname}*/*.a
-%_libdir/ocaml/%{libname}*/*/*.cmi
-%_libdir/ocaml/%{libname}*/*/*.cma
-%_libdir/ocaml/%{libname}*/*/*.a
 
-%files devel
-%_libdir/ocaml/%{libname}*/opam
-%_libdir/ocaml/%{libname}*/dune-package
-%_libdir/ocaml/%{libname}*/*.cmt
-%_libdir/ocaml/%{libname}*/*.cmti
-%_libdir/ocaml/%{libname}*/*.cmx
-%_libdir/ocaml/%{libname}*/*.ml*
-%_libdir/ocaml/%{libname}*/*.cmxa
-%_libdir/ocaml/%{libname}*/*.cmxs
-%_libdir/ocaml/%{libname}*/*/*.cmt
-%_libdir/ocaml/%{libname}*/*/*.cmti
-%_libdir/ocaml/%{libname}*/*/*.cmx
-%_libdir/ocaml/%{libname}*/*/*.ml*
-%_libdir/ocaml/%{libname}*/*/*.cmxa
-%_libdir/ocaml/%{libname}*/*/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.15-alt1
+- 0.15
+
 * Wed Aug 26 2020 Anton Farygin <rider@altlinux.ru> 0.14-alt1
 - 0.14
 
