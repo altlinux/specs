@@ -3,21 +3,15 @@
 
 Name:    ocaml-%modulename
 Version: 0.14.0
-Release: alt2
+Release: alt3
 
 Summary: Compile-time configuration for Jane Street libraries
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/jst-config
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires: dune ocaml-ppx_assert-devel ocaml-result-devel
-BuildRequires: ocaml-ppxlib-devel ocaml-migrate-parsetree-devel
-BuildRequires: ocaml-ppx_compare-devel ocaml-ppx_here-devel
-BuildRequires: ocaml-ppx_sexp_conv-devel ocaml-compiler-libs-devel
-BuildRequires: ocaml-stdio-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildRequires: ocaml-dune-devel ocaml-ppx_assert-devel
+BuildRequires: ocaml-ppxlib-devel
+BuildRequires: ocaml-stdio-devel ocaml-base-devel
 
 Source:  %modulename-%version.tar
 
@@ -52,6 +46,9 @@ developing applications that use %name.
 %_libdir/ocaml/%{modulename}*/rt-flags
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt3
+- cleanup build dependencies
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.14.0-alt2
 - migrated to rpm-build-ocaml-1.4
 - added ocaml-stdio-devel to BuildRequires
