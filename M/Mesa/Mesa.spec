@@ -67,7 +67,7 @@
 %endif
 
 Name: Mesa
-Version: 20.1.8
+Version: 20.2.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -349,7 +349,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-%doc docs/relnotes/%version.html
+%doc docs/relnotes/%version.rst
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -471,6 +471,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Sep 29 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.2.0-alt1
+- 20.2.0
+
 * Thu Sep 17 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.1.8-alt1
 - 20.1.8
 
