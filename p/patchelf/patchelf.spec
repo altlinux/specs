@@ -1,5 +1,5 @@
 Name: patchelf
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: A utility for patching ELF binaries
 
@@ -30,10 +30,7 @@ rm src/elf.h
 
 %check
 rc=0
-make check || rc=$?
-%ifnarch %arm aarch64
-[ "$rc" = 0 ]
-%endif
+make check
 
 %install
 %makeinstall_std
@@ -43,11 +40,14 @@ make check || rc=$?
 rm -rf %buildroot/usr/share/doc/%name
 
 %files
-%doc COPYING README
+%doc COPYING README.md
 %_bindir/patchelf
 %_mandir/man1/patchelf.1*
 
 %changelog
+* Tue Sep 29 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11-alt1
+- Updated to 0.11.
+
 * Fri Aug 16 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10-alt1
 - Updated to 0.10.
 
