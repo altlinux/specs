@@ -3,7 +3,7 @@
 
 Name: dune
 Version: 2.7.1
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -149,6 +149,9 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune-private-libs/*/*.cmx
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt2
+- fixed doc_root and mandir location
+
 * Thu Sep 03 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt1
 - 2.7.1
 
