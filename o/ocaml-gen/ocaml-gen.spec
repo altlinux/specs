@@ -2,13 +2,13 @@
 %define libname gen
 Name: ocaml-%libname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 Summary: Simple and efficient iterators (modules Gen and GenLabels).
 License: BSD
 Group: Development/ML
 Url: https://github.com/c-cube/sequence/
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune opam ocaml-result-devel
+BuildRequires: ocaml-findlib-devel ocaml-dune-devel ocaml-result-devel
 BuildRequires: ocaml-qcheck-devel ocaml-ounit-devel ocaml-odoc ocaml-qtest-devel
 
 %description
@@ -29,34 +29,25 @@ developing applications that use %name.
 
 %build
 sed -si 's,Pervasives.,Stdlib.,g' src/gen.ml
-make
+%dune_build -p %libname
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
+%check
+%dune_check
+
+%files -f ocaml-files.runtime
 %doc README.md LICENSE CHANGELOG.md
-%dir %_libdir/ocaml/%libname
-%_libdir/ocaml/%libname/*
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.cmt*
-%exclude %_libdir/ocaml/%libname/*.ml
-%exclude %_libdir/ocaml/%libname/*.mli
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmxs
 
 
-%files devel
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/%libname/*.cmt*
-%_libdir/ocaml/%libname/*.ml
-%_libdir/ocaml/%libname/*.mli
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmxs
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt2
+- enabled tests
+- migrated to rpm-build-ocaml 1.4
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1
 - 0.5.3
 
