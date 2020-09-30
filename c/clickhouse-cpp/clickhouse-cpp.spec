@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clickhouse-cpp
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: ClickHouse C++ client library
 Group: System/Libraries
@@ -96,6 +96,9 @@ rm -rf contrib/{cityhash,gtest,lz4}
 %_libdir/*.so
 
 %changelog
+* Wed Sep 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
+- Updated to upstream version 1.2.2.
+
 * Fri Sep 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
 - Updated to upstream release version 1.2.1.
 
