@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt13.rc91
+Release:        alt14.rc92
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Tue Sep 29 2020 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt14.rc92
+- New version
+
 * Fri Jul 3 2020 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt13.rc91
 - New version
 
