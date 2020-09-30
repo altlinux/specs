@@ -2,7 +2,7 @@
 %define libname logs
 Name:           ocaml-%libname
 Version:        0.6.3
-Release:        alt2
+Release:        alt3
 Summary:        Logging infrastructure for OCaml
 License:        ISC
 Group:          Development/ML
@@ -11,7 +11,7 @@ Url:            http://erratique.ch/software/logs
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: ocaml-fmt
+BuildRequires: ocaml-fmt ocaml-lwt-devel
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -36,7 +36,7 @@ programs which use %name
 %build
 sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
 ocaml pkg/pkg.ml build --with-js_of_ocaml false \
-                       --with-lwt false
+                       --with-lwt true
 
 %install
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
@@ -56,6 +56,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_libdir/ocaml/%libname/*.mli
 
 %changelog
+* Wed Sep 30 2020 Anton Farygin <rider@altlinux.ru> 0.6.3-alt3
+- built with lwt support
+
 * Wed Sep 16 2020 Anton Farygin <rider@altlinux.ru> 0.6.3-alt2
 - built without js_of_ocaml against cyclic dependencies
 
