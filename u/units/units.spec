@@ -1,5 +1,5 @@
 Name: units
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
@@ -8,7 +8,7 @@ Group: Office
 Url: https://www.gnu.org/software/units/units.html
 # https://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
-BuildRequires: libreadline-devel makeinfo
+BuildRequires: libreadline-devel makeinfo rpm-build-python3
 
 %description
 Units converts an amount from one unit to another, or tells you what
@@ -24,6 +24,7 @@ rm parse.tab.c *.info*
 sed -i '/^install-support:/ s/ currency-units-update//' Makefile.in
 
 %build
+export PYTHON=%_bindir/python3
 %configure
 %make_build
 
@@ -51,6 +52,9 @@ esac
 %doc NEWS README
 
 %changelog
+* Wed Sep 30 2020 Dmitry V. Levin <ldv@altlinux.org> 2.20-alt1
+- 2.19 -> 2.20.
+
 * Fri May 31 2019 Dmitry V. Levin <ldv@altlinux.org> 2.19-alt1
 - 2.18 -> 2.19.
 
