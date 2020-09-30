@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 6.1.4
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -66,6 +66,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Sep 30 2020 Andrew A. Vasilyev <andy@altlinux.org> 6.1.4-alt2
+- add many unrecognized etcnet options
+
 * Mon Jul 06 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.1.4-alt1
 - 6.1-4
 
