@@ -1,5 +1,5 @@
 Name: easy-rsa
-Version: 3.0.7
+Version: 3.0.8
 Release: alt1
 
 Summary: Simple shell based CA utility
@@ -37,6 +37,9 @@ mv %{buildroot}%{_datadir}/easyrsa3/easyrsa %{buildroot}%{_bindir}/
 %{_datadir}/easyrsa3
 
 %changelog
+* Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 3.0.8-alt1
+- new version
+
 * Fri Apr 10 2020 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt1
 - new version
 
