@@ -1,6 +1,6 @@
 Name: menulibre
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Advanced menu editor with quicklist support
 License: %gpl3only
@@ -63,6 +63,9 @@ cp -a build/mo/* %buildroot%_datadir/locale/
 %python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Wed Sep 30 2020 Mikhail Efremov <sem@altlinux.org> 1:2.2.1-alt2
+- Use gi.require_version for Gdk.
+
 * Wed Oct 02 2019 Mikhail Efremov <sem@altlinux.org> 1:2.2.1-alt1
 - Updated to 2.2.1.
 
