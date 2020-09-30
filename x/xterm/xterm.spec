@@ -1,7 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define xterm_stdfalgs \\\
+%define xterm_stdflags \\\
 	--with-app-defaults=%_sysconfdir/X11/app-defaults \\\
 	--with-utempter \\\
 	--enable-warnings \\\
@@ -22,10 +22,12 @@
   --enable-load-vt-fonts \\\
   --enable-logfile-exec  \\\
   --enable-logging       \\\
+  --enable-readline-mouse\\\
+  --enable-regis-graphics\\\
   --enable-toolbar
 
 Name: xterm
-Version: 359
+Version: 360
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -107,13 +109,13 @@ export ac_cv_path_XTERM_PATH=%_bindir/%name
 # Rebuild this
 touch ctlseqs.ms
 
-%configure %xterm_stdfalgs
+%configure %xterm_stdflags
 %make_build all ctlseqs.txt
 cp xterm xterm.std
 xz ctlseqs.txt
 
 make distclean
-%configure %xterm_stdfalgs %xterm_expflags
+%configure %xterm_stdflags %xterm_expflags
 %make_build
 cp xterm xterm.extd
 cp xterm.std xterm
@@ -155,6 +157,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed Sep 30 2020 Fr. Br. George <george@altlinux.ru> 360-alt1
+- Autobuild version bump to 360
+
 * Wed Aug 26 2020 Fr. Br. George <george@altlinux.ru> 359-alt1
 - Autobuild version bump to 359
 
