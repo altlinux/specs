@@ -15,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.102.4
+Version: 0.103.0
 Release: alt1
 %define abiversion 9
 
@@ -31,7 +31,8 @@ Source0: http://downloads.sourceforge.net/clamav/clamav-%{version}%{rctag}.tar.g
 %endif
 
 Source1: clamav.init
-Source2: clamav.sysconfig
+Source2: clamonacc.init
+Source3: clamav.sysconfig
 
 Source4: freshclam.cron
 Source5: freshclam.logrotate
@@ -100,7 +101,7 @@ Summary: Shared libraries for clamav
 Group: System/Libraries
 Provides: lib%name = %version-%release
 
-# http://lists.clamav.net/pipermail/clamav-devel/2019-January/000443.html
+# https://lists.clamav.net/pipermail/clamav-devel/2019-January/000443.html
 Conflicts: libclamav7 < 0.100.2-alt3
 
 %description -n lib%{name}%{abiversion}
@@ -141,6 +142,15 @@ Group: File tools
 %description freshclam
 This package contains programs which can be used to update the clamav anti-virus
 database automatically. It uses the freshclam(1) utility for this task.
+
+%package clamonacc
+Summary: Clam On-Access Scanner daemon
+Requires: %name = %version-%release
+Group: File tools
+
+%description clamonacc
+This package contains Clam On-Access Scanner daemon. Look to clamonacc(8)
+for details.
 
 %prep
 %setup %{?snap: -n clamav-devel-%snap} %{?rctag: -n clamav-%{version}%{rctag}}
@@ -197,7 +207,9 @@ mv %buildroot%clamconfdir/freshclam.conf.sample %buildroot%clamconfdir/freshclam
 
 %{!?_with_milter:rm -f %buildroot%_man1dir/clamav-milter*}
 
-install -pD -m755 %_sourcedir/clamav.init %buildroot/etc/rc.d/init.d/clamd
+mkdir -p %buildroot/etc/rc.d/init.d
+sed "s|@clamconfdir@|%clamconfdir|" < %_sourcedir/clamav.init > %buildroot/etc/rc.d/init.d/clamd
+sed "s|@clamconfdir@|%clamconfdir|" < %_sourcedir/clamonacc.init > %buildroot/etc/rc.d/init.d/clamonacc
 
 install -pD %_sourcedir/clamav.sysconfig %buildroot/etc/sysconfig/clamd
 
@@ -245,6 +257,10 @@ EOF
 rm -f %buildroot/%_man8dir/clamav-milter.*
 %endif
 
+%if_with systemd
+sed -i "s|@APP_CONFIG_DIRECTORY@|%clamconfdir|" %buildroot%_unitdir/clamav-clamonacc.service
+%endif
+
 %pre
 # SubmitDetectionStats removed in 0.100
 subst "s/^SubmitDetectionStats/# SubmitDetectionStats/" %_sysconfdir/clamav/freshclam.conf
@@ -279,7 +295,6 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %doc virusstat*
 %doc COPYING COPYING.* README.md
 
-%_bindir/clamonacc
 %_bindir/clamdscan
 %_bindir/clamscan
 %_bindir/clamsubmit
@@ -287,7 +302,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %_bindir/clamdtop
 %_bindir/clambc
 %_sbindir/clamd
-%config %_initdir/clamd
+%attr(0755,root,root) %config %_initdir/clamd
 %{?_with_ownconfdir: %dir %clamconfdir}
 %config(noreplace) %verify(not md5 size mtime) %clamconfdir/clamd.conf
 %config(noreplace) %_sysconfdir/logrotate.d/clamav
@@ -333,6 +348,15 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %_unitdir/clamav-freshclam.service
 %endif
 
+%files clamonacc
+%_sbindir/clamonacc
+%attr(0755,root,root) %config %_initdir/clamonacc
+%_man8dir/clamonacc*
+
+%if_with systemd
+%_unitdir/clamav-clamonacc.*
+%endif
+
 %files -n lib%{name}-devel
 %_bindir/clamav-config
 %_libdir/lib*.so
@@ -354,6 +378,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Wed Sep 30 2020 Sergey Y. Afonin <asy@altlinux.org> 0.103.0-alt1
+- 0.103.0
+- added clamonacc subpackage
+- updated the clamd's config patch for clamonacc
+
 * Tue Jul 28 2020 Sergey Y. Afonin <asy@altlinux.org> 0.102.4-alt1
 - 0.102.4
   + CVE-2020-3350
