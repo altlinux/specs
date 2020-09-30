@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.8
-Release: alt2
+Version: 0.43.9
+Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
 
@@ -168,6 +168,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Sep 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.9-alt1
+- Enable Winbind with SSSD idmap for Active Directory secure channel.
+- Synchronize SSSD and Winbind configuaration during join to AD.
+
 * Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.8-alt2
 - Add requires samba-winbind-clients to task-auth-ad-sssd metapackage
 

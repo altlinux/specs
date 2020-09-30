@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 
 Summary: ALT Local policies
 License: GPLv2+
@@ -34,7 +34,9 @@ for i in sshd-gssapi-auth \
          sssd-ad-gpo-access-control \
          sssd-ad-gpo-ignore-unreadable \
          sssd-cache-credentials \
-         autofs-browse-mode
+         autofs-browse-mode \
+         smb-conf-idmap-backend \
+         smb-conf-idmap-range
 do
         install -pD -m755 "controls/$i" \
                 "%buildroot%_sysconfdir/control.d/facilities/$i"
@@ -58,6 +60,11 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Wed Sep 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.5-alt1
+- Revert winbind service enabling by default on server and workstation
+  due it depends on samba configuration and could be unconsistent
+- Add smb-conf-idmap-backend and smb-conf-idmap-range controls
+
 * Sat Sep 12 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt2
 - Add requires to control with OpenSSH server PermitRootLogin configuration
 
