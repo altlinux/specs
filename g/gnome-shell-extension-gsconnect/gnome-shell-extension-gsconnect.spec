@@ -1,12 +1,15 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
 
-%define ver_major 41
+%define ver_major 43
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
-%define _libexecdir %_prefix/libexec
 
 %def_enable webextension
+%def_enable installed_tests
+# network required
+%def_disable check
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
@@ -22,6 +25,7 @@ Url: https://github.com/andyholmes/%name
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 %else
+Vcs: https://github.com/andyholmes/gnome-shell-extension-gsconnect.git
 Source: %name-%version%beta.tar
 %endif
 
@@ -31,7 +35,8 @@ Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
 
 BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: libgio-devel libdbus-devel
+BuildRequires: eslint libgio-devel libdbus-devel
+%{?_enable_check:BuildRequires: xvfb-run %_bindir/gjs typelib(Gdk) = 3.0}
 
 %add_python3_path %_datadir/gnome-shell/extensions/%domain %_datadir/nautilus-python/extensions
 # imports.gi.St.Settings.get()
@@ -41,20 +46,30 @@ BuildRequires: libgio-devel libdbus-devel
 GSConnect is a complete implementation of KDE Connect for
 GNOME Shell with Nautilus, Chrome and Firefox integration.
 
+%package tests
+Summary: Tests for the GSConnect
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed GSConnect Gnome Shell extension.
+
 %prep
 %setup -n %name-%version%beta
 
 %build
 %meson \
-    %{?_disable_webextension:-Dwebextension=false}
+    %{?_disable_webextension:-Dwebextension=false} \
+    %{?_disable_installed_tests:-Dinstalled_tests=false}
 %meson_build
-
-%check
-%meson_test
 
 %install
 %meson_install
 %find_lang %xdg_name
+
+%check
+xvfb-run %meson_test
 
 %files -f %xdg_name.lang
 %_desktopdir/%xdg_name.desktop
@@ -72,10 +87,18 @@ GNOME Shell with Nautilus, Chrome and Firefox integration.
 %_sysconfdir/opt/chrome/native-messaging-hosts/org.gnome.shell.extensions.gsconnect.json
 %_libdir/mozilla/native-messaging-hosts/org.gnome.shell.extensions.gsconnect.json
 %endif
-
 %doc README.md
 
+%if_enabled installed_tests
+%files tests
+%_datadir/installed-tests/gsconnect/
+%_libexecdir/installed-tests/gsconnect/
+%endif
+
 %changelog
+* Wed Sep 30 2020 Yuri N. Sedunov <aris@altlinux.org> 43-alt1
+- 43
+
 * Fri Aug 21 2020 Yuri N. Sedunov <aris@altlinux.org> 41-alt1
 - 41
 
