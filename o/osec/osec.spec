@@ -2,7 +2,7 @@
 
 Name: osec
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -69,6 +69,9 @@ add name of rpm packages for files in report.
 %install
 %makeinstall
 
+mkdir -p -- %buildroot/%_unitdir
+cp -- contrib/osec.timer contrib/osec.service %buildroot/%_unitdir/
+
 cd %buildroot
 #cron job file
 mkdir -p -- etc/cron.d .%_datadir/osec
@@ -106,6 +109,8 @@ rm -f %osec_statedir/osec.db.*
 %attr(770,root,%osec_group) %osec_statedir
 %defattr(600,root,root,700)
 %config(noreplace) /etc/osec
+%_unitdir/osec.timer
+%_unitdir/osec.service
 
 %files mailreport
 %_bindir/osec_mailer
@@ -113,6 +118,9 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Wed Sep 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt2
+- Add systemd-specific files (ALT#38902).
+
 * Tue Sep 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt1
 - New version (1.3.1);
 - Cronjob changes:
