@@ -3,7 +3,7 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
@@ -11,11 +11,11 @@ Group: Monitoring
 License: GPLv3
 Url: http://www.gnu.org/software/freeipmi/
 
-PreReq: lib%name = %version-%release
+PreReq: lib%name = %EVR
 
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: libgcrypt-devel texinfo
 
@@ -60,7 +60,7 @@ ipmi systems based on the most recent ipmipings received.
 %package ipmiseld
 Summary: FreeIPMI SEL syslog logging daemon
 Group: Monitoring
-PreReq: lib%name = %version-%release
+PreReq: lib%name = %EVR
 
 %description ipmiseld
 IPMI SEL syslog logging daemon.
@@ -68,8 +68,8 @@ IPMI SEL syslog logging daemon.
 %package doc
 Summary: GNU FreeIPMI documentation
 Group: Documentation
-Conflicts: lib%name < %version-%release
-Conflicts: lib%name > %version-%release
+Conflicts: lib%name < %EVR
+Conflicts: lib%name > %EVR
 BuildArch: noarch
 
 %description doc
@@ -176,6 +176,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Wed Sep 30 2020 Anton Farygin <rider@altlinux.ru> 1.6.6-alt1
+- 1.6.6
+
 * Tue Jun 16 2020 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
 - new version 1.6.5
 
