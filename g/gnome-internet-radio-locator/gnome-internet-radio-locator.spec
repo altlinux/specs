@@ -1,9 +1,9 @@
-%define ver_major 3.0
+%define ver_major 3.3
 %define gst_api_ver 1.0
 %def_with recording
 
 Name: gnome-internet-radio-locator
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -16,13 +16,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
-Requires: dconf
+Requires: dconf geoclue2
 
 %define gtk_ver 3.0
 
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel libchamplain-gtk3-devel
-BuildRequires: libgeocode-glib-devel gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
+BuildRequires: libgeocode-glib-devel pkgconfig(libgeoclue-2.0)
+BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
 BuildRequires: gsettings-desktop-schemas-devel
 
 %description
@@ -34,7 +35,7 @@ with the help of a map.
 %setup
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	%{subst_with recording}
@@ -56,6 +57,9 @@ with the help of a map.
 
 
 %changelog
+* Wed Sep 30 2020 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Thu Jul 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
