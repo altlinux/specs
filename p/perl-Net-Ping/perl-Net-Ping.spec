@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Ping
 Name: perl-%dist
-Version: 2.73
+Version: 2.74
 Release: alt1
 
 Summary: Check a remote host for reachability
@@ -26,6 +26,7 @@ of remote hosts on a network.
 %ifdef __BTE
 # skip network dependent test
 grep -FZl '1..0 # Skip: network dependent test' t/*.t |xargs -r0 rm -v
+rm -f t/190_alarm.t
 %endif
 
 %build
@@ -39,6 +40,9 @@ grep -FZl '1..0 # Skip: network dependent test' t/*.t |xargs -r0 rm -v
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.74-alt1
+- automated CPAN update
+
 * Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 2.73-alt1
 - automated CPAN update
 
