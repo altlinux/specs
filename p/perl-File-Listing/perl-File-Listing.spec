@@ -1,6 +1,6 @@
 %define dist File-Listing
 Name: perl-%dist
-Version: 6.04
+Version: 6.07
 Release: alt1
 
 Summary: Parse directory listing
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -22,7 +22,7 @@ This module exports a single function called parse_dir(), which can be
 used to parse directory listings.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ used to parse directory listings.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Changes.original
 %perl_vendor_privlib/File
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 6.04-alt1
 - 6.03 -> 6.04
 
