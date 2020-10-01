@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-Stem
 Name: perl-%dist
-Version: 2.30
+Version: 2.31
 Release: alt1
 
 Summary: Provides word stemming algorithms localized by language
@@ -35,6 +35,9 @@ locale.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.31-alt1
+- automated CPAN update
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1
 - automated CPAN update
 
