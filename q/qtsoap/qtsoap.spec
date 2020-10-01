@@ -1,6 +1,6 @@
 Name: qtsoap
 Version: 2.7
-Release: alt5
+Release: alt6
 
 Summary: The Simple Object Access Protocol Qt-based client side library
 License: LGPLv2 with exceptions or GPLv3
@@ -90,7 +90,7 @@ echo "VERSION=%{version}" >> common.pri
 
 #qmake_qt5 PREFIX=%_prefix 'QMAKE_CFLAGS+=%optflags' 'QMAKE_CXXFLAGS+=%optflags'
 #make_build -fPIC -DQT_DISABLE_DEPRECATED_BEFORE=0x000000"
-%qmake_qt5 PREFIX=%_prefix
+%qmake_qt5 PREFIX=%_prefix CONFIG+=nostrip
 %make_build CXXFLAGS="%{optflags} -fPIC -DQT_DISABLE_DEPRECATED_BEFORE=0x000000"
 popd
 
@@ -120,6 +120,9 @@ popd
 %_includedir/qt5/QtSoap/
 
 %changelog
+* Thu Oct 01 2020 Sergey V Turchin <zerg@altlinux.org> 2.7-alt6
+- make debuginfo for libqtsoap5
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2.7-alt5
 - E2K: explicit -std=c++11
 
