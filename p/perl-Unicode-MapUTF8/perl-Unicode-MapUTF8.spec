@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Unicode-MapUTF8
-Version: 1.11
-Release: alt2.1
+Version: 1.14
+Release: alt1
 
 Summary: Unicode-MapUTF8 - Perl module
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SN/SNOWHARE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 22 2006
 BuildRequires: perl-Encode-JP perl-Jcode perl-Module-Build perl-Test-Pod perl-Unicode-Map perl-Unicode-Map8
@@ -35,7 +35,7 @@ BuildRequires: perl-Encode-JP perl-Jcode perl-Module-Build perl-Test-Pod perl-Un
 None.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -43,9 +43,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README
 %perl_vendor_privlib/Unicode
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
