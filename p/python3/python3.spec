@@ -99,7 +99,7 @@
 %endif
 
 Name: python3
-Version: %{pybasever}.5
+Version: %{pybasever}.6
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -1076,6 +1076,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.6-alt1
+- Updated to upstream version 3.8.6.
+
 * Wed Jul 22 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.5-alt1
 - Updated to upstream version 3.8.5.
 
