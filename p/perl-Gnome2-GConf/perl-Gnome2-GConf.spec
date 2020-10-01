@@ -1,14 +1,14 @@
 %define dist Gnome2-GConf
 Name: perl-%dist
-Version: 1.044
-Release: alt6.2
+Version: 1.045
+Release: alt1
 
 Summary: Perl wrappers for the GConf configuration engine
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 Patch: perl-Gnome2-1.044-alt-fix-build.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
@@ -24,7 +24,7 @@ value pairs, and notifies any changes of the value to every program that
 monitors those keys.  GConf is used by GNOME 2.x.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p2
 
 %ifndef _build_display
@@ -39,7 +39,7 @@ xvfb-run -a make test
 %perl_vendor_install
 
 %files
-%doc	AUTHOR NEWS README
+%doc	AUTHOR README ChangeLog copyright.pod examples
 %dir	%perl_vendor_archlib/Gnome2
 	%perl_vendor_archlib/Gnome2/GConf.pm
 	%perl_vendor_autolib/Gnome2
@@ -49,6 +49,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/GConf/Install
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.045-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.044-alt6.2
 - rebuild with new perl 5.28.1
 
