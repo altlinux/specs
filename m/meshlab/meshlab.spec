@@ -2,19 +2,24 @@
 
 Name: meshlab
 Version: 2016.12
-Release: alt6
+Release: alt8
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
 Group: Graphics
-
 Url: http://meshlab.sourceforge.net/
-Source0: https://github.com/cnr-isti-vclab/meshlab/archive/v%version.tar.gz
+
+ExcludeArch: armh
+
+Provides: bundled(vcglib) = %vcglibver
+
+# https://github.com/cnr-isti-vclab/meshlab/archive/v%version.tar.gz
+Source0: v%version.tar
 Source1: meshlab-48x48.xpm
 # Matches 2016.12.
 # Probably belongs in its own package, but nothing else seems to depend on it.
-Source2: https://github.com/cnr-isti-vclab/vcglib/archive/v%vcglibver.tar.gz
-Provides: bundled(vcglib) = %vcglibver
+# https://github.com/cnr-isti-vclab/vcglib/archive/v%vcglibver.tar.gz
+Source2: v%vcglibver.tar
 
 # Fedora-specific patches to use shared libraries, and to put plugins and
 # shaders in appropriate directories
@@ -58,6 +63,7 @@ Patch100: meshlab-2016.12-added_missing_include_math.patch
 
 # Additional FTBFS fixes
 Patch110: meshlab-2016.12-alt-qt5.11.patch
+Patch111: alt-qt5.12.patch
 
 # Fix no return statement in the non-void function
 Patch120: %name-g++8.patch
@@ -104,6 +110,7 @@ these kinds of meshes.
 pushd %name-%version
 %patch100 -p2
 %patch110 -p2
+%patch111 -p1
 %patch120 -p2
 popd
 
@@ -263,6 +270,10 @@ install -m 644 meshlab-%version/src/plugins_experimental/filter_segmentation/lic
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Sep 30 2020 Sergey V Turchin <zerg@altlinux.org> 2016.12-alt8
+- fix to build with Qt-5.15
+- don't build on armh
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2016.12-alt6
 - E2K: ftbfs workaround (partially disable OpenMP)
 
