@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.30.2
-Release: alt3
+Version: 5.30.3
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -40,8 +40,8 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
 
 # cpan update patches here. use format below:
-Patch50: cpan-update-Scalar-List-Utils-1.50-to-Scalar-List-Utils-1.53.patch
-#Patch51: cpan-update-Test-Simple-1.302162-to-Test-Simple-1.302168.patch
+Patch50: cpan-update-Scalar-List-Utils-1.50-to-Scalar-List-Utils-1.55.patch
+Patch51: cpan-update-Test-Simple-1.302162-to-Test-Simple-1.302175.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -263,6 +263,8 @@ Provides: perl-MIME-Base64 = 3.15
 Obsoletes: perl-MIME-Base64 < 3.15
 Provides: perl-IPC-SysV = 2.07
 Obsoletes: perl-IPC-SysV < 2.07-alt2
+Provides: perl-PathTools = 3.75
+Obsoletes: perl-PathTools < 3.75-alt2
 
 %package devel
 Summary: Perl header files and development modules
@@ -391,7 +393,7 @@ equivalent text will have identical binary representations.
 %patch21 -p1
 %patch23 -p1
 %patch50 -p1
-#patch51 -p1
+%patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
@@ -1125,6 +1127,10 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.30.3-alt1
+- 5.30.2 -> 5.30.3
+- added Provides/Obsoletes on perl-PathTools 3.75
+
 * Sat Sep 19 2020 Igor Vlasenko <viy@altlinux.ru> 1:5.30.2-alt3
 - package File/Spec/{Cygwin,Epoc,Mac,OS2,VMS,Win32}.pm (closes: #38576)
 
