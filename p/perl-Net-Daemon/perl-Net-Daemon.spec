@@ -1,6 +1,6 @@
 %define dist Net-Daemon
 Name: perl-%dist
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: Perl extension for portable daemons
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MN/MNOONING/Net-Daemon-0.48.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ Net::Daemon is an abstract base class for implementing portable
 server applications.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %if "%(logger -d -u /dev/log -p user.debug test &>/dev/null || echo no)" == "no"
@@ -38,6 +38,9 @@ server applications.
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 
