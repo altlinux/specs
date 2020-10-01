@@ -1,5 +1,5 @@
 Name: i3
-Version: 4.18.1
+Version: 4.18.2
 Release: alt1
 
 Summary: I3 window manager
@@ -130,6 +130,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Wed Sep 30 2020 Andrey Bergman <vkni@altlinux.org> 4.18.2-alt1
+- Version update
+
 * Sun Jun 07 2020 Andrey Bergman <vkni@altlinux.org> 4.18.1-alt1
 - Version update
 
