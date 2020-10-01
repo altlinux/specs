@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.71
+Version: 2.73
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN GD
 Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/GD-%{version}.tar.gz
-Patch: GD-2.66-GD.t-fonts.patch
+Patch: GD-2.73-GD.t-fonts.patch
 Patch1: %name-2.68-alt-libgd-force-pkgconfig.patch
 
 Conflicts: perl-GD1
@@ -54,6 +54,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.73-alt1
+- automated CPAN update
+
 * Wed Feb 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.71-alt1
 - automated CPAN update
 
