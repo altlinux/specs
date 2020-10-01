@@ -13,16 +13,17 @@
 %def_with sys_pcre
 %def_enable selinux
 %def_disable fam
-%def_disable systemtap
 %def_enable installed_tests
 %def_enable gtk_doc
 %def_enable man
 %def_enable libmount
+%def_disable systemtap
+%def_disable sysprof
 %def_disable debug
 %def_disable check
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -92,6 +93,7 @@ BuildRequires: libffi-devel zlib-devel libelf-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 
 # for check  & tests
 BuildRequires: /proc dbus-tools-gui desktop-file-utils chrpath
@@ -260,6 +262,7 @@ subst "/subdir('fuzzing')/d" meson.build
     %{?_without_sys_pcre:-Dinternal_pcre=true} \
     %{?_enable_fam:-Dfam=true} \
     %{?_enable_systemtap:-Dsystemtap=true} \
+    %{?_enable_sysprof:-Dsysprof=enabled} \
     %{?_enable_installed_tests:-Dinstalled_tests=true} \
     -Diconv='libc'
 %meson_build
@@ -438,6 +441,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2.66.1-alt1
+- 2.66.1
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 2.66.0-alt1
 - 2.66.0
 
