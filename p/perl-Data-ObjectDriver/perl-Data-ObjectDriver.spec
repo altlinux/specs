@@ -16,8 +16,8 @@ BuildRequires: perl(Module/Build.pm) perl(Test/Exception.pm) perl(Module/Build/T
 %define _enable_test 1
 
 Name: perl-Data-ObjectDriver
-Version: 0.19
-Release: alt1.1
+Version: 0.20
+Release: alt1
 
 Summary: Simple, transparent data interface, with caching
 
@@ -59,6 +59,9 @@ rm -f %buildroot/%perl_vendor_privlib/Data/ObjectDriver/Driver/DBD/SQLite.pm
 %perl_vendor_privlib/Data/ObjectDriver.pm
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
