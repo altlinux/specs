@@ -1,16 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 1.90
+%define ver_major 2020
 %define api_ver 1.0
 %define gst_api_ver 1.0
-%define gst_ver 1.17.90
-%define gtk_ver 3.20
+%define gst_ver 1.18.0
+%define gtk_api_ver 3.0
+%define gtk_ver 3.24
 %define gi_ver 1.32
 
 %define xdg_name org.pitivi.Pitivi
 
 Name: pitivi
-Version: %ver_major.0.1
+Version: %ver_major.09
 Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
@@ -33,6 +34,7 @@ AutoReqProv: nopython
 # should be provided by python3-module-gst1.0
 %add_python3_req_skip gi.repository.GstPbutils
 
+Requires: typelib(Gtk) = %gtk_api_ver
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
 Requires: gst-devtools
@@ -82,6 +84,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 2020.09-alt1
+- 2020.09
+
 * Wed Sep 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.90.0.1-alt1
 - updated to 0.98-1210-g5cfb4060 from master branch
 - removed gst-transcoder* subpackages, GstTranscoder is a part of gst-plugins-bad-1.18
