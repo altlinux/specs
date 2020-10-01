@@ -6,15 +6,15 @@
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
-%def_with vkd3d
+%def_without vkd3d
 %def_with faudio
 %endif
 
 Name: wine-vanilla
-Version: 5.17
+Version: 5.18
 Release: alt1
 
-Summary: Wine - environment for running Windows 16/32/64 bit applications
+Summary: Wine - environment for running Windows applications
 
 License: LGPL
 Group: Emulators
@@ -56,13 +56,10 @@ BuildRequires: clang >= 5.0
 BuildRequires: gcc
 %endif
 
-
-
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
@@ -183,7 +180,7 @@ Conflicts: libwine
 Requires: glibc-pthread glibc-nss
 
 # Runtime linked
-Requires: libcups libncurses
+Requires: libcups
 Requires: libXrender libXi libXext libX11 libICE
 Requires: libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
@@ -305,8 +302,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 # Do not pack dangerous association for run windows executables
 rm -f %buildroot%_desktopdir/wine.desktop
 
-%if_enabled static
-rm -fv %buildroot%_libdir/wine/*.a
+%if_disabled static
+for i in %buildroot%_libdir/wine/*.a ; do
+    [ "$i" == "%buildroot%_libdir/wine/libwinecrt0.a" ] && continue
+    rm -fv $i
+done
 %endif
 
 %files
@@ -390,6 +390,7 @@ rm -fv %buildroot%_libdir/wine/*.a
 %endif
 
 %_libdir/wine/ntdll.so
+%_libdir/wine/user32.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -483,6 +484,11 @@ rm -fv %buildroot%_libdir/wine/*.a
 %endif
 
 %changelog
+* Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt1
+- new version 5.18
+- console no longer requires the curses library
+- build with vkd3d disabled (see ALT bug 39002)
+
 * Sat Sep 12 2020 Vitaly Lipatov <lav@altlinux.ru> 5.17-alt1
 - new version 5.17
 - drop static libs if disabled
