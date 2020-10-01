@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1.1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -135,6 +135,12 @@ install -p -D -m 644 mongod.sysconf %buildroot%_sysconfdir/sysconfig/mongos
 install -p -D -m 644 mongos.service %buildroot%_unitdir/mongos.service
 install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 
+# cow@: Mongo fails to build on Alt Beekeeper machine because there are only 32GB
+# of a disk space is available. Right now we reach this limit during the generation
+# of debuginfo files. Let's try to hotfix this issue by removing files created during
+# the build process.
+rm -fr build
+
 %pre server-mongod
 %_sbindir/groupadd -r -f mongod ||:
 %_sbindir/useradd -r -n -g mongod -d /var/lib/mongo -s /bin/false -c "Mongod pseudo user" mongod >/dev/null 2>&1 ||:
@@ -189,6 +195,13 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1.1
+- use rm instead of scons clean
+
+* Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 4.4.1-alt1
+- 4.4.1
+- try to hotfix build fail on beekeeper machine
+
 * Wed Aug 5 2020 Vladimir Didenko <cow@altlinux.org> 4.4.0-alt1.1
 - add missed build dependency
 - reduce build jobs count to avoid OOM
