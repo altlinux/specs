@@ -1,4 +1,3 @@
-%define module_version 0.008
 %define module_name HTTP-CookieJar
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(HTTP/Date.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Time/Local.pm) perl(URI.pm) perl(lib.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
@@ -10,21 +9,21 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008
-Release: alt2
+Version: 0.010
+Release: alt1
 Summary: A minimalist HTTP user agent cookie jar
 Group: Development/Perl
 License: apache
 URL: https://github.com/dagolden/HTTP-CookieJar
 
-Source0: http://cpan.org.ua/authors/id/D/DA/DAGOLDEN/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +32,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/H*
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt2
 - to Sisyphus as perl-Dancer dep
 
