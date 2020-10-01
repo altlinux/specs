@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Spreadsheet-ReadSXC
-Version: 0.24
+Version: 0.29
 Release: alt1
 
 Summary: Extract OpenOffice 1.x spreadsheet data
@@ -28,7 +28,9 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/C/CO/CORION/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Nov 13 2009 (-bi)
-BuildRequires: perl-Archive-Zip perl-XML-Parser perl-devel perl(PerlIO/gzip.pm)
+BuildRequires: perl-Archive-Zip perl-XML-Parser perl-devel perl(PerlIO/gzip.pm) perl(Moo.pm) perl(XML/Twig/XPath.pm) perl(Filter/signatures.pm) perl(PerlX/Maybe.pm)
+BuildRequires: perl(XML/XPath.pm)
+# or BuildRequires: perl(XML/XPathEngine.pm)
 
 %description
 Spreadsheet::ReadSXC extracts data from OpenOffice 1.x spreadsheet
@@ -51,10 +53,14 @@ of hashes instead.
 %perl_vendor_install
 
 %files
+%doc Changes README Todo.pod LICENSE
 %perl_vendor_privlib/Spreadsheet/*
 %doc Changes README
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
