@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20200907
+Version: 20201001
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHANCOCK/%{dist}-%{version}.tar.gz
-Patch: perl-Perl-Tidy-20190601-alt-deps.patch
+Patch: perl-Perl-Tidy-20201001-alt-deps.patch
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ write scripts in html format.
 %_man1dir/*
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 20201001-alt1
+- automated CPAN update
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 20200907-alt1
 - automated CPAN update
 
