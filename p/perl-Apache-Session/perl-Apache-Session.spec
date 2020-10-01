@@ -3,7 +3,7 @@
 #filter_from_requires /^perl.Apache2.RequestUtil.pm./d
 %define dist Apache-Session
 Name: perl-%dist
-Version: 1.93
+Version: 1.94
 Release: alt1
 
 Summary: A persistence framework for session data
@@ -11,7 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Apache-Session-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CH/CHORNY/%{dist}-%{version}.tar.gz
 # https://bugzilla.redhat.com/bugzilla/attachment.cgi?id=118577, from Chris Grau
 Patch0:         Apache-Session-mp2.patch
 
@@ -28,7 +28,7 @@ CGI and other web servers, and it also works outside of a web server
 altogether.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 find -type f -exec perl -pi -e 's/\r\n/\n/g' {} \;
 %patch0 -p1
 
@@ -39,10 +39,13 @@ find -type f -exec perl -pi -e 's/\r\n/\n/g' {} \;
 %perl_vendor_install
 
 %files
-%doc CHANGES README
+%doc CHANGES README Contributing.txt
 %perl_vendor_privlib/Apache
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.94-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.93-alt1
 - automated CPAN update
 
