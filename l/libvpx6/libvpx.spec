@@ -17,7 +17,7 @@
 %endif
 
 Name: libvpx6
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -27,7 +27,7 @@ Url: http://www.webmproject.org/
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen
+BuildRequires: doxygen gcc-c++
 %ifarch %ix86 x86_64
 BuildRequires: yasm
 %endif
@@ -100,6 +100,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Thu Oct 01 2020 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Mon Dec 23 2019 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
