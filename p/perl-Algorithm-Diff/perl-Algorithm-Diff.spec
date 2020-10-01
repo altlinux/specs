@@ -1,14 +1,15 @@
+Epoch: 1
 %define dist Algorithm-Diff
 Name: perl-%dist
-Version: 1.1903
-Release: alt1
+Version: 1.200
+Release: alt1.1
 
 Summary: Compute `intelligent' differences between two files / lists
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TY/TYEMQ/Algorithm-Diff-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ or any other two lists of things.  It uses an  intelligent algorithm similar to
 find the *smallest possible* set of differences.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +40,9 @@ rm %buildroot%perl_vendor_privlib/Algorithm/*diff*.pl
 %perl_vendor_privlib/Algorithm/DiffOld.pm
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.200-alt1.1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.1903-alt1
 - automated CPAN update
 
