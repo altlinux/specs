@@ -6,14 +6,14 @@ BuildRequires: perl(Class/Method/Modifiers.pm) perl(Class/Tiny.pm) perl(Eval/Typ
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.013
+Version: 0.016
 Release: alt1
 Summary: alternative handles_via implementation
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Sub-HandlesVia
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -40,10 +40,13 @@ fi
 %perl_vendor_install
 
 %files
-%doc CREDITS Changes COPYRIGHT LICENSE README
+%doc CREDITS Changes COPYRIGHT README
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- automated CPAN update
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - new version
 
