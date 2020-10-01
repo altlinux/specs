@@ -1,15 +1,15 @@
 %define dist Gnome2-Canvas
 
 Name: perl-%dist
-Version: 1.002
-Release: alt5.2
+Version: 1.003
+Release: alt1
 
 Summary: Gnome2-Canvas Perl module
 License: LGPL
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Gnome2-Canvas/
-Source: http://www.cpan.org/modules/by-module/Gnome2/%dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: fonts-ttf-dejavu libgnomecanvas-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gtk2-devel perl-podlators xvfb-run
@@ -38,7 +38,7 @@ This package contains Gnome2-Canvas development files and documentation
 for developers (overview of internals and internal API reference).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,7 +48,7 @@ xvfb-run -a make test
 %perl_vendor_install
 
 %files
-%doc 	AUTHORS NEWS README canvas_demo
+%doc 	AUTHORS README canvas_demo ChangeLog
 %dir	%perl_vendor_archlib/Gnome2
 	%perl_vendor_archlib/Gnome2/Canvas.pm
 %doc	%perl_vendor_archlib/Gnome2/Canvas.pod
@@ -61,6 +61,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/Canvas/Install
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.002-alt5.2
 - rebuild with new perl 5.28.1
 
