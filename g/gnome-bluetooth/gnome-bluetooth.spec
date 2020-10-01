@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -135,6 +135,9 @@ EOF
 %endif
 
 %changelog
+* Thu Oct 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.3-alt1
+- 3.34.3
+
 * Wed Sep 23 2020 Yuri N. Sedunov <aris@altlinux.org> 3.34.2-alt1
 - 3.34.2
 
