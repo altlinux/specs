@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-HomeDir
 Name: perl-%dist
-Version: 1.004
+Version: 1.006
 Release: alt1
 
 Summary: Get the home directory for yourself or other users
@@ -36,6 +36,9 @@ platforms.
 %perl_vendor_privlib/File
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.006-alt1
+- automated CPAN update
+
 * Wed May 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
 - automated CPAN update
 
