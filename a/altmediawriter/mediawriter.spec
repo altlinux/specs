@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.6
+Version:        0.4.7
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,11 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Thu Oct 01 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.7-alt1
+- Added more filters to file dialog (closes: 39017)
+- Add missing image types
+- Show image type name instead of description in image details
+
 * Wed Sep 16 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.6-alt1
 - Added p9-kworkstation release (closes: 38804).
 - Fixed "Delete downloaded image?" button showing for local
