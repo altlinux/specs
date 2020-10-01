@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: virt-manager
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -130,6 +130,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Oct 01 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+
 * Wed Sep 16 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 - removed virt-convert
