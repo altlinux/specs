@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Date
 Name: perl-%dist
-Version: 6.04
+Version: 6.05
 Release: alt1
 
 Summary: Date conversion routines
@@ -37,6 +37,9 @@ time2str() and str2time(), are exported by default.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 6.05-alt1
+- automated CPAN update
+
 * Tue Nov 19 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
 - automated CPAN update
 
