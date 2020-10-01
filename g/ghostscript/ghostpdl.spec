@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.28
-Release: alt0.rc1.1
+Release: alt0.rc1.2
 
 %define ijsver	0.35
 %global origver %version
@@ -55,6 +55,7 @@ Patch500: ghostscript-alt-ijs-version.patch
 Patch501: alt-urw-fonts-naming.patch
 Patch600: CVE-2019-14811_2_3.patch
 Patch601: CVE-2019-14817.patch
+Patch602: upstream-fix-CVE-2019-14869.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -225,6 +226,7 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 %patch501 -p1
 %patch600 -p1
 %patch601 -p1
+%patch602 -p1
 
 %build
 export CFLAGS=-DA4
@@ -353,6 +355,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.28-alt0.rc1.2
+- Applied security fixes from upstream (Fixes: CVE-2019-14869).
+
 * Tue Sep 10 2019 Fr. Br. George <george@altlinux.ru> 9.28-alt0.rc1.1
 - Fix changelog according to altlinux.org/Vulnerability_Policy
 - Fixes:
