@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-IO-HTML
-Version: 1.001
+Version: 1.004
 Release: alt1
 
 Summary: Open an HTML file with automatic charset detection
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/CPAN/authors/id/C/CJ/CJM/IO-HTML-0.04.tar.gz
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CJ/CJM/IO-HTML-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CJ/CJM/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 03 2012
 BuildRequires: perl-Encode perl-devel
@@ -36,7 +36,7 @@ BuildRequires: perl-Encode perl-devel
 None.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -44,9 +44,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README examples
 %perl_vendor_privlib/IO/*
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
+- automated CPAN update
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
 - automated CPAN update
 
