@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.1
 %define mono_version 5.1.0
-%define major 5.16
+%define major 5.18
 %define rel %nil
 
 %def_with gtk3
@@ -10,13 +10,13 @@
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
-%def_with vkd3d
+%def_without vkd3d
 %def_with faudio
 %endif
 
 Name: wine
 Version: %major.1
-Release: alt3
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -75,7 +75,6 @@ BuildRequires: gcc
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
@@ -221,7 +220,7 @@ Conflicts: libwine-vanilla
 Requires: glibc-pthread glibc-nss
 
 # Runtime linked
-Requires: libcups libncurses
+Requires: libcups
 Requires: libXrender libXi libXext libX11 libICE
 Requires: libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
@@ -326,12 +325,13 @@ export CC=clang
 	--enable-win64 \
 %endif
 	--disable-tests \
+	%{subst_enable static} \
 	%{subst_with gtk3} \
 	--without-gstreamer \
 	--without-oss \
 	--without-capi \
 	--without-hal \
-        --without-mingw \
+	--without-mingw \
 	--with-xattr \
 	%{subst_with vulkan} \
 	%{subst_with vkd3d} \
@@ -363,6 +363,13 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 # Do not pack dangerous association for run windows executables
 rm -f %buildroot%_desktopdir/wine.desktop
+
+%if_disabled static
+for i in %buildroot%_libdir/wine/*.a ; do
+    [ "$i" == "%buildroot%_libdir/wine/libwinecrt0.a" ] && continue
+    rm -fv $i
+done
+%endif
 
 %files
 %doc ANNOUNCE AUTHORS LICENSE README
@@ -445,6 +452,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %_libdir/wine/ntdll.so
+%_libdir/wine/user32.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -462,6 +470,7 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %_datadir/wine/winehid.inf
 %_datadir/wine/nls/
 %_datadir/wine/fonts/
+%_datadir/wine/color/
 
 # move to separate packages
 %exclude %_libdir/wine/twain*
@@ -538,6 +547,18 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.1-alt2
+- crypt32: fix CertGetCertificateContextProperty for CERT_KEY_PROV_INFO_PROP_ID property
+
+* Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.1-alt1
+- new version 5.18.1 (with rpmrb script)
+- console no longer requires the curses library
+- build with vkd3d disabled (see ALT bug 39002)
+
+* Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.17.1-alt1
+- new version 5.17.1 (with rpmrb script)
+- add fix for dotnet install issue (eterbug #11790)
+
 * Wed Sep 09 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.16.1-alt3
 - just require libvulkan1 as all other libs
 - backport small fixes from future biarch build
