@@ -1,14 +1,14 @@
 %define dist IO-Zlib
 Name: perl-%dist
-Version: 1.10
-Release: alt3
+Version: 1.11
+Release: alt1
 
 Summary: IO:: style interface to Compress::Zlib
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOMHUGHES/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ in much the same way as an IO::File object so you can have common
 code that doesn't know which sort of file it is using.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ code that doesn't know which sort of file it is using.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README.md
 %perl_vendor_privlib/IO
 
 %changelog
+* Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.10-alt3
 - rebuilt with pristine tarball
 
