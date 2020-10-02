@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 5.0.2
+Version: 5.5.1
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -15,19 +15,18 @@ Source: %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-Requires: python-module-iniparse mercurial
-# gconf needed at util/shlib.py for browse_url(url).
-Requires: python-module-pygnome-gconf
-Requires: python-module-PyQt5 python-module-qscintilla2-qt5 python-module-Pygments
-Requires: python-module-pygobject
+Requires: python3-module-iniparse mercurial
+Requires: python3-module-PyQt5 python3-module-qscintilla2-qt5 python3-module-Pygments
+Requires: python3-module-pygobject
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: mercurial
-BuildRequires: python-devel gettext python-module-sphinx python-module-PyQt5
-BuildRequires: python-module-enum34 desktop-file-utils libappstream-glib
+BuildRequires: python3-devel gettext python3-module-sphinx python3-module-PyQt5
+BuildRequires: desktop-file-utils libappstream-glib
 
 BuildArch: noarch
 
-%add_python_req_skip _winreg comtypes pythoncom
+%add_python3_req_skip _winreg pythoncom comtypes comtypes.automation comtypes.client
 
 %description
 This package contains the thg command line tool, which provides a graphical
@@ -37,7 +36,7 @@ user interface to the Mercurial distributed revision control system.
 %package nautilus
 Summary: Mercurial GUI plug-in to the Nautilus file manager
 Group: Development/Other
-Requires: %name = %EVR, python-module-nautilus
+Requires: %name = %EVR, python3-module-nautilus
 
 %description nautilus
 This package contains the TortoiseHg Gnome/Nautilus extension, which makes the
@@ -59,14 +58,13 @@ nofork       = True
 EOT
 
 %build
-%python_build
+%python3_build
 
-(cd doc && make html)
-rm doc/build/html/.buildinfo
+%make SPHINXBUILD="sphinx-build-3" -C doc html
 
 %install
-%python_install
-rm %buildroot%python_sitelibdir/hgext3rd/__init__.*
+%python3_install
+rm %buildroot%python3_sitelibdir/hgext3rd/__init__.*
 
 mkdir -p %buildroot%_sysconfdir/mercurial/hgrc.d
 install -pm0644 contrib/mergetools.rc %buildroot%_sysconfdir/mercurial/hgrc.d/thgmergetools.rc
@@ -74,15 +72,19 @@ install -pm0644 contrib/mergetools.rc %buildroot%_sysconfdir/mercurial/hgrc.d/th
 ln -s tortoisehg/icons/scalable/apps/thg.svg %buildroot%_datadir/pixmaps/thg_logo.svg
 desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 
+%if_without nautilus
+rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
+%endif
+
 %find_lang %name
 
 %files -f %name.lang
 %doc doc/build/html/ COPYING.txt
 %config(noreplace) %_sysconfdir/mercurial/hgrc.d/thgmergetools.rc
 %_bindir/thg
-%python_sitelibdir/hgext3rd/thg.py*
-%python_sitelibdir/tortoisehg/
-%python_sitelibdir/tortoisehg-*.egg-info
+%python3_sitelibdir/hgext3rd/*
+%python3_sitelibdir/tortoisehg/
+%python3_sitelibdir/tortoisehg-*.egg-info
 %_datadir/pixmaps/tortoisehg/
 %_datadir/pixmaps/thg_logo.svg
 %_datadir/applications/thg.desktop
@@ -93,6 +95,11 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 %endif
 
 %changelog
+* Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.1-alt1
+- Add watch file.
+- Transfer on python3.
+- Automatically updated to 5.5.1.
+
 * Tue Jul 23 2019 Grigory Ustinov <grenka@altlinux.org> 5.0.2-alt1
 - Build new version.
 

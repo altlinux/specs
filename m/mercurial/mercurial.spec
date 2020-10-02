@@ -1,7 +1,9 @@
-Version: 5.4.1
-Release: alt1
+# tests are too slow
+%def_without check
+
 Name: mercurial
-%setup_python_module %name
+Version: 5.5.1
+Release: alt1
 
 Summary: Mercurial source code management system
 
@@ -14,17 +16,21 @@ Patch1: %name-%version-%release.patch
 
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel asciidoc xmlto python-module-docutils
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-devel asciidoc xmlto python3-module-docutils
+BuildRequires: python3-modules-sqlite3 libzstd-devel
+
+%if_with check
+BuildRequires: unzip
+%endif
 
 Provides: hg = %version-%release
 
-#%add_python_req_skip win32api pywintypes win32com win32con win32file win32process win32gui winerror msvcrt
-%add_findreq_skiplist %python_sitelibdir/hgext/*
-%add_findreq_skiplist %python_sitelibdir/mercurial/win*
-%add_findreq_skiplist %python_sitelibdir/mercurial/scmwin*
-%add_findreq_skiplist %python_sitelibdir/mercurial/httpclient/tests/*
-%add_findreq_skiplist %python_sitelibdir/mercurial/py3kcompat.py
+%add_findreq_skiplist %python3_sitelibdir/hgext/*
+%add_findreq_skiplist %python3_sitelibdir/mercurial/win*
+%add_findreq_skiplist %python3_sitelibdir/mercurial/scmwin*
+%add_findreq_skiplist %python3_sitelibdir/mercurial/httpclient/tests/*
+%add_findreq_skiplist %python3_sitelibdir/mercurial/py3kcompat.py
 
 %description
 Mercurial is a fast fast, lightweight
@@ -42,7 +48,7 @@ Bash completion for mercurial
 %package -n %name-hgext
 Summary: Mercurial bundled extensions
 Group: Development/Other
-Requires: %name = %version-%release, tk, python-module-Pygments
+Requires: %name = %version-%release, tk, python3-module-Pygments
 
 %description -n %name-hgext
 Bundled extensions for Mercurial SCM. See
@@ -87,15 +93,13 @@ This extensions are included in package:
 %patch1 -p1
 
 %build
-%python_build_debug
+%python3_build
 
-make PYTHON=%__python -C doc clean
-make PYTHON=%__python -C doc all
-
-# TODO: run tests on build
+%make PYTHON=%__python3 -C doc clean
+%make PYTHON=%__python3 -C doc all
 
 %install
-%python_install
+%python3_install
 install -D doc/hg.1 %buildroot%_man1dir/hg.1
 install -D doc/hgrc.5 %buildroot%_man5dir/hgrc.5
 install -D doc/hgignore.5 %buildroot%_man5dir/hgignore.5
@@ -105,30 +109,38 @@ install contrib/hg-ssh %buildroot%_bindir/
 
 mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 
+%check
+%make PYTHON=%__python3 check
+
 %files
 %doc CONTRIBUTORS README.rst contrib doc/*html
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/hgrc.d
 %_bindir/hg
 %_bindir/hg-ssh
-%python_sitelibdir/mercurial
-%python_sitelibdir/hgdemandimport
-%python_sitelibdir/%name-*py%_python_version.egg-info
+%python3_sitelibdir/mercurial
+%python3_sitelibdir/hgdemandimport
+%python3_sitelibdir/%name-*py%_python3_version.egg-info
 %_man1dir/hg.*
 %_man5dir/hgrc.*
 %_man5dir/hgignore.*
 
-%exclude %python_sitelibdir/hgext/*
+%exclude %python3_sitelibdir/hgext/*
 
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/%name
 
 %files -n %name-hgext
 %_bindir/hgk
-%python_sitelibdir/hgext
-%python_sitelibdir/hgext3rd
+%python3_sitelibdir/hgext
+%python3_sitelibdir/hgext3rd
 
 %changelog
+* Thu Oct 01 2020 Grigory Ustinov <grenka@altlinux.org> 5.5.1-alt1
+- 5.5.1.
+- Transfer on python3.
+- Use system libzstd.
+
 * Tue Jun 30 2020 Grigory Ustinov <grenka@altlinux.org> 5.4.1-alt1
 - 5.4.1 (Closes: #38654).
 - spec: Set explicitly PYTHON=%%__python to make the docs. (thx arei@)
