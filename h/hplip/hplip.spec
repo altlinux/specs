@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.20.6
+Version: 3.20.9
 Release: alt1
 Epoch:   1
 
@@ -98,7 +98,17 @@ Requires: service => 0.5.9-alt1
 
 BuildRequires(pre): libsane-devel
 
-BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libavahi-devel
+BuildRequires: libcups-devel
+BuildRequires: libdbus-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libnet-snmp-devel
+BuildRequires: libssl-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libusb-compat-devel
+BuildRequires: libusb-devel
+BuildRequires: zlib-devel
 
 %if_enabled python_code
 %if_enabled qt3
@@ -116,7 +126,7 @@ BuildRequires: python%{pysuffix}-devel
 
 %if_enabled PPDs
 #cups-common and foomatic-filters is for cupstestppd
-BuildPreReq: perl cups-common %{cups_filters}
+BuildRequires: perl cups-common %{cups_filters}
 %endif
 
 %if_enabled policykit
@@ -1176,6 +1186,18 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Oct 02 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.9-alt1
+- New version.
+- Added support for the following new Printers:
+  + HP LaserJet MFP M234dw, M234dwe
+  + HP Color LaserJet Managed MFP E57540dn
+  + HP Color LaserJet Managed Flow MFP E57540c
+  + HP Color LaserJet Enterprise MFP M578dn, M578f
+  + HP Color LaserJet Enterprise Flow MFP M578c, M578z
+  + HP Color LaserJet Managed E55040dw, E55040dn
+  + HP Color LaserJet Enterprise M554dn
+  + HP Color LaserJet Enterprise M555dn, M555x
+
 * Fri Jun 19 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.6-alt1
 - New version.
 - Added support for the following new Printers:
