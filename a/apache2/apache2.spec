@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.46
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -1518,6 +1518,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Oct 02 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.46-alt2
+- fixed apachectl -M behavior (closes: #39025)
+
 * Fri Aug 14 2020 Anton Farygin <rider@altlinux.ru> 1:2.4.46-alt1
 - 2.4.46
 
