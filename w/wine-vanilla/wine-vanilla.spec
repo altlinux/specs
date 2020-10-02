@@ -6,13 +6,13 @@
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
-%def_without vkd3d
+%def_with vkd3d
 %def_with faudio
 %endif
 
 Name: wine-vanilla
 Version: 5.18
-Release: alt1
+Release: alt2
 
 Summary: Wine - environment for running Windows applications
 
@@ -75,7 +75,7 @@ BuildRequires: libunixODBC-devel
 BuildRequires: libvulkan-devel
 %endif
 %if_with vkd3d
-BuildRequires: vkd3d-devel
+BuildRequires: vkd3d-devel >= 1.2
 %endif
 %if_with faudio
 BuildRequires: libfaudio-devel
@@ -484,6 +484,9 @@ done
 %endif
 
 %changelog
+* Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.18-alt2
+- Re-enabled vkd3d support.
+
 * Mon Sep 28 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt1
 - new version 5.18
 - console no longer requires the curses library
