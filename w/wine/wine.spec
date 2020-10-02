@@ -10,13 +10,13 @@
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
 %def_with vulkan
 # vkd3d depends on vulkan
-%def_without vkd3d
+%def_with vkd3d
 %def_with faudio
 %endif
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -92,7 +92,7 @@ BuildRequires: libnetapi-devel libpcap-devel
 BuildRequires: libvulkan-devel
 %endif
 %if_with vkd3d
-BuildRequires: vkd3d-devel
+BuildRequires: vkd3d-devel >= 1.2
 %endif
 %if_with faudio
 BuildRequires: libfaudio-devel
@@ -547,6 +547,9 @@ done
 %endif
 
 %changelog
+* Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.18.1-alt3
+- Re-enabled vkd3d.
+
 * Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.1-alt2
 - crypt32: fix CertGetCertificateContextProperty for CERT_KEY_PROV_INFO_PROP_ID property
 
