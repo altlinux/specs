@@ -4,7 +4,7 @@
 
 Name: libb64
 Version: 2.0.0.1
-Release: alt1
+Release: alt2
 
 Summary: Base64 Encoding/Decoding Routines
 
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 
 Patch4: override-cflags.diff
 Patch6: disable-werror.diff
+Patch20: replace-elseif-with-elif.patch
+Patch21: use-stddef-h.patch
 BuildRequires: gcc-c++
 
 %description
@@ -40,6 +42,8 @@ code for standalone encoding and decoding executables.
 %setup
 %patch4 -p1
 %patch6 -p1
+%patch20 -p1
+%patch21 -p1
 
 %build
 pushd src
@@ -70,6 +74,9 @@ ln -s %soname %shared_lib
 %_includedir/b64/*.h
 
 %changelog
+* Wed Sep 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0.1-alt2
+- Fixed library for 32bit clients.
+
 * Mon Sep 21 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0.1-alt1
 - new version (2.0.0.1) with rpmgs script
 - change upstream to github repo
