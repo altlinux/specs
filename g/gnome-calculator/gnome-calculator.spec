@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -71,6 +71,7 @@ GObject introspection data for the GNOME Calculator library.
 %package -n libgcalc-gir-devel
 Summary: GObject introspection devel data for the GNOME Calculator library.
 Group: Development/Other
+BuildArch: noarch
 Requires: libgcalc-devel = %EVR
 Requires: libgcalc-gir = %EVR
 
@@ -113,6 +114,7 @@ GObject introspection data for the GNOME Calculator GTK interface library.
 %package -n libgci-gir-devel
 Summary: GObject introspection devel data for the GNOME Calculator GTK interface library.
 Group: Development/Other
+BuildArch: noarch
 Requires: libgci-devel = %EVR
 Requires: libgci-gir = %EVR
 
@@ -195,6 +197,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Fri Sep 11 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
