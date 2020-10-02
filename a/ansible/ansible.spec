@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.9.10
+Version: 2.9.13
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -81,6 +81,15 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Fri Oct 02 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.13-alt1
+- New version.
+- Fixes:
+  + CVE-2020-14332
+  + CVE-2020-1736
+  + CVE-2020-14330
+  + CVE-2019-14846
+  + CVE-2020-14365
+
 * Wed Jul 08 2020 Andrey Cherepanov <cas@altlinux.org> 2.9.10-alt1
 - 2.9.10
 - Fixes:
