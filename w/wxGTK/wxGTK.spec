@@ -10,7 +10,7 @@
 
 Name: wxGTK
 Version: %wxbranch.12
-Release: alt1.svn20131012.5
+Release: alt1.svn20131012.6
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -20,6 +20,7 @@ Url: http://wxwidgets.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar.gz
+# reduces symbol list by ~10%, introduces ftbfs with perl 5.30/binutils 2.34
 Source2: ld_shared_wrapper.pl
 
 Patch1: wxGTK-disable-ABI-checking.patch
@@ -190,10 +191,10 @@ subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 	 --with-sdl \
 	 --with-regex=yes
 
-%make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
+%make_build
 
 pushd contrib
-%make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
+%make_build
 popd
 
 %install
@@ -336,6 +337,10 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Fri Oct 02 2020 Michael Shigorin <mike@altlinux.org> 2:2.8.12-alt1.svn20131012.6
+- avoid custom ld_shared_wrapper.pl filter:
+  broke with perl 5.30 _and_ binutils 2.34 (bircoph@)
+
 * Tue Aug 29 2017 Michael Shigorin <mike@altlinux.org> 2:2.8.12-alt1.svn20131012.5
 - introduce java, mediactrl knobs (on by default)
 
