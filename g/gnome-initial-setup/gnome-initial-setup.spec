@@ -8,9 +8,10 @@
 %def_disable software_sources
 %def_enable cheese
 %def_enable systemd
+%def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -33,6 +34,7 @@ Requires: gnome-shell >= 3.37.92 gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
 Requires: ibus gnome-keyring
 Requires: gnome-getting-started-docs
+%{?_enable malcontent:Requires: malcontent}
 #Requires: gnome-tour
 
 BuildRequires(pre): meson pkgconfig(systemd)
@@ -52,6 +54,7 @@ BuildRequires: libgeoclue2-devel >= %geoclue_ver libgeocode-glib-devel
 BuildRequires: libwebkit2gtk-devel
 %{?_enable_cheese:BuildRequires: libcheese-devel}
 %{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
+%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-ui-0)}
 
 %description
 GNOME Initial Setup is an alternative to firstboot, providing
@@ -64,7 +67,8 @@ you through configuring it. It is integrated with gdm.
 %build
 %meson \
 	%{?_enable_software_sources:-Dsoftware-sources=enabled} \
-	%{?_disable_systemd:-Dsystemd=false}
+	%{?_disable_systemd:-Dsystemd=false} \
+	%{?_disable malcontent:-Dparental_controls=false}
 %nil
 %meson_build
 
@@ -96,6 +100,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Fri Oct 02 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
