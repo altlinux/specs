@@ -1,5 +1,5 @@
 Name:     settings-s
-Version:  0.4
+Version:  0.4.1
 Release:  alt1
 
 Summary:  settings for custom distro
@@ -83,6 +83,10 @@ fi
 
 
 %changelog
+* Fri Oct 02 2020 Paul Wolneykien <manowar@altlinux.org> 0.4.1-alt1
+- Set integalert service state from its preset after system
+  installation.
+
 * Thu Oct 01 2020 Paul Wolneykien <manowar@altlinux.org> 0.4-alt1
 - Setup OSEC for full journal output after integrity database
   initialization after install.
