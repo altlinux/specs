@@ -1,8 +1,8 @@
 %define module_name     dm-secdel
 %define module_version  1.0.7
-%define module_release  alt3
+%define module_release  alt4
 %define flavour         std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 
 %setup_kernel_module %flavour
 
@@ -50,5 +50,5 @@ install -m644 -D dm-secdel.ko %buildroot/%module_dir/
 %module_dir
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %kepoch%version-%release
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %epoch:%version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
