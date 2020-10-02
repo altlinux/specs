@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.233
+Version: 7.0.234
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -128,6 +128,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Fri Oct 02 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.234-alt1
+- 7.0.234
+
 * Fri Sep 18 2020 Andrew A. Vasilyev <andy@altlinux.org> 7.0.233-alt1
 - 7.0.233
 
