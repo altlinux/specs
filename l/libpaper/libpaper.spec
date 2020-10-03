@@ -1,5 +1,5 @@
 Name: libpaper
-Version: 1.1.26
+Version: 1.1.28
 Release: alt1
 
 Summary: Library and tools for handling papersize
@@ -78,6 +78,9 @@ done
 %_man3dir/*
 
 %changelog
+* Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.28-alt1
+- new version 1.1.28 (with rpmrb script)
+
 * Tue Feb 12 2019 Vitaly Lipatov <lav@altlinux.ru> 1.1.26-alt1
 - new version (1.1.26) with rpmgs script
 - update all patches from Fedora project
