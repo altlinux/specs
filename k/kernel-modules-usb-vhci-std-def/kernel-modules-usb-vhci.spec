@@ -1,6 +1,6 @@
 %define module_name     usb-vhci
 %define module_version  1.15
-%define module_release  alt3
+%define module_release  alt4
 %define flavour         std-def
 %define karch %ix86 x86_64 aarch64 ppc64le
 
@@ -51,5 +51,5 @@ install -m644 -D usb-vhci-hcd.ko usb-vhci-iocifc.ko %buildroot/%module_dir/
 %module_dir
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %kepoch%version-%release
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %epoch:%version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
