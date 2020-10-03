@@ -1,11 +1,11 @@
 %def_disable static
 
 Name: gammu
-Version: 1.41.0
+Version: 1.42.0
 Release: alt1
 
 Summary: Mobile phones management utility
-License: GPL
+License: GPLv2
 Group: Communications
 
 Url: http://wammu.eu/gammu/
@@ -184,6 +184,10 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sat Oct 03 2020 Michael Shigorin <mike@altlinux.org> 1.42.0-alt1
+- new version (watch file uupdate)
+- clarified license (GPLv2)
+
 * Sat Sep 28 2019 Michael Shigorin <mike@altlinux.org> 1.41.0-alt1
 - new version (watch file uupdate)
 
