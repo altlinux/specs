@@ -1,5 +1,5 @@
 Name: deepin-calculator
-Version: 5.5.28
+Version: 5.6.0.1
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-3.0+
@@ -19,7 +19,7 @@ Requires: icon-theme-hicolor
 %prep
 %setup
 %__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
-%__subst '1i#include <QPainterPath>' src/modules/simplelistdelegate.cpp src/widgets/equalbutton.cpp
+%__subst '1i#include <QPainterPath>' src/views/simplelistdelegate.cpp
 
 %build
 %cmake -GNinja
@@ -40,5 +40,8 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Oct 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.1-alt1
+- New version (5.6.0.1) with rpmgs script.
+
 * Tue Aug 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.5.28-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).

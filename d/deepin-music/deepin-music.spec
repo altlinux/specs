@@ -1,5 +1,5 @@
 Name: deepin-music
-Version: 6.0.1.8
+Version: 6.0.1.20
 Release: alt1
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+ and LGPL-2.1+
@@ -40,8 +40,9 @@ sed -i 's|$${PREFIX}/lib|%_libdir|' src/libdmusic/libdmusic.pro src/plugin/netea
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc CHANGELOG.md COPYING LICENSE README.md
 %_bindir/%name
 %_libdir/*.so.*
@@ -62,5 +63,8 @@ sed -i 's|$${PREFIX}/lib|%_libdir|' src/libdmusic/libdmusic.pro src/plugin/netea
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Oct 03 2020 Leontiy Volodin <lvol@altlinux.org> 6.0.1.20-alt1
+- New version (6.0.1.20) with rpmgs script.
+
 * Thu Sep 10 2020 Leontiy Volodin <lvol@altlinux.org> 6.0.1.8-alt1
 - Initial build for ALT Sisyphus (thanks archlinux for this spec).
