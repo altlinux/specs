@@ -1,6 +1,6 @@
 Name: kernel-image-std-def
 Release: alt1.1
-epoch:1 
+epoch:2
 %define kernel_base_version	5.4
 %define kernel_sublevel .68
 %define kernel_extra_version	%nil
@@ -704,6 +704,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/staging/
 
 %changelog
+* Fri Oct 02 2020 Kernel Bot <kernelbot@altlinux.org> 2:5.4.68-alt1.1
+- Epoch up to make it greater then in c8 :-(
+
 * Wed Sep 30 2020 Kernel Bot <kernelbot@altlinux.org> 1:5.4.68-alt1.1
 - SD card usage on Raspberry Pi 3 fixed
 
