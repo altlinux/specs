@@ -9,7 +9,7 @@ Name: python3-module-schedutils
 Group: Development/Python3
 Summary: Python interface for the Linux scheduler functions
 Version: 0.6
-Release: alt1
+Release: alt2
 License: GPL-2.0-only
 Url: https://rt.wiki.kernel.org/index.php/Tuna
 Vcs: https://git.kernel.org/pub/scm/libs/python/python-schedutils/python-schedutils.git/
@@ -40,6 +40,9 @@ functions and friends.
 %python3_sitelibdir/schedutils*
 
 %changelog
+* Mon Oct 05 2020 Vitaly Chikunov <vt@altlinux.org> 0.6-alt2
+- Increase release to be higher than Autoimports package.
+
 * Sat Oct 03 2020 Vitaly Chikunov <vt@altlinux.org> 0.6-alt1
 - First import of 0.6 to Sisyphus.
 
