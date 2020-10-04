@@ -1,23 +1,20 @@
 Name: scummvm
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
 Group: Games/Adventure
-License: GPL
+License: GPLv2
 Url: http://www.scummvm.org
 
 Source: %name-%version.tar.gz
 Patch: scummvm-1.3.0-mp2player.patch
-Patch1: scummvm-2.1.0-fluidsynth.patch
 
 Provides: %_gamesdatadir/%name
 
-##  gcc-c++ git-core libSDL-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
-
-# Automatically added by buildreq on Sun Apr 26 2020
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libogg-devel libsasl2-3 libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: gcc-c++ git-core libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
+# Automatically added by buildreq on Sun Oct 04 2020
+# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libharfbuzz-devel libogg-devel libpango-devel libpng-devel libsasl2-3 libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ git-core libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel libjpeg-devel libmad-devel libmpeg2-devel libreadline-devel libtheora-devel libvorbis-devel
 
 %description
 ScummVM is a collection of interpreters, capable of emulating several
@@ -28,7 +25,6 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 ./configure \
@@ -43,7 +39,7 @@ LucasArts games such as Monkey Island, Day of the Tentacle, and others.
 	--enable-text-console \
 	--enable-all-engines \
 	--enable-vkeybd
-%make_build 
+%make_build
 
 %install
 %makeinstall_std
@@ -66,7 +62,7 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_man6dir/scummvm.6*
 %_datadir/pixmaps/scummvm.xpm
 %_datadir/applications/%name.desktop
-%_datadir/appdata/*
+%_datadir/metainfo/*
 %_iconsdir/hicolor/*/apps/*
 %dir %_libdir/%name
 %_libdir/%name/*
@@ -74,6 +70,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Sun Oct 04 2020 Fr. Br. George <george@altlinux.ru> 2.2.0-alt1
+- Autobuild version bump to 2.2.0
+
 * Sun Apr 26 2020 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
 - Autobuild version bump to 2.1.1
 - Apply gentoo patch
