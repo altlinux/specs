@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 7.7
+%define major 7.8
 %define somajor 7
 #define _localstatedir /var
 %def_enable epoll
@@ -666,6 +666,9 @@ rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.
 %endif
 
 %changelog
+* Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt1
+- new version 7.8 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 7.7-alt1
 - new version 7.7 (with rpmrb script)
 
