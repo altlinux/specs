@@ -12,7 +12,7 @@
 
 Name: wine-vanilla
 Version: 5.18
-Release: alt2
+Release: alt3
 
 Summary: Wine - environment for running Windows applications
 
@@ -22,9 +22,8 @@ Url: http://winehq.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# See http://git.etersoft.ru/people/lav/packages/?p=wine.git;a=shortlog;h=refs/heads/vanilla
-# Source tarball from git.etersoft.ru, branch vanilla (pulled from wine's git)
-Source: ftp://updates.etersoft.ru/pub/Etersoft/Wine-vanilla/%version/sources/tarball/%name-%version.tar
+# Source-git: http://source.winehq.org/git/wine.git
+Source: %name-%version.tar
 Source2: %name-%version-desktop.tar
 Source3: %name-%version-icons.tar
 
@@ -95,7 +94,7 @@ BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
 BuildRequires: perl-XML-Simple
 
 # Actually for x86_32
-Requires: glibc-pthread glibc-nss
+Requires: glibc-nss
 
 Requires: webclient
 
@@ -122,7 +121,7 @@ Requires: cabextract
 While Wine is usually thought of as a Windows(TM) emulator, the Wine
 developers would prefer that users thought of Wine as a Windows
 compatibility layer for UNIX. This package includes a program loader,
-which allows unmodified Windows 3.x/9x/NT binaries to run on x86 and x86_64
+which allows unmodified Windows binaries to run on x86 and x86_64
 Unixes. Wine does not require MS Windows, but it can use native system
 .dll files if they are available.
 
@@ -484,6 +483,10 @@ done
 %endif
 
 %changelog
+* Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt3
+- move additional files to .gear subdir (drop etersoft dir)
+- add Source git URL
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.18-alt2
 - Re-enabled vkd3d support.
 
