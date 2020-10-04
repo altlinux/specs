@@ -1,8 +1,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	4.19
-%define kernel_sublevel		.142
-%define kernel_rt_release	rt63
+%define kernel_sublevel		.148
+%define kernel_rt_release	rt64
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -441,6 +441,10 @@ vm-run cat /sys/kernel/realtime
 %endif
 
 %changelog
+* Sun Oct 04 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.148-alt1.rt64
+- Update to v4.19.148-rt64 (02 Oct 2020).
+- config: Enable some options.
+
 * Sun Sep 06 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.142-alt1.rt63
 - Update to v4.19.142-rt63 (03 Sep 2020).
 
