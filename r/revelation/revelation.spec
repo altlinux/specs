@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define ver_major 0.5
 %define rdn_name info.olasagasti.revelation
 
 Name: revelation
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Password manager for the GNOME 3 desktop
@@ -27,7 +27,7 @@ BuildArch: noarch
 Requires: dconf
 Requires: libgtk+3-gir >= %gtk_ver
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
 BuildRequires: shared-mime-info desktop-file-utils libappstream-glib-devel
 BuildRequires: libgtk+3-gir-devel >= %gtk_ver
 BuildRequires: python3-module-pygobject3-devel
@@ -40,18 +40,14 @@ your accounts and passwords in a single, secure place, and gives you
 access to it through a user-friendly graphical interface.
 
 %prep
-%setup
+%setup -n %name%{?_disable_snapshot:-%name}-%version
 
 %build
-%autoreconf
-%configure \
-		--disable-schemas-compile \
-		--disable-desktop-update \
-		--disable-mime-update
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome %name
 
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -69,10 +65,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name
 %_iconsdir/hicolor/*x*/*/*.png
 %_iconsdir//hicolor/scalable/*/*.svg
-%_datadir/glib-2.0/schemas/org.revelation.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Sun Oct 04 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- 0.5.4 (ported to Meson build sysytem)
+
 * Thu Sep 17 2020 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3 (ported to PyGobject3/GTK3 and PyCryptodome)
 
