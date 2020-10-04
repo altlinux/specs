@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200915
+Version: 20200923
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Oct 04 2020 Cronbuild Service <cronbuild@altlinux.org> 20200923-alt1
+- upstream changes (GIT b78a66c):
+  + Update firmware for Cadence MHDP8546 DP bridge (thx Swapnil Jakhade)
+  + Update firmware patch for Intel Bluetooth 7265 (D1) (thx Kiran K)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2008.1312 (thx Petr Machata)
+  + nvidia: move firmware symlinks to WHENCE (thx Peter Robinson)
+  + move i915 firmware symlinks to WHENCE (thx Peter Robinson)
+  + move iwlwifi-7265D-10.ucode symlink to WHENCE (thx Peter Robinson)
+  + Update Marvell Switchdev firmware with ABI changes (thx Vadym Kochan)
+
 * Mon Sep 28 2020 Cronbuild Service <cronbuild@altlinux.org> 20200915-alt1
 - upstream changes (GIT 00a84c5):
   + Update AMD SEV firmware (thx John Allen)
