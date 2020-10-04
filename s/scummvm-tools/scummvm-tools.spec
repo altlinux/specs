@@ -1,10 +1,10 @@
 Name: scummvm-tools
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
 Group: Games/Adventure
-License: GPL
+License: GPLv2
 Url: http://www.scummvm.org
 
 Source: %name-%version.tar.gz
@@ -35,6 +35,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Sun Oct 04 2020 Fr. Br. George <george@altlinux.ru> 2.2.0-alt1
+- Autobuild version bump to 2.2.0
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Autobuild version bump to 2.1.0
 - Fix build
