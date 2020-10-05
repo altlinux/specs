@@ -1,22 +1,24 @@
-%def_without gtk3
+%def_with gtk
 
 Name: doublecmd
 Summary: Twin-panel (commander-style) file manager
-Version: 1.0.0
-Release: alt0.1.rev9483
+Version: 0.9.9
+Release: alt1
+Epoch:   1
 Url: https://doublecmd.sourceforge.io
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: %name-qt.desktop
-License: GPL-2.0+
+License: GPLv2+ and LGPLv2+ and Expat and MPL-1.1 and MPL-2.0 and Apache-2.0 and BSD and Expat and Zlib
 Group: File tools
 
 BuildRequires: fpc >= 2.6.2
 BuildRequires: fpc-src
-%if_with gtk3
-BuildRequires: libgtk+3-devel
+%if_with gtk
+# lcl_gtk3 is still unstable in Lazarus
+BuildRequires: libgtk+2-devel
 %endif
 BuildRequires: lazarus >= 1.0.10
 BuildRequires: qt5pas-devel
@@ -32,13 +34,12 @@ Patch2: doublecmd-alt-build-in-one-thread.patch
 ExclusiveArch: %ix86 x86_64
 
 %description
-Double Commander (GTK2 and QT4 versions) is a cross platform open source
-file manager with two panels side by side.  It is inspired by Total
-Commander and features some new ideas.
+Double Commander is a cross platform open source file manager with two panels
+side by side. It is inspired by Total Commander and features some new ideas.
 
-%if_with gtk3
+%if_with gtk
 %package -n %name-gtk
-Summary: Twin-panel (commander-style) file manager (GTK3)
+Summary: Twin-panel (commander-style) file manager (GTK)
 Group: File tools
 Requires: %name-common
 Provides: %name
@@ -56,7 +57,7 @@ Group: File tools
 Requires: %name-common
 
 %description -n %name-qt
-Double Commander QT5 is a cross platform open source file manager with
+Double Commander Qt5 is a cross platform open source file manager with
 two panels side by side.  It is inspired by Total Commander and features
 some new ideas.
 
@@ -74,15 +75,18 @@ Common files for Double Commander
 %patch2 -p2
 
 %build
-./build.sh all qt5
+export MAKEOPTS="-XX"
+lcl=qt5 ./build.sh beta
 cp ./%name ./%name-qt
-%if_with gtk3
+%if_with gtk
 ./clean.sh
-./build.sh all gtk3
+lcl=gtk2 ./build.sh beta
 %endif
 
+%ifarch %ix86
 # To fix ... "oblom" ... when processing install ;)
 %set_verify_elf_method textrel=relaxed
+%endif
 
 %install
 install/linux/install.sh --install-prefix=%buildroot
@@ -91,7 +95,7 @@ ln -s ../%_lib/%name/%name-qt %buildroot%_bindir/%name-qt
 # Adapt polkit rule for doublecmd-qt
 cp %buildroot%_datadir/polkit-1/actions/org.doublecmd{,-qt}.root.policy
 subst 's|%_bindir/%name|%_bindir/%name-qt|' %buildroot%_datadir/polkit-1/actions/org.doublecmd-qt.root.policy
-%if_without gtk3
+%if_without gtk
 rm -f %buildroot%_libdir/%name/%name \
       %buildroot%_bindir/%name \
       %buildroot%_desktopdir/%name.desktop \
@@ -105,7 +109,7 @@ convert -resize 48x48 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_liconsd
 convert -resize 32x32 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_niconsdir/%name.png
 convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsdir/%name.png
 
-%if_with gtk3
+%if_with gtk
 %files -n %name-gtk
 %_bindir/%name
 %_libdir/%name/%name
@@ -123,7 +127,7 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %doc doc/README.txt
 %exclude %_libdir/%name/%name-qt
 %exclude %_bindir/%name-qt
-%if_with gtk3
+%if_with gtk
 %exclude %_libdir/%name/%name
 %exclude %_bindir/%name
 %endif
@@ -137,6 +141,11 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Oct 05 2020 Andrey Cherepanov <cas@altlinux.org> 1:0.9.9-alt1
+- Downgrade to last stable version.
+- Build with gtk backend (ALT #38835).
+- Write out all used licenses in License tag.
+
 * Sun Jul 05 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt0.1.rev9483
 - New version (rev 9483).
 - Build in one thread.
