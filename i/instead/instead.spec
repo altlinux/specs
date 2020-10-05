@@ -1,6 +1,6 @@
 
 Name: instead
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
@@ -9,10 +9,12 @@ Summary(ru_RU.UTF-8): Интерпретатор текстовых приклю
 Url: http://instead.syscall.ru
 Source: %version.tar.gz
 Patch: %name-1.7.0-Rules.make.system.patch
+Provides: %name-sdl = %version-%release
+Obsoletes: %name-sdl < %version-%release
 
-# Automatically added by buildreq on Thu Jan 23 2020
-# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libharfbuzz-devel libpango-devel libsasl2-3 libstdc++-devel python-modules python2-base sh4 zlib-devel
-BuildRequires: ImageMagick-tools cmake gcc-c++ glibc-devel-static libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libgtk+2-devel lua-devel
+# Automatically added by buildreq on Mon Oct 05 2020
+# optimized out: at-spi2-atk cmake-modules fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libSDL2-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python2-base sh4 zlib-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ glibc-devel-static libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libgtk+3-devel lua-devel
 
 %description
 INSTEAD was designed to interpret the games that are the mix of visual novels,
@@ -29,33 +31,14 @@ text quests and classical 90's quests.
     * поддержка тем для графического интерпретатора -- конкретная игра может менять вид интерфейса;
     * переносимость (изначально написана для Linux, зависит от SDL и lua).
 
-%package sdl
-Group: Games/Adventure
-License: GPLv2
-Summary: STEAD text adventures/visual novels GUI engine
-Summary(ru_RU.UTF-8): Графический интерпретатор текстовых приключение и визуальных новелл STEAD
-Requires: %name = %version-%release
-Obsoletes: %name < %version-%release
-
-%description sdl
-This is GUI version of %name, text adventures/visual novels engine
-
-%description sdl -l ru_RU.UTF-8
-GUI-версия интерпретатора текстовых приключение и визуальных новелл STEAD
-
 %prep
 %setup
 %patch -p2
-##cat > subst <<@@@
-##sed -i --follow-symlinks -e '\${x;s/./&/;x;t;q 1};'"\$1"';T;x;s/.*/./;x' "\$2"
-##@@@
-##chmod +x subst
 
 for N in 16 32 48 64 128; do convert -resize ${N}x${N} icon/sdl_%name.png ${N}x${N}.png; done
-##./subst 's@char \*games_sw = NULL@char *games_sw = "%_localstatedir/%name/games"@' src/sdl-instead/main.c
 
 %build
-%cmake -DCMAKE_C_FLAGS:PATH="-I /usr/include/harfbuzz"
+%cmake -DCMAKE_C_FLAGS:PATH="-I /usr/include/harfbuzz" -DWITH_GTK3=1
 %cmake_build
 
 %install
@@ -64,20 +47,22 @@ for N in 16 32 48 64 128; do install -pD ${N}x${N}.png %buildroot/%_iconsdir/hic
 mkdir -p %buildroot%_localstatedir/%name/games
 
 %files
-%doc doc
+%doc doc README*
 %dir %_datadir/%name
 %dir %attr(1775,root,games) %_localstatedir/%name/games
 %_datadir/%name/*
 %_man6dir/*
-%_bindir/%name
-
-%files sdl
-%_bindir/sdl-%name
+%_bindir/*
 %_iconsdir/hicolor/*/apps/sdl_%name.png
 %_pixmapsdir/*
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Oct 05 2020 Fr. Br. George <george@altlinux.ru> 3.3.2-alt1
+- Autobuild version bump to 3.3.2
+- Drop bogus instead/instead-sdl separation
+- Switch to GTK3
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 3.3.1-alt1
 - Autobuild version bump to 3.3.1
 - Switch to SDL2
