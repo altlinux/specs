@@ -1,5 +1,5 @@
 Name: livecd-qemu-arch
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: prepare live-builder.iso for ARM/PPC/aarch64/armh/mipsel/riscv64 QEMU
@@ -135,7 +135,8 @@ EOF
 
 cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.armh << EOF
 # https://www.altlinux.org/Ports/arm
-rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/ports/armh/Sisyphus armh classic
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus armh classic
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.4.1.ppc << EOF
@@ -171,6 +172,9 @@ EOF
 %attr(755,root,root) %_bindir/register-qemu-*
 
 %changelog
+* Mon Oct 05 2020 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
+- fix repo for armh
+
 * Thu Aug 06 2020 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - fix syntax error in register-qemu-ppc64le
 
