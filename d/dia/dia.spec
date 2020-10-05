@@ -6,7 +6,7 @@
 %define major 0.97
 Name: dia
 Version: %major.4
-Release: alt0.7.1
+Release: alt0.7.2
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -32,7 +32,7 @@ Patch3: CVE-2019-19451-adapted-fix.patch
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
 BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
-%ifnarch %e2k
+%ifnarch %e2k %mips
 BuildRequires: libEMF-devel
 %endif
 BuildRequires: libpng-devel
@@ -77,7 +77,7 @@ intltoolize --force
 	--with-hardbooks \
 	--disable-gnome \
 	--without-python \
-%ifarch x86_64 %e2k
+%ifarch x86_64 %e2k %mips
 	--disable-libemf \
 %endif
 	--disable-static
@@ -109,6 +109,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Mon Oct 05 2020 Ivan A. Melnikov <iv@altlinux.org> 0.97.4-alt0.7.2
+- disable libEMF on mipsel
+
 * Fri Oct 02 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.97.4-alt0.7.1
 - Applied security fix from upstream (Fixes: CVE-2019-19451).
 
