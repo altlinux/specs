@@ -7,8 +7,8 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 1.4
-Release: alt3
+Version: 20.08.1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -21,9 +21,22 @@ Provides: kde-connect = %version kdeconnect-kde = %version
 Requires: libqt5-quickparticles
 Requires: /usr/bin/sshfs qca-qt5-ossl
 Requires: kf5-kirigami
+# KF5PeopleVCard
 
 Source: %rname-%version.tar
 Patch1: alt-hide-menu-item.patch
+
+Patch10: f183b5447bad47655c21af87214579f03bf3a163.diff
+Patch11: b279c52101d3f7cc30a26086d58de0b5f1c547fa.diff
+Patch12: d35b88c1b25fe13715f9170f18674d476ca9acdc.diff
+Patch13: b496e66899e5bc9547b6537a7f44ab44dd0aaf38.diff
+Patch14: 5310eae85dbdf92fba30375238a2481f2e34943e.diff
+Patch15: 721ba9faafb79aac73973410ee1dd3624ded97a5.diff
+Patch16: ae58b9dec49c809b85b5404cee17946116f8a706.diff
+Patch17: 66c768aa9e7fba30b119c8b801efd49ed1270b0a.diff
+Patch18: 85b691e40f525e22ca5cc4ebe79c361d71d7dc05.diff
+Patch19: 48180b46552d40729a36b7431e97bbe2b5379306.diff
+
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -36,6 +49,7 @@ BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel 
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel
 BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 BuildRequires: kf5-kdoctools-devel kf5-kirigami-devel kf5-kpeople-devel
+# KF5PulseAudioQt
 
 %description
 KDE Connect adds communication between KDE and your smartphone.
@@ -92,6 +106,17 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+
 %build
 %K5build \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
@@ -104,6 +129,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING*
+%_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5bin/kdeconnect-*
@@ -138,6 +164,12 @@ KF5 library
 %_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Oct 05 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt2
+- security (fixes: CVE-2020-26164)
+
+* Mon Oct 05 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
+- new version
+
 * Thu Feb 13 2020 Sergey V Turchin <zerg@altlinux.org> 1.4-alt3
 - hide inappropriate menu item (Closes: 38032)
 
