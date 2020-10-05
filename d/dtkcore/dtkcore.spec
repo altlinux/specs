@@ -1,5 +1,5 @@
 Name: dtkcore
-Version: 5.2.2.3
+Version: 5.2.2.15
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -9,7 +9,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ fdupes qt5-linguist qt5-declarative-devel qt5-multimedia-devel qt5-x11extras-devel gsettings-qt-devel
+BuildRequires: gcc-c++ git-core fdupes qt5-linguist qt5-declarative-devel qt5-multimedia-devel qt5-x11extras-devel gsettings-qt-devel
 
 %description
 Deepin tool kit core modules.
@@ -67,5 +67,8 @@ Header files and libraries for %name.
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.15-alt1
+- New version (5.2.2.15) with rpmgs script.
+
 * Mon Aug 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.3-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).

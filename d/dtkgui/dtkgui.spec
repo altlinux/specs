@@ -1,5 +1,5 @@
 Name: dtkgui
-Version: 5.2.2.1
+Version: 5.2.2.15
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0 and GPL-3.0+
@@ -9,7 +9,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ dtk5-core-devel qt5-x11extras-devel librsvg-devel
+BuildRequires: gcc-c++ dtk5-core-devel librsvg-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -34,7 +34,7 @@ Header files and libraries for %name.
 
 %build
 %qmake_qt5 \
-    "CONFIG += nostrip" \
+    CONFIG+=nostrip \
     PREFIX=%_prefix \
     LIB_INSTALL_DIR=%_libdir \
     DTK_VERSION=%version
@@ -60,5 +60,8 @@ Header files and libraries for %name.
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.15-alt1
+- New version (5.2.2.15) with rpmgs script.
+
 * Wed Jul 29 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.2.1-alt1
 - Initial build for ALT Sisyphus.
