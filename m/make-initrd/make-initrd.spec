@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -178,7 +178,6 @@ fi
 %_datadir/%myname
 %_man1dir/*
 /lib/initrd
-%_prefix/libexec/%myname
 %exclude %_datadir/%myname/features/devmapper
 %exclude %_datadir/%myname/features/lvm
 %exclude %_datadir/%myname/features/luks
@@ -218,6 +217,21 @@ fi
 %endif
 
 %changelog
+* Mon Oct 05 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt1
+- Feature luks:
+  + Decrypt using plymouth if present (thx Oleg Solovyov) (ALT#38934, ALT#34634)
+  + Run luks handler after mountdev
+- Feature multipath:
+  + Add service file and multipathd (ALT#38461)
+- Feature plymouth:
+  + Add missing label plugin (thx Oleg Solovyov)
+  + Include fonts (thx Oleg Solovyov)
+- Runtime:
+  + Add rdlog=console boot parameter to send all log messages to the /dev/console
+  + Check bootable conditions after each uevend handler
+- Misc:
+  + Replace initrd-cp by initrd-put
+
 * Thu Sep 10 2020 Alexey Gladkov <legion@altlinux.ru> 2.10.0-alt1
 - New feature:
   + Add lkrg feature to preload lkrg module (thx Vladimir D. Seleznev)
