@@ -1,5 +1,5 @@
 Name: disomaster
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 Summary: Library to manipulate DISC burning
 License: GPL-3.0+
@@ -52,5 +52,8 @@ Header files and libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
+- New version (5.0.4) with rpmgs script.
+
 * Fri Sep 25 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
