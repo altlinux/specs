@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: ALT Local policies
@@ -60,6 +60,10 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Mon Oct 05 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.6-alt1
+- Fix control_subst_with_file_check regression and improve default
+  variants of controls facilities use it
+
 * Wed Sep 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.4.5-alt1
 - Revert winbind service enabling by default on server and workstation
   due it depends on samba configuration and could be unconsistent
