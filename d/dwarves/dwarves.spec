@@ -1,8 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %define libname libdwarves
 %define libver 1
 
 Name: dwarves
-Version: 1.17
+Version: 1.18
 Release: alt1
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
@@ -98,5 +102,8 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Mon Oct 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.18-alt1
+- Update to v1.18 (2020-10-02).
+
 * Thu Apr 16 2020 Vitaly Chikunov <vt@altlinux.org> 1.17-alt1
 - Initial build for Sisyphus of v1.17 (released 2020-03-13).
