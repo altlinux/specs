@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 4.1.2
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -64,8 +64,8 @@ sed -i '/^\[testenv\]$/a whitelist_externals =\
 setenv =\
     py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
 commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
+    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
+    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
@@ -77,6 +77,9 @@ tox.py3 --sitepackages -r -vv
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 05 2020 Stanislav Levin <slev@altlinux.org> 4.1.2-alt1
+- 3.5.0 -> 4.1.2.
+
 * Wed Feb 19 2020 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.3.3 -> 3.5.0.
 
