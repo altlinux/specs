@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.11.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -120,6 +120,8 @@ Summary: plymouth module for %name
 Group: System/Base
 Requires: %name = %version-%release
 Requires: plymouth
+Requires: plymouth-plugin-label
+Requires: fonts-ttf-dejavu
 AutoReq: noshell, noshebang
 
 %description plymouth
@@ -217,6 +219,12 @@ fi
 %endif
 
 %changelog
+* Tue Oct 06 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt2
+- Feature plymouth:
+  + Add missing rpm dependencies
+- Utilities:
+  + initrd-put: Fix handling of previous directories
+
 * Mon Oct 05 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt1
 - Feature luks:
   + Decrypt using plymouth if present (thx Oleg Solovyov) (ALT#38934, ALT#34634)
