@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron8
-Version: 8.3.4
+Version: 8.5.2
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -63,6 +63,9 @@ ln -rs %buildroot%_libdir/%name/electron %buildroot/%_bindir/%name
 %endif
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 8.5.2-alt1
+- new version 8.5.2 (with rpmrb script)
+
 * Sat Jun 27 2020 Vitaly Lipatov <lav@altlinux.ru> 8.3.4-alt1
 - new version
 - add armh (armv7l) arch
