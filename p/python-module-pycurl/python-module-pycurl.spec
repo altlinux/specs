@@ -3,16 +3,22 @@
 
 Name: python-module-%oname
 Version: 7.43.0.6
-Release: alt1
+Release: alt2
 
 Summary: Python bindings to libcurl
+
 License: LGPL
 Group: Development/Python
 Url: http://pycurl.io/
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pycurl/pycurl/archive/REL_%oversion.tar.gz
 Source: %oname-%version.tar
+
+# revert python3 based improvement
+# https://github.com/pycurl/pycurl/commit/9b8a7f97261cb91f4894a8afa0cf6221f546c361
+Patch1: 9b8a7f97261cb91f4894a8afa0cf6221f546c361.patch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: libcurl-devel libssl-devel
@@ -26,6 +32,7 @@ This module provides the Python bindings to libcurl.
 
 %prep
 %setup -n %oname-%version
+%patch1 -R -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -42,6 +49,9 @@ This module provides the Python bindings to libcurl.
 
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt2
+- revert python3 based improvement (ALT bug 39027)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt1
 - new version 7.43.0.6 (with rpmrb script)
 - require libcurl not older than was at building time (ALT bug 25431)
