@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2020.07
+Version: 2020.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -49,7 +49,6 @@ for board in $boards; do
 		export BL31=%_datadir/atf/sun50i_a64/bl31.bin
 %endif
 	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig all
-	grep -q '^CONFIG_SPL=y' build/.config && \
 	install -pm0644 -D build/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
 	rm -rf build
 done
@@ -64,6 +63,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
+- 2020.10 released
+
 * Fri Jul 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.07-alt1
 - 2020.07 released
 
