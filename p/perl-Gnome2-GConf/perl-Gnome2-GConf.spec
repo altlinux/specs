@@ -1,6 +1,6 @@
 %define dist Gnome2-GConf
 Name: perl-%dist
-Version: 1.045
+Version: 1.046
 Release: alt1
 
 Summary: Perl wrappers for the GConf configuration engine
@@ -49,6 +49,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/GConf/Install
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.046-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.045-alt1
 - automated CPAN update
 
