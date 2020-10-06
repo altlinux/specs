@@ -1,5 +1,5 @@
 Name: wine-cpcsp_proxy
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Proxy for using Linux CryptoPro in Windows applications with wine
@@ -60,6 +60,11 @@ cp %_bindir/wineapploader %buildroot/%_bindir/cpcsp_proxy_setup
 %_bindir/cpcsp_proxy_setup
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
+- add traces to public info converters, verify parameters from the backend
+- print information about being saved certificate (eterbug #14660)
+- also import CA store from host
+
 * Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
 - change debug channel to cpcsp_proxy
 - move propid_to_name() to print_id_name.h

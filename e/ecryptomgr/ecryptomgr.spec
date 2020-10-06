@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.5
+Version: 0.7
 Release: alt1
 
 Summary: Crypto provider installer
@@ -26,6 +26,7 @@ Supported:
  * ViPNet CSP 4.2/4.4 64/32 bit
  * ruToken 64/32 bit
  * Jacarta 64/32 bit
+ * CryptoPro CAdES 64/32 bit
 
 %prep
 %setup
@@ -46,6 +47,17 @@ done
 %sdir/
 
 %changelog
+* Fri Oct 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- install_cryptopro.sh: fix distr dir checking
+- add cadesplugin install support
+
+* Thu Oct 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- install_itcs.sh: add libqt4 install (for qt = version provide)
+- install*: add /opt/distr support
+- install_rutoken.sh: install libpcsclite
+- uinstall_cryptopro.sh: remove all cprocsp packages if have not CryptoPro uninstall.sh
+- install_cryptopro.sh: install jacarta/rutoken support only if their packages are already installed
+
 * Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - add test_jacarta.sh
 - newt52 provides whiptail for unused install-gui.sh
