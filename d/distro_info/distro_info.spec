@@ -1,5 +1,5 @@
 Name: distro_info
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Get various info about a system and used distro
@@ -32,6 +32,9 @@ install -m0644 -D man/distro_info.1 %buildroot%_man1dir/distro_info.1
 %_man1dir/*
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- distro_info: add support for c8 and c9
+
 * Tue Nov 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
 - improve virtualization detection
 - drop upstart detection
