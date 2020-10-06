@@ -2,11 +2,12 @@
 %global qt_module qtimageformats
 
 %def_enable fmt_mng
-%def_enable fmt_jp2
+# Debian abandon libjasper
+%def_disable fmt_jp2
 
 Name: qt5-imageformats
 Version: 5.15.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -83,6 +84,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
+- build without libjasper
+
 * Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
 - new version
 
