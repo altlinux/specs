@@ -2,8 +2,8 @@
 %def_without python
 
 Name: dtc
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -123,6 +123,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Tue Oct 06 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Apr 19 2020 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2
 - E2K: fix ftbfs with OSL-inspired hacks
 
