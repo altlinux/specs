@@ -1,6 +1,6 @@
 Name: u-boot-rpi3
-Version: 2020.07
-Release: alt2
+Version: 2020.10
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -48,6 +48,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
+- 2020.10 released
+
 * Mon Jul 20 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.07-alt2
 - usb support enabled for 64bit rpi4
 
