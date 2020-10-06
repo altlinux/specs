@@ -5,8 +5,8 @@
 %def_without check
 
 Name: cmake
-Version: 3.18.3
-Release: alt2
+Version: 3.18.4
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -143,7 +143,6 @@ Set of RPM macros for packaging applications that use cmake.
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p1
 # force _libdir due strange libdir detection
 #__subst 's|LIBDIR_DEFAULT "lib"|LIBDIR_DEFAULT "%_lib"|' Modules/GNUInstallDirs.cmake
 
@@ -298,6 +297,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.4-alt1
+- new version 3.18.4 (with rpmrb script)
+- drop FindJNI.cmake patch (applied in upstream 3.81.4)
+
 * Sat Sep 26 2020 Vitaly Lipatov <lav@altlinux.ru> 3.18.3-alt2
 - add aarch64 dir support in FindJNI.cmake (ALT bug 38992)
 
