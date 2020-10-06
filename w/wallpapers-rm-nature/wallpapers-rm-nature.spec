@@ -3,10 +3,10 @@
 
 Name: wallpapers-rm-nature
 Version: 20201006
-Release: alt1
+Release: alt2
 
 Summary: Photos for screen backgrounds
-License: Distributable
+License: GPL-2.0+
 Group: Graphics
 
 Source: %name-%version.tar
@@ -18,12 +18,12 @@ Summary(ru_RU.UTF-8): Фотографии для рабочего стола
 BuildRequires(pre): ImageMagick-tools
 
 %description
-Photographed by the wife of Roman Myskin.
+Author: Roman Myskin (c).
 
 Packed as original photos and as adapted photos for widescreen monitors.
 
 %description -l ru_RU.UTF-8
-Сфотографировано супругой Романа Мыскина.
+Автор: Роман Мыскин (c).
 
 Упакованы как оригинальные фотографии, так и адаптированные для широкоформатных мониторов.
 
@@ -42,7 +42,11 @@ install -m 0644 *.jpeg %buildroot%photos_dir/%rname/default
 
 %files
 %photos_dir/%rname/
+%doc LICENSE
 
 %changelog
+* Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 20201006-alt2
+- Fixed description and license.
+
 * Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 20201006-alt1
 - Initial built for ALT Linux.
