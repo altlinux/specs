@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -14,6 +14,7 @@ AutoReqProv: nopython
 
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
+Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
 # Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %EVR
@@ -80,6 +81,8 @@ machine).
 %prep
 %setup
 #%%patch -p1
+%patch0001 -p1
+
 
 %build
 python3 setup.py configure
@@ -130,6 +133,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue Oct 06 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt2
+- fixed build on p9
+
 * Thu Oct 01 2020 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
 - new version 3.1.0
 
