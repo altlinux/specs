@@ -3,7 +3,7 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.11.0.36
+Version: 5.12.0.14
 Release: alt1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -33,56 +33,47 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-%patch -p1
-install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
+patch langselector/locale.go < rpm/locale.go.patch
+# %%patch -p1
+# install -m 644 %%SOURCE3 misc/etc/pam.d/deepin-auth
 
 # Fix library exec path
-# %%__subst '/deepin/s|lib|libexec|' Makefile
-# %%__subst '/systemd/s|lib|usr/lib|' Makefile
-# %%__subst 's|lib/NetworkManager|libexec|' network/utils_test.go
-# %%__subst 's|/usr/lib|%%_libexecdir|' \
-#    misc/*services/*.service \
-#    misc/systemd/services/*.service \
-#    misc/pam-configs/deepin-auth \
-#    misc/applications/deepin-toggle-desktop.desktop \
-#    misc/dde-daemon/gesture.json \
-#    misc/dde-daemon/keybinding/system_actions.json \
-#    keybinding/shortcuts/system_shortcut.go \
-#    session/power/constant.go \
-#    session/power/lid_switch.go \
-#    service_trigger/manager.go \
-#    bin/dde-system-daemon/main.go \
-#    bin/search/main.go \
-#    accounts/image_blur.go \
-#    network/secret_agent.go \
-#    grub2/modify_manger.go
+%__subst '/deepin/s|lib|libexec|' Makefile
+%__subst '/${DESTDIR}\/usr\/lib\/deepin-daemon\/service-trigger/s|${DESTDIR}%_libexecdir/deepin-daemon/service-trigger|${DESTDIR}/usr/libexec/deepin-daemon/service-trigger|g' Makefile
+%__subst '/${DESTDIR}${PREFIX}\/lib\/deepin-daemon/s|${DESTDIR}${PREFIX}/lib/deepin-daemon|${DESTDIR}${PREFIX}/usr/libexec/deepin-daemon|g' Makefile
+%__subst 's|lib/NetworkManager|libexec|' network/utils_test.go
+
+for file in $(grep "%_libexecdir/deepin-daemon" * -nR |awk -F: '{print $1}')
+do
+    sed -i 's|%_libexecdir/deepin-daemon|/usr/libexec/deepin-daemon|g' $file
+done
 
 # Fix grub.cfg path
 %__subst 's|boot/grub|boot/grub2|' grub2/{grub2,grub_params,theme}.go
 
 # Fix activate services failed (Permission denied)
 # dbus service
-#pushd misc/system-services/
-#%%__subst '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
-#    com.deepin.daemon.{Accounts,Apps,Daemon}.service \
-#    com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
-#%%__subst '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
-#popd
+pushd misc/system-services/
+%__subst '$aSystemdService=deepin-accounts-daemon.service' com.deepin.system.Power.service \
+    com.deepin.daemon.{Accounts,Apps,Daemon}.service \
+    com.deepin.daemon.{Gesture,SwapSchedHelper,Timedated}.service
+%__subst '$aSystemdService=dbus-com.deepin.dde.lockservice.service' com.deepin.dde.LockService.service
+popd
 # systemd service
-#cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
-#[Unit]
-#Description=Deepin Lock Service
-#Wants=user.slice dbus.socket
-#After=user.slice dbus.socket
+cat > misc/systemd/services/dbus-com.deepin.dde.lockservice.service <<EOF
+[Unit]
+Description=Deepin Lock Service
+Wants=user.slice dbus.socket
+After=user.slice dbus.socket
 
-#[Service]
-#Type=dbus
-#BusName=com.deepin.dde.LockService
-#ExecStart=%%_libexecdir/%%name/dde-lockservice
+[Service]
+Type=dbus
+BusName=com.deepin.dde.LockService
+ExecStart=%_prefix/libexec/%name/dde-lockservice
 
-#[Install]
-#WantedBy=graphical.target
-#EOF
+[Install]
+WantedBy=graphical.target
+EOF
 
 # Replace reference of google-chrome to chromium-browser
 %__subst 's/google-chrome/chromium-browser/g' misc/dde-daemon/mime/data.json
@@ -100,13 +91,13 @@ export GOPATH="%go_path"
 
 #install -Dm644 %{S:2} %buildroot%_libexecdir/sysusers.d/%name.conf
 
-## fix systemd/logind config
-#install -d %buildroot%_libexecdir/systemd/logind.conf.d/
-#cat > %buildroot%_libexecdir/systemd/logind.conf.d/10-%name.conf <<EOF
-#[Login]
-#HandlePowerKey=ignore
-#HandleSuspendKey=ignore
-#EOF
+# fix systemd/logind config
+install -d %buildroot%_libexecdir/systemd/logind.conf.d/
+cat > %buildroot%_libexecdir/systemd/logind.conf.d/10-%repo.conf <<EOF
+[Login]
+HandlePowerKey=ignore
+HandleSuspendKey=ignore
+EOF
 
 # install default settings
 #install -Dm644 %SOURCE1 \
@@ -116,42 +107,38 @@ export GOPATH="%go_path"
 
 %files -f %repo.lang
 %doc README.md LICENSE CHANGELOG.md
-%_sysconfdir/acpi/actions/deepin_lid.sh
-%_sysconfdir/acpi/events/deepin_lid
-%_sysconfdir/modules-load.d/i2c_dev.conf
-%_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
-%_datadir/dbus-1/system.d/*.conf
-# %%_sysusersdir/%%name.conf
-# %%_libdir/systemd/logind.conf.d/10-%%name.conf
-%exclude %_datadir/dbus-1/system.d/com.deepin.daemon.Grub2.conf
-%exclude %_sysconfdir/default/grub.d/10_deepin.cfg
-%exclude %_sysconfdir/grub.d/35_deepin_gfxmode
-%_sysconfdir/pam.d/deepin-auth
+%_sysconfdir/default/grub.d/10_deepin.cfg
+%_sysconfdir/grub.d/35_deepin_gfxmode
 %_sysconfdir/pam.d/deepin-auth-keyboard
-%_libdir/security/pam_deepin_auth.so
-%config(noreplace) %_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
-## Debian specific, useless on Fedora
-%exclude %_datadir/pam-configs
-%_libexecdir/%name/
-%exclude %_libexecdir/%name/grub2
-%_unitdir/deepin-accounts-daemon.service
-%_unitdir/hwclock_stop.service
-# %%_unitdir/dbus-com.deepin.dde.lockservice.service
-%_udevrulesdir/*.rules
+%_prefix/libexec/%name/
+%_libexecdir/systemd/logind.conf.d/10-%repo.conf
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
-%exclude %_datadir/dbus-1/system-services/com.deepin.daemon.Grub2.service
+%_datadir/dbus-1/system.d/*.conf
 %_iconsdir/hicolor/*/status/*
 %_datadir/%repo/
 %_datadir/dde/
 %_datadir/polkit-1/actions/*.policy
-%exclude %_datadir/polkit-1/actions/com.deepin.daemon.Grub2.policy
-#%_datadir/deepin-default-settings/
 %_var/cache/appearance/
-%_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.*.pkla
-%exclude %_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Grub2.pkla
+%_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Accounts.pkla
+%_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Grub2.pkla
+%_sysconfdir/acpi/actions/deepin_lid.sh
+%_sysconfdir/acpi/events/deepin_lid
+%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
+%_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
+%_sysconfdir/modules-load.d/i2c_dev.conf
+/lib/udev/rules.d/80-deepin-fprintd.rules
+%_datadir/pam-configs/deepin-auth
+/var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Fprintd.pkla
+%_libdir/security/pam_deepin_auth.so
+%_unitdir/dbus-com.deepin.dde.lockservice.service
+%_unitdir/deepin-accounts-daemon.service
+%_unitdir/hwclock_stop.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 5.12.0.14-alt1
+- New version (5.12.0.14) with rpmgs script.
+
 * Mon Sep 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.11.0.36-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).
