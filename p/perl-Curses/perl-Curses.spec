@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Curses
 Name: perl-%dist
-Version: 1.36
-Release: alt1.2
+Version: 1.37
+Release: alt1
 
 Summary: Terminal screen handling and optimization
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GI/GIRAFFED/Curses-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GI/GIRAFFED/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libncursesw-devel perl-devel
@@ -22,7 +22,7 @@ library is a freely distributable replacement for the discontinued 4.4BSD
 classic curses library.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 export CURSES_CFLAGS=-I%_includedir/ncursesw CURSES_LDFLAGS='-ltinfo -lncursesw'
@@ -36,11 +36,14 @@ perl -Mblib -MCurses -e1
 %perl_vendor_install
 
 %files
-%doc HISTORY README demo*
+%doc HISTORY README demo* Artistic Copying
 %perl_vendor_archlib/Curses*
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1.2
 - rebuild with new perl 5.28.1
 
