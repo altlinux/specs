@@ -8,7 +8,7 @@
 
 Name: kde5-connect
 Version: 20.08.1
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Communications
@@ -25,6 +25,7 @@ Requires: kf5-kirigami
 
 Source: %rname-%version.tar
 Patch1: alt-hide-menu-item.patch
+Patch2: alt-kf5-requires.patch
 
 Patch10: f183b5447bad47655c21af87214579f03bf3a163.diff
 Patch11: b279c52101d3f7cc30a26086d58de0b5f1c547fa.diff
@@ -41,7 +42,7 @@ Patch19: 48180b46552d40729a36b7431e97bbe2b5379306.diff
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libfakekey-devel libqca-qt5-devel python-module-google qt5-declarative-devel qt5-x11extras-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-multimedia-devel qt5-x11extras-devel
 BuildRequires: libfakekey-devel libqca-qt5-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
@@ -105,6 +106,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %patch10 -p1
 %patch11 -p1
@@ -164,6 +166,9 @@ KF5 library
 %_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt3
+- reduce KF5 requires
+
 * Mon Oct 05 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt2
 - security (fixes: CVE-2020-26164)
 
@@ -188,13 +193,13 @@ KF5 library
 * Wed Feb 13 2019 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt1
 - new version
 
-* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1%ubt
+* Thu Apr 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - new version
 
-* Wed Jan 24 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
+* Wed Jan 24 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
 - new version
 
-* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1%ubt
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
 - new version
 
 * Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
