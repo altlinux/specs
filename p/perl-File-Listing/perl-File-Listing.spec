@@ -1,6 +1,6 @@
 %define dist File-Listing
 Name: perl-%dist
-Version: 6.07
+Version: 6.10
 Release: alt1
 
 Summary: Parse directory listing
@@ -31,10 +31,13 @@ used to parse directory listings.
 %perl_vendor_install
 
 %files
-%doc Changes README Changes.original
+%doc Changes README Changes.original author.yml
 %perl_vendor_privlib/File
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 6.10-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
 - automated CPAN update
 
