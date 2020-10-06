@@ -35,7 +35,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.1
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -347,6 +347,7 @@ Widgets library for the Qt%major toolkit
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common = %EVR
+Requires: tslib
 %description -n lib%{gname}-eglfsdeviceintegration
 EGL integration library for the Qt%major toolkit
 
@@ -823,6 +824,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
+- require tslib
+
 * Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
 - new version
 
