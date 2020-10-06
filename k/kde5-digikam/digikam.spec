@@ -3,6 +3,8 @@
 
 %define opencv_ver %{get_version libopencv-devel}
 
+# Debian abandon libjasper
+%def_disable jasper
 %def_disable baloo
 %def_enable mysql
 %_K5if_ver_gteq %ubt_id M90
@@ -26,7 +28,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 6.4.0
-Release: alt4
+Release: alt5
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -55,8 +57,9 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libopencv-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
 BuildRequires: qt5-multimedia-devel qt5-webengine-devel qt5-x11extras-devel qt5-xmlpatterns-devel
-BuildRequires: libqtav-devel libx265-devel
-BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
+BuildRequires: libx265-devel
+BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjpeg-devel libpng-devel
+%{?_enable_jasper:BuildRequires: libjasper-devel}
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: libImageMagick-devel
@@ -305,6 +308,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt5
+- build without jasper
+
 * Thu Aug 27 2020 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt4
 - fix to build with Qt-5.15
 
