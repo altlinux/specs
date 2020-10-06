@@ -1,10 +1,11 @@
 %define oname tslib
 %define plugindir %_libdir/libts-1.0
 %define sover 0
+%define libts libts%sover
 
 Name: libts
 Version: 1.22
-Release: alt1
+Release: alt2
 
 Summary: tslib - touchscreen access library
 
@@ -21,11 +22,26 @@ BuildRequires: gcc-c++ glibc-devel libSDL2-devel
 %description
 Hardware independent touchscreen access library.
 
+%package -n tslib
+Group: System/Libraries
+Summary: %name library
+#Requires: %name-common = %EVR
+Provides: libts = %EVR
+Obsoletes: libts < %EVR
+%description -n tslib
+Hardware independent touchscreen access library utils.
+
+%package -n %libts
+Group: System/Libraries
+Summary: %name library
+#Requires: %name-common = %EVR
+%description -n %libts
+%name library.
+
 %package devel
 Summary: Development library and headers for %name
 Group: Development/C
 Requires: %name = %version-%release
-
 %description devel
 Development files (headers etc.) for %name.
 
@@ -44,21 +60,31 @@ grep "module_raw input" etc/ts.conf
 %makeinstall_std
 rm -f %buildroot%plugindir/*.la
 
-%files
+%files -n tslib
 %doc README AUTHORS ChangeLog
 %config(noreplace) %_sysconfdir/ts.conf
 %_bindir/ts_*
-%_libdir/lib*.so.%sover
-%_libdir/lib*.so.*
 %dir %plugindir
 %plugindir/*.so
+%_man1dir/*
+%_man5dir/*
+
+%files -n %libts
+%doc README AUTHORS ChangeLog
+%_libdir/libts.so.%sover
+%_libdir/libts.so.*
 
 %files devel
 %_libdir/*.so
 %_includedir/tslib.h
 %_pkgconfigdir/*.pc
+%_man3dir/*
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt2
+- split library to separate package
+- package manpages
+
 * Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt1
 - new version
 
