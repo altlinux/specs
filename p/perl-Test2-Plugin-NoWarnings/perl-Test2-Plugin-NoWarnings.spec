@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: Fail if tests warn
 Group: Development/Perl
@@ -37,6 +37,9 @@ then this module will stop working.
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sun Oct 13 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
