@@ -1,7 +1,7 @@
 %define dist Gnome2-Canvas
 
 Name: perl-%dist
-Version: 1.003
+Version: 1.004
 Release: alt1
 
 Summary: Gnome2-Canvas Perl module
@@ -61,6 +61,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/Canvas/Install
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
 - automated CPAN update
 
