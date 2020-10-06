@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 %define upstream_version 0.0402
 
 Name:       perl-%{upstream_name}
-Version:    0.0403
+Version:    0.0404
 Release:    alt1
 
 Summary:    Sprintf-like function with named conversions
@@ -51,10 +51,13 @@ with a width of 4.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README TODO
+%doc Changes META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.0404-alt1
+- automated CPAN update
+
 * Wed May 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.0403-alt1
 - automated CPAN update
 
