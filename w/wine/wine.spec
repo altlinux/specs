@@ -15,11 +15,11 @@
 %endif
 
 Name: wine
-Version: %major.1
-Release: alt3
+Version: %major.4
+Release: alt1
 Epoch: 1
 
-Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
+Summary: WINE Is Not An Emulator - environment for running Windows applications
 
 License: LGPLv2+
 Group: Emulators
@@ -36,9 +36,10 @@ Source1: %name-staging-%version.tar
 
 Source3: %name-%version-desktop.tar
 Source4: %name-%version-icons.tar
+Source6: %name-%version-scripts.tar
 
 # local patches
-Source5: %name-patches-%version.tar
+Source10: %name-patches-%version.tar
 
 AutoReq: yes, noperl
 
@@ -155,12 +156,12 @@ Obsoletes: %common_provobs %base_provobs %fonts_provobs
 #=========================================================================
 
 %description
-Wine is a program which allows running Microsoft Windows programs
-(including DOS, Windows 3.x and Win32 executables) on Unix. It
-consists of a program loader which loads and executes a Microsoft
-Windows binary, and a library (called Winelib) that implements Windows
-API calls using their Unix or X11 equivalents.  The library may also
-be used for porting Win32 code into native Unix executables.
+Wine (originally an acronym for "Wine Is Not an Emulator")
+is a compatibility layer capable of running Windows applications.
+Instead of simulating internal Windows logic like a virtual machine or emulator,
+Wine translates Windows API calls into POSIX calls on-the-fly,
+eliminating the performance and memory penalties
+of other methods and allowing you to cleanly integrate Windows applications into your desktop.
 
 This build based on wine source with wine-staging project patches
 and ALT in progress patches.
@@ -217,7 +218,7 @@ Group: System/Libraries
 Conflicts: libwine-vanilla
 
 # Actually for x86_32
-Requires: glibc-pthread glibc-nss
+Requires: glibc-nss
 
 # Runtime linked
 Requires: libcups
@@ -304,7 +305,7 @@ develop programs which make use of Wine.
 
 
 %prep
-%setup -a 1 -a 5
+%setup -a 1 -a 10
 # Apply wine-staging patches
 %name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
@@ -358,6 +359,11 @@ mkdir -p %buildroot%_iconsdir/
 cd %buildroot%_iconsdir/
 tar xvf %SOURCE4
 
+# unpack scripts files
+mkdir -p %buildroot%_bindir/
+cd %buildroot%_bindir/
+tar xvf %SOURCE6
+
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
 
@@ -383,6 +389,8 @@ done
 %lang(pt) %doc documentation/README.pt
 %lang(pt_BR) %doc documentation/README.pt_br
 %lang(tr) %doc documentation/README.tr
+
+%_bindir/wine_setup
 
 %if_without build64
 %_bindir/wine
@@ -547,6 +555,22 @@ done
 %endif
 
 %changelog
+* Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.4-alt1
+- add scripts/wine_setup (check and install all needed packages)
+- revert "add reg files for initial file open integration"
+- update patches to staging wine-5.18:
+ + wine.inf.in: disable decorated window for maincontroller.exe (eterbug #14662)
+ + add Office and media file associations (eterbug #14583)
+
+* Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.3-alt1
+- update patches to staging wine-5.18
+- add reg files for initial file open integration
+- drop Requires: glibc-pthread (we already have auto reqs for it)
+- update summary and description (ALT bug 34281)
+
+* Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.2-alt1
+- update Basealt patches
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.18.1-alt3
 - Re-enabled vkd3d.
 
