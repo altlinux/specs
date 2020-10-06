@@ -316,7 +316,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-10-openjdk
 Version: %{newjavaver}.%{buildver}
-Release: alt1_7jpp9
+Release: alt2_7jpp9
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -482,6 +482,7 @@ Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1
 Provides: java = %EVR
 Patch33: java-10-openjdk-alt-link-fontmanager.patch
 Patch34: java-9-openjdk-alt-no-objcopy.patch
+Patch35: java-9-openjdk-alt-JDK-8237879.patch
 
 %description
 The %{origin_nice} runtime environment.
@@ -829,6 +830,7 @@ done
 sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
 %patch33 -p0
 %patch34 -p0
+%patch35 -p0
 
 
 %build
@@ -1598,6 +1600,9 @@ fi
 
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt2_7jpp9
+- fixed build
+
 * Tue Jul 09 2019 Igor Vlasenko <viy@altlinux.ru> 0:10.0.2.13-alt1_7jpp9
 - new version
 
