@@ -5,7 +5,7 @@
 
 Name: libts
 Version: 1.22
-Release: alt2
+Release: alt3
 
 Summary: tslib - touchscreen access library
 
@@ -41,7 +41,6 @@ Summary: %name library
 %package devel
 Summary: Development library and headers for %name
 Group: Development/C
-Requires: %name = %version-%release
 %description devel
 Development files (headers etc.) for %name.
 
@@ -81,6 +80,9 @@ rm -f %buildroot%plugindir/*.la
 %_man3dir/*
 
 %changelog
+* Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt3
+- fix requires
+
 * Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt2
 - split library to separate package
 - package manpages
