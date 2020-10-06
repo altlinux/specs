@@ -6,14 +6,14 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Filter/Simple.pm) perl(Pod/Markd
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.16
-Release: alt2
+Version: 0.17
+Release: alt1
 Summary: very simplicistic signatures for Perl < 5.20
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/C/CO/CORION/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/C/CO/CORION/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -36,10 +36,13 @@ use Filter::signatures;
 %perl_vendor_install
 
 %files
-%doc README.mkdn Changes LICENSE README
+%doc README.mkdn Changes README
 %perl_vendor_privlib/F*
 
 %changelog
+* Tue Oct 06 2020 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
 - to Sisyphus as Spreadsheet-ReadSXC dep
 
