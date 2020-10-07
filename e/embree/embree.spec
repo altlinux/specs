@@ -4,7 +4,7 @@
 %define soname 3
 
 Name: embree
-Version: 3.11.0
+Version: 3.12.0
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
@@ -13,6 +13,8 @@ URL: https://embree.github.io
 
 # https://github.com/embree/embree.git
 Source: %name-%version.tar
+
+Source1: %name.watch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -56,6 +58,11 @@ applications that use %{name}.
 %setup
 
 %build
+# limit parallel build
+if [ %__nprocs -gt 4 ] ; then
+	export NPROCS=4
+fi
+
 %cmake \
 	-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF \
 	-DEMBREE_TUTORIALS=OFF \
@@ -83,6 +90,9 @@ rm -rf %buildroot%_docdir/%{name}%{libsuffix}
 %_libdir/cmake/%name-%version/
 
 %changelog
+* Wed Oct 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12.0-alt1
+- Updated to upstream version 3.12.0.
+
 * Tue Sep 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0-alt1
 - Initial build for ALT.
 

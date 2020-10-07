@@ -8,7 +8,7 @@
 %define soname 2.2
 
 Name:           lib%oname
-Version:        2.2.6.1
+Version:        2.2.7.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -22,7 +22,7 @@ Source0:        %name-%version.tar
 # Images for test suite
 #Source1:        oiio-images.tar.gz
 
-Patch1: %oname-upstream-pull-2896.patch
+Source2: %oname.watch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -124,7 +124,6 @@ Development files for package %name
 
 %prep
 %setup
-%patch1 -p1
 
 # Remove bundled pugixml
 rm -fr src/include/OpenImageIO/detail/pugixml/
@@ -201,6 +200,9 @@ cp -a BUILD/src/doc/*.1 %buildroot%_man1dir
 %_datadir/cmake/Modules/FindOpenImageIO.cmake
 
 %changelog
+* Wed Oct 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.7.0-alt1
+- Updated to upstream version 2.2.7.0.
+
 * Fri Sep 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.6.1-alt1
 - Updated to upstream version 2.2.6.1.
 
