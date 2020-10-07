@@ -1,7 +1,7 @@
 %global repo dde-polkit-agent
 
 Name: deepin-polkit-agent
-Version: 5.2.0.7
+Version: 5.3.0.2
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -28,11 +28,15 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 %__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 %__subst 's|lupdate|lupdate-qt5|' lupdate.sh
+%__subst 's|/usr/lib|/usr/libexec|' dde-polkit-agent.pro polkit-dde-authentication-agent-1.desktop \
+    pluginmanager.cpp
 # https://github.com/linuxdeepin/developer-center/issues/1721
 %__subst 's/bool is_deepin = true/bool is_deepin = false/' policykitlistener.cpp
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%prefix
 %make_build
 
 %install
@@ -41,15 +45,19 @@ Header files and libraries for %name.
 %files
 %doc README.md
 %doc LICENSE
-%dir %_libexecdir/polkit-1-dde
-%_libexecdir/polkit-1-dde/%repo
+%dir %_prefix/libexec/polkit-1-dde
+%_prefix/libexec/polkit-1-dde/%repo
 %_datadir/%repo/
 
 %files devel
+%dir %_includedir/dpa/
 %_includedir/dpa/agent-extension-proxy.h
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.2-alt1
+- New version (5.3.0.2) with rpmgs script.
+
 * Mon Aug 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.7-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
 

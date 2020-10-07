@@ -2,7 +2,7 @@
 %global repo   dde-qt-dbus-factory
 
 Name: deepin-qt-dbus-factory
-Version: 5.3.0.11
+Version: 5.3.0.19
 Release: alt1
 Summary: A repository stores auto-generated Qt5 dbus code
 # The entire source code is GPLv3+ except
@@ -59,5 +59,8 @@ Header files and libraries for %name.
 %_libdir/lib%soname.so
 
 %changelog
+* Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.19-alt1
+- New version (5.3.0.19) with rpmgs script.
+
 * Mon Aug 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.11-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).

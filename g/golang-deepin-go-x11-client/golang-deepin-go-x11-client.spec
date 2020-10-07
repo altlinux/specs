@@ -5,15 +5,15 @@
 %global goipath github.com/linuxdeepin/go-x11-client
 
 Name: golang-deepin-go-x11-client
-Version: 0.6.0
+Version: 0.6.2
 Release: alt1
 Summary: A X11 client Go bindings for Deepin Desktop Environment
-License: GPL-3.0-only
+License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/go-x11-client
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: go-x11-client-%version.tar.gz
+Source: %url/archive/%version/go-x11-client-%version.tar.gz
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang-x-text-devel golang-gopkg-check-1-devel golang-github-stretchr-testify-devel
@@ -41,6 +41,7 @@ building other packages which use import path with
 rm -rf debian/
 # undefined python scripts
 sed -i -e '1 s|^|#!/usr/bin/env python3\n\n|;' tools/*.py
+sed -i 's|python2 tools/go_client.py|python3 tools/go_client.py|' gen.sh
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -50,9 +51,7 @@ export GOPATH="%go_path"
 %golang_prepare
 
 cd .build/src/%goipath
-for cmd in tools/*; do
-%golang_build $cmd ||:
-done
+%golang_build
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -65,14 +64,13 @@ export GOPATH="%go_path"
 %gotest
 %endif
 
-# %%files
-# %%_bindir/*
-
 %files devel
 %doc README LICENSE
 %go_path/src/%goipath
 
 %changelog
+* Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
+- New version.
+
 * Mon May 18 2020 Leontiy Volodin <lvol@altlinux.org> 0.6.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
-
