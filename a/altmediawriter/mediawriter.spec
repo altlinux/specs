@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        0.4.7
+Version:        0.4.8
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,11 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Wed Oct 07 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.8-alt1
+- Improve image summary display
+- Improve windows build
+- Build windows version statically
+
 * Thu Oct 01 2020 Dmitry Degtyarev <kevl@altlinux.org> 0.4.7-alt1
 - Added more filters to file dialog (closes: 39017)
 - Add missing image types
