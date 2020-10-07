@@ -1,7 +1,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.3.0.5
+Version: 5.3.0.22
 Release: alt1
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
@@ -25,13 +25,13 @@ BuildRequires: gcc-c++ cmake qt5-tools qt5-base-devel deepin-qt-dbus-factory-dev
 %__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
 
 %build
-%cmake -GNinja -DCMAKE_INSTALL_PREFIX=%_prefix
+%cmake_insource -GNinja -DCMAKE_INSTALL_PREFIX=%_prefix
 # warning: out of memory
-ninja -j1 -C BUILD
+ninja -j1
+# %%ninja_build
 
 %install
-%ninja_install -C BUILD
-chmod +x %buildroot%_bindir/deepin-greeter
+%ninja_install
 
 %files
 %config(noreplace) %_sysconfdir/deepin/greeters.d/00-xrandr
@@ -45,5 +45,8 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
 
 %changelog
+* Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.22-alt1
+- New version (5.3.0.22) with rpmgs script.
+
 * Mon Aug 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.5-alt1
 - Initial build for ALT Sisyphus.
