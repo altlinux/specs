@@ -1,6 +1,6 @@
 Name: latex2html
-Version: 2017.2
-Release: alt1.2
+Version: 2020.2
+Release: alt1
 Summary: LaTeX to HTML converter
 License: GPLv2
 Group: Publishing
@@ -9,14 +9,11 @@ BuildArch: noarch
 
 # https://github.com/latex2html/latex2html.git
 Source: %name-%version.tar
-Patch0: latex2html-2002-gsfonts.patch
 Patch3: latex2html-2002-path.patch
 Patch4: latex2html-2002-alt-perl-path.patch
 Patch5: latex2html-2002-alt-perl-syntax.patch
-Patch7: latex2html-2002-alt-perlpath.patch
-Patch9: latex2html-2002-rh-tabularx.patch
+Patch7: latex2html-2020-alt-perlpath.patch
 
-Patch30: latex2html-2012-alt-perl522.patch
 Patch31: latex2html-2017.2-alt-perl-compat.patch
 
 Requires: /usr/bin/latex /usr/bin/dvips
@@ -36,14 +33,11 @@ using LaTeX to process images and equations.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
-%patch9 -p1
-%patch30 -p1
-%patch31 -p1
+#patch31 -p1
 
 %build
 %define _perl_lib_path %_datadir/%name
@@ -76,7 +70,7 @@ install -p -m755 %name pstoimg texexpand %buildroot%_bindir/
 mkdir -p %buildroot%_datadir/%name
 cp -avRf \
 	IndicTeX-HTML L2hos.pm L2hos XyMTeX-HTML cweb2html docs example foilhtml icons makeseg styles texinputs versions \
-	cfgcache.pm dot.latex2html-init l2hconf.pm makemap readme.hthtml \
+	cfgcache.pm dot.latex2html-init l2hconf.pm makemap \
 	%buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_datadir/texmf/tex/latex/html
@@ -95,9 +89,12 @@ sed -i '1s|/usr/local/bin/|/usr/bin/|' \
 %_bindir/*
 %_datadir/%name/
 %_datadir/texmf/tex/latex/html
-%doc Changes FAQ LICENSE LICENSE.orig README.md readme.hthtml TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
+%doc Changes FAQ LICENSE LICENSE.orig README.md TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
 
 %changelog
+* Wed Oct 07 2020 Igor Vlasenko <viy@altlinux.ru> 2020.2-alt1
+- new version
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2017.2-alt1.2
 - NMU: build with rpm-build-tex
 
