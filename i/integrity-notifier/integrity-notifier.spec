@@ -1,6 +1,6 @@
 Name:     integrity-notifier
-Version:  0.6.1
-Release:  alt4
+Version:  0.6.2
+Release:  alt1
 
 Summary:  Integrity event notifier
 License:  GPL v2+
@@ -25,26 +25,27 @@ This script notifies users and optionally administrators about that.
 
 %install
 install -D -m0755 bin/inotifier-functions.sh \
-                  %buildroot/%_bindir/inotifier-functions.sh
+                  %buildroot%_bindir/inotifier-functions.sh
 
-install -D -m0755 sbin/notifier.sh %buildroot/%_sbindir/integrity-notifier
-install -D -m0755 sbin/scanner.sh %buildroot/%_sbindir/integrity-scanner
+install -D -m0755 sbin/notifier.sh %buildroot%_sbindir/integrity-notifier
+install -D -m0755 sbin/scanner.sh %buildroot%_sbindir/integrity-scanner
 
 install -D -m0755 bin/integrity-notifier.sh \
-                  %buildroot/%_bindir/integrity-notifier
+                  %buildroot%_bindir/integrity-notifier
 install -D -m0644 autostart/integrity-notifier.desktop \
-        %buildroot/%_sysconfdir/xdg/autostart/integrity-notifier.desktop
+        %buildroot%_sysconfdir/xdg/autostart/integrity-notifier.desktop
 
-install -D -m0644 etc/message %buildroot/%_sysconfdir/integrity/message
-install -D -m0644 etc/desktop_message %buildroot/%_sysconfdir/integrity/desktop_message
-install -D -m0644 etc/also %buildroot/%_sysconfdir/integrity/also
+install -D -m0644 etc/message %buildroot%_sysconfdir/integrity/message
+install -D -m0644 etc/desktop_message %buildroot%_sysconfdir/integrity/desktop_message
+install -D -m0644 etc/also %buildroot%_sysconfdir/integrity/also
 
 install -D -m0644 unit/integrity-notifier.service \
-        %buildroot/%_unitdir/integrity-notifier.service
+        %buildroot%_unitdir/integrity-notifier.service
 install -D -m0644 unit/integrity-scanner.service \
-        %buildroot/%_unitdir/integrity-scanner.service
+        %buildroot%_unitdir/integrity-scanner.service
 
-install -D -m0644 log/config %buildroot/%_logdir/integrityd/config
+install -D -m0644 log/config %buildroot%_sysconfdir/integrity/log.conf
+mkdir -p -m 0755 %buildroot%_logdir/integrityd
 
 %files
 %doc README.en README
@@ -55,11 +56,15 @@ install -D -m0644 log/config %buildroot/%_logdir/integrityd/config
 %config(noreplace) %_sysconfdir/integrity/also
 %config(noreplace) %_unitdir/integrity-notifier.service
 %config(noreplace) %_unitdir/integrity-scanner.service
-%config(noreplace) %_logdir/integrityd/config
+%config(noreplace) %_sysconfdir/integrity/log.conf
+%dir %_logdir/integrityd
 %_bindir/*
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 
 %changelog
+* Wed Oct 07 2020 Paul Wolneykien <manowar@altlinux.org> 0.6.2-alt1
+- Move the log config to /etc/integrity. Create the log dir on demand.
+
 * Wed May 29 2019 Denis Medvedev <nbr@altlinux.org> 0.6.1-alt4
 - build to c8.1
 
