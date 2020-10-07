@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.20.3
-Release: alt2
+Release: alt3
 
 Summary: System configuration tool
 License: GPLv3
@@ -92,6 +92,7 @@ cp -r tests/* %{buildroot}%{testsdir}
 %{confdir}
 %exclude %{confdir}/wl.sh
 %exclude %{confdir}/permissions/wl
+%exclude %{confdir}/excluded_from_white_list
 %config(noreplace) %{confdir}/%{name}.conf
 %dir %{statedir}
 %dir %{ulim_statedir}
@@ -101,6 +102,7 @@ cp -r tests/* %{buildroot}%{testsdir}
 %files -n %{name}-wl
 %{confdir}/wl.sh
 %{confdir}/permissions/wl
+%{confdir}/excluded_from_white_list
 
 %files -n %{name}-checkinstall
 %{testsdir}/*
@@ -109,6 +111,11 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Oct 07 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.3-alt3
+- Modified script of whitelist-formation that enables an ability to exclude
+  certain directories from a search of system executable files by listing
+  those directories in "/etc/control++/excluded_from_white_list" file.
+
 * Thu Sep 24 2020 Alexey Appolonov <alexey@altlinux.org> 0.20.3-alt2
 - New bin package 'control++-wl' that contains files that can help to configure
   whitelist permission mode.
