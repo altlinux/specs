@@ -4,7 +4,7 @@
 
 Name: deepin-kwin
 Version: 5.2.0.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Summary: KWin configuration for Deepin Desktop Environment
@@ -52,7 +52,6 @@ Header files and libraries for %name.
 %__subst 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' tabbox/CMakeLists.txt
 
 %build
-# export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
 %K5cmake \
     -GNinja \
     -DCMAKE_INSTALL_LIBDIR=%_K5lib
@@ -75,11 +74,6 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %dir %_datadir/dde-kwin-xcb/
 %dir %_datadir/dde-kwin-xcb/translations/
 %_datadir/dde-kwin-xcb/translations/%repo-xcb*.qm
-
-%files devel
-%_includedir/%repo/
-%_pkgconfigdir/%repo.pc
-%_K5lib/libkwin-xcb.so
 %dir %_K5plug/platforms/
 %_K5plug/platforms/lib%repo-xcb.so
 %_K5plug/platforms/lib%repo-wayland.so
@@ -92,6 +86,14 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_K5plug/kwin/effects/plugins/libscissor-window.so
 %_K5plug/org.kde.kdecoration2/libdeepin-chameleon.so
 
+%files devel
+%_includedir/%repo/
+%_pkgconfigdir/%repo.pc
+%_K5lib/libkwin-xcb.so
+
 %changelog
+* Wed Oct 07 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt2
+- Fixed file locations.
+
 * Wed Sep 30 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).
