@@ -2,7 +2,7 @@
 
 Name: make-initrd
 Version: 2.11.0
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -219,6 +219,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 07 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt3
+- Utilities:
+  + initrd-put: Properly handle the situation when the copy_file_range is not implemented
+
 * Tue Oct 06 2020 Alexey Gladkov <legion@altlinux.ru> 2.11.0-alt2
 - Feature plymouth:
   + Add missing rpm dependencies
