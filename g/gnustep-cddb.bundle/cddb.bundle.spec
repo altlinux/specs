@@ -2,16 +2,16 @@
 
 Name: gnustep-cddb.bundle
 Version: 0.2
-Release: alt6.1
+Release: alt7
 Summary: GNUstep bundle for cddb access
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://gsburn.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -33,6 +33,7 @@ This package contains development files of cddb.bundle.
 
 %prep
 %setup
+subst '/objc2\/runtime.h/d' Cddb/Cddb.h
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -47,7 +48,8 @@ This package contains development files of cddb.bundle.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
+	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no
 
 install -d %buildroot%_includedir
 ln -s %_libdir/GNUstep/Headers/Cddb \
@@ -63,6 +65,9 @@ ln -s %_libdir/GNUstep/Headers/Cddb \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt7
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt6.1
 - NMU: Rebuild with libgnutls30.
 

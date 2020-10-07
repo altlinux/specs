@@ -2,17 +2,17 @@
 
 Name: gnustep-Paje
 Version: 1.98
-Release: alt3.1
+Release: alt4
 Summary: Paje is an interactive and scalable trace-based visualization tool
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
 Url: http://www-id.imag.fr/Logiciels/paje/index.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -160,6 +160,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Documentation/UserManual/*.ps Documentation/lang-paje/*.ps
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.98-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.98-alt3.1
 - NMU: Rebuild with libgnutls30.
 

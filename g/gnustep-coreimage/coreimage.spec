@@ -2,17 +2,18 @@
 
 Name: gnustep-coreimage
 Version: r36695
-Release: alt2.git20130603
+Release: alt3
 Summary: GNUstep CoreImage
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-coreimage
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-coreimage.git
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -38,6 +39,7 @@ Development files of GNUstep CoreImage.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -62,6 +64,9 @@ Development files of GNUstep CoreImage.
 %_libdir/*.so
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r36695-alt3
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r36695-alt2.git20130603
 - Built with clang
 

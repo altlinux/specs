@@ -3,19 +3,20 @@ BuildRequires: tex(dehypht.tex) tex(latex)
 # END SourceDeps(oneline)
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt9.svn20130529
+Release: alt10
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
 Url: http://www.gnustep.it/Renaissance/index.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/renaissance/trunk/
 Source: %name-%version.tar
 #Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-gui-devel /proc
 BuildPreReq: texlive-latex-base
 
 Requires: lib%name = %version-%release
@@ -69,6 +70,7 @@ This package contains documentation for Renaissance.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -78,7 +80,7 @@ This package contains documentation for Renaissance.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
 
 %make_build -C Documentation \
 	messages=yes
@@ -112,6 +114,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt10
+- Build without libgnustep-objc2-devel.
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt9.svn20130529
 - NMU: applied logoved fixes
 

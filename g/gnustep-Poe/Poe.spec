@@ -2,17 +2,17 @@
 
 Name: gnustep-Poe
 Version: 0.5.1
-Release: alt4.1
+Release: alt5
 Summary: Poe, or "a Pugnacious Ogg Editor", is a vorbis comment editor
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/Poe.app
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -61,6 +61,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt5
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt4.1
 - NMU: Rebuild with libgnutls30.
 

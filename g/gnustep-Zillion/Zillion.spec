@@ -2,17 +2,17 @@
 
 Name: gnustep-Zillion
 Version: 0.1
-Release: alt5.2
+Release: alt6
 Summary: Zillion distributed computing Project
 License: BSD
 Group: Graphical desktop/GNUstep
 Url: http://zillion.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 #Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -44,6 +44,7 @@ features are as follows:
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
+	CC=gcc \
 	messages=yes \
 	debug=yes \
 	strip=no \
@@ -60,6 +61,9 @@ features are as follows:
 #_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt6
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.1-alt5.2
 - Rebuild with new icu
 

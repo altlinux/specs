@@ -1,17 +1,18 @@
 Name: gnustep-xcode
 Version: 0.1
-Release: alt8.git20130921
+Release: alt9
 Summary: The XCLib framework is used to parse and process xcodeproj files
-License: GPL
+License: LGPL-2.1
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/xcode/trunk/
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: /proc
 
 Requires: gnustep-back
 
@@ -45,6 +46,7 @@ This package contains development files of XCLib framework.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -54,7 +56,7 @@ This package contains development files of XCLib framework.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -91,6 +93,10 @@ popd
 %_libdir/GNUstep/Frameworks/XCode.framework/Headers
 
 %changelog
+* Thu Oct 08 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt9
+- Build without libgnustep-objc2-devel.
+- Fix License acconding to SPDX.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt8.git20130921
 - Built with clang
 

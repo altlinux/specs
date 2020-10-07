@@ -2,17 +2,17 @@
 
 Name: gnustep-DataBasin
 Version: 0.7
-Release: alt1.1
+Release: alt2
 Summary: Data access tool and for SalesForce.com based on the SOAP API interfaces
 License: GPL / LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/databasin/index.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -50,6 +50,7 @@ Features
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	messages=yes \
 	debug=yes \
 	strip=no \
@@ -69,6 +70,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.7-alt2
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1.1
 - NMU: Rebuild with libgnutls30.
 

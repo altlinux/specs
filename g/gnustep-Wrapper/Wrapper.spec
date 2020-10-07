@@ -2,17 +2,17 @@
 
 Name: gnustep-Wrapper
 Version: 0.1.0
-Release: alt5.1
+Release: alt6
 Summary: Create GNUstep app-wrappers of non-GNUstep applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://www.freshports.org/deskutils/gnustep-wrapper
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -31,6 +31,7 @@ Enrico Sersale's GWorkspace environment.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	messages=yes \
 	debug=yes \
 	strip=no \
@@ -40,9 +41,12 @@ Enrico Sersale's GWorkspace environment.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	GNUSTEP_SYSTEM_ROOT=%buildroot%_libdir/GNUstep
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
+rm -f %buildroot%_libdir/*.so
 
 %files
 %doc AUTHORS NEWS README TODO
@@ -55,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 make_services
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt6
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt5.1
 - NMU: Rebuild with libgnutls30.
 

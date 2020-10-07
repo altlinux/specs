@@ -2,16 +2,17 @@
 
 Name: gnustep-BioCocoa
 Version: 2.2.2
-Release: alt3
+Release: alt4
 Summary: Open source OpenStep (GNUstep/Cocoa) framework for bioinformatics
 License: BSD
 Group: Graphical desktop/GNUstep
 Url: http://bioinformatics.org/biococoa/wiki/pmwiki.php
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -81,6 +82,7 @@ This package contains development files of BioCocoa.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -90,7 +92,7 @@ This package contains development files of BioCocoa.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -127,6 +129,9 @@ popd
 %_libdir/GNUstep/Frameworks/BioCocoa.framework/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt4
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt3
 - Built with clang
 

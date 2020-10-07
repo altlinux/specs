@@ -2,17 +2,18 @@
 
 Name: gnustep-simplewebkit
 Version: 0.1.0
-Release: alt2.svn20140201
+Release: alt3
 Summary: Framework which is meant to be a simple, drop-in replacement for WebKit
 License: LGPLv2+
 Group: Networking/WWW
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/simplewebkit/trunk/
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Requires: lib%name = %version-%release
@@ -47,6 +48,7 @@ This package contains development files of SimpleWebKit.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -56,7 +58,7 @@ This package contains development files of SimpleWebKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -95,6 +97,9 @@ popd
 %_libdir/GNUstep/Frameworks/SimpleWebKit.framework/Versions/0.1/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt3
+- Build without libgnustep-objc2-devel.
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.svn20140201
 - New snapshot
 

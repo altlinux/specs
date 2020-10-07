@@ -2,18 +2,18 @@
 
 Name: gnustep-webserver
 Version: 1.5.0
-Release: alt3.git20140224
+Release: alt4
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-webserver.git
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-performance-devel /proc
 
 %description
 The GNUstep embedded webserver library.
@@ -58,7 +58,7 @@ library.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -77,6 +77,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt4
+- Build without libgnustep-objc2-devel.
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20140224
 - New snapshot
 

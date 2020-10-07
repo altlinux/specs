@@ -2,18 +2,19 @@
 
 Name: gnustep-timeui
 Version: r715
-Release: alt5.svn20090220
+Release: alt6
 Summary: Make a bigger time and calendar ui framework
 License: GPLv3+
 Group: Graphical desktop/GNUstep
 Url: https://savannah.nongnu.org/projects/gap
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.savannah.nongnu.org/svn/gap/trunk/libs/timeui/
 Source: %name-%version.tar
 #Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -56,6 +57,7 @@ This package contains development files of TimeUI.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -68,7 +70,7 @@ This package contains development files of TimeUI.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -108,6 +110,9 @@ popd
 %_libdir/GNUstep/Frameworks/TimeUI.framework/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r715-alt6
+- Build without libgnustep-objc2-devel.
+
 * Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt5.svn20090220
 - Removed menu file
 

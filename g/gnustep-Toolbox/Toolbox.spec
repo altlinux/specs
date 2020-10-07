@@ -2,17 +2,19 @@
 
 Name: gnustep-Toolbox
 Version: 0.8
-Release: alt4
+Release: alt5
 Summary: Collection of tools for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: https://www.freshports.org/deskutils/toolbox/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
+Patch1: gnustep1.27-includes.patch
+Patch2: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -70,6 +72,8 @@ This package contains development files of Toolbox.
 
 %prep
 %setup
+%patch1 -p2
+%patch2 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -79,7 +83,7 @@ This package contains development files of Toolbox.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-base' \
 	OBJCFLAGS='%optflags -DGNUSTEP' \
 	USE_NONFRAGILE_ABI=no \
 	TOPDIR=$PWD
@@ -88,6 +92,7 @@ This package contains development files of Toolbox.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 pushd %buildroot%_libdir
@@ -127,6 +132,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.8-alt5
+- Build without libgnustep-objc2-devel.
+
 * Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt4
 - Added menu file (thnx kostyalamer@)
 

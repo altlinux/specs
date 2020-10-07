@@ -2,16 +2,17 @@
 
 Name: gnustep-HighlighterKit
 Version: 0.1.3
-Release: alt1
+Release: alt2
 Summary: Framework needed by Gemas and Project Manager
-License: MIT / FDL
+License: LGPL-2.1 and GFDL-1.2+
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/HighlighterKit
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Requires: lib%name = %EVR
@@ -49,6 +50,7 @@ This package contains development files of GNUstep HighlighterKit.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -58,7 +60,7 @@ This package contains development files of GNUstep HighlighterKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -94,6 +96,10 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt2
+- Build without libgnustep-objc2-devel.
+- Fix License tag.
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
 - Version 0.1.3
 

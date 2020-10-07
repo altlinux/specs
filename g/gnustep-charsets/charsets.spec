@@ -2,18 +2,18 @@
 
 Name: gnustep-charsets
 Version: r29248
-Release: alt7.git20100109.1
+Release: alt8
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-charsets.git
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel libgnustep-ucsdata-devel
+BuildPreReq: libgnustep-ucsdata-devel
 BuildPreReq: /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -59,6 +59,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r29248-alt8
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> r29248-alt7.git20100109.1
 - NMU: Rebuild with libgnutls30.
 

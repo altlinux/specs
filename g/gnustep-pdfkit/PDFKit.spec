@@ -1,17 +1,17 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt5.1
+Release: alt6
 Summary: A Framework for accessing and rendering PDF content
-License: GPLv2 only
+License: GPL-2.0
 Group: File tools
 Url: http://wiki.gnustep.org/index.php/PDFKit
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-ExcludeArch: aarch64
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildPreReq: gcc-c++ libfreetype-devel clang-devel gnustep-make-devel
-BuildPreReq: gnustep-base-devel libgnustep-objc2-devel gnustep-gui-devel
+BuildPreReq: gcc-c++ libfreetype-devel gnustep-make-devel
+BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
 Requires: gnustep-back
 
@@ -42,15 +42,12 @@ This package contains development files of PDFKit.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-%add_optflags %optflags_shared
-%remove_optflags -frecord-gcc-switches
-export CC=clang
-export CXX=clang++
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -63,7 +60,7 @@ export CXX=clang++
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -120,6 +117,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt6
+- Build without libgnustep-objc2-devel.
+- Build on aarch64 architectire.
+
 * Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 0.9.3-alt5.1
 - Fix FTBFS.
 

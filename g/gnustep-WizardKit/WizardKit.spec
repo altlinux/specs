@@ -2,16 +2,17 @@
 
 Name: gnustep-WizardKit
 Version: 0.1
-Release: alt3
+Release: alt4
 Summary: Framework needed by Project Manager
-License: MIT / FDL
+License: MIT and GFDL-1.2-or-later
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/WizardKit
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel doxygen
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -55,6 +56,7 @@ This package contains documentation for WizardKit.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -64,7 +66,7 @@ This package contains documentation for WizardKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 doxygen
 
@@ -106,6 +108,10 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Thu Oct 08 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt4
+- Build without libgnustep-objc2-devel.
+- Fix License tag according to SPDX.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3
 - Built with clang
 

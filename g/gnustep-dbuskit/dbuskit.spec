@@ -2,18 +2,20 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt7.svn20140131.2
+Release: alt7.svn20140131.3
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/dbuskit/trunk/
 Source: %name-%version.tar
+Patch1: gcc9-objc.patch
+Patch2: link-libs.patch
 
-BuildPreReq: clang-devel >= 4.0.1 gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel libdbus-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: libdbus-devel /proc
 BuildPreReq: texinfo texi2html
 
 Requires: lib%name = %version-%release
@@ -63,28 +65,24 @@ This package cicu of GNUstep interface.
 
 %prep
 %setup
-
+%patch1 -p1
+%patch2 -p1
 sed -i 's|@LIBDIR@|%_libdir|g' configure.ac
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-export CC=clang
-export OBJCPP='clang -E'
-export CPP='clang -E'
-%add_optflags -DHAVE_OBJC_RUNTIME_H
-%remove_optflags -frecord-gcc-switches
+#add_optflags -DHAVE_OBJC_RUNTIME_H
+#remove_optflags -frecord-gcc-switches
 %autoreconf
-for i in $(find ./ -type f); do
-	sed -i 's|[0-9a-z_]*alt-linux-gcc|clang|g' $i
-done
-export LD_LIBRARY_PATH=%_libdir/llvm
 %configure \
 	--libexecdir=%_libdir \
 	--enable-static=yes \
 	--enable-static=no \
-	--enable-libclang=yes \
+	--disable-libclang \
 	--with-installation-domain=SYSTEM
+# Override HAVE_LIBCLANG 1
+subst 's/define HAVE_LIBCLANG.*/define HAVE_LIBCLANG 0/' Source/config.h
 
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 export LD_LIBRARY_PATH=%_libdir/llvm
@@ -94,7 +92,7 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		CONFIG_SYSTEM_LIBS="-L$LD_LIBRARY_PATH -lclang -ldbus-1 $1" \
+		CONFIG_SYSTEM_LIBS="-L$LD_LIBRARY_PATH -ldbus-1 $1" \
 		nonstrict=yes
 }
 
@@ -149,6 +147,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt7.svn20140131.3
+- NMU: build without libgnustep-objc2-devel.
+
 * Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 0.3.2-alt7.svn20140131.2
 - Rebuild with llvm6.0.
 - BR cleanup.

@@ -1,17 +1,16 @@
 Name: unar
 Version: 1.10.1
-Release: alt1
+Release: alt1.1
 Summary: Multi-format archive extractor
 License: LGPLv2+
 Group: Archiving/Compression
 Url: http://unarchiver.c3.cx/unarchiver/
 Source: %name-%version.tar.gz
-Patch: unar1.8.1-clang.patch
 # NB: source tree moved from "The Unarchiver" to unar-version
 
 # Automatically added by buildreq on Mon Mar 03 2014
 # optimized out: libcloog-isl4 libgnustep-base libgnustep-objc2 libgnustep-objc2-devel libgpg-error libobjc-devel libp11-kit libstdc++-devel
-BuildRequires: bzlib-devel clang gnustep-base-devel libicu-devel unzip zlib-devel libstdc++-devel libgnustep-objc2-devel
+BuildRequires: bzlib-devel gcc-c++ gnustep-make-devel gnustep-base-devel libicu-devel unzip zlib-devel libstdc++-devel
 
 %description
 The command-line utilities lsar and unar are capable of listing and extracting
@@ -20,10 +19,9 @@ and open source replacement of unrar.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%make_build OBJCC=clang CC=clang CXX=clang++ -C XADMaster -f Makefile.linux
+%make_build -C XADMaster -f Makefile.linux
 
 %install
 install -d %buildroot%_bindir
@@ -41,6 +39,9 @@ install -D Extra/unar.bash_completion %buildroot%_datadir/bash-completion/comple
 %_datadir/bash-completion/*
 
 %changelog
+* Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.1-alt1.1
+- NMU: Build without libgnustep-objc2-devel.
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.10.1-alt1
 - Autobuild version bump to 1.10.1
 

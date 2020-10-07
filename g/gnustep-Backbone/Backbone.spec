@@ -2,18 +2,19 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt6.git20140219
+Release: alt7.git20170619
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://www.nongnu.org/backbone/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # git://git.savannah.nongnu.org/backbone.git
 Source: %name-%version.tar
 Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-objc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -57,6 +58,7 @@ This package contains development files of Backbone.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
@@ -79,7 +81,7 @@ export INSTALL_DIR=%buildroot%_libdir/GNUstep
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-DHAVE_CONFIG_H' \
-	CONFIG_SYSTEM_LIBS='-lutil -lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lutil -lgnustep-gui -lgnustep-base'
  
 install -d %buildroot%_libdir/GNUstep/Colors
 
@@ -122,6 +124,10 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt7.git20170619
+- New snapshot.
+- Build without libgnustep-objc2-devel.
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6.git20140219
 - New snapshot
 

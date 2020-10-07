@@ -1,17 +1,17 @@
 Name: gnustep-themes-Gtk
 Version: 1.0
-Release: alt6.svn20140115.1
+Release: alt7
 Summary: Gnome Theme for GNUstep
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/plugins/themes/Gtk/
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel
+BuildPreReq: gnustep-gui-devel
 BuildPreReq: glib2-devel libgtk+2-devel libGConf-devel
 BuildPreReq: /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -46,6 +46,9 @@ for drawing its widgets.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.0-alt7
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.0-alt6.svn20140115.1
 - NMU: Rebuild with libgnutls30.
 

@@ -1,18 +1,19 @@
 Name: gnustep-systempreferences
 Version: 1.2.0
-Release: alt1.svn20140214
+Release: alt2
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/apps/systempreferences/trunk/
 Source: %name-%version.tar
 Source1: %name.menu
+Patch1: link-libs.patch
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
+BuildPreReq: gnustep-gui-devel /proc
 
 Requires: lib%name = %version-%release
 Requires: gnustep-back
@@ -49,6 +50,7 @@ This package contains development files of %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -58,7 +60,7 @@ This package contains development files of %name.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -104,6 +106,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2
+- Build without libgnustep-objc2-devel.
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.svn20140214
 - Version 1.2.0
 

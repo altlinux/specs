@@ -1,11 +1,11 @@
 Name: gnustep-buildtool
 Version: r36614
-Release: alt3.svn20130513.1
+Release: alt4
 Summary: The GNUstep buildtool
 License: GPLv2+
 Group: Development/Tools
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/tools/buildtool/trunk/
 Source: %name-%version.tar
@@ -42,6 +42,9 @@ GNUstep buildtool.
 %_bindir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r36614-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> r36614-alt3.svn20130513.1
 - NMU: Rebuild with libgnutls30.
 

@@ -2,17 +2,17 @@
 
 Name: gnustep-Camera
 Version: 0.8
-Release: alt7
+Release: alt8
 Summary: Camera downloads files from your digital camera
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/Camera.app
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.8-alt8
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.8-alt7
 - Rebuild with new icu
 

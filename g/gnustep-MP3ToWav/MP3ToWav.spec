@@ -2,16 +2,16 @@
 
 Name: gnustep-MP3ToWav
 Version: 0.4.1
-Release: alt3.1
+Release: alt4
 Summary: MP3ToWav plugin for Burn.app
 License: Free
 Group: Graphical desktop/GNUstep
 Url: http://gsburn.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -40,6 +40,7 @@ MP3ToWav plugin for Burn.app.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 %files
@@ -47,6 +48,9 @@ MP3ToWav plugin for Burn.app.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt3.1
 - NMU: Rebuild with libgnutls30.
 

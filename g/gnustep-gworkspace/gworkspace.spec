@@ -1,19 +1,20 @@
 Name: gnustep-gworkspace
-Version: 0.9.2
-Release: alt4.svn20131218
+Version: 0.9.4
+Release: alt1
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.gnustep.org/experience/GWorkspace.html
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-gworkspace.git
-Source: %name-%version.tar
+Source: gworkspace-%version.tar.gz
 Source1: %name.menu
 Source2: %name.sh
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel /proc
-BuildPreReq: libgnustep-objc2-devel libgnustep-pdfkit-devel
+BuildPreReq: gnustep-make-devel gnustep-base-devel /proc
+BuildPreReq: libgnustep-pdfkit-devel
 BuildPreReq: gnustep-systempreferences-devel libsqlite3-devel unzip
 BuildPreReq: gnustep-gui-devel gnustep-gui inotify-tools-devel
 
@@ -64,7 +65,8 @@ etc.
 This package contains documentation for GWorkspace.
 
 %prep
-%setup
+%setup -n gworkspace-%version
+%patch1 -p2
 
 %build
 #export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
@@ -85,7 +87,7 @@ This package contains documentation for GWorkspace.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='%incs' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc2 -lm'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui'
  
 libFSNode="$PWD/FSNode/FSNode.framework/libFSNode.so"
 pushd Inspector
@@ -96,7 +98,7 @@ pushd Inspector
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='%incs' \
-	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc2"
+	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui"
 popd
 
 %install
@@ -148,6 +150,11 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
+- New version.
+- Build without libgnustep-objc2-devel.
+- Fix project URL.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt4.svn20131218
 - Built with clang
 

@@ -2,16 +2,17 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt6
+Release: alt7
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libogg-devel libvorbis-devel libsmpeg-devel libflac-devel
 BuildPreReq: libspeex-devel libSDL-devel libSDL_sound-devel
@@ -60,6 +61,7 @@ This package contains development files of ShengGuang.
 
 %prep
 %setup -n ShengGuang
+%patch1 -p3
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -70,7 +72,7 @@ This package contains development files of ShengGuang.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS="-I$PWD/.." \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base' \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
 	USE_NONFRAGILE_ABI=no
  
@@ -79,6 +81,7 @@ This package contains development files of ShengGuang.
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	LIB_SUFFIX=%_libsuff \
+	GNUSTEP_MAKE_STRICT_V2_MODE=no \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 pushd %buildroot%_libdir/GNUstep/Libraries
@@ -107,6 +110,9 @@ ln -s %_libdir/GNUstep/Headers/ShengGuang \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 2006-alt7
+- Build without libgnustep-objc2-devel.
+
 * Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 2006-alt6
 - NMU: fixed LIB_SUFFIX= on non-x86_64
 

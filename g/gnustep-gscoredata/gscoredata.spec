@@ -2,18 +2,19 @@
 
 Name: gnustep-gscoredata
 Version: r33286
-Release: alt4.svn20110612
+Release: alt5
 Summary: Free implementation of the Apple Core Data framework
-License: LGPLv2.1+, FDLv1.2
+License: LGPL-2.1+ and FDL-1.2
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/gscoredata/
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel /proc
+BuildPreReq: /proc
 BuildPreReq: doxygen graphviz
 
 Requires: lib%name = %version-%release
@@ -64,6 +65,7 @@ framework.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -116,6 +118,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r33286-alt5
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r33286-alt4.svn20110612
 - Built with clang
 
