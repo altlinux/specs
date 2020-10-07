@@ -2,7 +2,7 @@
 
 Name: gpupdate
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: GPT applier
 License: GPLv3+
@@ -79,8 +79,13 @@ install -Dm0644 doc/gpupdate.1 %buildroot/%_man1dir/gpupdate.1
 
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
+%define active_policy %_sysconfdir/local-policy/active
 %triggerpostun -- %name > 0.7
 rm -f %_cachedir/%name/registry.sqlite
+if test -L %active_policy; then
+	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
+		%_sysconfdir/%name/%name.ini
+fi
 
 %files
 %_sbindir/gpoa
@@ -107,6 +112,10 @@ rm -f %_cachedir/%name/registry.sqlite
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Oct 07 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.8.1-alt2
+- Fixed compatibility upgrade trigger from 0.7 releases for update
+  active local-policy in new gpupdate.ini configuartion file
+
 * Fri Sep 11 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.8.1-alt1
 - Workaround for control names with special symbols
 - Improved logging on Kerberos errors

@@ -2,9 +2,9 @@
 
 Name: alterator-auth
 Version: 0.43.9
-Release: alt1
+Release: alt2
 
-%filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d
+%filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
 Source:%name-%version.tar
 
@@ -168,6 +168,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Oct 07 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.9-alt2
+- Avoid dependency to gpupdate-setup due gpupdate mechanism is not mandatory.
+
 * Wed Sep 30 2020 Evgeny Sinelnikov <sin@altlinux.org> 0.43.9-alt1
 - Enable Winbind with SSSD idmap for Active Directory secure channel.
 - Synchronize SSSD and Winbind configuaration during join to AD.
