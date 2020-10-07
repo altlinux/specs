@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 4.3.0
-Release: alt3
+Release: alt4
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
@@ -65,6 +65,8 @@ BuildRequires: python3-module-unittest2
 BuildRequires: python3-module-moto >= 1.3.7
 %endif
 %endif
+
+Conflicts: python-module-celery
 
 %description
 Celery is an open source asynchronous task queue/job queue based on
@@ -140,6 +142,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Wed Oct 07 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt4
+- add Conflicts: python-module-celery
+
 * Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt3
 - build standalone python3 module
 - temp. disable doc ()
