@@ -1,15 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jdo2-api
 Version:       2.2
-Release:       alt3_18jpp8
+Release:       alt3_19jpp8
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
 License:       ASL 2.0
 Url:           http://db.apache.org/jdo/
@@ -21,7 +20,6 @@ Source2:       http://repo1.maven.org/maven2/javax/jdo/jdo2-api/2.2/jdo2-api-2.2
 
 Patch0:        jdo2-api-2.2-pom.patch
 BuildRequires: jpackage-utils
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 
 BuildRequires: ant
@@ -82,6 +80,9 @@ cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_19jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_18jpp8
 - new version
 
