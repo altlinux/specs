@@ -50,7 +50,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -121,7 +121,7 @@ Provides: nodejs(v8-abi) = %{v8_abi}
 Provides: nodejs(napi) = 6
 Provides: nodejs(napi) = %{napi}
 
-Provides: bundled(llhttp) = 2.1.2
+Provides: bundled(llhttp) = 2.1.3
 Provides: bundled(uvwasi) = 0.0.11
 
 # /usr/bin/ld.default: failed to set dynamic section sizes: memory exhausted
@@ -380,6 +380,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Thu Oct 08 2020 Vitaly Lipatov <lav@altlinux.ru> 14.13.1-alt1
+- new version 14.13.1 (with rpmrb script)
+- internal update llhttp to 2.1.3
+
 * Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 14.13.0-alt1
 - new version 14.13.0 (with rpmrb script)
 - set libuv >= 1.40.0
