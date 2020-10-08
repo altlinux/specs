@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt3_16jpp8
+Release:       alt3_17jpp8
 Summary:       Glassfish JPA Toplink Essentials
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
@@ -27,7 +27,6 @@ Patch1:        glassfish-persistence-2.0.41-jdk7.patch
 Patch2:        glassfish-persistence-2.0.41-agent-remove-manifest-classpath.patch
 Patch3:        glassfish-persistence-2.0.41-use_system_antlr.patch
 
-BuildRequires: java-devel
 BuildRequires: jpackage-utils
 BuildRequires: javapackages-local
 
@@ -112,6 +111,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc --no-dereference glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_17jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_16jpp8
 - new version
 
