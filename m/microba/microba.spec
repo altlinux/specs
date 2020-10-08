@@ -5,12 +5,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           microba
 Version:        0.4.4.3
-Release:        alt2_15jpp8
+Release:        alt3_15jpp8
 Summary:        Set of JFC (Swing) components
 License:        BSD
 URL:            http://microba.sourceforge.net/
@@ -24,9 +24,6 @@ Patch1:         %{name}-0.4.4.3-disable-jgraph.patch
 
 BuildRequires:  ant
 BuildRequires:  dos2unix
-BuildRequires:  java-devel
-# sinjdoc doesn't do the job for us in f12, drag in real javadoc
-BuildRequires:  java-devel-openjdk
 BuildRequires:  jpackage-utils
 # BuildRequires:  jgraph
 Requires:       java
@@ -81,6 +78,9 @@ cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt3_15jpp8
+- fixed build with new java
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt2_15jpp8
 - added BR: javapackages-local for javapackages 5
 
