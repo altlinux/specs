@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          mojarra
 Version:       2.2.13
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       JSF Reference Implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://javaserverfaces.java.net
@@ -71,7 +71,6 @@ BuildRequires: glassfish-jsp-api
 BuildRequires: glassfish-servlet-api
 BuildRequires: groovy
 BuildRequires: hibernate-jpa-2.1-api
-BuildRequires: java-devel
 BuildRequires: jboss-jstl-1.2-api
 BuildRequires: maven-install-plugin
 BuildRequires: maven-local
@@ -238,6 +237,9 @@ cp -rp jsf-ri/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt2_6jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt1_6jpp8
 - new version
 
