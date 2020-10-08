@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.19.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -69,7 +69,9 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DICON_INSTALL_DIR=%_iconsdir \
+    #
 
 %install
 %K5install
@@ -84,9 +86,9 @@ KF5 library
 %_K5bin/*
 %_K5plug/org.kde.kdecoration2/*.so
 %_K5snd/Oxygen*
-%_K5icon/Oxygen_*/
-%_K5icon/*/*/apps/oxygen-settings.*
-%_K5icon/KDE_Classic/
+%_iconsdir/Oxygen_*/
+%_iconsdir/*/*/apps/oxygen-settings.*
+%_iconsdir/KDE_Classic/
 %_K5data/color-schemes/*
 %_K5data/plasma/look-and-feel/org.kde.oxygen/
 %_K5plug/*oxygen*.so
@@ -100,6 +102,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Thu Oct 08 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt2
+- move cursors to standard place
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 
