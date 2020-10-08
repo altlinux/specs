@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.3.ga73dbfe3b
+Release: alt0.4.ga73dbfe3b
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -77,6 +77,8 @@ Patch51: %name-deb-core_create-home.patch
 # Upstream security fixes
 Patch100: upstream-fix-for-CVE-2019-18217.patch
 Patch101: upstream-fix-for-CVE-2019-19269-and-CVE-2019-19270.patch
+Patch102: upstream-fix-for-CVE-2020-9272.patch
+Patch103: upstream-fix-for-CVE-2020-9273.patch
 
 Provides: ftpserver
 Requires: locale-en
@@ -88,6 +90,7 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 BuildRequires: gcc-c++ libncurses-devel libtinfo-devel zlib-devel libltdl-devel libpcre-devel
 # ftpmail findreq
 BuildRequires: perl-Mail-Sendmail
+BuildRequires: libcap-devel
 
 %{?_with_mod_auth_pam:BuildRequires: pam-devel}
 
@@ -388,6 +391,8 @@ See control(8) for details.
 # Upstream security fixes
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
+%patch103 -p1
 
 %build
 #__libtoolize --ltdl
@@ -681,6 +686,10 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu Oct 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt0.4.ga73dbfe3b
+- Applied security fixes from upstream (Fixes: CVE-2020-9272, CVE-2020-9273).
+- Built with system libcap.
+
 * Wed Oct 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.6-alt0.3.ga73dbfe3b
 - Applied security fixes from upstream (Fixes: CVE-2019-18217, CVE-2019-19269, CVE-2019-19270).
 - Updated changelog records for vulnerability policy compatibility.
