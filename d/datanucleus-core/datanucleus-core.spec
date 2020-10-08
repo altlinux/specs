@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package %nil
@@ -13,13 +10,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:          datanucleus-core
 Version:       3.2.15
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       DataNucleus Core
 License:       ASL 2.0
 URL:           http://www.datanucleus.org/%{name}
 Source:        https://github.com/datanucleus/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
 
-BuildRequires: java-devel
 BuildRequires: mvn(javax.time:time-api)
 BuildRequires: mvn(javax.jdo:jdo-api)
 BuildRequires: mvn(javax.transaction:jta)
@@ -126,6 +122,9 @@ cp -p META-INF/README.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.15-alt1_10jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.15-alt1_9jpp8
 - new version
 
