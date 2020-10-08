@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          josql
 Version:       2.2
-Release:       alt1_14jpp8
+Release:       alt1_15jpp8
 Summary:       Library to apply SQL-like syntax to Java objects
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
@@ -20,7 +17,6 @@ Source2:       josql.bnd
 Patch0:        %{name}-%{version}-build.patch
 Patch1:        josql-2.2-doclint.patch
 
-BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 
@@ -94,6 +90,9 @@ bnd wrap -p %{SOURCE2} -o %{name}.jar -v %{version} JoSQL-%{version}.jar
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_15jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_14jpp8
 - new version
 
