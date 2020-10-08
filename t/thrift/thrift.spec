@@ -1,18 +1,14 @@
-# hack kill me
-%filter_from_requires /^.usr.lib.python3.site-packages/d
-%filter_from_requires /^python3.SCons.Builder/d
-%filter_from_requires /^python-base/d
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-fedora-compat rpm-macros-java rpm-build-ruby
-BuildRequires: /usr/bin/npm /usr/bin/perl /usr/bin/php /usr/bin/php-config /usr/bin/trial boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl-podlators pkgconfig(Qt5Core) pkgconfig(Qt5Network) python-devel rpm-build-java
+BuildRequires(pre): rpm-build-perl rpm-build-php7 rpm-build-python3 rpm-macros-java
+BuildRequires: /usr/bin/perl /usr/bin/php /usr/bin/rustc boost-devel boost-filesystem-devel boost-program_options-devel perl(Encode.pm) perl(HTTP/Request.pm) perl(IO/Select.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/SSL.pm) perl(IO/Socket/UNIX.pm) perl(IO/String.pm) perl(LWP/UserAgent.pm) perl(Time/HiRes.pm) perl(base.pm) perl(overload.pm) perl(parent.pm) perl-podlators pkgconfig(mono) python-devel rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: javapackages-local
+BuildRequires: /usr/bin/curl mono-web
 BuildRequires: chrpath
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global php_extdir  %(php-config --extension-dir 2>/dev/null || echo "undefined")
+
 
 %global have_mongrel 0
 
@@ -22,9 +18,25 @@ BuildRequires: jpackage-generic-compat
 # We should be able to enable this in the future
 %global want_d 0
 
+# Can't do anything with java with all the build deps in modules
+%global want_java 0
+
+%if 0%{?want_java} == 0
+%global java_configure --without-java
+%else
+%global java_configure --with-java
+%endif
+
+# Thrift's Ruby support depends on Mongrel.  Since Mongrel is
+# deprecated in Fedora, we can't support Ruby bindings for Thrift
+# unless and until Thrift is patched to use a different HTTP server.
+%if 0%{?have_mongrel} == 0
+%global ruby_configure --without-ruby
+%global with_ruby 0
+%else
 %global ruby_configure --with-ruby
 %global want_ruby 1
-%global want_python 0
+%endif
 
 # Thrift's Erlang support depends on the JSX library, which is not
 # currently available in Fedora.
@@ -52,9 +64,15 @@ BuildRequires: jpackage-generic-compat
 %global want_golang 0
 %global golang_configure --without-go
 
+# Thrift's Lua support has not yet been worked on
+%global want_lua 0
+%global lua_configure --without-lua
+
+# NOTE: thrift versions their libraries by package version, so each version
+# change is a SONAME change and dependencies need to be rebuilt
 Name:    thrift
-Version: 0.10.0
-Release: alt7_15jpp8
+Version: 0.13.0
+Release: alt1_9
 Summary: Software framework for cross-language services development
 
 # Parts of the source are used under the BSD and zlib licenses, but
@@ -64,40 +82,27 @@ Summary: Software framework for cross-language services development
 # Here's the breakdown:
 # ./lib/py/compat/win32/stdint.h is 2-clause BSD
 # ./compiler/cpp/src/md5.[ch] are zlib
-License: Apache-2.0 and BSD and zlib-acknowledgement
+License: ASL 2.0 and BSD and zlib
 URL:     https://thrift.apache.org/
-Vcs:     https://github.com/apache/thrift.git
+
 Source0: https://archive.apache.org/dist/%{name}/%{version}/%{name}-%{version}.tar.gz
 
 Source1: https://repo1.maven.org/maven2/org/apache/thrift/lib%{name}/%{version}/lib%{name}-%{version}.pom
 Source2: https://raw.github.com/apache/%{name}/%{version}/bootstrap.sh
 
-Source3: https://repo1.maven.org/maven2/org/apache/thrift/libfb303/%{version}/libfb303-%{version}.pom
-
 # this patch is adapted from Gil Cattaneo's thrift-0.7.0 package
-Patch0: %{name}-%{version}-buildxml.patch
-# for fb303, excise maven ant tasks; build against system libraries; etc.
-Patch1: fb303-%{version}-buildxml.patch
+#Patch0: %{name}-%{version}-buildxml.patch
 # fix configure.ac insistence on using /usr/local/lib for JAVA_PREFIX
 Patch2: configure-java-prefix.patch
-# fix for ppc64le builds not linking to /usr/lib64 directory
-Patch3: fix-ppc64le-builds.patch
-# fix for s390x build; incorporates fix for THRIFT-4177 with some code from THRIFT-4136
-Patch4: THRIFT-4177.patch
 
-# Update fb303 for python3
-Patch5: python3.patch
-
-# Fix linking with boost_atomic, which must be explicit on some architectures
-Patch10: thrift-0.10-debian-fix_boost_atomic_link.patch
-
-Group: Development/Other
 
 # BuildRequires for language-specific bindings are listed under these
 # subpackages, to facilitate enabling or disabling individual language
 # bindings in the future
 
+%if 0%{?want_java} > 0
 BuildRequires: ant >= 1.7
+%endif
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: bison
@@ -110,7 +115,7 @@ BuildRequires: libevent-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libtool
 BuildRequires: libssl-devel
-BuildRequires: libqt4-declarative libqt4-devel qt4-designer qt5-declarative-devel qt5-designer qt5-tools
+BuildRequires: qt5-base-devel
 BuildRequires: texlive-texmf
 BuildRequires: zlib-devel
 
@@ -154,20 +159,18 @@ Requires:       %{name} = %{version}-%{release}
 %description    glib
 The %{name}-qt package contains GLib bindings for %{name}.
 
-%if %{?want_python} > 0
-%package -n python3-module-thrift-original
+%package -n python3-module-thrift
 Group: Development/Other
 Summary: Python 3 support for %{name}
 BuildRequires: python3-devel
+BuildRequires: python3-module-distribute
 Requires: %{name} = %{version}-%{release}
 Requires: python3
 Obsoletes: python-%{name} < 0.10.0-1%{?dist}
 Obsoletes: python2-%{name} < 0.10.0-14%{?dist}
-Conflicts: python3-module-thrift
 
-%description -n python3-module-thrift-original
+%description -n python3-module-thrift
 The python3-%{name} package contains Python bindings for %{name}.
-%endif
 
 %package -n perl-%{name}
 Group: Development/Java
@@ -190,6 +193,11 @@ Requires: perl(constant.pm)
 Requires: perl(strict.pm)
 Requires: perl(utf8.pm)
 Requires: perl(warnings.pm)
+# thrift improperly packages some components in files with names different
+# than the package they contain
+Provides: perl(Thrift/Exception.pm)
+Provides: perl(Thrift/MessageType.pm)
+Provides: perl(Thrift/Type.pm)
 BuildArch: noarch
 
 %description -n perl-%{name}
@@ -219,6 +227,7 @@ BuildRequires: php-devel
 The php-%{name} package contains PHP bindings for %{name}.
 %endif
 
+%if 0%{?want_java} > 0
 %package -n lib%{name}-javadoc
 Group: Development/Java
 Summary: API documentation for java-%{name}
@@ -247,6 +256,7 @@ BuildRequires: slf4j
 # javax.servlet-api 3.1.0 is provided by glassfish-servlet-api
 BuildRequires: mvn(javax.servlet:javax.servlet-api) = 3.1.0
 
+Requires: java-headless >= 1.6.0
 Requires: javapackages-tools
 Requires: mvn(org.slf4j:slf4j-api)
 Requires: mvn(commons-lang:commons-lang)
@@ -256,25 +266,19 @@ BuildArch: noarch
 
 %description -n lib%{name}-java
 The lib%{name}-java package contains Java bindings for %{name}.
+%endif
 
+%if 0%{?want_ruby} > 0
+%package -n ruby-%{name}
+Group: Development/Other
+Summary: Ruby support for %{name}
+Requires: %{name} = %{version}-%{release}
+Requires: ruby(release)
+BuildRequires: libruby-devel
 
-%package       -n gem-%{name}
-Group:         Development/Ruby
-Summary:       Ruby support for %{name}
-Requires:      %{name} = %{version}-%{release}
-
-%description -n gem-%{name}
-The gem-%{name} package contains Ruby bindings for %{name}.
-
-
-%package       -n gem-%{name}-doc
-Summary:       Documentation files for %gemname gem
-Group:         Documentation
-BuildArch:     noarch
-
-%description   -n gem-%{name}-doc
-Documentation files for %gemname gem.
-
+%description -n ruby-%{name}
+The ruby-%{name} package contains Ruby bindings for %{name}.
+%endif
 
 %if 0%{?want_erlang} > 0
 %package -n erlang-%{name}
@@ -284,66 +288,17 @@ Requires: %{name} = %{version}-%{release}
 Requires: erlang
 Requires: erlang-jsx
 BuildRequires: erlang
-BuildRequires: rebar
+BuildRequires: rebar2
 
 %description -n erlang-%{name}
 The erlang-%{name} package contains Erlang bindings for %{name}.
 %endif
 
-%package -n fb303
-Group: Development/Java
-Summary: Basic interface for Thrift services
-Requires: %{name} = %{version}-%{release}
-
-%description -n fb303
-fb303 is the shared root of all Thrift services; it provides a
-standard interface to monitoring, dynamic options and configuration,
-uptime reports, activity, etc.
-
-%package -n fb303-devel
-Group: Development/Java
-Summary: Development files for fb303
-Requires: fb303 = %{version}-%{release}
-
-%description -n fb303-devel
-The fb303-devel package contains header files for fb303
-
-%if %{?want_python} > 0
-%package -n python3-module-fb303
-Group: Development/Other
-Summary: Python 3 bindings for fb303
-Requires: fb303 = %{version}-%{release}
-BuildRequires: python3-devel
-Obsoletes: python-fb303 < 0.10.0-1%{?dist}
-Obsoletes: python2-fb303 < 0.10.0-14%{?dist}
-BuildArch: noarch
-
-%description -n python3-module-fb303
-The python3-fb303 package contains Python bindings for fb303.
-%endif
-
-%package -n fb303-java
-Group: Development/Java
-Summary: Java bindings for fb303
-Requires: javapackages-tools
-Requires: mvn(org.slf4j:slf4j-api)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(org.apache.httpcomponents:httpclient)
-Requires: mvn(org.apache.httpcomponents:httpcore)
-BuildArch: noarch
-
-%description -n fb303-java
-The fb303-java package contains Java bindings for fb303.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch10 -p1
+
 
 %{?!el5:sed -i -e 's/^AC_PROG_LIBTOOL/LT_INIT/g' configure.ac}
 
@@ -354,26 +309,21 @@ cp -p %{SOURCE2} bootstrap.sh
 
 # work around linking issues
 echo 'libthrift_c_glib_la_LIBADD = $(GLIB_LIBS) $(GOBJECT_LIBS) -L../cpp/.libs ' >> lib/c_glib/Makefile.am
-echo 'libthriftqt_la_LIBADD = $(QT_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
+echo 'libthriftqt5_la_LIBADD = $(QT_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
 echo 'libthriftz_la_LIBADD = $(ZLIB_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
-echo 'libthriftqt5_la_LIBADD = $(QT5_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
-echo 'libthriftnb_la_LIBADD = $(LIBEVENT_LIBS) -lthrift -L.libs' >> lib/cpp/Makefile.am
-echo 'EXTRA_libthriftqt_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
-echo 'EXTRA_libthriftz_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
+echo 'libthriftnb_la_LIBADD = $(ZLIB_LIBS) -levent -lthrift -L.libs' >> lib/cpp/Makefile.am
 echo 'EXTRA_libthriftqt5_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
+echo 'EXTRA_libthriftz_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
 echo 'EXTRA_libthriftnb_la_DEPENDENCIES = libthrift.la' >> lib/cpp/Makefile.am
-
-# echo 'libfb303_so_LIBADD = -L../../../lib/cpp/.libs -lthrift' >> contrib/fb303/cpp/Makefile.am
-
-sed -i 's|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS)|libfb303_so_LDFLAGS = $(SHARED_LDFLAGS) -Wl,--no-as-needed -lthrift -L../../../lib/cpp/.libs -Wl,--as-needed|g' contrib/fb303/cpp/Makefile.am
 
 # fix broken upstream check for ant version; we enforce this with BuildRequires, so no need to check here
 sed -i 's|ANT_VALID=.*|ANT_VALID=1|' aclocal/ax_javac_and_java.m4
-sed -i 's|ANT_VALID=.*|ANT_VALID=1|' contrib/fb303/aclocal/ax_javac_and_java.m4
+
+# explicitly set python3
+shopt -s globstar
+sed -i -E 's@^(#!.*/env) *python *$@\1 python3@' **/*.py
 
 %build
-%ruby_build --ignore=rb
-
 export PY_PREFIX=%{_prefix}
 export PERL_PREFIX=%{_prefix}
 export PHP_PREFIX=%{php7_extdir}
@@ -391,71 +341,39 @@ find . -name Makefile\* -exec sed -i -e 's/[.][/]rebar/rebar/g' {} \;
 sed -i 's|-Dinstall.javadoc.path=$(DESTDIR)$(docdir)/java|-Dinstall.javadoc.path=$(DESTDIR)%{_javadocdir}/%{name}|' lib/java/Makefile.*
 
 # build a jar without a version number
-sed -i 's|${thrift.artifactid}-${version}|${thrift.artifactid}|' lib/java/build.xml
+#sed -i 's|${thrift.artifactid}-${version}|${thrift.artifactid}|' lib/java/build.xml
 
 # Proper permissions for Erlang files
 sed -i 's|$(INSTALL) $$p|$(INSTALL) --mode 644 $$p|g' lib/erl/Makefile.am
-
-# Build fb303 jars against the in-situ copy of thrift
-sed -i 's|$(thrift_home)/bin/thrift|../../../compiler/cpp/thrift|g' \
- contrib/fb303/cpp/Makefile.am \
- contrib/fb303/py/Makefile.am
-
-sed -i 's|$(prefix)/lib$|%{_libdir}|g' contrib/fb303/cpp/Makefile.am
-
-sed -i 's|$(thrift_home)/include/thrift|../../../lib/cpp/src|g' \
- contrib/fb303/cpp/Makefile.am
-
-# Create a straightforward makefile for Java fb303
-echo "all:
-	ant
-install: build/libfb303.jar
-	mkdir -p %{buildroot}%{_javadir}
-	/usr/bin/install -c -m 644 build/libfb303.jar %{buildroot}%{_javadir}
-" > contrib/fb303/java/Makefile
 
 sh ./bootstrap.sh
 
 # use unversioned doc dirs where appropriate (via _pkgdocdir macro)
 export PYTHON=%{_bindir}/python3
-%configure --disable-dependency-tracking --disable-static --with-boost=/usr --without-ruby %{erlang_configure} %{golang_configure} %{php_configure} --with-py3 --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
-	--without-haskell \
-	--without-nodejs
+%configure --disable-dependency-tracking --disable-static --with-boost=/usr \
+  --docdir=%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}} \
+  %{java_configure} %{ruby_configure} %{erlang_configure} %{golang_configure} %{php_configure} %{lua_configure}
 
 # eliminate unused direct shlib dependencies
 sed -i -e 's/ -shared / -Wl,--as-needed\0/g' libtool
 
 %make_build
 
-# build fb303
-(
-  cd contrib/fb303
-  sed -i '/^[.][/]configure.*/d' bootstrap.sh
-  sh bootstrap.sh
-  %configure --disable-static --with-java --without-php --with-py3 --libdir=%{_libdir}
-%make_build
-  (
-      cd java
-      ant dist
-  )
-)
 
 %install
-%ruby_install
 %makeinstall_std
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name fastbinary.so | xargs -r chmod 755
 find %{buildroot} -name \*.erl -or -name \*.hrl -or -name \*.app | xargs -r chmod 644
 
 # Remove javadocs jar
+%if 0%{?want_java} > 0
 find %{buildroot}/%{_javadir} -name lib%{name}-javadoc.jar -exec rm -f '{}' \;
-
 # Add POM file and depmap
 mkdir -p %{buildroot}%{_mavenpomdir}
-
 install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-libthrift.pom
-
 %add_maven_depmap JPP-libthrift.pom libthrift.jar
+%endif
 
 # Remove bundled jar files
 find %{buildroot} -name \*.jar -a \! -name \*thrift\* -exec rm -f '{}' \;
@@ -477,20 +395,6 @@ mv %{buildroot}/%{php7_extdir}/Thrift %{buildroot}/%{_datadir}/php/
 # Fix permissions on Thread.h
 find %{buildroot} -name Thread.h -exec chmod a-x '{}' \;
 
-# install fb303
-(
-  cd contrib/fb303
-  make DESTDIR=%{buildroot} install
-  (
-    cd java
-    ant -Dinstall.path=%{buildroot}%{_javadir} -Dinstall.javadoc.path=%{buildroot}%{_javadocdir}/fb303 install
-  )
-)
-
-# install maven pom and depmaps for fb303
-install -pm 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-libfb303.pom
-%add_maven_depmap JPP-libfb303.pom libfb303.jar -f "fb303"
-
 # Ensure all python scripts are executable
 find %{buildroot} -name \*.py -exec grep -q /usr/bin/env {} \; -print | xargs -r chmod 755
 # kill rpath
@@ -498,12 +402,6 @@ for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -ty
 	chrpath -d $i ||:
 done
 
-# last second hack; remove me if qt5 subpackage
-rm -f %buildroot%{_libdir}/libthriftqt5.so
-
-
-%check
-%ruby_test
 
 
 %files
@@ -516,27 +414,22 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files glib
 %{_libdir}/libthrift_c_glib.so
 %{_libdir}/libthrift_c_glib.so.*
-%{_libdir}/libthrift.so
-%{_libdir}/libthriftc.so
-%{_libdir}/libthriftc.so.0
-%{_libdir}/libthriftc.so.0.0.0
-%{_libdir}/libthriftnb.so
-%{_libdir}/libthriftz.so
 
 %files qt
+%{_libdir}/libthriftqt5.so
 %{_libdir}/libthriftqt5-%{version}.so
-%{_libdir}/libthriftqt-%{version}.so
-%{_libdir}/libthriftqt.so
 
 %files devel
 %{_includedir}/thrift
-%exclude %{_includedir}/thrift/fb303
+%{_libdir}/*.so
+%{_libdir}/*.so.0
+%{_libdir}/*.so.0.0.0
+%exclude %{_libdir}/lib*-%{version}.so
 %{_libdir}/pkgconfig/thrift-z.pc
-%{_libdir}/pkgconfig/thrift-qt.pc
+%{_libdir}/pkgconfig/thrift-qt5.pc
 %{_libdir}/pkgconfig/thrift-nb.pc
 %{_libdir}/pkgconfig/thrift.pc
 %{_libdir}/pkgconfig/thrift_c_glib.pc
-%{_libdir}/pkgconfig/thrift-qt5.pc
 %doc LICENSE NOTICE
 
 %files -n perl-%{name}
@@ -548,7 +441,7 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %files -n php-%{name}
 %config(noreplace) /etc/php.d/thrift_protocol.ini
 %{_datadir}/php/Thrift/
-%{php_extdir}/thrift_protocol.so
+%{php7_extdir}/thrift_protocol.so
 %doc LICENSE NOTICE
 %endif
 
@@ -558,49 +451,28 @@ rm -f %buildroot%{_libdir}/libthriftqt5.so
 %doc LICENSE NOTICE
 %endif
 
-%if %{?want_python} > 0
-%files -n python3-module-thrift-original
+%files -n python3-module-thrift
 %{python3_sitelibdir}/%{name}
 %{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
 %doc LICENSE NOTICE
-%endif
 
+%if 0%{?want_java} > 0
 %files -n lib%{name}-javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %files -n lib%{name}-java -f .mfiles
 %doc LICENSE NOTICE
-
-%files -n fb303
-%{_datarootdir}/fb303
-%doc LICENSE NOTICE
-
-%files -n fb303-devel
-%{_libdir}/libfb303.so
-%{_includedir}/thrift/fb303
-%doc LICENSE NOTICE
-
-%if %{?want_python} > 0
-%files -n python3-module-fb303
-%{python3_sitelibdir_noarch}/fb303
-%{python3_sitelibdir_noarch}/fb303_scripts
-%{python3_sitelibdir_noarch}/%{name}_fb303-%{version}-py%{__python3_version}.egg-info
-%doc LICENSE NOTICE
 %endif
 
-%files -n fb303-java -f .mfiles-fb303
-%doc LICENSE NOTICE
-
-%files -n gem-%{name}
-%ruby_gemspecdir/*
-%ruby_gemslibdir/*
-%ruby_gemsextdir/*
-
-%files -n gem-%{name}-doc
-%ruby_gemsdocdir/*
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_9
+- new version
+
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt8_15jpp8
+- fixed build with new java
+
 * Sat Apr 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt7_15jpp8
 - + lost binaries for ruby gem
 - * rpm tags and syntax
