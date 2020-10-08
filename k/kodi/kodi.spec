@@ -1,6 +1,6 @@
 Name: kodi
 Version: 19.0
-Release: alt0.20200726
+Release: alt0.20201005
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -171,6 +171,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/cmake
 
 %changelog
+* Thu Oct 08 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20201005
+- 19.0a2 Matrix
+
 * Mon Aug 03 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.0-alt0.20200726
 - 19.0a1 Matrix
 
