@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: dom4j
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -46,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -69,7 +68,6 @@ BuildRequires:  dom4j
 BuildRequires:  xml-commons-apis
 BuildRequires:  tagsoup
 # Use JAXP implementation in JDK
-BuildRequires:  java-devel
 BuildRequires:  xml-commons-resolver
 BuildRequires:  servlet
 
@@ -207,6 +205,9 @@ ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_13jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_12jpp8
 - new version
 
