@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.19.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -71,6 +71,7 @@ KF5 library
 %build
 %K5build \
     -DKDE_INSTALL_DATADIR=%_K5data \
+    -DICON_INSTALL_DIR=%_iconsdir \
     #
 
 %install
@@ -91,8 +92,8 @@ KF5 library
 %_K5data/kstyle/themes/*
 %_K5data/color-schemes/*
 %_K5data/plasma/look-and-feel/org.kde.breezedark.desktop/
-%_K5icon/?reeze*/
-%_K5icon/hicolor/*/apps/breeze-settings.*
+%_iconsdir/?reeze*/
+%_iconsdir/hicolor/*/apps/breeze-settings.*
 %_K5cf_upd/*
 %_K5wall/*
 
@@ -104,6 +105,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Thu Oct 08 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt2
+- move cursors to standard place
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 1:5.19.5-alt1
 - new version
 
