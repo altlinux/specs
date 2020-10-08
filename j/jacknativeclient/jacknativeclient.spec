@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global gitdate  20120218
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt3_0.16.20120218gitjpp8
+Release:        alt4_0.16.20120218gitjpp8
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -23,7 +23,6 @@ Source0:        https://github.com/%{user}/%{name}/tarball/%{gittag}/%{user}-%{n
 BuildRequires:  ant
 BuildRequires:  gcc
 BuildRequires:  libjack-devel
-BuildRequires:  java-devel
 BuildRequires:  java-javadoc
 BuildRequires:  jpackage-utils
 
@@ -93,6 +92,9 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0-alt4_0.16.20120218gitjpp8
+- fixed build with new java
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.16.20120218gitjpp8
 - fc29 update
 
