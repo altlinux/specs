@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_14jpp8
+Release:       alt4_15jpp8
 Summary:       Open source XA JDBC Pool
 License:       LGPLv2+
 URL:           http://xapool.ow2.org/
@@ -29,7 +26,6 @@ Patch1:        %{name}-%{version}-jdk7.patch
 BuildRequires: ant
 BuildRequires: apache-commons-logging
 BuildRequires: geronimo-jta
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 
 BuildArch:     noarch
@@ -84,6 +80,9 @@ ant dist
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_15jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_14jpp8
 - new version
 
