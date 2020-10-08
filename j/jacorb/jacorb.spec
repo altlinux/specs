@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jacorb
 Version:       2.3.2
-Release:       alt2_3.jbossorg.5jpp8
+Release:       alt3_3.jbossorg.5jpp8
 Summary:       The Java implementation of the OMG's CORBA standard
 License:       LGPLv2
 URL:           http://www.jacorb.org/index.html
@@ -45,7 +45,6 @@ Patch2:        JDK8-support.patch
 Patch3:        jacorb-2.3.2-java_cup.patch
 
 BuildRequires: ant
-BuildRequires: java-devel
 BuildRequires: maven-local
 BuildRequires: mvn(antlr:antlr)
 BuildRequires: mvn(avalon-logkit:avalon-logkit)
@@ -140,6 +139,9 @@ subst 's,maxmemory="256m",maxmemory="512m",' build.xml
 #%doc doc/LICENSE
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt3_3.jbossorg.5jpp8
+- fixed build with new java
+
 * Wed May 30 2018 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt2_3.jbossorg.5jpp8
 - fixed build with maven-javadoc-plugin 3
 
