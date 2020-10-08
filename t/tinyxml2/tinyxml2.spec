@@ -1,15 +1,16 @@
-%define soname 7
+%define soname 8
 Name: tinyxml2
-Version: 7.0.1
+Version: 8.0.0
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
-License: zlib
+License: Zlib
 Group: File tools
 Url: http://www.grinninglizard.com/tinyxml2/
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
-BuildPreReq: cmake gcc-c++
+BuildPreReq: cmake gcc-c++ ctest
 BuildPreReq: doxygen
 
 %description
@@ -48,6 +49,7 @@ This package contains documentation for TinyXML-2.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 cmake \
@@ -60,10 +62,13 @@ cmake \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DBUILD_STATIC_LIBS:BOOL=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
 	.
 %make_build VERBOSE=1
 
 doxygen dox
+%check
+%make test
 
 %install
 %makeinstall_std
@@ -82,6 +87,12 @@ doxygen dox
 %doc docs/*
 
 %changelog
+* Fri Oct 09 2020 Anton Farygin <rider@altlinux.ru> 8.0.0-alt1
+- 8.0.0
+
+* Fri Oct 09 2020 Anton Farygin <rider@altlinux.ru> 7.1.0-alt1
+- 7.1.0
+
 * Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 7.0.1-alt1
 - 7.0.1
 
