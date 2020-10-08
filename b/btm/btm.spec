@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -21,7 +21,6 @@ Patch1:         btm-jdbc4.1.patch
 
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  geronimo-jta
-BuildRequires:  java-devel
 BuildRequires:  javapackages-local
 BuildRequires:  xml-commons-apis
 #BuildRequires:  mvn(javax.transaction:jta)
@@ -84,6 +83,9 @@ ant build
 
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_15jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_14jpp8
 - new version
 
