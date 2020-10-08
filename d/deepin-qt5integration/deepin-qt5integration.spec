@@ -1,7 +1,7 @@
 %global repo qt5integration
 
 Name: deepin-qt5integration
-Version: 5.1.0.4
+Version: 5.1.0.8
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -26,7 +26,9 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 %setup -n %repo-%version
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    PREFIX=%prefix
 %make_build
 
 %install
@@ -36,12 +38,15 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 %doc README.md
 %doc LICENSE
 %_qt5_plugindir/platformthemes/libqdeepin.so
-%_qt5_plugindir/styles/libdstyleplugin.so
+# %_qt5_plugindir/styles/libdstyleplugin.so
 %_qt5_plugindir/styles/libchameleon.so
 %_qt5_plugindir/iconengines/libdsvgicon.so
 %_qt5_plugindir/iconengines/libdtkbuiltin.so
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Thu Oct 08 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.8-alt1
+- New version (5.1.0.8) with rpmgs script.
+
 * Tue Aug 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.4-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
