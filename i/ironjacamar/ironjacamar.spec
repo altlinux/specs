@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ java-devel-default rpm-build-java
+BuildRequires: gcc-c++ java-devel-default
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          ironjacamar
 Version:       1.3.4
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       Java Connector Architecture 1.7 implementation
 License:       LGPLv2+
 URL:           http://www.ironjacamar.org/
@@ -29,7 +29,6 @@ BuildRequires: ant
 BuildRequires: apache-ivy
 BuildRequires: graphviz libgraphviz
 BuildRequires: ivy-local
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(jdepend:jdepend)
@@ -150,6 +149,9 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_7jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_7jpp8
 - new version
 
