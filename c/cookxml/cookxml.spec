@@ -1,15 +1,15 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             cookxml
 Version:          3.0.2
-Release:          alt3_17jpp8
+Release:          alt4_17jpp8
 Summary:          Dynamic XML data binding tool
 License:          BSD
 URL:              http://cookxml.yuanheng.org/
@@ -21,7 +21,6 @@ Source2:          %{name}-pom.xml
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    java-devel
 BuildRequires:    ant
 BuildRequires:    javapackages-local
 
@@ -76,6 +75,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt4_17jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_17jpp8
 - new version
 
