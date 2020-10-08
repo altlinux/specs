@@ -1,12 +1,12 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-java
-BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
+BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 30
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _hardened_build 1
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          zookeeper
 Version:       3.4.9
-Release:       alt5_13jpp8
+Release:       alt6_13jpp8
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           https://zookeeper.apache.org/
@@ -40,7 +40,6 @@ BuildRequires: dos2unix
 BuildRequires: doxygen
 BuildRequires: gcc-c++
 BuildRequires: graphviz libgraphviz
-BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: jpackage-utils
 BuildRequires: libtool
@@ -81,7 +80,7 @@ BuildRequires: xml-commons-apis
 BuildRequires: apache-commons-parent
 BuildRequires: jetty-server
 BuildRequires: jetty-servlet
-BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
 
 Requires:      checkstyle
 Requires:      jline1
@@ -143,6 +142,7 @@ Python bindings for %{name}.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+
 
 # Do not treat C compile-time warnings as errors
 sed -i -e's/-Werror//' src/c/Makefile.am
@@ -256,8 +256,6 @@ install -p -m 0640 conf/log4j.properties %{buildroot}%{_sysconfdir}/zookeeper
 install -p -m 0640 conf/zoo_sample.cfg %{buildroot}%{_sysconfdir}/zookeeper
 touch %{buildroot}%{_sysconfdir}/zookeeper/zoo.cfg
 touch %{buildroot}%{_sharedstatedir}/zookeeper/data/myid
-
-# touching all ghosts; hack for rpm 4.0.4
 for rpm404_ghost in %{_sysconfdir}/zookeeper/zoo.cfg %{_sharedstatedir}/zookeeper/data/myid
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
@@ -330,6 +328,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt6_13jpp8
+- fixed build with new java
+
 * Fri Jun 28 2019 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt5_13jpp8
 - zookeeper.service fix thanks to jenya@
 
