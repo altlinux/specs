@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jarbundler	
 Version:       2.2.0
-Release:       alt2_12jpp8
+Release:       alt3_12jpp8
 Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
 License:       ASL 2.0
 URL:           http://informagen.com/JarBundler/
@@ -17,7 +17,6 @@ Source0:       http://informagen.com/JarBundler/dist/%{name}.tar.gz
 Source1:       %{name}-template-pom.xml
 BuildRequires: ant
 BuildRequires: jpackage-utils
-BuildRequires: java-devel
 
 Requires:      ant
 Requires:      jpackage-utils
@@ -60,7 +59,7 @@ find -name '*.jar' -delete
 cp -p %{SOURCE1} pom.xml
 sed -i "s|@VERSION@|%{version}|" pom.xml
 
-sed -i 's|source="1.4"|source="1.5" target="1.5"|' build.xml
+sed -i 's|source="1.4"|source="1.6" target="1.6"|' build.xml
 sed -i 's|/Developer/Java/Ant/lib/ant.jar|%{_javadir}/ant.jar|' build.xml
 sed -i 's|<javadoc destdir="javadoc" classpath="${ant.jar}">|<javadoc destdir="javadoc" classpath="${ant.jar}:build/${jarbundler.jar}">|' build.xml
 
@@ -96,6 +95,9 @@ echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE.TXT
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3_12jpp8
+- fixed build with new java
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_12jpp8
 - added BR: javapackages-local for javapackages 5
 
