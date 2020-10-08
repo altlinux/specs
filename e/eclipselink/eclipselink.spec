@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 BuildRequires: rpm-build-java-osgi
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -24,7 +24,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:          eclipselink
 Version:       2.6.3
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Eclipse Persistence Services Project
 License:       EPL and BSD
 Url:           http://www.eclipse.org/eclipselink/
@@ -56,7 +56,6 @@ BuildRequires: glassfish-jaxb-codemodel
 BuildRequires: glassfish-jaxb-core
 BuildRequires: glassfish-jaxb-jxc
 BuildRequires: glassfish-servlet-api
-BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: javamail
 BuildRequires: javapackages-local
@@ -171,16 +170,21 @@ ant
 %mvn_artifact %{SOURCE9} target/%{modelgen}-%{version}.jar
 %mvn_artifact %{SOURCE10} target/%{moxy}-%{version}.jar
 %mvn_artifact sdo-pom.xml target/%{sdo}-%{version}.jar
-%mvn_install -J target/api
+%mvn_install 
+# does not build on armh
+#-J target/api
 
 %files -f .mfiles
 %doc about.html readme.html
 %doc --no-dereference license.html
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference license.html
+#%files javadoc -f .mfiles-javadoc
+#%doc --no-dereference license.html
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_8jpp8
+- fixed build with new java
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_7jpp8
 - new version
 
