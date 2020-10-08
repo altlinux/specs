@@ -1,10 +1,9 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # This is a snapshot of the BCEL trunk for FindBugs 3.0.
@@ -13,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.14.20140707svn1547656jpp8
+Release:        alt1_0.17.20140707svn1547656jpp8
 Summary:        Byte Code Engineering Library for FindBugs
 
 License:        ASL 2.0
@@ -29,7 +28,7 @@ Source1:        http://central.maven.org/maven2/com/google/code/findbugs/bcel-fi
 # See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
 BuildRequires:  javapackages-local
 
-BuildRequires:  java-devel jpackage-utils
+BuildRequires:  jpackage-utils
 Requires:       jpackage-utils
 
 BuildArch:      noarch
@@ -84,13 +83,18 @@ fi ||:
 
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt
+%doc NOTICE.txt README.txt
+%doc --no-dereference LICENSE.txt
 
 %files javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc NOTICE.txt
+%doc --no-dereference LICENSE.txt
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.17.20140707svn1547656jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.14.20140707svn1547656jpp8
 - new version
 
