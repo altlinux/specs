@@ -1,15 +1,12 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           json-lib
 Version:        2.4
-Release:        alt1_16jpp8
+Release:        alt2_16jpp8
 Summary:        JSON library for Java
 License:        ASL 2.0
 URL:            http://json-lib.sourceforge.net/
@@ -29,7 +26,6 @@ Source100:      jenkins-%{name}-%{version}.tar.xz
 Source101:      http://repo.jenkins-ci.org/releases/org/kohsuke/stapler/json-lib/%{version}-jenkins-3/json-lib-%{version}-jenkins-3.pom
 Patch100:       %{name}-%{version}-Use-Jenkins-default-values.patch
 
-BuildRequires:  java-devel
 BuildRequires:  maven-local
 BuildRequires:  maven-shared
 BuildRequires:  maven-surefire-provider-junit
@@ -152,6 +148,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_16jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_16jpp8
 - new version
 
