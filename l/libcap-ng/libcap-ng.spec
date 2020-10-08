@@ -1,5 +1,5 @@
 Name: libcap-ng
-Version: 0.7.11
+Version: 0.8
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -7,9 +7,9 @@ License: LGPLv2+
 Group: System/Libraries
 
 Url: http://people.redhat.com/sgrubb/libcap-ng
-Source: http://people.redhat.com/sgrubb/libcap-ng/%name-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: kernel-headers >= 2.6.11
+BuildRequires: kernel-headers
 BuildRequires: libattr-devel
 
 # not BR(pre) as we don't need those macros to rpm -bs
@@ -100,6 +100,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 0.8-alt1
+- 0.8
+
 * Tue Sep 15 2020 Anton Farygin <rider@altlinux.ru> 0.7.11-alt1
 - 0.7.11
 
