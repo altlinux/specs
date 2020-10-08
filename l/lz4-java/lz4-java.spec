@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          lz4-java
 Version:       1.3.0
-Release:       alt2_9jpp8
+Release:       alt2_13jpp8
 Summary:       LZ4 compression for Java
 # GPL: src/xxhash/bench.c
 # src/lz4/programs
@@ -37,8 +37,8 @@ BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: aqute-bnd
 BuildRequires: cpptasks
+BuildRequires: gcc
 BuildRequires: ivy-local
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: mvel
 BuildRequires: objectweb-asm
@@ -129,6 +129,9 @@ ant %build_opts test
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_13jpp8
+- fixed build with new java
+
 * Thu May 31 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_9jpp8
 - java update
 
