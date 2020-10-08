@@ -4,20 +4,20 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc docbook-style-xsl
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gogui
 Version:	1.4.9
-Release:	alt1_7jpp8
+Release:	alt2_7jpp8
 Summary:	Graphical user interface to programs that play the board game Go
 
 License:	GPLv3
 URL:		http://gogui.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.zip
 
-BuildRequires:	java-devel jpackage-utils
+BuildRequires:	jpackage-utils
 BuildRequires:	ant docbook-style-xsl desktop-file-utils
 Requires:	java jpackage-utils
 BuildArch:	noarch
@@ -163,6 +163,9 @@ EOF
 %doc COPYING.html
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.9-alt2_7jpp8
+- fixed build with new java
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.9-alt1_7jpp8
 - new jpp release
 
