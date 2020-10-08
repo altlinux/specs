@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_18jpp8
+Release:       alt1_19jpp8
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
 # licensed under CC-BY-SA: demos/svg/xhtml/dat/*.svg
 License:       LGPLv2+ and CC-BY-SA
@@ -23,7 +23,6 @@ Patch0:        %{name}-R%{version}-build.patch
 # remove org.jvnet.wagon-svn wagon-svn 1.8
 Patch1:        %{name}-R%{version}-pom.patch
 
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 
 BuildRequires: ant
@@ -152,6 +151,9 @@ install -pm 644 build/svg.jar %{buildroot}%{_javadir}/%{name}/
 %doc --no-dereference LICENSE*
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 8-alt1_19jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 8-alt1_18jpp8
 - new version
 
