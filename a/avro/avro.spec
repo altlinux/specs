@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat mvn(org.apache.maven.shared:file-manageme
 %define _localstatedir %{_var}
 Name:             avro
 Version:          1.7.6
-Release:          alt3_5jpp8
+Release:          alt4_5jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
@@ -30,7 +30,7 @@ BuildRequires:    mvn(org.apache.hadoop:hadoop-client)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:    mvn(org.apache.thrift:libthrift)
+#BuildRequires:    mvn(org.apache.thrift:libthrift)
 BuildRequires:    mvn(org.codehaus.jackson:jackson-core-asl)
 BuildRequires:    mvn(org.codehaus.jackson:jackson-mapper-asl)
 BuildRequires:    mvn(org.codehaus.mojo:javacc-maven-plugin)
@@ -141,6 +141,7 @@ This package contains the API documentation for %{name}.
 %pom_disable_module archetypes lang/java
 
 %pom_disable_module tools lang/java
+%pom_disable_module thrift lang/java
 
 %pom_xpath_set pom:properties/pom:hadoop2.version 2.0.5-alpha lang/java
 %pom_xpath_set pom:properties/pom:jetty.version 9.0.3.v20130506 lang/java
@@ -211,8 +212,10 @@ done
 %files protobuf -f .mfiles-avro-protobuf
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
+%if 0
 %files thrift -f .mfiles-avro-thrift
 %doc --no-dereference LICENSE.txt NOTICE.txt
+%endif
 
 %files toplevel -f .mfiles-avro-toplevel
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -224,6 +227,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt4_5jpp8
+- build w/o thrift
+
 * Sun Jun 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt3_5jpp8
 - fixed build
 
