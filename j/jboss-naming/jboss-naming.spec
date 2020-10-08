@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-naming
 Version:          5.0.6
-Release:          alt2_0.17.CR1jpp8
+Release:          alt2_0.18.CR1jpp8
 Summary:          JBoss Naming
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -27,7 +24,6 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 
 BuildArch:        noarch
 
-BuildRequires:    java-devel
 BuildRequires:    jboss-common-core
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-parent
@@ -69,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc JBossORG-EULA.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.18.CR1jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.17.CR1jpp8
 - new version
 
