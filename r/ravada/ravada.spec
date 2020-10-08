@@ -2,7 +2,7 @@
 
 Name: ravada
 Summary: Remote Virtual Desktops Manager
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 License: AGPL-3.0
 Group: Development/Perl
@@ -19,6 +19,7 @@ BuildRequires: ImageMagick-tools
 BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
 
 BuildRequires: perl-Authen-Passphrase
+BuildRequires: perl-DateTime-Format-DateParse
 BuildRequires: perl-DateTime
 BuildRequires: perl-DBD-SQLite
 BuildRequires: perl-DBIx-Connector
@@ -39,8 +40,8 @@ BuildRequires: perl-Moose
 BuildRequires: perl-MooseX-Types
 BuildRequires: perl-MooseX-Types-NetAddr-IP
 BuildRequires: perl-Net-DNS
+BuildRequires: perl-Net-OpenSSH
 BuildRequires: perl-Net-Ping
-BuildRequires: perl-Net-SSH2
 BuildRequires: perl-PBKDF2-Tiny
 BuildRequires: perl-Proc-PID-File
 BuildRequires: perl-Sys-Virt
@@ -57,7 +58,7 @@ BuildRequires: perl-Test-Perl-Critic
 
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRavada'; export TZ=UTC
 %set_perl_req_method relaxed
-%global __find_requires export TZ=UTC; %__find_requires
+%global __find_requires export TZ=UTC; /usr/lib/rpm/find-requires
 
 %description
 Ravada is a software that allows the user to connect to a remote virtual desktop
@@ -74,7 +75,7 @@ perl Makefile.PL INSTALLDIRS=vendor
 
 %install
 export TZ=UTC
-%makeinstall_std
+%perl_vendor_install
 install -D -m755 script/rvd_back %buildroot%_sbindir/rvd_back
 install -D -m755 script/rvd_front %buildroot%_sbindir/rvd_front
 mkdir -p %buildroot%_datadir/%name
@@ -117,6 +118,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Oct 08 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Aug 05 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.8.3-alt1
 - initial build for ALT Linux Sisyphus
 
