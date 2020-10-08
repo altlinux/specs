@@ -1,15 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_15jpp8
+Release:          alt2_16jpp8
 Summary:          JSR-67 implementation
 License:          CDDL and GPLv2 with exceptions
 URL:              http://java.net/projects/saaj
@@ -22,7 +21,6 @@ Source0:          glassfish-saaj-%{version}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    java-devel
 BuildRequires:    maven-local
 BuildRequires:    mvn(net.java:jvnet-parent:pom:)
 BuildRequires:    mvn(javax.xml.soap:saaj-api)
@@ -62,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.html
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_16jpp8
+- fixed build with new java
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_15jpp8
 - new version
 
