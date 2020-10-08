@@ -1,16 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java swig
+BuildRequires: gcc-c++ swig
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global githash 3fd330c443272699cd8ba5d7da7e56c27a567ec1
 Name:          juniversalchardet
 Version:       1.0.3
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       A Java port of Mozilla's universalchardet
 # ALL files are under MPL (v1.1) GPL license
 # build.xml and c/* under MPL 1.1/GPL 2.0/LGPL 2.1 license
@@ -23,7 +23,6 @@ Source1:       http://repo1.maven.org/maven2/com/googlecode/%{name}/%{name}/%{ve
 Patch0:        %{name}-1.0.3-build.patch
 
 BuildRequires: ant
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 
 BuildArch:     noarch
@@ -73,6 +72,9 @@ install -pm 644 dist/%{name}-example-%{version}.jar \
 %doc --no-dereference MPL-1.1.txt
 
 %changelog
+* Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_13jpp8
+- fixed build with new java
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_12jpp8
 - new version
 
