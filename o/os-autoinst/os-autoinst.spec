@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.5.1527308405.8b586d5
-Release: alt15
+Release: alt16
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -111,6 +111,8 @@ rm %buildroot%_libexecdir/os-autoinst/tools/tidy
 rm -r %buildroot%_libexecdir/os-autoinst/tools/lib/perlcritic
 rm %buildroot%_libexecdir/os-autoinst/tools/check_coverage
 rm %buildroot%_libexecdir/os-autoinst/crop.py*
+# remove internal tools
+rm -r %{buildroot}/usr/lib/os-autoinst/tools/
 
 %check
 sed -i -e '/tidy --check/d' Makefile
@@ -130,6 +132,9 @@ sed -i -e '/tidy --check/d' Makefile
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Thu Oct 08 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt16
+- update to current version
+
 * Thu Aug 06 2020 Alexandr Antonov <aas@altlinux.org> 4.5.1527308405.8b586d5-alt15
 - update to current version
 
