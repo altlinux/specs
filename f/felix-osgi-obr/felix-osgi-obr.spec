@@ -1,17 +1,14 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.osgi.service.obr
 
 Name:           felix-osgi-obr
 Version:        1.0.2
-Release:        alt2_22jpp8
+Release:        alt2_24jpp8
 Summary:        Felix OSGi OBR Service API
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
@@ -22,9 +19,8 @@ Source0:        http://www.apache.org/dist/felix/org.osgi.service.obr-%{version}
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:felix:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.felix:org.osgi.core)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
-
 
 %description
 OSGi OBR Service API.
@@ -39,6 +35,9 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
+
+# Use latest OSGi implementation
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
 
 %mvn_file ":{*}" felix/@1
 
@@ -55,6 +54,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_24jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_22jpp8
 - new version
 
