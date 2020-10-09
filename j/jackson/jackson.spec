@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    jackson
 Version: 1.9.11
-Release: alt1_15jpp8
+Release: alt1_17jpp8
 Summary: Jackson Java JSON-processor
 License: ASL 2.0 or LGPLv2
 URL:     http://jackson.codehaus.org
@@ -37,9 +34,9 @@ BuildRequires: ant >= 1.8.2
 BuildRequires: joda-time >= 1.6.2
 BuildRequires: stax2-api >= 3.1.1
 BuildRequires: jsr-311 >= 1.1.1
+BuildRequires: junit
 BuildRequires: objectweb-asm3 >= 3.3
 BuildRequires: cglib >= 2.2
-BuildRequires: groovy18 >= 1.8.5
 Source44: import.info
 
 %description
@@ -71,6 +68,7 @@ find . -type f -name '*.jar' -exec rm {} \;
 rm src/test/org/codehaus/jackson/map/interop/TestHibernate.java
 rm src/perf/perf/TestJsonPerf.java
 rm src/test/org/codehaus/jackson/map/interop/TestGoogleCollections.java
+rm src/test/org/codehaus/jackson/map/interop/TestGroovyBeans.java
 
 # Make symbolic links to the jar files expected by the ant build
 # scripts:
@@ -80,7 +78,6 @@ ln -s $(build-classpath jsr-311) lib/jaxrs/jsr-311.jar
 ln -s $(build-classpath objectweb-asm3/asm) lib/ext/asm/asm.jar
 ln -s $(build-classpath objectweb-asm3/asm) lib/repackaged/jackson-asm.jar
 ln -s $(build-classpath cglib/cglib) lib/ext/cglib/cglib-nodep.jar
-ln -s $(build-classpath groovy18-1.8) lib/ext/groovy/groovy.jar
 ln -s $(build-classpath junit) lib/junit/junit.jar
 
 sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," \
@@ -120,6 +117,9 @@ done
 %doc release-notes
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_17jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_15jpp8
 - new version
 
