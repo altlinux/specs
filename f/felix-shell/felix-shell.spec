@@ -1,16 +1,13 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.apache.felix.shell
 
 Name:           felix-shell
 Version:        1.4.3
-Release:        alt1_13jpp8
+Release:        alt1_15jpp8
 Summary:        Apache Felix Shell Service
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -18,14 +15,11 @@ Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source
 
 BuildArch: noarch
 
-BuildRequires: java-devel >= 1.6.0
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: felix-osgi-core
-BuildRequires: felix-osgi-compendium
-BuildRequires: maven-plugin-bundle
-BuildRequires: felix-parent
-BuildRequires: mockito
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
@@ -44,6 +38,10 @@ This package contains API documentation for %{name}.
 
 %pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
 
+# Use latest OSGi implementation
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
+%pom_change_dep :org.osgi.compendium org.osgi:osgi.cmpn
+
 %mvn_file :%{bundle} "felix/%{bundle}"
 
 %build
@@ -53,12 +51,15 @@ This package contains API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_15jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_13jpp8
 - new version
 
