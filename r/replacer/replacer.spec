@@ -5,27 +5,21 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_9jpp8
+Release:       alt1_11jpp8
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
 # http://code.google.com/p/maven-replacer-plugin/
 Source0:       https://github.com/beiliubei/maven-replacer-plugin/archive/%{version}.tar.gz
 
-Patch0: 0001-Fix-build-with-Mockito-2.x.patch
-
-BuildRequires: maven-local
-BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(commons-lang:commons-lang)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.hamcrest:hamcrest-all)
-BuildRequires: mvn(org.mockito:mockito-all)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-BuildRequires: mvn(xerces:xercesImpl)
-BuildRequires: mvn(xml-apis:xml-apis)
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(xerces:xercesImpl)
 
 BuildArch:     noarch
 Source44: import.info
@@ -46,21 +40,15 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n maven-replacer-plugin-%{version}
-%patch0 -p1
 
 %pom_remove_plugin :dashboard-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
-# NoClassDefFoundError: org/w3c/dom/ElementTraversal
-%pom_add_dep xml-apis:xml-apis::test
-
-sed -i.hamcrest '/startsWith/d' src/test/java/com/google/code/maven_replacer_plugin/file/FileUtilsTest.java
 
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} com.google.code.maven-replacer-plugin:maven-replacer-plugin
 
 %build
-
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
@@ -73,6 +61,9 @@ sed -i.hamcrest '/startsWith/d' src/test/java/com/google/code/maven_replacer_plu
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_11jpp8
+- update
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_9jpp8
 - build with new mockito
 
