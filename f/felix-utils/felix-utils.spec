@@ -1,16 +1,13 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.apache.felix.utils
 
 Name:           felix-utils
-Version:        1.10.4
-Release:        alt1_4jpp8
+Version:        1.11.2
+Release:        alt1_1jpp8
 Summary:        Utility classes for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -18,10 +15,16 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
 
+# The module org.osgi.cmpn requires implementing methods which were not
+# implemented in previous versions where org.osgi.compendium was used
+Patch0:         0000-Port-to-osgi-cmpn.patch
+
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
@@ -37,6 +40,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
+%patch0 -p1
 
 %pom_remove_plugin :apache-rat-plugin
 
@@ -56,6 +60,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.11.2-alt1_1jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_4jpp8
 - new version
 
