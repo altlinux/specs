@@ -5,11 +5,10 @@
 
 Name: fuse-encfs
 Summary: Encrypted pass-thru filesystem for Linux
-Version: 1.9.4
-Release: alt3
+Version: 1.9.5
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name.tar
 Url: https://vgough.github.io/encfs/
@@ -75,6 +74,9 @@ cd build
 %endif
 
 %changelog
+* Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 1.9.5-alt1
+- 1.9.5
+
 * Mon Dec 03 2018 Anton Farygin <rider@altlinux.ru> 1.9.4-alt3
 - rebuilt for libtinyxml2-7.0.1
 

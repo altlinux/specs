@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.90
+Version: 2.2
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -15,13 +15,10 @@ Source: %name-%version.tar
 
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
-Patch3: cppcheck-1.87-cfgdir.patch
 Patch4: cppcheck-1.72-test_32.patch
-Patch5: 1939.patch
-Patch6: 1943.patch
-Patch7: cppcheck-1.88-tinyxml.patch
-Patch8: cppcheck-1.90-translations.patch
-Patch9: cppcheck-1.88-alt-pcre.patch
+Patch7: cppcheck-2.2-tinyxml.patch
+Patch8: cppcheck-2.2-translations.patch
+
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-charts-devel
@@ -50,20 +47,13 @@ Requires: %name = %EVR
 %setup
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
 
 %ifnarch x86_64
 %patch4 -p1
 %endif
 
-#patch5 -p1
-#patch6 -p1
 %patch7 -p1
-%patch8 -p2
-%patch9 -p2
-
-# fix /usr/share/cppcheck path
-%__subst 's|project(Cppcheck)|project(%name)|' CMakeLists.txt
+%patch8 -p1
 
 %__subst 's|/usr/bin/env python|%__python3|' htmlreport/cppcheck-htmlreport
 
@@ -80,10 +70,13 @@ rm -r externals/tinyxml
 %add_optflags -I%_includedir/pcre
 
 %cmake \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DUSE_MATCHCOMPILER:BOOL=ON \
 	-DHAVE_RULES:BOOL=ON \
 	-DBUILD_GUI:BOOL=ON \
-	-DWITH_QCHART:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DBUILD_TESTS:BOOL=ON \
+	-DFILESDIR=%{_datadir}/Cppcheck \
 	%nil
 
 %cmake_build
@@ -112,20 +105,23 @@ install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-ht
 %_bindir/%name
 %_bindir/%name-htmlreport
 %_man1dir/%name.1*
-%dir %_datadir/%name/
-%_datadir/%name/addons/
-%_datadir/%name/cfg/
-%_datadir/%name/platforms/
-%exclude %_datadir/%name/lang
+%dir %_datadir/Cppcheck/
+%_datadir/Cppcheck/addons/
+%_datadir/Cppcheck/cfg/
+%_datadir/Cppcheck/platforms/
 
 %files gui
 %doc gui/help/manual.html
 %_bindir/%name-gui
-%_datadir/%name/lang
+%_datadir/Cppcheck/lang
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 2.2-alt1
+- 2.2
+- cleanup spec
+
 * Sat Jan 25 2020 Vitaly Lipatov <lav@altlinux.ru> 1.90-alt1
 - NMU: new version 1.90 (with rpmrb script)
 - cleanup build, switch to python3
