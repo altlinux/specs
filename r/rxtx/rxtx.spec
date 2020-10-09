@@ -1,10 +1,10 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.22.20100211jpp8
+Release:	alt3_0.24.20100211jpp8
 License:	LGPLv2+
 URL:		http://rxtx.qbang.org/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -34,6 +34,7 @@ Patch4:		rxtx-2.2-lock.patch
 Patch5:		rxtx-2.2-Add-Arduino-driver-ttyACM-rxtxcomm-as-device.patch
 Patch6:		rxtx-2.2-java-version-fix.patch
 Patch7:		rxtx-2.2-convert-strcpy-to-strncpy.patch
+Patch8:		rxtx-2.2-minor.patch
 
 BuildRequires:	libtool automake
 BuildRequires:	ant
@@ -58,6 +59,7 @@ sed -e 's|@JNIPATH@|%{jni}|' %{PATCH1} | patch -s -b --suffix .p1 -p1
 %patch6 -p1
 %patch7 -p1
 %endif
+%patch8 -p1
 # remove prebuild binaries
 find . -name '*.jar' -exec rm {} \;
 find . -name '*.hqx' -exec rm {} \;
@@ -93,6 +95,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.24.20100211jpp8
+- update
+
 * Sat Jun 01 2019 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.22.20100211jpp8
 - fixed arch build
 
