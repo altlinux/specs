@@ -1,9 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,11 +12,11 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  groovy
+%bcond_with     groovy
 
 Name:           maven-script-interpreter
 Version:        1.2
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Script Interpreter
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-script-interpreter/
@@ -78,6 +78,9 @@ sed -i /GroovyScriptInterpreter/d src/main/java/org/apache/maven/shared/scriptin
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp8
 - new version
 
