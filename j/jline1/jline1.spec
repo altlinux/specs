@@ -1,10 +1,10 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt3_18jpp8
+Release:        alt3_20jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -47,26 +47,18 @@ Source0:        http://download.sourceforge.net/sourceforge/jline/jline-%{versio
 Source1:        CatalogManager.properties
 Patch1:         jline-0.9.94-crosslink.patch
 
-Requires:      bash sh
-# for /bin/stty
-Requires:      coreutils
+BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+Requires:       bash sh
+# for /bin/stty
+Requires:       coreutils
+Source44: import.info
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1022939
-
-BuildArch:     noarch
-Source44: import.info
 
 %description
 JLine is a java library for reading and editing user input in console
@@ -127,6 +119,9 @@ mv tmp/* .
 %doc LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_20jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18jpp8
 - new version
 
