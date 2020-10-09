@@ -5,15 +5,15 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 Obsoletes: vuse < 4.2.0.3
 Conflicts: vuse < 4.2.0.3
 Requires: java
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global		_newname Vuze
 
 Name:		azureus
 Version:	5.7.6.0
-Release:	alt1_6jpp8
+Release:	alt1_9jpp8
 Summary:	A BitTorrent Client
 
 #Exception for using Eclipse SWT
@@ -63,10 +63,7 @@ Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33
 Requires:	 java >= 1.6.0
 Requires:	json_simple
-BuildRequires:	 java-devel >= 1.6.0
 BuildRequires:	 desktop-file-utils
-Requires(post):	 desktop-file-utils
-Requires(postun):	desktop-file-utils
 
 Provides:	vuze = %{version}-%{release}
 
@@ -168,6 +165,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_9jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 5.7.6.0-alt1_6jpp8
 - new version
 
