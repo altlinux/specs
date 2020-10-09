@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global    _version 2.0.17
@@ -13,12 +13,12 @@ BuildRequires: jpackage-generic-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_27jpp8
+Release:   alt1_29jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
 # see: http://sourceforge.net/forum/forum.php?thread_id=3277926&forum_id=523519
-License:   EPL
+License:   EPL-1.0
 URL:       http://lpg.sourceforge.net/
 
 Source0:   http://downloads.sourceforge.net/lpg/lpg-java-runtime-src-%{version}.zip
@@ -145,6 +145,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %doc lpg-java-runtime/Eclipse*.htm
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_29jpp8
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_27jpp8
 - new version
 
