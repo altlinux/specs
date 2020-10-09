@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 6.2.4
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -116,6 +116,14 @@ Group: System/Servers
 %description -n pve-ha-manager
 HA Manager PVE
 
+%package -n pve-ha-simulator
+Summary: PVE HA Simulator
+Version: 3.0.9
+Group: System/Servers
+
+%description -n pve-ha-simulator
+PVE HA Simulator
+
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
 Version: 6.2.2
@@ -145,6 +153,10 @@ Requires: fonts-font-awesome
 This is used to implement the PVE REST API
 
 %add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
+%add_findreq_skiplist %_bindir/pve-ha-simulator
+%add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/*.pm
+%add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/Sim/*.pm
+%add_findreq_skiplist %_datadir/pve-ha-simulator/PVE/HA/Sim/Resources/*.pm
 
 %prep
 %setup -q -c -n pve -a1 -a2 -a3 -a4 -a10 -a11 -a12 -a13 -a14 -a15 -a18
@@ -205,7 +217,7 @@ install -m0644 %SOURCE5 pve-i18n/ru.po
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src pve-widget-toolkit pve-mini-journalreader/src; do
     pushd $d
-    %make PACKAGE="pve-manager" VERSION="6.0-7" PVERELEASE="6.0" REPOID="28984024"
+    %make PACKAGE="pve-manager" VERSION="6.2-4" PVERELEASE="6.2" REPOID="9824574a"
     popd
 done
 
@@ -525,6 +537,10 @@ __EOF__
 %_man8dir/pve-ha-crm.8*
 %_man8dir/pve-ha-lrm.8*
 
+%files -n pve-ha-simulator
+%_bindir/pve-ha-simulator
+%_datadir/pve-ha-simulator
+
 %files -n pve-qemu-server
 %_datadir/bash-completion/completions/qm
 %_datadir/bash-completion/completions/qmrestore
@@ -587,6 +603,9 @@ __EOF__
 %perl_vendor_privlib/PVE/APIServer
 
 %changelog
+* Fri Oct 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.4-alt2
+- fixed booting VM on Kunpeng-920
+
 * Mon Aug 24 2020 Valery Inozemtsev <shrek@altlinux.ru> 6.2.4-alt1
 - pve-manager 6.2-4
 - pve-container 3.1-5
