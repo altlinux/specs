@@ -1,16 +1,25 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
 BuildRequires: xpp3-minimal
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Allow building with minimal dependency set
+%bcond_with jp_minimal
+
 Name:           maven-war-plugin
 Version:        3.2.2
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Maven WAR Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-war-plugin/
@@ -18,9 +27,11 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
+# Patch out reliance on xstream for minimal build
+Patch0: 0001-Patch-out-reliance-on-xstream.patch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
@@ -32,6 +43,9 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-mapping)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+%if %{without jp_minimal}
+BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
+%endif
 Source44: import.info
 
 %description
@@ -49,6 +63,12 @@ API documentation for %{name}.
 %prep
 %setup -q 
 
+%if %{with jp_minimal}
+# Patch out reliance on xstream for minimal build
+%patch0 -p1
+%pom_remove_dep com.thoughtworks.xstream:xstream
+%endif
+
 %pom_remove_plugin :maven-enforcer-plugin
 
 %build
@@ -64,6 +84,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_5jpp8
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_3jpp8
 - new version
 
