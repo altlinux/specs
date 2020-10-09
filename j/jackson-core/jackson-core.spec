@@ -4,7 +4,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-core
-Version:       2.9.8
+Version:       2.9.9
 Release:       alt1_1jpp8
 Summary:       Core part of Jackson
 License:       ASL 2.0
@@ -15,6 +15,11 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+%ifarch %{arm}
+# Speed up builds on 32bit arm in case we get such a builder
+BuildRequires: java-1.8.0-openjdk-aarch32-devel
+%endif
 
 BuildArch:      noarch
 Source44: import.info
@@ -57,6 +62,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.9-alt1_1jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
 - new version
 
