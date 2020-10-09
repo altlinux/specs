@@ -1,25 +1,41 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Conditionally build with a minimal dependency set
+%bcond_with jp_minimal
+
 Name:           glassfish-jaxb
 Version:        2.2.11
-Release:        alt2_11jpp8
+Release:        alt2_15jpp8
 Summary:        JAXB Reference Implementation
 
 License:        CDDL-1.1 and GPLv2 with exceptions
 URL:            http://jaxb.java.net
 
 Source0:        https://jaxb.java.net/%{version}/jaxb-ri-%{version}.src.zip
-Patch0:         txw2-args4j.patch
+Patch0:         0001-Avoid-unnecessary-dep-on-istack-commons.patch
+Patch1:         0002-Port-to-latest-version-of-args4j.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%if %{without jp_minimal}
 BuildRequires:  mvn(args4j:args4j)
 BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
 BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
@@ -27,34 +43,31 @@ BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
 BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
 BuildRequires:  mvn(com.sun.xsom:xsom)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(net.java.dev.msv:msv-core)
-BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+%endif
 
-Requires:       glassfish-jaxb1-impl = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-runtime = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-txw2 = %{?epoch:%epoch:}%{version}-%{release}
+%if %{without jp_minimal}
 Requires:       %{name}-bom = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-bom-ext = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-codemodel = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-codemodel-annotation-compiler = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-codemodel-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-external-parent = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-jxc = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-parent = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-rngom = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-runtime = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-runtime-parent = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-txw2 = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-txwc2 = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-txw-parent = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       %{name}-xjc = %{?epoch:%epoch:}%{version}-%{release}
+%endif
+
+Obsoletes:      glassfish-jaxb1-impl                  < 2.2.11-12
 
 BuildArch:      noarch
 Source44: import.info
@@ -62,6 +75,29 @@ Source44: import.info
 %description
 GlassFish JAXB Reference Implementation.
 
+%package core
+Group: Development/Java
+Summary:        JAXB Core
+
+%description core
+JAXB Core module. Contains sources required by XJC, JXC and Runtime
+modules.
+
+%package runtime
+Group: Development/Java
+Summary:        JAXB Runtime
+
+%description runtime
+JAXB (JSR 222) Reference Implementation
+
+%package txw2
+Group: Development/Java
+Summary:        TXW2 Runtime
+
+%description txw2
+TXW is a library that allows you to write XML documents.
+
+%if %{without jp_minimal}
 %package codemodel
 Group: Development/Java
 Summary:        Codemodel Core
@@ -77,13 +113,6 @@ Summary:        Codemodel Annotation Compiler
 %description codemodel-annotation-compiler
 The annotation compiler ant task for the CodeModel java source code
 generation library.
-
-%package -n glassfish-jaxb1-impl
-Group: Development/Java
-Summary:        JAXB1 Runtime
-
-%description -n glassfish-jaxb1-impl
-Runtime classes for JAXB1 runtime implementation.
 
 %package bom
 Group: Development/Java
@@ -106,14 +135,6 @@ Summary:        Codemodel parent POM
 %description codemodel-parent
 This package contains codemodel parent POM.
 
-%package core
-Group: Development/Java
-Summary:        JAXB Core
-
-%description core
-JAXB Core module. Contains sources required by XJC, JXC and Runtime
-modules.
-
 %package external-parent
 Group: Development/Java
 Summary:        JAXB External parent POM
@@ -134,13 +155,6 @@ Summary:        JAXB parent POM
 
 %description parent
 This package contains parent POM.
-
-%package runtime
-Group: Development/Java
-Summary:        JAXB Runtime
-
-%description runtime
-JAXB (JSR 222) Reference Implementation
 
 %package runtime-parent
 Group: Development/Java
@@ -172,13 +186,6 @@ Summary:        RELAX NG Object Model/Parser
 %description rngom
 This package contains RELAX NG Object Model/Parser.
 
-%package txw2
-Group: Development/Java
-Summary:        TXW2 Runtime
-
-%description txw2
-TXW is a library that allows you to write XML documents.
-
 %package txwc2
 Group: Development/Java
 Summary:        TXW2 Compiler
@@ -186,6 +193,7 @@ Summary:        TXW2 Compiler
 %description txwc2
 JAXB schema generator. The tool to generate XML schema based on java
 classes.
+%endif
 
 %package javadoc
 Group: Development/Java
@@ -198,24 +206,72 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -c
 
+%if %{with jp_minimal}
 %patch0 -p1
+%endif
+%patch1 -p1
 
-%pom_disable_module bundles
+# Disable unneeded OSGi bundles
+%pom_disable_module xjc bundles
+%pom_disable_module jxc bundles
+%pom_disable_module ri bundles
+%pom_disable_module osgi bundles
+%pom_disable_module core bundles
 
+# Fix jar plug-in usage for OSGi bundles
+%pom_xpath_replace "pom:useDefaultManifestFile" "
+<archive>
+  <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+</archive>" bundles/core bundles/runtime
+
+# Make javax.activation an optional dep
+%pom_xpath_inject "pom:configuration/pom:instructions" "
+<Import-Package>javax.activation;resolution:=optional,*</Import-Package>" bundles/runtime
+
+# Disable ancient jaxb1 runtime
+%pom_disable_module jaxb1 runtime
+
+# Fix hard-coded tools location
 %pom_remove_dep com.sun:tools
 %pom_add_dep_mgmt com.sun:tools
 %pom_remove_dep com.sun:tools jxc
 %pom_add_dep com.sun:tools jxc
 
-%pom_remove_dep com.sun.xml.bind:jaxb-release-documentation bundles/ri
-%pom_remove_dep com.sun.xml.bind:jaxb-samples bundles/ri
-
-%pom_remove_plugin :gfnexus-maven-plugin
-%pom_remove_plugin :maven-site-plugin
+# Plug-ins not useful for RPM builds
 %pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :gfnexus-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-source-plugin jxc
+%pom_remove_plugin :maven-source-plugin xjc
 
-%mvn_alias org.glassfish.jaxb:jaxb-runtime "com.sun.xml.bind:jaxb-impl"
+%if %{with jp_minimal}
+# For minimal build disable all modules with extra deps
+%pom_disable_module codemodel
+%pom_disable_module external
+%pom_disable_module jxc
+%pom_disable_module compiler txw
+%pom_disable_module xjc
+# For minimal build of impl module, don't compile in support for extra deps
+%pom_remove_dep org.jvnet.staxex:stax-ex runtime/impl
+%pom_remove_dep com.sun.xml.fastinfoset:FastInfoset runtime/impl
+rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/unmarshaller/{FastInfoset,StAXEx}Connector.java
+rm runtime/impl/src/main/java/com/sun/xml/bind/v2/runtime/output/{FastInfoset,StAXEx}StreamWriterOutput.java
+%endif
+
 %mvn_alias org.glassfish.jaxb:jaxb-xjc "com.sun.xml.bind:jaxb-xjc"
+
+# Package OSGi version of runtime with the non-OSGi version
+%mvn_package com.sun.xml.bind:jaxb-impl jaxb-runtime
+
+# Don't install bundles parent pom
+%mvn_package com.sun.xml.bind.mvn:jaxb-bundles __noinstall
+
+%if %{with jp_minimal}
+# Don't install aggregator poms or boms for minimal build
+%mvn_package com.sun.xml.bind.mvn: __noinstall
+%mvn_package :jaxb-bom* __noinstall
+%endif
 
 %build
 %mvn_build -f -s -- -Ddev -DbuildNumber=unknown
@@ -224,65 +280,58 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
+%files core -f .mfiles-jaxb-core
+%doc --no-dereference License.txt licenceheader.txt License.html
+
+%files runtime -f .mfiles-jaxb-runtime
+%doc --no-dereference License.txt licenceheader.txt License.html
+
+%files txw2 -f .mfiles-txw2
+%doc --no-dereference License.txt licenceheader.txt License.html
+
+%if %{without jp_minimal}
 %files codemodel -f .mfiles-codemodel
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
 %files codemodel-annotation-compiler -f .mfiles-codemodel-annotation-compiler
-%dir %{_javadir}/%{name}
-
-%files -n glassfish-jaxb1-impl -f .mfiles-jaxb1-impl
-%dir %{_javadir}/%{name}
 
 %files bom -f .mfiles-jaxb-bom
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
 %files bom-ext -f .mfiles-jaxb-bom-ext
 
 %files codemodel-parent -f .mfiles-jaxb-codemodel-parent
 
-%files core -f .mfiles-jaxb-core
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
-
 %files external-parent -f .mfiles-jaxb-external-parent
 
 %files jxc -f .mfiles-jaxb-jxc
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
 %files parent -f .mfiles-jaxb-parent
-
-%files runtime -f .mfiles-jaxb-runtime
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
 
 %files runtime-parent -f .mfiles-jaxb-runtime-parent
 
 %files txw-parent -f .mfiles-jaxb-txw-parent
 
 %files xjc -f .mfiles-jaxb-xjc
-%dir %{_javadir}/%{name}
 
 %files rngom -f .mfiles-rngom
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
-
-%files txw2 -f .mfiles-txw2
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
 %files txwc2 -f .mfiles-txwc2
-%dir %{_javadir}/%{name}
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
+%endif
 
 %files javadoc -f .mfiles-javadoc
-%doc License.txt licenceheader.txt License.html
+%doc --no-dereference License.txt licenceheader.txt License.html
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_15jpp8
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2.11-alt2_11jpp8
 - fc update & java 8 build
 
