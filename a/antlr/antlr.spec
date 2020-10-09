@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without doxygen
-%bcond_without python
+%bcond_with python
 
 %global debug_package %{nil}
 # since we have only a static library
@@ -22,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_57jpp8
+Release:       alt12_59jpp8
 Epoch:         0
 License:       ANTLR-PD
 URL:           http://www.antlr2.org/
@@ -45,7 +44,6 @@ BuildRequires: mono-winforms
 %endif
 BuildRequires: gcc-c++
 BuildRequires: ant
-BuildRequires: java-devel >= 1.7.0
 BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 %if %{with doxygen}
@@ -236,6 +234,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %endif
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_59jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_57jpp8
 - new version
 
