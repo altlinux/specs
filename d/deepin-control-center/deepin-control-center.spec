@@ -2,7 +2,7 @@
 %global repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.3.0.18
+Version: 5.3.0.44
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -32,7 +32,7 @@ Group: Development/Other
 %setup -n %repo-%version
 
 %__subst 's|lrelease|lrelease-qt5|' translate_generation.sh
-%__subst '/%repo/s|\.\./lib|%_libdir|' src/frame/pluginscontroller.cpp
+# %__subst '/%repo/s|\.\./lib|%_libdir|' src/frame/pluginscontroller.cpp
 # Qt next version fixes
 %__subst '/#include <QPainter>/a #include <QPainterPath>' src/frame/widgets/basiclistdelegate.cpp src/frame/window/modules/update/updatehistorybutton.cpp \
                                                           src/frame/window/modules/commoninfo/commonbackgrounditem.cpp src/frame/modules/accounts/useroptionitem.cpp \
@@ -93,5 +93,8 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_libdir/libdccwidgets.so
 
 %changelog
+* Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.44-alt1
+- New version (5.3.0.44) with rpmgs script.
+
 * Mon Aug 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.18-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).

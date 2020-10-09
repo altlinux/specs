@@ -1,5 +1,5 @@
 Name: deepin-terminal
-Version: 5.2.20
+Version: 5.2.35
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -10,7 +10,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake qt5-base-devel dtk5-widget-devel dtk5-gui-devel dtk5-core-devel glib2-devel libat-spi2-core-devel deepin-qt-dbus-factory-devel qt5-tools-devel
+BuildRequires: gcc-c++ cmake qt5-base-devel dtk5-widget-devel dtk5-gui-devel dtk5-core-devel glib2-devel libat-spi2-core-devel deepin-qt-dbus-factory-devel qt5-tools-devel libsecret-devel
 # right-click menu style
 Requires: deepin-menu
 # run command by create_from_commandline
@@ -72,14 +72,12 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 
 %install
 %ninja_install -C BUILD
-
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md
 %doc LICENSE
 %_bindir/%name
-# maybe someone knows where to package this
 %exclude /usr/src/.config/deepin/%name/install_flag
 
 %files data
@@ -101,5 +99,8 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' 3rdparty/terminalwidget/exa
 %_includedir/terminalwidget5/
 
 %changelog
+* Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.35-alt1
+- New version (5.2.35) with rpmgs script.
+
 * Mon Aug 17 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.20-alt1
 - Initial build for ALT Sisyphus (thanks archlinux for this spec).

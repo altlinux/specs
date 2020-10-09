@@ -1,5 +1,5 @@
 Name: deepin-system-monitor
-Version: 5.6.12
+Version: 5.8.0.1
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -11,7 +11,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Source1: %name-appdata.xml
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils libappstream-glib
-BuildRequires: gcc-c++ cmake dtk5-widget-devel dtk5-wm-devel libprocps-devel libxcb-devel libxcbutil-devel libX11-devel libXext-devel libXtst-devel qt5-base-devel qt5-x11extras-devel qt5-linguist libpcap-devel libcap-devel libncurses-devel qt5-tools-devel libicu-devel deepin-gettext-tools
+BuildRequires: gcc-c++ cmake dtk5-widget-devel dtk5-wm-devel libprocps-devel libxcb-devel libxcbutil-devel libX11-devel libXext-devel libXtst-devel qt5-base-devel qt5-x11extras-devel qt5-linguist libpcap-devel libcap-devel libncurses-devel qt5-tools-devel libicu-devel deepin-gettext-tools libxcbutil-icccm-devel
 Requires: icon-theme-hicolor
 #Recommends:     deepin-manual
 
@@ -59,5 +59,8 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/*.appdata.xml
 %_datadir/%name/
 
 %changelog
+* Fri Oct 09 2020 Leontiy Volodin <lvol@altlinux.org> 5.8.0.1-alt1
+- New version (5.8.0.1) with rpmgs script.
+
 * Fri Jul 31 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.12-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).
