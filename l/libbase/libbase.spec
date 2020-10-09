@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: libbase
 Version: 1.1.3
-Release: alt1_20jpp8
+Release: alt1_22jpp8
 Summary: JFree Base Services
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -46,7 +46,7 @@ mkdir -p lib
 find . -name "*.jar" -exec rm -f {} \;
 build-jar-repository -s -p lib commons-logging-api
 cd lib
-ln -s %{_javadir}/ant ant-contrib 
+ln -s /usr/share/java/ant ant-contrib 
 
 %build
 ant jar javadoc
@@ -66,6 +66,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_22jpp8
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_20jpp8
 - fc update & java 8 build
 
