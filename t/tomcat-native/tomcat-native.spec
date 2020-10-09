@@ -1,13 +1,13 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm) rpm-build-java
+BuildRequires: java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm)
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-native
-Version:        1.2.17
+Version:        1.2.23
 Release:        alt1_3jpp8
 Summary:        Tomcat native library
 
@@ -16,7 +16,6 @@ URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  gcc-c++
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
 BuildRequires:  libapr1-devel >= 1.4.3
 BuildRequires:  libssl-devel >= 1.0.2
@@ -54,7 +53,7 @@ make -C native install DESTDIR=$RPM_BUILD_ROOT
 # Perhaps a devel package sometime?  Not for now; no headers are installed.
 rm -f $RPM_BUILD_ROOT%{_libdir}/libtcnative*.*a
 rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
-
+rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 
@@ -69,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.23-alt1_3jpp8
+- new version
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_3jpp8
 - new version
 
