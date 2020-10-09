@@ -1,5 +1,5 @@
 Name: nsd
-Version: 4.3.2
+Version: 4.3.3
 Release: alt1
 
 Summary: Name Server Daemon
@@ -89,8 +89,11 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Fri Oct 09 2020 Alexei Takaseev <taf@altlinux.org> 4.3.3-alt1
+- 4.3.3
+
 * Thu Jul 16 2020 Alexei Takaseev <taf@altlinux.org> 4.3.2-alt1
-- 4.3.1
+- 4.3.2
 
 * Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 4.3.1-alt1
 - 4.3.1
