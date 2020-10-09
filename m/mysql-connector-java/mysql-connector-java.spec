@@ -1,17 +1,16 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       8.0.15
-Release:       alt1_1jpp8
+Version:       8.0.21
+Release:       alt1_2jpp8
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -39,8 +38,8 @@ Source0:       %{name}-%{version}-nojars.tar.xz
 # ./generate-tarball.sh version
 # will create a new tarball compressed with xz and without those jar files.
 Source1:       generate-tarball.sh
-Patch3:        java-version-detection.patch
-Patch4:        remove-coverage-test.patch
+
+Patch1:        remove-coverage-test.patch
 
 BuildArch:     noarch
 
@@ -48,18 +47,16 @@ BuildRequires: ant >= 1.6.0
 BuildRequires: ant-contrib >= 1.0
 BuildRequires: ant-junit
 BuildRequires: apache-commons-logging
-BuildRequires: c3p0
 BuildRequires: git
-BuildRequires: hibernate-core
-BuildRequires: java-devel >= 1.6.0
+BuildRequires: javassist
 BuildRequires: javapackages-local
-BuildRequires: jta >= 1.0
-BuildRequires: junit
+BuildRequires: junit5
 BuildRequires: protobuf-java
 BuildRequires: slf4j
+BuildRequires: java-1.8.0-openjdk-devel
 
-Requires:      jta >= 1.0
 Requires:      slf4j
+Requires: java
 Source44: import.info
 
 %description
@@ -83,13 +80,12 @@ done
 
 sed -i 's/>@.*</>%{version}</' src/build/misc/pom.xml
 
-%patch3 -p1
-%patch4 -p1
+%patch1 -p1
 
 %build
 
 # We need both JDK1.5 (for JDBC3.0; appointed by $JAVA_HOME) and JDK1.6 (for JDBC4.0; appointed in the build.xml)
-export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.jar)
+export CLASSPATH=$(build-classpath jdbc-stdext junit slf4j commons-logging.jar)
 
 # We currently need to disable jboss integration because of missing jboss-common-jdbc-wrapper.jar (built from sources).
 # See BZ#480154 and BZ#471915 for details.
@@ -98,8 +94,8 @@ rm src/test/java/testsuite/regression/ConnectionRegressionTest.java
 rm src/test/java/testsuite/regression/DataSourceRegressionTest.java
 rm src/test/java/testsuite/simple/StatementsTest.java
 
-ant -Dcom.mysql.cj.build.jdk=%{java_home} \
-    -Dcom.mysql.cj.extra.libs=/usr/share/java \
+ant -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-1.8.0-openjdk \
+    -Dcom.mysql.cj.extra.libs=%{_javadir} \
     test dist
 
 %install
@@ -113,6 +109,9 @@ ant -Dcom.mysql.cj.build.jdk=%{java_home} \
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:8.0.21-alt1_2jpp8
+- new version
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1:8.0.15-alt1_1jpp8
 - new version
 
