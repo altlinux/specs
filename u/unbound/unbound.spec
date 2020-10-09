@@ -2,7 +2,7 @@
 
 Name: unbound
 Version: 1.12.0
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Oct 09 2020 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt2
+- Add lost contrib/unbound.service.in
+
 * Fri Oct 09 2020 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
