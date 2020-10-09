@@ -12,8 +12,8 @@ BuildRequires: jpackage-1.8-compat
 %bcond_without jna
 
 Name:           bcel
-Version:        6.2
-Release:        alt1_4jpp8
+Version:        6.3.1
+Release:        alt1_2jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
@@ -82,6 +82,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:6.3.1-alt1_2jpp8
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1:6.2-alt1_4jpp8
 - fc update & java 8 build
 
