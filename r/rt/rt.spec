@@ -1,7 +1,7 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl-podlators
+BuildRequires: /usr/bin/dot /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl-podlators
 # END SourceDeps(oneline)
 # hacks around findreq ==============
 # GraphViz is optional dependency, not a requirement
@@ -25,7 +25,7 @@ BuildRequires: /usr/bin/dot /usr/bin/gdlib-config /usr/bin/gpg /usr/bin/openssl 
 #add_findreq_skiplist /usr/libexec/perl5-tests/*
 # end hacks =======================
 BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
-%define fedora 30
+%define fedora 31
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -77,7 +77,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 
 Name:		rt
 Version:	4.4.4
-Release:	alt1_5
+Release:	alt1_7
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -658,6 +658,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_7
+- fixed build
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 4.4.4-alt1_5
 - update to new release by fcimport
 
