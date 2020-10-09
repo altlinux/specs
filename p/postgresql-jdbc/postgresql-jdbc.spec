@@ -2,10 +2,9 @@ Epoch: 0
 Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -41,51 +40,49 @@ BuildRequires: jpackage-generic-compat
 # Configuration for rpmbuild, might be specified by options
 # like e.g. 'rpmbuild --define "runselftest 0"'.
 
-%{!?runselftest:%global runselftest 0}
+# =============================================================================
+# IMPORTANT NOTE: This spec file is maintained on two places -- in native
+# Fedora repo [1] and in pgjdbc upstream [2].  Please, keep that in sync
+# (manual effort!) so both Fedora and Upstream can benefit from automatic
+# packaging CI, this is now done in [3] Copr project.
+# [1] https://src.fedoraproject.org/rpms/postgresql-jdbc
+# [2] https://github.com/pgjdbc/pgjdbc/tree/master/packaging/rpm
+# [3] https://copr.fedorainfracloud.org/coprs/g/pgjdbc/pgjdbc-travis/
+# ============================================================================
 
+%{!?runselftest:%global runselftest 0}
 
 %global section		devel
 %global source_path	pgjdbc/src/main/java/org/postgresql
-%global parent_ver	1.1.5
-%global parent_poms_builddir	./pgjdbc-parent-poms
-
-%global pgjdbc_mvn_options -DwaffleEnabled=false -DosgiEnabled=false \\\
-	-DexcludePackageNames=org.postgresql.osgi:org.postgresql.sspi
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.2.5
-Release:	alt1_2jpp8
+Version:  42.2.16
+Release:	alt1_1jpp8
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
-Source0:	https://github.com/pgjdbc/pgjdbc/archive/REL%{version}/pgjdbc-REL%{version}.tar.gz
+Source0:	https://repo1.maven.org/maven2/org/postgresql/postgresql/%{version}/postgresql-%{version}-jdbc-src.tar.gz
 Provides:	pgjdbc = %version-%release
 
-# Upstream moved parent pom.xml into separate project (even though there is only
-# one dependant project on it?).  Let's try to not complicate packaging by
-# having separate spec file for it, too.
-Source1:	https://github.com/pgjdbc/pgjdbc-parent-poms/archive/REL%parent_ver/pgjdbc-parent-poms-REL%{parent_ver}.tar.gz
-
-# disable test that makes unpredictable assumptions about non-routable IPs
-# See https://github.com/pgjdbc/pgjdbc/issues/556
-Patch0:		disable-ConnectTimeoutTest.patch
-
 BuildArch:	noarch
-BuildRequires:	java-devel >= 1.8
 BuildRequires:	maven-local
+BuildRequires:	maven-javadoc-plugin
 BuildRequires:	java-comment-preprocessor
-BuildRequires:	properties-maven-plugin
 BuildRequires:	maven-enforcer-plugin
 BuildRequires:	maven-plugin-bundle
-BuildRequires:	maven-plugin-build-helper
 BuildRequires:	classloader-leak-test-framework
 
 BuildRequires:	mvn(com.ongres.scram:client)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:	mvn(org.apache.maven.surefire:surefire-junit-platform)
+BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-params)
+BuildRequires:	mvn(org.junit.vintage:junit-vintage-engine)
 
 %if %runselftest
-BuildRequires:	postgresql11-contrib
+BuildRequires:	postgresql-contrib
 BuildRequires:	postgresql-test-rpm-macros
 %endif
 
@@ -111,36 +108,22 @@ This package contains the API Documentation for %{name}.
 
 
 %prep
-%setup -c -q -a 1
+%setup -c -q
 
-mv pgjdbc-REL%version/* .
-mv pgjdbc-parent-poms-REL%parent_ver pgjdbc-parent-poms
-
-%patch0 -p1
+mv postgresql-%{version}-jdbc-src/* .
 
 # remove any binary libs
-find -name "*.jar" -or -name "*.class" | xargs rm -f
+find -type f \( -name "*.jar" -or -name "*.class" \) | xargs rm -f
 
 # Build parent POMs in the same Maven call.
-%pom_xpath_inject pom:modules "<module>%parent_poms_builddir</module>"
-%pom_xpath_inject pom:parent "<relativePath>pgjdbc-parent-poms/pgjdbc-versions</relativePath>"
-%pom_xpath_set pom:relativePath ../pgjdbc-parent-poms/pgjdbc-core-parent pgjdbc
-%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-shade-plugin']" pgjdbc
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-shade-plugin']"
 
 # compat symlink: requested by dtardon (libreoffice), reverts part of
 # 0af97ce32de877 commit.
 %mvn_file org.postgresql:postgresql %{name}/postgresql %{name} postgresql
 
-# Parent POMs should not be installed.
-%mvn_package ":*{parent,versions,prevjre}*" __noinstall
-
 # For compat reasons, make Maven artifact available under older coordinates.
 %mvn_alias org.postgresql:postgresql postgresql:postgresql
-
-# Hack #1!  This directory is missing for some reason, it is most probably some
-# misunderstanding between maven, maven-compiler-plugin and
-# java-comment-preprocessor?  Not solved yet.  See rhbz#1325060.
-mkdir -p pgjdbc/target/generated-sources/annotations
 
 
 %build
@@ -176,7 +159,7 @@ EOF
 opts="-f"
 %endif
 
-%mvn_build $opts -- %pgjdbc_mvn_options
+%mvn_build $opts --xmvn-javadoc
 
 
 %install
@@ -193,6 +176,9 @@ opts="-f"
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:42.2.16-alt1_1jpp8
+- new version
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:42.2.5-alt1_2jpp8
 - new version
 
