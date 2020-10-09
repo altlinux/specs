@@ -1,37 +1,40 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
+%define tuneddir %_prefix/lib/tuned
+
 Name: tuned
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 
 Summary: A dynamic adaptive system tuning daemon
 
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
-Url: https://fedorahosted.org/tuned/
+Url: https://tuned-project.org/
+Vcs: https://github.com/redhat-performance/tuned
 
 # Source-url: https://github.com/redhat-performance/tuned/archive/v%version.tar.gz
 Source: %name-%version.tar
 Source1: tuned.init
 
-Patch0: tuned-2.7.1-pkexec-fix.patch
-Patch1: tuned-2.7.1-profile_info-traceback-fix.patch
-Patch2: tuned-2.7.1-throughput-performance-summary.patch
-
 BuildArch: noarch
 
-BuildRequires: desktop-file-utils asciidoctor
-
-Requires: virt-what ethtool hdparm util-linux polkit
-
-#Requires(post): systemd
-#Requires(preun): systemd
-#Requires(postun): systemd
-
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro
+BuildRequires: desktop-file-utils
+BuildRequires: asciidoctor
 BuildRequires: python3-dev
 
+Requires: virt-what
+Requires: ethtool
+Requires: hdparm
+Requires: util-linux
+Requires: polkit
+
 # BuildRequires for 'make test'
-#BuildRequires: python3-module-unittest2, python3-module-configobj, python3-module-mock
+BuildRequires: rpm-build-vm
 
 %py3_use decorator
 %py3_use pyudev
@@ -41,12 +44,6 @@ BuildRequires: python3-dev
 #py3_use perf
 %py3_use dbus
 %py3_use pygobject3
-
-# Recommends: python3-dmidecode
-#Recommends: kernel-tools
-#Requires: python3-module-syspurpose
-
-%define tuneddir %_prefix/lib/tuned
 
 %description
 The tuned package contains a daemon that tunes system settings dynamically.
@@ -157,6 +154,16 @@ Requires: tuna
 %description profiles-nfv-host
 Additional tuned profile(s) targeted to Network Function Virtualization (NFV) host.
 
+%package profiles-nfv
+Group: System/Configuration/Other
+Summary: Additional tuned profile(s) targeted to Network Function Virtualization (NFV)
+Requires: %name = %EVR
+Requires: %name-profiles-nfv-guest = %EVR
+Requires: %name-profiles-nfv-host = %EVR
+
+%description profiles-nfv
+Additional tuned profile(s) targeted to Network Function Virtualization (NFV).
+
 %package profiles-cpu-partitioning
 Group: System/Configuration/Other
 Summary: Additional tuned profile(s) optimized for CPU partitioning
@@ -164,6 +171,14 @@ Requires: %name = %EVR
 
 %description profiles-cpu-partitioning
 Additional tuned profile(s) optimized for CPU partitioning.
+
+%package profiles-spectrumscale
+Group: System/Configuration/Other
+Summary: Additional tuned profile(s) optimized for IBM Spectrum Scale (GPFS)
+Requires: %name = %EVR
+
+%description profiles-spectrumscale
+Additional tuned profile(s) optimized for IBM Spectrum Scale (formerly GPFS).
 
 %package profiles-compat
 Group: System/Configuration/Other
@@ -176,9 +191,19 @@ It can be also used to fine tune your system for specific scenarios.
 
 %prep
 %setup
-#patch0 -p1
-#patch1 -p1
-#patch2 -p1
+# For systemd-boot kernel-install hook.
+sed -i '/^KERNELINSTALLHOOKDIR =/s/\/usr\/lib/\/lib/' Makefile
+sed -i '/^KERNEL_UPDATE_HOOK_FILE =/s/\/usr\/lib/\/lib/' tuned/consts.py
+
+# Don't install systemtap docs.
+rm doc/README.{utils,scomes}
+
+# Fix grub paths.
+grep -lr -e /boot/grub2 -e grub2- | xargs sed -i s/grub2/grub/g
+sed -i '/^GRUB2_DEFAULT_ENV_FILE =/s/default\/grub/sysconfig\/grub2/' tuned/consts.py
+
+# Ezport tuned_params variable for submenu(s).
+echo 'echo "export tuned_params"' >> 00_tuned
 
 %build
 make html PYTHON=%__python3
@@ -190,12 +215,6 @@ make html PYTHON=%__python3
 
 mkdir -p %buildroot%_datadir/tuned/grub2
 mv %buildroot%_sysconfdir/grub.d/00_tuned %buildroot%_datadir/tuned/grub2/00_tuned
-
-# conditional support for grub2, grub2 is not available on all architectures
-# and tuned is noarch package, thus the following hack is needed
-#mkdir -p %buildroot%_datadir/tuned/grub2
-#mv %buildroot%_sysconfdir/grub.d/00_tuned %buildroot%_datadir/tuned/grub2/00_tuned
-#rmdir %buildroot%_sysconfdir/grub.d
 
 mkdir -p %buildroot%_logdir/tuned
 touch %buildroot%_logdir/tuned/tuned.log
@@ -210,38 +229,85 @@ __EOF__
 mkdir -p %buildroot%_initdir
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
-#check
-#make test
+mkdir -p %buildroot%_presetdir
+echo "enable tuned.service" > %buildroot%_presetdir/30-tuned.preset
+
+# Remove systemtap scripts that we don't support.
+rm %buildroot%_sbindir/{diskdevstat,netdevstat,scomes,varnetload}
+rm %buildroot%_man8dir/{diskdevstat,netdevstat,scomes,varnetload}.8*
+
+# Remove cpu-partitioning files, they require Dracut.
+rm %buildroot%_sysconfdir/tuned/cpu-partitioning-variables.conf
+rm %buildroot%_man7dir/tuned-profiles-cpu-partitioning.7*
+rm -rf %buildroot%tuneddir/cpu-partitioning
+
+%check
+[ -w /dev/kvm ] && vm-run make test
 
 %post
 %post_service %name
-if [ $1 -eq 1 ] ; then
-        /sbin/systemctl enable \
-	tuned.service \
-	>/dev/null 2>&1 || :
+
+# convert active_profile from full path to name (if needed)
+sed -i 's|.*/\([^/]\+\)/[^\.]\+\.conf|\1|' /etc/tuned/active_profile
+
+# convert GRUB_CMDLINE_LINUX to GRUB_CMDLINE_LINUX_DEFAULT
+if [ -r %_sysconfdir/sysconfig/grub2 ]; then
+	sed -i 's/GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX \\$tuned_params"/GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT \\$tuned_params"/' \
+	  %_sysconfdir/sysconfig/grub2
+fi
+
+# conditional support for grub2, grub2 is not available on all architectures
+# and tuned is noarch package, thus the following hack is needed
+if [ -d %_sysconfdir/grub.d ]; then
+	cp -a %_datadir/tuned/grub2/00_tuned %_sysconfdir/grub.d/00_tuned
 fi
 
 %preun
 %preun_service %name
 if [ $1 -eq 0 ] ; then
-	/sbin/systemctl disable \
-	tuned.service \
-	>/dev/null 2>&1 || :
-       # clear persistent storage
-       rm -f %_var/lib/tuned/* || :
+	# clear persistent storage
+	rm -f %_var/lib/tuned/* || :
+	# clear temporal storage
+	rm -f /run/tuned/* || :
+fi
+
+%postun
+if [ $1 -eq 0 ]; then
+	rm -f %_sysconfdir/grub.d/00_tuned || :
+
+	# unpatch /etc/default/grub
+	if [ -r %_sysconfdir/sysconfig/grub2 ]; then
+		sed -i '/GRUB_CMDLINE_LINUX_DEFAULT="${GRUB_CMDLINE_LINUX_DEFAULT:+$GRUB_CMDLINE_LINUX_DEFAULT }\\$tuned_params"/d' \
+		  %_sysconfdir/sysconfig/grub2
+	fi
+	# cleanup for Boot loader specification (BLS)
+
+	# clear grubenv variables
+	GRUBEDITENV=grub-editenv
+	$GRUBEDITENV - unset tuned_params tuned_initrd &>/dev/null || :
+
+	# unpatch BLS entries
+	MACHINE_ID=`cat /etc/machine-id 2>/dev/null`
+	if [ "$MACHINE_ID" ]; then
+		for f in /boot/loader/entries/$MACHINE_ID-*.conf; do
+			if [ -f "$f" -a "${f: -12}" != "-rescue.conf" ]; then
+				sed -i '/^\s*options\s\+.*\$tuned_params/ s/\s\+\$tuned_params\b//g' "$f" &>/dev/null || :
+				sed -i '/^\s*initrd\s\+.*\$tuned_initrd/ s/\s\+\$tuned_initrd\b//g' "$f" &>/dev/null || :
+			fi
+		done
+	fi
 fi
 
 %files
-#exclude %_docdir/README.utils
-#exclude %_docdir/README.scomes
+%exclude %_docdir/%name/README.*
 %doc %_docdir/%name
+/lib/kernel/install.d/92-tuned.install
 %_datadir/bash-completion/completions/tuned-adm
 %exclude %python3_sitelibdir/tuned/gtk
-%exclude %python3_sitelibdir/tuned/plugins/plugin_scheduler.p*
 %python3_sitelibdir/tuned
 %_sbindir/tuned
 %_sbindir/tuned-adm
-%exclude %_sysconfdir/tuned/realtime-variables.conf
+%exclude %_sysconfdir/tuned/realtime*variables.conf
 %dir %_sysconfdir/tuned/
 %dir %_libexecdir/%name/
 %dir %tuneddir/
@@ -254,19 +320,23 @@ fi
 %tuneddir/network-throughput/
 %tuneddir/powersave/
 %tuneddir/recommend.d/
-%tuneddir/sst/
+%tuneddir/intel-sst/
 %tuneddir/throughput-performance/
 %tuneddir/virtual-guest/
 %tuneddir/virtual-host/
+%tuneddir/accelerator-performance/
+%tuneddir/optimize-serial-console/
 
 %config(noreplace) %_sysconfdir/tuned/active_profile
 %config(noreplace) %_sysconfdir/tuned/tuned-main.conf
 %config(noreplace) %_sysconfdir/tuned/profile_mode
 %config(noreplace) %_sysconfdir/tuned/bootcmdline
+%config(noreplace) %_sysconfdir/tuned/post_loaded_profile
 %_sysconfdir/dbus-1/system.d/com.redhat.tuned.conf
 %_sysconfdir/modprobe.d/tuned.conf
 %_tmpfilesdir/tuned.conf
 %_unitdir/tuned.service
+%_presetdir/*tuned.preset
 %_initdir/tuned
 %dir %_logdir/tuned
 %ghost %_logdir/tuned/tuned.log
@@ -295,8 +365,8 @@ fi
 # tuned-utils-systemtap#2.13.0-alt1    systemtap
 %if 0
 %files utils-systemtap
-%doc doc/README.utils
-%doc doc/README.scomes
+%doc doc/%name/README.utils
+%doc doc/%name/README.scomes
 #doc COPYING
 %_sbindir/varnetload
 %_sbindir/netdevstat
@@ -329,13 +399,12 @@ fi
 %tuneddir/atomic-guest
 %_man7dir/tuned-profiles-atomic.7*
 
-# tuned-profiles-realtime#2.13.0-alt1    tuna
-%if 0
 %files profiles-realtime
 %config(noreplace) %_sysconfdir/tuned/realtime-variables.conf
 %tuneddir/realtime
 %_man7dir/tuned-profiles-realtime.7*
 
+# Requires rt-entsk from rt-setup
 %files profiles-nfv-guest
 %config(noreplace) %_sysconfdir/tuned/realtime-virtual-guest-variables.conf
 %tuneddir/realtime-virtual-guest
@@ -346,12 +415,20 @@ fi
 %tuneddir/realtime-virtual-host
 %_man7dir/tuned-profiles-nfv-host.7*
 
+%files profiles-nfv
+%doc %_docdir/%name/README.NFV
+
 # tuned-profiles-cpu-partitioning#2.13.0-alt1    /lib/dracut-lib.sh
+%if 0
 %files profiles-cpu-partitioning
 %config(noreplace) %_sysconfdir/tuned/cpu-partitioning-variables.conf
 %tuneddir/cpu-partitioning
 %_man7dir/tuned-profiles-cpu-partitioning.7*
 %endif
+
+%files profiles-spectrumscale
+%tuneddir/spectrumscale-ece
+%_man7dir/tuned-profiles-spectrumscale-ece.7*
 
 %files profiles-compat
 %tuneddir/default
@@ -364,6 +441,13 @@ fi
 %_man7dir/tuned-profiles-compat.7*
 
 %changelog
+* Sun Oct 04 2020 Vitaly Chikunov <vt@altlinux.org> 2.14.0-alt1
+- Update to 2.14.0.
+- Enable realtime profiles.
+- Add systemd-boot kernel-install hook.
+- spec: Cleanup and enable %%check section.
+- Add grub integration.
+
 * Sat Feb 08 2020 Vitaly Lipatov <lav@altlinux.ru> 2.13.0-alt1
 - sync spec with Fedora's one
 - build with python3 only
