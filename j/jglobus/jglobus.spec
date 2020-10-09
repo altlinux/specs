@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 29
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The gaxis module requires axis version 1.x
@@ -24,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_13jpp8
+Release:	alt1_15jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -88,8 +87,6 @@ BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(log4j:log4j)
 BuildRequires:	mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-compiler-plugin)
-BuildRequires:	mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:	mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
 %if %{tomcatmodule}
 BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
@@ -231,6 +228,10 @@ This package contains the API documentation for %{name}.
 # Avoid build dependency bloat
 %pom_remove_parent
 
+# Don't do source and release
+%pom_remove_plugin org.apache.maven.plugins:maven-release-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
+
 %if ! %{gaxismodule}
 %pom_disable_module axis
 %endif
@@ -278,6 +279,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_15jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_13jpp8
 - new version
 
