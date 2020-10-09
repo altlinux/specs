@@ -1,23 +1,19 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global short_name plexus-components
-
-Name:           %{short_name}-pom
-Version:        1.3.1
-Release:        alt1_12jpp8
+Name:           plexus-components-pom
 Summary:        Plexus Components POM
+Version:        4.0
+Release:        alt1_1jpp8
 License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-components
-BuildArch:      noarch
 
-Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_name}/%{version}/%{short_name}-%{version}.pom
+URL:            https://github.com/codehaus-plexus/plexus-components
+Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-components/%{version}/plexus-components-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
@@ -43,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_12jpp8
 - new version
 
