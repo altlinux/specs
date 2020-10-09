@@ -6,7 +6,7 @@
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
 Version: 2.8.3
-Release: alt2
+Release: alt3
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -29,7 +29,7 @@ Group: Development/Other
 BuildArch: noarch
 Requires(pre): %name = %EVR
 Requires: /proc
-Requires: kernel > 5.7
+Requires: rpm-build
 Requires: kernel-headers-modules-un-def
 
 %description checkinstall
@@ -82,8 +82,14 @@ install -D -p -m644 dkms.preset %buildroot%_presetdir/30-dkms.preset
 %pre checkinstall
 set -e
 PS4=$'\n+ '
-kver=$(find /boot -name 'vmlinuz-*' -print -quit)
-kver=${kver#/boot/vmlinuz-}
+khdr=$(rpm -q kernel-headers-modules-un-def | sort -V | tail -1)
+khdr=${khdr#kernel-headers-modules-}
+khdr=${khdr%%.*}
+krel=${khdr##*-}
+kver=${khdr%%-*}
+kver=${kver##*-}
+kflv=${khdr%%-*-*}
+kver=$kver-$kflv-$krel
 
 set -x
 dkms add %_defaultdocdir/%name-%version/test/dkms_test-1.0/dkms.conf
@@ -121,6 +127,10 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Fri Oct 09 2020 Vitaly Chikunov <vt@altlinux.org> 2.8.3-alt3
+- Make checkinstall work outside of hasher.
+- Optimize dkms.filetrigger.
+
 * Tue Sep 29 2020 Vitaly Chikunov <vt@altlinux.org> 2.8.3-alt2
 - spec: Remove dependence on /etc/sysconfig/kernel.
 
