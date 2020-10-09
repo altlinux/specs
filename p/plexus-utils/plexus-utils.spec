@@ -1,17 +1,14 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-utils
-Version:        3.1.0
-Release:        alt1_4jpp8
+Version:        3.2.0
+Release:        alt1_2jpp8
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -91,6 +88,9 @@ cp %{SOURCE1} .
 %doc NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_2jpp8
+- new version
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_4jpp8
 - new version
 
