@@ -1,27 +1,24 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-io
-Version:        3.0.0
-Release:        alt1_4jpp8
 Summary:        Plexus IO Components
+Version:        3.1.1
+Release:        alt1_1jpp8
 License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-io
-BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/plexus-io/archive/plexus-io-%{version}.tar.gz
+URL:            https://github.com/codehaus-plexus/%{name}
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
@@ -31,12 +28,12 @@ Source44: import.info
 Plexus IO is a set of plexus components, which are designed for use
 in I/O operations.
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
 
 
@@ -45,13 +42,20 @@ API documentation for %{name}.
 cp %{SOURCE1} .
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+# junit isn't actually used
+%pom_remove_dep :junit
+
 
 %build
 %mvn_file  : plexus/io
 %mvn_build
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference NOTICE.txt LICENSE-2.0.txt
@@ -61,6 +65,9 @@ cp %{SOURCE1} .
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_4jpp8
 - new version
 
