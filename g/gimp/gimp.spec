@@ -7,7 +7,7 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.20
+Version: %ver_major.22
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -21,7 +21,7 @@ Obsoletes: gimp2 < %version-%release
 Provides: gimp2 = %version-%release
 Conflicts: gimp2-perl create-resources <= 0.1.3-alt1
 Requires: lib%name = %version-%release
-Requires: icc-profiles mypaint-brushes%brushes_ver
+Requires: iso-codes icc-profiles mypaint-brushes%brushes_ver
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -118,6 +118,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Fri Oct 09 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.22-alt1
+- 2.10.22
+
 * Mon Jun 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 2.10.20-alt1
 - 2.10.20
 
