@@ -7,7 +7,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-compiler-plugin
-Version:        3.8.0
+Version:        3.8.1
 Release:        alt1_2jpp8
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.8.1-alt1_2jpp8
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_2jpp8
 - fc update & java 8 build
 

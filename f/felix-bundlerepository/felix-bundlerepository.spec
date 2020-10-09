@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-bundlerepository
 Version:        2.0.10
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
@@ -60,11 +57,9 @@ This package contains the API documentation for %{name}.
 
 %pom_change_dep :easymock :::test
 
-# Removing and adding is necessary (order matters)
-%pom_remove_dep :org.osgi.core
-%pom_add_dep org.osgi:osgi.core
-%pom_remove_dep :org.osgi.compendium
-%pom_add_dep org.osgi:osgi.cmpn
+# Use latest OSGi implementation
+%pom_change_dep :org.osgi.core org.osgi:osgi.core
+%pom_change_dep :org.osgi.compendium org.osgi:osgi.cmpn
 
 # For compatibility reasons
 %mvn_file : felix/%{name}
@@ -83,6 +78,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_7jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_5jpp8
 - new version
 
