@@ -1,12 +1,9 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,12 +12,12 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without groovy
+%bcond_with    groovy
 %bcond_without snakeyaml
 
 Name:           testng
 Version:        6.14.3
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Java-based testing framework
 License:        ASL 2.0
 URL:            http://testng.org/
@@ -135,6 +132,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:6.14.3-alt1_9jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:6.14.3-alt1_7jpp8
 - new version
 
