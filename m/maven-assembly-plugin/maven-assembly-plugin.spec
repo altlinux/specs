@@ -1,20 +1,21 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-assembly-plugin
-Version:        3.1.0
-Release:        alt1_5jpp8
 Summary:        Maven Assembly Plugin
+Version:        3.1.1
+Release:        alt1_1jpp8
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
-BuildArch:      noarch
 
+URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
@@ -45,24 +46,29 @@ Source44: import.info
 A Maven plugin to create archives of your project's sources, classes,
 dependencies etc. from flexible assembly descriptors.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package provides %{summary}.
+
 
 %prep
 %setup -q
+
 
 %build
 # Tests need easymockclassextension version 2.x, which is incompatible
 # with easymockclassextension version 3.x we have in Fedora.
 %mvn_build -f
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -70,7 +76,11 @@ This package provides %{summary}.
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_5jpp8
 - new version
 
