@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name  discovery
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_22jpp8
+Release:        alt3_24jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -50,6 +47,12 @@ BuildArch: noarch
 %patch1 -p1
 %mvn_file : %{short_name} %{name}
 
+%pom_add_plugin "org.apache.maven.plugins:maven-javadoc-plugin" . "
+<configuration>
+  <additionalparam>-Xdoclint:none</additionalparam>
+</configuration>
+"
+
 %build
 %mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.discovery
 
@@ -65,6 +68,9 @@ BuildArch: noarch
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_24jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_22jpp8
 - new version
 
