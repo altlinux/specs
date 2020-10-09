@@ -1,57 +1,62 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-source-plugin
-Version:        3.0.1
-Release:        alt1_6jpp8
 Summary:        Plugin creating source JAR
+Version:        3.1.0
+Release:        alt1_2jpp8
 License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-source-plugin/
-BuildArch:      noarch
 
+URL:            http://maven.apache.org/plugins/maven-source-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
 The Maven Source Plugin creates a JAR archive of the
 source files of the current project.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
+
 
 %prep
 %setup -q
+
 
 %build
 %mvn_file : %{name}
 %mvn_build
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -59,7 +64,11 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_6jpp8
 - new version
 
