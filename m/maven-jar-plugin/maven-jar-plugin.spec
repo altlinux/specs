@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-jar-plugin
-Version:        3.1.0
-Release:        alt1_3jpp8
+Version:        3.1.2
+Release:        alt1_2jpp8
 Summary:        Maven JAR Plugin
 
 License:        ASL 2.0
@@ -26,6 +26,7 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
@@ -48,7 +49,7 @@ API documentation for %{name}.
 
 %build
 # Test class MockArtifact doesn't override method getMetadata
-%mvn_build -f -- -DmavenVersion=3.1.1
+%mvn_build -f -- -DmavenVersion=3.1.2
 
 %install
 %mvn_install
@@ -61,6 +62,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_3jpp8
 - new version
 
