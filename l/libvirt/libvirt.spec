@@ -13,7 +13,7 @@
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
 
-%ifarch %ix86 x86_64 ia64 armh aarch64 ppc64le
+%ifarch %ix86 x86_64 armh aarch64 ppc64le
 %def_enable server_drivers
 %else
 %def_disable server_drivers
@@ -84,7 +84,6 @@
 # A few optional bits
 %def_without netcf
 %def_with udev
-%def_without hal
 %def_with yajl
 %def_with sanlock
 %if_with lxc
@@ -123,7 +122,6 @@
 
 %def_without netcf
 %def_without udev
-%def_without hal
 %def_with yajl
 %def_without sanlock
 %def_without fuse
@@ -139,7 +137,6 @@
 %endif
 
 # A few optional bits
-%def_with dbus
 %def_with polkit
 %def_with capng
 %def_with firewalld
@@ -154,12 +151,6 @@
 %endif
 
 %def_with libnl
-%if_with qemu
-%def_with macvtap
-%else
-%def_without macvtap
-%endif
-
 %def_with audit
 %def_without dtrace
 
@@ -179,8 +170,8 @@
 %endif
 
 Name: libvirt
-Version: 6.7.0
-Release: alt2
+Version: 6.8.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -208,7 +199,6 @@ Requires: %name-libs = %EVR
 
 BuildRequires(pre): meson >= 0.54.0
 %{?_with_libxl:BuildRequires: xen-devel}
-%{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: udev libudev-devel >= 219 libpciaccess-devel}
 %{?_with_yajl:BuildRequires: libyajl-devel >= 2.0.1}
 %{?_with_sanlock:BuildRequires: sanlock-devel >= 1.8}
@@ -220,7 +210,6 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
 %{?_with_libssh2:BuildRequires: pkgconfig(libssh2) >= 1.3}
-%{?_with_dbus:BuildRequires: libdbus-devel >= 1.0.0 dbus}
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
 %{?_with_qemu:BuildRequires: qemu-img}
@@ -233,7 +222,7 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_storage_gluster:BuildRequires: libglusterfs-devel}
 %{?_with_storage_zfs:BuildRequires: zfs-utils}
 %{?_with_storage_vstorage:BuildRequires: /usr/sbin/vstorage}
-%{?_with_numactl:BuildRequires: libnuma-devel}
+%{?_with_numactl:BuildRequires: libnuma-devel >= 2.0.6}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_netcf:BuildRequires: netcf-devel >= 0.1.8}
 %{?_with_esx:BuildRequires: libcurl-devel}
@@ -818,11 +807,9 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		-Dselinux_mount=%selinux_mount \
 		%{?_with_netcf:-Dnetcf=enabled} \
 		%{?_with_udev:-Dudev=enabled} \
-		%{?_with_hal:-Dhal=enabled} \
 		%{?_with_yajl:-Dyajl=enabled} \
 		%{?_with_sanlock:-Dsanlock=enabled} \
 		%{?_with_fuse:-Dfuse=enabled} \
-		%{?_with_dbus:-Ddbus=enabled} \
 		%{?_with_pm_utils:-Dpm_utils=enabled} \
 		%{?_with_polkit:-Dpolkit=enabled} \
 		%{?_with_firewalld:-Dfirewalld=enabled} \
@@ -831,7 +818,6 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
 		%{?_with_libpcap:-Dlibpcap=enabled} \
 		%{?_with_libssh:-Dlibssh=enabled} \
 		%{?_with_libssh2:-Dlibssh2=enabled} \
-		%{?_with_macvtap:-Dmacvtap=enabled} \
 		%{?_with_audit:-Daudit=enabled} \
 		%{?_with_dtrace:-Ddtrace=enabled} \
 		%{?_with_bash_completion:-Dbash_completion=enabled} \
@@ -1063,6 +1049,7 @@ fi
 
 
 %_libexecdir/libvirt_iohelper
+%_bindir/virt-ssh-helper
 %_sbindir/libvirtd
 %_sbindir/virtproxyd
 %_man8dir/libvirtd.*
@@ -1379,6 +1366,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Oct 09 2020 Alexey Shabalin <shaba@altlinux.org> 6.8.0-alt1
+- 6.8.0 (Fixes: CVE-2020-15708, CVE-2020-25637)
+
 * Tue Sep 08 2020 Alexey Shabalin <shaba@altlinux.org> 6.7.0-alt2
 - fix rpm filetrigger
 
