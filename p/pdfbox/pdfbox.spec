@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.9
-Release:       alt1_5jpp8
+Version:       2.0.16
+Release:       alt1_1jpp8
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -128,8 +128,8 @@ find -name 'sRGB.icc*' -print -delete
 find -name '*.icm' -print -delete
 find -name '*.ttf' -print -delete
 
-%patch0
-%patch1
+%patch0 -p1 -b .font
+%patch1 -b .openicc
 
 # Don't build apps (it's just a bundle of everything)
 %pom_disable_module preflight-app
@@ -151,7 +151,6 @@ find -name '*.ttf' -print -delete
 # Some test resources are not okay to distribute with the source, upstream
 # downloads them at build time, but we can't, so we either remove or fix
 # the affected tests
-%pom_remove_plugin -r :maven-download-plugin
 %pom_remove_plugin -r :download-maven-plugin
 rm fontbox/src/test/java/org/apache/fontbox/cff/CFFParserTest.java \
    pdfbox/src/test/java/org/apache/pdfbox/pdfparser/TestPDFParser.java \
@@ -225,6 +224,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.16-alt1_1jpp8
+- new version
+
 * Thu Jun 20 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.0.9-alt1_5jpp8
 - new version
 
