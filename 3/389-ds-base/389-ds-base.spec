@@ -12,7 +12,7 @@
 
 Name: 389-ds-base
 Version: 1.4.1.18
-Release: alt2
+Release: alt3
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -102,22 +102,6 @@ Requires: cracklib-words
 %description
 389 Directory Server is an LDAPv3 compliant server. The base package includes
 the LDAP server and command line utilities for server administration.
-
-%package -n 389-ds
-Summary: 389 Directory, Administration, and Console Suite
-Group: System/Servers
-Requires: 389-ds-base
-Requires: idm-console-framework
-Requires: 389-console
-Requires: 389-ds-console
-Requires: 389-ds-console-doc
-Requires: 389-dsgw
-
-%description -n 389-ds
-The 389 Directory Server, Administration Server, and Console Suite
-provide the LDAPv3 server, the httpd daemon used to administer the
-server, and the console GUI application used for server and user/group
-administration.
 
 %package libs
 Summary: Core libraries for 389 Directory Server
@@ -380,11 +364,6 @@ if [ $1 -eq 0 ]; then
 fi
 %preun_service %pkgname-snmp
 
-%ifnarch %e2k
-# FIXME: got no 389-admin/console/dsgw and no idm-console-framework just yet
-%files -n 389-ds
-%endif
-
 %files
 %doc LICENSE LICENSE.GPLv3+ LICENSE.openssl README.md
 %dir %_sysconfdir/%pkgname
@@ -617,6 +596,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 09 2020 Stanislav Levin <slev@altlinux.org> 1.4.1.18-alt3
+- Dropped dependency on decommissioned 389-ds admin Web services.
+
 * Fri Aug 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1.18-alt2
 - Rebuilt with libdb5.3 instead of libdb4.
 - Disabled some legacy perl bindings.
