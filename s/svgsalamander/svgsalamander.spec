@@ -1,9 +1,6 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global gittag v1.1.2
@@ -12,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           svgsalamander
 Version:        1.1.2
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        An SVG engine for Java
 
 License:        LGPLv2+ or BSD
@@ -20,14 +17,17 @@ URL:            https://github.com/blackears/svgSalamander/
 Source0:        https://github.com/blackears/%{gitname}/archive/%{gittag}/%{gitname}-%{version}.tar.gz
 # Pulled from version 1.1.1
 Source1:        pom.xml
+# The interesting code changes from release to the commit 658fd1a
+# https://github.com/blackears/svgSalamander/compare/v1.1.2...658fd1a
+Patch1:         svgsalamander-master.patch
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  java-devel
 BuildRequires:  javacc-maven-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  sonatype-oss-parent
+BuildRequires:  dos2unix
 
 Provides:       %{gitname}
 Source44: import.info
@@ -50,6 +50,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{gitname}-%{version}
+# To apply patches, we need normal line endings
+find . -name '*.java' -exec dos2unix '{}' \;
+%patch1 -p1
 
 find . -name '*.jar' -exec rm -f '{}' \;
 find . -name '*.class' -exec rm -f '{}' \;
@@ -84,6 +87,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_3jpp8
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_1jpp8
 - new version
 
