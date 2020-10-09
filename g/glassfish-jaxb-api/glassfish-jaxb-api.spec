@@ -1,17 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.12
-Release:       alt1_11jpp8
+Release:       alt1_13jpp8
 Summary:       Java Architecture for XML Binding
-License:       CDDL or GPLv2 with exception
+License:       CDDL-1.1 or GPLv2 with exception
 URL:           http://jaxb.java.net/
 # jaxb api and impl have different version
 # svn export https://svn.java.net/svn/jaxb~version2/tags/jaxb-2_2_6/tools/lib/redist/jaxb-api-src.zip
@@ -84,6 +84,9 @@ sed -i 's|<location>${basedir}/offline-javadoc</location>|<location>%{_javadocdi
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_13jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.12-alt1_11jpp8
 - new version
 
