@@ -1,13 +1,15 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat sonatype-oss-parent
-%define fedora 25
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name clojure
-%define version 1.7.0
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 31
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.8.0
 %global project     clojure
 %global groupId     org.clojure
 %global artifactId  clojure
@@ -16,12 +18,11 @@ BuildRequires: jpackage-generic-compat sonatype-oss-parent
 
 Name:           clojure
 Epoch:          1
-Version:        1.7.0
-Release:        alt2_1jpp8
+Version:        1.8.0
+Release:        alt1_1jpp8
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
-Group:          Development/Java
-License:        EPL
+License:        EPL-1.0
 URL:            http://clojure.org/
 Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{full_version}.zip
 
@@ -29,13 +30,15 @@ Source1:        clojure.sh
 
 BuildArch:      noarch
 
-BuildRequires:  maven-local
+BuildRequires:  javapackages-tools
 BuildRequires:  maven-local
 BuildRequires:  ant >= 1.6
 BuildRequires:  objectweb-asm
+BuildRequires:  sonatype-oss-parent
 
 %if 0%{?fedora} > 20
 %else
+Requires:       java >= 1.6
 %endif
 
 Requires:       objectweb-asm
@@ -75,12 +78,16 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %mvn_install
 
 %files -f .mfiles
-%doc epl-v10.html changes.md readme.txt 
+%doc --no-dereference epl-v10.html 
+%doc changes.md readme.txt 
 %{_mavenpomdir}/*
 %{_javadir}/%{name}.jar
 %{_bindir}/%{name}
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.8.0-alt1_1jpp8
+- new version
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7.0-alt2_1jpp8
 - fixed build
 
