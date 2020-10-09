@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.25.1
-Release: alt1
+Release: alt2
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -122,6 +122,9 @@ This package contains documentation for Eventlet.
 %setup
 %patch -p1
 
+# requires thrift, python 2.7 only
+rm -rf eventlet/zipkin
+
 cp -fR . ../python3
 
 %if_with docs
@@ -200,6 +203,9 @@ tox.py3 --sitepackages -p auto -o -vr
 %python3_sitelibdir/eventlet/
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.25.1-alt2
+- NMU: removed deprecated python2 zipkin due to thrift dependency
+
 * Tue Jun 09 2020 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt1
 - Automatically updated to 0.25.1.
 - Build without check (for openstack update).
