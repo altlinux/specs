@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           args4j
 Version:        2.33
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Java command line arguments parser
 License:        MIT
 URL:            http://args4j.kohsuke.org
@@ -20,7 +17,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.kohsuke:pom:pom:)
 BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
 
@@ -81,6 +77,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %pom_disable_module args4j-maven-plugin
 %pom_disable_module args4j-maven-plugin-example
 
+# Remove reliance on the parent pom
+%pom_remove_parent
+
 # put args4j-tools and parent POM to separate subpackages
 %mvn_package :args4j-tools::{}: %{name}-tools
 %mvn_package :args4j-site::{}: %{name}-parent
@@ -106,6 +105,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_8jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1_6jpp8
 - new version
 
