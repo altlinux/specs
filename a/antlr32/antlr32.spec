@@ -1,27 +1,32 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global bootstrap 0
+# Need to set this when bootstrapping due to self-dependency
+%bcond_with bootstrap
+
 %global bootstrap_version 3.1.3
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_21jpp8
+Release:        alt1_23jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
 URL:            http://www.antlr3.org/
 Source0:        http://www.antlr3.org/download/antlr-%{version}.tar.gz
 
+%if %{with bootstrap}
 # These artifacts are taken verbatim from maven central with the exception of the
 # jar in source 2, which additionally has the java 8 compatibility patch given below
 # These sources are only used for bootstrapping antlr32 into a new distro
-%if %{bootstrap}
 Source1:        http://repo1.maven.org/maven2/org/antlr/antlr-master/%{bootstrap_version}/antlr-master-%{bootstrap_version}.pom
 Source2:        http://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.jar
 Source3:        http://repo1.maven.org/maven2/org/antlr/antlr/%{bootstrap_version}/antlr-%{bootstrap_version}.pom
@@ -50,7 +55,7 @@ BuildRequires:  maven-plugin-plugin
 BuildRequires:  stringtemplate >= 3.2
 
 # Cannot require ourself when bootstrapping
-%if ! %{bootstrap}
+%if %{without bootstrap}
 BuildRequires:  %{name}-maven-plugin = %{version}
 %endif
 
@@ -136,7 +141,7 @@ sed -i -e "s|\${buildNumber}|%{release}|" tool/src/main/resources/org/antlr/antl
 mkdir -p .m2/org/antlr/antlr-master/%{version}/
 cp -p pom.xml .m2/org/antlr/antlr-master/%{version}/antlr-master-%{version}.pom
 
-%if %{bootstrap}
+%if %{with bootstrap}
 mkdir -p .m2/org/antlr/antlr-master/%{bootstrap_version}/
 cp -p %{SOURCE1} .m2/org/antlr/antlr-master/%{bootstrap_version}/.
 mkdir -p .m2/org/antlr/antlr/%{bootstrap_version}/
@@ -154,19 +159,21 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %mvn_install
 
 %files tool -f .mfiles-tool
-%doc tool/LICENSE.txt
+%doc --no-dereference tool/LICENSE.txt
 
 %files maven-plugin -f .mfiles-maven-plugin
-%doc tool/LICENSE.txt
+%doc --no-dereference tool/LICENSE.txt
 
 %files java -f .mfiles-java
-%doc tool/LICENSE.txt
-%dir %{_datadir}/java/antlr32
+%doc --no-dereference tool/LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc tool/LICENSE.txt
+%doc --no-dereference tool/LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_23jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_21jpp8
 - new version
 
