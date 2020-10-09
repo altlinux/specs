@@ -1,7 +1,7 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/rustc /usr/bin/xsltproc gcc-c++ rpm-build-java zip
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/rustc /usr/bin/xsltproc gcc-c++ zip
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
@@ -10,8 +10,8 @@ BuildRequires: bc
 
 %set_compress_method none
 %define oldname icedtea-web
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #can rust have debuginfo? Verify and fix! Likely issue in Makefile of itw.
@@ -35,14 +35,21 @@ BuildRequires: jpackage-generic-compat
 %define preffered_java  java-%{javaver}-openjdk
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
-Version:	1.8
-Release:	alt1_2jpp8
+Version:	1.8.2
+Release:	alt1_3jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
-Patch1:     patchOutDunce.patch
+Patch0:     patchOutDunce.patch
+Patch1:     issue1.patch
+Patch2:     issue2.patch
+Patch3:     issue3.patch
+Patch4:     PreventiveleQueue.patch
+Patch11:    issue1-bin.patch
+Patch33:    issue3-bin.patch
+Patch5:     testTuning.patch
 
 BuildRequires:  javapackages-tools
 #for deprecated add_maven_depmap, see https://www.spinics.net/lists/fedora-devel/msg233211.html
@@ -58,6 +65,8 @@ BuildRequires:  hamcrest
 BuildRequires:  libappstream-glib
 # new in 1.5 to have  clean up for malformed XMLs
 BuildRequires:  tagsoup
+# to apply binary tests for CVEs
+BuildRequires:      git
 
 # For functionality and the OpenJDK dirs
 Requires:      %{preffered_java}
@@ -98,14 +107,14 @@ Requires: %{_alt_javacandidate}
 %endif
 Provides: icedtea-web = %version-%release
 Obsoletes: mozilla-plugin-java-1.7.0-openjdk < 1.5
-Patch33: translation-desktop-files.patch
+Patch34: translation-desktop-files.patch
 Source45: Messages_ru.properties
 
 #BuildRequires: java-%javaver-%origin-devel
 
 %description
-The IcedTea-Web project provides a Java web browser plugin, an implementation
-of Java Web Start (originally based on the Netx project) and a settings tool to
+The IcedTea-Web project provides a an implementation of Java Web Start
+(originally based on the Netx project) and a settings tool to
 manage deployment settings for the aforementioned plugin and Web Start
 implementations. 
 
@@ -118,6 +127,8 @@ Requires(post,preun): alternatives
 # --- jpackage compatibility stuff starts here ---
 Provides:       javaws = %{javaws_ver}
 Obsoletes:      javaws-menu
+#Obsoletes:      java-1.7.0-openjdk-javaws
+#Obsoletes:      mozilla-plugin-java-1.7.0-openjdk
 # --- jpackage compatibility stuff ends here ---
 # due to the build specific
 Requires: mozilla-plugin-%altname = %version-%release
@@ -156,8 +167,21 @@ This package contains ziped sources of the IcedTea-Web project.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch0 -p1
 %patch1 -p1
-%patch33 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+if [ -e ../.git ] ; then
+  mv ../.git ../ggit
+fi
+git apply --no-index --binary -v %{PATCH11}
+git apply --no-index --binary -v %{PATCH33}
+if [ -e ../ggit ] ; then
+  mv ../ggit ../.git
+fi
+%patch34 -p2
 
 cp -f %SOURCE45 netx/net/sourceforge/jnlp/resources/Messages_ru.properties
 sed -i 's/en_US.UTF-8/en_US.UTF-8 ru_RU.UTF-8/' Makefile.am
@@ -360,6 +384,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_3jpp8
+- new version
+
 * Tue Jun 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2jpp8
 - restored Ivan Razzhivin patches
 
