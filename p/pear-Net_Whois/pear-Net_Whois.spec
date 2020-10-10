@@ -1,7 +1,7 @@
 %define pear_name Net_Whois
 
 Name: pear-Net_Whois
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: The PEAR::Net_Whois class provides a tool to query internet domain name and network number directory services
@@ -47,6 +47,9 @@ Network Information Centers (NICs).
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
+- new version 1.0.6 (with rpmrb script)
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5 (with rpmrb script)
 
