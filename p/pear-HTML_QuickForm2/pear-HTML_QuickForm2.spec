@@ -1,7 +1,7 @@
 %define pear_name HTML_QuickForm2
 
 Name: pear-HTML_QuickForm2
-Version: 2.0.2
+Version: 2.2.0
 Release: alt1
 
 Summary: PHP5 rewrite of HTML_QuickForm package
@@ -46,6 +46,9 @@ HTML_QuickForm and work with PHP5 E_STRICT setting.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
 - new version 2.0.2 (with rpmrb script)
 
