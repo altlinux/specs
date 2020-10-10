@@ -28,8 +28,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        85.0.4183.83
-Release:        alt2
+Version:        86.0.4240.75
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -67,20 +67,19 @@ Patch010: 0010-ALT-Fix-last-commit-position-issue.patch
 Patch011: 0011-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch012: 0012-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch013: 0013-FEDORA-Fix-gcc-round.patch
-Patch014: 0014-FEDORA-Fix-memcpy.patch
-Patch015: 0015-ALT-openh264-always-pic-on-x86.patch
-Patch016: 0016-ALT-allow-to-override-clang-through-env-variables.patch
-Patch017: 0017-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch018: 0018-ALT-Add-missing-header-on-aarch64.patch
-Patch019: 0019-GENTOO-Clang-allows-detection-of-these-builtins.patch
-Patch020: 0020-FEDORA-vtable-symbol-undefined.patch
-Patch021: 0021-FEDORA-remove-noexcept.patch
-Patch022: 0022-GENTOO-Chromium-compiled-with-system-ffmpeg-4.3.patch
-Patch023: 0023-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch024: 0024-IWYU-int8_t-used-in-nearby-share-encrypted-metadata-.patch
+Patch014: 0014-ALT-openh264-always-pic-on-x86.patch
+Patch015: 0015-ALT-allow-to-override-clang-through-env-variables.patch
+Patch016: 0016-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch017: 0017-ALT-Add-missing-header-on-aarch64.patch
+Patch018: 0018-FEDORA-vtable-symbol-undefined.patch
+Patch019: 0019-FEDORA-remove-noexcept.patch
+Patch020: 0020-ALT-disable-asm-on-x86-in-dav1d.patch
+Patch021: 0021-ALT-Disable-unknown-ld-flags.patch
+Patch022: 0022-ALT-Fix-memcpy.patch
 ### End Patches
 
 BuildRequires: /proc
+BuildRequires: /dev/shm
 
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
@@ -227,8 +226,6 @@ tar -xf %SOURCE1
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
-%patch023 -p1
-%patch024 -p1
 ### Finish apply patches
 
 echo > "third_party/adobe/flash/flapper_version.h"
@@ -493,6 +490,37 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Sat Oct 10 2020 Alexey Gladkov <legion@altlinux.ru> 86.0.4240.75-alt1
+- New version (86.0.4240.75).
+- Security fixes:
+  - CVE-2020-15967: Use after free in payments.
+  - CVE-2020-15968: Use after free in Blink.
+  - CVE-2020-15969: Use after free in WebRTC.
+  - CVE-2020-15970: Use after free in NFC.
+  - CVE-2020-15971: Use after free in printing.
+  - CVE-2020-15972: Use after free in audio.
+  - CVE-2020-15973: Insufficient policy enforcement in extensions.
+  - CVE-2020-15974: Integer overflow in Blink.
+  - CVE-2020-15975: Integer overflow in SwiftShader.
+  - CVE-2020-15976: Use after free in WebXR.
+  - CVE-2020-15977: Insufficient data validation in dialogs.
+  - CVE-2020-15978: Insufficient data validation in navigation.
+  - CVE-2020-15979: Inappropriate implementation in V8.
+  - CVE-2020-15980: Insufficient policy enforcement in Intents.
+  - CVE-2020-15981: Out of bounds read in audio.
+  - CVE-2020-15982: Side-channel information leakage in cache.
+  - CVE-2020-15983: Insufficient data validation in webUI.
+  - CVE-2020-15984: Insufficient policy enforcement in Omnibox.
+  - CVE-2020-15985: Inappropriate implementation in Blink.
+  - CVE-2020-15986: Integer overflow in media.
+  - CVE-2020-15987: Use after free in WebRTC.
+  - CVE-2020-15988: Insufficient policy enforcement in downloads.
+  - CVE-2020-15989: Uninitialized Use in PDFium.
+  - CVE-2020-15990: Use after free in autofill.
+  - CVE-2020-15991: Use after free in password manager.
+  - CVE-2020-15992: Insufficient policy enforcement in networking.
+  - CVE-2020-6557: Inappropriate implementation in networking.
+
 * Mon Sep 07 2020 Alexey Gladkov <legion@altlinux.ru> 85.0.4183.83-alt2
 - Drop third party VAAPI patch.
 
