@@ -1,14 +1,11 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: htrace
 Version: 3.1.0
-Release: alt1_9jpp8
+Release: alt1_10jpp8
 Summary: Tracing framework for java based distributed systems
 License: ASL 2.0
 URL:     https://%{name}.incubator.apache.org
@@ -16,12 +13,11 @@ Source0: https://archive.apache.org/dist/incubator/%{name}/%{name}-%{version}-in
 
 #BuildRequires: golang
 #BuildRequires: godep
-BuildRequires: java-devel
 BuildRequires: jackson-core
 BuildRequires: jackson-databind
 BuildRequires: jetty-util-ajax
 #BuildRequires: leveldb-devel
-BuildRequires: libthrift-java
+#BuildRequires: libthrift-java
 BuildRequires: maven-local
 BuildRequires: apache-parent
 BuildArch: noarch
@@ -34,7 +30,6 @@ written in java.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
@@ -42,6 +37,7 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{version}-incubating
 
+%pom_disable_module htrace-zipkin
 
 # disable hbase module because hbase package was retired
 %pom_disable_module htrace-hbase
@@ -76,7 +72,7 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :maven-shade-plugin htrace-core
 
 # skip install for zipkin
-%mvn_package ":%{name}-zipkin" __noinstall
+#mvn_package ":%{name}-zipkin" __noinstall
 
 %mvn_package ":%{name}-core"
 
@@ -93,6 +89,9 @@ This package contains javadoc for %{name}.
 %doc DISCLAIMER.txt
 
 %changelog
+* Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_10jpp8
+- fixed build
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_9jpp8
 - new version
 
