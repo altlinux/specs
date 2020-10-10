@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin
 
 Name:           %{target}-binutils
 Version:        2.32
-Release:        alt1_1
+Release:        alt1_5
 Epoch:          2
 Summary:        Cross Compiling GNU binutils targeted at %{target}
 License:        GPLv2+
@@ -19,6 +19,7 @@ Source0:        ftp://ftp.gnu.org/pub/gnu/binutils/binutils-%{version}.tar.xz
 Source1:        README.fedora
 #add widespread options to avr-size: --format=avr -mcu=XX
 Patch1: http://distribute.atmel.no/tools/opensource/avr-gcc/binutils-2.20.1/30-binutils-2.20.1-avr-size.patch
+Patch2: avr-binutils-config.patch
 
 BuildRequires:  gawk makeinfo gcc
 #for autoreconf:
@@ -36,17 +37,27 @@ native %{_arch} platform.
 %setup -q -c
 pushd binutils-%{version}
 %patch1 -p2 -b .avr-size
+%patch2 -p1 -b .config
 
 # known to fail on avr
 rm ld/testsuite/ld-elf/pr22450.*
-
 rm ld/testsuite/ld-elf/notes.*
+
+# We call configure directly rather than via macros, thus if
+# we are using LTO, we have to manually fix the broken configure
+# scripts
+pushd libiberty
+autoconf -f
+popd
+pushd intl
+autoconf -f
+popd
 
 popd 
 cp %{SOURCE1} .
 
-
 %build
+
 mkdir -p build
 pushd build
 CFLAGS="$RPM_OPT_FLAGS" ../binutils-%{version}/configure --prefix=%{_prefix} \
@@ -57,7 +68,7 @@ popd
 
 %check
 cd build
-%ifnarch %ix86
+%ifnarch %ix86 armh
 # on x86 can't find proper config, export does not help for gas
 export DEJAGNU=site.exp
 make check
@@ -68,7 +79,7 @@ pushd build
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 # these are for win targets only
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/%{target}-{dlltool,nlmconv,windres}.1 ||:
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/%{target}-{dlltool,windres}.1
 # we don't want these as we are a cross version
 rm -r $RPM_BUILD_ROOT%{_infodir}
 rm    $RPM_BUILD_ROOT%{_libdir}/libiberty.a ||:
@@ -84,7 +95,7 @@ fi
 
 
 %files
-%doc binutils-%{version}/COPYING binutils-%{version}/COPYING.LIB
+%doc --no-dereference binutils-%{version}/COPYING binutils-%{version}/COPYING.LIB
 %doc binutils-%{version}/README README.fedora
 %{_prefix}/%{target}
 %{_bindir}/%{target}-*
@@ -92,6 +103,9 @@ fi
 
 
 %changelog
+* Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 2:2.32-alt1_5
+- rebuild on armh
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 2:2.32-alt1_1
 - new version
 
