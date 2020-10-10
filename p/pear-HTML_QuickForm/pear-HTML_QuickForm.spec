@@ -1,7 +1,7 @@
 %define pear_name HTML_QuickForm
 
 Name: pear-HTML_QuickForm
-Version: 3.2.14
+Version: 3.2.15
 Release: alt1
 
 Summary: The PEAR::HTML_QuickForm package provides methods for creating, validating, processing HTML forms
@@ -62,6 +62,9 @@ Features:
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.15-alt1
+- new version 3.2.15 (with rpmrb script)
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 3.2.14-alt1
 - new version 3.2.14 (with rpmrb script)
 
