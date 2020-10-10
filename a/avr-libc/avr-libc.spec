@@ -1,8 +1,9 @@
 Epoch: 1
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%define fedora 28
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
  # FORCE NOARCH
@@ -14,9 +15,8 @@ BuildRequires: gcc-c++ unzip
 
 Name:           avr-libc
 Version:        2.0.0
-Release:        alt6_6
+Release:        alt6_9
 Summary:        C library for use with GCC on Atmel AVR microcontrollers
-Group:          Development/Tools
 License:        BSD
 URL:            http://www.nongnu.org/avr-libc/
 #Source0:        http://download.savannah.gnu.org/releases/avr-libc/avr-libc-%{version}.tar.bz2
@@ -45,8 +45,8 @@ closed-source commercial applications as possible.
 
 
 %package doc
+Group: Development/Tools
 Summary:        AVR C library docs in html and pdf format
-Group:          Development/Tools
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Obsoletes:      %{name}-docs < %{version}-%{release}
 BuildArch: noarch
@@ -141,6 +141,9 @@ chmod -R u=rwX,g=rX,o=rX $RPM_BUILD_ROOT%{_docdir}/%{name}/html
 %doc %{_docdir}/%{name}/%{name}*.pdf
 
 %changelog
+* Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt6_9
+- rebuild on armh
+
 * Wed Feb 06 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt6_6
 - added conflict for altbug#36040
 
