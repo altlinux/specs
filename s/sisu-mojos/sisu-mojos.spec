@@ -1,21 +1,20 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sisu-mojos
-Version:        0.3.1
-Release:        alt1_9jpp8
+Version:        0.3.3
+Release:        alt1_2jpp8
 Summary:        Sisu plugin for Apache Maven
 License:        EPL-1.0
 URL:            http://www.eclipse.org/sisu
 BuildArch:      noarch
 
-Source0:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.mojos.git/snapshot/releases/%{version}.tar.bz2#/%{name}-%{version}.tar.bz2
+Source0:        http://git.eclipse.org/c/sisu/org.eclipse.sisu.mojos.git/snapshot/releases/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -64,6 +63,9 @@ mv releases/%{version}/* .
 %doc LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_2jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_9jpp8
 - new version
 
