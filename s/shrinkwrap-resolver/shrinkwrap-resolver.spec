@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          shrinkwrap-resolver
 Version:       2.2.2
-Release:       alt2_6jpp8
+Release:       alt3_6jpp8
 Summary:       Java API to obtain Maven artifacts
 # Some file are without license headers
 # reported @ https://issues.jboss.org/projects/SHRINKRES/issues/SHRINKRES-242
@@ -51,7 +51,7 @@ BuildRequires: mvn(org.eclipse.aether:aether-util)
 BuildRequires: mvn(org.eclipse.aether:aether-connector-basic)
 BuildRequires: mvn(org.eclipse.aether:aether-transport-wagon)
 BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires: mvn(org.gradle:gradle-tooling-api)
+#BuildRequires: mvn(org.gradle:gradle-tooling-api)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 BuildRequires: mvn(org.jboss.shrinkwrap:shrinkwrap-api)
 BuildRequires: mvn(org.jboss.shrinkwrap:shrinkwrap-bom:pom:)
@@ -211,6 +211,10 @@ rm -rf */target
 %patch1 -p1
 %patch2 -p1
 
+# viy: no gradle
+%pom_disable_module depchain-gradle
+%pom_disable_module impl-gradle-embedded-archive
+
 # Build problems, use old configurations
 %pom_remove_plugin -r :maven-checkstyle-plugin
 %pom_remove_plugin ":maven-enforcer-plugin"
@@ -253,10 +257,10 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 %files depchain -f .mfiles-%{name}-depchain
 %doc --no-dereference LICENSE
 
-%files gradle-depchain -f .mfiles-%{name}-gradle-depchain
-%doc --no-dereference LICENSE
+#%files gradle-depchain -f .mfiles-%{name}-gradle-depchain
+#%doc --no-dereference LICENSE
 
-%files impl-gradle-embedded-archive -f .mfiles-%{name}-impl-gradle-embedded-archive
+#%files impl-gradle-embedded-archive -f .mfiles-%{name}-impl-gradle-embedded-archive
 %files impl-maven -f .mfiles-%{name}-impl-maven
 %files impl-maven-archive -f .mfiles-%{name}-impl-maven-archive
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
@@ -272,6 +276,9 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt3_6jpp8
+- build w/o gradle
+
 * Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt2_6jpp8
 - fixed build with new maven-resolver
 
