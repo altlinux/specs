@@ -1,7 +1,7 @@
 %define pear_name Log
 
 Name: pear-Log
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: Logging Framework
@@ -50,6 +50,9 @@ mechanisms.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.13.2-alt1
+- new version 1.13.2 (with rpmrb script)
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.13.1-alt1
 - new version 1.13.1 (with rpmrb script)
 
