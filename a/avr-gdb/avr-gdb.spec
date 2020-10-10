@@ -1,3 +1,4 @@
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/flex /usr/bin/m4 /usr/bin/runtest perl(Exporter.pm) swig texinfo
 # END SourceDeps(oneline)
@@ -8,9 +9,8 @@ BuildRequires: /usr/bin/pod2man
 
 Name:           %{target}-gdb
 Version:        8.1
-Release:        alt1_2
+Release:        alt1_4
 Summary:        GDB for (remote) debugging %{target} binaries
-Group:          Development/Tools
 License:        GPLv2+
 URL:            http://www.sourceware.org/gdb/
 Source0:        http://ftp.gnu.org/gnu/gdb/gdb-%{version}.tar.xz
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Sat Oct 10 2020 Igor Vlasenko <viy@altlinux.ru> 8.1-alt1_4
+- rebuild on armh
+
 * Wed Feb 06 2019 Igor Vlasenko <viy@altlinux.ru> 8.1-alt1_2
 - new version
 
