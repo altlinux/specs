@@ -1,5 +1,5 @@
 Name: papi
-Version: 5.7.0
+Version: 6.0.0
 Release: alt1
 
 Summary: Performance Application Programming Interface
@@ -16,8 +16,11 @@ Source: %name-%version.tar
 
 Requires: lib%name = %EVR
 
-BuildPreReq: libncurses-devel gcc-fortran /proc libsensors3-devel libgomp-devel
-BuildPreReq: libltdl-devel doxygen graphviz
+BuildRequires: /proc
+BuildRequires: libncurses-devel gcc-fortran libsensors3-devel libgomp-devel
+BuildRequires: libltdl-devel doxygen graphviz
+
+BuildRequires: chrpath
 
 %description
 PAPI aims to provide the tool designer and application engineer with a
@@ -66,31 +69,24 @@ This package contains documentation for PAPI.
 %prep
 %setup
 
-rm -fR src/perfctr-*
-cp -f src/Rules.pfm src/Rules.perfctr
-cp -f src/Rules.pfm src/Rules.perfctr-pfm
+#rm -fR src/perfctr-*
+#cp -f src/Rules.pfm src/Rules.perfctr
+#cp -f src/Rules.pfm src/Rules.perfctr-pfm
 
-%__subst 's|-Xlinker "-rpath" -Xlinker "\$(LIBDIR)"||' src/configure.in
+#__subst 's|-Xlinker "-rpath" -Xlinker "\$(LIBDIR)"||' src/configure.in
 
 %build
 cd src
 
-pushd components/lmsensors
-%autoreconf
-%configure \
-	--with-sensors_incdir=%_includedir/sensors \
-	--with-sensors_libdir=%_libdir
-popd
-
-#cp Makefile.inc Makefile.inc.bak
-#sed -i -e 's/\-Werror//g' libpfm-3.?/config.mk
+# TODO: fix build with static-lib=no
 %add_optflags %optflags_shared
 %autoreconf
 %configure \
 	--with-ffsll \
-	--with-static-lib=no \
-        --with-shlib \
-        --with-shlib-tools=yes \
+	--with-static-lib=yes \
+	--with-shlib \
+	--with-shared-lib=yes \
+	--with-shlib-tools=yes \
 	--with-virtualtimer=clock_thread_cputime_id \
 	--with-perf-events \
 	--with-libpfm4 \
@@ -106,16 +102,21 @@ cd src
 %makeinstall_std
 %make_install DESTDIR=%buildroot install-man
 
+%__subst "s|/usr/bin/python|/usr/bin/env python3|" %buildroot%_bindir/papi_hl_output_writer.py
+
+chrpath --delete %buildroot%_libdir/*.so*
+rm -rf %buildroot%_libdir/*.a
+
 install -d %buildroot%_docdir/%name
 cp -fR ../doc/html/* %buildroot%_docdir/%name/
 
-ln -s libpapi.so %buildroot%_libdir/libpapi64.so
-ln -s libpfm.so %buildroot%_libdir/libpfm64.so
+#ln -s libpapi.so %buildroot%_libdir/libpapi64.so
+#ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 
 rm -f %buildroot%_libdir/*.a
 
 %files
-%doc *.txt README
+%doc *.txt README.md
 %_bindir/*
 %_man1dir/*
 %_datadir/%name
@@ -133,6 +134,9 @@ rm -f %buildroot%_libdir/*.a
 %_docdir/%name
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
+- new version 6.0.0 (with rpmrb script)
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 5.7.0-alt1
 - new version (5.7.0) with rpmgs script
 - cleanup spec, change upstream source url
