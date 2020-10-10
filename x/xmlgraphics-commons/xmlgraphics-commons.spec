@@ -4,8 +4,8 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
-Version:        2.2
-Release:        alt1_3jpp8
+Version:        2.3
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -75,6 +75,9 @@ find -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_2jpp8
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_3jpp8
 - fc update & java 8 build
 
