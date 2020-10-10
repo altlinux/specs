@@ -1,7 +1,7 @@
 %define pear_name HTML_Table
 
 Name: pear-HTML_Table
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: PEAR::HTML_Table makes the design of HTML tables easy, flexible, reusable and efficient
@@ -57,6 +57,9 @@ http://pear.php.net/package/HTML_Table_Matrix
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- new version 1.8.4 (with rpmrb script)
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
 - new version 1.8.3 (with rpmrb script)
 
