@@ -1,8 +1,12 @@
+# TODO:
+#    --enable-redis-igbinary \
+#    --enable-redis-msgpack \
+
 %define		php7_extension	redis
 %define 	real_name	redis
 Name:	 	php7-%php7_extension
-Version:	5.1.1
-Release:	alt%php7_version.%php7_release.1
+Version:	5.3.1
+Release:	alt1
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
 Group:		System/Servers
@@ -16,6 +20,7 @@ Source2: php-redis-params.sh
 
 BuildRequires(pre): rpm-build-php7
 BuildRequires: php7-devel = %php7_version
+BuildRequires: liblzf-devel libzstd-devel liblz4-devel
 
 %description
 The phpredis extension provides an API for communicating with the Redis key-value store.
@@ -29,7 +34,13 @@ phpize
 %add_optflags -fPIC -L%_libdir
 export LDFLAGS=-lphp-%_php7_version
 %configure \
-	--with-libdir=%_lib
+    --with-libdir=%_lib \
+    --enable-redis-lzf \
+    --with-liblzf \
+    --enable-redis-zstd \
+    --with-libzstd \
+    --enable-redis-lz4 \
+    --with-liblz4
 
 %php7_make
 
@@ -52,6 +63,10 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%php7_version-%php7_release
+
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 5.3.1-alt1
+- new version 5.3.1
+- build with liblzf, libzstd, liblz4 support
 
 * Fri Dec 13 2019 Anton Farygin <rider@altlinux.org> 5.1.1-alt1
 - 3.1.2 -> 5.1.1
