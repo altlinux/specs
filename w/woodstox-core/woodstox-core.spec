@@ -1,28 +1,23 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name woodstox
-%global core_name %{base_name}-core
 
-Name:           %{core_name}
-Version:        5.0.3
-Release:        alt1_6jpp8
+Name:           woodstox-core
 Summary:        High-performance XML processor
+Version:        5.2.1
+Release:        alt1_1jpp8
 License:        ASL 2.0 or LGPLv2+ or BSD
-URL:            https://github.com/FasterXML/woodstox
-BuildArch:      noarch
 
-Source0:        https://github.com/FasterXML/%{base_name}/archive/%{name}-%{version}.tar.gz
-Patch0:         0001-stax2-api.patch
+URL:            https://github.com/FasterXML/woodstox
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
-BuildRequires:  mvn(javax.xml.stream:stax-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.msv:msv-core)
 BuildRequires:  mvn(net.java.dev.msv:msv-rngconverter)
@@ -39,45 +34,46 @@ XML processor means that it handles both input (== parsing)
 and output (== writing, serialization)), as well as supporting tasks
 such as validation.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
-Summary:          API documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package contains the API documentation for %{name}.
+
 
 %prep
 %setup -q -n %{base_name}-%{name}-%{version}
-
-%patch0 -p1
-
-%pom_xpath_inject 'pom:plugin[pom:artifactId="maven-bundle-plugin"]/pom:configuration' '
-<instructions>
-    <Export-Package>{local-packages}</Export-Package>
-</instructions>'
 
 %mvn_alias ":{woodstox-core}" :@1-lgpl :@1-asl :wstx-asl :wstx-lgpl \
     org.codehaus.woodstox:@1 org.codehaus.woodstox:@1-asl \
     org.codehaus.woodstox:@1-lgpl org.codehaus.woodstox:wstx-lgpl \
     org.codehaus.woodstox:wstx-asl
+
 %mvn_file : %{name}{,-asl,-lgpl}
 
-# Fails even when using online maven build
-rm ./src/test/java/org/codehaus/stax/test/stream/TestNamespaces.java
 
 %build
 %mvn_build
 
+
 %install
 %mvn_install
 
+
 %files -f .mfiles
 %doc README.md
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1_6jpp8
 - new version
 
