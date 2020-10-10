@@ -1,6 +1,6 @@
 %def_disable static
 %define gecko_version 2.47.1
-%define mono_version 5.1.0
+%define mono_version 5.1.1
 
 # rpm-build-info gives _distro_version
 %if %_vendor == "alt" && (%_distro_version == "p9" || %_distro_version == "Sisyphus")
@@ -11,8 +11,8 @@
 %endif
 
 Name: wine-vanilla
-Version: 5.18
-Release: alt3
+Version: 5.19
+Release: alt1
 
 Summary: Wine - environment for running Windows applications
 
@@ -125,6 +125,8 @@ which allows unmodified Windows binaries to run on x86 and x86_64
 Unixes. Wine does not require MS Windows, but it can use native system
 .dll files if they are available.
 
+This build uses only winehq upstream sources without any patches.
+
 %package test
 Summary: WinAPI test for Wine
 Summary(ru_RU.UTF-8): Тест WinAPI для Wine
@@ -232,6 +234,9 @@ Requires: lib%name = %EVR
 Conflicts: libwine-devel
 # Is it needed?
 Provides: libwine-devel = %version-%release
+
+# due winegcc require
+Requires: gcc-c++
 
 %description -n lib%name-devel
 lib%name-devel contains the header files and some utilities needed to
@@ -390,6 +395,8 @@ done
 
 %_libdir/wine/ntdll.so
 %_libdir/wine/user32.so
+%_libdir/wine/bcrypt.so
+%_libdir/wine/odbc32.so
 %_libdir/wine/*.com.so
 %_libdir/wine/*.cpl.so
 %_libdir/wine/*.drv.so
@@ -483,6 +490,10 @@ done
 %endif
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 5.19-alt1
+- new version 5.19
+- add gcc-c++ require to devel package (due winegcc)
+
 * Sun Oct 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.18-alt3
 - move additional files to .gear subdir (drop etersoft dir)
 - add Source git URL
