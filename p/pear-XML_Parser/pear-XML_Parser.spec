@@ -1,7 +1,7 @@
 %define pear_name XML_Parser
 
 Name: pear-XML_Parser
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 
 Summary: XML parsing class based on PHP's bundled expat
@@ -56,6 +56,9 @@ document with it.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt1
+- new version 1.3.8 (with rpmrb script)
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
 - new version 1.3.7 (with rpmrb script)
 
