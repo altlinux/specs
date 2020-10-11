@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,23 +12,21 @@ BuildRequires: jpackage-generic-compat
 %bcond_without dom4j
 
 Name:           jaxen
-Epoch:          0
-Version:        1.1.6
-Release:        alt1_19jpp8
 Summary:        An XPath engine written in Java
-# src/java/main/org/w3c/dom/UserDataHandler.java is W3C
-# rest is BSD
-License:        BSD and W3C
-URL:            http://jaxen.codehaus.org/
-BuildArch:      noarch
+Epoch:          0
+Version:        1.2.0
+Release:        alt1_2jpp8
+License:        BSD
 
-Source0:        http://dist.codehaus.org/jaxen/distributions/%{name}-%{version}-src.tar.gz
+URL:            https://github.com/jaxen-xpath/jaxen
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(jdom:jdom)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xml-apis:xml-apis)
 %if %{with dom4j}
@@ -46,24 +41,29 @@ Is it also possible to write adapters that treat non-XML trees such as compiled
 Java byte code or Java beans as XML, thus enabling you to query these trees
 with XPath too.
 
-%package demo
+
+%package        demo
 Group: Development/Documentation
 Summary:        Samples for %{name}
 Requires:       %{name} = 0:%{version}-%{release}
 
-%description demo
+%description    demo
 %{summary}.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Documentation
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 %{summary}.
 
+
 %prep
-%setup -q 
+%setup -q
+
+%pom_remove_plugin :maven-source-plugin
 
 %if %{without dom4j}
 rm -rf src/java/main/org/jaxen/dom4j
@@ -75,8 +75,10 @@ rm -rf src/java/main/org/jaxen/xom
 
 %mvn_file : %{name}
 
+
 %build
 %mvn_build -f
+
 
 %install
 %mvn_install
@@ -84,6 +86,7 @@ rm -rf src/java/main/org/jaxen/xom
 # demo
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/samples
 cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
+
 
 %files -f .mfiles
 %doc LICENSE.txt
@@ -94,7 +97,11 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 %files demo
 %{_datadir}/%{name}
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt1_2jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_19jpp8
 - new version
 
