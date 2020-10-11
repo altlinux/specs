@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty
 Version:        4.1.13
-Release:        alt1_9jpp8
+Release:        alt1_12jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
@@ -64,6 +61,7 @@ BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on)
 BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling)
 BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
 %endif
+
 Source44: import.info
 
 %description
@@ -205,7 +203,16 @@ sed -i 's|taskdef|taskdef classpathref="maven.plugin.classpath"|' all/pom.xml
 %mvn_package ':*-tests' __noinstall
 
 %build
+# Ensure we get the jit on arm
+%ifarch %{arm}
+export JAVA_HOME=$(ls -d %{_jvmdir}/java-1.8.0-openjdk-aarch32*)
+%else
+export JAVA_HOME=%{_jvmdir}/java
+%endif
+
+# Ensure we use distro compile flags
 export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
+
 %mvn_build -f
 
 %install
@@ -218,6 +225,9 @@ export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_12jpp8
+- update
+
 * Tue Apr 02 2019 Igor Vlasenko <viy@altlinux.ru> 4.1.13-alt1_9jpp8
 - fixed build (closes: #36463)
 
