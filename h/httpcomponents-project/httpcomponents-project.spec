@@ -1,18 +1,15 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           httpcomponents-project
 Summary:        Common POM file for HttpComponents
-Version:        9
-Release:        alt1_4jpp8
+Version:        11
+Release:        alt1_2jpp8
 License:        ASL 2.0
 URL:            http://hc.apache.org/
-Source0:        http://archive.apache.org/dist/httpcomponents/httpcomponents-parent/9/httpcomponents-parent-9.pom
+Source0:        http://archive.apache.org/dist/httpcomponents/httpcomponents-parent/%{version}/httpcomponents-parent-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
@@ -57,6 +54,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 11-alt1_2jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 9-alt1_4jpp8
 - new version
 
