@@ -1,18 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-parent
-Version:        19
-Release:        alt1_4jpp8
+Version:        23
+Release:        alt1_3jpp8
 Summary:        Parent POM file for Apache projects
 License:        ASL 2.0
 URL:            http://apache.org/
-Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
+Source0:        https://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -23,7 +23,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 Requires:       mvn(org.apache:apache-jar-resource-bundle)
 Source44: import.info
-Patch33: apache-parent-no-enforcer-loop.patch
 
 %description
 This package contains the parent pom file for apache projects.
@@ -32,7 +31,6 @@ This package contains the parent pom file for apache projects.
 %setup -n apache-%{version}
 
 %pom_remove_plugin :maven-site-plugin
-%patch33 -p1
 
 %build
 %mvn_build
@@ -44,6 +42,9 @@ This package contains the parent pom file for apache projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 23-alt1_3jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 19-alt1_4jpp8
 - new version
 
