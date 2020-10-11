@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
-Version:        3.1.1
-Release:        alt1_3jpp8
+Version:        3.2.1
+Release:        alt1_1jpp8
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -16,11 +16,10 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch0:         0001-Port-to-maven-dependency-tree-3.0.patch
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava:19.0)
+BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
@@ -34,11 +33,12 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jdom:jdom2)
+BuildRequires:  mvn(org.mockito:mockito-all)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.vafer:jdependency)
+BuildRequires:  mvn(xmlunit:xmlunit)
 Source44: import.info
-
 
 %description
 This plugin provides the capability to package the artifact in an
@@ -56,13 +56,18 @@ BuildArch: noarch
 
 %prep
 %setup -q
-%patch0 -p1
+
 rm src/test/jars/plexus-utils-1.4.1.jar
 ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
+%pom_remove_dep 'com.google.guava:guava:'
+%pom_add_dep 'com.google.guava:guava'
+
+sed -i 's/import org\.apache\.maven\.shared\.transfer\.artifact\.\(.*\)/import org.apache.maven.shared.artifact.\1/' src/main/java/org/apache/maven/plugins/shade/mojo/ShadeMojo.java
+sed -i 's/import org\.apache\.maven\.shared\.transfer\.artifact\.\(.*\)/import org.apache.maven.shared.artifact.\1/' src/test/java/org/apache/maven/plugins/shade/mojo/ShadeMojoTest.java
+
 %build
-# A class from aopalliance is not found. Simply adding BR does not solve it
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -74,6 +79,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_1jpp8
+- new version
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_3jpp8
 - new version
 
