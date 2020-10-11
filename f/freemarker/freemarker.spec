@@ -1,15 +1,21 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Conditionally build with a minimal dependency set
+%bcond_with jp_minimal
+
 Name:           freemarker
 Version:        2.3.28
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
@@ -34,7 +40,6 @@ BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: apache-commons-logging
 BuildRequires: aqute-bnd
-BuildRequires: dom4j >= 1.6.1
 BuildRequires: hamcrest
 BuildRequires: ivy-local
 BuildRequires: glassfish-jsp-api
@@ -44,11 +49,16 @@ BuildRequires: jaxen >= 1.1
 BuildRequires: jcl-over-slf4j
 BuildRequires: jdom >= 1.0
 BuildRequires: junit
-BuildRequires: jython
 BuildRequires: log4j-over-slf4j
-BuildRequires: rhino >= 1.6
 BuildRequires: slf4j
 BuildRequires: xalan-j2 >= 2.7.0
+
+%if %{without jp_minimal}
+BuildRequires: dom4j
+BuildRequires: saxpath
+BuildRequires: jython
+BuildRequires: rhino >= 1.6
+%endif
 Source44: import.info
 
 %description
@@ -86,9 +96,22 @@ rm ivysettings.xml
 sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
 sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
 
-# Drop unnecessary dep on saxpath and avalon
-sed -i -e '/saxpath/d' -e '/avalon-logkit/d' ivy.xml
+# Disable Java 8 javadoc linting
+sed -i '/<javadoc/a\ additionalparam="-Xdoclint:none"' build.xml
+
+# Drop unnecessary dep on avalon
+sed -i -e '/avalon-logkit/d' ivy.xml
 rm src/main/java/freemarker/log/_AvalonLoggerFactory.java
+
+%if %{with jp_minimal}
+# Drop dep on optional extra deps for minimal build
+sed -i -e '/"rhino"/d' -e '/"jython"/d' ivy.xml
+rm -rf src/main/java/freemarker/ext/{rhino,jython,ant}
+rm src/main/java/freemarker/template/utility/JythonRuntime.java
+# Drop dep on additional xml backends for minimal build
+sed -i -e '/dom4j/d' -e '/saxpath/d' ivy.xml
+rm src/main/java/freemarker/ext/xml/_Dom4jNavigator.java
+%endif
 
 %mvn_file org.%{name}:%{name} %{name}
 
@@ -107,6 +130,9 @@ ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.3.28-alt1_4jpp8
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.3.28-alt1_2jpp8
 - new version
 
