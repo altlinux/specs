@@ -1,5 +1,5 @@
 Name: xst
-Version: 0.7.1
+Version: 0.8.4
 Release: alt1
 
 Packager: %packager
@@ -41,9 +41,14 @@ xst is an in progress st fork that:
 %makeinstall DESTDIR=%buildroot PREFIX=%_exec_prefix MANPREFIX=%_mandir
 mkdir -p %buildroot/%docdir
 
-cp README.md %buildroot/%docdir/
-cp doc/* %buildroot/%docdir/
-rm -f %buildroot/%docdir/xst.1
+cp README %buildroot/%docdir/
+cp readme.org %buildroot/%docdir/
+cp FAQ %buildroot/%docdir/
+cp LEGACY %buildroot/%docdir/
+cp LICENSE %buildroot/%docdir/
+cp TODO %buildroot/%docdir/
+#cp Xresources %buildroot/%docdir/
+cp st.info %buildroot/%docdir/
 
 %files
 %_bindir/*
@@ -54,5 +59,8 @@ rm -f %buildroot/%docdir/xst.1
 %docdir/*
 
 %changelog
+* Sat Oct 10 2020 Andrey Bergman <vkni@altlinux.org> 0.8.4-alt1
+- Update to version 0.8.4
+
 * Sun Jun 23 2019 Andrey Bergman <vkni@altlinux.org> 0.7.1-alt1
 - Initial release for Sisyphus.
