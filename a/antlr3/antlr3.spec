@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat rpm-macros-java
-BuildRequires: gcc-c++ perl-devel unzip
+BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
@@ -11,13 +11,13 @@ BuildRequires: jpackage-1.8-compat
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 22
+%global baserelease 30
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Epoch:              1
 Version:            %{antlr_version}
-Release:            alt1_22jpp8
+Release:            alt1_30jpp8
 License:            BSD
 URL:                http://www.antlr3.org/
 
@@ -25,7 +25,7 @@ Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}/%{n
 #Source2:            http://www.antlr3.org/download/Python/antlr_python_runtime-%{python_runtime_version}.tar.gz
 Source3:            http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
 
-Patch0:             0001-java8-fix.patch
+Patch0:         0001-java8-fix.patch
 # Generate OSGi metadata
 Patch1:         osgi-manifest.patch
 # Increase the default conversion timeout to avoid build failures when complex
@@ -37,7 +37,12 @@ Patch3:         0003-fix-c-template.patch
 Patch4:         0004-eof-token.patch
 # Make parsers reproducible.  Patch from Debian.
 Patch5:         0005-reproducible-parsers.patch
+# Fix for C++20
+Patch6:         0006-antlr3memory.hpp-fix-for-C-20-mode.patch
+# Compile for target 1.8 to fix build with JDK 11
+Patch7:         0007-update-java-target.patch
 
+BuildRequires:  ant
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.antlr:antlr)
 BuildRequires:  mvn(org.antlr:antlr3-maven-plugin)
@@ -47,7 +52,6 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
 BuildRequires:      autoconf
@@ -158,10 +162,14 @@ sed -i "s,\${buildNumber},`cat %{_sysconfdir}/fedora-release` `date`," tool/src/
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 # remove pre-built artifacts
 find -type f -a -name *.jar -delete
 find -type f -a -name *.class -delete
+
+%pom_remove_parent
 
 %pom_disable_module antlr3-maven-archetype
 %pom_disable_module gunit
@@ -170,15 +178,6 @@ find -type f -a -name *.class -delete
 
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
-
-# compile for target 1.6, see BZ#842572
-sed -i 's/jsr14/1.6/' antlr3-maven-archetype/src/main/resources/archetype-resources/pom.xml \
-                      antlr3-maven-plugin/pom.xml \
-                                          gunit/pom.xml \
-                                          gunit-maven-plugin/pom.xml \
-                                          pom.xml \
-                                          runtime/Java/pom.xml \
-                                          tool/pom.xml
 
 # workarounds bug in filtering (Mark invalid)
 %pom_xpath_remove pom:resource/pom:filtering
@@ -212,7 +211,8 @@ popd
 # build ant task
 pushd antlr-ant/main/antlr3-task/
 export CLASSPATH=$(build-classpath ant)
-javac -encoding ISO-8859-1 antlr3-src/org/apache/tools/ant/antlr/ANTLR3.java
+javac -encoding ISO-8859-1 -source 1.8 -target 1.8 \
+  antlr3-src/org/apache/tools/ant/antlr/ANTLR3.java
 jar cvf ant-antlr3.jar \
   -C antlr3-src org/apache/tools/ant/antlr/antlib.xml \
   -C antlr3-src org/apache/tools/ant/antlr/ANTLR3.class
@@ -292,6 +292,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_30jpp8
+- fc update
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_22jpp8
 - build with java 8
 
