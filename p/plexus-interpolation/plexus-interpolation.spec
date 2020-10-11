@@ -1,24 +1,22 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-interpolation
-Version:        1.22
-Release:        alt1_11jpp8
+Version:        1.26
+Release:        alt1_2jpp8
 Summary:        Plexus Interpolation API
 License:        ASL 2.0 and ASL 1.1 and MIT
-URL:            https://github.com/codehaus-plexus/plexus-interpolation
+URL:            https://github.com/codehaus-plexus/%{name}
 BuildArch:      noarch
 
-Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 Source44: import.info
 
@@ -52,6 +50,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.26-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_11jpp8
 - new version
 
