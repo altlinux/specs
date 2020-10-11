@@ -8,14 +8,15 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-mime4j
-Version:        0.8.1
-Release:        alt1_3jpp8
 Summary:        Apache JAMES Mime4j
+Version:        0.8.3
+Release:        alt1_1jpp8
 License:        ASL 2.0
-URL:            http://james.apache.org/mime4j
-BuildArch:      noarch
 
+URL:            http://james.apache.org/mime4j
 Source0:        http://archive.apache.org/dist/james/mime4j/%{version}/james-mime4j-sources-%{version}.zip
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava:18.0)
@@ -33,13 +34,15 @@ Source44: import.info
 %description
 Java stream based MIME message parser.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
+
 
 %prep
 %setup -q -n james-mime4j
@@ -56,11 +59,14 @@ for p in core dom storage; do
   %mvn_file :*$p %{name}/%{name}-$p %{name}/$p
 done
 
+
 %build
-%mvn_build
+%mvn_build -f -- -Dmaven.test.skip.exec=true
+
 
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc RELEASE_NOTES.txt
@@ -69,7 +75,11 @@ done
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
+
 %changelog
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.8.3-alt1_1jpp8
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_3jpp8
 - fc update & java 8 build
 
