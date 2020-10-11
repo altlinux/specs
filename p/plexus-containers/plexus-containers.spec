@@ -1,55 +1,46 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-containers
-Version:        1.7.1
-Release:        alt1_9jpp8
 Summary:        Containers for Plexus
+Version:        2.0.0
+Release:        alt1_1jpp8
 # Most of the files are either under ASL 2.0 or MIT
 # The following files are under xpp:
 # plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/Driver.java
 # plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/MXParser.java
 License:        ASL 2.0 and MIT and xpp
-URL:            https://github.com/codehaus-plexus/plexus-containers
-BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
+URL:            https://github.com/codehaus-plexus/%{name}
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:        LICENSE.MIT
 
-Patch0:         0001-Port-to-current-qdox.patch
+BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava:20.0)
-BuildRequires:  mvn(commons-cli:commons-cli)
-BuildRequires:  mvn(com.sun:tools)
+BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.xbean:xbean-reflect)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-cli)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-all)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
+
+Obsoletes:      plexus-containers-component-javadoc < 2.0.0-1
 Source44: import.info
 
 
@@ -66,14 +57,6 @@ Group: Development/Java
 Summary:        Component metadata from %{name}
 
 %description component-metadata
-%{summary}.
-
-%package component-javadoc
-Group: Development/Java
-Summary:        Javadoc component from %{name}
-BuildArch: noarch
-
-%description component-javadoc
 %{summary}.
 
 %package component-annotations
@@ -101,24 +84,12 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-%patch0 -p1
-
 cp %{SOURCE1} .
 cp %{SOURCE2} .
 
 %pom_remove_plugin -r :maven-site-plugin
 
-# For Maven 3 compat
-%pom_add_dep org.apache.maven:maven-core plexus-component-metadata
-
-%pom_change_dep -r :google-collections com.google.guava:guava:20.0
-
-# ASM dependency was changed to "provided" in XBean 4.x, so we need to provide ASM
-%pom_add_dep org.ow2.asm:asm:5.0.3:runtime plexus-container-default
-%pom_add_dep org.ow2.asm:asm-commons:5.0.3:runtime plexus-container-default
-
-%pom_remove_dep com.sun:tools plexus-component-javadoc
-%pom_add_dep com.sun:tools plexus-component-javadoc
+%pom_change_dep -r :google-collections com.google.guava:guava
 
 # Generate OSGI info
 %pom_xpath_inject "pom:project" "
@@ -139,20 +110,16 @@ cp %{SOURCE2} .
       </plugins>
     </build>" plexus-component-annotations
 
-# to prevent ant from failing
-mkdir -p plexus-component-annotations/src/test/java
-
-# integration tests fix
-sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|" plexus-component-javadoc/src/it/basic/pom.xml
-
 # plexus-component-api has been merged into plexus-container-default
 %mvn_alias ":plexus-container-default" "org.codehaus.plexus:containers-component-api"
 
 # keep compat symlink for maven's sake
 %mvn_file ":plexus-component-annotations" %{name}/plexus-component-annotations plexus/containers-component-annotations
 
+
 %build
 %mvn_build -f -s
+
 
 %install
 %mvn_install
@@ -161,19 +128,24 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 # plexus-containers pom goes into main package
 %files -f .mfiles-plexus-containers
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
+
 %files component-annotations -f .mfiles-plexus-component-annotations
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
+
 %files container-default -f .mfiles-plexus-container-default
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
+
 %files component-metadata -f .mfiles-plexus-component-metadata
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
-%files component-javadoc -f .mfiles-plexus-component-javadoc
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_1jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_9jpp8
 - new version
 
