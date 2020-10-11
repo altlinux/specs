@@ -12,13 +12,13 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without     memcached
-%bcond_without     ehcache
+%bcond_with        memcached
+%bcond_with        ehcache
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.5.7
-Release:           alt1_1jpp8
+Release:           alt1_3jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
@@ -39,8 +39,8 @@ BuildRequires:     mvn(net.sf.ehcache:ehcache-core)
 BuildRequires:     mvn(net.spy:spymemcached)
 %endif
 BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:     mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:     mvn(org.apache.httpcomponents:project:pom:)
 BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:     mvn(org.easymock:easymock)
 BuildRequires:     mvn(org.mockito:mockito-core)
@@ -196,6 +196,9 @@ rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.5.7-alt1_3jpp8
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 4.5.7-alt1_1jpp8
 - new version
 
