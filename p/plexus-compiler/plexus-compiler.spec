@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,8 +16,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:       plexus-compiler
 Epoch:      0
-Version:    2.8.2
-Release:    alt1_4jpp8
+Version:    2.8.5
+Release:    alt1_1jpp8
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
@@ -100,6 +99,7 @@ cp %{SOURCE2} LICENSE.MIT
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
 # Tests are skipped because of unavailable plexus-compiler-test artifact
@@ -118,6 +118,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8.5-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_4jpp8
 - new version
 
