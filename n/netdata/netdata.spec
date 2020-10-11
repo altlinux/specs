@@ -1,9 +1,9 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 8791814f90df83c3340aa0cdd75cf908fca58084
+%define release_commit d4ff1ea72c44f11a7debeb157ab09be882373900
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -21,6 +21,9 @@ Source1: netdata.logrotate
 
 BuildRequires: bash4
 BuildRequires: libuuid-devel zlib-devel libcups-devel libuv-devel libprotobuf-devel liblz4-devel
+
+# TODO: ebpf.plugin (see configure.ac)
+BuildRequires: libelf-devel
 
 Requires: bash4
 
@@ -192,6 +195,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt1
+- new version 1.25.0 (with rpmrb script)
+
 * Mon Aug 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.24.0-alt1
 - new version 1.24.0 (with rpmrb script)
 
