@@ -1,23 +1,22 @@
 Group: Development/Java
 Obsoletes: ecj-standalone <= 3.4.2-alt4_0jpp6
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier S-4.11RC1-201903010040
+%global qualifier R-4.12-201906051800
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.11
-Release: alt1_0.1jpp9
+Version: 4.12
+Release: alt1_2jpp8
 URL: http://www.eclipse.org
 License: EPL-2.0
 
-Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}RC1.jar
-Source1: ecj.sh.in
-Source3: https://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/%{version}/ecj-%{version}.pom
+Source0: http://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
+Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.18.0/ecj-3.18.0.pom
 # Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
 Source4: MANIFEST.MF
 # Java API stubs for newer JDKs
@@ -57,21 +56,16 @@ the JDT Core batch compiler.
 
 sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
 
-cp %{SOURCE3} pom.xml
+cp %{SOURCE1} pom.xml
 mkdir -p scripts/binary/META-INF/
 cp %{SOURCE4} scripts/binary/META-INF/MANIFEST.MF
 
 # JDTCompilerAdapter isn't used by the batch compiler
 rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java
 
-# No dep on ant needed
-%pom_remove_dep org.apache.ant:ant
-
-# Symlinks and aliases
-%mvn_file :ecj ecj jdtcore
-%mvn_alias org.eclipse.jdt.core.compiler:ecj \
-  org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt \
-  org.eclipse.jdt:core org.eclipse.jdt:ecj
+# Aliases
+%mvn_alias org.eclipse.jdt:ecj org.eclipse.jdt:core org.eclipse.jdt.core.compiler:ecj \
+  org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt
 
 # Make Java API stubs available for other packages
 %mvn_artifact "org.eclipse:java10api:jar:10" %{SOURCE5}
@@ -97,18 +91,26 @@ ant -Djavaapi=%{SOURCE5}
 %mvn_install
 
 # Install the ecj wrapper script
-install -p -D -m0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/ecj
+%jpackage_script org.eclipse.jdt.internal.compiler.batch.Main '' '' ecj ecj true
 
 # Install manpage
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 
+# viy: compat symlink for gradle
+ln -s ecj/ecj.jar %buildroot%_javadir/ecj.jar
+
 %files -f .mfiles
 %doc --no-dereference about.html
+# compat symlink for gradle
+%_javadir/ecj.jar
 %{_bindir}/ecj
 %{_mandir}/man1/ecj*
 
 %changelog
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_2jpp8
+- new version
+
 * Sat Jul 06 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_0.1jpp9
 - rebuild with java 9
 
