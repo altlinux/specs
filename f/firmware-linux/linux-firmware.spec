@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20200923
+Version: 20200929
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -82,6 +82,23 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/liquidio
 
 %changelog
+* Sun Oct 11 2020 Cronbuild Service <cronbuild@altlinux.org> 20200929-alt1
+- upstream changes (GIT 58d41d0):
+  + ice: Add comms package file for Intel E800 series driver (thx Tony Nguyen)
+  + copy-firmware: Always write Link: entries (thx Tony Nguyen)
+  + amdgpu: update vega20 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update picasso firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware for 20.40 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 20.40 (thx Alex Deucher)
+  + Add new VPDMA firmware 1b8.bin (thx Nikhil Devshatwar)
+  + QCA : Updated firmware files for WCN3991 (thx Asit Shah)
+
 * Sun Oct 04 2020 Cronbuild Service <cronbuild@altlinux.org> 20200923-alt1
 - upstream changes (GIT b78a66c):
   + Update firmware for Cadence MHDP8546 DP bridge (thx Swapnil Jakhade)
