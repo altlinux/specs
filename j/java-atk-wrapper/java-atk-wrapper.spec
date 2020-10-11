@@ -2,31 +2,30 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xprop imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global major_version 0.33
-%global minor_version 2
-%global libver 5.0.0
+%global minor_version 2.1
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt6_9jpp8
+Release:    alt1_0.pre01jpp8
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
 URL:        http://git.gnome.org/browse/java-atk-wrapper
-Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
+Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.gz
 # this is a fedora-specific file
 # needed to explain how to use java-atk-wrapper with different java runtimes
 Source1:    README.fedora
 Patch1:		removeNotExistingManifestInclusion.patch
 
-BuildRequires:  java-devel
 
 BuildRequires:	gcc
 BuildRequires:	gcc-c++
+BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
@@ -35,6 +34,7 @@ BuildRequires:  xorg-utils
 BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
 BuildRequires:  libat-spi2-core-devel libat-spi2-core-gir-devel
+BuildRequires:  gobject-introspection-devel
 
 
 Requires:   java
@@ -54,12 +54,9 @@ change of underlying communication mechanism.
 %prep
 %setup -q
 %patch1
-# Source contains a pre-built AtkWrapper.java with incorrect path to xprop (should 
-# be in /usr/bin/ not /opt/X11/bin/). The real source file is AtkWrapper.java.in, 
-# so explicitly remove the pre-built file before building.
-rm wrapper/org/GNOME/Accessibility/AtkWrapper.java
 
 %build
+sh autogen.sh
 %configure
 %make_build
 cp %{SOURCE1} .
@@ -73,8 +70,8 @@ cp %{SOURCE1} .
 mkdir -p %{buildroot}%{_libdir}/%{name}
 
 mv wrapper/java-atk-wrapper.jar %{buildroot}%{_libdir}/%{name}/
-mv jni/src/.libs/libatk-wrapper.so.%{libver} %{buildroot}%{_libdir}/%{name}/
-ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
+mv jni/src/.libs/libatk-wrapper.so %{buildroot}%{_libdir}/%{name}/
+ln -s %{_libdir}/%{name}/libatk-wrapper.so \
     %{buildroot}%{_libdir}/%{name}/libatk-wrapper.so.0
 
 
@@ -88,6 +85,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.33.2.1-alt1_0.pre01jpp8
+- new version
+
 * Wed Aug 05 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.33.2-alt6_9jpp8
 - drop llvm buildreqs
 
