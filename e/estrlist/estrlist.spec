@@ -1,5 +1,5 @@
 Name: estrlist
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: estrlist - string operation utility
@@ -30,5 +30,8 @@ install -D bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- estrlist: fix exclude, fix exclude tests
+
 * Wed Oct 07 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus (separated from etersoft-build-utils)

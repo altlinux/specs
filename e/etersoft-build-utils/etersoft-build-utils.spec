@@ -1,12 +1,12 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
 
-License: Public domain
+License: Apache-2.0
 Group: Development/Other
 Url: http://www.altlinux.org/Etersoft-build-utils
 
@@ -25,7 +25,7 @@ BuildArchitectures: noarch
 Requires: giter >= 1.10
 Requires: eepm >= 2.1.0
 Requires: erc >= 0.9.2
-Requires: estrlist >= 0.1
+Requires: estrlist >= 0.2
 
 Requires: rpm-build
 #Requires: rpm-build-compat >= %altcompat_ver
@@ -69,6 +69,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sun Oct 11 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
+- gita: delsub allows list of subtask or packages (mixed)
+- set Apache license, add LICENSE file
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - gitask: use improved message
 - rpmbs: disable obsoleted checking
