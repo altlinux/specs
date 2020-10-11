@@ -8,8 +8,8 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    c3p0
-Version: 0.9.5
-Release: alt1_0.8.pre8jpp8
+Version: 0.9.5.4
+Release: alt1_2jpp8
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2 or EPL
 URL:     https://github.com/swaldman/c3p0
@@ -20,7 +20,7 @@ BuildRequires: mchange-commons >= 0.2.7
 
 Requires: mchange-commons >= 0.2.7
 
-Source0: https://github.com/swaldman/c3p0/archive/c3p0-%{version}-pre8.tar.gz
+Source0: https://github.com/swaldman/c3p0/archive/c3p0-%{version}.tar.gz
 
 BuildArch: noarch
 Source44: import.info
@@ -40,7 +40,7 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}-pre8
+%setup -q -n %{name}-%{name}-%{version}
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -58,7 +58,7 @@ sed -i -e "s|@c3p0.version.maven@|%{version}|g" \
   -e "s|@mchange-commons-java.version.maven@|0.2.7|g" \
   src/maven/pom.xml
 
-%mvn_artifact src/maven/pom.xml build/c3p0-%{version}-pre8.jar
+%mvn_artifact src/maven/pom.xml build/c3p0-%{version}.jar
 %mvn_alias : c3p0:c3p0
 
 %install
@@ -80,6 +80,9 @@ cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5.4-alt1_2jpp8
+- new version
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt1_0.8.pre8jpp8
 - fc update & java 8 build
 
