@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 BuildRequires: rpm-build-java-osgi
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -15,7 +12,7 @@ BuildRequires: rpm-build-java-osgi
 %global api_version 2.1
 Name:          eclipselink-persistence-api
 Version:       2.1.0
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       JPA 2.1 Spec OSGi Bundle
 License:       EPL and ASL 2.0
 URL:           http://www.eclipse.org/eclipselink/
@@ -24,9 +21,9 @@ Source0:       http://git.eclipse.org/c/eclipselink/javax.persistence.git/snapsh
 Source1:       eclipse-javax.persistence-template.pom.xml
 
 BuildRequires: java-javadoc
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.osgi:osgi.core)
 
 BuildArch:     noarch
 Source44: import.info
@@ -49,6 +46,9 @@ cp -p %{SOURCE1} pom.xml
 sed -i "s|@VERSION@|%{version}|" pom.xml
 sed -i "s|@API_VERSION@|%{api_version}|" pom.xml
 sed -i "s|@IMPL_VERSION@|%{namedversion}|" pom.xml
+
+# Switch which OSGi APIs are used at compile time
+%pom_change_dep "org.eclipse.osgi:org.eclipse.osgi" "org.osgi:osgi.core:6.0.0:provided"
 
 cp -p resource/{about,license,readme}.html .
 
@@ -79,6 +79,9 @@ done
 %doc --no-dereference license.html readme.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_9jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_7jpp8
 - new version
 
