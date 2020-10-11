@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_19jpp8
+Release: alt1_21jpp8
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{origname}-%%{version}.zip
@@ -46,7 +46,7 @@ find . -name "*.jar" -exec rm -f {} \;
 mkdir -p lib
 build-jar-repository -s -p lib commons-logging-api libbase libloader
 cd lib
-ln -s %{_javadir}/ant ant-contrib
+ln -s /usr/share/java/ant ant-contrib
 
 %build
 ant jar javadoc
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_21jpp8
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_19jpp8
 - fc update & java 8 build
 
