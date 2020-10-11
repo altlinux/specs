@@ -1,10 +1,7 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,14 +10,13 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# hadoop was retired
-%bcond_without hadoop
-%bcond_without ftp
+%bcond_with    hadoop
+%bcond_with    ftp
 %bcond_without ssh
 
 Name:          apache-commons-vfs
 Version:       2.1
-Release:       alt1_14jpp8
+Release:       alt1_16jpp8
 Summary:       Commons Virtual File System
 License:       ASL 2.0
 Url:           http://commons.apache.org/vfs/
@@ -187,6 +183,9 @@ install -p -m 644 commons-vfs %{buildroot}%{_sysconfdir}/ant.d/commons-vfs
 %config %{_sysconfdir}/ant.d/commons-vfs
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_16jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_14jpp8
 - new version
 
