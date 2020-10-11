@@ -1,10 +1,10 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # set to 0 provides a minimal test suite
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          openjpa
 Version:       2.4.1
-Release:       alt2_10jpp8
+Release:       alt2_12jpp8
 Summary:       Java Persistence 2.0 API
 # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
@@ -38,32 +38,27 @@ BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
-BuildRequires: mvn(mysql:mysql-connector-java)
 BuildRequires: mvn(net.sourceforge.serp:serp)
 BuildRequires: mvn(org.apache:apache:pom:)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.ant:ant-jsch)
 BuildRequires: mvn(org.apache.bval:bval-core)
-BuildRequires: mvn(org.apache.bval:bval-jsr303)
+BuildRequires: mvn(org.apache.bval:bval-jsr)
 BuildRequires: mvn(org.apache.commons:commons-jci-rhino)
 BuildRequires: mvn(org.apache.derby:derby)
-BuildRequires: mvn(org.apache.derby:derbyclient)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-validation_1.0_spec)
-BuildRequires: mvn(org.apache.geronimo.specs:specs:pom:)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
-BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires: mvn(org.apache.xbean:xbean-finder)
-BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
@@ -219,6 +214,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_12jpp8
+- update
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_10jpp8
 - new version
 
