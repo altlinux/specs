@@ -1,10 +1,7 @@
 Epoch: 1
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #global _check 1
@@ -14,7 +11,7 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt1_9jpp8
+Release:    alt1_11jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -67,6 +64,9 @@ rm -rf lib/*
 %pom_disable_module "pom-main-shaded.xml" pom-main.xml
 %mvn_alias :closure-compiler-unshaded :closure-compiler
 
+# Make static analysis annotations have provided scope
+%pom_xpath_inject "pom:dependency[pom:artifactId='jsr305']" "<scope>provided</scope>" pom-main.xml
+
 # Fix OSGi metadata
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']" \
 "<configuration><instructions>
@@ -103,6 +103,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %doc --no-dereference COPYING
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_11jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_9jpp8
 - new version
 
