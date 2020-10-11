@@ -1,16 +1,15 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-
 Name:          maven-dependency-tree
-Version:       3.0
-Release:       alt1_7jpp8
+Version:       3.0.1
+Release:       alt1_2jpp8
 Summary:       Maven dependency tree artifact
 License:       ASL 2.0
 Url:           http://maven.apache.org/
@@ -29,7 +28,6 @@ BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.eclipse.aether:aether-util)
 
 Provides:      maven-shared-dependency-tree = %{version}-%{release}
-Obsoletes:     maven-shared-dependency-tree < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -66,6 +64,9 @@ find -name Maven3DependencyGraphBuilder.java -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_7jpp8
 - new version
 
