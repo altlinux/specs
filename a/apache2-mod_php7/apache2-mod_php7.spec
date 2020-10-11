@@ -3,7 +3,7 @@
 
 Name: apache2-mod_php7
 Version: %php7_version
-Release: %php7_release.1
+Release: %php7_release.2
 
 Summary: The php7 HTML-embedded scripting language for use with Apache2
 
@@ -17,7 +17,7 @@ Source2: %name-browscap.ini
 Patch0: apache2-mod_php7-7.1.0.patch
 Patch1: php-alt-namespace.patch
 
-BuildRequires(pre): rpm-build-php7
+BuildRequires(pre): rpm-build-php7 rpm-macros-apache2
 BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel php7-devel zlib-devel libsqlite3-devel
 BuildRequires: php7-devel = %php7_version
 
