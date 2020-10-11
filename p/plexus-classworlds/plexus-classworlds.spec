@@ -1,23 +1,20 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-classworlds
-Version:        2.5.2
-Release:        alt2_11jpp8
+Version:        2.6.0
+Release:        alt1_2jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
 BuildArch:      noarch
 
-Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -29,9 +26,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(xml-apis:xml-apis)
-
-Obsoletes:      classworlds < 1.1-13
 Source44: import.info
+
 
 %description
 Classworlds is a framework for container developers
@@ -69,6 +65,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_11jpp8
 - new version
 
