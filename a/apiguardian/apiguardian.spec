@@ -4,16 +4,16 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apiguardian
-Version:        1.0.0
-Release:        alt1_4jpp8
 Summary:        API Guardian Java annotation
+Version:        1.1.0
+Release:        alt1_2jpp8
 License:        ASL 2.0
+
 URL:            https://github.com/apiguardian-team/apiguardian
-BuildArch:      noarch
-
-Source0:        https://github.com/apiguardian-team/apiguardian/archive/r%{version}.tar.gz
-
+Source0:        https://github.com/apiguardian-team/apiguardian/archive/r%{version}/%{name}-%{version}.tar.gz
 Source100:      https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/%{version}/apiguardian-api-%{version}.pom
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 Source44: import.info
@@ -25,18 +25,21 @@ methods, constructors, and fields within a framework or application in
 order to publish their API status and level of stability and to
 indicate how they are intended to be used by consumers of the API.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 API documentation for %{name}.
 
+
 %prep
-%setup -q -n apiguardian-r%{version}
-find -name \*.jar -delete
-cp -p %{SOURCE100} pom.xml
+%setup -q -n %{name}-r%{version}
+find -name "*.jar" -print -delete
+
+cp -pav %{SOURCE100} pom.xml
 
 # Inject OSGi manifest required by Eclipse
 %pom_xpath_inject pom:project "
@@ -72,8 +75,10 @@ cp -p %{SOURCE100} pom.xml
 %build
 %mvn_build
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
@@ -81,7 +86,11 @@ cp -p %{SOURCE100} pom.xml
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
 - explicit build with java8
 
