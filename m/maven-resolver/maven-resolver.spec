@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           maven-resolver
 Epoch:          1
-Version:        1.3.1
+Version:        1.3.3
 Release:        alt1_2jpp8
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
@@ -187,6 +187,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_2jpp8
+- new version
+
 * Wed Jul 10 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1_2jpp8
 - new version
 
