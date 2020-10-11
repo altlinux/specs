@@ -3,12 +3,23 @@
 
 Name: apache2-mod_php7
 Version: %php7_version
-Release: %php7_release
+Release: %php7_release.1
 
 Summary: The php7 HTML-embedded scripting language for use with Apache2
+
 Group: System/Servers
 License: PHP-3.01
 Url: http://www.php.net/
+
+Source1: php.ini
+Source2: %name-browscap.ini
+
+Patch0: apache2-mod_php7-7.1.0.patch
+Patch1: php-alt-namespace.patch
+
+BuildRequires(pre): rpm-build-php7
+BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel php7-devel zlib-devel libsqlite3-devel
+BuildRequires: php7-devel = %php7_version
 
 Requires: php7 = %php7_version
 Requires: php7 >= %php7_version-%php7_release
@@ -18,16 +29,6 @@ Requires(post): apache2-base
 
 Conflicts: apache2-mod_php5
 Provides: php-engine = %php7_version-%php7_release
-
-Source1: php.ini
-Source2: %name-browscap.ini
-
-Patch0: apache2-mod_php7-7.1.0.patch
-Patch1: php-alt-namespace.patch
-
-BuildRequires(pre): rpm-build-php7 apache2-devel
-BuildRequires: apache2-devel apache2-httpd-worker libmm-devel libxml2-devel php7-devel zlib-devel libsqlite3-devel
-BuildRequires: php7-devel = %php7_version
 
 %description
 PHP is an HTML-embedded scripting language. PHP attempts to make it
@@ -136,7 +137,7 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with new PHP
 
-* Tue Mar 29 2016 Anton Farygin <rider@altlinux.org> 5.6.19.20160303-alt1 
+* Tue Mar 29 2016 Anton Farygin <rider@altlinux.org> 5.6.19.20160303-alt1
 - Rebuild with php5-5.6.19.20160303-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
