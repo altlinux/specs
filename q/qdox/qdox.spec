@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global vertag  M9
@@ -11,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_4.M9jpp8
+Release:        alt1_6.M9jpp8
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
@@ -23,6 +20,7 @@ Source1:        qdox-MANIFEST.MF
 # Remove bundled binaries which are possibly proprietary
 Source2:        generate-tarball.sh
 
+Patch0:         0001-Port-to-JFlex-1.7.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
@@ -53,6 +51,7 @@ API docs for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}-%{vertag}
+%patch0 -p1
 find -name *.jar -delete
 rm -rf bootstrap
 
@@ -69,8 +68,8 @@ rm -rf bootstrap
 
 %build
 # Generate scanners (upstream does this with maven-jflex-plugin)
-jflex --inputstreamctor -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/lexer.flex
-jflex --inputstreamctor -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/commentlexer.flex
+jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/lexer.flex
+jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/commentlexer.flex
 
 # Build artifact
 %mvn_build -f -- -Dqdox.byaccj.executable=byaccj
@@ -88,6 +87,9 @@ jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
 %doc LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_6.M9jpp8
+- update
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_4.M9jpp8
 - new version
 

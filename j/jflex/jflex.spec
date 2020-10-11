@@ -2,10 +2,10 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-emacs
-BuildRequires: /usr/bin/desktop-file-install rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,8 +19,8 @@ BuildRequires: jpackage-generic-compat
 
 Summary:        Fast Scanner Generator
 Name:           jflex
-Version:        1.6.1
-Release:        alt2_13jpp8
+Version:        1.7.0
+Release:        alt1_1jpp8
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
@@ -32,19 +32,20 @@ Source3:        %{name}.png
 Source4:        %{name}.1
 Source5:        create-tarball.sh
 
-BuildRequires:  maven-local
-BuildRequires:  ant
 BuildRequires:  jflex
-BuildRequires:  junit
-BuildRequires:  sonatype-oss-parent
-BuildRequires:  java-devel
-BuildRequires:  java_cup
+BuildRequires:  maven-local
+BuildRequires:  mvn(java_cup:java_cup)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+
 %if %{with desktop}
 BuildRequires:  desktop-file-utils
 %endif
+
 %if %{with emacs}
 BuildRequires:  emacs
 %endif
+
 # Explicit javapackages-tools requires since scripts use
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
@@ -74,12 +75,26 @@ This package provides %{summary}.
 %mvn_file : %{name}
 %pom_add_dep java_cup:java_cup
 
-%pom_remove_plugin :maven-antrun-plugin
 %pom_remove_plugin :jflex-maven-plugin
+%pom_remove_plugin :cup-maven-plugin
+%pom_remove_plugin :maven-shade-plugin
+%pom_remove_dep :cup_runtime
 
 # Tests fail with 320k stacks (default on i686), so lets increase
 # stack to 16M to avoid stack overflows.  See rhbz#1119308
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration" "<argLine>-Xss16384k</argLine>"
+
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-site-plugin']" parent.xml
+%pom_xpath_remove "pom:plugin[pom:artifactId='fmt-maven-plugin']" parent.xml
+%pom_xpath_remove "pom:plugin[pom:artifactId='cup-maven-plugin']" parent.xml
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-shade-plugin']" parent.xml
+
+%pom_xpath_remove "pom:dependency[pom:artifactId='plexus-compiler-javac-errorprone']" parent.xml
+%pom_xpath_remove "pom:dependency[pom:artifactId='error_prone_core']" parent.xml
+%pom_xpath_remove "pom:compilerId" parent.xml
+%pom_xpath_remove "pom:compilerArgs" parent.xml
+
+sed -i /%%inputstreamctor/d src/main/jflex/LexScan.flex
 
 %build
 java -jar $(find-jar java_cup) -parser LexParse -interface -destdir src/main/java src/main/cup/LexParse.cup
@@ -138,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt1_1jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_13jpp8
 - new version
 
