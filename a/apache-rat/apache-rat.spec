@@ -1,36 +1,36 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-rat
-Version:        0.12
-Release:        alt1_8jpp8
 Summary:        Apache Release Audit Tool (RAT)
-
+Version:        0.13
+Release:        alt1_7jpp8
 License:        ASL 2.0
+
 URL:            http://creadur.apache.org/rat/
 Source0:        http://www.apache.org/dist/creadur/%{name}-%{version}/%{name}-%{version}-src.tar.bz2
-BuildArch:      noarch
 
 Patch1:         0001-Port-to-current-doxia-sitetools.patch
+
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-antunit)
 BuildRequires:  mvn(org.apache.ant:ant-testutil)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
@@ -65,53 +65,56 @@ It is therefore highly tuned to the Apache style of releases.
 This package just contains meta-data, you will want either apache-rat-tasks,
 or apache-rat-plugin.
 
-%package api
+
+%package        api
 Group: Development/Other
 Summary:        API module for %{name}
 
-%description api
+%description    api
 Shared beans and services.
 
-%package core
+
+%package        core
 Group: Development/Java
 Summary:        Core functionality for %{name}
-# Explicit requires for javapackages-tools since apache-rat-script
+
+# explicit requires for javapackages-tools since apache-rat-script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
 
-%description core
+%description    core
 The core functionality of RAT, shared by the Ant tasks, and the Maven plugin.
 It also includes a wrapper script "apache-rat" that should be the equivalent
 to running upstream's "java -jar apache-rat.jar".
 
 
-%package plugin
+%package        plugin
 Group: Development/Java
 Summary:        Maven plugin for %{name}
 
-%description plugin
+%description    plugin
 Maven plugin for running RAT, the Release Audit Tool.
 
 
-%package tasks
+%package        tasks
 Group: Development/Java
 Summary:        Ant tasks for %{name}
 
-%description tasks
+%description    tasks
 Ant tasks for running RAT.
 
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
 Summary:        Javadocs for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 
 %patch1 -p1
 
@@ -123,6 +126,10 @@ This package contains the API documentation for %{name}.
 # skipped anyways.  See rhbz#988561
 %pom_remove_plugin -r :maven-antrun-plugin
 
+# don't run apache-rat's checks on apache-rat:
+# these tests fail and would introduce a circular self-dependency
+%pom_remove_plugin -r :apache-rat-plugin
+
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
@@ -132,19 +139,31 @@ This package contains the API documentation for %{name}.
 # wagon-ssh is not needed in Fedora.
 %pom_xpath_remove pom:extensions
 
+# trivial port to commons-lang3
+%pom_change_dep -r :commons-lang org.apache.commons:commons-lang3:3.8.1
+
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    apache-rat-core/src/main/java/org/apache/rat/document/impl/guesser/GuessUtils.java
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    apache-rat-core/src/main/java/org/apache/rat/report/claim/impl/xml/SimpleXmlClaimReporter.java
+sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
+    apache-rat-core/src/main/java/org/apache/rat/Report.java
+
 # incompatible with our plexus-container
 rm apache-rat-plugin/src/test/java/org/apache/rat/mp/RatCheckMojoTest.java
 
+
 %build
-%mvn_build -s
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.test.skip.exec=true
+
 
 %install
 %mvn_install
 
-#Wrapper script
-%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true
+# create wrapper script
+%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang3:junit apache-rat true
 
-#Ant taksks
+# install ant tasks
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "apache-rat/rat-core apache-rat/rat-tasks" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
@@ -174,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_7jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_8jpp8
 - new version
 
