@@ -5,10 +5,13 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Epoch:          1
 Name:           apache-sshd
-Version:        2.0.0
-Release:        alt1_4jpp8
+Version:        2.2.0
+Release:        alt1_2jpp8
 Summary:        Apache SSHD
-License:        ASL 2.0
+
+# One file has ISC licensing:
+#   sshd-common/src/main/java/org/apache/sshd/common/config/keys/loader/openssh/kdf/BCrypt.java
+License:        ASL 2.0 and ISC
 URL:            http://mina.apache.org/sshd-project
 
 Source0:        https://archive.apache.org/dist/mina/sshd/%{version}/apache-sshd-%{version}-src.tar.gz
@@ -67,6 +70,7 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %pom_disable_module sshd-contrib
 %pom_disable_module sshd-spring-sftp
 %pom_disable_module sshd-cli
+%pom_disable_module sshd-openpgp
 
 # Disable plugins we don't need for RPM builds
 %pom_remove_plugin :apache-rat-plugin
@@ -87,12 +91,15 @@ rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.2.0-alt1_2jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 1:2.0.0-alt1_4jpp8
 - new version
 
