@@ -1,39 +1,33 @@
 Epoch: 1
 Group: System/Base
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-
 %global base_name   daemon
 %global short_name  commons-%{base_name}
 
-Name:           apache-%{short_name}
-Version:        1.0.15
-Release:        alt3_19jpp8
+Name:           apache-commons-daemon
 Summary:        Defines API to support an alternative invocation mechanism
+Version:        1.2.2
+Release:        alt1_5jpp8
 License:        ASL 2.0
+
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Patch1:         apache-commons-daemon-JAVA_OS.patch
-# backport from https://fisheye6.atlassian.com/changelog/commons?cs=1458896
-Patch2:         apache-commons-daemon-secondary.patch
-# backport from http://svn.apache.org/viewvc?view=revision&revision=1533345
-# https://issues.apache.org/jira/browse/DAEMON-308
-Patch3:         apache-commons-daemon-aarch64.patch
-BuildRequires:  maven-local
-BuildRequires:  java-devel >= 1.6.0
-BuildRequires:  jpackage-utils
-BuildRequires:  apache-commons-parent
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  xmlto
-BuildRequires:  gcc
-Source44: import.info
-Patch33: apache-commons-daemon-e2k.patch
 
+Patch0:         00-configure-java-os.patch
+
+BuildRequires:  autoconf
+BuildRequires:  dos2unix
+BuildRequires:  gcc
+BuildRequires:  xmlto
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+Source44: import.info
+Patch33: apache-commons-daemon-1.2.0-e2k.patch
 
 %description
 The scope of this package is to define an API in line with the current
@@ -43,13 +37,15 @@ method.  This specification covers the behavior and life cycle of what
 we define as Java daemons, or, in other words, non interactive
 Java applications.
 
+
 %package        jsvc
 Group: System/Base
 Summary:        Java daemon launcher
 Provides:       jsvc = 1:%{version}-%{release}
 
 %description    jsvc
-%{summary}.
+Java daemon launcher.
+
 
 %package        javadoc
 Group: Development/Java
@@ -58,31 +54,33 @@ Requires:       jpackage-utils
 BuildArch:      noarch
 
 %description    javadoc
-%{summary}.
+API documentation for apache-commons-daemon.
 
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch1 -p1 -b .java_os
-%patch2 -p1 -b .secondary
-%patch3 -p1 -b .aarch64
+%patch0 -p1
 
-# remove java binaries from sources
-rm -rf src/samples/build/
-
+# mark example files as non-executable
 chmod 644 src/samples/*
+
+# convert to correct end-of-line format
+dos2unix -k -n src/samples/ProcrunServiceInstall.cmd src/samples/ProcrunServiceInstall.cmd.new
+rm src/samples/ProcrunServiceInstall.cmd
+mv src/samples/ProcrunServiceInstall.cmd.new src/samples/ProcrunServiceInstall.cmd
+
+# build manpage for jsvc
 %patch33 -p1
 cd src/native/unix
 xmlto man man/jsvc.1.xml
 
 
 %build
-
 # build native jsvc
 pushd src/native/unix
+sh support/buildconf.sh
+
 %configure --with-java=%{java_home}
-# this is here because 1.0.2 archive contains old *.o
-make clean
 %make_build
 popd
 
@@ -104,18 +102,19 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 %doc LICENSE.txt PROPOSAL.html NOTICE.txt RELEASE-NOTES.txt src/samples
 %doc src/docs/*
 
-
 %files jsvc
 %doc LICENSE.txt NOTICE.txt
 %{_bindir}/jsvc
 %{_mandir}/man1/jsvc.1*
-
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt1_5jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt3_19jpp8
 - new version
 
