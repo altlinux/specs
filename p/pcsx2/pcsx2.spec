@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.6.0
-Release: alt5
+Release: alt6
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -22,13 +22,13 @@ BuildRequires(pre): libpcre-devel
 BuildRequires(pre): libuuid-devel
 
 BuildRequires: cmake
-BuildRequires: compat-libwxGTK3.0-gtk2-devel
+BuildRequires: libwxGTK3.0-devel
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libXmu-devel
 BuildRequires: libaio-devel
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
 BuildRequires: libportaudio2-devel
@@ -177,7 +177,8 @@ cmake .. \
 	-DXDG_STD:BOOL=TRUE \
 	-DGSDX_LEGACY:BOOL=TRUE \
 	-DDISABLE_BUILD_DATE:BOOL=TRUE \
-	-DwxWidgets_CONFIG_EXECUTABLE=%_libdir/wx/config/gtk2-unicode-3.0 \
+	-DwxWidgets_CONFIG_EXECUTABLE=%_libdir/wx/config/gtk3-unicode-3.0 \
+	-DGTK3_API=TRUE \
 	-Wno-dev
 popd
 
@@ -236,6 +237,9 @@ popd
 %_libdir/%name/libspu2x-2.0.0.so
 
 %changelog
+* Sun Oct 11 2020 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt6
+- Rebuild with libwxGTK3.0
+
 * Mon Jun 01 2020 Nazarov Denis <nenderus@altlinux.org> 1.6.0-alt5
 - Use directory /usr/share/doc/PCSX2 for Configuration Guide and Readme / FAQ
 
