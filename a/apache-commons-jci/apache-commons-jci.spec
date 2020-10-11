@@ -2,14 +2,21 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.1
+%bcond_with     groovy
+
 %global base_name  jci
 %global short_name commons-%{base_name}
 %global namedreltag %{nil}
@@ -17,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-commons-jci
 Version:       1.1
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Commons Java Compiler Interface
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
@@ -25,20 +32,19 @@ Source0:       http://www.apache.org/dist/commons/%{base_name}/source/%{short_na
 Patch0:        %{name}-1.1-janino27.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: ecj >= 3.4.2
-BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(asm:asm)
 BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires: mvn(org.codehaus.groovy:groovy)
-BuildRequires: mvn(org.codehaus.janino:janino)
-BuildRequires: mvn(rhino:js)
-
-# test deps
+BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(junit:junit)
-BuildRequires: objectweb-asm3
 BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+%if %{with groovy}
+BuildRequires: mvn(org.codehaus.groovy:groovy)
+%endif
+BuildRequires: mvn(org.codehaus.janino:janino)
+BuildRequires: mvn(org.eclipse.jdt.core.compiler:ecj)
+BuildRequires: mvn(rhino:js)
 
 Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch:     noarch
@@ -89,12 +95,14 @@ Summary:       Commons Java Compiler Interface - eclipse
 %description eclipse
 Commons JCI compiler implementation for the eclipse compiler.
 
+%if %{with groovy}
 %package groovy
 Group: Development/Java
 Summary:       Commons Java Compiler Interface - groovy
 
 %description groovy
 Commons JCI compiler implementation for the groovy compiler.
+%endif
 
 %package janino
 Group: Development/Java
@@ -117,6 +125,11 @@ find . -name "*.jar" -delete
 
 %patch0 -p1
 
+%if %{without groovy}
+# disable groovy support
+%pom_disable_module compilers/groovy
+%endif
+
 # require old version of jdependency
 %pom_disable_module examples
 
@@ -129,16 +142,20 @@ find . -name "*.jar" -delete
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :maven-site-plugin
 
+%if %{with groovy}
 %pom_xpath_set "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:artifactId" groovy
 %pom_xpath_set "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:version" 1.8.9
 %pom_xpath_set "pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:artifactId" groovy compilers/groovy
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']" "<version>1.8.9</version>" compilers/groovy
+%endif
 
 # Fix installation directory      
 %mvn_file :%{short_name}-core    %{short_name}/%{short_name}-core
 %mvn_file :%{short_name}-fam     %{short_name}/%{short_name}-fam
 %mvn_file :%{short_name}-eclipse %{short_name}/%{short_name}-eclipse
+%if %{with groovy}
 %mvn_file :%{short_name}-groovy  %{short_name}/%{short_name}-groovy
+%endif
 %mvn_file :%{short_name}-janino  %{short_name}/%{short_name}-janino
 %mvn_file :%{short_name}-rhino   %{short_name}/%{short_name}-rhino
 
@@ -164,13 +181,18 @@ find . -name "*.jar" -delete
 
 %files eclipse -f .mfiles-%{short_name}-eclipse
 
+%if %{with groovy}
 %files groovy -f .mfiles-%{short_name}-groovy
+%endif
 
 %files janino -f .mfiles-%{short_name}-janino
 
 %files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_9jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_8jpp8
 - new version
 
