@@ -1,19 +1,16 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.0.0
+%define version 1.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jboss-annotations-1.2-api
-Version:       1.0.0
-Release:       alt1_6jpp8
+Version:       1.0.2
+Release:       alt1_1jpp8
 Summary:       Common Annotations 1.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-annotations-api_spec
@@ -59,6 +56,9 @@ cp %{SOURCE1} .
 %doc --no-dereference cddl.txt LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6jpp8
 - new version
 
