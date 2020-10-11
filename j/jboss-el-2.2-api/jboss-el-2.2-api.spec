@@ -1,32 +1,29 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.0.2
+%define version 1.0.5
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:         jboss-el-2.2-api
-Version:      1.0.2
-Release:      alt1_10jpp8
+Version:      1.0.5
+Release:      alt1_1jpp8
 Summary:      Expression Language 2.2 API
 License:      CDDL or GPLv2 with exceptions
-URL:          http://www.jboss.org
-BuildArch:    noarch
 
-Source0:      https://github.com/jboss/jboss-el-api_spec/archive/%{namedversion}.tar.gz
+URL:          https://github.com/jboss/jboss-el-api_spec
+Source0:      %{url}/archive/jboss-el-api_2.2_spec-%{namedversion}.tar.gz
+Source1:      cddl.txt
+
+BuildArch:    noarch
 
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
-
 
 %description
 Expression Language 2.2 API classes.
@@ -40,7 +37,11 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-el-api_spec-%{namedversion}
+%setup -q -n jboss-el-api_spec-jboss-el-api_2.2_spec-%{namedversion}
+
+%pom_remove_plugin :maven-source-plugin
+
+cp %{SOURCE1} .
 
 %build
 %mvn_build
@@ -49,13 +50,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
+%doc --no-dereference cddl.txt LICENSE
 %doc README
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc --no-dereference cddl.txt LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10jpp8
 - new version
 
