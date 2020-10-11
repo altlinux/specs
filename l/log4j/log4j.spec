@@ -2,13 +2,12 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,11 +16,11 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with     jp_minimal
+%bcond_without  jp_minimal
 
 Name:           log4j
 Version:        2.11.1
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -92,6 +91,13 @@ Summary:        Binding between LOG4J 2 API and SLF4J
 %description slf4j
 Binding between LOG4J 2 API and SLF4J.
 
+%package jcl
+Group: Development/Java
+Summary:        Apache Log4j Commons Logging Bridge
+
+%description jcl
+Apache Log4j Commons Logging Bridge.
+
 %if %{without jp_minimal}
 %package osgi
 Group: Development/Java
@@ -106,13 +112,6 @@ Summary:        Apache Log4j Tag Library
 
 %description taglib
 Apache Log4j Tag Library for Web Applications.
-
-%package jcl
-Group: Development/Java
-Summary:        Apache Log4j Commons Logging Bridge
-
-%description jcl
-Apache Log4j Commons Logging Bridge.
 
 %package jmx-gui
 Group: Development/Java
@@ -219,7 +218,6 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_remove_plugin :maven-failsafe-plugin
 
 %if %{with jp_minimal}
-%pom_disable_module %{name}-jcl
 %pom_disable_module %{name}-taglib
 %pom_disable_module %{name}-jmx-gui
 %pom_disable_module %{name}-bom
@@ -285,9 +283,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 %config(noreplace,missingok) /etc/chainsaw.conf
 
 %files slf4j -f .mfiles-slf4j
+%files jcl -f .mfiles-jcl
 %if %{without jp_minimal}
 %files taglib -f .mfiles-taglib
-%files jcl -f .mfiles-jcl
 %files web -f .mfiles-web
 %files bom -f .mfiles-bom
 %files nosql -f .mfiles-nosql
@@ -300,6 +298,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.11.1-alt1_5jpp8
+- update
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.11.1-alt1_3jpp8
 - new version
 
