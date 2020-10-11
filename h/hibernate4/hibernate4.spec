@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          hibernate4
 Version:       4.3.11
-Release:       alt3_8jpp8
+Release:       alt4_8jpp8
 Summary:       Relational persistence and query service
 # Incorrect Free Software Foundation address https://hibernate.atlassian.net/browse/HHH-10961
 License:       LGPLv2+ and ASL 2.0
@@ -72,7 +72,7 @@ BuildRequires: mvn(org.jboss.byteman:byteman-install)
 BuildRequires: mvn(org.jboss.logging:jboss-logging)
 BuildRequires: mvn(org.jboss.logging:jboss-logging-annotations)
 BuildRequires: mvn(org.jboss.logging:jboss-logging-processor)
-BuildRequires: mvn(org.jboss.narayana.jta:jta)
+#BuildRequires: mvn(org.jboss.narayana.jta:jta)
 BuildRequires: mvn(org.jboss.spec.javax.security.jacc:jboss-jacc-api_1.4_spec)
 BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
 BuildRequires: mvn(org.jvnet.jaxb2.maven2:maven-jaxb22-plugin)
@@ -429,6 +429,7 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 
 %pom_disable_module hibernate-hikaricp
 %pom_disable_module hibernate-c3p0
+%pom_disable_module hibernate-testing
 
 %mvn_compat_version : %{namedversion} %{version} 4
 
@@ -456,12 +457,15 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %files proxool -f .mfiles-hibernate-proxool
-%files testing -f .mfiles-hibernate-testing
+#%files testing -f .mfiles-hibernate-testing
 
 #%files javadoc -f .mfiles-javadoc
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt4_8jpp8
+- build w/o jts
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt3_8jpp8
 - build w/o c3p0
 
