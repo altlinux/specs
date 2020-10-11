@@ -1,6 +1,6 @@
 Name: fontview
-Version: 0.2.3
-Release: alt2
+Version: 0.3.1
+Release: alt1.20191205
 
 Summary: Demo app that displays fonts with a free/libre/open-source text rendering stack: FreeType, HarfBuzz and Raqm
 
@@ -15,11 +15,13 @@ Source: %name-%version.tar
 
 # manually removed: mariadb-common python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy
 
-# Automatically added by buildreq on Wed Apr 26 2017
-# optimized out: at-spi2-atk fontconfig i586-libxcb libat-spi2-core libcairo-gobject libfreetype-devel libgdk-pixbuf libgpg-error libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-modules python-modules-compiler python3 python3-base
-BuildRequires: gcc-c++ libfribidi-devel libharfbuzz-devel
-BuildRequires: compat-libwxGTK3.0-gtk2-devel
-BuildRequires: python-module-argparse
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
+BuildRequires: libfribidi-devel
+BuildRequires: libharfbuzz-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libwxGTK3.0-devel
+BuildRequires: %_bindir/python3
 
 BuildRequires: libucdn-devel
 BuildRequires: libraqm-devel >= 0.2.0
@@ -32,7 +34,7 @@ FreeType, HarfBuzz and Raqm.
 %setup
 
 %build
-python2.7 build.py
+%__python3 build.py
 
 %install
 %__install -D build/%name %buildroot%_bindir/%name
@@ -44,6 +46,9 @@ python2.7 build.py
 #%_desktopdir/%name.desktop
 
 %changelog
+* Thu Jun 04 2020 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1.20191205
+- New version
+
 * Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2
 - Rebuilt with compat-libwxGTK3.0-gtk2
 
