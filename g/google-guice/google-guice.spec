@@ -2,12 +2,11 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,14 +15,14 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without jpa
-%bcond_without spring
+%bcond_with     jpa
+%bcond_with     spring
 
 %global short_name guice
 
 Name:           google-%{short_name}
-Version:        4.1
-Release:        alt1_14jpp8
+Version:        4.2.2
+Release:        alt1_1jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -36,23 +35,24 @@ Source1:        create-tarball.sh
 BuildRequires:  maven-local
 BuildRequires:  mvn(aopalliance:aopalliance)
 BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(com.google.guava:guava:19.0)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(javax.servlet:servlet-api)
+# xmvn-builddep misses apache-jar-resource-bundle
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.plugins:munge-maven-plugin)
-# xmvn-builddep misses this:
-BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
 %if %{with jpa}
-BuildRequires:  hibernate-jpa-2.0-api
+BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 %endif
 %if %{with spring}
-BuildRequires:  springframework-beans
+BuildRequires:  mvn(org.springframework:spring-beans)
 %endif
 
 # Test dependencies:
@@ -66,6 +66,8 @@ BuildRequires:  hibernate3-entitymanager
 BuildRequires:  mvn(org.hsqldb:hsqldb-j5)
 BuildRequires:  testng
 %endif
+
+Obsoletes:      guice-testlib < 4.1-17
 Source44: import.info
 
 %description
@@ -87,6 +89,7 @@ with at least three use cases. When in doubt, we leave it out. We
 build general functionality which enables you to extend Guice rather
 than adding every feature to the core framework.
 
+
 %package -n %{short_name}-parent
 Group: Development/Java
 Summary:        Guice parent POM
@@ -94,6 +97,7 @@ Summary:        Guice parent POM
 %description -n %{short_name}-parent
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides parent POM for Guice modules.
+
 
 %package -n %{short_name}-assistedinject
 Group: Development/Java
@@ -103,6 +107,7 @@ Summary:        AssistedInject extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides AssistedInject module for Guice.
 
+
 %package -n %{short_name}-extensions
 Group: Development/Java
 Summary:        Extensions for Guice
@@ -110,6 +115,7 @@ Summary:        Extensions for Guice
 %description -n %{short_name}-extensions
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides extensions POM for Guice.
+
 
 %package -n %{short_name}-grapher
 Group: Development/Java
@@ -119,6 +125,7 @@ Summary:        Grapher extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Grapher module for Guice.
 
+
 %package -n %{short_name}-jmx
 Group: Development/Java
 Summary:        JMX extension module for Guice
@@ -126,6 +133,7 @@ Summary:        JMX extension module for Guice
 %description -n %{short_name}-jmx
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides JMX module for Guice.
+
 
 %package -n %{short_name}-jndi
 Group: Development/Java
@@ -135,6 +143,7 @@ Summary:        JNDI extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides JNDI module for Guice.
 
+
 %package -n %{short_name}-multibindings
 Group: Development/Java
 Summary:        MultiBindings extension module for Guice
@@ -142,6 +151,7 @@ Summary:        MultiBindings extension module for Guice
 %description -n %{short_name}-multibindings
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides MultiBindings module for Guice.
+
 
 %if %{with jpa}
 %package -n %{short_name}-persist
@@ -153,6 +163,7 @@ Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Persist module for Guice.
 %endif
 
+
 %package -n %{short_name}-servlet
 Group: Development/Java
 Summary:        Servlet extension module for Guice
@@ -160,6 +171,7 @@ Summary:        Servlet extension module for Guice
 %description -n %{short_name}-servlet
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Servlet module for Guice.
+
 
 %if %{with spring}
 %package -n %{short_name}-spring
@@ -171,13 +183,6 @@ Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Spring module for Guice.
 %endif
 
-%package -n %{short_name}-testlib
-Group: Development/Java
-Summary:        TestLib extension module for Guice
-
-%description -n %{short_name}-testlib
-Guice is a lightweight dependency injection framework for Java 5
-and above. This package provides TestLib module for Guice.
 
 %package -n %{short_name}-throwingproviders
 Group: Development/Java
@@ -187,6 +192,7 @@ Summary:        ThrowingProviders extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides ThrowingProviders module for Guice.
 
+
 %package -n %{short_name}-bom
 Group: Development/Java
 Summary:        Bill of Materials for Guice
@@ -194,6 +200,7 @@ Summary:        Bill of Materials for Guice
 %description -n %{short_name}-bom
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Bill of Materials module for Guice.
+
 
 %package javadoc
 Group: Development/Java
@@ -247,6 +254,13 @@ This package provides %{summary}.
 
 %pom_disable_module jdk8-tests
 
+# Require a newer compiler
+%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" "1.8"
+%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" "1.8"
+
+%pom_disable_module testlib extensions
+
+
 %build
 %mvn_alias "com.google.inject.extensions:" "org.sonatype.sisu.inject:"
 
@@ -255,11 +269,14 @@ This package provides %{summary}.
 %mvn_file  ":guice-{*}"  %{short_name}/guice-@1
 %mvn_file  ":guice" %{short_name}/%{name} %{name}
 %mvn_alias ":guice" "org.sonatype.sisu:sisu-guice"
+
 # Skip tests because of missing dependency guice-testlib
 %mvn_build -f -s
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles-guice
 %dir %{_javadir}/%{short_name}
@@ -280,7 +297,6 @@ This package provides %{summary}.
 %if %{with spring}
 %files -n %{short_name}-spring -f .mfiles-guice-spring
 %endif
-%files -n %{short_name}-testlib -f .mfiles-guice-testlib
 %files -n %{short_name}-throwingproviders -f .mfiles-guice-throwingproviders
 
 %files -n %{short_name}-bom -f .mfiles-guice-bom
@@ -290,6 +306,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.2.2-alt1_1jpp8
+- new version
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_14jpp8
 - new version
 
