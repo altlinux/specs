@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/asciidoc /usr/bin/source-highlight boost-devel boost-filesystem-devel boost-program_options-devel gcc-c++ pkgconfig(liblzma) rpm-build-java zlib-devel
 # END SourceDeps(oneline)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat mvn(org.apache.maven.shared:file-management)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             avro
 Version:          1.7.6
-Release:          alt4_5jpp8
+Release:          alt5_5jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
@@ -26,7 +27,7 @@ BuildRequires:    maven-local
 BuildRequires:    mvn(com.thoughtworks.paranamer:paranamer)
 BuildRequires:    mvn(io.netty:netty:3)
 BuildRequires:    mvn(org.apache:apache:pom:)
-BuildRequires:    mvn(org.apache.hadoop:hadoop-client)
+#BuildRequires:    mvn(org.apache.hadoop:hadoop-client)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
@@ -141,7 +142,13 @@ This package contains the API documentation for %{name}.
 %pom_disable_module archetypes lang/java
 
 %pom_disable_module tools lang/java
+# viy
 %pom_disable_module thrift lang/java
+%pom_disable_module mapred lang/java
+%pom_disable_module ipc lang/java
+%pom_disable_module trevni lang/java
+%pom_disable_module protobuf lang/java
+%pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %pom_xpath_set pom:properties/pom:hadoop2.version 2.0.5-alpha lang/java
 %pom_xpath_set pom:properties/pom:jetty.version 9.0.3.v20130506 lang/java
@@ -174,13 +181,15 @@ for mod in mapred trevni/avro; do
           <phase>skip</phase>
         </execution>" lang/java/${mod}
 done
- 
+
+%if 0
 %mvn_package ":trevni-doc"  __noinstall
 %mvn_package ":trevni-avro" trevni
 %mvn_package ":trevni-core" trevni
 %mvn_package ":trevni-java" trevni
 %mvn_package ":trevni-avro::hadoop2:" trevni
 %mvn_package ":avro-mapred::hadoop2:" avro-mapred
+%endif
 
 %build
 
@@ -197,11 +206,13 @@ done
 %files compiler -f .mfiles-avro-compiler
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
+%if 0
 %files ipc -f .mfiles-avro-ipc
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files mapred -f .mfiles-avro-mapred
 %doc --no-dereference LICENSE.txt NOTICE.txt
+%endif
 
 %files maven-plugin -f .mfiles-avro-maven-plugin
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -209,10 +220,10 @@ done
 %files parent -f .mfiles-avro-parent
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
+%if 0
 %files protobuf -f .mfiles-avro-protobuf
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
-%if 0
 %files thrift -f .mfiles-avro-thrift
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %endif
@@ -220,13 +231,18 @@ done
 %files toplevel -f .mfiles-avro-toplevel
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
+%if 0
 %files trevni -f .mfiles-trevni
 %doc --no-dereference LICENSE.txt NOTICE.txt
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt5_5jpp8
+- build w/o mapred and co (due to hadoop requires)
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt4_5jpp8
 - build w/o thrift
 
