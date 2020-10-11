@@ -1,14 +1,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ini4j
 Version:        0.5.1
-Release:        alt2_20jpp8
+Release:        alt2_21jpp8
 Summary:        Java API for handling files in Windows .ini format
 License:        ASL 2.0
 URL:            http://www.ini4j.org/
@@ -37,7 +37,6 @@ BuildArch:      noarch
 
 # See http://ini4j.sourceforge.net/dependencies.html
 BuildRequires:  jpackage-utils
-BuildRequires:  java-devel >= 1.6.0
 
 BuildRequires:  maven-local
 
@@ -51,7 +50,6 @@ BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-release-plugin
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  xmlrpc3-client
@@ -97,6 +95,8 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 # maven-changes-plugin was retired
 %pom_remove_plugin :maven-changes-plugin
 
+# maven-site-plugin was retired
+%pom_remove_plugin :maven-site-plugin
 
 %build
 # Tests require easymock2 class extension to compile. This package is not
@@ -117,6 +117,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_21jpp8
+- update
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_20jpp8
 - new version
 
