@@ -1,19 +1,15 @@
-BuildRequires: maven-assembly-plugin
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 26
+Group: Development/Other
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
+%define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmltool
 Version:        3.3
-Release:        alt4_18jpp8
+Release:        alt4_24jpp8
 Summary:        Tool to manage XML documents through a Fluent Interface
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://code.google.com/p/xmltool
 ### upstream only provides binaries or source without build scripts
@@ -24,8 +20,8 @@ Source0:        %{name}-%{version}.tar.xz
 Patch0:         fix-deprecated-assembly-goal.patch
 BuildArch:      noarch
 
-BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
+BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-source-plugin
@@ -40,8 +36,8 @@ code for processing XML, transforming, etc. This easy to use class puts it all
 together, using the Fluent Interface pattern to facilitate XML manipulations. 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -78,6 +74,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt4_24jpp8
+- update
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt4_18jpp8
 - added BR: maven-assembly-plugin for javapackages 5
 
