@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           maven-patch-plugin
 Version:        1.2
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        Maven Patch Plugin
 
 License:        ASL 2.0
@@ -26,7 +26,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-docck-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-gpg-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-install-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
@@ -60,6 +59,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
+- update
+
 * Wed Jul 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_8jpp8
 - fc update & java 8 build
 
