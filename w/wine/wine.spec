@@ -1,7 +1,7 @@
 %def_disable static
 %define gecko_version 2.47.1
-%define mono_version 5.1.0
-%define major 5.18
+%define mono_version 5.1.1
+%define major 5.19
 %define rel %nil
 
 %def_with gtk3
@@ -15,7 +15,7 @@
 %endif
 
 Name: wine
-Version: %major.4
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -62,6 +62,10 @@ ExclusiveArch: %ix86 x86_64 aarch64
    %def_without build64
    %define winearch wine32
 %endif
+
+# TODO:
+%define libdir %_libdir
+%define libwinedir %libdir/wine
 
 # for wine-staging gitapply.sh script
 BuildPreReq: /proc
@@ -227,6 +231,7 @@ Requires: libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
 Requires: libpng16 libjpeg libtiff5
 Requires: libxslt
+
 %if_with gtk3
 Requires: libcairo libgtk+3
 %endif
@@ -255,7 +260,9 @@ Group: System/Libraries
 Requires: lib%name = %EVR
 Conflicts: libwine-vanilla-gl
 
+# Runtime linked (via dl_open)
 Requires: libGL
+
 # wine-staging only
 Requires: libva
 Requires: libtxc_dxtn
@@ -283,6 +290,9 @@ Requires: lib%name = %EVR
 Obsoletes: wine-devel
 Provides: wine-devel
 Conflicts: libwine-vanilla-devel
+
+# due winegcc require
+Requires: gcc-c++
 
 %description -n lib%name-devel
 lib%name-devel contains the header files and some utilities needed to
@@ -412,7 +422,7 @@ done
 %_bindir/winedbg
 %_bindir/wineboot
 %_bindir/winepath
-%_libdir/wine/*.exe.so
+%libwinedir/*.exe.so
 
 #%_initdir/wine
 #%_initdir/wine.outformat
@@ -447,29 +457,31 @@ done
 
 %files -n lib%name
 %doc LICENSE AUTHORS COPYING.LIB
-%_libdir/libwine*.so.*
-%dir %_libdir/wine/
-%_libdir/wine/fakedlls/
+%libdir/libwine*.so.*
+%dir %libwinedir/
+%libwinedir/fakedlls/
 
 %if_without build64
-%_libdir/wine/*.dll16.so
-%_libdir/wine/*.drv16.so
-%_libdir/wine/*.exe16.so
-%_libdir/wine/winoldap.mod16.so
-%_libdir/wine/*.vxd.so
+%libwinedir/*.dll16.so
+%libwinedir/*.drv16.so
+%libwinedir/*.exe16.so
+%libwinedir/winoldap.mod16.so
+%libwinedir/*.vxd.so
 %endif
 
-%_libdir/wine/ntdll.so
-%_libdir/wine/user32.so
-%_libdir/wine/*.com.so
-%_libdir/wine/*.cpl.so
-%_libdir/wine/*.drv.so
-%_libdir/wine/*.dll.so
-%_libdir/wine/*.acm.so
-%_libdir/wine/*.ocx.so
-%_libdir/wine/*.tlb.so
-%_libdir/wine/*.sys.so
-%_libdir/wine/ksproxy.ax.so
+%libwinedir/ntdll.so
+%libwinedir/user32.so
+%libwinedir/bcrypt.so
+%libwinedir/odbc32.so
+%libwinedir/*.com.so
+%libwinedir/*.cpl.so
+%libwinedir/*.drv.so
+%libwinedir/*.dll.so
+%libwinedir/*.acm.so
+%libwinedir/*.ocx.so
+%libwinedir/*.tlb.so
+%libwinedir/*.sys.so
+%libwinedir/ksproxy.ax.so
 
 %dir %_datadir/wine/
 %_datadir/wine/wine.inf
@@ -478,17 +490,16 @@ done
 %_datadir/wine/winehid.inf
 %_datadir/wine/nls/
 %_datadir/wine/fonts/
-%_datadir/wine/color/
 
 # move to separate packages
-%exclude %_libdir/wine/twain*
-%exclude %_libdir/wine/d3d10.dll.so
-%exclude %_libdir/wine/d3d8.dll.so
-%exclude %_libdir/wine/d3d9.dll.so
-%exclude %_libdir/wine/d3dxof.dll.so
-%exclude %_libdir/wine/opengl32.dll.so
-%exclude %_libdir/wine/glu32.dll.so
-%exclude %_libdir/wine/wined3d.dll.so
+%exclude %libwinedir/twain*
+%exclude %libwinedir/d3d10.dll.so
+%exclude %libwinedir/d3d8.dll.so
+%exclude %libwinedir/d3d9.dll.so
+%exclude %libwinedir/d3dxof.dll.so
+%exclude %libwinedir/opengl32.dll.so
+%exclude %libwinedir/glu32.dll.so
+%exclude %libwinedir/wined3d.dll.so
 
 %files full
 
@@ -505,18 +516,18 @@ done
 
 
 %files -n lib%name-twain
-%_libdir/wine/twain*
-%_libdir/wine/gphoto2.ds.so
-%_libdir/wine/sane.ds.so
+%libwinedir/twain*
+%libwinedir/gphoto2.ds.so
+%libwinedir/sane.ds.so
 
 %files -n lib%name-gl
-%_libdir/wine/d3d10.dll.so
-%_libdir/wine/d3d8.dll.so
-%_libdir/wine/d3d9.dll.so
-%_libdir/wine/d3dxof.dll.so
-%_libdir/wine/opengl32.dll.so
-%_libdir/wine/glu32.dll.so
-%_libdir/wine/wined3d.dll.so
+%libwinedir/d3d10.dll.so
+%libwinedir/d3d8.dll.so
+%libwinedir/d3d9.dll.so
+%libwinedir/d3dxof.dll.so
+%libwinedir/opengl32.dll.so
+%libwinedir/glu32.dll.so
+%libwinedir/wined3d.dll.so
 
 %files -n lib%name-devel
 %doc LICENSE
@@ -533,9 +544,9 @@ done
 %_bindir/msidb
 
 %_includedir/wine/
-%_libdir/lib*.so
-%_libdir/wine/lib*.def
-%_libdir/wine/libwinecrt0.a
+%libdir/lib*.so
+%libwinedir/lib*.def
+%libwinedir/libwinecrt0.a
 #%_aclocaldir/wine.m4
 
 %_man1dir/wmc.*
@@ -550,11 +561,19 @@ done
 
 %if_enabled static
 %files -n lib%name-devel-static
-%_libdir/wine/lib*.a
-%exclude %_libdir/wine/libwinecrt0.a
+%libwinedir/lib*.a
+%exclude %libwinedir/libwinecrt0.a
 %endif
 
 %changelog
+* Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.19.1-alt1
+- new version 5.19.1 (with rpmrb script)
+- add gcc-c++ require to devel package (due winegcc)
+- update Basealt patches to staging wine-5.19
+
+* Thu Oct 08 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.5-alt1
+- update Basealt patches to staging wine-5.18
+
 * Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 1:5.18.4-alt1
 - add scripts/wine_setup (check and install all needed packages)
 - revert "add reg files for initial file open integration"
