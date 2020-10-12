@@ -1,6 +1,6 @@
 Name: deepin-menu
 Version: 5.0.1
-Release: alt1
+Release: alt2
 Summary: Deepin menu service
 License: GPL-3.0-only
 Group: Graphical desktop/Other
@@ -19,11 +19,13 @@ Deepin menu service for building beautiful menus.
 %setup
 
 # Modify lib path to reflect the platform
-%__subst 's|/usr/bin|%_libexecdir|' data/com.deepin.menu.service \
+%__subst 's|/usr/bin|/usr/libexec|' data/com.deepin.menu.service \
     deepin-menu.desktop deepin-menu.pro
 
 %build
-%qmake_qt5 DEFINES+=QT_NO_DEBUG_OUTPUT
+%qmake_qt5 \
+    CONFIG+=nostrip \
+    DEFINES+=QT_NO_DEBUG_OUTPUT
 %make_build
 
 %install
@@ -32,9 +34,13 @@ Deepin menu service for building beautiful menus.
 %files
 %doc README.md
 %doc LICENSE
-%_libexecdir/%name
+%_prefix/libexec/%name
 %_datadir/dbus-1/services/com.deepin.menu.service
 
 %changelog
+* Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt2
+- Enabled debuginfo.
+- Fixed path location.
+
 * Tue Jul 21 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
