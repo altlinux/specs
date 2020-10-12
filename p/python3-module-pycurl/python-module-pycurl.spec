@@ -3,7 +3,7 @@
 
 Name: python3-module-pycurl
 Version: 7.43.0.6
-Release: alt2
+Release: alt3
 
 Summary: Python bindings to libcurl
 License: LGPL
@@ -15,13 +15,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): libcurl
 BuildRequires: libcurl-devel libssl-devel
 
 Requires: python3 >= 3.5
-
-BuildRequires(pre): libcurl
-%define libcurlver %(rpm -q --qf '%%{VERSION}' libcurl)
-Requires: libcurl >= %libcurlver
+Requires: libcurl >= %get_version libcurl
 
 %description
 This module provides the Python bindings to libcurl.
@@ -44,6 +42,9 @@ This module provides the Python bindings to libcurl.
 
 
 %changelog
+* Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt3
+- use get_version macro for get package version
+
 * Tue Oct 06 2020 Vitaly Lipatov <lav@altlinux.ru> 7.43.0.6-alt2
 - the package needs python 3.5 or above
 
