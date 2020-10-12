@@ -3,7 +3,7 @@
 
 Name:		coccinelle
 Version:	1.0.8
-Release:	alt7
+Release:	alt8
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -11,6 +11,7 @@ License:	GPL-2.0-only
 Url:		http://coccinelle.lip6.fr/
 
 Source:		%name-%version.tar
+Patch0:		%name-menhir-20200525.patch
 Provides:	spatch
 
 BuildRequires(pre): rpm-build-ocaml
@@ -93,6 +94,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p1
 sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 
 %build
@@ -152,6 +154,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 1.0.8-alt8
+- added patch for build with new menhir, based on upstream commit 4bffe71
+
 * Fri May 29 2020 Andrew A. Vasilyev <andy@altlinux.org> 1.0.8-alt7
 - fix changelog
 
