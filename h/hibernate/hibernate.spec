@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate
 Version:       5.0.10
-Release:       alt1_6jpp8
+Release:       alt3_6jpp8
 Summary:       Relational persistence and query service
 License:       LGPLv2+ and ASL 2.0
 URL:           http://www.hibernate.org/
@@ -60,8 +60,8 @@ BuildRequires: maven-local
 BuildRequires: mvn(antlr:antlr)
 BuildRequires: mvn(com.experlog:xapool)
 BuildRequires: mvn(com.fasterxml:classmate)
-BuildRequires: mvn(com.mchange:c3p0)
-BuildRequires: mvn(com.zaxxer:HikariCP)
+#BuildRequires: mvn(com.mchange:c3p0)
+#BuildRequires: mvn(com.zaxxer:HikariCP)
 BuildRequires: mvn(dom4j:dom4j)
 BuildRequires: mvn(java_cup:java_cup)
 BuildRequires: mvn(javax.enterprise:cdi-api)
@@ -449,11 +449,13 @@ done
 %if %{without spatial}
 %pom_disable_module hibernate-spatial
 %endif
+%pom_disable_module hibernate-hikaricp
+%pom_disable_module hibernate-c3p0
 
 %build
 
 # Disabled beacuse of cyclic dep between core and testing modules
-%mvn_build -s -f -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -j -s -f -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -462,11 +464,11 @@ done
 %doc changelog.txt README.md migration-guide.adoc
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
-%files c3p0 -f .mfiles-hibernate-c3p0
+#%files c3p0 -f .mfiles-hibernate-c3p0
 %files ehcache -f .mfiles-hibernate-ehcache
 %files entitymanager -f .mfiles-hibernate-entitymanager
 %files envers -f .mfiles-hibernate-envers
-%files hikaricp -f .mfiles-hibernate-hikaricp
+#files hikaricp -f .mfiles-hibernate-hikaricp
 %if %{without infinispan}
 %files infinispan -f .mfiles-hibernate-infinispan
 %endif
@@ -486,10 +488,16 @@ done
 
 %files testing -f .mfiles-hibernate-testing
 
-%files javadoc -f .mfiles-javadoc
+#%files javadoc -f .mfiles-javadoc
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt3_6jpp8
+- build w/o c3p0
+
+* Sun Oct 11 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt2_6jpp8
+- build w/o hikari
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1_6jpp8
 - new version
 
