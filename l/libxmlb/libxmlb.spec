@@ -2,8 +2,8 @@
 %define soversion 2
 Summary: Library for querying compressed XML metadata
 Name: libxmlb
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: https://github.com/hughsie/libxmlb
@@ -88,11 +88,14 @@ Files for development with %name.
 %dir %_datadir/gtk-doc
 %dir %_datadir/gtk-doc/html
 %_datadir/gtk-doc/html/libxmlb
-%_includedir/libxmlb-1
+%_includedir/libxmlb-2
 %_libdir/libxmlb.so
 %_libdir/pkgconfig/xmlb.pc
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Thu Sep 03 2020 Anton Farygin <rider@altlinux.ru> 0.2.0-alt2
 - move common files to %name-common package (closes: #38873)
 - rename source package to libxmlb
