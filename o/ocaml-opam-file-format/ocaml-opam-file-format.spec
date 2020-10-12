@@ -1,19 +1,14 @@
+%set_verify_elf_method textrel=relaxed
 Name: ocaml-opam-file-format
-Version: 2.0.0
-Release: alt4
+Version: 2.1.0
+Release: alt1
 Summary: Parser and printer for the opam file syntax
 Group: Development/ML
-
 %global libname %(echo %name | sed -e 's/^ocaml-//')
-
-# This is apparently a standard "OCaml exception" and is detailed
-# in the license file. That wasn't included in the repo, but I filed
-# a ticket (https://github.com/ocaml/opam-file-format/issues/5)
-# and now it is, so I've added the commit that added license as a patch.
-License: LGPLv2 with exceptions
+License: LGPLv2 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/opam-file-format/
 Source0: %name-%version.tar
-BuildRequires: ocaml
+BuildRequires: ocaml dune
 
 %description
 Parser and printer for the opam file syntax.
@@ -31,33 +26,22 @@ files for developing applications that use %name.
 %setup
 
 %build
-make byte
-make native
+%dune_build -p %libname
 
 %install
-make install LIBDIR=%_libdir/ocaml DESTDIR=%buildroot
+%dune_install
 
-# The mli files don't seem to get installed by the makefile.
-# This is suboptimal.
-cp -a src/*.mli %buildroot%_libdir/ocaml/%libname/
-
-%files
-# There is no documentation.
+%files -f ocaml-files.runtime
 %doc LICENSE
-%_libdir/ocaml/%libname
-%exclude %_libdir/ocaml/%libname/*.a
-%exclude %_libdir/ocaml/%libname/*.cmxa
-%exclude %_libdir/ocaml/%libname/*.cmx
-%exclude %_libdir/ocaml/%libname/*.mli
 
-%files devel
+%files devel -f ocaml-files.devel
 %doc LICENSE
-%_libdir/ocaml/%libname/*.a
-%_libdir/ocaml/%libname/*.cmxa
-%_libdir/ocaml/%libname/*.cmx
-%_libdir/ocaml/*/*.mli
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+- switch to dune build system
+
 * Wed Jul 31 2019 Anton Farygin <rider@altlinux.ru> 2.0.0-alt4
 - rebuilt with ocaml-4.08
 
