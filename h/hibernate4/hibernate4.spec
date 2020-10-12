@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          hibernate4
 Version:       4.3.11
-Release:       alt4_8jpp8
+Release:       alt5_8jpp8
 Summary:       Relational persistence and query service
 # Incorrect Free Software Foundation address https://hibernate.atlassian.net/browse/HHH-10961
 License:       LGPLv2+ and ASL 2.0
@@ -55,7 +55,7 @@ BuildRequires: mvn(java_cup:java_cup)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sf.ehcache:ehcache-core)
+#BuildRequires: mvn(net.sf.ehcache:ehcache-core)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.bsc.maven:maven-processor-plugin)
@@ -63,7 +63,7 @@ BuildRequires: mvn(org.codehaus.mojo:antlr-maven-plugin)
 BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
 BuildRequires: mvn(org.hibernate.common:hibernate-commons-annotations)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
-BuildRequires: mvn(org.infinispan:infinispan-core)
+#BuildRequires: mvn(org.infinispan:infinispan-core)
 BuildRequires: mvn(org.javassist:javassist)
 BuildRequires: mvn(org.jboss:jandex)
 BuildRequires: mvn(org.jboss.byteman:byteman)
@@ -430,6 +430,8 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %pom_disable_module hibernate-hikaricp
 %pom_disable_module hibernate-c3p0
 %pom_disable_module hibernate-testing
+%pom_disable_module hibernate-infinispan
+%pom_disable_module hibernate-ehcache
 
 %mvn_compat_version : %{namedversion} %{version} 4
 
@@ -446,11 +448,11 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 #%files c3p0 -f .mfiles-hibernate-c3p0
-%files ehcache -f .mfiles-hibernate-ehcache
+#%files ehcache -f .mfiles-hibernate-ehcache
 %files entitymanager -f .mfiles-hibernate-entitymanager
 %files envers -f .mfiles-hibernate-envers
 #files hikaricp -f .mfiles-hibernate-hikaricp
-%files infinispan -f .mfiles-hibernate-infinispan
+#files infinispan -f .mfiles-hibernate-infinispan
 %files osgi -f .mfiles-hibernate-osgi
 
 %files parent -f .mfiles-hibernate-parent
@@ -463,6 +465,9 @@ sed -i.jandex1.2.2 "s|classDotName, superName, access_flag, interfaces, map|clas
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt5_8jpp8
+- build w/o ehcache-core and infinispan
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.3.11-alt4_8jpp8
 - build w/o jts
 
