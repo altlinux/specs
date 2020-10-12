@@ -1,10 +1,9 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,18 +16,20 @@ BuildRequires: jpackage-generic-compat
 %bcond_without reflections
 
 Name:           jna
-Version:        4.5.1
-Release:        alt2_6jpp8
+Version:        5.4.0
+Release:        alt1_2jpp8
 Summary:        Pure Java access to native libraries
-# Most of code is dual-licensed under either LGPL 2.1 only or Apache
+# Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
 # which is pure Apache License 2.0.
-License:        (LGPLv2 or ASL 2.0) and ASL 2.0
+License:        (LGPLv2+ or ASL 2.0) and ASL 2.0
+
 URL:            https://github.com/java-native-access/jna/
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}-clean.tar.xz
 Source1:        package-list
 Source2:        generate-tarball.sh
+
 Patch0:         0001-Adapt-build.patch
 # This patch is Fedora-specific for now until we get the huge
 # JNI library location mess sorted upstream
@@ -46,6 +47,9 @@ Patch4:         0005-Fix-duplicate-manifest-entry.patch
 # We don't want newly added warnings to break our build
 Patch5:         0006-Remove-Werror.patch
 
+# We manually require libffi because find-requires doesn't work
+# inside jars.
+Requires:       libffi
 BuildRequires:  gcc
 BuildRequires:  javapackages-local
 BuildRequires:  libffi-devel
@@ -56,6 +60,11 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXt-devel
 %if %{with reflections}
 BuildRequires:  reflections
+%endif
+
+%ifarch %{arm}
+# Speed up builds on 32bit arm
+#BuildRequires: java-1.8.0-openjdk-aarch32-devel
 %endif
 Source44: import.info
 
@@ -78,7 +87,7 @@ This package contains the javadocs for %{name}.
 %package        contrib
 Group: Development/Java
 Summary:        Contrib for %{name}
-License:        LGPLv2 or ASL 2.0
+License:        LGPLv2+ or ASL 2.0
 Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 
@@ -87,7 +96,7 @@ This package contains the contributed examples for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 cp %{SOURCE1} .
 %patch0 -p1 -b .build
 %patch1 -p1 -b .loadlib
@@ -106,24 +115,35 @@ chmod -c 0644 LICENSE OTHERS CHANGES.md
 
 %if %{with reflections}
 sed s,'<include name="junit.jar"/>,&<include name="reflections.jar"/>,' -i build.xml
-build-jar-repository -s -p lib junit reflections ant
+build-jar-repository -s -p lib junit reflections
 %else
-build-jar-repository -s -p lib junit ant
+build-jar-repository -s -p lib junit
 rm test/com/sun/jna/StructureFieldOrderInspector.java
 rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
 rm contrib/platform/test/com/sun/jna/platform/StructureFieldOrderTest.java
 %endif
+ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
 
 %build
+# Ensure we get the jit on arm
+%ifarch %{arm}
+export JAVA_HOME=$(ls -d %{_jvmdir}/java-1.8.0-openjdk-aarch32*)
+%else
+export JAVA_HOME=%{_jvmdir}/java
+%endif
+
 # We pass -Ddynlink.native which comes from our patch because
 # upstream doesn't want to default to dynamic linking.
+# -Drelease removes the .SNAPSHOT suffix from maven artifact names
 #ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native compile javadoc jar contrib-jars
-ant -Dcompatibility=1.6 -Dplatform.compatibility=1.6 -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native dist
+ant -Drelease -Dcompatibility=1.6 -Dplatform.compatibility=1.6\
+ -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native dist
 # remove compiled contribs
 find contrib -name build -exec rm -rf {} \; || :
+
 
 %install
 # NOTE: JNA has highly custom code to look for native jars in this
@@ -155,6 +175,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_2jpp8
+- new version
+
 * Mon Aug 03 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.1-alt2_6jpp8
 - NMU: removed invalid parasitic dependency on libffi6 (#38781).
 
