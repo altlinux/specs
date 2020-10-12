@@ -1,5 +1,5 @@
 Name: mcelog
-Version: 170
+Version: 173
 Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
@@ -69,6 +69,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/cron.hourly/mcelog.cron
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 173-alt1
+- 170 -> 173
+
 * Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 170-alt1
 - 162 -> 170
 
@@ -81,7 +84,7 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 - logrotate setting has been moved from cron to main package (closes: #36329)
 - updated logrotate settings from ALT bug #36329
 
-* Wed Aug 08 2018 Anton Farygin <rider@altlinux.ru> 159-alt1%ubt
+* Wed Aug 08 2018 Anton Farygin <rider@altlinux.ru> 159-alt1
 - version up to 159
 - built from upstream git
 
