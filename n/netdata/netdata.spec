@@ -1,10 +1,12 @@
+# TODO: pyyaml3, urllib3
+
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
 %define release_commit d4ff1ea72c44f11a7debeb157ab09be882373900
 
 %define netdatauser netdata
 Name: netdata
 Version: 1.25.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -19,8 +21,14 @@ Source: %name-%version.tar
 
 Source1: netdata.logrotate
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: bash4
-BuildRequires: libuuid-devel zlib-devel libcups-devel libuv-devel libprotobuf-devel liblz4-devel
+BuildRequires: libuuid-devel libuv-devel libprotobuf-devel
+BuildRequires: libjudy-devel libcap-devel
+BuildRequires: liblz4-devel zlib-devel libssl-devel
+BuildRequires: libjson-c-devel
+
+BuildRequires: libcups-devel >= 1.7
 
 # TODO: ebpf.plugin (see configure.ac)
 BuildRequires: libelf-devel
@@ -35,13 +43,21 @@ BuildRequires: libmnl-devel
 BuildRequires: libnetfilter_acct-devel
 %endif
 
+Requires: %name-web = %EVR
+
 AutoReq: yes, noshell
 
-%add_findreq_skiplist %_libexecdir/%name/plugins.d/*.plugin
+%add_python3_lib_path %_libexecdir/%name/python.d
+
+#add_findreq_skiplist %_libexecdir/%name/plugins.d/*.plugin
 %add_findreq_skiplist %_libexecdir/%name/charts.d/*.sh
 
-# FIXME netdata-postgres: Depends: python2.7(bases) but it is not installable
-%add_python_req_skip bases
+%add_python3_req_skip UserDict
+
+# FIXME netdata-postgres
+#python3(python_modules.bases.FrameworkServices.ExecutableService)
+%add_python3_req_skip bases.FrameworkServices.SimpleService
+
 # python.d/python_modules/pyyaml3/__init__.py: invalid syntax (line 284)
 #add_findreq_skiplist %_libexecdir/%name/python.d/python_modules/*/*.py
 #if %_vendor != "alt"
@@ -60,11 +76,35 @@ happened, on your systems and applications.
 
 %package postgres
 Summary: PostgreSQL module for %name
-Group: Development/Python
+Group: Monitoring
 Requires: %name = %EVR
+#Provides: %name-postgres
+#Obsoletes: %name-postgres
 
 %description postgres
 PostgreSQL module for %name.
+
+%package web
+Summary:  %name web static files
+Group: Monitoring
+Requires: %name = %EVR
+BuildArch: noarch
+
+%description web
+%name web static files.
+
+%package plugin-cups
+Summary: The Common Unix Printing System (CUPS) plugin for netdata
+Group: Monitoring
+Requires: cups >= 1.7
+Requires: netdata = %EVR
+
+%description plugin-cups
+This is the Common Unix Printing System plugin for the netdata daemon.
+
+Use this plugin to enable metrics collection from cupsd, the daemon running when CUPS is enabled on the system
+
+
 
 %prep
 %setup
@@ -84,6 +124,7 @@ done
 	--docdir=%_docdir/%name-%version \
 	--with-zlib \
 	--with-math \
+	--enable-jsonc \
 	%{?with_nfacct:--enable-plugin-nfacct} \
 	--with-user=netdata
 
@@ -97,8 +138,8 @@ done
 %install
 %makeinstall_std
 
-# drop python3 version
-rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml3/
+# drop python2 version
+rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml2/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
@@ -182,19 +223,32 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/node.d/
 %_libexecdir/%name/plugins.d/
 %_libexecdir/%name/python.d/
-%exclude %_libexecdir/%name/python.d/postgres.chart.py
 %dir %_datadir/%name
 %dir %_libdir/%name/
 %_libdir/%name/conf.d/
 
+%exclude %_libexecdir/%name/python.d/postgres.chart.py
+%exclude %_libexecdir/%name/plugins.d/cups.plugin
+
+%files web
 # override defattr for web files (see netdata.conf for web access user/group)
 %defattr(644,root,%netdatauser,755)
 %_datadir/%name/web/
 
 %files postgres
-%_libexecdir/%name/python.d/postgres.chart.py
+%attr(0750,root,%netdatauser) %_libexecdir/%name/python.d/postgres.chart.py
+
+%files plugin-cups
+%attr(0750,root,%netdatauser) %_libexecdir/%name/plugins.d/cups.plugin
+
 
 %changelog
+* Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt2
+- use python3 only
+- move cups plugin to separate package
+- move web static files to separate noarch subpackage
+- update BR: libjudy-devel, libcap-devel, libssl-devel, libjson-c-devel
+
 * Tue Sep 22 2020 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt1
 - new version 1.25.0 (with rpmrb script)
 
