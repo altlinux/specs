@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.9.14
-Release: alt2
+Release: alt3
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -112,6 +112,10 @@ echo '#!/bin/bash -l
 
 %build
 %add_optflags -Wno-error=int-to-pointer-cast
+%ifarch %e2k
+# 0.9.14: expression has no effect (ssl.h, onoff)
+%add_optflags -Wno-error=unused-value
+%endif
 ./bootstrap
 for dir in xorgxrdp librfxcodec libpainter; do
 	pushd $dir
@@ -243,6 +247,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon Oct 12 2020 Michael Shigorin <mike@altlinux.org> 0.9.14-alt3
+- E2K: ftbfs workaround
+
 * Mon Sep 14 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.14-alt2
 - Use system-auth pam rules instead of local unix users.
 
