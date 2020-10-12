@@ -1,8 +1,8 @@
 %def_disable qt4
 %define oname eigen
 Name: %{oname}3
-Version: 3.3.7
-Release: alt5
+Version: 3.3.8
+Release: alt1
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -22,6 +22,7 @@ Patch2:         eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
 Patch3:		eigen3-3.3.7-alt-e2k.patch
 
+BuildRequires(pre): rpm-build-ninja
 %ifnarch %e2k
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
 %endif
@@ -36,6 +37,7 @@ BuildRequires: libXmu-devel libmetis-devel phonon-devel libXres-devel
 BuildRequires: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libxkbfile-devel libXpm-devel
 BuildRequires: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: boost-devel
 
 # TODO: add devel subpackage and move stuff
 Provides: %{name}-devel = %EVR
@@ -77,17 +79,14 @@ This package contains examples for Eigen.
 %endif
 
 %build
-mkdir -p BUILD
-pushd BUILD
-
 %add_optflags -I%_includedir/metis
 export PATH=$PATH:%_libdir/pastix/bin
 
-cmake \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_C_FLAGS="%optflags" \
-	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DCMAKE_Fortran_FLAGS="%optflags" \
+%cmake -GNinja \
+	-DINCLUDE_INSTALL_DIR:PATH=include/%name \
+	-DPKGCONFIG_INSTALL_DIR:PATH=%_lib/pkgconfig \
+	-DCMAKEPACKAGE_INSTALL_DIR=share/cmake/Modules/%name \
+	-DOpenGL_GL_PREFERENCE=GLVND \
 %ifarch %e2k
 	-DEIGEN_TEST_AVX512:BOOL=OFF \
 	-DEIGEN_TEST_AVX:BOOL=OFF \
@@ -101,21 +100,17 @@ cmake \
 %endif
 	-DSUPERLU_LIBRARIES:STRING=-lsuperlu_4.0 \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DEIGEN_INCLUDE_INSTALL_DIR:PATH=%_includedir/%name \
 	-DGOOGLEHASH_INCLUDES:PATH="%_includedir/google" \
 	-DGOOGLEHASH_COMPILE:STRING="g++ %optflags" \
-	-DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir \
 	..
-popd
 
-%make_build -C BUILD
+%ninja_build -C BUILD
 %ifnarch %e2k
-%make_build -C BUILD doc
+%ninja_build -C BUILD doc
 %endif
 
 %install
-%makeinstall_std -C BUILD
+%ninja_install -C BUILD
 
 install -d %buildroot%_bindir
 %ifnarch %e2k
@@ -127,8 +122,7 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %files
 %_includedir/*
 %_pkgconfigdir/*
-%_datadir/cmake/Modules/FindEigen3.cmake
-%_datadir/%name/cmake/*.cmake
+%_datadir/cmake/Modules/*
 
 %ifnarch %e2k
 %files examples
@@ -140,6 +134,10 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %endif
 
 %changelog
+* Sun Oct 11 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.8-alt1
+- New version.
+- Use ninja for build.
+
 * Fri Jun 26 2020 Michael Shigorin <mike@altlinux.org> 3.3.7-alt5
 - E2K: lcc 1.24 workaround
 
