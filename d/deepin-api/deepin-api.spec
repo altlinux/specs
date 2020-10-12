@@ -13,7 +13,7 @@
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.3.0.11
+Version: 5.3.0.12
 Release: alt1
 Summary: Go-lang bingding for dde-daemon
 License: GPL-3.0+
@@ -23,7 +23,6 @@ Url: https://github.com/linuxdeepin/dde-api
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/dde-api-%version.tar.gz
-Patch: %{name}_makefile.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools deepin-gir-generator
@@ -52,6 +51,8 @@ building other packages which use import path with
 rm -rf debian/
 # Fix unmets.
 sed -i 's|/usr/bin/true|/bin/true|' misc/systemd/system/deepin-shutdown-sound.service
+# Fixed build for i586.
+sed -i 's|gobuild|.build|' Makefile
 
 %build
 export BUILDDIR=$PWD/.build
@@ -102,5 +103,8 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.12-alt1
+- New version (5.3.0.12) with rpmgs script.
+
 * Fri Sep 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.11-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
