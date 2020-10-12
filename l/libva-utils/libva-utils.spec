@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -68,6 +68,9 @@ autoreconf -fisv
 
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 2.9.1-alt1
+- 2.9.1
+
 * Tue Sep 15 2020 Anton Farygin <rider@altlinux.ru> 2.9.0-alt1
 - 2.9.0
 
