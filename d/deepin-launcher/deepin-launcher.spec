@@ -1,7 +1,7 @@
 %global repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.3.0.5
+Version: 5.3.0.22
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -33,7 +33,9 @@ Header files and libraries for %name.
 %__subst '/include <QPainter>/a #include <QPainterPath>' src/widgets/miniframenavigation.cpp src/widgets/avatar.cpp src/widgets/miniframebutton.cpp
 
 %build
-%cmake_insource -GNinja -DCMAKE_INSTALL_PREFIX=%_prefix
+%cmake_insource \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=%_prefix
 %ninja_build
 
 %install
@@ -50,5 +52,8 @@ Header files and libraries for %name.
 %_includedir/%repo/
 
 %changelog
+* Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.22-alt1
+- New version (5.3.0.22) with rpmgs script.
+
 * Tue Aug 18 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.5-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for this spec).
