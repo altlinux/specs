@@ -4,7 +4,7 @@ BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-databind
-Version:       2.9.8
+Version:       2.9.9.3
 Release:       alt1_1jpp8
 Summary:       General data-binding package for Jackson (2.x)
 License:       ASL 2.0 and LGPLv2+
@@ -12,9 +12,11 @@ URL:           https://github.com/FasterXML/jackson-databind/
 Source0:       https://github.com/FasterXML/jackson-databind/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+
+# TODO: Revert back to version macro when versions align again.
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= 2.9.9
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= 2.9.9
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= 2.9.9
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.powermock:powermock-api-mockito)
@@ -75,6 +77,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.9.3-alt1_1jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_1jpp8
 - new version
 
