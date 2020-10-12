@@ -1,11 +1,10 @@
 %define		php7_extension	imagick
 %define 	real_name	imagick
 %define		real_version	3.4.3
-%define		im_suffix   6.6
 
 Name:	 	php7-%{php7_extension}
 Version:	%php7_version
-Release:	%php7_release.2
+Release:	%php7_release.3
 
 Summary:	PHP7 wrapper to the ImageMagick library
 
@@ -20,14 +19,7 @@ Source2:	php-%php7_extension-params.sh
 
 BuildRequires(pre): rpm-build-php7
 BuildRequires: php7-devel = %php7_version
-#FIXME: why the library package does not work??
-#BuildRequires(pre): libImageMagick%im_suffix
-BuildRequires(pre): libImageMagick-devel
-
-# the module does strict checking and print warning if versions are not equal
-%define im_version %get_version libImageMagick%im_suffix
-Requires: libImageMagick%im_suffix = %im_version
-
+BuildRequires: libImageMagick-devel
 
 %description
 Imagick is a native PHP extension to create and modify images

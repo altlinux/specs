@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.11
-%define drelease	28
+%define drelease	34
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		6
@@ -32,7 +32,7 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Source5: %name.watch
-Patch0: ImageMagick-6.9.9-modules-path.patch
+Patch0: ImageMagick-6.9.11.34-modules-path.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
@@ -263,6 +263,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Oct 12 2020 Anton Farygin <rider@altlinux.ru> 6.9.11.34-alt1
+- new version 6.9.11.34
+
 * Fri Aug 21 2020 Anton Farygin <rider@altlinux.ru> 6.9.11.28-alt1
 - new version 6.9.11.28
 
