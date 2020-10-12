@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 %define version 4.0.4
 %global _version %( echo %{version} | tr . _ )
 
-%if 0%{?fedora}
+%if 0
 # lucene:4.2.1
 #def_with lucene4
 %bcond_with lucene4
@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 Name:          querydsl
 # NOTE: newer release use hibernate-core:4.3.11.Final
 Version:       4.0.4
-Release:       alt4_6jpp8
+Release:       alt5_6jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -84,7 +84,7 @@ BuildRequires: mvn(org.geolatte:geolatte-geom:0.14)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
 BuildRequires: mvn(org.hibernate:hibernate-core:4)
 BuildRequires: mvn(org.hibernate:hibernate-entitymanager:4)
-BuildRequires: mvn(org.hibernate:hibernate-search-orm)
+#BuildRequires: mvn(org.hibernate:hibernate-search-orm)
 BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
@@ -429,6 +429,8 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 
 %pom_change_dep com.vividsolutions:jts:1.10 com.vividsolutions:jts:1.14.0 querydsl-sql-spatial
 
+%pom_disable_module querydsl-hibernate-search
+
 %build
 
 # Unavailable test deps
@@ -447,7 +449,7 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %files collections -f .mfiles-%{name}-collections
 %doc %{name}-collections/README.md
 
-%files hibernate-search -f .mfiles-%{name}-hibernate-search
+#%files hibernate-search -f .mfiles-%{name}-hibernate-search
 
 %files jdo -f .mfiles-%{name}-jdo
 %doc %{name}-jdo/README.md
@@ -485,6 +487,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt5_6jpp8
+- build w/o hibernate-search
+
 * Wed Jun 19 2019 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt4_6jpp8
 - build with geolatte-geom0.14
 
