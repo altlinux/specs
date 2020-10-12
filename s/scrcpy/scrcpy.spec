@@ -4,9 +4,9 @@
 %def_disable build_server
 
 Name: scrcpy
-Version: 1.14
+Version: 1.16
 Release: alt1
-Summary: Display and control your Android device from Linux OpenMandriva
+Summary: Display and control your Android device screen
 License: Apache-2.0
 Group: Networking/Remote access
 Url: https://github.com/Genymobile/scrcpy
@@ -20,7 +20,7 @@ Source1: scrcpy-server.jar
 # Android SDK is not free and is not redistributable.
 # If you want to build server application download it here:
 # https://developer.android.com/studio#downloads
-Source2: commandlinetools-linux-6514223_latest.zip
+Source2: commandlinetools-linux-6609375_latest.zip
 
 BuildPreReq: java-devel unzip
 %endif
@@ -33,9 +33,8 @@ BuildRequires: libSDL2-devel libavformat-devel meson
 Requires: android-tools
 
 %description
-his application provides display and control of Android devices connected on
-USB (or over TCP/IP).  It does not require any root access.  It works on
-GNU/Linux, Windows and macOS.
+This application provides display and control of Android devices connected on
+USB (or over TCP/IP).  It does not require any root access.
 
 %prep
 %setup
@@ -70,5 +69,9 @@ export ANDROID_SDK_ROOT=$PWD/android-sdk
 %_mandir/man1/scrcpy.1.*
 
 %changelog
+* Mon Oct 12 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.16-alt1
+- Updated to v1.16.
+- Fixed package summary and description.
+
 * Fri May 29 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.14-alt1
 - Initial build.
