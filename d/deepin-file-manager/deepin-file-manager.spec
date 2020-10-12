@@ -1,7 +1,7 @@
 %define repo dde-file-manager
 
 Name: deepin-file-manager
-Version: 5.2.0.59
+Version: 5.2.0.61
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc7-c++ git-core desktop-file-utils deepin-gettext-tools deepin-dock-devel libmagic-devel libjemalloc-devel kf5-kcodecs-devel libatk-devel dtk5-widget-devel dtk5-gui-devel deepin-qt-dbus-factory-devel libgtk+2-devel gsettings-qt-devel libsecret-devel libpoppler-cpp-devel libpolkit-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-svg-devel qt5-multimedia-devel qt5-x11extras-devel libtag-devel libuchardet-devel libxcbutil-devel libxcbutil-icccm-devel qt5-linguist udisks2-qt5-devel disomaster-devel qt5-tools libgio-qt-devel libssl-devel libqtxdg-devel libmediainfo-devel libpcre-devel libffmpegthumbnailer-devel libdmr-devel deepin-anything-devel liblucene++-devel libxml2-devel libhtmlcxx-devel libgsf-devel libmimetic-devel
 
 # run command by QProcess
-Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
+# Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
 #Recommends:     deepin-manual
 # dde-file-manager-lib/configure/global-setting-template-{fedora,pro,js}.js:2:13: error: Expected token `,'
 
@@ -37,7 +37,7 @@ Header files and libraries for %name.
 %package -n deepin-desktop
 Summary: Deepin desktop environment - desktop module
 Group: Graphical desktop/Other
-Requires: deepin-dock deepin-launcher deepin-session-shell
+# Requires: deepin-dock deepin-launcher deepin-session-shell
 
 %description -n deepin-desktop
 Deepin desktop environment - desktop module.
@@ -144,6 +144,10 @@ find -type f -perm 775 -exec chmod 644 {} \;
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.61-alt1
+- New version (5.2.0.61) with rpmgs script.
+- Removed requires.
+
 * Mon Oct 05 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.59-alt1
 - New version (5.2.0.59) with rpmgs script.
 
