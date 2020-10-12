@@ -1,5 +1,5 @@
 Name: mpz
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -40,6 +40,9 @@ cd build
 %_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - initial build for ALT Sisyphus
 
