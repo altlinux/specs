@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary: Application for extraction and decompilation of JVM byte code
 Name: java-runtime-decompiler
-Version: 2.0
-Release: alt1_6jpp8
+Version: 3.0
+Release: alt1_9jpp9
 License: GPLv3
 URL: https://github.com/pmikova/java-runtime-decompiler
 Source0: https://github.com/pmikova/%{name}/archive/%{name}-%{version}.tar.gz
@@ -18,12 +18,21 @@ Source2: java-runtime-decompiler.1
 Source3: jrd.desktop
 Patch1: systemFernflower.patch
 Patch2: systemProcyon.patch
-Patch3: includeLambdas.patch
+Patch3: rsyntaxVersion.patch
 BuildArch: noarch
 BuildRequires: maven-local
 BuildRequires: byteman
 BuildRequires: rsyntaxtextarea
+BuildRequires: junit5
+BuildRequires: ant-junit5
+BuildRequires: junit
+BuildRequires: ant-junit
+BuildRequires: maven-surefire-provider-junit
+BuildRequires: maven-surefire-provider-junit5
+BuildRequires: maven-surefire
+BuildRequires: maven-surefire-plugin
 # depends on devel, not runtime (needs tools.jar)
+BuildRequires: java-1.8.0-devel
 BuildRequires: google-gson
 BuildRequires: desktop-file-utils
 Requires: fernflower
@@ -44,10 +53,13 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch1
-%patch2
-%patch3
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
 sed -i s,/usr/bin/bash,/bin/bash, %SOURCE1
+
+# requires /sys/kernel
+rm runtime-decompiler/src/test/java/org/jrd/frontend/PluginMangerFrame/FileSelectorArrayRowTest.java
 
 %build
 pushd runtime-decompiler
@@ -55,7 +67,7 @@ pushd runtime-decompiler
 %pom_add_dep com.sun:tools
 %pom_remove_plugin :maven-jar-plugin
 popd
-%mvn_build 
+%mvn_build --xmvn-javadoc
 
 %install
 %mvn_install
@@ -90,6 +102,9 @@ desktop-file-install                      \
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_9jpp9
+- new version
+
 * Tue Jul 16 2019 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_6jpp8
 - new version
 
