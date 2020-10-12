@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-doxia
 Version:        1.7
-Release:        alt1_10jpp8
+Release:        alt2_10jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -262,7 +262,7 @@ rm doxia-modules/doxia-module-markdown/src/test/java/org/apache/maven/doxia/modu
 %endif
 
 %build
-%mvn_build -s
+%mvn_build -s -f
 
 %install
 %mvn_install
@@ -295,13 +295,16 @@ rm doxia-modules/doxia-module-markdown/src/test/java/org/apache/maven/doxia/modu
 %files module-xhtml -f .mfiles-doxia-module-xhtml
 %files sink-api -f .mfiles-doxia-sink-api
 %files test-docs -f .mfiles-doxia-test-docs
-%files tests -f .mfiles-tests
+#%files tests -f .mfiles-tests
 %doc LICENSE NOTICE
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt2_10jpp8
+- build w/o tests - support for fop 2.4
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_10jpp8
 - new version
 
