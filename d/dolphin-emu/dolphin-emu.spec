@@ -2,7 +2,7 @@
 
 Name: dolphin-emu
 Version: 5.0
-Release: alt14.git5a939cc
+Release: alt15.git5a939cc
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -47,6 +47,7 @@ BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
+BuildRequires: libminizip2-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
@@ -96,6 +97,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Mon Oct 12 2020 Nazarov Denis <nenderus@altlinux.org> 5.0-alt15.git5a939cc
+- Rebuit with minizip
+
 * Sun Oct 11 2020 Nazarov Denis <nenderus@altlinux.org> 5.0-alt14.git5a939cc
 - Update to git commit 5a939cc (ALT #39062)
 
