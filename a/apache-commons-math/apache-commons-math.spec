@@ -2,31 +2,23 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name commons-math3
 
 Name:             apache-commons-math
-Version:          3.4.1
-Release:          alt2_10jpp8
+Version:          3.6.1
+Release:          alt1_5jpp8
 Summary:          Java library of lightweight mathematics and statistics components
 License:          ASL 1.1 and ASL 2.0 and BSD
 URL:              http://commons.apache.org/math/
 Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
-# Fix random build self-test failures reported on RHBZ #1402145 (see
-# https://git1-us-west.apache.org/repos/asf?p=commons-math.git;a=commit;h=a9006aa)
-Patch1:           %{name}-3.4.1-RHBZ1402145.patch
 
-BuildRequires:    java-devel >= 1.6.0
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    mvn(org.apache.commons:commons-parent:pom:)
-Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
 
@@ -47,18 +39,18 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch1 -p1
+
+
+# Skip test that fails on Java 11
+sed -i -e '/checkMissingFastMathClasses/i@Ignore' \
+src/test/java/org/apache/commons/math3/util/FastMathTest.java
 
 # Compatibility links
 %mvn_alias "org.apache.commons:%{short_name}" "%{short_name}:%{short_name}"
 %mvn_file :%{short_name} %{short_name} %{name}
 
-# Disable maven-jgit-buildnumber-plugin plugin (not available in Fedora)
-%pom_remove_plugin ru.concerteza.buildnumber:maven-jgit-buildnumber-plugin
-
-
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.test.skip.exec=true
 
 
 %install
@@ -66,14 +58,19 @@ This package contains the API documentation for %{name}.
 
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc NOTICE.txt RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc NOTICE.txt
+%doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.6.1-alt1_5jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt2_10jpp8
 - new version
 
