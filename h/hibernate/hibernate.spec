@@ -19,7 +19,7 @@ BuildRequires: jpackage-1.8-compat
 %global namedversion %{version}%{?namedreltag}
 
 # Conditionals to help breaking hibernate <-> infinispan dependency cycle
-%if 0%{?fedora}
+%if 0
 %bcond_with infinispan
 # Use geolatte-geom 1.0.1 but 1.x series is no compatible with the 0.1x
 %bcond_with spatial
@@ -29,7 +29,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          hibernate
 Version:       5.0.10
-Release:       alt4_6jpp8
+Release:       alt5_6jpp8
 Summary:       Relational persistence and query service
 License:       LGPLv2+ and ASL 2.0
 URL:           http://www.hibernate.org/
@@ -67,7 +67,7 @@ BuildRequires: mvn(java_cup:java_cup)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sf.ehcache:ehcache-core)
+#BuildRequires: mvn(net.sf.ehcache:ehcache-core)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
@@ -76,13 +76,13 @@ BuildRequires: mvn(org.bsc.maven:maven-processor-plugin)
 BuildRequires: mvn(org.codehaus.mojo:antlr-maven-plugin)
 BuildRequires: mvn(org.eclipse.osgi:org.eclipse.osgi)
 %if %{with spatial}
-BuildRequires: mvn(org.geolatte:geolatte-geom)
-BuildRequires: mvn(postgresql:postgresql)
+#BuildRequires: mvn(org.geolatte:geolatte-geom)
+#BuildRequires: mvn(postgresql:postgresql)
 %endif
 BuildRequires: mvn(org.hibernate.common:hibernate-commons-annotations)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 %if %{without infinispan}
-BuildRequires: mvn(org.infinispan:infinispan-core) >= 7.2.1
+#BuildRequires: mvn(org.infinispan:infinispan-core) >= 7.2.1
 %endif
 BuildRequires: mvn(org.javassist:javassist)
 BuildRequires: mvn(org.jboss:jandex)
@@ -442,16 +442,12 @@ for f in $(grep -e 'Pedersen\|Lichtmaier\|Chanfreau\|Benke\|Carlos\|CREATE\ SCHE
   native2ascii -encoding UTF8 ${f} ${f}
 done
 
-%if %{with infinispan}
 %pom_disable_module hibernate-infinispan
-%endif
-
-%if %{without spatial}
 %pom_disable_module hibernate-spatial
-%endif
 %pom_disable_module hibernate-hikaricp
 %pom_disable_module hibernate-c3p0
 %pom_disable_module hibernate-testing
+%pom_disable_module hibernate-ehcache
 
 %build
 
@@ -466,12 +462,12 @@ done
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 #%files c3p0 -f .mfiles-hibernate-c3p0
-%files ehcache -f .mfiles-hibernate-ehcache
+#%files ehcache -f .mfiles-hibernate-ehcache
 %files entitymanager -f .mfiles-hibernate-entitymanager
 %files envers -f .mfiles-hibernate-envers
 #files hikaricp -f .mfiles-hibernate-hikaricp
 %if %{without infinispan}
-%files infinispan -f .mfiles-hibernate-infinispan
+#%files infinispan -f .mfiles-hibernate-infinispan
 %endif
 %files java8 -f .mfiles-hibernate-java8
 %files osgi -f .mfiles-hibernate-osgi
@@ -483,8 +479,8 @@ done
 %files proxool -f .mfiles-hibernate-proxool
 
 %if %{with spatial}
-%files spatial -f .mfiles-hibernate-spatial
-%doc --no-dereference hibernate-spatial/COPYRIGHT
+#%files spatial -f .mfiles-hibernate-spatial
+#%doc --no-dereference hibernate-spatial/COPYRIGHT
 %endif
 
 #%files testing -f .mfiles-hibernate-testing
@@ -493,6 +489,9 @@ done
 %doc --no-dereference lgpl.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt5_6jpp8
+- build w/o ehcache-core and infinispan
+
 * Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt4_6jpp8
 - build w/o jts
 
