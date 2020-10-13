@@ -1,5 +1,5 @@
 Name: R-base
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -340,6 +340,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Tue Oct 13 2020 Kirill Maslinsky <kirill@altlinux.org> 4.0.3-alt1
+- Version 4.0.3
+
 * Sun Jul 05 2020 Kirill Maslinsky <kirill@altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
