@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-trie
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Strict impure trie tree
 
 Group: Development/ML
@@ -9,9 +9,8 @@ License: MIT
 Url: https://github.com/kandu/trie
 Source: %name-%version.tar
 
-BuildRequires: dune ocaml-cppo
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: dune ocaml 
+BuildRequires: rpm-build-ocaml >= 1.4
 
 %description
 %summary.
@@ -29,28 +28,18 @@ developing applications that use %name.
 %setup
 
 %build
-dune build
+%dune_build -p trie
 
 %install
-dune install --destdir=%buildroot
+%dune_install
 
-%files
-%dir %_libdir/ocaml/trie
-%_libdir/ocaml/trie*/META
-%_libdir/ocaml/trie*/*.cma
-%_libdir/ocaml/trie*/*.cmi
-%_libdir/ocaml/trie*/*.cmxs
+%files -f ocaml-files.runtime
 
-%files devel
-%_libdir/ocaml/trie*/dune-package
-%_libdir/ocaml/trie*/opam
-%_libdir/ocaml/trie*/*.a
-%_libdir/ocaml/trie*/*.cmt*
-%_libdir/ocaml/trie*/*.cmxa
-%_libdir/ocaml/trie*/*.cmx
-%_libdir/ocaml/trie*/*.mli
-%_libdir/ocaml/trie*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Tue Oct 13 2020 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
+- migrated to rpm-build-ocaml 1.4
+
 * Sat Jun 20 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
