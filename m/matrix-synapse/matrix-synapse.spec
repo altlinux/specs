@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use jsonschema >= 2.5.1
 %py3_use frozendict >= 1
 %py3_use unpaddedbase64 >= 1.1.0
-%py3_use canonicaljson >= 1.3.0
+%py3_use canonicaljson >= 1.4.0
 %py3_use signedjson >= 1.1.0
 %py3_use pynacl >= 1.2.1
 %py3_use idna >= 2.5
@@ -48,7 +48,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.9
 %py3_use six >= 1.10
 # prometheus_client 0.4.0 changed the format of counter metrics
 # (cf https://github.com/matrix-org/synapse/issues/4001)
-%py3_use prometheus_client >= 0.0.18
+%py3_use prometheus_client >= 0.4.0
 %py3_use prometheus_client < 0.9.0
 # we use attr.validators.deep_iterable, which arrived in 19.1.0
 %py3_use attrs >= 19.1.0
@@ -154,6 +154,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 1.21.0-alt1
+- new version 1.21.0 (with rpmrb script)
+
 * Thu Sep 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1.20.1-alt1
 - new version 1.20.1 (with rpmrb script)
 
