@@ -3,8 +3,8 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.74.0
-Release: alt2
+Version: 5.75.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -166,6 +166,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
+- new version
+
 * Mon Sep 28 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt2
 - fix checksum widgets layout
 

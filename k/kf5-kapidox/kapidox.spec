@@ -3,7 +3,7 @@
 %def_enable python3
 
 Name: kf5-%rname
-Version: 5.74.0
+Version: 5.75.0
 Release: alt1
 %K5init altplace
 %if_disabled python3
@@ -86,7 +86,7 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 %endif
 
 %files
-%doc LICENSE README.md
+%doc LICENSES/* README.md
 %_K5bin/depdiagram-*
 %_K5bin/kapidox_generate
 
@@ -108,6 +108,9 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
+- new version
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 

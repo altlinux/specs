@@ -1,7 +1,7 @@
 %define rname kidletime
 
 Name: kf5-%rname
-Version: 5.74.0
+Version: 5.75.0
 Release: alt1
 %K5init altplace
 
@@ -76,6 +76,9 @@ KF5 library
 %_K5plug/kf5/org.kde.kidletime.platforms/
 
 %changelog
+* Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
+- new version
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 
