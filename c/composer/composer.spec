@@ -12,7 +12,7 @@
 # OR JUST run $ rpmrb NEWVERSION instead of all above
 
 Name: composer
-Version: 1.10.1
+Version: 1.10.15
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -74,6 +74,9 @@ install -m 0644 .gear/composer.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace)  %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.15-alt1
+- new version
+
 * Wed Apr 01 2020 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt1
 - new version
 - set default memory limit to 512MB
