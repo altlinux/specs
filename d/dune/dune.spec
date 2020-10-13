@@ -3,7 +3,7 @@
 
 Name: dune
 Version: 2.7.1
-Release: alt2
+Release: alt3
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -53,6 +53,7 @@ productive.
 Group: Development/ML
 Summary: Development files for %name
 Requires: ocaml-result-devel
+Requires: %name = %EVR
 %description -n ocaml-dune-devel
 Dune is a build system designed for OCaml/Reason projects only. It focuses
 on providing the user with a consistent experience and takes care of most of
@@ -106,10 +107,11 @@ sed -i '/^(name/a (version %version)' dune-project
 %_man1dir/dune-compute.1.xz
 %_man1dir/dune-format-dune-file.1.xz
 %_man1dir/dune-upgrade.1.xz
+
+%files -n ocaml-dune-devel
 %dir %_libdir/ocaml/dune/
 %dir %_libdir/ocaml/dune-action-plugin/
 %dir %_libdir/ocaml/dune-build-info/
-%dir %_libdir/ocaml/dune-configurator/
 %dir %_libdir/ocaml/dune-glob/
 %dir %_libdir/ocaml/dune-private-libs/
 %dir %_libdir/ocaml/dune-private-libs/cache/
@@ -123,18 +125,16 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune*/META
 %_libdir/ocaml/dune*/*.cma
 %_libdir/ocaml/dune*/*.cmi
-%_libdir/ocaml/dune-configurator/.private
 %_libdir/ocaml/dune-private-libs/*/*.cma
 %_libdir/ocaml/dune-private-libs/*/*.cmi
 %_libdir/ocaml/stublibs/dllstdune_stubs.so
-
-%files -n ocaml-dune-devel
 %_libdir/ocaml/dune*/dune-package
 %_libdir/ocaml/dune*/opam
 %_libdir/ocaml/dune*/*.cmt
 %_libdir/ocaml/dune*/*.cmti
 %_libdir/ocaml/dune*/*.ml
 %_libdir/ocaml/dune*/*.mli
+%_libdir/ocaml/dune-configurator
 %_libdir/ocaml/dune-private-libs/*/*.cmt
 %_libdir/ocaml/dune-private-libs/*/*.cmti
 %_libdir/ocaml/dune-private-libs/*/*.cmxa
@@ -149,6 +149,10 @@ sed -i '/^(name/a (version %version)' dune-project
 %_libdir/ocaml/dune-private-libs/*/*.cmx
 
 %changelog
+* Tue Oct 13 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt3
+- moved all dune-configurator modules to devel package to fix
+  cyclic build dependencies with csexp package
+
 * Tue Sep 29 2020 Anton Farygin <rider@altlinux.ru> 2.7.1-alt2
 - fixed doc_root and mandir location
 
