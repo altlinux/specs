@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,8 +12,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_without snappy
 
 Name:           plexus-archiver
-Version:        3.6.0
-Release:        alt1_3jpp8
+Version:        4.1.0
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
@@ -88,6 +85,9 @@ rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResour
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.1.0-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_3jpp8
 - new version
 

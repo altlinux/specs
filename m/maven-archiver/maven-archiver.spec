@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archiver
-Version:        3.2.0
-Release:        alt1_4jpp8
+Version:        3.4.0
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -18,9 +18,6 @@ BuildArch:      noarch
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 Patch0:         0001-Port-tests-to-Eclipse-Aether.patch
-# Test fails with OpenJDK on Linux
-# Reported upstream: https://issues.apache.org/jira/browse/MSHARED-448
-Patch1:         0002-MSHARED-448-Skip-failing-assertion.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -31,7 +28,7 @@ BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver) >= 4.1.0
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
@@ -51,7 +48,6 @@ Javadoc for %{name}.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %mvn_build
@@ -60,12 +56,15 @@ Javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc LICENSE NOTICE CONTRIBUTING.md README.md
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.4.0-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_4jpp8
 - new version
 
