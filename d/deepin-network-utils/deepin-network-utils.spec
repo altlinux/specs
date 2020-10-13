@@ -1,7 +1,7 @@
 %global repo dde-network-utils
 
 Name: deepin-network-utils
-Version: 5.1.0.2
+Version: 5.3.0.5
 Release: alt1
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
@@ -11,7 +11,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ deepin-qt-dbus-factory-devel qt5-base-devel qt5-linguist
+BuildRequires: gcc-c++ deepin-qt-dbus-factory-devel qt5-base-devel qt5-linguist gsettings-qt-devel
 
 %description
 Deepin desktop-environment - network utils.
@@ -57,5 +57,8 @@ Header files and libraries for %name.
 %_libdir/lib*.so
 
 %changelog
+* Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.5-alt1
+- New version (5.3.0.5) with rpmgs script.
+
 * Mon Jul 27 2020 Leontiy Volodin <lvol@altlinux.org> 5.1.0.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
