@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -105,6 +105,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.2-alt1
+- New version (0.8.2) with rpmgs script.
+
 * Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 0.8.1-alt1
 - New version (0.8.1) with rpmgs script.
 
