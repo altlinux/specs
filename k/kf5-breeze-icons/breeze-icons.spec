@@ -1,7 +1,7 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.74.0
+Version: 5.75.0
 Release: alt1
 %K5init no_altplace
 
@@ -14,7 +14,6 @@ BuildArch: noarch
 
 Source: %rname-%version.tar
 Patch1: alt-icons-defaults.patch
-Patch2: alt-bash.patch
 
 # Automatically added by buildreq on Fri Dec 11 2015 (-bi)
 # optimized out: cmake cmake-modules gtk-update-icon-cache libqt5-core libstdc++-devel perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-parent python-base python3 python3-base
@@ -37,7 +36,6 @@ Provides: kde4-icon-theme = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 chmod a+x *.sh
 
@@ -101,6 +99,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Tue Oct 13 2020 Sergey V Turchin <zerg@altlinux.org> 5.75.0-alt1
+- new version
+
 * Mon Sep 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.74.0-alt1
 - new version
 
