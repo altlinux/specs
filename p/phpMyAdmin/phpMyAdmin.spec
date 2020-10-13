@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -177,6 +177,12 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.3-alt1
+- new version 5.0.3 (with rpmrb script)
+- several important security fixes:
+ + PMASA-2020-5 XSS vulnerability with transformation feature
+ + MASA-2020-6 SQL injection vulnerability with the search feature
+
 * Thu Jun 04 2020 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
 - new version 5.0.2 (with rpmrb script)
 
