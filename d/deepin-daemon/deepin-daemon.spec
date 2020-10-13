@@ -3,8 +3,9 @@
 %global repo dde-daemon
 
 Name: deepin-daemon
-Version: 5.12.0.14
-Release: alt1
+Version: 5.11.0.36
+Release: alt2
+Epoch: 1
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -33,9 +34,9 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-patch langselector/locale.go < rpm/locale.go.patch
-# %%patch -p1
-# install -m 644 %%SOURCE3 misc/etc/pam.d/deepin-auth
+# patch langselector/locale.go < rpm/locale.go.patch
+%patch -p1
+install -m 644 %SOURCE3 misc/etc/pam.d/deepin-auth
 
 # Fix library exec path
 %__subst '/deepin/s|lib|libexec|' Makefile
@@ -100,8 +101,8 @@ HandleSuspendKey=ignore
 EOF
 
 # install default settings
-#install -Dm644 %SOURCE1 \
-#%buildroot%_datadir/deepin-default-settings/fontconfig.json
+install -Dm644 %SOURCE1 \
+%buildroot%_datadir/deepin-default-settings/fontconfig.json
 
 %find_lang %repo
 
@@ -110,6 +111,7 @@ EOF
 %_sysconfdir/default/grub.d/10_deepin.cfg
 %_sysconfdir/grub.d/35_deepin_gfxmode
 %_sysconfdir/pam.d/deepin-auth-keyboard
+%_sysconfdir/pam.d/deepin-auth
 %_prefix/libexec/%name/
 %_libexecdir/systemd/logind.conf.d/10-%repo.conf
 %_datadir/dbus-1/services/*.service
@@ -135,8 +137,13 @@ EOF
 %_unitdir/deepin-accounts-daemon.service
 %_unitdir/hwclock_stop.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
+%dir %_datadir/deepin-default-settings/
+%_datadir/deepin-default-settings/fontconfig.json
 
 %changelog
+* Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 1:5.11.0.36-alt2
+- Returned to stable version.
+
 * Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 5.12.0.14-alt1
 - New version (5.12.0.14) with rpmgs script.
 
