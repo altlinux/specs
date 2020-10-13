@@ -13,13 +13,13 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  scm
-%bcond_without  ssh
+%bcond_with     scm
+%bcond_with     ssh
 
 Name:           maven-wagon
 Epoch:          0
-Version:        3.2.0
-Release:        alt1_2jpp8
+Version:        3.3.3
+Release:        alt1_4jpp8
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
 URL:            http://maven.apache.org/wagon
@@ -37,14 +37,13 @@ BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 %if %{with scm}
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
 %endif
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
@@ -52,6 +51,12 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 Obsoletes:      %{name}-manual < %{epoch}:%{version}-%{release}
 Obsoletes:      %{name}-provider-test < %{epoch}:%{version}-%{release}
+%if %{without scm}
+Obsoletes:      %{name}-scm < %{epoch}:%{version}-%{release}
+%endif
+%if %{without ssh}
+Obsoletes:      %{name}-ssh < %{epoch}:%{version}-%{release}
+%endif
 Source44: import.info
 
 %description
@@ -220,6 +225,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:3.3.3-alt1_4jpp8
+- new version
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_2jpp8
 - new version
 
