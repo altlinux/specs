@@ -1,81 +1,88 @@
 Name: opusfile
-Version: 0.11
-Release: alt0.5.gd2577d7
+Version: 0.12.0.3.4174
+Release: alt1
 
-Summary: Library for encoding .opus audio files and live streams
-License: BSD
+Summary: A high-level API for decoding and seeking within .opus files
+License: BSD-3-Clause
 Group: System/Libraries
-Url: http://opus-codec.org/
-# http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
-Source0: %name-%version.tar
-Source1: package_version
+Url: https://opus-codec.org/
+Vcs: https://gitlab.xiph.org/xiph/opusfile
+Source: %name-%version.tar
 
-BuildRequires: libssl-devel libogg-devel libopus-devel
+BuildRequires: doxygen libogg-devel libopus-devel libssl-devel
 
 %def_disable static
 
 %description
-Stand-alone decoder library for .opus streams
+The opusfile and opusurl libraries provide a high-level API for
+decoding and seeking within .opus files on disk or over http(s).
 
 %package -n lib%{name}0
-Summary: Stand-alone decoder library for .opus streams
-License: BSD
+Summary: Runtime decoder library for .opus streams
+License: BSD-3-Clause
 Group: System/Libraries
 
 %description -n lib%{name}0
-Stand-alone decoder library for .opus streams
+This package contains %name shared library for .opus streams.
 
-%package devel
+%package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C
-PreReq: lib%{name}0 = %EVR
-BuildRequires: doxygen
+Provides: %name-devel = %version
+Obsoletes: %name-devel < %version
 
-%description devel
+%description -n lib%name-devel
 This package contains the header files and documentation needed
 to develop applications with %name.
 
-%package devel-static
+%package -n lib%name-devel-static
 Summary: Static libraries for %name
 Group: Development/C
-PreReq: %name-devel = %EVR
+Requires: lib%name-devel = %EVR
+Provides: %name-devel-static = %version
+Obsoletes: %name-devel-static < %version
 
-%description devel-static
+%description -n lib%name-devel-static
 This package contains development libraries required for packaging
-statically linked libopus-based software.
+statically linked %name-based software.
 
 %package -n libopusurl0
 Summary: High-level Opus decoding library, URL support
-License: BSD
+License: BSD-3-Clause
 Group: System/Libraries
 
 %description -n libopusurl0
 High-level Opus decoding library, URL support.
 
-%package -n opusurl-devel
+%package -n libopusurl-devel
 Summary: Development files for opusurl
 Group: Development/C
-PreReq: libopusurl0 = %EVR
-BuildRequires: libssl-devel
+Provides: opusurl-devel = %version
+Obsoletes: opusurl-devel < %version
 
-%description -n opusurl-devel
+%description -n libopusurl-devel
 This package contains the header files and documentation needed
 to develop applications with opusurl.
 
-%package -n opusurl-devel-static
+%package -n libopusurl-devel-static
 Summary: Static libraries for opusurl
 Group: Development/C
-PreReq: %name-devel = %EVR
+Requires: lib%name-devel = %EVR
+Provides: opusurl-devel-static = %version
+Obsoletes: opusurl-devel-static < %version
 
-%description -n opusurl-devel-static
+%description -n libopusurl-devel-static
 This package contains development libraries required for packaging
-statically linked libopus-based software.
+statically linked libopusurl-based software.
 
 %prep
 %setup
+cat > package_version <<-'EOF'
+	PACKAGE_VERSION=%version
+	AUTO_UPDATE=no
+EOF
 
 %build
-cp %SOURCE1 .
 %autoreconf
 %configure \
 	%{subst_enable static}
@@ -85,37 +92,43 @@ cp %SOURCE1 .
 %makeinstall_std
 
 %check
-%make check
+%make_build -k check
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %files -n lib%{name}0
 %_libdir/lib%{name}.so.*
-%doc AUTHORS README.md COPYING
+%doc AUTHORS COPYING README.md
 
-%files devel
+%files -n lib%name-devel
 %_libdir/lib%{name}.so
 %_includedir/*
 %_pkgconfigdir/%name.pc
-%dir %_docdir/%name/
-%_docdir/%name/*
-
-%if_enabled static
-%files devel-static
-%_libdir/lib%{name}.a
-%endif
+%_docdir/%name/
 
 %files -n libopusurl0
 %_libdir/libopusurl.so.*
 
-%files -n opusurl-devel
+%files -n libopusurl-devel
 %_libdir/libopusurl.so
 %_pkgconfigdir/opusurl.pc
 
 %if_enabled static
-%files devel-static
+%files -n lib%name-devel-static
+%_libdir/lib%name.a
+
+%files -n libopusurl-devel-static
 %_libdir/libopusurl.a
 %endif
 
 %changelog
+* Tue Oct 13 2020 Dmitry V. Levin <ldv@altlinux.org> 0.12.0.3.4174-alt1
+- v0.11-5-gd2577d7 -> v0.12-3-g4174c26.
+- Renamed subpackages:
+  opusfile-devel -> libopusfile-devel,
+  opusurl-devel -> libopusurl-devel.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 0.11-alt0.5.gd2577d7
 - initial build for ALTLinux.
-
