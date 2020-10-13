@@ -1,11 +1,12 @@
 %define oname prometheus_client
 
 Name: python3-module-%oname
-Version: 0.3.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: The Python client for Prometheus
-Url: https://github.com/kovidgoyal/html5-parser
+
+Url: https://github.com/prometheus/client_python
 License: ASL 2.0
 Group: Development/Python3
 
@@ -23,7 +24,7 @@ BuildRequires: python3-module-decorator python3-module-pytest
 The Python client for Prometheus.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
 %python3_build_debug
@@ -38,6 +39,9 @@ The Python client for Prometheus.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Tue Oct 13 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.0-alt1
+- new version 0.8.0 (with rpmrb script)
+
 * Thu Apr 09 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.3.0-alt2
 - Build for python2 disabled.
 
