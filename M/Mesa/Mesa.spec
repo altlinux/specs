@@ -68,7 +68,7 @@
 
 Name: Mesa
 Version: 20.2.0
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -87,7 +87,7 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
-BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 10.0.0 clang-devel >= 10.0.0
+BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -471,6 +471,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Oct 13 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.2.0-alt2
+- rebuild with llvm 11.0.0
+
 * Tue Sep 29 2020 Valery Inozemtsev <shrek@altlinux.ru> 4:20.2.0-alt1
 - 20.2.0
 
