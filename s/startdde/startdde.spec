@@ -1,6 +1,6 @@
 Name: startdde
 Version: 5.6.0.11
-Release: alt1
+Release: alt2
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -33,6 +33,8 @@ make GO_BUILD_FLAGS=-trimpath
 
 %install
 %makeinstall_std
+# Conflicts with lightdm.
+rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %files
 %_bindir/%name
@@ -44,13 +46,16 @@ make GO_BUILD_FLAGS=-trimpath
 %dir %_sysconfdir/profile.d/
 %_sysconfdir/profile.d/deepin-xdg-dir.sh
 %dir %_datadir/lightdm/
-%dir %_datadir/lightdm/lightdm.conf.d/
-%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
+# %%dir %%_datadir/lightdm/lightdm.conf.d/
+# %%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/%name/
 %dir %_datadir/xsessions/
 %_datadir/xsessions/deepin.desktop
 
 %changelog
+* Tue Oct 13 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.11-alt2
+- Fixed conflict with lightdm.
+
 * Tue Oct 06 2020 Leontiy Volodin <lvol@altlinux.org> 5.6.0.11-alt1
 - New version (5.6.0.11) with rpmgs script.
 
