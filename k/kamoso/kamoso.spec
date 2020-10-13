@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 20.04.3
+Version: 20.08.2
 Release: alt1
 
 Group:   Video
@@ -97,6 +97,12 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 20.08.2-alt1
+- New version.
+
+* Tue Aug 25 2020 Andrey Cherepanov <cas@altlinux.org> 20.08.0-alt1
+- New version.
+
 * Sun Jul 19 2020 Andrey Cherepanov <cas@altlinux.org> 20.04.3-alt1
 - New version.
 
