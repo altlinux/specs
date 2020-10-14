@@ -2,17 +2,18 @@
 
 Name: gnustep-gscrypt
 Version: r31301
-Release: alt2.git20100910
+Release: alt3
 Summary: GNUstep GSCrypt Library
 License: GPLv3
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-gscrypt
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-gscrypt.git
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -41,6 +42,7 @@ This package contains development files of GNUstep GSCrypt Library.
 
 %prep
 %setup
+%patch1 -p1
 
 mkdir gscrypt
 cp *.h gscrypt/
@@ -69,6 +71,9 @@ cp *.h gscrypt/
 %_libdir/*.so
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r31301-alt3
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31301-alt2.git20100910
 - Built with clang
 

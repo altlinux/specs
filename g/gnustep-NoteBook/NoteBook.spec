@@ -2,17 +2,17 @@
 
 Name: gnustep-NoteBook
 Version: 0.3
-Release: alt6.1
+Release: alt7
 Summary: Application to store and organize your notes 
 License: GPL
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/NoteBook.app
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -55,6 +55,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.3-alt7
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt6.1
 - NMU: Rebuild with libgnutls30.
 

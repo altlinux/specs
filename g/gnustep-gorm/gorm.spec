@@ -1,21 +1,21 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-gorm
-Version: 1.2.20
-Release: alt4.svn20140119
+Version: 1.2.26
+Release: alt1
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-ExcludeArch: aarch64
+Url: http://www.gnustep.org/experience/Gorm.html
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# http://svn.gna.org/svn/gnustep/apps/gorm/trunk/
+# https://github.com/gnustep/apps-gorm
 Source: %name-%version.tar
 Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-gui-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
@@ -64,6 +64,7 @@ This package contains documentation for Gorm.
 
 %prep
 %setup
+%patch1 -p1
 sed -i 's/@subsection/@section/g' Documentation/*.texi
 
 %build
@@ -76,7 +77,7 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base -lobjc2 -lm $1 $2 $3"
+		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base $1 $2 $3"
 }
 
 libGorm=$PWD/GormLib/obj/libGorm.so
@@ -133,6 +134,13 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.26-alt1
+- New version from https://github.com/gnustep/apps-gorm.
+- Fix project URL.
+
+* Fri Oct 09 2020 Andrey Cherepanov <cas@altlinux.org> 1.2.20-alt5.svn20140119
+- Build without libgnustep-objc2-devel
+
 * Mon Feb 04 2019 Ivan A. Melnikov <iv@altlinux.org> 1.2.20-alt4.svn20140119
 - Fix build with recent texinfo
 

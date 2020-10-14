@@ -2,17 +2,17 @@
 
 Name: gnustep-CDPlayer
 Version: 0.5.1
-Release: alt6
+Release: alt8
 Summary: Small CD Audio Player for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
 Url: http://gsburn.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: libcdaudio-devel gnustep-gui-devel
 BuildPreReq: gnustep-systempreferences-devel
 
@@ -76,6 +76,12 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt8
+- Build without libgnustep-objc2-devel.
+
+* Wed Sep 09 2020 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt7
+- Build without objc2.
+
 * Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt6
 - Fixed menu file (by kostyalamer@)
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-BDB
 Version: 0.2.1
-Release: alt5
+Release: alt6
 Summary: Berkeley DB Wrapper (BDB)
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,8 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Source1: config.properties
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -63,6 +64,7 @@ This package contains development files of BDB.
 
 %prep
 %setup
+%patch1 -p2
 
 install -m644 %SOURCE1 ./
 %ifarch x86_64
@@ -79,7 +81,7 @@ sed -i "s|@64@|$LIB64|" config.properties
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-I%_includedir/Encore' \
-	CONFIG_SYSTEM_LIBS='-lEncore -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lEncore -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
@@ -119,6 +121,9 @@ install -d %buildroot%_localstatedir/GNUstep
 %_libdir/GNUstep/Frameworks/BDB.framework/Headers
 
 %changelog
+* Sun Sep 06 2020 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt6
+- Build without objc2.
+
 * Fri Feb 22 2019 Dmitry V. Levin <ldv@altlinux.org> 0.2.1-alt5
 - NMU: Reverted to libdb4.
 

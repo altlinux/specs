@@ -2,16 +2,16 @@
 
 Name: gnustep-LaTeXService
 Version: 0.1
-Release: alt3.1
+Release: alt4
 Summary: LaTeX service for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://www.roard.com/latexservice/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -46,6 +46,9 @@ rendering.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.1-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt3.1
 - NMU: Rebuild with libgnutls30.
 

@@ -2,17 +2,18 @@
 
 Name: gnustep-netclasses
 Version: 1.06
-Release: alt3.svn20131019
+Release: alt4
 Summary: Asynchronous networking framework for GNUstep and Mac OS X
 License: LGPLv2
 Group: Graphical desktop/GNUstep
 Url: http://netclasses.aeruder.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.savannah.nongnu.org/svn/gap/trunk/libs/netclasses/
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -60,6 +61,7 @@ This package contains documentation for netclasses.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -72,7 +74,7 @@ This package contains documentation for netclasses.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %make_build -C Documentation \
 	messages=yes
@@ -118,6 +120,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.06-alt4
+- Build without libgnustep-objc2-devel.
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.06-alt3.svn20131019
 - Snapshot from svn
 

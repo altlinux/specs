@@ -2,17 +2,18 @@
 
 Name: gnustep-NeXTGo
 Version: 3.0
-Release: alt3.1
+Release: alt4
 Summary: NeXTGo is the classic Go game
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://www.nongnu.org/gap/nextgo/index.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -25,6 +26,7 @@ environment.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -39,13 +41,7 @@ environment.
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
-	GNUSTEP_SYSTEM_ROOT=%buildroot%_libdir/GNUstep
-
-install -d %buildroot%_bindir
-ln -s %_libdir/GNUstep/Applications/NeXTGo.app/NeXTGo \
-	%buildroot%_bindir/
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -56,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 3.0-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 3.0-alt3.1
 - NMU: Rebuild with libgnutls30.
 

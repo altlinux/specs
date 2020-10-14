@@ -1,30 +1,33 @@
 %set_verify_elf_method unresolved=strict
-
-# based on Fedora's package
+%def_without objc2
 
 Name: gnustep-gui
-Version: 0.24.0
-Release: alt8.svn20140223
+Version: 0.28.0
+Release: alt1
 Summary: The GNUstep GUI library
-License: GPLv2+ and GPLv3
+License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Tools
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-gui.git
-Source: %name-%version.tar
+Source: libs-gui-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel libtiff-devel libjpeg-devel
-BuildPreReq: libpng-devel libcups-devel libaspell-devel aspell
-BuildPreReq: libungif-devel libaudiofile-devel libportaudio2-devel
-BuildPreReq: libX11-devel libicu-devel imake libImageMagick-devel
-BuildPreReq: ImageMagick-tools libsndfile-devel libao-devel
-BuildPreReq: flite-devel libicns-devel /proc gnustep-base-doc
-BuildPreReq: texinfo texi2html texlive-latex-base
-BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel libdispatch-objc2-devel
-BuildPreReq: libkrb5-devel
+BuildRequires: gnustep-make-devel gnustep-base-devel
+%if_with objc2
+BuildRequires: libgnustep-objc2-devel libdispatch-objc2-devel
+%endif
+BuildRequires: libtiff-devel libjpeg-devel
+BuildRequires: libpng-devel libcups-devel libaspell-devel aspell
+BuildRequires: libungif-devel libaudiofile-devel libportaudio2-devel
+BuildRequires: libX11-devel libicu-devel imake libImageMagick-devel
+BuildRequires: ImageMagick-tools libsndfile-devel libao-devel
+BuildRequires: flite-devel libicns-devel /proc gnustep-base-doc
+BuildRequires: texinfo texi2html texlive-latex-base
+BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildRequires: libxslt-devel libffi-devel
+BuildRequires: libkrb5-devel
 
 Requires: lib%name = %version-%release
 Requires: aspell flite
@@ -40,7 +43,7 @@ classes for handling events, colors, fonts, pasteboards and images.
 %package -n lib%name
 Summary: Libraries for %name
 Group: System/Libraries
-License: LGPLv2+ and LGPLv3+
+License: LGPL-2.1+ and GPL-3.0+
 
 %description -n lib%name
 The GNUstep GUI library is a library of graphical user interface classes
@@ -55,6 +58,7 @@ This package contains the libraries for %name.
 %package devel
 Summary: Header files for the gnustep-gui package
 Group: Development/Objective-C
+License: LGPL-2.1+ and GPL-3.0+
 Requires: gnustep-base-devel
 Requires: lib%name = %version-%release
 Requires: %name = %version-%release
@@ -73,7 +77,7 @@ This package contains the header files for gnustep-gui.
 Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
-License: GFDL
+License: GFDL-1.2
 Requires: gnustep-base-doc
 #Requires: %name = %version-%release
 
@@ -88,11 +92,10 @@ classes for handling events, colors, fonts, pasteboards and images.
 This package contains the documentation for %name.
 
 %prep
-%setup
+%setup -n libs-gui-%version
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
-
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -100,14 +103,6 @@ This package contains the documentation for %name.
 	--with-x \
 	--with-installation-domain=SYSTEM
 
-#make_build \
-#	messages=yes \
-#	debug=yes \
-#	strip=no \
-#	shared=yes \
-#	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-#	||:
-#touch Tools/GSspell.service/Resources/Info-gnustep.plist
 %make_build \
 	messages=yes \
 	debug=yes \
@@ -120,11 +115,8 @@ This package contains the documentation for %name.
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
-
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
-
-%makeinstall_std -C Documentation \
-     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+%makeinstall_std -C Documentation GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 for i in ChangeLog*; do
 	gzip $i
@@ -153,6 +145,11 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Fri Jun 12 2020 Andrey Cherepanov <cas@altlinux.org> 0.28.0-alt1
+- New version.
+- Fix License tag according to SPDX.
+- Build without gnustep-objc2.
+
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 0.24.0-alt8.svn20140223
 - rebuild with new ImageMagick
 

@@ -2,16 +2,17 @@
 
 Name: gnustep-SlideShowKit
 Version: 20041011
-Release: alt2
+Release: alt3
 Summary: A small kit to include slideshow in your application
 License: Free
 Group: Graphical desktop/GNUstep
 Url: http://home.gna.org/gsimageapps/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -41,6 +42,7 @@ This package contains development files of SlideShowKit.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -50,7 +52,7 @@ This package contains development files of SlideShowKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -65,6 +67,9 @@ This package contains development files of SlideShowKit.
 %_libdir/*.so
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 20041011-alt3
+- Build without libgnustep-objc2-devel.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20041011-alt2
 - Built with clang
 

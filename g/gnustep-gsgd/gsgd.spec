@@ -2,17 +2,18 @@
 
 Name: gnustep-gsgd
 Version: r31302
-Release: alt4.git20100910.1
+Release: alt5
 Summary: Objc interface to libgd library
 License: LGPLv3
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-gsgd.git
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-base-devel libgd3-devel
 
 %description
@@ -43,6 +44,7 @@ This package contains development files of gsgd.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -57,7 +59,7 @@ This package contains development files of gsgd.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -73,6 +75,9 @@ This package contains development files of gsgd.
 %_libdir/*.so
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> r31302-alt5
+- Build without libgnustep-objc2-devel.
+
 * Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> r31302-alt4.git20100910.1
 - (NMU) rebuilt with new libgd.
 

@@ -1,31 +1,42 @@
 %set_verify_elf_method unresolved=strict
-%define gnustep_ver 1.24
+%define gnustep_ver 1.27
+%def_without build_debug
+%def_without objc2
+%def_with doc
 
 Name: gnustep-base
-Version: 1.24.6
-Release: alt9.svn20140226
+Version: 1.27.0
+Release: alt1
 Epoch: 1
 
 Summary: GNUstep Base library package
 
-License: LGPL
+License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 
 # http://svn.gna.org/svn/gnustep/libs/base/trunk/
 Source: %name-%version.tar
 Source1: %name.init
+Patch1: %name-alt-objc2.patch
+Patch2: %name-use_system-wide_crypto-policies.patch
 
-Requires: lib%name = %epoch:%version-%release
+Requires: lib%name = %EVR
 
-BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel
-BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
+BuildRequires: gnustep-make-devel libgnutls-devel
+%if_with objc2
+BuildRequires: libgnustep-objc2-devel
+%endif
+BuildRequires: pkgconfig libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
-BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
-Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
-BuildPreReq: libicu-devel /proc
-BuildPreReq: texinfo texi2html texlive-latex-base gnustep-make-doc
+BuildRequires: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
+BuildRequires: libicu-devel /proc
+%if_with doc
+BuildRequires: texinfo texi2html texlive-latex-base gnustep-make-doc
+%endif
 BuildRequires: tzdata ca-certificates
+
+Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
 
 %description
 The GNUstep Base Library is a powerful fast library of general-purpose,
@@ -41,7 +52,7 @@ headers too.
 %package -n lib%name
 Summary: Shared libraries of %name
 Group: System/Libraries
-Conflicts: %name < %epoch:%version-%release
+Conflicts: %name < %EVR
 
 %description -n lib%name
 Shared libraries of %name.
@@ -49,8 +60,8 @@ Shared libraries of %name.
 %package devel
 Summary: Header files and static libraries from %name
 Group: Development/Objective-C
-Requires: %name = %epoch:%version-%release
-Requires: lib%name = %epoch:%version-%release
+Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %description devel
 Libraries and includes files for developing programs based on %name.
@@ -66,50 +77,50 @@ Development documentation for %name.
 
 %prep
 %setup
-#cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
-%define _libexecdir %_libdir
+%if_with objc2
+%patch1 -p1
+%endif
+%patch2 -p1
 
 %build
-#. %_datadir/GNUstep/Makefiles/GNUstep.sh
+%if_with objc2
+export OBJCFLAGS="$OBJCFLAGS -D__GNU_LIBOBJC__=1"
+%endif
+%undefine _configure_gettext
 %undefine __libtoolize
-
-%{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
-	--enable-pass-arguments \
-	--with-openssl-include=%_includedir/openssl \
-	--with-openssl-library=/%_lib/ \
-	CC=gcc CPP='gcc -E'
-#	--disable-environment-config-file \
-#	--disable-importing-config-file \
+	--enable-pass-arguments
 
 %make \
+%if_with build_debug
 	messages=yes \
 	debug=yes \
+%endif
 	strip=no \
 	shared=yes
 
+%if_with doc
 export LD_LIBRARY_PATH=$PWD/Source/obj
 %make_build -C Documentation \
+%if_with build_debug
 	messages=yes
+%endif
+%endif
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-# gnustep install most of it stuff
-# into $(gnustep-config --variable=GNUSTEP_SYSTEM_LIBRARY)
-%make install \
-	INSTALL_ROOT_DIR=%buildroot \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	DESTDIR=%buildroot
-
+%if_with doc
 %makeinstall_std -C Documentation \
      GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+%endif
 
 install -d %buildroot%_initdir
 sed -e "s!@TOOLSARCHDIR@!%prefix/System/Tools!" %SOURCE1 > %buildroot%_initdir/gdomap
-rm -Rf %buildroot%_libexecdir/GNUstep/Libraries/gnustep-base/Versions/1.14/Resources/NSTimeZones/
+rm -Rf %buildroot%_libdir/GNUstep/Libraries/gnustep-base/Versions/1.14/Resources/NSTimeZones/
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
@@ -140,7 +151,6 @@ if [ -L "$t" ];then
     rm -f "$t"
 fi
 
-
 %files
 %_initdir/gdomap
 %doc ANNOUNCE COPYING COPYING.LIB ChangeLog*
@@ -158,13 +168,19 @@ fi
 %_libdir/libgnustep-base.so
 %_includedir/Foundation
 %_includedir/GNUstepBase
-%_includedir/gnustep
 
+%if_with doc
 %files doc
 %_docdir/GNUstep
 %_infodir/*
+%endif
  
 %changelog
+* Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 1:1.27.0-alt1
+- New version.
+- Fix License tag according to SPDX.
+- Build without gnustep-objc2.
+
 * Fri Apr 24 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.24.6-alt9.svn20140226
 - Blindly s/libcommoncpp2-devel//g to fix FTBFS.
 

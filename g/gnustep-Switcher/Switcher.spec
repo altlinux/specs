@@ -2,17 +2,17 @@
 
 Name: gnustep-Switcher
 Version: 20140127
-Release: alt3.cvs20140127.1
+Release: alt4
 Summary: Allow applications to appear when the icon is clicked on from another workspace
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/index.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/gap co gap/bundles/Switcher
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -45,6 +45,9 @@ clicked on from another workspace.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 20140127-alt4
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 20140127-alt3.cvs20140127.1
 - NMU: Rebuild with libgnutls30.
 

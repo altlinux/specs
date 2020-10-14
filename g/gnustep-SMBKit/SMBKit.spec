@@ -2,17 +2,18 @@
 
 Name: gnustep-SMBKit
 Version: 20140126
-Release: alt2.cvs20140126
+Release: alt3
 Summary: GNUstep SMBKit
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://savannah.gnu.org/projects/gnustep/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gnustep co gnustep/dev-libs/SMBKit
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -39,6 +40,7 @@ Development files of GNUstep SMBKit.
 
 %prep
 %setup
+%patch1 -p4
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -49,7 +51,7 @@ Development files of GNUstep SMBKit.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-I%_includedir/samba-4.0' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -65,6 +67,9 @@ Development files of GNUstep SMBKit.
 %_libdir/*.so
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 20140126-alt3
+- Build without libgnustep-objc2-devel.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140126-alt2.cvs20140126
 - Built with clang
 

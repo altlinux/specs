@@ -1,17 +1,23 @@
-%def_without doc
+%def_without objc2
+%def_with doc
+
 Name: gnustep-make
-Version: 2.6.6
-Release: alt21.svn20140202
-# http://svn.gna.org/svn/gnustep/tools/make/trunk
-Source: %name-%version-%release.tar
-License: GPLv3+
+Version: 2.8.0
+Release: alt1
+# https://github.com/gnustep/tools-make
+License: GPL-3.0+
 Group: Development/Objective-C
 Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
 
+Source: %name-%version.tar
+Patch1: %name-alt-path-fix.patch
+
+%if_with objc2
 BuildRequires: clang-devel libgnustep-objc2-devel star
+%endif
 %if_with doc
-BuildRequires: texlive-latex-base texi2html
+BuildRequires: texlive-dist texlive-latex-base texi2html
 %endif
 
 Requires: gnustep-dirs
@@ -46,15 +52,15 @@ BuildArch: noarch
 This package contains development documentation for %name.
 
 %prep
-%setup -n %name-%version-%release
+%setup
+%patch1 -p1
 
-sed -i "s|@64@|%_libsuff|g" FilesystemLayouts/fhs-system-alt
+%ifarch aarch64 ppc64le x86_64
+LIB_SUFF=64
+%endif
+sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
-# many of gnustep packages are build with clang
-%remove_optflags -frecord-gcc-switches
-
-export CC=gcc CXX=gcc-c++ CPP='gcc -E'
 OBJCFLAGS="%optflags"
 export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 export CFLAGS="%optflags"
@@ -64,7 +70,9 @@ export CXXFLAGS="%optflags"
 	--libexecdir=%_libdir \
 	--enable-flattened \
 	--with-layout=fhs-system-alt \
+%if_with objc2
 	--with-objc-lib-flag=-lobjc2 \
+%endif
 	--enable-native-objc-exceptions \
 	--enable-debug-by-default
 
@@ -87,6 +95,7 @@ sed -i 's|-mtune=i586||g' $(find %buildroot -type f)
 sed -i 's|-mtune=generic||g' \
 	%buildroot%_datadir/GNUstep/Makefiles/config.make
 
+rm -f %buildroot%_datadir/GNUstep/Makefiles/bake_debian_files.sh
 if grep -Fle %_target_cpu $(find %buildroot%_datadir/GNUstep -type f -not -name config.guess -not -name config.sub -not -name config.make); then
        echo >&2 %buildroot is dirty
        exit 1
@@ -105,7 +114,7 @@ if [ ! -d \$GNUSTEP_USER_ROOT ]; then
 fi
 EOF
 
-sed -i 's|\-march=[0-9a-z_]*||g' $(find %buildroot -type f)
+sed -i 's|\-march=[0-9a-z_-]*||g' $(find %buildroot -type f)
 
 gzip ChangeLog
 
@@ -121,7 +130,6 @@ rm -f %buildroot%_infodir/*
 %dir %_datadir/GNUstep/Makefiles
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/*.csh
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/*.sh
-#%attr(755,root,root) %_datadir/Tools
 %_datadir/GNUstep/Makefiles/tar-exclude-list
 %_datadir/GNUstep/Makefiles/config.guess
 %_datadir/GNUstep/Makefiles/config.sub
@@ -139,12 +147,22 @@ rm -f %buildroot%_infodir/*
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/install-sh
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
-%files doc
 %if_with doc
+%files doc
 %_docdir/GNUstep
 %endif
 
 %changelog
+* Fri Jun 12 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
+- New version.
+- Build without gnustep-objc2.
+- Build with gnustep-make-doc.
+
+* Mon Apr 13 2020 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
+- New version.
+- Fix License tag according to SPDX.
+- Build without gnustep-make-doc.
+
 * Tue Feb 11 2020 Vitaly Lipatov <lav@altlinux.ru> 2.6.6-alt21.svn20140202
 - disable doc subpackage
 

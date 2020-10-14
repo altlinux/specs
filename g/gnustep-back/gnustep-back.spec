@@ -3,22 +3,23 @@
 #based on Fedora's spec
 
 Name: gnustep-back    
-Version: 0.24.0
-Release: alt6.svn20140127.1
+Version: 0.28.0
+Release: alt1
 Summary: The GNUstep back-end library
-License: LGPLv3+ and GPLv3+
+License: LGPL-2.1+ and GPL-3.0+
 Group: Graphical desktop/GNUstep
 URL: http://www.gnustep.org
-# http://svn.gna.org/svn/gnustep/libs/back/trunk/
-Source: %name-%version.tar
+
+# https://github.com/gnustep/libs-back
+Source: libs-back-%version.tar
 Source1: Courier.FontInfo.plist
 Source2: Times.FontInfo.plist
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
-BuildPreReq: libart_lgpl-devel clang-devel libglitz-devel libcairo-devel
+BuildPreReq: libart_lgpl-devel libglitz-devel libcairo-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
+BuildPreReq: libXcursor-devel libXfixes-devel
 BuildPreReq: fonts-type1-urw gnustep-gui-doc
 BuildRequires: texinfo /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -42,7 +43,7 @@ Requires: gnustep-gui-doc
 This is develompent documentation for %name.
 
 %prep
-%setup
+%setup -n libs-back-%version
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -52,11 +53,7 @@ This is develompent documentation for %name.
 	--libexecdir=%_libdir \
 	--enable-glitz \
 	--enable-server=x11 \
-%ifarch x86_64
-	--enable-graphics=cairo \
-%else
 	--enable-graphics=xlib \
-%endif
 	--with-tiff-library \
 	--with-x \
 	--with-installation-domain=SYSTEM
@@ -131,6 +128,13 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Tue Oct 13 2020 Andrey Cherepanov <cas@altlinux.org> 0.28.0-alt1
+- New version.
+- Build from upstream https://github.com/gnustep/libs-back.
+
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.24.0-alt7
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.24.0-alt6.svn20140127.1
 - NMU: Rebuild with libgnutls30.
 

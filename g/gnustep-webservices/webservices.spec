@@ -2,18 +2,18 @@
 
 Name: gnustep-webservices
 Version: 0.5.10
-Release: alt3.git20140201
+Release: alt4
 Summary: WebServices framework for GNUstep
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-webservices.git
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
+BuildPreReq: gnustep-make-devel gnustep-base-devel
+BuildPreReq: gnustep-performance-devel /proc
 BuildPreReq: gnustep-performance-devel
 
 %description
@@ -70,7 +70,7 @@ framework for GNUstep.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -91,6 +91,9 @@ cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.5.10-alt4
+- Build without libgnustep-objc2-devel.
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.10-alt3.git20140201
 - New snapshot
 

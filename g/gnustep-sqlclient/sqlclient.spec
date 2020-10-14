@@ -3,21 +3,19 @@
 %set_verify_elf_method unresolved=strict
 Name: gnustep-sqlclient
 Version: 1.7.0
-Release: alt8.svn20140221.1
+Release: alt9
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-# gnustep is not built on aarch64
-ExclusiveArch: %{ix86} x86_64
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/sqlclient/trunk/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-java
-BuildRequires: clang-devel gnustep-make-devel gnustep-base-devel
-BuildRequires: libgnustep-objc2-devel gnustep-performance-devel /proc
+BuildRequires: gnustep-make-devel gnustep-base-devel
+BuildRequires: gnustep-performance-devel /proc
 BuildRequires: postgresql-devel libsqlite3-devel
 BuildRequires: libMySQL-devel
 %if_with java
@@ -107,7 +105,7 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		CONFIG_SYSTEM_LIBS="$1 -lPerformance -lgnustep-base -lobjc2"
+		CONFIG_SYSTEM_LIBS="$1 -lPerformance -lgnustep-base"
 }
 
 buildIt
@@ -142,6 +140,10 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt9
+- Build without libgnustep-objc2-devel.
+- Build on any architectures.
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt8.svn20140221.1
 - NMU: disabled java support as it links and generates dependencies with
   JVM's name and release; should use /usr/lib/jvm/jre/lib/<jarch> as RPATH

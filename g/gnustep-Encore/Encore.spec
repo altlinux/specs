@@ -2,7 +2,7 @@
 
 Name: gnustep-Encore
 Version: 0.3.1
-Release: alt4
+Release: alt5
 Summary: A set of utility classes
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -10,8 +10,9 @@ Url: http://fortytwo.sourceforge.net/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -64,6 +65,7 @@ This package contains development files of Encore.
 
 %prep
 %setup
+%patch1 -p2
 
 for i in $(find ./ -type f); do
 	sed -i 's|Encore/||g' $i
@@ -77,7 +79,7 @@ done
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -114,6 +116,9 @@ popd
 %_libdir/GNUstep/Frameworks/Encore.framework/Headers
 
 %changelog
+* Tue Sep 08 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt5
+- Build without gnustep-objc.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt4
 - Built with clang
 

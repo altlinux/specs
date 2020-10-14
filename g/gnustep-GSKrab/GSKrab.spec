@@ -2,17 +2,18 @@
 
 Name: gnustep-GSKrab
 Version: 0.0.1
-Release: alt5
+Release: alt6
 Summary: GNUstep Keyboard Grabber
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/GSKrab
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 #Source1: %name.menu
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -62,6 +63,7 @@ This package contains development files of GS Krab.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -71,7 +73,7 @@ This package contains development files of GS Krab.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -113,6 +115,9 @@ popd
 %_libdir/GNUstep/Frameworks/GSKrab.framework/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 0.0.1-alt6
+- Build without libgnustep-objc2-devel.
+
 * Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt5
 - Removed menu file
 

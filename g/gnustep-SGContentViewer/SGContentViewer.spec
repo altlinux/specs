@@ -2,16 +2,16 @@
 
 Name: gnustep-SGContentViewer
 Version: 2006
-Release: alt4.1
+Release: alt5
 Summary: A contents Inspector that can play music files
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/GWorkspace.app
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel /proc
 BuildPreReq: gnustep-ShengGuang-devel gnustep-libId3-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -46,6 +46,9 @@ shorten, voc, midi, and mod files.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 2006-alt5
+- Build without libgnustep-objc2-devel.
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 2006-alt4.1
 - NMU: Rebuild with libgnutls30.
 

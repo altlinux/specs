@@ -2,16 +2,17 @@
 
 Name: gnustep-CameraKit
 Version: 20041011
-Release: alt3
+Release: alt4
 Summary: A simple wrapper to libgphoto
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://home.gna.org/gsimageapps/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: link-libs.patch
 
-BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -46,6 +47,7 @@ This package contains development files of CameraKit.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -55,7 +57,7 @@ This package contains development files of CameraKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base'
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -91,6 +93,9 @@ popd
 %_libdir/GNUstep/Frameworks/CameraKit.framework/Headers
 
 %changelog
+* Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 20041011-alt4
+- Build without libgnustep-objc2-devel.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20041011-alt3
 - Built with clang
 
