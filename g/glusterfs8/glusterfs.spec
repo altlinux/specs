@@ -15,7 +15,7 @@
 
 Name: glusterfs8
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -94,11 +94,27 @@ This package includes the glusterfs binary, the glusterfsd daemon and the
 gluster command line, libglusterfs and glusterfs translator modules common to
 both GlusterFS server and client framework.
 
+Update glusterfs7 to glusterfs8:
+$ epm prescription glusterfs8
+
+%package checkinstall
+Summary: Checkinstall for %name
+Group: Development/Other
+BuildArch: noarch
+Requires(pre): %name = %EVR
+
+%description checkinstall
+Run checkinstall tests for %name.
+
 %package cli
 Summary: GlusterFS CLI
 Group: System/Base
 Requires: lib%name = %EVR
 Requires: libglusterd%somajor = %EVR
+Conflicts: glusterfs7-cli
+Conflicts: glusterfs3
+Conflicts: glusterfs6
+Conflicts: glusterfs7
 
 %description cli
 GlusterFS is a distributed file-system capable of scaling to several
@@ -713,7 +729,13 @@ install -p -m 0744 -D extras/command-completion/gluster.bash \
 %_target_libdir_noarch/ocf/resource.d/glusterfs/glusterd
 %endif
 
+#files checkinstall
+
 %changelog
+* Wed Oct 14 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2-alt2
+- fix upgrade instruction: use epm prescription
+- add missed conflicts to glusterfs8-cli
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 8.2-alt1
 - new version (8.2) with rpmgs script
 - rdma subpackage is obsoleted
