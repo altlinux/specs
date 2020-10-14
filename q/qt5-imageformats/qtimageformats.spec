@@ -7,7 +7,7 @@
 
 Name: qt5-imageformats
 Version: 5.15.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -84,8 +84,14 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt3
+- merge M90P changes
+
 * Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt2
 - build without libjasper
+
+* Tue Oct 06 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.12.9-alt1.M90P.1
+- Fixed build with new libjasper.
 
 * Thu Sep 10 2020 Sergey V Turchin <zerg@altlinux.org> 5.15.1-alt1
 - new version
