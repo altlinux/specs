@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 %define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -27,7 +27,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bval
 Version:       1.1.1
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -41,7 +41,7 @@ BuildRequires: mvn(javax.annotation:javax.annotation-api)
 BuildRequires: mvn(javax.el:javax.el-api)
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(javax.validation:validation-api:1)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache:apache:pom:)
@@ -210,6 +210,9 @@ sed -i '/Privileged/d' \
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_7jpp8
+- build with bean-validation-api1
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_7jpp8
 - new version
 
