@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jersey1
 Version:       1.19
-Release:       alt1_13jpp8
+Release:       alt2_13jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 # License file with incorrect fsf address https://java.net/jira/browse/JERSEY-2870
@@ -335,7 +335,7 @@ rm contribs/jersey-oauth/oauth-server/src/test/java/com/sun/jersey/oauth/server/
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -359,6 +359,9 @@ install -p -m 644 ant-wadl-task %{buildroot}%{_sysconfdir}/ant.d/ant-wadl-task
 %doc --no-dereference license.html legal/LICENSE.txt legal/maintenance/copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.19-alt2_13jpp8
+- build with new glassfish-jaxb
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_13jpp8
 - new version
 
