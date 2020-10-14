@@ -2,7 +2,7 @@
 %define Brand ALT
 %define theme server-v
 %define Theme Server-V
-%define codename FalcoRusticolus
+%define codename Altostratus
 %define status %nil
 %define status_en %nil
 %define flavour %brand-%theme
@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 9.1
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -317,6 +317,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Oct 14 2020 Alexey Shabalin <shaba@altlinux.org> 9.1-alt3
+- define codename as Altostratus
+
 * Wed Sep 16 2020 Andrew A. Vasilyev <andy@altlinux.org> 9.1-alt2
 - fix "the package obsoletes itself" error
 
