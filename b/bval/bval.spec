@@ -27,7 +27,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          bval
 Version:       1.1.1
-Release:       alt2_7jpp8
+Release:       alt3_7jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -190,7 +190,7 @@ sed -i '/Privileged/d' \
 
 %build
 
-%mvn_build -s -- -Dri -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -s -- -Dri -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install 
@@ -210,6 +210,9 @@ sed -i '/Privileged/d' \
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_7jpp8
+- support of glassfish-jaxb
+
 * Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_7jpp8
 - build with bean-validation-api1
 
