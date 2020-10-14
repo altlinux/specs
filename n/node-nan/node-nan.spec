@@ -1,7 +1,7 @@
 %define pname nan
 
 Name: node-nan
-Version: 2.14.0
+Version: 2.14.2
 Release: alt1
 
 Summary: Native Abstractions for Node.js
@@ -60,5 +60,8 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{test,tools,doc,examples}/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Wed Oct 14 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.2-alt1
+- new version 2.14.2 (with rpmrb script)
+
 * Fri Feb 28 2020 Vitaly Lipatov <lav@altlinux.ru> 2.14.0-alt1
 - initial build for ALT Sisyphus
