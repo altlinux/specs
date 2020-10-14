@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          tesla-polyglot
 Version:       0.1.19
-Release:       alt1_3jpp8
+Release:       alt2_3jpp8
 Summary:       Modules to enable Maven usage in other JVM languages
 License:       EPL
 URL:           https://github.com/takari/maven-polyglot
@@ -41,7 +41,7 @@ BuildRequires: mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.yaml:snakeyaml)
+#BuildRequires: mvn(org.yaml:snakeyaml)
 
 # Maven POM doesn't require maven-parent
 BuildRequires: mvn(org.apache.maven:maven-parent:pom:)
@@ -252,6 +252,10 @@ sed -i 's/\r//' eclipse-1.0.txt
 %mvn_alias ':polyglot-{*}' io.tesla.polyglot:tesla-polyglot-@1
 %mvn_alias ':polyglot-{*}' org.sonatype.pmaven:pmaven-@1
 
+# viy - w/o snakeyaml
+%pom_disable_module polyglot-yaml
+%pom_disable_module polyglot-translate-plugin
+
 %build
 
 %mvn_build -s -- -Dproject.build.sourceEncoding=UTF-8
@@ -277,17 +281,20 @@ sed -i 's/\r//' eclipse-1.0.txt
 %endif
 
 %files maven-plugin -f .mfiles-polyglot-maven-plugin
-%files translate-plugin -f .mfiles-polyglot-translate-plugin
+#%files translate-plugin -f .mfiles-polyglot-translate-plugin
 
 %files xml -f .mfiles-polyglot-xml
 %doc polyglot-xml/README.md
 
-%files yaml -f .mfiles-polyglot-yaml
+#%files yaml -f .mfiles-polyglot-yaml
 
 %files javadoc -f .mfiles-javadoc
 %doc eclipse-1.0.txt license-header.txt
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt2_3jpp8
+- build w/o snakeyaml
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_3jpp8
 - fc27 update
 
