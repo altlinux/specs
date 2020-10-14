@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.46.0
+Version: 1.47.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -8,8 +8,8 @@ Group: Development/Other
 License: Apache-2.0 and MIT
 URL: http://www.rust-lang.org/
 
-# https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
-Source: %{name}c-src.tar
+# https://static.rust-lang.org/dist/rustc-%version-src.tar.xz
+Source: rustc-src.tar
 
 Patch1: rust-gdb.patch
 
@@ -51,7 +51,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.45.0
+%define r_ver 1.46.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
@@ -428,6 +428,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Wed Oct 14 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.47.0-alt1
+- New version (1.47.0).
+
 * Sat Aug 29 2020 Alexey Gladkov <legion@altlinux.ru> 1:1.46.0-alt1
 - New version (1.46.0).
 
