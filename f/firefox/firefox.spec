@@ -14,7 +14,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        81.0.1
+Version:        81.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -481,6 +481,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Oct 14 2020 Alexey Gladkov <legion@altlinux.ru> 81.0.2-alt1
+- New release (81.0.2).
+
 * Sun Oct 04 2020 Alexey Gladkov <legion@altlinux.ru> 81.0.1-alt1
 - New release (81.0.1).
 
