@@ -7,30 +7,35 @@ BuildRequires: jpackage-1.8-compat
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_9jpp8
-Summary:          Library for accessing non-private method parameter names at run-time
+Release:          alt1_12jpp8
+Summary:          Java library for accessing non-private method's parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
-Source0:          https://github.com/paul-hammant/paranamer/archive/%{githash}/%{name}-%{githash}.tar.gz
+Source0:          %{url}/archive/%{githash}/%{name}-%{githash}.tar.gz
 
 Patch0:           0001-Port-to-current-qdox.patch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:    mvn(javax.inject:javax.inject)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.ant:ant)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:    mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:    mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:    mvn(org.mockito:mockito-all)
 BuildRequires:    mvn(org.ow2.asm:asm)
-BuildRequires:    mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:        noarch
 Source44: import.info
 
 %description
-It is a library that allows the parameter names of non-private methods
-and constructors to be accessed at run-time.
+Paranamer is a Java library that allows the parameter names of non-private
+methods and constructors to be accessed at run-time. Most compilers discard
+this information; traditional Reflection on JDK <= 7 would show something like
+doSomething(mypackage.Person ???) instead of doSomething(mypackage.Person toMe).
+The Paranamer library fills this gap for these JDK versions.
 
 %package ant
 Group: Development/Java
@@ -94,6 +99,9 @@ find -name "*.jar" -print ! -name "test.jar" -delete
 
 chmod -x LICENSE.txt
 
+# remove unnecessary dependency on parent POM
+%pom_remove_parent
+
 # Remove wagon extension
 %pom_xpath_remove "pom:build/pom:extensions"
 
@@ -144,6 +152,9 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_12jpp8
+- fc update for new xbean
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_9jpp8
 - fc update
 

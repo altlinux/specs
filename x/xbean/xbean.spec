@@ -1,11 +1,10 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,28 +13,28 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Conditionals to help breaking eclipse <-> xbean dependency cycle
-# when bootstrapping for new architectures
-%bcond_without equinox
-%bcond_without groovy
-%bcond_without spring
+%bcond_with     equinox
+%bcond_with     groovy
+%bcond_with     spring
 
 Name:           xbean
-Version:        4.9
-Release:        alt1_2jpp8
 Summary:        Java plugin based web server
+Version:        4.14
+Release:        alt1_1jpp8
 License:        ASL 2.0
-URL:            http://geronimo.apache.org/xbean/
-BuildArch:      noarch
 
+URL:            http://geronimo.apache.org/xbean/
 Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 # Compatibility with Eclipse Luna (rhbz#1087461)
 Patch1:         0002-Port-to-Eclipse-Luna-OSGi.patch
 Patch2:         0003-Port-to-QDox-2.0.patch
 
+BuildArch:      noarch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging-api)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(log4j:log4j:1.2.12)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -79,16 +78,15 @@ support for running with no IoC system, JMX without JMX code,
 lifecycle and class loader management, and a rock solid Spring
 integration.
 
+
 %if %{with spring}
-# For now blueprint module fails to compile. Disable it.
-%if 0
+# blueprint module fails to compile
 %package        blueprint
 Group: Development/Java
 Summary:        Schema-driven namespace handler for Apache Aries Blueprint
 
 %description    blueprint
 This package provides %{summary}.
-%endif
 
 %package        classloader
 Group: Development/Java
@@ -113,6 +111,7 @@ Summary:        XBean plugin for Apache Maven
 This package provides %{summary}.
 %endif
 
+
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -120,6 +119,7 @@ BuildArch: noarch
 
 %description    javadoc
 This package provides %{summary}.
+
 
 %prep
 %setup -q
@@ -135,14 +135,14 @@ rm src/site/site.xml
 %pom_remove_dep mx4j:mx4j
 
 # Unshade ASM
-%pom_remove_dep -r :xbean-asm6-shaded
+%pom_remove_dep -r :xbean-asm7-shaded
 %pom_remove_dep -r :xbean-finder-shaded
-%pom_disable_module xbean-asm6-shaded
+%pom_disable_module xbean-asm7-shaded
 %pom_disable_module xbean-finder-shaded
 %pom_add_dep org.apache.xbean:xbean-asm-util:%{version} xbean-reflect
 %pom_xpath_remove pom:optional xbean-reflect xbean-asm-util
 %pom_xpath_remove 'pom:scope[text()="provided"]' xbean-reflect xbean-asm-util
-sed -i 's/org\.apache\.xbean\.asm6/org.objectweb.asm/g' `find xbean-reflect -name '*.java'`
+sed -i 's/org\.apache\.xbean\.asm7/org.objectweb.asm/g' `find xbean-reflect -name '*.java'`
 
 # Prevent modules depending on springframework from building.
 %if %{without spring}
@@ -179,21 +179,21 @@ sed -i 's/org\.apache\.xbean\.asm6/org.objectweb.asm/g' `find xbean-reflect -nam
 sed -i "s|<Private-Package>|<!--Private-Package>|" xbean-blueprint/pom.xml
 sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 
+
 %build
-%mvn_build -f
+%mvn_build
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
 %doc LICENSE NOTICE
-%dir %{_javadir}/%{name}
 
 %if %{with spring}
-%if 0
 %files blueprint -f .mfiles-blueprint
 %doc LICENSE NOTICE %{name}-blueprint/target/restaurant.xsd*
-%endif
 
 %files classloader -f .mfiles-classloader
 %doc LICENSE NOTICE
@@ -208,7 +208,11 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 0:4.14-alt1_1jpp8
+- new version
+
 * Fri May 24 2019 Igor Vlasenko <viy@altlinux.ru> 0:4.9-alt1_2jpp8
 - new version
 
