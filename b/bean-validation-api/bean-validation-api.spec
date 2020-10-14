@@ -1,71 +1,75 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.1.0
+%define version 2.0.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-Name:             bean-validation-api
-Version:          1.1.0
-Release:          alt1_11jpp8
-Summary:          Bean Validation API (JSR 349)
-License:          ASL 2.0
-URL:              http://beanvalidation.org/
-Source0:          https://github.com/beanvalidation/beanvalidation-api/archive/%{namedversion}.tar.gz
+Name:           bean-validation-api
+Summary:        Bean Validation API (JSR 349)
+Version:        2.0.1
+Release:        alt1_2jpp8
+License:        ASL 2.0
 
-BuildRequires:    java-devel
-BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
-BuildRequires:    mvn(org.testng:testng)
+URL:            http://beanvalidation.org/
+Source0:        https://github.com/beanvalidation/beanvalidation-api/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
-BuildArch:        noarch
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
 
 %description
 This package contains Bean Validation (JSR-349) API.
 
-%package javadoc
+
+%package        javadoc
 Group: Development/Java
-Summary:          Javadoc for %{name}
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package contains the API documentation for %{name}.
+
 
 %prep
 %setup -q -n beanvalidation-api-%{namedversion}
 
-# Disable javadoc jar
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
-# Disable source jar
+%pom_remove_plugin :license-maven-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
+
+%mvn_file : %{name}
 
 # The byte array allocation should have triggered a OutOfMemoryError
 find src/test/java -name "ValidationTest.java" -print -delete
 
-%mvn_file : %{name}
-
 %build
-
 %mvn_build
+
 
 %install
 %mvn_install
 
+
 %files -f .mfiles
-%doc license.txt
+%doc README.md
+%doc --no-dereference license.txt copyright.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc license.txt
+%doc README.md
+%doc --no-dereference license.txt copyright.txt
+
 
 %changelog
+* Mon Oct 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2jpp8
+- new version
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_11jpp8
 - new version
 
