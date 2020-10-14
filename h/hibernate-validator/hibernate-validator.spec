@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 5
 Name:          hibernate-validator
 Version:       5.2.4
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       Bean Validation 1.1 (JSR 349) Reference Implementation
 License:       ASL 2.0
 URL:           http://www.hibernate.org/subprojects/validator.html
@@ -28,7 +28,7 @@ BuildRequires: mvn(com.thoughtworks.paranamer:paranamer)
 BuildRequires: mvn(javax.annotation:javax.annotation-api)
 BuildRequires: mvn(javax.el:javax.el-api)
 BuildRequires: mvn(javax.enterprise:cdi-api)
-BuildRequires: mvn(javax.validation:validation-api)
+BuildRequires: mvn(javax.validation:validation-api:1)
 BuildRequires: mvn(javax.xml.bind:jaxb-api)
 BuildRequires: mvn(joda-time:joda-time)
 BuildRequires: mvn(junit:junit)
@@ -181,6 +181,9 @@ rm engine/src/main/java/org/hibernate/validator/internal/engine/valuehandling/Ja
 %doc --no-dereference copyright.txt license.txt
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 5.2.4-alt2_6jpp8
+- build with bean-validation-api1
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 5.2.4-alt1_6jpp8
 - new version
 
