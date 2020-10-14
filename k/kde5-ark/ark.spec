@@ -6,8 +6,8 @@
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 20.08.1
-Release: alt3
+Version: 20.08.2
+Release: alt1
 %K5init altplace
 
 Group: Archiving/Compression
@@ -110,6 +110,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Thu Sep 24 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt3
 - build without libzip again to fix filename encoding
 

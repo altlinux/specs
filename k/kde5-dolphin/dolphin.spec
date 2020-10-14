@@ -5,7 +5,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init
 
@@ -29,6 +29,7 @@ Patch4: alt-fix-unmounting-during-preview-generation.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel
 BuildRequires: libxapian-devel desktop-file-utils
+BuildRequires: packagekit-qt-devel
 BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel kde5-baloo-widgets-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
@@ -105,6 +106,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files common -f %name.lang
 %doc COPYING*
 %_datadir/locale/*/LC_SCRIPTS/dolphin/
+
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -134,6 +136,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 

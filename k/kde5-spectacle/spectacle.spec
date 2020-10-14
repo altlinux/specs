@@ -1,8 +1,8 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 20.08.1
-Release: alt2
+Version: 20.08.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -80,6 +80,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Thu Sep 24 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt2
 - fix startup from desktop-file
 

@@ -23,7 +23,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -44,7 +44,6 @@ Obsoletes: kde4-k3b < %version-%release
 Source0: %rname-%version.tar
 Patch1: alt-permhelper.patch
 Patch2: alt-return-wodim.patch
-Patch3: alt-permhelper-install.patch
 
 # Automatically added by buildreq on Mon May 23 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libdbusmenu-qt52 libflac-devel libgpg-error libgst-plugins1.0 libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -125,7 +124,6 @@ KDE 4 library.
 %setup -q -n %rname-%version
 #%patch1 -p1
 #%patch2 -p1
-%patch3 -p1
 
 %build
 %K5build \
@@ -185,6 +183,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 
