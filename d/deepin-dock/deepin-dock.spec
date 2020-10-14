@@ -1,12 +1,11 @@
 %global repo dde-dock
 %global start_logo start-here
-# %%global __provides_exclude_from ^%%_libdir/%%repo/.*\\.so$
 
 Name: deepin-dock
-Version: 5.2.0.14
+Version: 5.3.0.27
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
-License: GPL-3.0-only
+License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -32,8 +31,8 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
-%patch1 -p1
+# %%patch -p1
+# %%patch1 -p1
 
 %__subst '/TARGETS/s|lib|%_lib|' plugins/*/CMakeLists.txt
 sed -E '35d;/dpkg-architecture|EXIT/d' CMakeLists.txt
@@ -66,6 +65,9 @@ sed -E '35d;/dpkg-architecture|EXIT/d' CMakeLists.txt
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Wed Oct 14 2020 Leontiy Volodin <lvol@altlinux.org> 5.3.0.27-alt1
+- New version (5.3.0.27) with rpmgs script.
+
 * Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.2.0.14-alt1
 - New version (5.2.0.14) with rpmgs script.
 
