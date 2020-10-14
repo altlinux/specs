@@ -29,7 +29,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -39,7 +39,9 @@ Requires: %name-integrated = %EVR
 Requires: %name-common = %EVR
 Requires: %name-mimetypes = %EVR
 Requires: %name-extensions = %EVR
+%if_with java
 Requires: libreoffice-languagetool
+%endif
 
 Provides: %name-full = %EVR
 Provides: libreoffice = %EVR
@@ -562,6 +564,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Oct 14 2020 Ivan A. Melnikov <iv@altlinux.org> 7.0.1.2-alt2
+- Drop LanguageTool dependency for java-less build
+
 * Wed Sep 23 2020 Fr. Br. George <george@altlinux.ru> 7.0.1.2-alt1
 - Update to 7.0.1.2
 
