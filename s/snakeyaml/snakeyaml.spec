@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,17 +9,18 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag 70abb5efa4c0
+%global vertag 8450addf3473
 
-%bcond_without    spring
+%bcond_with spring
 
-Name:             snakeyaml
-Version:          1.17
-Release:          alt1_7jpp8
-Summary:          YAML parser and emitter for the Java programming language
-License:          ASL 2.0
-URL:              https://bitbucket.org/asomov/%{name}/
-Source0:          https://bitbucket.org/asomov/snakeyaml/get/v%{version}.tar.bz2#/%{name}-%{version}.tar.bz2
+Name:           snakeyaml
+Summary:        YAML parser and emitter for Java
+Version:        1.25
+Release:        alt1_1jpp8
+License:        ASL 2.0
+
+URL:            https://bitbucket.org/asomov/%{name}
+Source0:        %{url}/get/%{name}-%{version}.tar.gz
 
 # Upstream has forked gdata-java and base64 and refuses [1] to
 # consider replacing them by external dependencies.  Bundled libraries
@@ -30,22 +28,26 @@ Source0:          https://bitbucket.org/asomov/snakeyaml/get/v%{version}.tar.bz2
 # See rhbz#875777 and http://code.google.com/p/snakeyaml/issues/detail?id=175
 #
 # Remove use of bundled Base64 implementation
-Patch0:           0001-Replace-bundled-base64-implementation.patch
+Patch0:         0001-Replace-bundled-base64-implementation.patch
 # We don't have gdata-java in Fedora any longer, use commons-codec instead
-Patch1:           0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
+Patch1:         0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
 
-BuildArch:        noarch
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(biz.source_code:base64coder)
 BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 %if %{with spring}
 BuildRequires:  mvn(org.springframework:spring-core)
+BuildRequires:  mvn(org.springframework:spring-beans)
+BuildRequires:  mvn(org.springframework:spring-context-support)
 %endif
 Source44: import.info
 
@@ -60,13 +62,14 @@ SnakeYAML features:
     * relatively sensible error messages.
 
 
-%package javadoc
+%package        javadoc
 Group: Development/Java
-Summary:          API documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 This package contains %{summary}.
+
 
 %prep
 %setup -q -n asomov-%{name}-%{vertag}
@@ -77,9 +80,11 @@ This package contains %{summary}.
 
 %pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-changes-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-license-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 sed -i "/<artifactId>spring</s/spring/&-core/" pom.xml
 rm -f src/test/java/examples/SpringTest.java
@@ -103,13 +108,17 @@ sed -i 's/\r//g' LICENSE.txt
 %if %{without spring}
 %pom_remove_dep org.springframework
 rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
+rm src/test/java/org/yaml/snakeyaml/helpers/FileTestHelper.java
 %endif
+
 
 %build
 %mvn_build
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc LICENSE.txt
@@ -117,7 +126,11 @@ rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
+
 %changelog
+* Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1_1jpp8
+- new version
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_7jpp8
 - new version
 

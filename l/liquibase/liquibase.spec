@@ -5,8 +5,8 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 3.6.3
-Release: alt1_2jpp8
+Version: 3.7.0
+Release: alt1_1jpp8
 License: ASL 2.0
 URL: http://www.liquibase.org
 
@@ -22,15 +22,12 @@ BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.felix:org.apache.felix.framework)
 BuildRequires: mvn(org.apache.maven:maven-compat)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.springframework:spring-beans)
-BuildRequires: mvn(org.springframework:spring-context)
-BuildRequires: mvn(org.springframework:spring-core)
-BuildRequires: mvn(org.yaml:snakeyaml)
+BuildRequires: mvn(org.yaml:snakeyaml) >= 1.23
 
 BuildArch:     noarch
 
@@ -78,13 +75,14 @@ Group: Development/Java
 Summary: Maven plugin for %{name}
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Requires: %{name} = %{version}-%{release}
 Requires: mvn(org.apache.maven:maven-plugin-api)
 Requires: mvn(org.apache.maven:maven-project)
 Requires: maven
-
 %description maven-plugin
 %{summary}.
+
 
 %prep
 %setup -q -n %{name}-%{name}-parent-%{version}
@@ -92,6 +90,8 @@ Requires: maven
 find -name "*.bat" -print -delete
 find -name "*.class" -print -delete
 find -name "*.jar" -print -delete
+# Spring isn't packaged with Fedora at the moment
+find -wholename "*/integration/spring/*.java" -print -delete
 # Do not bundle javascript libraries and fonts
 find -name "*.js" -print -delete
 rm -r %{name}-core/src/main/resources/liquibase/sdk
@@ -113,6 +113,10 @@ rm -r %{name}-core/src/main/resources/dist
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-deploy-plugin
 
+%pom_remove_dep -r org.springframework:spring-beans
+%pom_remove_dep -r org.springframework:spring-context
+%pom_remove_dep -r org.springframework:spring-core
+%pom_remove_dep -r com.github.stefanbirkner:system-rules
 %pom_remove_dep -r org.osgi:org.osgi.core
 %pom_add_dep org.apache.felix:org.apache.felix.framework %{name}-core
 
@@ -157,6 +161,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files maven-plugin -f .mfiles-%{name}-maven-plugin
 
 %changelog
+* Wed Oct 14 2020 Igor Vlasenko <viy@altlinux.ru> 3.7.0-alt1_1jpp8
+- new version
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_2jpp8
 - fc update
 
