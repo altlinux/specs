@@ -4,7 +4,7 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init altplace
 
@@ -84,6 +84,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Thu Sep 17 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 
