@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 9.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Thu Oct 15 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt2
+- update thunderbird
+- added recoll settings
+
 * Tue Jul 14 2020 Elena Mishina <lepata@altlinux.org> 9.1-alt1
 - update to latest public distr of ALT Education 9.1
 
