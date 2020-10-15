@@ -1,7 +1,7 @@
 %define rname kmplot
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init
 
@@ -49,6 +49,9 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 %_K5srv/kmplot_part.desktop
 
 %changelog
+* Thu Oct 15 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 

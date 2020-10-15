@@ -1,7 +1,7 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init
 
@@ -64,6 +64,9 @@ you can not only learn but feel how physics works!
 %_K5xdgmime/*step*.xml
 
 %changelog
+* Thu Oct 15 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 
