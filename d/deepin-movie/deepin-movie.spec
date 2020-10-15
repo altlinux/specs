@@ -1,7 +1,5 @@
-%add_findprov_lib_path %_libdir/libdvdnav.so.4 %_libdir/libgsettings-qt.so.1
-
 Name: deepin-movie
-Version: 5.7.6.29
+Version: 5.7.6.47
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -10,12 +8,12 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar.gz
-Patch: deepin-movie_5.7.6.29_alt_qt5.15.patch
 
 ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++ cmake qt5-base-devel qt5-x11extras-devel qt5-tools-devel dtk5-widget-devel libmpv-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel xorg-xcbproto-devel libavformat-devel libavutil-devel libavcodec-devel libffmpegthumbnailer-devel libpulseaudio-devel libdvdnav-devel gsettings-qt-devel libswresample-devel
+Requires: libdmr libdvdnav libgsettings-qt
 
 %description
 %summary.
@@ -36,18 +34,19 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
-%patch -p2
+sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbutton}.h
 
 %build
 %cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Debug
+    -DCMAKE_BUILD_TYPE=Release
 %ninja_build -C BUILD
 
 %install
 %ninja_install -C BUILD
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc CHANGELOG.md HACKING.md LICENSE LICENSE.OpenSSL README.md
 %_bindir/%name
 %_datadir/%name/
@@ -65,5 +64,11 @@ This package provides development files for libdmr.
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Oct 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.47-alt1
+- New version (5.7.6.47) with rpmgs script.
+
+* Sat Oct 03 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.37-alt1
+- New version (5.7.6.37) with rpmgs script.
+
 * Fri Sep 11 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.29-alt1
 - Initial build for ALT Sisyphus.
