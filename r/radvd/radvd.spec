@@ -5,8 +5,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.18
-Release: alt2
+Version: 2.19
+Release: alt1
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
@@ -46,7 +46,7 @@ services.
 %add_optflags -fpie
 export LDFLAGS=-pie
 %configure \
-	--with-pidfile=/var/run/radvd/radvd.pid \
+	--with-pidfile=/run/radvd/radvd.pid \
 	--with-systemdsystemunitdir=%systemd_unitdir \
 	--disable-silent-rules
 %make_build
@@ -59,7 +59,7 @@ export LDFLAGS=-pie
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initdir
-mkdir -p %buildroot/var/run/radvd
+mkdir -p %buildroot/run/radvd
 
 install -m 755 %SOURCE1 %buildroot%_initdir/radvd
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
@@ -74,7 +74,7 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 
 %pre
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
-/usr/sbin/useradd -g %_pseudouser_group -c 'radvd user' \
+/usr/sbin/useradd -g %_pseudouser_group -N -c 'radvd user' \
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %files
@@ -84,13 +84,19 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 %config %_tmpfilesdir/%name.conf
 %config %systemd_unitdir/%name.service
 %_initdir/%name
-%dir %attr(0771,root,%_pseudouser_group) /var/run/radvd/
+%dir %attr(0771,root,%_pseudouser_group) /run/radvd/
 %doc radvd.conf.example
 %_mandir/*/*
 %_sbindir/radvd
 %_sbindir/radvdump
 
 %changelog
+* Wed Oct 14 2020 Mikhail Efremov <sem@altlinux.org> 2.19-alt1
+- Changed location of pidfile to /run.
+- Changed location of tmpfiles to /run to avoid warnings.
+- Using useradd -N.
+- Updated to 2.19.
+
 * Tue Feb 25 2020 Mikhail Efremov <sem@altlinux.org> 2.18-alt2
 - Use Vcs tag.
 - Update license.
