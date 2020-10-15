@@ -1,6 +1,6 @@
 Name: nextcloud
-Version: 16.0.0
-Release: alt4
+Version: 20.0.0
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -23,6 +23,7 @@ Requires: php7-curl php7-fileinfo php7-openssl
 # For SQL DBs
 Requires: php7-pdo-driver
 Requires: php7-pcntl
+Requires: php7-intl
 
 Source0: %name-%version.tar
 
@@ -78,9 +79,6 @@ install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites
 #install nginx
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 
-#cleanup autoreq (php7-devel (/usr/bin/phpize))
-rm %buildroot%installdir/apps/gallery/build/xdebug_install.sh
-
 %post apache2
 a2ensite %name
 a2enmod ssl
@@ -113,7 +111,6 @@ ssl_generate "nextcloud"
 %installdir/lib
 %installdir/oc*
 %installdir/resources
-%installdir/settings
 %installdir/themes
 %installdir/updater
 %dir %attr(0770,root,_webserver) %_sysconfdir/%name/config/
@@ -136,6 +133,10 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Thu Oct 15 2020 Evgeniy Korneechev <ekorneechev@altlinux.org> 20.0.0-alt1
+- version 20.0.0 / Oct 3 2020 (closes: #39028)
+- Add requirement to php7-intl (closes: #36902)
+
 * Wed Aug 28 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 16.0.0-alt4
 - fixed nginx configuration to use php7
 
