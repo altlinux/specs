@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name: dmd
 Version: 2.094.0
-Release: alt1
+Release: alt2
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
@@ -140,11 +140,14 @@ cp -r ../phobos/std %buildroot%_includedir/d/
 
 cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
-#tools
-#cp tools/catdoc %buildroot%_bindir/
-cp ../tools/out/rdmd %buildroot%_bindir/
+pushd ../tools
+%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' install INSTALL_DIR=%buildroot%_prefix
+popd
+
 cp -r docs/man/man1/* %buildroot%_man1dir/
 cp -r docs/man/man5/* %buildroot%_man5dir/
+
+cp -r ../tools/man/man1/* %buildroot%_man1dir/
 
 %files
 %_bindir/*
@@ -169,6 +172,9 @@ cp -r docs/man/man5/* %buildroot%_man5dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Thu Oct 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.0-alt2
+- Reworked %%install phase. More tools should be installed now (ALT #39060).
+
 * Mon Sep 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.094.0-alt1
 - Updated to upstream version 2.094.0.
 
