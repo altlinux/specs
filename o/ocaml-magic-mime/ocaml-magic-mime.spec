@@ -3,13 +3,13 @@
 
 Name:    ocaml-%modulename
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: An OCaml library for mapping filenames to common MIME types
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/mirage/ocaml-magic-mime 
-BuildRequires: dune
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: dune ocaml
+BuildRequires: rpm-build-ocaml >= 1.4
 Source:  %name-%version.tar
 
 %description
@@ -28,33 +28,23 @@ developing applications that use %name.
 %setup
 
 %build
-dune build -p %{modulename} --verbose
+%dune_build -p %{modulename}
 
 %install
-dune install -p %{modulename} --destdir=%buildroot
+%dune_install
 
 %check
-dune runtest
+%dune_check
 
-%files
+%files -f ocaml-files.runtime
 %doc README.md
-%dir %_libdir/ocaml/%modulename
-%_libdir/ocaml/%{modulename}*/META
-%_libdir/ocaml/%{modulename}*/*.cma
-%_libdir/ocaml/%{modulename}*/*.cmi
-%_libdir/ocaml/%{modulename}*/*.cmxs
 
-%files devel
-%_libdir/ocaml/%{modulename}*/dune-package
-%_libdir/ocaml/%{modulename}*/opam
-%_libdir/ocaml/%{modulename}*/*.a
-%_libdir/ocaml/%{modulename}*/*.cmt*
-%_libdir/ocaml/%{modulename}*/*.cmxa
-%_libdir/ocaml/%{modulename}*/*.cmx
-%_libdir/ocaml/%{modulename}*/*.mli
-%_libdir/ocaml/%{modulename}*/*.ml
+%files devel -f ocaml-files.devel
 
 %changelog
+* Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 1.1.2-alt2
+- migrated to rpm-build-ocaml-1.4
+
 * Thu Sep 10 2020 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
 - first build for ALT
 
