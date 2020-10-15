@@ -1,6 +1,6 @@
 Name: libclc
 Version: 0.2.0
-Release: alt5
+Release: alt6
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
@@ -71,6 +71,9 @@ export CFLAGS=" -D__extern_always_inline=inline"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 15 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt6
+- rebuild with llvm 11.0
+
 * Tue Aug 11 2020 Valery Inozemtsev <shrek@altlinux.ru> 0.2.0-alt5
 - rebuild with llvm 10.0
 
