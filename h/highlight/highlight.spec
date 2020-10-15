@@ -1,6 +1,6 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
-Version: 3.38
+Version: 3.58
 Release: alt1
 Group:   Development/Tools
 License: GPLv3
@@ -10,9 +10,51 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
-BuildRequires: boost-devel-headers gcc-c++ liblua5-devel libstdc++-devel pkg-config
+BuildRequires: boost-devel-headers
+BuildRequires: gcc-c++
+BuildRequires: liblua5-devel
+BuildRequires: libstdc++-devel
+BuildRequires: pkg-config
+
+BuildRequires: swig
+
+BuildRequires: rpm-build-perl
+BuildRequires: perl-devel
+
+Requires: highlight-common = %version-%release
 
 %description
+A utility that converts sourcecode to HTML, XHTML, RTF, LaTeX, TeX, XML or
+terminal escape sequences with syntax highlighting.
+It supports several programming and markup languages.
+Language descriptions are configurable and support regular expressions.
+The utility offers indentation and reformatting capabilities.
+It is easily possible to create new language definitions and colour themes.
+
+%package -n highlight-common
+Summary: Source code to formatted text converter (architecture independent files)
+Group: Development/Other
+
+Conflicts: highlight <= 3.38-alt1
+
+BuildArch: noarch
+
+%description -n highlight-common
+A utility that converts sourcecode to HTML, XHTML, RTF, LaTeX, TeX, XML or
+terminal escape sequences with syntax highlighting.
+It supports several programming and markup languages.
+Language descriptions are configurable and support regular expressions.
+The utility offers indentation and reformatting capabilities.
+It is easily possible to create new language definitions and colour themes.
+
+%package -n perl-highlight
+Summary: perl bindings for highlight source code to formatted text converter
+Group: Development/Perl
+
+Provides: libhighlight-perl = %version-%release
+Requires: highlight-common  = %version-%release
+
+%description -n perl-highlight
 A utility that converts sourcecode to HTML, XHTML, RTF, LaTeX, TeX, XML or
 terminal escape sequences with syntax highlighting.
 It supports several programming and markup languages.
@@ -24,20 +66,42 @@ It is easily possible to create new language definitions and colour themes.
 %setup -q -n highlight
 
 %build
+%add_optflags %optflags_shared
+
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
+
 %make cli
+
+pushd extras/swig
+%make perl
+popd
 
 %install
 %makeinstall DESTDIR=%buildroot
 
+install -D extras/swig/highlight.pm %buildroot/%perl_vendor_archlib/highlight.pm
+install -D extras/swig/highlight.so %buildroot/%perl_vendor_autolib/highlight/highlight.so
+
 rm -rf -- %buildroot/%_datadir/doc/%name
 
 %files
-%_sysconfdir/%name
 %_bindir/%name
-%_datadir/%name
 %_man1dir/%name.*
+%_man5dir/filetypes.conf.5*
+
+%files -n highlight-common
+%_sysconfdir/%name
+%_datadir/%name
+
+%files -n perl-highlight
+%perl_vendor_autolib/*
+%perl_vendor_archlib/*
 
 %changelog
+* Thu Oct 15 2020 Alexey Gladkov <legion@altlinux.ru> 3.58-alt1
+- New version (3.58).
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.38-alt1
 - Updated to upstream version 3.38
 
