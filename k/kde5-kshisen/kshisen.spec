@@ -1,7 +1,7 @@
 %define rname kshisen
 
 Name: kde5-%rname
-Version: 20.04.3
+Version: 20.08.2
 Release: alt1
 %K5init
 
@@ -47,6 +47,9 @@ BuildRequires: kf5-kxmlgui-devel kf5-kcrash-devel
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Oct 15 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Wed Aug 19 2020 Sergey V Turchin <zerg@altlinux.org> 20.04.3-alt1
 - new version
 
