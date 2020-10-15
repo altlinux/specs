@@ -1,7 +1,7 @@
 %define rname sweeper
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init
 
@@ -63,6 +63,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/sweeper/
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Tue Sep 22 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 
