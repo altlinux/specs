@@ -1,7 +1,7 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 20.08.1
+Version: 20.08.2
 Release: alt1
 %K5init altplace
 
@@ -67,6 +67,9 @@ KDE help center.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Fri Sep 18 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt1
 - new version
 

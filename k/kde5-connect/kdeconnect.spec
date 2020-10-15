@@ -7,8 +7,8 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 20.08.1
-Release: alt3
+Version: 20.08.2
+Release: alt1
 %K5init
 
 Group: Communications
@@ -26,17 +26,6 @@ Requires: kf5-kirigami
 Source: %rname-%version.tar
 Patch1: alt-hide-menu-item.patch
 Patch2: alt-kf5-requires.patch
-
-Patch10: f183b5447bad47655c21af87214579f03bf3a163.diff
-Patch11: b279c52101d3f7cc30a26086d58de0b5f1c547fa.diff
-Patch12: d35b88c1b25fe13715f9170f18674d476ca9acdc.diff
-Patch13: b496e66899e5bc9547b6537a7f44ab44dd0aaf38.diff
-Patch14: 5310eae85dbdf92fba30375238a2481f2e34943e.diff
-Patch15: 721ba9faafb79aac73973410ee1dd3624ded97a5.diff
-Patch16: ae58b9dec49c809b85b5404cee17946116f8a706.diff
-Patch17: 66c768aa9e7fba30b119c8b801efd49ed1270b0a.diff
-Patch18: 85b691e40f525e22ca5cc4ebe79c361d71d7dc05.diff
-Patch19: 48180b46552d40729a36b7431e97bbe2b5379306.diff
 
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
@@ -108,17 +97,6 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-
 %build
 %K5build \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
@@ -166,6 +144,9 @@ KF5 library
 %_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Wed Oct 14 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.2-alt1
+- new version
+
 * Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 20.08.1-alt3
 - reduce KF5 requires
 
