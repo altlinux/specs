@@ -2,7 +2,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.8
-Release: alt1
+Release: alt2
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -21,6 +21,8 @@ Patch1:         eigen_pkgconfig.patch
 Patch2:         eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
 Patch3:		eigen3-3.3.7-alt-e2k.patch
+# https://gitlab.com/libeigen/eigen/-/issues/2011
+Patch4: eigen3-3.3.8-upstream-build.patch
 
 BuildRequires(pre): rpm-build-ninja
 %ifnarch %e2k
@@ -77,6 +79,7 @@ This package contains examples for Eigen.
 %ifarch %e2k
 %patch3 -p2 -b .e2k
 %endif
+%patch4 -p1
 
 %build
 %add_optflags -I%_includedir/metis
@@ -134,6 +137,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %endif
 
 %changelog
+* Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.8-alt2
+- Applied upstream fix for eigen.
+
 * Sun Oct 11 2020 Andrey Cherepanov <cas@altlinux.org> 3.3.8-alt1
 - New version.
 - Use ninja for build.
