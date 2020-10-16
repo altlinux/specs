@@ -1,5 +1,5 @@
 Name: python3-module-xiaomi-gateway
-Version: 0.13.2
+Version: 0.13.3
 Release: alt1
 
 Summary: Python library to communicate with the Xiaomi Gateway
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/PyXiaomiGateway-%version-*-info
 
 %changelog
+* Fri Oct 16 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.3-alt1
+- 0.13.3 released
+
 * Tue Sep 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.2-alt1
 - 0.13.2 released
 
