@@ -3,7 +3,7 @@
 
 Name: gnustep-make
 Version: 2.8.0
-Release: alt1
+Release: alt2
 # https://github.com/gnustep/tools-make
 License: GPL-3.0+
 Group: Development/Objective-C
@@ -31,7 +31,6 @@ GNUstep filesystem layout.
 %package devel
 Summary: Files needed to develop applications with gnustep-make
 Group: Development/Objective-C
-BuildArch: noarch
 Requires: %name = %version-%release
 Requires: gcc-objc
 
@@ -153,6 +152,9 @@ rm -f %buildroot%_infodir/*
 %endif
 
 %changelog
+* Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt2
+- Make gnustep-make-devel arch-depended package.
+
 * Fri Jun 12 2020 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
 - New version.
 - Build without gnustep-objc2.
