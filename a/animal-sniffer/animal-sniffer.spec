@@ -1,5 +1,5 @@
 Name:    animal-sniffer
-Version: 1.17
+Version: 1.19
 Release: alt1
 Summary: The Animal Sniffer Plugin is used to build signatures of APIs and to check your classes against previously generated signatures
 
@@ -18,6 +18,7 @@ BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-project
 BuildRequires:  maven-toolchain
 BuildRequires:  maven-shade-plugin
+BuildRequires:  mvn(org.apache.ant:ant)
 
 BuildArch: noarch
 Requires: java >= 1.6.0
@@ -44,6 +45,7 @@ Javadoc for %name.
 
 %prep
 %setup
+%pom_change_dep org.apache.ant:ant:1.9.4 org.apache.ant:ant:1.10.5 animal-sniffer-ant-tasks
 
 %build
 %mvn_build
@@ -59,5 +61,8 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-%name.pom
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Oct 16 2020 Andrey Cherepanov <cas@altlinux.org> 1.19-alt1
+- New version.
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.17-alt1
 - Initial build for Sisyphus
