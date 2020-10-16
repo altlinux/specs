@@ -2,7 +2,7 @@ Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
 Version: 1.6.0.26.g8080720d
-Release: alt1
+Release: alt2
 
 Group: Networking/Mail
 License: AGPL-3.0
@@ -55,6 +55,15 @@ BuildRequires: xapian-core
 BuildRequires: openssl
 BuildRequires: sqlite3
 
+Requires: git-core
+Requires: perl-Encode
+Requires: perl-Encode-CN
+Requires: perl-Encode-JP
+Requires: perl-Encode-KR
+Requires: perl-Encode-TW
+Requires: perl-Plack-Middleware-ReverseProxy
+Requires: perl-Search-Xapian
+
 %description
 public-inbox implements the sharing of an email inbox via git to
 complement or replace traditional mailing lists.  Readers may
@@ -106,6 +115,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Fri Oct 16 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.26.g8080720d-alt2
+- Add missing Requires.
+
 * Thu Oct 15 2020 Alexey Gladkov <legion@altlinux.ru> 1.6.0.26.g8080720d-alt1
 - First build for ALTLinux.
 
