@@ -1,7 +1,7 @@
 %define oname tcltls
 
 Name: tcl-tls
-Version: 1.7.21
+Version: 1.7.22
 Release: alt1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
@@ -53,6 +53,9 @@ make test AUTO_PATH=%buildroot%_tcllibdir/tcltls%version
 %_tcllibdir/tcltls%version/pkgIndex.tcl
 
 %changelog
+* Fri Oct 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.22-alt1
+- Updated to 1.7.22.
+
 * Sat May 09 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.21-alt1
 - Updated to 1.7.21.
 - Disable cipher tests because upstream expects different cipher suits.
