@@ -1,11 +1,11 @@
 %define oname yakuake
 
 Name:    kde5-%oname
-Version: 20.04.1
+Version: 20.08.1
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
-License: GPLv2, GPLv3 or any later version accepted by the membership of KDE e.V.
+License: GPL-2.0 or GPL-3.0
 Group: Terminals
 Url: http://yakuake.kde.org/
 
@@ -72,7 +72,7 @@ This version is built with KF5.
 %find_lang --with-kde %oname
 
 %files -f %oname.lang
-%doc AUTHORS COPYING COPYING.DOC ChangeLog NEWS README TODO
+%doc AUTHORS COPYING COPYING.DOC ChangeLog NEWS README.md TODO
 %_K5bin/*
 %_K5xdgconf/%oname.knsrc
 %_K5xdgapp/*.desktop
@@ -83,6 +83,9 @@ This version is built with KF5.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Thu Oct 15 2020 Andrey Cherepanov <cas@altlinux.org> 20.08.1-alt1
+- New version.
+
 * Wed May 20 2020 Andrey Cherepanov <cas@altlinux.org> 20.04.1-alt1
 - New version.
 
