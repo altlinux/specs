@@ -1,5 +1,5 @@
 Name: expat
-Version: 2.2.9
+Version: 2.2.10
 Release: alt1
 
 %def_disable static
@@ -105,6 +105,9 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Fri Oct 16 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.10-alt1
+- Updated to 2.2.10.
+
 * Sun May 31 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.2.9-alt1
 - 2.2.4 -> 2.2.9 (fixes CVE-2018-20843 and CVE-2019-15903)
 - Fixed license field according with SPDX
