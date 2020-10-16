@@ -1,5 +1,5 @@
 Name: deepin-movie
-Version: 5.7.6.47
+Version: 5.7.6.48
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and LGPL-2.1+
@@ -64,6 +64,9 @@ sed -i '/#include <DPalette>/a #include <QPainterPath>' src/widgets/{tip,toolbut
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Fri Oct 16 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.48-alt1
+- New version (5.7.6.48) with rpmgs script.
+
 * Thu Oct 15 2020 Leontiy Volodin <lvol@altlinux.org> 5.7.6.47-alt1
 - New version (5.7.6.47) with rpmgs script.
 
